@@ -6,7 +6,7 @@
 
 #include <windows.h>
 #include <string.h>
-#include "tga_video.h"
+#include "tgavid.h"
 #include "tndy16.h"
 
 /* ===== Global driver state ===== */
