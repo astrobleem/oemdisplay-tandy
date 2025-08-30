@@ -3,13 +3,17 @@
 
 CC = cl
 CFLAGS = /c /W3
-OBJS = tandy16.obj
+OBJS = enable.obj tga_video.obj
 
 all: $(OBJS)
 
 # Compile the driver
-$(OBJS): src\\tandy16.c src\\tandy16.h
-	$(CC) $(CFLAGS) src\\tandy16.c
+enable.obj: src\\enable.c src\\tndy16.h
+	$(CC) $(CFLAGS) src\\enable.c
+
+tga_video.obj: src\\tga_video.asm
+	ml /c /Fo tga_video.obj src\\tga_video.asm
 
 clean:
-	del $(OBJS)
+	del enable.obj
+	del tga_video.obj
