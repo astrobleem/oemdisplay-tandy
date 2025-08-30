@@ -1,0 +1,9 @@
+OEMDisplay-Tandy
+Windows 3.x display driver for Tandy 1000
+320x200 16-color TGA support
+Enhances Windows 3.x on TGA systems
+Build with MS C 6.0 & MASM 5.1
+Includes source and makefile
+Requires MS-DOS 3.2+ & Win 3.x
+NMAKE TANDY16.MAK to build
+MIT-licensed open source project
