@@ -2,7 +2,10 @@
 #ifndef TNDY16_H
 #define TNDY16_H
 
+
+#include "compiler_compat.h"
 #include "stdint.h"
+#include "stdbool.h"
 
 #define TNDY_W_320   320
 #define TNDY_H_200   200
