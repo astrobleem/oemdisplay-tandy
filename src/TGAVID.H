@@ -1,9 +1,9 @@
-/* tga_video.h — minimal HW layer (C/ASM boundary) */
+/* tgavid.h minimal HW layer (C/ASM boundary) */
 #ifndef TGA_VIDEO_H
 #define TGA_VIDEO_H
 
 #include <windows.h>
-#include "compiler_compat.h"
+#include "compat.h"
 #include "stdint.h"
 #include "stdbool.h"
 

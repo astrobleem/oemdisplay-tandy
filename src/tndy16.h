@@ -1,9 +1,9 @@
-/* tndy16.h — driver-local defs for our 4bpp path */
+/* tndy16.h driver-local defs for our 4bpp path */
 #ifndef TNDY16_H
 #define TNDY16_H
 
 
-#include "compiler_compat.h"
+#include "compat.h"
 #include "stdint.h"
 #include "stdbool.h"
 
