@@ -4,7 +4,7 @@
  * External module tga_video.asm provides the real hardware work.
  */
 
-#include <windows.h>
+#include "windows.h"
 #include <string.h>
 /* #include <gdidefs.h> */
 #include "tgavid.h"
@@ -121,9 +121,10 @@ int FAR PASCAL Enable(LPDEVICE lpDevice)
     return 1; /* success */
 }
 
-void FAR PASCAL Disable(void)
+void FAR PASCAL Disable(LPDEVICE lpDevice)
 {
     /* Free resources and restore text mode */
+    (void)lpDevice;
     free_shadow();
     TGA_SetTextMode();
 }
