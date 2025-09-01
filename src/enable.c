@@ -51,7 +51,7 @@ static int near alloc_shadow(void) {
 
 static void near free_shadow(void) {
     if (g_tndy.shadow) {
-        HGLOBAL h = GlobalHandle( (LPCVOID)g_tndy.shadow );
+        HGLOBAL h = GlobalHandle(g_tndy.shadow);
         GlobalUnlock(h);
         GlobalFree(h);
         g_tndy.shadow = NULL;
