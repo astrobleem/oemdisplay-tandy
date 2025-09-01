@@ -219,6 +219,7 @@ typedef DWORD NEAR*         PDWORD;
 typedef DWORD FAR*          LPDWORD;
 
 typedef void FAR*           LPVOID;
+typedef const void FAR*     LPCVOID;
 
 #define MAKELP(sel, off)    ((void FAR*)MAKELONG((off), (sel)))
 #define SELECTOROF(lp)      HIWORD(lp)
@@ -684,7 +685,7 @@ char FAR* WINAPI GlobalLock(HGLOBAL);
 BOOL    WINAPI GlobalUnlock(HGLOBAL);
 
 DWORD   WINAPI GlobalSize(HGLOBAL);
-DWORD   WINAPI GlobalHandle(UINT);
+HGLOBAL WINAPI GlobalHandle(LPCVOID);
 
 /* GlobalFlags return flags (in addition to GMEM_DISCARDABLE) */
 #define GMEM_DISCARDED	    0x4000
