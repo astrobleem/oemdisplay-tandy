@@ -1,4 +1,4 @@
-; tga_video.asm — Tandy/PCjr graphics tiny HW layer
+; tga_video.asm Tandy/PCjr graphics tiny HW layer
 ; Model: 16-bit, MASM 5.x
 ; Exports (Pascal far):
 ;   int  TGA_Detect(void);
