@@ -1,0 +1,9 @@
+LIBRARY TNDY16.DRV
+DESCRIPTION 'Tandy 16-color driver'
+STACKSIZE 2048
+HEAPSIZE 1024
+EXPORTS
+        Enable
+        Disable
+        DeviceMode
+        ColorInfo
