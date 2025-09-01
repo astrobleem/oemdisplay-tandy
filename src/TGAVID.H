@@ -2,7 +2,7 @@
 #ifndef TGA_VIDEO_H
 #define TGA_VIDEO_H
 
-#include <windows.h>
+#include "windows.h"
 #include "compat.h"
 #include "stdint.h"
 #include "stdbool.h"
