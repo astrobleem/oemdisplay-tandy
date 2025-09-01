@@ -13,7 +13,19 @@
 /* ===== Global driver state ===== */
 TNDY_STATE g_tndy;
 
-typedef void FAR *LPDEVICE; /* temp stand in for gdidefs.h */
+/*
+ * Stand-in for the DEVICE structure normally supplied by the
+ * Windows 3.x DDK's <gdidefs.h>.  We only model the few fields used by
+ * this sample so the code can be built with modern compilers.
+ */
+typedef struct DEVICE {
+    WORD dpVersion;
+    WORD dpHorzRes;
+    WORD dpVertRes;
+    WORD dpBitsPixel;
+    WORD dpPlanes;
+    WORD dpNumColors;
+} DEVICE, FAR *LPDEVICE;
 
 /* Forward decls of GDI-required exports (you’ll flesh out elsewhere) */
 int  FAR PASCAL Enable(LPDEVICE lpDevice);      /* called by GDI */
@@ -51,7 +63,7 @@ static int near alloc_shadow(void) {
 
 static void near free_shadow(void) {
     if (g_tndy.shadow) {
-        HGLOBAL h = GlobalHandle(g_tndy.shadow);
+        HGLOBAL h = GlobalHandle((LPCVOID)g_tndy.shadow);
         GlobalUnlock(h);
         GlobalFree(h);
         g_tndy.shadow = NULL;
@@ -94,15 +106,15 @@ int FAR PASCAL Enable(LPDEVICE lpDevice)
     _fmemset(g_tndy.shadow, 0, (size_t)g_tndy.shadowStride * g_tndy.height);
     /* You’ll call your “flush shadow to VRAM” here once that module exists */
 
-    /* 7) Fill out minimal pdev fields (size, resolution, planes, colors).
+    /* 7) Fill out minimal device fields (size, resolution, planes, colors).
        Structure layout varies by DDK; copy these into your sample’s DEVICES/DEVCAPS. */
-    if (pdev) {
-        pdev->dpVersion  = 0x0300;            /* Windows 3.0 */
-        pdev->dpHorzRes  = g_tndy.width;
-        pdev->dpVertRes  = g_tndy.height;
-        pdev->dpBitsPixel= 4;                 /* logical packed view */
-        pdev->dpPlanes   = 1;                 /* GDI sees a single packed plane */
-        pdev->dpNumColors= (g_tndy.bpp==4)?16:4;
+    if (lpDevice) {
+        lpDevice->dpVersion   = 0x0300;            /* Windows 3.0 */
+        lpDevice->dpHorzRes   = g_tndy.width;
+        lpDevice->dpVertRes   = g_tndy.height;
+        lpDevice->dpBitsPixel = 4;                 /* logical packed view */
+        lpDevice->dpPlanes    = 1;                 /* GDI sees a single packed plane */
+        lpDevice->dpNumColors = (g_tndy.bpp==4)?16:4;
         /* plus any other fields your sample struct expects */
     }
 
