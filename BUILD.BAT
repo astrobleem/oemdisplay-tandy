@@ -1,1 +1,1 @@
-nmake tndy16.mak
+nmake tndy16.mak > build.log

@@ -6,15 +6,18 @@
 
 #include <windows.h>
 #include <string.h>
+/* #include <gdidefs.h> */
 #include "tgavid.h"
 #include "tndy16.h"
 
 /* ===== Global driver state ===== */
 TNDY_STATE g_tndy;
 
+typedef void FAR *LPDEVICE; /* temp stand in for gdidefs.h */
+
 /* Forward decls of GDI-required exports (you’ll flesh out elsewhere) */
-int  FAR PASCAL Enable(DEVICES *pdev);      /* called by GDI */
-void FAR PASCAL Disable(void);
+int  FAR PASCAL Enable(LPDEVICE lpDevice);      /* called by GDI */
+void FAR PASCAL Disable(LPDEVICE lpDevice);
 int  FAR PASCAL DeviceMode(LPSTR, LPSTR);   /* enumerate mode(s) for Display applet */
 void FAR PASCAL ColorInfo(void);            /* fill color caps; stub for now */
 
@@ -57,7 +60,8 @@ static void near free_shadow(void) {
 
 /* ===== Driver exports expected by Win 3.0 GDI ===== */
 
-int FAR PASCAL Enable(DEVICES *pdev)
+int FAR PASCAL Enable(LPDEVICE lpDevice)
+
 {
     /* 1) Detect hardware early; bail out cleanly if not present */
     if (!TGA_Detect()) {
