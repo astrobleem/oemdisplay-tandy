@@ -7,7 +7,6 @@
 ;   void TGA_GetPlaneInfo(TGAPlaneInfo far *out);
 
 .MODEL LARGE, PASCAL
-OPTION PROLOGUE:NONE, EPILOGUE:NONE
 
 INCLUDE windows.inc
 
@@ -31,8 +30,6 @@ _textMode       DB  3               ; BIOS text mode 80x25
 ; --- int TGA_Detect(void) ---
 PUBLIC TGA_Detect
 TGA_Detect PROC FAR
-    push bp
-    mov  bp, sp
 
     ; Minimal detection: check for presence of Tandy/PCjr video BIOS extension.
     ; Pragmatic early version: assume present if segment B800h responds.
@@ -47,18 +44,15 @@ TGA_Detect PROC FAR
     pop  ds
 
     mov  ax, 1              ; say “present”
-    pop  bp
     ret
 TGA_Detect ENDP
 
 ; --- int TGA_SetMode(TGA_MODE mode) ---
 PUBLIC TGA_SetMode
-TGA_SetMode PROC FAR
-    push bp
-    mov  bp, sp
+TGA_SetMode PROC FAR mode:WORD
     push ds
 
-    mov  ax, [bp+6]         ; param: mode (int)
+    mov  ax, mode          ; param: mode (int)
     mov  _curMode, ax
 
     ; Try BIOS first. Many Tandy BIOSes provide INT 10h modes compatible with PCjr.
@@ -91,27 +85,21 @@ TGA_SetMode PROC FAR
 @ok:
     mov  ax, 1               ; success
     pop  ds
-    pop  bp
     ret
 TGA_SetMode ENDP
 
 ; --- void TGA_SetTextMode(void) ---
 PUBLIC TGA_SetTextMode
 TGA_SetTextMode PROC FAR
-    push bp
-    mov  bp, sp
     mov  ah, 0
     mov  al, _textMode       ; 03h: 80×25 color text
     int  10h
-    pop  bp
     ret
 TGA_SetTextMode ENDP
 
 ; --- void TGA_GetPlaneInfo(TGAPlaneInfo far *out) ---
 PUBLIC TGA_GetPlaneInfo
-TGA_GetPlaneInfo PROC FAR
-    push bp
-    mov  bp, sp
+TGA_GetPlaneInfo PROC FAR out:DWORD
     push ds
     push si
     push di
@@ -124,7 +112,7 @@ TGA_GetPlaneInfo PROC FAR
     mov  ds, ax
 
     lea  si, _pi_vramSeg
-    les  di, [bp+6]          ; far *out in stack
+    les  di, out             ; far *out in stack
     ; copy struct: 2 + (4*2) + 2 + 1 = 13 bytes (round to 14)
     mov  cx, 7               ; copy 7 words = 14 bytes (over-copies 1 pad byte, OK)
 copy_words:
@@ -137,7 +125,6 @@ copy_words:
     pop  di
     pop  si
     pop  ds
-    pop  bp
     ret
 TGA_GetPlaneInfo ENDP
 
