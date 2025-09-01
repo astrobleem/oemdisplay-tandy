@@ -5,6 +5,7 @@ CC = cl
 ML = masm
 
 CFLAGS = /c /W3
+MASMFLAGS = -v -ML -I.\\
 OBJS = enable.obj tgavid.obj
 
 all: $(OBJS)
@@ -14,7 +15,7 @@ enable.obj: src\\enable.c src\\tndy16.h
 	$(CC) $(CFLAGS) src\\enable.c
 
 tgavid.obj: src\\tgavid.asm
-	$(ML) /c tgavid.obj , src\\tgavid.asm
+        $(ML) $(MASMFLAGS) src\\tgavid.asm, tgavid.obj;
 
 clean:
 	del enable.obj
