@@ -97,22 +97,22 @@ TGA_SetTextMode PROC FAR
     ret
 TGA_SetTextMode ENDP
 
-; --- void TGA_GetPlaneInfo(TGAPlaneInfo far *out) ---
+; --- void TGA_GetPlaneInfo(TGAPlaneInfo far *info) ---
 PUBLIC TGA_GetPlaneInfo
-TGA_GetPlaneInfo PROC FAR out:DWORD
+TGA_GetPlaneInfo PROC FAR info:DWORD
     push ds
     push si
     push di
 
     ; DS:SI -> _planeInfo
-    ; ES:DI -> out
+    ; ES:DI -> caller buffer ("info")
     push ds
-    pop  es                  ; ES = DS (we’ll set DS to DGROUP)
-    mov  ax, @DATA
+    pop  es                  ; ES = DS (we’ll set DS to data segment)
+    mov  ax, SEG _pi_vramSeg
     mov  ds, ax
 
     lea  si, _pi_vramSeg
-    les  di, out             ; far *out in stack
+    les  di, info            ; far *info in stack
     ; copy struct: 2 + (4*2) + 2 + 1 = 13 bytes (round to 14)
     mov  cx, 7               ; copy 7 words = 14 bytes (over-copies 1 pad byte, OK)
 copy_words:
