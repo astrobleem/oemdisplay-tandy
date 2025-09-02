@@ -6,4 +6,4 @@ Build with MS C 6.0 & MASM 5.1
 Includes source and makefile
 Requires MS-DOS 3.2+ & Win 3.x
 NMAKE TANDY16.MAK to build
-MIT-licensed open source project
+GPL-licensed open source project

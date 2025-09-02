@@ -1,9 +1,6 @@
 # OEMDisplay-Tandy
 *Windows 3.x OEM Display Driver for the Tandy 1000 Series*
 
-![Tandy 1000 Logo](docs/images/tandy-logo.png)
-![Windows 3.x Logo](docs/images/win3x-logo.png)
-
 ---
 
 ## 📖 Overview
@@ -18,6 +15,9 @@ By default, Windows 3.0/3.1 only offers **CGA (2 colors)** or **EGA (limited sup
 - Correct palette handling and mode switching
 - Compatible with **Windows 3.0** and **Windows 3.1** (Standard & Real Mode)
 - Built with **Microsoft C 6.0** and **MASM 5.1** using the official **Windows 3.x DDK**
+
+## 🚧 Project Status
+This driver is under active development and may not yet be fully functional. Testing and contributions from the community are highly appreciated—please open issues or pull requests if you'd like to help.
 
 ---
 
@@ -40,3 +40,11 @@ By default, Windows 3.0/3.1 only offers **CGA (2 colors)** or **EGA (limited sup
    ```sh
    nmake tandy16.mak
    ```
+
+---
+
+## 🤝 Contributing
+We welcome community contributions! If you encounter problems or have ideas for improvements, feel free to open an issue or submit a pull request.
+
+## 📜 License
+This project is released under the [GNU General Public License v3.0](LICENSE).

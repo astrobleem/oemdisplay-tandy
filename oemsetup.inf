@@ -1,0 +1,11 @@
+; OEMSETUP.INF for the Tandy 1000 Windows 3.x display driver
+
+[disks]
+1="Tandy 1000 Display Driver Disk",,0
+
+[files]
+tndy16.drv,tndy16.drv,1
+
+[setup]
+display.drv,tndy16.drv
+
