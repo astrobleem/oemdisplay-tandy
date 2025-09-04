@@ -6,17 +6,21 @@ ML = masm
 
 CFLAGS = /c /W3
 MASMFLAGS = -v -ML -I.\\
-OBJS = enable.obj tgavid.obj
+OBJS = dllentry.obj enable.obj tgavid.obj
 
 all: $(OBJS)
 
 # Compile the driver
+dllentry.obj: src\\dllentry.c
+	$(CC) $(CFLAGS) src\\dllentry.c
+
 enable.obj: src\\enable.c src\\tndy16.h
 	$(CC) $(CFLAGS) src\\enable.c
 
 tgavid.obj: src\\tgavid.asm
-        $(ML) $(MASMFLAGS) src\\tgavid.asm, tgavid.obj;
+	$(ML) $(MASMFLAGS) src\\tgavid.asm, tgavid.obj;
 
 clean:
+	del dllentry.obj
 	del enable.obj
 	del tgavid.obj
