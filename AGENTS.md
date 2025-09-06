@@ -1,3 +1,13 @@
+Install prerequisites up front. Run sudo apt-get install -y dosbox-x unix2dos file dos2unix so the DOSBox emulator and line-ending utilities are ready before any edits
+
+Work inside DOSBox-X. Mount the repository in DOSBox-X and run the build script there; building from the Linux shell is unsupported
+
+Set DOS toolchain paths. Within DOSBox-X, set PATH, LIB, and INCLUDE variables to point at the bundled MS C 6.0 directories before compiling
+
+Maintain DOS-friendly files. Use unix2dos to preserve CRLF line endings, keep filenames in 8.3 uppercase form, and delete any .EXE, .OBJ, or .TXT artifacts before committing
+
+Run a clean build and test. From a DOSBox-X session, delete old binaries, invoke build, then run the executable to verify the expected output
+
 # Critical build constraints
 - Build with Microsoft C 6.0 or 7.0 targeting 16-bit real-mode.
 - Assume Windows 3.x compatibility; avoid features past C89.
