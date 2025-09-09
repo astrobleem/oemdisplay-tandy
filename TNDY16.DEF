@@ -7,3 +7,6 @@ EXPORTS
         Disable
         DeviceMode
         ColorInfo
+        RealizeObject
+        BitBlt
+        Output

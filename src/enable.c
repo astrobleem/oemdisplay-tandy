@@ -32,6 +32,9 @@ int  FAR PASCAL Enable(LPDEVICE lpDevice);      /* called by GDI */
 void FAR PASCAL Disable(LPDEVICE lpDevice);
 int  FAR PASCAL DeviceMode(LPSTR, LPSTR);   /* enumerate mode(s) for Display applet */
 void FAR PASCAL ColorInfo(void);            /* fill color caps; stub for now */
+int  FAR PASCAL RealizeObject(LPSTR, LPSTR, LPSTR); /* realize GDI objects */
+int  FAR PASCAL BitBlt(LPSTR, LPSTR, LPSTR, LPSTR, LPSTR, LPSTR); /* bit block transfer */
+int  FAR PASCAL Output(LPSTR, LPSTR, LPSTR, LPSTR, LPSTR, LPSTR); /* graphics output */
 
 /* ===== Helpers ===== */
 static void near set_defaults_for_mode(TGA_MODE m) {
@@ -143,4 +146,24 @@ void FAR PASCAL ColorInfo(void)
 {
     /* Fill GDI color mapping if your DDK sample asks for it; otherwise leave as-is.
        We’ll implement proper RealizePalette elsewhere. */
+}
+int FAR PASCAL RealizeObject(LPSTR lpDevObj, LPSTR lpPhysObj, LPSTR lpBrush)
+{
+    /* Stub implementation for object realization (brushes, pens, etc.) */
+    (void)lpDevObj; (void)lpPhysObj; (void)lpBrush;
+    return 0; /* fail - not implemented yet */
+}
+
+int FAR PASCAL BitBlt(LPSTR lpDstDev, LPSTR lpSrcDev, LPSTR lpClipRect, LPSTR lpBrush, LPSTR lpDrawMode, LPSTR lpExtent)
+{
+    /* Stub implementation for bit block transfer operations */
+    (void)lpDstDev; (void)lpSrcDev; (void)lpClipRect; (void)lpBrush; (void)lpDrawMode; (void)lpExtent;
+    return 0; /* fail - not implemented yet */
+}
+
+int FAR PASCAL Output(LPSTR lpDstDev, LPSTR lpStyle, LPSTR lpCount, LPSTR lpPoints, LPSTR lpPhysPen, LPSTR lpDrawMode)
+{
+    /* Stub implementation for graphics output (lines, polygons, etc.) */
+    (void)lpDstDev; (void)lpStyle; (void)lpCount; (void)lpPoints; (void)lpPhysPen; (void)lpDrawMode;
+    return 0; /* fail - not implemented yet */
 }
