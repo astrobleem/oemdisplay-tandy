@@ -5,7 +5,7 @@ CC = cl
 ML = masm
 
 CFLAGS = /c /W3
-MASMFLAGS = -v -ML -I.\\
+MASMFLAGS = -v -ML -I.\\ -Isrc\\
 OBJS = dllentry.obj enable.obj tgavid.obj
 
 all: TNDY16.DRV
@@ -17,7 +17,7 @@ dllentry.obj: src\\dllentry.c
 enable.obj: src\\enable.c src\\tndy16.h src\\string.h src\\compat.h
 	$(CC) $(CFLAGS) src\\enable.c
 
-tgavid.obj: src\\tgavid.asm
+tgavid.obj: src\\tgavid.asm src\\WINDOWS.INC
         $(ML) $(MASMFLAGS) src\\tgavid.asm, tgavid.obj;
 
 TNDY16.DRV: $(OBJS) TNDY16.DEF
