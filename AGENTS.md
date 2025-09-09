@@ -1,4 +1,4 @@
-Install prerequisites up front. Run sudo apt-get install -y dosbox-x unix2dos file dos2unix so the DOSBox emulator and line-ending utilities are ready before any edits
+Install prerequisites up front. Run sudo apt-get install -y dosbox-x file dos2unix so the DOSBox emulator and line-ending utilities are ready before any edits
 
 Work inside DOSBox-X. Mount the repository in DOSBox-X and run the build script there; building from the Linux shell is unsupported
 
