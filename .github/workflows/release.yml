@@ -28,6 +28,7 @@ jobs:
             -c "del BUILD.LOG" \
             -c "del *.OBJ" \
             -c "del *.EXE" \
+            -c "del *.TXT" \
             -c "rd /s /q TNDY16" \
             -c "exit"
 
