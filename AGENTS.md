@@ -6,7 +6,7 @@ Set DOS toolchain paths. Within DOSBox-X, set PATH, LIB, and INCLUDE variables t
 
 Maintain DOS-friendly files. Use unix2dos to preserve CRLF line endings, keep filenames in 8.3 uppercase form, and delete any .EXE, .OBJ, or .TXT artifacts before committing
 
-Run a clean build and test. From a DOSBox-X session, delete old binaries, invoke build, then run the executable to verify the expected output
+Run a clean build and test. From a DOSBox-X session, delete old binaries, invoke build, then install the driver in Windows 3.x to confirm it loads
 
 # Critical build constraints
 - Build with Microsoft C 6.0 or 7.0 targeting 16-bit real-mode.
