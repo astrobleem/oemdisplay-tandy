@@ -5687,14 +5687,6 @@ BOOL    WINAPI GetDriverInfo(HDRVR, DRIVERINFOSTRUCT FAR*);
 #endif  /* WINVER >= 0x030a */
 #endif  /* NOUSER */
 
-#ifndef NOWINDOWSX          /* ;Internal */
-#ifndef RC_INVOKED          /* ;Internal */
-#include "windowsx.h"       /* ;Internal */
-#ifndef STRICT              /* ;Internal */
-#undef  SelectFont          /* ;Internal */
-#endif  /* STRICT */        /* ;Internal */
-#endif  /* RC_INVOKED */    /* ;Internal */
-#endif  /* NOWINDOWSX */    /* ;Internal */
 #ifndef RC_INVOKED
 #pragma pack()          /* Revert to default packing */
 #endif  /* RC_INVOKED */
