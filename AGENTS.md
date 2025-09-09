@@ -4,7 +4,7 @@ Work inside DOSBox-X. Mount the repository in DOSBox-X and run the build script 
 
 Set DOS toolchain paths. Within DOSBox-X, set PATH, LIB, and INCLUDE variables to point at the bundled MS C 6.0 directories before compiling
 
-Maintain DOS-friendly files. Use unix2dos to preserve CRLF line endings, keep filenames in 8.3 uppercase form, and delete any .EXE, .OBJ, or .TXT artifacts before committing
+Maintain DOS-friendly files. Use `dos2unix`/`unix2dos` from the `dos2unix` package to preserve CRLF line endings, keep filenames in 8.3 uppercase form, and delete any .EXE, .OBJ, or .TXT artifacts before committing
 
 Run a clean build and test. From a DOSBox-X session, delete old binaries, invoke build, then install the driver in Windows 3.x to confirm it loads
 
