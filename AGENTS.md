@@ -27,7 +27,8 @@ Run a clean build and test. From a DOSBox-X session, delete old binaries, invoke
 # Build & test
 - Run `build` (BUILD.BAT) from the project root inside the emulator.
 - The batch file must complete without errors and emit driver binaries.
-- Verify the driver loads on a clean Windows 3.x setup.
+- After running build inside DOSBox‑X, verify success by ensuring TNDY16.DRV exists and that BUILD.LOG contains Build driver was successful.
+- This check is acceptable when a full Windows 3.x environment is unavailable; install and test the driver on actual Windows only when feasible.
 
 # CI
 - No automated CI exists; manual builds in DOSBox or PCem are mandatory.
@@ -36,3 +37,4 @@ Run a clean build and test. From a DOSBox-X session, delete old binaries, invoke
 - Explain environment and steps taken to build and test.
 - Include logs or screenshots proving `build` succeeded.
 - Keep commits focused and reference relevant issues when available.
+
