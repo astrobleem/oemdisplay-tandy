@@ -1,3 +1,4 @@
+
 # BUILDING
 
 This project targets 16-bit Windows using Microsoft C 6.0.
@@ -20,6 +21,9 @@ This project targets 16-bit Windows using Microsoft C 6.0.
 5. The ZIP contains `TNDY16.DRV`, `OEMSETUP.INF`,
    `FILE_ID.DIZ` and `README.TXT` ready for distribution.
 
+
 ## Testing
 
-After packaging, test the driver on a target system.
+1. Copy the resulting `TNDY16.DRV` into a Windows 3.x installation.
+2. Select the driver through Windows Setup and confirm that the display initializes correctly.
+
