@@ -4,17 +4,18 @@
 CC = cl
 ML = masm
 
-CFLAGS = /c /W3
+CFLAGS = /c /W3 /Isrc
 MASMFLAGS = -v -ML -I.\\ -Isrc\\
 OBJS = dllentry.obj enable.obj tgavid.obj
 
 all: TNDY16.DRV
 
 # Compile the driver
-dllentry.obj: src\\dllentry.c
+dllentry.obj: src\dllentry.c src\windows.h
 	$(CC) $(CFLAGS) src\\dllentry.c
 
-enable.obj: src\\enable.c src\\tndy16.h src\\string.h src\\compat.h
+enable.obj: src\enable.c src\windows.h src\tgavid.h src\tndy16.h \
+            src\string.h src\compat.h src\stdint.h src\stdbool.h
 	$(CC) $(CFLAGS) src\\enable.c
 
 tgavid.obj: src\\tgavid.asm src\\WINDOWS.INC
