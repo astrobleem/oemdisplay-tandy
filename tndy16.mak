@@ -14,7 +14,7 @@ all: TNDY16.DRV
 dllentry.obj: src\\dllentry.c
 	$(CC) $(CFLAGS) src\\dllentry.c
 
-enable.obj: src\\enable.c src\\tndy16.h
+enable.obj: src\\enable.c src\\tndy16.h src\\string.h src\\compat.h
 	$(CC) $(CFLAGS) src\\enable.c
 
 tgavid.obj: src\\tgavid.asm

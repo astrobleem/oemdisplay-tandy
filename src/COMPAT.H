@@ -21,7 +21,7 @@
 #endif
 
 /* memset/memcpy for far pointers (Windows 3.x) */
-#include <string.h>
+#include "string.h"
 #define fmemcpy _fmemcpy
 #define fmemset _fmemset
 

@@ -5,7 +5,7 @@
  */
 
 #include "windows.h"
-#include <string.h>
+#include "string.h"
 /* #include <gdidefs.h> */
 #include "tgavid.h"
 #include "tndy16.h"
