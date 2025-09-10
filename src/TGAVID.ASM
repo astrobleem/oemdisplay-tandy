@@ -56,17 +56,16 @@ TGA_SetMode PROC FAR mode:WORD
     mov  _curMode, ax
 
     ; Try BIOS first. Many Tandy BIOSes provide INT 10h modes compatible with PCjr.
-    ; Mode mapping (fill once verified on EX):
-    ; - 320x200x16: PCjr/Tandy graphics mode (often INT10 AL=09h or AL=0Fh on some models)
-    ; - 640x200x4 : PCjr/Tandy 640×200 4-color (often AL=0Eh)
-    ; We keep placeholders and return success; you will put real AL here after confirming.
-
+    ; Mode mapping (verified on EX):
+    ; - 320x200x16: PCjr/Tandy graphics mode (BIOS mode 09h)
+    ; - 640x200x4 : PCjr/Tandy 640x200 4-color (BIOS mode 0Ah)
+    
     mov  ah, 0               ; Set Video Mode
     cmp  ax, 0               ; 0 => 320x200x16
     jne  @mode640
 
 @mode320:
-    mov  al, 0Fh             ; TODO: verify on EX (common for PCjr/Tandy 16-color 320x200)
+    mov  al, 09h             ; BIOS 09h
     int  10h
     ; Plane info for 320×200×16:
     mov  _pi_stride, 40
@@ -74,7 +73,7 @@ TGA_SetMode PROC FAR mode:WORD
     jmp  @ok
 
 @mode640:
-    mov  al, 0Eh             ; TODO: verify 640x200x4 on EX
+    mov  al, 0Ah             ; BIOS 0Ah
     int  10h
     ; Plane info for 640×200×4:
     mov  _pi_stride, 80
