@@ -4,11 +4,11 @@
  * External module tga_video.asm provides the real hardware work.
  */
 
-#include "windows.h"
-#include "string.h"
+#include "WINDOWS.H"
+#include "STRING.H"
 /* #include <gdidefs.h> */
-#include "tgavid.h"
-#include "tndy16.h"
+#include "TGAVID.H"
+#include "TNDY16.H"
 
 /* ===== Global driver state ===== */
 TNDY_STATE g_tndy;
