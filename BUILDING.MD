@@ -11,6 +11,16 @@ This project targets 16-bit Windows using Microsoft C 6.0.
 
 ## Building and Packaging
 
+For a clean build run:
+
+```
+dosbox-x -no-console -conf dosbox-x.conf
+```
+
+The configuration mounts this repository, clears previous binaries, and
+executes `BUILD.BAT` with output redirected to `OUT.TXT`. Review
+`OUT.TXT` to confirm the build succeeded.
+
 1. Start DOSBox-X.
 2. Mount the repository as drive C: `MOUNT C <repo>`.
 3. Set the toolchain environment:
