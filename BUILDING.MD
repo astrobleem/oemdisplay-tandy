@@ -14,7 +14,7 @@ This project targets 16-bit Windows using Microsoft C 6.0.
 For a clean build run:
 
 ```
-dosbox-x -no-console -conf dosbox-x.conf
+dosbox-x -noconsole -conf dosbox-x.conf
 ```
 
 The configuration mounts this repository, clears previous binaries, and
