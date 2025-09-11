@@ -1,4 +1,4 @@
-#include "windows.h"
+#include "WINDOWS.H"
 
 /*
  * DLL entry points for the Tandy 16-color display driver.

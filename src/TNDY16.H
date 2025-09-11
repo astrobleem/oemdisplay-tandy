@@ -3,9 +3,9 @@
 #define TNDY16_H
 
 
-#include "compat.h"
-#include "stdint.h"
-#include "stdbool.h"
+#include "COMPAT.H"
+#include "STDINT.H"
+#include "STDBOOL.H"
 
 #define TNDY_W_320   320
 #define TNDY_H_200   200

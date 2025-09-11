@@ -2,10 +2,10 @@
 #ifndef TGA_VIDEO_H
 #define TGA_VIDEO_H
 
-#include "windows.h"
-#include "compat.h"
-#include "stdint.h"
-#include "stdbool.h"
+#include "WINDOWS.H"
+#include "COMPAT.H"
+#include "STDINT.H"
+#include "STDBOOL.H"
 
 /* Logical modes we’ll support */
 typedef enum {

@@ -4,11 +4,11 @@
  * External module tga_video.asm provides the real hardware work.
  */
 
-#include "windows.h"
-#include <string.h>
+#include "WINDOWS.H"
+#include "STRING.H"
 /* #include <gdidefs.h> */
-#include "tgavid.h"
-#include "tndy16.h"
+#include "TGAVID.H"
+#include "TNDY16.H"
 
 /* ===== Global driver state ===== */
 TNDY_STATE g_tndy;
@@ -33,7 +33,16 @@ void FAR PASCAL Disable(LPDEVICE lpDevice);
 int  FAR PASCAL DeviceMode(LPSTR, LPSTR);   /* enumerate mode(s) for Display applet */
 void FAR PASCAL ColorInfo(void);            /* fill color caps; stub for now */
 int  FAR PASCAL RealizeObject(LPSTR, LPSTR, LPSTR); /* realize GDI objects */
-int  FAR PASCAL BitBlt(LPSTR, LPSTR, LPSTR, LPSTR, LPSTR, LPSTR); /* bit block transfer */
+BOOL FAR PASCAL BitBlt(
+    HDC   hdcDest,
+    int   xDest,
+    int   yDest,
+    int   width,
+    int   height,
+    HDC   hdcSrc,
+    int   xSrc,
+    int   ySrc,
+    DWORD rop); /* bit block transfer */
 int  FAR PASCAL Output(LPSTR, LPSTR, LPSTR, LPSTR, LPSTR, LPSTR); /* graphics output */
 
 /* ===== Helpers ===== */
@@ -154,11 +163,13 @@ int FAR PASCAL RealizeObject(LPSTR lpDevObj, LPSTR lpPhysObj, LPSTR lpBrush)
     return 0; /* fail - not implemented yet */
 }
 
-int FAR PASCAL BitBlt(LPSTR lpDstDev, LPSTR lpSrcDev, LPSTR lpClipRect, LPSTR lpBrush, LPSTR lpDrawMode, LPSTR lpExtent)
+BOOL FAR PASCAL BitBlt(HDC hdcDest, int xDest, int yDest, int width, int height,
+                       HDC hdcSrc, int xSrc, int ySrc, DWORD rop)
 {
     /* Stub implementation for bit block transfer operations */
-    (void)lpDstDev; (void)lpSrcDev; (void)lpClipRect; (void)lpBrush; (void)lpDrawMode; (void)lpExtent;
-    return 0; /* fail - not implemented yet */
+    (void)hdcDest; (void)xDest; (void)yDest; (void)width; (void)height;
+    (void)hdcSrc; (void)xSrc; (void)ySrc; (void)rop;
+    return FALSE; /* fail - not implemented yet */
 }
 
 int FAR PASCAL Output(LPSTR lpDstDev, LPSTR lpStyle, LPSTR lpCount, LPSTR lpPoints, LPSTR lpPhysPen, LPSTR lpDrawMode)
