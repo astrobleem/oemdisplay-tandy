@@ -4,7 +4,7 @@
 CC = cl
 ML = masm
 
-CFLAGS = /c /W3 /Isrc
+CFLAGS = /c /AL /W3 /Isrc
 MASMFLAGS = -v -ML -I.\\ -Isrc\\
 OBJS = DLLENTRY.OBJ ENABLE.OBJ TGAVID.OBJ
 
@@ -22,7 +22,7 @@ TGAVID.OBJ: src\\TGAVID.ASM src\\WINDOWS.INC
         $(ML) $(MASMFLAGS) src\\TGAVID.ASM, TGAVID.OBJ;
 
 TNDY16.DRV: $(OBJS) TNDY16.DEF
-        link DLLENTRY.OBJ ENABLE.OBJ TGAVID.OBJ, TNDY16.DRV,, libw sdllcew gdi kernel user, TNDY16.DEF
+        link DLLENTRY.OBJ ENABLE.OBJ TGAVID.OBJ, TNDY16.DRV,, slibcew libw gdi kernel user, TNDY16.DEF
 
 clean:
         del DLLENTRY.OBJ
