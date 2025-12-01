@@ -1,0 +1,1 @@
+	link inquire.obj setmode.obj disable.obj color.obj blkwhite.obj       chkstk.obj cursors.obj control.obj fb.obj charwdth.obj           lodither.obj hidither.obj sswitch.obj enable.obj tandy.obj, tandy16.drv, tandy16.map, libw.lib, tandy16.def /NOD /NOE

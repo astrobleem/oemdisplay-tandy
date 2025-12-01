@@ -1,0 +1,36 @@
+Notes on Video Programs
+-----------------------
+
+These are some old programs I had lying around.  I wrote them for a kid who 
+wanted to know how to program Tandy video.  Every once in a while somebody 
+will ask in comp.sys.tandy for information on Tandy video, so I decided to 
+put them on my ftp site.  The programs are simple screen savers.  <esc> 
+exits out of them.
+
+Tanbox shows how to detect, enter, leave, and set pixels in Tandy 1000/PCjr 
+320x200x16 mode.  It displays random rectangles on the screen with changing 
+colors.  Tandots shows how to detect, enter, leave, and set pixels in Tandy 
+1000SL/TL/RL 640x200x16 mode.  It uses random dots to change colors on the 
+screen in a kind of dissolve.
+
+These programs are not terribly efficient, and you can get better, more 
+complete information from other sources (particularly the technical 
+reference manual for your system; see the Tandy 1000-series FAQ).  Tandy 
+video has a lot of features, including a programmable palette, palette 
+mask, and paging in graphics modes, but I don't go into all that here.  
+Somebody should do a definitive reference for Tandy video, but it's really 
+not on my "to do" list.
+
+One important problem I don't deal with here is the matter of video memory.  
+On the Tandy 1000's, video memory may be shared with conventional, so you 
+need to make sure that your program won't clobber itself (or another 
+program) when it writes to the screen.  Make sure that your program's 
+memory block extends to the end of conventional RAM, then make sure that 
+the part of conventional that may overlap with video is not in use by your 
+program.  In other words, if you need 32k for 320x200x16 mode, make sure 
+that you own the last 16k of conventional RAM and are not using it (at 
+least 16k will always be set aside exclusively for video).  If you need 64k 
+for 640x200x16 mode, make sure that you own the last 48k of conventional 
+RAM, and that you don't have code, data, or stack there.  That sort of 
+thing.
+

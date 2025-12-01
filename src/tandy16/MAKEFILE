@@ -1,0 +1,42 @@
+#   Window's Sample Display Drivers.
+
+OPT =
+INCS = -I.\
+
+ASM = masm $(INCS) -v -Mx  $(OPT)
+
+.asm.obj:
+        $(ASM) $**,$@;
+
+OBJS=   inquire.obj setmode.obj disable.obj color.obj blkwhite.obj      \
+        chkstk.obj cursors.obj cursor.obj control.obj fb.obj charwdth.obj          \
+        lodither.obj hidither.obj sswitch.obj enable.obj tandy.obj
+
+tandy16.drv:  $(OBJS)
+    link @tandy16.lnk
+
+inquire.obj:	inquire.asm
+setmode.obj:	setmode.asm
+enable.obj:	enable.asm
+disable.obj:	disable.asm
+color.obj:	color.asm
+blkwhite.obj:	blkwhite.asm
+chkstk.obj:	chkstk.asm
+cursors.obj:	cursors.asm
+control.obj:	control.asm
+fb.obj: 	fb.asm
+tandy.obj:	tandy.asm
+
+cursor.obj:	cursor.asm cursor.inc
+	$(ASM) cursor.asm,cursor.obj;
+
+charwdth.obj:	charwdth.asm fontseg.inc
+	$(ASM) $*;
+
+lodither.obj:	dither.asm
+	$(ASM) -DLORES $**,$@;
+
+hidither.obj:	dither.asm
+	$(ASM) -DHIRES $**,$@;
+
+sswitch.obj:	sswitch.asm

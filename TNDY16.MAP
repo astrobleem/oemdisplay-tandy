@@ -1,0 +1,61 @@
+LINK : warning L4021: no stack segment
+
+ Start  Stop   Length Name                   Class
+ 00000H 00377H 00378H _TEXT                  CODE
+ 00378H 003F1H 0007AH TGAVID_TEXT            CODE
+ 00400H 0040FH 00010H NULL                   BEGDATA
+ 00410H 00435H 00026H _DATA                  DATA
+ 00436H 00436H 00000H CDATA                  DATA
+ 00436H 00436H 00000H XIFB                   DATA
+ 00436H 00436H 00000H XIF                    DATA
+ 00436H 00436H 00000H XIFE                   DATA
+ 00436H 00436H 00000H XIB                    DATA
+ 00436H 00436H 00000H XI                     DATA
+ 00436H 00436H 00000H XIE                    DATA
+ 00436H 00436H 00000H XPB                    DATA
+ 00436H 00436H 00000H XP                     DATA
+ 00436H 00436H 00000H XPE                    DATA
+ 00436H 00436H 00000H XCB                    DATA
+ 00436H 00436H 00000H XC                     DATA
+ 00436H 00436H 00000H XCE                    DATA
+ 00436H 00436H 00000H XCFB                   DATA
+ 00436H 00436H 00000H XCF                    DATA
+ 00436H 00436H 00000H XCFE                   DATA
+ 00436H 00441H 0000CH DBDATA                 DATA
+ 00442H 00442H 00000H CONST                  CONST
+ 00442H 0045AH 00019H HDR                    MSG
+ 0045BH 004DCH 00082H MSG                    MSG
+ 004DDH 004DEH 00002H PAD                    MSG
+ 004DFH 004DFH 00001H EPAD                   MSG
+ 004E0H 004E0H 00000H _BSS                   BSS
+ 004E0H 004E0H 00000H XOB                    BSS
+ 004E0H 004E0H 00000H XO                     BSS
+ 004E0H 004E0H 00000H XOE                    BSS
+ 004E0H 004FBH 0001CH c_common               BSS
+
+ Origin   Group
+ 0040:0   DGROUP
+
+Unresolved externals:
+
+
+GLOBALUNLOCK in file(s):
+ ENABLE.OBJ(src\\ENABLE.C)
+FATALAPPEXIT in file(s):
+ \LIB\SDLLCEW.LIB(windows\fatal.asm)
+GLOBALLOCK in file(s):
+ ENABLE.OBJ(src\\ENABLE.C)
+OUTPUTDEBUGSTRING in file(s):
+ \LIB\SDLLCEW.LIB(dos\nmsghdr.asm)
+GLOBALHANDLE in file(s):
+ ENABLE.OBJ(src\\ENABLE.C)
+GETPROFILEINT in file(s):
+ ENABLE.OBJ(src\\ENABLE.C)
+GLOBALFREE in file(s):
+ ENABLE.OBJ(src\\ENABLE.C)
+FATALEXIT in file(s):
+ \LIB\SDLLCEW.LIB(windows\fatal.asm)
+__WINFLAGS in file(s):
+ \LIB\SDLLCEW.LIB(windows\winstart.asm)
+GLOBALALLOC in file(s):
+ ENABLE.OBJ(src\\ENABLE.C)

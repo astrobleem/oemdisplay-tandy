@@ -1,0 +1,94 @@
+Notes on Tandydsp
+-----------------
+
+This is the Tandy video driver from Windows 2.03, provided by James 
+Blackmun <jsb4@umw.edu>.  It can be used with Windows 2.x, or with Windows 
+3.0 in real mode only.
+
+Normally, when you install Windows 3.0 on a Tandy 1000, 1000A, SX, TX, EX, 
+HX, SL, TL, SL/2, TL/2, TL/3, RL, or RL-HD, where the video on the system 
+has not been upgraded and a CGA monitor is attached, the CGA driver is 
+selected; as far as I know, there was never a Tandy video driver 
+specifically written for Win 3.0.  The CGA driver works in 640x200x2 mode 
+and displays in black and white.  The Tandy driver works in 640x200x4 mode 
+and displays blue, green, red, and white, which may be more pleasing to the 
+eye.  As with other Windows video drivers, you can select the color 
+combination through the Control Panel "Colors" option.
+
+Note that Microsoft does not recommend using Win 2.x drivers with Win 3.0, 
+though they do say it can be done (in real mode) - but as far as I can see 
+this driver works fine.  There are three files in this archive:  
+TANDYDSP.DRV, TANDYDSP.LGO, and TANDYDSP.GRB.  I got the last one by taking 
+WINOLDAP.GRB from my Win 2.03 installation and renaming it.
+
+The following instructions are exempted from the Windows 3.0 User's Guide:
+
+Installing a Device Driver Not Supplied with Windows
+----------------------------------------------------
+
+A specific set of device drivers was supplied with Windows 3.0.  Additional 
+device drivers become available as they are completed.  See your device 
+driver manufacturer for information about these device drivers.
+
+Microsoft also periodically provides the Driver Library Disk, which 
+contains device drivers that are made available after Windows 3.0 was 
+released.  You can request the Driver Library Disk from Microsoft.  See the 
+Hardware Compatibility List for contact information.  [Note:  Microsoft 
+told me they no longer have the Tandy video driver.]
+
+If you want to install a device driver that is not included with Windows, 
+you must run Setup from MS-DOS.
+
+Before running Setup, check for any special installation instructions that 
+came with the device driver.  There may be other things you will have to do 
+to set up the hardware.  Some drivers supply set-up information files that 
+tell Setup what type of files (such as font files) the driver supports.  If 
+you are not sure what your device driver supports, contact the device- 
+driver manufacturer.
+
+To install a device driver not supplied with Windows:
+
+1.  Exit Windows.
+
+    Do not use the DOS Prompt icon in the Main Group window.  Using this 
+    icon will result in an incorrect set-up.
+
+2.  Type "setup" and press <enter>.
+
+    Setup lists your current Windows configuration.
+
+3.  Press the <up arrow> or <down arrow> key to select the setting you want 
+    to change and press <enter>
+
+    A list of choices is displayed.  [You want to change the Display 
+    driver.]
+
+4.  Scroll to the bottom of the list using the <down arrow> key.
+
+    [A list of video systems that Windows 3.0 natively supports is 
+    displayed.  At the bottom of the list, it says, "Other (Requires disk 
+    provided by a hardware manufacturer)".]
+
+5.  Select Other and press <enter>.
+
+    Select Other even if you are installing an updated version of a driver 
+    that appears on the list.
+
+    Setup prompts you for the disk containing the device driver.
+
+6.  Insert the disk into drive A:.  Setup displays a list of the device 
+    drivers on that disk.  Then select the appropriate driver and press 
+    <enter>.
+
+    Or type the pathname of the device driver and press <enter>.
+
+    (You might be prompted for additional disks if more than one disk was 
+    provided from the device driver vendor.)
+
+    Setup then copies the appropriate files to your Windows system 
+    directory and displays the updated list of your hardware.
+
+7.  Press <enter> to complete the process.
+
+8.  At the DOS prompt, type "win" to start Windows.
+
