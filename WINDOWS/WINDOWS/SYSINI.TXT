@@ -1,0 +1,527 @@
+----------
+SYSINI.TXT
+----------
+
+
+  NOTE: This is the first of three files that contain
+        information about SYSTEM.INI. The other files,
+        SYSINI2.TXT and SYSINI3.TXT, are continuations of
+        the information presented here.
+
+
+INTRODUCTION
+------------
+
+SYSTEM.INI is one of two Windows initialization files that
+are included with Windows. Windows initialization files
+contain information that defines your Windows environment.
+Windows and applications can use the information stored in
+these files to meet your needs and preferences.
+
+There are two standard Windows initialization files:
+
+  * SYSTEM.INI, which primarily contains settings that allow
+    you to customize Windows to meet your system's hardware
+    needs.
+
+  * WIN.INI, which primarily contains settings that allow
+    you to alter your Windows environment according to your
+    preferences.
+
+This document describes the contents of the SYSTEM.INI file
+and how to change settings in the file.
+
+For information on the WIN.INI file, see the WININI.TXT
+file.
+
+  WARNING: If you change a setting incorrectly in
+           SYSTEM.INI, you might disable your system. Before
+           changing any setting, read "Changing Settings"
+           later in this document.
+
+
+FORMAT
+------
+
+Windows initialization files have the following format:
+
+  [section name]
+  keyname=value
+
+In this example, [section name] is the name of a section.
+Sections are used to break settings into logical groups. The
+enclosing brackets ([]) are required, and the left bracket
+must be in the leftmost column on the screen.
+
+The keyname=value statement defines the value of each
+setting. A keyname is the name of a setting. It can consist
+of any combination of letters and digits, and must be
+followed immediately by an equal sign (=). The value of the
+setting can be an integer, a Boolean value, a string, or a
+quoted string, depending on the setting. There are multiple
+settings in most sections.
+
+You can include comments in initialization files. You must
+begin each line of comments with a semicolon (;).
+
+
+HOW TO READ LISTINGS IN THIS DOCUMENT
+-------------------------------------
+
+In this document, settings in SYSTEM.INI are listed
+alphabetically within the sections that contain them. These
+sections appear in this document in the following order:
+
+  [boot]
+  [boot.description]
+  [keyboard]
+  [NonWindowsApp]
+  [standard]
+  [386Enh]
+
+The settings will not appear alphabetically in the
+SYSTEM.INI file. If you want to change a setting, you will
+have to search for the setting in the appropriate section.
+Many of the settings explained in this file are rarely
+needed and will not appear in your SYSTEM.INI file unless
+you add them yourself.
+
+The syntax, purpose, and recommended method for changing
+each setting appear in the following format:
+
+------------------------------------------------------------
+SettingName=<value-type>
+  Default: This is Windows' built-in value for this setting.
+  Purpose: This paragraph briefly describes the function of
+           the setting.
+  To change: This sentence states the recommended method
+           for changing the value of this setting.
+------------------------------------------------------------
+
+The <value-type> indicates whether the value should be a
+number, a letter, a range of numbers, a Boolean value, or
+something else. If you want to enable a Boolean setting,
+you can enter: true, yes, on, or 1. If you want the Boolean
+setting to be disabled, you can enter: false, no, off, or 0.
+
+Many settings listed in this document do not normally appear
+in your SYSTEM.INI file. Most of these settings have a
+built-in default value that is present whether or not the
+setting appears in SYSTEM.INI.
+
+Setup assigns a value to each setting in the [boot] and
+[keyboard] sections, and to the Device setting and its
+synonyms in the [386Enh] section. These settings have no
+built-in default values. These settings must appear in
+SYSTEM.INI in order for Windows to function properly, so be
+careful not to delete them.
+
+
+CHANGING SETTINGS
+-----------------
+
+Windows created the SYSTEM.INI file when you installed
+Windows. Many of the settings contained in this file have
+default values.
+
+It may be necessary to change one or more of these values in
+order to improve the performance of Windows or an
+application with your system.
+
+Most of the values in SYSTEM.INI can be changed only by
+opening SYSTEM.INI and editing it using a text editor, such
+as Notepad. (Don't use a formatting editor; it can corruprt
+your SYSTEM.INI file.) For more information on how to use
+Notepad, see Chapter 10, "Additional Accessories," in the
+User's Guide.
+
+  CAUTION: You should use extreme care when making changes
+           to your SYSTEM.INI file using a text editor. You
+           can disable your system if you edit these files
+           incorrectly. The listings in this document
+           indicate which settings can be changed without
+           opening SYSTEM.INI. Use the recommended method
+           whenever possible.
+
+           Always back up your SYSTEM.INI file before you
+           open it.
+
+
+WHAT IS IN SYSTEM.INI?
+----------------------
+
+The SYSTEM.INI file contains global system information that
+Windows uses when it starts. Generally, you cannot change
+these settings through Control Panel. Any changes to the
+file do not affect Windows until you restart Windows.
+
+The following sections can appear in SYSTEM.INI:
+
+Section             Purpose
+-------             -------
+[boot]              Lists drivers and Windows modules.
+
+[boot.description]  Lists the names of devices you can
+                    change using Windows Setup.
+
+[keyboard]          Contains information about the keyboard.
+
+[NonWindowsApp]     Contains information used by
+                    non-Windows applications.
+
+[standard]          Contains information used by Windows
+                    in standard mode.
+
+[386Enh]            Contains information used by Windows in
+                    386 enhanced mode. (The listings for
+                    this section are in the SYSINI2.TXT
+                    and SYSINI3.TXT files.)
+
+------------------------------------------------------------
+------------------------------------------------------------
+
+[BOOT] SECTION
+
+The [boot] section contains a list of the drivers and
+Windows modules that Windows uses to configure itself each
+time you start it.
+
+  CAUTION: All settings in this section are required. If you
+           modify or delete one of these settings, Windows
+           might not operate properly. There are no built-in
+           default values for these settings; Setup assigns
+           values based on your system configuration.
+
+The [boot] section can contain the following settings:
+
+------------------------------------------------------------
+286grabber=<filename>
+  Default: none
+  Purpose: Specifies the filename of the device driver
+           (called a grabber) that makes a non-Windows
+           application visible when you use Windows in real
+           mode or standard mode.
+  To change: Choose the Windows Setup icon from the Main
+           Group window. This setting changes when you
+           change the Display setting in Setup. If you are
+           installing a device driver that is not included
+           with Windows, run Setup from MS-DOS.
+------------------------------------------------------------
+386grabber=<filename>
+  Default: none
+  Purpose: Specifies the filename of the device driver
+           (called a grabber) that makes a non-Windows
+           application visible when you use Windows in 386
+           enhanced mode.
+  To change: Choose the Windows Setup icon from the Main
+           Group window. This setting changes when you
+           change the display setting in Setup. If you are
+           installing a device driver that is not included
+           with Windows, run Setup from MS-DOS.
+------------------------------------------------------------
+comm.drv=<filename>
+  Default: none
+  Purpose: Specifies the filename of the serial
+           communications driver you are using.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+display.drv=<filename>
+  Default: none
+  Purpose: Specifies the filename of the display driver you
+           are using.
+  To change: Choose the Windows Setup icon from the Main
+           Group window. If you are installing a device
+           driver that is not included with Windows, run
+           Setup from MS-DOS.
+------------------------------------------------------------
+fixedfon.fon=<filename>
+  Default: none
+  Purpose: Specifies the filename of the fixed system font
+           used by Windows version 2.x. This font will still
+           be used by version 2.x applications.
+  To change: Choose the Windows Setup icon from the Main
+           Group window. This setting changes when you
+           change the display setting. If you are installing
+           a device driver that is not included with
+           Windows, run Setup from MS-DOS.
+------------------------------------------------------------
+fonts.fon=<filename>
+  Default: none
+  Purpose: Specifies the filename of the proportionately
+           spaced system font used by Windows 3.0.
+  To change: Choose the Windows Setup icon from the Main
+           Group window. This setting changes when you
+           change the display setting in Setup. If you are
+           installing a device driver that is not included
+           with Windows, run Setup from MS-DOS.
+------------------------------------------------------------
+keyboard.drv=<filename>
+  Default: none
+  Purpose: Specifies the filename of the keyboard driver you
+           are using.
+  To change: Choose the Windows Setup icon from the
+           Main Group window. If you are installing a device
+           driver that is not included with Windows, run
+           Setup from MS-DOS.
+------------------------------------------------------------
+language.dll=<library-name>
+  Default: none
+  Purpose: Specifies the name of the dynamic-link library
+           that supplies language-specific functions. If no
+           language library is specified, Windows uses the
+           built-in U.S. English library.
+  To change: Choose the International icon from the Control
+           Panel window.
+------------------------------------------------------------
+mouse.drv=<filename>
+  Default: none
+  Purpose: Specifies the filename of the mouse driver you
+           are using.
+  To change: Choose the Windows Setup icon from the Main
+           Group window. If you are installing a device
+           driver that is not included with Windows, run
+           Setup from MS-DOS.
+------------------------------------------------------------
+network.drv=<filename>
+  Default: none
+  Purpose: Specifies the filename of the network driver you
+           are using.
+  To change: Choose the Windows Setup icon from the Main
+           Group window. If you are installing a device
+           driver that is not included with Windows, run
+           Setup from MS-DOS.
+------------------------------------------------------------
+oemfonts.fon=<filename>
+  Default: none
+  Purpose: Supplies the name of the font file for the OEM
+           character set. This setting is associated with
+           the display setting.
+  To change: Run Setup from MS-DOS. This setting changes
+           when you change the Languages setting in Setup.
+------------------------------------------------------------
+shell=<filename>
+  Default: none (Setup initializes this value as
+             PROGMAN.EXE)
+  Purpose: Specifies the Windows program that runs when you
+           start Windows. Unless you change this setting,
+           Program Manager will run when you start Windows.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+sound.drv=<filename>
+  Default: none
+  Purpose: Specifies the filename of the sound driver you
+           are using.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+system.drv=<filename>
+  Default: none
+  Purpose: Specifies the filename of the system hardware
+           driver you are using.
+  To change: Exit Windows and run Setup from MS-DOS.
+------------------------------------------------------------
+------------------------------------------------------------
+
+[BOOT.DESCRIPTION] SECTION
+
+The [boot.description] section is simply a list of strings
+that are used to describe the devices you can change when
+you run Setup. There is no reason to change these settings.
+
+------------------------------------------------------------
+------------------------------------------------------------
+
+[KEYBOARD] SECTION
+
+The [keyboard] section provides information about the
+keyboard.
+
+  CAUTION: All settings in this section are required. If you
+           modify or delete one of these settings, Windows
+           will not operate properly. There are no built-in
+           default values for these settings; Setup assigns
+           values based on your system configuration.
+
+The [keyboard] section can contain the following settings:
+
+------------------------------------------------------------
+keyboard.dll=<filename>
+  Purpose: Specifies the name of a dynamic-link library that
+           defines the layout for non-U.S. keyboards and
+           keyboards not compatible with IBM-compatible
+           systems. This setting is required for all
+           keyboards except the following U.S. keyboards:
+           IBM XT, PC/AT (R), or enhanced; AT&T type 301 or
+           302, Olivetti 83-key.
+  To change: Choose the Windows Setup icon from the Main
+           Group window or the International icon from the
+           Control Panel window.
+------------------------------------------------------------
+oemansi.bin=<filename>
+  Purpose: Specifies the name of a file that defines
+           OEM/ANSI code-page translation tables for systems
+           not using the U.S. OEM character set (code page
+           437).
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+subtype=<number>
+  Purpose: Distinguishes, for some drivers, special features
+           for keyboards that otherwise have identical
+           layouts. The following values are defined:
+
+           Type     Subtype
+           Value    Value     Meaning
+           -----    -------   -------
+             1         2      Olivetti M24 83-key or
+                              AT&T 6300 type 301 83-key
+
+             1         4      AT&T type 302 sometimes used
+                              on the 6300 Plus.
+
+             2         1      Olivetti 102-key ICO used on
+                              M24 systems.
+
+           This setting can also be used by other drivers.
+
+           See the following setting (type=) for information
+           about its values.
+
+  To change: Choose the Windows Setup icon from the Main
+           Group window.
+------------------------------------------------------------
+type=<number>
+  Purpose: Specifies the keyboard type. It can be any one of
+           the following values:
+
+             Value  Meaning
+             -----  ------------------------------------
+               1    IBM PC or XT compatible (83 keys)
+
+               2    Olivetti 102-key ICO
+
+               3    IBM AT compatible (84 or 86 keys)
+
+               4    IBM compatible, enhanced (101 or 102
+                    keys)
+
+           If this field is blank or missing, the driver
+           selects a default type. For IBM-compatible
+           keyboards (using the keyboard.drv driver), the
+           default type is determined by the BIOS.
+  To change: Choose the Windows Setup icon from the Main
+           Group window.
+------------------------------------------------------------
+------------------------------------------------------------
+
+[NONWINDOWSAPP] SECTION
+
+The [NonWindowsApp] section contains settings that affect
+the performance of non-Windows applications.
+
+The [NonWindowsApp] section can contain the following
+settings:
+
+------------------------------------------------------------
+NetAsynchSwitching=<0-or-1>
+  Default: 0
+  Purpose: Indicates whether Windows will allow you to
+           switch away from an application (running in
+           real mode or standard mode) after it has made an
+           asynchronous network BIOS call. The default value
+           of 0 specifies that such task switching is not
+           allowed. Switching away from some applications
+           that make these calls might cause your system to
+           fail. Once Windows detects an asynchronous
+           NetBIOS call, it will not allow switching from
+           the application even if no more of these calls
+           are made. Set this value to 1 if you are sure the
+           applications you use will not receive network
+           messages while you are switched away from them.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+ScreenLines=<number>
+  Default: 25
+  Purpose: Specifies the number of lines that will be
+           displayed on the screen when a non-Windows
+           application is run. An application that specifies
+           a different screen mode can override this
+           setting.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+SwapDisk=<drive-colon-directory>
+  Default: (The directory pointed to by the TEMP environment
+           variable; if there is no TEMP variable, then the
+           default is the Windows directory)
+  Purpose: Provides the name of the disk drive and directory
+           to which Windows running in real mode or standard
+           mode swaps non-Windows applications.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+------------------------------------------------------------
+
+[STANDARD] SECTION
+
+The [standard] section contains settings that are specific
+to running Windows in standard mode.
+
+The [standard] section can contain the following settings:
+
+------------------------------------------------------------
+Int28Filter=<number>
+  Default: 10
+  Purpose: Specifies the percentage of INT28h interrupts,
+           generated when the system is idle, that are made
+           visible to software that is loaded before
+           Windows. Windows will reflect every nth
+           interrupt, where n is the value of this setting.
+           Increasing this value might improve Windows'
+           performance, but may interfere with some memory-
+           resident software such as a network. Set this
+           value to 0 to prevent INT28h interrupts. But
+           note that setting this value too low will add
+           to system overhead that might interfere with
+           communications applications.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+NetHeapSize=<kilobytes>
+  Default: 8
+  Purpose: Specifies the size (in kilobytes) of the buffer
+           pool that standard-mode Windows allocates in
+           conventional memory for transferring data over a
+           network. Some networks require a larger buffer
+           than the default. Increasing this value will
+           diminish the amount of memory available to
+           applications. If no network software is
+           running, this setting will be ignored and no
+           memory will be allocated.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+PadCodeSegments=<0-or-1>
+  Default: 0
+  Purpose: Setting this value to 1 causes Windows kernel to
+           pad code segments with 16 bytes. This will
+           prevent the last instruction in the segment
+           from being too close to the segment limit for
+           80286 C2 stepping. You only need to set this
+           value to 1 for this 80286 stepping.
+           Unfortunately, there is no easy way of telling
+           what stepping a 80286 chip is. Try setting this
+           value to 1 if your 80286 system hangs in
+           standard mode.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+ReservedLowMemory=<kilobytes>
+  Default: 0
+  Purpose: Specifies the amount of conventional memory (in
+           kilobytes) to be reserved for use by programs
+           other than Windows. There is no known reason
+           to change this value.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+------------------------------------------------------------
+
+NOTE: See the SYSINI2.TXT and SYSINI3.TXT files for the
+      [386Enh] section listings.
+----------
+
+PC/AT is a registered trademark of International Business
+Machines Corporation.

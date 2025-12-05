@@ -1,0 +1,19 @@
+inquire.obj+
+setmode.obj+
+disable.obj+
+color.obj+
+chkstk.obj+
+cursors.obj+
+control.obj+
+fb.obj+
+charwdth.obj+
+lodither.obj+
+sswitch.obj+
+TGAVID.OBJ+
+cursor.obj+
+enable.obj+
+tandy.obj
+tandy16.drv
+tandy16.map
+libw.lib kernel.lib
+TANDY16.DEF;

@@ -1,0 +1,237 @@
+3270.TXT
+
+USING NOTEPAD TO VIEW ON-LINE DOCUMENTS
+=======================================
+
+  *  If you enlarge Notepad to its maximum size, the following 
+     document will be easier to read. To do so, click the 
+     Maximize button in the upper-right corner of the Notepad 
+     window. Or open the Control menu in the upper-left corner 
+     of the Notepad window and choose Maximize.
+
+  *  To move through the document, press PAGE UP and PAGE DOWN 
+     or click the arrows at the top and bottom of the scroll bar
+     along the right of the Notepad window.
+
+  *  To print the document, choose Print from the Notepad File 
+     menu.
+
+  *  For Help using Notepad, press F1.
+
+
+USING NON-WINDOWS 3270 APPLICATIONS
+===================================
+
+This on-line document describes some specific problems you 
+might encounter when running non-Windows 3270 emulation 
+products with Windows 3.0. 
+
+
+Starting 3270 Applications
+--------------------------
+You can start most 3270 emulator products as memory-
+resident applications (also known as terminate-and-stay-
+resident, or T&SRs). Most memory-resident applications 
+are incompatible with a multitasking environment such as 
+Windows, and should not be started before you start 
+Windows, especially when running Windows 386 enhanced mode.                
+                                                                   
+However, some other applications can be started before you
+start Windows. Only attempt this if the documentation you
+received with the application specifies that it will work.
+In all other cases, start Windows first, and then run your 
+emulator from a DOS Prompt, or directly from Windows 
+Program Manager.  
+
+
+Getting Optimal Performance with 3270 Applications
+--------------------------------------------------
+High-speed communications programs like 3270 emulators run 
+successfully when you run Windows 3.0 in 386 enhanced mode. 
+However, when running in real or standard mode, you must 
+select the Prevent Program Switch option in the 3270 
+emulator's PIF to ensure against accidental loss of your 
+mainframe connection.
+
+When running in 386 enhanced mode, you will achieve the best 
+results by using the following recommendations:
+
+  *  Start all 3270 emulation utilities from the DOS prompt.
+
+  *  Make sure the virtual machine can run in the background 
+     by setting the background bit in the virtual machine's 
+     Settings dialog box or in the PIF you use to start the 
+     machine. This should prevent your mainframe session 
+     from being disconnected when you run other applications.
+
+  *  For the best results, run all 3270 emulation 
+     applications full screen. 
+
+  *  If you do run your 3270 emulator in a window, do not
+     use your mouse to select text. Selecting text in this
+     way will temporarily suspend your application and
+     might cause your mainframe session to be disconnected.
+
+  *  To use file send and file receive utilities, you must 
+     set the Memory Required parameter for COMMAND.PIF 
+     so that enough memory is available to load both the 
+     emulator and the utilities at the same time. See the 
+     3270 emulator's documentation for memory requirements 
+     and recommendations for system settings.
+
+  *  If you are running Windows in standard or real mode, 
+     and cannot use Windows hotkeys to switch away from your 
+     3270 emulator or to copy the emulator's screen to the        
+     Clipboard, the emulator is probably intercepting the 
+     hotkeys before Windows receives them. 
+
+     Try using a hotkey to switch from the host session to 
+     the DOS session being maintained by the emulator. This 
+     usually causes the emulator to pass the keystrokes on 
+     to Windows, thereby allowing you to switch tasks.
+
+See Chapter 12, "More About Application," in the Windows User's 
+Guide for more information about PIFs and memory-resident
+applications.
+
+
+IBM Personal Communications/3270 (PCS)
+--------------------------------------
+  *  PCS reserves specific keys for switching between the host 
+     and the MS-DOS sessions. These "hot keys" conflict with the 
+     following keys reserved for use by Windows 3.0:
+           
+       CTRL+ESC
+       ALT+TAB
+       ALT+ESC
+            
+     To redefine these key combinations, use a keyboard 
+     definition file. You can find the proper procedure in your 
+     PCS product documentation.
+
+  *  If you want your 286-based PS/2 computer configured to use 
+     expanded memory, you must add the following line to your 
+     CONFIG.SYS file:
+
+       device=PCSX2EMS.SYS
+
+     When you ran Setup to install Windows and chose to let 
+     Windows modify your CONFIG.SYS, this line was removed. 
+     Check the backup, CONFIG.OLD for the exact entry you must 
+     add.
+
+     See your PCS documentation for further information on
+     using PCSX2EMS.SYS.
+
+  *  Make sure you always unload PCS before exiting the MS-DOS 
+     session where PCS was initialized.
+
+  *  If your computer is configured so that no EMS page frame
+     is available, you must prevent PCS from using expanded
+     memory. Create a program information file (PIF) for 
+     PCS and include these settings:
+
+       EMS Memory KB Required  0
+       EMS Memory KB Limit     0
+
+     For information about creating a PIF, see Chapter 12,
+     "More About Applications," in the Windows User's Guide.   
+  
+  *  If you access PCS via a gateway on PCLP or Token Ring 
+     networks, you must prevent other applications from trying
+     to run while PCS is running. Select the Exclusive option 
+     in the PIF for PCS to ensure safe operation.
+
+
+DCA IRMAX  or IrmaLan
+---------------------
+  *  Make sure the DCA keyboard is loaded before you start
+     Windows by including the following line in your CONFIG.SYS 
+     file:
+
+        device=kybddrv.sys -1b
+
+     If you are running Windows in real or standard mode, 
+     you must toggle to the DOS session before using Windows 
+     hotkeys to switch tasks. If you do not, the driver might 
+     intercept keystrokes meant for another non-Windows 
+     application and send them to the host.         
+
+  *  If you are running Windows in 386 enhanced mode, add the 
+     following line to the [386Enh] section of the SYSTEM.INI 
+     file:
+
+        LOCAL=EXTKYBD
+
+     See the on-line document SYSINI3.TXT for information about
+     the procedure.
+
+  *  If you want to paste information from the Windows Clipboard 
+     to IRMAX, clear the Allow Fast Paste check box in the 
+     Advanced Options of the DCA's PIF.
+
+
+DCA IRMA Plus+
+--------------
+You will not be able to terminate IRMA Plus as usual. If you 
+press Shift+Shift to switch to the Host, and then press Shift+F6
+to exit the emulator, you will return to the DOS prompt, not to
+the IRMA Pop-up program box. At this point, you can press 
+ALT+TAB and return to Windows, but you cannot exit the emulator.  
+
+To terminate properly, create the following batch file:
+
+  echo off
+  cls
+  %1 %2 %3 %4 %5 %6 %7 %8 %9
+  echo MICROSOFT WINDOWS POP-UP SUPPORT
+  echo Your pop-up program has been loaded and you may activate 
+  it as echo you would normally. When you have finished using 
+  this pop-up echo program, exit it or press any key to return 
+  to Windows.
+  pause
+  command /c echo Done
+
+Name the batch file E7.BAT. Create a PIF for IRMA Plus. Enter 
+e7.bat as the Program Name, and e7.com as an optional parameter.  
+
+  NOTE:  This batch file and its associated PIF file can be used 
+         for other programs that terminate abnormally. Be sure 
+         that you enter the appropriate application name as the
+         optional parameter.
+
+
+Attachmate Extra or Extra Gateway 
+----------------------------------
+  *  If you have problems switching away from Extra Gateway, 
+     answer Yes to the question "Will you be using Windows 386?" 
+     in the Extra Gateway configuration program. Answering Yes 
+     enables the -CQ option in your EXTRA.BAT file.
+
+  *  To ensure proper termination of Extra, clear the Close
+     Window on Exit option (remove the X) in PIF for Extra.
+     Alternately, you can use the E7.BAT file as explained in
+     the previous topic, "DCA IRMA Plus+."     
+
+
+OTHER ON-LINE DOCUMENTS
+=======================
+
+The following are other on-line documents that contain important
+information not included in the Windows User's Guide or in 
+on-line Help:  
+
+NETWORKS.TXT    Information about running Windows with specific 
+                network configurations.
+
+PRINTERS.TXT    Information about particular printers and fonts 
+     		that help you configure them to run in the 
+    		Windows environment.
+
+SYSINI.TXT      Procedures for modifying SYSTEM.INI settings 
+SYSINI2.TXT     (for advanced users only).
+SYSINI3.TXT
+
+WININI.TXT      Procedures for modifying WIN.INI settings 
+WININI2.TXT  	(for advanced users only).
+

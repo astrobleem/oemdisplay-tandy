@@ -1,0 +1,5 @@
+files = 30
+buffers = 30
+device=C:\himem.sys
+device=C:\WINDOWS\mouse.sys /Y
+device=C:\WINDOWS\smartdrv.sys 2048 1024

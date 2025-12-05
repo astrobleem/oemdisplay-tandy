@@ -12,7 +12,11 @@ echo Close the DOSBox window when the build is complete.
 echo.
 
 REM Run DOSBox - it will automatically run BUILD.BAT
-start "" "DOSBOX\DOSBox-0.74-3\DOSBox.exe" -conf dosbox-x.conf
+"DOSBox-X\dosbox-x.exe" -conf dosbox-x.conf -c "BLDTNDY.BAT 1"
+"DOSBox-X\dosbox-x.exe" -conf dosbox-x.conf -c "BLDTNDY.BAT 2"
+"DOSBox-X\dosbox-x.exe" -conf dosbox-x.conf -c "BLDTNDY.BAT 3"
+"DOSBox-X\dosbox-x.exe" -conf dosbox-x.conf -c "BLDTNDY.BAT 4"
+"DOSBox-X\dosbox-x.exe" -conf dosbox-x.conf -c "BLDTNDY.BAT 5"
 
 echo Waiting for build to complete...
 echo Press any key when you've closed DOSBox...

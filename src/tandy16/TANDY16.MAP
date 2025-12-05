@@ -1,0 +1,41 @@
+
+ TANDY16
+
+ Start     Length     Name                   Class
+ 0001:0000 00965H     _TEXT_SEG              CODE
+ 0001:0966 000B8H     _BLUEMOON              CODE
+ 0001:0A1E 00000H     _INITTEXT              CODE
+ 0002:0000 00255H     _INIT                  CODE
+ 0002:0256 00029H     _LINES                 CODE
+ 0002:0280 00029H     _SCANLINE              CODE
+ 0002:02AA 00127H     _SSWITCH               CODE
+ 0002:03D2 0007AH     TGAVID_TEXT            CODE
+ 0002:044C 0002AH     _STUBCODE              CODE
+ 0003:0000 00148H     _DATA_SEG              DATA
+ 0003:0148 00000H     _INITDATA              DATA
+ 0003:0148 00010H     _DATA                  DATA
+
+ Origin   Group
+ 0003:0   DGROUP
+ 0001:0   IGROUP
+
+ Address   Export                  Alias
+
+ 0001:0763 BITBLT                  BITBLT
+ 0001:002D COLORINFO               COLORINFO
+ 0001:0986 DEVICEMODE              DEVICEMODE
+ 0002:0000 DISABLE                 TandyDisable
+ 0002:0120 ENABLE                  TandyEnable
+ 0002:0461 OUTPUT                  OUTPUT
+ 0002:044C REALIZEOBJECT           REALIZEOBJECT
+SSWITCH.OBJ(sswitch.asm) : warning L4001: frame-relative fixup, frame ignored near 0052 in segment _SSWITCH
+ pos: 480 Record type: 70BA
+ target external 'cstods'
+SSWITCH.OBJ(sswitch.asm) : warning L4001: frame-relative fixup, frame ignored near 006B in segment _INIT
+ pos: 69F Record type: 70BA
+ frm seg _TEXT_SEG, tgt seg _SSWITCH, q£G'¡• 8274115
+
+Program entry point at 0002:00E7
+CURSOR.OBJ(cursor.asm) : warning L4001: frame-relative fixup, frame ignored near 003F in segment _TEXT_SEG
+ pos: 4FE Record type: 70BA
+ target external 'TGA_SetMode'

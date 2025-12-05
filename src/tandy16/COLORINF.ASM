@@ -26,6 +26,9 @@
 ;-----------------------------------------------------------------------;
 
 
+	?PLM = 1
+	?WIN = 1
+    
 	.xlist
 	include cmacros.inc
 	include gdidefs.inc

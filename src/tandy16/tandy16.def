@@ -1,0 +1,27 @@
+LIBRARY TANDY16
+DESCRIPTION 'Tandy 16-color display driver'
+EXETYPE WINDOWS
+
+DATA PRELOAD MOVEABLE SINGLE
+CODE PRELOAD MOVEABLE DISCARDABLE
+
+EXPORTS
+    ENABLE=TandyEnable          @1
+    DISABLE=TandyDisable        @2
+    COLORINFO       @3
+    REALIZEOBJECT   @4
+    BITBLT          @5
+    OUTPUT          @6
+    DEVICEMODE      @7
+
+IMPORTS
+    _ScreenSwitchEnable = KEYBOARD.100
+    _AllocCSToDSAlias   = KERNEL.170
+    _GetModuleHandle    = KERNEL.47
+    _GetProcAddress     = KERNEL.50
+    _FreeSelector       = KERNEL.175
+    ScreenSwitchEnable = KEYBOARD.100
+    AllocCSToDSAlias   = KERNEL.170
+    GetModuleHandle    = KERNEL.47
+    GetProcAddress     = KERNEL.50
+    FreeSelector       = KERNEL.175

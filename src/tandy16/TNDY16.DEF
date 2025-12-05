@@ -1,13 +1,28 @@
-LIBRARY TNDY16.DRV
-DESCRIPTION 'Tandy 16-color driver'
+LIBRARY TANDY16
+DESCRIPTION 'Tandy 16-color display driver'
 EXETYPE WINDOWS
-STACKSIZE 2048
-HEAPSIZE 1024
+STUB 'WINSTUB.EXE'
+
+DATA PRELOAD MOVEABLE SINGLE
+CODE PRELOAD MOVEABLE DISCARDABLE
+
 EXPORTS
-        Enable
-        Disable
-        DeviceMode
-        ColorInfo
-        RealizeObject
-        BitBlt
-        Output
+    Enable          @1
+    Disable         @2
+    DeviceMode      @3
+    ColorInfo       @4
+    RealizeObject   @5
+    BitBlt          @6
+    Output          @7
+
+IMPORTS
+    ScreenSwitchEnable = KEYBOARD.100
+    AllocCSToDSAlias   = KERNEL.170
+    GetModuleHandle    = KERNEL.47
+    GetProcAddress     = KERNEL.50
+    FreeSelector       = KERNEL.175
+    _ScreenSwitchEnable = KEYBOARD.100
+    _AllocCSToDSAlias   = KERNEL.170
+    _GetModuleHandle    = KERNEL.47
+    _GetProcAddress     = KERNEL.50
+    _FreeSelector       = KERNEL.175

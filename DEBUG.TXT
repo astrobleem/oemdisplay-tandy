@@ -1,0 +1,14 @@
+Running LIB check
+
+ Volume in drive C is C_DRIVE
+ Volume Serial Number is 0000-1234
+ Directory of C:\BIN
+
+LIB      EXE             49,661 09/05/2025  4:18p
+    1 File(s)            49,661 Bytes
+    0 Dir(s)    113,623,965,696 Bytes free
+
+Microsoft (R) Library Manager  Version 3.10
+Copyright (C) Microsoft Corp 1983-1988.  All rights reserved.
+
+Library name:

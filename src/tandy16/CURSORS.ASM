@@ -1,84 +1,19 @@
-        page    ,132
+	page	,132
 ;-----------------------------Module-Header-----------------------------;
 ; Module Name:	CURSORS.ASM
 ;
 ; This module contains the routines which are required to manage
-; the cursor image.  The actual cursor drawing primitive reside
-; elsewhere.
-;
-; Create   15-Feb-1987
-; Author:  Walt Moore [waltm]
-;
-; Copyright (c) 1987  Microsoft Corporation
-;
-; Exported Functions:	SetCursor
-;			CheckCursor
-;			MoveCursor
-;
-; Public Functions:	exclude
-;			unexclude
-;			exclude_far		(allows far call to exclude)
-;			unexclude_far		( "" to unexclude)
-;
-; Public Data:		screen_busy
-;
-; General Description:
-;
-;   All display drivers must support a "cursor" for the pointing
-;   device.  The cursor is a small graphics image which is allowed
-;   to move around the screen independantly of all other operations
-;   to the screen, and is normally bound to the location of the
-;   pointing device.  The cursor is non-destructive in nature, i.e.
-;   the bits underneath the cursor image are not destroyed by the
-;   presence of the cursor image.
-;
-;   Logically, the cursor image isn't part of the physical display
-;   surface.  When a drawing operation coincides with the cursor
-;   image, the result is the same as if the cursor image wasn't
-;   there.  In reality, if the cursor image is part of the display
-;   surface it must be removed from memory before the drawing
-;   operation may occur, and redrawn at a later time.
-;
-;   This exclusion of the cursor image is the responsibility of
-;   the display driver.  If the cursor image is part of physical
-;   display memory, then all output operations must perform a hit
-;   test to determine if the cursor must be removed from display
-;   memory, and set a protection rectangle wherein the cursor must
-;   not be displayed.  The actual cursor image drawing routine
-;   must honor this protection rectangle by never drawing the
-;   cursor image within its boundary.
-;
-;
-; Restrictions:
-;
-;   The Window Manager is responsible for mapping generic cursors
-;   into the correct size for the driver, as specified in the
-;   display driver's resources.
-;
-;   The segments containing these routines and their data must be fixed
-;   in memory since they are called at interrupt time.
-;
-;   The exclusion rectangle is a serially reusabel resource.  Only
-;   one may be defined at any given moment.  There is no check for
-;   this.  It is assumed that there will never be contention for it
-;   since Windows is non-preemptive.
-;
-; History:
-;
-; Wed 26-Apr-1989 16:44:40 -by-  Amit Chatterjee  [amitc]
-;     When the screen is forced into the background, a flag 'in_background',
-;     is set to 1. The set cursor code will go ahead and set the cursor image
-;     if this flag is set even if the SCREEN_BUSY flag is set. 
-;     This is done, because, USER changes the hourglass cursor back to the
-;     arrow cursor after driver is ent to background. Cut since screen_busy
-;     flag will still be set, the cursor will not be drawn.
+; the cursor image.
 ;
 ;-----------------------------------------------------------------------;
 
+	?PLM = 1		; Pascal calling convention
+	?WIN = 1		; Windows driver
 
 	.xlist
 	include cmacros.inc
 	include windefs.inc
+	include cursor.inc
 	.list
 
 ; ??_out	Cursors
@@ -86,9 +21,6 @@
 	externNP cursor_off		;Remove cursor from the screen
 	externNP move_cursors		;Move cursor data structure
 	externNP draw_cursor		;Draw the cursor
-	extrn  CUR_HEIGHT:abs		;Height of a cursor/icon
-	extrn  CUR_ROUND_LEFT:abs 	;Used to round left  exclude X down
-	extrn  CUR_ROUND_RIGHT:abs	;Used to round right exclude X up
 
 
 sBegin	_data_seg
@@ -113,8 +45,6 @@ sBegin	_data_seg
 
 	externW x_cell			;x_cell of last drawn cursor
 	externW y_cell			;y_cell of last drawn cursor
-	extrn INIT_CURSOR_X:abs		;initial x position
-	extrn INIT_CURSOR_Y:abs		;initial y position
 
 real_x	dw	INIT_CURSOR_X		;Real x location of cursor
 real_y	dw	INIT_CURSOR_Y		;Real x location of cursor
@@ -150,7 +80,9 @@ hot_y	 dw	 0			 ;Y hot spot adjustment
 
 
 	public	screen_busy
+	public	_screen_busy
 screen_busy	db	NOT_BUSY	;Show screen not busy
+_screen_busy	label	byte
 IS_BUSY 	equ	0		;  Cursor operation in progress
 NOT_BUSY	equ	1		;  No cursor operation in progress
 SCREEN_IN_BGND	equ	1		;screen in background indicator

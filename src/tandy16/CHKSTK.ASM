@@ -97,21 +97,12 @@ page
 ;	stack_min = stack_top;
 ;	return(0x800000000L);
 ;   }
-;   if (new_SP < new_minimun)
-;	stack_min = new_SP;
-;   SP = new_SP;
-;   return();
-; }
-;-----------------------------------------------------------------------;
-
-	assumes ds,nothing
-	assumes es,nothing
-
-cProc	my_check_stack,<NEAR,PUBLIC>
+	public	my_check_stack
+my_check_stack label near
+cProc	my_check_stack_impl,<NEAR,PUBLIC>
 
 cBegin	<nogen>
 
-	pop	bx			;Save return address
 	sub	ax,sp			;See if room
 	jnc	no_room 		;No room, return error
 	neg	ax			;Make it positive for other checks
@@ -196,19 +187,6 @@ assumes cs,_LINES
 ;	stack_min = new_SP;
 ;   SP = new_SP;
 ;   return();
-; }
-;-----------------------------------------------------------------------;
-
-	assumes ds,nothing
-	assumes es,nothing
-
-cProc	LineSeg_check_stack ,<NEAR,PUBLIC>
-
-cBegin	<nogen>
-
-	pop	bx			;Save return address
-	sub	ax,sp			;See if room
-	jnc	no_room_ls		;No room, return error
 	neg	ax			;Make it positive for other checks
 	cmp	ss:stack_top,ax 	;Used up too much stack?
 	ja	no_room_ls		;  Yes, return error
@@ -290,20 +268,6 @@ assumes cs,_SCANLINE
 ;   if (new_SP < new_minimun)
 ;	stack_min = new_SP;
 ;   SP = new_SP;
-;   return();
-; }
-;-----------------------------------------------------------------------;
-
-	assumes ds,nothing
-	assumes es,nothing
-
-cProc	ScanlineSeg_check_stack,<NEAR,PUBLIC>
-
-cBegin	<nogen>
-
-	pop	bx			;Save return address
-	sub	ax,sp			;See if room
-	jnc	no_room_sl		;No room, return error
 	neg	ax			;Make it positive for other checks
 	cmp	ss:stack_top,ax 	;Used up too much stack?
 	ja	no_room_sl		;  Yes, return error

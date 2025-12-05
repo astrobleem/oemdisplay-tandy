@@ -33,14 +33,12 @@
 ;hercules = b:hercules.drv, "Hercules Monochrome",                           "133,96,72",   b:hercules.2gr, a:herclogo.lgo,  b:vddherc.386,  b:herc.3gr,,             a:herclogo.rle
 
 ; Tandy 1000 320x200 16-color TGA mode
-tndy16 = 1:tndy16.drv, "Tandy 1000 320x200 16 colors", "320,200,16", 1:tndy16.2gr,, 1:vddvga.386, 1:tndy16.3gr,,
+tndy16 = 1:tndy16.drv, "Tandy 1000 320x200 16 colors", "320,200,16",,, ,,
 
 [files]
 tndy16.drv,tndy16.drv,1
 
-tndy16.2gr,tndy16.2gr,1
-tndy16.3gr,tndy16.3gr,1
-vddvga.386,vddvga.386,1
+
 
 ; 386 GRABBER FONTS
 ; ---------------------------------------------------------------
@@ -50,8 +48,7 @@ vddvga.386,vddvga.386,1
 ; your grabber name.  You only need sections that correspond to
 ; 386 grabber names in the [display] section.
 
-[TNDY16.3gr]
-1:CGA40WOA.FON,1:CGA40850.FON
+
 
 ; SYSTEM FONTS
 ; ---------------------------------------------------------------

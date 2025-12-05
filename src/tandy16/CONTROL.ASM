@@ -49,13 +49,17 @@ incControl	=	1		;Include control for gdidefs.inc
 
 ;	??_out	Control
 
-	extrn COLOR_TBL_SIZE:abs		;# entries in the color table
+	;extrn COLOR_TBL_SIZE:abs		;# entries in the color table
+COLOR_TBL_SIZE equ 16
 
 createSeg _BLUEMOON,BlueMoonSeg,word,public,CODE
 sBegin	BlueMoonSeg
 assumes cs,_BLUEMOON
 
-	externD BlueMoonSeg_color_table ;Color table values
+	;externD BlueMoonSeg_color_table ;Color table values
+    public BlueMoonSeg_color_table
+BlueMoonSeg_color_table label dword
+    dd 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 
 page
 ;--------------------------Exported-Routine-----------------------------;

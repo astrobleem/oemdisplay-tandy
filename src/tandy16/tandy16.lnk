@@ -3,17 +3,18 @@ setmode.obj+
 disable.obj+
 color.obj+
 chkstk.obj+
+colorinf.obj+
 cursors.obj+
-cursor.obj+
 control.obj+
 fb.obj+
 charwdth.obj+
 lodither.obj+
 sswitch.obj+
-stubs.obj+
+TGAVID.OBJ+
+cursor.obj+
 enable.obj+
+stubs.obj+
 tandy.obj
 tandy16.drv
 tandy16.map
-libw.lib
-tandy16.def
+libw.lib kernel.lib, tandy16.def

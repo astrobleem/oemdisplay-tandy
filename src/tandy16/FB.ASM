@@ -12,6 +12,9 @@
 ; Exported Functions:	FastBorder
 ;
 ; Public Functions:	none
+
+	?PLM = 1
+	?WIN = 1
 ;
 ; Public Data:		none
 ;

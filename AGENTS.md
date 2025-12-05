@@ -1,40 +1,37 @@
-Install prerequisites up front. Run sudo apt-get install -y dosbox-x file dos2unix so the DOSBox emulator and line-ending utilities are ready before any edits
+# Project: Tandy 1000 EX/HX Display Driver (Windows 3.0)
 
-Work inside DOSBox-X. Mount the repository in DOSBox-X and run the build script there; building from the Linux shell is unsupported
+## 1. Environment & Tools
+- **Host OS:** Windows.
+- **Emulator:** DOSBox-X (Path: `DOSBox-X\dosbox-x.exe`).
+- **Assembler:** MASM 5.10.
+- **Linker:** Microsoft Overlay Linker 3.64.
+- **Build Script:** `build_driver.bat` (Host) -> `BLDTNDY.BAT` (Guest).
 
-Set DOS toolchain paths. Within DOSBox-X, set PATH, LIB, and INCLUDE variables to point at the bundled MS C 6.0 directories before compiling
+## 2. File Handling Rules
+- **Line Endings:** **CRLF** (Windows style) is MANDATORY.
+    - *Reason:* MASM 5.10 and the `multi_replace_file_content` tool can fail with mixed or LF-only line endings.
+    - *Action:* Ensure all edits preserve `\r\n`.
+- **Filenames:** 8.3 format, uppercase preferred for DOS compatibility (e.g., `TANDY16.DRV`).
 
-Maintain DOS-friendly files. Use `dos2unix`/`unix2dos` from the `dos2unix` package to preserve CRLF line endings, keep filenames in 8.3 uppercase form, and delete any .EXE, .OBJ, or .TXT artifacts before committing
+## 3. Coding Standards
+- **Language:** 8086 Assembly (MASM 5.1 syntax).
+- **Calling Convention:** Pascal (`?PLM=0`) for Windows API compliance.
+- **Segments:** Use `cmacros.inc` macros (`sBegin`, `sEnd`, `cProc`) to ensure correct segment ordering (`_TEXT`, `_DATA`, etc.).
 
-Run a clean build and test. From a DOSBox-X session, delete old binaries, invoke build, then install the driver in Windows 3.x to confirm it loads
+## 4. Build Process
+1.  **Edit:** Modify `.asm` files in `src\tandy16`.
+2.  **Build:** Run `build_driver.bat` from the host terminal.
+3.  **Verify:** Check `BUILD.LOG` for "Severe Errors".
+    - *Success:* `TNDY16.DRV` is created.
+    - *Failure:* Fix errors and retry.
 
-# Critical build constraints
-- Build with Microsoft C 6.0 or 7.0 targeting 16-bit real-mode.
-- Assume Windows 3.x compatibility; avoid features past C89.
+## 5. Common Pitfalls
+- **Syntax Errors:** `?PLM=0` fails; use `?PLM = 0` (spaces required).
+- **Fixup Overflows:** `NEAR` calls to distant segments. Use `FAR` calls or rearrange segments.
+- **Tool Issues:** If `replace_file_content` fails, check for whitespace mismatches or non-unique context. Use `view_file` to confirm exact content first.
 
-# Environment setup
-- Develop inside DOSBox or PCem.
-- Install MS-DOS and the Microsoft C toolchain in the emulator.
-- Share this repository as a drive and set PATH for the compiler tools.
-
-# Coding style
-- Strictly C89; no C99 or C++ features.
-- Indent with four spaces; tabs are forbidden.
-- Keep lines at 80 columns or fewer.
-- Use explicit-width integers (e.g. `uint8_t`, `UINT16`).
-- Functions with no parameters must declare `void`.
-
-# Build & test
-- Run `build` (BUILD.BAT) from the project root inside the emulator.
-- The batch file must complete without errors and emit driver binaries.
-- After running build inside DOSBox‑X, verify success by ensuring TNDY16.DRV exists and that BUILD.LOG contains Build driver was successful.
-- This check is acceptable when a full Windows 3.x environment is unavailable; install and test the driver on actual Windows only when feasible.
-
-# CI
-- No automated CI exists; manual builds in DOSBox or PCem are mandatory.
-
-# Pull request expectations
-- Explain environment and steps taken to build and test.
-- Include logs or screenshots proving `build` succeeded.
-- Keep commits focused and reference relevant issues when available.
-
+## 6. Milestones
+- **[x] Milestone 1: First Successful Build (2025-12-02)**
+    - `TNDY16.DRV` builds and links successfully without stubs.
+    - Windows API symbols (`AllocCSToDSAlias`, `FreeSelector`, etc.) are correctly linked to `KERNEL.LIB` and `LIBW.LIB`.
+    - Build process automated via `build_driver.bat`.

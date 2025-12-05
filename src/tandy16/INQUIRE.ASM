@@ -22,18 +22,19 @@
 ;
 ;-----------------------------------------------------------------------;
 
-
 	.xlist
 	include cmacros.inc
 	include windefs.inc
+	include cursor.inc
+	include macros.mac
 	.list
-
 
 createSeg _BLUEMOON,BlueMoonSeg,word,public,CODE
 sBegin	BlueMoonSeg
 assumes cs,_BLUEMOON
 
-	externB inquire_data		;Data to be returned
+	public inquire_data
+inquire_data CURSORINFO <X_RATE, Y_RATE>
 
 page
 ;--------------------------Exported-Routine-----------------------------;
@@ -89,5 +90,5 @@ cBegin
 
 cEnd
 
-sEnd	Seldom
+sEnd	BlueMoonSeg
 end

@@ -17,29 +17,19 @@ By default, Windows 3.0/3.1 only offers **CGA (2 colors)** or **EGA (limited sup
 - Built with **Microsoft C 6.0** and **MASM 5.1** using the official **Windows 3.x DDK**
 
 ## 🚧 Project Status
-This driver is under active development and may not yet be fully functional. Testing and contributions from the community are highly appreciated—please open issues or pull requests if you'd like to help.
+**MILESTONE 1 ACHIEVED (2025-12-02):** The driver `TNDY16.DRV` now builds and links successfully against the Windows 3.x DDK libraries!
 
----
-
-## 🖥️ Requirements
-- Tandy 1000 series system (EX, HX, TX, RL, or compatible)
-- MS-DOS 3.2+
-- Windows 3.0 or 3.1 (Real or Standard Mode)
-- Development system (for building):
-  - 386 or better
-  - Microsoft C 6.0
-  - Microsoft Macro Assembler 5.1
-  - Windows 3.x DDK
+This driver is under active development. The next phase involves verifying functionality in a live Windows 3.0 environment.
 
 ---
 
 ## 🔧 Building
-1. Install Microsoft C 6.0 and MASM 5.1 on your development VM (DOS 6.22 + Windows 3.1 recommended).
-2. Clone this repository or transfer the source to your VM.
-3. From the DOS prompt, run:
-   ```sh
-   nmake tandy16.mak
-   ```
+1.  Ensure **DOSBox-X** is installed and available.
+2.  Run the automated build script from the project root:
+    ```cmd
+    build_driver.bat
+    ```
+3.  For detailed instructions, see [BUILDING.md](BUILDING.MD).
 
 ---
 

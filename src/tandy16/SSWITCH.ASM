@@ -27,6 +27,9 @@ ifdef	OS2_ONLY
 	.286c
 endif
 
+	?PLM = 1
+	?WIN = 1
+
 	.xlist
 	include cmacros.inc
 	include macros.mac
@@ -41,7 +44,7 @@ endif
 	externNP dev_to_foreground	;Switch to foreground code
 	externNP dev_to_save_regs	;save device registers
 	externNP dev_to_res_regs	;restore device registers
-	externNP dev_initialization	;Other boot-time initialization
+	externFP dev_initialization	;Other boot-time initialization
 	externFP AllocCSToDSAlias	;get a DS alias for CS
 	externFP FreeSelector		;frees the selector
 
@@ -65,6 +68,7 @@ SCREEN_IN_BGND equ	1		;screen is in background
 
 
 	public		in_background
+	public		_in_background
 
 	externB		screen_busy	;screen semaphore
 	externB		enabled_flag	;set 0 to disable all functions
@@ -75,6 +79,7 @@ createSeg _SSWITCH,SSwitchCode,word,public,CODE
 sBegin	_data_seg
 
 in_background	db	0		;flag to say we are in background
+_in_background	equ	in_background	;alias for C calling convention
 old_screen_busy	db	?		;saved value of screen semaphore
 IS_BUSY	equ	0			;should be public in cursors.asm!
 
@@ -138,7 +143,7 @@ sEnd	_data_seg
 sBegin	SSwitchCode
 assumes cs,_SSWITCH
 
-	externW		_cstods
+	externW		cstods
 
 prev_int_2Fh	dd	0		;Previous int 2Fh vector
 page
@@ -242,7 +247,7 @@ screen_switch_occurring:
 	mov	bp,sp
 
 	push	ds
-	mov	ds,[_cstods]
+	mov	ds,[cstods]
 	assumes	ds,DGROUP
 
 	mov	ah,switch_control
@@ -706,6 +711,8 @@ assumes cs,_INIT
 	assumes es,nothing
 
 		public	hook_int_2Fh
+		public	_hook_int_2Fh
+_hook_int_2Fh:
 hook_int_2Fh	proc	near
 
 	push	bx
@@ -789,7 +796,9 @@ page
 	assumes es,DGROUP
 
 		public	restore_int_2Fh
+		public	_restore_int_2Fh
 
+_restore_int_2Fh:
 restore_int_2Fh proc	near
 
 	test	switch_control,INT_2F_HOOKED

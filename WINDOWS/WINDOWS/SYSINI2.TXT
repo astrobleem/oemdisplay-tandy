@@ -1,0 +1,447 @@
+-----------
+SYSINI2.TXT
+-----------
+
+
+  NOTE: This is the second of three files containing
+        information about the SYSTEM.INI file. For general
+        information about SYSTEM.INI and the listings in
+        this file, read the introductory material in the
+        SYSINI.TXT file.
+
+  WARNING: If you change a setting incorrectly in
+           SYSTEM.INI, you might disable your system. Before
+           changing any setting, read "Changing Settings"
+           in the SYSINI.TXT file.
+
+------------------------------------------------------------
+------------------------------------------------------------
+
+[386ENH] SECTION
+
+The [386Enh] section contains information specific to
+running Windows in 386 enhanced mode, including information
+used for virtual-memory page swapping.
+
+The [386Enh] section can contain the following settings:
+
+------------------------------------------------------------
+AllVMsExclusive=<Boolean>
+  Default: false
+  Purpose: If enabled, this setting forces all applications
+           to run in exclusive full-screen mode, overriding
+           all contrary settings in the applications'
+           program information files (PIFs). Enabling this
+           setting might prolong the length of the Windows
+           session when you are running network and memory-
+           resident software that is incompatible with
+           Windows.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+AltKeyDelay=<seconds>
+  Default: .005
+  Purpose: Specifies how much time Windows waits to process
+           a keyboard interrupt after it processes an ALT
+           interrupt.  Some applications expect a slower
+           processing rate than Windows in 386 enhanced mode
+           normally uses. Increase this value if such an
+           application has trouble handling the ALT key.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+AltPasteDelay=<seconds>
+  Default: .025
+  Purpose: Specifies how much time Windows waits before
+           pasting any characters after the ALT key has been
+           pasted. Some applications may require more time
+           for recognition of the ALT keystroke.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+CGA40WOA.FON=<filename>
+  Default: none
+  Purpose: Specifies the filename of the fixed-pitch display
+           font used for non-Windows applications with a
+           display of 40 columns and 25 or fewer lines.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+CGA80WOA.FON=<filename>
+  Default: none
+  Purpose: Specifies the filename of the fixed-pitch display
+           font used for non-Windows applications with a
+           display of 80 columns and 25 or fewer lines.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+CGANoSnow=<Boolean>
+  Default: no
+  Purpose: If enabled, causes Windows to do special handling
+           to avoid snow appearing on an IBM CGA display
+           device.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+COM1AutoAssign=<seconds>
+COM2AutoAssign=<seconds>
+COM3AutoAssign=<seconds>
+COM4AutoAssign=<seconds>
+  Default: 2
+  Purpose: Indicate the contention detection values for each
+           connected communications port. These values are
+           used by Windows to determine how to arbitrate
+           requests for the use of a device by more than one
+           application, at least one of which is a non-
+           Windows application. If the value is -1, Windows
+           will display a warning message that asks you
+           which application should be given control of the
+           port. If the value is zero, any application can
+           use the device at any time. If the value is a
+           positive integer less than 1,000, this value
+           represents the number of seconds after an
+           application stops using the device before another
+           application can use the same device.
+  To change: Choose the 386 Enhanced icon from the Control
+           Panel window.
+------------------------------------------------------------
+COM1Base=<port>
+COM2Base=<port>
+COM3Base=<port>
+COM4Base=<port>
+  Default: COM1Base=3F8h; COM2Base=2F8h; COM3Base=2E8h;
+           COM4Base=2E0h
+  Purpose: Specifies the base (first) port for the serial
+           port adapter you are using. Check you hardware
+           documentation for the appropriate value.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+COMBoostTime=<milliseconds>
+  Default: 2
+  Purpose: Specifies the amount of time (in milliseconds) to
+           allow a virtual machine to process a COM
+           interrupt. If a communications application is
+           losing keyboard characters on the display, you
+           can try increasing this value.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+COM1Buffer=<characters>
+COM2Buffer=<characters>
+COM3Buffer=<characters>
+COM4Buffer=<characters>
+  Default: 128
+  Purpose: Specifies the number of characters that will be
+           buffered by the device on the corresponding
+           communications port. Before changing one of these
+           settings, make sure the corresponding
+           COMxProtocol setting has the proper value.
+           Buffering may slow down communications on a port,
+           but might be necessary to prevent some
+           communications applications from losing
+           characters at high baud rates. The size of the
+           buffer required will depend on the speed of the
+           machine and the application's needs. Before
+           increasing this value, see the COMxProtocol
+           setting.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+COM1Irq=<number>
+COM2Irq=<number>
+COM3Irq=<number>
+COM4Irq=<number>
+  Default: COM1Irq=4; COM2Irq=3; COM3Irq=4; COM4Irq=3
+  Purpose: Specifies which interrupt line is being used by
+           the device on the specified communications port.
+           Check your hardware documentation for the
+           appropriate value. Setting a value to -1 disables
+           input for that COM port. You would do this only
+           if there is a hardware conflict between ports.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+COMIrqSharing=<Boolean>
+  Default: true for Micro Channel (TM) and EISA machines;
+           false for all other machines
+  Purpose: Specifies whether COM IRQs will be sharable
+           between mulitiple communications ports or with
+           other devices. Enable this switch if your machine
+           uses the same interrupt for COM3 or COM4 as it
+           does for COM1 or COM2.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+COM1Protocol=<XOFF-or-blank>
+COM2Protocol=<XOFF-or-blank>
+COM3Protocol=<XOFF-or-blank>
+COM4Protocol=<XOFF-or-blank>
+  Default: (Default is no entry, which is the same as any
+            entry other than XOFF)
+  Purpose: Specifies whether Windows in 386 enhanced mode
+           should stop simulating characters into a virtual
+           machine after the virtual machine sends an XOFF
+           character. Set the value for a port to XOFF if a
+           communications application using that port is
+           losing characters while doing text transfers at
+           high baud rates. Windows will resume simulating
+           characters when the virtual machine sends another
+           character after the XOFF character. Leave this
+           setting disabled if the application is doing
+           binary data transfers; enabling this switch might
+           suspend binary transmissions. Windows will not
+           check for XOFF characters if this setting is
+           blank or set to anything other than XOFF. If the
+           application continues to lose characters after
+           this setting is properly set, try increasing the
+           corresponding COMxBuffer value.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+Device=<filename-or-*devicename>
+  Default: none (Setup assigns appropriate values based on
+             your system configuration.)
+  Purpose: Specifies which virtual devices are being used
+           with Windows in 386 enhanced mode. This value can
+           appear in two ways: either the name of a specific
+           virtual device file, or an asterisk (*) followed
+           immediately by the device name. The latter case
+           refers to a virtual device that is in the
+           WIN386.EXE file. Synonyms for Device= are
+           Display=, EBIOS=, Keyboard=, Network=, and
+           Mouse=. Filenames usually include the .386
+           extension. Multiple device lines are required to
+           run Windows in 386 enhanced mode.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+Display=<filename-or-*devicename> (See "Device=", above)
+  Default: none (Setup assigns an appropriate value based on
+             your system configuration.)
+  Purpose: Specifies the display device that is being used
+           with Windows in 386 enhanced mode. This setting
+           is a synonym for Device=.
+  To change: Choose the Windows Setup icon from the Main
+           Group window.
+------------------------------------------------------------
+DMABufferIn1MB=<Boolean>
+  Default: no
+  Purpose: Indicates, if enabled, that the direct memory
+           access (DMA) buffer memory should be in the first
+           1MB of memory (above 640K, if possible) in order
+           to be compatible with 8-bit bus master cards.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+DMABufferSize=<kilobytes>
+  Default: 16
+  Purpose: Specifies the amount of memory (in kilobytes) to
+           be reserved for buffered direct memory access
+           (DMA). This memory will be allocated above 640K,
+           if possible. Windows in 386 enhanced mode will
+           default to a DMA buffer size that will handle
+           disk access.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+DualDisplay=<Boolean>
+  Default: See "Purpose."
+  Purpose: Normally, when running in 386 enhanced mode, the
+           memory between B000:0000 and B7FF:000F will be
+           used by the general system unless a secondary
+           display is detected. If this setting is enabled,
+           this memory will be left unused and available for
+           display adapters. If this setting is disabled,
+           the address range will be available on EGA
+           systems but not under VGA systems, since the VGA
+           display device supports monochrome modes, which
+           use this address space.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+EBIOS=<filename-or-*devicename> (See "Device=", above)
+  Default: none (Setup assigns an appropriate value based on
+             your system configuration.)
+  Purpose: Specifies the extended BIOS device that is being
+           used with Windows in 386 enhanced mode. This
+           setting is a synonym for Device=.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+EGA40WOA.FON=<filename>
+  Default: none
+  Purpose: Specifies the filename of the fixed-pitch display
+           font used for non-Windows applications with a
+           display of 40 columns and more than 25 lines.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+EGA80WOA.FON=<filename>
+  Default: none
+  Purpose: Specifies the filename of the fixed-pitch display
+           font used for non-Windows applications with a
+           display of 80 columns and more than 25 lines.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+EISADMA=<Boolean> or <channel>,<size>
+  Default: 0,8; 1,8; 2,8; 3,8; 5,16w; 6,16w; 7,16w (Each
+           pair goes with its own EISADMA setting.)
+  Purpose: Specifies the mode of operation of an extended
+           DMA channel for Extended Industry Standard
+           Architecture (EISA) machines only. This
+           setting's value can take one of two forms. If
+           you disable this setting, Windows will treat the
+           machine as non-EISA, therefore avoiding all EISA-
+           related logic. You can try disabling this switch
+           if you cannot run Windows in 386 enhanced mode
+           on your EISA machine. If you are using an EISA
+           machine, you can specify the default transfer
+           size for one or more DMA channels. The channels
+           can operate in the following modes: 8-bit (8),
+           16-bit specified in words (16w), 16-bit specified
+           in bytes (16b), or 32-bit (32). If you are not
+           using an EISA machine, Windows will ignore this
+           setting.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+EMMExclude=<paragraph-range>
+  Default: none
+  Purpose: Specifies a range of memory that Windows will not
+           scan to find unused address space. This has the
+           side effect of turning off the RAM and ROM search
+           code for the range. The range (two paragraph
+           values separated by a hyphen) must be between
+           A000 and EFFF. This scanning can interfere with
+           some adapters that use the same memory area. The
+           starting value is rounded down and the ending
+           value is rounded up to a multiple of 16K. For
+           example, you could set EMMExclude=C800-CFFF to
+           prevent Windows from scanning the addresses
+           C800:0000 through CFFF:000F. You can specify more
+           than one range by including more than one
+           EMMExclude line.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+EMMInclude=<paragraph-range>
+  Default: none
+  Purpose: Specifies a range of memory that Windows will
+           scan for unused address space regardless of what
+           may be there. EMMInclude takes precedence over
+           EMMExclude if you specify ranges that overlap.
+           The range (two values separated by a hyphen) must
+           be between A000 and EFFF. The starting value is
+           rounded down and the ending value is rounded up
+           to a multiple of 16K.  For example, you could set
+           EMMInclude=C800-CFFF to ensure that Windows scans
+           the addresses C800:0000 through CFFF:000F. You
+           may specify more than one range by including more
+           than one EMMInclude line.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+EMMPageFrame=<paragraph>
+  Default: none
+  Purpose: Specifies the starting paragraph where the 64K
+           page frame will begin when Windows in 386
+           enhanced mode cannot find a suitable page frame.
+           Allows an EMM page frame in an area containing
+           some unused RAM or ROM. For example, you could
+           set EMMPageFrame=C400 to start the page frame at
+           C400:0000.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+EMMSize=<kilobytes>
+  Default: 65,536
+  Purpose: Specifies the total amount of memory to be made
+           available for mapping as expanded memory. The
+           default allocates the maximum possible amount of
+           system memory as expanded memory. You should
+           specify a value for this setting if you run an
+           application that allocates all of the available
+           expanded memory. This will be apparent if, when
+           you run the application, you can never create any
+           new virtual machine. If this value is zero, then
+           no expanded memory will be allocated, but the EMM
+           driver will be loaded. This setting does not
+           prevent the EMM driver from being loaded; use the
+           NoEMMDriver to disable EMM.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+FileSysChange=<Boolean>
+  Default: on (But in a standard SYSTEM.INI file, Setup will
+               set FileSysChange=off, disabling this
+               setting.)
+  Purpose: Indicates whether File Manager will automatically
+           receive messages any time a non-Windows
+           application creates, renames, or deletes a file.
+           When this setting is disabled, a virtual machine
+           can be run exclusively even when it manipulates
+           files. Enabling this setting can slow down system
+           performance significantly.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+Global=<device-name>
+  Default: (all devices)
+  Purpose: Defines DOS devices loaded in CONFIG.SYS that
+           need to be global to the system. The default
+           setting for all devices is global. But certain
+           virtual devices might specify that a DOS device
+           be local (for example, MS$MOUSE). Use this
+           setting to override that local specification. The
+           <device-name> value must exactly match the case
+           of the device name, or this setting will not
+           work. (Most device names are in all captial
+           letters, therefore this value must usually be in
+           all caps.)
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+HighFloppyReads=<Boolean>
+  Default: yes
+  Purpose: Normally, Windows turns a DMA verify to the
+           area E000:0000-EFFF:000F into a read in order to
+           work around problems with certain machines. In
+           rare cases, this might cause the system to fail
+           because some software might, as a result, write
+           over the system's shadow RAM if you have it in
+           this area. If this happens, disable this setting
+           and set EMMExclude to E000-EFFF.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+IgnoreInstalledEMM=<Boolean>
+  Default: no
+  Purpose: If enabled, this setting allows Windows to start
+           in 386 enhanced mode even when there is an
+           unknown expanded memory manager (EMM) running.
+           This can cause the system to fail if memory-
+           resident software was using EMM before Windows
+           started. Enable this setting only if no such
+           software is installed or you are sure it will not
+           be active when you are running Windows. This
+           setting applies only to expanded memory managers
+           servicing physical EMS hardware; Windows will not
+           disable unrecognized 80386 expanded memory
+           emulators.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+InDOSPolling=<Boolean>
+  Default: no
+  Purpose: If enabled, prevents Windows from running other
+           applications when memory-resident software has
+           the InDOS flag set. Enabling this setting is
+           necessary if the memory-resident software needs
+           to be in a critical section to do operations off
+           an INT21 hook. Enabling this setting will slow
+           down system performance slightly.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+INT28Critical=<Boolean>
+  Default: true
+  Purpose: Specifies whether a critical section is needed to
+           handle INT28h interrupts used by memory-resident
+           software. Some network virtual devices do
+           internal task switching on INT28h interrupts.
+           These interrupts might hang some network
+           software, indicating the need for an INT28h
+           critical section. If you are not using such
+           software, you might improve Windows' task
+           switching by disabling this setting.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+IRQ9Global=<Boolean>
+  Default: no
+  Purpose: If enabled, converts IRQ9 masks to global. Enable
+           this setting if your system hangs when your
+           system touches a floppy drive. Or make sure your
+           system touches the floppy drive before starting
+           Windows.
+  To change: Use Notepad to edit the SYSTEM.INI file.
+------------------------------------------------------------
+
+NOTE: See the SYSINI3.TXT file for the remainder of the
+      [386Enh] section listings.
+----------
+
+Micro Channel is a trademark of International Business
+Machines Corporation.

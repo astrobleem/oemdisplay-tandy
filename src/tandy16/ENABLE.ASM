@@ -37,6 +37,9 @@
 
 incDevice	= 1
 
+	?PLM = 1
+	?WIN = 1
+
 	.xlist
 	include cmacros.inc
 	include gdidefs.inc
@@ -45,7 +48,7 @@ incDevice	= 1
 
 	externNP hook_int_2Fh		;Hook into multiplexed interrupt
 	extrn  PHYS_DEVICE_SIZE:abs	;Size of physical device
-	extrn  ScreenSelector:abs		;selector for video buffer
+	externW  TandyScreenSelector		;selector for video buffer
 	externFP AllocCSToDSAlias	;allocates data alias for code seg
 	externFP FreeSelector		;frees an allocated selector
 
@@ -155,7 +158,7 @@ page
 	assumes ds,_DATA_SEG
 	assumes es,nothing
 
-cProc	Enable,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
+cProc	TandyEnable,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
 
 	parmD	lp_device		;Physical device or GDIinfo destination
 	parmW	style			;Style, Enable Device, or Inquire Info
@@ -207,7 +210,7 @@ endif
 	mov	es,ax			; es has this code segment
 	assumes	es,_INIT
 
-	mov	ax,ScreenSelector	; get the address of memory
+	mov	ax,TandyScreenSelector	; get the address of memory
 	mov	word ptr es:[physical_device.bmType],ax
 	mov	word ptr es:[physical_device.bmBits+2],ax
 

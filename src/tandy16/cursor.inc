@@ -61,7 +61,11 @@ SCREEN_WIDTH    equ 320
 SCREEN_HEIGHT   equ 200
 
 ; Segment aliases
-; Segment aliases
-;SCREENSELECTOR  equ ScreenSelector
-DATABASE        equ _data_seg
-FARTHEST equ far
+; Structure definitions
+; cursorShape is defined in windefs.inc
+
+CURSORINFO	struc
+	ci_x_rate	dw	?
+	ci_y_rate	dw	?
+CURSORINFO	ends
+

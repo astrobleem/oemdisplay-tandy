@@ -1,0 +1,617 @@
+----------
+WININI.TXT
+----------
+
+
+  NOTE: This is the first of two files that contain
+        information about WIN.INI. The second file, named
+        WININI2.TXT, is a continuation of the information
+        presented here.
+
+
+INTRODUCTION
+------------
+
+WIN.INI is one of two Windows initialization files that are
+included with Windows. Windows initialization files contain
+information that defines your Windows environment. Windows
+and Windows applications can use the information stored in
+these files to configure themselves to meet your needs and
+preferences.
+
+There are two standard Windows initialization files:
+
+  * WIN.INI, which primarily contains settings that allow
+    you to alter your Windows environment according to your
+    preferences.
+
+  * SYSTEM.INI, which primarily contains settings that allow
+    you to customize Windows to meet your system's hardware
+    needs.
+
+This document describes the contents of the WIN.INI file and
+explains how to change settings in the file.
+
+For information on the SYSTEM.INI file, see the SYSINI.TXT
+file.
+
+  CAUTION: Changing settings can lead to undesirable results
+           when you run Windows. Before changing any
+           setting, read "Changing Settings" later in this
+           document.
+
+
+FORMAT
+------
+
+Windows initialization files have the following format:
+
+  [section name]
+  keyname=value
+
+In this example, [section name] is the name of a section.
+Sections are used to break settings into logical groups. The
+enclosing brackets ([]) are required, and the left bracket
+must be in the leftmost column on the screen.
+
+The keyname=value statement defines the value of each
+setting. A keyname is the name of a setting. It can consist
+of any combination of letters and digits, and must be
+followed immediately by an equal sign (=). The value can be
+an integer, a string, or a quoted string, depending on the
+setting.
+
+You can include comments in initialization files. You must
+begin each line of comments with a semicolon (;).
+
+
+HOW TO READ LISTINGS IN THIS DOCUMENT
+-------------------------------------
+
+In this document, WIN.INI settings are listed alphabetically
+within the sections that contain them. These sections appear
+in WIN.INI and in this document in the following order
+(however, the order of these sections is not important):
+
+  [windows]
+  [desktop]
+  [extensions]
+  [intl]
+  [ports]
+  [fonts]
+  [PrinterPorts]
+  [devices]
+  [colors]
+
+In addition, some Windows applications may add or insert
+other sections.
+
+The settings do not appear alphabetically in WIN.INI. If you
+want to change a setting, you will have to search for it
+within the appropriate section.
+
+The syntax, purpose, and recommended method for changing
+each setting appear in the following format:
+
+------------------------------------------------------------
+SettingName=<value-type>
+  Default: This is Windows' built-in value for this setting.
+  Purpose: This paragraph briefly describes the function of
+           the setting and its default value (if
+           applicable).
+  To change: This sentence states the recommended method
+           for changing the value of this setting.
+------------------------------------------------------------
+
+The <value-type> indicates whether the value should be a
+number, a letter, a range of numbers, or something else.
+
+A setting that is listed in this document but that does not
+appear in your WIN.INI file has the default value.
+
+
+CHANGING SETTINGS
+-----------------
+
+Windows created the WIN.INI file when you installed Windows.
+All of the settings contained in this file were set to
+default values defined by Windows.
+
+You might want to change one or more of these values in
+order to change the appearance or performance of Windows to
+suit your needs.
+
+There are two ways to change WIN.INI settings:
+
+* You can use Control Panel to change most settings.
+
+* Use a text editor such as Notepad to edit the WIN.INI
+  file directly. (Don't use a formatting editor; it can
+  corrupt your WIN.INI file.)
+
+You can change most settings in WIN.INI by using Control
+Panel. By doing so, you avoid opening WIN.INI as a text
+file, where it is easier to make mistakes.
+
+For more information on Control Panel, see Chapter 5,
+"Control Panel," in the User's Guide.
+
+For the settings you cannot change by using Control Panel,
+you must open the WIN.INI file, edit it using a text editor
+such as Notepad, and then restart Windows. For more
+information on how to use Notepad, see Chapter 10,
+"Additional Accessories," in the User's Guide.
+
+  CAUTION: You should use care when making changes to your
+           WIN.INI file using a text editor. Incorrect
+           changes to WIN.INI can lead to unexpected
+           results when you run Windows. In addition, some
+           editors can damage certain characters (those
+           with ANSI values of greater than 127). It is
+           recommended that you use Notepad as a text
+           editor. The listings in this document indicate
+           which settings you can change using Control
+           Panel. Use Control Panel whenever possible.
+
+           Always back up your WIN.INI file before you
+           open it.
+
+
+UPDATING WIN.INI FROM PREVIOUS VERSIONS OF WINDOWS
+--------------------------------------------------
+
+If you update your system to Windows version 3.0 from
+Windows version 2.x, Setup will automatically update your
+WIN.INI file by making the following changes:
+
+In the [windows] section, Setup will add one setting:
+
+  Documents=
+
+and will clear the old values from another setting:
+
+  Device=
+
+In the [extensions] section, Setup will add two settings:
+
+  pcx=pbrush.exe ^.pcx
+  rec=recorder.exe ^.rec
+
+In the [devices] section, Setup will remove all entries. The
+previous drivers, fonts, and other resources will remain in
+your system. Setup will ask you whether you want to upgrade
+to the new driver or stay with the previous one.
+
+Setup leaves all other sections unchanged.
+
+If you are updating to Windows version 3.0 from Windows
+version 1.x, Setup will not preserve any values from your
+old WIN.INI file.
+
+
+WHAT IS IN WIN.INI?
+-------------------
+
+The settings in the WIN.INI file allow you to personalize
+your Windows environment. WIN.INI contains several sections,
+each of which consists of a group of related settings. Your
+WIN.INI file might not have all of these sections, or it
+might have additional sections, depending on your system's
+hardware and software requirements. The following sections
+can appear in WIN.INI:
+
+This section             Does this
+------------             ---------
+[windows]                Affects an assortment of elements
+                         in your Windows environment.
+
+[desktop]                Controls the appearance of the
+                         screen background (desktop) and the
+                         positioning of windows and icons.
+
+[extensions]             Associates specified types of
+                         files with corresponding
+                         applications.
+
+[intl]                   Describes how to display items for
+                         countries other than the United
+                         States.
+
+[ports]                  Lists all available output ports.
+                         These settings are listed in the
+                         WININI2.TXT file.
+
+[fonts]                  Describes the screen font files
+                         that are loaded by Windows.
+                         (These settings are listed in the
+                         WININI2.TXT file.)
+
+[PrinterPorts]           Lists active and inactive output
+                         devices that can be accessed by
+                         Windows. (These settings are listed
+                         in the WININI2.TXT file.)
+
+
+[devices]                Lists active output devices
+                         that provide compatibility with
+                         Windows 2.x applications. (These
+                         settings are listed in the
+                         WININI2.TXT file.)
+
+
+[colors]                 Defines colors for parts of the
+                         Windows display. (These settings
+                         are listed in the WININI2.TXT
+                         file.)
+
+
+Additional sections might be inserted by other applications.
+Consult the application's documentation for information on
+those sections.
+
+------------------------------------------------------------
+------------------------------------------------------------
+
+[WINDOWS] SECTION
+
+The [windows] section contains settings that affect the
+following parts of your Windows environment:
+
+  * Applications that start when you start Windows
+  * Warning beep
+  * Printing
+  * Window border width
+  * Keyboard speed
+  * Mouse settings
+  * Definition of files as documents or programs
+
+The [windows] section can contain the following settings:
+
+------------------------------------------------------------
+Beep=<yes-or-no>
+  Default: yes
+  Purpose: If this setting is enabled, Windows sounds a
+           warning beep when you attempt to do something
+           that is not allowed.
+  To change: Choose the Sound icon from the Control Panel
+           window.
+------------------------------------------------------------
+BorderWidth=<number>
+  Default: 3
+  Purpose: Sets the width of the borders around all the
+           windows on your desktop except those (such as
+           Control Panel) that have a fixed size. The
+           allowed range is 1 (narrowest) to 49 (widest).
+  To change: Choose the Desktop icon from the Control Panel
+           window.
+------------------------------------------------------------
+CursorBlinkRate=<milliseconds>
+  Default: 530
+  Purpose: Indicates how many milliseconds elapse between
+           each blink of the selection cursor.
+  To change: Choose the Desktop icon from the Control Panel
+           window.
+------------------------------------------------------------
+Device=<output-device-name>, <device-driver>,
+       <port-connection>
+  Default: none
+  Purpose: Defines the default printer. The
+           <output-device-name> value can be any device name
+           given in the [devices] section. An explicit port
+           and driver must be assigned to the device. The
+           <device-driver> value is the filename (without
+           the extension) of the device-driver file. The
+           <port-connection> value is any portname given in
+           the [ports] section.
+  To change: Choose the Printers icon from the Control Panel
+           window.
+------------------------------------------------------------
+DeviceNotSelectedTimeout=<seconds>
+  Default: 15
+  Purpose: Specifies the default number of seconds for
+           Windows to wait for a device to be switched on. A
+           value is saved for each printer listed in the
+           [PrinterPorts] section. If the device is not
+           switched on during this time, Windows won't print
+           to the device. Note that for some devices,
+           Windows immediately posts an error message if the
+           device is not already switched on.
+  To change: Use Notepad to edit the WIN.INI file. This
+           setting serves only as the system default value.
+           To change the value for a particular printer,
+           choose the Printers icon from the Control Panel
+           window. Using Control Panel changes the
+           corresponding value only in the [PrinterPorts]
+           section.
+------------------------------------------------------------
+Documents=<extensions>
+  Default: none
+  Purpose: Defines files that are to be considered
+           "documents" by Windows. Files with the extensions
+           listed in the [extensions] section of WIN.INI are
+           automatically considered documents. Use this
+           setting to define only document file extensions
+           that are not in the [extensions] section. The
+           extensions listed here are not associated with
+           any application. Separate extension names with a
+           space, and do not include the preceding periods.
+  To change: Use Notepad to edit the WIN.INI file.
+------------------------------------------------------------
+DoubleClickSpeed=<milliseconds>
+  Default: 452
+  Purpose: Establishes the maximum amount of time between
+           clicks of the mouse button that the system
+           will permit for one double-click. The lower the
+           value, the less time you have to click twice in
+           order to effect a double-click.
+  To change: Choose the Mouse icon from the Control Panel
+           window.
+------------------------------------------------------------
+KeyboardSpeed=<milliseconds>
+  Default: 31
+  Purpose: Establishes how much time elapses between
+           repetitions of a character on the display when
+           you hold down a keyboard key. This setting does
+           not work for all keyboards. If you delete this
+           setting from WIN.INI, Windows Setup will not set
+           this speed, but the speed will still be set if
+           you choose the Keyboard icon in Control Panel
+           (even if you cancel out of it).
+  To change: Choose the Keyboard icon from the Control Panel
+           window.
+------------------------------------------------------------
+Load=<filename(s)>
+  Default: none
+  Purpose: Specifies one or more applications that are to be
+           run as icons when Windows is started. This
+           value is a list of one or more filenames of
+           applications, or documents that are associated
+           with an application, each separated by a space.
+  To change: Use Notepad to edit the WIN.INI file.
+------------------------------------------------------------
+MouseSpeed=<0-or-1-or-2>
+  Default: 1
+  Purpose: Establishes the relationship between mouse
+           movement and cursor movement when the value of
+           either MouseThreshold1 or MouseThreshold2 is
+           exceeded. When this occurs, Windows causes cursor
+           movement to accelerate according to the value of
+           MouseSpeed. If it is 0, there is no acceleration.
+           If it is 1, the cursor is moved twice the normal
+           speed when mouse movement exceeds the value of
+           MouseThreshold1. If it is 2, the cursor is moved
+           twice the normal speed when mouse movement
+           exceeds the value of MouseThreshold1 or four
+           times the normal speed if mouse movement exceeds
+           MouseThreshold2.
+  To change: Choose the Mouse icon from the Control Panel
+           window.
+------------------------------------------------------------
+MouseThreshold1=<pixels>
+  Default: 5
+  Purpose: Establishes the maximum number of pixels that
+           the mouse can move between mouse interrupts
+           before Windows alters the relationship between
+           mouse movement and cursor movement. If the mouse
+           movement exceeds this threshold and MouseSpeed is
+           greater than zero, Windows moves the cursor at
+           twice the normal speed.
+  To change: Choose the Mouse icon from the Control Panel
+           window.
+------------------------------------------------------------
+MouseThreshold2=<pixels>
+  Default: 10
+  Purpose: Establishes the maximum number of pixels that
+           the mouse can move between mouse interrupts
+           before Windows alters the relationship between
+           mouse movement and cursor movement. If the mouse
+           movement exceeds this threshold and MouseSpeed is
+           equal to 2, Windows moves the cursor at four
+           times the normal speed.
+  To change: Choose the Mouse icon from the Control Panel
+           window.
+------------------------------------------------------------
+NetWarn=<0-or-1>
+  Default: 1
+  Purpose: Specifies whether Windows should display a
+           warning message if your system is configured to
+           run a network and the network is not running or
+           the wrong network is running. All Windows
+           network-related options will be disabled if the
+           network is disabled or incorrect. Setting this
+           value to 0 will disable the warning message.
+  To change: Choose the Network icon from the Control Panel
+           window.
+------------------------------------------------------------
+NullPort=<string>
+  Default: "None"
+  Purpose: Specifies the name used for a null port. This
+           name appears in the Printers-Configure dialog box
+           in Control Panel when a device is installed (that
+           is, the device driver is present) but is not
+           connected to any port. This value also appears
+           for such a device in the [devices] section of
+           WIN.INI.
+  To change: Use Notepad to edit the WIN.INI file.
+------------------------------------------------------------
+Programs=<extensions>
+  Default: com exe bat pif
+  Purpose: Defines which files Windows regards as
+           applications. Extension names are separated by a
+           space and do not include the preceding periods.
+  To change: Use Notepad to edit the WIN.INI file.
+------------------------------------------------------------
+Run=<filename(s)>
+  Default: none
+  Purpose: Tells Windows to run one or more specified
+           applications when Windows is started. The value
+           is a list of one or more filenames of
+           applications, or documents associated with
+           applications, each separated by a space.
+  To change: Use Notepad to edit the WIN.INI file.
+------------------------------------------------------------
+Spooler=<yes-or-no>
+  Default: yes
+  Purpose: Specifies whether output to the printer is to be
+           sent through Print Manager. Changing this value
+           to no disables Print Manager.
+  To change: Choose the Printers icon from the Control Panel
+           window.
+------------------------------------------------------------
+TransmissionRetryTimeout=<seconds>
+  Default: 45
+  Purpose: Specifies the default amount of time to give
+           Windows for attempted transmission retries. A
+           value is saved for each printer in the
+           [PrinterPorts] section. If a successful
+           transmission does not occur during this time,
+           Windows posts a message box stating that the
+           printer is not receiving characters.
+  To change: Use Notepad to edit the WIN.INI file. This
+           setting serves only as the system default value.
+           To change the value for a particular printer,
+           choose the Printers icon from the Control Panel
+           window. Using Control Panel changes the
+           corresponding value only in the [PrinterPorts]
+           section.
+------------------------------------------------------------
+------------------------------------------------------------
+
+[DESKTOP] SECTION
+
+The [desktop] section contains optional settings that
+control the appearance of the screen background (desktop)
+and the positioning of windows and icons on the screen.
+
+The [desktop] section can contain the following settings:
+
+------------------------------------------------------------
+GridGranularity=<number>
+  Default: 0
+  Purpose: Specifies the size (in units of eight pixels)
+           of the grid that Windows uses to position
+           windows on the screen. The allowed range is 0
+           through 49.
+  To change: Choose the Desktop icon from the Control Panel
+           window.
+------------------------------------------------------------
+IconSpacing=<pixels>
+  Default: 77
+  Purpose: Specifies the number of pixels that will appear
+           between icons. Increasing this number increases
+           the amount of space between icons.
+  To change: Choose the Desktop icon from the Control Panel
+           window.
+------------------------------------------------------------
+Pattern=<b1 b2 b3 b4 b5 b6 b7 b8>
+  Default: "(None)"  (This string appears when no pattern
+                      is specified)
+  Purpose: Specifies a pattern that is used to paint the
+           screen background. The eight numeric values
+           define a bitmap eight pixels wide and eight
+           pixels high. Each decimal value represents a
+           byte, and each byte represents a row of eight
+           pixels. The following shows the effect of setting
+           a bit:
+
+           Setting   Effect
+           -------   ------
+              0      Sets the corresponding pixel to the
+                     background color (specified by the
+                     Background setting in the [colors]
+                     section).
+
+              1      Sets the corresponding pixel to the
+                     foreground color (specified by the
+                     WindowText setting in the [colors]
+                     section).
+
+           For example, if you set the <b1> value to the
+           decimal value 175, the top row of pixels in the
+           bitmap will appear as the binary equivalent
+           (10101111) according to the preceding table.
+
+  To change: Choose the Desktop icon from the Control Panel
+           window.
+------------------------------------------------------------
+TileWallpaper=<0-or-1>
+  Default: 0
+  Purpose: Specifies whether to tile the desktop wallpaper
+           across the screen (set this value to 0) or to
+           center it (set this value to 1).
+  To change: Choose the Desktop icon from the Control Panel
+           window.
+------------------------------------------------------------
+Wallpaper=<bitmap-filename>
+  Default: "(None)"  (This string appears when no pattern
+                      is specified)
+  Purpose: Supplies the name of a bitmap file. This bitmap
+           appears on the screen background. You need to
+           include the full pathname of the file if it is
+           not in the Windows or system directory.
+  To change: Choose the Desktop icon from the Control Panel
+           window.
+------------------------------------------------------------
+WallpaperOriginX=<x-coordinate>
+  Default: 0
+  Purpose: Adjusts the initial offset of a tiled wallpaper.
+           The x-origin (default value) is the left side
+           of the screen.
+To change: Use Notepad to edit the WIN.INI file.
+------------------------------------------------------------
+WallpaperOriginY=<y-coordinate>
+  Default: 0
+  Purpose: Adjusts the initial offset of a tiled wallpaper.
+           The y-origin (default value) is the top of the
+           screen.
+  To change: Use Notepad to edit the WIN.INI file.
+------------------------------------------------------------
+------------------------------------------------------------
+
+[EXTENSIONS] SECTION
+
+The [extensions] section contains settings that link groups
+of document files with an application so that opening one of
+the document files automatically starts the application.
+
+The [extensions] section can contain settings of the
+following type:
+
+------------------------------------------------------------
+<extension>=<command-line>
+
+  Purpose: Contains a list of filename extensions that
+           identify documents, and corresponding command
+           lines that are invoked when you choose a file
+           that has the associated extensions.
+
+           The <extension> keyname is an extension of one to
+           three characters. The <command-line> value is an
+           ordinary DOS command line. The command line
+           always begins with an application filename (with
+           the .EXE extension). This can be followed by any
+           command parameters the application needs, usually
+           including the document filename. The caret (^)
+           character can be used when the original document
+           filename is needed in the command line; the caret
+           is replaced by the document filename without any
+           extension. The most typical <extension> entries
+           simply list the application name and the document
+           name; for example:
+
+             CAL=CALENDAR.EXE ^.CAL
+
+           If you run a file called MYFILE.CAL after this
+           association has been made, the Calendar progam
+           will start and automatically open the file named
+           MYFILE.
+
+  To change: Choose Associate from the File menu in File
+           Manager.
+
+------------------------------------------------------------
+------------------------------------------------------------
+
+NOTE: See the WININI2.TXT file for the [intl], [ports],
+      [fonts], [PrinterPorts], [devices], and [colors]
+      section listings.

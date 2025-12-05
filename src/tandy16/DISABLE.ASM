@@ -36,6 +36,9 @@
 ;
 ;-----------------------------------------------------------------------;
 
+	?PLM = 1
+	?WIN = 1
+
 	.xlist
 	include cmacros.inc
 	.list
@@ -83,7 +86,7 @@ page
 ;-----------------------------------------------------------------------;
 
 
-cProc	Disable,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
+cProc	TandyDisable,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
 
 	parmD	lp_device
 

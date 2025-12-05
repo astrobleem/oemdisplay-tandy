@@ -1,0 +1,505 @@
+-----------
+WININI2.TXT
+-----------
+
+
+  NOTE: This is the second of two files containing
+        information about the WIN.INI file. For general
+        information about WIN.INI and the listings in this
+        file, read the introductory material in the
+        WININI.TXT file.
+
+  CAUTION: Changing a WIN.INI setting can lead to
+           undesirable results when you run Windows. Before
+           changing any setting, read "Changing Settings"
+           later in this document.
+
+
+------------------------------------------------------------
+------------------------------------------------------------
+
+[INTL] SECTION
+
+The [intl] section describes how to display dates, times,
+currency amounts, and other items for countries other than
+the United States. The default values reflect U.S. options.
+
+To change any setting in this section, choose the
+International icon from the Control Panel window.
+
+The [intl] section can contain the following settings:
+
+------------------------------------------------------------
+iCountry=<country-code>
+  Default: 1
+  Purpose: Specifies the country code. This number matches
+           the country's international telephone code,
+           except for Canada, which is 2.
+------------------------------------------------------------
+iCurrDigits=<number>
+  Default: 2
+  Purpose: Specifies the number of digits to put after the
+           decimal separator in currency.
+------------------------------------------------------------
+iCurrency=<number>
+  Default: 0
+  Purpose: Specifies a currency format according to the
+           following:
+
+             Value  Format
+             -----  ------
+               0    $2
+               1    2$
+               2    $ 2
+               3    2 $
+
+           The actual currency symbol is specified by the
+           sCurrency value.
+------------------------------------------------------------
+iDate=<number>
+  Default: 0
+  Purpose: Specifies a numerical date format according to
+           the following:
+
+             Value  Format
+             -----  ------
+               0    12/31/90
+               1    31/12/90
+               2    90/12/31
+
+           The actual date divider is specified by the
+           sShortDate value.
+
+           This setting is not used by Windows 3.0 and
+           exists only for compatibility with Windows 2.x.
+------------------------------------------------------------
+iDigits=<number>
+  Default: 2
+  Purpose: Specifies the number of digits to display after
+           the decimal separator in numbers.
+------------------------------------------------------------
+iLZero=<0-or-1>
+  Default: 0
+  Purpose: Specifies whether to put leading zeros in decimal
+           numbers according to the following:
+
+             Value  Format
+             -----  ------
+               0    .7
+               1    0.7
+
+           The actual decimal separator is specified by the
+           sDecimal setting.
+------------------------------------------------------------
+iMeasure=<0-or-1>
+  Default: 1
+  Purpose: Specifies the measurement system according to the
+           following:
+
+             Value  System
+             -----  ------
+               0    metric
+               1    English
+
+------------------------------------------------------------
+iNegCurr=<number>
+  Default: 0
+  Purpose: Specifies a negative number format according to
+           the following:
+
+             Value  Format
+             -----  ------
+               0    ($1)
+               1    -$1
+               2    $-1
+               3    $1-
+               4    (1$)
+               5    -1$
+               6    1-$
+               7    1$-
+
+           The actual currency symbol is specified by the
+           sCurrency setting.
+------------------------------------------------------------
+iTime=<number>
+  Default: 0
+  Purpose: Specifies whether to format time using a 12-hour
+           clock or a 24-hour clock.
+
+             Value  Format     Meaning
+             -----  ------     -------
+               0    1:00       12-hour clock
+               1    13:00      24-hour clock
+
+           The actual time separator is specified by the
+           sTime setting.
+------------------------------------------------------------
+iTLZero=<number>
+  Default: 0
+  Purpose: Specifies whether to put leading zeros in time
+           according to the following:
+
+             Value  Format
+             -----  ------
+               0    9:15
+               1    09:15
+
+           The actual time separator is specified by the
+           sTime setting.
+------------------------------------------------------------
+s1159=<string>
+  Default: AM
+  Purpose: Specifies the string that follows times before
+           noon in the 12-hour time format.
+------------------------------------------------------------
+s2359=<string>
+  Default: PM
+  Purpose: Specifies the string that follows times after
+           noon in the 12-hour format or that follows all
+           times in the 24-hour format.
+------------------------------------------------------------
+sCountry=<string>
+  Default: United States
+  Purpose: Specifies the name of the country whose standard
+           setting you want to use.
+------------------------------------------------------------
+sCurrency=<string>
+  Default: $
+  Purpose: Specifies the currency symbol you want to use.
+------------------------------------------------------------
+sDecimal=<string>
+  Default: .
+  Purpose: Specifies the punctuation used to separate the
+           fractional part of a decimal number from the
+           whole number part.
+------------------------------------------------------------
+sLanguage=<string>
+  Default: usa
+  Purpose: Specifies the language you want to work in.
+           Windows applications that provide language-
+           specific tasks, such as sorting or spell-
+           checking, use this setting. The following are the
+           standard values:
+
+           Value    Language
+           -----    --------
+           dan      Danish
+           dut      Dutch
+           eng      International English
+           fcf      French Canadian
+           fin      Finnish
+           frn      French
+           ger      German
+           ice      Icelandic
+           itn      Italian
+           nor      Norwegian
+           por      Portuguese
+           spa      Spanish
+           swe      Swedish
+           usa      U.S. English
+
+------------------------------------------------------------
+sList=<string>
+  Default: ,
+  Purpose: Specifies the character used to separate items in
+           a list. In U.S. English, the most common
+           separator is a comma.
+------------------------------------------------------------
+sLongDate=<date-picture>
+  Default: dddd, MMMM d, yyyy (e.g., Friday, June 1, 1990)
+  Purpose: Specifies your choice for the long date format,
+           including abbreviations for the words and
+           different separators, according to the following:
+
+             Date Picture      Item     Format
+             ------------      -----    ------
+             M                 Month    1-12
+             MM                Month    01-12
+             MMM               Month    Jan-Dec
+             MMMM              Month    January-December
+             d                 Day      1-31
+             dd                Day      01-31
+             ddd               Day      Mon-Sun
+             dddd              Day      Monday-Sunday
+             yy                Year     00-99
+             yyyy              Year     1900-2040
+
+
+           Control Panel will accept only certain date-
+           picture combinations. Therefore, you should use
+           Control Panel to change this setting.
+------------------------------------------------------------
+sShortDate=<date-picture>
+  Default: M/d/yy (e.g., 6/1/90)
+  Purpose: Specifies your choice for the short date format,
+           including abbreviations for the words and
+           different separators, according to the list
+           described above in the sLongDate listing. Control
+           Panel will accept only certain date-picture
+           combinations. Therefore, you should use Control
+           Panel to change this setting.
+------------------------------------------------------------
+sThousand=<string>
+  Default: ,
+  Purpose: Specifies the symbol used to separate thousands
+           in a number with more than three digits. An
+           example, if the value is a comma (,), is 3,000.
+------------------------------------------------------------
+sTime=<string>
+  Default: :
+  Purpose: Specifies the character used to separate the
+           hours, minutes, and seconds in time. An example,
+           if the value is a colon (:), is 15:29:31.
+------------------------------------------------------------
+------------------------------------------------------------
+
+[PORTS] SECTION
+
+The [ports] section lists all available communications and
+printer ports, and defines default values; it also lists
+files to which printer output can be sent.
+
+The [ports] section can contain one or more occurrences of
+the following setting:
+
+------------------------------------------------------------
+<portname>:=<baud-rate>,<parity>,<word-length>,<stop-bits>
+              [[,p]]
+
+  Purpose: Specifies an available output port.
+
+           The <portname> keyname must be the name of an
+           output port as it is recognized by MS-DOS. This
+           keyname can be COMx: (communications port, where
+           x represents the port number), LPTx: (a parallel
+           port, where x represents the port number), EPT:
+           (used for a specific IBM printer), LPTx.OS2 (a
+           parallel port used with OS/2, where x represents
+           the port number), FILE:, or a filename.
+
+           For COM ports, the <baud-rate> value specifies
+           the port's baud rate; the <word-length> value
+           gives the length of a word (in bits); the
+           <stop-bits> value gives the number of stop bits
+           to be used; and the [[,p]] option specifies that
+           hardware handshaking is in effect.
+
+           LPT (parallel), EPT, FILE, and LPTx.OS2 ports do
+           not take any parameters.
+
+           The LPTx.OS2 ports are used (instead of the
+           corresponding LPT port) when you are running
+           Windows in the DOS compatibility box of OS/2.
+           This port bypasses the Windows' special output
+           handling.
+
+           Specifying a filename for the <portname> will
+           direct output to that file. A filename, unlike
+           the other port names, must not be followed by a
+           colon (:).
+
+           By using FILE:=, Windows will prompt you to
+           specify an output file at output time.
+
+           You can specify no more than 10 ports.
+
+  To change COM port settings: Choose the Ports icon from
+           the Control Panel window.
+  To change or add other ports: Use Notepad to edit the
+           WIN.INI file.
+------------------------------------------------------------
+LPT1.OS2=<pathname>
+LPT2.OS2=<pathname>
+LPT3.OS2=<pathname>
+LPT4.OS2=<pathname>
+  Default: none
+  Purpose: Specifies the pathname of the printer you are
+           using if you are using Windows in the DOS
+           compatibility box of OS/2.
+  To change: Use Notepad to edit the WIN.INI file.
+------------------------------------------------------------
+------------------------------------------------------------
+
+[FONTS] SECTION
+
+The [fonts] section describes one or more display font files
+that are loaded by Windows at start-up.
+
+The [fonts] section can contain one or more occurrences of
+the following setting:
+
+------------------------------------------------------------
+<font-name>=<font-file>
+  Purpose: Specifies a font file. The <font-name> keyname is
+           the descriptive name of a font. The <font-file>
+           value is the filename of a file that contains
+           font resources.
+  To change: Choose the Fonts icon from the Control Panel
+           window.
+------------------------------------------------------------
+------------------------------------------------------------
+
+[PRINTERPORTS] SECTION
+
+The [PrinterPorts] section lists the active and inactive
+printers that can be accessed by Windows device drivers,
+specifies the communications port or ports to which the
+devices are connected, and specifies their corresponding
+timeout values.
+
+The [PrinterPorts] section can contain one or more
+occurrences of the following setting:
+
+------------------------------------------------------------
+<device-name>=<driver-name>,
+               <port-name>,<DeviceNotSelectedTimeout>,
+               <TransmissionRetryTimeout>
+               [[,<port-name>,<DeviceNotSelectedTimeout>,
+                 <TransmissionRetryTimeout>,...]]
+
+  Purpose: Specifies an active or inactive printer.
+
+           The <device-name> keyname is the name of the
+           device. The <driver-name> value is the driver
+           filename.
+
+           After the <driver-name> value, there is a set of
+           <port-name>, <TransmissionRetryTimeout>, and
+           <DeviceNotSelectedTimeout> values for each port
+           that has a printer of the specified type.
+
+           If a device is not currently connected, the
+           <port-name> value is the string specified in the
+           NullPort setting (in the [windows] section).
+
+           The <TransmissionRetryTimeout> value determines
+           the amount of time (in seconds) allowed for
+           attempted transmission retries.
+
+           The <DeviceNotSelectedTimeout> value determines
+           the number of seconds Print Manager will wait for
+           the device to be switched on.
+
+           If the timeout values are not specified for a
+           particular port, Windows uses the default
+           settings listed in the [windows] section for that
+           port.
+
+  CAUTION: When changing a setting in this section,
+           be sure it does not conflict with a corresponding
+           setting in the [devices] section. Problems may
+           occur if a connected device does not appear in
+           the [PrinterPorts] section.
+
+  To change: Choose the Printers icon from the Control Panel
+           window.
+------------------------------------------------------------
+------------------------------------------------------------
+
+[DEVICES] SECTION
+
+The [devices] section names the active printers. The
+settings in this section reflect those in the [PrinterPorts]
+section, without the timeout values. This section is
+necessary only for Windows version 2.x applications, which
+look to the [devices] section for this information.
+
+The [devices] section can contain one or more occurrences of
+the following setting:
+
+------------------------------------------------------------
+<device-name>=<driver-name>, <port-name>
+               [[,<port-name>,...]]
+
+  Purpose: Specifies an active printer.
+
+           The <device-name> keyname is the name of the
+           device. The <driver-name> value is the driver
+           filename. The <port-name> value specifies the
+           port that the printer is connected to. If the
+           printer is not currently connected, the <port-
+           name> value is the string specified in the
+           NullPort setting (in the [windows] section).
+
+  CAUTION: When changing a setting in this section,
+           be sure it does not conflict with a corresponding
+           setting in the [PrinterPorts] section. Problems
+           may occur if a connected device does not appear
+           in the [PrinterPorts] section.
+
+  To change: Choose the Printers icon from the Control Panel
+           window.
+------------------------------------------------------------
+------------------------------------------------------------
+
+[COLORS] SECTION
+
+The [colors] section defines the colors for components of
+the Windows display.
+
+The colors section can contain settings of the following
+type:
+
+------------------------------------------------------------
+<component>=<red-value> <green-value> <blue-value>
+
+  Purpose: The <red-value>, <green-value>, and <blue-value>
+           values are integers that specify the relative
+           intensities of red, blue, and green,
+           respectively. These settings can range from 0
+           (minimum intensity) to 255 (maximum intensity).
+
+           The <component> keyname can be any one of the
+           following:
+
+
+           Keyname            Refers to
+           ---------------    ------------------------------
+           ActiveBorder       Border of the active window
+
+           ActiveTitle        Active title bar
+
+           AppWorkspace       Application workspace for
+                              Windows applications
+
+           Background         Screen background (desktop)
+
+           ButtonFace         Button face
+
+           ButtonShadow       Button shadow
+
+           ButtonText         Button text
+
+           GrayText           Text that is dimmed (as in an
+                              unavailable command name)
+
+           Hilight            Background of highlighted text
+
+           HilightText        Highlighted text
+
+           InactiveBorder     Border of the inactive window
+
+           InactiveTitle      Inactive title bar
+
+           Menu               Menu background
+
+           MenuText           Menu text
+
+           Scrollbar          Scroll bar
+
+           TitleText          Title-bar text
+
+           Window             Window workspace
+
+           WindowFrame        Window frame
+
+           WindowText         Window text
+
+  To change: For most of these settings, choose the Color
+           icon from the Control Panel window. For
+           ButtonFace, ButtonShadow, ButtonText, GrayText,
+           Hilight and HilightText, use Notepad to edit the
+           WIN.INI file.
+------------------------------------------------------------
+------------------------------------------------------------
+
