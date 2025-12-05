@@ -1,0 +1,43 @@
+# System Directories
+WINDOWS/
+DOS/
+DOSBox-X/
+dosfetch/
+
+# Build Artifacts
+*.OBJ
+*.LNK
+*.MAP
+*.DRV
+*.LOG
+*.ZIP
+*.EXE
+*.COM
+
+# Temporary & Intermediate Files
+TNDY16/
+_archive/
+BLDPART*.BAT
+LIBS.LOG
+LINK.LOG
+TEST.LOG
+OUTPUT.TXT
+
+# Project Definitions (if unused in root)
+TNDY16.DEF
+TNDY16.MAK
+
+# Documentation Clutter (if archived)
+*.DOC
+*.FRM
+WHATSNEW.*
+masmsmpl.txt
+w3ddkadp.txt
+
+# Keep specific important files if they match above patterns (e.g. tools we might want?)
+# But generally we ignore binaries.
+!PKZIP.EXE
+!PKUNZIP.EXE
+# (Only if user actually wants these committed, but usually bad practice.
+# User said "more than a few things that we should not be uploading".
+# So ignoring all EXE/COM is safer. I'll stick to ignoring them.)
