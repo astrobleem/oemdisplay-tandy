@@ -1,17 +1,18 @@
 
 # BUILDING
 
-This project targets 16-bit Windows using Microsoft C 6.0.
+This project targets 16-bit Windows 3.0 using MASM 5.10.
 
 ## Prerequisites
 
-- DOSBox-X
-- MS-DOS with Microsoft C 6.0 installed under `BIN`, `LIB` and `INCLUDE`.
-- `PKZIP.EXE` and `UNIX2DOS.EXE` available on the DOS `PATH`.
+- **Host:** Windows 10/11 with PowerShell.
+- **Emulator:** DOSBox-X (included in `DOSBox-X/`).
+- **Tools:** `MASM 5.10` and `LINK4.EXE` (included in `BIN/`).
 
 ## Building
 
-For a clean build using the automated script:
+### Automated Build (Recommended)
+From the host command prompt:
 
 ```cmd
 build_driver.bat
@@ -19,21 +20,31 @@ build_driver.bat
 
 This script:
 1.  Starts DOSBox-X.
-2.  Mounts the repository.
-3.  Runs the 5-stage build process (`BLDTNDY.BAT`).
-4.  Checks for the output file `TNDY16.DRV`.
+2.  Runs the 5-stage build process (`BLDTNDY.BAT`) inside the emulator.
+3.  Checks for the output file `TNDY16.DRV`.
 
-**Manual Build (inside DOSBox-X):**
-1.  `MOUNT C <repo>`
+### Packaging (Release)
+To create a distribution zip (`TNDY16.ZIP`):
+
+```cmd
+makedisk.bat
+```
+
+This script:
+1.  Builds the driver if missing.
+2.  Creates a `TNDY16` folder with the driver and INF files.
+3.  Converts text files to DOS format.
+4.  Zips contents into `TNDY16.ZIP`.
+
+## Manual Build (Debugging)
+Inside DOSBox-X:
+1.  `MOUNT C <repo>` (Auto-mounted by `dosbox-x.conf`)
 2.  `C:`
 3.  `BLDTNDY.BAT` (or `BLDTNDY.BAT <stage>` to resume)
 
-The build produces `TNDY16.DRV` in the root directory.
-
-
 ## Testing
 
-1. Copy the resulting `TNDY16.DRV` into a Windows 3.x installation.
+1. Copy the resulting `TNDY16.DRV` (or unzip `TNDY16.ZIP`) into a Windows 3.0 installation.
 2. Select the driver through Windows Setup and confirm that the display initializes correctly.
 
 
