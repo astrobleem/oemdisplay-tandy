@@ -1,0 +1,64 @@
+; VERSION INFO
+; ---------------------------------------------------------------
+; This tells Setup that this is a 3.0 compatible OEM driver disk.
+
+[data]
+    Version   = "3.0"
+
+; OEMSETUP.INF for the Tandy 1000 Windows 3.x display driver
+
+[disks]
+1="Tandy 1000 Display Driver Disk",,0
+; DISPLAY TYPES
+; ---------------------------------------------------------------
+; Specify the complete list of display types, colors, and resolutions
+; available in this section.  Some tips...
+;
+; Profile:              This must be a unique identifier.
+;
+; Description:          No more than 47 characters!  Include all necessary info.
+;                       This description string should change slightly in new versions
+;                       of your driver disk.  Include a version id, and keep the rest
+;                       of the string the same, e.g. "ACME Z-1000 v1.1 640x480, 256 colors".
+;
+; VDD:                  Don't reference *vddvga!  This file uses "vddvga.386" instead,
+;                       which can be built using the Windows 3.0 DDK source files.
+;
+; NOTE:  Optional work sections are not supported by Windows 3.0 Setup!
+;        Windows 3.0 Setup cannot copy extra files or write to INI files.
+;        For this reason, the XGA, V7VGA, and TIGA drivers are not shown here.
+
+[display]
+;profile = driver,         Description of driver,                           resolution,    286 grabber,    logo code,       VDD,            386grabber,   ega.sys,   logo data
+;hercules = b:hercules.drv, "Hercules Monochrome",                           "133,96,72",   b:hercules.2gr, a:herclogo.lgo,  b:vddherc.386,  b:herc.3gr,,             a:herclogo.rle
+
+; Tandy 1000 320x200 16-color TGA mode
+tndy16 = 1:tndy16.drv, "Tandy 1000 320x200 16 colors", "320,200,16",,, ,,
+
+[files]
+tndy16.drv,tndy16.drv,1
+
+
+
+; 386 GRABBER FONTS
+; ---------------------------------------------------------------
+; Setup will copy these fonts, sometimes called "old app fonts",
+; depending on the 386 grabber being used.  If you use your own
+; 386 grabber, then you should be sure to specify a section with
+; your grabber name.  You only need sections that correspond to
+; 386 grabber names in the [display] section.
+
+
+
+; SYSTEM FONTS
+; ---------------------------------------------------------------
+; Fonts are installed according to the resolution of the display type selected.
+; Your OEMSETUP.INF file must have these sections, with all font resolution lines
+; appropriate for the listings in the [display] section.
+
+[TNDY16.DRV]
+320,200,16,1:VGASYS.FON,1:VGAFIX.FON,1:VGAOEM.FON
+
+[setup]
+display.drv,tndy16.drv
+
