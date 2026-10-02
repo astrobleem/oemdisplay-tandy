@@ -26,8 +26,9 @@ The complete release contains root `README.TXT` and these `DISK1/` files:
 
 - `TANDY88.DRV`, `RESERVE.COM`: exact accepted runtime SHA256 pins
 - `OEMSETUP.INF`, `INSTALL.BAT`, `TANDY88.BAT`: verified OEM and helper sources
-- `EGASYS.FON`, `EGAFIX.FON`, `EGAOEM.FON`, `CGA.GR2`, `CGALOGO.LGO`,
-  `CGALOGO.RLE`: exactly six required Windows support files, individually pinned
+- `EGASYS.FON`, `EGAFIX.FON`, `EGAOEM.FON`, `CGA.GR2`, `CGALOGO.LGO`:
+  exactly five required Windows support files, individually pinned
+- `TNDYLOGO.RLE`: separately pinned first-party custom startup image
 - `README.TXT`, `FILE_ID.DIZ`, `LOCAL.TXT`, `MANIFEST.SHA`
 
 The `LOCAL.TXT` filename is retained as the completion marker expected by the
@@ -35,8 +36,8 @@ already-tested installer. It now describes the complete disk. No full OS,
 installation disks, compiler toolchain, emulator, or unrelated media files are
 included. The exact support-file hashes appear in `BUILDING.MD` and `STAGE.PY`.
 
-The builder reads a fixed source allowlist and the six explicitly required media
-files. It never copies a mutable directory tree, the historical `disk1/`, or the
+The builder reads a fixed source allowlist and the five explicitly required media
+files, plus the pinned first-party custom image. It never copies a mutable directory tree, the historical `disk1/`, or the
 old root TNDY16.DRV. SZDD mode-A expansion is local and bounded to 1 MiB per file;
 expanded inputs are supported too. All eight binary hashes are checked. Missing,
 stale, unaccepted or ambiguous files fail before an output is created. FON NE
@@ -92,7 +93,11 @@ This work preserves the accepted driver and reservation bytes. It does not
 claim Windows 3.1, protected mode, arbitrary Tandy configurations, PCjr, physical
 hardware compatibility, or cycle-accurate 8088 execution.
 
-## Packaging regression evidence (2026-10-02)
+## Original installer packaging regression evidence (2026-10-02)
+
+The following records the stock-splash installer accepted in PR #61. The
+custom-splash disk replaces the stock RLE with a separately pinned first-party
+image; its repeated package and runtime acceptance is in [SPLASH.MD](SPLASH.MD).
 
 - 47 host unit tests passed with Python 3 on the Linux cloud host
 - 22 real DOS batch-control-flow checks passed in separate DOSBox-X guests,
@@ -226,9 +231,12 @@ is made that changing INF syntax alone explains it. What is established is that
 the repaired complete disk performs Setup-managed installation and renders
 readable glyphs through both tested Setup paths, within the clipping limit.
 
-### Future custom startup splash
+### Custom startup splash
 
-The display record's logo-code and logo-data fields currently reference the
-unchanged own-media CGALOGO.LGO and CGALOGO.RLE. Those are the integration points
-for a future custom Tandy startup splash. This installer repair does not replace
-those tested files with custom art or implement that separate feature.
+The current display record retains the unchanged `CGALOGO.LGO` loader and uses
+first-party `TNDYLOGO.RLE` image data. The unique filename prevents Windows Setup
+from reusing an already-installed stock `CGALOGO.RLE`. Setup builds `WIN.COM`
+from those inputs normally; neither the DOS helper nor a binary-patching step
+modifies the installed executable. See [SPLASH.MD](SPLASH.MD) for the new disk
+and actual startup evidence. The historical stock-splash tests above remain
+documented as their own checkpoint.

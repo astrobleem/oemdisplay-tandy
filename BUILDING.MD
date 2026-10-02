@@ -42,7 +42,7 @@ On Linux/macOS:
 python3 MAKEDISK.PY --windows-files /your/windows30/source --out /new/TANDY88.ZIP
 ```
 
-The media directory must contain these six accepted files. The builder accepts
+The media directory must contain these five accepted files. The builder accepts
 the original SZDD mode-A compressed files under the requested filenames or the
 expanded bytes; it checks SHA256 after expansion:
 
@@ -51,9 +51,9 @@ expanded bytes; it checks SHA256 after expansion:
 - EGAOEM.FON: `05bd6ef11802bbca20473b0e409116fd8919c5bbcbbbc26b7ee2ea1f33ad23be`
 - CGA.GR2: `1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067`
 - CGALOGO.LGO: `d9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807`
-- CGALOGO.RLE: `f31392cac25d3433f22a4500e5f42aaa29fc1ac188a1e2525441b759bef21735`
 
-Only those six Windows files are included. No full OS, installation disks,
+Only those five Windows files are included. The first-party startup image is
+read from `src/splash/assets/TNDYLOGO.RLE` and pinned separately. No full OS, installation disks,
 emulator or compiler toolchain is added. There is no network fetching or input
 directory globbing. Missing/wrong files fail before an output is created.
 Calling the normal builder without `--windows-files` fails with a developer
@@ -78,11 +78,26 @@ disk must fit standard 360 KB FAT12 media, including 1 KB allocation rounding,
 python3 MAKEDISK.PY --verify TANDY88.ZIP
 ```
 
-Verification checks exact members (including all six support files and the
+Verification checks exact members (including all five Windows support files and the custom splash and the
 completion marker), all eight binary pins, the full manifest, canonical ZIP
 metadata, current source payload, and the 360 KB floppy allocation budget.
 No external media directory is required. This is the tag-release CI path;
 release automation can upload the same verified checked-in ZIP unchanged.
+
+## Reproduce the custom startup image
+
+The ready disk uses `TNDYLOGO.RLE`, avoiding Setup's cached `CGALOGO.RLE` name.
+The unchanged stock `CGALOGO.LGO` decodes the 640x200 two-color RLE4 stream.
+The image is reproducible without external fonts or image-generation tools:
+
+```sh
+python3 src/splash/tools/BUILD.PY
+python3 src/splash/tools/TEST.PY
+python3 src/splash/tools/VERIFY.PY src/splash/assets/TNDYLOGO.RLE
+```
+
+See [the source guide](src/splash/README.MD) and [runtime evidence](docs/SPLASH.MD).
+The normal disk already contains the image; users need none of these tools.
 
 ## Optional support-free developer toolkit
 

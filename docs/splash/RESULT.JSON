@@ -1,0 +1,87 @@
+{
+  "width": 640,
+  "height": 200,
+  "bpp": 1,
+  "compression": 2,
+  "palette_entries": 2,
+  "encoded_runs": 2733,
+  "eol_commands": 200,
+  "file_bytes": 5930,
+  "image_bytes": 5868,
+  "end_of_bitmap_offset": 5930,
+  "rle_sha256": "e7a9c043ce3b9f9c78f7ff38bc68d211a0da32462e036abb7135f0602194f083",
+  "win_com_bytes": 10266,
+  "win_com_sha256": "6f07b5a9fc764c74f9b3c5a0e0c521f87cdd1b3507863f1772dee4da814b1907",
+  "loader_offset": 3456,
+  "rle_offset": 4336,
+  "stock_loader_and_driver_verified": true,
+  "test_date": "2026-10-02",
+  "base_commit": "f2c7f1454fc9118ee20d10cb712471985ad3a757",
+  "package": "TANDY88.ZIP",
+  "package_bytes": 96255,
+  "package_sha256": "816cceb66b1a062d42c1cd99dc2e22f424eb42515280aae5fc0431ef1919af68",
+  "package_rebuild_identical": true,
+  "package_current_source_verify": true,
+  "host_packaging_tests": 61,
+  "dos_helper_checks": 22,
+  "installation": {
+    "source": "fresh stock-CGA Windows 3.0 baseline copy",
+    "method": "DOS INSTALL then guarded Windows Setup Display / Other",
+    "manual_ini_edits": false,
+    "manual_win_com_patch": false,
+    "installed_runtime_files_match_final_archive": true,
+    "original_first_4336_win_com_bytes_unchanged": true
+  },
+  "runtime": {
+    "cold_new_process": true,
+    "oem_disk_mounted": false,
+    "original_windows_media_mounted": false,
+    "machine": "tandy",
+    "core": "normal",
+    "cputype": "8086_prefetch",
+    "memsizekb": 640,
+    "allow_above_640kb": false,
+    "xms": false,
+    "ems": false,
+    "umb": false,
+    "fpu": false,
+    "cycles": 20000,
+    "reserve_before_win_r": true,
+    "custom_splash_observed": true,
+    "desktop_resolution": [
+      320,
+      200
+    ],
+    "desktop_driver": "accepted candidate05 TANDY88.DRV",
+    "clean_exit_to_dos_observed": true
+  },
+  "capture": {
+    "logical_resolution": [
+      640,
+      200
+    ],
+    "native_resolution": [
+      640,
+      400
+    ],
+    "duplicated_rows": 2,
+    "source_pixel_mismatches": 0,
+    "native_capture_unedited": true
+  },
+  "pins": {
+    "TANDY88.DRV": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee",
+    "RESERVE.COM": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+    "CGALOGO.LGO": "d9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807"
+  },
+  "limits": [
+    "Physical Tandy hardware not tested",
+    "Cycle-exact 8088 timing not tested",
+    "No new selectable desktop mode in this change"
+  ],
+  "evidence_sha256": {
+    "BOOT.PNG": "2c0c668435e3fab7ecc3a4369911ddd642fdeb2d403c7f81e701b631a2c68f29",
+    "DESKTOP.PNG": "d09e19324cd004fd5030490f9c28baf8c60ea9f0e38060b3eec32d99f8fa7497",
+    "EXIT.PNG": "3e1643f0e2925babdfc4d8dd322e33918a13843eda8b27001ccaec3ed1eb2a70",
+    "SETUP.PNG": "4a8f1368108c47a7fe7c5ab72919c8b018671fca991c7df4ef3b748db0b14d7a"
+  }
+}

@@ -1,6 +1,7 @@
 ; Tandy 1000 EX/HX Windows 3.0 real-mode display disk, candidate 05.
-; Complete this disk with STAGE.PY using your own Windows 3.0 media.
-; Microsoft fonts, logo files and grabber are local-only, not distributed.
+; Ready-to-use disk includes five pinned Windows 3.0 support files.
+; TNDYLOGO.RLE is first-party artwork; CGALOGO.LGO is the unchanged loader.
+; Distinct bitmap filename prevents Setup reusing cached stock CGALOGO.RLE.
 [data]
 Version = "3.0"
 [disks]
@@ -8,7 +9,7 @@ a = ., "Tandy 1000 EX/HX Display Disk", OEMSETUP.INF
 [display]
 ; profile = driver, description, aspect/logical DPI, grabber, logo, VDD,
 ;           enhanced grabber, EGA driver, logo bitmap
-TANDY88 = a:TANDY88.DRV, "Tandy EX/HX 320x200 16 colors (8088 c05)", "133,96,72", a:CGA.GR2, a:CGALOGO.LGO,,,, a:CGALOGO.RLE
+TANDY88 = a:TANDY88.DRV, "Tandy EX/HX 320x200 16 colors (8088 c05)", "133,96,72", a:CGA.GR2, a:CGALOGO.LGO,,,, a:TNDYLOGO.RLE
 [sysfonts]
 a:EGASYS.FON, "EGA System Font", "133,96,72"
 [fixedfonts]

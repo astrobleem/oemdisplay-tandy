@@ -16,16 +16,20 @@ import sys
 DRIVER_SHA = "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee"
 RESERVE_SHA = "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
 BINARY_HASHES = {"TANDY88.DRV": DRIVER_SHA, "RESERVE.COM": RESERVE_SHA}
+SPLASH_NAME = "TNDYLOGO.RLE"
+SPLASH_SHA = "e7a9c043ce3b9f9c78f7ff38bc68d211a0da32462e036abb7135f0602194f083"
+SPLASH_BYTES = 5930
+BINARY_NAMES = frozenset(BINARY_HASHES) | {SPLASH_NAME}
 SUPPORT_HASHES = {
     "EGASYS.FON": "8bd307d7886d0f2fdfc1de3da8253e294233d1c757fd9131a66405fca5825b09",
     "EGAFIX.FON": "6df45a74e5756dd0746bcee593be9ac4df4a35458c26bf4570b748def2d394cb",
     "EGAOEM.FON": "05bd6ef11802bbca20473b0e409116fd8919c5bbcbbbc26b7ee2ea1f33ad23be",
     "CGA.GR2": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
     "CGALOGO.LGO": "d9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807",
-    "CGALOGO.RLE": "f31392cac25d3433f22a4500e5f42aaa29fc1ac188a1e2525441b759bef21735",
 }
 PAYLOAD_NAMES = frozenset(("TANDY88.DRV", "RESERVE.COM", "OEMSETUP.INF",
-                           "INSTALL.BAT", "TANDY88.BAT", "README.TXT", "FILE_ID.DIZ"))
+                           "INSTALL.BAT", "TANDY88.BAT", "README.TXT", "FILE_ID.DIZ",
+                           SPLASH_NAME))
 DEFAULT_WINDOWS = r"C:\WINDOWS"
 HELPER_DIR = r"C:\TANDY88"
 DOS_NAME = r"[A-Z0-9_!#$%&'()@^`{}~-]{1,8}(?:\.[A-Z0-9_!#$%&'()@^`{}~-]{1,3})?"
@@ -72,6 +76,67 @@ def verify_binaries(payload):
                             "; use the accepted 8088 build, never root TNDY16.DRV")
 
 
+def splash_rle(data, name=SPLASH_NAME):
+    """Validate the exact safe BMP/RLE subset accepted by the stock CGA loader.
+
+    The legacy format uses a one-bit header with RLE4 encoded monochrome runs.
+    Keep this parser self-contained so extracted toolkits need only Python.
+    """
+    def refuse(reason):
+        raise DiskError(name + ": " + reason)
+    # WIN.CNF (3456) + unchanged CGALOGO.LGO (880) precede the bitmap.
+    if not 62 <= len(data) <= 65280 - 4336:
+        refuse("invalid RLE size for the stock 64 KiB COM loader")
+    signature, declared, reserved1, reserved2, offset = struct.unpack_from("<2sIHHI", data)
+    if (signature, reserved1, reserved2, offset) != (b"BM", 0, 0, 62):
+        refuse("invalid BMP file header")
+    header = struct.unpack_from("<IiiHHIIiiII", data, 14)
+    size, width, height, planes, bpp, compression, image_bytes, xppm, yppm, used, important = header
+    if (size, width, height, planes, bpp, compression) != (40, 640, 200, 1, 1, 2):
+        refuse("expected 640x200 monochrome legacy RLE4 bitmap")
+    if (xppm, yppm, used, important) != (0, 0, 2, 0):
+        refuse("unexpected bitmap resolution or palette fields")
+    if data[54:62] != b"\0\0\0\0\xff\xff\xff\0":
+        refuse("expected the two-entry black/white palette")
+    if declared != len(data) or image_bytes != len(data) - offset:
+        refuse("bitmap file/image size fields do not match the exact stream")
+    x = y = runs = 0
+    pos = offset
+    while pos + 2 <= len(data):
+        count, value = data[pos:pos + 2]
+        pos += 2
+        if count:
+            if count > 254 or value not in (0x00, 0x11):
+                refuse("unsupported monochrome encoded run")
+            if y >= height or x + count > width:
+                refuse("encoded run exceeds bitmap row or height")
+            x += count
+            runs += 1
+        elif value == 0:
+            if y >= height or x != width:
+                refuse("each row must contain exactly 640 pixels before EOL")
+            x = 0
+            y += 1
+        elif value == 1:
+            if x or y != height or pos != len(data):
+                refuse("EOB must follow exactly 200 complete rows with no trailing data")
+            return {"width": width, "height": height, "encoded_runs": runs,
+                    "eol_commands": y, "file_bytes": len(data), "image_bytes": image_bytes}
+        else:
+            refuse("delta and absolute RLE commands are outside the safe encoding subset")
+    refuse("missing or truncated end-of-bitmap command")
+
+
+def verify_splash(payload):
+    if SPLASH_NAME not in payload:
+        raise DiskError("Missing first-party splash: " + SPLASH_NAME)
+    data = payload[SPLASH_NAME]
+    splash_rle(data)
+    if len(data) != SPLASH_BYTES or sha(data) != SPLASH_SHA:
+        raise DiskError("Unverified first-party splash: " + SPLASH_NAME +
+                        " bytes=" + str(len(data)) + " SHA256=" + sha(data))
+
+
 def inf_support_files(data):
     """Check the bounded disk contract; Windows Setup performs the full parse."""
     text = checked_text(data, "OEMSETUP.INF")
@@ -110,6 +175,13 @@ def inf_support_files(data):
         raise DiskError("Malformed OEM display fields")
     if len(fields) != 9 or not fields[3].strip() or not fields[4].strip() or not fields[8].strip():
         raise DiskError("OEM display requires grabber and logo code/data to build WIN.COM")
+    # A distinct bitmap name prevents Setup reusing cached stock CGALOGO.RLE.
+    if fields[8].strip().upper() != "A:" + SPLASH_NAME:
+        raise DiskError("OEM logo bitmap must reference a:" + SPLASH_NAME +
+                        "; CGALOGO.RLE can reuse the cached stock splash")
+    if [field.strip().upper() for field in fields[3:8]] != [
+            "A:CGA.GR2", "A:CGALOGO.LGO", "", "", ""]:
+        raise DiskError("OEM display must preserve the accepted grabber and logo loader")
     if fields[2].strip() != "133,96,72":
         raise DiskError("OEM display must use the accepted EGA font resolution")
     # The Windows 3.0 parser treats no-data comma fields as inherited defaults.
@@ -135,9 +207,10 @@ def inf_support_files(data):
             raise DiskError("Expected " + expected + " in [" + section + "]")
     if not {"EGASYS.FON", "EGAFIX.FON", "EGAOEM.FON"}.issubset(support):
         raise DiskError("Incomplete system-font references")
-    if support != set(SUPPORT_HASHES):
-        raise DiskError("OEM INF must name exactly the six accepted Windows support files")
-    return sorted(support)
+    if support != set(SUPPORT_HASHES) | {SPLASH_NAME}:
+        raise DiskError("OEM INF must name exactly five accepted Windows support files "
+                        "and the first-party " + SPLASH_NAME)
+    return sorted(support - {SPLASH_NAME})
 
 
 def expanded_file(data, name):
@@ -241,8 +314,9 @@ def clean_payload(directory):
     if expected != manifest(payload):
         raise DiskError("DISK1 manifest mismatch; package is stale or modified")
     verify_binaries(payload)
+    verify_splash(payload)
     inf_support_files(payload["OEMSETUP.INF"])
-    for name in PAYLOAD_NAMES - BINARY_HASHES.keys():
+    for name in PAYLOAD_NAMES - BINARY_NAMES:
         checked_text(payload[name], name)
     return payload
 
@@ -261,7 +335,7 @@ def windows_path(value):
 
 def verify_support(payload):
     if set(payload) != set(SUPPORT_HASHES):
-        raise DiskError("Expected exactly the six accepted Windows support files")
+        raise DiskError("Expected exactly the five accepted Windows support files")
     for name, data in payload.items():
         if name.endswith(".FON"):
             font_ne(data, name)
@@ -270,12 +344,13 @@ def verify_support(payload):
 
 
 def completed_payload(source, support, windows_dir=DEFAULT_WINDOWS):
-    """Assemble one complete disk from fixed source plus six exact accepted inputs."""
+    """Assemble the source payload plus five exact Windows support inputs."""
     windows_dir = windows_path(windows_dir)
     if set(source) != PAYLOAD_NAMES:
         raise DiskError("Unexpected or missing base OEM payload files")
     payload = dict(source)
     verify_binaries(payload)
+    verify_splash(payload)
     inf_support_files(payload["OEMSETUP.INF"])
     verify_support(support)
     payload.update(support)
@@ -287,7 +362,7 @@ def completed_payload(source, support, windows_dir=DEFAULT_WINDOWS):
                                               b"REM WINDOWSDRIVE\r\n" + windows_dir[:2].encode("ascii") + b"\r\n")
     payload["LOCAL.TXT"] = dos_text(
         "COMPLETE TANDY88 OEM DISK\n"
-        "All six required Windows support files are included and verified.\n"
+        "Five required Windows support files and the custom Tandy splash are verified.\n"
         "Run INSTALL from this disk at a DOS prompt; read README.TXT first.\n"
         "Windows directory: " + windows_dir + "\n"
         "DOS helper directory: " + HELPER_DIR + "\n")

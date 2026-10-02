@@ -20,6 +20,16 @@ and cycle-exact 8088 timing have not been tested.
 [Download the ready-to-use OEM disk](TANDY88.ZIP) and follow
 [Getting started](#getting-started).
 
+## Custom Tandy startup screen
+
+![Actual custom Tandy splash during Windows 3.0 startup](docs/splash/BOOT.PNG)
+
+The ready-to-use disk includes this custom monochrome startup screen. Windows
+Setup installs it automatically, then Windows transitions to the sixteen-color
+desktop. This is an unmodified native emulator capture: 640×400 because the
+capture duplicates each row of the logical 640×200 image. The stock startup
+loader and accepted driver are unchanged. [Source and verification](docs/SPLASH.MD).
+
 ## Solitaire on TANDY88
 
 ![Native Windows 3.0 Solitaire with red and black suits on a green table](docs/tandy-solitaire.png)
@@ -68,10 +78,11 @@ historical evidence.
 
 Use the [ready-to-use TANDY88.ZIP disk](TANDY88.ZIP) for normal installation.
 It includes the accepted driver, automatic video-memory reservation helper,
-Windows Setup metadata and all six required Windows 3.0 support files:
+Windows Setup metadata, the custom `TNDYLOGO.RLE` startup image, and all five
+required Windows 3.0 support files:
 
 - `EGASYS.FON`, `EGAFIX.FON` and `EGAOEM.FON`
-- `CGA.GR2`, `CGALOGO.LGO` and `CGALOGO.RLE`
+- `CGA.GR2` and `CGALOGO.LGO`
 
 Python, source builds, manual `SYSTEM.INI` edits and a separate font-staging
 step are not part of the normal installation. You need an existing Windows 3.0
@@ -89,10 +100,15 @@ These steps use the tested default Windows directory, `C:\WINDOWS`:
    `OEMSETUP.INF` and `INSTALL.BAT`, then run `INSTALL`. It installs the
    helper and permanent launcher in `C:\TANDY88`
 3. Run `C:\TANDY88\TANDY88 SETUP`, choose **Other display**, and supply that
-   OEM disk's path. Windows Setup installs the display and fonts
+   OEM disk's path. Windows Setup installs the display, fonts and custom splash;
+   if asked for `TNDYLOGO.RLE`, supply that same disk path
 4. Start Windows with `C:\TANDY88\TANDY88` on every boot. The launcher
    automatically runs `RESERVE.COM` and then `WIN /R`; it stops if the
    reservation fails. The OEM disk is no longer needed after installation
+
+Already installed the previous TANDY88 disk? Keep the existing DOS helper and
+repeat step 3 with this new disk, then start Windows normally. Setup rebuilds
+`WIN.COM`; copying the splash file alone does not update the startup screen.
 
 Read the [full installation instructions](README.TXT) before starting.
 The same permanent launcher protects both Setup and normal Windows startup,
@@ -265,7 +281,8 @@ whether the result came from physical hardware or emulation. Preserve the
 correctness baseline when working on repaint performance.
 
 The driver reuses existing Microsoft DDK material and tools. The ready-to-use
-OEM disk also includes the six Microsoft Windows 3.0 support files listed above.
+OEM disk also includes the five Microsoft Windows 3.0 support files listed above
+and the first-party Tandy startup image.
 See the [source provenance](src/tandysw/PROVENANCE.md) and
 [OEM package contents and evidence](docs/OEMDISK.MD) for their origins and
 package details. Existing third-party notices are retained.

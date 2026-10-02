@@ -25,8 +25,8 @@
 1. Preserve the accepted candidate05 `src/tandysw/bin/TANDY88.DRV` and `RESERVE.COM` unless a driver change is explicitly in scope.
 2. Rebuild with `BUILD88.PY` and review `RESULT.json`; run the documented CPU, memory and framebuffer tests.
 3. Package through `MAKEDISK.BAT` on Windows or `MAKEDISK.PY` elsewhere. Exact binary pins deliberately reject an unaccepted rebuild.
-4. Use `--windows-files <owned-media-files> --local-out <new-disk-directory>` for a complete installable disk. The normal TANDY88.ZIP includes precisely the six pinned Windows 3.0 OEM support files.
-5. Test Windows Setup and the resulting installation without manually editing SYSTEM.INI. Keep full OS media, guest installations and unrelated toolchains out of publication. Only the six pinned OEM dependencies belong in the complete runtime ZIP.
+4. Use `--windows-files <owned-media-files> --local-out <new-disk-directory>` for a complete installable disk. The normal TANDY88.ZIP includes precisely the five pinned Windows 3.0 OEM support files plus the pinned first-party TNDYLOGO.RLE.
+5. Test Windows Setup and the resulting installation without manually editing SYSTEM.INI. Keep full OS media, guest installations and unrelated toolchains out of publication. Only the five pinned Windows OEM dependencies and first-party TNDYLOGO.RLE belong in the complete runtime ZIP.
 6. See `docs/OEMDISK.MD` for acceptance, failure checks and limits. Native Windows host-wrapper execution and physical Tandy hardware remain separate verification requirements.
 
 ## 5. Common Pitfalls

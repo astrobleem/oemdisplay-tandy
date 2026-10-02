@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Host regression tests. Uses synthetic Microsoft-file fixtures, never real media."""
+"""Host regressions: actual first-party splash, synthetic Windows support files."""
 import importlib.machinery
 import importlib.util
 from pathlib import Path
 import shutil
 import struct
+import subprocess
+import sys
 import tempfile
 import unittest
 from unittest import mock
@@ -48,7 +50,8 @@ class PackageTests(unittest.TestCase):
         for name in ("STAGE.PY", "oemsetup.inf", "README.TXT", "FILE_ID.DIZ"):
             shutil.copyfile(ROOT / name, self.repo / name)
         for relative in ("oemdisk/INSTALL.BAT", "oemdisk/TANDY88.BAT",
-                         "src/tandysw/bin/TANDY88.DRV", "src/tandysw/bin/RESERVE.COM"):
+                         "src/tandysw/bin/TANDY88.DRV", "src/tandysw/bin/RESERVE.COM",
+                         "src/splash/assets/TNDYLOGO.RLE"):
             target = self.repo / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, target)
@@ -135,6 +138,46 @@ class PackageTests(unittest.TestCase):
             builder.build(self.repo, self.archive, self.fonts)
         self.assertFalse(self.archive.exists())
 
+    def test_media_fixtures_exclude_first_party_splash(self):
+        self.assertEqual({p.name for p in self.fonts.iterdir()},
+                         {"EGASYS.FON", "EGAFIX.FON", "EGAOEM.FON", "CGA.GR2", "CGALOGO.LGO"})
+        splash = self.repo / "src/splash/assets/TNDYLOGO.RLE"
+        self.assertEqual(len(splash.read_bytes()), 5930)
+        self.assertEqual(s.sha(splash.read_bytes()), s.SPLASH_SHA)
+        self.assertNotIn(s.SPLASH_NAME, s.SUPPORT_HASHES)
+
+    def test_stock_or_wrong_media_splash_never_used(self):
+        (self.fonts / "CGALOGO.RLE").write_bytes(b"old cached stock splash")
+        (self.fonts / "TNDYLOGO.RLE").write_bytes(b"wrong media override")
+        builder.build(self.repo, self.archive, self.fonts)
+        with zipfile.ZipFile(self.archive) as archive:
+            self.assertNotIn("DISK1/CGALOGO.RLE", archive.namelist())
+            self.assertEqual(s.sha(archive.read("DISK1/TNDYLOGO.RLE")), s.SPLASH_SHA)
+
+    def test_missing_source_splash_does_not_fall_back_to_media_or_dirty_disk(self):
+        splash = self.repo / "src/splash/assets/TNDYLOGO.RLE"
+        data = splash.read_bytes()
+        splash.unlink()
+        (self.fonts / "TNDYLOGO.RLE").write_bytes(data)
+        (self.repo / "disk1").mkdir()
+        (self.repo / "disk1/TNDYLOGO.RLE").write_bytes(data)
+        for complete in (False, True):
+            with self.subTest(complete=complete), self.assertRaises(s.DiskError):
+                if complete:
+                    builder.build(self.repo, self.archive, self.fonts)
+                else:
+                    builder.build_toolkit(self.repo, self.archive)
+            self.assertFalse(self.archive.exists())
+
+    def test_wrong_source_splash_rejected_without_output(self):
+        path = self.repo / "src/splash/assets/TNDYLOGO.RLE"
+        changed = bytearray(path.read_bytes())
+        changed[63] ^= 0x11  # Valid monochrome run, different artwork.
+        path.write_bytes(changed)
+        with self.assertRaisesRegex(s.DiskError, "Unverified first-party splash"):
+            builder.build_toolkit(self.repo, self.archive)
+        self.assertFalse(self.archive.exists())
+
     def test_unrequested_media_never_packaged(self):
         (self.fonts / "WIN.COM").write_bytes(b"unrequested OS file")
         (self.fonts / "PRIVATE.TXT").write_bytes(b"unrelated")
@@ -143,10 +186,10 @@ class PackageTests(unittest.TestCase):
             self.assertNotIn("DISK1/WIN.COM", archive.namelist())
             self.assertNotIn("DISK1/PRIVATE.TXT", archive.namelist())
 
-    def test_seventh_inf_dependency_rejected(self):
+    def test_extra_inf_dependency_rejected(self):
         path = self.repo / "oemsetup.inf"
         path.write_bytes(path.read_bytes() + b"[fonts]\r\na:EXTRA.FON, extra, 1\r\n")
-        with self.assertRaisesRegex(s.DiskError, "exactly the six"):
+        with self.assertRaisesRegex(s.DiskError, "exactly five"):
             builder.build(self.repo, self.archive, self.fonts)
         self.assertFalse(self.archive.exists())
 
@@ -166,6 +209,21 @@ class PackageTests(unittest.TestCase):
         with zipfile.ZipFile(changed, "a") as archive:
             archive.writestr("UNWANTED.TXT", b"extra")
         with self.assertRaisesRegex(s.DiskError, "missing, extra"):
+            builder.verify_archive(self.repo, changed)
+
+    def test_verify_missing_or_old_splash_name_rejected(self):
+        changed = self.modified_archive(lambda entries: entries.__setitem__(
+            "DISK1/CGALOGO.RLE", entries.pop("DISK1/TNDYLOGO.RLE")))
+        with self.assertRaisesRegex(s.DiskError, "missing, extra"):
+            builder.verify_archive(self.repo, changed)
+
+    def test_verify_wrong_splash_rejected(self):
+        def mutate(entries):
+            changed = bytearray(entries["DISK1/TNDYLOGO.RLE"])
+            changed[63] ^= 0x11
+            entries["DISK1/TNDYLOGO.RLE"] = bytes(changed)
+        changed = self.modified_archive(mutate)
+        with self.assertRaisesRegex(s.DiskError, "Unverified first-party splash"):
             builder.verify_archive(self.repo, changed)
 
     def test_verify_wrong_support_rejected(self):
@@ -229,7 +287,9 @@ class PackageTests(unittest.TestCase):
                 self.assertEqual(info.compress_type, zipfile.ZIP_STORED)
                 self.assertEqual(info.create_system, 0)
                 self.assertEqual(info.external_attr, 0x20)
-            self.assertFalse(any(n.endswith((".FON", ".LGO", ".RLE", ".GR2")) for n in names))
+            self.assertFalse(any(n.endswith((".FON", ".LGO", ".GR2")) for n in names))
+            self.assertEqual({n for n in names if n.endswith(".RLE")}, {"DISK1/TNDYLOGO.RLE"})
+            self.assertEqual(s.sha(archive.read("DISK1/TNDYLOGO.RLE")), s.SPLASH_SHA)
 
     def test_root_old_driver_and_dirty_disk_are_never_inputs(self):
         (self.repo / "TNDY16.DRV").write_bytes(b"wrong old driver")
@@ -282,6 +342,19 @@ class PackageTests(unittest.TestCase):
         with self.assertRaisesRegex(s.DiskError, "OEM display"):
             builder.build_toolkit(self.repo, self.archive)
 
+    def test_stock_logo_name_cannot_reuse_setup_cache(self):
+        path = self.repo / "oemsetup.inf"
+        path.write_bytes(path.read_bytes().replace(b"a:TNDYLOGO.RLE", b"a:CGALOGO.RLE"))
+        with self.assertRaisesRegex(s.DiskError, "cached stock splash"):
+            builder.build_toolkit(self.repo, self.archive)
+        self.assertFalse(self.archive.exists())
+
+    def test_omitted_custom_bitmap_rejected(self):
+        path = self.repo / "oemsetup.inf"
+        path.write_bytes(path.read_bytes().replace(b"a:TNDYLOGO.RLE", b""))
+        with self.assertRaisesRegex(s.DiskError, "logo"):
+            builder.build_toolkit(self.repo, self.archive)
+
     def test_omitted_wincom_logo_rejected(self):
         path = self.repo / "oemsetup.inf"
         path.write_bytes(path.read_bytes().replace(b"a:CGALOGO.LGO", b""))
@@ -305,6 +378,45 @@ class PackageTests(unittest.TestCase):
         self.assertFalse(list(out.glob("*.ZIP")))
         for name in s.BINARY_HASHES:
             self.assertEqual((out / name).read_bytes(), (disk / name).read_bytes())
+
+    def test_extracted_toolkit_stages_without_source_tree_or_site_packages(self):
+        disk = self.disk()
+        out = self.base / "standalone"
+        # The fixture pins apply only in this isolated test process. The custom
+        # bitmap remains the actual accepted first-party file with its real pin.
+        code = ("import runpy,sys; from pathlib import Path; "
+                "m=runpy.run_path(sys.argv[1]); "
+                "m['SUPPORT_HASHES'].update(" + repr(dict(s.SUPPORT_HASHES)) + "); "
+                "m['stage'](Path(sys.argv[2]),Path(sys.argv[3]),Path(sys.argv[4]))")
+        result = subprocess.run([sys.executable, "-I", "-S", "-c", code,
+                                 str(disk.parent / "STAGE.PY"), str(disk),
+                                 str(self.fonts), str(out)], cwd=self.base,
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse((disk.parent / "src").exists())
+        self.assertEqual(s.sha((out / "TNDYLOGO.RLE").read_bytes()), s.SPLASH_SHA)
+        self.assertFalse((out / "CGALOGO.RLE").exists())
+
+    def test_missing_toolkit_splash_rejected(self):
+        disk = self.disk()
+        (disk / "TNDYLOGO.RLE").unlink()
+        out = self.base / "local"
+        with self.assertRaisesRegex(s.DiskError, "untouched toolkit"):
+            s.stage(disk, self.fonts, out)
+        self.assertFalse(out.exists())
+
+    def test_changed_toolkit_splash_rejected_even_with_recomputed_manifest(self):
+        disk = self.disk()
+        path = disk / "TNDYLOGO.RLE"
+        changed = bytearray(path.read_bytes())
+        changed[63] ^= 0x11
+        path.write_bytes(changed)
+        payload = {p.name: p.read_bytes() for p in disk.iterdir() if p.name != "MANIFEST.SHA"}
+        (disk / "MANIFEST.SHA").write_bytes(s.manifest(payload))
+        out = self.base / "local"
+        with self.assertRaisesRegex(s.DiskError, "Unverified first-party splash"):
+            s.stage(disk, self.fonts, out)
+        self.assertFalse(out.exists())
 
     def test_compressed_owned_files_stage_locally(self):
         for path in self.fonts.iterdir():
@@ -417,6 +529,62 @@ class PackageTests(unittest.TestCase):
 
 
 class FormatTests(unittest.TestCase):
+    def test_accepted_splash_format_and_pins(self):
+        data = (ROOT / "src/splash/assets/TNDYLOGO.RLE").read_bytes()
+        s.verify_splash({s.SPLASH_NAME: data})
+        self.assertEqual(s.splash_rle(data), {"width": 640, "height": 200,
+                         "encoded_runs": 2733, "eol_commands": 200,
+                         "file_bytes": 5930, "image_bytes": 5868})
+        self.assertEqual(s.SUPPORT_HASHES["CGALOGO.LGO"],
+                         "d9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807")
+
+    def test_malformed_splash_headers_rejected(self):
+        good = (ROOT / "src/splash/assets/TNDYLOGO.RLE").read_bytes()
+        variants = [("too short", good[:61]), ("too large", good + b"x" * 65280),
+                    ("signature", b"XX" + good[2:]), ("truncated", good[:-1]),
+                    ("trailing", good + b"x")]
+        for label, offset, fmt, value in (
+                ("file size", 2, "I", len(good) - 2), ("reserved", 6, "H", 1),
+                ("pixel offset", 10, "I", 54), ("header size", 14, "I", 12),
+                ("width", 18, "i", 320), ("height", 22, "i", -200),
+                ("planes", 26, "H", 2), ("bpp", 28, "H", 4),
+                ("compression", 30, "I", 0), ("image size", 34, "I", 1),
+                ("resolution", 38, "i", 1), ("palette count", 46, "I", 16),
+                ("important colors", 50, "I", 1), ("palette bytes", 54, "I", 1)):
+            changed = bytearray(good)
+            struct.pack_into("<" + fmt, changed, offset, value)
+            variants.append((label, bytes(changed)))
+        for label, data in variants:
+            with self.subTest(label=label), self.assertRaises(s.DiskError):
+                s.splash_rle(data)
+
+    def test_malformed_splash_commands_rejected(self):
+        good = (ROOT / "src/splash/assets/TNDYLOGO.RLE").read_bytes()
+        def with_stream(stream):
+            header = bytearray(good[:62])
+            struct.pack_into("<I", header, 2, 62 + len(stream))
+            struct.pack_into("<I", header, 34, len(stream))
+            return bytes(header) + stream
+        row = bytes((254, 0, 254, 0, 132, 0, 0, 0))
+        valid = with_stream(row * 200 + b"\0\1")
+        s.splash_rle(valid)
+        # A valid alternative bitmap still cannot replace the accepted artwork.
+        with self.assertRaisesRegex(s.DiskError, "Unverified first-party splash"):
+            s.verify_splash({s.SPLASH_NAME: valid})
+        for label, stream in (
+                ("early eol", b"\0\0"), ("early eob", b"\0\1"),
+                ("delta", b"\0\2"), ("absolute", b"\0\3"),
+                ("invalid color", bytes((1, 0x22))),
+                ("alternating run", bytes((2, 0x01))),
+                ("oversized run", bytes((255, 0))),
+                ("row overflow", bytes((254, 0)) * 3),
+                ("height overflow", row * 201 + b"\0\1"),
+                ("extra eol", row * 200 + b"\0\0\0\1"),
+                ("no eob", row * 200), ("half command", row * 200 + b"\0"),
+                ("trailing command", row * 200 + b"\0\1\0\0")):
+            with self.subTest(label=label), self.assertRaises(s.DiskError):
+                s.splash_rle(with_stream(stream))
+
     def test_literal_szdd_roundtrip(self):
         for data in (b"a", b"12345678", b"123456789", bytes(range(256)), font_fixture()):
             self.assertEqual(s.expanded_file(compressed_fixture(data), "TEST.FON"), data)
