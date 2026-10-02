@@ -1,9 +1,9 @@
-OEMDisplay-Tandy
-Windows 3.x display driver for Tandy 1000
-320x200 16-color TGA support
-Enhances Windows 3.x on TGA systems
-Build with MS C 6.0 & MASM 5.1
-Includes source and makefile
-Requires MS-DOS 3.2+ & Win 3.x
-NMAKE TANDY16.MAK to build
-GPL-licensed open source project
+TANDY88 ready-to-use OEM display disk
+Windows 3.0 real mode; 8086/8088
+Tandy 320x200, 16 colors
+Normal 640 KB shared-memory layout
+Includes all six OEM support files
+Guarded RESERVE.COM DOS launcher
+Other display Setup installation
+Extract DISK1 and run INSTALL in DOS
+No Python required for installation

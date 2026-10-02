@@ -1,0 +1,134 @@
+[
+  {
+    "file": "CGAWIN.PNG",
+    "source_capture": "/workspace/shared/tandy-native-gallery/cga/captures/kernel_001.raw1.png",
+    "sha256": "7c92aac14f9a588e7b56c99df87b8e9093057c1eec543c275d82fbb8d0dacf1c",
+    "scope": "Windows 3.0 stock Microsoft CGA driver",
+    "logical_dimensions": [
+      640,
+      200
+    ],
+    "png_dimensions": [
+      640,
+      400
+    ],
+    "rgb_colors": 2,
+    "duplicate_rows": true,
+    "duplicate_columns": false,
+    "modified": false,
+    "capture_method": "DOSBox-X native raw PNG via F12+Ctrl+P",
+    "cpu": "8086_prefetch",
+    "metadata": {}
+  },
+  {
+    "file": "MODE0A.PNG",
+    "source_capture": "/workspace/shared/tandy-native-gallery/mode0a/captures/showmode_000.raw1.png",
+    "sha256": "2c6e5c5e8ef83ce7ad3090ecbc2b874cf92807be0133210a558d905d3c4f8d09",
+    "scope": "DOS-only BIOS 0Ah framebuffer test",
+    "logical_dimensions": [
+      640,
+      200
+    ],
+    "png_dimensions": [
+      640,
+      400
+    ],
+    "rgb_colors": 4,
+    "duplicate_rows": true,
+    "duplicate_columns": false,
+    "modified": false,
+    "capture_method": "DOSBox-X native raw PNG via F12+Ctrl+P",
+    "cpu": "8086_prefetch",
+    "metadata": {
+      "mode": 10,
+      "width": 640,
+      "color_mask": 3,
+      "bytes": 32768,
+      "psp": 2070,
+      "code": 2086,
+      "live_end": 2234,
+      "block_end": 39936,
+      "kb_before": 624,
+      "kb_after": 624,
+      "got_mode": 10,
+      "got_columns": 80,
+      "alias_check_not_used": 0,
+      "mcb_check_not_used": 0,
+      "text_return_ok": 1
+    }
+  },
+  {
+    "file": "MODE04.PNG",
+    "source_capture": "/workspace/shared/tandy-native-gallery/mode04/captures/showmode_000.raw1.png",
+    "sha256": "05db6cad64d2b830bfaea99ab2bfe3a672d701b14b08d87199cb9606b2ccd6cd",
+    "scope": "DOS-only BIOS 04h framebuffer test",
+    "logical_dimensions": [
+      320,
+      200
+    ],
+    "png_dimensions": [
+      320,
+      200
+    ],
+    "rgb_colors": 4,
+    "duplicate_rows": false,
+    "duplicate_columns": false,
+    "modified": false,
+    "capture_method": "DOSBox-X native raw PNG via F12+Ctrl+P",
+    "cpu": "8086_prefetch",
+    "metadata": {
+      "mode": 4,
+      "width": 320,
+      "color_mask": 3,
+      "bytes": 16384,
+      "psp": 2070,
+      "code": 2086,
+      "live_end": 2234,
+      "block_end": 39936,
+      "kb_before": 624,
+      "kb_after": 624,
+      "got_mode": 4,
+      "got_columns": 40,
+      "alias_check_not_used": 0,
+      "mcb_check_not_used": 0,
+      "text_return_ok": 1
+    }
+  },
+  {
+    "file": "MODE08.PNG",
+    "source_capture": "/workspace/shared/tandy-native-gallery/mode08/captures/showmode_000.raw1.png",
+    "sha256": "3952c01013ffdb46a4bd0def540f51d6e0f180a3216f5bb2b85bf0949a2f4d7f",
+    "scope": "DOS-only BIOS 08h framebuffer test",
+    "logical_dimensions": [
+      160,
+      200
+    ],
+    "png_dimensions": [
+      320,
+      200
+    ],
+    "rgb_colors": 16,
+    "duplicate_rows": false,
+    "duplicate_columns": true,
+    "modified": false,
+    "capture_method": "DOSBox-X native raw PNG via F12+Ctrl+P",
+    "cpu": "8086_prefetch",
+    "metadata": {
+      "mode": 8,
+      "width": 160,
+      "color_mask": 15,
+      "bytes": 16384,
+      "psp": 2070,
+      "code": 2086,
+      "live_end": 2234,
+      "block_end": 39936,
+      "kb_before": 624,
+      "kb_after": 624,
+      "got_mode": 8,
+      "got_columns": 20,
+      "alias_check_not_used": 0,
+      "mcb_check_not_used": 0,
+      "text_return_ok": 1
+    }
+  }
+]

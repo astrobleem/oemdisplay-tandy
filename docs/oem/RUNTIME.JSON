@@ -1,0 +1,117 @@
+{
+  "source": "/workspace/shared/tandy-oem-qa/restart-c",
+  "source_hashes_before": {
+    "WINDOWS/SYSTEM/TANDY88.DRV": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee",
+    "TANDY88/RESERVE.COM": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+    "WINDOWS/SYSTEM.INI": "2d574e363fe23bdecd04929ab979fb033c592e28f344e097860371bfc68a8e44",
+    "WINDOWS/WIN.COM": "5551ebcd3f32df26f759c5423f806733e006c3cae640a8336e5c618f8d899659",
+    "WINDOWS/SYSTEM/EGASYS.FON": "8bd307d7886d0f2fdfc1de3da8253e294233d1c757fd9131a66405fca5825b09",
+    "WINDOWS/SYSTEM/EGAFIX.FON": "6df45a74e5756dd0746bcee593be9ac4df4a35458c26bf4570b748def2d394cb",
+    "WINDOWS/SYSTEM/EGAOEM.FON": "05bd6ef11802bbca20473b0e409116fd8919c5bbcbbbc26b7ee2ea1f33ad23be"
+  },
+  "tests": [
+    {
+      "name": "coldstart",
+      "guest": "/workspace/shared/tandy-oem-regression/coldstart-c",
+      "config": "/workspace/shared/tandy-oem-regression/coldstart.CNF",
+      "exe_sha256": "013b44db1d3852b09bcf1d34bddd07305fa2bc27f373fc2765978db14118fd54",
+      "driver_sha256": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee",
+      "reserve_sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+      "installed_ini_unchanged": true,
+      "installed_binary_and_fonts_unchanged": true,
+      "core": "normal",
+      "cpu": "8086_prefetch",
+      "reservation": "RESERVE: 16K video overlap reserved. Start Windows with WIN /R.",
+      "memory": {
+        "bios_conventional_kb": 624,
+        "before_free_kb": 592,
+        "after_free_kb": 574
+      },
+      "run": {
+        "complete": true,
+        "elapsed_seconds": 13.074,
+        "config": "/workspace/shared/tandy-oem-regression/coldstart.CNF",
+        "guest_log": "/workspace/shared/tandy-oem-regression/coldstart-c/PROBE.LOG",
+        "host_log": "/workspace/shared/tandy-oem-regression/coldstart-host.log"
+      },
+      "metrics": {
+        "PROBE_VERSION": 1,
+        "SM_CXSCREEN": 320,
+        "SM_CYSCREEN": 200,
+        "HORZRES": 320,
+        "VERTRES": 200,
+        "BITSPIXEL": 1,
+        "PLANES": 4,
+        "NUMCOLORS": 16,
+        "BIOS_MODE_DECIMAL": 9,
+        "CURSOR_X": 160,
+        "CURSOR_Y": 100,
+        "COMPLETE": 1
+      }
+    },
+    {
+      "name": "round4",
+      "guest": "/workspace/shared/tandy-oem-regression/round4-c",
+      "config": "/workspace/shared/tandy-oem-regression/round4.CNF",
+      "exe_sha256": "8fee3930c714e295bb959bb20494615dfafaf4e9bd6f39547aa921b1c44a67b4",
+      "driver_sha256": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee",
+      "reserve_sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+      "installed_ini_unchanged": true,
+      "installed_binary_and_fonts_unchanged": true,
+      "core": "normal",
+      "cpu": "8086_prefetch",
+      "reservation": "RESERVE: 16K video overlap reserved. Start Windows with WIN /R.",
+      "memory": {
+        "bios_conventional_kb": 624,
+        "before_free_kb": 592,
+        "after_free_kb": 574
+      },
+      "run": {
+        "complete": true,
+        "elapsed_seconds": 12.246,
+        "config": "/workspace/shared/tandy-oem-regression/round4.CNF",
+        "guest_log": "/workspace/shared/tandy-oem-regression/round4-c/ROUND4.LOG",
+        "host_log": "/workspace/shared/tandy-oem-regression/round4-host.log"
+      },
+      "oracle_result": "PASS"
+    },
+    {
+      "name": "round5",
+      "guest": "/workspace/shared/tandy-oem-regression/round5-c",
+      "config": "/workspace/shared/tandy-oem-regression/round5.CNF",
+      "exe_sha256": "fe836e67bc859fe34d9d4772d3c189d538c84f1d1d2b2480ace4c442626ecfd4",
+      "driver_sha256": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee",
+      "reserve_sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+      "installed_ini_unchanged": true,
+      "installed_binary_and_fonts_unchanged": true,
+      "core": "normal",
+      "cpu": "8086_prefetch",
+      "reservation": "RESERVE: 16K video overlap reserved. Start Windows with WIN /R.",
+      "memory": {
+        "bios_conventional_kb": 624,
+        "before_free_kb": 592,
+        "after_free_kb": 574
+      },
+      "run": {
+        "complete": true,
+        "elapsed_seconds": 10.632,
+        "config": "/workspace/shared/tandy-oem-regression/round5.CNF",
+        "guest_log": "/workspace/shared/tandy-oem-regression/round5-c/ROUND5.LOG",
+        "host_log": "/workspace/shared/tandy-oem-regression/round5-host.log"
+      },
+      "oracle_result": "PASS"
+    }
+  ],
+  "ini_edits": "NONE; run test EXE through WIN /R argument in separate copied guests",
+  "source_hashes_after": {
+    "WINDOWS/SYSTEM/TANDY88.DRV": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee",
+    "TANDY88/RESERVE.COM": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+    "WINDOWS/SYSTEM.INI": "2d574e363fe23bdecd04929ab979fb033c592e28f344e097860371bfc68a8e44",
+    "WINDOWS/WIN.COM": "5551ebcd3f32df26f759c5423f806733e006c3cae640a8336e5c618f8d899659",
+    "WINDOWS/SYSTEM/EGASYS.FON": "8bd307d7886d0f2fdfc1de3da8253e294233d1c757fd9131a66405fca5825b09",
+    "WINDOWS/SYSTEM/EGAFIX.FON": "6df45a74e5756dd0746bcee593be9ac4df4a35458c26bf4570b748def2d394cb",
+    "WINDOWS/SYSTEM/EGAOEM.FON": "05bd6ef11802bbca20473b0e409116fd8919c5bbcbbbc26b7ee2ea1f33ad23be"
+  },
+  "source_unchanged": true,
+  "result": "PASS"
+}

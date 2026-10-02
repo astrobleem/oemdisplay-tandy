@@ -1,0 +1,45 @@
+{
+  "base_commit": "f80b3f85e1b655f63331102e435d436946e6213b",
+  "driver_runtime_unchanged": true,
+  "final_runtime_installer_and_owned_support_equal_gui_tested_disk": [
+    "TANDY88.DRV",
+    "RESERVE.COM",
+    "OEMSETUP.INF",
+    "INSTALL.BAT",
+    "TANDY88.BAT",
+    "CGA.GR2",
+    "CGALOGO.LGO",
+    "CGALOGO.RLE",
+    "EGASYS.FON",
+    "EGAFIX.FON",
+    "EGAOEM.FON"
+  ],
+  "final_changes_after_gui_test": "Completed distribution ZIP and documentation; installed driver, INF, both DOS helpers and all six support files stay byte-identical to the tested OEM disk",
+  "host_tests": 47,
+  "dos_sentinel_tests": 22,
+  "setup_change_existing_cga": "PASS",
+  "fresh_initial_graphical_setup": "PASS_WITH_320x200_DIALOG_CLIPPING",
+  "fresh_gui_cold_start_without_oem_disk": "PASS",
+  "paintbrush_draw_save_reopen_clean_exit": "PASS",
+  "round4": "56 cases; 1835008 bytes; zero mismatches",
+  "round5": "64 calls after 8 warmups; zero failures; stable heap/framebuffer",
+  "historical_general_glyph_corruption": "NOT REPRODUCED; root cause unproven",
+  "native_windows_host_wrapper": "STATIC_REVIEW_ONLY",
+  "physical_tandy": "NOT TESTED",
+  "clean_archive_reproducible": true,
+  "outputs": {
+    "TANDY88.ZIP": {
+      "bytes": 95481,
+      "sha256": "15def8a68f14aa5a6729df58d4f6962727abeb213cb2c1d98541d9d4471c0ef2",
+      "scope": "Ready-to-use OEM disk; includes exactly six Windows support files"
+    }
+  },
+  "floppy_360kb": {
+    "disk_files": 15,
+    "allocated_file_bytes": 96256,
+    "filesystem_overhead_bytes": 6144,
+    "total_bytes": 102400,
+    "capacity_bytes": 368640,
+    "fits": true
+  }
+}

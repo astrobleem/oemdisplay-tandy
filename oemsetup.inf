@@ -1,52 +1,17 @@
-; OEMSETUP.INF -- Tandy 1000 Windows 3.0 Display Driver
-; ---------------------------------------------------------------
-; Install via Windows Setup: select "Other display (Requires disk
-; from OEM)" and provide the path to this disk.
-;
-; Based on the Microsoft Windows 3.x DDK sample OEMSETUP.INF.
-; See DDK Device Driver Adaptation Guide, Chapter 14.
-
-; VERSION INFO
-; ---------------------------------------------------------------
-; This tells Setup that this is a 3.0 compatible OEM driver disk.
-
+; Tandy 1000 EX/HX Windows 3.0 real-mode display disk, candidate 05.
+; Complete this disk with STAGE.PY using your own Windows 3.0 media.
+; Microsoft fonts, logo files and grabber are local-only, not distributed.
 [data]
-    Version = "3.0"
-
-; DRIVER DISKS
-; ---------------------------------------------------------------
-; Setup prompts the user to "insert the:" followed by the disk name.
-
+Version = "3.0"
 [disks]
-    a =., "Tandy 1000 Display Driver Disk"
-
-; DISPLAY TYPES
-; ---------------------------------------------------------------
-; Resolution triplet is "AspectRatio, LogPixelsX, LogPixelsY".
-; AspectRatio = LogPixelsX * 100 / LogPixelsY.
-; We use EGA-class values (133,96,72) as the closest standard
-; font resolution for the 320x200 display mode.
-;
-; Fields: profile = driver, description, resolution,
-;         286grabber, logocode, VDD, 386grabber, ega.sys, logodata
-
+a = ., "Tandy 1000 EX/HX Display Disk", OEMSETUP.INF
 [display]
-tndy16 = a:tndy16.drv, "Tandy 1000 320x200, 16 colors", "133,96,72",,,,,,
-
-; SYSTEM FONTS
-; ---------------------------------------------------------------
-; Fonts are selected by matching the resolution string from the
-; [display] section. EGA-resolution fonts are the smallest standard
-; set and the best fit for the 320x200 display mode.
-;
-; If these font files are not on the driver disk, Windows Setup
-; will prompt for the original Windows installation disk.
-
+; profile = driver, description, aspect/logical DPI, grabber, logo, VDD,
+;           enhanced grabber, EGA driver, logo bitmap
+TANDY88 = a:TANDY88.DRV, "Tandy EX/HX 320x200 16 colors (8088 c05)", "133,96,72", a:CGA.GR2, a:CGALOGO.LGO,,,, a:CGALOGO.RLE
 [sysfonts]
-a:egasys.fon, "EGA (640x350) resolution System Font", "133,96,72"
-
+a:EGASYS.FON, "EGA System Font", "133,96,72"
 [fixedfonts]
-a:egafix.fon, "EGA (640x350) resolution Fixed System Font", "133,96,72"
-
+a:EGAFIX.FON, "EGA Fixed System Font", "133,96,72"
 [oemfonts]
-a:egaoem.fon, "EGA (640x350) resolution Terminal Font (USA/Europe)", "133,96,72", 1
+a:EGAOEM.FON, "EGA Terminal Font (USA/Europe)", "133,96,72", 1
