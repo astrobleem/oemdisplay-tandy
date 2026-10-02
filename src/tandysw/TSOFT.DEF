@@ -1,0 +1,46 @@
+LIBRARY DISPLAY
+DESCRIPTION 'DISPLAY : 133,96,72 : Tandy 320x200 16-color software raster'
+EXETYPE WINDOWS
+DATA PRELOAD FIXED SINGLE
+CODE PRELOAD FIXED
+SEGMENTS
+ _TEXT PRELOAD FIXED SHARED
+ _REAL PRELOAD FIXED SHARED
+ _INIT PRELOAD FIXED SHARED
+ _LINES PRELOAD FIXED SHARED
+ _PIXEL PRELOAD FIXED SHARED
+ _SCANLINE PRELOAD FIXED SHARED
+ _BLUEMOON PRELOAD FIXED SHARED
+ _SHADOW PRELOAD FIXED
+EXPORTS
+ BitBlt=TBitBlt @1
+ ColorInfo @2
+ Control=TControl @3
+ Disable=TDisable @4
+ Enable=TEnable @5
+ EnumDFonts @6
+ EnumObj @7
+ Output=TOutput @8
+ Pixel=TPixel @9
+ RealizeObject @10
+ StrBlt=TStrBlt @11
+ ScanLR=TScanLR @12
+ DeviceMode @13 NODATA
+ ExtTextOut=TExtTextOut @14
+ GetCharWidth @15 NODATA
+ DeviceBitmap @16 NODATA
+ FastBorder @17
+ SetAttribute @18 NODATA
+ Inquire @101
+ SetCursor @102
+ MoveCursor @103
+ CheckCursor @104
+ UserRepaintDisable @500
+IMPORTS
+ AllocCSToDSAlias=KERNEL.170
+ AllocDSToCSAlias=KERNEL.171
+ AllocSelector=KERNEL.175
+ FreeSelector=KERNEL.176
+ PrestoChangeoSelector=KERNEL.177
+ ScreenSelector=KERNEL.182
+ __NEXTSEG=KERNEL.114
