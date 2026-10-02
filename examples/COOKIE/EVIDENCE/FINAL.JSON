@@ -1,0 +1,15 @@
+{
+  "exe_sha256": "9edbfc5c23a245c555af690391d6a7f6efccd6db552de5473e613e9c2bae2a14",
+  "source_sha256": "287e641fda0cec008b1b7861f4d1e8e17b5feb81f2190b890dd2a88616e6e290",
+  "native_checks": 410,
+  "modes": [
+    "160x200x16",
+    "320x200x4",
+    "320x200x16",
+    "640x200x2",
+    "640x200x4"
+  ],
+  "minimum_verified_screen": "160x200",
+  "driver_changed": false,
+  "stage": "Local runtime acceptance before publication"
+}
