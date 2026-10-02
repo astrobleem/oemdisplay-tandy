@@ -1,0 +1,912 @@
+{
+  "build": "PASS",
+  "runtime": "NOT_TESTED",
+  "target": "8086/8088 real mode",
+  "candidate": "05 DIB save/readback correction",
+  "mode": {
+    "profile": {
+      "width": 640,
+      "height": 200,
+      "colors": 4,
+      "bios": 10,
+      "driver": "TNDY6404.DRV",
+      "palette": [
+        0,
+        11,
+        13,
+        15
+      ],
+      "key": "640x200x4",
+      "logical_planes": 4,
+      "shadow_bytes": 64000
+    },
+    "color": {
+      "feature": "four physical colors with redundant four-plane DDB indices",
+      "changed": true,
+      "patched_files": [
+        "BMC_ITE.ASM",
+        "CBLT.ASM",
+        "COLORS.ASM",
+        "EGA/TSOFT.ASM",
+        "ENUM.ASM",
+        "ROBJECT.ASM",
+        "SCANLR.ASM"
+      ],
+      "logical_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          255,
+          255
+        ],
+        [
+          255,
+          0,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "hardware_palette": [
+        0,
+        11,
+        13,
+        15
+      ],
+      "canonical_indices": [
+        0,
+        5,
+        10,
+        15
+      ],
+      "raw_ddb_aliases": "index & 3; readback, ScanLR and color-to-mono BitBlt agree",
+      "ddb_format": "4 planes, 1 bit per pixel per plane (0104h)",
+      "color_quantization": "nearest RGB squared distance; ties black/cyan/magenta/white",
+      "brushes": "nearest solid color; monochrome dithering retained; hatch/pattern canonical",
+      "public_palette_entries": 4,
+      "dib_indexed_palette_entries": 16,
+      "dib_formats": "1/4/8/24-bit BI_RGB imports and exports use the same palette",
+      "cpu": "8086 mapper; CBLT emits audited MOV/XOR/LODSB/OR/NOT opcodes",
+      "mapper_sha256": "a2435bd3e33bd56cdb176d6ab33f0f644f8b7cae627bbd0acc5634a11a2d2079"
+    },
+    "stage": "experimental mode profile; runtime validation required",
+    "staged_sha256": {
+      "EGA/TSOFT.ASM": "8d9b8c1ca3a0cf45a9160f43f6e4fbf25b38247a5ef4944ef8beb2675d1f3163",
+      "EGA/TCURSOR.ASM": "c333f75a56eca33ebe42b6a8eed6646a190e752d3bc6acbe6d8bb81784bba82f",
+      "SDIB88.ASM": "4cfe06266f792d5f3dfbbecbc07851c5f046ab6f38fb414cd0e2d2a9425fa18c"
+    }
+  },
+  "resource_sha256": "4bdf9197db27b33dd5859c4198534aa7db6cb2066fe8075caff1899ff25cb312",
+  "driver_bytes": 50832,
+  "driver_sha256": "6fdeb2f9fd452f86f3fd9c786c4e37f6a4b8e04e4a7d8cbe07470e0641a1040d",
+  "port": {
+    "cpu": "8086/8088",
+    "mode": "Windows real mode",
+    "pinned_ddk_inputs": 62,
+    "patched_files": [
+      "BITBLT.ASM",
+      "CBLT.ASM",
+      "DEBUG.INC",
+      "DEVCONST.INC",
+      "GENCONST.INC",
+      "INC/CMACROS.INC",
+      "MACROS.INC",
+      "MACROS.MAC",
+      "POLYLINE.ASM",
+      "RLBLDSTR.ASM",
+      "RLSTRBLT.ASM",
+      "SPECIAL.INC"
+    ],
+    "immediate_shift_sites": 17,
+    "pusha_sites": 5,
+    "popa_sites": 6,
+    "push_immediate_sites": 5,
+    "push_immediate_instantiations": 12,
+    "generated_rotate": "D0 C0/D0 C8 repeated min(phase, 8-phase) times",
+    "max_blt_size": 500,
+    "include_path_requirement": "R:\\INC must precede C:\\DDK\\286\\INC"
+  },
+  "dib": {
+    "feature": "uncompressed DIB conversion and shadow-backed screen transfer",
+    "pinned_new_ddk_inputs": 4,
+    "shared_includes": "all previously pinned by PORT8086; strict staged macros verified",
+    "patched_files": [
+      "BLDCOR.BAT",
+      "BMC_MAIN.ASM",
+      "EGA/TSOFT.ASM",
+      "EGA/TSOFT.DEF",
+      "EGA/TSOFT.LNK",
+      "SDIB88.ASM"
+    ],
+    "new_objects": [
+      "BMC_MAIN.OBJ",
+      "BMC_ETI.OBJ",
+      "BMC_ITE.OBJ",
+      "SDIB88.OBJ"
+    ],
+    "exports": {
+      "19": "DeviceBitmapBits",
+      "20": "CreateBitmap",
+      "21": "DIBScreenBlt"
+    },
+    "capability": "RC_DI_BITMAP | RC_DIBTODEV (shadow-only)",
+    "screen_bridge_sha256": "e76afa30f17dfd1102e567af246b8289e2aa2814515d2d59525b957039358620",
+    "screen_temporary_storage": "1064-byte private header/palette plus one four-plane row <=16384 bytes",
+    "screen_mapping": "bottom-up supplied band; signed clipping against 320x200 and caller rectangle; one FlushShadow",
+    "compression": "BI_RGB only; complete nonzero biCompression DWORD returns AX=0",
+    "raw_data_audit": "pixel/threshold data and routine-address tables only; no code templates",
+    "include_path_requirement": "R:\\INC must precede C:\\DDK\\286\\INC"
+  },
+  "instruction_audit": {
+    "emitted_instruction_rows_checked": 13525,
+    "listing_counts": {
+      "BITBLT.LST": 2068,
+      "BMC_ETI.LST": 813,
+      "BMC_ITE.LST": 665,
+      "BMC_MAIN.LST": 83,
+      "CBLT.LST": 547,
+      "CHARWDTH.LST": 105,
+      "CHKSTK.LST": 90,
+      "COLORINF.LST": 34,
+      "COLORS.LST": 68,
+      "DITHERS.LST": 327,
+      "ENUM.LST": 72,
+      "FB.LST": 347,
+      "LODITHER.LST": 44,
+      "OUTPUT.LST": 11,
+      "PIXEL.LST": 198,
+      "POLYLINE.LST": 1807,
+      "REALFIX.LST": 629,
+      "REALPRO.LST": 705,
+      "RLBLDSTR.LST": 1178,
+      "RLSTRBLT.LST": 1210,
+      "ROBJECT.LST": 343,
+      "SCANLINE.LST": 583,
+      "SCANLR.LST": 206,
+      "SDIB88.LST": 426,
+      "SETMODE.LST": 2,
+      "TCURSOR.LST": 447,
+      "TSOFT.LST": 517
+    },
+    "unsupported": [],
+    "scope": "Emitted instruction rows, including macro expansions (some macro header rows repeat bytes). Numeric runtime-code templates are audited separately by PORT8086."
+  },
+  "link_audit": {
+    "result": "PASS",
+    "explicit_objects": 27,
+    "extra_library_code_bytes": 0,
+    "segments": [
+      {
+        "name": "_BLUEMOON",
+        "class": "CODE",
+        "bytes": 804
+      },
+      {
+        "name": "_DATA",
+        "class": "DATA",
+        "bytes": 898
+      },
+      {
+        "name": "_DIMAPS",
+        "class": "CODE",
+        "bytes": 3531
+      },
+      {
+        "name": "_INIT",
+        "class": "CODE",
+        "bytes": 381
+      },
+      {
+        "name": "_LINES",
+        "class": "CODE",
+        "bytes": 4472
+      },
+      {
+        "name": "_PIXEL",
+        "class": "CODE",
+        "bytes": 628
+      },
+      {
+        "name": "_PROTECT",
+        "class": "CODE",
+        "bytes": 46
+      },
+      {
+        "name": "_REAL",
+        "class": "CODE",
+        "bytes": 9406
+      },
+      {
+        "name": "_SCANLINE",
+        "class": "CODE",
+        "bytes": 1504
+      },
+      {
+        "name": "_SHADOW",
+        "class": "DATA",
+        "bytes": 64000
+      },
+      {
+        "name": "_TEXT",
+        "class": "CODE",
+        "bytes": 12272
+      }
+    ],
+    "objects": [
+      {
+        "object": "TSOFT.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 0,
+            "bytes": 908,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 0,
+            "bytes": 46,
+            "alignment": 2
+          },
+          {
+            "segment": "_SHADOW",
+            "class": "DATA",
+            "start": 0,
+            "bytes": 64000,
+            "alignment": 2
+          },
+          {
+            "segment": "_PIXEL",
+            "class": "CODE",
+            "start": 0,
+            "bytes": 64,
+            "alignment": 2
+          },
+          {
+            "segment": "_BLUEMOON",
+            "class": "CODE",
+            "start": 0,
+            "bytes": 171,
+            "alignment": 2
+          },
+          {
+            "segment": "_INIT",
+            "class": "CODE",
+            "start": 0,
+            "bytes": 381,
+            "alignment": 2
+          },
+          {
+            "segment": "_DIMAPS",
+            "class": "CODE",
+            "start": 0,
+            "bytes": 64,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "BITBLT.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 908,
+            "bytes": 4740,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 0,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "CBLT.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 5648,
+            "bytes": 1202,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 0,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "POLYLINE.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 6850,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_LINES",
+            "class": "CODE",
+            "start": 0,
+            "bytes": 4426,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "SCANLINE.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 6850,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_SCANLINE",
+            "class": "CODE",
+            "start": 0,
+            "bytes": 1458,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "OUTPUT.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 6850,
+            "bytes": 32,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 0,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "PIXEL.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 6882,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_PIXEL",
+            "class": "CODE",
+            "start": 64,
+            "bytes": 564,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "SCANLR.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 6882,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_BLUEMOON",
+            "class": "CODE",
+            "start": 172,
+            "bytes": 451,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "RLSTRBLT.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 6882,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_REAL",
+            "class": "CODE",
+            "start": 0,
+            "bytes": 2790,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "RLBLDSTR.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 6882,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_REAL",
+            "class": "CODE",
+            "start": 2790,
+            "bytes": 2963,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "REALFIX.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 6882,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_REAL",
+            "class": "CODE",
+            "start": 5754,
+            "bytes": 1700,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "REALPRO.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 6882,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_REAL",
+            "class": "CODE",
+            "start": 7454,
+            "bytes": 1905,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "DITHERS.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 6882,
+            "bytes": 856,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 46,
+            "bytes": 4,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "ROBJECT.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 7738,
+            "bytes": 827,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 50,
+            "bytes": 0,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "COLORINF.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 8566,
+            "bytes": 68,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 50,
+            "bytes": 0,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "ENUM.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 8634,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 50,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_BLUEMOON",
+            "class": "CODE",
+            "start": 624,
+            "bytes": 174,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "COLORS.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 8634,
+            "bytes": 150,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 50,
+            "bytes": 0,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "SETMODE.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 8784,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 50,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_BLUEMOON",
+            "class": "CODE",
+            "start": 798,
+            "bytes": 6,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "CHKSTK.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 8784,
+            "bytes": 46,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 50,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_LINES",
+            "class": "CODE",
+            "start": 4426,
+            "bytes": 46,
+            "alignment": 2
+          },
+          {
+            "segment": "_PROTECT",
+            "class": "CODE",
+            "start": 0,
+            "bytes": 46,
+            "alignment": 2
+          },
+          {
+            "segment": "_REAL",
+            "class": "CODE",
+            "start": 9360,
+            "bytes": 46,
+            "alignment": 2
+          },
+          {
+            "segment": "_SCANLINE",
+            "class": "CODE",
+            "start": 1458,
+            "bytes": 46,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "CHARWDTH.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 8830,
+            "bytes": 238,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 50,
+            "bytes": 0,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "FB.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 9068,
+            "bytes": 795,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 50,
+            "bytes": 0,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "LODITHER.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 9864,
+            "bytes": 203,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 50,
+            "bytes": 0,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "TCURSOR.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 10068,
+            "bytes": 1052,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 50,
+            "bytes": 848,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "BMC_MAIN.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 11120,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 898,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DIMAPS",
+            "class": "CODE",
+            "start": 64,
+            "bytes": 174,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "BMC_ETI.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 11120,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 898,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DIMAPS",
+            "class": "CODE",
+            "start": 238,
+            "bytes": 1804,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "BMC_ITE.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 11120,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 898,
+            "bytes": 0,
+            "alignment": 2
+          },
+          {
+            "segment": "_DIMAPS",
+            "class": "CODE",
+            "start": 2042,
+            "bytes": 1489,
+            "alignment": 2
+          }
+        ]
+      },
+      {
+        "object": "SDIB88.OBJ",
+        "contributions": [
+          {
+            "segment": "_TEXT",
+            "class": "CODE",
+            "start": 11120,
+            "bytes": 1152,
+            "alignment": 2
+          },
+          {
+            "segment": "_DATA",
+            "class": "DATA",
+            "start": 898,
+            "bytes": 0,
+            "alignment": 2
+          }
+        ]
+      }
+    ]
+  }
+}

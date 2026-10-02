@@ -5,10 +5,12 @@ TANDY88.ZIP is ready to use. Extract it and copy the CONTENTS of DISK1
 to a floppy or DOS-accessible folder. No Python, font collection, or
 media-staging step is needed to install this downloaded driver disk.
 
-The package contains the accepted TANDY88.DRV, RESERVE.COM, DOS helpers,
-OEMSETUP.INF, the custom TNDYLOGO.RLE startup image, and five required
-Windows support files: EGASYS.FON, EGAFIX.FON, EGAOEM.FON, CGA.GR2 and
-CGALOGO.LGO. It does not include Windows itself. You still need a working Windows 3.0 installation.
+The package contains five selectable display drivers, RESERVE.COM, DOS
+helpers, OEMSETUP.INF, the custom TNDYLOGO.RLE startup image, and eight
+required Windows support files: EGASYS.FON, EGAFIX.FON, EGAOEM.FON,
+CGASYS.FON, CGAFIX.FON, CGAOEM.FON, CGA.GR2 and CGALOGO.LGO. It does not
+include Windows itself. You still need a working Windows 3.0 installation.
+All five choices and their support files fit one standard 360 KB floppy.
 
 QUICK INSTALL
 -------------
@@ -21,10 +23,12 @@ QUICK INSTALL
    start Windows or Setup automatically.
 3. Run C:\TANDY88\TANDY88 SETUP. In Windows Setup, choose Display,
    Other display (Requires disk from OEM), and the path to this disk,
-   such as A:\. Select Tandy EX/HX 320x200 16 colors (8088 c05).
+   such as A:\. The first choice, Tandy EX/HX 320x200 16 colors (8088 c05),
+   is the unchanged default. Select it or one of the other modes below.
 4. Let Windows Setup install the driver/support files and update its
-   settings. If asked for TNDYLOGO.RLE, supply the same OEM disk path. Do not manually edit SYSTEM.INI or copy the driver into
-   the Windows directory yourself.
+   settings. If asked for TNDYLOGO.RLE or a font, supply the same OEM disk
+   path. Setup installs the selected driver and its matching system fonts.
+   Do not manually edit SYSTEM.INI or copy drivers into Windows yourself.
 5. Every time you start Windows, including after a reboot, run:
 
      C:\TANDY88\TANDY88
@@ -32,12 +36,35 @@ QUICK INSTALL
    This safely checks RESERVE and then starts WIN.COM /R. After the
    installation finishes, the removable OEM disk is no longer needed.
 
+SELECTABLE DISPLAY MODES
+------------------------
+Windows Setup presents these five choices in this order:
+
+  320x200 16 colors (8088 c05)  TANDY88.DRV   Original default, EGA fonts
+  640x200  4 colors (8088)      TNDY6404.DRV  Black, green, red, white
+  160x200 16 colors (8088)      TNDY160.DRV   Very narrow desktop
+  320x200  4 colors (8088)      TNDY3204.DRV  Four-color desktop
+  640x200  2 colors (8088)      TNDY6402.DRV  Black-and-white desktop
+
+The original choice keeps its EGA fonts and 133,96,72 font resolution.
+All four additional modes use 8-pixel CGA system, fixed, and terminal
+fonts with 200,96,48 font resolution. These are display modes for the
+same Tandy EX/HX hardware; choosing a CGA-style mode does not make the
+package a generic CGA or PCjr driver.
+
+To switch, exit Windows completely, run C:\TANDY88\TANDY88 SETUP, and
+repeat Display / Other with this disk and the desired choice. Each mode
+has a unique driver filename, so Setup can replace the active selection.
+Keep this disk available when switching. Some standard Windows dialogs
+clip at 320 pixels; 160x200 is especially cramped and is not recommended
+for normal desktop work. Wider modes provide more horizontal room.
+
 CUSTOM TANDY STARTUP SCREEN
 --------------------------
 The disk includes a crisp monochrome Tandy startup screen. Windows Setup
 installs it automatically and rebuilds WIN.COM; no separate patching is
-needed. Its 640x200 two-color startup mode changes to the normal 320x200
-sixteen-color desktop as Windows loads.
+needed. Its 640x200 two-color startup mode changes to the desktop mode
+you selected as Windows loads.
 
 Already using the previous TANDY88 disk? Keep its installed DOS helper,
 exit Windows, and run C:\TANDY88\TANDY88 SETUP with this new disk via the
@@ -52,7 +79,9 @@ Tandy mode 09 uses 32 KB at the top of shared RAM. In the supported
 but the lower 16 KB remains available to ordinary DOS allocations.
 RESERVE.COM claims that remaining 16 KB through the DOS allocator,
 with valid DOS memory-block ownership, before Windows uses it as video
-memory. It does not add RAM or change the BIOS memory-size value.
+memory. The same conservative reservation is used for all five display
+choices, including modes that need only 16 KB. It does not add RAM or
+change the BIOS memory-size value.
 
 The same helper may run again in the same boot: it verifies its existing
 reservation and succeeds without reserving it twice. Reboot removes the
@@ -64,7 +93,7 @@ with the guarded launcher. There is no unload command.
 
 TARGET AND LIMITS
 -----------------
-- Windows 3.0 REAL MODE, 8086/8088, Tandy 320x200 16 colors
+- Windows 3.0 REAL MODE, 8086/8088, original Tandy 1000 EX/HX modes above
 - Normal 640 KB shared-memory layout: BIOS reports 624 KB and the DOS
   arena ends at 9C00h; BIOS text mode 3 before RESERVE
 - DOS 3.0 or later with the helper's required allocation functions
@@ -108,8 +137,14 @@ Python 3.8+ on a modern host and the exact accepted Windows support files:
 MAKEDISK.PY is the portable backend. Add --local-out C:\OEMDISK to write
 an extracted disk too, or --windows-dir D:\WIN30 for a different guest
 Windows path. Output paths must be new. Original Windows 3.0 SZDD mode-A
-inputs or the accepted expanded files are supported. All eight binary
-inputs are SHA256-pinned; stale or unaccepted files are rejected.
+inputs or the accepted expanded files are supported. All fifteen binary
+inputs (five drivers, helper, splash, eight support files) are SHA256-pinned;
+stale or unaccepted files are rejected. Both completion paths reject a
+disk that exceeds standard 360 KB FAT12 space, including cluster rounding.
+
+Verify a rebuilt complete archive with MAKEDISK.PY --verify TANDY88.ZIP.
+For the support-free toolkit, use --verify-toolkit T88TOOLS.ZIP. Both
+checks reject unexpected members and stale source or manifest contents.
 
 An explicit --toolkit-only produces the separate T88TOOLS.ZIP for
 optional developer staging with STAGE.PY. It is not the normal download.

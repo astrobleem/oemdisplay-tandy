@@ -1,5 +1,5 @@
-; Tandy 1000 EX/HX Windows 3.0 real-mode display disk, candidate 05.
-; Ready-to-use disk includes five pinned Windows 3.0 support files.
+; Tandy 1000 EX/HX Windows 3.0 real-mode selectable display disk.
+; Ready-to-use disk includes eight pinned Windows 3.0 support files.
 ; TNDYLOGO.RLE is first-party artwork; CGALOGO.LGO is the unchanged loader.
 ; Distinct bitmap filename prevents Setup reusing cached stock CGALOGO.RLE.
 [data]
@@ -10,9 +10,16 @@ a = ., "Tandy 1000 EX/HX Display Disk", OEMSETUP.INF
 ; profile = driver, description, aspect/logical DPI, grabber, logo, VDD,
 ;           enhanced grabber, EGA driver, logo bitmap
 TANDY88 = a:TANDY88.DRV, "Tandy EX/HX 320x200 16 colors (8088 c05)", "133,96,72", a:CGA.GR2, a:CGALOGO.LGO,,,, a:TNDYLOGO.RLE
+TNDY6404 = a:TNDY6404.DRV, "Tandy EX/HX 640x200 4 colors (8088)", "200,96,48", a:CGA.GR2, a:CGALOGO.LGO,,,, a:TNDYLOGO.RLE
+TNDY160 = a:TNDY160.DRV, "Tandy EX/HX 160x200 16 colors (8088)", "200,96,48", a:CGA.GR2, a:CGALOGO.LGO,,,, a:TNDYLOGO.RLE
+TNDY3204 = a:TNDY3204.DRV, "Tandy EX/HX 320x200 4 colors (8088)", "200,96,48", a:CGA.GR2, a:CGALOGO.LGO,,,, a:TNDYLOGO.RLE
+TNDY6402 = a:TNDY6402.DRV, "Tandy EX/HX 640x200 2 colors (8088)", "200,96,48", a:CGA.GR2, a:CGALOGO.LGO,,,, a:TNDYLOGO.RLE
 [sysfonts]
 a:EGASYS.FON, "EGA System Font", "133,96,72"
+a:CGASYS.FON, "CGA System Font", "200,96,48"
 [fixedfonts]
 a:EGAFIX.FON, "EGA Fixed System Font", "133,96,72"
+a:CGAFIX.FON, "CGA Fixed System Font", "200,96,48"
 [oemfonts]
 a:EGAOEM.FON, "EGA Terminal Font (USA/Europe)", "133,96,72", 1
+a:CGAOEM.FON, "CGA Terminal Font (USA/Europe)", "200,96,48", 1

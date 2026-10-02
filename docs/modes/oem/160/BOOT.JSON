@@ -1,0 +1,45 @@
+{
+  "profile": "160x200x16",
+  "selected_via_native_setup": true,
+  "system_ini_modified_by_test": false,
+  "boot": {
+    "286grabber": "CGA.GR2",
+    "fixedfon.fon": "CGAFIX.FON",
+    "oemfonts.fon": "CGAOEM.FON",
+    "fonts.fon": "CGASYS.FON",
+    "display.drv": "TNDY160.DRV",
+    "shell": "progman.exe",
+    "network.drv": "",
+    "language.dll": "",
+    "comm.drv": "comm.drv",
+    "sound.drv": "sound.drv",
+    "mouse.drv": "mouse.drv",
+    "keyboard.drv": "keyboard.drv",
+    "system.drv": "system.drv",
+    "386grabber": ""
+  },
+  "files": {
+    "TNDY160.DRV": {
+      "bytes": 51296,
+      "sha256": "124a07c38c13922a4cbd58452d39108755f632abe01e4dd17780c32140d2aedd"
+    },
+    "CGASYS.FON": {
+      "bytes": 4368,
+      "sha256": "baf8fa607806d949dfb6992113ce93494678abdef07783b22222b62e5de28ef4"
+    },
+    "CGAFIX.FON": {
+      "bytes": 4208,
+      "sha256": "b0c043a65e2b551bce3c77d25921394dfd2533f50633bc129abd240c7aeb5f89"
+    },
+    "CGAOEM.FON": {
+      "bytes": 4576,
+      "sha256": "1a86d9e42c73ccefcbc82c822abe8dbcd61cf0116454f213c3a95f4d7436cd0d"
+    }
+  },
+  "custom_splash_embedded": true,
+  "dos_configuration_unchanged": true,
+  "gdi_pass": true,
+  "cases": 92,
+  "pixels": 2944000,
+  "ini_sha256": "260ade064743d531b55c9c56214c3e440812460ac022d5c65ec483664247f175"
+}

@@ -49,9 +49,10 @@ class PackageTests(unittest.TestCase):
         self.repo.mkdir()
         for name in ("STAGE.PY", "oemsetup.inf", "README.TXT", "FILE_ID.DIZ"):
             shutil.copyfile(ROOT / name, self.repo / name)
-        for relative in ("oemdisk/INSTALL.BAT", "oemdisk/TANDY88.BAT",
-                         "src/tandysw/bin/TANDY88.DRV", "src/tandysw/bin/RESERVE.COM",
-                         "src/splash/assets/TNDYLOGO.RLE"):
+        relatives = ["oemdisk/INSTALL.BAT", "oemdisk/TANDY88.BAT",
+                     "src/splash/assets/TNDYLOGO.RLE"]
+        relatives += ["src/tandysw/bin/" + name for name in s.BINARY_HASHES]
+        for relative in relatives:
             target = self.repo / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, target)
@@ -75,9 +76,164 @@ class PackageTests(unittest.TestCase):
             archive.extractall(target)
         return target / "DISK1"
 
+    def test_five_profiles_have_distinct_files_and_original_default(self):
+        text = (self.repo / "oemsetup.inf").read_text()
+        lines = text.split("[display]\n", 1)[1].split("[sysfonts]", 1)[0].splitlines()
+        choices = [line for line in lines if line and not line.startswith(";")]
+        self.assertEqual(len(choices), 5)
+        self.assertEqual(choices[0],
+            'TANDY88 = a:TANDY88.DRV, "Tandy EX/HX 320x200 16 colors (8088 c05)", '
+            '"133,96,72", a:CGA.GR2, a:CGALOGO.LGO,,,, a:TNDYLOGO.RLE')
+        self.assertEqual([line.split(" = ")[0] for line in choices],
+                         ["TANDY88", "TNDY6404", "TNDY160", "TNDY3204", "TNDY6402"])
+        self.assertEqual(len(s.DRIVER_NAMES), 5)
+        for name in s.PAYLOAD_NAMES | set(s.SUPPORT_HASHES):
+            self.assertRegex(name, "^" + s.DOS_NAME + "$")
+        for line in choices[1:]:
+            self.assertIn('"200,96,48"', line)
+        for font in ("CGASYS", "CGAFIX", "CGAOEM"):
+            self.assertIn("a:" + font + ".FON", text)
+
+    def test_missing_duplicate_reordered_and_crosswired_profiles_rejected(self):
+        original = (self.repo / "oemsetup.inf").read_bytes()
+        lines = original.splitlines(keepends=True)
+        default = next(line for line in lines if line.startswith(b"TANDY88 ="))
+        extra = next(line for line in lines if line.startswith(b"TNDY6404 ="))
+        variants = [original.replace(extra, b""), original.replace(extra, extra + extra),
+                    original.replace(default + extra, extra + default),
+                    original.replace(b"a:TNDY6404.DRV", b"a:TANDY88.DRV"),
+                    original.replace(b"TNDY6404 =", b"TANDY88 =")]
+        for data in variants:
+            with self.subTest(data=data), self.assertRaises(s.DiskError):
+                s.inf_support_files(data)
+
+    def test_other_sections_cannot_force_install_unselected_drivers(self):
+        original = (self.repo / "oemsetup.inf").read_bytes()
+        for name in sorted(s.DRIVER_NAMES):
+            extra = s.dos_text("[fonts]\na:" + name + ", unselected, 1\n")
+            with self.subTest(name=name), self.assertRaisesRegex(s.DiskError, "Setup selects one"):
+                s.inf_support_files(original + extra)
+
+    def test_every_profile_requires_its_font_resolution_and_splash(self):
+        original = (self.repo / "oemsetup.inf").read_bytes()
+        for key, _, resolution in s.DISPLAY_PROFILES:
+            line = next(line for line in original.splitlines() if line.startswith(key.encode() + b" ="))
+            for value in (line.replace(resolution.encode(), b"1,2,3"),
+                          line.replace(b"a:TNDYLOGO.RLE", b"a:CGALOGO.RLE"),
+                          line.replace(b"a:CGA.GR2", b"a:OTHER.GR2")):
+                with self.subTest(key=key, value=value), self.assertRaises(s.DiskError):
+                    s.inf_support_files(original.replace(line, value))
+
+    def test_font_contract_rejects_missing_swapped_and_wrong_metadata(self):
+        original = (self.repo / "oemsetup.inf").read_bytes()
+        for font in ("EGASYS", "EGAFIX", "EGAOEM", "CGASYS", "CGAFIX", "CGAOEM"):
+            line = next(line for line in original.splitlines(keepends=True)
+                        if line.startswith(b"a:" + font.encode() + b".FON"))
+            wrong = b"200,96,48" if font.startswith("EGA") else b"133,96,72"
+            right = b"133,96,72" if font.startswith("EGA") else b"200,96,48"
+            for value in (b"", line + line, line.replace(right, wrong),
+                          line.replace(font.encode(), b"OTHER")):
+                with self.subTest(font=font, value=value), self.assertRaises(s.DiskError):
+                    s.inf_support_files(original.replace(line, value))
+        with self.assertRaises(s.DiskError):
+            s.inf_support_files(original.replace(b'"200,96,48", 1', b'"200,96,48", 2'))
+
+    def test_every_new_driver_is_required_and_pinned_for_both_outputs(self):
+        for name in sorted(s.DRIVER_NAMES - {"TANDY88.DRV"}):
+            path = self.repo / "src/tandysw/bin" / name
+            original = path.read_bytes()
+            for data in (None, b"unaccepted build"):
+                if data is None:
+                    path.unlink()
+                else:
+                    path.write_bytes(data)
+                for complete in (False, True):
+                    with self.subTest(name=name, data=data, complete=complete), self.assertRaises(s.DiskError):
+                        if complete:
+                            builder.build(self.repo, self.archive, self.fonts)
+                        else:
+                            builder.build_toolkit(self.repo, self.archive)
+                    self.assertFalse(self.archive.exists())
+            path.write_bytes(original)
+
+    def test_every_cga_font_is_required_and_pinned_without_partial_output(self):
+        for name in ("CGASYS.FON", "CGAFIX.FON", "CGAOEM.FON"):
+            path = self.fonts / name
+            original = path.read_bytes()
+            for data in (None, original + b"modified font"):
+                if data is None:
+                    path.unlink()
+                else:
+                    path.write_bytes(data)
+                local = self.base / "local"
+                with self.subTest(name=name, data=data), self.assertRaises(s.DiskError):
+                    builder.build_with_local(self.repo, self.archive, self.fonts, local)
+                self.assertFalse(self.archive.exists())
+                self.assertFalse(local.exists())
+            path.write_bytes(original)
+
+    def test_completion_paths_reject_cluster_rounded_overflow(self):
+        path = self.repo / "README.TXT"
+        path.write_bytes(b"Large README\r\n" * 30000)
+        with self.assertRaisesRegex(s.DiskError, "360 KB"):
+            builder.build(self.repo, self.archive, self.fonts, self.base / "local")
+        self.assertFalse(self.archive.exists())
+        self.assertFalse((self.base / "local").exists())
+        disk = self.disk()
+        with self.assertRaisesRegex(s.DiskError, "360 KB"):
+            s.stage(disk, self.fonts, self.base / "local")
+        self.assertFalse((self.base / "local").exists())
+
+    def test_toolkit_verifier_rejects_unexpected_members_and_stale_sources(self):
+        builder.build_toolkit(self.repo, self.archive)
+        self.assertEqual(builder.verify_toolkit(self.repo, self.archive), sorted(s.SUPPORT_HASHES))
+        with zipfile.ZipFile(self.archive) as archive:
+            entries = {name: archive.read(name) for name in archive.namelist()}
+        for index, (name, value) in enumerate((
+                ("DISK1/CGASYS.FON", b"not allowed"), ("DISK1/LOCAL.TXT", b"not complete"),
+                ("STAGE.PY", b"changed\r\n"), ("README.TXT", b"changed\r\n"),
+                ("DISK1/MANIFEST.SHA", b"wrong\r\n"), ("DISK1/TNDY6404.DRV", b"wrong"))):
+            changed = dict(entries)
+            changed[name] = value
+            path = self.base / ("WRONG" + str(index) + ".ZIP")
+            builder.write_zip(changed, path)
+            with self.subTest(name=name), self.assertRaises(s.DiskError):
+                builder.verify_toolkit(self.repo, path)
+        (self.repo / "STAGE.PY").write_bytes((self.repo / "STAGE.PY").read_bytes() + b"# changed\r\n")
+        with self.assertRaisesRegex(s.DiskError, "differs from current source"):
+            builder.verify_toolkit(self.repo, self.archive)
+
+    def test_archive_verifiers_reject_duplicates_and_noncanonical_metadata(self):
+        for complete in (False, True):
+            entries = (builder.disk_entries(s.prepare_complete(builder.source_payload(self.repo), self.fonts))
+                       if complete else builder.toolkit_entries(self.repo))
+            verify = builder.verify_archive if complete else builder.verify_toolkit
+            name = next(iter(entries))
+            path = self.base / ("BAD" + str(complete) + ".ZIP")
+            builder.write_zip(entries, path)
+            with zipfile.ZipFile(path, "a") as archive:
+                archive.writestr("EXTRA", b"extra")
+            with self.assertRaises(s.DiskError):
+                verify(self.repo, path)
+            path = self.base / ("DUP" + str(complete) + ".ZIP")
+            builder.write_zip(entries, path)
+            with zipfile.ZipFile(path, "a") as archive:
+                with self.assertWarns(UserWarning):
+                    archive.writestr(name, entries[name])
+            with self.assertRaisesRegex(s.DiskError, "duplicate files"):
+                verify(self.repo, path)
+            path = self.base / ("TIME" + str(complete) + ".ZIP")
+            with zipfile.ZipFile(path, "w") as archive:
+                for key, data in sorted(entries.items()):
+                    archive.writestr(key, data)  # Current timestamps, not canonical epoch.
+            with self.assertRaisesRegex(s.DiskError, "Noncanonical"):
+                verify(self.repo, path)
+
     def test_one_command_outputs_complete_disk_and_complete_zip(self):
         local = self.base / "local"
         builder.build_with_local(self.repo, self.archive, self.fonts, local)
+        for name in s.DRIVER_NAMES | set(s.SUPPORT_HASHES):
+            self.assertTrue((local / name).is_file(), name)
         self.assertTrue((local / "EGASYS.FON").is_file())
         self.assertTrue((local / "LOCAL.TXT").is_file())
         with zipfile.ZipFile(self.archive) as archive:
@@ -140,7 +296,8 @@ class PackageTests(unittest.TestCase):
 
     def test_media_fixtures_exclude_first_party_splash(self):
         self.assertEqual({p.name for p in self.fonts.iterdir()},
-                         {"EGASYS.FON", "EGAFIX.FON", "EGAOEM.FON", "CGA.GR2", "CGALOGO.LGO"})
+                         {"EGASYS.FON", "EGAFIX.FON", "EGAOEM.FON", "CGASYS.FON",
+                          "CGAFIX.FON", "CGAOEM.FON", "CGA.GR2", "CGALOGO.LGO"})
         splash = self.repo / "src/splash/assets/TNDYLOGO.RLE"
         self.assertEqual(len(splash.read_bytes()), 5930)
         self.assertEqual(s.sha(splash.read_bytes()), s.SPLASH_SHA)
@@ -189,7 +346,7 @@ class PackageTests(unittest.TestCase):
     def test_extra_inf_dependency_rejected(self):
         path = self.repo / "oemsetup.inf"
         path.write_bytes(path.read_bytes() + b"[fonts]\r\na:EXTRA.FON, extra, 1\r\n")
-        with self.assertRaisesRegex(s.DiskError, "exactly five"):
+        with self.assertRaisesRegex(s.DiskError, "exactly eight"):
             builder.build(self.repo, self.archive, self.fonts)
         self.assertFalse(self.archive.exists())
 
@@ -615,6 +772,7 @@ class FormatTests(unittest.TestCase):
     def test_all_authored_dos_text_is_crlf(self):
         paths = [ROOT / p for p in ("MAKEDISK.BAT", "MAKEDISK.PY", "STAGE.PY", "README.TXT",
                                      "FILE_ID.DIZ", "BUILDING.MD", "docs/OEMDISK.MD")]
+        paths += [ROOT / "oemsetup.inf"]
         paths += list((ROOT / "oemdisk").glob("*.BAT")) + list((ROOT / "oemdisk").glob("*.PY"))
         for path in paths:
             with self.subTest(path=path):

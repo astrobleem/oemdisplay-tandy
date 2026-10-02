@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--repo", type=Path, default=HERE.parents[1])
     parser.add_argument("--dosbox", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--mode", default="320x200x16", choices=("320x200x16", "640x200x4", "160x200x16", "320x200x4", "640x200x2"))
     args = parser.parse_args()
     repo, dosbox, out = args.repo.resolve(), args.dosbox.resolve(), args.out.resolve()
     if out.exists():
@@ -38,6 +39,9 @@ def main():
     dib_module = importlib.util.module_from_spec(dib_spec)
     dib_spec.loader.exec_module(dib_module)
     dib_audit = dib_module.port(renderer, repo)
+    mode_loader = importlib.machinery.SourceFileLoader("modeprof", str(HERE / "MODEPROF.PY"))
+    mode_module = mode_loader.load_module()
+    mode_audit = mode_module.port(renderer, resources, repo, args.mode)
     for filename in ("BLDCOR.BAT", "BLDCUR.BAT"):
         path = renderer / filename
         text = baseline.normalized(path).replace("SET INCLUDE=", "SET INCLUDE=R:\\INC;")
@@ -78,12 +82,16 @@ def main():
     link_audit = module.audit_link(renderer, dib_audit["new_objects"])
     subprocess.run([sys.executable, str(resources / "PACKRES.PY"), "build"], env=env, check=True)
     resource_file = resources / "TANDY.RES"
-    assert hashlib.sha256(resource_file.read_bytes()).hexdigest() == baseline.RESOURCE_SHA
-    binary = out / "TANDY88.DRV"
+    resource_sha = hashlib.sha256(resource_file.read_bytes()).hexdigest()
+    if args.mode == "320x200x16":
+        assert resource_sha == baseline.RESOURCE_SHA
+    if args.mode in ("640x200x4", "640x200x2"):
+        assert resource_sha == "4bdf9197db27b33dd5859c4198534aa7db6cb2066fe8075caff1899ff25cb312", "Profile resource mismatch"
+    binary = out / mode_module.PROFILES[args.mode]["driver"]
     subprocess.run([sys.executable, str(resources / "PACKRES.PY"), "attach", str(resource_file),
                     str(renderer / "EGA/TSOFT.DRV"), str(binary)], env=env, check=True)
-    report = {"build": "PASS", "runtime": "NOT_TESTED", "target": "8086/8088 real mode", "candidate": "05 DIB save/readback correction",
-              "driver_bytes": binary.stat().st_size,
+    report = {"build": "PASS", "runtime": "NOT_TESTED", "target": "8086/8088 real mode", "candidate": "05 DIB save/readback correction" if args.mode == "320x200x16" else "experimental " + args.mode,
+              "mode": mode_audit, "resource_sha256": resource_sha, "driver_bytes": binary.stat().st_size,
               "driver_sha256": hashlib.sha256(binary.read_bytes()).hexdigest(), "port": audit, "dib": dib_audit,
               "instruction_audit": instruction_audit, "link_audit": link_audit}
     (out / "RESULT.json").write_text(json.dumps(report, indent=2) + "\n")

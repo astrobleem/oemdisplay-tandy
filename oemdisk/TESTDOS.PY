@@ -72,6 +72,10 @@ def main():
             raise AssertionError(description)
         results.append(description)
 
+    check("OEM disk contains exactly five selectable driver binaries",
+          {p.name for p in (out / "clean/DISK1").glob("*.DRV")} == s.DRIVER_NAMES)
+    check("OEM disk requests exactly eight Microsoft support files", len(s.SUPPORT_HASHES) == 8)
+
     def case(name, commands, machine="tandy", installed=False, missing=(),
              existing=False, windows_dir=r"C:\WINDOWS"):
         directory = out / name
@@ -110,6 +114,10 @@ def main():
     directory, win, helper = case("install_only", "COMMAND /C INSTALL > R:\\INSTALL.TXT")
     check("installer copies the accepted reservation helper", s.sha((helper / "RESERVE.COM").read_bytes()) == s.RESERVE_SHA)
     check("installer copies the guarded launcher", (helper / "TANDY88.BAT").is_file())
+    check("DOS installer copies only the two shared helpers",
+          {p.name for p in helper.iterdir()} == {"RESERVE.COM", "TANDY88.BAT"})
+    check("DOS installer leaves driver and font selection to Windows Setup",
+          not list(win.rglob("*.DRV")) and not list(win.rglob("*.FON")))
     check("installer never auto-starts Windows or Setup", not (win / "WIN.RAN").exists() and not (win / "SETUP.RAN").exists())
 
     commands = ("COMMAND /C INSTALL > R:\\INSTALL.TXT\n"

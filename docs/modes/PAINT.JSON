@@ -1,0 +1,35 @@
+{
+  "saved_by": "native Windows 3.0 Paintbrush Save As",
+  "dimensions": [
+    320,
+    64
+  ],
+  "colors": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      255,
+      0
+    ],
+    [
+      255,
+      0,
+      0
+    ],
+    [
+      255,
+      255,
+      255
+    ]
+  ],
+  "pixels_compared": 20480,
+  "mismatches": 0,
+  "input_sha256": "b188ff74959af35e8dbab6754e1b1bb2b63631a8716f58cd6b00064756449627",
+  "saved_sha256": "12b175566401b77e6ca1027f8b766a3b68d1524b1d34459620e067fa84880740",
+  "saved_bytes": 10358,
+  "saved_bpp": 4
+}

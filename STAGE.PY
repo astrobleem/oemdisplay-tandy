@@ -15,19 +15,38 @@ import sys
 
 DRIVER_SHA = "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee"
 RESERVE_SHA = "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
-BINARY_HASHES = {"TANDY88.DRV": DRIVER_SHA, "RESERVE.COM": RESERVE_SHA}
+# Each Setup choice has a distinct file; the accepted default remains untouched.
+DISPLAY_PROFILES = (
+    ("TANDY88", "TANDY88.DRV", "133,96,72"),
+    ("TNDY6404", "TNDY6404.DRV", "200,96,48"),
+    ("TNDY160", "TNDY160.DRV", "200,96,48"),
+    ("TNDY3204", "TNDY3204.DRV", "200,96,48"),
+    ("TNDY6402", "TNDY6402.DRV", "200,96,48"),
+)
+DRIVER_NAMES = frozenset(profile[1] for profile in DISPLAY_PROFILES)
+BINARY_HASHES = {
+    "TANDY88.DRV": DRIVER_SHA,
+    "TNDY6404.DRV": "5ab225f6e93d53f39d092b8db81fd0129a0fe473cf30eef880ddaeaaa0a8d306",
+    "TNDY160.DRV": "124a07c38c13922a4cbd58452d39108755f632abe01e4dd17780c32140d2aedd",
+    "TNDY3204.DRV": "c90526efb90f4434e8aa567d439e9cdf7f81c096968a362806a992052a81e9e9",
+    "TNDY6402.DRV": "b0c95515462ba27ce208963dd94957019995e3e6085d147771ef037b39967652",
+    "RESERVE.COM": RESERVE_SHA,
+}
 SPLASH_NAME = "TNDYLOGO.RLE"
 SPLASH_SHA = "e7a9c043ce3b9f9c78f7ff38bc68d211a0da32462e036abb7135f0602194f083"
 SPLASH_BYTES = 5930
 BINARY_NAMES = frozenset(BINARY_HASHES) | {SPLASH_NAME}
 SUPPORT_HASHES = {
+    "CGASYS.FON": "baf8fa607806d949dfb6992113ce93494678abdef07783b22222b62e5de28ef4",
+    "CGAFIX.FON": "b0c043a65e2b551bce3c77d25921394dfd2533f50633bc129abd240c7aeb5f89",
+    "CGAOEM.FON": "1a86d9e42c73ccefcbc82c822abe8dbcd61cf0116454f213c3a95f4d7436cd0d",
     "EGASYS.FON": "8bd307d7886d0f2fdfc1de3da8253e294233d1c757fd9131a66405fca5825b09",
     "EGAFIX.FON": "6df45a74e5756dd0746bcee593be9ac4df4a35458c26bf4570b748def2d394cb",
     "EGAOEM.FON": "05bd6ef11802bbca20473b0e409116fd8919c5bbcbbbc26b7ee2ea1f33ad23be",
     "CGA.GR2": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
     "CGALOGO.LGO": "d9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807",
 }
-PAYLOAD_NAMES = frozenset(("TANDY88.DRV", "RESERVE.COM", "OEMSETUP.INF",
+PAYLOAD_NAMES = DRIVER_NAMES | frozenset(("RESERVE.COM", "OEMSETUP.INF",
                            "INSTALL.BAT", "TANDY88.BAT", "README.TXT", "FILE_ID.DIZ",
                            SPLASH_NAME))
 DEFAULT_WINDOWS = r"C:\WINDOWS"
@@ -164,51 +183,69 @@ def inf_support_files(data):
     disks = sections["disks"]
     if len(disks) != 1 or not re.match(r'^a\s*=\s*\.\s*,', disks[0], re.I):
         raise DiskError("OEM disk must use the single root disk identifier a")
-    if len(sections["display"]) != 1:
-        raise DiskError("Expected exactly one accepted display profile")
-    display = sections["display"][0]
-    if not re.match(r'^tandy88\s*=\s*a:tandy88\.drv\s*,', display, re.I):
-        raise DiskError("OEM display must reference tandy88 = a:TANDY88.DRV")
-    try:
-        fields = next(csv.reader([display.split("=", 1)[1]], skipinitialspace=True))
-    except (csv.Error, StopIteration):
-        raise DiskError("Malformed OEM display fields")
-    if len(fields) != 9 or not fields[3].strip() or not fields[4].strip() or not fields[8].strip():
-        raise DiskError("OEM display requires grabber and logo code/data to build WIN.COM")
-    # A distinct bitmap name prevents Setup reusing cached stock CGALOGO.RLE.
-    if fields[8].strip().upper() != "A:" + SPLASH_NAME:
-        raise DiskError("OEM logo bitmap must reference a:" + SPLASH_NAME +
-                        "; CGALOGO.RLE can reuse the cached stock splash")
-    if [field.strip().upper() for field in fields[3:8]] != [
-            "A:CGA.GR2", "A:CGALOGO.LGO", "", "", ""]:
-        raise DiskError("OEM display must preserve the accepted grabber and logo loader")
-    if fields[2].strip() != "133,96,72":
-        raise DiskError("OEM display must use the accepted EGA font resolution")
+    if len(sections["display"]) != len(DISPLAY_PROFILES):
+        raise DiskError("Expected exactly five accepted display profiles")
+    for display, (profile, driver, resolution) in zip(sections["display"], DISPLAY_PROFILES):
+        # Preserve the original default first; reject aliases, duplicates, and
+        # reordered choices as well as accidental cross-wiring of driver files.
+        if not re.match(r'^' + profile + r'\s*=\s*a:' + re.escape(driver) + r'\s*,',
+                        display, re.I):
+            raise DiskError("OEM display must reference " + profile + " = a:" + driver +
+                            " in accepted profile order")
+        try:
+            fields = next(csv.reader([display.split("=", 1)[1]], skipinitialspace=True))
+        except (csv.Error, StopIteration):
+            raise DiskError("Malformed OEM display fields")
+        if len(fields) != 9 or not fields[3].strip() or not fields[4].strip() or not fields[8].strip():
+            raise DiskError("OEM display requires grabber and logo code/data to build WIN.COM")
+        if not fields[1].strip():
+            raise DiskError("OEM display requires a visible description")
+        # A distinct bitmap name prevents Setup reusing cached stock CGALOGO.RLE.
+        if fields[8].strip().upper() != "A:" + SPLASH_NAME:
+            raise DiskError("OEM logo bitmap must reference a:" + SPLASH_NAME +
+                            "; CGALOGO.RLE can reuse the cached stock splash")
+        if [field.strip().upper() for field in fields[3:8]] != [
+                "A:CGA.GR2", "A:CGALOGO.LGO", "", "", ""]:
+            raise DiskError("OEM display must preserve the accepted grabber and logo loader")
+        if fields[2].strip() != resolution:
+            raise DiskError("OEM display " + profile + " must use font resolution " + resolution)
     # The Windows 3.0 parser treats no-data comma fields as inherited defaults.
     # Any driver files actually named in the record must be on our allowlist.
     refs = []
-    for lines in sections.values():
+    for section, lines in sections.items():
         for line in lines:
-            refs.extend(re.findall(r'\b([A-Za-z0-9]):([^,\s"]+)', line))
+            refs.extend((section, disk, filename) for disk, filename in
+                        re.findall(r'\b([A-Za-z0-9]):([^,\s"]+)', line))
     support = set()
-    for disk, filename in refs:
+    for section, disk, filename in refs:
         name = filename.upper()
         if disk.lower() != "a" or not re.fullmatch(DOS_NAME, name):
             raise DiskError("Unsupported disk/file reference: " + disk + ":" + filename)
-        if name == "TANDY88.DRV":
+        if name in DRIVER_NAMES:
+            if section != "display":
+                raise DiskError("Display drivers may only appear in [display]; Setup selects one")
             continue
         if Path(name).suffix not in {".FON", ".LGO", ".RLE", ".GR2", ".GR3", ".386", ".SYS"}:
             raise DiskError("Unapproved Windows support-file reference: " + name)
         support.add(name)
-    for section, expected in (("sysfonts", "EGASYS.FON"),
-                              ("fixedfonts", "EGAFIX.FON"), ("oemfonts", "EGAOEM.FON")):
-        if len(sections[section]) != 1 or not re.match(
-                r'^a:' + re.escape(expected) + r'\s*,', sections[section][0], re.I):
-            raise DiskError("Expected " + expected + " in [" + section + "]")
-    if not {"EGASYS.FON", "EGAFIX.FON", "EGAOEM.FON"}.issubset(support):
-        raise DiskError("Incomplete system-font references")
+    for section, suffix in (("sysfonts", "SYS"), ("fixedfonts", "FIX"), ("oemfonts", "OEM")):
+        if len(sections[section]) != 2:
+            raise DiskError("Expected exactly two font resolutions in [" + section + "]")
+        for line, family, resolution in zip(sections[section], ("EGA", "CGA"),
+                                            ("133,96,72", "200,96,48")):
+            expected = family + suffix + ".FON"
+            try:
+                fields = [field.strip() for field in next(csv.reader([line], skipinitialspace=True))]
+            except (csv.Error, StopIteration):
+                raise DiskError("Malformed OEM font fields")
+            count = 4 if section == "oemfonts" else 3
+            if (len(fields) != count or fields[0].upper() != "A:" + expected or
+                    not fields[1] or fields[2] != resolution or
+                    (count == 4 and fields[3] != "1")):
+                raise DiskError("Expected " + expected + " with resolution " + resolution +
+                                " in [" + section + "]")
     if support != set(SUPPORT_HASHES) | {SPLASH_NAME}:
-        raise DiskError("OEM INF must name exactly five accepted Windows support files "
+        raise DiskError("OEM INF must name exactly eight accepted Windows support files "
                         "and the first-party " + SPLASH_NAME)
     return sorted(support - {SPLASH_NAME})
 
@@ -335,7 +372,7 @@ def windows_path(value):
 
 def verify_support(payload):
     if set(payload) != set(SUPPORT_HASHES):
-        raise DiskError("Expected exactly the five accepted Windows support files")
+        raise DiskError("Expected exactly the eight accepted Windows support files")
     for name, data in payload.items():
         if name.endswith(".FON"):
             font_ne(data, name)
@@ -343,8 +380,23 @@ def verify_support(payload):
             raise DiskError("Unverified Windows support file: " + name + " SHA256=" + sha(data))
 
 
+def disk_allocation(payload):
+    """Standard 360 KB FAT12: 2 sectors/cluster, 2 FATs, 112 root entries."""
+    sector = 512
+    total = 720 * sector
+    overhead = (1 + 2 * 2 + 7) * sector
+    cluster = 1024
+    allocated = sum(((len(data) + cluster - 1) // cluster) * cluster for data in payload.values())
+    if len(payload) > 112 or allocated > total - overhead:
+        raise DiskError("Extracted OEM disk exceeds standard 360 KB FAT12 capacity")
+    return {"files": len(payload), "logical_bytes": sum(map(len, payload.values())),
+            "allocated_file_bytes": allocated, "filesystem_overhead_bytes": overhead,
+            "total_used_bytes": allocated + overhead, "capacity_bytes": total,
+            "free_data_bytes": total - overhead - allocated}
+
+
 def completed_payload(source, support, windows_dir=DEFAULT_WINDOWS):
-    """Assemble the source payload plus five exact Windows support inputs."""
+    """Assemble the source payload plus eight exact Windows support inputs."""
     windows_dir = windows_path(windows_dir)
     if set(source) != PAYLOAD_NAMES:
         raise DiskError("Unexpected or missing base OEM payload files")
@@ -362,11 +414,12 @@ def completed_payload(source, support, windows_dir=DEFAULT_WINDOWS):
                                               b"REM WINDOWSDRIVE\r\n" + windows_dir[:2].encode("ascii") + b"\r\n")
     payload["LOCAL.TXT"] = dos_text(
         "COMPLETE TANDY88 OEM DISK\n"
-        "Five required Windows support files and the custom Tandy splash are verified.\n"
+        "Eight required Windows support files and the custom Tandy splash are verified.\n"
         "Run INSTALL from this disk at a DOS prompt; read README.TXT first.\n"
         "Windows directory: " + windows_dir + "\n"
         "DOS helper directory: " + HELPER_DIR + "\n")
     payload["MANIFEST.SHA"] = manifest(payload)
+    disk_allocation(payload)
     return payload
 
 

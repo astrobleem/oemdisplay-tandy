@@ -1,0 +1,58 @@
+{
+  "status": "first Windows milestone; not OEM-install accepted",
+  "mode": "640x200x4",
+  "bios_mode": 10,
+  "logical_DDB_planes": 4,
+  "bits_per_plane": 1,
+  "physical_colors": 4,
+  "shadow_bytes": 64000,
+  "driver_sha256": "6fdeb2f9fd452f86f3fd9c786c4e37f6a4b8e04e4a7d8cbe07470e0641a1040d",
+  "driver_bytes": 50832,
+  "resource_sha256": "4bdf9197db27b33dd5859c4198534aa7db6cb2066fe8075caff1899ff25cb312",
+  "cpu": "DOSBox-X core normal, cputype 8086_prefetch; not physical hardware",
+  "memory": "640KB physical, RESERVE protects additional16KB; no expanded base, EMS/XMS/UMB",
+  "gdi_cases": 94,
+  "pixels_compared": 12032000,
+  "assertions": 102,
+  "pass_all": true,
+  "fonts": {
+    "system_height": 8,
+    "fixed_height": 8,
+    "logical_dpi": [
+      96,
+      48
+    ],
+    "id": "200,96,48"
+  },
+  "native_capture": {
+    "file": "PROGMAN.PNG",
+    "dimensions": [
+      640,
+      400
+    ],
+    "logical_dimensions": [
+      640,
+      200
+    ],
+    "doubled_rows_verified": true,
+    "unique_RGB": 2,
+    "sha256": "a19f17187da79fa8254f4093c8a4eeac0234dd04061200c99343aed5702cf183",
+    "note": "Unmodified native DOSBox raw capture; desktop uses black/white of the four-color palette"
+  },
+  "pending": [
+    "OEM Setup selectable entry and switching",
+    "Paintbrush GUI save/reopen",
+    "native Solitaire",
+    "physical hardware"
+  ],
+  "fixture_notes": [
+    "First startup used compressed SZDD media fonts and failed before GDI; corrected with expanded fonts.",
+    "Headless harness waited for EXIT.LOG after app completion but Program Manager remains running; bounded wrapper timed out, while actual probe COMPLETE and all94GDIcases passed. Clean GUI exit is a separate acceptance gate."
+  ],
+  "first_candidate_gui": {
+    "program_manager": "native capture",
+    "solitaire": "all seven columns fit; old cyan/magenta palette maps table and red suits to black",
+    "clean_windows_exit_to_dos": true,
+    "future_candidate": "Black/red/green/white palette is separately regression-tested; not substituted in this first checkpoint"
+  }
+}

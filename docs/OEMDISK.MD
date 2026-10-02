@@ -4,8 +4,11 @@
 
 `TANDY88.ZIP` is the complete end-user download. Extract `DISK1` and run its
 DOS `INSTALL`, then `C:\TANDY88\TANDY88 SETUP` and Windows Setup's Other display
-option. Use `C:\TANDY88\TANDY88` for every Windows start. There is no Python or
-support-file staging requirement for normal users.
+option. Choose one of five profiles; switching modes later uses the same Setup
+flow and a Windows restart. Start with stock-CGA Windows, then select OEM
+640x200 four-color for a more usable desktop width. Use `C:\TANDY88\TANDY88`
+for every Windows start. There is no Python or support-file staging requirement
+for normal users.
 
 `MAKEDISK.BAT` remains the Windows developer entry point, invoking the portable
 standard-library Python backend. Rebuilding requires the accepted media inputs:
@@ -24,10 +27,15 @@ developer toolkit with STAGE.PY; it is never the normal end-user package.
 
 The complete release contains root `README.TXT` and these `DISK1/` files:
 
-- `TANDY88.DRV`, `RESERVE.COM`: exact accepted runtime SHA256 pins
+- `TANDY88.DRV`: unchanged candidate05 320x200 sixteen-color default
+- `TNDY6404.DRV`, `TNDY160.DRV`, `TNDY3204.DRV`, `TNDY6402.DRV`:
+  four additional drivers with distinct runtime SHA256 pins
+- `RESERVE.COM`: unchanged accepted shared reservation helper
 - `OEMSETUP.INF`, `INSTALL.BAT`, `TANDY88.BAT`: verified OEM and helper sources
 - `EGASYS.FON`, `EGAFIX.FON`, `EGAOEM.FON`, `CGA.GR2`, `CGALOGO.LGO`:
-  exactly five required Windows support files, individually pinned
+  the original five Windows support files, unchanged and individually pinned
+- `CGASYS.FON`, `CGAFIX.FON`, `CGAOEM.FON`: the only three added Windows
+  dependencies, individually pinned; eight Windows support files in total
 - `TNDYLOGO.RLE`: separately pinned first-party custom startup image
 - `README.TXT`, `FILE_ID.DIZ`, `LOCAL.TXT`, `MANIFEST.SHA`
 
@@ -36,10 +44,11 @@ already-tested installer. It now describes the complete disk. No full OS,
 installation disks, compiler toolchain, emulator, or unrelated media files are
 included. The exact support-file hashes appear in `BUILDING.MD` and `STAGE.PY`.
 
-The builder reads a fixed source allowlist and the five explicitly required media
-files, plus the pinned first-party custom image. It never copies a mutable directory tree, the historical `disk1/`, or the
-old root TNDY16.DRV. SZDD mode-A expansion is local and bounded to 1 MiB per file;
-expanded inputs are supported too. All eight binary hashes are checked. Missing,
+The builder reads a fixed source allowlist and the eight explicitly required
+media files, plus the pinned first-party custom image. It never copies a mutable
+directory tree, the historical `disk1/`, or the old root TNDY16.DRV. SZDD mode-A
+expansion is local and bounded to 1 MiB per file; expanded inputs are supported
+too. All 15 runtime/support/image hashes are checked. Missing,
 stale, unaccepted or ambiguous files fail before an output is created. FON NE
 resource bounds are validated as an additional structural check.
 
@@ -49,6 +58,11 @@ extracted disk is checked against a 360 KB FAT12 budget: 720 sectors of 512
 bytes; one reserved sector; two two-sector FATs; 112 root directory entries
 occupying seven sectors; and 1,024-byte allocation units for the 354 data clusters.
 The calculation uses extracted DOS allocation, not just ZIP byte size.
+
+The final rebuilt package measurement is **22 files**, **320,512 bytes** of rounded file
+allocation plus **6,144 bytes** overhead: **326,656 / 368,640 bytes used**, leaving
+**41,984 bytes** free. [The recorded package test](modes/PACKAGE.JSON) includes the
+final packaged-text rebuild and byte-identical repeated packaging.
 
 `python3 MAKEDISK.PY --verify TANDY88.ZIP` verifies the checked-in complete
 archive without separately supplied media. It checks the exact member set,
@@ -73,7 +87,16 @@ Windows Setup flow. The helper lives outside Windows and keeps working after
 the OEM disk is removed. A launcher cannot prevent someone manually bypassing
 it with a direct `WIN` command; the instructions require using it on every boot.
 
-Setup owns installation of the display/font/support files and the INI changes.
+Setup owns installation of the selected display/font/support files and the INI
+changes. The default TANDY88 choice uses the EGA fonts with resource/Setup tuple
+`133,96,72`; all four new choices use eight-pixel CGA fonts and `200,96,48`. All
+five records retain the same custom splash and stock loader. The DOS installer
+copies only the two shared helpers; it does not install all five drivers into
+Windows itself. See [MODES.MD](MODES.MD) for the profile table.
+
+The unchanged RESERVE helper conservatively protects the extra 16 KB video
+overlap in every mode, including the modes with 16 KB hardware buffers. The
+launcher and supported normal-640-KB memory checks are unchanged.
 The DOS helper is deliberately separate: optional OEM sections are not a way
 to install COM/BAT files in Windows 3.0. The setup launcher reserves memory too,
 before any possible graphical phase. No manual INI edit is part of the flow.
@@ -89,9 +112,59 @@ failure of these sentinels are not evidence of a real Windows boot. The actual
 OEM Setup and GUI acceptance evidence is recorded separately after testing the
 complete disk with the exact accepted Windows support files.
 
-This work preserves the accepted driver and reservation bytes. It does not
-claim Windows 3.1, protected mode, arbitrary Tandy configurations, PCjr, physical
+This work preserves the default candidate05 driver and reservation bytes while
+adding four separate display drivers. It does not claim Windows 3.1, protected mode, arbitrary Tandy configurations, PCjr, physical
 hardware compatibility, or cycle-accurate 8088 execution.
+
+## Five-mode package and native acceptance (2026-10-02)
+
+- **71 host package tests** passed, including the five-profile contract and all
+  eight Windows support-file pins
+- **26 real DOS checks** passed; [DOS.JSON](modes/DOS.JSON) explicitly identifies
+  its WIN/SETUP programs as sentinels, not actual Windows GUI acceptance
+- Repeated complete archives, original compressed versus expanded support
+  media, and standalone toolkit staging produced byte-identical disk payloads
+- Missing or modified CGA fonts failed before output creation; exact members,
+  hashes, manifest and floppy allocation were checked
+- All five driver rebuilds were byte-identical, with 27 linked objects audited
+  for each; the default, reservation helper and custom splash remain unchanged
+- The four new profiles passed 374 Windows GDI cases / 33,024,000 pixels before
+  this native installer sequence; [MODES.MD](MODES.MD#verification) keeps the
+  separate rendering and installation evidence distinct
+
+![Native Windows Setup lists all five Tandy display choices](modes/oem/CHOICES.PNG)
+
+Native Windows Setup has selected all five profiles sequentially, then returned
+from the default to 640x200 four-color. Five independent clones of those
+Setup-produced installations passed **466 GDI cases / 38,912,000 pixels**
+without SYSTEM.INI edits. Exact selected drivers and matching fonts were
+checked, original CONFIG.SYS remained unchanged, and the custom splash is
+embedded. On the first 640x200 four-color install, only the selected new driver
+was installed; the DOS helper did not copy every profile into Windows.
+[Native selection/installed-runtime record](modes/oem/RESULT.JSON).
+
+**Final native emulator acceptance passed:** a fresh process started Windows
+with only the installed C: drive, reopened the saved bitmap in Paintbrush and
+returned cleanly to Program Manager. [Evidence](modes/oem/COLD.JSON).
+The rebuilt ZIP passed verification and was byte-identical on repeat packaging.
+
+Native 640x200 four-color Paintbrush Save As has already produced a 320x64,
+4-bpp BMP with all four colors and all 20,480 pixels exact; its installed
+C-only restart and native reopen also passed. [PAINT.JSON](modes/PAINT.JSON).
+The current native Solitaire capture shows all seven columns with red/black
+suits distinct and a green table; it is a launch/layout/color smoke test, not
+proof of whole-game playability. [Capture](modes/6404rg/SOLITAIR.PNG).
+
+The Windows host `.BAT` wrapper remains statically reviewed rather than natively
+executed. The portable backend and real DOS helper behavior were executed.
+Physical EX/HX hardware, genuine MS-DOS variants and cycle-exact timing remain
+unverified.
+
+## Historical installer evidence
+
+The following sections preserve the source history of the original single-mode
+OEM disk and custom-splash integration. Their counts, sizes and all-six-support
+wording describe those checkpoints, not the current five-mode payload above.
 
 ## Original installer packaging regression evidence (2026-10-02)
 
@@ -233,7 +306,7 @@ readable glyphs through both tested Setup paths, within the clipping limit.
 
 ### Custom startup splash
 
-The current display record retains the unchanged `CGALOGO.LGO` loader and uses
+All five current display records retain the unchanged `CGALOGO.LGO` loader and use
 first-party `TNDYLOGO.RLE` image data. The unique filename prevents Windows Setup
 from reusing an already-installed stock `CGALOGO.RLE`. Setup builds `WIN.COM`
 from those inputs normally; neither the DOS helper nor a binary-patching step
