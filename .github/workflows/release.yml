@@ -13,6 +13,7 @@ jobs:
 
       - name: Verify ready-to-use OEM disk
         run: |
+          python3 src/splash/tools/TEST.PY
           python3 oemdisk/TESTDISK.PY
           python3 MAKEDISK.PY --verify TANDY88.ZIP
 

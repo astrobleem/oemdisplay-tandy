@@ -1,0 +1,14 @@
+{
+  "width": 640,
+  "height": 200,
+  "bpp": 1,
+  "compression": 2,
+  "palette_entries": 2,
+  "encoded_runs": 2733,
+  "eol_commands": 200,
+  "file_bytes": 5930,
+  "image_bytes": 5868,
+  "end_of_bitmap_offset": 5930,
+  "sha256": "e7a9c043ce3b9f9c78f7ff38bc68d211a0da32462e036abb7135f0602194f083",
+  "round_trip_pixels_match": true
+}

@@ -6,9 +6,9 @@ to a floppy or DOS-accessible folder. No Python, font collection, or
 media-staging step is needed to install this downloaded driver disk.
 
 The package contains the accepted TANDY88.DRV, RESERVE.COM, DOS helpers,
-OEMSETUP.INF, and all six required support files: EGASYS.FON, EGAFIX.FON,
-EGAOEM.FON, CGA.GR2, CGALOGO.LGO, and CGALOGO.RLE. It does not include
-Windows itself. You still need a working Windows 3.0 installation.
+OEMSETUP.INF, the custom TNDYLOGO.RLE startup image, and five required
+Windows support files: EGASYS.FON, EGAFIX.FON, EGAOEM.FON, CGA.GR2 and
+CGALOGO.LGO. It does not include Windows itself. You still need a working Windows 3.0 installation.
 
 QUICK INSTALL
 -------------
@@ -23,7 +23,7 @@ QUICK INSTALL
    Other display (Requires disk from OEM), and the path to this disk,
    such as A:\. Select Tandy EX/HX 320x200 16 colors (8088 c05).
 4. Let Windows Setup install the driver/support files and update its
-   settings. Do not manually edit SYSTEM.INI or copy the driver into
+   settings. If asked for TNDYLOGO.RLE, supply the same OEM disk path. Do not manually edit SYSTEM.INI or copy the driver into
    the Windows directory yourself.
 5. Every time you start Windows, including after a reboot, run:
 
@@ -31,6 +31,19 @@ QUICK INSTALL
 
    This safely checks RESERVE and then starts WIN.COM /R. After the
    installation finishes, the removable OEM disk is no longer needed.
+
+CUSTOM TANDY STARTUP SCREEN
+--------------------------
+The disk includes a crisp monochrome Tandy startup screen. Windows Setup
+installs it automatically and rebuilds WIN.COM; no separate patching is
+needed. Its 640x200 two-color startup mode changes to the normal 320x200
+sixteen-color desktop as Windows loads.
+
+Already using the previous TANDY88 disk? Keep its installed DOS helper,
+exit Windows, and run C:\TANDY88\TANDY88 SETUP with this new disk via the
+same Display / Other procedure. The unique TNDYLOGO.RLE filename avoids
+Windows Setup reusing its cached stock CGALOGO.RLE. Do not just copy the
+image into WINDOWS\SYSTEM; Setup must rebuild WIN.COM.
 
 WHAT RESERVE.COM DOES
 --------------------

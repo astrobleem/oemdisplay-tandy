@@ -21,14 +21,17 @@ def source_payload(repo):
     for name in sorted(stage.PAYLOAD_NAMES):
         if name in stage.BINARY_HASHES:
             source = repo / "src" / "tandysw" / "bin"
+        elif name == stage.SPLASH_NAME:
+            source = repo / "src" / "splash" / "assets"
         elif name in ("INSTALL.BAT", "TANDY88.BAT"):
             source = repo / "oemdisk"
         else:
             source = repo
         payload[name] = stage.single_file(source, name).read_bytes()
     stage.verify_binaries(payload)
+    stage.verify_splash(payload)
     stage.inf_support_files(payload["OEMSETUP.INF"])
-    for name in stage.PAYLOAD_NAMES - stage.BINARY_HASHES.keys():
+    for name in stage.PAYLOAD_NAMES - stage.BINARY_NAMES:
         stage.checked_text(payload[name], name)
     return payload
 
@@ -75,7 +78,7 @@ def disk_allocation(payload):
 
 
 def build_toolkit(repo, out):
-    """Explicit support-free developer alternative, never the normal download."""
+    """Explicit Windows-support-free developer alternative, never the normal download."""
     if out.name.upper() == "TANDY88.ZIP":
         raise stage.DiskError("Toolkit output must be distinctly named, for example T88TOOLS.ZIP")
     stage.fresh_output(out)
@@ -87,7 +90,8 @@ def build_toolkit(repo, out):
     entries["TOOLKIT.TXT"] = stage.dos_text(
         "DEVELOPER TOOLKIT - NOT AN INSTALL-READY DISK\n"
         "Normal users should download the complete TANDY88.ZIP instead.\n"
-        "This alternative omits the six Windows support files and LOCAL.TXT.\n"
+        "This alternative includes the first-party TNDYLOGO.RLE splash.\n"
+        "It omits the five Windows support files and LOCAL.TXT.\n"
         "Developer command: python STAGE.PY --windows-files MEDIA --out NEWDISK\n")
     write_zip(entries, out)
     return sorted(stage.SUPPORT_HASHES)
@@ -139,6 +143,7 @@ def verify_archive(repo, path):
         entries = {name: archive.read(name) for name in names}
     payload = {name[6:]: data for name, data in entries.items() if name.startswith("DISK1/")}
     stage.verify_binaries(payload)
+    stage.verify_splash(payload)
     support = {name: payload[name] for name in stage.SUPPORT_HASHES}
     stage.verify_support(support)
     marker = stage.checked_text(payload["LOCAL.TXT"], "LOCAL.TXT")
@@ -184,7 +189,7 @@ def main(argv=None):
     except (stage.DiskError, OSError, zipfile.BadZipFile) as error:
         parser.exit(1, "ERROR: " + str(error) + "\n")
     print("Created ready-to-use OEM package:", out)
-    print("Included and verified:", ", ".join(support))
+    print("Included and verified:", ", ".join(support + [stage.SPLASH_NAME]))
     print("Users can extract DISK1 and run INSTALL from DOS; no Python or media staging needed.")
     if args.local_out:
         print("Ready-to-use extracted disk:", args.local_out)

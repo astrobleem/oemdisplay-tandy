@@ -63,6 +63,9 @@ def main():
     # Windows media is needed, and production source hashes remain untouched.
     s.SUPPORT_HASHES = {p.name: s.sha(p.read_bytes()) for p in owned.iterdir()}
     results = []
+    if set(s.SUPPORT_HASHES) & {"TNDYLOGO.RLE", "CGALOGO.RLE"}:
+        raise AssertionError("Synthetic Windows support fixtures must exclude splash artwork")
+    s.verify_splash({s.SPLASH_NAME: (out / "clean/DISK1" / s.SPLASH_NAME).read_bytes()})
 
     def check(description, condition):
         if not condition:
