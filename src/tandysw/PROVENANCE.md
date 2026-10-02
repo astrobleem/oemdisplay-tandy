@@ -22,7 +22,7 @@ The successful standalone backend does not depend on unpublished modifications t
 
 V1.ASM includes hatch, color-match and line-style table material derived from the existing DDK EGA/EGA.ASM. The table provenance is stated in its header. Existing Microsoft notices in reused files are retained in the generated build tree.
 
-This change supplies no new license for third-party material and makes no claim that existing repository inclusion grants redistribution rights. It avoids duplicating the DDK tree, compiler binaries, import libraries, Windows/DOS media or system fonts.
+This change supplies no new license for third-party material and makes no claim that existing repository inclusion grants redistribution rights. The historical source checkpoint avoided duplicating the DDK tree, compiler binaries, import libraries, Windows/DOS media or system fonts. The later ready-to-use OEM runtime package is described below.
 
 ## Local transformations
 
@@ -41,3 +41,20 @@ Resource changes reuse tracked assets: low-resolution geometry, EGA color defaul
 ## Frozen artifact
 
 bin/TANDYV1.DRV is the GUI-tested checkpoint, not the later performance candidate. Its source/resource build was reproduced byte-for-byte before publication.
+
+## Ready-to-use OEM runtime package (2026-10-02)
+
+The current root TANDY88.ZIP is a complete display-driver disk. In addition to
+the accepted driver and DOS reservation/launcher files, it contains precisely
+these Windows 3.0 Setup dependencies: EGASYS.FON, EGAFIX.FON, EGAOEM.FON,
+CGA.GR2, CGALOGO.LGO and CGALOGO.RLE. They are expanded from the supplied
+Windows 3.0 media and pinned by exact hashes in the packaging tools. This is a
+bounded runtime package, not a complete Windows installation or a distribution
+of original OS disks, DDK tools, compiler binaries or import libraries.
+
+Normal installation is entirely in DOS and Windows Setup; end users do not
+need Python or a separate support-file staging step. Python/media input is the
+optional developer rebuild route. See ../../README.TXT, ../../BUILDING.MD and
+../../docs/OEMDISK.MD for the installer, provenance hashes and verification.
+Existing third-party notices remain applicable; this packaging change does
+not create or assert a new license for those components.

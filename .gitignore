@@ -41,3 +41,16 @@ w3ddkadp.txt
 # (Only if user actually wants these committed, but usually bad practice.
 # User said "more than a few things that we should not be uploading".
 # So ignoring all EXE/COM is safer. I'll stick to ignoring them.)
+
+# Host-side packaging caches and conventional private staging locations
+__pycache__/
+*.pyc
+/OEMLOCAL/
+/PRIVATE-DISK*/
+
+# Deliberately retained authored test evidence
+!docs/altmodes/CGAWIN.LOG
+!docs/altmodes/CGA-GUI.LOG
+
+# Ready-to-use OEM runtime disk (only the scoped pinned support files)
+!/TANDY88.ZIP

@@ -11,26 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install tools
+      - name: Verify ready-to-use OEM disk
         run: |
-          sudo apt-get update
-          sudo apt-get install -y apt-utils dosbox-x file dos2unix
-
-      - name: Build package
-        run: |
-          dosbox-x -set "dos private area=false" \
-            -c "mount c $GITHUB_WORKSPACE" \
-            -c "c:" \
-            -c "set PATH=C:\\DDK\\286\\TOOLS;C:\\BIN;%PATH%" \
-            -c "set LIB=C:\\LIB" \
-            -c "set INCLUDE=C:\\INCLUDE;C:\\DDK\\286\\INC" \
-            -c "MAKEDISK.BAT" \
-            -c "del BUILD.LOG" \
-            -c "del *.OBJ" \
-            -c "del *.EXE" \
-            -c "del *.TXT" \
-            -c "rd /s /q TNDY16" \
-            -c "exit"
+          python3 oemdisk/TESTDISK.PY
+          python3 MAKEDISK.PY --verify TANDY88.ZIP
 
       - name: Create release
         id: create_release
@@ -47,6 +31,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: TNDY16.ZIP
-          asset_name: TNDY16.ZIP
+          asset_path: TANDY88.ZIP
+          asset_name: TANDY88.ZIP
           asset_content_type: application/zip

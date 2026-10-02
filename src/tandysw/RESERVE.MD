@@ -12,7 +12,23 @@
 
 Other layouts, an occupied video overlap, or an unrecognized existing reservation fail with DOS exit code 1. Do not treat a failure as permission to start the Tandy driver. The current helper deliberately does not generalize to smaller-memory machines, linked UMB arenas, expanded-base-memory configurations, different Tandy models, or another program's reservation.
 
-## Safe launch
+## Normal installation and launch
+
+The ready-to-use [OEM disk](../../TANDY88.ZIP) includes this helper. Run its DOS
+INSTALL, then use C:\TANDY88\TANDY88 SETUP for installation and
+C:\TANDY88\TANDY88 to start Windows. The supplied launcher performs the check
+for you every time; end users do not need to build a helper or write a batch.
+
+In plain terms, mode 09h needs 32 KB at the top of the Tandy's shared RAM, but
+the BIOS keeps only the upper 16 KB out of DOS's way. RESERVE asks DOS to keep
+the remaining video overlap unavailable to programs before Windows starts.
+It is not extra memory or a graphics accelerator. It leaves BIOS memory size
+unchanged, stays reserved until reboot, and refuses unsupported/occupied layouts.
+
+## Developer launch example
+
+The following explains the guard used by the supplied launcher. For normal
+installation use the complete disk's instructions above.
 
 Copy the built `RESERVE.COM` onto the guest drive, then use this DOS batch sequence before Windows:
 

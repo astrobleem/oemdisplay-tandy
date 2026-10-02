@@ -1,0 +1,91 @@
+{
+  "archive": "TANDY88.ZIP",
+  "size": 95481,
+  "sha256": "15def8a68f14aa5a6729df58d4f6962727abeb213cb2c1d98541d9d4471c0ef2",
+  "host_tests": 47,
+  "verified_against_current_source": true,
+  "disk_files": 15,
+  "fat12_360kb": {
+    "sectors": 720,
+    "bytes_per_sector": 512,
+    "sectors_per_cluster": 2,
+    "root_entries": 112,
+    "reserved_sectors": 1,
+    "fats": 2,
+    "sectors_per_fat": 2,
+    "root_directory_sectors": 7,
+    "data_clusters": 354,
+    "allocated_file_bytes": 96256,
+    "filesystem_overhead_bytes": 6144,
+    "total_used_bytes": 102400,
+    "capacity_bytes": 368640,
+    "free_data_bytes": 266240
+  },
+  "runtime_helper_and_support_bytes_match_gui_tested_disk": true,
+  "members": {
+    "DISK1/CGA.GR2": {
+      "size": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "DISK1/CGALOGO.LGO": {
+      "size": 880,
+      "sha256": "d9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807"
+    },
+    "DISK1/CGALOGO.RLE": {
+      "size": 6782,
+      "sha256": "f31392cac25d3433f22a4500e5f42aaa29fc1ac188a1e2525441b759bef21735"
+    },
+    "DISK1/EGAFIX.FON": {
+      "size": 4656,
+      "sha256": "6df45a74e5756dd0746bcee593be9ac4df4a35458c26bf4570b748def2d394cb"
+    },
+    "DISK1/EGAOEM.FON": {
+      "size": 4576,
+      "sha256": "05bd6ef11802bbca20473b0e409116fd8919c5bbcbbbc26b7ee2ea1f33ad23be"
+    },
+    "DISK1/EGASYS.FON": {
+      "size": 5328,
+      "sha256": "8bd307d7886d0f2fdfc1de3da8253e294233d1c757fd9131a66405fca5825b09"
+    },
+    "DISK1/FILE_ID.DIZ": {
+      "size": 314,
+      "sha256": "37ca9c4bcc7482d6308806bcf7af27533bb19b29244b5c0b62ae0293d1683bad"
+    },
+    "DISK1/INSTALL.BAT": {
+      "size": 1861,
+      "sha256": "301d77c5fe9d56020554a812e4d16f808a47f2b546a4e0b54f6e2f822b42162b"
+    },
+    "DISK1/LOCAL.TXT": {
+      "size": 227,
+      "sha256": "15416c15f5508965c3ea6ab1ea856d5a227fb608e94e303ae35246c3eba630d3"
+    },
+    "DISK1/MANIFEST.SHA": {
+      "size": 1097,
+      "sha256": "bd16c57d077accce4297d7802b7897897fcdbce0588e1b2c49bac417a63714d3"
+    },
+    "DISK1/OEMSETUP.INF": {
+      "size": 770,
+      "sha256": "206f59fa752bb988726f915f45076292549de44295352049e759f217aef7332b"
+    },
+    "DISK1/README.TXT": {
+      "size": 5675,
+      "sha256": "87fedcb9fe2bdb9437ba289b19ce6ba2db445262e56c9beabfe18bedc441b78b"
+    },
+    "DISK1/RESERVE.COM": {
+      "size": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+    },
+    "DISK1/TANDY88.BAT": {
+      "size": 976,
+      "sha256": "80b9891fafd4be5066c39374c297eec76e5c33535451a0ace23384650df807c2"
+    },
+    "DISK1/TANDY88.DRV": {
+      "size": 51296,
+      "sha256": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee"
+    },
+    "README.TXT": {
+      "size": 5675,
+      "sha256": "87fedcb9fe2bdb9437ba289b19ce6ba2db445262e56c9beabfe18bedc441b78b"
+    }
+  }
+}

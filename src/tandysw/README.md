@@ -71,34 +71,33 @@ instruction, raw runtime-generated code, stack bounds and linked-library
 closure. [RESERVE.MD](RESERVE.MD) describes the DOS memory reservation and its
 supported layout/failure cases.
 
-## Install in a separate Windows 3.0 guest copy
+## Install through the completed OEM driver disk
 
-Keep a clean stock-CGA Windows 3.0 baseline. Do not include Windows media or
-installed Windows files in public driver packages.
+Use Windows 3.0 Setup to install the driver and fonts. Do not manually edit
+SYSTEM.INI for a normal installation. Work on a backed-up or disposable guest.
 
-1. Copy the built `TANDY88.DRV` to `C:\WINDOWS\SYSTEM\TANDY88.DRV`
-2. Copy the tested `RESERVE.COM` to `C:\RESERVE.COM`
-3. Install `EGASYS.FON`, `EGAFIX.FON` and `EGAOEM.FON` from your own Windows 3.0
-   media into `C:\WINDOWS\SYSTEM`
-4. Set these existing `SYSTEM.INI` [boot] entries:
+Download the ready-to-use [TANDY88.ZIP](../../TANDY88.ZIP) and extract DISK1.
+It already includes the exact candidate05 driver, RESERVE, DOS installer/launcher,
+and all six Windows 3.0 Setup dependencies. End users do not need Python or a
+separate media-staging step.
 
-       display.drv=tandy88.drv
-       fonts.fon=egasys.fon
-       fixedfon.fon=egafix.fon
-       oemfonts.fon=egaoem.fon
+For an existing stock-CGA Windows 3.0 installation at C:\WINDOWS:
 
-5. Retain the stock Microsoft mouse driver; use COM1 serial-mouse emulation
-6. Start Windows with `WIN /R` only after `RESERVE` succeeds
+1. Mount/copy the completed disk, switch to it, and run `INSTALL`
+2. Run `C:\TANDY88\TANDY88 SETUP` from DOS
+3. Select Display, Other, and supply the completed disk path when prompted
+4. Select Tandy EX/HX 320x200 16 colors (8088 c05), then complete Setup
+5. Always launch using `C:\TANDY88\TANDY88`, which reserves memory before WIN /R
 
-The launcher validates the exact candidate/helper hashes, font presence and
-INI selection; verifies CPU readback; and refuses to launch Windows if video
-reservation fails:
+Setup copies the driver/fonts/grabber/logo and updates SYSTEM.INI itself.
+The helper lives outside Windows. Python is only needed for optional developer
+rebuilds described in BUILDING.MD. See [the full instructions](../../README.TXT),
+[packaging details](../../BUILDING.MD) and [OEM acceptance](../../docs/OEMDISK.MD).
+Keep the stock Microsoft mouse driver; emulator tests use COM1 serialmouse.
 
-    python3 src/tandysw/RUN88.PY /path/to/guest-drive-c /path/to/dosbox-x
-
-Use `--prepare-only --config /new/TANDY88.CNF` to validate and inspect the
-configuration without starting the emulator. It never overwrites an existing
-configuration and discards host console diagnostics to prevent runaway logs.
+`RUN88.PY` remains the developer validator/launcher for previously prepared
+checkpoint guests. It checks exact binary hashes, fonts, INI and CPU settings;
+use the OEM disk path above for installation.
 
 `RESERVE.COM` is 1,512 bytes, SHA256:
 `644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8`
