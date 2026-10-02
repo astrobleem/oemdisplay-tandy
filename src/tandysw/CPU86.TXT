@@ -1,0 +1,70 @@
+CPU enforcement verification, 2026-10-02 UTC
+
+Emulator: DOSBox-X 2026.08.31 SDL2 nightly, commit b13702c0af413b46061129aea0924122e5b59a8b
+Executable: /workspace/shared/dosbox-x/run
+
+Critical finding
+---------------
+cputype=8088 is invalid. It is reset to auto (which accepts later-CPU instructions).
+See run.log and CPU.TXT. Never label that configuration an 8088 test.
+
+Accepted configuration
+----------------------
+[cpu]
+core=normal
+cputype=8086_prefetch
+
+The pinned upstream src/cpu/cpu.cpp lines 3947-3954 explicitly assign the
+8086 core with CPU_PrefetchQueueSize=4 to emulate the more common 8088.
+See dosbox-cpu-excerpt.txt for the exact pinned source link and excerpt.
+DOSBox-X is not cycle exact; this establishes ISA semantics and the selected
+4-byte prefetch queue, not physical bus timing or hardware compatibility.
+
+CPUCHECK.COM, built from cpucheck.s with GNU as --32 and ld -m elf_i386:
+                     FLAGS high   PUSH SP delta   SHL 1 by CL=32
+8086                 F000         FFFE            0000
+8086_prefetch        F000         FFFE            0000
+386 control          7000         0000            0001
+
+LATERCPU.COM, built from latercpu.s:
+                     PUSHA delta  PUSHimm delta   C0 SHL result  66 prefix AX
+8086                 0000         0000            0001           0001
+8086_prefetch        0000         0000            0001           0001
+386 control          FFF0         FFFE            0008           9090
+
+These are controlled semantic comparisons. 8086/8088 undocumented opcode
+aliases mean a blanket expectation of invalid-opcode traps would be wrong.
+The 8086 core does not execute the tested later-CPU meanings. Source and
+machine-code binaries are retained here, along with configs and output files.
+
+Memory
+------
+Normal machine=tandy, memsize=0, memsizekb=640,
+allow more than 640kb base memory=false, xms=false, ems=false, umb=false:
+DOS MEM reports 624KB conventional memory, 592KB free before the helper/Windows.
+The text-mode 16KB video reservation is expected. A 32KB mode needs another
+16KB protected from the DOS allocator; RESERVE.COM now protects this overlap before Windows starts.
+
+Display
+-------
+For pixel-exact display QA, use [render] doublescan=false, scaler=none,
+aspect=false and [sdl] windowresolution=original. Doublescan is independent
+of the software scaler. A GDI metrics probe must still verify 320x200 logical
+resolution and four bits per pixel; screenshot dimensions alone do not prove it.
+
+Rebuild the authored DOS probes with GNU binutils (verified byte-identical):
+  as --32 CPUCHECK.S -o cpucheck.o
+  ld -m elf_i386 -Ttext 0x100 --oformat binary -e _start cpucheck.o -o CPUCHECK.COM
+  as --32 LATERCPU.S -o latercpu.o
+  ld -m elf_i386 -Ttext 0x100 --oformat binary -e _start latercpu.o -o LATERCPU.COM
+
+Run each COM in separate disposable DOSBox-X boots with the CPU settings
+listed above. Capture CONFIG -GET CPU CPUTYPE and redirect each program's
+output to a text file. Never execute the later-opcode diagnostic as part of
+normal Windows startup on real hardware: it intentionally exercises undefined
+8086 encodings. This is an emulator-identity test, not an installation tool.
+
+CPUCHECK.COM SHA256:
+aad80777879ff1ba084b3a413fd3ba48485fe2c1ef99a0606637e7366b3e5f4c
+LATERCPU.COM SHA256:
+2a2a3dc60d44ad421be00d32dbe6686bb03b5f1c8d01a847a395f6d0041920ad
