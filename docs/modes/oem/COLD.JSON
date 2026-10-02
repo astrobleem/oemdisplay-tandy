@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "date": "2026-10-02",
+  "mode": "640x200x4",
+  "fresh_process": true,
+  "mounted_drives": [
+    "C (installed guest)",
+    "Z (emulator internal)"
+  ],
+  "oem_media_mounted": false,
+  "launcher": "C:\\TANDY88\\TANDY88",
+  "manual_system_ini_edits": false,
+  "cold_desktop_observed": true,
+  "native_reopen_command": "pbrush t4save.bmp",
+  "reopen_title": "Paintbrush - t4save.bmp",
+  "reopen_visually_verified": true,
+  "native_application_exit_and_desktop_redraw": true,
+  "saved_bmp_sha256": "12b175566401b77e6ca1027f8b766a3b68d1524b1d34459620e067fa84880740",
+  "saved_bmp_size": 10358,
+  "saved_bmp_dimensions": [
+    320,
+    64
+  ],
+  "save_exact_pixel_comparison": "See ../PAINT.JSON: 20480 pixels, zero mismatches",
+  "capture_note": "Unmodified native raw captures, 640x400 scan-doubled logical 640x200. Reopen is a native GUI check; it is not an additional GDI case or all-pixel roundtrip assertion.",
+  "captures": {
+    "COLD.PNG": "a794cd9df66421aba24eb85a25ad273bde6bc296f04c90f36e4ee71c433e1f76",
+    "REOPEN.PNG": "ae730a540facf42a097039ad13ba949d2ac5bc81e89566902896b170c0ce2398"
+  },
+  "hardware_tested": false
+}

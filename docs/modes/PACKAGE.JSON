@@ -1,0 +1,82 @@
+{
+  "result": "PASS",
+  "complete_sha256": "8de653231031daf3a5608e6d4abffb517a076429f9b6296235120977d078e549",
+  "toolkit_sha256": "9c1b9388fe70ba43e9291e7bb034368459d583c65026a064b9bf665b3e7c249f",
+  "budget": {
+    "files": 22,
+    "logical_bytes": 308151,
+    "allocated_file_bytes": 320512,
+    "filesystem_overhead_bytes": 6144,
+    "total_used_bytes": 326656,
+    "capacity_bytes": 368640,
+    "free_data_bytes": 41984
+  },
+  "production_font_failures": [
+    {
+      "file": "CGASYS.FON",
+      "case": "modified",
+      "result": "Unverified Windows support file: CGASYS.FON SHA256=62ab66d8e4d2ca3cdf36c4707c8b159fc96649a097cb698ef68b60bef06420b9"
+    },
+    {
+      "file": "CGASYS.FON",
+      "case": "missing",
+      "result": "Missing, ambiguous, or nonregular file: /workspace/shared/tandy-mode-oem-validation01/EXPANDED/CGASYS.FON"
+    },
+    {
+      "file": "CGAFIX.FON",
+      "case": "modified",
+      "result": "Unverified Windows support file: CGAFIX.FON SHA256=3ff3ef075c76da6e8ab4747a2a758561c30d646eedbcd9290ee7e9a7dcf38528"
+    },
+    {
+      "file": "CGAFIX.FON",
+      "case": "missing",
+      "result": "Missing, ambiguous, or nonregular file: /workspace/shared/tandy-mode-oem-validation01/EXPANDED/CGAFIX.FON"
+    },
+    {
+      "file": "CGAOEM.FON",
+      "case": "modified",
+      "result": "Unverified Windows support file: CGAOEM.FON SHA256=14c7f773d3bf815d93681feb482aeca3aada8a190559f4d3073d4a7588930a29"
+    },
+    {
+      "file": "CGAOEM.FON",
+      "case": "missing",
+      "result": "Missing, ambiguous, or nonregular file: /workspace/shared/tandy-mode-oem-validation01/EXPANDED/CGAOEM.FON"
+    }
+  ],
+  "compressed_expanded_reproducible": true,
+  "complete_repeat_reproducible": true,
+  "standalone_toolkit_disk_identical": true,
+  "exact_members": [
+    "CGA.GR2",
+    "CGAFIX.FON",
+    "CGALOGO.LGO",
+    "CGAOEM.FON",
+    "CGASYS.FON",
+    "EGAFIX.FON",
+    "EGAOEM.FON",
+    "EGASYS.FON",
+    "FILE_ID.DIZ",
+    "INSTALL.BAT",
+    "LOCAL.TXT",
+    "MANIFEST.SHA",
+    "OEMSETUP.INF",
+    "README.TXT",
+    "RESERVE.COM",
+    "TANDY88.BAT",
+    "TANDY88.DRV",
+    "TNDY160.DRV",
+    "TNDY3204.DRV",
+    "TNDY6402.DRV",
+    "TNDY6404.DRV",
+    "TNDYLOGO.RLE"
+  ],
+  "driver_sha256": {
+    "TANDY88.DRV": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee",
+    "TNDY160.DRV": "124a07c38c13922a4cbd58452d39108755f632abe01e4dd17780c32140d2aedd",
+    "TNDY3204.DRV": "c90526efb90f4434e8aa567d439e9cdf7f81c096968a362806a992052a81e9e9",
+    "TNDY6402.DRV": "b0c95515462ba27ce208963dd94957019995e3e6085d147771ef037b39967652",
+    "TNDY6404.DRV": "5ab225f6e93d53f39d092b8db81fd0129a0fe473cf30eef880ddaeaaa0a8d306"
+  },
+  "final_repeat_byte_identical": true,
+  "final_package_date": "2026-10-02"
+}

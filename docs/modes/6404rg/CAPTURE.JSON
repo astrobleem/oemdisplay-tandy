@@ -1,0 +1,45 @@
+{
+  "driver_sha256": "5ab225f6e93d53f39d092b8db81fd0129a0fe473cf30eef880ddaeaaa0a8d306",
+  "native_file": "SOLITAIR.PNG",
+  "sha256": "2a46f4f6b25c38f4eb74f6846f6b8f7aee700ff952c9fb6078174b76dbeb749e",
+  "native_dimensions": [
+    640,
+    400
+  ],
+  "logical_dimensions": [
+    640,
+    200
+  ],
+  "doubled_rows": true,
+  "observed_colors": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      85,
+      255,
+      85
+    ],
+    [
+      255,
+      85,
+      85
+    ],
+    [
+      255,
+      255,
+      255
+    ]
+  ],
+  "observed": "All seven tableau columns, red diamonds/hearts distinct from black clubs/spades, green table, four visible RGBI colors",
+  "scope": "startup/layout/color smoke test; not a full game",
+  "logical_palette": "black,red,green,white",
+  "hardware_palette": [
+    0,
+    12,
+    10,
+    15
+  ]
+}

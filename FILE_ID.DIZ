@@ -1,9 +1,10 @@
-TANDY88 ready-to-use OEM display disk
-Windows 3.0 real mode; 8086/8088
-Tandy 320x200, 16 colors
-Normal 640 KB shared-memory layout
+TANDY88 selectable OEM display disk
+Windows 3.0 real mode; Tandy EX/HX 8088
+320x200x16 default unchanged
+Also 160x200x16 and 320x200x4
+640x200x4 or 640x200x2 for wider desktop
+Normal 640 KB; guarded RESERVE launcher
 Custom Tandy startup splash included
-Guarded RESERVE.COM DOS launcher
 All required OEM support files included
-Extract DISK1 and run INSTALL in DOS
+Extract DISK1, INSTALL, then Setup Other
 No Python required for installation

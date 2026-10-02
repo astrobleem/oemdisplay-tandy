@@ -1,0 +1,45 @@
+{
+  "profile": "320x200x16",
+  "selected_via_native_setup": true,
+  "system_ini_modified_by_test": false,
+  "boot": {
+    "286grabber": "CGA.GR2",
+    "fixedfon.fon": "EGAFIX.FON",
+    "oemfonts.fon": "EGAOEM.FON",
+    "fonts.fon": "EGASYS.FON",
+    "display.drv": "TANDY88.DRV",
+    "shell": "progman.exe",
+    "network.drv": "",
+    "language.dll": "",
+    "comm.drv": "comm.drv",
+    "sound.drv": "sound.drv",
+    "mouse.drv": "mouse.drv",
+    "keyboard.drv": "keyboard.drv",
+    "system.drv": "system.drv",
+    "386grabber": ""
+  },
+  "files": {
+    "TANDY88.DRV": {
+      "bytes": 51296,
+      "sha256": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee"
+    },
+    "EGASYS.FON": {
+      "bytes": 5328,
+      "sha256": "8bd307d7886d0f2fdfc1de3da8253e294233d1c757fd9131a66405fca5825b09"
+    },
+    "EGAFIX.FON": {
+      "bytes": 4656,
+      "sha256": "6df45a74e5756dd0746bcee593be9ac4df4a35458c26bf4570b748def2d394cb"
+    },
+    "EGAOEM.FON": {
+      "bytes": 4576,
+      "sha256": "05bd6ef11802bbca20473b0e409116fd8919c5bbcbbbc26b7ee2ea1f33ad23be"
+    }
+  },
+  "custom_splash_embedded": true,
+  "dos_configuration_unchanged": true,
+  "gdi_pass": true,
+  "cases": 92,
+  "pixels": 5888000,
+  "ini_sha256": "2d574e363fe23bdecd04929ab979fb033c592e28f344e097860371bfc68a8e44"
+}

@@ -1,0 +1,52 @@
+{
+  "status": "Windows rendering passed; native OEM selection acceptance pending",
+  "baseline_sha256": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee",
+  "new_profiles": [
+    {
+      "profile": "160x200x16",
+      "driver": "TNDY160.DRV",
+      "driver_bytes": 51296,
+      "driver_sha256": "124a07c38c13922a4cbd58452d39108755f632abe01e4dd17780c32140d2aedd",
+      "resource_sha256": "a0726f53eefab8df45b39f9fa638c8c49d324b04239aa48706396c3e9806c468",
+      "cases": 92,
+      "pixels": 2944000,
+      "pass_all": true,
+      "assertions": 62
+    },
+    {
+      "profile": "320x200x4",
+      "driver": "TNDY3204.DRV",
+      "driver_bytes": 50848,
+      "driver_sha256": "c90526efb90f4434e8aa567d439e9cdf7f81c096968a362806a992052a81e9e9",
+      "resource_sha256": "a0726f53eefab8df45b39f9fa638c8c49d324b04239aa48706396c3e9806c468",
+      "cases": 94,
+      "pixels": 6016000,
+      "pass_all": true,
+      "assertions": 103
+    },
+    {
+      "profile": "640x200x4",
+      "driver": "TNDY6404.DRV",
+      "driver_bytes": 50832,
+      "driver_sha256": "5ab225f6e93d53f39d092b8db81fd0129a0fe473cf30eef880ddaeaaa0a8d306",
+      "resource_sha256": "4bdf9197db27b33dd5859c4198534aa7db6cb2066fe8075caff1899ff25cb312",
+      "cases": 94,
+      "pixels": 12032000,
+      "pass_all": true,
+      "assertions": 104
+    },
+    {
+      "profile": "640x200x2",
+      "driver": "TNDY6402.DRV",
+      "driver_bytes": 50704,
+      "driver_sha256": "b0c95515462ba27ce208963dd94957019995e3e6085d147771ef037b39967652",
+      "resource_sha256": "4bdf9197db27b33dd5859c4198534aa7db6cb2066fe8075caff1899ff25cb312",
+      "cases": 94,
+      "pixels": 12032000,
+      "pass_all": true,
+      "assertions": 100
+    }
+  ],
+  "new_case_count": 374,
+  "new_pixel_count": 33024000
+}

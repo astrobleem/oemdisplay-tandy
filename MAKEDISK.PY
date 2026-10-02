@@ -63,25 +63,11 @@ def disk_entries(payload):
 
 
 def disk_allocation(payload):
-    """Standard 360 KB FAT12: 2 sectors/cluster, 2 FATs, 112 root entries."""
-    sector = 512
-    total = 720 * sector
-    overhead = (1 + 2 * 2 + 7) * sector
-    cluster = 1024
-    allocated = sum(((len(data) + cluster - 1) // cluster) * cluster for data in payload.values())
-    if len(payload) > 112 or allocated > total - overhead:
-        raise stage.DiskError("Extracted OEM disk exceeds standard 360 KB FAT12 capacity")
-    return {"files": len(payload), "logical_bytes": sum(map(len, payload.values())),
-            "allocated_file_bytes": allocated, "filesystem_overhead_bytes": overhead,
-            "total_used_bytes": allocated + overhead, "capacity_bytes": total,
-            "free_data_bytes": total - overhead - allocated}
+    """Shared with standalone staging so neither completion path can overfill."""
+    return stage.disk_allocation(payload)
 
 
-def build_toolkit(repo, out):
-    """Explicit Windows-support-free developer alternative, never the normal download."""
-    if out.name.upper() == "TANDY88.ZIP":
-        raise stage.DiskError("Toolkit output must be distinctly named, for example T88TOOLS.ZIP")
-    stage.fresh_output(out)
+def toolkit_entries(repo):
     payload = source_payload(repo)
     payload["MANIFEST.SHA"] = stage.manifest(payload)
     entries = disk_entries(payload)
@@ -91,9 +77,17 @@ def build_toolkit(repo, out):
         "DEVELOPER TOOLKIT - NOT AN INSTALL-READY DISK\n"
         "Normal users should download the complete TANDY88.ZIP instead.\n"
         "This alternative includes the first-party TNDYLOGO.RLE splash.\n"
-        "It omits the five Windows support files and LOCAL.TXT.\n"
+        "It omits the eight Windows support files and LOCAL.TXT.\n"
         "Developer command: python STAGE.PY --windows-files MEDIA --out NEWDISK\n")
-    write_zip(entries, out)
+    return entries
+
+
+def build_toolkit(repo, out):
+    """Explicit Windows-support-free developer alternative, never the normal download."""
+    if out.name.upper() == "TANDY88.ZIP":
+        raise stage.DiskError("Toolkit output must be distinctly named, for example T88TOOLS.ZIP")
+    stage.fresh_output(out)
+    write_zip(toolkit_entries(repo), out)
     return sorted(stage.SUPPORT_HASHES)
 
 
@@ -124,23 +118,37 @@ def build_with_local(repo, out, windows_files, local_out, windows_dir=stage.DEFA
     return build(repo, out, windows_files, local_out, windows_dir)
 
 
-def verify_archive(repo, path):
-    """Verify complete release, exact dependencies and current sources; no media needed."""
-    expected_names = {"DISK1/" + name for name in stage.PAYLOAD_NAMES | set(stage.SUPPORT_HASHES)
-                      | {"LOCAL.TXT", "MANIFEST.SHA"}} | {"README.TXT"}
+def read_archive(path, expected_names, label):
+    """Reject added, duplicate, reordered or noncanonical archive members."""
     with zipfile.ZipFile(path) as archive:
         infos = archive.infolist()
         names = [info.filename for info in infos]
         if len(names) != len(expected_names) or set(names) != expected_names:
-            raise stage.DiskError("Complete ZIP has missing, extra, or duplicate files")
+            raise stage.DiskError(label + " ZIP has missing, extra, or duplicate files")
         if names != sorted(names) or archive.comment:
-            raise stage.DiskError("Complete ZIP has noncanonical order or comment")
+            raise stage.DiskError(label + " ZIP has noncanonical order or comment")
         for info in infos:
             if (info.file_size > 1024 * 1024 or info.compress_type != zipfile.ZIP_STORED or
                     info.date_time != (1980, 1, 1, 0, 0, 0) or info.create_system != 0 or
-                    info.external_attr != 0x20 or info.extra or info.comment):
+                    info.external_attr != 0x20 or info.extra or info.comment or info.flag_bits):
                 raise stage.DiskError("Noncanonical or oversized ZIP member: " + info.filename)
-        entries = {name: archive.read(name) for name in names}
+        return {name: archive.read(name) for name in names}
+
+
+def verify_toolkit(repo, path):
+    """Verify exact support-free toolkit members, pins, manifest and current sources."""
+    expected = toolkit_entries(repo)
+    entries = read_archive(path, set(expected), "Toolkit")
+    if entries != expected:
+        raise stage.DiskError("Toolkit ZIP differs from current source or manifest; rebuild it")
+    return sorted(stage.SUPPORT_HASHES)
+
+
+def verify_archive(repo, path):
+    """Verify complete release, exact dependencies and current sources; no media needed."""
+    expected_names = {"DISK1/" + name for name in stage.PAYLOAD_NAMES | set(stage.SUPPORT_HASHES)
+                      | {"LOCAL.TXT", "MANIFEST.SHA"}} | {"README.TXT"}
+    entries = read_archive(path, expected_names, "Complete")
     payload = {name[6:]: data for name, data in entries.items() if name.startswith("DISK1/")}
     stage.verify_binaries(payload)
     stage.verify_splash(payload)
@@ -168,14 +176,22 @@ def main(argv=None):
     parser.add_argument("--toolkit-only", action="store_true",
                         help="Explicitly build support-free developer T88TOOLS.ZIP instead")
     parser.add_argument("--verify", type=Path, help="Validate a complete ZIP against current source without media")
+    parser.add_argument("--verify-toolkit", type=Path,
+                        help="Validate an exact support-free toolkit ZIP against current source")
     args = parser.parse_args(argv)
-    if args.verify and (args.out or args.windows_files or args.local_out or args.toolkit_only or
+    if args.verify and args.verify_toolkit:
+        parser.error("--verify and --verify-toolkit cannot be combined")
+    if (args.verify or args.verify_toolkit) and (args.out or args.windows_files or args.local_out or args.toolkit_only or
                         args.windows_dir != stage.DEFAULT_WINDOWS):
-        parser.error("--verify cannot be combined with build options")
+        parser.error("Archive verification cannot be combined with build options")
     if args.toolkit_only and (args.windows_files or args.local_out or args.windows_dir != stage.DEFAULT_WINDOWS):
         parser.error("--toolkit-only cannot be combined with media, local disk, or Windows-path options")
     out = args.out or HERE / ("T88TOOLS.ZIP" if args.toolkit_only else "TANDY88.ZIP")
     try:
+        if args.verify_toolkit:
+            verify_toolkit(HERE, args.verify_toolkit)
+            print("Verified support-free toolkit ZIP and current source:", args.verify_toolkit)
+            return 0
         if args.verify:
             verify_archive(HERE, args.verify)
             print("Verified complete OEM ZIP and current source:", args.verify)
