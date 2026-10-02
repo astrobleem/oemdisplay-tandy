@@ -1,0 +1,93 @@
+{
+  "production_source_sha256": "287e641fda0cec008b1b7861f4d1e8e17b5feb81f2190b890dd2a88616e6e290",
+  "executable_sha256": "2d5684eca3cf4bdf6808c249aea575c3b383f520bade8553650da080b8ea998e",
+  "total_checks": 410,
+  "pass": true,
+  "results": [
+    {
+      "complete": true,
+      "elapsed_seconds": 46.659,
+      "config": "/workspace/scratch/a84592844d2c/cookie-unit/160/RUN.CNF",
+      "guest_log": "/workspace/scratch/a84592844d2c/cookie-unit/160/guest/COOKIEUT.LOG",
+      "host_log": "/workspace/scratch/a84592844d2c/cookie-unit/160/HOST.LOG",
+      "mode": "160",
+      "pass_count": 82,
+      "failures": [],
+      "screen": {
+        "SCREEN_WIDTH": 160,
+        "SCREEN_HEIGHT": 200,
+        "WIN_FLAGS": 64
+      },
+      "pass": true
+    },
+    {
+      "complete": true,
+      "elapsed_seconds": 44.524,
+      "config": "/workspace/scratch/a84592844d2c/cookie-unit/3204/RUN.CNF",
+      "guest_log": "/workspace/scratch/a84592844d2c/cookie-unit/3204/guest/COOKIEUT.LOG",
+      "host_log": "/workspace/scratch/a84592844d2c/cookie-unit/3204/HOST.LOG",
+      "mode": "3204",
+      "pass_count": 82,
+      "failures": [],
+      "screen": {
+        "SCREEN_WIDTH": 320,
+        "SCREEN_HEIGHT": 200,
+        "WIN_FLAGS": 64
+      },
+      "pass": true
+    },
+    {
+      "complete": true,
+      "elapsed_seconds": 30.393,
+      "config": "/workspace/scratch/a84592844d2c/cookie-unit/6404/RUN.CNF",
+      "guest_log": "/workspace/scratch/a84592844d2c/cookie-unit/6404/guest/COOKIEUT.LOG",
+      "host_log": "/workspace/scratch/a84592844d2c/cookie-unit/6404/HOST.LOG",
+      "mode": "6404",
+      "pass_count": 82,
+      "failures": [],
+      "screen": {
+        "SCREEN_WIDTH": 640,
+        "SCREEN_HEIGHT": 200,
+        "WIN_FLAGS": 64
+      },
+      "pass": true
+    },
+    {
+      "complete": true,
+      "elapsed_seconds": 29.696,
+      "config": "/workspace/scratch/a84592844d2c/cookie-unit/6402/RUN.CNF",
+      "guest_log": "/workspace/scratch/a84592844d2c/cookie-unit/6402/guest/COOKIEUT.LOG",
+      "host_log": "/workspace/scratch/a84592844d2c/cookie-unit/6402/HOST.LOG",
+      "mode": "6402",
+      "pass_count": 82,
+      "failures": [],
+      "screen": {
+        "SCREEN_WIDTH": 640,
+        "SCREEN_HEIGHT": 200,
+        "WIN_FLAGS": 64
+      },
+      "pass": true
+    },
+    {
+      "complete": true,
+      "elapsed_seconds": 39.508,
+      "config": "/workspace/scratch/a84592844d2c/cookie-unit/baseline/RUN.CNF",
+      "guest_log": "/workspace/scratch/a84592844d2c/cookie-unit/baseline/guest/COOKIEUT.LOG",
+      "host_log": "/workspace/scratch/a84592844d2c/cookie-unit/baseline/HOST.LOG",
+      "mode": "baseline",
+      "pass_count": 82,
+      "failures": [],
+      "screen": {
+        "SCREEN_WIDTH": 320,
+        "SCREEN_HEIGHT": 200,
+        "WIN_FLAGS": 64
+      },
+      "pass": true
+    }
+  ],
+  "limits": [
+    "Native Win16 execution in DOSBox-X 8086_prefetch with 640 KB and no EMS/XMS/UMB; not physical hardware.",
+    "Harness includes an exact source snapshot and calls real routines with synthetic messages; native timer and modal dialog execute through Windows dispatch.",
+    "About geometry and font metrics are checked; these are not screenshots or full visual pixel comparisons."
+  ]
+}
