@@ -1,0 +1,180 @@
+{
+  "production_source_sha256": "b7a8cc7834afaa6bc4067ffd8ab3f41ecc4c428f0eaa94a8bfa9e7d7ff587298",
+  "executable_sha256": "8faf6233a7d903936e5e5aa94c4706649973508d9c66aabba267281d76107dc8",
+  "total_checks": 690,
+  "pass": true,
+  "results": [
+    {
+      "complete": true,
+      "elapsed_seconds": 64.054,
+      "config": "/workspace/scratch/a84592844d2c/about-unit/160/RUN.CNF",
+      "guest_log": "/workspace/scratch/a84592844d2c/about-unit/160/guest/ABOUTUT.LOG",
+      "host_log": "/workspace/scratch/a84592844d2c/about-unit/160/HOST.LOG",
+      "mode": "160",
+      "pass_count": 138,
+      "failures": [],
+      "screen": {
+        "SCREEN_WIDTH": 160,
+        "SCREEN_HEIGHT": 200,
+        "WIN_FLAGS": 64,
+        "CLIENT_WIDTH": 160,
+        "CLIENT_HEIGHT": 185,
+        "COLORS": 16,
+        "PLANES": 4,
+        "BITS": 1,
+        "VERSION": 83886083,
+        "FREE_BYTES": 346912,
+        "FONT_HEIGHT": 8,
+        "FONT_WIDTH": 8
+      },
+      "pass": true,
+      "expected_screen": {
+        "SCREEN_WIDTH": 160,
+        "SCREEN_HEIGHT": 200,
+        "COLORS": 16,
+        "PLANES": 4,
+        "BITS": 1
+      },
+      "screen_matches": true
+    },
+    {
+      "complete": true,
+      "elapsed_seconds": 58.542,
+      "config": "/workspace/scratch/a84592844d2c/about-unit/3204/RUN.CNF",
+      "guest_log": "/workspace/scratch/a84592844d2c/about-unit/3204/guest/ABOUTUT.LOG",
+      "host_log": "/workspace/scratch/a84592844d2c/about-unit/3204/HOST.LOG",
+      "mode": "3204",
+      "pass_count": 138,
+      "failures": [],
+      "screen": {
+        "SCREEN_WIDTH": 320,
+        "SCREEN_HEIGHT": 200,
+        "WIN_FLAGS": 64,
+        "CLIENT_WIDTH": 320,
+        "CLIENT_HEIGHT": 185,
+        "COLORS": 4,
+        "PLANES": 4,
+        "BITS": 1,
+        "VERSION": 83886083,
+        "FREE_BYTES": 331360,
+        "FONT_HEIGHT": 8,
+        "FONT_WIDTH": 8
+      },
+      "pass": true,
+      "expected_screen": {
+        "SCREEN_WIDTH": 320,
+        "SCREEN_HEIGHT": 200,
+        "COLORS": 4,
+        "PLANES": 4,
+        "BITS": 1
+      },
+      "screen_matches": true
+    },
+    {
+      "complete": true,
+      "elapsed_seconds": 52.577,
+      "config": "/workspace/scratch/a84592844d2c/about-unit/6404/RUN.CNF",
+      "guest_log": "/workspace/scratch/a84592844d2c/about-unit/6404/guest/ABOUTUT.LOG",
+      "host_log": "/workspace/scratch/a84592844d2c/about-unit/6404/HOST.LOG",
+      "mode": "6404",
+      "pass_count": 138,
+      "failures": [],
+      "screen": {
+        "SCREEN_WIDTH": 640,
+        "SCREEN_HEIGHT": 200,
+        "WIN_FLAGS": 64,
+        "CLIENT_WIDTH": 640,
+        "CLIENT_HEIGHT": 185,
+        "COLORS": 4,
+        "PLANES": 4,
+        "BITS": 1,
+        "VERSION": 83886083,
+        "FREE_BYTES": 299360,
+        "FONT_HEIGHT": 8,
+        "FONT_WIDTH": 8
+      },
+      "pass": true,
+      "expected_screen": {
+        "SCREEN_WIDTH": 640,
+        "SCREEN_HEIGHT": 200,
+        "COLORS": 4,
+        "PLANES": 4,
+        "BITS": 1
+      },
+      "screen_matches": true
+    },
+    {
+      "complete": true,
+      "elapsed_seconds": 45.02,
+      "config": "/workspace/scratch/a84592844d2c/about-unit/6402/RUN.CNF",
+      "guest_log": "/workspace/scratch/a84592844d2c/about-unit/6402/guest/ABOUTUT.LOG",
+      "host_log": "/workspace/scratch/a84592844d2c/about-unit/6402/HOST.LOG",
+      "mode": "6402",
+      "pass_count": 138,
+      "failures": [],
+      "screen": {
+        "SCREEN_WIDTH": 640,
+        "SCREEN_HEIGHT": 200,
+        "WIN_FLAGS": 64,
+        "CLIENT_WIDTH": 640,
+        "CLIENT_HEIGHT": 185,
+        "COLORS": 2,
+        "PLANES": 4,
+        "BITS": 1,
+        "VERSION": 83886083,
+        "FREE_BYTES": 299520,
+        "FONT_HEIGHT": 8,
+        "FONT_WIDTH": 8
+      },
+      "pass": true,
+      "expected_screen": {
+        "SCREEN_WIDTH": 640,
+        "SCREEN_HEIGHT": 200,
+        "COLORS": 2,
+        "PLANES": 4,
+        "BITS": 1
+      },
+      "screen_matches": true
+    },
+    {
+      "complete": true,
+      "elapsed_seconds": 74.555,
+      "config": "/workspace/scratch/a84592844d2c/about-unit/baseline/RUN.CNF",
+      "guest_log": "/workspace/scratch/a84592844d2c/about-unit/baseline/guest/ABOUTUT.LOG",
+      "host_log": "/workspace/scratch/a84592844d2c/about-unit/baseline/HOST.LOG",
+      "mode": "baseline",
+      "pass_count": 138,
+      "failures": [],
+      "screen": {
+        "SCREEN_WIDTH": 320,
+        "SCREEN_HEIGHT": 200,
+        "WIN_FLAGS": 64,
+        "CLIENT_WIDTH": 320,
+        "CLIENT_HEIGHT": 185,
+        "COLORS": 16,
+        "PLANES": 4,
+        "BITS": 1,
+        "VERSION": 83886083,
+        "FREE_BYTES": 329792,
+        "FONT_HEIGHT": 10,
+        "FONT_WIDTH": 8
+      },
+      "pass": true,
+      "expected_screen": {
+        "SCREEN_WIDTH": 320,
+        "SCREEN_HEIGHT": 200,
+        "COLORS": 16,
+        "PLANES": 4,
+        "BITS": 1
+      },
+      "screen_matches": true
+    }
+  ],
+  "limits": [
+    "Native Win16 execution in DOSBox-X 8086_prefetch with 640 KB and no EMS/XMS/UMB; not physical hardware.",
+    "Harness includes an exact source snapshot and calls real routines with synthetic messages; production WM_CREATE, WM_SIZE, WM_PAINT, WM_COMMAND and keyboard helpers execute against real Windows controls.",
+    "All pages, control geometry and font metrics are checked; these are not screenshots or full visual pixel comparisons."
+  ],
+  "production_source_matches": true,
+  "harness_source_sha256": "d47e86ee8328124829e3744b87121652a9ee9052b4882a7b31bef7b12769b802"
+}

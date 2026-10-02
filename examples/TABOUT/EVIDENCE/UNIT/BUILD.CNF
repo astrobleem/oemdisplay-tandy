@@ -1,0 +1,22 @@
+[sdl]
+fullscreen=false
+output=surface
+[dosbox]
+machine=tandy
+memsize=16
+working directory option=force
+working directory default=/workspace/scratch/a84592844d2c/about-unit
+[cpu]
+core=normal
+cputype=8086_prefetch
+cycles=fixed 200000
+[mixer]
+nosound=true
+[midi]
+mididevice=none
+[autoexec]
+@echo off
+mount C "/workspace/scratch/a84592844d2c/tandy-about"
+mount D "/workspace/scratch/a84592844d2c/about-unit"
+D:
+BUILD.BAT
