@@ -1,0 +1,3 @@
+START driver=C:\WINDOWS\SYSTEM\TNDY6404.DRV fast=1 width=640 colors=4 bios=10
+END reason=benchmark fast=1 width=640 colors=4 bios=10 ticks=60 cells=10889 elapsed_ms=26529 draw_ms=25705 max_draw_ms=4559 startup_ms=5438 restore_ms=439 free_warm=284096 free_end=284096
+QUIT clean

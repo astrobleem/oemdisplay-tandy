@@ -1,0 +1,36 @@
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+END reason=keyboard fast=1 width=160 colors=16 bios=8 ticks=4 cells=1160 elapsed_ms=330 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=298848 free_end=298848
+QA step=0 changed_screen_bytes=0 active_ok=1
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+END reason=mouse-button fast=1 width=160 colors=16 bios=8 ticks=4 cells=1160 elapsed_ms=384 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=298848 free_end=298848
+QA step=1 changed_screen_bytes=0 active_ok=1
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+END reason=mouse-move fast=1 width=160 colors=16 bios=8 ticks=4 cells=1160 elapsed_ms=330 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=298848 free_end=298848
+QA step=2 changed_screen_bytes=0 active_ok=1
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+END reason=deactivated fast=1 width=160 colors=16 bios=8 ticks=4 cells=1160 elapsed_ms=330 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=298848 free_end=298848
+QA step=3 changed_screen_bytes=0 active_ok=1
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+END reason=close fast=1 width=160 colors=16 bios=8 ticks=4 cells=1160 elapsed_ms=384 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=298848 free_end=298848
+QA step=4 changed_screen_bytes=0 active_ok=1
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+END reason=keyboard fast=1 width=160 colors=16 bios=8 ticks=4 cells=1160 elapsed_ms=330 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=298848 free_end=298848
+QA step=5 changed_screen_bytes=0 active_ok=1
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+END reason=cancel-mode fast=1 width=160 colors=16 bios=8 ticks=4 cells=1160 elapsed_ms=330 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=298848 free_end=298848
+QA step=6 changed_screen_bytes=0 active_ok=1
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+END reason=shutdown fast=1 width=160 colors=16 bios=8 ticks=4 cells=1160 elapsed_ms=384 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=298848 free_end=298848
+QA step=7 changed_screen_bytes=0 active_ok=1
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+END reason=task-switch fast=1 width=160 colors=16 bios=8 ticks=4 cells=1160 elapsed_ms=330 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=298848 free_end=298848
+QA step=8 changed_screen_bytes=0 active_ok=1
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+QA repair=PASS
+END reason=repaint-recovery fast=1 width=160 colors=16 bios=8 ticks=5 cells=1660 elapsed_ms=494 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=298848 free_end=298848
+QA step=9 changed_screen_bytes=0 active_ok=1
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+END reason=ownership-lost fast=1 width=160 colors=16 bios=8 ticks=4 cells=1160 elapsed_ms=494 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=298848 free_end=298848
+QA step=10 changed_screen_bytes=0 active_ok=1
+QA DONE
+QUIT clean

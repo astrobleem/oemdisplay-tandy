@@ -1,0 +1,1 @@
+PASS: 30,000 rain ticks; exact shade/glyph/dirty invariants; 262,144 packed pixels; visible row bounds/padding.
