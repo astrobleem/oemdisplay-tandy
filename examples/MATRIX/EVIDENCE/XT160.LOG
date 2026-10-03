@@ -1,0 +1,3 @@
+START driver=C:\WINDOWS\SYSTEM\TNDY160.DRV fast=1 width=160 colors=16 bios=8
+END reason=benchmark fast=1 width=160 colors=16 bios=8 ticks=60 cells=2826 elapsed_ms=10710 draw_ms=7801 max_draw_ms=1373 startup_ms=2911 restore_ms=2032 free_warm=331648 free_end=331648
+QUIT clean

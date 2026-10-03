@@ -1,0 +1,46 @@
+{
+  "checked_utc": "2026-10-03",
+  "standalone_package_bytes": 78129,
+  "standalone_package_sha256": "0f79d536e6fbce5737e2902f2bbe30295637ed4dcc2c6f0843a579bc2a76073c",
+  "sealed_manifest_entries_verified": 46,
+  "sealed_package_unchanged": true,
+  "all_source_and_binary_bytes_unchanged": true,
+  "privacy_path_scan": "No absolute host build paths or environment identifiers found; no evidence substitutions required. Generic DOS guest/toolchain paths are preserved.",
+  "host_tests_rerun": "PASS: 30,000 rain ticks; exact shade/glyph/dirty invariants; 262,144 packed pixels; visible row bounds/padding.",
+  "host_sanitizers": "AddressSanitizer and UndefinedBehaviorSanitizer passed; LeakSanitizer disabled as documented.",
+  "modes": {
+    "160": {
+      "recorded_visible_frame_matches_fresh_host_oracle": true,
+      "recorded_restoration_checks": 11,
+      "published_png_matches_recorded_framebuffer": true
+    },
+    "baseline": {
+      "recorded_visible_frame_matches_fresh_host_oracle": true,
+      "recorded_restoration_checks": 11,
+      "published_png_matches_recorded_framebuffer": true
+    },
+    "3204": {
+      "recorded_visible_frame_matches_fresh_host_oracle": true,
+      "recorded_restoration_checks": 11,
+      "published_png_matches_recorded_framebuffer": true
+    },
+    "6404": {
+      "recorded_visible_frame_matches_fresh_host_oracle": true,
+      "recorded_restoration_checks": 11,
+      "published_png_matches_recorded_framebuffer": true
+    },
+    "6402": {
+      "recorded_visible_frame_matches_fresh_host_oracle": true,
+      "recorded_restoration_checks": 11,
+      "published_png_matches_recorded_framebuffer": true
+    }
+  },
+  "two_recorded_clean_builds_byte_identical": true,
+  "native_runtime": "Existing final native evidence rechecked against the exact release binary and a fresh host oracle; no new native or manual-input run during publication.",
+  "limitations": [
+    "On-demand only; no automatic idle activation, SCR registration, hook helper or password lock.",
+    "Physical Tandy hardware and manual keyboard/mouse/cursor observation remain untested.",
+    "240-cycle DOSBox-X measurements are an uncalibrated approximate XT preset, not hardware performance.",
+    "No PR CI configured: the existing workflow is tag-triggered release packaging; absence of CI is not a pass."
+  ]
+}

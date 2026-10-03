@@ -1,0 +1,81 @@
+MATRIX - VERIFIED RESULTS (2026-10-03 UTC)
+
+Release MATRIX.EXE: 11,213 bytes
+SHA256: 70ee3dbdb3721844c1eeadcdcecb200ac9f4b8bf2602c70a9c67712b6609cf77
+Two separate warning-free /G0 /Gw /AS /W3 /Ox builds were byte-identical.
+The accepted baseline driver hash is unchanged:
+ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee
+No driver, normal launcher, Windows setting or user's computer was changed.
+
+NATIVE WINDOWS 3.0 TESTS
+All five already-installed profiles passed the final exact EXE:
+160x200x16; 320x200x16; 320x200x4; 640x200x4; 640x200x2.
+- 60 completed timer updates per mode; clean process exit.
+- Update-40 native framebuffer matches the host renderer exactly, including
+  all visible bytes. Native PNGs in EVIDENCE are actual captures.
+- Eleven repeated message-driven tests per mode: keyboard, mouse button,
+  movement, deactivation, Close, Alt-key, cancel mode, shutdown, task switch,
+  recovery after a background display flush, and a nonactivating popup.
+- All 55 tests restored the prior test desktop's visible framebuffer exactly
+  and returned activation to its window. The test desktop includes a white
+  field, text and a diagonal line. It is not a manual Program Manager test.
+- Each background display-flush test repaired the rain image successfully.
+- Forced GDI fallback completed a 60-update 160x200 run and exited cleanly.
+- Free memory was unchanged from warm-up to completion in every 60-update
+  run. Repeated QA opens/closes did not show warm-memory drift. These are
+  bounded short-run checks, not a general or long-duration leak proof.
+
+APPROXIMATE XT PERFORMANCE
+Final EXE, DOSBox-X normal core / 8086_prefetch, 240 fixed cycles,
+640KB base memory, FPU/XMS/EMS/UMB disabled. Same preset as the prior maze
+measurement. DOSBox-X calls it approximately an 8088 XT 4.77MHz preset;
+it is not cycle-accurate or calibrated to a physical Tandy.
+
+160x200x16: 60 updates / 10.710 emulated seconds = 5.60 updates/second.
+640x200x4: 60 updates / 26.529 emulated seconds = 2.26 updates/second.
+The wide mode is deliberately a slower rain effect. These are completed
+animation updates, not CRT refresh rates. The measured interval begins at
+entry to the first timer handler and ends before exit restoration.
+
+160 mode application startup: 2.911 seconds; canonical restore: 2.032 sec.
+640 four-color application startup: 5.438 sec; restore: 0.439 seconds.
+These do not include starting Windows itself. The initial full render and
+occasional repaint repair are slower than ordinary sparse updates.
+The draw_ms diagnostic sums all renders, including initial setup; it must
+not be mistaken for a steady-state average. Its clock is coarse.
+
+The earlier maze measured 6.316 seconds for one completed animation frame,
+including 6.096 seconds in painting, on this same approximate preset.
+The workloads differ; the useful conclusion is that Matrix animates at
+several updates per second without that full GDI flush on every update.
+No numerical claim about physical EX/HX performance is made.
+Only these two Matrix display modes received the approximate-XT timing run.
+The other modes were checked at accelerated 200000-cycle settings, where
+about 8.6 updates/second is timer-limited and is not hardware performance.
+
+HOST AND BINARY CHECKS
+- 30,000 animation ticks checked across 20, 40 and 80 columns.
+- Exact head/trail shade, glyph-range and dirty-update invariants checked.
+- 262,144 packed pixels decoded independently for color/dither correctness.
+- Addressing stays within visible graphics rows and outside bank padding.
+- Undefined/address sanitizers passed; LeakSanitizer is not supported by
+  this execution sandbox and was explicitly disabled.
+- Scoped i8086 disassembly: 3,211 reachable instructions checked, with no
+  post-8088 instruction suspects. Windows imports, indirect continuations
+  and unreachable bytes are outside that audit's coverage.
+- Integer-only application; no floating-point runtime and no direct I/O
+  port, BIOS mode switch, interrupt disabling, idle hook or DLL helper.
+
+LIMITATIONS
+Physical Tandy hardware and calibrated 8088 performance remain untested.
+CUA/manual keyboard, mouse, Alt-Tab and cursor observation could not run
+because the native UI connection was unavailable. The exit tests inject
+Windows messages and inspect guest video memory instead; they must not be
+reported as manual physical-input tests. Actual arbitrary background
+applications, protected-mode fallback, unknown third-party display drivers,
+low-memory stress and long-duration operation are not certified.
+
+This is an ON-DEMAND saver, not automatic idle activation or a password
+lock. A Windows 3.0 global idle helper would need a separate tested fixed
+hook DLL; cursor polling alone would miss stationary mouse clicks. The
+Windows 3.1 .SCR control-panel interface is not assumed or installed.
