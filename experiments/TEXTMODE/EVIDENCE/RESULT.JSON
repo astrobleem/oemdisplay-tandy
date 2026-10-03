@@ -1,0 +1,66 @@
+{
+  "status": "EXPERIMENTAL FEASIBILITY PROOF, not a general-purpose usable Windows driver",
+  "date_utc": "2026-10-03",
+  "driver_sha256": "943a455baa475071a190b26e69b92a477178b5ced231edef19882abb2a8d2646",
+  "applications": {
+    "PROGMAN.EXE": {
+      "bytes": 55200,
+      "sha256": "7375eba584f248d57d604e5563885c4fa0f0cd148d5033b988942ad3ecd8ef15",
+      "unchanged_from_owned_installation": true
+    },
+    "NOTEPAD.EXE": {
+      "bytes": 31936,
+      "sha256": "bace902375ec5bc88490724a13e49860f1bd938fca5ba97ef13115b1a0dd107e",
+      "unchanged_from_owned_installation": true
+    }
+  },
+  "native_environment": {
+    "dosbox_x": "2026.08.31 b13702c",
+    "machine": "tandy",
+    "core": "normal",
+    "cpu": "8086_prefetch",
+    "cycles": "fixed 200000 (accelerated; not hardware speed)",
+    "base_memory_config_kb": 640,
+    "observed_bda_memory_kb": 624,
+    "xms": false,
+    "ems": false,
+    "umb": false,
+    "windows": "3.0 real mode /R"
+  },
+  "hardware_evidence": {
+    "int10_mode": 3,
+    "bda_mode": 3,
+    "columns": 80,
+    "page_bytes": 4096,
+    "hardware_page": "B800:0000..0F9F (2000 character/attribute pairs)",
+    "logical_gdi": "640x200, 2 colors"
+  },
+  "tests": {
+    "gdi_pixel_mismatches": 0,
+    "double_xor_mismatches": 0,
+    "screen_copy_mismatches": 0,
+    "bitmap_restore_pixel_mismatches": 0,
+    "bitmap_restore_hardware_cell_byte_differences": 60,
+    "notepad_edit_text_length": 47,
+    "notepad_text_readable_initial": true,
+    "notepad_text_readable_after_full_repaint": true,
+    "all_program_manager_labels_readable": false,
+    "window_move_preserves_all_semantic_cells": false
+  },
+  "known_limits": [
+    "Window movement/sub-cell clipping can damage text cells.",
+    "Bitmap-only save/restore preserves canonical GDI pixels but loses semantic hardware characters.",
+    "Small/proportional icon labels and arbitrary graphics are approximations.",
+    "Caret and graphics inversion can invalidate the text cell under them.",
+    "Physical Tandy hardware and speed are untested.",
+    "Manual input, DOS boxes, broad application/dialog compatibility, and complete cleanup are unverified."
+  ],
+  "implementation": {
+    "shadow_bytes": 64000,
+    "tile_cache_bytes": 16000,
+    "semantic_cell_layer_bytes": 4000,
+    "font": "Owned CGAFIX font resource inserted into a private CGASYS copy while keeping original module identity; no font files distributed.",
+    "canonical_pixels": "Kept separate from character/attribute presentation; no B800 character read into bitmap."
+  },
+  "next_architecture": "Track semantic text with clipped regions and bitmap/DDB transfers, preserve it across moves/restores, and define an all-fixed-cell font/layout contract."
+}

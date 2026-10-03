@@ -1,0 +1,142 @@
+8086/8088 DDK PORT AUDIT
+======================
+
+Scope and result
+----------------
+PORT8086.PY changes only a fresh staged copy returned by build.prepare().
+The tracked DDK, original V1 source and frozen V1 binary remain unchanged.
+The base port's 62 transitive DDK/include inputs used by its 23 assembly modules
+are SHA-256 pinned after CRLF/EOF normalization. Unexpected input fails before
+any staged output is written. Files written by the port use CRLF.
+
+The renderer-owned V1.ASM and TCURSOR.ASM contain no later-CPU instructions.
+The incompatibilities were inherited from the DDK, including its macros and
+runtime code generator. V1 introduced the dependency by selecting this backend
+without completing its port to the project's 8088 target. A top-level .8086
+directive alone was insufficient.
+
+Inherited incompatibilities and corrections
+------------------------------------------
+1. CMACROS.INC: its IFDEF ?pmd condition is true even when ?pmd equals zero.
+   Consequently its .286p promoted even real-mode code. The staged INC copy
+   uses .8086, rejects PMODE, nonzero ?386regs and unsupported TEFTI builds,
+   and makes dormant protected-mode ENTER/LEAVE branches explicit errors.
+   R:\INC must precede C:\DDK\286\INC in the assembler include path.
+
+2. MACROS.INC and MACROS.MAC: unconditional .286 directives replaced with
+   .8086. CPU is set to 88. Shift/rotate macros retain only their existing
+   repeated-one-bit 8086 implementations. BITBLT's unused alternate .286p
+   directive is also replaced. Baseline prepare already changed top-level
+   directives in CHARWDTH, PIXEL and ROBJECT; these did not prevent promotion
+   by the later includes.
+
+3. Seventeen immediate-count shift instructions expanded into native one-bit
+   shifts: BITBLT 1, CBLT 1, RLSTRBLT 6, RLBLDSTR 3, SPECIAL.INC 6. Counts are
+   2, 3 or 8 and operands are registers. Defined CF/SF/ZF/PF and final values
+   are retained, with no scratch-register changes. Original OF for counts
+   greater than one was undefined.
+
+4. SPECIAL.INC has four PUSHA and five POPA sites. DEBUG.INC has one of each
+   in the disabled release-debug macro. The expansions preserve the exact
+   eight-word layout: DI, SI, BP, original SP, BX, DX, CX, AX. PUSH SP is not
+   used because its 8086 semantics differ from newer processors. LEA/MOV
+   recover original SP without altering FLAGS. POPA's ignored SP slot is
+   discarded with a dummy POP BX, followed by the real POP BX. ADD SP,2 would
+   be incorrect here: a SPECIAL path tests ZF immediately after POPA.
+   One expanded backward conditional exceeded rel8 and now uses an inverted
+   conditional followed by a near JMP; flags and branch meaning are retained.
+
+5. Immediate PUSH operands:
+   - RLBLDSTR has two PUSH 0FFFFh sites, replaced by PUSH of a CS-relative
+     immutable delimiter word, preserving every register and FLAGS.
+   - POLYLINE's run_the_dda macro pushes an immediate return address in eight
+     instantiations. Each now pushes its own CS-relative LOCAL literal after
+     the unconditional indirect JMP. The literal is unreachable as code.
+   - DEBUG's two immediate arguments use AX already saved by its save-all
+     frame. AX is restored by that frame at macro exit.
+   Total: five source sites, twelve instantiations including disabled DEBUG.
+
+Runtime-generated instructions and size bound
+--------------------------------------------
+CBLT loaded I_ROL_AL_N / I_ROR_AL_N, storing C0 C0 nn or C0 C8 nn into the
+stack-generated BLT. These are 80186+ instructions, and an assembler's .8086
+mode cannot check them. GENCONST's raw constants were the critical hidden
+incompatibility.
+
+The generator now emits D0 C0 (ROL AL,1) or D0 C8 (ROR AL,1), repeated by
+min(phase,8-phase); phase zero emits nothing. REP STOSW in the generator
+consumes CX. Downstream lengths and offsets are computed from DI, so the
+variable-length sequences are copied correctly. The stale immediate-rotate
+constants and unused FS/GS prefix constants are removed from GENCONST.INC.
+The other numeric instruction constants and DB code fragments are 8086-safe;
+ROPTABLE and the other copied templates are assembled under .8086.
+
+Worst growth per alignment: eight bytes instead of three, or five bytes.
+There can be at most seven copies: two initial fetches, four inner-loop
+copies, and one final fetch. That adds at most 35 bytes. Three generated
+branches can grow when the code crosses their short-displacement limit:
+inner LOOP +4, plane conditional +3, outer LOOP +4. Total growth is bounded
+by 46 bytes. MAX_BLT_SIZE is 500, the original 452 plus an even 48-byte
+allowance. Both allocation/stack check and deallocation use that constant.
+The 492-byte intermediate builds used an incomplete conservative bound and
+must be treated as superseded by the 500-byte final build.
+
+Linked-library closure
+----------------------
+PORT8086.audit_link(renderer, additional_objects=()) parses OMF LNAMES/SEGDEF
+records from the base23 plus explicitly named additional TSOFT.LNK input
+objects in link order, applies each contribution's
+alignment, and requires exact agreement with every nonempty CODE/DATA MAP
+segment. It rejects unreviewed 32-bit SEGDEF/COMDAT or segment attributes.
+The build's libraries supply imports but no extra CODE/DATA contribution.
+This closes the risk of an unscanned library runtime helper. The executable
+Windows imports themselves belong to the separately verified real-mode OS.
+
+Reproducible semantic checks
+---------------------------
+Run from the repository with a fresh output directory:
+
+  python src/tandysw/TEST86.PY --dosbox /path/to/dosbox-x --out /tmp/test86
+
+The script stages and ports its own renderer, generates DOS assembly test
+programs from the actual port expansions/generator, assembles with MASM 5.10
+.8086, and runs under DOSBox-X 8086_prefetch (four-byte 8088 prefetch queue).
+Outputs include assembly, listings, EXEs, build logs, execution logs and
+RESULT.json. A 120-second timeout bounds emulator execution.
+
+SEM86: PASS for 128 combinations of arithmetic flags and DF. Checks all
+saved registers before/after, every frame slot including original SP,
+exact stack depth, and FLAGS preservation by both save and restore.
+
+ROT86: PASS for 4096 generated-code executions: every byte value, all eight
+phases, and two contrasting flag patterns. Checks AL/AH, unchanged CX and
+all defined FLAGS against native 8086 CL-count rotations. OF is compared
+only when defined (counts zero or one).
+
+The test runner also checks CRLF and that applying the patch twice fails.
+Strict all-listings opcode checks are provided separately by AUDIT88.PY;
+BUILD88.PY uses MASM -LA so .XLIST cannot hide included instructions.
+
+Limitations
+-----------
+These checks establish reviewed source, opcode, generated-code and semantic
+properties. They are not a substitute for Windows GUI workload validation
+or testing on physical Tandy 1000 EX/HX hardware. In particular, screenshot
+appearance alone does not establish 8088 instruction compatibility, and a
+successful real-mode assembly/link does not establish runtime correctness.
+
+Candidate05 DIB extension
+-------------------------
+PORTDIB.PY adds four pinned DDK inputs and four explicitly audited objects:
+BMC_MAIN, BMC_ETI, BMC_ITE and the new SDIB88. Thus the final link has27
+objects. All13707 emitted listing rows pass the same8086 instruction audit.
+The converter macros resolve through the already strict 8086 staged includes;
+the added tables contain palette/expansion data and routine addresses, not
+raw generated code. The original hardware DISCREEN and RLE paths are excluded.
+
+OMF class names are compared case-insensitively. Each declared contribution
+retains its linker alignment even when length is zero; empty aggregate MAP
+segments are omitted from the final comparison. Exact nonempty CODE/DATA
+byte totals still must match, so these format corrections do not permit
+unknown executable library contributions. Two fresh full builds produce
+identical 51296-byte output (see DIB88.MD for hash and runtime scope).
