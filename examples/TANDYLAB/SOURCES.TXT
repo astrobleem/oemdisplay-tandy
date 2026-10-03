@@ -1,0 +1,57 @@
+SOURCE / PROVENANCE / NOTICES
+=============================
+This is a curated runtime layout of previously sealed first-party projects.
+Existing runtimes are unchanged. CDSTART is a new tiny launcher for private
+COMMDLG lookup; its complete first-party source is EXPER/CDLG/SOURCE.ZIP.
+SHA256 pins
+are checked while packaging; MANIFEST.SHA describes the resulting files.
+Application detailed README text is preserved in DOCS (line endings and en-dashes normalized for DOS).
+Their source/build/evidence directories live in the original source packages,
+not in this runtime-only pack. No new project-wide license claim is made.
+
+Display driver and visual applications:
+  https://github.com/astrobleem/oemdisplay-tandy
+Sound applications:
+  https://github.com/astrobleem/oemsound-tandy
+
+Source review records / downloadable source artifacts:
+  Cookie: https://github.com/astrobleem/oemdisplay-tandy/pull/64
+    TANDY-COOKIE-BENCHMARK.ZIP
+  About: https://github.com/astrobleem/oemdisplay-tandy/pull/65
+    ABOUT-THIS-TANDY.ZIP
+  Slosh: TANDY-SLOSH.ZIP (examples/SLOSH in display repository)
+  Pinball: https://github.com/astrobleem/oemdisplay-tandy/pull/67
+    TANDY-PINBALL.ZIP
+  TSHELL Run/Browse: https://github.com/astrobleem/oemdisplay-tandy/pull/68
+    examples/TSHELL/MILESTONE.ZIP
+  GIFLOAD: https://github.com/astrobleem/oemdisplay-tandy/pull/69
+    TANDY-GIF-PROOF.ZIP
+  Maze: https://github.com/astrobleem/oemdisplay-tandy/pull/70
+    TANDY-MAZE-PROOF.ZIP (root MAZE.EXE, not PERF diagnostic)
+  File drop: https://github.com/astrobleem/oemdisplay-tandy/pull/72
+    TANDY-FILEDROP-PROOF.ZIP
+  COMMDLG: https://github.com/astrobleem/oemdisplay-tandy/pull/73
+    COMMDLG30-EXPERIMENTAL-PREVIEW.ZIP
+  Matrix: TANDY-MATRIX-SAVER.ZIP (standalone source/evidence archive)
+  Fly Swat: final original SWAT.EXE build, 16989 bytes, with separately
+    delivered source/build/test evidence for the display repository.
+    SHA256 6f65c56dd17a5667e16b583638d8e02a0a8b937234357b09457ca60ee965a60b
+  PSGPLAY/TCHIME: TANDY-WIN30-PSG-MILESTONE.ZIP
+  XP chime: TANDY-XP-NOTE-CHIME.ZIP
+  Mouth: https://github.com/astrobleem/oemsound-tandy/pull/17
+    TANDY-AUTOMATIC-MOUTH.ZIP
+  Exit chime: https://github.com/astrobleem/oemsound-tandy/pull/18
+    TANDY-EXIT-CHIME.ZIP
+  Beats: https://github.com/astrobleem/oemsound-tandy/pull/19
+    TANDY-BEATS-LAB.ZIP
+
+LICENSE.TXT preserves the sound repository's existing GPLv3 license text.
+Its README historically said MIT; this pack does not resolve or alter that
+existing inconsistency. Consult the corresponding source and its notices.
+XP-note arrangement credit: Windows XP Startup Sound, Bill Brown; supplied
+score arrangement by David Caldarella. The program synthesizes PSG notes.
+
+Validation boundary: these exact runtime builds were exercised in native
+Windows 3.0 emulation under an 8086/8088 target. Packaging verifies paths,
+bytes, imports and private dependencies. This is not a new real-hardware
+pass, cycle-accurate timing guarantee, or broad third-party compatibility test.
