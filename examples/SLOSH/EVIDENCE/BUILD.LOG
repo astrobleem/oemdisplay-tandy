@@ -1,0 +1,11 @@
+SLOSH.C
+
+Microsoft (R) Segmented-Executable Linker  Version 5.01.17
+Copyright (C) Microsoft Corp 1984-1988.  All rights reserved.
+
+Object Modules [.OBJ]: SLOSH.OBJ
+Run File [SLOSH.EXE]: SLOSH.EXE
+List File [NUL.MAP]: SLOSH.MAP
+Libraries [.LIB]: C:\LIB\SLIBCEW.LIB C:\LIB\LIBW.LIB
+Definitions File [NUL.DEF]: SLOSH.DEF
+PASS
