@@ -1,0 +1,17 @@
+GIFLOAD publication layout
+
+The editable source is directly in examples/GIFLOAD, matching README.TXT's
+repository-root BUILD.PY command. The native GIFLOAD.EXE, fixtures, BMP
+samples, screenshots and complete sealed evidence are in the same subtree.
+MILESTONE.ZIP preserves the complete, unchanged standalone GIFLOAD/ package,
+including its SOURCE/ folder. SHA256.JSON describes those original paths.
+EVIDENCE.JSON's no-publication limit records the pre-publication snapshot.
+No compiler, Windows, DDK, guest image or PBRUSH binary is included.
+
+This is a bounded GIF-to-BMP companion for unmodified Paintbrush. The
+accepted scope is one opaque full-canvas GIF up to 320x200 and 256 KiB;
+transparency, animation and other documented unsupported forms are refused.
+Existing output files are protected. Paintbrush format lists are unchanged.
+The 243-case suite passed on all five native emulated display profiles
+(1,215 native cases), plus seven Paintbrush open/edit/save/reopen workflows.
+These are automated Windows-message tests, not manual CUA or hardware tests.

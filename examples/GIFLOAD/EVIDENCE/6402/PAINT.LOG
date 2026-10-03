@@ -1,0 +1,14 @@
+329 BEGIN automated native UI test
+549 START helper
+933 PASS helper controls fit
+1043 PASS native conversion
+2197 Paintbrush - TEST.BMP
+2197 PAINT_CLIENT 96 64
+2197 PASS opened BMP
+2471 EDIT native Paste of 8x8 white bitmap
+2746 SAVE command
+2856 CLOSE after save
+4558 Paintbrush - TEST.BMP
+4558 PASS reopened edited BMP
+4888 SAVE reopened BMP
+5108 PASS workflow; verify pixels externally

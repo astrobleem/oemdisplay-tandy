@@ -1,0 +1,13 @@
+{
+  "accepted": true,
+  "native_cases": 243,
+  "byte_or_absence_matches": 243,
+  "memory": {
+    "FREE_BEFORE": 272192,
+    "FREE_AFTER": 272192
+  },
+  "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+  "cpu": "8086_prefetch",
+  "base_memory_kb": 640,
+  "ems_xms_umb": false
+}

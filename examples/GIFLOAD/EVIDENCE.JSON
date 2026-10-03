@@ -1,0 +1,315 @@
+{
+  "date_utc": "2026-10-03",
+  "status": "Accepted bounded native software proof",
+  "build": {
+    "bytes": 21453,
+    "sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+    "cpu": "/G0 8086",
+    "target": "Windows 3.0 real mode",
+    "compiler_flags": "/nologo /c /G0 /Gw /AS /W3 /Od"
+  },
+  "host_cases": 243,
+  "host_success_cases": 184,
+  "host_rejection_cases": 59,
+  "sanitizer_mutations": 10000,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "leak_sanitizer": "Disabled because unsupported in host environment",
+  "core_native": [
+    {
+      "accepted": true,
+      "native_cases": 243,
+      "byte_or_absence_matches": 243,
+      "memory": {
+        "FREE_BEFORE": 302624,
+        "FREE_AFTER": 302624
+      },
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "cpu": "8086_prefetch",
+      "base_memory_kb": 640,
+      "ems_xms_umb": false,
+      "profile": "baseline"
+    },
+    {
+      "accepted": true,
+      "native_cases": 243,
+      "byte_or_absence_matches": 243,
+      "memory": {
+        "FREE_BEFORE": 319744,
+        "FREE_AFTER": 319744
+      },
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "cpu": "8086_prefetch",
+      "base_memory_kb": 640,
+      "ems_xms_umb": false,
+      "profile": "160"
+    },
+    {
+      "accepted": true,
+      "native_cases": 243,
+      "byte_or_absence_matches": 243,
+      "memory": {
+        "FREE_BEFORE": 304192,
+        "FREE_AFTER": 304192
+      },
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "cpu": "8086_prefetch",
+      "base_memory_kb": 640,
+      "ems_xms_umb": false,
+      "profile": "3204"
+    },
+    {
+      "accepted": true,
+      "native_cases": 243,
+      "byte_or_absence_matches": 243,
+      "memory": {
+        "FREE_BEFORE": 272192,
+        "FREE_AFTER": 272192
+      },
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "cpu": "8086_prefetch",
+      "base_memory_kb": 640,
+      "ems_xms_umb": false,
+      "profile": "6404"
+    },
+    {
+      "accepted": true,
+      "native_cases": 243,
+      "byte_or_absence_matches": 243,
+      "memory": {
+        "FREE_BEFORE": 272352,
+        "FREE_AFTER": 272352
+      },
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "cpu": "8086_prefetch",
+      "base_memory_kb": 640,
+      "ems_xms_umb": false,
+      "profile": "6402"
+    }
+  ],
+  "paintbrush_workflows": [
+    {
+      "mode": "baseline",
+      "drive": "C",
+      "status": "finished",
+      "log": "1098 BEGIN automated native UI test\n7579 START helper\n30593 PASS helper controls fit\n37953 PASS native conversion\n105620 Paintbrush - TEST.BMP\n105620 PAINT_CLIENT 96 64\n105620 PASS opened BMP\n123965 EDIT native Paste of 8x8 white bitmap\n143299 SAVE command\n143628 CLOSE after save\n236342 Paintbrush - TEST.BMP\n236342 PASS reopened edited BMP\n238429 SAVE reopened BMP\n239143 PASS workflow; verify pixels externally\n",
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "changed_pixels": 64,
+      "changed_bbox": [
+        0,
+        0,
+        7,
+        7
+      ],
+      "reopen_pixels_compared": 6144,
+      "reopen_mismatches": 0,
+      "accepted": true,
+      "profile": "baseline"
+    },
+    {
+      "profile": "160",
+      "output_drive": "C",
+      "status": "finished",
+      "log": "439 BEGIN automated native UI test\n1428 START helper\n4558 PASS helper controls fit\n5602 PASS native conversion\n15488 Paintbrush - TEST.BMP\n15488 PAINT_CLIENT 96 64\n15488 PASS opened BMP\n18235 EDIT native Paste of 8x8 white bitmap\n21310 SAVE command\n21420 CLOSE after save\n35701 Paintbrush - TEST.BMP\n35701 PASS reopened edited BMP\n36634 SAVE reopened BMP\n36854 PASS workflow; verify pixels externally\n",
+      "accepted": true,
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "test_exe_sha256": "f245e94459390a5d8dfb60e0f41a4d8f903a64e8c682a1ea8f1203899a78c750",
+      "cpu": "8086_prefetch",
+      "base_memory_kb": 640,
+      "ems_xms_umb": false,
+      "interaction": "Automated Windows messages; Edit Paste of guest clipboard bitmap",
+      "changed_pixels": 64,
+      "changed_bbox": [
+        0,
+        0,
+        7,
+        7
+      ],
+      "reopen_pixels_compared": 6144,
+      "reopen_mismatches": 0
+    },
+    {
+      "profile": "3204",
+      "output_drive": "C",
+      "status": "finished",
+      "log": "384 BEGIN automated native UI test\n1153 START helper\n3515 PASS helper controls fit\n4229 PASS native conversion\n11149 Paintbrush - TEST.BMP\n11149 PAINT_CLIENT 96 64\n11149 PASS opened BMP\n13017 EDIT native Paste of 8x8 white bitmap\n14994 SAVE command\n15104 CLOSE after save\n24661 Paintbrush - TEST.BMP\n24661 PASS reopened edited BMP\n25155 SAVE reopened BMP\n25375 PASS workflow; verify pixels externally\n",
+      "accepted": true,
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "test_exe_sha256": "f245e94459390a5d8dfb60e0f41a4d8f903a64e8c682a1ea8f1203899a78c750",
+      "cpu": "8086_prefetch",
+      "base_memory_kb": 640,
+      "ems_xms_umb": false,
+      "interaction": "Automated Windows messages; Edit Paste of guest clipboard bitmap",
+      "changed_pixels": 64,
+      "changed_bbox": [
+        0,
+        0,
+        7,
+        7
+      ],
+      "reopen_pixels_compared": 6144,
+      "reopen_mismatches": 0
+    },
+    {
+      "mode": "6404",
+      "drive": "C",
+      "status": "finished",
+      "log": "659 BEGIN automated native UI test\n2032 START helper\n5272 PASS helper controls fit\n6481 PASS native conversion\n15873 Paintbrush - TEST.BMP\n15873 PAINT_CLIENT 96 64\n15873 PASS opened BMP\n17850 EDIT native Paste of 8x8 white bitmap\n20047 SAVE command\n20212 CLOSE after save\n33284 Paintbrush - TEST.BMP\n33284 PASS reopened edited BMP\n33943 SAVE reopened BMP\n34218 PASS workflow; verify pixels externally\n",
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "changed_pixels": 64,
+      "changed_bbox": [
+        0,
+        0,
+        7,
+        7
+      ],
+      "reopen_pixels_compared": 6144,
+      "reopen_mismatches": 0,
+      "accepted": true,
+      "profile": "6404"
+    },
+    {
+      "profile": "6402",
+      "output_drive": "C",
+      "status": "finished",
+      "log": "329 BEGIN automated native UI test\n549 START helper\n933 PASS helper controls fit\n1043 PASS native conversion\n2197 Paintbrush - TEST.BMP\n2197 PAINT_CLIENT 96 64\n2197 PASS opened BMP\n2471 EDIT native Paste of 8x8 white bitmap\n2746 SAVE command\n2856 CLOSE after save\n4558 Paintbrush - TEST.BMP\n4558 PASS reopened edited BMP\n4888 SAVE reopened BMP\n5108 PASS workflow; verify pixels externally\n",
+      "accepted": true,
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "test_exe_sha256": "f245e94459390a5d8dfb60e0f41a4d8f903a64e8c682a1ea8f1203899a78c750",
+      "cpu": "8086_prefetch",
+      "base_memory_kb": 640,
+      "ems_xms_umb": false,
+      "interaction": "Automated Windows messages; Edit Paste of guest clipboard bitmap",
+      "changed_pixels": 64,
+      "changed_bbox": [
+        0,
+        0,
+        7,
+        7
+      ],
+      "reopen_pixels_compared": 6144,
+      "reopen_mismatches": 0
+    },
+    {
+      "profile": "6404",
+      "output_drive": "D",
+      "status": "finished",
+      "log": "384 BEGIN automated native UI test\n714 START helper\n1592 PASS helper controls fit\n1867 PASS native conversion\n4394 Paintbrush - TEST.BMP\n4394 PAINT_CLIENT 96 64\n4394 PASS opened BMP\n4998 EDIT native Paste of 8x8 white bitmap\n5602 SAVE command\n5712 CLOSE after save\n9227 Paintbrush - TEST.BMP\n9227 PASS reopened edited BMP\n9611 SAVE reopened BMP\n9831 PASS workflow; verify pixels externally\n",
+      "accepted": true,
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "test_exe_sha256": "f245e94459390a5d8dfb60e0f41a4d8f903a64e8c682a1ea8f1203899a78c750",
+      "cpu": "8086_prefetch",
+      "base_memory_kb": 640,
+      "ems_xms_umb": false,
+      "interaction": "Automated Windows messages; Edit Paste of guest clipboard bitmap",
+      "changed_pixels": 64,
+      "changed_bbox": [
+        0,
+        0,
+        7,
+        7
+      ],
+      "reopen_pixels_compared": 6144,
+      "reopen_mismatches": 0
+    },
+    {
+      "profile": "6404",
+      "output_drive": "R",
+      "status": "finished",
+      "log": "384 BEGIN automated native UI test\n714 START helper\n1592 PASS helper controls fit\n1867 PASS native conversion\n4394 Paintbrush - TEST.BMP\n4394 PAINT_CLIENT 96 64\n4394 PASS opened BMP\n4998 EDIT native Paste of 8x8 white bitmap\n5602 SAVE command\n5712 CLOSE after save\n9227 Paintbrush - TEST.BMP\n9227 PASS reopened edited BMP\n9611 SAVE reopened BMP\n9831 PASS workflow; verify pixels externally\n",
+      "accepted": true,
+      "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+      "test_exe_sha256": "f245e94459390a5d8dfb60e0f41a4d8f903a64e8c682a1ea8f1203899a78c750",
+      "cpu": "8086_prefetch",
+      "base_memory_kb": 640,
+      "ems_xms_umb": false,
+      "interaction": "Automated Windows messages; Edit Paste of guest clipboard bitmap",
+      "changed_pixels": 64,
+      "changed_bbox": [
+        0,
+        0,
+        7,
+        7
+      ],
+      "reopen_pixels_compared": 6144,
+      "reopen_mismatches": 0
+    }
+  ],
+  "protected_files": [
+    {
+      "profile": "baseline",
+      "file": "PBRUSH.EXE",
+      "sha256": "ff9f708e94c2f072011a214d43c3f9fecf37d2869bccf39c25d0b1ef360f8472",
+      "unchanged": true
+    },
+    {
+      "profile": "baseline",
+      "file": "SYSTEM/TANDY88.DRV",
+      "sha256": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee",
+      "unchanged": true
+    },
+    {
+      "profile": "160",
+      "file": "PBRUSH.EXE",
+      "sha256": "ff9f708e94c2f072011a214d43c3f9fecf37d2869bccf39c25d0b1ef360f8472",
+      "unchanged": true
+    },
+    {
+      "profile": "160",
+      "file": "SYSTEM/TNDY160.DRV",
+      "sha256": "124a07c38c13922a4cbd58452d39108755f632abe01e4dd17780c32140d2aedd",
+      "unchanged": true
+    },
+    {
+      "profile": "3204",
+      "file": "PBRUSH.EXE",
+      "sha256": "ff9f708e94c2f072011a214d43c3f9fecf37d2869bccf39c25d0b1ef360f8472",
+      "unchanged": true
+    },
+    {
+      "profile": "3204",
+      "file": "SYSTEM/TNDY3204.DRV",
+      "sha256": "c90526efb90f4434e8aa567d439e9cdf7f81c096968a362806a992052a81e9e9",
+      "unchanged": true
+    },
+    {
+      "profile": "6404",
+      "file": "PBRUSH.EXE",
+      "sha256": "ff9f708e94c2f072011a214d43c3f9fecf37d2869bccf39c25d0b1ef360f8472",
+      "unchanged": true
+    },
+    {
+      "profile": "6404",
+      "file": "SYSTEM/TNDY6404.DRV",
+      "sha256": "5ab225f6e93d53f39d092b8db81fd0129a0fe473cf30eef880ddaeaaa0a8d306",
+      "unchanged": true
+    },
+    {
+      "profile": "6402",
+      "file": "PBRUSH.EXE",
+      "sha256": "ff9f708e94c2f072011a214d43c3f9fecf37d2869bccf39c25d0b1ef360f8472",
+      "unchanged": true
+    },
+    {
+      "profile": "6402",
+      "file": "SYSTEM/TNDY6402.DRV",
+      "sha256": "b0c95515462ba27ce208963dd94957019995e3e6085d147771ef037b39967652",
+      "unchanged": true
+    }
+  ],
+  "fixed_codec_array_bytes": 17616,
+  "full_frame_buffer": false,
+  "source_core_sha256": "8c6a8101941aad3cbd7d36e6112363eaf55b348e536b699476054e8fdb32109e",
+  "limits": [
+    "GIF87a/GIF89a bounded subset, one opaque full-canvas image, at most 320x200 and 256 KiB",
+    "Transparency, animation, application/text extensions and subrect images are rejected",
+    "No PBRUSH patch; its native format lists are unchanged",
+    "Automated native Windows message/clipboard tests, not manual CUA",
+    "Stock Paintbrush menus can be cramped/clipped at narrow resolutions",
+    "No physical Tandy hardware or timing validation",
+    "No Windows media, compiler binaries or Microsoft application binaries are included",
+    "No repository publication performed"
+  ]
+}

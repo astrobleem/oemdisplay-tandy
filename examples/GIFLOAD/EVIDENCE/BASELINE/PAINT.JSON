@@ -1,0 +1,17 @@
+{
+  "mode": "baseline",
+  "drive": "C",
+  "status": "finished",
+  "log": "1098 BEGIN automated native UI test\n7579 START helper\n30593 PASS helper controls fit\n37953 PASS native conversion\n105620 Paintbrush - TEST.BMP\n105620 PAINT_CLIENT 96 64\n105620 PASS opened BMP\n123965 EDIT native Paste of 8x8 white bitmap\n143299 SAVE command\n143628 CLOSE after save\n236342 Paintbrush - TEST.BMP\n236342 PASS reopened edited BMP\n238429 SAVE reopened BMP\n239143 PASS workflow; verify pixels externally\n",
+  "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+  "changed_pixels": 64,
+  "changed_bbox": [
+    0,
+    0,
+    7,
+    7
+  ],
+  "reopen_pixels_compared": 6144,
+  "reopen_mismatches": 0,
+  "accepted": true
+}

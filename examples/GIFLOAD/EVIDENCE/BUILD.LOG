@@ -1,0 +1,12 @@
+GIFCORE.C
+GIFLOAD.C
+
+Microsoft (R) Segmented-Executable Linker  Version 5.01.17
+Copyright (C) Microsoft Corp 1984-1988.  All rights reserved.
+
+Object Modules [.OBJ]: GIFLOAD.OBJ GIFCORE.OBJ
+Run File [GIFLOAD.EXE]: GIFLOAD.EXE
+List File [NUL.MAP]: GIFLOAD.MAP
+Libraries [.LIB]: C:\LIB\SLIBCEW.LIB C:\LIB\LIBW.LIB
+Definitions File [NUL.DEF]: GIFLOAD.DEF
+PASS
