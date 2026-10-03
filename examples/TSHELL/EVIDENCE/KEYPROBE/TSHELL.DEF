@@ -1,0 +1,16 @@
+NAME TSHELL
+DESCRIPTION 'Tandy Start Shell - Windows 3.0 / 8086'
+EXETYPE WINDOWS
+CODE PRELOAD MOVEABLE DISCARDABLE
+DATA PRELOAD MOVEABLE MULTIPLE
+HEAPSIZE 2048
+STACKSIZE 4096
+EXPORTS
+ WndProc @1
+ ExitProc @2
+ RunProc @3
+ BrowseProc @4
+ TestTimer @5
+ BrowseTimer @6
+ RunTests @7
+ Watchdog @8

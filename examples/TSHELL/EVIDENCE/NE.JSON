@@ -1,0 +1,26 @@
+{
+  "windows_version": "0x300",
+  "protected_mode_only": false,
+  "imports": [
+    "KERNEL",
+    "GDI",
+    "USER"
+  ],
+  "code_and_data_segments": [
+    [
+      1,
+      9996,
+      7504,
+      9996
+    ],
+    [
+      22,
+      1091,
+      3153,
+      2448
+    ]
+  ],
+  "heap": 2048,
+  "stack": 4096,
+  "no_commdlg": true
+}

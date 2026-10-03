@@ -1,0 +1,8 @@
+{
+  "only_system_ini_restored": true,
+  "original_sha256": "260ade064743d531b55c9c56214c3e440812460ac022d5c65ec483664247f175",
+  "restored_sha256": "260ade064743d531b55c9c56214c3e440812460ac022d5c65ec483664247f175",
+  "shell_before": "tshell.exe",
+  "shell_after": "progman.exe",
+  "progman_unchanged": true
+}
