@@ -1,0 +1,46 @@
+[
+  {
+    "raw": "MENU160.BIN",
+    "mode": "160",
+    "logical_dimensions": [
+      160,
+      200
+    ],
+    "sha256_raw": "fa25d2ededbfd3884e03f7e70a62b3d6e0edb3d19039cf418708cfcee972487d",
+    "png": "MENU160.PNG",
+    "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels"
+  },
+  {
+    "raw": "BROWSE160.BIN",
+    "mode": "160",
+    "logical_dimensions": [
+      160,
+      200
+    ],
+    "sha256_raw": "bd52b1208d707f066349d145336123e45e7442d1e5e7c37b859b9209d6ad67bf",
+    "png": "BROWSE160.PNG",
+    "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels"
+  },
+  {
+    "raw": "ERROR160.BIN",
+    "mode": "160",
+    "logical_dimensions": [
+      160,
+      200
+    ],
+    "sha256_raw": "fb98e327cbbae8aed4930dba99801b6af8761267844ce7a7a6e9675ea8bd4613",
+    "png": "ERROR160.PNG",
+    "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels"
+  },
+  {
+    "raw": "MENUBASE.BIN",
+    "mode": "baseline",
+    "logical_dimensions": [
+      320,
+      200
+    ],
+    "sha256_raw": "7b0d8593540148e89191972bb87d18103c9eb19bda805d149d524cb9989cf622",
+    "png": "MENUBASE.PNG",
+    "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels"
+  }
+]

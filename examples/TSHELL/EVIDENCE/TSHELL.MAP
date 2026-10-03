@@ -1,0 +1,46 @@
+
+ TSHELL
+
+ Start     Length     Name                   Class
+ 0001:0000 0270CH     _TEXT                  CODE
+ 0002:0000 00010H     NULL                   BEGDATA
+ 0002:0010 0034AH     _DATA                  DATA
+ 0002:035A 0000EH     CDATA                  DATA
+ 0002:0368 00000H     XIFB                   DATA
+ 0002:0368 00000H     XIF                    DATA
+ 0002:0368 00000H     XIFE                   DATA
+ 0002:0368 00000H     XIB                    DATA
+ 0002:0368 00000H     XI                     DATA
+ 0002:0368 00000H     XIE                    DATA
+ 0002:0368 00000H     XPB                    DATA
+ 0002:0368 00000H     XP                     DATA
+ 0002:0368 00000H     XPE                    DATA
+ 0002:0368 00000H     XCB                    DATA
+ 0002:0368 00000H     XC                     DATA
+ 0002:0368 00000H     XCE                    DATA
+ 0002:0368 00000H     XCFB                   DATA
+ 0002:0368 00000H     XCF                    DATA
+ 0002:0368 00000H     XCFE                   DATA
+ 0002:0368 0000CH     DBDATA                 DATA
+ 0002:0374 00002H     XIQC                   DATA
+ 0002:0376 00000H     CONST                  CONST
+ 0002:0376 00019H     HDR                    MSG
+ 0002:038F 000B1H     MSG                    MSG
+ 0002:0440 00002H     PAD                    MSG
+ 0002:0442 00001H     EPAD                   MSG
+ 0002:0450 00540H     _BSS                   BSS
+ 0002:0990 00000H     XOB                    BSS
+ 0002:0990 00000H     XO                     BSS
+ 0002:0990 00000H     XOE                    BSS
+
+ Origin   Group
+ 0002:0   DGROUP
+
+ Address   Export                  Alias
+
+ 0001:0C54 BrowseProc              BrowseProc
+ 0001:0404 ExitProc                ExitProc
+ 0001:125E RunProc                 RunProc
+ 0001:18B6 WndProc                 WndProc
+
+Program entry point at 0001:1DF3

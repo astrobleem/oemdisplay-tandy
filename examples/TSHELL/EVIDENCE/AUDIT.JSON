@@ -1,0 +1,26 @@
+{
+  "executable": "/workspace/scratch/a84592844d2c/tshell-run-resume06/TSHELL.EXE",
+  "bytes": 12355,
+  "sha256": "647031075ae35442c1a379ec37196f810c3d33f2bb1c45233498029a2ec90b25",
+  "code_bytes": 9996,
+  "NE_entry_offset": "0x1df3",
+  "export_offsets": [
+    "0xc54",
+    "0x404",
+    "0x125e",
+    "0x18b6"
+  ],
+  "reachable_instructions_checked": 3786,
+  "post8088_suspects": [],
+  "indirect_branch_sites": [
+    {
+      "offset": "0x1e7e",
+      "instruction": "jmp    *%bx"
+    },
+    {
+      "offset": "0x23d0",
+      "instruction": "jmp    *0x342"
+    }
+  ],
+  "scope": "Scoped reachability audit from NE entry and four exported callbacks, following direct calls/branches. Imported Windows code and unresolved indirect jumps excluded; /G0 and strict real-mode native tests provide independent checks."
+}

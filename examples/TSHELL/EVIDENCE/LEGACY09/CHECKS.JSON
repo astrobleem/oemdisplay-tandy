@@ -1,0 +1,681 @@
+{
+  "passed": 169,
+  "checks": [
+    {
+      "check": "160/boot/FLAGS",
+      "passed": true
+    },
+    {
+      "check": "160/boot/WIDTH",
+      "passed": true
+    },
+    {
+      "check": "160/boot/SHELL",
+      "passed": true
+    },
+    {
+      "check": "160/boot/BAR_BOTTOM",
+      "passed": true
+    },
+    {
+      "check": "160/boot/BAR_HEIGHT",
+      "passed": true
+    },
+    {
+      "check": "160/boot/START_RIGHT",
+      "passed": true
+    },
+    {
+      "check": "160/boot/CLOCK_WIDTH",
+      "passed": true
+    },
+    {
+      "check": "160/boot/QUERYENDSESSION",
+      "passed": true
+    },
+    {
+      "check": "160/boot/CLOCK_CURRENT",
+      "passed": true
+    },
+    {
+      "check": "160/boot/CLOCK_CHANGED",
+      "passed": true
+    },
+    {
+      "check": "160/boot/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "160/exists/PROGMAN",
+      "passed": true
+    },
+    {
+      "check": "160/exists/NOTEPAD",
+      "passed": true
+    },
+    {
+      "check": "160/exists/PBRUSH",
+      "passed": true
+    },
+    {
+      "check": "160/exists/COOKIE",
+      "passed": true
+    },
+    {
+      "check": "160/exists/TABOUT",
+      "passed": true
+    },
+    {
+      "check": "160/exists/SLOSH",
+      "passed": true
+    },
+    {
+      "check": "160/exists/MOUTH",
+      "passed": true
+    },
+    {
+      "check": "160/dialog/DIALOG_FITS",
+      "passed": true
+    },
+    {
+      "check": "160/dialog/CLIENT_128_58",
+      "passed": true
+    },
+    {
+      "check": "160/dialog/CANCEL_FOCUSED",
+      "passed": true
+    },
+    {
+      "check": "160/dialog/EXIT_BUTTON_FITS",
+      "passed": true
+    },
+    {
+      "check": "160/dialog/CANCEL_BUTTON_FITS",
+      "passed": true
+    },
+    {
+      "check": "160/dialog/LABEL_FITS",
+      "passed": true
+    },
+    {
+      "check": "160/dialog/EXPECTED_RESULT",
+      "passed": true
+    },
+    {
+      "check": "160/dialog/SHELL_SURVIVES",
+      "passed": true
+    },
+    {
+      "check": "160/dialog/complete",
+      "passed": true
+    },
+    {
+      "check": "160/memory/DELTA",
+      "passed": true
+    },
+    {
+      "check": "160/memory/CODE_BYTES",
+      "passed": true
+    },
+    {
+      "check": "160/memory/DATA_BYTES",
+      "passed": true
+    },
+    {
+      "check": "160/memory/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "3204/boot/FLAGS",
+      "passed": true
+    },
+    {
+      "check": "3204/boot/WIDTH",
+      "passed": true
+    },
+    {
+      "check": "3204/boot/SHELL",
+      "passed": true
+    },
+    {
+      "check": "3204/boot/BAR_BOTTOM",
+      "passed": true
+    },
+    {
+      "check": "3204/boot/BAR_HEIGHT",
+      "passed": true
+    },
+    {
+      "check": "3204/boot/START_RIGHT",
+      "passed": true
+    },
+    {
+      "check": "3204/boot/CLOCK_WIDTH",
+      "passed": true
+    },
+    {
+      "check": "3204/boot/QUERYENDSESSION",
+      "passed": true
+    },
+    {
+      "check": "3204/boot/CLOCK_CURRENT",
+      "passed": true
+    },
+    {
+      "check": "3204/boot/CLOCK_CHANGED",
+      "passed": true
+    },
+    {
+      "check": "3204/boot/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "3204/exists/PROGMAN",
+      "passed": true
+    },
+    {
+      "check": "3204/exists/NOTEPAD",
+      "passed": true
+    },
+    {
+      "check": "3204/exists/PBRUSH",
+      "passed": true
+    },
+    {
+      "check": "3204/exists/COOKIE",
+      "passed": true
+    },
+    {
+      "check": "3204/exists/TABOUT",
+      "passed": true
+    },
+    {
+      "check": "3204/exists/SLOSH",
+      "passed": true
+    },
+    {
+      "check": "3204/exists/MOUTH",
+      "passed": true
+    },
+    {
+      "check": "3204/dialog/DIALOG_FITS",
+      "passed": true
+    },
+    {
+      "check": "3204/dialog/CLIENT_128_58",
+      "passed": true
+    },
+    {
+      "check": "3204/dialog/CANCEL_FOCUSED",
+      "passed": true
+    },
+    {
+      "check": "3204/dialog/EXIT_BUTTON_FITS",
+      "passed": true
+    },
+    {
+      "check": "3204/dialog/CANCEL_BUTTON_FITS",
+      "passed": true
+    },
+    {
+      "check": "3204/dialog/LABEL_FITS",
+      "passed": true
+    },
+    {
+      "check": "3204/dialog/EXPECTED_RESULT",
+      "passed": true
+    },
+    {
+      "check": "3204/dialog/SHELL_SURVIVES",
+      "passed": true
+    },
+    {
+      "check": "3204/dialog/complete",
+      "passed": true
+    },
+    {
+      "check": "3204/memory/DELTA",
+      "passed": true
+    },
+    {
+      "check": "3204/memory/CODE_BYTES",
+      "passed": true
+    },
+    {
+      "check": "3204/memory/DATA_BYTES",
+      "passed": true
+    },
+    {
+      "check": "3204/memory/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "6404/boot/FLAGS",
+      "passed": true
+    },
+    {
+      "check": "6404/boot/WIDTH",
+      "passed": true
+    },
+    {
+      "check": "6404/boot/SHELL",
+      "passed": true
+    },
+    {
+      "check": "6404/boot/BAR_BOTTOM",
+      "passed": true
+    },
+    {
+      "check": "6404/boot/BAR_HEIGHT",
+      "passed": true
+    },
+    {
+      "check": "6404/boot/START_RIGHT",
+      "passed": true
+    },
+    {
+      "check": "6404/boot/CLOCK_WIDTH",
+      "passed": true
+    },
+    {
+      "check": "6404/boot/QUERYENDSESSION",
+      "passed": true
+    },
+    {
+      "check": "6404/boot/CLOCK_CURRENT",
+      "passed": true
+    },
+    {
+      "check": "6404/boot/CLOCK_CHANGED",
+      "passed": true
+    },
+    {
+      "check": "6404/boot/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "6404/exists/PROGMAN",
+      "passed": true
+    },
+    {
+      "check": "6404/exists/NOTEPAD",
+      "passed": true
+    },
+    {
+      "check": "6404/exists/PBRUSH",
+      "passed": true
+    },
+    {
+      "check": "6404/exists/COOKIE",
+      "passed": true
+    },
+    {
+      "check": "6404/exists/TABOUT",
+      "passed": true
+    },
+    {
+      "check": "6404/exists/SLOSH",
+      "passed": true
+    },
+    {
+      "check": "6404/exists/MOUTH",
+      "passed": true
+    },
+    {
+      "check": "6404/dialog/DIALOG_FITS",
+      "passed": true
+    },
+    {
+      "check": "6404/dialog/CLIENT_128_58",
+      "passed": true
+    },
+    {
+      "check": "6404/dialog/CANCEL_FOCUSED",
+      "passed": true
+    },
+    {
+      "check": "6404/dialog/EXIT_BUTTON_FITS",
+      "passed": true
+    },
+    {
+      "check": "6404/dialog/CANCEL_BUTTON_FITS",
+      "passed": true
+    },
+    {
+      "check": "6404/dialog/LABEL_FITS",
+      "passed": true
+    },
+    {
+      "check": "6404/dialog/EXPECTED_RESULT",
+      "passed": true
+    },
+    {
+      "check": "6404/dialog/SHELL_SURVIVES",
+      "passed": true
+    },
+    {
+      "check": "6404/dialog/complete",
+      "passed": true
+    },
+    {
+      "check": "6404/memory/DELTA",
+      "passed": true
+    },
+    {
+      "check": "6404/memory/CODE_BYTES",
+      "passed": true
+    },
+    {
+      "check": "6404/memory/DATA_BYTES",
+      "passed": true
+    },
+    {
+      "check": "6404/memory/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "6402/boot/FLAGS",
+      "passed": true
+    },
+    {
+      "check": "6402/boot/WIDTH",
+      "passed": true
+    },
+    {
+      "check": "6402/boot/SHELL",
+      "passed": true
+    },
+    {
+      "check": "6402/boot/BAR_BOTTOM",
+      "passed": true
+    },
+    {
+      "check": "6402/boot/BAR_HEIGHT",
+      "passed": true
+    },
+    {
+      "check": "6402/boot/START_RIGHT",
+      "passed": true
+    },
+    {
+      "check": "6402/boot/CLOCK_WIDTH",
+      "passed": true
+    },
+    {
+      "check": "6402/boot/QUERYENDSESSION",
+      "passed": true
+    },
+    {
+      "check": "6402/boot/CLOCK_CURRENT",
+      "passed": true
+    },
+    {
+      "check": "6402/boot/CLOCK_CHANGED",
+      "passed": true
+    },
+    {
+      "check": "6402/boot/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "6402/exists/PROGMAN",
+      "passed": true
+    },
+    {
+      "check": "6402/exists/NOTEPAD",
+      "passed": true
+    },
+    {
+      "check": "6402/exists/PBRUSH",
+      "passed": true
+    },
+    {
+      "check": "6402/exists/COOKIE",
+      "passed": true
+    },
+    {
+      "check": "6402/exists/TABOUT",
+      "passed": true
+    },
+    {
+      "check": "6402/exists/SLOSH",
+      "passed": true
+    },
+    {
+      "check": "6402/exists/MOUTH",
+      "passed": true
+    },
+    {
+      "check": "6402/dialog/DIALOG_FITS",
+      "passed": true
+    },
+    {
+      "check": "6402/dialog/CLIENT_128_58",
+      "passed": true
+    },
+    {
+      "check": "6402/dialog/CANCEL_FOCUSED",
+      "passed": true
+    },
+    {
+      "check": "6402/dialog/EXIT_BUTTON_FITS",
+      "passed": true
+    },
+    {
+      "check": "6402/dialog/CANCEL_BUTTON_FITS",
+      "passed": true
+    },
+    {
+      "check": "6402/dialog/LABEL_FITS",
+      "passed": true
+    },
+    {
+      "check": "6402/dialog/EXPECTED_RESULT",
+      "passed": true
+    },
+    {
+      "check": "6402/dialog/SHELL_SURVIVES",
+      "passed": true
+    },
+    {
+      "check": "6402/dialog/complete",
+      "passed": true
+    },
+    {
+      "check": "6402/memory/DELTA",
+      "passed": true
+    },
+    {
+      "check": "6402/memory/CODE_BYTES",
+      "passed": true
+    },
+    {
+      "check": "6402/memory/DATA_BYTES",
+      "passed": true
+    },
+    {
+      "check": "6402/memory/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "baseline/boot/FLAGS",
+      "passed": true
+    },
+    {
+      "check": "baseline/boot/WIDTH",
+      "passed": true
+    },
+    {
+      "check": "baseline/boot/SHELL",
+      "passed": true
+    },
+    {
+      "check": "baseline/boot/BAR_BOTTOM",
+      "passed": true
+    },
+    {
+      "check": "baseline/boot/BAR_HEIGHT",
+      "passed": true
+    },
+    {
+      "check": "baseline/boot/START_RIGHT",
+      "passed": true
+    },
+    {
+      "check": "baseline/boot/CLOCK_WIDTH",
+      "passed": true
+    },
+    {
+      "check": "baseline/boot/QUERYENDSESSION",
+      "passed": true
+    },
+    {
+      "check": "baseline/boot/CLOCK_CURRENT",
+      "passed": true
+    },
+    {
+      "check": "baseline/boot/CLOCK_CHANGED",
+      "passed": true
+    },
+    {
+      "check": "baseline/boot/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "baseline/exists/PROGMAN",
+      "passed": true
+    },
+    {
+      "check": "baseline/exists/NOTEPAD",
+      "passed": true
+    },
+    {
+      "check": "baseline/exists/PBRUSH",
+      "passed": true
+    },
+    {
+      "check": "baseline/exists/COOKIE",
+      "passed": true
+    },
+    {
+      "check": "baseline/exists/TABOUT",
+      "passed": true
+    },
+    {
+      "check": "baseline/exists/SLOSH",
+      "passed": true
+    },
+    {
+      "check": "baseline/exists/MOUTH",
+      "passed": true
+    },
+    {
+      "check": "baseline/dialog/DIALOG_FITS",
+      "passed": true
+    },
+    {
+      "check": "baseline/dialog/CLIENT_128_58",
+      "passed": true
+    },
+    {
+      "check": "baseline/dialog/CANCEL_FOCUSED",
+      "passed": true
+    },
+    {
+      "check": "baseline/dialog/EXIT_BUTTON_FITS",
+      "passed": true
+    },
+    {
+      "check": "baseline/dialog/CANCEL_BUTTON_FITS",
+      "passed": true
+    },
+    {
+      "check": "baseline/dialog/LABEL_FITS",
+      "passed": true
+    },
+    {
+      "check": "baseline/dialog/EXPECTED_RESULT",
+      "passed": true
+    },
+    {
+      "check": "baseline/dialog/SHELL_SURVIVES",
+      "passed": true
+    },
+    {
+      "check": "baseline/dialog/complete",
+      "passed": true
+    },
+    {
+      "check": "baseline/memory/DELTA",
+      "passed": true
+    },
+    {
+      "check": "baseline/memory/CODE_BYTES",
+      "passed": true
+    },
+    {
+      "check": "baseline/memory/DATA_BYTES",
+      "passed": true
+    },
+    {
+      "check": "baseline/memory/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "160/menu",
+      "passed": true
+    },
+    {
+      "check": "6404/menu",
+      "passed": true
+    },
+    {
+      "check": "PMTEST.LOG/PROGMAN_FOUND",
+      "passed": true
+    },
+    {
+      "check": "PMTEST.LOG/WAS_MINIMIZED",
+      "passed": true
+    },
+    {
+      "check": "PMTEST.LOG/RESTORED",
+      "passed": true
+    },
+    {
+      "check": "PMTEST.LOG/VISIBLE",
+      "passed": true
+    },
+    {
+      "check": "PMTEST.LOG/ACTIVE",
+      "passed": true
+    },
+    {
+      "check": "PMTEST.LOG/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "CLOSE.LOG/BAR_CLOSED",
+      "passed": true
+    },
+    {
+      "check": "CLOSE.LOG/PROGMAN_ALIVE",
+      "passed": true
+    },
+    {
+      "check": "CLOSE.LOG/COMPLETE",
+      "passed": true
+    },
+    {
+      "check": "byte identical rebuild",
+      "passed": true
+    },
+    {
+      "check": "rollback original bytes",
+      "passed": true
+    },
+    {
+      "check": "exit marker",
+      "passed": true
+    }
+  ]
+}

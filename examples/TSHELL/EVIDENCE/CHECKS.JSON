@@ -1,0 +1,869 @@
+{
+  "profiles": 5,
+  "assertions": 250,
+  "checks": [
+    {
+      "profile": "160",
+      "check": "REAL_MODE",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "RUN_FITS",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "EDIT_FOCUSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "RUN_CONTROL_FITS",
+      "count": 8,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "EMPTY_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "SPACE_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "LONG_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "EDIT_CAP",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "CAP_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "ERROR_RETAINED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "BROWSE_FITS",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "BROWSE_CONTROL_FITS",
+      "count": 10,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "LIST_FOCUSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "NAV_ROOT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "AT_ROOT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "CANCEL_TEXT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "CANCEL_CWD",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "NAV_WINDOWS",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "COM_FILTER",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "BAT_FILTER",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "EXE_FOUND",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "PICK_ARGS",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "PICK_CWD",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "LAUNCH_NO_ERROR",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "RUN_CLOSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "SHELL_SURVIVES",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "ARGS_RECEIVED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "160",
+      "check": "COMPLETE",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "REAL_MODE",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "RUN_FITS",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "EDIT_FOCUSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "RUN_CONTROL_FITS",
+      "count": 8,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "EMPTY_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "SPACE_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "LONG_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "EDIT_CAP",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "CAP_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "ERROR_RETAINED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "BROWSE_FITS",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "BROWSE_CONTROL_FITS",
+      "count": 10,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "LIST_FOCUSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "NAV_ROOT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "AT_ROOT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "CANCEL_TEXT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "CANCEL_CWD",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "NAV_WINDOWS",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "COM_FILTER",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "BAT_FILTER",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "EXE_FOUND",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "PICK_ARGS",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "PICK_CWD",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "LAUNCH_NO_ERROR",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "RUN_CLOSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "SHELL_SURVIVES",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "ARGS_RECEIVED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "3204",
+      "check": "COMPLETE",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "REAL_MODE",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "RUN_FITS",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "EDIT_FOCUSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "RUN_CONTROL_FITS",
+      "count": 8,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "EMPTY_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "SPACE_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "LONG_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "EDIT_CAP",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "CAP_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "ERROR_RETAINED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "BROWSE_FITS",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "BROWSE_CONTROL_FITS",
+      "count": 10,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "LIST_FOCUSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "NAV_ROOT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "AT_ROOT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "CANCEL_TEXT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "CANCEL_CWD",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "NAV_WINDOWS",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "COM_FILTER",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "BAT_FILTER",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "EXE_FOUND",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "PICK_ARGS",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "PICK_CWD",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "LAUNCH_NO_ERROR",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "RUN_CLOSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "SHELL_SURVIVES",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "ARGS_RECEIVED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6404",
+      "check": "COMPLETE",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "REAL_MODE",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "RUN_FITS",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "EDIT_FOCUSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "RUN_CONTROL_FITS",
+      "count": 8,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "EMPTY_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "SPACE_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "LONG_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "EDIT_CAP",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "CAP_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "ERROR_RETAINED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "BROWSE_FITS",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "BROWSE_CONTROL_FITS",
+      "count": 10,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "LIST_FOCUSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "NAV_ROOT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "AT_ROOT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "CANCEL_TEXT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "CANCEL_CWD",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "NAV_WINDOWS",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "COM_FILTER",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "BAT_FILTER",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "EXE_FOUND",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "PICK_ARGS",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "PICK_CWD",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "LAUNCH_NO_ERROR",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "RUN_CLOSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "SHELL_SURVIVES",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "ARGS_RECEIVED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "6402",
+      "check": "COMPLETE",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "REAL_MODE",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "RUN_FITS",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "EDIT_FOCUSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "RUN_CONTROL_FITS",
+      "count": 8,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "EMPTY_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "SPACE_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "LONG_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "EDIT_CAP",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "CAP_BLOCKED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "ERROR_RETAINED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "BROWSE_FITS",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "BROWSE_CONTROL_FITS",
+      "count": 10,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "LIST_FOCUSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "NAV_ROOT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "AT_ROOT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "CANCEL_TEXT",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "CANCEL_CWD",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "NAV_WINDOWS",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "COM_FILTER",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "BAT_FILTER",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "EXE_FOUND",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "PICK_ARGS",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "PICK_CWD",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "LAUNCH_NO_ERROR",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "RUN_CLOSED",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "SHELL_SURVIVES",
+      "count": 2,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "ARGS_RECEIVED",
+      "count": 1,
+      "passed": true
+    },
+    {
+      "profile": "baseline",
+      "check": "COMPLETE",
+      "count": 1,
+      "passed": true
+    }
+  ],
+  "production_sha256": "647031075ae35442c1a379ec37196f810c3d33f2bb1c45233498029a2ec90b25",
+  "instrumented_source_sha256": "a97178e25bbe3048567622f339d08028241cfcc54b4bc0d3c719137feab0da2d",
+  "supplemental_160": {
+    "assertions": 26,
+    "checks": {
+      "REAL_MODE": 5,
+      "RUN_CLOSED": 5,
+      "SHELL_SURVIVES": 5,
+      "D_ORIGINAL_READ": 1,
+      "D_NAVIGATE": 1,
+      "D_CHANGED": 1,
+      "BROWSE_CLOSE_UNCHANGED": 1,
+      "C_RESTORED": 1,
+      "D_RESTORED": 1,
+      "D_RESTORED_AFTER_YIELD": 1,
+      "ENTER_DRIVE_RELATIVE_ARGS": 1,
+      "ENTER_MAX126_ARGS": 1,
+      "NO_COMMDLG": 1,
+      "COMPLETE": 1
+    },
+    "steps": 5,
+    "result": "all passed"
+  }
+}
