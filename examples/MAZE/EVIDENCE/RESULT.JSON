@@ -1,0 +1,91 @@
+{
+  "status": "WINDOWED PROOF VERIFIED; SCREENSAVER PERFORMANCE GATE NOT MET",
+  "binary_bytes": 8463,
+  "binary_sha256": "80f1112521ba5e36586fa97b607cd4662c7611369c73637d82ae988b01d07a0d",
+  "host_oracle": {
+    "rays": 540672,
+    "max_height_error_pixels": 1,
+    "movement_steps": 30000,
+    "undefined_behavior_sanitizer": "PASS"
+  },
+  "final_native_profiles": {
+    "160": {
+      "elapsed_ms": 10106,
+      "setup_ms": 110,
+      "frames": 61,
+      "paints": 62,
+      "free_start": 347776,
+      "free_end": 333664,
+      "free_warm": 333664,
+      "timer_failed": 0,
+      "buffer_failed": 0,
+      "frames_per_emulated_second": 6.036,
+      "warmed_free_memory_delta": 0
+    },
+    "3204": {
+      "elapsed_ms": 10106,
+      "setup_ms": 110,
+      "frames": 61,
+      "paints": 62,
+      "free_start": 332224,
+      "free_end": 306528,
+      "free_warm": 306528,
+      "timer_failed": 0,
+      "buffer_failed": 0,
+      "frames_per_emulated_second": 6.036,
+      "warmed_free_memory_delta": 0
+    },
+    "6402": {
+      "elapsed_ms": 10051,
+      "setup_ms": 0,
+      "frames": 60,
+      "paints": 61,
+      "free_start": 300384,
+      "free_end": 275968,
+      "free_warm": 275968,
+      "timer_failed": 0,
+      "buffer_failed": 0,
+      "frames_per_emulated_second": 5.97,
+      "warmed_free_memory_delta": 0
+    },
+    "6404": {
+      "elapsed_ms": 10161,
+      "setup_ms": 55,
+      "frames": 61,
+      "paints": 62,
+      "free_start": 300224,
+      "free_end": 275808,
+      "free_warm": 275808,
+      "timer_failed": 0,
+      "buffer_failed": 0,
+      "frames_per_emulated_second": 6.003,
+      "warmed_free_memory_delta": 0
+    },
+    "baseline": {
+      "elapsed_ms": 10161,
+      "setup_ms": 220,
+      "frames": 61,
+      "paints": 62,
+      "free_start": 330656,
+      "free_end": 304960,
+      "free_warm": 304960,
+      "timer_failed": 0,
+      "buffer_failed": 0,
+      "frames_per_emulated_second": 6.003,
+      "warmed_free_memory_delta": 0
+    }
+  },
+  "visual_regression_pixels_different": 0,
+  "approximate_xt_preset": {
+    "cycles": 240,
+    "cold_first_paint_ms": 87441,
+    "cold_benchmark_animation_frames": 0,
+    "single_diagnostic_frame_ms": 6316,
+    "single_diagnostic_paint_ms": 6096,
+    "geometry_and_paint_code_identical_to_release": true,
+    "physical_hardware_calibrated": false
+  },
+  "saver": "not implemented; rendering cost fails gate",
+  "manual_ui_validation": "not performed",
+  "physical_tandy_validation": "not performed"
+}

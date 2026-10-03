@@ -1,0 +1,1 @@
+PASS rays=540672 max_height_error=1 movement_steps=30000 bounds=PASS

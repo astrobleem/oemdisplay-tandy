@@ -1,0 +1,12 @@
+{
+  "publication_checks_date_utc": "2026-10-03",
+  "sealed_package_manifest": "all members pass",
+  "fresh_rebuild_sha256": "80f1112521ba5e36586fa97b607cd4662c7611369c73637d82ae988b01d07a0d",
+  "fresh_rebuild_bytes": 8463,
+  "fresh_rebuild_matches_sealed_binary": true,
+  "native_evidence": "retained final milestone records, not rerun during publication",
+  "github_ci": "check remote exact head after publication; no CI pass claimed",
+  "fresh_host_oracle": "PASS rays=540672 max_height_error=1 movement_steps=30000 bounds=PASS",
+  "host_compiler": "gcc -x c -std=c99 -fsanitize=undefined -fno-sanitize-recover=all -Wall -Wextra",
+  "host_warnings": "existing misleading-indentation and unused-variable warnings; no sanitizer failure"
+}

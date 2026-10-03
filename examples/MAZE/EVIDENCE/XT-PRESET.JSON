@@ -1,0 +1,15 @@
+{
+  "label": "Approximate DOSBox-X preset only, not calibrated physical Tandy timing",
+  "installed_reference": "/workspace/shared/dosbox-x/squashfs-root/usr/share/dosbox-x/languages/en_US.lng",
+  "preset_text": "8088 XT 4.77MHz (~240 cycles)",
+  "cpu": "8086_prefetch",
+  "core": "normal",
+  "cycles": 240,
+  "dosbox_x": "2026.08.31 b13702c",
+  "caveats": [
+    "DOSBox-X cycles are emulated instructions per millisecond, not oscillator clock ticks.",
+    "Prefetch-compatible instruction core is not a cycle-accurate physical 8088 model.",
+    "Host scheduling and emulator implementation can affect results.",
+    "Physical Tandy 1000 EX verification remains outstanding."
+  ]
+}
