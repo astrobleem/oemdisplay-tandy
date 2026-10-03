@@ -1,0 +1,19 @@
+Host review run UTC: 2026-10-02T23:12:48.919741+00:00
+Compiler: gcc (Debian 14.2.0-19) 14.2.0
+Source SHA256:
+PHYSICS.H: 478e0299eca58b11161a06223a5ac964b914e44450633913fb333da1668d8785
+PINBALL.C: edf7448adc3e511f8513f1ff1b1ddb879d6b55c83bbae2a580ebe97de89587f5
+TEST.C: f576db72f31fb0ae0aac49fff649b5beea1cbec265655b2796c37562c43631ef
+
+Command (replace SOURCE with the directory containing PHYSICS.H):
+gcc -x c -std=c99 -O2 -Wall -Wextra -I SOURCE FUZZ.C -o fuzz
+./fuzz
+
+PASS: axis bumper loop escaped in 27 ticks
+PASS: mask=0 1000000 ticks, max unchanged=0, max high=79
+PASS: mask=1 1000000 ticks, max unchanged=0, max high=79
+PASS: mask=2 1000000 ticks, max unchanged=0, max high=104
+PASS: mask=3 1000000 ticks, max unchanged=0, max high=79
+PASS: mask=4 1000000 ticks, max unchanged=0, max high=110
+PASS: 40000000 fuzz ticks, 200 seeds, max high=229 ticks
+PASS: 45000000 total schedule ticks plus axis-loop regression

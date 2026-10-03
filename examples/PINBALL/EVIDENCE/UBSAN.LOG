@@ -1,0 +1,15 @@
+Host review run UTC: 2026-10-02T23:12:48.919741+00:00
+Compiler: gcc (Debian 14.2.0-19) 14.2.0
+Source SHA256:
+PHYSICS.H: 478e0299eca58b11161a06223a5ac964b914e44450633913fb333da1668d8785
+PINBALL.C: edf7448adc3e511f8513f1ff1b1ddb879d6b55c83bbae2a580ebe97de89587f5
+TEST.C: f576db72f31fb0ae0aac49fff649b5beea1cbec265655b2796c37562c43631ef
+
+Command (run from source directory):
+gcc -x c -DHOSTMAIN -std=c89 -Wall -Wextra -fsanitize=undefined -fno-sanitize-recover=undefined -O1 TEST.C -o hosttest
+./hosttest
+
+Compiler output:
+
+Run output:
+PASS line=0: launch, bumper score, both flipper kicks/return, walls, three drains, score limit, replay, 2000000 stress ticks

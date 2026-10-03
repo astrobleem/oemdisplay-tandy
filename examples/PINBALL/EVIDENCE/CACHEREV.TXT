@@ -1,0 +1,59 @@
+Tiny Pinball rendering-cache review addendum
+Reviewed UTC: 2026-10-02T23:39:50.164190+00:00
+PINBALL.C SHA256:
+0d3bab6870eca0bc011bc9887865b9fb206228307ee52756de57c0a522afb644
+
+Result: no outstanding blocking source defect found in this scope.
+No application source was edited by this review.
+
+Fixes verified
+- A failed bitmap SelectObject now destroys the unused DC and bitmap,
+  clears the cache handles, and reaches direct-render fallback.
+- A failed initial cache PatBlt now releases the cache and falls back.
+- A failed restore BitBlt now clears/redraws the dirty area directly.
+  Previously these paths could retain an unusable cache or stale pixels.
+
+Lifecycle and Win16 checks
+- CompatibleBitmap is created from the window DC, not the new memory DC;
+  this avoids inheriting the memory DC's default monochrome surface.
+- The old bitmap is restored before deleting the DC and owned bitmap.
+  Stock pens, brush and font are never deleted. Normal repeated paints
+  reuse one cache; WM_SIZE and WM_DESTROY release it. Failed DC/bitmap
+  allocations leave no owned cache active. Stale oldbits is unreachable
+  when board is zero, and is replaced before the next successful cache.
+- APIs used are declared by the repository Win16 WINDOWS.H. No Win32-only
+  handles, pointer-width assumptions, DIB sections, or new large buffers
+  were introduced. Native compilation/execution is separate evidence.
+
+Dirty rectangles and clipping
+- Each 11x11 ball dirty rect contains its old/new 5x5 rendered square.
+- The flipper update rectangle contains all endpoints and both parallel
+  lines for angles 0..4. Score invalidation includes the measured 8/10px
+  fonts and previously considered 14px font, starting at y1.
+- Launch, drain, reset, pause and focus loss use full-client invalidation.
+  Overlay text is redrawn when its vertical region intersects the update.
+- Cache and destination share client coordinates. BeginPaint clips output
+  to the actual update region; its rcPaint bounding box stays inside the
+  client-sized source bitmap. Fallback table drawing is similarly clipped.
+  WM_SIZE invalidates the whole client after discarding the old-size cache.
+- No normal-path stale-pixel or out-of-range blit defect was identified.
+
+Verification in this review
+- CACHETST.C contains exact reviewed rendering functions plus host GDI stubs.
+  Build: gcc -x c -std=c89 -w CACHETST.C -o /tmp/cachetest
+  Run: /tmp/cachetest
+  Six asserted control-flow cases pass, recorded in
+  CACHETST.LOG: DC allocation failure, bitmap allocation failure, bitmap
+  selection failure, cache clear failure, BitBlt failure, normal repeated
+  paint/free lifetime. This is not native fault injection or pixel testing.
+- Source has 80 CRLF line endings and no bare LF line endings.
+- Existing five-mode KEYPAINT logs and UICHECK.C were read for font/client
+  metrics and test scope. Their successful cache check is not proof of all
+  GDI pixels, low-memory behavior, or physical-hardware frame rate.
+- No GUI/DOSBox test was run here. Physics was intentionally not re-reviewed.
+  Final revised executable/native reruns are owned by the build task.
+
+API reference cross-checks (current GDI docs, not Win16 execution proof)
+https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-selectobject
+https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-createcompatibledc
+https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-bitblt
