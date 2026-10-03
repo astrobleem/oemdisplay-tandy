@@ -1,0 +1,403 @@
+BEGIN independent historical COMMDLG.LIB tests
+RUNTIME 320 x 200 colors=16 flags=64
+PASS Windows real mode verified by GetWinFlags
+PASS OPENFILENAME sizeof=72
+PASS OPENFILENAME offsets
+PASS GetFileTitle large buffer
+PASS FAR Pascal stack/DS preserved
+PASS FileTitle canaries
+PASS FileTitle short buffer reports 8 including NUL
+PASS short output no overwrite beyond capacity
+PASS FileTitle exact capacity
+PASS DOS device rejected
+PASS FileTitle empty rejected
+PASS FileTitle wildcard rejected
+PASS FileTitle directory rejected
+PASS FileTitle DOS space rejected
+PASS FileTitle bracket rejected
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS unsupported multiselect fails explicitly
+PASS hook request fails explicitly
+PASS template request fails explicitly
+PASS separate far allocations
+PASS far structure rejected safely
+PASS separate segment output
+PASS far output canaries
+UNIT RESULT PASS
+BEGIN UI CASE 0
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS cancel has error zero
+BEGIN UI CASE 1
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS new selection creates real file
+PASS round-trip write
+BEGIN UI CASE 2
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS open selected real file
+PASS round-trip read matches
+BEGIN UI CASE 3
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS tiny selected-file reports buffer too small
+PASS tiny file reports required NUL-inclusive bytes
+BEGIN UI CASE 4
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS one-based filter index changes
+BEGIN UI CASE 5
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS extension-different output flag
+PASS tiny title truncates with NUL and capacity canary
+BEGIN UI CASE 6
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS cancel has error zero
+PASS validation/prompt appeared
+BEGIN UI CASE 7
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS overwrite/create confirmation appears once
+BEGIN UI CASE 8
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS cancel has error zero
+PASS validation/prompt appeared
+BEGIN UI CASE 9
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS overwrite/create confirmation appears once
+BEGIN UI CASE 10
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS cancel has error zero
+PASS validation/prompt appeared
+BEGIN UI CASE 11
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+BEGIN UI CASE 12
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS tiny selected-file reports buffer too small
+PASS one-byte file buffer remains NUL
+BEGIN UI CASE 13
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS drive selection and initial file path
+BEGIN UI CASE 14
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS cancel has error zero
+BEGIN UI CASE 15
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS bad initial directory has documented error
+BEGIN UI CASE 16
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS drive selection and initial file path
+BEGIN UI CASE 17
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS FILEMUSTEXIST with CREATEPROMPT can confirm new file
+BEGIN UI CASE 18
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS cancel has error zero
+PASS validation/prompt appeared
+PASS missing CREATEPROMPT path never asks to create
+BEGIN UI CASE 19
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS cancel has error zero
+PASS validation/prompt appeared
+BEGIN UI CASE 20
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS cancel has error zero
+PASS validation/prompt appeared
+BEGIN UI CASE 21
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS no extension offset is terminating NUL
+BEGIN UI CASE 22
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS explicit trailing period suppresses default extension
+BEGIN UI CASE 23
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS empty default acts like NULL in this subset
+BEGIN UI CASE 24
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS NULL default clears stale extension-different flag
+BEGIN UI CASE 25
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS NOREADONLYRETURN permits writable Open selection
+BEGIN UI CASE 26
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS NOREADONLYRETURN permits writable Open selection
+PASS parent task has independent error
+PASS start second caller task
+PASS second caller does not clear parent error
+SUITE PASS
+FINAL PASS

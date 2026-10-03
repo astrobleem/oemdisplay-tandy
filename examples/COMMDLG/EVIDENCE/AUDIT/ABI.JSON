@@ -1,0 +1,613 @@
+{
+  "dll": {
+    "path": "cdlg-resume-frame-build/COMMDLG.DLL",
+    "bytes": 14876,
+    "sha256": "2f244e11acf6605130928c0fdf6e280702740a057198af2221124431ed90c62d",
+    "flags": 32769,
+    "expected_windows": "0x300",
+    "target_os": 2,
+    "initial_csip": 65536,
+    "heap": 4096,
+    "names": {
+      "COMMDLG": 0,
+      "WEP": 100,
+      "8086 Windows 3.0 bounded file-dialog subset": 0,
+      "FILEDLGPROC": 101,
+      "COMMDLGEXTENDEDERROR": 26,
+      "GETSAVEFILENAME": 2,
+      "GETOPENFILENAME": 1,
+      "PROMPTPROC": 102,
+      "GETFILETITLE": 27
+    },
+    "entries": {
+      "1": {
+        "flags": 3,
+        "segment": 1,
+        "offset": 13254
+      },
+      "2": {
+        "flags": 3,
+        "segment": 1,
+        "offset": 13302
+      },
+      "26": {
+        "flags": 3,
+        "segment": 1,
+        "offset": 2275
+      },
+      "27": {
+        "flags": 3,
+        "segment": 1,
+        "offset": 2136
+      },
+      "100": {
+        "flags": 3,
+        "segment": 1,
+        "offset": 2428
+      },
+      "101": {
+        "flags": 3,
+        "segment": 1,
+        "offset": 10100
+      },
+      "102": {
+        "flags": 3,
+        "segment": 1,
+        "offset": 5199
+      },
+      "103": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 2349
+      },
+      "104": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 19
+      },
+      "105": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 34
+      },
+      "106": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 85
+      },
+      "107": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 54
+      },
+      "108": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 111
+      },
+      "109": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 144
+      }
+    },
+    "modules": [
+      "KERNEL",
+      "GDI",
+      "USER"
+    ],
+    "imports": [
+      [
+        "GDI",
+        93
+      ],
+      [
+        "KERNEL",
+        4
+      ],
+      [
+        "KERNEL",
+        15
+      ],
+      [
+        "KERNEL",
+        17
+      ],
+      [
+        "KERNEL",
+        18
+      ],
+      [
+        "KERNEL",
+        19
+      ],
+      [
+        "KERNEL",
+        36
+      ],
+      [
+        "KERNEL",
+        51
+      ],
+      [
+        "KERNEL",
+        52
+      ],
+      [
+        "KERNEL",
+        74
+      ],
+      [
+        "KERNEL",
+        81
+      ],
+      [
+        "USER",
+        13
+      ],
+      [
+        "USER",
+        22
+      ],
+      [
+        "USER",
+        24
+      ],
+      [
+        "USER",
+        25
+      ],
+      [
+        "USER",
+        26
+      ],
+      [
+        "USER",
+        33
+      ],
+      [
+        "USER",
+        37
+      ],
+      [
+        "USER",
+        41
+      ],
+      [
+        "USER",
+        42
+      ],
+      [
+        "USER",
+        56
+      ],
+      [
+        "USER",
+        66
+      ],
+      [
+        "USER",
+        68
+      ],
+      [
+        "USER",
+        88
+      ],
+      [
+        "USER",
+        91
+      ],
+      [
+        "USER",
+        92
+      ],
+      [
+        "USER",
+        93
+      ],
+      [
+        "USER",
+        99
+      ],
+      [
+        "USER",
+        100
+      ],
+      [
+        "USER",
+        101
+      ],
+      [
+        "USER",
+        111
+      ],
+      [
+        "USER",
+        179
+      ],
+      [
+        "USER",
+        218
+      ]
+    ],
+    "segments": [
+      {
+        "offset": 512,
+        "bytes": 13349,
+        "flags": 7504,
+        "allocation": 13350
+      },
+      {
+        "offset": 14336,
+        "bytes": 540,
+        "flags": 3185,
+        "allocation": 864
+      }
+    ]
+  },
+  "caller": {
+    "path": "cdlg-timerfix-build/CDTEST.EXE",
+    "bytes": 16963,
+    "sha256": "c661a2b11dd36a635da6815b725ed51e95715e8d0cc34a4070423c6ed8417544",
+    "flags": 2,
+    "expected_windows": "0x300",
+    "target_os": 2,
+    "initial_csip": 75075,
+    "heap": 2048,
+    "names": {
+      "CDTEST": 0,
+      "Independent Windows 3.0 common dialog ABI caller": 0,
+      "CLOCKPROC": 2,
+      "WNDPROC": 1
+    },
+    "entries": {
+      "1": {
+        "flags": 1,
+        "segment": 1,
+        "offset": 8050
+      },
+      "2": {
+        "flags": 1,
+        "segment": 1,
+        "offset": 4514
+      }
+    },
+    "modules": [
+      "KERNEL",
+      "GDI",
+      "USER",
+      "COMMDLG"
+    ],
+    "imports": [
+      [
+        "COMMDLG",
+        1
+      ],
+      [
+        "COMMDLG",
+        2
+      ],
+      [
+        "COMMDLG",
+        26
+      ],
+      [
+        "COMMDLG",
+        27
+      ],
+      [
+        "GDI",
+        33
+      ],
+      [
+        "GDI",
+        80
+      ],
+      [
+        "GDI",
+        87
+      ],
+      [
+        "KERNEL",
+        1
+      ],
+      [
+        "KERNEL",
+        5
+      ],
+      [
+        "KERNEL",
+        6
+      ],
+      [
+        "KERNEL",
+        7
+      ],
+      [
+        "KERNEL",
+        15
+      ],
+      [
+        "KERNEL",
+        16
+      ],
+      [
+        "KERNEL",
+        17
+      ],
+      [
+        "KERNEL",
+        18
+      ],
+      [
+        "KERNEL",
+        19
+      ],
+      [
+        "KERNEL",
+        23
+      ],
+      [
+        "KERNEL",
+        24
+      ],
+      [
+        "KERNEL",
+        29
+      ],
+      [
+        "KERNEL",
+        30
+      ],
+      [
+        "KERNEL",
+        49
+      ],
+      [
+        "KERNEL",
+        51
+      ],
+      [
+        "KERNEL",
+        52
+      ],
+      [
+        "KERNEL",
+        81
+      ],
+      [
+        "KERNEL",
+        82
+      ],
+      [
+        "KERNEL",
+        83
+      ],
+      [
+        "KERNEL",
+        84
+      ],
+      [
+        "KERNEL",
+        85
+      ],
+      [
+        "KERNEL",
+        86
+      ],
+      [
+        "KERNEL",
+        88
+      ],
+      [
+        "KERNEL",
+        89
+      ],
+      [
+        "KERNEL",
+        90
+      ],
+      [
+        "KERNEL",
+        91
+      ],
+      [
+        "KERNEL",
+        102
+      ],
+      [
+        "KERNEL",
+        115
+      ],
+      [
+        "KERNEL",
+        132
+      ],
+      [
+        "KERNEL",
+        137
+      ],
+      [
+        "KERNEL",
+        166
+      ],
+      [
+        "KERNEL",
+        178
+      ],
+      [
+        "USER",
+        5
+      ],
+      [
+        "USER",
+        6
+      ],
+      [
+        "USER",
+        7
+      ],
+      [
+        "USER",
+        10
+      ],
+      [
+        "USER",
+        12
+      ],
+      [
+        "USER",
+        23
+      ],
+      [
+        "USER",
+        32
+      ],
+      [
+        "USER",
+        39
+      ],
+      [
+        "USER",
+        40
+      ],
+      [
+        "USER",
+        41
+      ],
+      [
+        "USER",
+        42
+      ],
+      [
+        "USER",
+        49
+      ],
+      [
+        "USER",
+        53
+      ],
+      [
+        "USER",
+        57
+      ],
+      [
+        "USER",
+        58
+      ],
+      [
+        "USER",
+        60
+      ],
+      [
+        "USER",
+        66
+      ],
+      [
+        "USER",
+        68
+      ],
+      [
+        "USER",
+        91
+      ],
+      [
+        "USER",
+        107
+      ],
+      [
+        "USER",
+        108
+      ],
+      [
+        "USER",
+        110
+      ],
+      [
+        "USER",
+        113
+      ],
+      [
+        "USER",
+        114
+      ],
+      [
+        "USER",
+        124
+      ],
+      [
+        "USER",
+        125
+      ],
+      [
+        "USER",
+        151
+      ],
+      [
+        "USER",
+        173
+      ],
+      [
+        "USER",
+        179
+      ],
+      [
+        "USER",
+        266
+      ],
+      [
+        "USER",
+        411
+      ],
+      [
+        "USER",
+        415
+      ],
+      [
+        "USER",
+        420
+      ],
+      [
+        "USER",
+        430
+      ],
+      [
+        "USER",
+        471
+      ]
+    ],
+    "segments": [
+      {
+        "offset": 512,
+        "bytes": 11694,
+        "flags": 7504,
+        "allocation": 11694
+      },
+      {
+        "offset": 13312,
+        "bytes": 3651,
+        "flags": 3153,
+        "allocation": 4128
+      }
+    ]
+  },
+  "historical_import_library_sha256": "8749b82da0be59e0d947fe3a8313e75f5d89acec0e938c5b6288dce58a666f39",
+  "reserved_Win16_data_header_bytes": 16,
+  "reserved_data_header_verified": true,
+  "historical_ordinals_verified": true,
+  "historical_library_exports": {
+    "GETOPENFILENAME": 1,
+    "GETSAVEFILENAME": 2,
+    "CHOOSECOLOR": 5,
+    "FINDTEXT": 11,
+    "REPLACETEXT": 12,
+    "CHOOSEFONT": 15,
+    "PRINTDLG": 20,
+    "COMMDLGEXTENDEDERROR": 26,
+    "GETFILETITLE": 27
+  },
+  "all_imports_present_in_owned_Windows_3_0": true,
+  "protected_only_flag_clear": true,
+  "linear_instruction_review_candidates": [],
+  "instruction_review_note": "Compiler /G0 plus original .8086 assembler; linear disassembly is supplementary, native enforced-8086 tests are required."
+}

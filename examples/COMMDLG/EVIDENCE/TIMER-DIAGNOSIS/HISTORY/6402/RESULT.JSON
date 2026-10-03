@@ -1,0 +1,18 @@
+{
+  "mode": "640x200x2",
+  "returncode": "timeout",
+  "seconds": 605.01,
+  "pass_count": 79,
+  "fail_lines": [],
+  "suite_pass": false,
+  "final_pass": false,
+  "second_caller_pass": false,
+  "dos_return": false,
+  "cpu": "8086_prefetch",
+  "memory_kb": 640,
+  "xms": false,
+  "ems": false,
+  "umb": false,
+  "cycles": 100000,
+  "temporary_files_remaining": []
+}

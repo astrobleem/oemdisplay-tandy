@@ -1,0 +1,49 @@
+BEGIN focused native Win16 SYNTHETIC KEYBOARD-MESSAGE probe (not physical input)
+RUNTIME 320 x 200 colors=4 flags=64 queue=32
+PASS Windows real mode
+PASS historical OPENFILENAME is 72 bytes
+PASS historical OPENFILENAME offsets
+PASS native timer created
+BEGIN FOCUSED CASE 17
+TRACE heartbeat case=17 phase=0 tick=1 active=4348 focus=4536 edit=4536 class=#32770 title=Bounded dialog
+TRACE ready case=17 phase=0 tick=2 active=4348 focus=4536 edit=4536 class=#32770 title=Bounded dialog
+PASS initial keyboard focus is filename Edit
+PASS filename Edit initially empty
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+NEWOPEN.TXT
+PASS queued WM_CHAR produced exact chosen filename
+TRACE queue Return from Edit case=17 phase=2 tick=14 active=4348 focus=4536 edit=4536 class=#32770 title=Bounded dialog
+PASS posted WM_KEYDOWN
+PASS posted WM_KEYUP
+TRACE CREATEPROMPT observed case=17 phase=2 tick=15 active=7192 focus=7452 edit=0 class=#32770 title=NEWOPEN.TXT
+PASS create prompt initial focus is No
+PASS queued native focus move to Yes
+TRACE prompt Yes focus case=17 phase=3 tick=16 active=7192 focus=7380 edit=0 class=#32770 title=NEWOPEN.TXT
+PASS queued focus move selected prompt Yes
+TRACE queue Return on Yes case=17 phase=4 tick=16 active=7192 focus=7380 edit=0 class=#32770 title=NEWOPEN.TXT
+PASS posted WM_KEYDOWN
+PASS posted WM_KEYUP
+RETURN case=17 ok=1 error=0 phase=4 prompts=1 path=C:\CDCASE\NEWOPEN.TXT
+PASS FAR Pascal stack and DS preserved
+PASS file output capacity and outer canaries
+PASS title output outer canaries
+PASS NOCHANGEDIR restores caller cwd
+PASS queued Return accepts selected filename
+PASS exact selected path with expected extension
+PASS title and file offset agree
+PASS FILEMUSTEXIST plus CREATEPROMPT confirms new Open once
+PASS dialog selection does not create new file
+END FOCUSED CASE 17
+SUMMARY checks=34 failures=0
+SUITE PASS
+FINAL PASS

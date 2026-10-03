@@ -1,0 +1,126 @@
+BEGIN independent historical COMMDLG.LIB tests
+RUNTIME 320 x 200 colors=4 flags=64
+PASS Windows real mode verified by GetWinFlags
+PASS OPENFILENAME sizeof=72
+PASS OPENFILENAME offsets
+PASS GetFileTitle large buffer
+PASS FAR Pascal stack/DS preserved
+PASS FileTitle canaries
+PASS FileTitle short buffer reports 8 including NUL
+PASS short output no overwrite beyond capacity
+PASS FileTitle exact capacity
+PASS DOS device rejected
+PASS FileTitle empty rejected
+PASS FileTitle wildcard rejected
+PASS FileTitle directory rejected
+PASS FileTitle DOS space rejected
+PASS FileTitle bracket rejected
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS unsupported multiselect fails explicitly
+PASS hook request fails explicitly
+PASS template request fails explicitly
+PASS separate far allocations
+PASS far structure rejected safely
+PASS separate segment output
+PASS far output canaries
+UNIT RESULT PASS
+POST tick=0 target=4280 msg=1033 wp=0 result=90
+BEGIN UI CASE 16
+TIMER ENTER t=1 time=305332410 id=207 busy=0 case=16 step=0 active=4348 popup=4348 focus=4536 visible=1 enabled=1
+POST tick=1 target=4536 msg=12 wp=0 result=180
+POST tick=1 target=4348 msg=40 wp=5180 result=198
+POST tick=1 target=5180 msg=256 wp=13 result=216
+POST tick=1 target=5180 msg=257 wp=13 result=234
+TIMER EXIT
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS drive selection and initial file path
+POST tick=1 target=4280 msg=1033 wp=0 result=252
+BEGIN UI CASE 17
+TIMER ENTER t=2 time=305332410 id=207 busy=0 case=17 step=0 active=4348 popup=4348 focus=4536 visible=1 enabled=1
+POST tick=2 target=4536 msg=12 wp=0 result=324
+POST tick=2 target=4348 msg=40 wp=5180 result=342
+POST tick=2 target=5180 msg=256 wp=13 result=360
+POST tick=2 target=5180 msg=257 wp=13 result=378
+TIMER EXIT
+TIMER ENTER t=3 time=305332410 id=207 busy=0 case=17 step=1 active=7192 popup=7192 focus=7588 visible=0 enabled=1
+TIMER EXIT
+TIMER ENTER t=4 time=305332410 id=207 busy=0 case=17 step=1 active=7192 popup=7192 focus=7588 visible=1 enabled=1
+POST tick=4 target=7192 msg=40 wp=7516 result=432
+POST tick=4 target=7516 msg=256 wp=13 result=450
+POST tick=4 target=7516 msg=257 wp=13 result=468
+TIMER EXIT
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS FILEMUSTEXIST with CREATEPROMPT can confirm new file
+POST tick=4 target=4280 msg=1033 wp=0 result=486
+PASS parent task has independent error
+PASS start second caller task
+PASS second caller does not clear parent error
+SUITE PASS
+FINAL PASS

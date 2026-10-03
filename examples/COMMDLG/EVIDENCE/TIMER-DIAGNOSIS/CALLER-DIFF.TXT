@@ -1,0 +1,14 @@
+--- previous-500ms-caller
+
++++ final-200ms-caller
+
+@@ -246,6 +246,6 @@
+
+  w=CreateWindow("CDTESTCLASS",prev?"ABI task 2":"ABI task 1",WS_OVERLAPPEDWINDOW,0,0,150,140,NULL,menu,inst,NULL);if(!w)return 2;rootWindow=w;ShowWindow(w,SW_SHOW);UpdateWindow(w);
+  clockThunk=MakeProcInstance((FARPROC)ClockProc,inst);
+- if(cmd[0]=='/'&&(cmd[1]=='B'||cmd[1]=='b')){automated=1;clockId=SetTimer(NULL,0,500,(TIMERPROC)clockThunk);PostMessage(w,WM_COMMAND,102,0L);}
+- if(cmd[0]=='/'&&(cmd[1]=='C'||cmd[1]=='c')){clockId=SetTimer(NULL,0,500,(TIMERPROC)clockThunk);PostMessage(w,WM_USER+9,0,0L);}
++ if(cmd[0]=='/'&&(cmd[1]=='B'||cmd[1]=='b')){automated=1;clockId=SetTimer(NULL,0,200,(TIMERPROC)clockThunk);PostMessage(w,WM_COMMAND,102,0L);}
++ if(cmd[0]=='/'&&(cmd[1]=='C'||cmd[1]=='c')){clockId=SetTimer(NULL,0,200,(TIMERPROC)clockThunk);PostMessage(w,WM_USER+9,0,0L);}
+  while(GetMessage(&msg,NULL,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);}FreeProcInstance(clockThunk);if(cmd[0]=='/'&&(cmd[1]=='B'||cmd[1]=='C'))ExitWindows(0L,0);return msg.wParam;
+ }

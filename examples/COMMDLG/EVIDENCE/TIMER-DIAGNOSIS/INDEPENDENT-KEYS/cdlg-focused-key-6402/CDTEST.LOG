@@ -1,0 +1,50 @@
+BEGIN focused native Win16 SYNTHETIC KEYBOARD-MESSAGE probe (not physical input)
+RUNTIME 640 x 200 colors=2 flags=64 queue=32
+PASS Windows real mode
+PASS historical OPENFILENAME is 72 bytes
+PASS historical OPENFILENAME offsets
+PASS native timer created
+BEGIN FOCUSED CASE 0
+TRACE heartbeat case=0 phase=0 tick=1 active=4348 focus=4536 edit=4536 class=#32770 title=Bounded dialog
+TRACE ready case=0 phase=0 tick=1 active=4348 focus=4536 edit=4536 class=#32770 title=Bounded dialog
+PASS initial keyboard focus is filename Edit
+PASS filename Edit initially empty
+TRACE queue Escape case=0 phase=90 tick=1 active=4348 focus=4536 edit=4536 class=#32770 title=Bounded dialog
+PASS posted WM_KEYDOWN
+PASS posted WM_KEYUP
+RETURN case=0 ok=0 error=0 phase=90 prompts=0 path=
+PASS FAR Pascal stack and DS preserved
+PASS file output capacity and outer canaries
+PASS title output outer canaries
+PASS NOCHANGEDIR restores caller cwd
+PASS queued Escape cancels with extended error zero
+END FOCUSED CASE 0
+BEGIN FOCUSED CASE 1
+TRACE heartbeat case=1 phase=0 tick=1 active=4348 focus=4536 edit=4536 class=#32770 title=Bounded dialog
+TRACE ready case=1 phase=0 tick=1 active=4348 focus=4536 edit=4536 class=#32770 title=Bounded dialog
+PASS initial keyboard focus is filename Edit
+PASS filename Edit initially empty
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+PASS posted one queued WM_CHAR
+ROUND
+PASS queued WM_CHAR produced exact chosen filename
+TRACE queue Return from Edit case=1 phase=2 tick=7 active=4348 focus=4536 edit=4536 class=#32770 title=Bounded dialog
+PASS posted WM_KEYDOWN
+PASS posted WM_KEYUP
+RETURN case=1 ok=1 error=0 phase=2 prompts=0 path=C:\CDCASE\ROUND.TXT
+PASS FAR Pascal stack and DS preserved
+PASS file output capacity and outer canaries
+PASS title output outer canaries
+PASS NOCHANGEDIR restores caller cwd
+PASS queued Return accepts selected filename
+PASS exact selected path with expected extension
+PASS title and file offset agree
+PASS caller creates selected Save output
+PASS caller writes real Save output
+END FOCUSED CASE 1
+SUMMARY checks=32 failures=0
+SUITE PASS
+FINAL PASS

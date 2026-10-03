@@ -1,0 +1,64 @@
+LOG: Early LOG Init complete
+LOG: SETUP: mkdir_recursive failed: Read-only file system
+LOG: CONFIG: Loaded config file: /workspace/scratch/a84592844d2c/cdlg-app-local-frame160/RUN.CNF
+LOG: DOSBox-X's working directory: /workspace/scratch/a84592844d2c/
+LOG: Logging init: beginning logging proper. This is the end of the early init logging
+LOG: Logging: No logfile was given. All further logging will be discarded.
+LOG: DOSBox-X version 2026.08.31 Commit b13702c (Linux SDL2 64-bit)
+LOG: Prevent capture: 0
+Failed to create secure directory (/home/agent/.local/run/pulse): Read-only file system
+socket(): Operation not permitted
+LOG: SDL: version 2.32.10, Video dummy, Audio alsa
+LOG: Host keyboard layout is now  ()
+LOG: Mapper keyboard layout is now  ()
+LOG: SDL2 reports desktop display mode 1024 x 768
+LOG: Configured windowposition: -
+LOG: SDL: Current window pixel format: SDL_PIXELFORMAT_RGB888
+LOG: SDL: You are running in 24 bpp mode, this will slow down things!
+LOG: Releasing keyboard
+LOG: Screen report: Method 'None' (-1.000 x -1.000 pixels) at (0.000 x 0.000) (-1.000 x -1.000 mm) (-0.039 x -0.039 in) (-1.000 x -1.000 DPI)
+LOG: WARNING: DOS/V is only supported for VGA video cards.
+LOG: ISA BCLK: 8333333.333Hz (25000000/3)
+LOG: monopal: green, 
+LOG: Active save slot: 1 [Empty]
+LOG: USING AVI+ZMBV
+LOG: CPU warning: 8086 cpu type is experimental at this time
+LOG: Max 1073741824 sz 640
+LOG: Final 640
+LOG: Final arrangement: Below 4GB = 640KB, Above 4GB = 0KB
+LOG: MIDI:Opened device:none
+LOG: VOODOO LFB now at d0000000
+LOG: Serial1: BASE 3f8h
+LOG: Serial2: BASE 2f8h
+LOG: Parallel1: BASE 378h
+LOG: MPU-401 Registering I/O ports as if IBM PC MPU-401 at base 330h
+LOG: Memory I/O complexity optimization enabled aka option 'memory io optimization 1'. If the game or demo is unable to draw to the screen properly, set the option to false.
+LOG: The 'scanline render on demand' option is available and may provide a modest boost in video render performance if set to true.
+LOG: Allocated APM BIOS pm entry point at f000:ce40
+LOG: Writing code to fce40
+LOG: Writing code to fce60
+LOG: ISA Plug & Play BIOS enabled
+LOG: pixratio 1.200, dw false, dh true
+LOG: Aspect ratio: 640 x 480  xToY=1.333 yToX=0.750
+LOG: menuScale=1
+LOG: surface consider=640x417 final=640x417
+LOG: WARNING: No translation support (to host) for code page 0
+LOG: DOS keyboard layout loaded with main language code US for layout us
+LOG: COMMAND.COM env size:             720 bytes
+LOG: COMMAND.COM main body (PSP):      0x0701 sz=0x009a
+LOG: COMMAND.COM environment block:    0x079c sz=0x002d
+LOG: COMMAND.COM stack:                0x071b
+LOG: Started capturing video to: /workspace/scratch/a84592844d2c/cdlg-app-local-frame160/captures/kernel_000.avi
+LOG: pixratio 1.200, dw true, dh true
+LOG: menuScale=1
+LOG: surface consider=500x317 final=500x317
+LOG: Stopped capturing video.
+LOG: Started capturing video to: /workspace/scratch/a84592844d2c/cdlg-app-local-frame160/captures/kernel_001.avi
+LOG: pixratio 1.200, dw false, dh true
+LOG: menuScale=1
+LOG: surface consider=640x417 final=640x417
+LOG: Pausing for post exit delay (3.000 seconds)
+LOG: Stopped capturing video.
+LOG: Started capturing video to: /workspace/scratch/a84592844d2c/cdlg-app-local-frame160/captures/command_000.avi
+LOG: Stopped capturing video.
+LOG: SHELL:Redirect output to C:\DONE.TXT

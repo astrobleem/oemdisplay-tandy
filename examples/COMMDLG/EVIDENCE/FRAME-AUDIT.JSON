@@ -1,0 +1,34 @@
+{
+  "source_sha256": "a81b744cca928e489dbcd83eefeff2ae56471328cd5bb0ed4e578a249b0aa428",
+  "canonical_marked_far_frames": {
+    "LIBENTRY": {
+      "saved_DS_at_BP_minus_2": true,
+      "pascal_cleanup_bytes": 0
+    },
+    "DOSDRIVE": {
+      "saved_DS_at_BP_minus_2": true,
+      "pascal_cleanup_bytes": 0
+    },
+    "DOSCHDRV": {
+      "saved_DS_at_BP_minus_2": true,
+      "pascal_cleanup_bytes": 2
+    },
+    "DOSGETDIR": {
+      "saved_DS_at_BP_minus_2": true,
+      "pascal_cleanup_bytes": 6
+    },
+    "DOSSETDIR": {
+      "saved_DS_at_BP_minus_2": true,
+      "pascal_cleanup_bytes": 4
+    },
+    "DOSATTR": {
+      "saved_DS_at_BP_minus_2": true,
+      "pascal_cleanup_bytes": 4
+    },
+    "DOSNEW": {
+      "saved_DS_at_BP_minus_2": true,
+      "pascal_cleanup_bytes": 4
+    }
+  },
+  "rebuild_byte_identical": true
+}

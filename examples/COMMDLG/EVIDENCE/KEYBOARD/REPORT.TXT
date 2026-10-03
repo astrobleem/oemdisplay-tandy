@@ -1,0 +1,38 @@
+Native Win16 synthetic keyboard-message regression: frame-fix DLL PASS
+
+Reran the unchanged 9-case/107-check independent caller and runner against
+cdlg-resume-frame-build/COMMDLG.DLL. Source and caller are byte-identical
+to the previous keyboard probe. Previous results remain separately intact.
+
+All five modes passed: 45 cases, 535 checks, no failures, no watchdog
+recovery, clean return to DOS, and no CD*.TMP remnants.
+
+Runtime modes verified by the native caller:
+- baseline: RUNTIME 320 x 200 colors=16 flags=64; 123.78 host seconds
+- 160: RUNTIME 160 x 200 colors=16 flags=64; 43.54 host seconds
+- 3204: RUNTIME 320 x 200 colors=4 flags=64; 51.62 host seconds
+- 6404: RUNTIME 640 x 200 colors=4 flags=64; 31.91 host seconds
+- 6402: RUNTIME 640 x 200 colors=2 flags=64; 50.19 host seconds
+
+Coverage: initially empty Open/Escape; initially empty Save with queued
+WM_CHAR typing and Return; real file write/read round-trip; Tab navigation;
+exact prefilled filename selection; overwrite Return choosing default No
+followed by Escape; unchanged file payload; repeated reopen; 72-byte
+historical Win16 ABI layout; stack/DS; buffer canaries; restored cwd.
+
+Input is synthetic WM_CHAR/WM_KEYDOWN/WM_KEYUP posted to focused native
+controls through the dialog message queue, not physical keyboard input.
+No direct WM_COMMAND is used in passing flows. Cycles=100000 expedites QA
+and is not physical 8088 speed. Runtime: Windows /R, 8086_prefetch, 640 KiB,
+no EMS, XMS, or UMB. No broader tests or original-file changes were made.
+
+Complete unchanged source/runner: source/ (original README retains the
+previous experiment's example DLL/output paths; current paths are in the
+per-mode RUN.CNF and SUMMARY.JSON.)
+Original independent caller/build log: build/
+Native logs/configuration/host logs/JSON: results/
+Unchanged-source hashes: UNCHANGED-SOURCE-SHA256.JSON
+Aggregate machine-readable results: SUMMARY.JSON
+
+Candidate DLL SHA-256: 2f244e11acf6605130928c0fdf6e280702740a057198af2221124431ed90c62d
+Caller EXE SHA-256: a548b4020209e1db2076e79a2d347e514cc977516e905012994ab2709117b222

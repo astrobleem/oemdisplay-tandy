@@ -1,0 +1,133 @@
+BEGIN native Win16 SYNTHETIC KEYBOARD-MESSAGE probe (not physical keyboard input)
+RUNTIME 640 x 200 colors=2 flags=64
+PASS Windows real mode
+PASS historical OPENFILENAME is 72 bytes
+PASS historical OPENFILENAME offsets
+PASS native timer created
+BEGIN KEYBOARD CASE 0
+PASS initial focus is native filename Edit
+PASS initially empty filename Edit
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS FAR Pascal stack and DS preserved
+PASS caller output canaries preserved
+PASS NOCHANGEDIR restores caller cwd
+PASS queued Escape cancels with extended error zero
+END KEYBOARD CASE 0
+BEGIN KEYBOARD CASE 1
+PASS initial focus is native filename Edit
+PASS initially empty filename Edit
+PASS posted native WM_CHAR
+PASS posted native WM_CHAR
+PASS posted native WM_CHAR
+PASS posted native WM_CHAR
+PASS posted native WM_CHAR
+PASS posted native WM_CHAR
+PASS posted native WM_CHAR
+PASS queued WM_CHAR typed KEYTEST in empty Save Edit
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS FAR Pascal stack and DS preserved
+PASS caller output canaries preserved
+PASS NOCHANGEDIR restores caller cwd
+PASS keyboard Return accepts selected filename
+PASS selected path includes typed filename and default TXT extension
+PASS caller creates real selected file
+PASS caller writes full real payload
+END KEYBOARD CASE 1
+BEGIN KEYBOARD CASE 2
+PASS initial focus is native filename Edit
+PASS prefilled filename text is present
+SELECTION start=0 end=11 length=11
+PASS prefilled filename selection covers zero through end
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS FAR Pascal stack and DS preserved
+PASS caller output canaries preserved
+PASS NOCHANGEDIR restores caller cwd
+PASS keyboard Return accepts selected filename
+PASS selected path includes typed filename and default TXT extension
+PASS caller opens real selected file
+PASS real file read/write round-trip matches
+END KEYBOARD CASE 2
+BEGIN KEYBOARD CASE 3
+PASS initial focus is native filename Edit
+PASS initially empty filename Edit
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS queued Tab moved focus to another dialog control
+PASS Tab from filename Edit selects native file ListBox
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS FAR Pascal stack and DS preserved
+PASS caller output canaries preserved
+PASS NOCHANGEDIR restores caller cwd
+PASS queued Escape cancels with extended error zero
+END KEYBOARD CASE 3
+BEGIN KEYBOARD CASE 4
+PASS initial focus is native filename Edit
+PASS prefilled filename text is present
+SELECTION start=0 end=11 length=11
+PASS prefilled filename selection covers zero through end
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS overwrite prompt initial keyboard focus is No
+PASS overwrite No is default pushbutton
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS Return accepted overwrite prompt default No and returned to file dialog
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS FAR Pascal stack and DS preserved
+PASS caller output canaries preserved
+PASS NOCHANGEDIR restores caller cwd
+PASS queued Escape cancels with extended error zero
+PASS overwrite Return chose No before Escape cancellation
+PASS original file still opens after overwrite No
+PASS overwrite No preserves original payload
+END KEYBOARD CASE 4
+BEGIN KEYBOARD CASE 5
+PASS initial focus is native filename Edit
+PASS initially empty filename Edit
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS FAR Pascal stack and DS preserved
+PASS caller output canaries preserved
+PASS NOCHANGEDIR restores caller cwd
+PASS queued Escape cancels with extended error zero
+END KEYBOARD CASE 5
+BEGIN KEYBOARD CASE 6
+PASS initial focus is native filename Edit
+PASS prefilled filename text is present
+SELECTION start=0 end=11 length=11
+PASS prefilled filename selection covers zero through end
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS FAR Pascal stack and DS preserved
+PASS caller output canaries preserved
+PASS NOCHANGEDIR restores caller cwd
+PASS queued Escape cancels with extended error zero
+END KEYBOARD CASE 6
+BEGIN KEYBOARD CASE 7
+PASS initial focus is native filename Edit
+PASS initially empty filename Edit
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS FAR Pascal stack and DS preserved
+PASS caller output canaries preserved
+PASS NOCHANGEDIR restores caller cwd
+PASS queued Escape cancels with extended error zero
+END KEYBOARD CASE 7
+BEGIN KEYBOARD CASE 8
+PASS initial focus is native filename Edit
+PASS initially empty filename Edit
+PASS posted native WM_KEYDOWN
+PASS posted native WM_KEYUP
+PASS FAR Pascal stack and DS preserved
+PASS caller output canaries preserved
+PASS NOCHANGEDIR restores caller cwd
+PASS queued Escape cancels with extended error zero
+END KEYBOARD CASE 8
+SUMMARY checks=107 failures=0
+SUITE PASS
+FINAL PASS

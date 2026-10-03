@@ -1,0 +1,79 @@
+REPRODUCING COMMDLG30
+====================
+
+Inputs: Python 3, DOSBox-X, and an existing owned tool tree containing:
+BIN/CL.EXE, BIN/LINK4.EXE, BIN/MASM.EXE, DDK/286/INC/WINDOWS.H,
+INCLUDE, LIB/LIBW.LIB and LIB/SNOCRTDW.LIB. The caller also needs
+LIB/SLIBCEW.LIB and the original LIB/COMMDLG.LIB.
+
+From the DLL source directory on the host:
+  python3 BUILD.PY --repo /path/to/tools --dosbox /path/to/dosbox-x \
+    --out /new/dll-build
+From the TESTS source directory:
+  python3 BUILD.PY --repo /path/to/tools --dosbox /path/to/dosbox-x \
+    --out /new/caller-build
+
+Outputs must be new directories. These commands stage files, mount the
+tool tree as C: and the build as D:, compile, link, apply Windows 3.0 NE
+marking, and produce logs and a SHA256 result. They do not change the tool
+tree. DLL flags: /G0 /Gs /Gw /AS /Aw /W3 /Od /Zp. Assembly uses .8086.
+/Aw is essential: DLL SS is not DS. Every marked FAR assembly frame saves DS at BP-2 for the real-mode
+Windows stack walker. The DLL initializes its own local heap
+for native edit controls. DOSUTIL.OBJ MUST be linked first: its initial
+16 data bytes are reserved for Win16 pLocalHeap/pAtomTable/stack fields.
+The builder checks this header. Assembly FAR frames use the Win16 odd-BP
+marker so Windows can distinguish them while walking the caller's stack.
+No C runtime startup implementation was copied.
+
+Caller modes:
+  CDTEST          interactive Test menu, plus initial ABI tests
+  CDTEST /A       automatic ABI tests only
+  CDTEST /B       automatic basic Save/read/Cancel round-trip
+  CDTEST /C       expanded dialog suite and second-caller isolation
+
+/C is a developer fixture test. It expects C:\CDCASE plus an additional
+D: drive with HERE and THERE directories. RUNTEST.PY builds this isolated
+fixture from an already installed Windows guest. It adds no requirement
+for D: to the shipped library or interactive application.
+
+Example (source directory):
+  python3 RUNTEST.PY --guest /owned/installed/guest \
+    --dll /new/dll-build/COMMDLG.DLL \
+    --caller /new/caller-build/CDTEST.EXE \
+    --dosbox /path/to/dosbox-x --out /new/test-run --mode 160x200x16
+
+The guest must already have the chosen display profile installed, Windows
+at WINDOWS, and TANDY88/RESERVE.COM. The runner clones it, creates test
+files, runs the Windows app, and preserves logs/captures. Default test
+cycles are 100000 for expedited QA; the strict 8086_prefetch core remains.
+Cycle settings are not a physical-speed benchmark. Use --cycles to select
+another setting and --timeout to set the diagnostic wall-clock limit. Suite timeout is a diagnostic
+failure, never success. The five modes must be separate prepared guests;
+the runner does not switch drivers or rewrite their SYSTEM.INI.
+
+Audit against the actual SDK library and Windows exports:
+  python3 AUDIT.PY --dll /new/dll-build/COMMDLG.DLL \
+    --caller /new/caller-build/CDTEST.EXE \
+    --windows /owned/installed/guest/WINDOWS \
+    --historic-lib /path/to/tools/LIB/COMMDLG.LIB --out /new/audit
+
+The audit checks actual OMF import definitions, NE exports/imports, the
+Windows version/real-mode flag, and that every imported Windows ordinal
+exists in the supplied Windows 3.0 binaries. It extracts code for a
+supplementary 8086 disassembly review. /G0 and enforced native execution
+are separate evidence; a linear disassembly alone is not a full proof.
+
+Do not package the cloned guests, SDK/compiler/import libraries, or full
+Windows media. The release includes only the original implementation,
+built DLL/caller, scripts, documentation, and selected test evidence.
+
+Automation timer note
+---------------------
+The independent caller uses a 200 ms automation timer. In a minimal native
+640x200x2 Cancel-to-Save sequence, the earlier 500 ms timer remained
+registered but stopped delivering callbacks while modal idle/caret events
+continued. Rearming at 500 ms did not recover; rearming the same untouched
+dialog at 200 ms did. Startup at 200 ms passed without any recovery. Only
+the caller interval changed; the final DLL is byte-for-byte unchanged.
+See EVIDENCE/TIMER-DIAGNOSIS for the traced reproducer and focused tests.
+This observation does not claim a universal Windows timer defect.

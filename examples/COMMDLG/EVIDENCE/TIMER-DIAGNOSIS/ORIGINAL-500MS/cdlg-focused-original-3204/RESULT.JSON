@@ -1,0 +1,19 @@
+{
+  "mode": "3204",
+  "returncode": 0,
+  "seconds": 27.54,
+  "pass_count": 97,
+  "fail_lines": [],
+  "suite_pass": true,
+  "final_pass": true,
+  "second_caller_pass": true,
+  "dos_return": true,
+  "cpu": "8086_prefetch",
+  "memory_kb": 640,
+  "xms": false,
+  "ems": false,
+  "umb": false,
+  "cycles": 100000,
+  "timeout_seconds": 120,
+  "temporary_files_remaining": []
+}
