@@ -1,0 +1,22 @@
+{
+  "mode": "baseline",
+  "returncode": 0,
+  "seconds": 123.78,
+  "input": "synthetic posted native WM_KEYDOWN/WM_KEYUP/WM_CHAR, not physical keyboard",
+  "dll_sha256": "2f244e11acf6605130928c0fdf6e280702740a057198af2221124431ed90c62d",
+  "caller_sha256": "a548b4020209e1db2076e79a2d347e514cc977516e905012994ab2709117b222",
+  "pass_count": 107,
+  "fail_lines": [],
+  "suite_pass": true,
+  "final_pass": true,
+  "cases_completed": 9,
+  "dos_return": true,
+  "cpu": "8086_prefetch",
+  "memory_kb": 640,
+  "xms": false,
+  "ems": false,
+  "umb": false,
+  "cycles": 100000,
+  "cycles_note": "expedited QA, not physical 8088 speed",
+  "temporary_files_remaining": []
+}

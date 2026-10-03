@@ -1,0 +1,52 @@
+{
+  "kind": "unmodified frames extracted from completed native guest recordings",
+  "method": "ffmpeg timestamp selection only; no crop, composite or redraw",
+  "note": "Capture dimensions can include emulator pixel doubling. Logical profiles are identified by mode and verified in runtime logs. Screenshots illustrate appearance, not all assertions.",
+  "frames": [
+    {
+      "mode": "160",
+      "timestamp_seconds_in_native_capture": 12,
+      "png": "160.png",
+      "png_width": 320,
+      "png_height": 200,
+      "png_sha256": "082261dba723e9d9a1eae384bf84dd16366c011033291db5245f55af352f705a",
+      "native_video_sha256": "1a72a548157475dece4e1165e442bfb91f6a4d03e74d1a1d1d7df53d2a0f991c"
+    },
+    {
+      "mode": "baseline",
+      "timestamp_seconds_in_native_capture": 22,
+      "png": "baseline.png",
+      "png_width": 320,
+      "png_height": 200,
+      "png_sha256": "ea1bd7e4b52e0a5f5db3a533930ad591b8d19c0e7294cd63af59e955b094319c",
+      "native_video_sha256": "e259615812ac9a4c28f9c73608fa5c3361a196b7059fb21676a90ed31e31567d"
+    },
+    {
+      "mode": "3204",
+      "timestamp_seconds_in_native_capture": 3,
+      "png": "3204.png",
+      "png_width": 320,
+      "png_height": 200,
+      "png_sha256": "bf64b1d54f959e07295fa62ac943e8b8a9dafd00eafe75f5549c525ae73f955c",
+      "native_video_sha256": "6d0293198afa806d47b279d33ad64ca00ad0a97ca1871d374e6b15f57e05ad3d"
+    },
+    {
+      "mode": "6404",
+      "timestamp_seconds_in_native_capture": 3,
+      "png": "6404.png",
+      "png_width": 640,
+      "png_height": 400,
+      "png_sha256": "e2ea550a1d6288793e8ad23c463a54767cc69d0b5152c51beb35488bb0a63d76",
+      "native_video_sha256": "4f0496cc6546632a41a0ea7ee7a452688260e34210c5df14e4567c9b9e408be7"
+    },
+    {
+      "mode": "6402",
+      "timestamp_seconds_in_native_capture": 2,
+      "png": "6402.png",
+      "png_width": 640,
+      "png_height": 400,
+      "png_sha256": "cbc8e0806c973e14b8ded48bb04e8159fcedc550f075af7990b09018500eede1",
+      "native_video_sha256": "5bae5acb58f01d708597e7b46313dd397fc9ff2fe03f62c96ab4a3755cc145bf"
+    }
+  ]
+}

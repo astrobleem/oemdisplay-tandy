@@ -1,0 +1,19 @@
+{
+  "mode": "6402",
+  "returncode": 0,
+  "seconds": 11.98,
+  "pass_count": 95,
+  "fail_lines": [],
+  "suite_pass": true,
+  "final_pass": true,
+  "second_caller_pass": true,
+  "dos_return": true,
+  "cpu": "8086_prefetch",
+  "memory_kb": 640,
+  "xms": false,
+  "ems": false,
+  "umb": false,
+  "cycles": 100000,
+  "timeout_seconds": 90,
+  "temporary_files_remaining": []
+}

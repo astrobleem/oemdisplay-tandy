@@ -1,0 +1,115 @@
+BEGIN independent historical COMMDLG.LIB tests
+RUNTIME 640 x 200 colors=2 flags=64
+PASS Windows real mode verified by GetWinFlags
+PASS OPENFILENAME sizeof=72
+PASS OPENFILENAME offsets
+PASS GetFileTitle large buffer
+PASS FAR Pascal stack/DS preserved
+PASS FileTitle canaries
+PASS FileTitle short buffer reports 8 including NUL
+PASS short output no overwrite beyond capacity
+PASS FileTitle exact capacity
+PASS DOS device rejected
+PASS FileTitle empty rejected
+PASS FileTitle wildcard rejected
+PASS FileTitle directory rejected
+PASS FileTitle DOS space rejected
+PASS FileTitle bracket rejected
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS unsupported multiselect fails explicitly
+PASS hook request fails explicitly
+PASS template request fails explicitly
+PASS separate far allocations
+PASS far structure rejected safely
+PASS separate segment output
+PASS far output canaries
+UNIT RESULT PASS
+POST tick=0 target=4280 msg=1033 wp=0 result=90
+BEGIN UI CASE 0
+TIMER ENTER t=1 time=305332410 id=207 busy=0 case=0 step=0 active=4348 popup=4348 focus=4536 visible=1 enabled=1
+POST tick=1 target=4348 msg=256 wp=27 result=162
+POST tick=1 target=4348 msg=257 wp=27 result=180
+TIMER EXIT
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS cancel has error zero
+POST tick=1 target=4280 msg=1033 wp=0 result=198
+BEGIN UI CASE 1
+TIMER ENTER t=2 time=305332410 id=207 busy=0 case=1 step=0 active=4348 popup=4348 focus=4536 visible=1 enabled=1
+POST tick=2 target=4536 msg=12 wp=0 result=270
+POST tick=2 target=4348 msg=40 wp=5180 result=288
+POST tick=2 target=5180 msg=256 wp=13 result=306
+POST tick=2 target=5180 msg=257 wp=13 result=324
+TIMER EXIT
+PASS initial keyboard focus is filename edit
+PASS Open/Save button within screen
+PASS Cancel button within screen
+PASS restores inactive drive working directory
+PASS UI FAR Pascal stack and DS preserved
+PASS selected-file outer and capacity canaries
+PASS file-title outer canaries
+PASS restores cwd after each UI outcome
+PASS selected-file success
+PASS offsets within selected path
+PASS title and file offset agree
+PASS new selection creates real file
+PASS round-trip write
+POST tick=2 target=4280 msg=1033 wp=0 result=342
+PASS parent task has independent error
+PASS start second caller task
+PASS second caller does not clear parent error
+SUITE PASS
+FINAL PASS

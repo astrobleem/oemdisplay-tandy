@@ -1,0 +1,40 @@
+COMMDLG30 VERIFIED PREVIEW TEST REPORT
+
+The exact saved-DS/frame-corrected DLL from the previous preview passes
+all five full native expanded profiles with the corrected test caller.
+No library or display-driver changes were needed for the last stalls.
+
+EXPANDED 27-CASE MATRIX
+- 160: PASS, 371 checks, 119.38 seconds, clean DOS return.
+- baseline: PASS, 371 checks, 202.93 seconds, clean DOS return.
+- 3204: PASS, 371 checks, 80.24 seconds, clean DOS return.
+- 6404: PASS, 371 checks, 35.71 seconds, clean DOS return.
+- 6402: PASS, 371 checks, 32.45 seconds, clean DOS return.
+
+Every run also passes second-caller error isolation and leaves no CD*.TMP.
+The corrected caller changes only two automation timer constants, 500 to
+200 ms. Its source diff, minimal reproducer, timer/idle traces, failed
+historical runs and successful recovery/startup runs are retained. The
+underlying Windows/driver timing interaction was not fully reverse
+engineered, and no universal timer bug is claimed. Historical incomplete
+runs remain labeled as such; they are not retroactively counted as passes.
+
+OTHER PASSED VERIFICATION
+- Independent synthetic keyboard-message probe on all five profiles:
+  9 cases and 107 checks each, 535 total; no watchdog recovery. Covers
+  empty Open/Escape, empty Save typing/Return, real file read/write, Tab,
+  Edit focus and full filename selection, overwrite default No and reopen.
+- DLL only in C:\CD30, only C: mounted: same 107 keyboard checks and clean
+  DOS return. This uses the independent keyboard caller, not CDTEST /C.
+- Byte-identical independent rebuilds of both DLL and corrected caller.
+- Historical COMMDLG.LIB ordinal audit, Win3.0 import/NE checks, 8086
+  disassembly scan, canonical 16-byte DGROUP header and saved DS at BP-2
+  in all seven marked FAR assembly frames.
+
+Runtime: Windows 3.0 /R, 8086_prefetch, normal 640 KB, no EMS/XMS/UMB.
+Fixed 100000 emulator cycles expedite QA; this is not a physical 8088
+speed benchmark. Input is queued native WM_CHAR/WM_KEYDOWN/WM_KEYUP and
+programmatic edit/filter setup, not physical keyboard or mouse input.
+Physical Tandy hardware and pre-existing third-party applications remain
+unverified. This is a bounded API compatibility subset, not the complete
+Microsoft COMMDLG library. No stock File Manager was modified.

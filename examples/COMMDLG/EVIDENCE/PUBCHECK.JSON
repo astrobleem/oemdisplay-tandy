@@ -1,0 +1,22 @@
+{
+  "checked_utc": "2026-10-03",
+  "package_sha256": "51b995d3647cc4ab5ec683b1120579911ae75593fafdf0b4b910a0f0f090748d",
+  "package_bytes": 299359,
+  "package_manifest_entries_verified": 192,
+  "fresh_rebuilds": [
+    {
+      "file": "BIN/CDTEST.EXE",
+      "sha256": "c661a2b11dd36a635da6815b725ed51e95715e8d0cc34a4070423c6ed8417544",
+      "bytes": 16963,
+      "fresh_rebuild_exact": true
+    },
+    {
+      "file": "BIN/COMMDLG.DLL",
+      "sha256": "2f244e11acf6605130928c0fdf6e280702740a057198af2221124431ed90c62d",
+      "bytes": 14876,
+      "fresh_rebuild_exact": true
+    }
+  ],
+  "native_acceptance": "preserved final evidence; not rerun during publication",
+  "ci": "no pull-request workflow configured; not a pass"
+}

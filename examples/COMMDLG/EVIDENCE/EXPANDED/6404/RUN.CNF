@@ -1,0 +1,43 @@
+[sdl]
+fullscreen=false
+output=surface
+[dosbox]
+machine=tandy
+memsize=0
+memsizekb=640
+allow more than 640kb base memory=false
+captures=/workspace/scratch/a84592844d2c/cdlg-timerfix-final-6404/captures
+[cpu]
+core=normal
+cputype=8086_prefetch
+cycles=fixed 100000
+fpu=false
+[render]
+scaler=none
+doublescan=false
+aspect=false
+[dos]
+xms=false
+ems=false
+umb=false
+[serial]
+serial1=serialmouse
+[mixer]
+nosound=true
+[midi]
+mididevice=none
+[autoexec]
+@echo off
+mount c "/workspace/scratch/a84592844d2c/cdlg-timerfix-final-6404/guest"
+mount d "/workspace/scratch/a84592844d2c/cdlg-timerfix-final-6404/drive-d"
+mount e "/workspace/scratch/a84592844d2c/cdlg-timerfix-final-6404/readonly" -ro
+d:
+cd \here
+c:
+set path=c:\windows;z:\
+set temp=c:\windows\temp
+c:\tandy88\reserve
+cd c:\windows
+DX-CAPTURE /V win /r c:\cdtest.exe /C
+echo DONE>C:\DONE.TXT
+exit

@@ -1,0 +1,20 @@
+{
+  "returncode": 0,
+  "seconds": 79.89,
+  "dll_locations": [
+    "CD30/COMMDLG.DLL"
+  ],
+  "dll_sha256": "2f244e11acf6605130928c0fdf6e280702740a057198af2221124431ed90c62d",
+  "pass_count": 107,
+  "fail_lines": [],
+  "suite_pass": true,
+  "final_pass": true,
+  "dos_return": true,
+  "isolated_install": "Only C drive mounted; DLL only in C:\\CD30; none in Windows or system directories",
+  "cpu": "8086_prefetch",
+  "memory_kb": 640,
+  "cycles": 100000,
+  "xms": false,
+  "ems": false,
+  "umb": false
+}
