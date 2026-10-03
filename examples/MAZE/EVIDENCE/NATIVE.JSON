@@ -1,0 +1,72 @@
+{
+  "binary_sha256": "80f1112521ba5e36586fa97b607cd4662c7611369c73637d82ae988b01d07a0d",
+  "cycles": "fixed 200000",
+  "caveat": "Accelerated emulation, not hardware speed. Only 10-second runs; not a general leak proof.",
+  "results": {
+    "160": {
+      "elapsed_ms": 10106,
+      "setup_ms": 110,
+      "frames": 61,
+      "paints": 62,
+      "free_start": 347776,
+      "free_end": 333664,
+      "free_warm": 333664,
+      "timer_failed": 0,
+      "buffer_failed": 0,
+      "frames_per_emulated_second": 6.036,
+      "warmed_free_memory_delta": 0
+    },
+    "3204": {
+      "elapsed_ms": 10106,
+      "setup_ms": 110,
+      "frames": 61,
+      "paints": 62,
+      "free_start": 332224,
+      "free_end": 306528,
+      "free_warm": 306528,
+      "timer_failed": 0,
+      "buffer_failed": 0,
+      "frames_per_emulated_second": 6.036,
+      "warmed_free_memory_delta": 0
+    },
+    "6402": {
+      "elapsed_ms": 10051,
+      "setup_ms": 0,
+      "frames": 60,
+      "paints": 61,
+      "free_start": 300384,
+      "free_end": 275968,
+      "free_warm": 275968,
+      "timer_failed": 0,
+      "buffer_failed": 0,
+      "frames_per_emulated_second": 5.97,
+      "warmed_free_memory_delta": 0
+    },
+    "6404": {
+      "elapsed_ms": 10161,
+      "setup_ms": 55,
+      "frames": 61,
+      "paints": 62,
+      "free_start": 300224,
+      "free_end": 275808,
+      "free_warm": 275808,
+      "timer_failed": 0,
+      "buffer_failed": 0,
+      "frames_per_emulated_second": 6.003,
+      "warmed_free_memory_delta": 0
+    },
+    "baseline": {
+      "elapsed_ms": 10161,
+      "setup_ms": 220,
+      "frames": 61,
+      "paints": 62,
+      "free_start": 330656,
+      "free_end": 304960,
+      "free_warm": 304960,
+      "timer_failed": 0,
+      "buffer_failed": 0,
+      "frames_per_emulated_second": 6.003,
+      "warmed_free_memory_delta": 0
+    }
+  }
+}

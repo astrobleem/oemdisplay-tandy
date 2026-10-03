@@ -1,0 +1,3 @@
+CREATE
+TIMER
+elapsed_ms=10106 setup_ms=110 frames=61 paints=62 free_start=347776 free_end=333664 free_warm=333664 timer_failed=0 buffer_failed=0

@@ -1,0 +1,4 @@
+CREATE
+TIMER
+CAPTURED
+elapsed_ms=4998 setup_ms=110 frames=30 paints=31 free_start=332224 free_end=306528 free_warm=306528 timer_failed=0 buffer_failed=0
