@@ -1,0 +1,98 @@
+WINDOWS 3.0 / 8086 RUNTIME DISPLAY PROBES
+======================================
+
+These standalone, no-dialog Win16 programs were built with CL /G0 /Gw
+/AS /W3 /Od and a MASM .8086 BIOS helper. LINK4 uses the supplied
+SLIBCEW.LIB and LIBW.LIB. The strict 8086_prefetch runtime executed the
+minimal metrics probe successfully on the candidate04 Tandy driver.
+
+PROBE.EXE: writes C:\PROBE.LOG and exits immediately. Reports screen
+metrics, display-device caps, INT 10h/AH=0F current BIOS mode, cursor.
+
+PROBECUR.EXE: writes C:\PROBECUR.LOG while pumping Windows messages
+for 60 seconds. Records changed cursor positions at 250 ms intervals.
+No window or modal dialog; stops automatically.
+
+PROBEDRW.EXE: draws 16 palette strips, a one-pixel complete screen
+border, and four distinct corner blocks. Dumps exactly 32768 bytes of
+B800:0000 to C:\PROBEDRW.BIN. C:\PROBEDRW.LOG reports completion.
+The updated probe hides the cursor until ShowCursor returns negative,
+logs the count, calls SetCursor(NULL), and restores/balances afterward.
+
+PROBEBLT.EXE: constructs a 32x16 compatible memory bitmap with a
+16-color pattern. Tests 12 SRCCOPY transfers with varied odd/even
+source and destination offsets and widths/heights. Writes
+C:\PROBEBLT.LOG and a 32768-byte C:\PROBEBLT.BIN screen dump.
+Uses the same cursor-hide/restore discipline.
+
+Both graphical probes require 320x200, overwrite the visible desktop,
+and exit without waiting. Run only in Windows 3.0 real mode: B800 is a
+real segment, not a protected-mode selector. The desktop can be
+repainted afterward. These are test programs, not driver components.
+
+BUILD
+-----
+In DOSBox, mount the repository root as C: (BIN, LIB, DDK, INCLUDE),
+copy PROBE*.C, PROBEASM.ASM, PROBE*.DEF, PROBE*.RSP, PROBEBLD.BAT to a
+separate build directory mounted as D:, switch to D:, run PROBEBLD.
+All input files use CRLF and 8.3 DOS names. Output PROBEBD.LOG must end
+in PASS. The /G0 switch explicitly requests 8086 instruction generation.
+
+INDEPENDENT RAW-FRAMEBUFFER CHECK
+--------------------------------
+Host Python requires Pillow. Copy each guest dump before running:
+  python3 PROBEDMP.PY PROBEDRW.BIN --test draw --out draw-check
+  python3 PROBEDMP.PY PROBEBLT.BIN --test blt --out blt-check
+The checker compares all 64000 pixels and writes PNG plus JSON.
+Mode09 offset = (y % 4)*8192 + (y // 4)*160 + x//2;
+even x uses the high nibble. Expected patterns are generated directly
+from the documented rectangles and formulas, independently of driver
+code. Comparisons use physical color indices. The PNG uses the
+standard physical palette; the requested logical RGB values match the
+driver table (128-level dark colors, gray128, darkgray64).
+
+VERIFIED INITIAL RESULTS
+------------------------
+Candidate04 driver SHA256:
+191cc57cc538e15d3637a4dc21c4cddb078ff3452836476ae4776352a5ff5fdd
+Metrics: 320x200; caps HORZRES320 VERTRES200 BITSPIXEL1 PLANES4
+NUMCOLORS16; BIOS_MODE_DECIMAL9; COMPLETE1.
+Cursor sampling reached (0,0), (319,0), (319,199), (0,199); COMPLETE1.
+
+The first draw and BLT dumps retained a launch-hourglass overlay:
+its exact mismatch bounding box was x252..266, y53..66 (15x14).
+Draw: all16 colors; 170 mismatched pixels, all within that box.
+BLT: 169 mismatched pixels, all within that box. Cases0..10 matched
+all destination pixels; case11 had 13 pixels obscured by the hourglass.
+All12 BitBlt calls returned1. These initial dumps do not establish a
+fully unmasked pass. The corrected probes then passed the single bounded rerun below.
+
+Artifacts and full raw evidence from this investigation live in the
+separate /workspace/shared/tandy-video-probe working directory.
+
+FINAL UNMASKED RESULTS
+----------------------
+Corrected draw dump: all 64000 pixels match, zero mismatches, all 16
+physical color indices present. Full outer border, four corner blocks,
+16 color strips and all four mode09 banks are correct.
+Corrected BitBlt dump: all 64000 pixels match, zero mismatches across
+12 varied compatible-memory-bitmap SRCCOPY cases and the background.
+There is no cursor mask or excluded pixel in either final comparison.
+Both probes required two ShowCursor(FALSE) calls to reach count -1;
+SetCursor(NULL) additionally removed the startup cursor, and both
+probes restored the previous cursor and balanced all hide calls.
+
+Final dump SHA256:
+PROBEDRW 362849614acdb344d945113de3a65e9daa6ad0651707d3af0e0c695c407fd1b4
+PROBEBLT 755fc95fc6d1b10d97318e1713886bb20752b7e7f9b4fa16d7caa286e87e0697
+
+Final executable SHA256:
+PROBE    013b44db1d3852b09bcf1d34bddd07305fa2bc27f373fc2765978db14118fd54
+PROBECUR 79d20adcaa6e17111d7c5ab6b9c059cce706834a8244e442396a9a1187ecc052
+PROBEDRW 4b09e96f10abc2efc26825c4859b62561cc40c6c1fb96895cadc0e472d8b13dd
+PROBEBLT d42cbf73498da780d8b6c6ae9e427a93721ac88fbbf98c632960b88a82e48d07
+
+Linear disassembly of every code segment in these final executables
+found no post-8086 primary opcodes. Source compiler /G0, strict MASM
+.8086, and actual successful 8086_prefetch execution provide the
+complementary generation, static and runtime checks.

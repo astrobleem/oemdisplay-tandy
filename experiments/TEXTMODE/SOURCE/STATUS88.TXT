@@ -1,0 +1,126 @@
+CANDIDATE05: DIB SAVE/REOPEN CORRECTION CHECKPOINT
+================================================
+Date:2026-10-02 UTC
+Target:Tandy 1000 EX/HX, Windows 3.0 real mode,320x200x16,8088 ISA
+
+TANDY88.DRV:51296 bytes
+SHA256:ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee
+Two fresh full builds reproduce this exact driver.
+RESERVE.COM is unchanged:1512 bytes
+SHA256:644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8
+
+PASSED ON CANDIDATE05
+--------------------
+- Strict 8086 assembly:27 linked objects,13707 emitted listing rows;
+  all executable contributions accounted for; no extra linked-library code
+- Repeated 128 save-frame/FLAGS cases,4096 generated rotate executions
+- Repeated 24 reservation checks and full converter pixel/padding/guard suite
+- ROUND2 odd 37x11 full and partial bitmap conversion with guards
+- ROUND3 BI_RGB 1/4/8/24 GetDIBits/SetDIBits/CreateDIBitmap/directscreen
+- ROUND4:56 crop/clip/band/compression cases,1835008 framebuffer bytes,
+  zero mismatches; caller inputs unchanged
+- ROUND5:8 warmups + 64 calls, zero failures, stable largest/total free heap
+- Actual Paintbrush opens 16-color test image, types cyan TANDY8088, Save As,
+  reopens that exact file; all 24000 canvas pixels match persisted BMP
+- Saved BMP 200x120,4bpp, all 16 colors; all original bar pixels unchanged and
+ 280 newly cyan text pixels; raw reopened screenshot320x200
+
+Saved BMP SHA256:
+05110394e2a1b085b3ff4e51c023abb195308953da4b0b046cacaa55a10150e6
+- Fresh post-save/reopen Windows metrics: 320x200, BITSPIXEL=1, PLANES=4,
+  NUMCOLORS=16; active BIOS mode 09
+- Fresh PROBEDRW and 12-case PROBEBLT each match all 64000 pixels exactly
+- Interactive clean exit to DOS, WIN /R restart, Program Manager restore and
+  maximize, and final clean exit passed
+
+DEFECT AND LIMITS
+-----------------
+Candidate04 lacked DIB capabilities; its documented GDI monochrome fallback
+lost saved color and reopening produced stripes. Candidate05 adds memory
+DIB converters and a shadow-only screen bridge. BI_RGB 1/4/8/24 supported;
+RLE/othercompression rejected. See DIB88.MD for header/dimension/band limits.
+No physical Tandy hardware or cycle-exact bus timing has been tested.
+No performance optimization included. Paintbrush repaint interactions can
+still take 10-20seconds at fixed 20000 emulator cycles. The isolated converter
+benchmark below is not an end-to-end GUI speed or physical8088 estimate.
+
+ORACLE TRANSPARENCY
+------------------
+ROUND4 initially used an incorrect top-left source-Y expectation. Preserved
+failed inputs and both old/new expected results are described in ORACLE.MD.
+The corrected bottom-left expectation agrees with the SDK, original DDK,
+native stockCGA control and independent byte-by-byte review. No driver
+geometry was changed to make the corrected oracle pass.
+
+CANDIDATE04 HISTORICAL TEST RECORD (BEFORE DIB DEFECT DISCOVERY)
+============================================================
+The following is retained provenance, not a claim that every interaction
+was rerun on candidate05 or that candidate04 saving worked.
+
+8088 CORRECTION: FROZEN EMULATOR CORRECTNESS CHECKPOINT
+====================================================
+Date: 2026-10-02 UTC
+Target: Tandy 1000 EX/HX, Windows 3.0 real mode, 320x200x16, 8088 ISA.
+
+TANDY88.DRV: 46464 bytes
+SHA256: 191cc57cc538e15d3637a4dc21c4cddb078ff3452836476ae4776352a5ff5fdd
+RESERVE.COM: 1512 bytes
+SHA256: 644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8
+Two independent fresh builds reproduce the exact final driver hash.
+
+PASSED
+------
+- Strict 8086 assembly and all23 linked object modules accounted for;
+  no extra linked-library executable bytes;62 pinned DDK inputs
+- 11720 emitted listing rows checked (macro header rows can repeat bytes)
+- 128 save-frame/FLAGS cases and4096 generated rotate executions
+- 24 reservation tests on8086 and8086_prefetch: normal 640 KB, actual video
+  alias, allocation guard/MCB survival, idempotency and fail-closed cases
+- Converter: all 64000 pixels,32000 visible bytes,768 untouched padding bytes,
+  all 16 colors/256 packed values, source/register/cursor-call checks
+- CPU readback and semantics distinguish8086_prefetch from386 control;
+  literal8088 setting is rejected and falls back to auto
+- Windows 3.0 desktop, menus, maximize, mouse window drag, keyboard resize,
+  repaint, Notepad typing/selection/copy-paste/close, clean exit/cold relaunch
+- Paintbrush actual black and blue mouse-drawn strokes, clicked blue swatch,
+  retained strokes after resize and repaint
+- Cursor movement to (0,0),(319,0),(319,199),(0,199), then return inside
+- Live Windows metrics: 320x200, BITSPIXEL=1, PLANES=4, NUMCOLORS=16; BIOS 09
+- Native capture:320x200 pixels,16 distinct physical Tandy RGBI colors
+- Independent live color/border/corner/bank oracle:64000 pixels,0 mismatches
+- Live12-case SRCCOPY alignment/dimension suite:all calls succeed;
+  full64000-pixel framebuffer oracle matches exactly,0 mismatches
+
+EXACT EMULATOR SCOPE
+-------------------
+DOSBox-X2026.08.31 SDL2 nightly, commit b13702c0af413b46061129aea0924122e5b59a8b.
+machine=tandy; core=normal; cputype=8086_prefetch; cycles=20000; fpu=false.
+memsize=0; memsizekb=640; expanded base memory=false; XMS/EMS/UMB=false.
+WIN /R, stock Microsoft mouse driver, COM1 serialmouse, EGA fonts.
+BIOS conventional memory624KB; free memory574KB after video reservation.
+scaler=none; doublescan=false; aspect=false; windowresolution=original.
+
+PERFORMANCE AND LIMITS
+----------------------
+Full flush converts8000 groups/64000 pixels/32000 bytes. Sixteen isolated
+flushes took13 BIOS ticks (~0.714 seconds,~44.6ms each) at cycles20000;
+batch timer granularity54.9ms. Excludes Windows,GDI and cursor rendering.
+This is emulator throughput, NOT a physical8088 timing estimate.
+
+Physical Tandy hardware, cycle-exact bus timing, genuine MS-DOS variants,
+all Windows applications/ROPs, and an explicit double-click test are unverified.
+Windows3.1, standard/enhanced mode and low-memory expansion variants are not
+claimed. Full-frame redraw remains slow; performance changes must retain this
+baseline and repeat affected tests. No performance change is included here.
+
+REPRODUCTION
+------------
+See README.md, AUDIT86.TXT, RESERVE.MD, CPU86.TXT and PROBE.TXT.
+BUILD88.PY builds the driver; TEST86.PY, RESERVE.PY and TESTFB.PY run the
+headless tests. PROBEBLD.BAT builds the Win16 runtime probes. RUN88.PY
+validates the tested binaries/INI and gates launch on CPU readback and the
+memory reservation. Its CPU/fallback/reservation gate tests passed.
+
+The historical V1 binary remains unchanged only as a comparison baseline.
+Its 386/expanded-memory GUI run does not establish8088 compatibility.
+Windows installation media and installed OS files are excluded from packages.

@@ -1,0 +1,152 @@
+WINDOWS 3.0 ROUNDTRIP REGRESSION REPRODUCTION
+
+Inputs retained outside this source tree:
+- Authorized Windows 3.0 guest: /workspace/shared/windows30/candidate-c
+- Frozen04 driver: SHA256 191cc57cc538e15d3637a4dc21c4cddb078ff3452836476ae4776352a5ff5fdd
+- Microsoft C/MASM/LINK4 and DDK toolchain in /workspace/shared/tandy-savefix
+- DOSBox-X launcher: /workspace/shared/dosbox-x/run
+- Authored test build/evidence directory: /workspace/shared/tandy-roundtrip
+- Separate mutable test guest: /workspace/shared/windows30/round05-c
+Do not distribute or replace the original Windows guest or frozen04 files.
+
+FINAL TESTED DRIVER
+/workspace/shared/tandy-savefix-sdib-build-03/TANDY88.DRV
+51296 bytes, SHA256 ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee
+Installed only as round05-c/WINDOWS/SYSTEM/TANDY88.DRV after stopping that guest.
+
+BUILD
+The included ROUNDn.BAT uses CL /nologo /c /G0 /Gw /AS /W3 /Od and LINK4.
+Copy ROUNDn.C, ROUNDn.DEF, ROUNDn.RSP, ROUNDn.BAT to the build directory.
+The exact BUILDn.CNF structure (substitute n=2,3,4,5) is:
+
+[sdl]
+fullscreen=false
+output=surface
+[dosbox]
+machine=tandy
+memsize=16
+working directory option=force
+working directory default=/workspace/shared/tandy-roundtrip
+[cpu]
+core=normal
+cputype=8086_prefetch
+cycles=fixed 200000
+[mixer]
+nosound=true
+[midi]
+mididevice=none
+[autoexec]
+@echo off
+mount C "/workspace/shared/tandy-savefix"
+mount D "/workspace/shared/tandy-roundtrip"
+D:
+ROUNDn.BAT
+
+Run:
+SDL_VIDEODRIVER=dummy /workspace/shared/dosbox-x/run -nopromptfolder -conf /workspace/shared/tandy-roundtrip/BUILDn.CNF
+Check BUILDn.LOG; the final authored probes compile/link without warnings.
+Copy each ROUNDn.EXE into round05-c/WINDOWS.
+
+RUNTIME CONFIG
+The production-style normal-memory runtime is distinct from build settings:
+
+[sdl]
+autolock=false
+fullscreen=false
+output=surface
+windowresolution=original
+[dosbox]
+captures=/workspace/shared/windows30/captures
+machine=tandy
+memsize=0
+memsizekb=640
+allow more than 640kb base memory=false
+[cpu]
+core=normal
+cputype=8086_prefetch
+cycles=20000
+fpu=false
+[render]
+scaler=none
+doublescan=false
+aspect=false
+[dos]
+xms=false
+ems=false
+umb=false
+[serial]
+serial1=serialmouse
+[autoexec]
+mount c /workspace/shared/windows30/round05-c
+c:
+startn
+
+Generate STARTn.BAT from candidate-c/START.BAT by replacing WIN /R with
+WIN /R ROUNDn.EXE. Preserve its CPU configuration/probe logging, RESERVE
+helper, IF ERRORLEVEL 1 GOTO FAILED gate, PATH/TEMP setup, and real-mode switch.
+Do not run multiple instances against the same writable guest directory.
+
+EXACT FINAL RUNS
+For n=2,3,4,5, RUN05n.CNF contains the runtime profile above with startn:
+python /workspace/shared/tandy-roundtrip/ROUNDGO.PY /workspace/shared/tandy-roundtrip/RUN05n.CNF /workspace/shared/windows30/round05-c/ROUNDn.LOG --host-log /workspace/shared/tandy-roundtrip/final05n-host.log
+
+ROUNDGO.PY captures at most 1 MiB of host diagnostics, drains remaining output,
+waits for the flushed COMPLETE=1 marker, and stops only its isolated process.
+It does not use process-wide file-size limits, which break SDL shared memory.
+
+CHECKERS
+python ROUNDCHK.PY /workspace/shared/windows30/round05-c --out FINAL052
+python ROUND3CK.PY /workspace/shared/windows30/round05-c --out FINAL053
+python ROUND4CK.PY /workspace/shared/windows30/round05-c --source-origin bottom --out FINAL054
+
+ROUND5.LOG records available heap before and after every 16 calls; compare
+R5BEFORE.BIN and R5AFTER.BIN byte-for-byte. The final run has 0 call failures,
+largest free block 318208 and total free 328768 unchanged after 16/32/48/64 calls.
+
+AUTHORITATIVE COORDINATES
+See ORACLE.MD. Win3 SDK SetDIBitsToDevice uses bottom-left DIB source origin.
+The separate native stock-CGA control uses ROUND4.EXE M (first 10 mono cases),
+RUNCG4.CNF, and:
+python ROUND4CK.PY /workspace/shared/windows30/roundcg-c --mode cga --source-origin bottom --out ROUNDCG4B
+
+RAW EVIDENCE TO PRESERVE (NO WINDOWS FILES NEEDED)
+round05-c/ROUND2.LOG, ROUND2*.BIN, ROUND2*.BMP
+round05-c/ROUND3.LOG, R3G*.BIN, R3I*.BIN
+round05-c/ROUND4.LOG, R4B*.BIN, R4D*.BIN
+round05-c/ROUND5.LOG, R5BEFORE.BIN, R5AFTER.BIN
+round05-c/CPU.TXT, CPUCHECK.TXT, LATERCPU.TXT, RESERVE.TXT, MEMBEFOR.TXT, MEMAFTER.TXT
+round05-c/NATIVEIN.BMP (authored exact-pixel fixture)
+round05-c/NATIVE05.BMP (Paintbrush native save with cyan TANDY8088 text)
+tandy-roundtrip/FINAL052.json/png, FINAL053.json, FINAL054.json, FINAL055.json
+BUILDn.LOG, ROUNDn.EXE, ROUNDn.MAP and authored ROUND sources for reproducibility
+
+Original screen-fix evidence and incorrect-oracle failures remain in
+screen-first-evidence/ and SCREEN054TOP.json. Stock pre-alias-decoder evidence
+is separately labeled ROUNDCG4T-PRE-ALIAS.json; current ROUNDCG4T.json isolates
+top-origin error alone. These are not final-driver failures.
+
+NATIVE PAINTBRUSH SAVE/REOPEN CHECK
+
+Use the final driver/runtime profile and open C:\NATIVEIN.BMP through
+Paintbrush File Open. Select the text tool and cyan foreground. Type
+TANDY 8088 in the blank area, then click elsewhere to commit the text.
+File -> Save As -> C:\NATIVE05.BMP. File -> Open that saved path again.
+A real DOSBox-X Capture -> Take raw screenshot produced
+/workspace/shared/windows30/captures/kernel_006.raw1.png, copied unchanged to
+tandy-roundtrip/NATIVE05.PNG. Its native dimensions are 320x200.
+
+Run the independent native-file and reopened-display checker:
+python ROUNDNAT.PY NATIVEIN.BMP NATIVE05.BMP NATIVE05.PNG --out NATIVE05.json
+
+The final native Save As retains all 16 palette colors, all 4000 top-bar pixels,
+and 280 cyan text pixels below the bars. Its reopened canvas at (36,48) matches
+all 24000 saved BMP pixels after the logical RGB-to-RGBI display mapping.
+There is no cursor inside that comparison rectangle and no ignored pixels.
+
+Saved BMP SHA256:
+05110394e2a1b085b3ff4e51c023abb195308953da4b0b046cacaa55a10150e6
+
+The exact Save As file is untouched after verification. NATIVE05.json records
+BMP header/palette, color counts, text bounds, all SHA256 values and zero
+reopen mismatches. The first raw screenshot with a cursor is kernel_005.raw1.png;
+use kernel_006.raw1.png / NATIVE05.PNG for the exact pixel comparison.

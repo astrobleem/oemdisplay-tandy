@@ -1,0 +1,10 @@
+tsoft.obj bitblt.obj cblt.obj polyline.obj +
+scanline.obj output.obj pixel.obj scanlr.obj +
+rlstrblt.obj rlbldstr.obj realfix.obj realpro.obj +
+dithers.obj robject.obj colorinf.obj enum.obj +
+colors.obj setmode.obj chkstk.obj charwdth.obj +
+fb.obj lodither.obj tcursor.obj
+TSOFT.DRV
+TSOFT.MAP /MAP /AL:16
+libw sdllcew /NOD /NOE
+TSOFT.DEF

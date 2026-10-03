@@ -1,0 +1,10 @@
+{
+  "publication_checks_date_utc": "2026-10-03",
+  "sealed_package_manifest": "all members pass",
+  "fresh_rebuild_sha256": "943a455baa475071a190b26e69b92a477178b5ced231edef19882abb2a8d2646",
+  "fresh_rebuild_bytes": 72960,
+  "fresh_rebuild_matches_sealed_binary": true,
+  "native_evidence": "retained final milestone records, not rerun during publication",
+  "github_ci": "check remote exact head after publication; no CI pass claimed",
+  "fresh_instruction_audit_rows": 13650
+}
