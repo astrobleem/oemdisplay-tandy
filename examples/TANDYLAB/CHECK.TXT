@@ -1,0 +1,66 @@
+FIRST REAL-HARDWARE TEST CHECKLIST
+================================
+Date/time: ___________________  Tester: ___________________________
+Machine/model: _______________  CPU/clock: ________________________
+Installed RAM: _______________  DOS version: ______________________
+CF/adapter: _________________  Windows path/version: _____________
+Display/monitor: ____________  Mouse/interface/driver: ____________
+
+Before testing
+[ ] Verified PC D: is the CF card; backed it up off-card.
+[ ] Copied the new TANDYLAB folder; no merge over old files.
+[ ] Own Windows 3.0 setup completed; DOS can boot independently.
+[ ] Saved a known-good Windows/config backup before any driver change.
+[ ] Custom display only: accepted RESERVE/launcher succeeds every boot.
+[ ] No automatic chime, TSHELL shell replacement or idle saver installed.
+
+1. Display and basic controls (use the working mode first)
+[ ] Program Manager opens; text/menus readable; pointer moves/clicks.
+[ ] About Sys / Disp / Mem pages: photograph all three if practical.
+    Resolution/colors: __________ Windows heap: _________ KiB
+[ ] Cookie: 10 clicks/Space, U, counter increases, About closes cleanly.
+[ ] Cookie Save, close, reopen, Load restores expected values.
+[ ] Slosh: drag, release, reverse, close; desktop redraw looks correct.
+[ ] Pinball: Space, both flippers, pause/resume, focus away/back, close.
+[ ] TSHELL ordinary-app Run/Browse works; Close bar returns to Program Mgr.
+
+2. Sound (start low volume; close each producer before the next)
+[ ] PSGPLAY: Play, Stop, replay, close. Quiet after Stop and close.
+[ ] Mouth: HELLO/TANDY/YES/NO; Stop and close leave silence.
+[ ] Original TCHIME: audible phrase, then silence, no visible window left.
+[ ] XPCHIME: audible phrase, then silence.
+[ ] TEXIT /preview: audio completes and Windows stays running.
+[ ] Beats: Play, edit a step, Stop/Esc, close. Silence afterward.
+    Stuck/late/missing audio notes: _________________________________
+
+3. Files and restoration
+[ ] GIF sample converts to a NEW BMP; open in owned Paintbrush if present.
+[ ] Matrix dismisses with keyboard, mouse and Alt-Tab in separate runs.
+    Desktop/pointer restored: _____________________________________
+[ ] Fly Swat: NEW, hit/miss, pause/resume, restart, EXIT/Esc.
+[ ] Fly Swat: switch away; game closes and desktop/pointer restore.
+    Mouse response / pace on real hardware: ________________________
+[ ] Drop special C:\ sender/log notes reviewed; path drag and Shift work.
+
+4. Optional experiments, no unsaved work
+[ ] Launch CDSTART (not CDTEST directly). Open/Cancel; then Save/Read using a NEW scratch filename only.
+[ ] Maze: time first paint, observe motion, pause and close.
+    First paint: __________  Responsiveness: _______________________
+[ ] After closing all tests, About Mem snapshot: __________ KiB.
+    This is only a rough before/after check, not a memory-leak proof.
+[ ] Windows exits normally and next boot/launch is clean.
+
+On a problem: stop that test. Note the app, display mode, last action,
+exact error and whether keys/mouse still respond. Photograph the full
+screen, then a close-up of bad text/colors. A short video helps for
+slowness, mouse redraw or sound timing. Avoid a reset while CF activity
+is visible. After a forced shutdown, restart from the known-good setup
+before testing another app. Do not change several drivers at once.
+
+Useful report:
+App + mode: ______________________________________________________
+Steps to reproduce: ______________________________________________
+Expected / actual: _______________________________________________
+Time until first screen / sound: __________________________________
+Error text / logs / photo filename: _______________________________
+After closing/rebooting: __________________________________________

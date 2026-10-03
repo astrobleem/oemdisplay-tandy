@@ -1,0 +1,77 @@
+TANDYLAB APPLICATION CATALOG
+============================
+Use Program Manager / File / Run inside Windows 3.0 real mode.
+C: below means the EXAMPLE DOS card drive on the Tandy. It is not the PC's
+D: card-reader letter. Substitute the actual Tandy drive when necessary.
+No switches are needed unless explicitly shown below.
+
+START HERE: DISPLAY AND INPUT
+  C:\TANDYLAB\ABOUT\TABOUT.EXE
+    Sys, Disp, Mem pages; S/D/M, arrows, R to refresh, Esc to close.
+    Shows Windows-reported CPU family and heap, not an exact CPU speed/model.
+  C:\TANDYLAB\COOKIE\COOKIE.EXE
+    Click cookie or Space. U buys +1 CPS for 10 cookies. Game Save/Load.
+    Save replaces COOKIE.SAV beside the EXE. Exit does not save automatically.
+  C:\TANDYLAB\SLOSH\SLOSH.EXE
+    Drag the title bar left/right; release and watch water settle. Alt+F4.
+  C:\TANDYLAB\PINBALL\PINBALL.EXE
+    Space launches; Z/Left and / or Right work the flippers. P pauses.
+    Focus loss pauses it; P resumes after returning. No sound or save file.
+  C:\TANDYLAB\SHELL\TSHELL.EXE
+    Start / Run / Browse launches files from their private folders.
+    Use Close bar to leave. Do not select it as the Windows shell yet.
+    Predefined app entries can be gray because apps aren't in WINDOWS/PATH.
+
+SOUND: ONE APP AT A TIME, CLOSE THE PREVIOUS APP FIRST
+  C:\TANDYLAB\PSG\PSGPLAY.EXE
+    Play/P, Stop/S/Esc. Close also mutes. Replaces C:\PSGTRACE.LOG.
+  C:\TANDYLAB\MOUTH\MOUTH.EXE
+    HELLO, TANDY, YES or NO; Enter/Speak, Esc/Stop. Electronic syllables,
+    not general text-to-speech. Normal launch writes no log.
+  C:\TANDYLAB\CHIMES\TCHIME.EXE
+    Short original startup phrase; invisible one-shot, mutes and exits.
+  C:\TANDYLAB\CHIMES\XPCHIME.EXE
+    XP-note PSG arrangement; invisible one-shot. No sampled WAV playback.
+  C:\TANDYLAB\CHIMES\TEXIT.EXE /preview
+    Exit-chime audio only, then closes itself. WITHOUT /preview it asks
+    permission and can exit Windows to DOS. Never add TEXIT to startup.
+  C:\TANDYLAB\BEATS\BEATS.EXE
+    Keep MIDIMAP.DRV beside it. Play/P, Stop/S/Esc, eight-step grid.
+    Patterns are in memory only. Never register/copy its driver into Windows.
+
+HELPERS / OPTIONAL VISUALS
+  C:\TANDYLAB\GIF\GIFLOAD.EXE
+    Input C:\TANDYLAB\GIF\TEST.GIF
+    Output C:\TANDYLAB\GIF\TEST.BMP (must be a NEW name).
+    Convert, then Open BMP if Windows Paintbrush is installed. If TEST.BMP
+    exists, use TEST2.BMP. This does not add GIF support inside Paintbrush.
+  C:\TANDYLAB\MATRIX\MATRIX.EXE
+    On-demand rain; key, click, mouse motion or Alt-Tab dismisses it.
+    Check that the underlying desktop and cursor restore. No idle setup.
+  C:\TANDYLAB\FLYSWAT\SWAT.EXE
+    Fast fullscreen on accepted Tandy modes. Click field/NEW to begin.
+    Click fly +10; misses/escapes cost a heart. P/Space pauses; N/R restarts.
+    EXIT/Esc or switching away closes and restores Windows. Silent.
+    /G forces the much slower windowed fallback; it pauses on focus loss.
+    Approximate-XT tests ~4.3 updates/sec; physical speed is unverified.
+  C:\TANDYLAB\DROP\DROPRX.EXE
+  C:\TANDYLAB\DROP\DROPTX.EXE
+    Read DROP\README.TXT FIRST for the fixed C:\ sender/log behavior.
+    Start receiver, then sender manually; drag to receiver, Shift for two
+    names, Escape cancels. It passes path text; it never copies any file.
+
+EXPERIMENTAL: AFTER THE ABOVE, WITH NO UNSAVED WORK
+  C:\TANDYLAB\EXPER\CDLG\CDSTART.EXE
+    Use CDSTART to launch CDTEST with its private COMMDLG.DLL. Test Open/Cancel first. Save/read round-trip
+    writes only a new scratch file you choose. Log: CDTEST.LOG beside EXE.
+    Do not use it to replace a system COMMDLG.DLL or Windows 3.1 library.
+  C:\TANDYLAB\EXPER\MAZE\MAZE.EXE
+    Windowed automatic walk. Space pause/resume; Esc/Close exits.
+    VERY SLOW on approximate 8088 emulation: ~87 seconds first paint and
+    ~6.3 seconds for one diagnostic frame. Those are not hardware timings.
+    Not a screensaver. Delayed first paint can resemble a hang; test last.
+
+DISPLAY TOOLKIT (OPTIONAL, MODERN PC PREPARATION ONLY)
+  Read DRIVERS\README.TXT. T88TOOLS.ZIP omits eight Windows support files.
+  Use its existing STAGE.PY with your own matching files to produce a NEW
+  complete OEM folder; Windows Setup owns installation, never manual INI edits.

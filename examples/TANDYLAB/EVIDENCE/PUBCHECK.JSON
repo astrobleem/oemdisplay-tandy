@@ -1,0 +1,18 @@
+{
+  "zip_bytes": 355159,
+  "zip_sha256": "ac825b9e38d6fc636cbf33960e2e55eb00693dc92de49d8d04adf093bcb13881",
+  "pack_members_verified": 54,
+  "toolkit_members_verified": 12,
+  "helper_members_verified": 15,
+  "dos83_paths": true,
+  "game_sha256": "6f65c56dd17a5667e16b583638d8e02a0a8b937234357b09457ca60ee965a60b",
+  "result": "PASS: archive structure and hashes only; not a runtime or hardware test",
+  "checked_utc": "2026-10-03",
+  "package_members_unchanged": true,
+  "cdstart_fresh_rebuild_exact": true,
+  "focused_harness_fresh_rebuild_exact": true,
+  "native_acceptance": "Preserved producer tests, not rerun during publication",
+  "privacy": "Sealed archive contains no private absolute host paths; publication metadata uses relative descriptions only.",
+  "ci": "No pull-request workflow configured. Absence of CI is not a passing result.",
+  "hardware_tested": false
+}

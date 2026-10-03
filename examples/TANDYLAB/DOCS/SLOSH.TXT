@@ -1,0 +1,88 @@
+# Slosh for Windows 3.0 / Tandy 1000
+
+A tiny fake-fluid toy: drag the normal **Slosh** title bar left or right.
+The lower part of the client area contains water. Starting a rightward move
+raises its left side; starting leftward raises its right side. Changing speed,
+stopping and reversing excite the 40-point spring surface, which rebounds and
+settles. This is deliberately a one-dimensional visual approximation.
+
+## Run
+
+Copy SLOSH.EXE to C:\SLOSH. Start the existing accepted Tandy Windows 3.0
+installation with C:\TANDY88\TANDY88. Use Program Manager File > Run and enter
+C:\SLOSH\SLOSH.EXE. No DLL, data file, menu, sound or installation is required.
+Close with Alt+F4 or the normal system-menu Close command.
+
+The window is fixed-size but movable: 192x132 screen pixels on 320/640 modes,
+The 160x200 request is 112x132; Windows enforces a 128-pixel width in the
+verified fixture, leaving 32 horizontal pixels of travel. This is the minimum
+verified usable screen size. Smaller screens are unsupported and untested.
+Its native frame/title bar are provided by Windows. Mouse titlebar dragging
+uses SetCapture and the normal application message pump so timer events can
+continue, with live MoveWindow calls at the requested cadence. Mouse-move messages
+can drive the same step at a 55 ms rate limit because Windows gives them higher
+priority than WM_TIMER. Button release samples the final position once. It does not use a
+private busy loop, a Windows hook, undocumented Win32 messages, or an IRQ/PIT
+replacement. Escape, activation loss, or cancellation ends captured dragging.
+Motion is clamped to keep the entire window on screen.
+
+Windows 3.0's system-menu/keyboard Move command remains the OS's ordinary
+outline move. A completed keyboard move can excite the surface after placement;
+it is not the live mouse-drag path. The normal app has no settings or test UI.
+
+## Build
+
+From the full existing repository:
+
+    python3 examples/SLOSH/BUILD.PY --dosbox /path/to/dosbox-x --out /new/build
+
+For a standalone copy of this directory, add --repo /path/to/full/repository.
+The wrapper uses its BIN, INCLUDE, DDK/286/INC and LIB tree. DOS alternative:
+mount that tree as C and a writable copy of SLOSH.C, WATER.H, SLOSH.DEF,
+SLOSH.RSP and BUILD.BAT as D; run D:\BUILD.BAT.
+
+Compiler: Microsoft C /G0 /Gw /AS /W3 /Od; LINK4; SLIBCEW and LIBW.
+The output is a small-model native Win16 NE EXE for real-mode Windows 3.0.
+No floating point, FPU, EMS, XMS, UMB, 286/386 instructions or modern runtime
+are requested. The host wrapper may give build tools more RAM; runtime tests
+use normal 640 KB and the existing launcher/reservation helper unchanged.
+
+## Architecture and bounds
+
+WATER.H holds 40 Q4-pixel heights, 40 velocities and 40 scratch velocities:
+240 bytes with 16-bit int, plus a 2-byte redraw flag. No geometry array is needed.
+There is no framebuffer, per-pixel simulation, heap simulation buffer or
+full-window memory bitmap. Up to 40 solid filled columns draw the water. Adjacent equal-height columns
+are coalesced, so a flat surface needs only one fill. FillRect clears the client.
+Only the union of old/new surface extents is invalidated when integer-pixel
+heights change; air/water are repainted per column without clearing the entire
+band first. Settled
+water stops repainting. The brush is reused and released on teardown.
+
+The requested timer is 55 ms (about 18 Hz); mouse-driven and timer-driven
+steps share the same rate limit. Release deliberately takes one final sample. Windows timers can be delayed or
+coalesced, so this is a request, not a performance promise. Each delivered timer or rate-limited mouse step measures the desired horizontal
+displacement, normalizes it by bounded elapsed time, computes bounded change
+in speed, and takes one step. The new surface is computed before MoveWindow
+paints it, avoiding an old-surface paint followed by a second new-surface paint.
+There is no catch-up loop after a stall. The surface combines restoring force,
+nearest-neighbor coupling and damping. Heights clamp to +/-512 Q4 (32 pixels),
+velocities to +/-128 Q4 (8 pixels/tick), and acceleration to +/-24. Mirrored
+end samples provide closed ends. A tiny decay removes subpixel fixed-point
+stiction so the final state can become exactly flat.
+
+All physics intermediates fit a signed 16-bit int: the worst neighbor
+Laplacian is +/-2048 and the largest v*7 damping intermediate is +/-3318.
+Only coordinate/time normalization and horizontal drawing coordinates use
+32-bit integer math. Elapsed time clamps to 32..200 ms and stale speed clears
+after gaps above 250 ms. These are workload/bounds choices suitable for trying
+on an 8088, not measured physical-hardware speed claims.
+
+## Scope and limits
+
+Only examples/SLOSH is added. Driver, launcher, memory helper, Cookie and About
+code are unchanged. No GitHub publication is part of this delivery.
+See TESTS.MD and EVIDENCE for exact native acceptance, captures and limitations.
+Physical Tandy hardware remains untested. Native pixel aspect ratios and low-
+color palette mapping affect appearance. The water remains a solid dark area
+against a light background; it has no transparency or physically correct fluid volume.

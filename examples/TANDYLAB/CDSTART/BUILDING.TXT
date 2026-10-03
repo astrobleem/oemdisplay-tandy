@@ -1,0 +1,21 @@
+BUILDING CDSTART
+================
+Only first-party launcher source is included here. Supply your own
+existing supported DOS C toolchain and Windows 3.0 development headers
+and import libraries; none are redistributed in this folder.
+
+Files: CDSTART.C, CDSTART.DEF, CDSTART.RSP, BUILD.BAT and BUILD.PY.
+BUILD.PY clones these inputs to a NEW output directory and invokes the
+existing DOS compiler through an existing DOSBox-X executable.
+
+Python invocation on the modern development host:
+  python BUILD.PY --repo <owned-toolchain-repo> --dosbox <dosbox-x> --out <new-output>
+
+Expected repo paths: BIN/CL.EXE, BIN/LINK4.EXE, LIB/SLIBCEW.LIB,
+LIB/LIBW.LIB, DDK/286/INC and INCLUDE. Compilation uses /G0 /Gw /AS /W3 /Od
+for 8086 Win16 small-model code. BUILD.PY applies the Windows 3.0 resource-
+free NE version marker after linking. BUILD.LOG and RESULT.JSON identify
+output and hash. Building does not modify the paired sealed CDTEST/DLL.
+
+Accepted CDSTART.EXE: 4867 bytes
+SHA256: c2cf986d1cd5d44ed02a31a4c327601b4b7b4b6a4dceb94fa41f8909d8136eac

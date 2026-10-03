@@ -1,0 +1,66 @@
+NATIVE RELOCATION AND LAUNCHER TESTS - 2026-10-03
+================================================
+Environment: own-media Windows 3.0 real mode, Tandy 160x200x16 display,
+640 KB configured base RAM, RESERVE succeeded, 8086_prefetch CPU,
+no XMS/EMS/UMB, stock Windows SOUND.DRV. Disposable clones only.
+Emulator cycles were accelerated; elapsed seconds are not hardware speed.
+No COMMDLG.DLL, MIDIMAP.DRV or TSOUND.DRV was present inside WINDOWS.
+The base guest was hashed before/after and remained unchanged.
+
+ORIGINAL PACK
+- About and Cookie: full private-path launch, native window, clean close.
+- TSHELL: full private-path launch; Run/Browse open/cancel; clean close;
+  no COMMDLG module needed. Relocated smoke harness FAILURES=0.
+- Beats: full private-path /test loaded paired MIDIMAP beside EXE, played
+  two loops, reset/close muted, released ownership. TOTAL_FAILURES=0.
+- Direct full-path CDTEST from C:\WINDOWS failed: Cannot find COMMDLG.
+- Same sealed pair with CDLG as startup CWD passed Save/Read/Cancel.
+
+CDSTART CORRECTION
+CDSTART is the only new runtime. CDTEST and COMMDLG remain byte-for-byte:
+  CDTEST: c661a2b11dd36a635da6815b725ed51e95715e8d0cc34a4070423c6ed8417544
+  DLL:    2f244e11acf6605130928c0fdf6e280702740a057198af2221124431ed90c62d
+
+STARTC.TXT: new helper launched from C:\WINDOWS, pair on C:.
+STARTD.TXT: same launch, pair on D:, inactive D: began at D:\BEFORE.
+Both bounded helper suites finish FAILURES=0 / COMPLETE=1, with normal
+Windows return to DOS. Tests include:
+- Native child window and exact DLL path via GetModuleFileName.
+- Immediate active/per-drive directory restoration after WinExec.
+- Refusal when COMMDLG is already loaded; no extra child is started.
+- Native Save/Read/Cancel after restoration, correct payload on disk.
+- DLL unload after child exit.
+- Missing-DLL and missing-EXE refusal; each leaves its pre-attempt drive
+  and current-directory state unchanged.
+CHILDC.TXT / CHILDD.TXT contain the sealed caller's UNIT RESULT PASS and
+FINAL PASS, including successful real-file round-trip and Cancel.
+FAIL160.PNG shows the current launcher's compact loaded-module warning.
+Native Windows title decoration can clip at this very narrow mode; the
+warning text and OK button remain visible in this captured case.
+
+OBSERVED CHILD LIMIT, NOT HIDDEN
+The cross-drive child's later file dialogs change inactive D:'s remembered
+CWD after CDSTART has already exited. STARTD records
+CHILD_DIRS_EQUAL_PRELAUNCH=0. Missing-file checks compare against state
+immediately before each new attempted launch, not against the earlier
+pre-child state. No watcher or extra restoration code masks this limit.
+DOLD.TXT preserves the earlier stronger full-lifetime expectation: its
+three failed comparisons all trace to that single later D: change.
+C:-resident testing had no later-directory difference.
+
+REPRODUCTION
+Build CDSTART with BUILDING.TXT. Start from a fresh disposable owned guest;
+retain its validated display setup and run its reservation guard first.
+Extract TANDYLAB on C:, place CDSTART with the sealed CDTEST/DLL, start
+Windows normally with C:\WINDOWS current, and invoke the full CDSTART path.
+Test Save/Read/Cancel with a new filename. For the two-drive test, put the
+same folder on D:, first remember D:\BEFORE, return to C:\WINDOWS and launch
+D:\TANDYLAB\EXPER\CDLG\CDSTART.EXE. Record current and per-drive directories
+immediately after startup and separately after child file-dialog activity.
+While the first demo is open, invoke CDSTART again and dismiss its refusal.
+In separate disposable folders, omit one paired file at a time, launch,
+and check refusal/current-directory preservation. Never change a real
+installation or copy the private DLL to WINDOWS to make this test pass.
+
+Boundary: no physical Tandy, manual input, all-mode retest, random external
+COMMDLG coexistence, or full application regression claim is made here.
