@@ -1,0 +1,725 @@
+{
+  "DROPTX": {
+    "path": "drop-resume-build/DROPTX.EXE",
+    "bytes": 9407,
+    "sha256": "3177ede0941ea158d63887436921a24fb04f580631f928d31732cc618687ab63",
+    "flags": 2,
+    "expected_windows": "0x300",
+    "target_os": 2,
+    "initial_csip": 70691,
+    "heap": 2048,
+    "names": {
+      "DROPTX": 0,
+      "Win30 independent ANSI file drop proof": 0,
+      "WNDPROC": 1
+    },
+    "entries": {
+      "1": {
+        "flags": 1,
+        "segment": 1,
+        "offset": 1522
+      },
+      "2": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 4588
+      },
+      "3": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 5028
+      },
+      "4": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 4447
+      },
+      "5": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 4001
+      },
+      "6": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 3756
+      },
+      "7": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 4744
+      },
+      "8": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 4627
+      },
+      "9": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 3900
+      }
+    },
+    "modules": [
+      "KERNEL",
+      "GDI",
+      "USER"
+    ],
+    "imports": [
+      [
+        "GDI",
+        33
+      ],
+      [
+        "GDI",
+        45
+      ],
+      [
+        "GDI",
+        87
+      ],
+      [
+        "KERNEL",
+        1
+      ],
+      [
+        "KERNEL",
+        5
+      ],
+      [
+        "KERNEL",
+        6
+      ],
+      [
+        "KERNEL",
+        7
+      ],
+      [
+        "KERNEL",
+        15
+      ],
+      [
+        "KERNEL",
+        16
+      ],
+      [
+        "KERNEL",
+        17
+      ],
+      [
+        "KERNEL",
+        18
+      ],
+      [
+        "KERNEL",
+        19
+      ],
+      [
+        "KERNEL",
+        20
+      ],
+      [
+        "KERNEL",
+        23
+      ],
+      [
+        "KERNEL",
+        24
+      ],
+      [
+        "KERNEL",
+        30
+      ],
+      [
+        "KERNEL",
+        47
+      ],
+      [
+        "KERNEL",
+        50
+      ],
+      [
+        "KERNEL",
+        81
+      ],
+      [
+        "KERNEL",
+        83
+      ],
+      [
+        "KERNEL",
+        84
+      ],
+      [
+        "KERNEL",
+        85
+      ],
+      [
+        "KERNEL",
+        86
+      ],
+      [
+        "KERNEL",
+        88
+      ],
+      [
+        "KERNEL",
+        90
+      ],
+      [
+        "KERNEL",
+        91
+      ],
+      [
+        "KERNEL",
+        102
+      ],
+      [
+        "KERNEL",
+        115
+      ],
+      [
+        "KERNEL",
+        132
+      ],
+      [
+        "KERNEL",
+        137
+      ],
+      [
+        "KERNEL",
+        169
+      ],
+      [
+        "KERNEL",
+        178
+      ],
+      [
+        "USER",
+        5
+      ],
+      [
+        "USER",
+        6
+      ],
+      [
+        "USER",
+        10
+      ],
+      [
+        "USER",
+        12
+      ],
+      [
+        "USER",
+        17
+      ],
+      [
+        "USER",
+        18
+      ],
+      [
+        "USER",
+        19
+      ],
+      [
+        "USER",
+        22
+      ],
+      [
+        "USER",
+        24
+      ],
+      [
+        "USER",
+        25
+      ],
+      [
+        "USER",
+        26
+      ],
+      [
+        "USER",
+        28
+      ],
+      [
+        "USER",
+        29
+      ],
+      [
+        "USER",
+        30
+      ],
+      [
+        "USER",
+        33
+      ],
+      [
+        "USER",
+        35
+      ],
+      [
+        "USER",
+        39
+      ],
+      [
+        "USER",
+        40
+      ],
+      [
+        "USER",
+        41
+      ],
+      [
+        "USER",
+        42
+      ],
+      [
+        "USER",
+        46
+      ],
+      [
+        "USER",
+        47
+      ],
+      [
+        "USER",
+        50
+      ],
+      [
+        "USER",
+        53
+      ],
+      [
+        "USER",
+        57
+      ],
+      [
+        "USER",
+        76
+      ],
+      [
+        "USER",
+        106
+      ],
+      [
+        "USER",
+        107
+      ],
+      [
+        "USER",
+        108
+      ],
+      [
+        "USER",
+        109
+      ],
+      [
+        "USER",
+        110
+      ],
+      [
+        "USER",
+        111
+      ],
+      [
+        "USER",
+        113
+      ],
+      [
+        "USER",
+        114
+      ],
+      [
+        "USER",
+        124
+      ],
+      [
+        "USER",
+        125
+      ],
+      [
+        "USER",
+        135
+      ],
+      [
+        "USER",
+        136
+      ],
+      [
+        "USER",
+        173
+      ],
+      [
+        "USER",
+        236
+      ],
+      [
+        "USER",
+        430
+      ]
+    ],
+    "segments": [
+      {
+        "offset": 512,
+        "bytes": 6772,
+        "flags": 7504,
+        "allocation": 6772
+      },
+      {
+        "offset": 8192,
+        "bytes": 1215,
+        "flags": 3153,
+        "allocation": 1232
+      }
+    ]
+  },
+  "DROPRX": {
+    "path": "drop-resume-build/DROPRX.EXE",
+    "bytes": 8239,
+    "sha256": "5f40a94d20d60d6162dcde8ebb67f77efdb1e19cc49b9e2031625a63f41a640a",
+    "flags": 2,
+    "expected_windows": "0x300",
+    "target_os": 2,
+    "initial_csip": 69891,
+    "heap": 2048,
+    "names": {
+      "DROPRX": 0,
+      "Win30 independent ANSI file drop proof": 0,
+      "WNDPROC": 1
+    },
+    "entries": {
+      "1": {
+        "flags": 1,
+        "segment": 1,
+        "offset": 1522
+      },
+      "2": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 3792
+      },
+      "3": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 4232
+      },
+      "4": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 3651
+      },
+      "5": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 3205
+      },
+      "6": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 2960
+      },
+      "7": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 3948
+      },
+      "8": {
+        "flags": 0,
+        "segment": 1,
+        "offset": 3104
+      }
+    },
+    "modules": [
+      "KERNEL",
+      "GDI",
+      "USER"
+    ],
+    "imports": [
+      [
+        "GDI",
+        33
+      ],
+      [
+        "GDI",
+        45
+      ],
+      [
+        "GDI",
+        87
+      ],
+      [
+        "KERNEL",
+        1
+      ],
+      [
+        "KERNEL",
+        5
+      ],
+      [
+        "KERNEL",
+        6
+      ],
+      [
+        "KERNEL",
+        7
+      ],
+      [
+        "KERNEL",
+        15
+      ],
+      [
+        "KERNEL",
+        16
+      ],
+      [
+        "KERNEL",
+        17
+      ],
+      [
+        "KERNEL",
+        18
+      ],
+      [
+        "KERNEL",
+        19
+      ],
+      [
+        "KERNEL",
+        20
+      ],
+      [
+        "KERNEL",
+        23
+      ],
+      [
+        "KERNEL",
+        24
+      ],
+      [
+        "KERNEL",
+        30
+      ],
+      [
+        "KERNEL",
+        47
+      ],
+      [
+        "KERNEL",
+        50
+      ],
+      [
+        "KERNEL",
+        81
+      ],
+      [
+        "KERNEL",
+        83
+      ],
+      [
+        "KERNEL",
+        84
+      ],
+      [
+        "KERNEL",
+        85
+      ],
+      [
+        "KERNEL",
+        86
+      ],
+      [
+        "KERNEL",
+        88
+      ],
+      [
+        "KERNEL",
+        90
+      ],
+      [
+        "KERNEL",
+        91
+      ],
+      [
+        "KERNEL",
+        102
+      ],
+      [
+        "KERNEL",
+        115
+      ],
+      [
+        "KERNEL",
+        132
+      ],
+      [
+        "KERNEL",
+        137
+      ],
+      [
+        "KERNEL",
+        166
+      ],
+      [
+        "KERNEL",
+        169
+      ],
+      [
+        "KERNEL",
+        178
+      ],
+      [
+        "USER",
+        5
+      ],
+      [
+        "USER",
+        6
+      ],
+      [
+        "USER",
+        7
+      ],
+      [
+        "USER",
+        10
+      ],
+      [
+        "USER",
+        12
+      ],
+      [
+        "USER",
+        19
+      ],
+      [
+        "USER",
+        24
+      ],
+      [
+        "USER",
+        25
+      ],
+      [
+        "USER",
+        26
+      ],
+      [
+        "USER",
+        29
+      ],
+      [
+        "USER",
+        30
+      ],
+      [
+        "USER",
+        33
+      ],
+      [
+        "USER",
+        35
+      ],
+      [
+        "USER",
+        39
+      ],
+      [
+        "USER",
+        40
+      ],
+      [
+        "USER",
+        41
+      ],
+      [
+        "USER",
+        42
+      ],
+      [
+        "USER",
+        46
+      ],
+      [
+        "USER",
+        47
+      ],
+      [
+        "USER",
+        57
+      ],
+      [
+        "USER",
+        76
+      ],
+      [
+        "USER",
+        107
+      ],
+      [
+        "USER",
+        108
+      ],
+      [
+        "USER",
+        109
+      ],
+      [
+        "USER",
+        110
+      ],
+      [
+        "USER",
+        113
+      ],
+      [
+        "USER",
+        114
+      ],
+      [
+        "USER",
+        124
+      ],
+      [
+        "USER",
+        125
+      ],
+      [
+        "USER",
+        135
+      ],
+      [
+        "USER",
+        136
+      ],
+      [
+        "USER",
+        173
+      ],
+      [
+        "USER",
+        236
+      ],
+      [
+        "USER",
+        430
+      ]
+    ],
+    "segments": [
+      {
+        "offset": 512,
+        "bytes": 5972,
+        "flags": 7504,
+        "allocation": 5972
+      },
+      {
+        "offset": 7168,
+        "bytes": 1071,
+        "flags": 3153,
+        "allocation": 1088
+      }
+    ]
+  },
+  "all_imports_exist_in_Windows30": true,
+  "shell_file_present": false
+}

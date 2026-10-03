@@ -1,0 +1,28 @@
+{
+  "checked_utc": "2026-10-03",
+  "package_sha256": "d3076315bf05055b47fb0629930c4d3de83ce87654b0f52e2c339c0356885a85",
+  "package_bytes": 55825,
+  "package_manifest_entries_verified": 54,
+  "fresh_rebuilds": [
+    {
+      "file": "BIN/DROPRX.EXE",
+      "sha256": "5f40a94d20d60d6162dcde8ebb67f77efdb1e19cc49b9e2031625a63f41a640a",
+      "bytes": 8239,
+      "fresh_rebuild_exact": true
+    },
+    {
+      "file": "BIN/DROPTX.EXE",
+      "sha256": "3177ede0941ea158d63887436921a24fb04f580631f928d31732cc618687ab63",
+      "bytes": 9407,
+      "fresh_rebuild_exact": true
+    },
+    {
+      "file": "BIN/TDROP.LIB",
+      "sha256": "be5db6a779b3320b8f2b7f00d29974c08b6555a031ba3c5e88ce7b68baf577e4",
+      "bytes": 3599,
+      "fresh_rebuild_exact": true
+    }
+  ],
+  "native_acceptance": "preserved final evidence; not rerun during publication",
+  "ci": "no pull-request workflow configured; not a pass"
+}
