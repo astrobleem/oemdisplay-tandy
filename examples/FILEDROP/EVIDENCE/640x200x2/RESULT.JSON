@@ -1,0 +1,11 @@
+{
+  "returncode": 0,
+  "logs": {
+    "DROPRX.LOG": "UNIT PASS\nPASS real mode\nSTYLE bit retained\nSHELL not loaded\nRECEIVED\nC:\\DROP.TXT\nC:\\SECOND.TXT\nReceived path(s)\nUNIT PASS\nPASS real mode\nSTYLE bit retained\nSHELL not loaded\nCROSS TASK PASS\n",
+    "DROPTX.LOG": "UNIT PASS\nPASS real mode\nSTYLE bit retained\nSHELL not loaded\nDrag to receiver\nCancelled\nESCAPE PASS\nDrag to receiver\nCancelled\nCANCELMODE PASS\nCLOSED TARGET PASS\nQUEUE FAILURE PASS\nCROSS TASK POST PASS\n"
+  },
+  "dos_return": true,
+  "guest": "/workspace/shared/tandy-modes-installed-6402/guest",
+  "cpu": "8086_prefetch",
+  "memory": 640
+}

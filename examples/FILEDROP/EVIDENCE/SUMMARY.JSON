@@ -1,0 +1,76 @@
+{
+  "modes": [
+    {
+      "mode": "160x200x16",
+      "automated_cross_task": "pass",
+      "cancel_escape": "pass",
+      "cancel_mode": "pass",
+      "closed_target": "pass",
+      "queue_failure": "pass",
+      "dos_return": true,
+      "native_8086_real_mode": true,
+      "physical_mouse_test": "not_run",
+      "physical_tandy_test": "not_run"
+    },
+    {
+      "mode": "320x200x16",
+      "automated_cross_task": "pass",
+      "cancel_escape": "pass",
+      "cancel_mode": "pass",
+      "closed_target": "pass",
+      "queue_failure": "pass",
+      "dos_return": true,
+      "native_8086_real_mode": true,
+      "physical_mouse_test": "not_run",
+      "physical_tandy_test": "not_run"
+    },
+    {
+      "mode": "320x200x4",
+      "automated_cross_task": "pass",
+      "cancel_escape": "pass",
+      "cancel_mode": "pass",
+      "closed_target": "pass",
+      "queue_failure": "pass",
+      "dos_return": true,
+      "native_8086_real_mode": true,
+      "physical_mouse_test": "not_run",
+      "physical_tandy_test": "not_run"
+    },
+    {
+      "mode": "640x200x4",
+      "automated_cross_task": "pass",
+      "cancel_escape": "pass",
+      "cancel_mode": "pass",
+      "closed_target": "pass",
+      "queue_failure": "pass",
+      "dos_return": true,
+      "native_8086_real_mode": true,
+      "physical_mouse_test": "not_run",
+      "physical_tandy_test": "not_run"
+    },
+    {
+      "mode": "640x200x2",
+      "automated_cross_task": "pass",
+      "cancel_escape": "pass",
+      "cancel_mode": "pass",
+      "closed_target": "pass",
+      "queue_failure": "pass",
+      "dos_return": true,
+      "native_8086_real_mode": true,
+      "physical_mouse_test": "not_run",
+      "physical_tandy_test": "not_run"
+    }
+  ],
+  "rebuild_bit_identical": true,
+  "cpu": "8086_prefetch",
+  "memory_kb": 640,
+  "xms": false,
+  "ems": false,
+  "umb": false,
+  "unmodified_file_manager_integration": false,
+  "builds": {
+    "DROPTX.EXE": "3177ede0941ea158d63887436921a24fb04f580631f928d31732cc618687ab63",
+    "DROPRX.EXE": "5f40a94d20d60d6162dcde8ebb67f77efdb1e19cc49b9e2031625a63f41a640a",
+    "TDROP.LIB": "be5db6a779b3320b8f2b7f00d29974c08b6555a031ba3c5e88ce7b68baf577e4"
+  }
+}

@@ -1,0 +1,29 @@
+MEASURED TEST RESULTS
+
+All five display profiles passed the final automated two-task proof:
+160x200x16, 320x200x16, 320x200x4, 640x200x4 and 640x200x2.
+Each used Windows 3.0 /R, 640 KB, 8086_prefetch, no EMS/XMS/UMB.
+Receiver and sender were separate executables/tasks. Both fixture paths
+arrived. Escape, WM_CANCELMODE, already-closed target and full message queue
+were checked with explicit PASS results. Packet validation/query/count/
+truncation/nonclient behavior and 100 allocate/free repetitions passed.
+The sender exited after posting; receiver retained/read/freed the shared
+packet. Windows then returned normally to DOS.
+
+A fresh rebuild was byte-identical for both EXEs and TDROP.LIB. The NE/import
+audit passed against the installed Windows 3.0 KERNEL/USER/GDI binaries.
+All final tests were rerun after correcting the test runner's false-positive
+matching of the phrase QUEUE FAILURE PASS.
+
+LIMITATIONS
+These are timer-driven and programmatic Win16 tests. The successful drop
+uses the normal pack/post/query/free path, but does not synthesize a physical
+mouse drag through the driver. Real mouse gestures, capture theft by another
+task, allocation/lock-failure injection, receiver crash after a successful
+post and physical Tandy hardware remain unverified. The cloud desktop was
+unavailable for the interactive gesture pass. Screens are native captured
+emulator output from automated runs.
+
+This custom acceptance property is a cooperating-application proof. It does
+not turn stock Windows 3.0 File Manager into a Windows 3.1 sender, export
+SHELL ordinals, port Win32 WinFile, or alter the system installation.

@@ -1,0 +1,1 @@
+Read-only drop fixture. File transfer displays its path only.
