@@ -1,0 +1,2 @@
+PASS: launch, score, left/right, return, walls, drains, limit, replay, 20000 stress ticks
+COMPLETE=1

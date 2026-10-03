@@ -1,0 +1,77 @@
+Host review run UTC: 2026-10-02T23:12:48.919741+00:00
+Compiler: gcc (Debian 14.2.0-19) 14.2.0
+Source SHA256:
+PHYSICS.H: 478e0299eca58b11161a06223a5ac964b914e44450633913fb333da1668d8785
+PINBALL.C: edf7448adc3e511f8513f1ff1b1ddb879d6b55c83bbae2a580ebe97de89587f5
+TEST.C: f576db72f31fb0ae0aac49fff649b5beea1cbec265655b2796c37562c43631ef
+
+Tiny Pinball source and host physics review
+
+Scope
+PHYSICS.H, PINBALL.C and TEST.C were read. No GUI, DOSBox, native
+Windows or physical-hardware test was performed in this review.
+Host tests are additional evidence, not proof of 16-bit or GDI behavior.
+
+Results
+- Repository TEST.C: all tests passed, including 2,000,000 stress ticks,
+  under GCC C89 with undefined-behavior checks and fail-on-error enabled.
+- FUZZ.C: 45,000,000 schedule ticks passed position, velocity, and score
+  bounds. Five 1,000,000-tick schedules cover idle, left, right, both, and
+  alternating randomized controls. Another 40,000,000 ticks cover 200
+  deterministic xorshift32 seeds with controls held for 1-40 ticks.
+- No unchanged-position streak occurred in the five fixed schedules.
+  The longest above-flipper-zone streak in the varied schedules was
+  229 ticks. The detector fails at >1000 such ticks; this is a heuristic
+  for a suspected trap, not a completeness proof for all possible orbits.
+- The exact axis-aligned bumper regression escaped its top lane in
+  27 ticks. All published logs identify the source hashes tested.
+
+Findings and fixes verified by source review
+1. Original axis-aligned bumper contact with vx=0 could bounce forever
+   between bumper and ceiling, unreachable by flippers. Fixture:
+   live=1, bx=42*Q, by=26*Q, vx=0, vy=50. The original stayed live for
+   20,000 ticks without descending below y26.39. The added deterministic
+   sideways nudge and new regression eliminate that fixture's trap.
+2. Original 10-pixel footer spacing and 13-pixel HUD dirty height assumed
+   a small font. With the EGA 14-pixel fixed font, footer text could overlap
+   and the score's bottom pixels could remain stale. Current source uses
+   one footer, board origin 17, HUD invalidation bottom 17 and outer height 198.
+   Actual font metrics and 160x200 visibility still require GUI verification.
+3. Original alias handling released a flipper when either corresponding
+   key was released, even if the other remained held. Current lmask/rmask
+   bits keep Z/Left and slash/Right independently pressed. Focus loss
+   clears both masks and pauses. This fix was source-reviewed, not exercised
+   through native keyboard messages by this review.
+
+Arithmetic and collision review
+- Current normal game coordinates stay around 9,000 Q6 units, below the
+  signed 16-bit limit. Segment length squares are at most 1568; circle and
+  capsule squared distances are bounded by their axis early-outs.
+- Projection and reflection products that can exceed 16-bit use long.
+  Long intermediates remain within signed 32-bit range for this geometry.
+  Score is long and capped at 999990 in increments of 10. No evident
+  16-bit overflow was found, but a 32/64-bit host sanitizer cannot itself
+  establish Microsoft C 6 integer-model correctness.
+- New segment AABB early-outs are conservative. Four substeps cap motion
+  at 1.75 pixels per axis per substep (about 2.475 pixels diagonally), with
+  five-pixel capsule radii and eleven-pixel bumper contact radii. No
+  tunneling or boundary escape was observed in these schedules. The
+  algorithm is discrete rather than swept collision detection.
+- Ball dirty rectangles include old/new ellipse extents. Flipper dirty
+  bounds cover every angle. Launch, drain, pause and focus-loss state
+  transitions invalidate the whole client area. The revised score region
+  covers a 14-pixel font starting at y1.
+
+Cooperative Windows review
+A 55ms window timer advances exactly four bounded substeps per delivered
+message, with no wall-clock catch-up loop. Painting occurs through
+WM_PAINT and dirty invalidation; focus loss or iconification stops active
+simulation. This is cooperative-friendly structurally. Actual 8088
+frame rate, UI responsiveness and GDI costs need native measurement.
+
+Remaining limitations
+No blocking source defect remains from this review. Windows font/layout,
+keyboard integration, native 16-bit execution and physical Tandy behavior
+must be described according to their separate evidence. The host fuzz
+harness is C99 because it uses uint32_t for a reproducible PRNG; the game
+and its own TEST.C remain C89/Microsoft C 6-oriented.

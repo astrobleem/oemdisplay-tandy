@@ -1,0 +1,8 @@
+source_sha256=0d3bab6870eca0bc011bc9887865b9fb206228307ee52756de57c0a522afb644
+DC failure: board=0 screen_background_fills=1
+bitmap failure: board=0 deleted_dc=1 screen_background_fills=1
+select failure: board=0 oldbits=0 attempted_invalid_copy=0 screen_background_fills=1
+copy failure: board=100 copy_calls=1 screen_background_fills=1
+cache clear failure: board=0 copy_calls=0 screen_background_fills=1
+normal lifecycle: dc_allocations=1 bitmap_allocations=1 dc_deletes=1 bitmap_deletes=1 board_after_free=0
+PASS: all six stub control-flow cases
