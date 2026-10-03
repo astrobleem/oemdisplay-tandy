@@ -1,0 +1,1463 @@
+{
+  "passed": 243,
+  "checks": [
+    {
+      "name": "I100",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I100",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I100",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I100",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I101",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I101",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I101",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I101",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I110",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I110",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I110",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I110",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I111",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I111",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I111",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I111",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I200",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I200",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I200",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I200",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I201",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I201",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I201",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I201",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I210",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I210",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I210",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I210",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I211",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I211",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I211",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I211",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I300",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I300",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I300",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I300",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I301",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I301",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I301",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I301",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I310",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I310",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I310",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I310",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I311",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I311",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I311",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I311",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I400",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I400",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I400",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I400",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I401",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I401",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I401",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I401",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I410",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I410",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I410",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I410",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I411",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I411",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I411",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I411",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I700",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I700",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I700",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I700",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I701",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I701",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I701",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I701",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I710",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I710",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I710",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I710",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I711",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I711",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I711",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I711",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I800",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I800",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I800",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I800",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I801",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I801",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I801",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I801",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I810",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I810",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I810",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I810",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I811",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I811",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I811",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I811",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I900",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I900",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I900",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I900",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I901",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I901",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I901",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I901",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I910",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I910",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I910",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I910",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I911",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I911",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I911",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I911",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1700",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1700",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1700",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1700",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1701",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1701",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1701",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1701",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1710",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1710",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1710",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1710",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1711",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1711",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1711",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I1711",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20000",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20000",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20000",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20000",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20001",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20001",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20001",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20001",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20010",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20010",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20010",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20010",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20011",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20011",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20011",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "I20011",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND0",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND0",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND0",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND0",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND1",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND1",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND1",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND1",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND2",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND2",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND2",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "RAND2",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "DEFER",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "DEFER",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "DEFER",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "DEFER",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID0",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID0",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID0",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID0",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID1",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID1",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID1",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID1",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID255",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID255",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID255",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "SOLID255",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "TEST",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "TEST",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "TEST",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "TEST",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "COMMENT",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "COMMENT",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "COMMENT",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "COMMENT",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "GCE",
+      "mode": 2,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "GCE",
+      "mode": 4,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "GCE",
+      "mode": 5,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "GCE",
+      "mode": 16,
+      "valid": true,
+      "diagnostic": ""
+    },
+    {
+      "name": "TR000",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Not GIF87a/GIF89a"
+    },
+    {
+      "name": "TR001",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Not GIF87a/GIF89a"
+    },
+    {
+      "name": "TR002",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Not GIF87a/GIF89a"
+    },
+    {
+      "name": "TR003",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Not GIF87a/GIF89a"
+    },
+    {
+      "name": "TR004",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Not GIF87a/GIF89a"
+    },
+    {
+      "name": "TR005",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Not GIF87a/GIF89a"
+    },
+    {
+      "name": "TR006",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated screen"
+    },
+    {
+      "name": "TR007",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated screen"
+    },
+    {
+      "name": "TR008",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated screen"
+    },
+    {
+      "name": "TR009",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated screen"
+    },
+    {
+      "name": "TR010",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated screen"
+    },
+    {
+      "name": "TR011",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated screen"
+    },
+    {
+      "name": "TR012",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated screen"
+    },
+    {
+      "name": "TR013",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR014",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR015",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR016",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR017",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR018",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR019",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR020",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR021",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR022",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR023",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR024",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated palette"
+    },
+    {
+      "name": "TR025",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Missing GIF trailer"
+    },
+    {
+      "name": "TR026",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated image descriptor"
+    },
+    {
+      "name": "TR027",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated image descriptor"
+    },
+    {
+      "name": "TR028",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated image descriptor"
+    },
+    {
+      "name": "TR029",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated image descriptor"
+    },
+    {
+      "name": "TR030",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated image descriptor"
+    },
+    {
+      "name": "TR031",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated image descriptor"
+    },
+    {
+      "name": "TR032",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated image descriptor"
+    },
+    {
+      "name": "TR033",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated image descriptor"
+    },
+    {
+      "name": "TR034",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated image descriptor"
+    },
+    {
+      "name": "TR035",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Invalid LZW minimum"
+    },
+    {
+      "name": "TR036",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Missing initial clear"
+    },
+    {
+      "name": "TR037",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Missing initial clear"
+    },
+    {
+      "name": "TR038",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated LZW stream"
+    },
+    {
+      "name": "TR039",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated LZW stream"
+    },
+    {
+      "name": "TR040",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated LZW stream"
+    },
+    {
+      "name": "TR041",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Truncated LZW stream"
+    },
+    {
+      "name": "TR042",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Data after LZW end"
+    },
+    {
+      "name": "TR043",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Missing GIF trailer"
+    },
+    {
+      "name": "TRAIL",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Trailing data"
+    },
+    {
+      "name": "ANIM",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Multiple images unsupported"
+    },
+    {
+      "name": "TRANS",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Transparency unsupported"
+    },
+    {
+      "name": "APP",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Application/text extensions unsupported"
+    },
+    {
+      "name": "SUBRECT",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Subrect images unsupported"
+    },
+    {
+      "name": "WIDTH",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Limit is 320 by 200"
+    },
+    {
+      "name": "ZERO",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Limit is 320 by 200"
+    },
+    {
+      "name": "MIN1",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Invalid LZW minimum"
+    },
+    {
+      "name": "MIN9",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Invalid LZW minimum"
+    },
+    {
+      "name": "NOCLR",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Missing initial clear"
+    },
+    {
+      "name": "BADCODE",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Invalid first LZW code"
+    },
+    {
+      "name": "SHORTPIX",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Wrong pixel count"
+    },
+    {
+      "name": "LONGPIX",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Too many pixels"
+    },
+    {
+      "name": "BADPAL",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Pixel outside palette"
+    },
+    {
+      "name": "CAP",
+      "mode": 16,
+      "valid": false,
+      "diagnostic": "Input exceeds 256 KB"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "profile": "6402",
+  "output_drive": "C",
+  "status": "finished",
+  "log": "329 BEGIN automated native UI test\n549 START helper\n933 PASS helper controls fit\n1043 PASS native conversion\n2197 Paintbrush - TEST.BMP\n2197 PAINT_CLIENT 96 64\n2197 PASS opened BMP\n2471 EDIT native Paste of 8x8 white bitmap\n2746 SAVE command\n2856 CLOSE after save\n4558 Paintbrush - TEST.BMP\n4558 PASS reopened edited BMP\n4888 SAVE reopened BMP\n5108 PASS workflow; verify pixels externally\n",
+  "accepted": true,
+  "exe_sha256": "b8de9ba5523a3cdda02cb746d087e92beb020bc4dd42bd108910a4dda2139683",
+  "test_exe_sha256": "f245e94459390a5d8dfb60e0f41a4d8f903a64e8c682a1ea8f1203899a78c750",
+  "cpu": "8086_prefetch",
+  "base_memory_kb": 640,
+  "ems_xms_umb": false,
+  "interaction": "Automated Windows messages; Edit Paste of guest clipboard bitmap",
+  "changed_pixels": 64,
+  "changed_bbox": [
+    0,
+    0,
+    7,
+    7
+  ],
+  "reopen_pixels_compared": 6144,
+  "reopen_mismatches": 0
+}
