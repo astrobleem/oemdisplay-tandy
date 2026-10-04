@@ -263,10 +263,6 @@ tcr_again:
     call tc_draw
     pushf
     cli
-    cmp tc_pending,0
-    je tcr_release
-    popf
-    jmp tcr_again
 tcr_release:
     mov tc_busy,0
     popf

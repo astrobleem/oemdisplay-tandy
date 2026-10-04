@@ -1,0 +1,38 @@
+{
+  "CGA.GR2": {
+    "bytes": 2104,
+    "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+  },
+  "CGALOGO.LGO": {
+    "bytes": 880,
+    "sha256": "d9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807"
+  },
+  "TNDYLOGO.RLE": {
+    "bytes": 5930,
+    "sha256": "e7a9c043ce3b9f9c78f7ff38bc68d211a0da32462e036abb7135f0602194f083"
+  },
+  "EGASYS.FON": {
+    "bytes": 5328,
+    "sha256": "8bd307d7886d0f2fdfc1de3da8253e294233d1c757fd9131a66405fca5825b09"
+  },
+  "EGAFIX.FON": {
+    "bytes": 4656,
+    "sha256": "6df45a74e5756dd0746bcee593be9ac4df4a35458c26bf4570b748def2d394cb"
+  },
+  "EGAOEM.FON": {
+    "bytes": 4576,
+    "sha256": "05bd6ef11802bbca20473b0e409116fd8919c5bbcbbbc26b7ee2ea1f33ad23be"
+  },
+  "CGASYS.FON": {
+    "bytes": 4368,
+    "sha256": "baf8fa607806d949dfb6992113ce93494678abdef07783b22222b62e5de28ef4"
+  },
+  "CGAFIX.FON": {
+    "bytes": 4208,
+    "sha256": "b0c043a65e2b551bce3c77d25921394dfd2533f50633bc129abd240c7aeb5f89"
+  },
+  "CGAOEM.FON": {
+    "bytes": 4576,
+    "sha256": "1a86d9e42c73ccefcbc82c822abe8dbcd61cf0116454f213c3a95f4d7436cd0d"
+  }
+}

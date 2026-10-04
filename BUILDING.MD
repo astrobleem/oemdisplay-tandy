@@ -1,3 +1,8 @@
+Development source update (2026-10-04): the current BUILD88 pipeline produces
+new experimental drivers; existing package binaries and exact packaging pins
+remain unchanged. Read docs/TRIAL4/README.MD for build identities, tested scope,
+trial overlays and rollback. A successful rebuild is not package acceptance.
+
 # Developer builds and package verification
 
 Normal users download the ready-to-use `TANDY88.ZIP`, extract `DISK1`, and follow
@@ -35,8 +40,10 @@ Omitting `--mode` means `320x200x16`; specifying that value is equivalent.
 Each build stages its changes instead of modifying the source baseline. An
 unsupported profile or existing output directory is rejected. Check `RESULT.json`,
 the 27-object instruction/link audit and the output SHA256; building alone is
-not runtime acceptance. All five fresh rebuilds matched the checked-in driver
-bytes in [docs/modes/REBUILD.JSON](docs/modes/REBUILD.JSON).
+not runtime acceptance. The current development outputs are pinned in
+[docs/TRIAL4/BUILDS.JSN](docs/TRIAL4/BUILDS.JSN). The older five-mode rebuild
+record in [docs/modes/REBUILD.JSON](docs/modes/REBUILD.JSON) verified the
+historical base/package source; it does not describe these updated outputs.
 
 See `src/tandysw/README.md`, `STATUS88.TXT` and `RESERVE.MD` for prerequisites,
 provenance and acceptance limits. Packaging never silently rebuilds a missing

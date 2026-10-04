@@ -1,0 +1,74 @@
+{
+  "base_commit": "ca795d46329cfdf1dd62be935078534ed4ac4129",
+  "scope": "Development builds; existing packaged drivers and packaging pins unchanged.",
+  "profiles": {
+    "320x200x16": {
+      "driver": "TANDY88.DRV",
+      "trial_alias": "TR43216.DRV",
+      "bytes": 54864,
+      "sha256": "a22f0d75ec8864e7af65e922cdc2083ce225b19096dfa7c2e416c4e3f1276b61",
+      "staged_source_sha256": {
+        "TSOFT.ASM": "2eec973b3603bc9591abc855948459181054220f925e5cb2c6e9d74f9b13a513",
+        "TCURSOR.ASM": "0ba78064a34225c84aed1e767766d7cdf325cf73a2437d0d9c5e69331909b85b"
+      },
+      "hardware_status": "User-reported Paintbrush and TSHELL load; installed hash not read back"
+    },
+    "640x200x4": {
+      "driver": "TNDY6404.DRV",
+      "trial_alias": "TR46404.DRV",
+      "bytes": 53776,
+      "sha256": "2864d96a1efe3ab010aeb4cbd6377b0a6e6e0d44ca14f7dbbb43c3dcee249917",
+      "staged_source_sha256": {
+        "TSOFT.ASM": "fe08b58f1b925365a9e49efd98851d262edf3e0fec10f998855c9fca391c15cd",
+        "TCURSOR.ASM": "e90de1336296b9112d0704af113a0de6e9a85fc17f893acb9b587fdf7c11e9af"
+      },
+      "hardware_status": "Not physically verified for this exact Output build"
+    },
+    "160x200x16": {
+      "driver": "TNDY160.DRV",
+      "trial_alias": "TR41616.DRV",
+      "bytes": 54848,
+      "sha256": "a35a007342709c676386a9a1059a6ca9c7d166a416fe1b7f9ef98e03a9479c95",
+      "staged_source_sha256": {
+        "TSOFT.ASM": "d513690cf6f820fa5ffb498bdebefc08b3957320029ebac9cbb735f98e64256f",
+        "TCURSOR.ASM": "e287816ebec55d3b0d0048b7f6bab7e4c7e049ee1bd93c656a228505d5eb9fc1"
+      },
+      "hardware_status": "Not physically verified for this exact Output build"
+    },
+    "320x200x4": {
+      "driver": "TNDY3204.DRV",
+      "trial_alias": "TR43204.DRV",
+      "bytes": 54000,
+      "sha256": "332c706c346c1e3bc7f5b2619042f29d6233e08565f8022a6e57b5134973e474",
+      "staged_source_sha256": {
+        "TSOFT.ASM": "94e59cd37ca8642da8f2abf2e487ac4ef5dbf8ad3e42e668d8b5e712b830dc81",
+        "TCURSOR.ASM": "970c6e42b1a1bcc3f40b9761a7b44a653d1cfa2c736726cd65d5bfad197bf3d3"
+      },
+      "hardware_status": "Not physically verified for this exact Output build"
+    },
+    "640x200x2": {
+      "driver": "TNDY6402.DRV",
+      "trial_alias": null,
+      "bytes": 53600,
+      "sha256": "8fe8cb59f0c9f0a675d5feb822cb2478264e0ce1f9e9e6acc090f419f698cd46",
+      "staged_source_sha256": {
+        "TSOFT.ASM": "447788c01cfbb0dd3ffa7c7e46ad4b6c29984cabc1e593e6470351e03ec8b40e",
+        "TCURSOR.ASM": "27db0cd8a938c42317b7d7fd6d0cf5b29c72aca7bff45802bfa569a969fb3b8c"
+      },
+      "hardware_status": "Not physically verified for this exact Output build"
+    }
+  },
+  "source_files": {
+    "src/tandysw/BUILD88.PY": "6e08651e6d0451bda33beb02619641a22939af42898f5411230565eb79152b31",
+    "src/tandysw/MONOCOL.PY": "1a41091072fbc7ba3bb9c00a6278d4aa1558104d8d51c49b489f6b2e52390775",
+    "src/tandysw/TCURSOR.ASM": "a0c47b8908dada271ec49b8848c28092a614e951f167cafd539c25a75ad8907d",
+    "src/tandysw/V1.ASM": "3781fd527d0b854965e8135703bebb040472c96ba12617dde8c8721f2b841e03",
+    "src/tandysw/REPCOPY88.PY": "62fde9f6c0f97b76d097bcd6ce55e362a06af227982a04933754df0aff4ee215",
+    "src/tandysw/BYTECOL.PY": "2801ba449f3906bd6df208dce5e323538862289f859dc4e391bf39ef289a9337",
+    "src/tandysw/CURKEEP.PY": "4e076da4136939ead43dc2997c205bf53929d15bf37256bdd5d6510c69555f01",
+    "src/tandysw/OUTROWS.PY": "ec783c4b0cbf4dfaca5fd245ce6dab0b40f16732937e4563873fcf50b51c6ef8",
+    "src/tandysw/TSTREP88.PY": "c5cc07cb0d44e838855ac179a51869b1a05adbdd0a5ed26a6e57abe4022876e6",
+    "src/tandysw/TSTCOL.PY": "72d93abec03991df444741eaea56689fc36456786ffae62fca3c152c48938568",
+    "src/tandysw/VERKEEP.PY": "3fa30c259898f2c639118d1ac1dd409c0cd3f2a1f872c8f27393d1c1f771acd6"
+  }
+}

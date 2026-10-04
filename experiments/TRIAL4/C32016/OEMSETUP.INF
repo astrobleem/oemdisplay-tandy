@@ -1,0 +1,14 @@
+; PRIVATE TRIAL 4 COLOR: frozen synchronous optimized driver.
+; Existing staging markers do not validate this modified trial source.
+[data]
+Version = "3.0"
+[disks]
+a = ., "Tandy EX/HX TRIAL 4 COLOR 32016", OEMSETUP.INF
+[display]
+TR43216 = a:TR43216.DRV, "Tandy EX/HX 320x200 16 colors (TRIAL 4 COLOR)", "133,96,72", a:CGA.GR2, a:CGALOGO.LGO,,,, a:TNDYLOGO.RLE
+[sysfonts]
+a:EGASYS.FON, "EGA System Font", "133,96,72"
+[fixedfonts]
+a:EGAFIX.FON, "EGA Fixed System Font", "133,96,72"
+[oemfonts]
+a:EGAOEM.FON, "EGA Terminal Font (USA/Europe)", "133,96,72", 1
