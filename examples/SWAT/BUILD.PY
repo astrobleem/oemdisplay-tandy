@@ -11,7 +11,7 @@ if out.exists():p.error('--out must be new')
 for n in ('BIN/CL.EXE','BIN/LINK4.EXE','LIB/SLIBCEW.LIB','LIB/LIBW.LIB'):
  if not (repo/n).is_file():p.error('Missing existing toolchain input: '+n)
 out.mkdir(parents=True)
-for n in ('SWAT.C','GAME.H','SWAT.DEF','SWAT.RSP','BUILD.BAT'):
+for n in ('SWAT.C','GAME.H','SWATCUR.H','SWAT.DEF','SWAT.RSP','BUILD.BAT'):
  shutil.copyfile(Path(__file__).parent/n,out/n)
 config="""[sdl]
 fullscreen=false
