@@ -1,0 +1,97 @@
+TANDY START 06 - WINDOWS 3.0 REAL MODE / 8086
+
+New controls
+- Start / System / About This Tandy opens the existing Tandy information app.
+- Double-click only the clock area to open Windows CLOCK.EXE. If Clock is
+  absent, CALENDAR.EXE is used. A missing app gets a compact message.
+- Optional Matrix idle saver observes keyboard and mouse activity across
+  Windows applications. It starts after five minutes of quiet input by
+  default. A key or mouse gesture dismisses it. This is not a password lock.
+
+Keep your working TSTART05 package and installed TSHELL files as backups.
+This update does not install a display or sound driver.
+
+Upgrade the working TSTART05 installation, from DOS after exiting Windows
+1. Make a separate C:\TSUPD06 folder. Put the current TSHELL.EXE, TSINPUT.DLL
+   and ../MATRIX/MATRIX.EXE there with ADDON.INI. Keep the working C:\TSTART
+   folder and its working launcher/configuration.
+2. Preserve C:\WINDOWS\TSHELL.EXE and TSHELL.INI in unused backup names.
+   If TSINPUT.DLL already exists there, preserve it too. Also preserve any
+   existing C:\TSTART\MATRIX.EXE in an unused backup before the next step.
+3. Copy these new files:
+   COPY C:\TSUPD06\TSHELL.EXE C:\WINDOWS\TSHELL.EXE
+   COPY C:\TSUPD06\TSINPUT.DLL C:\WINDOWS\TSINPUT.DLL
+   COPY C:\TSUPD06\MATRIX.EXE C:\TSTART\MATRIX.EXE
+4. Open C:\WINDOWS\TSHELL.INI in your editor and add the settings in ADDON.INI.
+   Merge keys into an existing section if it is already present; do not add
+   duplicate sections. Retain your existing Sounds and Startup settings.
+   Missing ScreenSaver settings mean disabled. Do not replace TSHELL.INI
+   with ADDON.INI, which contains only the new settings.
+5. Use your existing, working C:\TSTART\TSTART command. Do not run SHELLSEL
+   manually as the normal routine. This update does not replace your
+   TSTART.BAT, RECOVER.BAT, SHELLSEL.EXE, RESERVE.COM or sound companions.
+
+Preserve the existing working launcher, configuration and reservation path.
+Keep any separate original on-demand Matrix installation unchanged.
+
+Configuration in C:\WINDOWS\TSHELL.INI
+[Apps]
+System=C:\TANDYLAB\ABOUT\TABOUT.EXE
+[ScreenSaver]
+Enabled=1
+IdleSeconds=300
+Program=C:\TSTART\MATRIX.EXE
+
+Set Enabled=0 to disable the idle saver. IdleSeconds accepts 10 through 3600;
+300 is five minutes. Program is the full DOS path to this update's Matrix
+variant; TSHELL supplies /S. The Apps/System command can be changed to another
+installed copy of About This Tandy. Keep full DOS 8.3 paths without spaces.
+Changes are read next time the shell starts. System is read when selected.
+
+Safe idle behavior
+Only the selected TSHELL shell starts the idle observer; running the bar as
+an ordinary Program Manager app does not install it. The observer is a small
+fixed-code Win3.0 DLL using the documented global journaling-record hook.
+It keeps activity/held-input state in memory and does not save typed content.
+Launches happen in the shell's normal timer, never inside the global hook.
+The saver arms only after the hook has observed genuine Windows input. A
+completely untouched boot may therefore wait for the first mouse move or key.
+After a detected DOS/system-modal interruption, complete a new key or button gesture;
+then the full idle interval starts again. This avoids using stale held state.
+Ordinary polling does not call GetAsyncKeyState. Physical baselines at install
+and exceptional resynchronization do clear that API's shared pressed-since-
+last-call bits; no such baseline is taken from within the hook.
+
+The saver waits during startup sounds, shell menus/dialogs, mouse capture,
+held input and system-modal activity. Known PSG/MIDI tools also pause idle
+launches while their windows are present. An already running Matrix prevents
+a duplicate. Following suspended DOS or a long scheduling pause, a fresh idle
+interval is required. The owner compares DOS time against Windows ticks to
+recognize suspended Windows time. Midnight or clock changes also reset
+conservatively. Input arriving while the saver loads cancels it.
+
+The wake gesture is consumed while Matrix retains focus/capture. A held wake
+key/button is allowed to release before focus returns to the prior app.
+Forced deactivation or shutdown releases ownership without stealing it back.
+No cooperative Windows program can guarantee a response while another task
+never yields, or prevent input delivery after it has lost capture/focus.
+
+Recovery after interruption
+Before any direct Windows start following an interrupted TSTART session, run:
+C:\TSTART\RECOVER
+Keep the TSHELL journal and backup sidecars if recovery reports a problem.
+Recovery changes the shell setting while preserving unrelated current INI
+edits. Never replace the entire current SYSTEM.INI with an old TSHELL.BAK.
+Your existing accepted Windows launcher remains the normal Program Manager
+entry after recovery. Do not start Windows until reservation succeeds.
+
+Original features retained
+Read-only Programs group paging, saved command arguments and working
+directories, Run/Browse, startup sound selection and shutdown/veto behavior
+remain. Program Manager remains the editor for its groups. The existing DOS
+selector, batches, TCHIME, XPCHIME and TEXIT binaries are unchanged.
+
+Verification
+See TESTS.MD for the exact candidate and measured scope. Earlier acceptance of
+TSTART05 and the original on-demand Matrix does not qualify these new hooks
+and controls on physical hardware. This build needs its own physical test.

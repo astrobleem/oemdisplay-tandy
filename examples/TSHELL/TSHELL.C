@@ -1,13 +1,22 @@
-/* TSHELL: optional 8086 Windows 3.0 launcher. No desktop hooks. */
+/* TSHELL: optional 8086 Windows 3.0 launcher. Optional global idle observation in TSINPUT.DLL. */
 #define WINVER 0x0300
 #include <windows.h>
 #include <dos.h>
 #include <direct.h>
+#include "PROGMENU.H"
+#include "TSBOOT.H"
+#include "TNOTICE.H"
+#include "TSAUX.H"
+#include "TSSAVER.H"
 #define START 1
 #define FIRSTAPP 20
 #define EXITWIN 40
 #define CLOSEAPP 41
 #define RUNAPP 42
+#define PROGRAMS 43
+#define EXITSILENT 44
+#define ABOUTSYS 45
+#define STARTBOOT (WM_USER+3)
 #define RUNEDIT 100
 #define RUNMAX 126
 #define BROWSE 101
@@ -20,14 +29,14 @@ static char FAR *browseDirs;
 static char *masks[]={"*.EXE","*.COM","*.BAT"};
 static HINSTANCE instance;
 static HWND start;
-static int shellMode, width, barHeight=22, minute=-1;
+static int primaryShell, shellMode, width, barHeight=22, minute=-1;
 static char clockText[6]="--:--";
-static char *names[]={"&Program Mgr","&Notepad","&Paintbrush","&Cookie","&About Tandy","&Slosh","&Mouth"};
-static char *files[]={"PROGMAN.EXE","NOTEPAD.EXE","PBRUSH.EXE","COOKIE.EXE","TABOUT.EXE","SLOSH.EXE","MOUTH.EXE"};
-static char paths[7][144];
+static char *names[]={"&Program Mgr"};
+static char *files[]={"PROGMAN.EXE"};
+static char paths[1][144];
 static void findapps(void) {
  OFSTRUCT of;int i;char path[144];
- for(i=0;i<7;i++){
+ for(i=0;i<1;i++){
   paths[i][0]=0;
   /* OpenFile performs the Windows search, and returns its resolved path. */
   if(OpenFile(files[i],&of,OF_EXIST)!=HFILE_ERROR)lstrcpy(paths[i],of.szPathName);
@@ -44,25 +53,28 @@ static void clockread(HWND w) {
 }
 static void launch(HWND w,int i) {
  UINT result;HWND manager;char message[80];
- if(i<0||i>=7)return;
- if(!paths[i][0]){MessageBox(w,"App not found.","Start",MB_OK|MB_ICONEXCLAMATION);return;}
+ if(i<0||i>=1)return;
+ if(!paths[i][0])findapps();
+ if(!paths[i][0]){TinyNotice(w,instance,"Start","App not found.");return;}
  result=WinExec(paths[i],SW_SHOWNORMAL);
  if(result>=32&&i==0){manager=FindWindow("Progman",NULL);if(manager){ShowWindow(manager,SW_RESTORE);BringWindowToTop(manager);}}
- if(result<32){wsprintf(message,"Launch failed.\nError %u.",result);MessageBox(w,message,"Start",MB_OK|MB_ICONEXCLAMATION);}
+ if(result<32){wsprintf(message,"Launch failed.\nError %u.",result);TinyNotice(w,instance,"Start",message);}
 }
 static void popup(HWND w) {
- HMENU menu;RECT r;int i,y,h;
+ HMENU menu,system;RECT r;int y,h;
  SetActiveWindow(w);SetFocus(w);findapps();menu=CreatePopupMenu();if(!menu)return;
+ AppendMenu(menu,MF_STRING,PROGRAMS,"&Programs...");
  AppendMenu(menu,MF_STRING,RUNAPP,"&Run...");
- for(i=0;i<7;i++)AppendMenu(menu,MF_STRING|(paths[i][0]?0:MF_GRAYED),FIRSTAPP+i,names[i]);
+ system=CreatePopupMenu();
+ if(system){AppendMenu(system,MF_STRING,ABOUTSYS,"&About This Tandy");AppendMenu(menu,MF_POPUP,(UINT)system,"&System");}
+ AppendMenu(menu,MF_STRING|(paths[0][0]?0:MF_GRAYED),FIRSTAPP,names[0]);
  AppendMenu(menu,MF_SEPARATOR,0,NULL);
  if(!shellMode)AppendMenu(menu,MF_STRING,CLOSEAPP,"&Close bar");
- AppendMenu(menu,MF_STRING,EXITWIN,"E&xit Windows");
- GetWindowRect(w,&r);
- /* Estimate native popup height and clamp to the physical screen. */
- h=GetSystemMetrics(SM_CYMENU);y=r.top-h*(shellMode?9:10)-h/2-4;if(y<0)y=0;
- TrackPopupMenu(menu,TPM_LEFTBUTTON,0,y,0,w,NULL);
- DestroyMenu(menu);
+ AppendMenu(menu,MF_STRING,EXITWIN,"E&xit Windows...");
+ AppendMenu(menu,MF_STRING,EXITSILENT,"Exit &silently...");
+ GetWindowRect(w,&r);h=GetSystemMetrics(SM_CYMENU);
+ y=r.top-h*(shellMode?6:7)-h/2-4;if(y<0)y=0;
+ TSSaverHold(1);TrackPopupMenu(menu,TPM_LEFTBUTTON,0,y,0,w,NULL);DestroyMenu(menu);TSSaverHold(0);
 }
 static void word(BYTE FAR **p,unsigned v){*(*p)++=(BYTE)v;*(*p)++=(BYTE)(v>>8);}
 static void dword(BYTE FAR **p,DWORD v){word(p,(unsigned)v);word(p,(unsigned)(v>>16));}
@@ -217,8 +229,8 @@ BOOL FAR PASCAL RunProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
 static void runcommand(HWND w) {
  smallDialog(w,"Run",114,(FARPROC)RunProc);
 }
-static void exitwindows(HWND w) {
- if(confirmexit(w))if(!ExitWindows(0L,0))MessageBox(w,"Exit canceled.","Start",MB_OK);
+static void exitwindows(HWND w,int silent) {
+ TSSaverHold(1);if(confirmexit(w))TandyExit(w,silent);TSSaverHold(0);
 }
 LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
  HDC dc;PAINTSTRUCT ps;RECT r;
@@ -234,18 +246,25 @@ LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
   dc=BeginPaint(w,&ps);GetClientRect(w,&r);SelectObject(dc,GetStockObject(SYSTEM_FIXED_FONT));
   SetBkMode(dc,TRANSPARENT);SetTextColor(dc,GetSysColor(COLOR_WINDOWTEXT));
   MoveTo(dc,0,0);LineTo(dc,width,0);TextOut(dc,width-43,7,clockText,5);EndPaint(w,&ps);return 0;
- case WM_TIMER:clockread(w);return 0;
+ case WM_TIMER:if(wp==BOOT_TIMER)TandyBootTick(w);else if(wp==1)clockread(w);else if(wp==SAVER_TIMER)TSSaverTick(w);return 0;
+ case STARTBOOT:if(primaryShell){TandyBootBegin(w);TSSaverBegin(w,instance);}return 0;
+ case WM_LBUTTONDBLCLK:
+  if((int)LOWORD(lp)>=width-45&&(int)LOWORD(lp)<width&&(int)HIWORD(lp)>=0&&(int)HIWORD(lp)<barHeight){TSSaverHold(1);TandyClock(w,instance);TSSaverHold(0);}
+  return 0;
  case WM_SETFOCUS:return 0;
  case WM_COMMAND:
   if(wp==START){popup(w);return 0;}
-  if(wp>=FIRSTAPP&&wp<FIRSTAPP+7){launch(w,wp-FIRSTAPP);return 0;}
-  if(wp==RUNAPP){runcommand(w);return 0;}
-  if(wp==EXITWIN){exitwindows(w);return 0;}
+  if(wp>=FIRSTAPP&&wp<FIRSTAPP+1){launch(w,wp-FIRSTAPP);return 0;}
+  if(wp==RUNAPP){TSSaverHold(1);runcommand(w);TSSaverHold(0);return 0;}
+  if(wp==PROGRAMS){TSSaverHold(1);PmPrograms(w,instance);TSSaverHold(0);return 0;}
+  if(wp==ABOUTSYS){TSSaverHold(1);TandySystem(w,instance);TSSaverHold(0);return 0;}
+  if(wp==EXITWIN){exitwindows(w,0);return 0;}
+  if(wp==EXITSILENT){exitwindows(w,1);return 0;}
   if(wp==CLOSEAPP&&!shellMode){DestroyWindow(w);return 0;}break;
- case WM_CLOSE:if(shellMode)exitwindows(w);else DestroyWindow(w);return 0;
- case WM_QUERYENDSESSION:return TRUE;
- case WM_ENDSESSION:if(wp)DestroyWindow(w);return 0;
- case WM_DESTROY:KillTimer(w,1);PostQuitMessage(0);return 0;
+ case WM_CLOSE:if(shellMode)exitwindows(w,0);else DestroyWindow(w);return 0;
+ case WM_QUERYENDSESSION:TSSaverShutdown(1);return TRUE;
+ case WM_ENDSESSION:TSSaverShutdown(wp!=0);if(wp){TandyBootStop(w);DestroyWindow(w);}return 0;
+ case WM_DESTROY:TSSaverStop(w);TandyBootStop(w);KillTimer(w,1);PostQuitMessage(0);return 0;
  }return DefWindowProc(w,m,wp,lp);
 }
 int PASCAL WinMain(HINSTANCE inst,HINSTANCE prev,LPSTR cmd,int show) {
@@ -253,14 +272,15 @@ int PASCAL WinMain(HINSTANCE inst,HINSTANCE prev,LPSTR cmd,int show) {
  instance=inst;shellMode=(cmd[0]=='/'&&(cmd[1]=='S'||cmd[1]=='s'));
  GetWindowsDirectory(ini,sizeof(ini));lstrcat(ini,"\\SYSTEM.INI");
  GetPrivateProfileString("boot","shell","",configured,sizeof(configured),ini);
- if(!lstrcmpi(configured,"TSHELL.EXE"))shellMode=1;
+ if(!lstrcmpi(configured,"TSHELL.EXE")){shellMode=1;primaryShell=1;}
  width=GetSystemMetrics(SM_CXSCREEN);
  if(prev)return 0;
- wc.style=0;wc.lpfnWndProc=WndProc;wc.cbClsExtra=0;wc.cbWndExtra=0;wc.hInstance=inst;wc.hIcon=NULL;
+ wc.style=CS_DBLCLKS;wc.lpfnWndProc=WndProc;wc.cbClsExtra=0;wc.cbWndExtra=0;wc.hInstance=inst;wc.hIcon=NULL;
  wc.hCursor=LoadCursor(NULL,IDC_ARROW);wc.hbrBackground=(HBRUSH)(COLOR_BTNFACE+1);wc.lpszMenuName=NULL;wc.lpszClassName="TandyStart";
  if(!RegisterClass(&wc))return 1;
  w=CreateWindow("TandyStart","Tandy Start",WS_POPUP|WS_VISIBLE,0,GetSystemMetrics(SM_CYSCREEN)-barHeight,width,barHeight,NULL,NULL,inst,NULL);
  if(!w)return 1;ShowWindow(w,SW_SHOWNORMAL);UpdateWindow(w);
+ if(primaryShell)PostMessage(w,STARTBOOT,0,0L);
  while(GetMessage(&msg,NULL,0,0)){
   if(((msg.message==WM_KEYDOWN||msg.message==WM_SYSKEYDOWN)&&msg.wParam==VK_F10)||(msg.message==WM_KEYDOWN&&msg.wParam==VK_SPACE)){popup(w);continue;}
   if(msg.message==WM_SYSKEYDOWN&&msg.wParam=='S'){popup(w);continue;}

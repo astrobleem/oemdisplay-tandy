@@ -10,3 +10,5 @@ EXPORTS
  ExitProc @2
  RunProc @3
  BrowseProc @4
+ PmDialogProc @5
+ NoticeProc @6

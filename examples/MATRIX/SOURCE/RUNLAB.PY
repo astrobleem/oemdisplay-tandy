@@ -11,15 +11,28 @@ p.add_argument('--dosbox',type=Path,required=True)
 p.add_argument('--out',type=Path,required=True)
 p.add_argument('--preset',choices=['accelerated','approx-xt'],default='accelerated')
 p.add_argument('--mode',default='T')
+p.add_argument('--cycles',type=int,help='Optional accelerated test-cycle override')
+p.add_argument('--standard-shell',action='store_true',help='Use owned Program Manager only in the new test clone')
 p.add_argument('--timeout',type=int,default=600)
 a=p.parse_args();out=a.out.resolve();template=a.template.resolve()
 if out.exists():p.error('Use a fresh --out directory')
 for name in ['WINDOWS/WIN.COM','TANDY88/RESERVE.COM']:
  if not (template/name).is_file():p.error('Required owned installed guest file missing: '+name)
 out.mkdir(parents=True);shutil.copytree(template,out/'guest');shutil.copyfile(a.exe,out/'guest/MATRIX.EXE')
+if a.standard_shell:
+ import re
+ ini=out/'guest/WINDOWS/SYSTEM.INI'
+ text=ini.read_text(errors='replace')
+ text,n=re.subn(r'(?im)^shell=.*$', 'shell=PROGMAN.EXE',text,count=1)
+ if n!=1:raise SystemExit('No existing shell line in cloned SYSTEM.INI')
+ ini.write_bytes(text.replace('\r\n','\n').replace('\n','\r\n').encode('latin1'))
+ ini=out/'guest/WINDOWS/WIN.INI'
+ text=ini.read_text(errors='replace')
+ text=re.sub(r'(?im)^(load|run)=.*$',r'\1=',text)
+ ini.write_bytes(text.replace('\r\n','\n').replace('\n','\r\n').encode('latin1'))
 old=out/'guest/MATRIX.LOG'
 if old.exists():old.unlink()
-cycles=200000 if a.preset=='accelerated' else 240
+cycles=(a.cycles or 200000) if a.preset=='accelerated' else 240
 conf='''[sdl]
 fullscreen=false
 output=surface
