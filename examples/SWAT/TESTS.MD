@@ -1,85 +1,77 @@
-FLY SWAT 1.0 - VERIFICATION
-==========================
+FLY SWAT 1.1 - CURSOR FIX VERIFICATION
+=====================================
 
-Sealed native build
--------------------
-SWAT.EXE is 16989 bytes, SHA-256:
-6f65c56dd17a5667e16b583638d8e02a0a8b937234357b09457ca60ee965a60b
-Two independent Microsoft C 6 /G0 /Gw /AS /W3 /Ox + LINK4 builds are byte-identical.
-The compiler reports C4203 notices for the large diagnostic/entry functions,
-which skip global optimization; there are no build errors. The rendering
-functions remain optimized. The actual imports are only KERNEL, GDI and USER.
-A direct-control-flow NE disassembly audit found no post-8088 instruction
-suspects in its reachable scope. Imported Windows routines, unresolved indirect continuations and unreachable bytes are outside the scoped audit.
+SWAT.EXE: 19901 bytes
+SHA256: 850b65e0072ea6bdb68f2fb804f353eb76b093dc4946ab8a562cc30a69f1b0bb
+Two independent Microsoft C 6 /G0 /Gw /AS /W3 /Ox builds match exactly.
+The existing C4203 optimization notices for large diagnostic/entry functions
+remain; no compiler errors. Imports remain Windows KERNEL, USER and GDI.
 
-Rules and input
----------------
-The exact shared GAME.H passed GCC C89 with AddressSanitizer/UndefinedBehavior-
-Sanitizer, including hit/miss, pause, game-over, restart, score cap and 2000000
-sampled game ticks. Native Windows tests route synthetic left-click, key,
-focus and timer messages through the actual window procedure. They verify
-start, scoring, lost hearts, pause/input blocking, restart, escape exhaustion,
-swatter clipping/overlap, animated paints and resource cleanup.
-These are synthetic native-message tests, not a manual physical-mouse pass.
+Scope
+-----
+Replaces the GDI stock crosshair with a per-instance Win3 CreateCursor
+resource. Fixed black and white AND/XOR pixels are used, without inversion.
+The same white head/handle and black halo are used in the native renderer.
+Cursor bitmap rows are word-aligned. The client pointer is selected for a
+stationary launch and HTCLIENT; nonclient handling stays with Windows.
+Cursor resources are detached and freed on startup failure and normal exit.
+The GDI path does not change ShowCursor's visibility count.
 
-Fast rendering and restoration
-------------------------------
-The default fast renderer is enabled only for the five accepted driver/name,
-BIOS-mode, real-mode, page-zero, resolution and color tuples. It uses original
-monochrome art in each hardware packing layout. The Windows cursor is hidden
-with a balanced visibility count; a small drawn swatter follows WM_MOUSEMOVE.
+GAME.H and the exact detectFast function are byte-identical to the baseline.
+No gameplay, score, hitbox, driver source/name gate or timer changes.
+Unsupported/protected-mode displays skip raw-framebuffer cursor diagnostics.
 
-Ownership loss blocks further framebuffer writes immediately. Focus change,
-activation loss, cancel mode and an occluding top-level window queue a close;
-the main message loop also finalizes pending closes if message posting fails.
-The screen DC is acquired before rendering, and allocation failure fails closed.
-Exit forces the display driver's current canonical shadow back to VRAM and
-restores the Windows cursor. It never copies a stale desktop snapshot over
-another application's current drawing.
+Native checks
+-------------
+20 runs pass. Both windowed and direct-rendered paths pass in all five
+formats: 160x200x16, 320x200x16, 320x200x4, 640x200x4, 640x200x2.
+GDI fixtures use current trial-driver filenames. Direct-path test fixtures
+use identical trial-driver bytes under accepted legacy names, solely to
+exercise the unchanged gate. These are cloned emulator fixtures; no user
+installation or driver bytes were changed. Raw private fixtures are not
+published; the retained test counts here refer to those completed runs.
 
-All five native profiles passed each of these controlled runs:
-- /T: gameplay/input/paint, forced shadow overwrite and repair, then EXIT click
-- /Q: focus-loss close request
-- /E: Escape
-- /W: Close
-- /A: real activation of another full-screen window
-- /O: a nonactivating full-screen occluding window
+Assertions inspect native framebuffer pixels for the white core and black
+halo during idle, swing and pause, on black and white backgrounds. GDI
+checks actually reposition the system cursor using SetCursorPos, then send
+WM_SETCURSOR; they are not merely WM_MOUSEMOVE state simulations. The old
+cursor area is verified clean after movement. Nonclient pointer selection,
+scoring, restart, exhaustion, resource cleanup and focus pause also pass.
 
-All 30 runs returned the controlled baseline with zero changed framebuffer
-bytes, and a second independent Windows-shadow flush changed zero bytes.
-The long real-timer runs separately verify current-shadow restoration. During
-those runs Windows creates a blue active-task caption strip at the bottom of
-the desktop, so the prelaunch screenshot is no longer an exact oracle. Before
-and after snapshots are retained; the game does not draw that blue strip.
+The direct renderer additionally passes edge clipping, overlap and forced
+Windows-shadow overwrite/recovery checks. Focus loss, Escape, Close, real
+activation and full occlusion pass at 160 and 640x200x4, returning the
+controlled baseline and current Windows display shadow exactly.
 
-A forced windowed /F regression also passed at 160x200. /G is the user-facing
-fallback switch, and /F is diagnostic only. Earlier unchanged GDI drawing was
-tested in all five modes, but it is too slow for preferred hardware play.
-
-Performance
+Host checks
 -----------
-See the measured table below. The slow preset is DOSBox-X 2026.08.31,
-machine=tandy, 640 KB conventional RAM, core=normal, cputype=8086_prefetch,
-fpu=false, no EMS/XMS/UMB, fixed 240 cycles. It is NOT a calibrated physical
-4.77 MHz Tandy timing model. These are guest GetTickCount measurements.
-The 40 timer-driven runs use actual WM_TIMER dispatch, not synthetic timer
-sends. Reported update rate uses the 39 measured intervals after the first
-paint, so it excludes initial setup and the initial repair repaint.
+Unchanged rules pass C89 ASan/UBSan with 2,000,000 sampled ticks. CURTEST.PY
+compiles the exact native cursor function under C89 ASan/UBSan and checks
+black/white backgrounds, off-screen clipping, all widths and dirty bounds.
+A scoped reachable-instruction audit reports no post-8088 suspects. Its
+unresolved indirect/imported-code paths remain excluded from this scoped
+audit. AUDIT.PY reproduces the check against a build and matching MAP.
 
-Measured final native timer delivery:
-160: first draw 2.087 s; 39 intervals 9.008 s; 4.329 updates/s; restore 2.142 s.
-6404: first draw 4.174 s; 39 intervals 9.118 s; 4.277 updates/s; restore 0.549 s.
-The 160 mode is 160x200x16; 6404 is 640x200x4.
-The logged paint totals/maxima include an initial repair repaint; they are
-not steady-frame latency statistics. The timer interval measurement above
-starts after that first paint.
+Approximate XT comparison
+------------------------
+DOSBox-X, normal 8086_prefetch core, 640 KB, no EMS/XMS/UMB, fixed 240 cycles.
+This is not calibrated physical 4.77 MHz timing. Same 160-color fixture:
+- Baseline: 39 actual timer intervals, 9228 ms (4.226 updates/s)
+- Fixed:    39 actual timer intervals, 9117 ms (4.278 updates/s)
+- Initial draw: 2087 ms baseline, 2087 ms fixed
+- Paint totals: 2196 ms baseline, 4284 ms fixed
+- Max measured paint: 55 ms baseline, 110 ms fixed
+The richer cursor costs more painting work, but remains within the requested
+220 ms tick budget in this sample. Do not interpret the small cadence
+difference as a speed improvement. Both restore the current shadow exactly.
 
-PUBLICATION CHECKS AND LIMITS
------------------------------
-The source is rebuilt fresh, compared with the sealed 16989-byte executable,
-and checked by the host gameplay sanitizer suite and scoped ISA auditor.
-The native results above are retained bounded emulator observations, not a
-new manual-input or all-app regression. Physical hardware, external mouse
-and keyboard play, and calibrated speed remain untested.
-This is the original silent, single-fly game without saved high scores.
-No desktop/driver/install settings or existing TANDYLAB pack are changed.
+Limits
+------
+No screenshots or raw environment reports are included in this source delta.
+Tests use native APIs and generated input; no manual external mouse pass or
+physical Tandy test of this new build is claimed. No Windows media, driver,
+compiler or private account material is included.
+
+Publication reruns the period build, exact executable comparison, host rules
+checks, CURTEST.PY and scoped ISA audit. The 20 native runs above are retained
+qualification evidence, not a new full native regression during publication.

@@ -3,6 +3,7 @@
 #define WINVER 0x0300
 #include <windows.h>
 #include "GAME.H"
+#include "SWATCUR.H"
 static HDC back,atlas;
 static HBITMAP bits,oldbits,sprites,oldsprites;
 static int ox,oy,testing,bench,qaFailures,paints,liveBench,liveFrames;
@@ -19,7 +20,8 @@ static const unsigned shape[4][12]={
 static int closing,fastMode,fastReady,screenW,kind,banks,stride,byteCell,hideMouse,quitTest;
 static int cursorX=80,cursorY=100;
 static HDC fastDC;
-static HCURSOR oldCursor;
+static HCURSOR oldCursor,clientCursor;
+static unsigned char curAnd[512],curXor[512];
 static unsigned char bios,mono[16000],packed[256][4];
 static unsigned offsets[200];
 static HGLOBAL savedScreen;
@@ -52,12 +54,19 @@ static void rawshape(int n,int x,int y){int r,c;unsigned v;for(r=0;r<12;r++){v=s
 static void rawtext(int x,int y,char *t){int a,r,c,v;while(*t){a=*t>='0'&&*t<='9'?*t-'0':*t>='A'&&*t<='Z'?*t-'A'+10:-1;
  if(a>=0)for(r=0;r<7;r++){v=tinyfont[a][r];for(c=0;c<5;c++)if(v&(16>>c))dotpixel(ox+x+c,oy+y+r);}else if(*t==':'){dotpixel(ox+x+2,oy+y+2);dotpixel(ox+x+2,oy+y+5);}x+=6;t++;}}
 static void rawbox(int x,int y,int xx,int yy){int i;for(i=x;i<=xx;i++){dotpixel(ox+i,oy+y);dotpixel(ox+i,oy+yy);}for(i=y;i<=yy;i++){dotpixel(ox+x,oy+i);dotpixel(ox+xx,oy+i);}}
+static void rawCursor(void){int x,y,px,py;unsigned bit,n;unsigned char m;
+ for(y=0;y<16;y++)for(x=0;x<16;x++){bit=0x8000U>>x;if(!(curMask[y]&bit))continue;px=cursorX-CURHOT+x;py=cursorY-CURHOT+y;if(px<0||px>=screenW||py<0||py>=200)continue;n=py*stride+(px>>3);m=(unsigned char)(128>>(px&7));if(curWhite[y]&bit)mono[n]|=m;else mono[n]&=(unsigned char)~m;}}
+static int initClientCursor(HINSTANCE inst){int w=GetSystemMetrics(SM_CXCURSOR),h=GetSystemMetrics(SM_CYCURSOR),pitch,x,y,n;unsigned bit;unsigned char m;
+ if(w<16||h<16||w>64||h>64||(w&7))return 0;pitch=((w+15)>>4)<<1;for(n=0;n<pitch*h;n++){curAnd[n]=255;curXor[n]=0;}
+ for(y=0;y<16;y++)for(x=0;x<16;x++){bit=0x8000U>>x;if(curMask[y]&bit){n=y*pitch+(x>>3);m=(unsigned char)(128>>(x&7));curAnd[n]&=(unsigned char)~m;if(curWhite[y]&bit)curXor[n]|=m;}}
+ clientCursor=CreateCursor(inst,CURHOT,CURHOT,w,h,curAnd,curXor);return clientCursor!=NULL;}
+static void freeClientCursor(void){HCURSOR prev;if(!clientCursor)return;prev=SetCursor(LoadCursor(NULL,IDC_ARROW));if(prev!=clientCursor)SetCursor(prev);DestroyCursor(clientCursor);clientCursor=NULL;}
+static void selectClientCursor(HWND w){POINT pt;RECT r;if(!clientCursor||GetActiveWindow()!=w)return;GetCursorPos(&pt);ScreenToClient(w,&pt);GetClientRect(w,&r);if(PtInRect(&r,pt))SetCursor(clientCursor);}
 static void rawScene(RECT *r){char b[24];int i;if(r->top<oy+29){wsprintf(b,"S:%05u",score);rawtext(3,2,b);for(i=0;i<hearts;i++)rawshape(3,104+i*13,1);rawtext(3,16,"CLICK TO SWAT");}if(r->left<ox+4||r->right>ox+144||r->top<oy+31||r->bottom>oy+143)rawbox(2,29,145,144);
  for(i=0;i<NFLY;i++)if(flies[i].active&&(flies[i].ttl>12||phase))rawshape(phase,flies[i].x-6,flies[i].y-6);if(marklife)rawshape(2,markx-6,marky-6);
  if(!playing||paused){if(!playing&&!hearts){rawtext(42,72,"GAME OVER");rawtext(30,89,"NEW: RESTART");}else if(paused){rawtext(56,72,"PAUSED");rawtext(42,89,"P: RESUME");}else{rawtext(48,72,"FLY SWAT");rawtext(32,89,"CLICK: START");}}
  if(r->bottom>oy+148){rawbox(2,149,43,172);rawbox(46,149,102,172);rawbox(105,149,145,172);rawtext(13,157,"NEW");rawtext(59,157,paused?"PLAY":"PAUSE");rawtext(114,157,"EXIT");}
- /* Small original swatter: lattice head and a short handle. */
- for(i=-4;i<=4;i++){dotpixel(cursorX+i,cursorY-4);dotpixel(cursorX+i,cursorY+4);dotpixel(cursorX-4,cursorY+i);dotpixel(cursorX+4,cursorY+i);dotpixel(cursorX+i,cursorY);dotpixel(cursorX,cursorY+i);}for(i=5;i<10;i++)dotpixel(cursorX+i-4,cursorY+i);
+ rawCursor();
 }
 static void flushRaw(RECT *r){int x,y,j,a=r->left>>3,b=(r->right+7)>>3;unsigned off;unsigned char *p;if(a<0)a=0;if(b>stride)b=stride;
  for(y=r->top;y<r->bottom;y++)if(y>=0&&y<200)for(x=a;x<b;x++){p=packed[mono[y*stride+x]];off=offsets[y]+x*byteCell;for(j=0;j<byteCell;j++)vram[off+j]=p[j];}}
@@ -100,15 +109,15 @@ static void paint(HWND w,HDC d,RECT *r){RECT a,c;DWORD start=GetTickCount(),dt;G
 static void dirty(HWND w,int x,int y,int xx,int yy){RECT r;r.left=ox+x;r.top=oy+y;r.right=ox+xx;r.bottom=oy+yy;InvalidateRect(w,&r,FALSE);}
 static void dirtyflies(HWND w){int i;for(i=0;i<NFLY;i++)if(flies[i].active)dirty(w,flies[i].x-8,flies[i].y-8,flies[i].x+9,flies[i].y+9);if(marklife)dirty(w,markx-7,marky-7,markx+8,marky+8);}
 static void pausegame(HWND w){if(playing){paused=!paused;InvalidateRect(w,NULL,FALSE);}}
-static void capture(char *name){HFILE f;char path[144];unsigned char FAR *vram=(unsigned char FAR *)0xb8000000L;int i;unsigned char mode=*((unsigned char FAR *)0x00400049L);if(mode!=4&&mode!=6&&mode!=8&&mode!=9&&mode!=10)return;lstrcpy(path,logpath);for(i=lstrlen(path)-1;i>=0&&path[i]!='\\';i--);path[i+1]=0;lstrcat(path,name);f=_lcreat(path,0);if(f!=HFILE_ERROR){_lwrite(f,(LPSTR)vram,(mode==9||mode==10)?32768U:16384U);_lclose(f);}}
+static void capture(char *name){HFILE f;char path[144];unsigned char FAR *vram=(unsigned char FAR *)0xb8000000L;int i;unsigned char mode;if(GetWinFlags()&WF_PMODE)return;mode=*((unsigned char FAR *)0x00400049L);if(mode!=4&&mode!=6&&mode!=8&&mode!=9&&mode!=10)return;lstrcpy(path,logpath);for(i=lstrlen(path)-1;i>=0&&path[i]!='\\';i--);path[i+1]=0;lstrcat(path,name);f=_lcreat(path,0);if(f!=HFILE_ERROR){_lwrite(f,(LPSTR)vram,(mode==9||mode==10)?32768U:16384U);_lclose(f);}}
 static void queueClose(HWND w){if(!closing){closing=1;PostMessage(w,WM_CLOSE,0,0L);}}
 LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp){HDC d;PAINTSTRUCT ps;RECT r;int x,y,oldh,k;unsigned olds;char liveLog[180];switch(m){
  case WM_CREATE:hearts=3;playing=paused=0;if(!SetTimer(w,1,220,NULL))return -1L;return 0;
  case WM_SIZE:GetClientRect(w,&r);ox=(r.right-FW)/2;oy=fastMode?12:0;InvalidateRect(w,NULL,FALSE);return 0;
  case WM_ERASEBKGND:return 1;
  case WM_PAINT:d=BeginPaint(w,&ps);if(fastMode)rawPaint(w,&ps.rcPaint);else paint(w,d,&ps.rcPaint);EndPaint(w,&ps);return 0;
- case WM_SETCURSOR:if(fastMode){SetCursor(NULL);return 1;}break;
- case WM_MOUSEMOVE:if(fastMode&&fastReady){dirty(w,cursorX-ox-6,cursorY-oy-6,cursorX-ox+8,cursorY-oy+11);cursorX=(int)LOWORD(lp);cursorY=(int)HIWORD(lp);dirty(w,cursorX-ox-6,cursorY-oy-6,cursorX-ox+8,cursorY-oy+11);}return 0;
+ case WM_SETCURSOR:if(fastMode){SetCursor(NULL);return 1;}if(LOWORD(lp)==HTCLIENT&&clientCursor){SetCursor(clientCursor);return 1;}break;
+ case WM_MOUSEMOVE:if(!fastMode&&clientCursor)SetCursor(clientCursor);if(fastMode&&fastReady){dirty(w,cursorX-ox-6,cursorY-oy-6,cursorX-ox+8,cursorY-oy+11);cursorX=(int)LOWORD(lp);cursorY=(int)HIWORD(lp);dirty(w,cursorX-ox-6,cursorY-oy-6,cursorX-ox+8,cursorY-oy+11);}return 0;
  case WM_ACTIVATE:if(fastMode){if(fastReady&&wp==WA_INACTIVE)queueClose(w);return 0;}break;
  case WM_ACTIVATEAPP:if(fastMode){if(fastReady&&!wp)queueClose(w);return 0;}break;
  case WM_CANCELMODE:if(fastMode){if(fastReady)queueClose(w);return 0;}break;
@@ -119,10 +128,25 @@ LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp){HDC d;PAINTSTRUCT ps;
  case WM_KILLFOCUS:if(fastMode&&fastReady){queueClose(w);return 0;}if(playing&&!paused){paused=1;InvalidateRect(w,NULL,FALSE);}return 0;
  case WM_TIMER:if(fastMode&&fastReady&&!owns(w)){queueClose(w);return 0;}if(fastMode&&fastReady&&disrupted())InvalidateRect(w,NULL,FALSE);if(wp!=1||!playing||paused||IsIconic(w))return 0;if(liveBench)for(k=0;k<NFLY;k++)if(flies[k].active)flies[k].ttl=90;oldh=hearts;dirtyflies(w);stepgame();dirtyflies(w);if(oldh!=hearts)dirty(w,0,0,FW,15);if(!playing)InvalidateRect(w,NULL,FALSE);if(liveBench){UpdateWindow(w);if(!liveFrames)liveStarted=GetTickCount();if(++liveFrames==40){wsprintf(liveLog,"LIVE timers=40 measured_intervals=39 elapsed_ms=%lu paints=%d paint_ms=%lu max_paint_ms=%lu\r\n",GetTickCount()-liveStarted,paints,paintMs,maxPaint);logtext(liveLog);DestroyWindow(w);}}return 0;
  case WM_CLOSE:DestroyWindow(w);return 0;
- case WM_DESTROY:KillTimer(w,1);playing=0;if(fastMode)restoreFast(w);freecache();PostQuitMessage(0);return 0;
+ case WM_DESTROY:KillTimer(w,1);playing=0;if(fastMode)restoreFast(w);freeClientCursor();freecache();PostQuitMessage(0);return 0;
  }return DefWindowProc(w,m,wp,lp);}
+static int qaScreen(void){HDC d;int col;if((GetWinFlags()&WF_PMODE)||GetSystemMetrics(SM_CYSCREEN)!=200)return 0;bios=*((unsigned char FAR *)0x00400049L);if(*((unsigned char FAR *)0x00400062L))return 0;d=GetDC(NULL);if(!d)return 0;col=GetDeviceCaps(d,NUMCOLORS);ReleaseDC(NULL,d);return (screenW==160&&bios==8&&col==16)||(screenW==320&&bios==9&&col==16)||(screenW==320&&bios==4&&col==4)||(screenW==640&&bios==10&&col==4)||(screenW==640&&bios==6&&col==2);}
+static unsigned qaPixel(int x,int y){unsigned off;int b=(bios==9||bios==10)?4:2,shift;off=(y&(b-1))*8192U+(y/b)*(b==4?160:80);if(bios==10){off+=(x>>3)*2;shift=7-(x&7);return ((vram[off]>>shift)&1)|(((vram[off+1]>>shift)&1)<<1);}if(bios==8||bios==9)return (vram[off+(x>>1)]>>((1-(x&1))*4))&15;if(bios==4)return (vram[off+(x>>2)]>>((3-(x&3))*2))&3;return (vram[off+(x>>3)]>>(7-(x&7)))&1;}
+static void qaPoint(HWND w,int x,int y){POINT pt;pt.x=ox+x;pt.y=oy+y;if(!fastMode){ClientToScreen(w,&pt);SetCursorPos(pt.x,pt.y);SendMessage(w,WM_SETCURSOR,(WPARAM)w,MAKELONG(HTCLIENT,WM_MOUSEMOVE));}SendMessage(w,WM_MOUSEMOVE,0,MAKELONG(ox+x,oy+y));UpdateWindow(w);}
+static unsigned qaCursor(HWND w,int x,int y){POINT pt;int a,b;unsigned bit,bad=0,white=(bios==8||bios==9)?15:bios==6?1:3;pt.x=ox+x;pt.y=oy+y;if(!fastMode)ClientToScreen(w,&pt);for(b=0;b<16;b++)for(a=0;a<16;a++){bit=0x8000U>>a;if((curMask[b]&bit)&&qaPixel(pt.x-CURHOT+a,pt.y-CURHOT+b)!=((curWhite[b]&bit)?white:0))bad++;}return bad;}
+static void cursorTests(HWND w){int i,x,y;POINT pt;RECT r;HDC d;HCURSOR prev;unsigned bad=0;
+ if(!qaScreen()){logtext("SKIP cursor framebuffer assertions: unsupported display\r\n");return;}
+ newgame();for(i=0;i<NFLY;i++){flies[i].active=0;flies[i].wait=-1;}InvalidateRect(w,NULL,FALSE);UpdateWindow(w);qaPoint(w,90,115);check(qaCursor(w,90,115)==0,"idle swatter white core and black halo");capture("IDLE.RAW");
+ SendMessage(w,WM_LBUTTONDOWN,0,MAKELONG(ox+90,oy+115));UpdateWindow(w);check(qaCursor(w,90,115)==0,"swing keeps visible swatter");capture("SWING.RAW");
+ marklife=0;InvalidateRect(w,NULL,FALSE);UpdateWindow(w);SendMessage(w,WM_KEYDOWN,'P',0L);UpdateWindow(w);check(qaCursor(w,90,115)==0,"paused swatter visible");capture("PAUSED.RAW");
+ qaPoint(w,25,115);pt.x=ox+90;pt.y=oy+115;if(!fastMode)ClientToScreen(w,&pt);for(y=1;y<16;y++)for(x=1;x<13;x++)if(qaPixel(pt.x-CURHOT+x,pt.y-CURHOT+y))bad++;check(!bad,"moving swatter restores black background");
+ qaPoint(w,90,115);if(fastMode){r.left=ox+82;r.top=oy+107;r.right=ox+108;r.bottom=oy+133;for(y=r.top;y<r.bottom;y++)for(x=r.left;x<r.right;x++)dotpixel(x,y);rawCursor();flushRaw(&r);}else{d=GetDC(w);PatBlt(d,ox+82,oy+107,26,26,WHITENESS);ReleaseDC(w,d);SetCursor(clientCursor);}check(qaCursor(w,90,115)==0,"white background retains black halo");capture("WHITE.RAW");
+ if(!fastMode){SendMessage(w,WM_SETCURSOR,(WPARAM)w,MAKELONG(HTCAPTION,WM_MOUSEMOVE));prev=SetCursor(clientCursor);check(prev!=clientCursor,"nonclient default pointer preserved");SetCursor(prev);}
+ newgame();InvalidateRect(w,NULL,FALSE);UpdateWindow(w);qaPoint(w,70,115);
+}
 static void runtests(HWND w){MSG closeMsg;HWND cover;int x,y,h,i,j;unsigned s,t;DWORD started;char b[220];RECT r;
  KillTimer(w,1);GetClientRect(w,&r);wsprintf(b,"START screen=%dx%d client=%dx%d cache=%d initial_draw_ms=%lu fast=%d\r\n",GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN),r.right,r.bottom,back!=NULL&&atlas!=NULL,startupMs,fastMode);logtext(b);check(fastMode?fastReady:(back!=NULL&&atlas!=NULL),"renderer allocation");if(quitTest){if(quitTest>=4){logtext("QA cover create\r\n");cover=CreateWindow("STATIC","",WS_POPUP|SS_WHITERECT,0,0,screenW,200,NULL,NULL,GetWindowWord(w,GWW_HINSTANCE),NULL);logtext("QA cover position\r\n");SetWindowPos(cover,HWND_TOP,0,0,screenW,200,SWP_NOACTIVATE|SWP_SHOWWINDOW);logtext("QA cover paint\r\n");UpdateWindow(cover);logtext("QA cover activate\r\n");if(quitTest==4)SetActiveWindow(cover);else SendMessage(w,WM_TIMER,1,0L);check(closing,"focus or occlusion requests close");if(IsWindow(w)&&PeekMessage(&closeMsg,w,WM_CLOSE,WM_CLOSE,PM_REMOVE))DispatchMessage(&closeMsg);check(!IsWindow(w),"real focus or full occlusion exits");DestroyWindow(cover);UpdateWindow(GetDesktopWindow());}else SendMessage(w,quitTest==1?WM_KILLFOCUS:quitTest==2?WM_KEYDOWN:WM_CLOSE,quitTest==2?VK_ESCAPE:0,0L);if(IsWindow(w)&&PeekMessage(&closeMsg,w,WM_CLOSE,WM_CLOSE,PM_REMOVE))DispatchMessage(&closeMsg);check(!fastReady&&!fastDC,"alternate exit cleanup");return;}
+ cursorTests(w);playing=0;hearts=3;InvalidateRect(w,NULL,FALSE);UpdateWindow(w);
  SendMessage(w,WM_LBUTTONDOWN,0,MAKELONG(ox+70,oy+90));check(playing&&hearts==3,"mouse starts game");
  x=flies[0].x;y=flies[0].y;SendMessage(w,WM_LBUTTONDOWN,0,MAKELONG(ox+x,oy+y));check(score==10&&hearts==3,"mouse hit scores");
  SendMessage(w,WM_LBUTTONDOWN,0,MAKELONG(ox+6,oy+34));check(hearts==2&&score==10,"mouse miss loses life");
@@ -137,12 +161,13 @@ static void runtests(HWND w){MSG closeMsg;HWND cover;int x,y,h,i,j;unsigned s,t;
  paintMs=maxPaint=0;paints=0;started=GetTickCount();for(i=0;i<(bench?12:60);i++){for(j=0;j<NFLY;j++)if(flies[j].active)flies[j].ttl=90;SendMessage(w,WM_TIMER,1,0L);if(!bench&&i%9==0){j=0;if(flies[j].active)SendMessage(w,WM_LBUTTONDOWN,0,MAKELONG(ox+flies[j].x,oy+flies[j].y));}UpdateWindow(w);}
  wsprintf(b,"BENCH frames=%d elapsed_ms=%lu paint_ms=%lu max_paint_ms=%lu score=%u free=%lu\r\n",paints,GetTickCount()-started,paintMs,maxPaint,score,GetFreeSpace(0));logtext(b);check(playing&&hearts==3&&score>=(bench?120U:130U),"animated native frames");
  h=hearts;s=score;SendMessage(w,WM_KEYDOWN,'P',0L);UpdateWindow(w);for(i=0;i<5;i++)SendMessage(w,WM_TIMER,1,0L);check(paused&&hearts==h&&score==s,"repeated paused ticks");
- SendMessage(w,WM_LBUTTONDOWN,0,MAKELONG(ox+125,oy+160));check(!back&&!atlas&&!fastDC&&!fastReady,"exit frees resources");wsprintf(b,"QA failures=%d\r\n",qaFailures);logtext(b);
+ SendMessage(w,WM_LBUTTONDOWN,0,MAKELONG(ox+125,oy+160));check(!back&&!atlas&&!fastDC&&!fastReady&&!clientCursor,"exit frees resources");wsprintf(b,"QA failures=%d\r\n",qaFailures);logtext(b);
 }
 int PASCAL WinMain(HINSTANCE inst,HINSTANCE prev,LPSTR cmd,int show){WNDCLASS wc;HWND w;MSG msg;int i,j;HFILE f;DWORD start;unsigned bad=0;
  testing=cmd[0]=='/'&&(cmd[1]=='T'||cmd[1]=='t'||cmd[1]=='B'||cmd[1]=='b');bench=cmd[0]=='/'&&(cmd[1]=='B'||cmd[1]=='b');quitTest=cmd[0]=='/'&&(cmd[1]=='Q'||cmd[1]=='q')?1:cmd[0]=='/'&&(cmd[1]=='E'||cmd[1]=='e')?2:cmd[0]=='/'&&(cmd[1]=='W'||cmd[1]=='w')?3:cmd[0]=='/'&&(cmd[1]=='A'||cmd[1]=='a')?4:cmd[0]=='/'&&(cmd[1]=='O'||cmd[1]=='o')?5:0;if(quitTest)testing=1;liveBench=cmd[0]=='/'&&(cmd[1]=='R'||cmd[1]=='r');if(liveBench)testing=1;fastMode=detectFast();if(cmd[0]=='/'&&(cmd[1]=='F'||cmd[1]=='f')){testing=1;fastMode=0;}if(cmd[0]=='/'&&(cmd[1]=='G'||cmd[1]=='g'))fastMode=0;GetModuleFileName(inst,logpath,sizeof(logpath));for(i=lstrlen(logpath)-1;i>=0&&logpath[i]!='\\';i--);logpath[i+1]=0;lstrcat(logpath,"SWAT.LOG");if(testing){f=_lcreat(logpath,0);if(f!=HFILE_ERROR)_lclose(f);}
  if(GetSystemMetrics(SM_CXSCREEN)<160||GetSystemMetrics(SM_CYSCREEN)<200)return 1;
- if(!prev){wc.style=0;wc.lpfnWndProc=WndProc;wc.cbClsExtra=wc.cbWndExtra=0;wc.hInstance=inst;wc.hIcon=NULL;wc.hCursor=LoadCursor(NULL,IDC_CROSS);wc.hbrBackground=GetStockObject(BLACK_BRUSH);wc.lpszMenuName=NULL;wc.lpszClassName="TandyFlySwat";if(!RegisterClass(&wc))return 2;}
+ if(!fastMode&&!initClientCursor(inst))return 5;
+ if(!prev){wc.style=0;wc.lpfnWndProc=WndProc;wc.cbClsExtra=wc.cbWndExtra=0;wc.hInstance=inst;wc.hIcon=NULL;wc.hCursor=LoadCursor(NULL,IDC_ARROW);wc.hbrBackground=GetStockObject(BLACK_BRUSH);wc.lpszMenuName=NULL;wc.lpszClassName="TandyFlySwat";if(!RegisterClass(&wc)){freeClientCursor();return 2;}}
  if(testing&&fastMode){capture("BEFORE.RAW");savedScreen=GlobalAlloc(GMEM_MOVEABLE,32768UL);if(savedScreen)saved=(unsigned char FAR *)GlobalLock(savedScreen);if(saved)for(j=0;j<(banks==4?4:2);j++)for(i=0;i<8192;i++)saved[j*8192U+i]=vram[j*8192U+i];}
- w=CreateWindow("TandyFlySwat","Fly Swat",fastMode?WS_POPUP:WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU,fastMode?0:(GetSystemMetrics(SM_CXSCREEN)-156)/2,0,fastMode?screenW:156,fastMode?200:198,NULL,NULL,inst,NULL);if(!w)return 3;start=GetTickCount();if(fastMode)initFast(w);if(fastMode&&!fastReady){DestroyWindow(w);if(saved){GlobalUnlock(savedScreen);GlobalFree(savedScreen);}return 4;}ShowWindow(w,show);UpdateWindow(w);startupMs=GetTickCount()-start;if(liveBench){char b[120];newgame();InvalidateRect(w,NULL,FALSE);UpdateWindow(w);paintMs=maxPaint=0;paints=0;wsprintf(b,"LIVE START initial_draw_ms=%lu fast=%d width=%d\r\n",startupMs,fastMode,screenW);logtext(b);}else if(testing)runtests(w);while(GetMessage(&msg,NULL,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);if(closing&&IsWindow(w))DestroyWindow(w);}if(testing&&fastMode){HDC d;unsigned initialBad=0;capture("AFTER.RAW");if(saved){for(i=0;i<200;i++)for(j=0;j<(banks==4?160:80);j++){if(saved[offsets[i]+j]!=vram[offsets[i]+j])initialBad++;saved[offsets[i]+j]=vram[offsets[i]+j];}d=GetDC(NULL);if(d){if(!BitBlt(d,0,0,1,1,d,0,0,SRCCOPY))bad=65535U;ReleaseDC(NULL,d);}else bad=65535U;if(!bad)for(i=0;i<200;i++)for(j=0;j<(banks==4?160:80);j++)if(saved[offsets[i]+j]!=vram[offsets[i]+j])bad++;GlobalUnlock(savedScreen);GlobalFree(savedScreen);saved=NULL;}else bad=65535U;{char b[140];wsprintf(b,"RESTORE initial_changed_bytes=%u canonical_changed_bytes=%u restore_ms=%lu\r\n",initialBad,bad,restoreMs);logtext(b);}check(bad==0,"current Windows shadow restored");if(!liveBench)check(initialBad==0,"controlled baseline restored");}if(testing)logtext("QUIT clean\r\n");return qaFailures?4:0;
+ w=CreateWindow("TandyFlySwat","Fly Swat",fastMode?WS_POPUP:WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU,fastMode?0:(GetSystemMetrics(SM_CXSCREEN)-156)/2,0,fastMode?screenW:156,fastMode?200:198,NULL,NULL,inst,NULL);if(!w){freeClientCursor();return 3;}start=GetTickCount();if(fastMode)initFast(w);if(fastMode&&!fastReady){DestroyWindow(w);if(saved){GlobalUnlock(savedScreen);GlobalFree(savedScreen);}return 4;}ShowWindow(w,show);UpdateWindow(w);if(!fastMode)selectClientCursor(w);startupMs=GetTickCount()-start;if(liveBench){char b[120];newgame();InvalidateRect(w,NULL,FALSE);UpdateWindow(w);paintMs=maxPaint=0;paints=0;wsprintf(b,"LIVE START initial_draw_ms=%lu fast=%d width=%d\r\n",startupMs,fastMode,screenW);logtext(b);}else if(testing)runtests(w);while(GetMessage(&msg,NULL,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);if(closing&&IsWindow(w))DestroyWindow(w);}if(testing&&fastMode){HDC d;unsigned initialBad=0;capture("AFTER.RAW");if(saved){for(i=0;i<200;i++)for(j=0;j<(banks==4?160:80);j++){if(saved[offsets[i]+j]!=vram[offsets[i]+j])initialBad++;saved[offsets[i]+j]=vram[offsets[i]+j];}d=GetDC(NULL);if(d){if(!BitBlt(d,0,0,1,1,d,0,0,SRCCOPY))bad=65535U;ReleaseDC(NULL,d);}else bad=65535U;if(!bad)for(i=0;i<200;i++)for(j=0;j<(banks==4?160:80);j++)if(saved[offsets[i]+j]!=vram[offsets[i]+j])bad++;GlobalUnlock(savedScreen);GlobalFree(savedScreen);saved=NULL;}else bad=65535U;{char b[140];wsprintf(b,"RESTORE initial_changed_bytes=%u canonical_changed_bytes=%u restore_ms=%lu\r\n",initialBad,bad,restoreMs);logtext(b);}check(bad==0,"current Windows shadow restored");if(!liveBench)check(initialBad==0,"controlled baseline restored");}if(testing)logtext("QUIT clean\r\n");return qaFailures?4:0;
 }
