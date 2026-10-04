@@ -1,0 +1,53 @@
+TANDY START 09 - VERIFIED POPUP PLACEMENT
+2026-10-04
+
+TSHELL.EXE: 35,907 bytes, build01, SHA256
+ad3c8394b3391939f19e2a1cf282d89701fe46397a4ce5c4c7a312f37c6babe6
+
+Only TSHELL.C changes from 08: Start popup height is calculated from the
+SYSTEM_FONT text height, menu actually built, separators and border spacing.
+The native TrackPopupMenu path remains unchanged. Windows 3.0 documents the
+font and APIs, but not the exact popup padding formula; its dimensions were
+measured and verified on these native Windows 3.0 display configurations.
+No private menu structure, hook, post-display repositioning, or modern-only
+alignment flag is used. The unrelated clock popup stays unchanged.
+
+Four fresh native cases pass: primary shell and secondary bar, each at
+160x200 16-color and 640x200 monochrome. WIN /R, GetWinFlags=64, 640 KB,
+8086_prefetch normal core, no XMS/EMS/UMB. Actual SDL mouse/keyboard input.
+- All 34 observed Start openings meet the bar at y=178, with zero logical
+  gap and no overlap. Primary popup is 73 pixels high; secondary is 82.
+- First-row mouse selection launches File Manager. Last-row selection opens
+  the exit confirmation; Cancel returns safely.
+- F10, Space and Alt+S open Start. System submenu keyboard traversal, Escape,
+  outside-click dismissal and repeated opening/closing pass.
+- Close bar removes only the secondary TSHELL and leaves Program Manager.
+- Every case returns to DOS and retains its CWD. Primary-shell GRP and
+  PROGMAN.INI hashes are unchanged. Secondary-bar outputs exactly match the
+  old08 secondary baseline: Program Manager reencodes the fixture icons
+  for the selected driver on startup; TSHELL does not write these files.
+
+Exact 08 baseline rerun reproduced its 36-pixel gap. Native metrics are
+SYSTEM_FONT height 8, border 1 and menu-bar height 14. Its unchanged one-row
+clock popup measures 12 pixels, independently checking the row/border model.
+
+Both period MSC6 /G0 /Gw /AS builds are warning-free and byte-identical.
+Scoped audit: 11,300 reachable instructions, no post-8088 suspects. Imported
+Windows code and unresolved indirect continuations are outside audit scope.
+
+DOSBox-X 2026.08.31 b13702c, recovered historical runtime; current canonical
+TNDY160.DRV and TNDY6402.DRV from display commit
+f98a0ba99dfa006fb34466d3618c2afae8e5a066, with CGA fonts. These are newly
+constructed isolated functional fixtures, not another Setup-install test.
+The earlier 08 tests used trial aliases. No driver is included or installed.
+
+SHELLSEL.EXE, BATCH08.TXT, TSINPUT.DLL, MATRIX.EXE, and all other production
+source files remain byte-identical to 08. The 08 recovery, error/veto and
+date/saver results are historical evidence, not a claim that those complete
+suites were rerun on 09. TESTS08.MD retains their exact verified scope.
+
+Actual screenshots are direct SDL surface captures, converted losslessly
+from BMP to PNG. No compositing, retouching or synthetic menu positioning.
+This is emulator qualification; physical Tandy acceptance remains pending.
+The cumulative TSTART09 package SOURCE.ZIP includes current sources and selected evidence, with no Windows,
+ROMs, compiler libraries, guest images or control executables.

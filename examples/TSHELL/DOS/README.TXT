@@ -4,6 +4,7 @@ USE FROM DOS, AFTER COMPLETELY EXITING WINDOWS
   SHELLSEL STATUS  C:\WINDOWS\SYSTEM.INI
   SHELLSEL SELECT  C:\WINDOWS\SYSTEM.INI
   SHELLSEL RECOVER C:\WINDOWS\SYSTEM.INI
+  SHELLSEL FINISH  C:\WINDOWS\SYSTEM.INI
 
 Exit code: 0 = requested operation verified; 1 = safety or I/O failure;
 2 = usage. SELECT by itself does not reserve video RAM or start Windows.
@@ -101,3 +102,32 @@ or compiler files are development evidence, not runtime package contents.
 Genuine DOS 6.22 normal-exit and interrupted-session recovery passed in a
 Tandy HX emulator. Physical hardware and audio quality are not independently
 qualified. See ../TESTS.MD for current scope.
+
+
+
+SUCCESS-ONLY FINISH UPDATE (08 AND LATER)
+
+FINISH uses the same conservative restoration as RECOVER, then draws a BIOS
+text-mode moon/stars screen only after successful verified journal cleanup.
+The message says: It's now safe to turn off your computer. It does not power
+off the machine, pause for a key or require ANSI.SYS. Existing 40/80-column
+text mode and active page are kept; the DOS prompt remains usable.
+
+RECOVER remains plain for manual recovery and preflight. SELECT internal
+recovery, absent journals, errors and redirected output remain plain.
+
+The new SHELLSEL.EXE is required before activating the post-WIN batch block.
+Follow BATCH08.TXT exactly, preserving all SET paths and every unrelated byte.
+OLDWIN.TXT and NEWWIN.TXT are the exact replacement blocks. Require one old
+block and no conflicting WINFAIL label. Nonzero WIN /R returns use RECOVER;
+zero uses FINISH. ERRORLEVEL must be checked immediately after WIN /R.
+The supplied TSTART.BAT remains only a first-install template. Never overwrite
+a configured installed batch with it. The new helper works safely with an old
+batch, which continues to use plain recovery until patched.
+
+Build using BUILD.BAT with the owned MSC6 /AS /G0 and LINK4/SLIBCE toolchain.
+Host checks: run TESTSEL.PY, then TESTNITE.PY with Python 3/GCC. BASESEL.C and
+BASESTRT.BAT are historical fixtures used to prove the transaction source and
+all configured SET paths remain unchanged. They are not installed. The test
+runners generate temporary local outputs; do not publish those build outputs.
+See ../TESTS08.MD for the retained DOS 6.22 emulator qualification.

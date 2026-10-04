@@ -8,6 +8,7 @@
 #include "TNOTICE.H"
 #include "TSAUX.H"
 #include "TSSAVER.H"
+#include "TSDATE.H"
 #define START 1
 #define FIRSTAPP 20
 #define EXITWIN 40
@@ -16,6 +17,8 @@
 #define PROGRAMS 43
 #define EXITSILENT 44
 #define ABOUTSYS 45
+#define ADJUSTTIME 46
+#define MYCOMPUTER 47
 #define STARTBOOT (WM_USER+3)
 #define RUNEDIT 100
 #define RUNMAX 126
@@ -60,9 +63,34 @@ static void launch(HWND w,int i) {
  if(result>=32&&i==0){manager=FindWindow("Progman",NULL);if(manager){ShowWindow(manager,SW_RESTORE);BringWindowToTop(manager);}}
  if(result<32){wsprintf(message,"Launch failed.\nError %u.",result);TinyNotice(w,instance,"Start",message);}
 }
+/* Win3.0 string popup sizing, verified against native menu rectangles.
+   SYSTEM_FONT supplies the text height; SM_CYMENU is only the menu-bar
+   metric. Count the menu actually built, including a failed System popup.
+   Keep native menu drawing/tracking and the Win3.0 flags=0 contract. */
+static int popupheight(HWND w,HMENU menu) {
+ HDC dc;HFONT old;TEXTMETRIC tm;int row,border,height,count,i;WORD flags;
+ border=GetSystemMetrics(SM_CYBORDER);if(border<1)border=1;
+ row=GetSystemMetrics(SM_CYMENU);
+ dc=GetDC(w);
+ if(dc){
+  old=(HFONT)SelectObject(dc,GetStockObject(SYSTEM_FONT));
+  if(GetTextMetrics(dc,&tm))row=tm.tmHeight+border;
+  SelectObject(dc,old);ReleaseDC(w,dc);
+ }
+ height=3*border;count=GetMenuItemCount(menu);
+ for(i=0;i<count;i++){
+  flags=GetMenuState(menu,i,MF_BYPOSITION);
+  /* A submenu's item count occupies the high byte of GetMenuState. */
+  if(!(flags&MF_POPUP)&&(flags&MF_SEPARATOR))
+   height+=GetSystemMetrics(SM_CYMENU)/2;
+  else height+=row;
+ }
+ return height;
+}
 static void popup(HWND w) {
- HMENU menu,system;RECT r;int y,h;
+ HMENU menu,system;RECT r;int y;
  SetActiveWindow(w);SetFocus(w);findapps();menu=CreatePopupMenu();if(!menu)return;
+ AppendMenu(menu,MF_STRING,MYCOMPUTER,"&My Computer");
  AppendMenu(menu,MF_STRING,PROGRAMS,"&Programs...");
  AppendMenu(menu,MF_STRING,RUNAPP,"&Run...");
  system=CreatePopupMenu();
@@ -72,9 +100,20 @@ static void popup(HWND w) {
  if(!shellMode)AppendMenu(menu,MF_STRING,CLOSEAPP,"&Close bar");
  AppendMenu(menu,MF_STRING,EXITWIN,"E&xit Windows...");
  AppendMenu(menu,MF_STRING,EXITSILENT,"Exit &silently...");
- GetWindowRect(w,&r);h=GetSystemMetrics(SM_CYMENU);
- y=r.top-h*(shellMode?6:7)-h/2-4;if(y<0)y=0;
+ GetWindowRect(w,&r);y=r.top-popupheight(w,menu);if(y<0)y=0;
  TSSaverHold(1);TrackPopupMenu(menu,TPM_LEFTBUTTON,0,y,0,w,NULL);DestroyMenu(menu);TSSaverHold(0);
+}
+static void clockpopup(HWND w) {
+ HMENU menu;RECT r;int x,y;
+ SetActiveWindow(w);SetFocus(w);
+ menu=CreatePopupMenu();if(!menu)return;
+ AppendMenu(menu,MF_STRING,ADJUSTTIME,"&Adjust date/time...");
+ GetWindowRect(w,&r);y=r.top-GetSystemMetrics(SM_CYMENU)-4;if(y<0)y=0;
+ TSSaverHold(1);
+ /* Windows 3.0 requires flags=0; right-button/alignment flags are 3.1. */
+ x=width-160;if(x<0)x=0;
+ TrackPopupMenu(menu,0,x,y,0,w,NULL);
+ DestroyMenu(menu);TSSaverHold(0);
 }
 static void word(BYTE FAR **p,unsigned v){*(*p)++=(BYTE)v;*(*p)++=(BYTE)(v>>8);}
 static void dword(BYTE FAR **p,DWORD v){word(p,(unsigned)v);word(p,(unsigned)(v>>16));}
@@ -246,10 +285,14 @@ LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
   dc=BeginPaint(w,&ps);GetClientRect(w,&r);SelectObject(dc,GetStockObject(SYSTEM_FIXED_FONT));
   SetBkMode(dc,TRANSPARENT);SetTextColor(dc,GetSysColor(COLOR_WINDOWTEXT));
   MoveTo(dc,0,0);LineTo(dc,width,0);TextOut(dc,width-43,7,clockText,5);EndPaint(w,&ps);return 0;
+ case WM_TIMECHANGE:minute=-1;clockread(w);return 0;
  case WM_TIMER:if(wp==BOOT_TIMER)TandyBootTick(w);else if(wp==1)clockread(w);else if(wp==SAVER_TIMER)TSSaverTick(w);return 0;
  case STARTBOOT:if(primaryShell){TandyBootBegin(w);TSSaverBegin(w,instance);}return 0;
  case WM_LBUTTONDBLCLK:
   if((int)LOWORD(lp)>=width-45&&(int)LOWORD(lp)<width&&(int)HIWORD(lp)>=0&&(int)HIWORD(lp)<barHeight){TSSaverHold(1);TandyClock(w,instance);TSSaverHold(0);}
+  return 0;
+ case WM_RBUTTONUP:
+  if((int)LOWORD(lp)>=width-45&&(int)LOWORD(lp)<width&&(int)HIWORD(lp)>=0&&(int)HIWORD(lp)<barHeight)clockpopup(w);
   return 0;
  case WM_SETFOCUS:return 0;
  case WM_COMMAND:
@@ -257,6 +300,8 @@ LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
   if(wp>=FIRSTAPP&&wp<FIRSTAPP+1){launch(w,wp-FIRSTAPP);return 0;}
   if(wp==RUNAPP){TSSaverHold(1);runcommand(w);TSSaverHold(0);return 0;}
   if(wp==PROGRAMS){TSSaverHold(1);PmPrograms(w,instance);TSSaverHold(0);return 0;}
+  if(wp==MYCOMPUTER){TSSaverHold(1);TandyFileManager(w,instance);TSSaverHold(0);return 0;}
+  if(wp==ADJUSTTIME){TSSaverHold(1);TandyDateTime(w,instance);TSSaverHold(0);return 0;}
   if(wp==ABOUTSYS){TSSaverHold(1);TandySystem(w,instance);TSSaverHold(0);return 0;}
   if(wp==EXITWIN){exitwindows(w,0);return 0;}
   if(wp==EXITSILENT){exitwindows(w,1);return 0;}

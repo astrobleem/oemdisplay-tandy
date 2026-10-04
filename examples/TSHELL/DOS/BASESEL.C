@@ -32,7 +32,6 @@ static char tmp[PLEN], old[PLEN], rst[PLEN];
 static char names[64][64];
 static unsigned on, cn, dn;
 static int steps;
-static int show_night;
 typedef struct { unsigned a, b; } Shell;
 static Shell os, cs;
 
@@ -227,95 +226,12 @@ static void not_windows(void)
 #endif
 }
 
-/* Success presentation only. Called after the original shell was reread and
- * the active journal was removed. No ANSI.SYS, direct video RAM, extra file,
- * resident code, timer, or keyboard wait. Unsupported/redirected output uses
- * ordinary text and never changes the current display mode.
- */
-#ifndef HOST_TEST
-static unsigned char night_page;
-static void night_pos(unsigned row,unsigned col)
-{ union REGS r;
-  r.h.ah=2; r.h.bh=night_page; r.h.dh=(unsigned char)row;
-  r.h.dl=(unsigned char)col; int86(0x10,&r,&r);
-}
-static void night_run(unsigned row,unsigned col,unsigned ch,unsigned attr,
-                      unsigned count)
-{ union REGS r;
-  night_pos(row,col); r.h.ah=9; r.h.al=(unsigned char)ch;
-  r.h.bh=night_page; r.h.bl=(unsigned char)attr; r.x.cx=count;
-  int86(0x10,&r,&r);
-}
-static void night_text(unsigned row,unsigned col,const char *s,unsigned attr)
-{ while(*s) { night_run(row,col++,(unsigned char)*s++,attr,1); } }
-static int night_draw(void)
-{ union REGS r; unsigned cols,mode,i,j,base,attr,moon,star,scale;
-  static const char *shape[] = {
-    "      ....      ",
-    "   .####..      ",
-    "  .####.        ",
-    " .####.         ",
-    " #####          ",
-    " #####          ",
-    " .####.         ",
-    "  .####.        ",
-    "   .####..      ",
-    "      ....      "
-  };
-  /* DOS device information distinguishes CON from redirected files and NUL. */
-  r.x.ax=0x4400; r.x.bx=1; intdos(&r,&r);
-  if(r.x.cflag || (r.x.dx&0x0082)!=0x0082 || (r.x.dx&4)) return 0;
-  r.h.ah=0x0f; int86(0x10,&r,&r);
-  mode=r.h.al&0x7f; cols=r.h.ah; night_page=r.h.bh;
-  if(!((mode<=3 || mode==7) && (cols==40 || cols==80))) return 0;
-  /* Stock Tandy and MDA text displays have 25 rows. Leave two prompt rows. */
-  r.x.ax=0x0600; r.h.bh=7; r.x.cx=0;
-  r.h.dh=24; r.h.dl=(unsigned char)(cols-1); int86(0x10,&r,&r);
-  moon=(mode==7)?15:14; star=(mode==7)?7:11;
-  scale=(cols==80)?2:1; base=(cols-16*scale)/2;
-  for(i=0;i<10;++i) for(j=0;j<16;++j) {
-    if(shape[i][j]=='#') night_run(i+4,base+j*scale,219,moon,scale);
-    else if(shape[i][j]=='.') night_run(i+4,base+j*scale,176,moon,scale);
-  }
-  /* Sparse points at scaled positions keep the 40-column sky balanced. */
-  night_run(3,cols/8,'.',7,1); night_run(5,cols/4,'+',star,1);
-  night_run(8,cols/10,'*',15,1); night_run(12,cols/5,'.',7,1);
-  night_run(14,cols/3,'.',star,1); night_run(2,cols*3/4,'.',7,1);
-  night_run(4,cols*7/8,'*',15,1); night_run(7,cols*3/4,'.',star,1);
-  night_run(10,cols*17/20,'+',star,1); night_run(14,cols*7/10,'.',7,1);
-  if(cols==80) {
-    night_text(17,(cols-39)/2,"It's now safe to turn off your computer",15);
-  } else {
-    night_text(17,(cols-25)/2,"It's now safe to turn off",15);
-    night_text(18,(cols-13)/2,"your computer",15);
-  }
-  attr=(mode==7)?7:8;
-  night_run(21,cols/4,196,attr,cols/2);
-  /* Leave a normal, visible DOS cursor and return immediately. */
-  r.h.ah=3; r.h.bh=night_page; int86(0x10,&r,&r);
-  if(r.h.ch&0x20) {
-    r.h.ah=1; r.x.cx=(mode==7)?0x0b0c:0x0607; int86(0x10,&r,&r);
-  }
-  night_pos(23,0);
-  return 1;
-}
-#endif
-static void restored_notice(void)
-{
-  /* SELECT may recover an older transaction before selecting TSHELL again. */
-  if(!show_night) { puts("Original shell restored and reread verified."); return; }
-#ifndef HOST_TEST
-  if(night_draw()) return;
-#endif
-  puts("It's now safe to turn off your computer");
-}
-
 static void cleanup_restored(void)
 { unsigned z; Shell s;
   z=readall(ini,cur,MAXINI); s=parse(cur,z);
   if(!originalshell(cur,s)) die("Restoration proof failed; journal retained.");
   if(exists(tmp)||exists(old)||exists(rst)) die("Unresolved transaction before journal cleanup.");
-  remove_snap(jrn,orig,on); restored_notice();
+  remove_snap(jrn,orig,on); puts("Original shell restored and reread verified.");
 }
 static void recover(void)
 { unsigned z; Shell s;
@@ -400,7 +316,7 @@ static void status(void)
   if(exists(tmp)||exists(old)||exists(rst)) { puts("Interrupted transaction: run RECOVER before Windows."); exit(1); }
 }
 int main(int argc,char **argv)
-{ if(argc!=3 || (!eqi(argv[1],"SELECT")&&!eqi(argv[1],"RECOVER")&&!eqi(argv[1],"FINISH")&&!eqi(argv[1],"STATUS"))) { puts("Usage: SHELLSEL SELECT|RECOVER|FINISH|STATUS C:\\WINDOWS\\SYSTEM.INI"); return 2; }
+{ if(argc!=3 || (!eqi(argv[1],"SELECT")&&!eqi(argv[1],"RECOVER")&&!eqi(argv[1],"STATUS"))) { puts("Usage: SHELLSEL SELECT|RECOVER|STATUS C:\\WINDOWS\\SYSTEM.INI"); return 2; }
   setup(argv[2]); not_windows();
-  if(eqi(argv[1],"SELECT")) select_shell(); else if(eqi(argv[1],"RECOVER")||eqi(argv[1],"FINISH")) { show_night=eqi(argv[1],"FINISH"); recover(); } else status(); return 0;
+  if(eqi(argv[1],"SELECT")) select_shell(); else if(eqi(argv[1],"RECOVER")) recover(); else status(); return 0;
 }

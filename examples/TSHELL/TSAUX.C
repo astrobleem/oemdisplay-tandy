@@ -42,3 +42,24 @@ void TandyClock(HWND w, HINSTANCE instance)
     }
     PmLaunch(w, command);
 }
+
+void TandyFileManager(HWND w, HINSTANCE instance)
+{
+    char command[144];
+    HWND frame, active;
+    /* Win3.0 WINFILE refuses a second instance with a system-modal warning. */
+    frame = FindWindow("WFS_Frame", NULL);
+    if (frame) {
+        if (IsIconic(frame)) ShowWindow(frame, SW_RESTORE);
+        else if (!IsWindowVisible(frame)) ShowWindow(frame, SW_SHOW);
+        active = GetLastActivePopup(frame);
+        if (!active || !IsWindowVisible(active)) active = frame;
+        BringWindowToTop(active);
+        SetActiveWindow(active);
+        return;
+    }
+    if (!locate("WINFILE.EXE", command)) {
+        TinyNotice(w, instance, "My Computer", "File Manager\nnot found."); return;
+    }
+    PmLaunch(w, command);
+}
