@@ -1,24 +1,42 @@
 # Project promotional artwork
 
-These retro-style promotional mockups were supplied for the project README.
-They are illustrative art, not photographs of a tested installation, native
-emulator evidence or official Tandy/Microsoft packaging. The older poster's
-Windows 3.x wording does not expand the documented Windows 3.0 real-mode target.
+These retro-style promotional mockups are illustrative art, not photographs
+of a tested physical installation or official Tandy/Microsoft packaging.
+The WOW poster's monitor uses an authentic native emulator screenshot; its
+surrounding computer scene is artwork. Verified software scope remains
+Windows 3.0 real mode.
 
-The original PNGs remain unchanged. These web copies retain the full original
-dimensions and composition, with no crop, text change or retouching. They were
-encoded as WebP quality 88 with metadata stripped, then visually inspected.
-Combined web payload: 477,496 bytes, versus 4,626,844 original PNG bytes.
+## Corrected 16 COLORS. WOW!
 
-## 16 COLORS. WOW!
+[16WOW.WEBP](16WOW.WEBP), 1448x1086, 221,620 bytes. The recovered final
+artwork retains the three-bar RGB monitor badge, black 5 1/4-inch floppy with
+handwritten label, and Windows 3.0 headline. The monitor power LED is red.
 
-[16WOW.WEBP](16WOW.WEBP), 1448x1086, 287,814 bytes.
-Original PNG SHA256:
-a35b70d87f5dfd17af1744b5f1f83e173fa3a9a885e656f41c9ec5dcc214767d
-Web copy SHA256:
-23fb84c61d9b16137c334de2fdc55cfe32ed62aab0ad2db682f300c8702c2f0d
+The screen is a deterministic nearest-neighbor perspective composite of the
+[existing native Paintbrush capture](../tandy-dib-roundtrip.png), originally
+320x200. It shows actual Windows 3.0 real-mode rendering and the 16-color
+bitmap roundtrip on the Tandy driver. No UI was regenerated or retyped.
+The CRT edge mask fits the pictured curved glass. This geometry fitting and
+the later WebP encoding resample the displayed image; the linked source
+remains unchanged. See [original test scope](../../src/tandysw/DIB88.MD).
 
-## Windows XT concept box
+Only the screen surface and 32 LED pixels changed from the corrected base.
+The badge, floppy and headline were checked byte-identical before web
+encoding. No new runtime or physical-machine test is claimed by this edit.
+
+- Corrected base PNG SHA256:
+  3e027ac2c3e655b9113921d70daf860d9fcff383003ca072d89dc4c58313b9b2
+- Original native screenshot SHA256:
+  cbefffc81cec457f84406031421b40cb020a7712e53e926c0f2731a6e9069703
+- Final composite PNG SHA256:
+  3971f44495ca1d3a8d4f81c711a7f4337ab12c7d9af4b0d250e7ba5277d8e5c9
+- Current web copy SHA256:
+  49b436116ab19c7637f657ef1501417515f402685c16c780a653373c02766b16
+
+The web copy preserves full dimensions/composition, uses WebP quality 88 and
+strips metadata. The original artwork and earlier versions remain preserved.
+
+## Windows XT concept box (unchanged)
 
 [WINXTBOX.WEBP](WINXTBOX.WEBP), 1122x1402, 189,682 bytes.
 Original PNG SHA256:
