@@ -1,0 +1,14 @@
+TANDY START PUBLICATION HISTORY
+
+TSHELL.EXE and TSINPUT.DLL beside the current source are the 06 candidate.
+README.MD, UPDATE06.TXT and TESTS.MD describe this candidate and its limits.
+
+The repository's MILESTONE.ZIP is a preserved earlier standalone milestone,
+not the current 06 build. Existing MANIFEST.JSON and EVIDENCE files identify
+that earlier publication and remain historical unless explicitly labeled
+otherwise. Do not extract the old archive over a current installation or
+use old hashes to identify the new executables. No historical file is removed.
+
+The unchanged DOS helper sources/batches and base TSHELL.INI are retained.
+Merge ADDON.INI into an installed INI; do not replace existing sound/startup
+settings or the working launcher's configured reservation path.

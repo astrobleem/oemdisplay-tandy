@@ -1,1 +1,6 @@
-Publication layout: source, executable, screenshots and test evidence match the sealed Tandy Start / Run-Browse package byte for byte. MILESTONE.ZIP is the complete unmodified standalone package. MANIFEST.JSON describes that original package; MILESTONE.ZIP and this note are additional publication files. EVIDENCE/LEGACY09 is explicitly historical, not a rerun of the current executable. The current evidence covers 250 native assertions in five profiles and 26 additional keyboard/directory checks. Manual mouse operation and physical Tandy hardware remain unverified. No operating-system media, compiler/library binaries or unrelated applications are added.
+Current publication: Tandy Start 06 source, TSHELL.EXE and TSINPUT.DLL.
+The matching Matrix /S source and executable are under ../MATRIX.
+README.MD, TESTS.MD and UPDATE06.TXT describe the exact current candidate.
+MILESTONE.ZIP, existing MANIFEST.JSON and prior EVIDENCE are preserved
+historical material, not a current build package or current validation.
+See HISTORY.TXT. New features still require their own physical Tandy test.

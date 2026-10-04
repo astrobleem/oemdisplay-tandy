@@ -1,110 +1,98 @@
-# TSHELL Run/Browse verification
+# Tandy Start 06 verification
 
-## Production binary and target
+## Exact production candidate
 
-TSHELL.EXE: 12,355 bytes. SHA256:
-647031075ae35442c1a379ec37196f810c3d33f2bb1c45233498029a2ec90b25
+- TSHELL.EXE: 29,555 bytes; SHA-256
+  34d441cf8c9a544eaf08d2e89503ac032f00949f2c29b99173d79a72f1d0f2e0
+- TSINPUT.DLL: 3,082 bytes; SHA-256
+  cbb4a851a7f4489945e42c758bb2519415f85270dabe105781acfb056d0521f8
+- ../MATRIX/MATRIX.EXE: 14,157 bytes; SHA-256
+  0987936c3b80eb9fc5718f3022996514f6885adbdf83cd05128d01bc19de17c8
 
-Two clean Microsoft C /G0 /Gw /AS builds match byte for byte. The NE expected
-Windows version is 3.0; the protected-mode-only bit is clear. Imports are
-KERNEL, GDI and USER only. No COMMDLG DLL, header or import library is used.
-A scoped disassembly audit followed 3,786 reachable instructions from the NE
-entry and four exported callbacks without finding post-8088 instructions.
-Unresolved indirect branches and Windows imports are outside that audit;
-it is not an exhaustive instruction or physical-hardware certification.
+Independent native rebuilds reproduced the final shell, DLL and Matrix bytes.
+The shell uses Microsoft C 6.0 /G0 /Gw /AS /W3 /Od. DLL code and single shared
+data are fixed/preloaded, with no local heap; exports and USER/KERNEL imports
+were checked directly in the final NE file. Matrix uses /G0 /Gw /AS /W3 /Ox.
 
-## Five-profile native regression
+## Portable source checks
 
-All five isolated Windows 3.0 real-mode profiles passed the final-source
-Run/Browse probe: 160x200x16, 320x200x4, 640x200x4, 640x200x2 and baseline
-320x200x16. Each boots with shell=tshell.exe and the accepted display driver,
-reservation helper and fonts. The emulator is DOSBox-X, machine=tandy,
-8086_prefetch, 640 KB conventional memory, and no EMS/XMS/UMB. The fixed
-cycle count is a test convenience, not a physical Tandy speed measurement.
+Run Python 3 and GCC through TESTS/RUNHOST.PY. It covers the unchanged 210
+selector assertions, all seven completed SELECT and seven RECOVER mutation
+checkpoints, 26 nested recovery interruptions, later unrelated edits,
+collision/corruption refusal and short writes. Twelve group-parser categories
+include 1,000 mutated files and command/slot/string/checksum bounds. Twenty-three
+startup/exit cases cover ordering, duplicates, busy helpers, veto and failures.
 
-The probe uses the production source with test callbacks and logging added.
-It executes the native dialogs and controls, rather than modeling them:
+Version 06 adds SVCORE deadline boundaries, once-per-interval behavior, activity
+and blocked resets, and 32-bit timer/generation wrap. The idle observer tests
+ownership, duplicate hook refusal, chaining, held input, modal/capture guards,
+non-consuming normal polls, polling gaps, suspended Windows time, midnight and
+backward DOS-clock changes, removal failure and WEP cleanup. The host stub uses
+a pointer-sized DWORD for callback pointers; native NE/ABI checks cover the
+actual 16-bit target separately. The runner also verifies the shipped DLL's
+fixed-segment/export/import contract. Tests leave no generated source files.
 
-- Run and Browse outer bounds and all controls fit the physical screen
-- Run edit starts focused; file list starts focused in Browse
-- Empty, whitespace-only, overlong and missing-program commands stay open
-  with the expected short status; failed launches are not reported as success
-- 140 native WM_CHAR inputs stop at the 127-character guard; commands longer
-  than 126 are rejected before copying into the 128-byte command buffer
-- Browse navigates to the root and back, changes EXE/COM/BAT filters, locates
-  the real test executable, and accepts it through a double-click notification
-- Browse Cancel leaves command text and the original working directory intact
-- Choosing an executable preserves arguments and restores the working directory
-- The chosen native child receives the exact arguments and expected directory
-- Run closes after successful launch; reopening and WM_CLOSE cancel safely;
-  the shell survives both modal sessions
+## Final native integration
 
-CHECKS.JSON contains the aggregate assertions and source/binary identities.
-Per-profile RUNTEST.LOG files contain the raw results. The callback source,
-child source, build inputs and configuration templates are included.
-The typed-limit check temporarily suppresses edit repaint while delivering
-WM_CHAR; text handling and the guard are native. It is not a typing-speed test.
+The final integration recorded 89 passing checks across 32 native fixtures
+and a host policy check, including 45 legacy checks rerun on this exact shell.
+Tests used DOSBox-X 8086_prefetch, 640 KiB conventional memory with 16 KiB video
+reservation, no XMS/EMS/UMB, no FPU, and 160x200 16-color plus 640x200 monochrome
+Windows 3.0 real-mode displays. Accelerated functional emulation is not an
+original-clock or physical-machine timing measurement.
 
-## Pixel inspection and exact-binary observations
+A separate foreground Windows app received real SDL keyboard and captured
+relative mouse input. More than 15 guest seconds of other-app activity
+prevented a 10-second idle launch. Quiet input launched one Matrix instance;
+another complete idle interval did not create a duplicate. Actual keys and
+mouse motion dismissed it and restored the app/desktop on both displays.
+Held-key/button, capture, popup/dialog and known audio-class guards passed,
+as did shutdown veto/resume. Three saver/unload cycles on each display returned
+GetFreeSpace to the same observed baseline: 325,344 bytes at 160 and 277,952 at
+640. This is a three-cycle measurement, not a universal memory-growth claim.
 
-CAPTURES contains raw B800 framebuffer snapshots from the final production
-EXE and their decoded PNGs. The Start popup includes Run and fits both the
-160 profile and the larger-font baseline profile. The 160 Run and Browse
-layouts were inspected from actual guest pixels. The decoder does not redraw
-the UI; DISPLAY images duplicate 160 horizontal pixels to match DOSBox's
-usual 320-pixel capture. The file list visibly accommodates 8.3 filenames.
+A real DOS COM/PIF interval paused Windows GetTickCount for 12 BIOS seconds.
+The owner-side DOS clock comparison blocked stale immediate launch, required
+a fresh release, then allowed a new full idle interval. Tests observed no
+saver for 11 guest seconds after return before providing a new input gesture.
+A clearly labeled 20-second test chime verified startup serialization; real
+chimes ran separately in legacy cases, without an audible-quality claim.
+A secondary nonprimary TSHELL bar loaded neither the hook nor the saver.
 
-These captures and the external helper's initialization/control observations
-use the unmodified EXE. Functional assertions above use the instrumented
-production source. Early asynchronous cross-task harness runs were not used
-as functional acceptance: they raced modal cleanup and invoked callbacks
-from another cooperative task. Their partial logs are excluded.
+Real About This Tandy opened through Start/System at both widths. Compact
+menus/notices were visually checked. SDL button pairs showed that only the
+clock area opens Clock on double-click; Start and empty-bar double-clicks did
+not. Calendar opened when Clock was absent. The clock tests used a control
+app to position the cursor, then real button events; no direct double-click
+window message was posted. Genuine mouse movement was tested separately.
+Disabled saver, missing Matrix, invalid interval, missing DLL and malformed
+DLL continued safely. Missing/bad-DLL notices fit the 160-pixel display.
 
-Cloud desktop control was unavailable during this revision. No new manual
-mouse session, physical Tandy run or complete stock-application compatibility
-claim is made. Real keyboard/mouse operation and hardware timing should still
-be checked on the user's target installation.
+The 45 legacy checks cover group paging/bounds/read-only handling, saved
+arguments and working directories, real keyboard Run/Browse, missing/corrupt
+groups, local common-dialog and CD-start support, 20 stable menu cycles,
+startup choice/order, busy/missing helpers, exit veto/retry and silent fallback,
+shutdown while a notice is open, and the direct-DOS TSTART/Windows/restore
+lifecycle. The accepted selector, DOS batches and sound helpers are unchanged.
 
-## Additional 160-profile keyboard and directory checks
+## Limits and historical evidence
 
-A second native production-source probe posts real WM_KEYDOWN messages to the
-Run edit. Escape cancels; Return launches a drive-relative executable with
-its arguments. A 126-character command also launches and delivers all 114
-argument characters intact. Run closes, and the shell survives every case.
-This verifies Windows dialog key handling, not physical keyboard input.
+Ten-second idle intervals exercise the same parser/policy as the shipped
+300-second setting. An independent observer's IdleReady is not a readiness
+verdict because only the installing shell task owns that query. Assertions
+used genuine input, actual launches/windows, activity generation and guest
+clock measurements. Disabled/rejected paths need not execute copied helper
+fixtures; the actual final runtime trio was used for live acceptance cases.
 
-That probe starts with D:\ONE as drive D's saved directory, browses to
-D:\TWO and closes Browse. The original command stays unchanged; C's working
-directory and D:\ONE are restored, including after yielding back to Windows.
-The drive-relative launch then succeeds. A final Run WM_CLOSE cancels safely.
-All five modal sessions complete. Cases return to the normal message loop
-between dialogs. KEYQA.LOG and KEYPROBE contain the clean final evidence.
+Physical tests of these new controls, global hook and Matrix /S behavior are
+pending. Earlier acceptance of Tandy Start 05 and on-demand Matrix does not
+qualify the new features. Original-clock performance, acoustic quality,
+forced allocation exhaustion, arbitrary third-party sound engines, unknown
+PSG writers and non-yielding apps are not certified. No emulator test proves
+all possible torn disk writes or arbitrary corruption recoverable.
 
-## Size and memory
-
-NE code is 9,996 bytes; minimum data is 2,448 bytes, heap 2,048 and stack 4,096.
-The included external loader at 160 launches the unmodified production EXE,
-closes only its bar, and verifies that COMMDLG is absent. It observed a
-10,848-byte GetFreeSpace(0) decrease,
-a 10,000-byte runtime code block and a 9,648-byte instance data block. The
-availability change and block sizes overlap and must not be added together.
-This is a snapshot, not a complete resident-memory census or measured peak.
-
-Browse temporarily allocates 3,744 bytes to preserve visited drives' current
-directories, and releases that buffer on return. Allow roughly 32 KiB for the
-bar and transient dialogs, plus memory for launched applications and shared
-Windows resources. That is a planning estimate, not a measured upper bound.
-There is no full-screen bitmap allocation in the shell.
-
-## Historical scope and reproduction
-
-LEGACY09 preserves the earlier 7,423-byte shell's tests, captures, clock,
-exit/rollback and Program Manager results. Those are explicitly historical;
-they are not presented as a rerun of this binary. The Run/Browse work does
-not change accepted display drivers, launcher, reservation helper or splash.
-
-Build production with BUILD.PY from examples/TSHELL in the existing repository.
-For the included helper/probe copies, pass --repo explicitly. Supply isolated
-Windows 3.0 installations from owned media and the accepted five profiles;
-CONFIG.TXT documents the settings. No Windows media, guest installations,
-Microsoft compiler/library binaries or stock applications are included.
+This document summarizes bounded native evidence; raw environment reports,
+private paths, OS media, toolchains and test-control binaries are excluded.
+Existing MILESTONE.ZIP and pre-06 EVIDENCE files are historical. They are not
+reruns of this candidate. The current portable checks can be run from source;
+native reproduction needs the tester's own licensed Windows/DOS and tools.

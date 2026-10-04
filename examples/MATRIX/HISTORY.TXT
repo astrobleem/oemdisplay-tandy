@@ -1,0 +1,13 @@
+MATRIX PUBLICATION HISTORY
+
+Current MATRIX.EXE and SOURCE/MATRIX.C include the /S companion mode for
+Tandy Start 06. No-argument on-demand operation remains available.
+README.TXT and TESTS.MD identify the current candidate and measured limits.
+
+MILESTONE.ZIP is the preserved older on-demand package. The earlier
+MANIFEST.JSN and existing EVIDENCE files describe that historical package,
+not current /S behavior. They are retained unchanged. The historical
+SOURCE/VERIFY.PY supports the old ordinary /C and /Q fixture layout.
+
+Do not extract the old archive over the current runtime or infer that
+on-demand hardware acceptance qualifies the new saver integration.

@@ -1,0 +1,13 @@
+LIBRARY TSINPUT
+DESCRIPTION 'Windows 3.0 8086 global idle input observer'
+EXETYPE WINDOWS
+CODE PRELOAD FIXED
+DATA PRELOAD FIXED SINGLE
+HEAPSIZE 0
+EXPORTS
+ IdleInstall @1
+ IdleRemove @2
+ IdleGeneration @3
+ IdleReady @4
+ IdleRecord @5
+ WEP @6 RESIDENTNAME

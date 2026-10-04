@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build only the Matrix rain saver, using the repository's existing DOS tools."""
+"""Build the optional Matrix guard test application, using the repository's existing DOS tools."""
 import argparse, hashlib, json, os, shutil, subprocess, time
 from pathlib import Path
 p=argparse.ArgumentParser()
@@ -11,7 +11,7 @@ if out.exists():p.error('--out must be new')
 for n in ('BIN/CL.EXE','BIN/LINK4.EXE','LIB/SLIBCEW.LIB','LIB/LIBW.LIB'):
  if not (repo/n).is_file():p.error('Missing existing toolchain input: '+n)
 out.mkdir(parents=True)
-for n in ('MATRIX.C','MATRIX.DEF','MATRIX.RSP','BUILD.BAT'):
+for n in ('MXGUARD.C','MXGUARD.DEF','MXGUARD.RSP','BUILD.BAT'):
  shutil.copyfile(Path(__file__).parent/n,out/n)
 config="""[sdl]
 fullscreen=false
@@ -48,7 +48,7 @@ with (out/'HOST.LOG').open('wb') as log:
  finally:
   if proc.poll() is None:proc.kill()
   proc.wait()
-if not passed or not (out/'MATRIX.EXE').is_file():raise SystemExit('Build failed; inspect BUILD.LOG and HOST.LOG')
-exe=(out/'MATRIX.EXE').read_bytes()
+if not passed or not (out/'MXGUARD.EXE').is_file():raise SystemExit('Build failed; inspect BUILD.LOG and HOST.LOG')
+exe=(out/'MXGUARD.EXE').read_bytes()
 result={'bytes':len(exe),'sha256':hashlib.sha256(exe).hexdigest(),'cpu':'/G0 8086','target':'Windows 3.0 real mode','compiler_flags':'/nologo /c /G0 /Gw /AS /W3 /Ox'}
 (out/'RESULT.JSON').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
