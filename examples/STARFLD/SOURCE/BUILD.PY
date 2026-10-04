@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build only the optional Start shell, using the repository's existing DOS tools."""
+"""Build only the starfield saver, using the repository's existing DOS tools."""
 import argparse, hashlib, json, os, shutil, subprocess, time
 from pathlib import Path
 p=argparse.ArgumentParser()
@@ -11,7 +11,7 @@ if out.exists():p.error('--out must be new')
 for n in ('BIN/CL.EXE','BIN/LINK4.EXE','LIB/SLIBCEW.LIB','LIB/LIBW.LIB'):
  if not (repo/n).is_file():p.error('Missing existing toolchain input: '+n)
 out.mkdir(parents=True)
-for n in ('TSHELL.C','TSBOOT.C','TSBOOT.H','TNOTICE.C','TNOTICE.H','PROGMENU.C','PROGMENU.H','GRPREAD.C','GRPREAD.H','TSAUX.C','TSAUX.H','TSSAVER.C','TSSAVER.H','TSSAVCFG.C','TSSAVCFG.H','TSSVOPT.C','TSSVOPT.H','SCFGCORE.C','SCFGCORE.H','SVCORE.C','SVCORE.H','TSDATE.C','TSDATE.H','DTCORE.C','DTCORE.H','TSHELL.DEF','TSHELL.RSP','BUILD.BAT'):
+for n in ('STARFLD.C','STARFLD.DEF','STARFLD.RSP','BUILD.BAT'):
  shutil.copyfile(Path(__file__).parent/n,out/n)
 config="""[sdl]
 fullscreen=false
@@ -48,13 +48,8 @@ with (out/'HOST.LOG').open('wb') as log:
  finally:
   if proc.poll() is None:proc.kill()
   proc.wait()
-if not passed or not (out/'TSHELL.EXE').is_file():raise SystemExit('Build failed; inspect BUILD.LOG and HOST.LOG')
-# Mark this resource-free module for Windows 3.0, equivalent to RC /30.
-import struct
-exe=bytearray((out/'TSHELL.EXE').read_bytes())
-ne=struct.unpack_from('<I',exe,0x3c)[0]
-if exe[ne:ne+2]!=b'NE' or struct.unpack_from('<H',exe,ne+0xc)[0]&8:raise SystemExit('Unexpected NE target')
-struct.pack_into('<H',exe,ne+0x3e,0x0300)
-(out/'TSHELL.EXE').write_bytes(exe)
+if not passed or not (out/'STARFLD.EXE').is_file():raise SystemExit('Build failed; inspect BUILD.LOG and HOST.LOG')
+exe=(out/'STARFLD.EXE').read_bytes()
 result={'bytes':len(exe),'sha256':hashlib.sha256(exe).hexdigest(),'cpu':'/G0 8086','target':'Windows 3.0 real mode','compiler_flags':'/nologo /c /G0 /Gw /AS /W3 /Od'}
 (out/'RESULT.JSON').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
+

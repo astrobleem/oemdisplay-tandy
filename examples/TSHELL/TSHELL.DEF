@@ -13,3 +13,5 @@ EXPORTS
  PmDialogProc @5
  NoticeProc @6
  DateProc @7
+ SaverCfgProc @8
+ StarOptProc @9

@@ -103,3 +103,29 @@ from BMP to PNG, with emulator display scaling retained. Source capture:
 `verification/shell160/02-start.PNG`. SHA-256:
 `e910558163be3d5225b0ed50df3850d385d599509750f1af862f7ce991d4ea26`.
 The runtime identity is the same 09 executable listed above.
+
+
+## Tandy Start 10 settings and current Starfield
+
+These are direct native SDL emulator surfaces, losslessly converted to PNG.
+Settings/Options show final TSHELL build 05 at logical 160x200; the emulator
+scales them to 640x400. Those unchanged dialogs were captured during the
+15-case suite with Starfield 08 present. The Starfield image is from the
+subsequent final cursor-fixed build 10 recheck at logical 640x200 mono,
+640x400 output. No retouching or simulated motion is used. A still frame
+does not establish animation speed or physical input/performance.
+
+TSHELL SHA256: d87142ac16b615dc1a696976478db2596030b3d4b61e445eb48f2f84aa893cfa.
+Final STARFLD SHA256: e06c9d80f977e1bda1db2d13be8af5f7d8b6f00285daa4f0e0159af00211b8d0.
+
+- [SAVER10.PNG](SAVER10.PNG): `verification/final05-160-stars/01-four-choice-settings.png`; SHA256
+  `be3335ea5071fa70a03f9ec056e6a4a2877f08a3d3cc85c145ce8d34495ac305`.
+- [STAROPT.PNG](STAROPT.PNG): `verification/final05-160-stars/02-starfield-default-options.png`; SHA256
+  `49c2301ced82a7d93066397219fa48d0972ae3c6dd1b60c8a0f143dd6a8532b7`.
+- [STARS10.PNG](STARS10.PNG): `verification/final05-s10-640-stars/09-starfield-idle-fast64.png`; SHA256
+  `b1de772388c0fec4ea272acebd096e0254b04a288a4de357cf7cb91d01c25f34`.
+
+The experimental text-mode README image links directly to the existing
+[TXNOTE.PNG](../../experiments/TEXTMODE/EVIDENCE/TXNOTE.PNG), decoded from
+actual emulator B800 character/attribute cells. Its original
+[proof and failures](../../experiments/TEXTMODE/README.MD) remain unchanged.

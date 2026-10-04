@@ -19,6 +19,7 @@
 #define ABOUTSYS 45
 #define ADJUSTTIME 46
 #define MYCOMPUTER 47
+#define SAVERSETUP 48
 #define STARTBOOT (WM_USER+3)
 #define RUNEDIT 100
 #define RUNMAX 126
@@ -94,7 +95,7 @@ static void popup(HWND w) {
  AppendMenu(menu,MF_STRING,PROGRAMS,"&Programs...");
  AppendMenu(menu,MF_STRING,RUNAPP,"&Run...");
  system=CreatePopupMenu();
- if(system){AppendMenu(system,MF_STRING,ABOUTSYS,"&About This Tandy");AppendMenu(menu,MF_POPUP,(UINT)system,"&System");}
+ if(system){AppendMenu(system,MF_STRING,ABOUTSYS,"&About This Tandy");AppendMenu(system,MF_STRING,SAVERSETUP,"Screen &saver...");AppendMenu(menu,MF_POPUP,(UINT)system,"&System");}
  AppendMenu(menu,MF_STRING|(paths[0][0]?0:MF_GRAYED),FIRSTAPP,names[0]);
  AppendMenu(menu,MF_SEPARATOR,0,NULL);
  if(!shellMode)AppendMenu(menu,MF_STRING,CLOSEAPP,"&Close bar");
@@ -303,6 +304,7 @@ LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
   if(wp==MYCOMPUTER){TSSaverHold(1);TandyFileManager(w,instance);TSSaverHold(0);return 0;}
   if(wp==ADJUSTTIME){TSSaverHold(1);TandyDateTime(w,instance);TSSaverHold(0);return 0;}
   if(wp==ABOUTSYS){TSSaverHold(1);TandySystem(w,instance);TSSaverHold(0);return 0;}
+  if(wp==SAVERSETUP){TSSaverHold(1);TSSaverSettings(w,instance);TSSaverHold(0);return 0;}
   if(wp==EXITWIN){exitwindows(w,0);return 0;}
   if(wp==EXITSILENT){exitwindows(w,1);return 0;}
   if(wp==CLOSEAPP&&!shellMode){DestroyWindow(w);return 0;}break;

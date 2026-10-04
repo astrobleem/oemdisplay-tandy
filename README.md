@@ -1,7 +1,8 @@
 # OEMDisplay-Tandy
 
-**Five display modes, a compact Start-menu shell, games and utilities for
-Windows 3.0 real mode on the original 8088 Tandy 1000 EX/HX.**
+**Five graphics modes, experimental hardware text mode, a compact Start-menu
+shell, games and utilities for Windows 3.0 real mode on the original 8088
+Tandy 1000 EX/HX.**
 
 Bring Tandy graphics to a 640 KB Windows desktop: launch your Program Manager
 apps from Start, click cookies, swat flies, play pinball, watch Matrix rain,
@@ -10,7 +11,7 @@ or convert a GIF for Paintbrush.
 [Current trial guide](docs/TRIAL4/README.MD) | [App test pack](examples/TANDYLAB/README.MD) |
 [Development status](docs/STATUS.MD) | [Companion sound project](https://github.com/astrobleem/oemsound-tandy)
 
-## Five display modes
+## Five graphics display modes
 
 | Resolution | Colors | Driver | Desktop |
 | --- | ---: | --- | --- |
@@ -28,6 +29,24 @@ colors, not sixteen. [Mode guide](docs/MODES.MD).
 ![The five Tandy profiles in actual Windows Setup](docs/SHOTS/SETUP.PNG)
 
 The five choices in Windows Setup, captured in the emulator.
+
+## Experimental 80x25 hardware text mode
+
+A separate [text-mode proof](experiments/TEXTMODE/README.MD) runs unchanged
+Windows 3.0 Program Manager and Notepad in actual BIOS mode 03h: 80x25
+character/attribute cells with 640x200 logical GDI pixels. Notepad text is
+readable and survives full repaint; sampled pixel, XOR and copy checks pass.
+
+![Actual Notepad hardware-text capture](experiments/TEXTMODE/EVIDENCE/TXNOTE.PNG)
+
+Recorded Notepad proof, decoded from the emulator's hardware text cells.
+This frame shows readable text; it does not establish general compatibility.
+
+**Lab-only, not ready for everyday use.** Window movement, clipping, caret
+inversion and bitmap restore can corrupt characters, and small icon labels
+remain approximate. Physical hardware and speed are untested. Keep it out of
+normal Windows installations and OEM/Setup disks. See the
+[measured results and failures](experiments/TEXTMODE/EVIDENCE/RESULT.JSON).
 
 ## Driver features
 
@@ -66,8 +85,10 @@ The custom startup screen from the OEM/splash emulator checkpoint.
 - **Adjust date/time:** right-click the clock for a compact date/time editor,
   with validation, Apply, Reload and Cancel; fits the 160-pixel desktop.
 - **Clock shortcut:** double-click the clock to open Clock, or Calendar as fallback.
-- **Optional Matrix idle saver:** observes input across Windows apps; configurable
-  delay, input dismissal and pauses around menus, held input and known audio tools.
+- **Screen saver chooser:** Start / System / Screen saver selects None, Matrix,
+  Maze or Starfield, with a 10–3600 second delay, Apply and unsaved Preview.
+  Starfield Options offers three speeds and 16, 32 or 64 stars. Other-app input
+  resets idle; menus, held input and known audio tools defer automatic launch.
 - **Startup sounds:** Tandy, XP-note arrangement or none; optional pre-exit sound.
 - **Normal or silent exit:** preserves application save prompts and exit vetoes.
 - **DOS launch/recovery helpers:** restore the original shell after Windows returns
@@ -76,10 +97,10 @@ The custom startup screen from the OEM/splash emulator checkpoint.
   shell restoration, BIOS text artwork appears above the usable DOS prompt.
   No ANSI.SYS is needed; it does not power off the machine.
 
-![Tandy Start 09 with its menu directly above Start](docs/SHOTS/START09.PNG)
+![Retained Tandy Start 09 menu placement capture](docs/SHOTS/START09.PNG)
 
-Tandy Start 09 in the emulator, on a logical 640x200 monochrome desktop.
-The popup now sits directly above the Start bar.
+Retained version 09 capture on a logical 640x200 monochrome desktop.
+The corrected placement remains in 10, whose System menu adds Screen saver.
 
 ![Windows File Manager opened from My Computer](docs/SHOTS/FILES08.PNG)
 
@@ -95,14 +116,33 @@ Right-click the clock to edit date and time in a dialog that fits 160x200.
 The successful DOS farewell in 86Box. Errors and recovery failures retain plain
 diagnostics; the artwork never substitutes for successful shell restoration.
 
-Version 09 includes the version 07 date/time editor, version 08 My Computer
-and success-only DOS farewell, and corrected Start-menu placement. Matching
+Version 10 adds the graphical saver chooser, compatible Maze saver and GDI
+Starfield to the date/time editor, My Computer, success-only DOS farewell and
+corrected Start-menu placement. Matching
 first-party source and runtime files are included in this branch. Upgrade
 instructions and exact verification scope are in [development status](docs/STATUS.MD).
 
 Program Manager remains the group editor. TSHELL is a compact shell experiment;
 maximized apps can cover its bar, and the idle saver is not a password lock.
 [Launch, upgrade and recovery guide](examples/TSHELL/README.MD).
+
+### Choose a screen saver
+
+![Tandy Start 10 four-choice screen saver settings](docs/SHOTS/SAVER10.PNG)
+
+Current TSTART10 settings on the logical 160x200 desktop. Preview does not
+save; Apply saves and updates the primary shell. None disables automatic
+launch. Secondary bars save for the next primary startup.
+
+![Tandy Start 10 Starfield speed and star-count options](docs/SHOTS/STAROPT.PNG)
+
+Options are staged until Apply. Cancel discards unapplied changes.
+
+![Final Starfield running in the native emulator](docs/SHOTS/STARS10.PNG)
+
+Current Starfield in 640x200 monochrome. This still frame does not demonstrate
+animation speed. Maze remains experimental and can be very slow; 16 stars is
+Starfield's lightest setting. Physical performance is unmeasured.
 
 ## Games, visuals and utilities
 
@@ -111,7 +151,8 @@ maximized apps can cover its bar, and the idle saver is not a password lock.
 | [Cookie Clicker](examples/COOKIE/README.MD) | Click or Space earns cookies; buy cookies/second upgrades; New, Save, Load and About menus; fits 160x200. |
 | [Fly Swat 1.1](examples/SWAT/README.MD) | Mouse-controlled fly hunting, score, three hearts, pause and restart; visible white swatter with black outline; fullscreen and windowed paths, with `/G` fallback. |
 | [Matrix](examples/MATRIX/README.MD) | Fullscreen character rain, input dismissal and desktop restoration; on-demand animation or TSHELL `/S` idle companion. |
-| [Maze](examples/MAZE/README.MD) | Experimental windowed raycasting walk; Space pauses. Too slow for its intended screensaver role on the approximate-XT preset. |
+| [Maze saver](examples/MAZE/SAVER10/README.MD) | Experimental raycasting saver with native presentation on canonical drivers and clipped GDI fallback on trial aliases; very slow on approximate-XT settings. Ordinary windowed mode remains available. |
+| [Starfield](examples/STARFLD/README.MD) | GDI flying-star saver with three speeds, 16/32/64 stars, input dismissal and guarded cursor/focus handoff. |
 | [Pinball](examples/PINBALL/README.MD) | Two flippers, three bumpers, three balls and score; Space launches, Z/Left and / or Right flip, P pauses; focus loss pauses. |
 | [Slosh](examples/SLOSH/README.MD) | Drag the title bar and watch the small spring-surface water toy rebound and settle. |
 | [GIFLOAD](examples/GIFLOAD/README.TXT) | Convert supported static GIFs to new palette-mapped BMPs, then open in Paintbrush; does not change Paintbrush's format list. |
@@ -120,7 +161,7 @@ maximized apps can cover its bar, and the idle saver is not a password lock.
 | [Brighter Tomorrow](examples/BRIGHT/README.MD) | Five workplace notices, choices, three visible metrics, receipts, two endings and Restart; compact keyboard/native-button game. |
 | [About This Tandy](examples/TABOUT/README.MD) | System, Display and Memory pages with refresh and keyboard navigation; exact hardware model remains unknown, with probing deferred. |
 | [EXJOY](examples/EXJOY/README.MD) | Left/right raw joystick axis counts, buttons, live/range views and session-only center calibration. |
-| [DOS WHEEL diagnostic — draft PR 80](https://github.com/astrobleem/oemdisplay-tandy/pull/80) | Bounded DOS mouse-wheel/API and raw serial diagnostics. Raw Genius protocol detected; Windows scrolling bridge not implemented. |
+| [DOS WHEEL diagnostic](tools/WHEEL/README.TXT) | Bounded DOS mouse-wheel/API and raw serial diagnostics. Raw Genius protocol detected; Windows scrolling bridge not implemented. |
 
 | Cookie Clicker - 320x200x16 | Pinball - 640x200x4 |
 | --- | --- |
@@ -170,3 +211,4 @@ Use Setup for mode changes rather than manual SYSTEM.INI edits.
 Contributions and hardware testing are welcome. Include app/driver versions,
 machine, DOS/Windows versions and reproducible steps, distinguishing hardware
 from emulator results. Preserve existing third-party notices.
+

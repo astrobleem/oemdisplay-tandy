@@ -20,10 +20,19 @@ general deferred conversion or asynchronous GDI flush is claimed.
 
 ## Shell update status
 
-Tandy Start 09 source and matching runtime files are included in this branch.
-It adds corrected Start-menu placement to version 08, which includes version
-07's right-click clock date/time editor and **My Computer directly under Start**.
-My Computer launches or restores File Manager; there is no extra submenu.
+Tandy Start 10 source and matching first-party runtimes are included in this
+branch. Start / System / Screen saver offers None, Matrix, Maze and Starfield,
+a 10..3600-second delay, Apply and unsaved Preview. Starfield Options selects
+speed 1/2/3 and 16/32/64 stars. Cancel discards unapplied choices. Only the
+primary shell updates automatic idle immediately; a secondary bar saves for
+the next primary startup and can Preview without installing another hook.
+
+Maze keeps the native path for canonical drivers and uses clipped GDI on
+trial aliases/other supported identities. It remains very slow. Starfield
+uses GDI on every driver; 16 stars is lightest. Neither is a password lock.
+
+The 09 Start placement fix, 08 My Computer/FINISH and 07 date/time editor
+remain. My Computer opens or restores File Manager directly from Start.
 
 The date/time editor validates calendar dates (1980–2099) and 24-hour times.
 Apply changes only edited values. Reload, Cancel, Escape and closing without
@@ -34,30 +43,31 @@ journal deletion before drawing the moon/stars farewell using BIOS text colors.
 No ANSI.SYS, key wait or power-off is required. Nonzero Windows returns, manual
 RECOVER, missing journals and failed restoration retain plain diagnostics.
 
-For an installed 08, exit Windows and replace only TSHELL.EXE after backing
-it up. For 06/07, also replace SHELLSEL.EXE and apply the exact
-[BATCH08.TXT](../examples/TSHELL/DOS/BATCH08.TXT) post-Windows block.
-Preserve every custom SET path and all other launcher content. The two EXEs
-alone are not the full 06/07 upgrade. TSINPUT.DLL and MATRIX.EXE are unchanged
-from 06; no INI change is required for an installed 06/07/08. The
-[component guide](../examples/TSHELL/README.MD) covers older installations.
+From installed 08/09, exit Windows, back up and replace TSHELL.EXE, then
+copy the current MAZE.EXE and STARFLD.EXE to the configured saver directory
+(normally C:\TSTART). Keep your INI and batch. Earlier installations also need
+the preserved input observer/Matrix and, for the DOS artwork, the exact
+[BATCH08.TXT](../examples/TSHELL/DOS/BATCH08.TXT) helper upgrade.
+See the [component guide](../examples/TSHELL/README.MD); never overwrite a
+configured launcher or bypass the shared-memory reservation.
 
-[Current verification](../examples/TSHELL/TESTS.MD) identifies the exact 09
-checks, separately from [retained 08 evidence](../examples/TSHELL/TESTS08.MD).
-The 08 suite included ten native Windows cases, 210 recovery assertions and
-genuine DOS 6.22 emulator exit/veto/error/failure checks. Error-return and
-read-only-journal failures used clearly labeled WIN.COM stand-ins, not every
-possible Windows failure. Earlier tests are not relabeled as 09 reruns.
-No exact-binary physical acceptance of 09 is claimed.
+[Current verification](../examples/TSHELL/TESTS.MD) separates fifteen
+integrated cases using TSHELL 05/Maze 12/Starfield 08 from three fresh targeted
+runs after the final Starfield 10 cursor correction. Earlier 06/08/09 evidence
+remains historical. No full old suite or physical acceptance is claimed anew.
 
-TSHELL 09 build01 is 35,907 bytes, SHA-256
-`ad3c8394b3391939f19e2a1cf282d89701fe46397a4ce5c4c7a312f37c6babe6`.
-Unchanged 08 SHELLSEL (success-only FINISH) is 25,953 bytes, SHA-256
-`6aa652c9fc77e2e05944b46c055157e97b88a10b963135a4aecf5a01fa71c2fd`.
+Current SHA-256 identities:
+- TSHELL.EXE, 48,547 bytes:
+  `d87142ac16b615dc1a696976478db2596030b3d4b61e445eb48f2f84aa893cfa`.
+- MAZE.EXE, 23,215 bytes:
+  `c8dac5dd6c8b6c9c0c6fb8727dd56919e9c0fd5a71fa63b30c429f4be2c3598a`.
+- STARFLD.EXE, 16,783 bytes:
+  `e06c9d80f977e1bda1db2d13be8af5f7d8b6f00285daa4f0e0159af00211b8d0`.
+Matrix, TSINPUT, SHELLSEL and the post-WIN block remain unchanged.
 
 Programs import is read-only; Program Manager remains the group editor.
 Maximized apps can cover the bar. An application taskbar is only proposed,
-not implemented. The global Matrix idle saver is not a lock, and cooperative
+not implemented. The global idle saver is not a lock, and cooperative
 Windows cannot guarantee progress while another task blocks.
 
 ## Physical hardware reports and remaining limits
@@ -137,3 +147,4 @@ frames from current functionality. All showcase PNGs are byte-identical copies
 of existing emulator evidence, not new runtime tests or physical photographs.
 Screenshots do not prove timing, audio or full application behavior. Source
 revisions and exact per-asset paths are recorded there.
+
