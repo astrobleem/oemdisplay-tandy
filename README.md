@@ -11,6 +11,18 @@ or convert a GIF for Paintbrush.
 [Current trial guide](docs/TRIAL4/README.MD) | [App test pack](examples/TANDYLAB/README.MD) |
 [Development status](docs/STATUS.MD) | [Companion sound project](https://github.com/astrobleem/oemsound-tandy)
 
+## Project promotional art
+
+Retro-style project mockups, separate from the actual emulator captures below.
+These are not official Tandy or Microsoft packaging. The older poster says
+"Windows 3.x"; the verified project target remains **Windows 3.0 real mode**.
+
+![16 COLORS. WOW! promotional artwork with a Tandy 1000 EX and blue Windows 3.0 Driver floppy](docs/PROMO/16WOW.WEBP)
+
+<a href="docs/PROMO/WINXTBOX.WEBP"><img src="docs/PROMO/WINXTBOX.WEBP" alt="Windows XT concept box art for the Tandy Windows 3.0 TShell and Extensions Plus Pack" width="420"></a>
+
+[Artwork notes and image identities](docs/PROMO/README.MD).
+
 ## Five graphics display modes
 
 | Resolution | Colors | Driver | Desktop |
