@@ -1,0 +1,137 @@
+WHEEL 0.1 - Genius serial-wheel diagnostic for DOS / 8088
+=======================================================
+
+This tiny DOS diagnostic answers two different questions:
+1. Does the loaded DOS mouse driver expose wheel data?
+2. Does the selected serial port deliver wheel-like data directly?
+
+It is NOT a Windows scrolling driver. Nothing is installed and no system,
+startup or driver files are changed. No capture file is created unless you
+explicitly redirect the output yourself. Two short physical Tandy EX/Genius
+NetScroll captures produced valid directional wheel packets with zero UART
+or decoder errors. See TESTS.MD for bounded counts; broader testing remains.
+
+FIRST: safe driver check
+-----------------------
+Exit Windows completely. At the plain DOS prompt in this folder, run:
+
+  WHEEL
+
+With Microsoft Mouse 7.00, a missing wheel API is expected. That result does
+not mean the wheel is broken. This check does not touch the UART or reset
+the mouse driver. If the driver does support the CuteMouse wheel API, the
+program observes its wheel counter for 20 seconds; Esc ends it sooner.
+The initial accumulated count is discarded. Sampling consumes wheel counts,
+but does not reset the driver. Positive API counts mean downward motion.
+
+CuteMouse 1.9 compatibility note:
+The upstream 1.9 branch can report Microsoft mode with a wheel present while
+lacking the later Wheel API. Official 1.9.1 source leaves INT 33h function 11h
+unimplemented. Its serial handler reads the wheel-press middle-button bit,
+but discards rotation bits. The banner alone does not establish rotation.
+The directional Wheel API was introduced in 2.x. No driver change is needed
+to use the independent clean-boot raw capture below.
+
+SECOND: raw serial test, only on the mouse's known port
+----------------------------------------------------
+1. Reboot DOS 6.22 while holding F5 at DOS startup to skip CONFIG.SYS and
+   AUTOEXEC.BAT. Use your normal known-good clean-boot procedure if different.
+   Do not load MOUSE.COM, CTMOUSE or another mouse driver. Do not start Windows.
+2. Return to this folder. Use ONLY the COM port physically connected to the
+   Genius serial mouse. Do not guess or test a modem/printer/other device.
+
+     WHEEL /RAW1         for the mouse on BIOS COM1
+     WHEEL /RAW2         for the mouse on BIOS COM2
+
+   The chosen BIOS COM number and I/O base are displayed. No port scanning is
+   performed. Either standard UART base 03F8 or 02F8 is accepted if BIOS lists
+   it at the selected COM entry; other bases are refused.
+3. Read the warning and press R. Any other key cancels without port writes.
+4. Keep the mouse body still and wait about two seconds. Turn the wheel UP
+   several clicks, then DOWN several clicks. Avoid pressing buttons during
+   this first test. The capture ends after about 20 seconds. Esc ends early.
+5. Photograph the final counts. For a detailed report, repeat using an unused
+   output filename, for example:
+
+     WHEEL /RAW1 > WHEEL1.TXT
+
+   The R-key prompt and capture instructions still appear on the screen.
+   DOS redirection creates or OVERWRITES the named file. Choose an unused name.
+   Afterward: TYPE WHEEL1.TXT (or send that small text file for inspection).
+6. Reboot normally before using your usual mouse driver or Windows.
+
+If RAW refuses because a mouse handler is resident, stop there and use the
+clean boot. Do not unload or replace a driver just to force this program.
+It also refuses detected Windows/task switching, missing/nonstandard BIOS
+ports, divisor-bank/break states, enabled UART interrupts, loopback, a busy
+transmitter or a UART that changes while waiting for your R-key response.
+
+WHAT THE RESULTS MEAN
+---------------------
+- Repeated nonzero candidate deltas that follow your deliberate up/down wheel
+  motion are useful evidence that wheel data reaches the serial port.
+- Fourth-byte count alone is insufficient: a middle button can also produce
+  a fourth byte, with zero wheel delta.
+- The raw parser assumes Microsoft serial IntelliMouse format. It labels the
+  output CANDIDATE and does not claim automatic model identification.
+- Zero candidates are inconclusive. The port, initial mouse state, exact
+  protocol or hardware could differ. Check raw bytes before drawing conclusions.
+- UART-error bytes suggest the capture is unreliable; do not infer wheel
+  support from those packets. Invalid fourth-byte bit 5 is rejected.
+- A successful raw test plus no DOS wheel API points to a software-layer gap.
+  Enabling the wheel in Windows 3.0 is separate work; changing only a DOS
+  driver does not establish Windows application scrolling support.
+
+The public X.org mouse source identifies Genius NetScroll+ serial, PnP ID
+KYE0004, as serial IntelliMouse compatible. This is evidence for a related
+model, not proof that every mouse labeled NetScroll has identical behavior.
+The raw report preserves startup bytes so the actual unit can be investigated.
+
+BOUNDARIES AND RESTORATION
+-------------------------
+RAW temporarily sets 1200 baud, seven data bits, no parity, one stop bit.
+It asserts DTR and RTS, polls received bytes, and restores the saved divisor,
+LCR, MCR and IER on normal timeout, Esc and buffer-full exit. It never sends
+a serial data byte, enables a UART interrupt, changes a PIC/vector, or writes
+FCR. Only BIOS keyboard/timer operations occur while the UART is modified.
+Changing/restoring DTR/RTS may power-cycle or reset the mouse. Register restore
+cannot restore consumed bytes or a mouse's internal state. A power failure,
+reset or system crash can interrupt restoration; reboot before normal use.
+No program can prove that a non-mouse polling TSR is absent, so the explicit
+clean boot and correct physical port are essential.
+
+Capture memory is fixed at 4096 byte records. Only the first 64 nonzero wheel
+candidate events are individually printed, followed by the complete bounded
+raw byte report and summary. The first two seconds are excluded from decoding
+because power-on/PnP bytes are not motion packets. Tick timestamps are about
+1/18.2 second. A capture spanning the BIOS midnight reset can stop early.
+
+OTHER OPTIONS
+-------------
+  WHEEL /TEST       Synthetic packet checks; no mouse/UART access.
+  WHEEL /?          Usage.
+
+BUILD AND VERIFICATION
+----------------------
+See TESTS.MD. SOURCE/WHEEL.C is the original source. SOURCE/BUILD.BAT needs
+Microsoft C6 CL and LINK4 on PATH, with INCLUDE and LIB set to the compiler
+headers/libraries. Run it from SOURCE. No compiler or driver is bundled.
+The executable is DOS MZ, small model, compiled /G0 for 8086/8088.
+TESTS/MOCKTEST.PY uses a host C compiler to check refusal/restoration paths
+with mocked UART/BIOS calls. It performs no hardware I/O.
+
+PRIMARY REFERENCES
+------------------
+CuteMouse wheel API and protocol:
+https://github.com/FDOS/mouse/blob/master/wheelapi.txt
+https://github.com/FDOS/mouse/blob/master/protocol.txt
+Official CuteMouse 1.9.1 source archive:
+https://cutemouse.sourceforge.net/download/cutemouse191.zip
+X.org serial PnP model mapping:
+https://sources.debian.org/src/xserver-xorg-input-mouse/1:1.9.2-1/src/pnp.c
+Microsoft Windows detection reference (archived original KB Q75338):
+https://jeffpar.github.io/kbarchive/kb/075/Q75338/
+
+PHYSICAL CHECK: two short Genius NetScroll direct-serial captures produced
+valid directional wheel bytes with zero UART/decoder errors. See TESTS.MD
+for exact counts and limits. This does not add Windows wheel scrolling.
