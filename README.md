@@ -1,3 +1,11 @@
+Development source update (2026-10-04): the current BUILD88 pipeline produces
+new experimental drivers; existing package binaries and exact packaging pins
+remain unchanged. Read docs/TRIAL4/README.MD for build identities, tested scope,
+trial overlays and rollback. A successful rebuild is not package acceptance.
+The archived package linked below predates the 8088 copy correction and is
+retained for historical reproduction. Use the experimental guide for new
+hardware trials; its TRIAL 3 mono fallback has the broadest physical report.
+
 # OEMDisplay-Tandy
 
 **Five selectable Windows 3.0 real-mode display drivers for the original
@@ -6,7 +14,9 @@
 Choose your resolution and color depth through Windows Setup. The package
 includes matching fonts, a custom Tandy startup screen and a guarded DOS
 launcher. Tested in DOSBox-X with 8086/8088 instruction-set enforcement and
-normal 640 KB memory; physical Tandy hardware remains untested.
+normal 640 KB memory. This paragraph describes the historical packaged
+baseline; newer physical and genuine-DOS results are scoped in
+[the experimental verification record](docs/TRIAL4/VERIFY.TXT).
 
 **[Download TANDY88.ZIP](TANDY88.ZIP)** · [Installation details](README.TXT) ·
 [Verification and limits](docs/MODES.MD)
@@ -72,8 +82,10 @@ For another Windows directory or troubleshooting, read [README.TXT](README.TXT).
   memory layouts are rejected. [Memory requirements](src/tandysw/RESERVE.MD).
 - Windows 3.0 **real mode** is the target. Windows 3.1, protected modes, PCjr
   and expanded-memory configurations are outside the validated target.
-- Physical Tandy hardware, genuine MS-DOS variants and cycle-exact 8088 timing
-  have not been validated. Emulator tests do not establish hardware performance.
+- The historical package evidence did not validate physical Tandy hardware
+  or genuine MS-DOS. Newer experimental builds have separate scoped evidence
+  in [VERIFY.TXT](docs/TRIAL4/VERIFY.TXT); emulator timings do not establish
+  physical hardware performance.
 - Large redraws can be slow. Application coverage and bitmap support are not
   exhaustive; see the [mode test record](docs/MODES.MD) and
   [bitmap limits](src/tandysw/DIB88.MD).

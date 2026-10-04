@@ -1,0 +1,135 @@
+EXPERIMENTAL TANDY COLOR TRIAL 4
+
+Experimental overlays. A user reports 320x200x16 Paintbrush and TSHELL
+loading on a physical EX; installed driver identity was not read back.
+Other physical color acceptance remains pending.
+
+Purpose
+
+This adds the existing Tandy color modes to the optimized Windows 3.0 driver
+family. The bounded Output path refreshes only proven rows for simple
+two-point lines and solid scan intervals. Other cases retain full refresh.
+Drawing remains synchronous. The 8088 safe-copy correction, cursor protection
+and RESERVE helper are unchanged. No new hardware mode is invented.
+
+Modes and overlay folders
+
+  C32016   320x200, 16 colors   TR43216.DRV   EGA font trio
+  C6404    640x200,  4 colors   TR46404.DRV   CGA font trio
+  C16016   160x200, 16 colors   TR41616.DRV   CGA font trio
+  C3204    320x200,  4 colors   TR43204.DRV   CGA font trio
+  FALLBACK 640x200,  2 colors   TR36402.DRV   CGA font trio
+
+FALLBACK contains the unchanged, hardware-working TRIAL 3 mono driver and its
+exact OEMSETUP.INF. Do not substitute the new development-only 6402 Output
+build from the separate engineering archive.
+
+Expected color choices
+
+The 640x200 four-color palette is black, red, green and white. The 320x200
+four-color palette is black, cyan, magenta and white. Four-color Program
+Manager can still look mostly black and white. Use actual color artwork or
+Paintbrush's palette to check colors. The 160/320 sixteen-color modes provide
+the Tandy RGBI palette.
+
+Narrow modes can clip windows and dialogs. Keyboard navigation or maximizing
+can help; some applications simply do not fit 160/320 logical pixels.
+
+Prepare on the modern PC
+
+1. Keep a complete, verified Windows/CF backup and an UNTOUCHED complete
+   TRIAL 3 6402 OEM source folder. Confirm that you can use the known-good
+   fallback before changing the display mode.
+
+   The fallback driver is TR36402.DRV, 53,040 bytes, SHA256:
+   ca292c7923faa8d716d1c02b7fc2137f04a1965b347000f5c4ee80a707f664bb
+
+2. For each desired color mode, make a NEW complete OEM source copy. Overlay
+   only that mode's exact driver and OEMSETUP.INF from this package. Keep
+   mode folders separate; each INF contains one unambiguous display choice.
+   These two-file overlays are not complete installation disks.
+
+3. Verify the driver and INF hashes in FILES.JSN / MANIFEST.SHA. Verify every
+   required support file using SUPPORT.SHA and SUPPORT.JSN:
+
+   All modes: CGA.GR2, CGALOGO.LGO, TNDYLOGO.RLE
+   C32016:    EGASYS.FON, EGAFIX.FON, EGAOEM.FON
+   Others:    CGASYS.FON, CGAFIX.FON, CGAOEM.FON
+
+   Use verified files from your existing complete OEM source or your owned
+   Windows installation/media, as appropriate. TNDYLOGO.RLE is the existing
+   custom logo from the complete source; do not substitute a Windows logo.
+   Missing or mismatched support means STOP. This overlay does not include
+   Windows, DOS, fonts, ROMs, toolchains or installation media.
+
+Original LOCAL.TXT / MANIFEST.SHA do not validate a modified trial source.
+Do not fabricate staging markers or run an old staging installer to bypass
+checks. This package's manifest is separate. No Python runs on the Tandy.
+
+Activate on the Tandy from DOS
+
+1. Use the working boot profile with no active USE!UMBS / DOSMAX managers.
+
+2. Run the same known, unchanged RESERVE.COM used successfully for TRIAL 3.
+   Continue only after one of these exact success messages:
+
+   RESERVE: 16K video overlap reserved. Start Windows with WIN /R.
+   RESERVE: video reservation already installed.
+
+   Any failure means STOP. Recheck reservation after every reboot. The
+   known helper is 1,512 bytes, SHA256:
+   644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8
+
+3. In the ACTUAL installed Windows directory, run DOS SETUP.EXE. Select
+   Display, Other, and the new complete source folder for ONE color mode.
+   Choose its entry ending '(TRIAL 4 COLOR)'. If Setup asks for the source
+   again while copying the new alias, enter that SAME folder again.
+
+4. Complete Changes. Only at the CONFIG.SYS question choose option 3:
+   'Setup can make NO changes for you.' Let Setup finish.
+
+5. In that same successfully reserved boot, start Windows with WIN /R.
+
+Do not manually edit SYSTEM.INI or overwrite an installed display driver.
+This route does not assume a TANDY88 launcher exists. Mode changes require
+exiting Windows and using DOS Setup; this is not a live resolution switch.
+
+Focused physical checks
+
+Begin with 320x200 sixteen-color, then consider 640x200 four-color. Let each
+initial desktop/app repaint finish with the pointer still. Check a menu,
+ordinary cursor movement, Notepad typing/close, Cookie click/close, and
+Paintbrush/menu/close, with responsive Program Manager after each close.
+Check color appearance and cursor-background restoration.
+
+Record the exact mode, action and elapsed wait if a problem occurs. A slow
+hourglass alone does not distinguish work from a hang. Stop on reproducible
+freezing, corruption, crashes or reservation failure and roll back.
+
+The 86Box 640x200 four-color video implementation labels its hardware model
+a guess. Its emulated colors/layout do not prove the physical EX result.
+All four new color modes remain experimental. Native timing and coverage
+are stated in docs/TRIAL4/VERIFY.TXT, not assumed from a mode name.
+
+MATRIX/SWAT retain their original filename guards. The new aliases use those
+apps' ordinary GDI fallback, not their original-name direct-render path.
+
+Rollback through DOS Setup
+
+Return to the working supported DOS boot and reserve successfully. In DOS
+Windows Setup, choose Display, Other and your UNTOUCHED complete TRIAL 3
+source. Select 'Tandy EX/HX 640x200 2 colors (TRIAL 3)'. Repeat that source
+path if asked, complete changes, and use the CONFIG.SYS-only option 3. Then
+start WIN /R in the successfully reserved boot.
+
+Inactive trial driver files can remain; no manual installed-file deletion
+is required. The fallback is the exact TR36402 hash above, not older TRIAL 1
+or the original driver from before the 8088 copy correction.
+
+Driver rollback restores the display/font selection. In the controlled
+Setup fixture, the fallback driver, SYSTEM.INI and WIN.COM returned to their
+exact baseline hashes. This does not undo saved window positions or app
+preferences. Windows may save narrower Program Manager/group layouts after
+a low-resolution session; PROGMAN.INI and group files can naturally change.
+Maximize or resize normally, or use the full verified backup if a complete
+state restore is needed. Never guess individual system files to overwrite.

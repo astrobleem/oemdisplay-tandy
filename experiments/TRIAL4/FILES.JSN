@@ -1,0 +1,92 @@
+{
+  "status": "EXPERIMENTAL TRIAL OVERLAYS",
+  "color_modes": {
+    "32016": {
+      "alias": "TR43216.DRV",
+      "label": "Tandy EX/HX 320x200 16 colors (TRIAL 4 COLOR)",
+      "driver_bytes": 54864,
+      "driver_sha256": "a22f0d75ec8864e7af65e922cdc2083ce225b19096dfa7c2e416c4e3f1276b61",
+      "font": "EGA",
+      "dpi": "133,96,72",
+      "inf_sha256": "449e056f2855dad25acb808b239073bedf7b041d1c4bf67407f43da5822b1434"
+    },
+    "6404": {
+      "alias": "TR46404.DRV",
+      "label": "Tandy EX/HX 640x200 4 colors (TRIAL 4 COLOR)",
+      "driver_bytes": 53776,
+      "driver_sha256": "2864d96a1efe3ab010aeb4cbd6377b0a6e6e0d44ca14f7dbbb43c3dcee249917",
+      "font": "CGA",
+      "dpi": "200,96,48",
+      "inf_sha256": "f805e9bc799d04dc1b08d7610de1ed40f7507466167dc212847bb6e134037516"
+    },
+    "16016": {
+      "alias": "TR41616.DRV",
+      "label": "Tandy EX/HX 160x200 16 colors (TRIAL 4 COLOR)",
+      "driver_bytes": 54848,
+      "driver_sha256": "a35a007342709c676386a9a1059a6ca9c7d166a416fe1b7f9ef98e03a9479c95",
+      "font": "CGA",
+      "dpi": "200,96,48",
+      "inf_sha256": "492ada763d252f4b3bad75da103bda81c746f9f4c7f49adc2bbff509486bec14"
+    },
+    "3204": {
+      "alias": "TR43204.DRV",
+      "label": "Tandy EX/HX 320x200 4 colors (TRIAL 4 COLOR)",
+      "driver_bytes": 54000,
+      "driver_sha256": "332c706c346c1e3bc7f5b2619042f29d6233e08565f8022a6e57b5134973e474",
+      "font": "CGA",
+      "dpi": "200,96,48",
+      "inf_sha256": "719c96ab446dad477209a612641f69f6d0edb450923727f4433aabdc21adece7"
+    }
+  },
+  "fallback": {
+    "alias": "TR36402.DRV",
+    "bytes": 53040,
+    "sha256": "ca292c7923faa8d716d1c02b7fc2137f04a1965b347000f5c4ee80a707f664bb",
+    "inf_sha256": "5ac1e3b6850a698ab67e0f86629bf46e5911a1692cff1ce15e5e110147306848",
+    "unchanged_TRIAL3": true
+  },
+  "required_support_files_included": false,
+  "support_inputs": {
+    "CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "CGALOGO.LGO": {
+      "bytes": 880,
+      "sha256": "d9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807"
+    },
+    "TNDYLOGO.RLE": {
+      "bytes": 5930,
+      "sha256": "e7a9c043ce3b9f9c78f7ff38bc68d211a0da32462e036abb7135f0602194f083"
+    },
+    "EGASYS.FON": {
+      "bytes": 5328,
+      "sha256": "8bd307d7886d0f2fdfc1de3da8253e294233d1c757fd9131a66405fca5825b09"
+    },
+    "EGAFIX.FON": {
+      "bytes": 4656,
+      "sha256": "6df45a74e5756dd0746bcee593be9ac4df4a35458c26bf4570b748def2d394cb"
+    },
+    "EGAOEM.FON": {
+      "bytes": 4576,
+      "sha256": "05bd6ef11802bbca20473b0e409116fd8919c5bbcbbbc26b7ee2ea1f33ad23be"
+    },
+    "CGASYS.FON": {
+      "bytes": 4368,
+      "sha256": "baf8fa607806d949dfb6992113ce93494678abdef07783b22222b62e5de28ef4"
+    },
+    "CGAFIX.FON": {
+      "bytes": 4208,
+      "sha256": "b0c043a65e2b551bce3c77d25921394dfd2533f50633bc129abd240c7aeb5f89"
+    },
+    "CGAOEM.FON": {
+      "bytes": 4576,
+      "sha256": "1a86d9e42c73ccefcbc82c822abe8dbcd61cf0116454f213c3a95f4d7436cd0d"
+    }
+  },
+  "known_unchanged_RESERVE_sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+  "physical_color_acceptance": "320x200x16: user-reported Paintbrush/TSHELL loading, still slow; installed hash not read back. Other modes pending.",
+  "new_6402_installation": false,
+  "malformed_route_suite": "STOPPED / NOT RUN",
+  "native_lifecycle_final": true
+}

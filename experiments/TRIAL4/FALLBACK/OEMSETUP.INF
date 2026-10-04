@@ -1,0 +1,16 @@
+; PRIVATE TRIAL 3: isolated 6402 cursor-retention and byte-column candidate.
+; Add to a NEW copy of your complete original OEM support folder.
+; Original LOCAL.TXT / MANIFEST.SHA do not validate this changed OEM file.
+; Host-side frozen evidence separately pins this test-only source.
+[data]
+Version = "3.0"
+[disks]
+a = ., "Tandy EX/HX PRIVATE TRIAL 3 6402", OEMSETUP.INF
+[display]
+TR36402 = a:TR36402.DRV, "Tandy EX/HX 640x200 2 colors (TRIAL 3)", "200,96,48", a:CGA.GR2, a:CGALOGO.LGO,,,, a:TNDYLOGO.RLE
+[sysfonts]
+a:CGASYS.FON, "CGA System Font", "200,96,48"
+[fixedfonts]
+a:CGAFIX.FON, "CGA Fixed System Font", "200,96,48"
+[oemfonts]
+a:CGAOEM.FON, "CGA Terminal Font (USA/Europe)", "200,96,48", 1

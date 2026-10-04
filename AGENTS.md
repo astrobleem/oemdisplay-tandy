@@ -5,7 +5,7 @@
 - **Emulator:** DOSBox-X (Path: `DOSBox-X\dosbox-x.exe`).
 - **Assembler:** MASM 5.10.
 - **Linker:** LINK4 (Segmented Executable Linker v5.x).
-- **Current Build:** `python3 src/tandysw/BUILD88.PY --dosbox <dosbox-x> --out <new-path> [--mode <profile>]`; five profiles are in `docs/MODES.MD`. Omitted mode preserves candidate05.
+- **Current Build:** `python3 src/tandysw/BUILD88.PY --dosbox <dosbox-x> --out <new-path> [--mode <profile>]`; five profiles are in `docs/MODES.MD`. Omitted mode selects 320x200x16 in the current development pipeline; see docs/TRIAL4/README.MD.
 - **Legacy Build:** `build_driver.bat` -> `BLDTNDY.BAT` builds the old `TNDY16.DRV`, not the accepted driver.
 - **Packaging:** `MAKEDISK.BAT` -> `MAKEDISK.PY` (Python 3.8+). See `BUILDING.MD`.
 - **Install:** own-media OEM disk, five Windows Setup Other display choices, and fail-closed `C:\TANDY88\TANDY88` launcher. Never use manual INI edits as normal install instructions.
@@ -22,6 +22,14 @@
 - **Segments:** Use `cmacros.inc` macros (`sBegin`, `sEnd`, `cProc`) to ensure correct segment ordering (`_TEXT`, `_DATA`, etc.).
 
 ## 4. Current Build and Package Process
+
+The updated BUILD88 source produces the experimental Output-row family recorded
+in docs/TRIAL4/BUILDS.JSN. Existing packaged payloads and exact MAKEDISK pins
+remain historical accepted artifacts. Do not replace those payloads or relax
+pins merely because a development rebuild succeeds. Trial overlays live only
+in experiments/TRIAL4 and require owned support files. REPCOPY88.PY is a
+retained, host-only nine-character filename; DOS payload names stay 8.3.
+
 1. Preserve the accepted candidate05 `src/tandysw/bin/TANDY88.DRV` (SHA256 `ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee`), `RESERVE.COM`, shared launcher and custom `TNDYLOGO.RLE` unless explicitly in scope. Main commit `54fdd714` and the custom-splash work have been merged locally; do not regress them.
 2. Rebuild with `BUILD88.PY` and review `RESULT.json`; run the documented CPU, memory and framebuffer tests.
 3. Package through `MAKEDISK.BAT` on Windows or `MAKEDISK.PY` elsewhere. Exact binary pins deliberately reject an unaccepted rebuild.

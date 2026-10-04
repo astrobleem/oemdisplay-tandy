@@ -1,0 +1,109 @@
+BOUNDED VERIFICATION RECORD - 2026-10-04
+
+Code/build identity
+All eleven supplied existing production/pass/regression source files are
+byte-identical to the frozen final source. Five MASM/link/resource builds
+passed emitted 8086/8088 and safe-copy audits. A second final 32016 build
+was byte-identical. BUILDS.JSN gives exact binary and staged assembly pins.
+
+The 8088 copy correction changes eleven source sites, ten compiled sites.
+A passive instruction trace of the old driver reproduced an interrupted
+multi-prefix copy returning without REP, a shortened generated drawing
+sequence and malformed control flow. The replacement eliminates every
+compiled unsafe site. Dedicated forced-interrupt stress was NOT RUN.
+Ordinary native app/input lifecycle checks passed for the corrected family;
+that does not replace arbitrary interrupt-phase coverage.
+
+Prior byte-column/cursor combination gates passed across five profiles,
+including complete shadow/VRAM comparisons, padding, DS != SS, overlap and
+ordinary callback/visibility paths. The current Output-row stage changes
+only its wrapper/helper: all 26 other linked objects and 164 other staged
+source files per profile were byte-identical to that combined parent.
+
+Final Output-row valid-input differential
+2,580 paired cases; 5,160 actual renderer calls; 287,440,896 compared bytes
+across five profiles. Complete shadow/surface/VRAM, bank padding, returns,
+nonvolatile registers, stack balance and ordinary cursor interaction passed.
+Coverage includes ROP2 values 1..16, pen styles 0..4, background modes,
+solid/dither brushes, octants/reverse/clipped edges, count-3 fallback,
+hollow/patterned fallback, memory bitmaps and disabled display.
+BS_MONO_PATTERN was excluded. A separate malformed-input route/ABI spy suite
+was NOT RUN. Numeric pointer bounds do not establish object ownership;
+callers must provide valid, live, stable objects. Full BitBlt regression was
+not repeated at this final stage; its source and object scope are unchanged.
+
+Static Output checks compared 4,032,160 far-span arithmetic cases and at
+least 120,960 geometry cases, plus eleven fail-closed pin/reapply checks.
+These model/source checks do not substitute for missing dynamic coverage.
+
+Native measured Output batches
+Official 86Box 6.0, Tandy HX proxy, 8088 4.772728 MHz, 640 KB,
+genuine DOS 6.22/Windows 3.0, FILES=30, BUFFERS=20, no UMB managers,
+unchanged successful RESERVE. The physical DOS mouse TSR was not loaded.
+One identical /G0 OUTBENCH probe was used in each matched pair. It hides the
+cursor and measures 16 horizontal, 4 diagonal, 4 vertical two-point lines,
+then one 12x12 ellipse. Timer resolution is approximately 55 ms.
+Values below are whole-batch milliseconds, not per-call timings:
+
+  mode       batch          prior combined    Output rows
+  320x16     horizontal16          24771              329
+  320x16     diagonal4              6152             1703
+  320x16     vertical4              6151             1703
+  320x16     ellipse1              21860             5053
+  640x4      horizontal16           3899              274
+  640x4      diagonal4               934              275
+  640x4      vertical4               933              274
+  640x4      ellipse1               3625             1098
+
+All 100 timed API calls succeeded. Eight paired 32 KB VRAM dumps matched
+byte-for-byte, including padding (262,144 bytes; 768,000 visible-pixel
+comparisons). Straight-line geometry also matched an independent check.
+Ellipse testing establishes paired raster equality and bounds/color sanity,
+not an independent ellipse algorithm oracle. Every post-boot probe speed
+sample was 100 percent. OUTBENCH source/build inputs are included here;
+its measured EXE SHA256 was:
+4ce70f8fb64714d10a7ba767b9f495f8b932900c693d40ddefefdcc4fa82e782
+
+Native real applications
+Quiet initial Cookie paint, measured in roughly five-second screenshot
+brackets after Windows start detection (includes OS/app startup):
+  320x16: prior 395-400 seconds; Output rows 55-60 seconds.
+  640x4:  prior  90-95 seconds; Output rows 30-35 seconds.
+Initial-paint completion could still show an hourglass. These are not exact
+WinMain timings or readiness measurements. Each paired completed image was
+identical across 333,500 pixels; native movement reports were zero through
+initial paint. 32016 candidate mean speed was 99.81 percent (one 90-percent
+sample); its baseline averaged 100 percent. Both 6404 starts sampled 100.
+
+Each final color candidate passed one Cookie click/repaint/close cycle and
+one Paintbrush full-controls/palette render/close cycle, followed by a
+responsive Program Manager File menu. Actual click changed Cookies 0 to 1.
+Two ten-second horizontal motion bursts per candidate settled to zero new
+native reports in the next five seconds with no UART overruns. 32016
+Paintbrush's full File popup was observed. A fully rendered 6404 Paintbrush
+popup was not established by its saved frame; the later Progman menu passed.
+No second app-launch cycle or DOS-shell EXIT restoration was run for this
+final Output-row stage. 16016/3204 had no new native app/timing run here.
+
+Setup and rollback
+All four exact fresh color aliases passed actual DOS Setup selection/copy,
+fresh Windows menu/exit and Setup rollback to exact TRIAL 3 mono driver,
+SYSTEM.INI and WIN.COM in isolated DOSBox-X fixtures. This Setup test used
+built-in DOS, and is distinct from the native genuine-DOS runtime checks.
+It added only the expected inactive aliases/fonts. Normal GUI save behavior
+changed Progman/group layouts; driver rollback is not whole-install rollback.
+
+Physical observations
+TRIAL 3 640x200x2 was reported substantially faster and working on an EX.
+The later 320x200x16 trial was reported working, with Paintbrush and TSHELL
+loading, and still slow. These are user reports, without post-install hash
+readback for those reports. Other color modes and broad physical lifecycle
+acceptance remain pending. 86Box's 640x200x4 video code describes that
+hardware model as a guess; emulator success cannot establish EX colors.
+
+Preservation
+The current addition contains authored source, scoped summaries and isolated
+trial drivers only. It adds no OS media, fonts, ROM, DDK or toolchain payload.
+The unchanged reservation helper remains required. Full-frame identity-copy
+resynchronization and the 8088 copy fix remain enabled. No new asynchronous
+flush, private escape, palette mode or hardware resolution was introduced.

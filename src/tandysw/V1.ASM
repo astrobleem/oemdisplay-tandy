@@ -7,11 +7,15 @@
 ?WIN=1
 incDevice=1
 incControl=1
+incFont=1
+incDrawMode=1
 include cmacros.inc
 include gdidefs.inc
 include display.inc
 include mflags.inc
 include ega.inc
+include rlstrblt.inc
+include rlfntseg.inc
 externFP BitBlt
 externFP Output
 externFP Pixel
@@ -421,8 +425,22 @@ get_nibble macro
     shl bh,1
     rcl al,1
 endm
-public FlushShadow
+public FlushShadow,FlushRows
 FlushShadow proc near
+    ; Full-screen callers retain the original synchronous conversion.
+    push ax
+    push bx
+    xor ax,ax
+    mov bx,SCREEN_HEIGHT
+    call FlushRows
+    pop bx
+    pop ax
+    ret
+
+; AX is signed first row; BX is exclusive last row. Both are already
+; overflow-checked by the caller. Clamp before touching the shadow.
+; Preserve every register, and hide/show the cursor even for empty bounds.
+FlushRows label near
     cmp enabled_flag,0
     jne flush_start
     ret
@@ -436,14 +454,29 @@ flush_start:
     push bp
     push ds
     push es
+    cmp ax,0
+    jge flush_first_clamped
+    xor ax,ax
+flush_first_clamped:
+    cmp bx,SCREEN_HEIGHT
+    jle flush_last_clamped
+    mov bx,SCREEN_HEIGHT
+flush_last_clamped:
     call cursor_hide
+    cld
+    cmp ax,bx
+    jl flush_nonempty
+    jmp flush_finished
+flush_nonempty:
+    mov bp,ax
+    push bx
+    mov cx,SCREEN_W_BYTES*4
+    mul cx
+    mov si,ax
     mov ax,seg shadow_bits
     mov ds,ax
     mov ax,0b800h
     mov es,ax
-    xor bp,bp
-    xor si,si
-    cld
 flush_row:
     mov ax,bp
     and ax,3
@@ -480,9 +513,14 @@ flush_byte:
 flush_next_row:
     add si,120
     inc bp
-    cmp bp,200
-    jae flush_finished
+    ; Keep the exclusive limit on our private stack across conversion.
+    pop ax
+    push ax
+    cmp bp,ax
+    jae flush_rows_finished
     jmp flush_row
+flush_rows_finished:
+    pop ax
 flush_finished:
     pop es
     pop ds
@@ -500,7 +538,7 @@ FlushShadow endp
 
 ; Translate a screen argument in our private stack frame. The caller's
 ; descriptor is never modified. Ordinary and null bitmap pointers pass.
-map_device macro arg
+map_device macro arg,writes
 local mapped
     les di,arg
     mov ax,es
@@ -510,7 +548,9 @@ local mapped
     je mapped
     mov word ptr arg,offset shadow_device
     mov word ptr arg+2,ds
+    if writes
     mov dirty,1
+    endif
 mapped:
 endm
 
@@ -527,14 +567,77 @@ cProc TBitBlt,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
     parmD brush
     parmD mode
     localW dirty
+    localW resync
 cBegin
     mov dirty,0
-    map_device dst
-    map_device src
+    mov resync,0
+    ; Fullscreen clients restore direct VRAM writes with an identity
+    ; screen SRCCOPY (even 1x1). Keep that full shadow-resync contract.
+    ; Inspect both real devices before map_device replaces descriptors.
+    cmp word ptr rop,0020h
+    jne TBitBlt_mapped
+    cmp word ptr rop+2,00cch
+    jne TBitBlt_mapped
+    mov ax,dstx
+    cmp ax,sx
+    jne TBitBlt_mapped
+    mov ax,dsty
+    cmp ax,sy
+    jne TBitBlt_mapped
+    les di,dst
+    mov ax,es
+    or ax,di
+    jz TBitBlt_mapped
+    cmp word ptr es:[di],0
+    je TBitBlt_mapped
+    les di,src
+    mov ax,es
+    or ax,di
+    jz TBitBlt_mapped
+    cmp word ptr es:[di],0
+    je TBitBlt_mapped
+    mov resync,1
+TBitBlt_mapped:
+    map_device dst,1
+    map_device src,0
     cCall BitBlt,<dst,dstx,dsty,src,sx,sy,xextent,yextent,rop,brush,mode>
     cmp dirty,0
     je TBitBlt_done
+    ; DDK BitBlt relies on GDI-clipped destination geometry. Only an
+    ; in-screen rectangle with positive, non-overflowing extents proves
+    ; dirty row bounds. Anything outside that contract gets a full flush.
+    ; Save the renderer return value while calculating dirty scanlines.
+    push ax
+    push bx
+    cmp resync,0
+    jne TBitBlt_full
+    mov bx,xextent
+    or bx,bx
+    jle TBitBlt_full
+    mov ax,dstx
+    or ax,ax
+    js TBitBlt_full
+    add ax,bx
+    jo TBitBlt_full
+    cmp ax,SCREEN_WIDTH
+    jg TBitBlt_full
+    mov bx,yextent
+    or bx,bx
+    jle TBitBlt_full
+    mov ax,dsty
+    or ax,ax
+    js TBitBlt_full
+    add bx,ax
+    jo TBitBlt_full
+    cmp bx,SCREEN_HEIGHT
+    jg TBitBlt_full
+    call FlushRows
+    jmp short TBitBlt_flushed
+TBitBlt_full:
     call FlushShadow
+TBitBlt_flushed:
+    pop bx
+    pop ax
 TBitBlt_done:
 cEnd
 
@@ -550,7 +653,7 @@ cProc TOutput,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
     localW dirty
 cBegin
     mov dirty,0
-    map_device dst
+    map_device dst,1
     cCall Output,<dst,style,count,points,pen,brush,mode,clip>
     cmp dirty,0
     je TOutput_done
@@ -567,11 +670,37 @@ cProc TPixel,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
     localW dirty
 cBegin
     mov dirty,0
-    map_device dst
+    map_device dst,1
+    ; NULL draw mode means GetPixel: the renderer only reads shadow RAM.
+    mov ax,word ptr mode
+    or ax,word ptr mode+2
+    jnz TPixel_render
+    mov dirty,0
+TPixel_render:
     cCall Pixel,<dst,x,y,color,mode>
     cmp dirty,0
     je TPixel_done
-    call FlushShadow
+    push ax
+    push bx
+    ; The renderer clips SetPixel to the destination bitmap dimensions.
+    ; Out-of-bounds pixels still pair cursor hide/show but convert no row.
+    xor ax,ax
+    xor bx,bx
+    cmp x,0
+    jl TPixel_flush
+    cmp x,SCREEN_WIDTH
+    jge TPixel_flush
+    cmp y,0
+    jl TPixel_flush
+    cmp y,SCREEN_HEIGHT
+    jge TPixel_flush
+    mov ax,y
+    mov bx,ax
+    inc bx
+TPixel_flush:
+    call FlushRows
+    pop bx
+    pop ax
 TPixel_done:
 cEnd
 
@@ -584,9 +713,210 @@ cProc TScanLR,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
     localW dirty
 cBegin
     mov dirty,0
-    map_device dst
+    map_device dst,1
     cCall ScanLR,<dst,x,y,color,style>
 cEnd
+
+; Text bounds are deliberately conservative. FONTINFO starts at fsType,
+; not the file header. Use the renderer's actual DDK structures and assert
+; their relationship. The real-mode GDI caller still owns pointer validity;
+; these checks reject null/segment-wrapping descriptors, not arbitrary RAM.
+.errnz (offset fsType)-42h
+.errnz (offset fsVersion)
+.errnz dfType
+.errnz PF_RASTER_TYPE
+.errnz dfPixHeight-16h
+.errnz ftAccelerator-0fh
+.errnz (offset fsPixHeight)-(offset fsType)-dfPixHeight
+.errnz (offset fsWeight)-(offset fsType)-dfWeight
+.errnz ETO_OPAQUE_FILL-2
+.errnz ETO_OPAQUE_CLIP-4
+
+; 8086 conditionals cannot branch beyond 128 bytes. Use a nearby accepted
+; branch followed by a near failure jump. All MASM 5 arguments are explicit.
+text_require macro condition,failed
+local accepted
+    condition accepted
+    jmp failed
+accepted:
+endm
+
+text_pointer macro pointer,span,failed
+    les di,pointer
+    mov ax,es
+    or ax,ax
+    text_require jnz,failed
+    cmp di,0ffffh-(span-1)
+    text_require jbe,failed
+endm
+
+; Read the entire RECT only after the far-pointer boundary check. Empty
+; ordered rectangles are safe; reducing the interval by clipping is optional.
+text_rectangle macro pointer,failed
+    text_pointer pointer,<size RECT>,failed
+    mov ax,es:[di].left
+    or ax,ax
+    text_require jns,failed
+    cmp ax,es:[di].right
+    text_require jle,failed
+    cmp word ptr es:[di].right,SCREEN_WIDTH
+    text_require jle,failed
+    mov ax,es:[di].top
+    or ax,ax
+    text_require jns,failed
+    cmp ax,es:[di].bottom
+    text_require jle,failed
+    cmp word ptr es:[di].bottom,SCREEN_HEIGHT
+    text_require jle,failed
+endm
+
+; Snapshot only final row endpoints before the unchanged renderer call.
+; dirty=0 means no flush, 1 full flush, and 2 proven full-width row interval.
+; The last three macro arguments are explicit even for ordinary StrBlt.
+text_bounds macro extended,optr,opts
+local finished,restore,top_kept,bottom_kept,widths_checked
+    cmp dirty,0
+    text_require jne,finished
+    cmp count,0
+    text_require jg,finished
+    push ax
+    push bx
+    push cx
+    push dx
+    push si
+    push di
+    push es
+    ; Positive strings must not wrap their segment. This is a selector
+    ; guard only; real-mode GDI still guarantees the allocation is readable.
+    les di,string
+    mov ax,es
+    or ax,ax
+    text_require jnz,restore
+    mov ax,count
+    dec ax
+    add ax,di
+    text_require jnc,restore
+    if extended
+    ; A null width vector is normal. A supplied vector has count WORDs.
+    les di,dxs
+    mov ax,es
+    or ax,di
+    jz widths_checked
+    mov ax,es
+    or ax,ax
+    text_require jnz,restore
+    mov ax,count
+    shl ax,1
+    text_require jnc,restore
+    dec ax
+    add ax,di
+    text_require jnc,restore
+ widths_checked:
+    endif
+    ; Font: the exact raster FONTINFO layout accepted by get_font.
+    text_pointer font,<size FONTINFO>,restore
+    cmp di,offset fsType
+    text_require je,restore
+    cmp word ptr es:fsVersion,0200h
+    text_require je,restore
+    test word ptr es:[di].dfType,not PF_BITS_IS_ADDRESS
+    text_require jz,restore
+    cmp byte ptr es:[di].dfItalic,0
+    text_require je,restore
+    cmp byte ptr es:[di].dfUnderline,0
+    text_require je,restore
+    cmp byte ptr es:[di].dfStrikeOut,0
+    text_require je,restore
+    mov bx,es:[di].dfPixHeight
+    or bx,bx
+    text_require jg,restore
+    mov cx,es:[di].dfWeight
+    ; No rotation, scaling in Y, synthetic weight, or decoration. Width
+    ; is intentionally unconstrained: SYSTEM_FONT is proportional.
+    text_pointer xform,<size TEXTXFORM>,restore
+    cmp es:[di].ftHeight,bx
+    text_require je,restore
+    cmp word ptr es:[di].ftEscapement,0
+    text_require je,restore
+    cmp word ptr es:[di].ftOrientation,0
+    text_require je,restore
+    cmp es:[di].ftWeight,cx
+    text_require je,restore
+    cmp byte ptr es:[di].ftItalic,0
+    text_require je,restore
+    cmp byte ptr es:[di].ftUnderline,0
+    text_require je,restore
+    cmp byte ptr es:[di].ftStrikeOut,0
+    text_require je,restore
+    cmp word ptr es:[di].ftAccelerator,0
+    text_require je,restore
+    cmp word ptr es:[di].ftOverhang,0
+    text_require je,restore
+    text_pointer mode,<size DRAWMODE>,restore
+    cmp word ptr es:[di].bkMode,TRANSPARENT
+    text_require jge,restore
+    cmp word ptr es:[di].bkMode,OPAQUE
+    text_require jle,restore
+    text_rectangle clip,restore
+    ; Prove signed y+h cannot overflow and is wholly on screen.
+    mov si,y
+    or si,si
+    text_require jns,restore
+    mov dx,si
+    add dx,bx
+    text_require jno,restore
+    cmp dx,SCREEN_HEIGHT
+    text_require jle,restore
+    if extended
+    test opts,not (ETO_OPAQUE_FILL+ETO_OPAQUE_CLIP)
+    text_require jz,restore
+    test opts,ETO_OPAQUE_FILL+ETO_OPAQUE_CLIP
+    jz bottom_kept
+    text_rectangle optr,restore
+    ; Bit 2 fills, bit 4 only clips (the archived prose reverses these).
+    test opts,ETO_OPAQUE_FILL
+    jz bottom_kept
+    mov ax,es:[di].top
+    cmp si,ax
+    jle top_kept
+    mov si,ax
+ top_kept:
+    mov ax,es:[di].bottom
+    cmp dx,ax
+    jge bottom_kept
+    mov dx,ax
+ bottom_kept:
+    endif
+    mov rowfirst,si
+    mov rowlast,dx
+    mov dirty,2
+ restore:
+    pop es
+    pop di
+    pop si
+    pop dx
+    pop cx
+    pop bx
+    pop ax
+ finished:
+endm
+
+text_flush macro
+local full,done
+    push ax
+    push bx
+    cmp dirty,2
+    jne full
+    mov ax,rowfirst
+    mov bx,rowlast
+    call FlushRows
+    jmp short done
+ full:
+    call FlushShadow
+ done:
+    pop bx
+    pop ax
+endm
 
 cProc TStrBlt,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
     parmD dst
@@ -599,13 +929,21 @@ cProc TStrBlt,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
     parmD mode
     parmD xform
     localW dirty
+    localW rowfirst
+    localW rowlast
 cBegin
     mov dirty,0
-    map_device dst
+    map_device dst,1
+    ; Negative count requests extents. Zero can still paint an opaque rect.
+    cmp count,0
+    jge TStrBlt_render
+    mov dirty,0
+TStrBlt_render:
+    text_bounds 0,0,0
     cCall RStrBlt,<dst,x,y,clip,string,count,font,mode,xform>
     cmp dirty,0
     je TStrBlt_done
-    call FlushShadow
+    text_flush
 TStrBlt_done:
 cEnd
 
@@ -620,16 +958,24 @@ cProc TExtTextOut,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
     parmD mode
     parmD xform
     parmD dxs
-    parmD opaque
+    parmD opaquerect
     parmW options
     localW dirty
+    localW rowfirst
+    localW rowlast
 cBegin
     mov dirty,0
-    map_device dst
-    cCall RExtTextOut,<dst,x,y,clip,string,count,font,mode,xform,dxs,opaque,options>
+    map_device dst,1
+    ; Negative count requests extents. Zero can still paint an opaque rect.
+    cmp count,0
+    jge TExtTextOut_render
+    mov dirty,0
+TExtTextOut_render:
+    text_bounds 1,opaquerect,options
+    cCall RExtTextOut,<dst,x,y,clip,string,count,font,mode,xform,dxs,opaquerect,options>
     cmp dirty,0
     je TExtTextOut_done
-    call FlushShadow
+    text_flush
 TExtTextOut_done:
 cEnd
 
