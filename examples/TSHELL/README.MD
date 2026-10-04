@@ -1,27 +1,21 @@
-# Tandy Start 09
+# Tandy Start 10
 
-Optional Windows 3.0 real-mode shell for 8086/8088 Tandy machines. Programs
-reads existing Program Manager groups; Run/Browse, startup sound selection
-and normal or silent exit remain available. Version 07 added a compact
-date/time editor. Version 08 added My Computer directly under Start and
-success-only DOS moon/stars artwork. Version 09 corrects popup placement
-so Start opens directly above its bar.
-
-The optional Matrix idle saver observes input across Windows applications.
-It is not a password lock. Saver selection is configured through TSHELL.INI;
-there is no graphical screensaver chooser in this version.
+Optional Windows 3.0 real-mode shell for 8086/8088 Tandy machines. Version 10
+adds Start / System / Screen saver: Matrix, Maze, Starfield or None, delay,
+Apply and unsaved Preview. Starfield Options offers three speeds and
+16/32/64 stars. Earlier Start, date/time, My Computer and DOS FINISH features
+remain. These visual effects are not password locks.
 
 ## Current files and history
 
-TSHELL.EXE is the current 35,907-byte shell. DOS/SHELLSEL.EXE is the unchanged
-25,953-byte success-only FINISH helper from 08. TSINPUT.DLL remains 3,082 bytes
-and ../MATRIX/MATRIX.EXE remains 14,157 bytes, both unchanged from 06. Exact
-SHA-256 identities and measured limits are in TESTS.MD.
+TSHELL.EXE is 48,547 bytes. Current Maze saver is at
+[../MAZE/SAVER10](../MAZE/SAVER10/README.MD); current Starfield is at
+[../STARFLD](../STARFLD/README.MD). Matrix, TSINPUT.DLL, DOS/SHELLSEL.EXE and
+the DOS batch block remain unchanged. TESTS.MD records all exact identities.
 
-Historical MILESTONE.ZIP, MANIFEST.JSON and pre-06 EVIDENCE remain unchanged;
-they do not describe current runtime files. TESTS06.MD and TESTS08.MD retain
-earlier qualification without claiming it was rerun on 09. No OS, SDK,
-compiler, ROM, donor-media or test-control binaries are added.
+MILESTONE.ZIP, MANIFEST.JSON, UPDATE09.MF and earlier EVIDENCE/TESTS06/08/09
+files retain their original historical scope. They do not identify current
+10 runtime files. No OS, SDK, compiler, ROM or test-control binary is added.
 
 ## Build and portable checks
 
@@ -41,6 +35,7 @@ Run portable host checks with Python 3 and GCC:
 
     python3 examples/TSHELL/TESTS/RUNHOST.PY
     python3 examples/TSHELL/TESTS/DATE/RUN.PY
+    python3 examples/TSHELL/TESTS/CONFIG/RUN.PY
     python3 examples/TSHELL/DOS/TESTSEL.PY
     python3 examples/TSHELL/DOS/TESTNITE.PY
 
@@ -49,67 +44,91 @@ owned C:\BIN, C:\INCLUDE and C:\LIB layout. It uses /G0 /AS and DOS SLIBCE,
 without Windows startup/runtime. See DOS/README.TXT for full first-install
 and interruption-recovery details.
 
-## Upgrade an existing installation
+## Settings, upgrade and input safety
 
-Exit Windows completely and preserve unused backup copies before replacing
-files. Keep all installed TSHELL.INI choices, custom paths, display drivers,
-RESERVE.COM and sound companions.
+USING THE SETTINGS
+- Choose a saver and an idle delay in seconds. 300 means five minutes.
+  The supported range is 10 to 3600 seconds.
+- Apply saves the choices and updates the primary shell immediately.
+- Preview tries the selected saver without saving. A key or mouse gesture
+  dismisses it and returns to the settings window. Held wake input is drained
+  before the underlying app receives input.
+- Starfield / Options chooses speed 1 (slow), 2 (normal), or 3 (fast), and
+  16, 32, or 64 stars. Press OK, then Apply in the main settings window to
+  save. Preview can try the new options before Apply.
+- Cancel, Escape, or closing either dialog discards that dialog's unapplied
+  choices. An earlier explicit Apply remains saved.
+- None disables the automatic idle saver. The normal default is Matrix with
+  a five-minute delay if that is already configured. An unconfigured shell
+  starts with automatic saving disabled until you choose and Apply.
+- A secondary bar launched from Program Manager saves for the next primary
+  shell startup. It can Preview, but does not install another idle observer.
 
-- From 08: replace only TSHELL.EXE in the actual Windows directory.
-- From 06/07: replace TSHELL.EXE and SHELLSEL.EXE, then apply the exact
-  post-WIN block in DOS/BATCH08.TXT. Install the new helper first. Preserve
-  every SET path and all other batch bytes; do not overwrite a configured
-  TSTART.BAT with the source template. No INI change is required.
-- From 05 or earlier: first follow UPDATE06.TXT for TSINPUT.DLL, the Matrix
-  /S companion and optional ADDON.INI keys, preserving existing settings,
-  then apply the 06/07 steps above. Use the current TSHELL.EXE throughout.
+UPGRADE FROM INSTALLED 08 OR 09
+Exit Windows. Preserve unused backup copies of the existing files first.
+Stage this folder's TSHELL.EXE, ../MAZE/SAVER10/MAZE.EXE and
+../STARFLD/STARFLD.EXE in C:\TSUPD10 on the DOS machine, then copy:
 
-About This Tandy, Clock/Calendar and File Manager must already be installed
-separately. My Computer opens WINFILE.EXE or restores/activates its existing
-window; it does not bundle or rewrite File Manager. A missing app produces
-a compact notice. Program Manager remains the group editor.
+COPY C:\TSUPD10\TSHELL.EXE C:\WINDOWS\TSHELL.EXE
+COPY C:\TSUPD10\MAZE.EXE C:\TSTART\MAZE.EXE
+COPY C:\TSUPD10\STARFLD.EXE C:\TSTART\STARFLD.EXE
 
-The right-click clock editor validates 1980..2099 dates and 24-hour times.
-Apply changes only edited fields. Cancel, Escape and closing without Apply
-do not set the clock. Reload reads the current values. Failed or unverifiable
-partial changes require Reload before another Apply; no silent rollback is
-attempted. Double-click still opens Clock, with Calendar as fallback.
+Use your existing working TSTART command. No INI or batch edit is needed for
+this upgrade. Open Start / System / Screen saver to choose the saver.
+If your existing setup uses different paths, keep that arrangement and
+replace the copies it already uses. Custom saver program paths are preserved.
+The original on-demand Maze elsewhere is not replaced by these instructions.
 
-Use the existing working TSTART command with its configured reservation path.
-A fresh installation must configure DOS batch paths against its accepted
-RESERVE.COM; C:\TANDY88\RESERVE.COM is only a template default. Never bypass a
-failed reservation. Manual SHELLSEL SELECT is not the complete procedure.
+FROM INSTALLED 05, 06 OR 07
+Keep the existing launcher, RESERVE helper, recovery files, sound companions,
+and all working path settings. Back up each destination before replacement.
+Copy TSHELL.EXE and TSINPUT.DLL to C:\WINDOWS. Copy MATRIX.EXE, MAZE.EXE and
+STARFLD.EXE to C:\TSTART. Then use the new settings dialog; manual INI editing
+is unnecessary for the default paths. Existing Sounds/Startup settings stay.
 
-TSTART recovers interrupted selection, reserves video memory, selects TSHELL,
-runs WIN /R, then restores the original shell. Immediate nonzero ERRORLEVEL
-uses plain RECOVER. A zero return uses FINISH, which draws its farewell only
-after reread verification and journal cleanup. It leaves a usable DOS prompt;
-it does not power off or require ANSI.SYS. All error/recovery paths stay plain.
+For the retained moon-and-stars DOS shutdown screen, also copy SHELLSEL.EXE
+over the helper your launcher uses and follow DOS/BATCH08.TXT's exact post-WIN
+block edit once. Preserve every configured SET/path line. Do not overwrite
+your whole working batch file. If that edit was already applied for 08/09,
+leave it alone. No default replacement TSTART.BAT is supplied here.
 
-After interruption, run RECOVER before starting Windows; retain journal and
-backup sidecars on conflict. Never copy TSHELL.BAK over a current SYSTEM.INI.
-See DOS/README.TXT for installation and conservative recovery details.
+SPEED AND DISPLAY NOTES
+Maze keeps its ordinary windowed demo when launched without /S. Its saver
+uses the known canonical drivers' native path, and a safe clipped GDI path
+for trial aliases and other compatible 160/320/640 by 200 displays. A driver
+replacement is not required. The fallback paints progressively and can be
+very slow on an 8088. Matrix remains a good choice if Maze is too slow.
 
-## Optional idle saver
+Starfield draws through GDI on every driver. 16 stars is the lightest choice;
+64 gives more stars but slower per-star updates. The default is speed 2 and
+32 stars. Emulator verification does not establish physical Tandy speed.
+These savers are visual effects, not password locks.
 
-Enable it through ADDON.INI. IdleSeconds accepts 10..3600; 300 is five minutes.
-TSHELL supplies /S to the configured Matrix executable. Only the selected
-TSHELL shell installs the global observer; an ordinary secondary bar does not.
-A completely untouched boot waits until the observer sees genuine input.
-After DOS suspension or exceptional resynchronization, complete a new key or
-button gesture, then a full idle interval. Menus, dialogs, held input,
-capture, startup helpers and known audio tools defer automatic launch.
+IDLE AND INPUT SAFETY
+Only the selected primary TSHELL owns the global input observer. Input in
+other Windows apps resets the delay. Menus, modal dialogs, held input,
+capture, system-modal activity, startup sounds, known sound apps, and pending
+shutdown suppress automatic launch. An already running saver program blocks
+duplicates. DOS/scheduling interruptions require fresh input and a new idle
+interval. A completely untouched boot waits for its first input gesture.
+The components consume their wake gesture, restore focus only while still
+owning activation, and yield control between bounded rendering slices.
 
-The fixed-code WH_JOURNALRECORD hook only records activity and held state in
-memory and chains the prior hook. It performs no I/O, yields or UI work.
-The owner task compares DOS INT 21h/AH=2Ch time with GetTickCount to detect
-suspended Windows time. Ordinary polls do not call GetAsyncKeyState; initial
-and exceptional physical baselines do clear that API's shared low bits.
+ADVANCED PATHS (OPTIONAL)
+The existing Windows-directory TSHELL.INI is retained. Default program paths:
+[ScreenSaver]
+Program=C:\TSTART\MATRIX.EXE
+MazeProgram=C:\TSTART\MAZE.EXE
+StarProgram=C:\TSTART\STARFLD.EXE
 
-Matrix /S drains the wake gesture until release while it owns focus/capture,
-then restores the prior app. Forced deactivation/shutdown releases ownership
-without stealing it back. Cooperative Windows cannot guarantee progress if
-another task never yields, or swallow input after focus/capture is lost.
+The chooser saves Enabled, IdleSeconds, and Choice. Choice is Matrix, Maze,
+or Starfield; None writes Enabled=0 while retaining Choice. Starfield Options
+save Speed and Stars under [Starfield]. The chooser leaves custom paths and
+unrelated INI keys intact, checks readback, and reports failed saves.
+Full DOS 8.3 paths without spaces are required. An unusually long StarProgram
+may fit idle launch but be refused for Preview when its option arguments
+would exceed the launcher's 126-character command limit.
+
 
 ## Programs and startup
 
@@ -136,4 +155,5 @@ tasks cannot be guaranteed. The bar is not an Explorer replacement: maximized
 apps can cover it, and Alt+Tab returns to it. No desktop icons or task tray.
 
 See TESTS.MD for measured evidence and limits.
+
 
