@@ -13,11 +13,15 @@ or convert a GIF for Paintbrush.
 
 ## Project promotional art
 
-Retro-style project mockups, separate from the actual emulator captures below.
-These are not official Tandy or Microsoft packaging. The older poster says
-"Windows 3.x"; the verified project target remains **Windows 3.0 real mode**.
+Retro-style project mockups, separate from the emulator evidence below.
+These are not official Tandy or Microsoft packaging. The poster uses the
+corrected three-bar monitor badge, black 5 1/4-inch floppy and Windows 3.0 text.
 
-![16 COLORS. WOW! promotional artwork with a Tandy 1000 EX and blue Windows 3.0 Driver floppy](docs/PROMO/16WOW.WEBP)
+![16 COLORS. WOW! promotional composite with a Tandy 1000 EX, real Paintbrush screenshot, red power LED and black Windows 3.0 Driver floppy](docs/PROMO/16WOW.WEBP)
+
+The monitor contains the [actual native Windows 3.0 Paintbrush capture](docs/tandy-dib-roundtrip.png),
+perspective-fitted from its original pixels rather than a simulated UI.
+The surrounding computer scene remains promotional artwork.
 
 <a href="docs/PROMO/WINXTBOX.WEBP"><img src="docs/PROMO/WINXTBOX.WEBP" alt="Windows XT concept box art for the Tandy Windows 3.0 TShell and Extensions Plus Pack" width="420"></a>
 
@@ -223,4 +227,5 @@ Use Setup for mode changes rather than manual SYSTEM.INI edits.
 Contributions and hardware testing are welcome. Include app/driver versions,
 machine, DOS/Windows versions and reproducible steps, distinguishing hardware
 from emulator results. Preserve existing third-party notices.
+
 
