@@ -1,0 +1,43 @@
+TSTART08 - ONE BATCH BLOCK UPDATE
+
+Exit Windows fully. Back up your working TSTART.BAT under an unused name.
+Install this package's SHELLSEL.EXE in the location your launcher already
+uses. Ordinary RECOVER remains compatible with the old launcher.
+
+Open your working TSTART.BAT (normally C:\TSTART\TSTART.BAT) in EDIT.
+Replace the following complete block exactly once. Do not change any SET
+path line, preflight check, or other branch. If the block differs, or the
+file already has a :WINFAIL label elsewhere, keep it unchanged and have the
+edit adapted to that file. Do not overwrite it with a default batch file.
+
+OLD BLOCK
+%TSDRV%%TSWIN%\WIN.COM /R
+REM Do not skip recovery merely because WIN returned an error.
+%TSHOME%\SHELLSEL.EXE RECOVER %TSDRV%%TSWIN%\SYSTEM.INI
+IF ERRORLEVEL 1 GOTO RECFAIL
+GOTO DONE
+
+NEW BLOCK
+%TSDRV%%TSWIN%\WIN.COM /R
+IF ERRORLEVEL 1 GOTO WINFAIL
+REM Show the night screen only after successful Windows return and recovery.
+%TSHOME%\SHELLSEL.EXE FINISH %TSDRV%%TSWIN%\SYSTEM.INI
+IF ERRORLEVEL 1 GOTO RECFAIL
+GOTO DONE
+:WINFAIL
+ECHO Windows returned an error. Attempting shell recovery.
+REM Do not skip recovery merely because WIN returned an error.
+%TSHOME%\SHELLSEL.EXE RECOVER %TSDRV%%TSWIN%\SYSTEM.INI
+IF ERRORLEVEL 1 GOTO RECFAIL
+GOTO DONE
+
+Save and exit EDIT. Continue using your usual TSTART command.
+
+FINISH is called only after WIN /R returns zero. It renders the night screen
+only after the same shell-restoration proof and journal cleanup as RECOVER.
+A nonzero Windows return goes to WINFAIL, where plain RECOVER retains the
+existing diagnostic output. Both paths keep the recovery-failure check.
+
+If the batch edit is omitted, the new helper still recovers safely with the
+old launcher; shutdown simply retains its plain success message. To undo
+this upgrade, exit Windows and restore your saved EXEs and TSTART.BAT.

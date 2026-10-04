@@ -1,6 +1,7 @@
-Current publication: Tandy Start 06 source, TSHELL.EXE and TSINPUT.DLL.
-The matching Matrix /S source and executable are under ../MATRIX.
-README.MD, TESTS.MD and UPDATE06.TXT describe the exact current candidate.
-MILESTONE.ZIP, existing MANIFEST.JSON and prior EVIDENCE are preserved
-historical material, not a current build package or current validation.
-See HISTORY.TXT. New features still require their own physical Tandy test.
+Current branch: Tandy Start 09 source and matching TSHELL.EXE.
+DOS/SHELLSEL.EXE is the unchanged success-only FINISH helper from 08.
+TSINPUT.DLL and ../MATRIX/MATRIX.EXE remain the exact accepted 06 components.
+README.MD, TESTS.MD and DOS/BATCH08.TXT describe the current upgrade.
+MILESTONE.ZIP, MANIFEST.JSON and prior EVIDENCE remain historical material.
+TESTS06.MD and TESTS08.MD retain earlier qualification, not 09 reruns.
+No merge, tag or release is implied by this draft branch publication.

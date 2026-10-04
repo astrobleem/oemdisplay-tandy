@@ -12,3 +12,4 @@ EXPORTS
  BrowseProc @4
  PmDialogProc @5
  NoticeProc @6
+ DateProc @7
