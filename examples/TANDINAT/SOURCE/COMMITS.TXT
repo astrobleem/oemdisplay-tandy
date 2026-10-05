@@ -1,0 +1,5 @@
+3d514bc Integrate exact native cabinet art with bounded fullscreen UI
+39688b1 Correct guarded WindowsXT launch instructions
+45c5b4a Build tested Win16 oracle UI with bounded eyes and compact redraws
+8c45653 Curate original starter roster and validate compact 2000-record format
+1ea5524 Add compact disk database and deterministic 8088 guessing engine

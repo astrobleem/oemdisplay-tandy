@@ -1,0 +1,70 @@
+INTEGER ENGINE AND MEMORY DESIGN
+================================
+ENGINE.C is shared verbatim by Win16 and the host C89 simulator. It has no
+Windows calls, floats or heap allocation. DB.C isolates disk operations;
+TANDI.C handles the Windows UI. The host compiler never runs on the Tandy.
+
+For a definite answer, exact agreement adds 4, a probable match adds 2,
+unknown adds 0, probable disagreement subtracts 4, and opposite definite
+answers subtract 8. For a probable player answer the corresponding changes
+are +2,+2,0,-2,-4. Don't know changes no scores. Only explicitly rejecting
+a guess eliminates a candidate. Scores are 16-bit signed, safely bounded
+by the question count; real gameplay stops asking after 25 questions.
+
+NEXT QUESTION
+-------------
+All non-rejected candidates are rescored from one packed question column.
+We find the leader and the candidates within 24 score points. The leader
+and up to 63 evenly sampled members of that plausible set are cached, with
+complete packed rows. Ties are stable and deterministic. This is a bounded
+approximation to considering every candidate, not exact entropy.
+
+A sampled candidate's integer weight is 16/(1 + score_distance/3). Known
+answer value v contributes weight*v to YES and weight*(4-v) to NO; UNKNOWN
+adds weight*4 to a separate total. Each unused question is valued as
+4*min(YES,NO)-UNKNOWN. Highest utility wins, first index breaks ties. No
+fixed question order, name/ID partition or hard-coded character branch is
+used. Selection reads at most 64 rows (6,144 bytes at maximum dimensions),
+then examines up to 64*256 cached relationships. Low-scoring candidates are
+not erased and can recover as later answers change scores.
+
+GUESSING
+--------
+An early guess needs >=7 informative answers, leader score >=2 times the
+informative-answer count, and >=10 points over the runner-up. At 25 total
+questions it offers the current leader regardless of confidence. These are
+heuristic thresholds, not calibrated probabilities. Similar characters and
+contradictory responses may need one or more rejected guesses. No guess is
+forced to be right by asking the character's name or an identity question.
+
+DISK FORMAT
+-----------
+DATA/FORMAT.TXT specifies the 64-byte header, two offset tables, two packed
+3-bit matrices and ASCII string pool. Both orientations deliberately trade
+cheap disk space for efficient access. The application keeps a single
+file open, streams a checksum on load, bounds-checks offset tables, and
+validates names/questions and 3-bit values when read. The host compiler
+performs stronger full cross-orientation/string/padding validation.
+The checksum detects accidental damage, not deliberate malicious edits.
+
+Fixed runtime engine state is 12,624 bytes at BOTH 128 and 2,000 characters.
+A column uses at most 750 bytes and a DB validation buffer 512 bytes. Names
+and questions are read by offset, never retained as thousands of pointers.
+No complete database is loaded or permanently resident. The Win16 map and
+NE segment report give code/data allocation; Windows/GDI overhead and peak
+whole-system memory are not inferred from those numbers.
+
+TEST INTERPRETATION
+-------------------
+SIM.C simulates every roster entry from its stored facts, tracks first
+and eventual correct guesses, counts questions and wrong guesses, and
+reports mean/median/worst cases. One-wrong mode flips the first non-unknown
+answer at/after the fourth question. Two-wrong flips the first two; uncertain
+replaces one with Don't know. Decisive/cautious styles also convert
+probable to definite or definite to probable answers. Incorrect guesses are explicitly rejected,
+with a limit of ten rejected guesses in the simulation (not the UI).
+These deterministic perturbations are limited tests, not a user-study or
+an exhaustive test of every possible false answer.
+
+The 2,000x256 synthetic fixture tests scale and implementation limits; its
+random test records are not 2,000 authored characters or playable content.

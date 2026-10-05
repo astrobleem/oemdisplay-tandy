@@ -1,0 +1,1501 @@
+{
+  "purpose": "Starter curation diagnostics, not a promise of gameplay accuracy.",
+  "characters": 128,
+  "questions": [
+    {
+      "id": "real",
+      "text": "Is your character a real person?",
+      "counts": {
+        "0": 106,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 22
+      }
+    },
+    {
+      "id": "fictional",
+      "text": "Is your character fictional or legendary?",
+      "counts": {
+        "0": 22,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 106
+      }
+    },
+    {
+      "id": "male",
+      "text": "Is your character male?",
+      "counts": {
+        "0": 30,
+        "1": 0,
+        "2": 1,
+        "3": 2,
+        "4": 95
+      }
+    },
+    {
+      "id": "female",
+      "text": "Is your character female?",
+      "counts": {
+        "0": 97,
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 30
+      }
+    },
+    {
+      "id": "human",
+      "text": "Is your character human?",
+      "counts": {
+        "0": 49,
+        "1": 0,
+        "2": 9,
+        "3": 0,
+        "4": 70
+      }
+    },
+    {
+      "id": "young",
+      "text": "Is your character usually a child or teenager?",
+      "counts": {
+        "0": 107,
+        "1": 0,
+        "2": 6,
+        "3": 3,
+        "4": 12
+      }
+    },
+    {
+      "id": "animal",
+      "text": "Is your character an animal rather than a human?",
+      "counts": {
+        "0": 95,
+        "1": 0,
+        "2": 3,
+        "3": 0,
+        "4": 30
+      }
+    },
+    {
+      "id": "robot",
+      "text": "Is your character a robot or artificial machine?",
+      "counts": {
+        "0": 124,
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 3
+      }
+    },
+    {
+      "id": "alien",
+      "text": "Is your character from another planet?",
+      "counts": {
+        "0": 124,
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 3
+      }
+    },
+    {
+      "id": "magical_being",
+      "text": "Is your character a magical or supernatural being?",
+      "counts": {
+        "0": 119,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 9
+      }
+    },
+    {
+      "id": "monster",
+      "text": "Is your character usually called a monster?",
+      "counts": {
+        "0": 123,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 5
+      }
+    },
+    {
+      "id": "villain",
+      "text": "Is your character mainly a villain?",
+      "counts": {
+        "0": 121,
+        "1": 0,
+        "2": 1,
+        "3": 2,
+        "4": 4
+      }
+    },
+    {
+      "id": "hero",
+      "text": "Is your character known for heroic adventures?",
+      "counts": {
+        "0": 69,
+        "1": 0,
+        "2": 0,
+        "3": 10,
+        "4": 49
+      }
+    },
+    {
+      "id": "royal",
+      "text": "Is your character royalty?",
+      "counts": {
+        "0": 110,
+        "1": 0,
+        "2": 0,
+        "3": 3,
+        "4": 15
+      }
+    },
+    {
+      "id": "crown",
+      "text": "Is your character often shown wearing a crown or tiara?",
+      "counts": {
+        "0": 121,
+        "1": 0,
+        "2": 0,
+        "3": 2,
+        "4": 5
+      }
+    },
+    {
+      "id": "leader",
+      "text": "Is your character a ruler, commander, or national leader?",
+      "counts": {
+        "0": 109,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 19
+      }
+    },
+    {
+      "id": "sidekick",
+      "text": "Is your character often a hero's helper or sidekick?",
+      "counts": {
+        "0": 116,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 12
+      }
+    },
+    {
+      "id": "comic_relief",
+      "text": "Is being funny a major part of your character's role?",
+      "counts": {
+        "0": 94,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 34
+      }
+    },
+    {
+      "id": "video_origin",
+      "text": "Did your character first become known in video games?",
+      "counts": {
+        "0": 103,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 25
+      }
+    },
+    {
+      "id": "animation_origin",
+      "text": "Did your character first become known in animation?",
+      "counts": {
+        "0": 92,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 36
+      }
+    },
+    {
+      "id": "live_origin",
+      "text": "Did your character first become known in live-action fiction?",
+      "counts": {
+        "0": 120,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 8
+      }
+    },
+    {
+      "id": "comics_origin",
+      "text": "Did your character first become known in comics or comic strips?",
+      "counts": {
+        "0": 114,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 14
+      }
+    },
+    {
+      "id": "books_origin",
+      "text": "Did your character first become known in a book or story?",
+      "counts": {
+        "0": 109,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 18
+      }
+    },
+    {
+      "id": "folklore",
+      "text": "Is your character from folklore, legend, or mythology?",
+      "counts": {
+        "0": 123,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 5
+      }
+    },
+    {
+      "id": "movie",
+      "text": "Is your character strongly associated with movies?",
+      "counts": {
+        "0": 62,
+        "1": 0,
+        "2": 0,
+        "3": 5,
+        "4": 61
+      }
+    },
+    {
+      "id": "tv",
+      "text": "Is your character strongly associated with a television series?",
+      "counts": {
+        "0": 95,
+        "1": 0,
+        "2": 0,
+        "3": 2,
+        "4": 31
+      }
+    },
+    {
+      "id": "singer",
+      "text": "Is your character famous for singing or making music?",
+      "counts": {
+        "0": 120,
+        "1": 0,
+        "2": 0,
+        "3": 2,
+        "4": 6
+      }
+    },
+    {
+      "id": "scientist",
+      "text": "Is your character known as a scientist or mathematician?",
+      "counts": {
+        "0": 121,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 7
+      }
+    },
+    {
+      "id": "politician",
+      "text": "Is your character known for politics or governing?",
+      "counts": {
+        "0": 123,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 5
+      }
+    },
+    {
+      "id": "athlete",
+      "text": "Is your character famous for competitive sports or wrestling?",
+      "counts": {
+        "0": 125,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 3
+      }
+    },
+    {
+      "id": "performer",
+      "text": "Is your character a professional actor or stage entertainer?",
+      "counts": {
+        "0": 120,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 8
+      }
+    },
+    {
+      "id": "adventurer",
+      "text": "Is your character an explorer or adventurer?",
+      "counts": {
+        "0": 103,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 24
+      }
+    },
+    {
+      "id": "fighter",
+      "text": "Is your character known as a warrior or trained fighter?",
+      "counts": {
+        "0": 98,
+        "1": 0,
+        "2": 0,
+        "3": 2,
+        "4": 28
+      }
+    },
+    {
+      "id": "detective",
+      "text": "Is your character a detective or investigator?",
+      "counts": {
+        "0": 124,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 4
+      }
+    },
+    {
+      "id": "inventor",
+      "text": "Is your character known for inventing or building machines?",
+      "counts": {
+        "0": 125,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 3
+      }
+    },
+    {
+      "id": "artist",
+      "text": "Is your character famous as an author or visual artist?",
+      "counts": {
+        "0": 126,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 2
+      }
+    },
+    {
+      "id": "business",
+      "text": "Is your character known for owning or running a business?",
+      "counts": {
+        "0": 122,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 6
+      }
+    },
+    {
+      "id": "wizard",
+      "text": "Is your character a wizard, witch, or sorcerer?",
+      "counts": {
+        "0": 123,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 5
+      }
+    },
+    {
+      "id": "student",
+      "text": "Is your character usually a student?",
+      "counts": {
+        "0": 121,
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 6
+      }
+    },
+    {
+      "id": "food",
+      "text": "Is your character strongly associated with food or cooking?",
+      "counts": {
+        "0": 110,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 18
+      }
+    },
+    {
+      "id": "american",
+      "text": "Is your character mainly associated with the United States?",
+      "counts": {
+        "0": 61,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 67
+      }
+    },
+    {
+      "id": "japanese",
+      "text": "Was your character created in Japan?",
+      "counts": {
+        "0": 107,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 21
+      }
+    },
+    {
+      "id": "british",
+      "text": "Is your character mainly associated with Britain?",
+      "counts": {
+        "0": 103,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 25
+      }
+    },
+    {
+      "id": "french",
+      "text": "Is your character mainly associated with France?",
+      "counts": {
+        "0": 125,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 3
+      }
+    },
+    {
+      "id": "european",
+      "text": "Is your character mainly associated with continental Europe?",
+      "counts": {
+        "0": 121,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 7
+      }
+    },
+    {
+      "id": "african",
+      "text": "Is your character strongly associated with Africa?",
+      "counts": {
+        "0": 123,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 5
+      }
+    },
+    {
+      "id": "asian",
+      "text": "Is your character strongly associated with Asia outside Japan?",
+      "counts": {
+        "0": 125,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 3
+      }
+    },
+    {
+      "id": "pre1800",
+      "text": "Is this a real historical person who lived before 1800?",
+      "counts": {
+        "0": 123,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 5
+      }
+    },
+    {
+      "id": "nineteenth",
+      "text": "Is this a real historical person active in the 1800s?",
+      "counts": {
+        "0": 124,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 4
+      }
+    },
+    {
+      "id": "old_fiction",
+      "text": "Was your fictional character known before 1950?",
+      "counts": {
+        "0": 97,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 31
+      }
+    },
+    {
+      "id": "mid_fiction",
+      "text": "Did your fictional character debut between 1950 and 1979?",
+      "counts": {
+        "0": 105,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 23
+      }
+    },
+    {
+      "id": "late_fiction",
+      "text": "Did your fictional character debut between 1980 and 1999?",
+      "counts": {
+        "0": 83,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 45
+      }
+    },
+    {
+      "id": "new_fiction",
+      "text": "Did your fictional character debut in 2000 or later?",
+      "counts": {
+        "0": 121,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 7
+      }
+    },
+    {
+      "id": "red",
+      "text": "Is red a major color in your character's usual appearance?",
+      "counts": {
+        "0": 82,
+        "1": 0,
+        "2": 21,
+        "3": 1,
+        "4": 24
+      }
+    },
+    {
+      "id": "blue",
+      "text": "Is blue a major color in your character's usual appearance?",
+      "counts": {
+        "0": 79,
+        "1": 0,
+        "2": 23,
+        "3": 2,
+        "4": 24
+      }
+    },
+    {
+      "id": "green",
+      "text": "Is green a major color in your character's usual appearance?",
+      "counts": {
+        "0": 87,
+        "1": 0,
+        "2": 22,
+        "3": 2,
+        "4": 17
+      }
+    },
+    {
+      "id": "pink",
+      "text": "Is pink a major color in your character's usual appearance?",
+      "counts": {
+        "0": 101,
+        "1": 0,
+        "2": 22,
+        "3": 1,
+        "4": 4
+      }
+    },
+    {
+      "id": "yellow",
+      "text": "Is yellow or gold a major color in your character's appearance?",
+      "counts": {
+        "0": 91,
+        "1": 0,
+        "2": 20,
+        "3": 0,
+        "4": 17
+      }
+    },
+    {
+      "id": "black",
+      "text": "Is black a major color in your character's usual appearance?",
+      "counts": {
+        "0": 86,
+        "1": 0,
+        "2": 20,
+        "3": 0,
+        "4": 22
+      }
+    },
+    {
+      "id": "white",
+      "text": "Is white a major color in your character's usual appearance?",
+      "counts": {
+        "0": 76,
+        "1": 0,
+        "2": 16,
+        "3": 1,
+        "4": 35
+      }
+    },
+    {
+      "id": "purple",
+      "text": "Is purple a major color in your character's usual appearance?",
+      "counts": {
+        "0": 99,
+        "1": 0,
+        "2": 22,
+        "3": 0,
+        "4": 7
+      }
+    },
+    {
+      "id": "hat",
+      "text": "Does your character often wear a hat?",
+      "counts": {
+        "0": 107,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 21
+      }
+    },
+    {
+      "id": "mask",
+      "text": "Does your character usually wear a mask or helmet?",
+      "counts": {
+        "0": 118,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 10
+      }
+    },
+    {
+      "id": "cape",
+      "text": "Does your character often wear a cape or cloak?",
+      "counts": {
+        "0": 119,
+        "1": 0,
+        "2": 0,
+        "3": 3,
+        "4": 6
+      }
+    },
+    {
+      "id": "uniform",
+      "text": "Does your character often wear a work or military uniform?",
+      "counts": {
+        "0": 115,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 13
+      }
+    },
+    {
+      "id": "formal",
+      "text": "Is your character often shown in a suit or formal clothes?",
+      "counts": {
+        "0": 107,
+        "1": 0,
+        "2": 17,
+        "3": 0,
+        "4": 4
+      }
+    },
+    {
+      "id": "glasses",
+      "text": "Is your character usually shown wearing glasses?",
+      "counts": {
+        "0": 123,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 4
+      }
+    },
+    {
+      "id": "moustache",
+      "text": "Is your character known for having a moustache?",
+      "counts": {
+        "0": 121,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 7
+      }
+    },
+    {
+      "id": "beard",
+      "text": "Is your character known for having a beard?",
+      "counts": {
+        "0": 112,
+        "1": 0,
+        "2": 0,
+        "3": 2,
+        "4": 14
+      }
+    },
+    {
+      "id": "blond",
+      "text": "Is your character usually shown with blond hair?",
+      "counts": {
+        "0": 109,
+        "1": 0,
+        "2": 4,
+        "3": 2,
+        "4": 13
+      }
+    },
+    {
+      "id": "dark_hair",
+      "text": "Is your character usually shown with dark hair?",
+      "counts": {
+        "0": 89,
+        "1": 0,
+        "2": 4,
+        "3": 0,
+        "4": 35
+      }
+    },
+    {
+      "id": "bald",
+      "text": "Is your character usually bald or almost bald?",
+      "counts": {
+        "0": 121,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 7
+      }
+    },
+    {
+      "id": "long_hair",
+      "text": "Is your character usually shown with long hair?",
+      "counts": {
+        "0": 99,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 29
+      }
+    },
+    {
+      "id": "unusual_skin",
+      "text": "Does your character have an unusual nonhuman skin color?",
+      "counts": {
+        "0": 114,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 14
+      }
+    },
+    {
+      "id": "fur",
+      "text": "Does your character have fur?",
+      "counts": {
+        "0": 104,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 24
+      }
+    },
+    {
+      "id": "feathers",
+      "text": "Does your character have feathers?",
+      "counts": {
+        "0": 125,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 3
+      }
+    },
+    {
+      "id": "tail",
+      "text": "Does your character have a tail?",
+      "counts": {
+        "0": 106,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 22
+      }
+    },
+    {
+      "id": "big_ears",
+      "text": "Does your character have conspicuously large or pointed ears?",
+      "counts": {
+        "0": 118,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 10
+      }
+    },
+    {
+      "id": "small",
+      "text": "Is your character much smaller than an average adult human?",
+      "counts": {
+        "0": 95,
+        "1": 0,
+        "2": 2,
+        "3": 3,
+        "4": 28
+      }
+    },
+    {
+      "id": "large",
+      "text": "Is your character unusually large or bulky?",
+      "counts": {
+        "0": 111,
+        "1": 0,
+        "2": 0,
+        "3": 3,
+        "4": 14
+      }
+    },
+    {
+      "id": "strength",
+      "text": "Does your character have extraordinary physical strength?",
+      "counts": {
+        "0": 109,
+        "1": 0,
+        "2": 0,
+        "3": 3,
+        "4": 16
+      }
+    },
+    {
+      "id": "flies",
+      "text": "Can your character fly without an ordinary aircraft?",
+      "counts": {
+        "0": 113,
+        "1": 0,
+        "2": 0,
+        "3": 3,
+        "4": 12
+      }
+    },
+    {
+      "id": "magic",
+      "text": "Does your character use magic or supernatural powers?",
+      "counts": {
+        "0": 106,
+        "1": 0,
+        "2": 0,
+        "3": 4,
+        "4": 18
+      }
+    },
+    {
+      "id": "speed",
+      "text": "Is your character known for extraordinary speed?",
+      "counts": {
+        "0": 124,
+        "1": 0,
+        "2": 0,
+        "3": 2,
+        "4": 2
+      }
+    },
+    {
+      "id": "transforms",
+      "text": "Does your character famously change shape or physical form?",
+      "counts": {
+        "0": 119,
+        "1": 0,
+        "2": 0,
+        "3": 3,
+        "4": 6
+      }
+    },
+    {
+      "id": "sword",
+      "text": "Is your character associated with a sword or lightsaber?",
+      "counts": {
+        "0": 113,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 14
+      }
+    },
+    {
+      "id": "gun",
+      "text": "Is your character associated with a gun or blaster?",
+      "counts": {
+        "0": 119,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 9
+      }
+    },
+    {
+      "id": "martial",
+      "text": "Is your character known for martial arts or hand-to-hand combat?",
+      "counts": {
+        "0": 119,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 9
+      }
+    },
+    {
+      "id": "gadgets",
+      "text": "Does your character rely on special tools or gadgets?",
+      "counts": {
+        "0": 110,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 18
+      }
+    },
+    {
+      "id": "instrument",
+      "text": "Is your character known for playing a musical instrument?",
+      "counts": {
+        "0": 122,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 6
+      }
+    },
+    {
+      "id": "dance",
+      "text": "Is your character famous for dancing?",
+      "counts": {
+        "0": 124,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 4
+      }
+    },
+    {
+      "id": "ball_sport",
+      "text": "Is your character famous for a sport involving a ball?",
+      "counts": {
+        "0": 126,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 2
+      }
+    },
+    {
+      "id": "spacecraft",
+      "text": "Is your character strongly associated with spacecraft?",
+      "counts": {
+        "0": 119,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 9
+      }
+    },
+    {
+      "id": "vehicle",
+      "text": "Is your character associated with a distinctive vehicle?",
+      "counts": {
+        "0": 120,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 8
+      }
+    },
+    {
+      "id": "water",
+      "text": "Is your character closely associated with water or the sea?",
+      "counts": {
+        "0": 123,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 5
+      }
+    },
+    {
+      "id": "treasure",
+      "text": "Does your character often search for treasure or ancient objects?",
+      "counts": {
+        "0": 123,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 5
+      }
+    },
+    {
+      "id": "superhero",
+      "text": "Is your character a costumed comic-book-style superhero?",
+      "counts": {
+        "0": 118,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 9
+      }
+    },
+    {
+      "id": "rescue",
+      "text": "Does your character often rescue or protect other people?",
+      "counts": {
+        "0": 95,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 33
+      }
+    },
+    {
+      "id": "conquest",
+      "text": "Does your character seek power by conquering or ruling others?",
+      "counts": {
+        "0": 126,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 2
+      }
+    },
+    {
+      "id": "crime",
+      "text": "Is your character strongly associated with crime stories?",
+      "counts": {
+        "0": 123,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 5
+      }
+    },
+    {
+      "id": "space",
+      "text": "Is your character strongly associated with outer space?",
+      "counts": {
+        "0": 118,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 10
+      }
+    },
+    {
+      "id": "fantasy",
+      "text": "Does your character belong mainly to a fantasy world?",
+      "counts": {
+        "0": 82,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 46
+      }
+    },
+    {
+      "id": "ordinary",
+      "text": "Does your character mainly inhabit an everyday Earth-like world?",
+      "counts": {
+        "0": 82,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 46
+      }
+    },
+    {
+      "id": "future",
+      "text": "Is your character's world strongly associated with future technology?",
+      "counts": {
+        "0": 115,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 13
+      }
+    },
+    {
+      "id": "historical_setting",
+      "text": "Is your character associated with a historical setting?",
+      "counts": {
+        "0": 109,
+        "1": 0,
+        "2": 0,
+        "3": 3,
+        "4": 16
+      }
+    },
+    {
+      "id": "modern",
+      "text": "Is your character associated with modern-day life?",
+      "counts": {
+        "0": 100,
+        "1": 0,
+        "2": 0,
+        "3": 13,
+        "4": 15
+      }
+    },
+    {
+      "id": "comedy",
+      "text": "Is your character mainly associated with comedy?",
+      "counts": {
+        "0": 92,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 35
+      }
+    },
+    {
+      "id": "horror",
+      "text": "Is your character strongly associated with horror stories?",
+      "counts": {
+        "0": 125,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 2
+      }
+    },
+    {
+      "id": "romance",
+      "text": "Is romance a major theme in your character's best-known story?",
+      "counts": {
+        "0": 118,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 9
+      }
+    },
+    {
+      "id": "mystery",
+      "text": "Are mysteries a major part of your character's stories?",
+      "counts": {
+        "0": 125,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 3
+      }
+    },
+    {
+      "id": "team",
+      "text": "Is your character a member of a well-known team or close group?",
+      "counts": {
+        "0": 88,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 40
+      }
+    },
+    {
+      "id": "family",
+      "text": "Are family relationships central to your character's story?",
+      "counts": {
+        "0": 98,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 29
+      }
+    },
+    {
+      "id": "sibling",
+      "text": "Does your character have a famous brother or sister?",
+      "counts": {
+        "0": 119,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 9
+      }
+    },
+    {
+      "id": "animal_friend",
+      "text": "Does your character have a well-known animal companion?",
+      "counts": {
+        "0": 120,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 8
+      }
+    },
+    {
+      "id": "horse",
+      "text": "Is your character often associated with riding a horse?",
+      "counts": {
+        "0": 120,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 8
+      }
+    },
+    {
+      "id": "castle",
+      "text": "Is your character strongly associated with a castle or kingdom?",
+      "counts": {
+        "0": 113,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 15
+      }
+    },
+    {
+      "id": "nature",
+      "text": "Is your character strongly associated with forests or wilderness?",
+      "counts": {
+        "0": 114,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 14
+      }
+    },
+    {
+      "id": "city",
+      "text": "Is your character closely associated with city life?",
+      "counts": {
+        "0": 117,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 11
+      }
+    },
+    {
+      "id": "school",
+      "text": "Is your character strongly associated with a school?",
+      "counts": {
+        "0": 121,
+        "1": 0,
+        "2": 1,
+        "3": 0,
+        "4": 6
+      }
+    },
+    {
+      "id": "stage",
+      "text": "Is your character known for appearing on a stage?",
+      "counts": {
+        "0": 122,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 6
+      }
+    },
+    {
+      "id": "quest",
+      "text": "Does your character undertake a major journey or quest?",
+      "counts": {
+        "0": 86,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 41
+      }
+    },
+    {
+      "id": "science",
+      "text": "Is science or technology central to your character's identity?",
+      "counts": {
+        "0": 111,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 17
+      }
+    },
+    {
+      "id": "teacher",
+      "text": "Is your character known as a teacher, scholar, or wise mentor?",
+      "counts": {
+        "0": 119,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 8
+      }
+    },
+    {
+      "id": "peace",
+      "text": "Is your character widely associated with peace or social justice?",
+      "counts": {
+        "0": 122,
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 5
+      }
+    },
+    {
+      "id": "gloves",
+      "text": "Does your character often wear gloves?",
+      "counts": {
+        "0": 87,
+        "1": 0,
+        "2": 20,
+        "3": 1,
+        "4": 20
+      }
+    },
+    {
+      "id": "wealthy",
+      "text": "Is great wealth part of your character's well-known image?",
+      "counts": {
+        "0": 123,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 5
+      }
+    },
+    {
+      "id": "catchphrase",
+      "text": "Is your character known for a distinctive catchphrase?",
+      "counts": {
+        "0": 112,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 16
+      }
+    },
+    {
+      "id": "red_hair",
+      "text": "Is your character usually shown with red or orange hair?",
+      "counts": {
+        "0": 121,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 7
+      }
+    }
+  ],
+  "real_people": 22,
+  "fictional_or_legendary": 106,
+  "female_yes": 30,
+  "male_yes": 95,
+  "minimum_profile_distance": 3,
+  "closest_pairs": [
+    {
+      "profile_distance": 3,
+      "strong_no_yes_disagreements": 2,
+      "characters": [
+        "Sylvester",
+        "Tom"
+      ]
+    },
+    {
+      "profile_distance": 3,
+      "strong_no_yes_disagreements": 2,
+      "characters": [
+        "Tom",
+        "Jerry"
+      ]
+    },
+    {
+      "profile_distance": 3,
+      "strong_no_yes_disagreements": 3,
+      "characters": [
+        "Snoopy",
+        "Garfield"
+      ]
+    },
+    {
+      "profile_distance": 4,
+      "strong_no_yes_disagreements": 3,
+      "characters": [
+        "Simba",
+        "Nala"
+      ]
+    },
+    {
+      "profile_distance": 4,
+      "strong_no_yes_disagreements": 4,
+      "characters": [
+        "Bugs Bunny",
+        "Jerry"
+      ]
+    },
+    {
+      "profile_distance": 4,
+      "strong_no_yes_disagreements": 4,
+      "characters": [
+        "Bugs Bunny",
+        "Sylvester"
+      ]
+    },
+    {
+      "profile_distance": 4,
+      "strong_no_yes_disagreements": 4,
+      "characters": [
+        "Mickey Mouse",
+        "Bugs Bunny"
+      ]
+    },
+    {
+      "profile_distance": 4,
+      "strong_no_yes_disagreements": 4,
+      "characters": [
+        "Mickey Mouse",
+        "Sylvester"
+      ]
+    },
+    {
+      "profile_distance": 4,
+      "strong_no_yes_disagreements": 4,
+      "characters": [
+        "Sylvester",
+        "Jerry"
+      ]
+    },
+    {
+      "profile_distance": 5,
+      "strong_no_yes_disagreements": 3,
+      "characters": [
+        "Dolly Parton",
+        "Beyonce"
+      ]
+    }
+  ]
+}

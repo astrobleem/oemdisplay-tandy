@@ -1,0 +1,133 @@
+TANDINATOR 0.1 STARTER ROSTER - 128 CHARACTERS
+=================================================
+
+Mario
+Luigi
+Princess Peach
+Bowser
+Link
+Princess Zelda
+Sonic the Hedgehog
+Tails
+Knuckles
+Pac-Man
+Mega Man
+Donkey Kong
+Kirby
+Pikachu
+Ash Ketchum
+Samus Aran
+Lara Croft
+Ryu
+Chun-Li
+Crash Bandicoot
+Steve
+Gordon Freeman
+Master Chief
+Kratos
+Yoshi
+Isabelle
+Mickey Mouse
+Minnie Mouse
+Donald Duck
+Goofy
+Bugs Bunny
+Daffy Duck
+Tweety
+Sylvester
+Tom
+Jerry
+Scooby-Doo
+Shaggy Rogers
+Fred Flintstone
+Barney Rubble
+Homer Simpson
+Bart Simpson
+Lisa Simpson
+Marge Simpson
+SpongeBob SquarePants
+Patrick Star
+Squidward Tentacles
+Popeye
+Betty Boop
+Charlie Brown
+Snoopy
+Garfield
+Winnie the Pooh
+Tigger
+Elsa
+Anna
+Mulan
+Ariel
+Belle
+Aladdin
+Genie
+Shrek
+Donkey
+Woody
+Buzz Lightyear
+Simba
+Nala
+Batman
+Superman
+Wonder Woman
+Spider-Man
+Iron Man
+Captain America
+Thor
+Hulk
+Black Panther
+Joker
+Harley Quinn
+Darth Vader
+Luke Skywalker
+Princess Leia
+Yoda
+Chewbacca
+R2-D2
+C-3PO
+Indiana Jones
+Sherlock Holmes
+James Bond
+Harry Potter
+Hermione Granger
+Ron Weasley
+Gandalf
+Frodo Baggins
+Aragorn
+Gollum
+Dracula
+Frankenstein's Monster
+Santa Claus
+Robin Hood
+King Arthur
+Merlin
+Alice
+Peter Pan
+Mary Poppins
+Willy Wonka
+Paddington Bear
+Abraham Lincoln
+George Washington
+Albert Einstein
+Isaac Newton
+Marie Curie
+Ada Lovelace
+Leonardo da Vinci
+Cleopatra
+Joan of Arc
+Nelson Mandela
+Mahatma Gandhi
+Amelia Earhart
+Elvis Presley
+Michael Jackson
+Dolly Parton
+Freddie Mercury
+Beyonce
+Mr. T
+Hulk Hogan
+Muhammad Ali
+Serena Williams
+Colonel Sanders
+
+Think of the familiar portrayal. See DATA/STARTER.JSON for notes.

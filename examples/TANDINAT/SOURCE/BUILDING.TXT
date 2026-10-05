@@ -1,0 +1,70 @@
+BUILDING TANDINATOR
+==================
+Host-side asset/test tools: Python 3, Pillow and a C89 compiler.
+Emulator screenshot decoding additionally uses Pillow on the modern host.
+Tandy runtime: just Windows 3.0 and TANDI.EXE/TANDY.DAT. No Python on Tandy.
+
+ARTWORK (project source tree)
+-----------------------------
+python3 tools/ARTBUILD.PY
+python3 tests/ARTTEST.PY
+ARTBUILD slices immutable 320x240 source PNGs into a 128x416 4-bit atlas,
+then writes src/ART.H. Sprite body/crown/title crop slices separate the
+neighboring sheet components without redrawing them. The generated header
+is included in the C build, so no external art file is needed at runtime.
+The DIB uses driver logical RGB entries to preserve physical RGBI indices.
+The normal app caches one native device bitmap. In 640-wide modes it makes
+one nearest-neighbor horizontal x2 cache during initialization, then frees
+the temporary native bitmap. Sprite bytes are never expanded on the stack.
+
+DATABASE AND HOST TESTS (project source tree)
+-------------------------------------------
+python3 tools/DBBUILD.PY --strict-unique
+python3 tests/DBTEST.PY
+gcc -std=c89 -Wall -Wextra -pedantic -O2 -x c src/ENGINE.C src/DB.C \
+    tools/SIM.C -o build/SIM
+build/SIM build/TANDY.DAT > evidence/SIMFINAL.JSON
+gcc -std=c89 -Wall -Wextra -pedantic -O2 -x c src/ENGINE.C src/DB.C \
+    tests/ENGTEST.C -o build/ENGTEST
+build/ENGTEST build/TANDY.DAT
+build/ENGTEST build/SCALE.DAT
+
+The simulator can take a second argument: a zero-based character index.
+It then prints the adaptive question/answer trace for that character to
+stderr, while retaining the complete JSON aggregate on stdout.
+
+MICROSOFT C6 / WINDOWS 3.0 BUILD
+------------------------------
+Use the existing project toolchain. In the DOS emulator, mount its tools
+root as C: (BIN, LIB, DDK/286/INC, INCLUDE). Mount src as D: and run BUILD.BAT.
+It invokes CL /G0 /Gw /AS /O /DWIN16, then LINK4 with SLIBCEW.LIB/LIBW.LIB.
+/G0 forbids later-CPU code generation. Small model keeps segments bounded.
+WndProc MUST remain exported in TANDI.DEF so Windows sets the data segment
+correctly on callback entry. Omitting that export can make painting corrupt.
+DOS-facing source and build files use ASCII/CRLF and uppercase 8.3 names.
+Inspect BUILD.LOG, BUILD.OK and TANDI.MAP; do not trust a stale EXE.
+
+Copy src/TANDI.EXE plus build/TANDY.DAT into RUN for packaging. Package
+source paths src/data/tools/tests/build/evidence preserve the source tree.
+The distribution contains no vintage compiler or Microsoft Windows files.
+
+PRIVATE EMULATOR INTEGRATION
+---------------------------
+TOOLS/EMUTEST.PY documents the isolated Windows-copy runner used here.
+It requires locally supplied licensed Windows files and the project's built
+TR7/combined display drivers. Its default paths are from this private build
+workspace and should be adapted on another host. It does not download media
+or change the original fixture. All emulator use is serialized by a lock.
+DOSBox-X uses core=normal, cputype=8086_prefetch, memsizekb=640, fpu=false,
+xms=false, ems=false, umb=false; Windows starts WIN /R with RESERVE.COM.
+That direct command is only for the isolated automated test fixture. On the
+installed WindowsXT system, use its existing guarded launcher (normally
+C:\WINXT\WINXT). Do not bypass reservation/recovery errors.
+The project's CPU probes reject reliance on later CPU behavior. DOSBox-X
+calls its four-byte-prefetch 8088-compatible core 8086_prefetch; '8088' is
+not a valid setting in this build and must not be substituted.
+
+The fixed 25,000 cycle setting is uncalibrated. A speed test on a physical
+8088 with real display/disk drivers is still required before claiming its
+actual interaction latency. No physical CF write or user-machine test was
+performed as part of this build.

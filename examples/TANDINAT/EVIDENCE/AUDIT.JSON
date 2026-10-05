@@ -1,0 +1,29 @@
+{
+  "exe_sha256": "addccc4271aee92a95ca5c53c18679a7c2c7019a1b96fcb471e2b6ba33bfeeca",
+  "segments": [
+    {
+      "segment": 1,
+      "file_bytes": 14512,
+      "minimum_allocation": 14512,
+      "data": false
+    },
+    {
+      "segment": 2,
+      "file_bytes": 28847,
+      "minimum_allocation": 44432,
+      "data": true
+    }
+  ],
+  "linear_instructions": 5878,
+  "unsupported_or_fpu": [],
+  "excluded_embedded_data": [
+    {
+      "segment": 1,
+      "start": 12369,
+      "bytes": 2,
+      "symbol": "__wflags",
+      "reason": "Embedded CRT data, not instructions; identified by LINK /MAP and immediately before NE entry"
+    }
+  ],
+  "scope": "All emitted NE code bytes disassembled, restarting at LINK public instruction boundaries to retain alignment; not a proof of every possible control-flow path. Combined with /G0, integer-only source and actual 8086_prefetch real-mode runs."
+}
