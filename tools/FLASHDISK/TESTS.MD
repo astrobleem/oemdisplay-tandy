@@ -1,7 +1,9 @@
 # 720 KB release verification
 
 Verified 2026-10-05. These are emulator and host checks, not physical GoTek or
-Tandy certification. GitHub Actions has not run until this workflow is published.
+Tandy certification. The first GitHub Actions run found an old orphan-submodule checkout issue;
+the workflow now uses an exact-commit anonymous checkout for this public repo.
+The latest PR check records the remote-CI outcome.
 The kit packages accepted TR5/runtime bytes; no display driver was changed.
 
 ## Published image and helper identities

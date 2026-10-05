@@ -73,8 +73,11 @@ library, runs format/package tests, verifies every publication file and uploads:
 The artifact is named `winxt-720k-<commit SHA>` and retained for 30 days.
 Download it from the successful run's Artifacts section. Durable, anonymous
 release downloads must be attached to a reviewed GitHub Release separately.
-This workflow has **contents: read**, does not store checkout credentials and
-uses commit-pinned actions. It cannot create tags/releases, publish a release,
+This public-repository workflow has **contents: read**, uses anonymous Git
+to check out the exact event commit and stores no checkout credentials. It
+materializes only the builder/runtime directories and uses a commit-pinned
+artifact-upload action. Anonymous checkout avoids credential-cleanup errors
+from the repository's historical orphan `dosfetch` gitlink. It cannot create tags/releases, publish a release,
 enable runners or create credentials. An ordinary merge does not publish a
 release. No Windows media or user secrets are needed by GitHub Actions.
 
