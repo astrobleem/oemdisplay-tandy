@@ -1,0 +1,56 @@
+{
+  "version": "0.2",
+  "starfld_bytes": 33231,
+  "starfld_sha256": "de1af104b4b79f77217a7c6edc5ed5981fa22013359c58cab8f2b8939d743887",
+  "tshell_unchanged": true,
+  "tshell_sha256": "703383a6944c9c22a0533f15d2e2ff7794edfd57ed0ebced125eca67129a7403",
+  "production_source_files_changed": 3,
+  "corner_pose_scene_checks": 200,
+  "normal_scene_checks": 4,
+  "lifecycle_cases": 32,
+  "cursor_handoffs": 15,
+  "SDL_held_input_cases": 2,
+  "model_checked_slices": 261795,
+  "raster_cases": 4802,
+  "joystick_checks": 171873,
+  "paired_timing_old": {
+    "elapsed_ms": 16972,
+    "draw_ms": 7366,
+    "max_draw_ms": 220,
+    "free_warm": 300320,
+    "free_end": 300320
+  },
+  "paired_timing_new": {
+    "elapsed_ms": 17741,
+    "draw_ms": 8295,
+    "max_draw_ms": 275,
+    "free_warm": 298528,
+    "free_end": 298528
+  },
+  "paired_elapsed_overhead_percent": 4.53,
+  "stress_timings": {
+    "320": {
+      "elapsed_ms": 39491,
+      "draw_ms": 31141,
+      "max_draw_ms": 550,
+      "free_warm": 298624,
+      "free_end": 298624
+    },
+    "640c": {
+      "elapsed_ms": 30044,
+      "draw_ms": 20925,
+      "max_draw_ms": 385,
+      "free_warm": 266400,
+      "free_end": 266400
+    },
+    "640m": {
+      "elapsed_ms": 29824,
+      "draw_ms": 20872,
+      "max_draw_ms": 385,
+      "free_warm": 266688,
+      "free_end": 266688
+    }
+  },
+  "physical_hardware_tested": false,
+  "published": false
+}

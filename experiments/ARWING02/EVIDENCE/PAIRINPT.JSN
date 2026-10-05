@@ -1,0 +1,35 @@
+{
+  "scope": "Diagnostic-only paired timing builds, not shipped apps",
+  "conditions": [
+    "Windows3 real mode,640KB,8086_prefetch,1500 fixed cycles,EMS/XMS/UMB/FPU off",
+    "320x200x16,speed2,32 stars,same seeded star scene",
+    "Stationary centered ship,hold fire for10 of each36 flight steps",
+    "77 flight updates,151 star updates,10 shot births,maximum4 slots in each run",
+    "Trajectory/shrink/lifetime differ intentionally; same volley birth schedule",
+    "Timer flight cadence forced to each third timer only in these fixture variants, eliminating differing minimum-interval skips"
+  ],
+  "changes": [
+    {
+      "fixture_only": true,
+      "tag": "old",
+      "inserted_code": "if(injected){joyValid=1;joyX=joyY=0;joyButtons=(flight.steps%36)<10?3:0;joyPolls++;joyGood++;return;}",
+      "basis": "Frozen v0.1 source",
+      "constant_ship": true,
+      "steps_per_cycle": 36,
+      "fire_held_steps": 10,
+      "source_sha256": "c53b0dfc9ea832499049009f6dd492a205ac38fbe4021815f9cc87ae10ad2c31",
+      "frame_schedule": "For fixture injected mode only, force every third WM_TIMER flight slice in both versions; identical 77 flight and151 star updates."
+    },
+    {
+      "fixture_only": true,
+      "tag": "new",
+      "inserted_code": "if(injected){joyValid=1;joyX=joyY=0;joyButtons=(flight.steps%36)<10?3:0;joyPolls++;joyGood++;return;}",
+      "basis": "Frozen v0.2 source",
+      "constant_ship": true,
+      "steps_per_cycle": 36,
+      "fire_held_steps": 10,
+      "source_sha256": "babe1d4238dcb29ac213d1d14a41447ec4a15a292613af89f9bb0e2e550a2040",
+      "frame_schedule": "For fixture injected mode only, force every third WM_TIMER flight slice in both versions; identical 77 flight and151 star updates."
+    }
+  ]
+}
