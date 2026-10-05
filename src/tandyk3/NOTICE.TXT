@@ -1,0 +1,17 @@
+PROVENANCE AND REDISTRIBUTION
+
+TNDYK3.DRV adapts the Microsoft Windows DDK keyboard sample, copyright
+Microsoft Corporation (1983-1992 notices in the source inputs).
+Original DDK, Windows OS, compiler and SDK source/binaries are excluded.
+The SOURCE directory contains first-party adaptation/build code and
+minimal original sample-match strings, not a copy of the DDK source tree.
+Rebuilding requires appropriately licensed original inputs.
+
+No public redistribution license for the Microsoft-derived runtime is
+asserted by this candidate. Confirm applicable DDK redistribution terms
+before publishing that derived binary. This notice does not grant rights
+to Microsoft's original materials or replace their license.
+
+RAWKEY, WINKEY, K3SET and the adaptation/build/test tooling are first-party
+work for this project. Microsoft product names identify compatibility;
+no Microsoft or Tandy endorsement is claimed.

@@ -1,0 +1,31 @@
+[
+  {
+    "case": "existing output refused",
+    "PASS": true,
+    "exit_code": 1
+  },
+  {
+    "case": "missing support refused",
+    "PASS": true,
+    "exit_code": 1
+  },
+  {
+    "case": "wrong original font hash refused",
+    "PASS": true,
+    "exit_code": 1
+  },
+  {
+    "case": "all eight SZDD originals accepted; TXTSYS derived",
+    "PASS": true,
+    "exit_code": 0
+  },
+  {
+    "case": "both staging routes exactly match tested46-file runtime",
+    "PASS": true
+  },
+  {
+    "case": "duplicate plain and compressed refused",
+    "PASS": true,
+    "exit_code": 1
+  }
+]

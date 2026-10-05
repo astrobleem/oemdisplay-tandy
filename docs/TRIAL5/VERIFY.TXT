@@ -1,0 +1,56 @@
+TRIAL 5 verification, 2026-10-04
+
+PASS: All five final binaries compiled with the existing authorized toolchain.
+ISA, link and multi-prefix REP audits pass. The exact Trial4 160 baseline
+reproduced SHA256 a35a007342709c676386a9a1059a6ca9c7d166a416fe1b7f9ef98e03a9479c95.
+The exact Trial4 Output6402 baseline reproduced SHA256
+8fe8cb59f0c9f0a675d5feb822cb2478264e0ce1f9e9e6acc090f419f698cd46.
+
+PASS: All five pipelines stage exactly. Only EGA/TSOFT.ASM changes; inverse
+scope is exact. Repeated-pass and altered-input tests reject without writes.
+All 26 other linked 160-mode objects, including renderer and cursor, match
+the exact baseline object bytes. All five final driver files grow 32 bytes.
+Resources, reservation, palette and Setup contracts are unchanged.
+
+PASS: The actual staged bounds gate executes under 8086_prefetch in 640 KB:
+62 cases cover count 0/1/2/3/64/65/large values, Y and exclusive-X bounds,
+all ROP2 values, background mode, null/invalid/wrapping/shadow-aliased spans,
+ignored scanline clipping input, memory destination and marker fallback,
+thin-line compatibility and flags/GPR/segment/SP preservation. Repeated
+portable TSTWIDE execution also passed. This is gate-only ABI evidence.
+
+PASS: Five-mode Windows paired rectangle regression, exact final hashes:
+6,560 paired cases; 8,320 Rectangle return values;
+429,916,160 complete B800 framebuffer bytes compared, including padding.
+There were zero changed bytes and exact API/metadata log equality.
+Each mode has 1,280 matrix cases plus 32 cursor-corner cases. Coverage:
+widths 1..5; ROP2 1..16; null/solid brush; ordinary/overlapping rectangles;
+rectangular clipping; negative and lower/right bounds; anisotropic/reflected
+mapping; narrow/degenerate geometry; cursor show/draw/hide at all corners.
+Independent R2_NOP checks also left every buffer unchanged in all modes.
+All ten runs: Tandy, 640 KB, 8086_prefetch, FPU/EMS/XMS/UMB disabled,
+WIN /R, WinFlags=64, zero harness failures, normal Windows return to DOS.
+Functional runs used cycles 200000. The comparison preserves Trial4 behavior;
+it is not an independent specification oracle for every GDI primitive.
+
+PASS: Exclusive same-driver-profile timing, 160x200x16, cycles 25000.
+Identical BORDER.EXE / identical client 121x72 / WinFlags=64:
+Trial4 two-pixel Rectangle: 1318 ms; Trial5: 55 ms.
+One-pixel Rectangle and four-fill controls: below 55 ms timer resolution.
+Zero-tick readings mean below resolution, not zero execution time.
+
+PASS: Unmodified retail Clock on both drivers, same exclusive configuration.
+Clock SHA256 e18fac9fbdbfa044ad409865eb0b107df57ccadf2002749516b07f415162f6d3.
+Baseline first red pixels to digits: 1.389 s in the captured host frames.
+Trial5 border and digits first appear in the same frame, with about 87 ms
+sampling. This is below that sampling interval, not zero drawing time.
+Clock itself was not patched. Startup's separate DOS-second wait remains.
+
+LIMITS: No physical hardware timing or acceptance for these exact bytes.
+DOSBox-X cycles are uncalibrated; its 640x200 four-color model remains
+uncertain. No long soak or complete GDI suite is claimed. Integrated Setup,
+Clock/Paintbrush/Cookie/saver lifecycle acceptance is maintained by the full
+bundle separately; do not infer those app results from this rectangle suite.
+No CF card, user Windows installation, historical accepted binary or rollback
+pin was changed by this optimization. No OS/DDK/compiler/ROM payload or raw
+memory stream belongs in this source/component archive.

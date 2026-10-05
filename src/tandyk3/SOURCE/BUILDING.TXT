@@ -1,0 +1,27 @@
+REBUILDING
+
+The driver is a patch-based adaptation of the Microsoft DDK sample.
+Original Microsoft source/toolchain files are deliberately not included.
+Input SHA-256 hashes make the patch fail closed on a different sample.
+
+With your licensed toolchain and DDK in a directory containing BIN,
+LIB and DDK/286/KEYBOARD, and DOSBox-X already installed:
+
+python3 BUILD.PY --repo /path/to/tools --dosbox /path/to/dosbox-x
+
+Use a fresh SOURCE directory: it refuses an existing work or base tree.
+Output: work/TNDYK3.DRV; assembly listings and BUILD.LOG are retained.
+The compiler/assembler run inside an 8086_prefetch guest. The /G0 flag
+is used for C probes. No modern instruction support is requested.
+The resource-free NE driver is marked target Windows 3.0 after linking.
+
+Probe rebuild:
+cd PROBES
+python3 BUILD.PY --tools /path/to/tools --dosbox /path/to/dosbox-x
+
+TNTEST.ASM is a first-party standalone test harness for the exact
+normalization routine. MASM then LINK it as a DOS executable; TNTEST
+prints PASS only after all 4320 generated transitions match.
+
+PATCH.PY contains only the adaptation and minimal sample-match strings.
+Microsoft sample copyright/license continues to apply to its components.

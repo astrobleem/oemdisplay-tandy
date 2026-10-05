@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "reproduced_byte_identical": true,
+  "source_sha256": "fdcb696d4c320c9adbe26c25cfff25c194fbdc001e2064f925fed3ca31b197e4",
+  "pin_sha256": "b1dedd48023634d23a5093d3a40b9c645fd928de4aee069fe9809a2c4d222254",
+  "exe_sha256": "30f3608737d586b28756a8b458614cf3cc6064e2229f64c37d8706491bb7173f",
+  "exe_bytes": 29643,
+  "native_builds": [
+    "installer",
+    "installer/qa",
+    "packaged K3SRC/qa",
+    "CRLF publication source"
+  ],
+  "commands": [
+    "CL /c /AS /G0 /W3 /Od K3SET.C",
+    "LINK4 /NOD /ST:4096 K3SET.OBJ,K3SET.EXE,K3SET.MAP,C:\\LIB\\SLIBCE.LIB;"
+  ],
+  "tools_sha256": {
+    "BIN/CL.EXE": "9f452b39def257b3e07a9f4e07857d6d8a6e36da869a30c6e20ac51ea98b9816",
+    "BIN/LINK4.EXE": "a0ca9ccca97dc1b6f597cf9f6ff8a3f0807dddbd0b552635e0f77754fbdfab71",
+    "LIB/SLIBCE.LIB": "1ddc98ccdfdfebd0c484d6869929e358d3b9e668f3e3b9b926f22bd9de087af2"
+  },
+  "cpu": "8086_prefetch",
+  "scope": "experimental installer; physical Windows validation pending",
+  "packaged_source_rebuild_byte_identical": true,
+  "line_endings": "CRLF",
+  "crlf_publication_rebuild_byte_identical": true
+}

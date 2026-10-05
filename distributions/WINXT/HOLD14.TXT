@@ -1,0 +1,68 @@
+TANDY START 14 - HOLD OPENS START
+Windows 3.0 real mode / 8086
+
+Press and release the Tandy Hold key to open Start from another application.
+Start opens on release, so holding the key down cannot select a menu item or
+open repeated menus. Escape returns to the application and focused control
+that were active before Start opened. Pressing Hold while Start is already
+open does not toggle or select anything.
+
+Shift, Ctrl and Alt combinations keep their normal keyboard behavior.
+Ctrl+Hold / Ctrl+Break is not reassigned. Standard modal dialogs, capture,
+saver operation and shutdown take priority. Hold can still wake a saver;
+that wake does not immediately open Start.
+
+INSTALLATION
+Use the combined kit's main INSTALL and shell TSSETUP steps in SHELL14.TXT.
+The active TSHELL.EXE and TSINPUT.DLL belong in C:\WINDOWS. Companion apps
+stay under C:\WINXT. No older update archive is required.
+The compatible keyboard driver remains a separate opt-in kit. With the stock
+keyboard, use the Start button; automatic Hold activation stays off.
+
+ENABLE / DISABLE
+Hold-to-Start defaults on only for the supported Tandy ROM profile in real
+mode with TNDYK3.DRV actually loaded as the keyboard driver. Editing
+SYSTEM.INI alone does not satisfy that check. With another driver, the normal
+Start button remains available and Hold keeps its original behavior.
+To disable the shortcut, add or change this entry in TSHELL.INI, then
+restart Windows:
+
+[Keyboard]
+HoldStart=0
+
+Remove that entry to use the automatic driver-based default again. Setting
+HoldStart=1 explicitly opts in with another keyboard driver, but generic
+drivers may report mismatched virtual keys when Ctrl changes mid-press.
+Use the compatible driver for the full shortcut behavior. A missing or older
+TSINPUT.DLL leaves the normal Start button usable and
+reports that the Hold shortcut is off.
+
+COMPATIBILITY DETAILS
+Hold remains Windows' Scroll Lock key underneath the shortcut. Ordinary
+removed/dispatched key messages are consumed for an owned plain Hold gesture.
+Programs that inspect PeekMessage without removing input can still observe
+it, and programs that poll GetKeyState(VK_SCROLL) still see the toggle bit
+change. The shortcut does not rewrite keyboard state. Use the opt-out above
+if an application needs ordinary Scroll Lock behavior.
+
+Input arriving while a program is unresponsive is treated conservatively:
+stale or interrupted gestures do not open a menu later. Use a fresh press
+after the program responds. Normal Windows modal dialogs are detected;
+arbitrary custom modal loops cannot always be identified in Windows 3.0.
+
+The DLL's hooks are separate from its existing idle observer. Changing saver
+settings does not disable Hold. Normal shutdown removes them. If a detach
+cannot complete safely, the code is kept loaded but inert until cleanup or
+Windows shutdown. It is never left pointing at freed code by this shell.
+
+INCLUDED EARLIER FEATURES
+This includes 13's reduced Browse repainting, validated read-only friendly
+filename reader, the 160-pixel System menu fix, date/time correction, and 12's
+single Exit Windows item. Hold Shift while selecting Exit for a silent exit.
+Existing confirmation and unsaved-document prompts still apply.
+
+TESTS.TXT and SOURCE.ZIP describe the exact verification and limits.
+Screenshots are actual emulator captures. The physical EX raw Hold scan has
+been confirmed as 46h make / C6h break. Actual Windows-driver and Start-menu
+behavior still need confirmation on the Tandy; no physical performance claim
+is made.

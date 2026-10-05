@@ -1,0 +1,50 @@
+{
+  "STARFLD.EXE": {
+    "bytes": 16783,
+    "sha256": "e06c9d80f977e1bda1db2d13be8af5f7d8b6f00285daa4f0e0159af00211b8d0"
+  },
+  "SHELLSEL.EXE": {
+    "bytes": 25953,
+    "sha256": "6aa652c9fc77e2e05944b46c055157e97b88a10b963135a4aecf5a01fa71c2fd"
+  },
+  "TSHELL.EXE": {
+    "bytes": 68451,
+    "sha256": "4577182c8ba80f3604867710c44403f61c7e684f01cdc4d45e1e6dc92ef74689"
+  },
+  "TEXIT.EXE": {
+    "bytes": 8687,
+    "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99"
+  },
+  "XPCHIME.EXE": {
+    "bytes": 4543,
+    "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f"
+  },
+  "TSCHECK.EXE": {
+    "bytes": 3311,
+    "sha256": "53f5fe88e099ccd37826e23a191c803313ad5ae70dee9c04b3ff19bc95705cbe"
+  },
+  "MATRIX.EXE": {
+    "bytes": 14157,
+    "sha256": "0987936c3b80eb9fc5718f3022996514f6885adbdf83cd05128d01bc19de17c8"
+  },
+  "MAZE.EXE": {
+    "bytes": 23215,
+    "sha256": "c8dac5dd6c8b6c9c0c6fb8727dd56919e9c0fd5a71fa63b30c429f4be2c3598a"
+  },
+  "RESERVE.COM": {
+    "bytes": 1512,
+    "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+  },
+  "TCHIME.EXE": {
+    "bytes": 3999,
+    "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121"
+  },
+  "TABOUT.EXE": {
+    "bytes": 6479,
+    "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed"
+  },
+  "TSINPUT.DLL": {
+    "bytes": 6281,
+    "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+  }
+}

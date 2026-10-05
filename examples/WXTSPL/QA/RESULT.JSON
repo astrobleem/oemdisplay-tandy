@@ -1,0 +1,37 @@
+{
+  "pass": true,
+  "source_sha256": "88ec59eb7d96802aeec8ead0771c3d26042cf0f975be2b404acec57b8f0dadd7",
+  "exe_sha256": "772de655c5b949c5fb3a3d17f7e57dc2638cc3cbba1a98eb3782a5cf5d8d9bf7",
+  "updater_bytes": 20065,
+  "byte_identical_rebuild": true,
+  "host_state_cases": 1048,
+  "independent_sanitizer_states": 375,
+  "independent_fault_interruption_cases": 120,
+  "independent_artwork_check_cases": 30,
+  "native_DOS_commands": 19,
+  "native_DOS_scenarios": 9,
+  "actual_Windows_3_DOS_app_guard_refusal": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nREFUSED: Windows or a task switcher is active. Exit fully to DOS first.\n",
+  "trial4_delta": {
+    "only_changes": [
+      "WIN.WXB",
+      "WIN.COM"
+    ],
+    "original_backup_sha256": "5551ebcd3f32df26f759c5423f806733e006c3cae640a8336e5c618f8d899659",
+    "new_win_com_sha256": "8c8901b4c8482a2aefcf8a0a1beaba2ee07f90af94bf23993a8cf49eb6a30ebc",
+    "unchanged_other_windows_files": 107
+  },
+  "trial4_driver": "TR43216.DRV",
+  "trial4_driver_sha256": "a22f0d75ec8864e7af65e922cdc2083ce225b19096dfa7c2e416c4e3f1276b61",
+  "cold_boot_approved_pixels_exact": true,
+  "cold_boot_only_installed_C_mounted": true,
+  "desktop_and_normal_exit_to_DOS": true,
+  "limitations": [
+    "Physical Tandy/CF testing not performed",
+    "No guarantee against physical power loss, FAT torn writes or controller/cache failure",
+    "Injected I/O-failure tests are on the host; native DOS used prepared interrupted-file states, not forced media failure",
+    "Host tests assume no concurrent external writer; shipped DOS rename refuses an existing destination"
+  ],
+  "scope": "Sanitized qualified splash-only 0.2 results; no input OS bytes or local paths.",
+  "qualification_source_sha256_lf": "aba695ee808d5fbd7e9ab07f28d8ce10ccd558c74b7c099e05faa8e73cc33c50",
+  "publication_source_change": "CRLF line-ending normalization only; independently rebuilt and compared to the qualified runtime."
+}

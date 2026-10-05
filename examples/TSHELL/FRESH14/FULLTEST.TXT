@@ -1,0 +1,78 @@
+COMPLETE WINXT / TSTART14 SHELL - FRESH INSTALL VERIFICATION
+
+Production shell and input DLL remain the exact previously qualified14 files.
+TSHELL.EXE 68,451bytes SHA256
+4577182c8ba80f3604867710c44403f61c7e684f01cdc4d45e1e6dc92ef74689
+TSINPUT.DLL 6,281bytes SHA256
+d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80
+New read-only TSCHECK.EXE 3,311bytes SHA256
+53f5fe88e099ccd37826e23a191c803313ad5ae70dee9c04b3ff19bc95705cbe
+The complete12-binary shell/companion payload is 183,371 bytes before documents.
+
+FINAL COMMON-ROOT INSTALL
+Genuine DOS 6.22, Windows 3.0 WIN/R, Tandy 8086, 640KB, no XMS/EMS/UMB.
+Fixtures began with Program Manager selected, stock keyboard, no active shell
+EXE/DLL/INI, and no previous support folder. The tested root is C:\WINXT,
+with active files in C:\WINDOWS. TR41616 and TR36402 were installed by the
+private fixture; the combined display installer's separate six-mode tests
+qualify its new drivers and common launcher.
+
+- Fresh 160 and 640 installs succeeded. Both original Windows INIs were backed
+  up byte-for-byte under WINXT\BACKUP\SHELL14, and all three installed files
+  matched the supplied files. SHREADY.TAG matched its template; NEW was absent.
+- Repeating TSSETUP refused the existing marker/files without overwriting them.
+- At 160, About launched from the new root. Cancel preserved Windows, then
+  normal TEXIT/go exit returned to DOS and drew the success-only moon screen.
+- At 640, My Computer opened stock File Manager. Its normal exit confirmation
+  worked. Save Settings was unchecked for the fixture. Run opened Notepad;
+  its unsaved-file prompt appeared on Shift and normal exit attempts. Cancel
+  vetoed the Shift exit. A normal chime exit later returned to DOS after
+  discarding only fixture text.
+- A second 640 launch through TSTART recovered cleanly and started again.
+  Matrix, Maze and Starfield each launched from C:\WINXT and returned to the
+  settings dialog. Cancel retained the original settings. Shift at Exit
+  selection skipped TEXIT on this second launch; the log contains no TEXIT
+  module load in that session. Windows returned to DOS with the moon screen.
+- SYSTEM.INI and WIN.INI matched their original bytes after the final returns.
+  No TSHELL.JRN, NEW, OLD or RST active transaction remained. Persistent
+  TSHELL.BAK/SAV were retained, as designed.
+
+SIX NATIVE FAIL-CLOSED CASES
+Missing companion, existing active shell configuration, existing backup
+folder, existing completion marker, an injected comparison failure, and a
+failing RESERVE helper all returned to DOS without changing either Windows
+INI. Failed installation did not publish a new ready marker. The reserve
+failure occurred after successful file installation but before shell selection
+or Windows startup. Existing marker/config/backup contents stayed intact.
+
+COMPARATOR AND BUILD
+TSCHECK passed 70 host comparison/error cases with ASan/UBSan (leak checking
+was disabled because the execution environment uses ptrace). The cases cover
+empty, short and 64KB+ files, different lengths and contents, missing files,
+a read-error path and command-line misuse. The genuine DOS installs exercise
+its real DOS success/close path; comparison-failure injection verifies the
+batch gate. This is not a claim of native injected disk-read failures.
+A clean MSC6 /G0 /AS rebuild was byte-identical. Scoped entry-reachable audit
+covered 1,027 instructions with no post-8088 suspects; untraced indirect/far code
+is outside that audit. The final public DLL build helper also reproduced the
+exact 6,281-byte DLL after its paths were made explicit.
+
+TEST HARNESS CORRECTIONS AND PRIOR EVIDENCE
+A preliminary observer stalled while recursively querying File Manager's
+private drive controls. The final observer excludes that control tree;
+File Manager then remained responsive and closed normally. Earlier attempts
+using Alt mnemonics and Tab to an unchecked radio did not activate controls;
+final native input used focus/Space and the radio group's arrow keys. No
+production change was made to accommodate these harness mistakes.
+The preceding flat C:\TSTART assembly also passed all three saver previews
+and restoration at 160/640; it is historical path evidence, not the final root.
+Previous 14 Hold, 13 Browse and component lifecycle tests retain their own exact
+runtime scopes in TESTS14.TXT and the separately supplied source archives.
+
+LIMITS
+These are functional emulator tests, not physical timing or audio-output
+measurements. The stock keyboard intentionally leaves automatic Hold off.
+The separate compatible keyboard kit and physical Windows Hold confirmation
+remain opt-in/pending. Experimental text mode is not a qualified TSHELL target;
+the common launcher retains the original shell there. No OS images, SDK,
+compiler or user-card content are redistributed with this evidence.

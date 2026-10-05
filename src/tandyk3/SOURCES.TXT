@@ -1,0 +1,17 @@
+REFERENCE SOURCES
+
+Microsoft DDK adapter guide (Windows 3.0 keyboard interface):
+https://www.pcjs.org/documents/books/mspl13/win/w3ddkadp/
+
+Tandy original keyboard raw-code chart, original 1000 reference:
+https://www.manualslib.com/manual/887518/Tandy-1000.html?page=108
+
+Tandy HX firmware key/character table (corroboration; not an EX test):
+https://www.manualslib.com/manual/1366743/Tandy-1000-Hx.html?page=416
+
+Tandy EX hardware interface and I/O description (primary scanned manual):
+https://manuals.plus/m/a5450fe6dcd66bb4902629b9e4200258fee5acfaffa08a96b2eea50c07d828c2.pdf
+EX manual p.53 / PDF page61: port60 keyboard data; port61 bit7 keyboard
+clear. Driver retains other port61 bits when acknowledging the keyboard,
+including speaker and sound-control bits. Scan-layout assumptions still
+need the physical RAWKEY test for this particular machine.

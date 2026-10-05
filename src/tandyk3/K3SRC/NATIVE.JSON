@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "cpu": "8086_prefetch",
+  "dos": "DOSBox-X internal DOS",
+  "cases": [
+    "CHECK read-only",
+    "APPLY",
+    "APPLY idempotent",
+    "RESTORE preserves later unrelated INI edits",
+    "RESTORE idempotent",
+    "duplicate boot refusal",
+    "foreign target refusal",
+    "conflicting keyboard selection refusal",
+    "maximum 14000-byte INI and original-driver roundtrip"
+  ],
+  "exe_sha256": "30f3608737d586b28756a8b458614cf3cc6064e2229f64c37d8706491bb7173f",
+  "driver_sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+}

@@ -1,0 +1,46 @@
+NATIVE VERIFICATION - 4 OCTOBER 2026
+
+Unmodified TSTART13 / Windows 3.0 WIN /R / genuine DOS 6.22 / 640KB.
+Disposable owned OS fixtures in DOSBox-X. No physical-card writes.
+Stock Windows wallpaper path: WIN.INI [desktop], Wallpaper=<BMP path>,
+TileWallpaper=0. No SystemParametersInfo or later-version API used.
+
+Both 160x200x16 and 320x200x16:
+- Desktop appeared with the intended native RGBI bitmap.
+- Opened and canceled Run twice. All wallpaper pixels above the Start bar
+  exactly matched the first desktop capture after each uncover.
+- Start/Run remained usable. Normal Exit returned to DOS.
+- Free Windows memory was stable before and after both cover/uncover cycles.
+- Full-screen wallpaper is naturally behind the bottom 22-pixel Start bar.
+
+PAIRED FREE MEMORY (GetFreeSpace(0), identical observer present)
+160: plain 255,776; hill 239,712; added 16,064 bytes.
+320: plain 239,776; hill 207,712; added 32,064 bytes.
+These are Windows aggregate free-space readings, not a hardware guarantee.
+They are not a count of additional processes: the package has no executable.
+
+DRAWING MICROBENCHMARK (SEPARATE TEST-ONLY OBSERVER)
+100 synchronous desktop WM_ERASEBKGND sends using its own GetDC handle.
+DOSBox-X 8086_prefetch, fixed 200000 cycles, 640KB. GetTickCount units ms.
+160: plain 165 ms; hill 220 ms for all 100 calls.
+320: plain 384 ms; hill 384 ms for all 100 calls.
+The timer is coarse (~55 ms); these numbers cannot establish a precise
+single-repaint penalty, physical 4.77MHz speed, or total visible startup time.
+The test loop is not installed. Windows owns demand-driven desktop repaint.
+This is a small static bitmap memory tradeoff, not a zero-memory feature.
+
+Functional 160 tests used 8086_prefetch; functional 320 tests used 8086.
+All drawing benchmark pairs used 8086_prefetch and passed the same lifecycle.
+No physical Tandy acceptance or monochrome test is claimed. Before changing
+to mono, use plain wallpaper. No fallback process is installed.
+
+BITMAP VALIDATION
+Windows BITMAPINFOHEADER size 40, uncompressed BI_RGB, 4 bits per pixel,
+16-entry fixed RGBI palette, bottom-up pixels, DWORD-aligned scanlines.
+Exact native dimension and palette-index round trip checked after encoding.
+160: 16,118 disk bytes; 320: 32,118 disk bytes.
+Original art built at each target resolution; no runtime scaling/conversion.
+
+Native screenshots are lossless SDL captures, not reconstructed UI.
+Only the preview PNGs are nearest-neighbor enlarged to a 4:3 display shape.
+No original OS media, third-party binaries, or tools are redistributed.

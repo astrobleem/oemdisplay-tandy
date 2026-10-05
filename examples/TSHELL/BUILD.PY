@@ -11,7 +11,7 @@ if out.exists():p.error('--out must be new')
 for n in ('BIN/CL.EXE','BIN/LINK4.EXE','LIB/SLIBCEW.LIB','LIB/LIBW.LIB'):
  if not (repo/n).is_file():p.error('Missing existing toolchain input: '+n)
 out.mkdir(parents=True)
-for n in ('TSHELL.C','TSBOOT.C','TSBOOT.H','TNOTICE.C','TNOTICE.H','PROGMENU.C','PROGMENU.H','GRPREAD.C','GRPREAD.H','TSAUX.C','TSAUX.H','TSSAVER.C','TSSAVER.H','TSSAVCFG.C','TSSAVCFG.H','TSSVOPT.C','TSSVOPT.H','SCFGCORE.C','SCFGCORE.H','SVCORE.C','SVCORE.H','TSDATE.C','TSDATE.H','DTCORE.C','DTCORE.H','TSHELL.DEF','TSHELL.RSP','BUILD.BAT'):
+for n in ('VFAT.C','VFAT.H','RAWREAD.C','RAWREAD.H','TSNAMES.C','TSNAMES.H','TSHELL.C','TSHOLD.C','TSHOLD.H','TSBOOT.C','TSBOOT.H','TNOTICE.C','TNOTICE.H','PROGMENU.C','PROGMENU.H','GRPREAD.C','GRPREAD.H','TSAUX.C','TSAUX.H','TSSAVER.C','TSSAVER.H','TSSAVCFG.C','TSSAVCFG.H','TSSVOPT.C','TSSVOPT.H','SCFGCORE.C','SCFGCORE.H','SVCORE.C','SVCORE.H','TSDATE.C','TSDATE.H','DTCORE.C','DTCORE.H','TSHELL.DEF','TSHELL.RSP','BUILD.BAT'):
  shutil.copyfile(Path(__file__).parent/n,out/n)
 config="""[sdl]
 fullscreen=false

@@ -1,0 +1,105 @@
+TSTART14 VERIFICATION
+
+FINAL RUNTIME
+TSHELL.EXE build04: 68,451 bytes
+SHA256 4577182c8ba80f3604867710c44403f61c7e684f01cdc4d45e1e6dc92ef74689
+TSINPUT.DLL build06: 6,281 bytes
+SHA256 d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80
+
+The keyboard driver ships separately. The complete modifier-transition tests
+use TNDYK3.DRV, 7,640 bytes, SHA256
+ e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5.
+The physical EX raw Hold scan was confirmed as 46h make/C6h break by the
+keyboard qualification. Actual Windows/hook behavior on physical hardware
+remains pending; emulated behavior must not be called a physical pass.
+
+FINAL DEFAULT GATE
+The automatic shortcut requires real mode, the supported Tandy ROM marker,
+and the loaded KEYBOARD module's exact TNDYK3.DRV basename. It reads the
+loaded module path, not merely a SYSTEM.INI selection awaiting restart.
+This is a profile/name check, not a binary-integrity check. Explicit
+[Keyboard] HoldStart=0 disables; 1 explicitly opts in with another driver
+within the Tandy/real-mode gate. Generic drivers may not keep modifier
+make/break virtual keys paired; use TNDYK3 for the full behavior.
+
+Six final 04 native host-mounted cases pass and return to DOS: new-driver
+automatic enable, stock automatic disable, explicit stock enable, explicit
+new-driver disable, and live INI changes in both directions. The loaded
+module path remains authoritative after the bar is closed and restarted.
+Focused final 04 genuine DOS 6.22 runs pass in 160/640: release-only Start,
+covered-app focus restoration, default gating, and Shift+Exit/DOS return.
+
+BROAD INTEGRATION BEFORE THE DEFAULT-GATE CHANGE
+Shell03 used the same feature implementation but defaulted on from the Tandy
+ROM alone. Its ten native host-mounted fixture runs pass, including all 31
+primary checkpoints in each width and normal DOS return. Shell04 changes
+only the loaded-driver default predicate and its default argument; the
+GATE-DELTA.patch records that exact difference. Broad 03 results remain
+labeled with their original executable hash, not claimed as a full 04 rerun.
+The DLL is unchanged throughout the final integration series.
+
+Coverage includes another app fully covering Start; release-only activation;
+long holds and repeat suppression; root and System-menu cancellation with
+exact edit focus restored; no duplicate popup on another Hold; ordinary app
+selection; modifier-first and mid-gesture modifiers with TNDYK3; Run/Browse/
+date modality; saver preview and idle wake without a Start popup; changing,
+disabling and re-enabling idle without losing Hold; real shutdown veto,
+confirmation cancellation, and Shift+Exit; secondary-bar close/restart and
+five scheduling races per width; bounded long-held close with inert retained
+DLL code; missing/old DLL and disabled-config fallback.
+
+The genuine-DOS 03 smoke additionally verifies friendly names, short-alias
+launch and selected-app focus. Browse/repaint/parser source is unchanged by
+the Hold addition; its 26 current ASan/UBSan host groups pass. Original 13
+native raw-disk and repaint evidence remains in the source archive with its
+original hashes and scope.
+
+DLL COMPONENT VERIFICATION
+The exact final DLL passes 28 native cases and 17 accepted one-shot requests;
+a duplicate take is rejected each time. Independent host checks pass 238 Hold
+callbacks/19 post attempts plus the original 30-callback idle regressions.
+They cover chain results, negative/no-remove codes, modifier and mouse
+interruptions, stale input, owner/foreground/token lifetime, dialog/capture/
+saver exclusions, failed posting/unhooks, partial removal and nested teardown.
+
+HC_NOREMOVE is always chained unchanged. Win3 can otherwise suppress a later
+HC_ACTION release and strand gesture ownership. All ownership and consumption
+occur only on HC_ACTION. A downstream hook that discards a key cancels our
+action while preserving the owned release. Removal stays latched through its
+private-message drain; WEP does not pump messages. Old idle exports 1-6 remain
+compatible and the new API appends 7-12. Idle and Hold own separate hooks and
+library references.
+
+Independent source-extracted shell tests pass 18 fault groups plus 18 final
+gate cases: popup failures, dropped deferred menus, focus/window identity,
+activation reentry, ROM/protected-mode guards, old/missing DLL, module-path
+validation/overrides, failed detach with no FreeLibrary, bounded close retries
+and timer failure. These are mocked API tests, not native OS failure injection.
+
+BUILD AND LIMITS
+MSC6 uses /G0 /Gw /AS for the shell and /G0 /Gsw /ASw for the DLL, with
+period MASM/LINK and Win 3.0 imports. Fresh shell rebuild is byte-identical.
+Shell code is 61,058 bytes; its scoped audit checks 22,368 instructions.
+The DLL audit checks 1,772 instructions from entry and exported API roots.
+Both audits find no post8088 suspects.
+DLL code/data are fixed, preloaded, nondiscardable and shared as required;
+there is no DLL local heap or CRT. Scoped disassembly audits and exact native
+8086 execution supplement compiler flags; imported Windows code, unresolved
+indirect branches and untraced far calls are outside disassembly scope.
+
+Native GUI host fixtures use real Windows 3.0 WIN/R with 8086_prefetch and 640KB,
+but DOSBox host-mounted DOS. Genuine cases separately boot actual DOS 6.22
+images under 8086 emulation. No user CF is accessed and no OS/toolchain binary
+is distributed. Program Manager itself rewrites/normalizes group files when
+explicitly launched; those bytes match a separate Program Manager control.
+TSHELL does not modify the group definitions.
+
+PM_NOREMOVE readers can inspect Hold; GetKeyState(VK_SCROLL) polling still
+observes its toggle. Removed/dispatched owned Scroll messages are suppressed.
+No keyboard-state rewriting is used. Arbitrary custom modal loops, every
+possible programmatic activation race and native third-party hook failures
+are not exhaustively covered. Retention after a failed detach is a deliberate
+lifetime safeguard, not a claim that abnormal termination cannot fail.
+
+Screenshots are actual final 04 emulated Windows output, not reconstructed UI.
+Physical Windows Hold behavior, physical timing and audio remain unverified.

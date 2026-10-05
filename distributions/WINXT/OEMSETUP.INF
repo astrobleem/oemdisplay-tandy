@@ -1,0 +1,24 @@
+; Five TR5 graphics profiles plus experimental text. Windows 3.0 real mode.
+[data]
+Version = "3.0"
+[disks]
+a = ., "Windows XT All-in-One", OEMSETUP.INF
+[display]
+TR53216 = a:TR53216.DRV, "Tandy EX/HX 320x200 16 colors (TR5 Clock)", "133,96,72", a:CGA.GR2, a:CGALOGO.LGO,,,, a:WXTSPL01.RLE
+TR56404 = a:TR56404.DRV, "Tandy EX/HX 640x200 4 colors (TR5 Clock)", "200,96,48", a:CGA.GR2, a:CGALOGO.LGO,,,, a:WXTSPL01.RLE
+TR51616 = a:TR51616.DRV, "Tandy EX/HX 160x200 16 colors (TR5 Clock)", "200,96,48", a:CGA.GR2, a:CGALOGO.LGO,,,, a:WXTSPL01.RLE
+TR53204 = a:TR53204.DRV, "Tandy EX/HX 320x200 4 colors (TR5 Clock)", "200,96,48", a:CGA.GR2, a:CGALOGO.LGO,,,, a:WXTSPL01.RLE
+TR56402 = a:TR56402.DRV, "Tandy EX/HX 640x200 2 colors (TR5 Clock)", "200,96,48", a:CGA.GR2, a:CGALOGO.LGO,,,, a:WXTSPL01.RLE
+TXTMODE = a:TXTMODE.DRV, "EXPERIMENTAL 80x25 text (character corruption)", "0200,96,48", a:CGA.GR2, a:CGALOGO.LGO,,,, a:WXTSPL01.RLE
+[sysfonts]
+a:TXTSYS.FON, "Experimental fixed-cell System Font", "0200,96,48"
+a:EGASYS.FON, "EGA System Font", "133,96,72"
+a:CGASYS.FON, "CGA System Font", "200,96,48"
+[fixedfonts]
+a:CGAFIX.FON, "CGA Fixed System Font", "0200,96,48"
+a:EGAFIX.FON, "EGA Fixed System Font", "133,96,72"
+a:CGAFIX.FON, "CGA Fixed System Font", "200,96,48"
+[oemfonts]
+a:CGAOEM.FON, "CGA Terminal Font (USA/Europe)", "0200,96,48", 1
+a:EGAOEM.FON, "EGA Terminal Font (USA/Europe)", "133,96,72", 1
+a:CGAOEM.FON, "CGA Terminal Font (USA/Europe)", "200,96,48", 1

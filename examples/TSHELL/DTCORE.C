@@ -22,7 +22,8 @@ static int validTime(const DTVALUE *v)
 {
     return v->hour >= 0 && v->hour < 24 &&
            v->minute >= 0 && v->minute < 60 &&
-           v->second >= 0 && v->second < 60;
+           v->second >= 0 && v->second < 60 &&
+           v->hsecond >= 0 && v->hsecond < 100;
 }
 
 int DtValid(const DTVALUE *v)
@@ -59,8 +60,9 @@ int DtTime(const char *s, DTVALUE *v)
     parsed.hour = digits(s, 2);
     parsed.minute = digits(s + 3, 2);
     parsed.second = digits(s + 6, 2);
+    parsed.hsecond = 0;
     if (!validTime(&parsed)) return 0;
-    v->hour = parsed.hour; v->minute = parsed.minute; v->second = parsed.second;
+    v->hour = parsed.hour; v->minute = parsed.minute; v->second = parsed.second; v->hsecond = 0;
     return 1;
 }
 
@@ -83,13 +85,19 @@ static int sameDate(const DTVALUE *a, const DTVALUE *b)
     return a->year == b->year && a->month == b->month && a->day == b->day;
 }
 
-static int advanced(const DTVALUE *expected, const DTVALUE *actual)
+static int advanced(const DTVALUE *expected, const DTVALUE *actual, int timeWritten)
 {
     DTVALUE next;
     long a, b;
     a = (long)expected->hour * 3600L + expected->minute * 60L + expected->second;
     b = (long)actual->hour * 3600L + actual->minute * 60L + actual->second;
-    if (sameDate(expected, actual)) return b >= a && b - a <= 2L;
+    if (sameDate(expected, actual)) {
+        if (b >= a) return b - a <= 2L;
+        /* DOS rounds a .00 request down to BIOS ticks. Preserve hundredths
+           so only the measured sub-tick predecessor (.94 through .99) is
+           accepted, and only after a successful time write. */
+        return timeWritten && a - b == 1L && actual->hsecond >= 94;
+    }
     next = *expected;
     if (++next.day > monthDays(next.year, next.month)) {
         next.day = 1;
@@ -125,14 +133,14 @@ void DtApply(const char *date, const char *time,
         else {
             r->written |= DT_TIME;
             expected.hour = value.hour; expected.minute = value.minute;
-            expected.second = value.second;
+            expected.second = value.second; expected.hsecond = 0;
         }
     }
     if (r->written) {
         r->readback = io->read(io->context, &r->actual) && DtValid(&r->actual);
         if (failure) { r->code = failure; return; }
         if (!r->readback) { r->code = DT_READBACKFAIL; return; }
-        if (!advanced(&expected, &r->actual)) { r->code = DT_VERIFYFAIL; return; }
+        if (!advanced(&expected, &r->actual, r->written & DT_TIME)) { r->code = DT_VERIFYFAIL; return; }
     }
     r->code = failure ? failure : DT_OK;
 }

@@ -3,7 +3,7 @@
 
 /* Pure 16-bit C calendar/apply core. No host or DOS clock calls here. */
 typedef struct {
-    int year, month, day, hour, minute, second;
+    int year, month, day, hour, minute, second, hsecond;
 } DTVALUE;
 
 typedef struct {

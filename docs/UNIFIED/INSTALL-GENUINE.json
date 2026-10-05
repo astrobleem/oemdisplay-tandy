@@ -1,0 +1,26 @@
+{
+  "DOS": "MS-DOS Version 6.22",
+  "cpu": "8086_prefetch",
+  "machine": "tandy",
+  "ram_kb": 640,
+  "runtime_sha256": "f8f0c46ea7c6162a9e46338a5a53bbce718711c6aea8175af0eb8f9aa240809e",
+  "checks": {
+    "real_msdos622": true,
+    "install_native_setup": true,
+    "real_mode_command_tail": true,
+    "repeat_refusal": true,
+    "fresh_in_place_payload_unchanged": true,
+    "nested_snapshot_complete": true,
+    "qualified_shell_dispatched": true,
+    "text_shell_blocked_plain_win": true,
+    "malformed_ini_stops_launch": true,
+    "collision_before_restore": true,
+    "shell_dispatch_disabled": true,
+    "all_original_windows_bytes_restored": true,
+    "first_restore_verified_complete": true,
+    "restore_repeatable": true,
+    "actual_pending_selector_restored": true,
+    "no_legacy_root_writes": true
+  },
+  "passed": true
+}

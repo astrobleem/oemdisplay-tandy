@@ -31,6 +31,7 @@ static int readClock(void *context, DTVALUE *v)
             before.day == after.day) {
             v->year = after.year; v->month = after.month; v->day = after.day;
             v->hour = time.hour; v->minute = time.minute; v->second = time.second;
+            v->hsecond = time.hsecond;
             return DtValid(v);
         }
     }

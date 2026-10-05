@@ -54,6 +54,9 @@ def main():
     out_loader = importlib.machinery.SourceFileLoader("outrows", str(HERE / "OUTROWS.PY"))
     out_module = out_loader.load_module()
     out_audit = out_module.port(renderer, args.mode)
+    wide_loader = importlib.machinery.SourceFileLoader("widescan", str(HERE / "WIDESCAN.PY"))
+    wide_module = wide_loader.load_module()
+    wide_audit = wide_module.port(renderer, args.mode)
     for filename in ("BLDCOR.BAT", "BLDCUR.BAT"):
         path = renderer / filename
         text = baseline.normalized(path).replace("SET INCLUDE=", "SET INCLUDE=R:\\INC;")
@@ -103,12 +106,12 @@ def main():
     binary = out / mode_module.PROFILES[args.mode]["driver"]
     subprocess.run([sys.executable, str(resources / "PACKRES.PY"), "attach", str(resource_file),
                     str(renderer / "EGA/TSOFT.DRV"), str(binary)], env=env, check=True)
-    report = {"build": "PASS", "runtime": "NOT_TESTED", "target": "8086/8088 real mode", "candidate": "isolated synchronous Output rows atop byte columns plus cursor retention; " + args.mode,
+    report = {"build": "PASS", "runtime": "NOT_TESTED", "target": "8086/8088 real mode", "candidate": "Trial5 bounded multi-interval scanlines atop exact Trial4; " + args.mode,
               "mode": mode_audit, "resource_sha256": resource_sha, "driver_bytes": binary.stat().st_size,
               "driver_sha256": hashlib.sha256(binary.read_bytes()).hexdigest(), "port": audit, "dib": dib_audit,
               "instruction_audit": instruction_audit, "link_audit": link_audit,
               "cursor_retention": keep_audit, "interrupt_safe_copies": rep_audit, "rep_prefix_audit": rep_instruction_audit,
-              "byte_columns": column_audit, "output_rows": out_audit}
+              "byte_columns": column_audit, "output_rows": out_audit, "wide_scanlines": wide_audit}
     (out / "RESULT.json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report, indent=2))
 

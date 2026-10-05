@@ -1,5 +1,5 @@
 LIBRARY TSINPUT
-DESCRIPTION 'Windows 3.0 8086 global idle input observer'
+DESCRIPTION 'Windows 3.0 8086 global idle and Hold input hooks'
 EXETYPE WINDOWS
 CODE PRELOAD FIXED
 DATA PRELOAD FIXED SINGLE
@@ -11,3 +11,9 @@ EXPORTS
  IdleReady @4
  IdleRecord @5
  WEP @6 RESIDENTNAME
+ HoldInstall @7
+ HoldRemove @8
+ HoldPolicy @9
+ HoldTake @10
+ HoldKeyboard @11
+ HoldRecord @12

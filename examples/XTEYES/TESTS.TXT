@@ -1,0 +1,30 @@
+XTEyes 1.0 validation - 2026-10-04
+
+PASS: warning-free Microsoft C /G0 /Gw small-model build, 7,919-byte EXE.
+PASS: 206,241 geometry cases executing the actual extracted C routine on host.
+All pupil rectangle corners remain inside the eye's inner outline.
+PASS: scoped reachable-code audit from NE entry and exported WndProc, with no
+post-8088 instruction suspects. Indirect branch targets/imported Windows code
+are not fully covered by that audit. Native strict-core tests complement it.
+PASS: real Windows 3.0 /R on DOSBox-X 8086_prefetch, 640 KB conventional RAM,
+video reservation fixture, no FPU/XMS/EMS/UMB, fixed 20,000 emulation cycles.
+160x200, 640x200 monochrome, and Trial4 320x200x16: launch; top-left and
+bottom-right gaze; cursor over eyes; cover and uncover; move; minimize and
+restore; close; reopen; close again. All three native controllers finish DONE.
+Screenshots were captured from the running emulator, then converted losslessly
+from BMP to PNG. DOSBox-X output doubles some axes: 160 mode screenshots are
+320x200, 640 mode 640x400, and 320 mode 320x200. These are real framebuffer
+captures, not UI mockups. L/R=gaze, U=uncovered, M=moved, S=restored, O=reopened.
+
+SOURCE REVIEW: no direct video access, float math, or ellipse calls. Nominal
+8 polls/second, zero draw calls for stationary pupil positions. At most two
+small white erases and two small bitmap copies per changed-pointer update.
+Memory DC/bitmap cleanup checked in source; close/reopen exercised natively.
+No quantitative GDI resource-count leak measurement was performed.
+Not separately run: remaining two display modes, completely off-screen window,
+manual physical-machine load/performance, and out-of-memory failure injection.
+No actual physical Tandy responsiveness or frame-rate claim is made.
+
+Reference 320x16 driver: TR43216.DRV
+SHA256 a22f0d75ec8864e7af65e922cdc2083ce225b19096dfa7c2e416c4e3f1276b61
+The driver is used for tests only and is not included in this package.
