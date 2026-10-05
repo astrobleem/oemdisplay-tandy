@@ -1,0 +1,117 @@
+{
+  "passed": 8,
+  "failed": 0,
+  "skipped": 0,
+  "tests": [
+    {
+      "name": "immutable original source hashes",
+      "status": "passed",
+      "detail": {
+        "original_sheets": 2,
+        "hashes": {
+          "CABINET.PNG": "960fb2033e3aeaa7c0d550e228e8fcf69cdad6dace8a13571a9b5f068bf5251b",
+          "PARTS.PNG": "6ae9d955e6feaf6bd0585e82fd7ed5cda6b743b929913fede5ac0cb951ebbcb1"
+        }
+      }
+    },
+    {
+      "name": "all native crops and black padding",
+      "status": "passed",
+      "detail": {
+        "pixel_exact_crops": 11,
+        "atlas_size": [
+          128,
+          416
+        ]
+      }
+    },
+    {
+      "name": "generated DIB decodes to exact atlas",
+      "status": "passed",
+      "detail": {
+        "decoded_bytes": 26624,
+        "row_stride": 64,
+        "pixel_exact": true
+      }
+    },
+    {
+      "name": "26-column starter questions and names fit",
+      "status": "passed",
+      "detail": {
+        "narrowest_columns": 26,
+        "font_assumption": "qualified CGAFIX 8x8",
+        "content": {
+          "question": {
+            "strings": 130,
+            "max_lines": 3,
+            "available_rows": 4
+          },
+          "name": {
+            "strings": 256,
+            "max_lines": 2,
+            "available_rows": 3
+          }
+        }
+      }
+    },
+    {
+      "name": "nine bounded native pupil positions",
+      "status": "passed",
+      "detail": {
+        "native_positions": 9,
+        "horizontal_scales": [
+          1,
+          2
+        ],
+        "centered_pixels_exact": true,
+        "patches": [
+          [
+            39,
+            42,
+            7,
+            9
+          ],
+          [
+            47,
+            42,
+            7,
+            9
+          ]
+        ]
+      }
+    },
+    {
+      "name": "native framebuffer fidelity 320x200x16",
+      "status": "passed",
+      "detail": {
+        "compared_pixels": 11520,
+        "exact_hardware_indices": true,
+        "x_scale": 1,
+        "result_matches_current_exe": true,
+        "hardware_palette": "16 colors"
+      }
+    },
+    {
+      "name": "native framebuffer fidelity 640x200x2",
+      "status": "passed",
+      "detail": {
+        "compared_pixels": 23040,
+        "exact_hardware_indices": true,
+        "x_scale": 2,
+        "result_matches_current_exe": true,
+        "hardware_palette": "2 colors"
+      }
+    },
+    {
+      "name": "native framebuffer fidelity 640x200x4",
+      "status": "passed",
+      "detail": {
+        "compared_pixels": 23040,
+        "exact_hardware_indices": true,
+        "x_scale": 2,
+        "result_matches_current_exe": true,
+        "hardware_palette": "black/red/green/white"
+      }
+    }
+  ]
+}

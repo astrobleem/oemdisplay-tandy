@@ -1,0 +1,22 @@
+{
+  "TANDI04.ZIP": {
+    "bytes": 965600,
+    "sha256": "75f6843c5351b8995a946be438215b7ebd6bf4ad9fc4ac1e0f6dc4206809e195"
+  },
+  "BASELINE.PNG": {
+    "bytes": 9102,
+    "sha256": "f4cdbebb700fe526cf6e037c28b627996b6156311a78eb14dfff0795bca30b38"
+  },
+  "PREVIEW.PNG": {
+    "bytes": 9482,
+    "sha256": "c66f574e67b1b47602758d3c84895b05a5c2d98bea998558b67c55a97c327e19"
+  },
+  "RUN/TANDI.EXE": {
+    "bytes": 46479,
+    "sha256": "8473d6bda08bc73be643199402e37dce7c67242c23feac8b395c416357a7e6de"
+  },
+  "RUN/TANDY.DAT": {
+    "bytes": 37118,
+    "sha256": "af01447c905e6419a2d9844c9ea250e02c49a132cec900b8d57063b00ff2498c"
+  }
+}

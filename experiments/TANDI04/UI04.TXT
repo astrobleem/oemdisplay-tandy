@@ -1,0 +1,34 @@
+TANDINATOR 0.3.1 - TEXT AND ANSWER LAYOUT REPAIR
+================================================
+Local test build; not a published release.
+
+The initial I in the movies question is now complete. Question and result
+lines are measured individually, spaces trimmed before centering, and
+rendered with TextOut rather than Windows 3.0 centered DrawText wrapping.
+The original inner side margins are retained. Each line is checked against
+its pixel width and height; words break only when needed.
+
+Answer buttons are 164 rather than 212 native layout units wide (23% less).
+Numbers 1-5 share an independent left-aligned column. Only answer labels
+are centered in the remaining label area. Entire bordered rectangles remain
+clickable, keyboard shortcuts remain unchanged, and moving eyes are kept.
+Source cabinet and parts images, palette indices, atlas, and pupil code are
+unchanged. The 256-person database and inference engine are unchanged.
+
+Verified on DOSBox-X with Windows 3.0 in all supported modes:
+320x200x16, 640x200x2 and 640x200x4. Each run checks all 130 question strings
+and 256 result names, keyboard 1-5, two opposite corners of every answer
+button, a click just outside the buttons, repeated rounds, rejection,
+replay, focus restoration, partial redraws and moving-eye boundaries.
+Fresh screenshots include the reported movies question and longest strings.
+
+Run tests/ARTTEST.PY --require-runtime --runtime-tag=-ui04 and
+python3 tests/UITEST.PY in the development workspace after the fresh
+EMUTEST.PY runs with tag=-ui04. Runtime captures are in EVIDENCE in this kit.
+This is emulator QA, not a physical Tandy/8088 hardware validation.
+Older expansion QA documents describe the preceding 0.3 build; UI04.TXT,
+UITEST.JSON and ARTUI04.JSON qualify this repaired executable.
+
+RUN/TANDI.EXE and RUN/TANDY.DAT are the install pair. Back up an existing
+installation before replacing files. No Windows, compiler, BIOS or DOSBox
+binaries are included. All file hashes are recorded in SHA256.TXT.
