@@ -1,297 +1,340 @@
-# OEMDisplay-Tandy
+# Windows XT
 
-**Five graphics modes, experimental hardware text mode, a compact Start-menu
-shell, games and utilities for Windows 3.0 real mode on the original 8088
-Tandy 1000 EX/HX.**
+**A colorful little Windows desktop for an 8088 Tandy.**
 
-Bring Tandy graphics to a 640 KB Windows desktop: launch your Program Manager
-apps from Start, click cookies, swat flies, play pinball, watch Matrix rain,
-or convert a GIF for Paintbrush.
+Windows XT brings five graphics modes, a compact Start-menu shell, games and
+utilities to **Windows 3.0 real mode on the original Tandy 1000 EX/HX with
+640 KB RAM**. This repository, OEMDisplay-Tandy, contains the display drivers,
+desktop additions and their source and test evidence.
 
-[Current trial guide](docs/TRIAL5/README.MD) | [Unified installation](distributions/WINXT/README.MD) | [App test pack](examples/TANDYLAB/README.MD) |
-[Development status](docs/STATUS.MD) | [Companion sound project](https://github.com/astrobleem/oemsound-tandy)
+[Get started](#get-started) · [Display modes](#display-modes) ·
+[The desktop](#tandy-start--tshell) · [Apps](#games-and-utilities) ·
+[Performance](#performance-and-verification) ·
+[Sound companion](https://github.com/astrobleem/oemsound-tandy)
 
-## Project promotional art
+![16 COLORS. WOW! Windows 3.0 on a Tandy 1000 EX, with a real Paintbrush capture inside a promotional computer scene](docs/PROMO/16WOW.WEBP)
 
-Retro-style project mockups, separate from the emulator evidence below.
-These are not official Tandy or Microsoft packaging. The poster uses the
-corrected three-bar monitor badge, black 5 1/4-inch floppy and Windows 3.0 text.
+*Project artwork, not a hardware photograph or official Tandy/Microsoft
+packaging. The monitor uses an [actual emulator capture](docs/tandy-dib-roundtrip.png).
+[Artwork details](docs/PROMO/README.MD).*
 
-![16 COLORS. WOW! promotional composite with a Tandy 1000 EX, real Paintbrush screenshot, red power LED and black Windows 3.0 Driver floppy](docs/PROMO/16WOW.WEBP)
+## At a glance
 
-The monitor contains the [actual native Windows 3.0 Paintbrush capture](docs/tandy-dib-roundtrip.png),
-perspective-fitted from its original pixels rather than a simulated UI.
-The surrounding computer scene remains promotional artwork.
+- **Five graphics modes:** 160 or 320 pixels wide in sixteen colors,
+  320 pixels in four colors, or a 640-pixel desktop in two or four colors.
+- **Tandy Start 14:** Programs, My Computer, Run/Browse, a clock, screen
+  savers, optional sounds and guarded Hold-to-Start support.
+- **One support folder:** `C:\WINXT`, with native Windows Setup, matching
+  fonts, a guarded launcher and numbered recovery backups.
+- **Small native apps:** Cookie Clicker, Fly Swat, Pinball, XTEyes, GIF
+  conversion for Paintbrush and more.
+- **An experimental sixth mode:** real 80×25 hardware text, with known
+  character corruption. Choose a graphics mode for ordinary use.
 
-<a href="docs/PROMO/WINXTBOX.WEBP"><img src="docs/PROMO/WINXTBOX.WEBP" alt="Windows XT concept box art for the Tandy Windows 3.0 TShell and Extensions Plus Pack" width="420"></a>
+**Status:** experimental software with emulator tests and limited reports
+from a physical Tandy 1000 EX. Hardware reports do not certify every current
+binary or app. See the [mode table](#display-modes) and
+[detailed status](docs/STATUS.MD).
 
-[Artwork notes and image identities](docs/PROMO/README.MD).
+## Get started
 
-## Five graphics display modes
+### Choose the right package
 
-| Resolution | Colors | Driver | Desktop |
-| --- | ---: | --- | --- |
-| 160x200 | 16 | `TR51616.DRV` | Smallest desktop, full Tandy palette |
-| 320x200 | 4 | `TR53204.DRV` | Black, cyan, magenta and white |
-| 320x200 | 16 | `TR53216.DRV` | Default profile, full Tandy palette |
-| 640x200 | 2 | `TR56402.DRV` | Wide black-and-white desktop |
-| 640x200 | 4 | `TR56404.DRV` | Wide desktop, black/red/green/white |
+| What you want | Start here |
+| --- | --- |
+| Current drivers and optional Windows XT desktop | [One-folder WINXT source and staging guide](distributions/WINXT/README.MD): five TR5 graphics drivers, experimental text and Tandy Start 14. Supply your own Windows support files. |
+| Games and utilities to try on an existing setup | [TANDYLAB test pack](examples/TANDYLAB/README.MD): a separate, versioned app collection. Check individual component guides for newer work. |
+| Reproduce the older OEM installation | [Historical TANDY88 package](TANDY88.ZIP) and [its instructions](README.TXT). This is an older driver baseline, not the current WINXT kit. |
 
-The unified installer offers these five graphics profiles plus the experimental
-hardware-text choice below. Select through Windows Setup's **Other display**
-menu and restart. Each profile uses matching fonts from your owned media. All modes have 200 logical rows;
-stock dialogs can clip at narrow widths. Original EX/HX 640x200 mode has four
-colors, not sixteen. [Mode guide](docs/MODES.MD).
+### 1. Prepare the folder on a modern computer
 
-![All six display choices in actual Windows Setup](docs/UNIFIED/SHOTS/SETUP6.PNG)
+Start with a **backed-up, working Windows 3.0 installation**. Stock CGA is a
+useful starting point. The integrated shell expects `C:\WINDOWS` and
+`C:\WINXT`; the display installer also supports other Windows paths.
+DOS 3.3 or later is required. No Python or compiler runs on the Tandy.
 
-The five graphics choices and experimental hardware-text choice in genuine
-Windows 3.0 Setup, captured from the running emulator.
+Clone this repository, or use **Code → Download ZIP**, and gather these
+eight files from your own supported **English Windows 3.0 media** into one
+directory:
 
-## Experimental 80x25 hardware text mode
+```text
+CGA.GR2      CGALOGO.LGO
+CGASYS.FON   CGAFIX.FON   CGAOEM.FON
+EGASYS.FON   EGAFIX.FON   EGAOEM.FON
+```
 
-A separate [text-mode proof](experiments/TEXTMODE/README.MD) runs unchanged
-Windows 3.0 Program Manager and Notepad in actual BIOS mode 03h: 80x25
-character/attribute cells with 640x200 logical GDI pixels. Notepad text is
-readable and survives full repaint; sampled pixel, XOR and copy checks pass.
+From the repository root, using Python 3, run:
 
-![Actual Notepad hardware-text capture](experiments/TEXTMODE/EVIDENCE/TXNOTE.PNG)
+```sh
+python3 distributions/WINXT/STAGE.PY --windows-files /path/to/windows30-files --out /path/to/new/WINXT
+```
 
-Recorded Notepad proof, decoded from the emulator's hardware text cells.
-This frame shows readable text; it does not establish general compatibility.
+Use a **new output directory**. The staging tool accepts expanded files or
+their compressed SZDD originals, verifies exact hashes and prepares the
+text-mode font privately. A mismatch stops the process. Copy the resulting
+single `WINXT` folder to `C:\WINXT` on your DOS drive.
 
-**Lab-only, not ready for everyday use.** Window movement, clipping, caret
-inversion and bitmap restore can corrupt characters, and small icon labels
-remain approximate. Physical hardware and speed are untested. It is included
-as an explicitly experimental sixth choice in the
-[unified own-media installer](distributions/WINXT/README.MD), with a graphics
-rollback path. Choose a graphics profile for ordinary use. See the
-[measured results and failures](experiments/TEXTMODE/EVIDENCE/RESULT.JSON).
+The public WINXT source excludes the Microsoft support files and derived
+font. **Do not redistribute the completed own-media folder.** See the
+[staging and media requirements](distributions/WINXT/README.MD).
 
-## Driver features
+### 2. Install through Windows Setup
 
-- **8088-safe drawing copies:** corrected runtime-generated copy sequences
-  and instruction audits for the original 8086/8088 target.
-- **Smaller redraws:** bounded dirty-region refresh for proven BitBlt,
-  SetPixel and plain-text cases; read-only queries avoid needless screen copies.
-- **Cursor retention:** preserve an unaffected cursor, with bounded refresh
-  retries and safe hide/restore when drawing overlaps it.
-- **Faster Output paths:** proven thin lines and validated multi-interval
-  scanlines refresh bounded rows. This avoids repeated full-screen copies for
-  stock Clock borders while preserving the original renderer and raster rules.
-  Uncertain cases keep the full refresh path. [TR5 tests](docs/TRIAL5/VERIFY.TXT).
-- **Palette and bitmap support:** mode-specific colors, compatible bitmaps,
-  bounded BI_RGB conversion and Paintbrush save/reopen support.
-- **Guarded startup:** shared-video-memory reservation before Windows or Setup.
-- **Native OEM installation:** matching fonts and a custom Tandy startup screen,
-  installed through Setup.
+Exit Windows completely. At the DOS prompt:
 
-The optimized development drivers and older packaged binaries are separate.
-Use the [current trial guide](docs/TRIAL5/README.MD) for new hardware trials;
-build/package identities and rendering limits are in [development status](docs/STATUS.MD).
+```bat
+C:
+CD \WINXT
+INSTALL
+```
 
-![Custom Tandy startup screen captured in the emulator](docs/SHOTS/BOOT.PNG)
+In Setup, select **Display → Other display**, enter **`C:\WINXT`**, choose
+a mode and accept **Complete Changes**. If asked for the display disk again,
+use the same folder. If Setup offers to alter CONFIG.SYS, choose **option 3:
+make no changes**.
 
-The custom startup screen from the OEM/splash emulator checkpoint.
+For the optional Tandy Start desktop, run once from DOS:
+
+```bat
+C:\WINXT\TSSETUP
+```
+
+This fresh-install step refuses to overwrite existing shell files. For an
+existing Tandy Start installation, follow the
+[upgrade guide](examples/TSHELL/README.MD) and preserve your settings.
+
+### 3. Start Windows
+
+At a fresh DOS prompt, use:
+
+```bat
+C:\WINXT\WINXT
+```
+
+**Always use this guarded launcher, including for lower-color modes and
+Setup. Never bypass a video-memory reservation or recovery error by running
+WIN directly.** It starts Windows in real mode. A verified optional-shell
+installation uses Tandy Start for that graphics session and restores the
+original shell on exit; experimental text keeps the original Windows shell.
+
+### Change modes or roll back
+
+Exit Windows and run `C:\WINXT\WINXT SETUP`. Select **Other display** and
+`C:\WINXT` again, choose the new mode, then reboot and use the guarded
+launcher. Use Setup rather than editing SYSTEM.INI by hand.
+
+To restore the pre-installation configuration, use the backup path printed
+by INSTALL and recorded in `C:\WINXT\BACKUP.TXT`. For example, from DOS:
+
+```bat
+C:\WINXT\BACKUP\B001\RESTORE YES
+```
+
+`B001` is an example; use your actual numbered backup. Restoration verifies
+the saved files and disables automatic optional-shell dispatch. New files
+may remain on disk but are no longer selected. Keep the backup until the
+restored system works; resolve any restore failure before starting Windows.
+
+[Full installation and recovery guide](distributions/WINXT/README.TXT) ·
+[Installation, six-mode switching and rollback evidence](docs/UNIFIED/README.md)
+
+## Display modes
+
+All five graphics profiles have 200 logical rows. These are the driver
+identities in the current public WINXT kit:
+
+| Mode | Palette / purpose | Driver | Physical Tandy status |
+| --- | --- | --- | --- |
+| **320×200, 16 colors** | Full Tandy palette; default profile | `TR53216.DRV` | Paintbrush and TSHELL worked on a later trial; still slow |
+| **640×200, 2 colors** | Wide black-and-white desktop | `TR56402.DRV` | Earlier TRIAL 3 reported substantially faster and usable |
+| **160×200, 16 colors** | Smallest desktop; full Tandy palette | `TR51616.DRV` | Low-resolution report did not identify the exact mode |
+| **320×200, 4 colors** | Black, cyan, magenta, white | `TR53204.DRV` | Operation reported; red hearts mapped to black |
+| **640×200, 4 colors** | Black, red, green, white | `TR56404.DRV` | Unconfirmed; emulator hardware model remains uncertain |
+| **80×25 hardware text** | BIOS mode 03h; 640×200 logical GDI surface | `TXTMODE.DRV` | Lab-only; physical behavior and speed untested |
+
+The physical observations above concern earlier trials, with no final-file
+hash readback. **They are not acceptance of the exact TR5 files in this
+table.** The known-working TRIAL 3 monochrome fallback is a different binary;
+keep it separately. [Hardware reports and scope](docs/STATUS.MD).
+
+Original EX/HX 640×200 Tandy graphics has **four colors, not sixteen**.
+Narrow modes can clip stock Windows dialogs. In 320×200 four-color mode,
+stock Clock's digital digits are invisible; use analog Clock or another mode.
+
+<details>
+<summary>See the six Setup choices and the text-mode caveat</summary>
+
+![The five TR5 graphics choices and explicitly experimental text choice in native Windows Setup](docs/UNIFIED/SHOTS/SETUP6.PNG)
+
+Actual Windows 3.0 Setup in the emulator. The experimental text driver runs
+unchanged Program Manager and Notepad in real hardware character cells, but
+window movement, clipping, caret inversion and bitmap restore can corrupt
+characters. It is not ready for everyday use. TSHELL is not qualified for
+this driver; switching back to graphics restores the appropriate fonts and
+optional-shell path.
+
+[Text-mode experiment](experiments/TEXTMODE/README.MD) ·
+[Known failures and measurements](experiments/TEXTMODE/EVIDENCE/RESULT.JSON) ·
+[Runtime text-mode notes](distributions/WINXT/TEXTMODE.TXT)
+
+</details>
 
 ## Tandy Start / TSHELL
 
-[TSHELL](examples/TSHELL/README.MD) adds a compact Start menu and clock bar:
+Tandy Start 14 adds a compact Start menu and clock bar while keeping
+Program Manager as the editor for your program groups.
 
-- **My Computer:** directly on Start; opens File Manager, brings its existing
-  window forward, and restores it when minimized.
-- **Programs:** read-only import of existing Windows 3.0 Program Manager groups,
-  paging, saved command arguments and working directories.
-- **Run / Browse:** launch programs from their own folders. Read-only friendly
-  names use validated FAT/VFAT metadata while launching through DOS aliases;
-  unavailable or inconsistent metadata falls back to ordinary short names.
-  Large listings use fewer redundant redraws.
-- **System / About This Tandy:** compact system, display and memory pages.
-- **Adjust date/time:** right-click the clock for a compact date/time editor,
-  with validation, Apply, Reload and Cancel; fits the 160-pixel desktop.
-- **Clock shortcut:** double-click the clock to open Clock, or Calendar as fallback.
-- **Screen saver chooser:** Start / System / Screen saver selects None, Matrix,
-  Maze or Starfield, with a 10–3600 second delay, Apply and unsaved Preview.
-  Starfield Options offers three speeds and 16, 32 or 64 stars. Other-app input
-  resets idle; menus, held input and known audio tools defer automatic launch.
-- **Startup sounds:** Tandy, XP-note arrangement or none; optional pre-exit sound.
-- **One Exit item:** normal exit plays the optional chime; hold Shift when
-  selecting Exit to skip it. Application save prompts and exit vetoes remain.
-- **Hold-to-Start:** optional support for the original Tandy Hold key through
-  the compatible keyboard driver and TSINPUT helper. Its guarded default
-  requires the supported real-mode Tandy ROM and loaded driver profile.
-- **DOS launch/recovery helpers:** restore the original shell after Windows returns
-  while preserving unrelated settings.
-- **Moon-and-stars DOS farewell:** after a successful Windows return and verified
-  shell restoration, BIOS text artwork appears above the usable DOS prompt.
-  No ANSI.SYS is needed; it does not power off the machine.
+- **My Computer and Programs:** open or restore File Manager; browse existing
+  Program Manager groups with paging, saved arguments and working directories.
+- **Run / Browse:** launch from the program's folder, with read-only friendly
+  names from validated FAT/VFAT metadata. Launches still use DOS aliases;
+  unsupported metadata falls back to short names.
+- **Clock and System:** right-click the clock to adjust date/time; double-click
+  to open Clock or Calendar. About This Tandy shows system, display and memory
+  pages. The compact controls fit the 160-pixel desktop.
+- **Screen savers:** None, Matrix, Maze or Starfield; 10–3600-second idle delay,
+  unsaved Preview, and Starfield speed/star-count options. Maze can be very slow.
+- **Sounds and exit:** optional Tandy or XP-note startup phrase and pre-exit
+  chime. Hold Shift while selecting Exit to skip the chime. Application save
+  prompts remain active; successful return to DOS can show moon-and-stars art.
+- **Hold-to-Start:** optional original-Tandy Hold key support through the
+  compatible keyboard driver and TSINPUT helper. The default is guarded by
+  the supported real-mode ROM and loaded driver profile.
 
-![Retained Tandy Start 09 menu placement capture](docs/SHOTS/START09.PNG)
-
-Retained version 09 capture on a logical 640x200 monochrome desktop.
-The corrected placement is retained in the current shell. This is historical
-version 09 evidence, not a capture of every later feature.
-
-![Windows File Manager opened from My Computer](docs/SHOTS/FILES08.PNG)
-
-My Computer opens the installed Windows File Manager or restores its existing
-window. File Manager remains a stock Windows app; it is not bundled here.
-
-![Compact date/time editor in Tandy Start 08](docs/SHOTS/CLOCK08.PNG)
-
-Right-click the clock to edit date and time in a dialog that fits 160x200.
-
-![Actual successful return to DOS with moon-and-stars artwork](docs/SHOTS/NIGHT08.PNG)
-
-The successful DOS farewell in 86Box. Errors and recovery failures retain plain
-diagnostics; the artwork never substitutes for successful shell restoration.
-
-Version 14 includes friendly names, the narrow-desktop System menu repair,
-one Exit item with Shift-to-skip-chime, reduced Browse redraws and optional
-Hold-to-Start. Current first-party source and runtime files are included.
-[Version 14 changes and exact test scope](examples/TSHELL/TESTS14.MD) explain
-which checks ran on final binaries and which are retained earlier evidence.
-[Fresh installation](examples/TSHELL/FRESH14/README.TXT) is separate from
-upgrades, which preserve existing INI settings.
-
-Program Manager remains the group editor. TSHELL is a compact shell experiment;
-maximized apps can cover its bar, and the idle saver is not a password lock.
-[Launch, upgrade and recovery guide](examples/TSHELL/README.MD).
-
-### Choose a screen saver
-
-![Tandy Start 10 four-choice screen saver settings](docs/SHOTS/SAVER10.PNG)
-
-Retained TSTART10 settings capture on the logical 160x200 desktop. Preview does not
-save; Apply saves and updates the primary shell. None disables automatic
-launch. Secondary bars save for the next primary startup.
-
-![Tandy Start 10 Starfield speed and star-count options](docs/SHOTS/STAROPT.PNG)
-
-Options are staged until Apply. Cancel discards unapplied changes.
-
-![Final Starfield running in the native emulator](docs/SHOTS/STARS10.PNG)
-
-Starfield captured in 640x200 monochrome. This still frame does not demonstrate
-animation speed. Maze remains experimental and can be very slow; 16 stars is
-Starfield's lightest setting. Matrix, Maze and Starfield were reported working
-on the physical Tandy, with Maze slow; no instrumented physical speed claim
-is made.
-
-![Actual TSTART14 Hold-to-Start native emulator capture](examples/TSHELL/SHOTS/HOLD640.PNG)
-
-Final14 Start opened over a covering test application using Hold in a genuine
-DOS 6.22 / Windows 3.0 real-mode emulator fixture. Physical Hold behavior
-remains unverified.
-
-## Windows XT additions
-
-- **[Original keyboard support](src/tandyk3/README.md):** compatible real-mode
-  driver, diagnostic tools, guarded installer and rollback. Seventeen raw
-  press/release pairs matched the physical keyboard. Windows translation and
-  Hold-to-Start still need physical verification. The DDK-derived driver has
-  separate provenance and redistribution notices.
-- **[Splash-only updater](examples/WXTSPL/README.TXT):** installs the Windows XT
-  artwork into a recognized existing startup file from DOS, with CHECK, APPLY
-  and RESTORE. It preserves display drivers, fonts and INI settings.
-- **[Green hill wallpaper](examples/HILLS/README.TXT):** original native RGBI
-  landscapes for 160x200 and 320x200 sixteen-color desktops. Ordinary Windows
-  wallpaper needs no resident helper, with measured bitmap memory costs of
-  about 16 KB and 32 KB. Turn it off before changing to monochrome.
-- **[XTEyes](examples/XTEYES/README.TXT):** a small GDI window whose eyes follow
-  the pointer. Original Win16 implementation, integer geometry, bounded
-  redraws and a nominal 125 ms polling timer; physical responsiveness is
-  unmeasured.
-
-![Actual Windows XT startup artwork in the emulator](examples/WXTSPL/QA/BOOT.PNG)
-
-The splash-only updater’s approved artwork, captured during native startup;
-logical 640x200 rows are doubled in this image.
-
-![Actual Windows XT hill wallpaper emulator capture](examples/HILLS/HILL320.PNG)
-
-Native 320x200 sixteen-color wallpaper with TSTART13; the SDL capture doubles
-both axes. The current shell remains a separate component.
-
-![Actual XTEyes emulator capture](examples/XTEYES/EVIDENCE/E320O.PNG)
-
-XTEyes reopened on a native 320x200 sixteen-color Windows desktop.
-
-## Games, visuals and utilities
-
-| App | What it does |
+| Tandy Start 14: Hold opens Start over another app | Green hill wallpaper with Tandy Start 13 |
 | --- | --- |
-| [Cookie Clicker](examples/COOKIE/README.MD) | Click or Space earns cookies; buy cookies/second upgrades; New, Save, Load and About menus; fits 160x200. |
-| [Fly Swat 1.1](examples/SWAT/README.MD) | Mouse-controlled fly hunting, score, three hearts, pause and restart; visible white swatter with black outline; fullscreen and windowed paths, with `/G` fallback. |
-| [Matrix](examples/MATRIX/README.MD) | Fullscreen character rain, input dismissal and desktop restoration; on-demand animation or TSHELL `/S` idle companion. |
-| [Maze saver](examples/MAZE/SAVER10/README.MD) | Experimental raycasting saver with native presentation on canonical drivers and clipped GDI fallback on trial aliases; very slow on approximate-XT settings. Ordinary windowed mode remains available. |
-| [Starfield](examples/STARFLD/README.MD) | GDI flying-star saver with three speeds, 16/32/64 stars, input dismissal and guarded cursor/focus handoff. |
-| [Pinball](examples/PINBALL/README.MD) | Two flippers, three bumpers, three balls and score; Space launches, Z/Left and / or Right flip, P pauses; focus loss pauses. |
-| [Slosh](examples/SLOSH/README.MD) | Drag the title bar and watch the small spring-surface water toy rebound and settle. |
-| [GIFLOAD](examples/GIFLOAD/README.TXT) | Convert supported static GIFs to new palette-mapped BMPs, then open in Paintbrush; does not change Paintbrush's format list. |
-| [COMMDLG demo](examples/COMMDLG/README.TXT) | Original bounded Open/Save dialogs, extended-error and file-title APIs; app-local Windows 3.0 preview, with the pack's CDSTART launcher. |
-| [FileDrop demo](examples/FILEDROP/README.TXT) | Drag one or two path names between sender/receiver apps; Escape cancels. Transfers names, not files. |
-| [Brighter Tomorrow](examples/BRIGHT/README.MD) | Five workplace notices, choices, three visible metrics, receipts, two endings and Restart; compact keyboard/native-button game. |
-| [About This Tandy](examples/TABOUT/README.MD) | System, Display and Memory pages with refresh and keyboard navigation; exact hardware model remains unknown, with probing deferred. |
-| [EXJOY](examples/EXJOY/README.MD) | Left/right raw joystick axis counts, buttons, live/range views and session-only center calibration. |
-| [DOS WHEEL diagnostic](tools/WHEEL/README.TXT) | Bounded DOS mouse-wheel/API and raw serial diagnostics. Raw Genius protocol detected; Windows scrolling bridge not implemented. |
+| ![Tandy Start 14 Hold-to-Start emulator capture](examples/TSHELL/SHOTS/HOLD640.PNG) | ![Native sixteen-color hill wallpaper emulator capture with Tandy Start 13](examples/HILLS/HILL320.PNG) |
 
-| Cookie Clicker - 320x200x16 | Pinball - 640x200x4 |
+Actual emulator captures, with doubled rows and, for the hill scene, columns.
+The wallpaper image retains its version 13 identity. Physical Hold behavior
+and the later Browse redraw improvements remain unverified. Friendly-name
+browsing and all three savers have hardware reports, with Maze slow.
+
+Maximized apps can cover the bar; there is no application taskbar. The idle
+saver is not a password lock. See the
+[launch, upgrade and recovery guide](examples/TSHELL/README.MD) and
+[version 14 changes and test scope](examples/TSHELL/TESTS14.MD).
+
+### Optional desktop additions
+
+| Addition | What it provides |
 | --- | --- |
-| ![Actual Cookie Clicker emulator capture](docs/SHOTS/COOKIE.PNG) | ![Actual Pinball emulator capture](docs/SHOTS/PINBALL.PNG) |
+| [Original keyboard support](src/tandyk3/README.md) | Compatible real-mode driver, diagnostics, guarded install and rollback. Seventeen raw key press/release pairs matched hardware; Windows translation and Hold still need physical verification. |
+| [Windows XT splash updater](examples/WXTSPL/README.TXT) | CHECK, APPLY and RESTORE for a recognized startup file, preserving display drivers, fonts and INI settings. |
+| [Green hill wallpaper](examples/HILLS/README.TXT) | Native RGBI landscapes for 160×200 and 320×200 sixteen-color modes, using about 16 KB / 32 KB of bitmap memory. Turn wallpaper off before switching to monochrome. |
+| [XTEyes](examples/XTEYES/README.TXT) | A small native GDI window whose eyes follow the pointer, with integer geometry and bounded redraws. Physical responsiveness is unmeasured. |
 
-| Matrix - 320x200x16 | Slosh - logical 160x200x16 |
+These standalone additions are opt-in; the main installer does not activate
+them all automatically.
+
+## Games and utilities
+
+| App | What to try |
 | --- | --- |
-| ![Actual on-demand Matrix capture](docs/SHOTS/MATRIX.PNG) | ![Actual Slosh motion capture](docs/SHOTS/SLOSH.PNG) |
+| [Cookie Clicker](examples/COOKIE/README.MD) | Click or press Space, buy cookies-per-second upgrades, save and load. Fits 160×200. |
+| [Fly Swat 1.1](examples/SWAT/README.MD) | Mouse-controlled fly hunting with score, three hearts, pause and restart; fullscreen and windowed paths, plus `/G` fallback. |
+| [Pinball](examples/PINBALL/README.MD) | Two flippers, three bumpers and three balls; Space launches, Z/Left and / or Right flip, P pauses. |
+| [Matrix](examples/MATRIX/README.MD) | Fullscreen character rain, on demand or as the shell's idle companion. |
+| [Maze](examples/MAZE/SAVER10/README.MD) | Experimental raycasting saver and windowed demo. Trial aliases use clipped GDI; approximate-XT settings can be very slow. |
+| [Starfield](examples/STARFLD/README.MD) | GDI flying stars, three speeds and 16/32/64-star settings. Sixteen stars is the lightest option. |
+| [Slosh](examples/SLOSH/README.MD) | Drag the title bar and watch a tiny water surface rebound and settle. |
+| [Brighter Tomorrow](examples/BRIGHT/README.MD) | A compact choices-and-consequences game with workplace notices, receipts and two endings. |
+| [GIFLOAD](examples/GIFLOAD/README.TXT) | Convert supported static GIFs to new palette-mapped BMPs for Paintbrush. It does not add formats to Paintbrush itself. |
+| [COMMDLG demo](examples/COMMDLG/README.TXT) | Bounded app-local Open/Save dialogs for Windows 3.0; use the pack's CDSTART launcher. |
+| [FileDrop demo](examples/FILEDROP/README.TXT) | Drag one or two path names between demo apps. It transfers names, not file contents. |
+| [About This Tandy](examples/TABOUT/README.MD) | System, display and memory pages with refresh; exact hardware-model detection remains deferred. |
+| [EXJOY](examples/EXJOY/README.MD) | Raw joystick axes/buttons, range display and session-only center calibration. Physical input remains unverified. |
+| [DOS WHEEL diagnostic](tools/WHEEL/README.TXT) | Bounded mouse-wheel/API and serial diagnostics. Raw Genius data was detected; no Windows scrolling bridge is implemented. |
 
-| Maze - windowed proof | Native Solitaire - 640x200x4 |
+| Cookie Clicker · 320×200×16 | Pinball · logical 640×200×4 |
 | --- | --- |
-| ![Actual Maze framebuffer capture](docs/SHOTS/MAZE.PNG) | ![Actual native Solitaire emulator capture](docs/SHOTS/SOLITAIR.PNG) |
+| ![Cookie Clicker native emulator capture](docs/SHOTS/COOKIE.PNG) | ![Pinball native emulator capture, with doubled rows](docs/SHOTS/PINBALL.PNG) |
 
-Actual emulator captures. Solitaire is a stock Windows compatibility example,
-not an included game. Some images duplicate rows/columns for display aspect;
-[capture sources and scope](docs/SHOTS/README.MD) retain their original provenance.
+These are retained emulator captures, not physical performance measurements.
+[Screenshot sources and exact scope](docs/SHOTS/README.MD).
 
-The [TANDYLAB catalog](examples/TANDYLAB/CATALOG.TXT) also includes PSGPLAY,
-Beats, Automatic Mouth and startup/exit chimes from the
-[sound project](https://github.com/astrobleem/oemsound-tandy).
+The [TANDYLAB catalog](examples/TANDYLAB/CATALOG.TXT) describes the separate
+test pack and paired runtime files. Stock Windows apps shown in project
+captures, such as Paintbrush and File Manager, come from your own Windows
+installation.
 
-## Hardware status and installation
+### Add some Tandy sound
 
-The project is experimental, with emulator evidence and scoped reports from
-a genuine 8088 Tandy 1000 EX running DOS 6.22 and Windows 3.0 real mode.
-TRIAL 3 monochrome was reported substantially faster, and a later 320x200x16
-trial ran Paintbrush and TSHELL. A low-resolution 16-color report did not
-identify the exact mode. The 320x200 four-color report noted red hearts mapping
-to black. All three selectable savers were reported working, with Maze slow; exact
-runtime hashes were not read back. Friendly-name browsing was also reported
-working. Later Browse redraw optimizations and Windows Hold behavior remain
-physically unverified. Physical 640x200 four-color behavior and joystick input
-remain open.
-[Detailed status and limits](docs/STATUS.MD).
+The companion **[OEMSound-Tandy](https://github.com/astrobleem/oemsound-tandy)**
+project has Mini MIDI, Mini Piano, Beats Lab, Automatic Mouth, PSGPLAY and
+startup/exit chimes. It uses the Tandy's three square-wave voices and noise
+voice. Follow each app's guide: app-local MIDIMAP is not a system MIDI device
+or General MIDI synthesizer, and only one PSG producer should run at a time.
 
-Use a backed-up **Windows 3.0 real-mode / 640 KB** installation. For current
-drivers, follow the [unified installation guide](distributions/WINXT/README.MD)
-and [trial limits](docs/TRIAL5/README.MD). The public source requires your own
-Windows support files; its host assembler verifies them before producing the
-complete DOS folder. Display support and TSTART companions share **C:\WINXT**.
-The older
-[TANDY88.ZIP](TANDY88.ZIP) remains a historical OEM package; its installation
-uses `INSTALL`, then `C:\TANDY88\TANDY88 SETUP` and **Other display**.
+## Performance and verification
 
-**Always use the guarded launcher, including for Setup and lower-color modes.
-Never bypass a failed video-memory reservation by starting WIN directly.**
-For the unified installation, use C:\WINXT\WINXT; C:\WINXT\WINXT SETUP returns to
-mode selection. Standalone extras remain opt-in and are not activated by the
-main installer.
-Use Setup for mode changes rather than manual SYSTEM.INI edits.
+The graphics drivers keep an 8086/8088-safe drawing path and reserve shared
+video memory before Windows starts. Proven drawing cases refresh bounded
+regions; uncertain bounds fall back to the original synchronous full-screen
+copy. Palette conversion, compatible bitmaps and bounded BI_RGB support
+include Paintbrush save/reopen checks.
 
-[Installation details](README.TXT) | [Build guide](BUILDING.MD) |
-[Verification and compatibility limits](docs/STATUS.MD) |
-[Source provenance](src/tandysw/PROVENANCE.md)
+**The public TR5 change targets repeated Clock-border copies.** It expands
+the validated multi-interval scanline refresh gate while preserving the
+original renderer, raster rules and cursor protections. Stock CLOCK.EXE is
+unchanged.
 
-Contributions and hardware testing are welcome. Include app/driver versions,
-machine, DOS/Windows versions and reproducible steps, distinguishing hardware
-from emulator results. Preserve existing third-party notices.
+| Measured operation | TRIAL 4 | TRIAL 5 |
+| --- | ---: | ---: |
+| Two-pixel rectangle, 121×72 client, 160×200×16 | 1,318 ms | 55 ms |
 
+About **24× faster for that measured operation**, in exclusive paired
+DOSBox-X runs at fixed 25,000 cycles. The guest timer resolves roughly
+55 ms; these cycle settings are uncalibrated and **do not predict physical
+8088 speed or an overall Windows speedup**.
 
+The five-mode paired rectangle suite compared **6,560 cases** with zero
+framebuffer differences against TRIAL 4. Coverage included pen widths, all
+16 ROP2 values, clipping, coordinate transforms and cursor corners. This is
+bounded regression evidence, not complete GDI or hardware qualification.
+
+[TR5 design and reproduction](docs/TRIAL5/README.MD) ·
+[Exact binaries](docs/TRIAL5/BUILDS.JSN) ·
+[Timings, regression coverage and limits](docs/TRIAL5/VERIFY.TXT)
+
+### What still needs testing
+
+- Exact current binaries on physical EX/HX hardware, especially 640×200
+  four-color behavior; the emulator's model remains uncertain.
+- Text-mode character/geometry corruption and DOS-app/grabber switching.
+- Physical Windows keyboard translation, Hold-to-Start and joystick input.
+- Broader app compatibility, long-running use and calibrated hardware timing.
+
+Windows 3.1, standard/enhanced mode, PCjr, other memory layouts and an
+unexpanded 256 KB EX are outside the current acceptance scope. Large redraws
+can still be slow. [Complete development status](docs/STATUS.MD).
+
+## Build, explore and contribute
+
+- [Build guide](BUILDING.MD): host tooling and historical package reproduction.
+- [Current TR5 driver guide](docs/TRIAL5/README.MD): source pipeline, profile
+  names, audits and exact build identities.
+- [Mode contracts](docs/MODES.MD): palettes, fonts, memory and retained evidence.
+- [Unified installation evidence](docs/UNIFIED/README.md): staging, Setup,
+  six-mode lifecycle checks and verified rollback.
+- [Source provenance](src/tandysw/PROVENANCE.md): third-party inputs and notices.
+
+Preserve the historical binaries and package pins when experimenting.
+A successful rebuild does not make a new driver hardware-qualified.
+
+Hardware reports are especially useful. Include the machine and RAM, DOS
+and Windows versions, display mode, driver/app version or SHA-256, exact
+steps and expected versus actual behavior. Say whether the result came from
+hardware or an emulator, and keep a known-working rollback available.
+Preserve component licenses and third-party notices; repository inclusion
+does not grant new rights to Windows, DDK material or fonts.
+
+<details>
+<summary>Windows XT concept box and project artwork</summary>
+
+<a href="docs/PROMO/WINXTBOX.WEBP"><img src="docs/PROMO/WINXTBOX.WEBP" alt="Windows XT concept box for the Tandy Windows 3.0 TShell and Extensions Plus Pack" width="360"></a>
+
+Promotional concept art, not official packaging or a physical product.
+[Original artwork and image identities](docs/PROMO/README.MD).
+
+</details>
