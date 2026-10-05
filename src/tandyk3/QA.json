@@ -1,0 +1,18 @@
+{
+  "target": "Windows 3.0 real mode, original US Tandy EX-style keyboard",
+  "native_windows_assertions": 74,
+  "assembled_normalization_transitions": 4320,
+  "installer_host_assertions": 274,
+  "installer_sanitizers": "ASan and UBSan pass",
+  "native_installer": "8086-prefetch apply, restore, idempotency, refusals, maximum 14000-byte inputs pass",
+  "reproducibility": "driver and installer packaged rebuilds byte-identical",
+  "physical_raw_pairs_matched": 17,
+  "physical_windows_translation": "not yet verified",
+  "physical_hold_to_start": "not yet verified",
+  "driver_sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5",
+  "sanitized_source_host_regression": "274 assertions pass",
+  "sanitized_portable_rebuilds": "K3SET, RAWKEY and WINKEY byte-identical",
+  "publication_source_line_endings": "CRLF, all textual files checked",
+  "crlf_publication_rebuilds": "TNDYK3, K3SET, RAWKEY, WINKEY all byte-identical",
+  "crlf_host_and_sanitizer_assertions": 274
+}

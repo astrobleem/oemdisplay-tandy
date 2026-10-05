@@ -1,0 +1,63 @@
+TANDY START 11 - FRIENDLY NAMES IN RUN / BROWSE
+Windows 3.0 real mode / DOS 6.22 / 8086
+
+Run / Browse can read long names already stored on an ordinary FAT12 or FAT16
+card. It reads them on the Tandy. The selected DOS short name stays visible
+below the list, and navigation and launch always use that existing short path.
+
+INSTALLATION
+This feature is already included in the complete TSTART14 runtime. Follow
+SHELL14.TXT for the fresh setup; no separate version11 update is needed.
+
+USING FRIENDLY NAMES
+Open Start / Run / Browse. The EXE, COM and BAT filters still work normally.
+Directories keep brackets. Scroll the list horizontally to read longer text;
+the selected short alias remains in the separate field below the list.
+Open enters a directory or selects the real short file path for Run.
+Existing command arguments are retained. The original working directories are
+restored when Browse closes. Cancel also works while names are being read.
+
+Only stored VFAT names are shown. The reader never invents an alias such as
+~1, creates or renames a long filename, or writes filesystem metadata.
+Typing a command in Run still requires DOS-compatible paths. This feature
+belongs to TSHELL's Browse window; other applications retain their own dialogs.
+
+WHEN SHORT NAMES ARE SHOWN
+The normal DOS list remains usable when friendly names cannot be read.
+Supported raw reads are ordinary uncompressed fixed local FAT12/FAT16 volumes
+on DOS 6.22 in Windows real mode, with 512-byte sectors. Network, removable,
+SUBST, JOIN and resident ASSIGN paths are refused. A detected Microsoft
+DriveSpace service disables the reader conservatively. Other compression
+implementations are outside the verified domain; a negative presence query
+is not proof that every possible third-party compressor is absent.
+
+Names with unsupported non-ASCII characters use their short aliases. Corrupt,
+ambiguous or incomplete VFAT entries also fall back. A validated name longer
+than 63 characters is displayed as a prefix with an ellipsis; its entire
+stored sequence is checked before that prefix is accepted.
+
+The complete filtered DOS list must contain at most 128 rows, including
+folders and drive entries. Larger lists remain short-name lists. The reader
+also has fixed directory-depth, entry, cluster and sector-read limits, and
+falls back if memory or a read fails. DOS enumeration remains authoritative.
+An old long-name entry can survive a legacy DOS edit, so treat the friendly
+label as descriptive and use the visible short alias to identify the file.
+
+INCLUDED HOTFIXES
+At 160 pixels, click System... to open its separate two-item menu. This avoids
+Windows overlapping a cascading child on the Start menu. Keyboard access
+works too; 320- and 640-pixel modes retain the normal native cascade.
+
+Date/time validation retains DOS hundredths and accepts only the measured
+sub-tick rounding after a successful time write. Larger readback differences
+still show an error. This is the same correction as TSFIX10. It does not
+change stock Clock's drawing speed. Reload current reads the current DOS time.
+
+SAFETY AND VERIFICATION
+The reader issues bounded one-sector reads between Windows message-loop
+turns, stages labels until validation succeeds, then refreshes and checks the
+DOS list before displaying them. It has no raw-disk write path or TSR.
+Automatic saver launch remains held while Run/Browse is open.
+See TESTS14.TXT and the separate source archive for native tests and limits.
+Physical Tandy confirmation remains pending. Continue using your working
+reservation/TSTART launcher and normal recovery procedure.

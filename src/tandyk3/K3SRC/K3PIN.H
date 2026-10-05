@@ -1,0 +1,3 @@
+#define K3_PIN_READY 1
+#define K3_PIN_SIZE 7640UL
+#define K3_PIN_SHA256 "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"

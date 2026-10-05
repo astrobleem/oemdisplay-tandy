@@ -1,0 +1,130 @@
+{
+  "target": "experimental Tandy keyboard3 candidate01",
+  "text_line_endings": "CRLF",
+  "files": {
+    "INSTALL.TXT": {
+      "bytes": 7484,
+      "sha256": "3f52f663a75018efed557856fe9bb01d4e4eebb004853d3910371c6a1965dce0"
+    },
+    "K3SET.EXE": {
+      "bytes": 29643,
+      "sha256": "30f3608737d586b28756a8b458614cf3cc6064e2229f64c37d8706491bb7173f"
+    },
+    "K3SRC/BUILD.BAT": {
+      "bytes": 304,
+      "sha256": "0ce5fce3a9e01c577417bb9d28ead8a63658fe75337574cf5114226ed49df567"
+    },
+    "K3SRC/BUILD.PY": {
+      "bytes": 1097,
+      "sha256": "157bc8f36c6f6fbf7807147b6d92cebb3f16eb3c930f690a54a0265b30d1f039"
+    },
+    "K3SRC/HOSTTEST.JSON": {
+      "bytes": 337,
+      "sha256": "38234f68e622fdcba23402f55e6e170598d4f6b3aece715ce8a09a30b4521037"
+    },
+    "K3SRC/K3PIN.H": {
+      "bytes": 142,
+      "sha256": "b1dedd48023634d23a5093d3a40b9c645fd928de4aee069fe9809a2c4d222254"
+    },
+    "K3SRC/K3SET.C": {
+      "bytes": 25531,
+      "sha256": "fdcb696d4c320c9adbe26c25cfff25c194fbdc001e2064f925fed3ca31b197e4"
+    },
+    "K3SRC/NATIVE.JSON": {
+      "bytes": 592,
+      "sha256": "5d6fe9a3143237c0b98ca247733c459024e2cf30ff9a1b72ba86ce548fe303e2"
+    },
+    "K3SRC/NATIVE.PY": {
+      "bytes": 4139,
+      "sha256": "6f1ccd4bc9663f2e0597cf1ea4038e7007177540df95b3ddd35de623cba77330"
+    },
+    "K3SRC/REPRO.JSON": {
+      "bytes": 1134,
+      "sha256": "1b452868d4acc2207dc72bfbb71f70fbdafa48f3f902095df12b8711e2d202cd"
+    },
+    "K3SRC/SANITIZER.JSON": {
+      "bytes": 336,
+      "sha256": "0f16ea0ea8a5f3f61c140552ce1be73dcabf290996db3d70aeb942ad3b8a4645"
+    },
+    "K3SRC/TESTS.PY": {
+      "bytes": 7736,
+      "sha256": "596c1c91c1dae2a01e194836f948e06bd63f66068a787c6ae016611da46f84ab"
+    },
+    "NOTICE.TXT": {
+      "bytes": 928,
+      "sha256": "b19321fa7f75b3294f4ed672c44b0c6ef4c8b025336b865db4653550827bfdb1"
+    },
+    "QA.json": {
+      "bytes": 1011,
+      "sha256": "b88c7a22385caa276f8ee3bf05c087c55e9efccba081d8b257f5db3179b31b71"
+    },
+    "RAWKEY.EXE": {
+      "bytes": 5991,
+      "sha256": "cfc9043775fb42873e9546f2574bd2314a8ef6c5a83a9e7cae02fc6bf9030bcd"
+    },
+    "README.md": {
+      "bytes": 4050,
+      "sha256": "83046f90ce2c93a0e7385542150eb7f4451dbb1b50de0ed0564242d645e1fe47"
+    },
+    "SOURCE/BASESHA.JSON": {
+      "bytes": 1700,
+      "sha256": "92ef4a6be8543d5b7078f2bb803976aa455d14bd4a5258d0733bdef882493bc5"
+    },
+    "SOURCE/BUILD.PY": {
+      "bytes": 2775,
+      "sha256": "dc2a0514ed86c02125ac0c3b62311f61478beae7957d15b669cabec395abe309"
+    },
+    "SOURCE/BUILDING.TXT": {
+      "bytes": 1234,
+      "sha256": "0e836318169fe510122c7a163368735555ac99d19bdc955322228574652b1758"
+    },
+    "SOURCE/PATCH.PY": {
+      "bytes": 8458,
+      "sha256": "aeeffa4d0f2b1219deb7395c2bdb8d7ac52d518d65c35367db00fc71a511453c"
+    },
+    "SOURCE/PROBES/BUILD.BAT": {
+      "bytes": 477,
+      "sha256": "30e9086cec7afa737915816b2da62b50857f60d677abbaedc5b559fbeba289a2"
+    },
+    "SOURCE/PROBES/BUILD.PY": {
+      "bytes": 1730,
+      "sha256": "20163e3f283cd6adad77d433c8e90872ea8b12b31878d26e782a8b29e58a12db"
+    },
+    "SOURCE/PROBES/RAWKEY.ASM": {
+      "bytes": 3508,
+      "sha256": "2badc95d907050e7b5197dfe001961f4666381d149eca76cf7cfadadc6e24512"
+    },
+    "SOURCE/PROBES/WINKEY.C": {
+      "bytes": 6273,
+      "sha256": "c9b3fa39d77758cd1cda87d6ae81b85b56fb2cd02e5e061b53d16e06292cf86b"
+    },
+    "SOURCE/PROBES/WINKEY.DEF": {
+      "bytes": 215,
+      "sha256": "9772f3ac2ac7b0d6eb95b46bbdf1d28991b67eedee3dad51d9ea18922e5fc2d9"
+    },
+    "SOURCE/PROBES/WINKEY.RSP": {
+      "bytes": 84,
+      "sha256": "8ac3e5bbae9e33f348958a50a57cfee94c03431d1963cff64076aaedfba65512"
+    },
+    "SOURCE/TNTEST.ASM": {
+      "bytes": 68513,
+      "sha256": "cb939e7690f3d6131f16fe506f32ed899de953f0fc81c5c65f268dbd78ee1a48"
+    },
+    "SOURCES.TXT": {
+      "bytes": 873,
+      "sha256": "52c0ee83810a9873e419df66fd2cb47d6cf9967b6993b9907fce6397cc925794"
+    },
+    "TEST.TXT": {
+      "bytes": 1461,
+      "sha256": "2efb88a95ee71185ee8fcd53f9b6dfddd847bf198810db50a8b68aa43b7e0f3b"
+    },
+    "TNDYK3.DRV": {
+      "bytes": 7640,
+      "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+    },
+    "WINKEY.EXE": {
+      "bytes": 6591,
+      "sha256": "41b45ca959dd51c6dfce7b9a9ee74c5c4e1ca93bfeba8c6afc2919c0841f6f01"
+    }
+  }
+}

@@ -1,0 +1,132 @@
+K3SET 0.1 -- experimental Tandy Windows 3 keyboard installer candidate
+================================================================
+This is an installer-only utility for plain DOS 3.3+ on 8088/8086.
+It is not a TSR. It must run after exiting Windows completely.
+No real Tandy EX, user CF card, or actual user Windows installation has
+been modified or validated by this work. Emulator testing is not proof
+of physical Windows keyboard compatibility. Driver QA is documented separately.
+A later physical RAWKEY test matched 17 make/break pairs; Windows
+translation and Hold-to-Start are not yet physically verified.
+
+Install only with the pinned TNDYK3.DRV:
+  bytes: 7640
+  SHA256: e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5
+K3SET embeds that SHA256 and size, not driver or OS bytes. Wrong-size or
+same-size modified files are refused. The installer includes no stock Windows OS binaries, compiler, DOS
+operating system, or copied original driver. The combined experimental kit
+includes the separately documented adapted TNDYK3.DRV test candidate.
+
+PREPARATION
+-----------
+Make an offline full backup of the CF card/Windows directory first.
+Exit Windows; do not use a Windows DOS prompt. Work from a separate test
+copy first. Put K3SET.EXE and TNDYK3.DRV in one package directory outside
+the Windows directory. Change to that package directory. Keep a bootable
+DOS recovery route. The Windows SYSTEM subdirectory must already exist.
+
+Commands (replace C:\WINDOWS with the actual absolute DOS 8.3 path):
+  K3SET CHECK C:\WINDOWS\SYSTEM.INI
+  K3SET APPLY C:\WINDOWS\SYSTEM.INI
+  K3SET CHECK C:\WINDOWS\SYSTEM.INI
+
+CHECK reads only; a nonzero ERRORLEVEL is a refusal. APPLY changes only
+the value of the unique keyboard.drv key in the unique [boot] section,
+preserving spaces, comments, line endings, and every unrelated byte.
+It stages the exact pinned TNDYK3.DRV in WINDOWS\SYSTEM using an exclusive
+new filename, rereads/verifies it, then renames it without overwriting.
+The original selected .DRV remains at its original path, untouched.
+
+On the next Windows launch, test keys in a disposable document before
+working with important files. Follow the driver owner's physical-test
+checklist. This installer does not claim the keyboard hardware works.
+
+RESTORE / INTERRUPTION
+----------------------
+Exit Windows completely, then:
+  K3SET RESTORE C:\WINDOWS\SYSTEM.INI
+RESTORE does not require the package driver to remain in the current
+directory. It uses verified journals, backup, and original driver.
+It restores only the original keyboard.drv value, preserving unrelated
+INI changes made after APPLY. It refuses if that key was independently
+changed to another value, the original driver changed, or ownership or
+hash evidence is missing/corrupt. It does not copy the whole old INI over
+later edits. Verified installed TNDYK3.DRV stays in SYSTEM for reuse.
+
+After interruption run RESTORE before launching Windows. A proven gap
+between INI renames can be repaired. Completed APPLY mutations and
+interrupted RESTORE mutations are restartable. APPLY can resume a known
+incomplete install. Unknown partial writes, foreign files, conflicting
+edits, or missing evidence are refused; preserve ALL files and inspect
+from DOS. Do not delete or overwrite a sidecar merely to bypass refusal.
+If a write/flush/rename/close fails, success is never reported. FAT and
+storage hardware power-loss behavior cannot be guaranteed by this tool.
+
+FILES / OWNERSHIP
+-----------------
+In the Windows directory:
+ K3SEL.BAK  byte-exact first SYSTEM.INI backup (retained, never overwritten)
+ K3SEL.SAV  bounded, CRC-checked path-bound ownership record for that backup
+ K3SEL.JRN  active selection transaction: original current INI snapshot
+ K3SEL.NEW  verified staged replacement INI
+ K3SEL.OLD  original INI during the transactional rename gap
+ K3SEL.RST  current edited INI snapshot for restartable narrow RESTORE
+ K3ORIG.BAK byte-exact original keyboard driver backup (retained)
+ K3ORIG.SAV bounded ownership snapshot for the original driver backup
+In Windows\SYSTEM:
+ TNDYK3.DRV exact pinned replacement, never overwritten or deleted
+ K3DRV.NEW  exclusive temporary driver staging file
+These names are independent of SHELLSEL's TSHELL.* sidecars. The shell,
+video selection, launch scripts, and Windows loader are not modified.
+Verified transient files are removed on completed RESTORE; persistent
+backups remain. Existing foreign targets/backups/journals are refused.
+Repeated APPLY and RESTORE are supported against the owned baseline.
+
+CONSERVATIVE LIMITS
+-------------------
+- SYSTEM.INI and original selected driver: at most 14,000 bytes each.
+- One [boot] section and one keyboard.drv key; duplicate sections anywhere
+  are rejected rather than guessing Windows' effective interpretation.
+- Original selection must be a plain DOS 8.3 .DRV basename, present in
+  exactly one of Windows or Windows\SYSTEM. Paths and ambiguity refuse.
+- Absolute drive:\8.3\SYSTEM.INI, no spaces, parent traversal, wildcards,
+  quotes, or network paths; path length is bounded to 127 characters.
+- Unsupported control bytes, malformed sections, unsafe attributes,
+  changed original driver, invalid journals, and foreign files refuse.
+- A later independent change to the original keyboard selection requires
+  manual review; persistent backups are never silently repurposed.
+- Do not run concurrent installers or editors against the directory.
+
+SOURCE / REBUILD
+----------------
+K3SET.C is C89 first-party installer source; SHA256 implementation and
+transaction patterns reuse first-party WXTSPL/SHELLSEL utilities. Source
+permission: use, modify and redistribute. No compiler is redistributed.
+K3PIN.H is the exact pinned driver identity.
+
+Using existing Microsoft C 6 and DOS libraries (C:\BIN, C:\INCLUDE, C:\LIB):
+  CL /c /AS /G0 /W3 /Od K3SET.C
+  LINK4 /NOD /ST:4096 K3SET.OBJ,K3SET.EXE,K3SET.MAP,C:\LIB\SLIBCE.LIB;
+BUILD.BAT executes those commands; native builds use DOS runtime only,
+never /Gw or Windows libraries. /G0 is the 8086/8088 instruction target.
+BUILD.PY can orchestrate existing DOSBox-X and tools with --dosbox/--tools.
+It does not download tools. Root and separate qa builds must match bytes.
+
+QA
+--
+ TESTS.PY compiles exact source with host syscall shims and a QA-only pin
+ derived from the current local driver candidate. HOSTTEST.JSON records
+ exact source/driver identity. This never changes the release K3PIN.H.
+ ASAN_OPTIONS=detect_leaks=0 SANITIZE=1 python TESTS.PY
+ runs ASan and UBSan; LeakSanitizer is disabled because the execution
+ sandbox uses ptrace. No heap allocations are performed by installer code.
+ python TESTS.PY; python qa/BUILD.PY; python NATIVE.PY
+ is the native fixture workflow with the driver beside the source directory.
+ NATIVE.PY runs the built DOS EXE in disposable synthetic fixtures on
+ DOSBox-X cputype=8086_prefetch. It writes no user CF/card/installation.
+ NATIVE.JSON distinguishes native cases from host-only fault injection.
+ Host tests cover active-Windows refusal via a shim; native INT 2F Windows
+ detection has not been exercised inside a running physical Windows setup.
+ Neither host crash checkpoints nor emulator tests simulate every possible
+ physical media failure. Unknown/unproven states intentionally stop.
+
+K3MANIF.JSON gives exact files, sizes and SHA256 in the installer deliverable.

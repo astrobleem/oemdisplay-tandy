@@ -1,0 +1,126 @@
+TANDY START 14 - COMPLETE FRESH-INSTALL KIT
+Windows 3.0 real mode, DOS 6.22, Tandy 1000 / 8086-8088
+
+This is the complete TSTART runtime. No older TSTART update is needed.
+This is the shell component of the combined WINXT kit. Windows itself is
+separate. Run the main INSTALL for the included display assets first; the
+optional keyboard kit has its own guarded install and rollback.
+Keep the normal Windows files, including Program Manager and File Manager.
+
+COPY FROM THE MODERN PC
+Extract this ZIP. Copy its WINXT folder to the root of the Tandy card.
+The result on the Tandy must be C:\WINXT\TSSETUP.BAT, not
+C:\WINXT\WINXT\TSSETUP.BAT. If the card is D: on your modern PC,
+copy to D:\WINXT; the same card is C: when booted in the Tandy.
+Do not run this installer on the modern PC.
+
+INSTALL ON THE TANDY
+This fresh kit is configured for Windows in C:\WINDOWS and companions in
+C:\WINXT. Other Windows locations need deliberate path configuration;
+this installer stops if C:\WINDOWS does not contain Windows.
+
+1. Exit Windows completely to DOS.
+2. Run C:\WINXT\TSSETUP
+3. Wait for: TSTART14 installed in C:\WINDOWS.
+4. Run C:\WINXT\WINXT
+
+The combined kit's INSTALL starts display Setup. TSSETUP installs the shell
+files afterward. Follow its main README for the complete setup order.
+
+TSSETUP copies TSHELL.EXE, TSINPUT.DLL and TSHELL.INI into C:\WINDOWS.
+That is the active shell location. It preserves copies of the original
+SYSTEM.INI and WIN.INI in C:\WINXT\BACKUP\SHELL14. It does not
+replace either Windows INI. All other applications stay in C:\WINXT.
+
+The installer refuses existing TSHELL.EXE, TSINPUT.DLL or TSHELL.INI in
+C:\WINDOWS and refuses to reuse its backup directory or completion marker. This protects an
+existing installation and makes a repeated install harmless. If you are
+upgrading an existing setup, use the supplied TSTART14 update instructions
+in HOLD14.TXT instead; do not replace your working TSHELL.INI blindly.
+
+If a copy fails or power is interrupted during TSSETUP, keep all files and
+backups. The shell has not been selected in SYSTEM.INI. Do not start TSTART
+until the copy problem is resolved. A successful install byte-compares both
+backups and all three active files, then publishes SHREADY.TAG. WINXT uses
+that marker to decide whether the fresh shell is ready. No FC.EXE is needed.
+
+For a known partial fresh install, preserve the three partial shell files,
+BACKUP\SHELL14 directory and any SHREADY.NEW file under unused backup names
+before retrying. Never replace your current SYSTEM.INI or WIN.INI with older
+whole-file snapshots merely to repair a shell-file copy.
+
+START AND EXIT
+The common C:\WINXT\WINXT command selects the qualified graphics shell
+when SHREADY.TAG is present, or starts the original shell otherwise. Its
+SETUP option starts display Setup. Experimental text mode retains the
+original shell. C:\WINXT\TSTART is the direct graphics-shell launcher.
+It first
+recovers any unfinished shell selection, checks required files, runs the
+included unchanged RESERVE.COM, selects TSHELL, and runs WIN /R. A failed
+reservation stops before Windows starts. No separate TANDY88 path is needed.
+
+Start > Exit Windows confirms exit and plays the exit chime. Hold Shift
+while selecting Exit Windows to skip the chime. Confirmation, application
+vetoes and unsaved-document prompts still apply. If sound is busy, the shell
+explains that Shift+Exit remains available.
+
+After successful Windows return, SHELLSEL restores the original shell entry,
+rereads it, clears its journal and displays the moon/stars shutdown screen.
+It returns immediately to DOS; ANSI.SYS is not needed. Any failed restoration
+or Windows error keeps plain diagnostics and does not claim shutdown success.
+
+RECOVERY AND NORMAL PROGRAM MANAGER
+After a crash, reset or power loss, run this before starting Windows:
+C:\WINXT\SHELLSEL RECOVER C:\WINDOWS\SYSTEM.INI
+Keep every TSHELL journal/backup sidecar until recovery succeeds.
+TSTART runs that same recovery automatically before each launch.
+
+To start the original shell after successful recovery, run
+C:\WINXT\RESERVE.COM first. Stop if it reports any failure. Only after a
+successful reservation run C:\WINDOWS\WIN /R, normally Program Manager.
+Never bypass the reservation after a reset when using a graphics driver. The selector edits only the shell setting and
+preserves display, keyboard and other current Windows configuration.
+Do not copy an old whole SYSTEM.INI over a newer driver configuration.
+If recovery reports an error, stop and keep its diagnostics and sidecars.
+
+FEATURES AND SETTINGS
+Start imports your existing Program Manager groups without rewriting them.
+My Computer opens File Manager. Start > System provides About this Tandy,
+screen saver settings and date/time adjustment. Double-click the bar clock
+for the stock Clock/Calendar application; right-click it to adjust date/time.
+The 160-pixel System menu opens separately so its entries remain clickable.
+
+Screen saver settings offers Matrix, Maze, Starfield or None, a delay and
+Preview. Default: Matrix after five minutes. Starfield Options changes speed
+and star count. Maze is experimental and can be slow on trial driver names.
+Typing or moving/clicking the mouse dismisses a saver; a held wake gesture
+is drained before returning input. These are not password locks.
+
+Sounds default to the XP startup chime and the exit chime. In
+C:\WINDOWS\TSHELL.INI, [Sounds] Startup can be XP, TANDY or NONE;
+ExitChime=0 disables the exit chime. These small applications use the Tandy
+PSG directly. They do not install a Windows sound driver.
+Existing WIN.INI load/run executable entries are supported with the bounded
+startup rules documented in the source and historical tests.
+
+Run > Browse displays validated, already-existing friendly FAT12/16 names
+on supported local fixed DOS 6.22 volumes, and launches their real short
+aliases. It does not create or rename long names. Unsupported drives, names,
+large listings or invalid metadata retain 8.3 names. NAMES11.TXT has limits; its old upgrade section is historical.
+Browse includes the reduced-repaint correction from TSTART13.
+
+HOLD KEY (OPTIONAL KEYBOARD KIT)
+The ordinary Start button works with the stock keyboard driver. Hold-to-Start
+turns on automatically only in the supported real-mode Tandy ROM profile
+when TNDYK3.DRV is actually loaded. The compatible keyboard kit is separate
+and has its own guarded installer and rollback. This kit does not select it.
+HOLD14.TXT documents the shortcut and its Scroll Lock compatibility limits.
+
+SOURCE AND EVIDENCE
+The source and detailed verification are supplied separately from the compact
+CF runtime and are published with the project. They are not needed on the card.
+TESTS14.TXT describes current shell verification; SHFULL.TXT records this
+fresh-install kit's checks. The separate source bundle contains the exact
+shell, input DLL, saver, sound, selector and install-comparator sources.
+Actual Tandy Windows behavior of Hold remains pending; emulator results are
+not a claim of physical performance or independently verified audio output.

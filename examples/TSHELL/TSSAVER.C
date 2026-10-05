@@ -3,6 +3,7 @@
 #include <windows.h>
 #include "TSBOOT.H"
 #include "TSSAVER.H"
+#include "TSHOLD.H"
 #include "TSSAVCFG.H"
 #include "TNOTICE.H"
 #include "PROGMENU.H"
@@ -57,12 +58,15 @@ void TSSaverStop(HWND w)
 { ++policyRevision; enabled = 0; KillTimer(w, SAVER_TIMER); closeSaver(); releaseHook(); }
 void TSSaverHold(int enter)
 {
+    TandyHoldBlock(enter);
     if (enter) ++holding;
     else if (holding) --holding;
     reset();
 }
 void TSSaverShutdown(int pending)
-{ stopping = pending; reset(); if (pending) { ++policyRevision; closeSaver(); } }
+{ stopping = pending; TandyHoldShutdown(pending); reset(); if (pending) { ++policyRevision; closeSaver(); } }
+int TSSaverShortcutBusy(void)
+{ return holding || stopping || launchBusy || previewWatch; }
 int TSSaverPrimary(void)
 { return policyOwner != NULL; }
 static int beginPolicy(HWND w, HINSTANCE instance)
@@ -133,12 +137,12 @@ void TSSaverTick(HWND w)
     if (holding || stopping || !IsWindowEnabled(w) || knownAudio() || saverRunning()) ready = FALSE;
     if (SvDue(&state, GetTickCount(), gen, delay, ready)) {
         revision = policyRevision;
-        ++holding; launchBusy = 1;
+        ++holding; TandyHoldBlock(1); launchBusy = 1;
         result = PmLaunchShow(w, saver, SW_SHOWNORMAL);
         /* WinExec may yield while loading; new input/shutdown cancels the saver. */
         if (stopping || revision != policyRevision || !idleGeneration ||
             idleGeneration() != gen) closeSaver();
-        launchBusy = 0; --holding; reset();
+        launchBusy = 0; --holding; TandyHoldBlock(0); reset();
         if (result < 32 && IsWindow(w) && !stopping && revision == policyRevision) {
             TSSaverStop(w);
             TinyNotice(w, ownInstance, "Saver", "Saver failed.\nIdle disabled.");
@@ -190,10 +194,10 @@ void TSSaverPreview(HWND w, HINSTANCE instance, char *command)
         TSSaverPreviewEnd(w);
         TinyNotice(w, instance, "Saver", "Preview timer\nfailed."); return;
     }
-    launchBusy = 1; ++holding;
+    launchBusy = 1; ++holding; TandyHoldBlock(1);
     result = PmLaunchShow(w, command, SW_SHOWNORMAL);
     if (stopping || previewInput()) closeSaver();
-    launchBusy = 0; --holding; reset();
+    launchBusy = 0; --holding; TandyHoldBlock(0); reset();
     if (result < 32 || stopping || previewInput()) TSSaverPreviewEnd(w);
     else TSSaverPreviewTick(w);
 }

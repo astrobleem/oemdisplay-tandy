@@ -89,11 +89,11 @@ void TandyBootStop(HWND w) { waiting=0;listed=1;KillTimer(w,BOOT_TIMER); }
 void TandyExit(HWND w,int silent) {
  char path[144];UINT r;readConfig();
  if(silent||!useExit){if(!ExitWindows(0L,0))status(w,"Exit canceled.","Windows stays.");return;}
- if(psgBusy()){status(w,"Sound is busy.","Use silent exit.");return;}
- if(!soundPath("TEXIT.EXE",path)){status(w,"No exit chime.","Use silent exit.");return;}
- if(lstrlen(path)+4>=(int)sizeof(path)){status(w,"Bad sound path.","Use silent exit.");return;}
+ if(psgBusy()){status(w,"Sound is busy.","Hold Shift\nat Exit.");return;}
+ if(!soundPath("TEXIT.EXE",path)){status(w,"No exit chime.","Hold Shift\nat Exit.");return;}
+ if(lstrlen(path)+4>=(int)sizeof(path)){status(w,"Bad sound path.","Hold Shift\nat Exit.");return;}
  lstrcat(path," /go");r=WinExec(path,SW_SHOWNORMAL);
- if(r<32)status(w,"Chime failed.","Use silent exit.");
+ if(r<32)status(w,"Chime failed.","Hold Shift\nat Exit.");
 }
 
 int TandyBootBusy(void) { return begun && (!listed || waiting); }

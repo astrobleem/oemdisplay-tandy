@@ -1,0 +1,20 @@
+{
+  "PASS": true,
+  "sequence": [
+    "genuineDOS experimentaltext+installedoptionalshell",
+    "nativeSetup toTR56402 originalCGASYS (cycle2)",
+    "primaryWINXT launchesTSHELL (cycle3)",
+    "nativeShiftExit toDOS; shellselectionrestored",
+    "fullverifiedRESTORE disablesSHREADY",
+    "coldprimaryWINXT launchesoriginalCGA ProgramManager",
+    "nativeexitDOS; restoredINIs/WINCOMremainexact"
+  ],
+  "support_root": "C:\\WINXT",
+  "legacy_support_roots_created": false,
+  "active_sidecars_remaining": false,
+  "installer_sha256": "f8f0c46ea7c6162a9e46338a5a53bbce718711c6aea8175af0eb8f9aa240809e",
+  "original_system_ini_sha256": "e1819e0c18ae873502d3f040e1c70331ebbde8b51610914ad7d13f157fc9f996",
+  "original_win_ini_sha256": "e47e8ca23f6ffe344c81d4253352493f2b6b1aac0aec3461907b32999fdac3b0",
+  "original_win_com_sha256": "5551ebcd3f32df26f759c5423f806733e006c3cae640a8336e5c618f8d899659",
+  "harness_notes": "Restarted after correcting boot/input readiness and stale-log polling. Product bytes unchanged."
+}

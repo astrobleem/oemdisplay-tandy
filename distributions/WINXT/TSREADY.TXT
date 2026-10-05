@@ -1,0 +1,1 @@
+TSTART14 shell installed and byte-verified. Windows=C:\WINDOWS Support=C:\WINXT

@@ -1,0 +1,51 @@
+EXPERIMENTAL HARDWARE TEXT DISPLAY
+Windows 3.0 real mode / Tandy 80x25 text
+
+Choose this only for experimentation with a working backup. TXTMODE.DRV is
+the unchanged existing feasibility driver. It is not TR5-optimized. It runs
+Windows using actual BIOS mode 03h character/attribute cells, with 640x200
+logical GDI pixels over the 80x25 text grid.
+
+KNOWN DAMAGE
+Character and geometry corruption remains. Window movement, clipping, caret
+inversion and bitmap save/restore can damage text. Small icon labels and
+arbitrary graphics are approximate. DOS application/grabber switching,
+physical Tandy hardware and original-speed performance are unverified.
+This is not a general-purpose usable text-mode replacement for graphics.
+
+SELECT TEXT
+Exit Windows completely. At the DOS prompt run:
+  C:\WINXT\WINXT SETUP
+Select Display, Other display, and enter C:\WINXT. Choose:
+  EXPERIMENTAL 80x25 text (character corruption)
+If Setup asks for the display disk again, enter the SAME C:\WINXT.
+Complete Changes; if asked, choose no CONFIG.SYS/AUTOEXEC.BAT changes.
+Reboot, then start with C:\WINXT\WINXT. Do not bypass a reservation error.
+
+Setup automatically selects TXTMODE.DRV and its private TXTSYS.FON 8x8
+fixed-cell system font, plus CGAFIX.FON and CGAOEM.FON. TXTSYS is derived
+from the owner's licensed CGASYS/CGAFIX fonts and is separate from the
+unchanged graphics CGASYS. Do not substitute CGAFIX as both font modules.
+The text choice uses the original shell, normally Program Manager on a
+fresh Windows installation. Optional TSSETUP does not activate TSHELL here.
+
+RETURN TO GRAPHICS
+Exit Windows, run C:\WINXT\WINXT SETUP, select Display -> Other display,
+enter C:\WINXT, and choose one of the five TR5 graphics modes. Reboot and
+start with C:\WINXT\WINXT. Standard Setup restores that graphics mode's
+matching original EGA/CGA fonts. A text-to-TR56402-to-cold-graphics cycle was
+verified in the emulator; known text-mode rendering faults remain.
+
+FULL ROLLBACK
+From plain DOS use the numbered backup printed by INSTALL, for example:
+  C:\WINXT\BACKUP\B001\RESTORE YES
+Read C:\WINXT\BACKUP.TXT for your actual backup path. Keep that backup
+until you have checked your chosen graphics mode on your own hardware.
+
+FONT/PAYLOAD PROVENANCE
+TXTMODE.DRV: 72960 bytes, unchanged from the existing experiment.
+SHA256: 943a455baa475071a190b26e69b92a477178b5ced231edef19882abb2a8d2646
+TXTSYS.FON: 4368 bytes, privately derived fixed-cell system font.
+SHA256: b7353ceca94cce0c7cad568ebafa26f8fa5fa855be551a24e3502161415a0807
+Do not publish TXTSYS or other Microsoft support-font binaries with source
+overlays. The first-party FIXFONT.PY recipe checks both owner input hashes.

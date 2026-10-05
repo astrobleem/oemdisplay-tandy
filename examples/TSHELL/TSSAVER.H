@@ -10,6 +10,7 @@ void TSSaverStop(HWND owner);
 void TSSaverSettings(HWND owner, HINSTANCE instance);
 /* Internal settings bridge; only Begin marks this process as primary. */
 int TSSaverPrimary(void);
+int TSSaverShortcutBusy(void);
 int TSSaverReconfigure(void);
 void TSSaverPreview(HWND owner, HINSTANCE instance, char *command);
 void TSSaverPreviewTick(HWND owner);

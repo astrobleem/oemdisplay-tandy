@@ -1,0 +1,140 @@
+WINXT - NATIVE 8088 INSTALLER AND ROLLBACK
+
+ONE SUPPORT FOLDER
+Copy the complete flat package to C:\WINXT. This is both the source folder and
+permanent support folder. At a real DOS prompt, with Windows fully exited:
+  C:
+  CD \WINXT
+  INSTALL
+For a different existing Windows directory use, for example, INSTALL D:\WIN30.
+The source folder may also be elsewhere on a writable local DOS drive. Keep it
+in place after installation: generated launch/restore commands use its path.
+There is no target Python, PowerShell, compiler, second source directory or
+separate TDISPLAY/TANDY88/TSTART root. Existing old roots are never deleted.
+
+RUNTIME SOURCE CHECK
+TINST requires OEMSETUP.INF, RESERVE.COM, CGA.GR2, CGALOGO.LGO, WXTSPL01.RLE,
+TR53216.DRV, TR56404.DRV, TR51616.DRV, TR53204.DRV, TR56402.DRV, TXTMODE.DRV,
+CGAFIX.FON, CGAOEM.FON, CGASYS.FON, EGAFIX.FON, EGAOEM.FON, EGASYS.FON and
+TXTSYS.FON. The experimental text profile is distinct from the five graphics
+profiles. Its separate TXTSYS.FON does not replace the graphics source fonts.
+
+FRESH INSTALL
+1. TINST validates paths, required source files and the selected Windows tree.
+   Existing source contents are expected. It refuses generated WINXT.BAT,
+   BACKUP.TXT, READY.TAG, READY.NEW, PARTIAL.TAG or SHREADY.TAG rather than
+   overwriting an installed, incomplete or conflicting support folder.
+2. If this source contains SHELLSEL.EXE, TINST runs its RECOVER operation against
+   the selected Windows SYSTEM.INI before snapshotting. This repairs a pending
+   interrupted optional-shell selection. Recovery failure stops installation.
+   This is the only delegated pre-snapshot INI recovery action. Normal fresh
+   installation never overwrites an original Windows file.
+3. A new snapshot is created inside this source's BACKUP\B001, or the next free
+   name through B999. Existing numbered backups and BACKUP\SHELL14 are retained.
+   A file named BACKUP is refused. Every copied byte is reread and compared.
+4. TINST generates WINXT.BAT and BACKUP.TXT in the source folder. RESERVE.COM is
+   used in place, never copied onto itself. A PARTIAL.TAG guard is created before
+   snapshot writes; only a completed snapshot and generated launcher allow its
+   final rename to READY.TAG. Failures retain incomplete work for inspection.
+5. INSTALL then invokes WINXT SETUP. Choose Other display in native Windows 3.0
+   DOS Setup and give the source path shown by the installer. Native Setup owns
+   display-driver, font, WIN.COM and related Windows INI installation changes.
+   Choose that Setup should make no CONFIG.SYS/AUTOEXEC.BAT changes if asked.
+
+ONE PRIMARY COMMAND
+  C:\WINXT\WINXT          Start the installed Windows configuration in real mode
+  C:\WINXT\WINXT SETUP    Revisit native DOS Windows Setup
+Use the equivalent generated path for a custom support folder.
+Every launch checks READY.TAG and required Windows files, performs optional
+SHELLSEL RECOVER first, then runs RESERVE.COM and stops if reservation fails.
+Recovery failure also stops both Windows and Setup. Native Setup is never
+replaced with the optional shell installer.
+
+OPTIONAL SHELL
+TSSETUP.BAT is a separate, explicitly invoked shell installation step for the
+fixed C:\WINXT source and C:\WINDOWS destination. Its own instructions and
+verification govern that step. It does not run automatically from INSTALL.
+The main WINXT command dispatches to TSTART.BAT only for those default paths,
+a verified SHREADY.TAG, TSTART.BAT and all three active files TSHELL.EXE,
+TSINPUT.DLL and TSHELL.INI, and a qualifying graphics display selection.
+Merely finding old shell files never enables that dispatch.
+TINST /SHELLSAFE reads the selected SYSTEM.INI without changing it. It permits
+only the five exact TR5 graphics driver basenames, ignoring case. TXTMODE and
+other displays use plain WIN /R, retaining the recovered original Windows
+shell. A missing/malformed display selection stops rather than guessing.
+Custom support or Windows paths are display-only; optional shell installation
+is not supported there. TSTART's own reservation/recovery guards remain active.
+
+SNAPSHOT AND RESTORE
+The snapshot contains ROOT, SYSTEM and BOOT subdirectories, FILES.TXT,
+RESTORE.BAT and, only when fully verified, DONE.TAG. It captures SYSTEM.INI,
+WIN.INI, WIN.COM; every INI in Windows root and SYSTEM (including existing
+TSHELL.INI); all DRV/FON/FOT/TTF/GR2/GR3/LGO/RLE files there; active [boot]
+display/core-font/grabber and WIN.INI [fonts] references; and existing
+C:\CONFIG.SYS and C:\AUTOEXEC.BAT. Source paths and sizes appear in FILES.TXT.
+Backup file bytes and timestamps are preserved. BACKUP.TXT records the paths.
+
+To roll back, first exit Windows completely, then run the exact command from
+BACKUP.TXT, for example:
+  C:\WINXT\BACKUP\B001\RESTORE YES
+The literal YES is required. RESTORE checks DONE.TAG, every saved input and the
+source TINST.EXE verifier before changing anything. If both SHREADY.TAG and
+SHREADY.OFF exist, it refuses without overwriting either marker or Windows.
+After those preflights, optional SHELLSEL RECOVER must succeed and active
+TSHELL.JRN/NEW/OLD/RST must all be absent. If the helper is missing while any
+active sidecar remains, restoration is refused. Persistent TSHELL.BAK/SAV
+are retained. Sidecars are never deleted merely to force progress. This ordering
+prevents later launcher recovery from undoing a completed full rollback.
+Then RESTORE preserves SHREADY.TAG by renaming it SHREADY.OFF before copying.
+This disables optional-shell dispatch, even while added shell files remain.
+Each original is restored and immediately byte-compared by native TINST;
+a copy or comparison error stops. Do not start Windows after such a failure.
+The native status reset avoids stale MS-DOS ERRORLEVEL affecting COPY checks.
+Repeating RESTORE YES after TAG has already become OFF is supported.
+Restoration leaves newly added drivers, fonts, shell files and INIs in place.
+Saved original INIs restore original boot/run selections; WINXT ignores the
+new shell files without SHREADY.TAG. Boot files that were originally absent
+are not removed if later created. Keep independent backups and verify the
+restored machine before deleting any snapshot.
+
+BOUNDS AND FAILURE SAFETY
+- Run at real DOS, not from an active Windows DOS box. SHELLSEL enforces its
+  own Windows-session guard when present; a display-only package relies on
+  this instruction. DOS 3.3+ API/batch syntax is used; actual guest acceptance
+  was performed on MS-DOS 6.22 and DOSBox-X's DOS implementation.
+- Absolute drive:\8.3\directory paths only. No spaces, UNC or long names.
+  Support path maximum 31 characters; Windows path maximum 63 characters.
+  Paths whose generated rollback commands exceed DOS's 126-character budget
+  are rejected before snapshot writes. C: is the boot-file snapshot drive;
+  the source drive, not necessarily C:, holds all other support/backups.
+- Windows root and SYSTEM resources only. Unsupported external active resource
+  paths, missing files, duplicate/missing required boot keys, overlong INI lines
+  and more than 256 resources are refused rather than silently omitted.
+- No overwrite-on-retry. PARTIAL.TAG or generated-file collisions require
+  manual review. Do not remove them merely to force installation to continue.
+- A snapshot/restore is not a filesystem-atomic full-disk image. Every copy is
+  checked, but interrupted restores can still require another restoration.
+- Physical hardware timing and experimental text/TSHELL visual compatibility
+  are outside these installer checks. Package integration evidence is separate.
+
+BUILD AND INTERNAL QUERIES
+Canonical runtime sources: TINST.C and INSTALL.BAT, CRLF text.
+BUILD.BAT uses Microsoft C 6-compatible CL /AS /G0 /W3 TINST.C and the period
+small-model libraries; /G0 emits 8086/8088 code. No target compilation required.
+Internal helpers used by the generated batches:
+  TINST /SHELLSAFE [Windows path]    0=five TR5 graphics, 1=other, 2=read/INI error
+  TINST /COMPARE file1 file2        0=equal bytes, 1=different, 2=I/O error
+  TINST /ZERO                       0; clear stale DOS process status
+These are implementation helpers, not additional user launchers.
+
+DEVELOPMENT EVIDENCE
+Host-only test_installer.py preserves the earlier twenty failure-safety checks
+and adds in-place source, custom root, partial marker, collision, source-font,
+optional-shell dispatch, recovery, eligibility, comparison and restore gates.
+test_genuine_dos.py boots actual MS-DOS 6.22 under a Tandy/8086-prefetch/640 KB
+profile with no XMS/EMS/UMB. Windows/Setup stubs isolate installer semantics;
+the separate snapshot pass preserves genuine Windows executables unchanged.
+TESTRESULTS.json, GENUINE-DOS.json and logs describe the exact acceptance run.
+Private OS fixtures and test stubs are never runtime files and must not be
+redistributed as part of this package. The full real Setup -> shell -> exit ->
+restore integration gate belongs to the assembled package's evidence.

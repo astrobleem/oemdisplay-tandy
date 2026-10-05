@@ -1,0 +1,27 @@
+PHYSICAL TEST CHECKLIST
+
+First run RAWKEY from plain DOS. It temporarily owns IRQ1, records make
+and break bytes, and restores the old vector before writing RAWKEY.LOG.
+Escape release exits; timeout/buffer-full also exits. It does not remain
+resident. Do not run it from a Windows DOS box.
+
+In WINKEY, check:
+- letters, digits, punctuation, Tab/Enter/Backspace/Escape
+- each dedicated arrow, alone and with Shift/Ctrl/Alt
+- repeat then release for every arrow; no stuck movement afterward
+- NumLock off/on: dedicated arrows always arrows, numeric pad normal
+- Shift+keypad 7/4/8/2 -> backslash/bar/tilde/grave
+- release Shift before the numeric key, then the reverse order
+- both Shift keys together, release one while the other stays held
+- Ctrl+A/C/V/X/Z, Alt menu shortcuts, Alt+Tab and Alt+F4
+- F1 through F12, Home, keypad Enter, Insert/Delete and operators
+- Hold then release, repeated Hold, Shift/Alt+Hold
+- Ctrl then Hold; release Hold first and then Ctrl; reverse order too
+- Hold then Ctrl: matching Hold release must remain VK_SCROLL
+- separate Break key and Ctrl+NumLock (Pause)
+- Print / Alt+Print, then confirm normal keyboard operation
+- leave Windows for DOS and reenter, then repeat letters/arrows/glyphs
+
+Do not infer pass just because Windows starts. Send RAWKEY.LOG and
+WINKEY.LOG along with any observed difference and the exact key sequence.
+If physical scan codes differ, stop and restore the original driver.

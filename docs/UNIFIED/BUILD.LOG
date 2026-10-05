@@ -1,0 +1,10 @@
+TINST.C
+
+Microsoft (R) Overlay Linker  Version 3.64   
+Copyright (C) Microsoft Corp 1983-1988.  All rights reserved.
+
+Object Modules [.OBJ]: "TINST.OBJ" /FARCALL 
+Run File ["TINST.EXE]: "TINST.EXE" /NOI
+List File [NUL.MAP]: NUL
+Libraries [.LIB]: 
+Build succeeded.

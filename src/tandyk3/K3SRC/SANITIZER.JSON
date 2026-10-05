@@ -1,0 +1,10 @@
+{
+  "passed": 274,
+  "checkpoints": {
+    "APPLY_mutation_checkpoints": 11,
+    "RESTORE_mutation_checkpoints": 7
+  },
+  "sanitizers": true,
+  "driver_candidate_sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5",
+  "source_sha256": "fdcb696d4c320c9adbe26c25cfff25c194fbdc001e2064f925fed3ca31b197e4"
+}

@@ -1,0 +1,80 @@
+[
+  {
+    "PASS": true,
+    "driver": "TR53216.DRV",
+    "driver_sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61",
+    "mode": "32016",
+    "metrics": "FLAGS=64 SCREEN=320x200 BITS=1 PLANES=4 COLORS=16 DPI=96x72 FONT=7x12 ASCENT=10",
+    "source_and_helpers": "C:\\WINXT",
+    "new_legacy_root_folders": false,
+    "shell_dispatch": "TSHELL14",
+    "config_restored_after_exit": true,
+    "genuine_dos": "6.22",
+    "installer_sha256": "f8f0c46ea7c6162a9e46338a5a53bbce718711c6aea8175af0eb8f9aa240809e"
+  },
+  {
+    "PASS": true,
+    "driver": "TR56404.DRV",
+    "driver_sha256": "50969051a462bbada0be684c247de5c4bde6f51a3d0b9db22bf46d58592e3ca9",
+    "mode": "64004",
+    "metrics": "FLAGS=64 SCREEN=640x200 BITS=1 PLANES=4 COLORS=4 DPI=96x48 FONT=7x8 ASCENT=7",
+    "source_and_helpers": "C:\\WINXT",
+    "new_legacy_root_folders": false,
+    "shell_dispatch": "TSHELL14",
+    "config_restored_after_exit": true,
+    "genuine_dos": "6.22",
+    "installer_sha256": "f8f0c46ea7c6162a9e46338a5a53bbce718711c6aea8175af0eb8f9aa240809e"
+  },
+  {
+    "PASS": true,
+    "driver": "TR51616.DRV",
+    "driver_sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d",
+    "mode": "16016",
+    "metrics": "FLAGS=64 SCREEN=160x200 BITS=1 PLANES=4 COLORS=16 DPI=96x48 FONT=7x8 ASCENT=7",
+    "source_and_helpers": "C:\\WINXT",
+    "new_legacy_root_folders": false,
+    "shell_dispatch": "TSHELL14",
+    "config_restored_after_exit": true,
+    "genuine_dos": "6.22",
+    "installer_sha256": "f8f0c46ea7c6162a9e46338a5a53bbce718711c6aea8175af0eb8f9aa240809e"
+  },
+  {
+    "PASS": true,
+    "driver": "TR53204.DRV",
+    "driver_sha256": "707dabdd83dafcf80b3f9e2fe07ca785662d3358d08f366cb2ed6b45b2804744",
+    "mode": "32004",
+    "metrics": "FLAGS=64 SCREEN=320x200 BITS=1 PLANES=4 COLORS=4 DPI=96x48 FONT=7x8 ASCENT=7",
+    "source_and_helpers": "C:\\WINXT",
+    "new_legacy_root_folders": false,
+    "shell_dispatch": "TSHELL14",
+    "config_restored_after_exit": true,
+    "genuine_dos": "6.22",
+    "installer_sha256": "f8f0c46ea7c6162a9e46338a5a53bbce718711c6aea8175af0eb8f9aa240809e"
+  },
+  {
+    "PASS": true,
+    "driver": "TR56402.DRV",
+    "driver_sha256": "3c002227b7b01579787d10c452ae9b3f216a4fd53a8aa5c2190c6bab67d880a2",
+    "mode": "64002",
+    "metrics": "FLAGS=64 SCREEN=640x200 BITS=1 PLANES=4 COLORS=2 DPI=96x48 FONT=7x8 ASCENT=7",
+    "source_and_helpers": "C:\\WINXT",
+    "new_legacy_root_folders": false,
+    "shell_dispatch": "TSHELL14",
+    "config_restored_after_exit": true,
+    "genuine_dos": "6.22",
+    "installer_sha256": "f8f0c46ea7c6162a9e46338a5a53bbce718711c6aea8175af0eb8f9aa240809e"
+  },
+  {
+    "PASS": true,
+    "driver": "TXTMODE.DRV",
+    "driver_sha256": "943a455baa475071a190b26e69b92a477178b5ced231edef19882abb2a8d2646",
+    "mode": "TEXT",
+    "metrics": "FLAGS=64 SCREEN=640x200 BITS=1 PLANES=4 COLORS=2 DPI=96x48 FONT=8x8 ASCENT=7",
+    "source_and_helpers": "C:\\WINXT",
+    "new_legacy_root_folders": false,
+    "shell_dispatch": "original Program Manager (experimental text)",
+    "config_restored_after_exit": true,
+    "genuine_dos": "6.22",
+    "installer_sha256": "f8f0c46ea7c6162a9e46338a5a53bbce718711c6aea8175af0eb8f9aa240809e"
+  }
+]

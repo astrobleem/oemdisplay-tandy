@@ -1,0 +1,78 @@
+WINDOWS XT SHARED-FOLDER QUALIFICATION
+
+FINAL SHARED-ROOT INTEGRATION: SIX OF SIX PASS
+Six fresh stock-CGA Windows 3.0 installations on genuine guest MS-DOS 6.22
+were installed using INSTALL and unmodified native Windows DOS SETUP.
+Every profile used only C:\WINXT at both Other-display and copy prompts.
+All six driver/font selections matched the pinned source bytes. Optional
+TSSETUP then installed its three verified files without permanent shell edits.
+
+Fresh emulator boots through the one C:\WINXT\WINXT command reached:
+- Five TR5 graphics modes: qualified TSHELL14 desktop, real-mode flags 64.
+- Experimental TXTMODE: original Program Manager, real-mode flags 64.
+Every case returned to genuine DOS through native keyboard exit, with exact
+post-Setup SYSTEM.INI restored after the temporary shell session. No TDISPLAY,
+TANDY88, TSTART or root-level numbered-backup directory was created.
+
+TEXT -> GRAPHICS -> FULL RECOVERY: PASS
+The installed text profile switched through ordinary DOS Setup to TR56402,
+restoring the exact original CGASYS.FON. WINXT then launched TSHELL on that
+qualified graphics mode. After native shell exit, RESTORE YES restored every
+saved ROOT/SYSTEM file, preserved the shell marker as SHREADY.OFF and cleared
+active selector transactions. A fresh WINXT launch used original stock-CGA
+Windows/Program Manager; native exit retained exact original SYSTEM.INI,
+WIN.INI and WIN.COM. All recovery helpers retained the RESERVE safety path.
+
+INSTALLER: 75 SAFETY CHECKS + 16 GENUINE DOS CHECKS PASS
+In-place source, nested B001 backups, custom paths, repeat/partial refusal,
+missing resources, disk errors, per-file byte comparison, six profile inputs,
+read-only shell eligibility query, malformed-INI refusal and shell marker
+handling are covered. Real SHELLSEL SELECT followed by interrupted-session
+recovery, full rollback and subsequent guarded launch passes. Restoration
+recovers active transactions before baseline copying and never deletes
+sidecars to force success. Persistent validated BAK/SAV may remain.
+The native helper clears stale DOS process status and verifies copied bytes,
+rather than trusting success behavior of internal COPY/REN commands alone.
+
+EXPERIMENTAL TEXT: QUALIFIED AS A FEASIBILITY MODE ONLY
+Unchanged TXTMODE.DRV uses BIOS03,80 columns,4096-byte page,640x 200 logical
+GDI pixels,2 colors,96x 48 DPI and private 8x 8 TXTSYS system font. Native text
+Windows, Program Manager Run and keyboard-typed Notepad worked. Character,
+icon-label and geometry damage remains visibly present. Full DOS-application
+/grabber switching and physical hardware are unverified. Its distinct font
+key 0200,96,48 is intentional: do not normalize away the leading zero. It
+selects separate TXTSYS without changing original graphics fonts. All six
+font selections and a text-to-cold-graphics recovery cycle passed real Setup.
+
+FIVE TR5 GRAPHICS DRIVERS: PRIOR FROZEN REGRESSION RETAINED
+Same final driver bytes passed 6560 paired old/new rectangle cases,8320 API
+return comparisons and 429916160 full framebuffer/padding bytes. Separate
+8088 gate tests passed 62 cases. The exclusive 25000-cycle emulator thick-border
+operation measured 1318ms before and 55ms after; these are not physical Tandy
+measurements. Stock CLOCK.EXE itself is unchanged.
+
+APPLICATION AND SHELL COVERAGE
+All five graphics modes passed analog Clock, native Paintbrush strokes/close,
+Cookie input/timer/About/reset/close, and native Windows-to-DOS return.
+Matrix/Maze/Starfield passed 235 sampled GDI lifecycle cases with no sampled
+restoration mismatch, released capture and clean quit. Shared-root shell
+installation, three savers, File Manager, unsaved-Notepad veto, normal exit,
+Shift/silent exit and original INI restoration also passed final 160/640 tests.
+
+Known existing limits: stock Clock digital digits map to black in 320x 4; use
+analog there. Stock Paintbrush's 160-pixel save prompt clips horizontally but
+native N works. New driver names use safe GDI saver paths, not newly assumed
+raw-framebuffer layouts. See TEXTMODE.TXT and SHFULL.TXT for detailed limits.
+
+ENVIRONMENT AND LIMITS
+DOSBox-X, Tandy machine,640KB conventional RAM, no EMS/XMS/UMB/FPU. Native
+installer/driver suites include 8086-prefetch execution; full genuine-DOS UI
+runs use 8086 and high fixed cycles for functional testing. No actual CF card
+was accessed. DOS3.3+ is targeted; genuine UI validation usedDOS6.22. Tests do
+not guarantee every app, every allocation failure or physical hardware speed.
+
+Harness-only corrections were retained in detailed validation records:
+Setup screen readiness and screenshot queue timing, boot-keyboard readiness,
+and waiting until old logs were actually cleared before polling new startup.
+Failed harness snapshots were not accepted as passes. No product-byte change
+was needed for these synchronizations. All final emulator sessions stopped.

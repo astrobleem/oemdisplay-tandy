@@ -1,0 +1,26 @@
+[
+  {
+    "file": "SETUP6.PNG",
+    "sha256": "e0a9cc12e4e454de2cc914f90d106c9ea76278c1054165ac4e9c7278d8922603",
+    "capture_description": "Actual native DOS Setup: all six entries in one source; experimental warning visible.",
+    "conversion": "Lossless PNG encoding; decoded RGBA pixels identical to native BMP capture"
+  },
+  {
+    "file": "SHELL160.PNG",
+    "sha256": "129df78ab8dd75b0c6467b0e23b9151e985ba2d50098fbc2beeceb9f72ca6f92",
+    "capture_description": "Primary WINXT launch: TSHELL14 on TR51616 after same-root installation.",
+    "conversion": "Lossless PNG encoding; decoded RGBA pixels identical to native BMP capture"
+  },
+  {
+    "file": "TEXTBAD.PNG",
+    "sha256": "32a8c1ab11d0a562f7c4326bf31d915cd9844c752846a29288e3f1c1bea1b157",
+    "capture_description": "Actual experimental hardware text. Corrupted icon labels/geometry are intentionally not hidden.",
+    "conversion": "Lossless PNG encoding; decoded RGBA pixels identical to native BMP capture"
+  },
+  {
+    "file": "RESTORE.PNG",
+    "sha256": "7edf793965621cf212b594c7b27c584854c4b0a5a0fd23bcda725e43d3ef8ff3",
+    "capture_description": "Actual guarded cold launch of original CGA/Program Manager after full rollback.",
+    "conversion": "Lossless PNG encoding; decoded RGBA pixels identical to native BMP capture"
+  }
+]

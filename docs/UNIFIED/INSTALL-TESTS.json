@@ -1,0 +1,386 @@
+{
+  "emulator": "DOSBox-X 2026.08.31",
+  "cpu": "8086_prefetch",
+  "machine": "tandy",
+  "ram_kb": 640,
+  "runtime_python_required": false,
+  "results": [
+    {
+      "name": "originals_unchanged",
+      "passed": true,
+      "detail": "Every original Windows byte unchanged by installer and stub setup."
+    },
+    {
+      "name": "reserved_setup_and_win",
+      "passed": true,
+      "detail": "Real RESERVE.COM allowed SETUP and WIN stubs on emulated Tandy 8088."
+    },
+    {
+      "name": "real_mode_argument",
+      "passed": true,
+      "detail": "WIN received the real-mode /R command-line argument."
+    },
+    {
+      "name": "commit_markers",
+      "passed": true,
+      "detail": "Backup and helper ready markers created only after completion."
+    },
+    {
+      "name": "all_backup_bytes_verified",
+      "passed": true,
+      "detail": "28 resources match originals byte for byte."
+    },
+    {
+      "name": "repeat_install_refused",
+      "passed": true,
+      "detail": "Second install returns nonzero without altering helper, backups or Windows."
+    },
+    {
+      "name": "restore_requires_yes",
+      "passed": true,
+      "detail": "No restoration without literal YES argument."
+    },
+    {
+      "name": "restore_roundtrip",
+      "passed": true,
+      "detail": "RESTORE YES restored exact original Windows tree bytes."
+    },
+    {
+      "name": "custom_windows_drive",
+      "passed": true,
+      "detail": "INSTALL D:\\WIN30 installed and launched from non-default Windows drive."
+    },
+    {
+      "name": "backup_collision_avoided",
+      "passed": true,
+      "detail": "Existing rollback directory preserved, next new name used."
+    },
+    {
+      "name": "missing_source",
+      "passed": true,
+      "detail": "Refused before backup creation or Windows launch; originals unchanged."
+    },
+    {
+      "name": "missing_font",
+      "passed": true,
+      "detail": "Refused before backup creation or Windows launch; originals unchanged."
+    },
+    {
+      "name": "bad_path",
+      "passed": true,
+      "detail": "Refused before backup creation or Windows launch; originals unchanged."
+    },
+    {
+      "name": "extra_args",
+      "passed": true,
+      "detail": "Refused before backup creation or Windows launch; originals unchanged."
+    },
+    {
+      "name": "helper_file",
+      "passed": true,
+      "detail": "Refused before backup creation or Windows launch; originals unchanged."
+    },
+    {
+      "name": "reservation_failure_gate",
+      "passed": true,
+      "detail": "Errorlevel 1 from RESERVE blocks both paths after a complete backup/install."
+    },
+    {
+      "name": "incomplete_helper_gate",
+      "passed": true,
+      "detail": "Missing READY.TAG blocks SETUP and WIN before reservation."
+    },
+    {
+      "name": "disk_space_refusal",
+      "passed": true,
+      "detail": "Reported zero free space refuses before any new backup/helper writes."
+    },
+    {
+      "name": "mid_copy_error_guard",
+      "passed": true,
+      "detail": "Injected INT 21h write error aborts incomplete backup; no ready marker, helper or Setup; originals byte-identical."
+    },
+    {
+      "name": "real_windows_snapshot",
+      "passed": true,
+      "detail": "Real original Windows binaries snapshotted byte-exactly without invoking Setup or WIN."
+    },
+    {
+      "name": "fresh_source_in_place",
+      "passed": true,
+      "detail": "Existing complete WINXT payload accepted; RESERVE and every source file remain byte-identical."
+    },
+    {
+      "name": "single_support_root",
+      "passed": true,
+      "detail": "Only BACKUP subtree created beneath source; pre-existing legacy roots untouched."
+    },
+    {
+      "name": "existing_shell_ini_snapshot",
+      "passed": true,
+      "detail": "Pre-existing TSHELL.INI included byte-for-byte in original snapshot."
+    },
+    {
+      "name": "custom_support_drive",
+      "passed": true,
+      "detail": "D:\\TOOLS\\WINXT runs in place, owns nested backup and uses correct Windows location."
+    },
+    {
+      "name": "custom_root_display_only",
+      "passed": true,
+      "detail": "Custom source/Windows installation never dispatches fixed-path optional shell."
+    },
+    {
+      "name": "collision_PARTIAL.TAG",
+      "passed": true,
+      "detail": "Generated-file/marker collision refuses without touching original source or Windows bytes."
+    },
+    {
+      "name": "collision_READY.NEW",
+      "passed": true,
+      "detail": "Generated-file/marker collision refuses without touching original source or Windows bytes."
+    },
+    {
+      "name": "collision_READY.TAG",
+      "passed": true,
+      "detail": "Generated-file/marker collision refuses without touching original source or Windows bytes."
+    },
+    {
+      "name": "collision_BACKUP.TXT",
+      "passed": true,
+      "detail": "Generated-file/marker collision refuses without touching original source or Windows bytes."
+    },
+    {
+      "name": "collision_SHREADY.TAG",
+      "passed": true,
+      "detail": "Generated-file/marker collision refuses without touching original source or Windows bytes."
+    },
+    {
+      "name": "backup_container_file",
+      "passed": true,
+      "detail": "A file named BACKUP is never replaced by a directory."
+    },
+    {
+      "name": "required_TXTMODE.DRV",
+      "passed": true,
+      "detail": "Missing experimental driver/font is refused before creating the partial marker or backup."
+    },
+    {
+      "name": "required_TXTSYS.FON",
+      "passed": true,
+      "detail": "Missing experimental driver/font is refused before creating the partial marker or backup."
+    },
+    {
+      "name": "partial_backup_restart_refused",
+      "passed": true,
+      "detail": "Interrupted copy retains partial marker; next native invocation cannot overwrite or continue it."
+    },
+    {
+      "name": "old_shell_files_not_activated",
+      "passed": true,
+      "detail": "Old shell runtime files without SHREADY.TAG do not activate shell dispatch."
+    },
+    {
+      "name": "verified_shell_dispatch",
+      "passed": true,
+      "detail": "SHREADY.TAG plus all active shell files dispatches the optional TSTART entry point."
+    },
+    {
+      "name": "setup_never_dispatches_shell",
+      "passed": true,
+      "detail": "WINXT SETUP always starts native DOS Setup even while shell is enabled."
+    },
+    {
+      "name": "incomplete_shell_falls_back",
+      "passed": true,
+      "detail": "Missing active shell runtime file returns to plain WIN /R."
+    },
+    {
+      "name": "restore_shell_marker_collision",
+      "passed": true,
+      "detail": "TAG/OFF collision refuses the whole restore before changing Windows or either marker."
+    },
+    {
+      "name": "combined_restore_disables_shell",
+      "passed": true,
+      "detail": "Restore preserves shell marker as OFF, restores original INIs and starts plain real-mode Windows."
+    },
+    {
+      "name": "repeated_restore_without_tag",
+      "passed": true,
+      "detail": "Restore remains repeatable after shell TAG has already become OFF."
+    },
+    {
+      "name": "shellsafe_TR53216.DRV",
+      "passed": true,
+      "detail": "Read-only query returned expected DOS status 0."
+    },
+    {
+      "name": "shellsafe_tr56404.drv",
+      "passed": true,
+      "detail": "Read-only query returned expected DOS status 0."
+    },
+    {
+      "name": "shellsafe_SYSTEM_TR51616.DRV",
+      "passed": true,
+      "detail": "Read-only query returned expected DOS status 0."
+    },
+    {
+      "name": "shellsafe_C_WINDOWS_SYSTEM_TR53204.DRV",
+      "passed": true,
+      "detail": "Read-only query returned expected DOS status 0."
+    },
+    {
+      "name": "shellsafe_TR56402.DRV",
+      "passed": true,
+      "detail": "Read-only query returned expected DOS status 0."
+    },
+    {
+      "name": "shellsafe_TXTMODE.DRV",
+      "passed": true,
+      "detail": "Read-only query returned expected DOS status 1."
+    },
+    {
+      "name": "shellsafe_CGA.DRV",
+      "passed": true,
+      "detail": "Read-only query returned expected DOS status 1."
+    },
+    {
+      "name": "shellsafe_NOTTR53216.DRV",
+      "passed": true,
+      "detail": "Read-only query returned expected DOS status 1."
+    },
+    {
+      "name": "shellsafe_",
+      "passed": true,
+      "detail": "Read-only query returned expected DOS status 2."
+    },
+    {
+      "name": "shellsafe_TR53216.DRV_display.drv=TR56404.DRV",
+      "passed": true,
+      "detail": "Read-only query returned expected DOS status 2."
+    },
+    {
+      "name": "shellsafe_missing_ini",
+      "passed": true,
+      "detail": "Missing SYSTEM.INI returns read-error status 2."
+    },
+    {
+      "name": "text_mode_plain_windows",
+      "passed": true,
+      "detail": "TXTMODE refuses unqualified TSHELL dispatch and launches original Windows shell via WIN /R."
+    },
+    {
+      "name": "malformed_ini_blocks_launch",
+      "passed": true,
+      "detail": "Malformed shell eligibility stops with a clear message before launching either shell path."
+    },
+    {
+      "name": "recover_before_snapshot",
+      "passed": true,
+      "detail": "Optional native SHELLSEL receives exact selected SYSTEM.INI before byte-preserving snapshot."
+    },
+    {
+      "name": "repeat_refusal_before_recovery",
+      "passed": true,
+      "detail": "Generated-file collision refuses before invoking optional recovery helper."
+    },
+    {
+      "name": "recover_launch_win",
+      "passed": true,
+      "detail": "Launcher invokes recovery before WIN /R."
+    },
+    {
+      "name": "recover_launch_setup",
+      "passed": true,
+      "detail": "Launcher invokes recovery before Setup."
+    },
+    {
+      "name": "recovery_failure_blocks_launch",
+      "passed": true,
+      "detail": "Recovery error blocks both normal Windows and native Setup without modifying original files."
+    },
+    {
+      "name": "recovery_failure_blocks_snapshot",
+      "passed": true,
+      "detail": "Fresh installer recovery failure stops before partial marker, snapshot or Setup."
+    },
+    {
+      "name": "recovery_custom_windows_path",
+      "passed": true,
+      "detail": "Native snapshot and generated launcher both recover the selected non-default Windows INI."
+    },
+    {
+      "name": "compare_b'abc'",
+      "passed": true,
+      "detail": "Read-only byte comparator returns 0 with inputs unchanged."
+    },
+    {
+      "name": "compare_b'abd'",
+      "passed": true,
+      "detail": "Read-only byte comparator returns 1 with inputs unchanged."
+    },
+    {
+      "name": "compare_b'abcd'",
+      "passed": true,
+      "detail": "Read-only byte comparator returns 1 with inputs unchanged."
+    },
+    {
+      "name": "compare_None",
+      "passed": true,
+      "detail": "Read-only byte comparator returns 2 with inputs unchanged."
+    },
+    {
+      "name": "restore_missing_verifier_preflight",
+      "passed": true,
+      "detail": "Missing TINST verifier refuses before any original-file restoration."
+    },
+    {
+      "name": "restore_comparator_failure_gate",
+      "passed": true,
+      "detail": "Injected comparator failure stops after the first restored file; later originals remain untouched."
+    },
+    {
+      "name": "restore_missing_helper_TSHELL.JRN",
+      "passed": true,
+      "detail": "Missing recovery helper with transaction sidecar refuses before any restore or marker rename."
+    },
+    {
+      "name": "restore_missing_helper_TSHELL.NEW",
+      "passed": true,
+      "detail": "Missing recovery helper with transaction sidecar refuses before any restore or marker rename."
+    },
+    {
+      "name": "restore_missing_helper_TSHELL.OLD",
+      "passed": true,
+      "detail": "Missing recovery helper with transaction sidecar refuses before any restore or marker rename."
+    },
+    {
+      "name": "restore_missing_helper_TSHELL.RST",
+      "passed": true,
+      "detail": "Missing recovery helper with transaction sidecar refuses before any restore or marker rename."
+    },
+    {
+      "name": "restore_recovery_failure",
+      "passed": true,
+      "detail": "Failed recovery blocks every snapshot copy and shell-marker rename."
+    },
+    {
+      "name": "restore_requires_clean_journal",
+      "passed": true,
+      "detail": "A falsely-successful helper cannot permit restore while its active journal remains."
+    },
+    {
+      "name": "real_pending_shell_transaction",
+      "passed": true,
+      "detail": "Real packaged SHELLSEL SELECT creates a recoverable pending shell selection after simulated display Setup."
+    },
+    {
+      "name": "restore_pending_then_primary_launch",
+      "passed": true,
+      "detail": "Actual helper recovery clears transaction before original byte restoration; subsequent primary WINXT preserves all restored bytes and runs plain WIN /R."
+    }
+  ],
+  "runtime_sha256": "f8f0c46ea7c6162a9e46338a5a53bbce718711c6aea8175af0eb8f9aa240809e",
+  "source_sha256": "da3c8684252e445d8957d31af80a4355d2f8b0ff81ce1c2f1839dd80a39234bc"
+}

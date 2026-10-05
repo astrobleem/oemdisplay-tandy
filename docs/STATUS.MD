@@ -6,19 +6,69 @@ not imply that every listed app, mode or recent update is hardware-qualified.
 
 ## Driver and package identities
 
-The current drawing pipeline includes the 8088 copy correction and bounded
-Output-row refresh. Historical TANDY88.ZIP binaries and exact packaging pins
-remain unchanged and predate that correction. The physically tried TRIAL 3
-monochrome fallback differs from the final Output-row monochrome build.
-Use the [trial guide](TRIAL4/README.MD), [binary identities](TRIAL4/BUILDS.JSN)
-and [measured verification scope](TRIAL4/VERIFY.TXT). A successful build does
-not update the accepted package or justify relaxing its pins.
+The current TR5 drawing pipeline extends the bounded Output-row gate to
+validated multi-interval OS_SCANLINES calls. It preserves the original renderer
+and full-refresh fallback for uncertain cases. See the
+[TR5 source and build guide](TRIAL5/README.MD), [binary identities](TRIAL5/BUILDS.JSN)
+and [paired verification](TRIAL5/VERIFY.TXT).
+
+The [unified own-media installation](../distributions/WINXT/README.MD) offers five
+TR5 graphics choices and a separately labeled experimental hardware-text choice.
+It shares C:\WINXT with TSTART companions. Microsoft support files are supplied
+from the user's licensed media and verified during host assembly; they are not
+included in the public overlay. Installation, mode switching and rollback have
+their own [qualified scope](UNIFIED/README.md).
+
+Historical TANDY88.ZIP binaries and exact MAKEDISK pins remain unchanged. The
+physically tried TRIAL 3 monochrome fallback differs from the new TR5 monochrome
+bytes. The previous [TRIAL4 guide](TRIAL4/README.MD) remains historical evidence.
+A successful development rebuild does not change an old accepted package.
 
 Unknown drawing bounds retain full refresh. Cursor overlap uses synchronous
 hide/restore, and identity screen copies retain full resynchronization. No
 general deferred conversion or asynchronous GDI flush is claimed.
 
-## Shell update status
+## Current shell and Windows XT additions
+
+Tandy Start 14 includes the 11 friendly-name browser, the narrow-desktop System
+menu repair, 12 single Exit item with Shift-to-skip-chime, 13 reduced Browse
+redraws and 14 guarded Hold-to-Start support. Source and matching runtimes are
+published together. Friendly-name lookup is read-only; launches retain DOS
+aliases and unsupported metadata falls back to short names.
+
+Current runtime SHA-256 identities:
+- TSHELL.EXE, 68,451 bytes:
+  `4577182c8ba80f3604867710c44403f61c7e684f01cdc4d45e1e6dc92ef74689`.
+- TSINPUT.DLL, 6,281 bytes:
+  `d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80`.
+
+See [cumulative changes and verification](../examples/TSHELL/TESTS14.MD),
+[upgrade instructions](../examples/TSHELL/README.MD) and the separate
+[fresh installation](../examples/TSHELL/FRESH14/README.TXT). Replace both
+matching shell and helper when upgrading; preserve configured INI/batch files.
+The saver binaries and historical accepted display-package pins are unchanged.
+
+[Keyboard candidate](../src/tandyk3/README.md) includes first-party patches,
+probes and a guarded installer, alongside the DDK-derived runtime with its
+attribution/rights notice. Seventeen physical raw press/release pairs matched;
+Windows translation, modifier behavior and Hold-to-Start are not physically
+qualified. Hold-to-Start defaults to the supported real-mode Tandy ROM and
+actually loaded compatible driver. It is not a general Scroll Lock override.
+
+The [splash-only updater](../examples/WXTSPL/README.TXT) preserves display
+components and unrelated settings. [Hill wallpaper](../examples/HILLS/README.TXT)
+uses normal Windows desktop handling with measured bitmap-memory cost.
+[XTEyes](../examples/XTEYES/README.TXT) is an original bounded GDI pointer toy.
+Each component records its native emulator coverage and physical limits.
+
+Physical reports confirm friendly-name browsing and all three selectable savers,
+with Maze slow. The later Browse redraw changes and new Hold behavior have no
+instrumented physical acceptance. Emulator cycle presets are not physical MHz.
+
+## Retained Tandy Start 10 snapshot
+
+The following documents the earlier 10 delivery. Its hashes, upgrade recipe
+and test evidence are historical; use the current guides above for 14.
 
 Tandy Start 10 source and matching first-party runtimes are included in this
 branch. Start / System / Screen saver offers None, Matrix, Maze and Starfield,
@@ -51,12 +101,12 @@ the preserved input observer/Matrix and, for the DOS artwork, the exact
 See the [component guide](../examples/TSHELL/README.MD); never overwrite a
 configured launcher or bypass the shared-memory reservation.
 
-[Current verification](../examples/TSHELL/TESTS.MD) separates fifteen
+[Version 10 verification](../examples/TSHELL/TESTS.MD) separates fifteen
 integrated cases using TSHELL 05/Maze 12/Starfield 08 from three fresh targeted
 runs after the final Starfield 10 cursor correction. Earlier 06/08/09 evidence
 remains historical. No full old suite or physical acceptance is claimed anew.
 
-Current SHA-256 identities:
+Version 10 SHA-256 identities:
 - TSHELL.EXE, 48,547 bytes:
   `d87142ac16b615dc1a696976478db2596030b3d4b61e445eb48f2f84aa893cfa`.
 - MAZE.EXE, 23,215 bytes:
