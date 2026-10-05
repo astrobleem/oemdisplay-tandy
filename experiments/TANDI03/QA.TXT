@@ -1,0 +1,67 @@
+TANDINATOR 0.3 - DATABASE EXPANSION QA
+=====================================
+
+Playable data: 256 characters, 130 questions, 37118 bytes.
+Compiler/format/corruption suite: 53/53 passed.
+The original BASE128 source and runtime are preserved byte-for-byte.
+The shared scoring engine, DB reader, artwork and normal UI are unchanged.
+Only the explicit GUI self-test gained a configurable TestTarget name.
+
+MEASURED SIMULATION RESULTS
+---------------------------
+Every run uses the actual C89 runtime engine. A test case may reject up to
+10 wrong guesses; the UI has no such rejection limit. First-guess and
+eventual recovery are different measures.
+matrix_exact: 235/256 first; 256/256 eventual.
+  Added profiles: 107/128 first; 128/128 eventual.
+  Mean questions, all/added: 14.129/19.023.
+uncertain_soft: 2696/3072 first; 3061/3072 eventual.
+  Added profiles: 1160/1536 first; 1525/1536 eventual.
+  Mean questions, all/added: 17.251/21.867.
+mixed_noise: 2095/3072 first; 2881/3072 eventual.
+  Added profiles: 790/1536 first; 1359/1536 eventual.
+  Mean questions, all/added: 19.38/22.999.
+single_flip_each_early_position: 1722/2560 first; 2534/2560 eventual.
+  Added profiles: 779/1280 first; 1254/1280 eventual.
+  Mean questions, all/added: 17.24/22.202.
+
+Uncertain-soft uses 15% unknown and 30% softened definite answers.
+Mixed-noise uses 15% unknown, 5% reversals, and 25% softened answers.
+Each uses 12 deterministic seeds per entry. Single-flip cases separately
+perturb one of the first ten positions. These are synthetic stress cases,
+not measured human accuracy or a claim that every noisy game succeeds.
+
+Sparse independent diagnostic: 4/19 first; 15/19 eventual.
+Only specifically source-grounded facts are supplied; all other responses
+are UNKNOWN. Some cases have too little information to identify a person.
+This selected, manually authored fixture is not a blind accuracy estimate.
+
+FACTUAL COVERAGE AND AMBIGUITIES
+--------------------------------
+Expanded matrix UNKNOWN: 39.41%.
+Added-profile UNKNOWN: 77.16%.
+Legacy cell corrections: 53.
+Exact duplicate profiles: 0.
+Pairs with no opposing known trait: 200.
+A difference involving UNKNOWN is not a decisive distinction. Uniqueness
+and successful matrix playback do not establish factual correctness.
+Evidence tiers and source-linked changes are in data/COVERAGE.JSON and
+data/CHANGES.JSON. Whole-matrix factual verification is NOT claimed.
+
+REAL WINDOWS 3.0 EMULATOR COVERAGE
+----------------------------------
+Fresh 320x200x16, 640x200x2 and 640x200x4 runs use the final 256-entry DAT.
+They exercise added-character lookup/guessing, mouse and keyboard answers,
+Tab, help/debug overlays, explicit rejection, replay, dirty repaint,
+bounded pupils, focus restoration, and three different clean exit paths.
+Separate tests cover the preserved 128 data, 2,000x256 synthetic limit,
+and a damaged DAT. Strict configuration: normal core, 8086_prefetch,
+640 KB conventional memory, no XMS/EMS/UMB/FPU, Windows real mode.
+All renderer assertions remain pixel-exact. GetWinFlags is 64.
+
+LIMITS
+------
+The same-task focus test does not prove physical cross-task Alt-Tab.
+No physical Tandy/CF installation, human playtest or calibrated hardware
+latency test occurred. Remaining profile sparsity and interpretation
+differences are documented, not disguised by forcing synthetic facts.

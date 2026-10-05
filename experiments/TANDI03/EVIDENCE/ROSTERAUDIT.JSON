@@ -1,0 +1,3075 @@
+{
+  "source_sha256": "dc46b91ef521711f97326d82e32aa766c01d6951572a20c873e8ec608424f8ce",
+  "baseline_sha256": "06d8bce4c3aab93f9271f566f42b5fdcbcc51afcfc374ae86715597996c9cf4d",
+  "characters": 256,
+  "questions": 130,
+  "cohorts": {
+    "all": {
+      "characters": 256,
+      "cells": 33280,
+      "code_counts": {
+        "0": 16383,
+        "4": 3674,
+        "3": 105,
+        "2": 13115,
+        "1": 3
+      },
+      "unknown_percent": 39.41
+    },
+    "original": {
+      "characters": 128,
+      "cells": 16640,
+      "code_counts": {
+        "0": 14067,
+        "4": 2191,
+        "3": 103,
+        "2": 276,
+        "1": 3
+      },
+      "unknown_percent": 1.66
+    },
+    "added": {
+      "characters": 128,
+      "cells": 16640,
+      "code_counts": {
+        "0": 2316,
+        "4": 1483,
+        "2": 12839,
+        "3": 2
+      },
+      "unknown_percent": 77.16
+    }
+  },
+  "identical_profiles": [],
+  "normalized_duplicate_names": [],
+  "near_pairs_by_definite_opposition": [
+    {
+      "a": "peppa_pig",
+      "b": "bluey_heeler",
+      "hamming": 4,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "lebron_james",
+      "b": "cristiano_ronaldo",
+      "hamming": 4,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 37,
+      "discriminators": []
+    },
+    {
+      "a": "cinderella",
+      "b": "aurora_sleeping_beauty",
+      "hamming": 5,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 28,
+      "discriminators": []
+    },
+    {
+      "a": "zeus_greek_myth",
+      "b": "poseidon_greek_myth",
+      "hamming": 5,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "cristiano_ronaldo",
+      "b": "lionel_messi",
+      "hamming": 5,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 37,
+      "discriminators": []
+    },
+    {
+      "a": "steve_jobs",
+      "b": "barack_obama",
+      "hamming": 5,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "wolverine_logan",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "daredevil_matt_murdock",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 27,
+      "discriminators": []
+    },
+    {
+      "a": "scarlet_witch_wanda_maximoff",
+      "b": "black_widow_natasha_romanoff",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "scarlet_witch_wanda_maximoff",
+      "b": "captain_marvel_carol_danvers",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "wolverine_logan",
+      "b": "daredevil_matt_murdock",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 27,
+      "discriminators": []
+    },
+    {
+      "a": "bert",
+      "b": "ernie",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "zeus_greek_myth",
+      "b": "thor_norse_myth",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "athena_greek_myth",
+      "b": "medusa_greek_myth",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "rosa_parks",
+      "b": "malala_yousafzai",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "lex_luthor",
+      "b": "penguin_oswald_cobblepot",
+      "hamming": 7,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 27,
+      "discriminators": []
+    },
+    {
+      "a": "tiana",
+      "b": "mirabel_madrigal",
+      "hamming": 7,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "hercules_greek_myth",
+      "b": "thor_norse_myth",
+      "hamming": 7,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 18,
+      "discriminators": []
+    },
+    {
+      "a": "william_shakespeare",
+      "b": "wolfgang_amadeus_mozart",
+      "hamming": 7,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "ant_man_scott_lang",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "green_lantern_hal_jordan",
+      "b": "wolverine_logan",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "wolverine_logan",
+      "b": "ant_man_scott_lang",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "black_widow_natasha_romanoff",
+      "b": "captain_marvel_carol_danvers",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "black_widow_natasha_romanoff",
+      "b": "storm_ororo_munroe",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "arrietty",
+      "b": "katniss_everdeen",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "ernie",
+      "b": "oscar_the_grouch",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "doctor_strange_stephen_strange",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "doctor_strange_stephen_strange",
+      "b": "wolverine_logan",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "rapunzel",
+      "b": "moana",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "moana",
+      "b": "mirabel_madrigal",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "moana",
+      "b": "dora_explorer",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "cookie_monster",
+      "b": "ernie",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "big_bird",
+      "b": "ernie",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 14,
+      "discriminators": []
+    },
+    {
+      "a": "ernie",
+      "b": "kermit_the_frog",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "doraemon",
+      "b": "astro_boy",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "poseidon_greek_myth",
+      "b": "thor_norse_myth",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "michael_jordan",
+      "b": "steve_jobs",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "lebron_james",
+      "b": "steve_jobs",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "simone_biles",
+      "b": "malala_yousafzai",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "usain_bolt",
+      "b": "steve_jobs",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "green_lantern_hal_jordan",
+      "b": "ant_man_scott_lang",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "green_lantern_hal_jordan",
+      "b": "daredevil_matt_murdock",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "ant_man_scott_lang",
+      "b": "daredevil_matt_murdock",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "rapunzel",
+      "b": "mirabel_madrigal",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "moana",
+      "b": "tiana",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "pocahontas",
+      "b": "san_princess_mononoke",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "stitch",
+      "b": "olaf",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 20,
+      "discriminators": []
+    },
+    {
+      "a": "bambi",
+      "b": "pinocchio",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 21,
+      "discriminators": []
+    },
+    {
+      "a": "mirabel_madrigal",
+      "b": "dora_explorer",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 22,
+      "discriminators": []
+    },
+    {
+      "a": "chihiro_ogino",
+      "b": "dora_explorer",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "elmo",
+      "b": "ernie",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "naruto_uzumaki",
+      "b": "monkey_d_luffy",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "hercules_greek_myth",
+      "b": "poseidon_greek_myth",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "zeus_greek_myth",
+      "b": "sun_wukong",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "sun_wukong",
+      "b": "anubis_egyptian_myth",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "sun_wukong",
+      "b": "thor_norse_myth",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "anubis_egyptian_myth",
+      "b": "thor_norse_myth",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "william_shakespeare",
+      "b": "galileo_galilei",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "ludwig_van_beethoven",
+      "b": "vincent_van_gogh",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "charles_darwin",
+      "b": "galileo_galilei",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "galileo_galilei",
+      "b": "vincent_van_gogh",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "oprah_winfrey",
+      "b": "malala_yousafzai",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "obi_wan_kenobi",
+      "b": "rocky_balboa",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "aquaman_arthur_curry",
+      "b": "wolverine_logan",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "penguin_oswald_cobblepot",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "green_lantern_hal_jordan",
+      "b": "doctor_strange_stephen_strange",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "penguin_oswald_cobblepot",
+      "b": "daredevil_matt_murdock",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "cyborg_victor_stone",
+      "b": "naruto_uzumaki",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "cyborg_victor_stone",
+      "b": "monkey_d_luffy",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "doctor_strange_stephen_strange",
+      "b": "ant_man_scott_lang",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "doctor_strange_stephen_strange",
+      "b": "daredevil_matt_murdock",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "groot",
+      "b": "astro_boy",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "rapunzel",
+      "b": "tiana",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "moana",
+      "b": "chihiro_ogino",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "tiana",
+      "b": "dora_explorer",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "elmo",
+      "b": "big_bird",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "bert",
+      "b": "kermit_the_frog",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "hercules_greek_myth",
+      "b": "zeus_greek_myth",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "poseidon_greek_myth",
+      "b": "sun_wukong",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "wolfgang_amadeus_mozart",
+      "b": "galileo_galilei",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "rosa_parks",
+      "b": "simone_biles",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "cristiano_ronaldo",
+      "b": "steve_jobs",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "simone_biles",
+      "b": "oprah_winfrey",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "jackie_chan",
+      "b": "barack_obama",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "lex_luthor",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "cyborg_victor_stone",
+      "b": "deadpool_wade_wilson",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "rocket_raccoon",
+      "b": "doraemon",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "rapunzel",
+      "b": "dora_explorer",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "dumbo",
+      "b": "thor_norse_myth",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "ponyo",
+      "b": "bluey_heeler",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 21,
+      "discriminators": []
+    },
+    {
+      "a": "elmo",
+      "b": "bert",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "big_bird",
+      "b": "kermit_the_frog",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "william_shakespeare",
+      "b": "jackie_chan",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 31,
+      "discriminators": []
+    },
+    {
+      "a": "ludwig_van_beethoven",
+      "b": "galileo_galilei",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "taylor_swift",
+      "b": "malala_yousafzai",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "aquaman_arthur_curry",
+      "b": "flash_barry_allen",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "penguin_oswald_cobblepot",
+      "b": "wolverine_logan",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "tiana",
+      "b": "chihiro_ogino",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "olaf",
+      "b": "no_face",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 18,
+      "discriminators": []
+    },
+    {
+      "a": "howl_jenkins_pendragon",
+      "b": "forrest_gump",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    }
+  ],
+  "zero_opposing_pairs": [
+    {
+      "a": "elsa",
+      "b": "mirabel_madrigal",
+      "hamming": 106,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "anna",
+      "b": "mirabel_madrigal",
+      "hamming": 105,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "luke_skywalker",
+      "b": "obi_wan_kenobi",
+      "hamming": 102,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 27,
+      "discriminators": []
+    },
+    {
+      "a": "general_grievous",
+      "b": "stitch",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 20,
+      "discriminators": []
+    },
+    {
+      "a": "general_grievous",
+      "b": "olaf",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 19,
+      "discriminators": []
+    },
+    {
+      "a": "general_grievous",
+      "b": "lightning_mcqueen",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 21,
+      "discriminators": []
+    },
+    {
+      "a": "obi_wan_kenobi",
+      "b": "rocky_balboa",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "ahsoka_tano",
+      "b": "totoro",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "bb8",
+      "b": "hatsune_miku",
+      "hamming": 23,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 10,
+      "discriminators": []
+    },
+    {
+      "a": "aquaman_arthur_curry",
+      "b": "flash_barry_allen",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "aquaman_arthur_curry",
+      "b": "lex_luthor",
+      "hamming": 19,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 21,
+      "discriminators": []
+    },
+    {
+      "a": "aquaman_arthur_curry",
+      "b": "penguin_oswald_cobblepot",
+      "hamming": 20,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 20,
+      "discriminators": []
+    },
+    {
+      "a": "aquaman_arthur_curry",
+      "b": "doctor_strange_stephen_strange",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "aquaman_arthur_curry",
+      "b": "wolverine_logan",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "aquaman_arthur_curry",
+      "b": "ant_man_scott_lang",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 22,
+      "discriminators": []
+    },
+    {
+      "a": "aquaman_arthur_curry",
+      "b": "daredevil_matt_murdock",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "aquaman_arthur_curry",
+      "b": "doraemon",
+      "hamming": 19,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 19,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "lex_luthor",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "penguin_oswald_cobblepot",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "doctor_strange_stephen_strange",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "wolverine_logan",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "ant_man_scott_lang",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "flash_barry_allen",
+      "b": "daredevil_matt_murdock",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 27,
+      "discriminators": []
+    },
+    {
+      "a": "green_lantern_hal_jordan",
+      "b": "penguin_oswald_cobblepot",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "green_lantern_hal_jordan",
+      "b": "doctor_strange_stephen_strange",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "green_lantern_hal_jordan",
+      "b": "wolverine_logan",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "green_lantern_hal_jordan",
+      "b": "ant_man_scott_lang",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "green_lantern_hal_jordan",
+      "b": "daredevil_matt_murdock",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "lex_luthor",
+      "b": "penguin_oswald_cobblepot",
+      "hamming": 7,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 27,
+      "discriminators": []
+    },
+    {
+      "a": "lex_luthor",
+      "b": "wolverine_logan",
+      "hamming": 14,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "lex_luthor",
+      "b": "daredevil_matt_murdock",
+      "hamming": 14,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "penguin_oswald_cobblepot",
+      "b": "wolverine_logan",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "penguin_oswald_cobblepot",
+      "b": "ant_man_scott_lang",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 22,
+      "discriminators": []
+    },
+    {
+      "a": "penguin_oswald_cobblepot",
+      "b": "daredevil_matt_murdock",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "cyborg_victor_stone",
+      "b": "deadpool_wade_wilson",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "cyborg_victor_stone",
+      "b": "naruto_uzumaki",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "cyborg_victor_stone",
+      "b": "monkey_d_luffy",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "doctor_strange_stephen_strange",
+      "b": "wolverine_logan",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "doctor_strange_stephen_strange",
+      "b": "ant_man_scott_lang",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "doctor_strange_stephen_strange",
+      "b": "daredevil_matt_murdock",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "scarlet_witch_wanda_maximoff",
+      "b": "black_widow_natasha_romanoff",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "scarlet_witch_wanda_maximoff",
+      "b": "captain_marvel_carol_danvers",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "wolverine_logan",
+      "b": "ant_man_scott_lang",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "wolverine_logan",
+      "b": "daredevil_matt_murdock",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 27,
+      "discriminators": []
+    },
+    {
+      "a": "black_widow_natasha_romanoff",
+      "b": "captain_marvel_carol_danvers",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "black_widow_natasha_romanoff",
+      "b": "storm_ororo_munroe",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "deadpool_wade_wilson",
+      "b": "naruto_uzumaki",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "deadpool_wade_wilson",
+      "b": "monkey_d_luffy",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "ant_man_scott_lang",
+      "b": "daredevil_matt_murdock",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "groot",
+      "b": "loki_marvel",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 21,
+      "discriminators": []
+    },
+    {
+      "a": "groot",
+      "b": "astro_boy",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "rocket_raccoon",
+      "b": "loki_marvel",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 21,
+      "discriminators": []
+    },
+    {
+      "a": "rocket_raccoon",
+      "b": "doraemon",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "rocket_raccoon",
+      "b": "astro_boy",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 22,
+      "discriminators": []
+    },
+    {
+      "a": "loki_marvel",
+      "b": "doraemon",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 20,
+      "discriminators": []
+    },
+    {
+      "a": "loki_marvel",
+      "b": "astro_boy",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 20,
+      "discriminators": []
+    },
+    {
+      "a": "cinderella",
+      "b": "aurora_sleeping_beauty",
+      "hamming": 5,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 28,
+      "discriminators": []
+    },
+    {
+      "a": "rapunzel",
+      "b": "moana",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "rapunzel",
+      "b": "tiana",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "rapunzel",
+      "b": "mirabel_madrigal",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "rapunzel",
+      "b": "dora_explorer",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "moana",
+      "b": "tiana",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 24,
+      "discriminators": []
+    },
+    {
+      "a": "moana",
+      "b": "mirabel_madrigal",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "moana",
+      "b": "chihiro_ogino",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "moana",
+      "b": "dora_explorer",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "tiana",
+      "b": "mirabel_madrigal",
+      "hamming": 7,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "tiana",
+      "b": "chihiro_ogino",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "tiana",
+      "b": "dora_explorer",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "pocahontas",
+      "b": "san_princess_mononoke",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "stitch",
+      "b": "olaf",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 20,
+      "discriminators": []
+    },
+    {
+      "a": "stitch",
+      "b": "no_face",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 18,
+      "discriminators": []
+    },
+    {
+      "a": "dumbo",
+      "b": "hercules_greek_myth",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "dumbo",
+      "b": "zeus_greek_myth",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 14,
+      "discriminators": []
+    },
+    {
+      "a": "dumbo",
+      "b": "poseidon_greek_myth",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 13,
+      "discriminators": []
+    },
+    {
+      "a": "dumbo",
+      "b": "anubis_egyptian_myth",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 14,
+      "discriminators": []
+    },
+    {
+      "a": "dumbo",
+      "b": "thor_norse_myth",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "bambi",
+      "b": "pinocchio",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 21,
+      "discriminators": []
+    },
+    {
+      "a": "bambi",
+      "b": "zeus_greek_myth",
+      "hamming": 20,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 13,
+      "discriminators": []
+    },
+    {
+      "a": "bambi",
+      "b": "poseidon_greek_myth",
+      "hamming": 19,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 13,
+      "discriminators": []
+    },
+    {
+      "a": "bambi",
+      "b": "sun_wukong",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "bambi",
+      "b": "anubis_egyptian_myth",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "bambi",
+      "b": "thor_norse_myth",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "pinocchio",
+      "b": "zeus_greek_myth",
+      "hamming": 18,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 14,
+      "discriminators": []
+    },
+    {
+      "a": "pinocchio",
+      "b": "poseidon_greek_myth",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 14,
+      "discriminators": []
+    },
+    {
+      "a": "pinocchio",
+      "b": "sun_wukong",
+      "hamming": 14,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 18,
+      "discriminators": []
+    },
+    {
+      "a": "pinocchio",
+      "b": "anubis_egyptian_myth",
+      "hamming": 20,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 13,
+      "discriminators": []
+    },
+    {
+      "a": "pinocchio",
+      "b": "thor_norse_myth",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "olaf",
+      "b": "no_face",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 18,
+      "discriminators": []
+    },
+    {
+      "a": "mirabel_madrigal",
+      "b": "dora_explorer",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 22,
+      "discriminators": []
+    },
+    {
+      "a": "chihiro_ogino",
+      "b": "dora_explorer",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "ponyo",
+      "b": "bluey_heeler",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 21,
+      "discriminators": []
+    },
+    {
+      "a": "no_face",
+      "b": "peppa_pig",
+      "hamming": 22,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "no_face",
+      "b": "bluey_heeler",
+      "hamming": 20,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "no_face",
+      "b": "lightning_mcqueen",
+      "hamming": 20,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "howl_jenkins_pendragon",
+      "b": "forrest_gump",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "nausicaa",
+      "b": "sailor_moon",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 21,
+      "discriminators": []
+    },
+    {
+      "a": "arrietty",
+      "b": "hatsune_miku",
+      "hamming": 22,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 13,
+      "discriminators": []
+    },
+    {
+      "a": "arrietty",
+      "b": "katniss_everdeen",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "elmo",
+      "b": "big_bird",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "elmo",
+      "b": "bert",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "elmo",
+      "b": "ernie",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "elmo",
+      "b": "kermit_the_frog",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "cookie_monster",
+      "b": "bert",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 14,
+      "discriminators": []
+    },
+    {
+      "a": "cookie_monster",
+      "b": "ernie",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "cookie_monster",
+      "b": "godzilla",
+      "hamming": 21,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 12,
+      "discriminators": []
+    },
+    {
+      "a": "big_bird",
+      "b": "ernie",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 14,
+      "discriminators": []
+    },
+    {
+      "a": "big_bird",
+      "b": "kermit_the_frog",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "big_bird",
+      "b": "oscar_the_grouch",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 14,
+      "discriminators": []
+    },
+    {
+      "a": "bert",
+      "b": "ernie",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "bert",
+      "b": "kermit_the_frog",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "bert",
+      "b": "oscar_the_grouch",
+      "hamming": 14,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 14,
+      "discriminators": []
+    },
+    {
+      "a": "ernie",
+      "b": "kermit_the_frog",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "ernie",
+      "b": "oscar_the_grouch",
+      "hamming": 8,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "ernie",
+      "b": "godzilla",
+      "hamming": 20,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 10,
+      "discriminators": []
+    },
+    {
+      "a": "kermit_the_frog",
+      "b": "oscar_the_grouch",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "miss_piggy",
+      "b": "hello_kitty",
+      "hamming": 19,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 12,
+      "discriminators": []
+    },
+    {
+      "a": "peppa_pig",
+      "b": "bluey_heeler",
+      "hamming": 4,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 25,
+      "discriminators": []
+    },
+    {
+      "a": "naruto_uzumaki",
+      "b": "monkey_d_luffy",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 26,
+      "discriminators": []
+    },
+    {
+      "a": "doraemon",
+      "b": "astro_boy",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 23,
+      "discriminators": []
+    },
+    {
+      "a": "hello_kitty",
+      "b": "godzilla",
+      "hamming": 18,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 13,
+      "discriminators": []
+    },
+    {
+      "a": "hatsune_miku",
+      "b": "katniss_everdeen",
+      "hamming": 26,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 12,
+      "discriminators": []
+    },
+    {
+      "a": "hatsune_miku",
+      "b": "eleven_stranger_things",
+      "hamming": 24,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 12,
+      "discriminators": []
+    },
+    {
+      "a": "doom_slayer",
+      "b": "wario",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 21,
+      "discriminators": []
+    },
+    {
+      "a": "doom_slayer",
+      "b": "scorpion_mortal_kombat",
+      "hamming": 14,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 22,
+      "discriminators": []
+    },
+    {
+      "a": "doom_slayer",
+      "b": "sephiroth",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 22,
+      "discriminators": []
+    },
+    {
+      "a": "wario",
+      "b": "cloud_strife",
+      "hamming": 14,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 22,
+      "discriminators": []
+    },
+    {
+      "a": "wario",
+      "b": "sephiroth",
+      "hamming": 14,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 22,
+      "discriminators": []
+    },
+    {
+      "a": "wicked_witch_west",
+      "b": "athena_greek_myth",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 14,
+      "discriminators": []
+    },
+    {
+      "a": "king_kong",
+      "b": "zeus_greek_myth",
+      "hamming": 20,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 13,
+      "discriminators": []
+    },
+    {
+      "a": "king_kong",
+      "b": "poseidon_greek_myth",
+      "hamming": 21,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 12,
+      "discriminators": []
+    },
+    {
+      "a": "king_kong",
+      "b": "anubis_egyptian_myth",
+      "hamming": 20,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 13,
+      "discriminators": []
+    },
+    {
+      "a": "king_kong",
+      "b": "thor_norse_myth",
+      "hamming": 20,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 13,
+      "discriminators": []
+    },
+    {
+      "a": "hercules_greek_myth",
+      "b": "zeus_greek_myth",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "hercules_greek_myth",
+      "b": "poseidon_greek_myth",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "hercules_greek_myth",
+      "b": "anubis_egyptian_myth",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "hercules_greek_myth",
+      "b": "thor_norse_myth",
+      "hamming": 7,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 18,
+      "discriminators": []
+    },
+    {
+      "a": "zeus_greek_myth",
+      "b": "poseidon_greek_myth",
+      "hamming": 5,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "zeus_greek_myth",
+      "b": "sun_wukong",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "zeus_greek_myth",
+      "b": "thor_norse_myth",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "athena_greek_myth",
+      "b": "medusa_greek_myth",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "poseidon_greek_myth",
+      "b": "sun_wukong",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 16,
+      "discriminators": []
+    },
+    {
+      "a": "poseidon_greek_myth",
+      "b": "thor_norse_myth",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "sun_wukong",
+      "b": "anubis_egyptian_myth",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "sun_wukong",
+      "b": "thor_norse_myth",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 17,
+      "discriminators": []
+    },
+    {
+      "a": "anubis_egyptian_myth",
+      "b": "thor_norse_myth",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 15,
+      "discriminators": []
+    },
+    {
+      "a": "william_shakespeare",
+      "b": "wolfgang_amadeus_mozart",
+      "hamming": 7,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "william_shakespeare",
+      "b": "galileo_galilei",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "william_shakespeare",
+      "b": "neil_armstrong",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 31,
+      "discriminators": []
+    },
+    {
+      "a": "william_shakespeare",
+      "b": "michael_jordan",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 31,
+      "discriminators": []
+    },
+    {
+      "a": "william_shakespeare",
+      "b": "pele",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 31,
+      "discriminators": []
+    },
+    {
+      "a": "william_shakespeare",
+      "b": "usain_bolt",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "william_shakespeare",
+      "b": "jackie_chan",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 31,
+      "discriminators": []
+    },
+    {
+      "a": "william_shakespeare",
+      "b": "barack_obama",
+      "hamming": 13,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "ludwig_van_beethoven",
+      "b": "galileo_galilei",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "ludwig_van_beethoven",
+      "b": "napoleon_bonaparte",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "ludwig_van_beethoven",
+      "b": "winston_churchill",
+      "hamming": 14,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "ludwig_van_beethoven",
+      "b": "vincent_van_gogh",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "ludwig_van_beethoven",
+      "b": "jackie_chan",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 31,
+      "discriminators": []
+    },
+    {
+      "a": "ludwig_van_beethoven",
+      "b": "steve_jobs",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "ludwig_van_beethoven",
+      "b": "barack_obama",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "wolfgang_amadeus_mozart",
+      "b": "galileo_galilei",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "wolfgang_amadeus_mozart",
+      "b": "neil_armstrong",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 31,
+      "discriminators": []
+    },
+    {
+      "a": "wolfgang_amadeus_mozart",
+      "b": "jackie_chan",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 31,
+      "discriminators": []
+    },
+    {
+      "a": "wolfgang_amadeus_mozart",
+      "b": "steve_jobs",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "wolfgang_amadeus_mozart",
+      "b": "barack_obama",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "charles_darwin",
+      "b": "galileo_galilei",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "charles_darwin",
+      "b": "napoleon_bonaparte",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "charles_darwin",
+      "b": "jackie_chan",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "galileo_galilei",
+      "b": "napoleon_bonaparte",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "galileo_galilei",
+      "b": "vincent_van_gogh",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "galileo_galilei",
+      "b": "neil_armstrong",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "galileo_galilei",
+      "b": "jackie_chan",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "napoleon_bonaparte",
+      "b": "winston_churchill",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 35,
+      "discriminators": []
+    },
+    {
+      "a": "napoleon_bonaparte",
+      "b": "vincent_van_gogh",
+      "hamming": 15,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "napoleon_bonaparte",
+      "b": "michael_jordan",
+      "hamming": 18,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "napoleon_bonaparte",
+      "b": "usain_bolt",
+      "hamming": 20,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "napoleon_bonaparte",
+      "b": "jackie_chan",
+      "hamming": 19,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 31,
+      "discriminators": []
+    },
+    {
+      "a": "napoleon_bonaparte",
+      "b": "steve_jobs",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 31,
+      "discriminators": []
+    },
+    {
+      "a": "napoleon_bonaparte",
+      "b": "barack_obama",
+      "hamming": 16,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "queen_victoria",
+      "b": "simone_biles",
+      "hamming": 18,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "queen_victoria",
+      "b": "taylor_swift",
+      "hamming": 21,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "winston_churchill",
+      "b": "michael_jordan",
+      "hamming": 17,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "winston_churchill",
+      "b": "pele",
+      "hamming": 21,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 31,
+      "discriminators": []
+    },
+    {
+      "a": "winston_churchill",
+      "b": "usain_bolt",
+      "hamming": 19,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 30,
+      "discriminators": []
+    },
+    {
+      "a": "winston_churchill",
+      "b": "steve_jobs",
+      "hamming": 14,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "martin_luther_king_jr",
+      "b": "neil_armstrong",
+      "hamming": 14,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "rosa_parks",
+      "b": "simone_biles",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "rosa_parks",
+      "b": "malala_yousafzai",
+      "hamming": 6,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "michael_jordan",
+      "b": "steve_jobs",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "lebron_james",
+      "b": "cristiano_ronaldo",
+      "hamming": 4,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 37,
+      "discriminators": []
+    },
+    {
+      "a": "lebron_james",
+      "b": "steve_jobs",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 33,
+      "discriminators": []
+    },
+    {
+      "a": "cristiano_ronaldo",
+      "b": "lionel_messi",
+      "hamming": 5,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 37,
+      "discriminators": []
+    },
+    {
+      "a": "cristiano_ronaldo",
+      "b": "steve_jobs",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "simone_biles",
+      "b": "oprah_winfrey",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "simone_biles",
+      "b": "malala_yousafzai",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "usain_bolt",
+      "b": "steve_jobs",
+      "hamming": 9,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "jackie_chan",
+      "b": "barack_obama",
+      "hamming": 11,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "taylor_swift",
+      "b": "malala_yousafzai",
+      "hamming": 12,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 32,
+      "discriminators": []
+    },
+    {
+      "a": "steve_jobs",
+      "b": "barack_obama",
+      "hamming": 5,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    },
+    {
+      "a": "oprah_winfrey",
+      "b": "malala_yousafzai",
+      "hamming": 10,
+      "opposing_known": 0,
+      "definite_opposites": 0,
+      "known_overlap": 34,
+      "discriminators": []
+    }
+  ],
+  "baseline_changes": [
+    {
+      "character": "bowser",
+      "question": "adventurer",
+      "old": 4,
+      "new": 2
+    },
+    {
+      "character": "bowser",
+      "question": "quest",
+      "old": 4,
+      "new": 2
+    },
+    {
+      "character": "link",
+      "question": "big_ears",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "princess_zelda",
+      "question": "big_ears",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "sonic_the_hedgehog",
+      "question": "young",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "sonic_the_hedgehog",
+      "question": "flies",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "tails",
+      "question": "science",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "knuckles",
+      "question": "young",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "knuckles",
+      "question": "flies",
+      "old": 0,
+      "new": 2
+    },
+    {
+      "character": "kirby",
+      "question": "young",
+      "old": 3,
+      "new": 2
+    },
+    {
+      "character": "pikachu",
+      "question": "hero",
+      "old": 4,
+      "new": 2
+    },
+    {
+      "character": "pikachu",
+      "question": "sidekick",
+      "old": 4,
+      "new": 2
+    },
+    {
+      "character": "pikachu",
+      "question": "team",
+      "old": 4,
+      "new": 2
+    },
+    {
+      "character": "samus_aran",
+      "question": "red",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "samus_aran",
+      "question": "yellow",
+      "old": 0,
+      "new": 2
+    },
+    {
+      "character": "samus_aran",
+      "question": "gloves",
+      "old": 0,
+      "new": 2
+    },
+    {
+      "character": "crash_bandicoot",
+      "question": "tail",
+      "old": 4,
+      "new": 0
+    },
+    {
+      "character": "crash_bandicoot",
+      "question": "sibling",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "kratos",
+      "question": "japanese",
+      "old": 4,
+      "new": 0
+    },
+    {
+      "character": "isabelle",
+      "question": "sibling",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "tweety",
+      "question": "young",
+      "old": 4,
+      "new": 2
+    },
+    {
+      "character": "batman",
+      "question": "leader",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "batman",
+      "question": "tv",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "batman",
+      "question": "scientist",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "batman",
+      "question": "teacher",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "superman",
+      "question": "gloves",
+      "old": 3,
+      "new": 0
+    },
+    {
+      "character": "darth_vader",
+      "question": "vehicle",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "luke_skywalker",
+      "question": "leader",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "luke_skywalker",
+      "question": "gun",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "luke_skywalker",
+      "question": "vehicle",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "luke_skywalker",
+      "question": "teacher",
+      "old": 0,
+      "new": 2
+    },
+    {
+      "character": "yoda",
+      "question": "catchphrase",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "indiana_jones",
+      "question": "ordinary",
+      "old": 0,
+      "new": 2
+    },
+    {
+      "character": "sherlock_holmes",
+      "question": "ordinary",
+      "old": 0,
+      "new": 2
+    },
+    {
+      "character": "james_bond",
+      "question": "ordinary",
+      "old": 0,
+      "new": 2
+    },
+    {
+      "character": "harry_potter",
+      "question": "leader",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "harry_potter",
+      "question": "cape",
+      "old": 3,
+      "new": 4
+    },
+    {
+      "character": "harry_potter",
+      "question": "flies",
+      "old": 3,
+      "new": 4
+    },
+    {
+      "character": "harry_potter",
+      "question": "gadgets",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "harry_potter",
+      "question": "ball_sport",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "harry_potter",
+      "question": "fantasy",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "harry_potter",
+      "question": "teacher",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "hermione_granger",
+      "question": "gadgets",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "hermione_granger",
+      "question": "fantasy",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "hermione_granger",
+      "question": "teacher",
+      "old": 3,
+      "new": 2
+    },
+    {
+      "character": "hermione_granger",
+      "question": "peace",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "ron_weasley",
+      "question": "food",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "ron_weasley",
+      "question": "flies",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "ron_weasley",
+      "question": "ball_sport",
+      "old": 0,
+      "new": 3
+    },
+    {
+      "character": "ron_weasley",
+      "question": "vehicle",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "ron_weasley",
+      "question": "fantasy",
+      "old": 0,
+      "new": 4
+    },
+    {
+      "character": "dracula",
+      "question": "royal",
+      "old": 3,
+      "new": 0
+    },
+    {
+      "character": "paddington_bear",
+      "question": "ordinary",
+      "old": 0,
+      "new": 2
+    }
+  ],
+  "baseline_cell_changes": 53,
+  "added_questions": [
+    "born_before1970",
+    "puppet_tv"
+  ],
+  "interpretation": "Hamming differences involving UNKNOWN are not decisive distinctions. Similarity is not a fact audit. Source verification is separately reported."
+}

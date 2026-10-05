@@ -1,0 +1,121 @@
+{
+  "status": "ready_for_parent_review",
+  "qualification": "Experimental playable expansion; targeted factual review and emulator qualification, not a universal factual or human-accuracy signoff. Parent decides publication readiness.",
+  "source_sha256": "dc46b91ef521711f97326d82e32aa766c01d6951572a20c873e8ec608424f8ce",
+  "exe_sha256": "30c9f5ffd620bc189c42a492c9a02c3db355eb113031f20816b5f5f10715e066",
+  "database_sha256": "af01447c905e6419a2d9844c9ea250e02c49a132cec900b8d57063b00ff2498c",
+  "baseline_source_sha256": "06d8bce4c3aab93f9271f566f42b5fdcbcc51afcfc374ae86715597996c9cf4d",
+  "baseline_database_sha256": "8af110b129698f054ee9349b0fe84b5401b2b595852862e84f2c240fa4c4377d",
+  "baseline_exe_sha256": "addccc4271aee92a95ca5c53c18679a7c2c7019a1b96fcb471e2b6ba33bfeeca",
+  "characters": 256,
+  "questions": 130,
+  "database_bytes": 37118,
+  "runtime_bytes": 81869,
+  "first_guess_exact": 235,
+  "eventual_exact": 256,
+  "original_first_guess_exact": 128,
+  "legacy_trait_corrections": 53,
+  "zero_opposing_known_pairs": 200,
+  "evidence_counts": {
+    "characters": 256,
+    "cells": 33280,
+    "tiers": {
+      "legacy_general_unverified": 15985,
+      "derived_logical_complement": 941,
+      "unknown": 13115,
+      "reviewed_primary_diagnostic": 123,
+      "curated_general_unverified": 2941,
+      "reviewed_primary_interpretation": 18,
+      "reviewed_primary_claim": 150,
+      "reviewed_primary_excerpt": 7
+    }
+  },
+  "independent_diagnostic": {
+    "characters": 19,
+    "assessed_cells": 124,
+    "exact_matches": 124,
+    "opposing_known": 0,
+    "differences": [],
+    "limits": "Targeted and error-seeking, not blind or representative; a human has not played these cases."
+  },
+  "host_tests": {
+    "compiler_corruption": 53,
+    "curation_and_provenance": 1326,
+    "art_ui": 8,
+    "bounds_current": 166786,
+    "bounds_maximum": 2562256,
+    "asan_ubsan": "passed"
+  },
+  "emulator_runs": [
+    {
+      "mode": "320x200x16",
+      "actual_target": "Oscar the Grouch",
+      "returncode": 0,
+      "expected_error": false,
+      "exe_sha256": "30c9f5ffd620bc189c42a492c9a02c3db355eb113031f20816b5f5f10715e066",
+      "database_sha256": "af01447c905e6419a2d9844c9ea250e02c49a132cec900b8d57063b00ff2498c",
+      "WINFLAGS": 64
+    },
+    {
+      "mode": "640x200x2",
+      "actual_target": "Michael Jordan",
+      "returncode": 0,
+      "expected_error": false,
+      "exe_sha256": "30c9f5ffd620bc189c42a492c9a02c3db355eb113031f20816b5f5f10715e066",
+      "database_sha256": "af01447c905e6419a2d9844c9ea250e02c49a132cec900b8d57063b00ff2498c",
+      "WINFLAGS": 64
+    },
+    {
+      "mode": "640x200x4",
+      "actual_target": "General Grievous",
+      "returncode": 0,
+      "expected_error": false,
+      "exe_sha256": "30c9f5ffd620bc189c42a492c9a02c3db355eb113031f20816b5f5f10715e066",
+      "database_sha256": "af01447c905e6419a2d9844c9ea250e02c49a132cec900b8d57063b00ff2498c",
+      "WINFLAGS": 64
+    },
+    {
+      "mode": "320x200x16-base128",
+      "actual_target": "Mario",
+      "returncode": 0,
+      "expected_error": false,
+      "exe_sha256": "30c9f5ffd620bc189c42a492c9a02c3db355eb113031f20816b5f5f10715e066",
+      "database_sha256": "8af110b129698f054ee9349b0fe84b5401b2b595852862e84f2c240fa4c4377d",
+      "WINFLAGS": 64
+    },
+    {
+      "mode": "320x200x16-scale",
+      "actual_target": "Synthetic test 0000",
+      "returncode": 0,
+      "expected_error": false,
+      "exe_sha256": "30c9f5ffd620bc189c42a492c9a02c3db355eb113031f20816b5f5f10715e066",
+      "database_sha256": "d8ce8c9efbc1c10ec7d777528f74b40a3a3350e8069c8146eb45e8ee9b080241",
+      "WINFLAGS": 64
+    },
+    {
+      "mode": "320x200x16-corrupt",
+      "actual_target": "",
+      "returncode": 0,
+      "expected_error": true,
+      "exe_sha256": "30c9f5ffd620bc189c42a492c9a02c3db355eb113031f20816b5f5f10715e066",
+      "database_sha256": "f0dc3480570f82e5357cc4daba5002664e2c9e853306d4e110cb4a8499bc706b",
+      "WINFLAGS": 64
+    }
+  ],
+  "unchanged": [
+    "shared ENGINE.C",
+    "DB.C",
+    "TANDI.H",
+    "normal UI rendering and input",
+    "all native art bytes"
+  ],
+  "code_change": "Test-only configurable target name and metric; no normal-play algorithm or renderer changes.",
+  "remaining_limits": [
+    "New profiles remain sparse: 77.16% UNKNOWN.",
+    "200 pairs have no opposing known answer, often with different positive/unknown coverage.",
+    "One-wrong and two-wrong standard simulations have failures; all counts are reported.",
+    "Whole matrix is not independently verified; 18,926 cells remain general-knowledge/unverified, including legacy values.",
+    "No physical 8088 test, actual human playtest, or calibrated hardware latency measurement.",
+    "No publication or merge performed by this task."
+  ]
+}

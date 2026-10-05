@@ -1,0 +1,17 @@
+TANDINATOR 0.3 CHANGES
+======================
+
+128 additional identities; 2 new broad discriminators.
+Two explicit portrayal entries, such as Marvel/Norse Thor, are kept only
+when their version is labeled. Anakin was rejected as a duplicate Vader
+identity. Full alias/identity review is included in the audit evidence.
+53 targeted legacy fact/ambiguity corrections.
+Alien wording now specifies a nonhuman species rather than birthplace.
+Added profiles begin as UNKNOWN. Logical complements are tracked as
+inference. Direct source claims, interpretations and unverified general
+knowledge have separate coverage tiers. No cells were fabricated merely
+to make profiles unique. No proprietary Akinator records/API or GPL engine
+was imported. All new questions and representation are original curation.
+
+See QA.TXT for current measured first/eventual/noisy-answer results.
+The unmodified original 128 runtime is in BASE128 for recovery.
