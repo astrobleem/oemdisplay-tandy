@@ -1,0 +1,105 @@
+PREPXT - WINXT OWN-MEDIA PREPARATION
+=================================
+
+DOS 3.3 or later; 8086/8088; 640 KB conventional RAM. No Python, network,
+EMS, XMS, UMB or protected-mode runtime is needed on the DOS computer.
+Exit Windows completely before running it.
+
+Simple release-disk use (from its root):
+  A:
+  INSTALL
+
+If files are missing from the installed Windows directory:
+  INSTALL C:\WIN30SRC
+
+C:\WIN30SRC is a folder where YOU copied the required files from YOUR
+original Windows 3.0 disks. Files may still be SZDD-compressed; PREPXT
+expands them itself. It accepts the genuine names below and names whose
+last character is an underscore (for example CGASYS.FO_). It also accepts
+SZDD-compressed bytes stored under the uncompressed filename.
+
+Advanced direct invocation:
+  PREPXT WINXT C:\WINDOWS [media-dir1 [media-dir2 [media-dir3 [media-dir4]]]]
+
+The first argument is the release runtime folder. Relative paths work,
+including WINXT when the release is mounted as A: or B:. The second is the
+installed Windows folder. The helper searches the runtime folder, Windows
+root, Windows\SYSTEM (when present), then up to four additional directories.
+Use ordinary DOS 8.3 paths without spaces. Every source drive must remain
+mounted for the entire run; there is no floppy-swap prompt or network use.
+For one-floppy-drive systems, collect original support files on the hard
+disk before inserting the release disk. Sources are opened read-only.
+
+Required original files, of exactly the pinned Windows 3.0 versions:
+  CGA.GR2       CGALOGO.LGO   CGAFIX.FON    CGAOEM.FON
+  CGASYS.FON    EGAFIX.FON    EGAOEM.FON    EGASYS.FON
+
+Identical expanded content in more than one searched location is fine.
+Any corrupt/different-version candidate under a required name is refused,
+even if another location has a good copy. Nothing in Windows is replaced
+or repaired by PREPXT. A mismatch needs investigation, not forced copying.
+
+PREPXT checks all eight support hashes, derives TXTSYS.FON locally, and
+checks every fixed public runtime hash including MANIFEST.SHA. No original
+Windows file or font bytes are embedded in PREPXT. Support files are not
+optional and their provenance checks cannot be bypassed.
+
+After checking disk space, PREPXT asks you to type Y then Enter. N, an
+empty response, or Ctrl+C cancels. No output directory is created before
+all source checks and this confirmation succeed. Validation can take
+several minutes on an original-class CPU; progress is shown for each file.
+
+The only output location is fresh C:\WINXT. Existing directories OR files
+at that path are always refused. There is no overwrite or resume option.
+The complete folder is 46 files and 651,008 bytes for this pinned release.
+Actual disk space also includes allocation slack plus 128 KB headroom.
+The later installer separately checks the space needed for its backups.
+
+Each output is create-new only. Runtime sources are SHA-256 checked again
+while copied; all outputs are closed, reopened and byte-compared. The
+runnable INSTALL.BAT is withheld as INSTALL.NEW until its own verification
+finishes, then renamed as the last commit. No READY.TAG, PARTIAL.TAG,
+SHREADY.TAG or generated Windows launcher is created by PREPXT.
+
+If writing fails or power is lost, a partial C:\WINXT may remain. Do not
+use it. Review/remove that NEW incomplete folder before retrying. Keep an
+existing installation; PREPXT will never clear it for you. Input errors,
+missing files, low-space refusal and a declined confirmation leave no new
+C:\WINXT at all. PREPXT never starts Setup or Windows.
+
+After a successful preparation, at the DOS prompt:
+  C:
+  CD \WINXT
+  INSTALL C:\WINDOWS
+
+For a different Windows path, use that same path for both PREPXT and the
+subsequent INSTALL. The optional shell still uses the distribution's
+normal C:\WINDOWS / C:\WINXT layout. Existing guarded installation and
+Windows Setup continue to own installation. Experimental text mode
+remains opt-in and retains its documented character-corruption limitation.
+
+DEVELOPER BUILD (not needed by a DOS user)
+----------------------------------------
+Sources: PREPXT.C and XTPINS.H. CRLF line endings; DOS 8.3 names.
+Using your authorized Microsoft C toolchain, set PATH, INCLUDE
+and LIB to its BIN, INCLUDE and LIB directories, then run:
+  CL /AS /G0 /W3 PREPXT.C
+
+BUILD.BAT uses T:\BIN, T:\INCLUDE and T:\LIB. The reproducible local build
+mounts that repository as T: and this source folder as C: in DOSBox-X.
+/G0 selects 8086/8088 instructions; /AS selects the small memory model.
+No compiler tools, library archives, OS files, fonts or original media are
+packaged. The executable uses the existing legacy C runtime toolchain; no
+new license or redistribution grant is asserted here. XTPINS.H contains
+only names, lengths and cryptographic hashes, including the derived pin.
+
+Optional developer diagnostic:
+  PREPXT /SELFTEST
+This checks standard empty, abc and two-block SHA-256 vectors without
+reading sources or creating output. The same self-test runs on normal use.
+
+Validation uses DOSBox-X's 8086_prefetch core, 640 KB, no EMS/XMS/UMB/FPU.
+The internal DOS reports version 3.30; this is not a claim that a separately
+booted Microsoft MS-DOS 3.3 kernel or physical Tandy hardware was tested.
+RUNQA.PY and the TESTS directory are private developer fixtures/evidence;
+Python is not part of the DOS workflow. Do not publish private TESTS files.
