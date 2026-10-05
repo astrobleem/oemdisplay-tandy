@@ -1,0 +1,13 @@
+ORIGINAL 128-CHARACTER FALLBACK
+===============================
+This folder preserves the unmodified v0.2 TANDI.EXE and TANDY.DAT.
+Launch this copy for the original 128-character/128-question behavior.
+The expanded RUN folder is separate; these files do not install themselves.
+
+The v0.3 factual audit found several incorrect and uncertain legacy traits.
+They are corrected only in the expanded database. This fallback is retained
+for regression/recovery, not offered as more factually accurate.
+
+Do not copy the old database over the expanded database without making a
+backup. Both executables read TANDY.DAT beside their own EXE.
+Start Windows using your guarded WindowsXT launcher as usual.
