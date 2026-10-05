@@ -1,0 +1,13 @@
+{
+  "mounted_public_image": "40e93a1f7dcc0ed8d2485d48f2fb25a316fea9860c7da76b0ec8254e3d1ce0ec",
+  "image_unchanged": true,
+  "windows_unchanged": true,
+  "runtime_matches_private_stage": true,
+  "runtime_file_count": 46,
+  "cpu": "8086_prefetch",
+  "ram_kb": 640,
+  "ems": false,
+  "xms": false,
+  "umb": false,
+  "wall_seconds": 304.7089723879981
+}

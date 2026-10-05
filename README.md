@@ -42,41 +42,39 @@ binary or app. See the [mode table](#display-modes) and
 
 | What you want | Start here |
 | --- | --- |
-| Current drivers and optional Windows XT desktop | [One-folder WINXT source and staging guide](distributions/WINXT/README.MD): five TR5 graphics drivers, experimental text and Tandy Start 14. Supply your own Windows support files. |
+| GoTek, emulator or 720 KB floppy | [Windows XT disk image](tools/FLASHDISK/README.MD): current TR5 drivers, optional desktop and a DOS helper that gathers your own Windows files. No Python needed to install. |
+| Copy directly to CF/hard disk | [One-folder WINXT source and staging guide](distributions/WINXT/README.MD): the same current runtime, with optional host-side staging. |
 | Games and utilities to try on an existing setup | [TANDYLAB test pack](examples/TANDYLAB/README.MD): a separate, versioned app collection. Check individual component guides for newer work. |
 | Reproduce the older OEM installation | [Historical TANDY88 package](TANDY88.ZIP) and [its instructions](README.TXT). This is an older driver baseline, not the current WINXT kit. |
 
-### 1. Prepare the folder on a modern computer
+### 1. Mount the 720 KB disk and prepare Windows XT
 
-Start with a **backed-up, working Windows 3.0 installation**. Stock CGA is a
-useful starting point. The integrated shell expects `C:\WINDOWS` and
-`C:\WINXT`; the display installer also supports other Windows paths.
-DOS 3.3 or later is required. No Python or compiler runs on the Tandy.
+Start with a **backed-up, working Windows 3.0 installation** on DOS 3.3 or
+later. Download `WINXT720.IMG` (or the same image inside `WINXT720.ZIP`)
+using the [disk download/build guide](tools/FLASHDISK/README.MD). Select it in
+your GoTek or mount it as a **720 KB floppy** in your emulator. Boot your
+existing DOS system first: this is an installation data disk, not a boot disk.
+No 1.44 MB controller support or Python is needed on the Tandy.
 
-Clone this repository, or use **Code → Download ZIP**, and gather these
-eight files from your own supported **English Windows 3.0 media** into one
-directory:
+At a plain DOS prompt, outside Windows:
 
-```text
-CGA.GR2      CGALOGO.LGO
-CGASYS.FON   CGAFIX.FON   CGAOEM.FON
-EGASYS.FON   EGAFIX.FON   EGAOEM.FON
+```bat
+A:
+CD \
+INSTALL
 ```
 
-From the repository root, using Python 3, run:
+The DOS helper gathers and verifies matching support files from your own
+`C:\WINDOWS` and `SYSTEM` folder. If some files are missing, it lists them
+and stops; supply a directory copied from your own Windows 3.0 media with
+`INSTALL D:\WIN30SRC` (use your actual path). Original compressed files are
+accepted. After validation and your confirmation, it prepares a new
+`C:\WINXT` without changing Windows or overwriting an existing WINXT folder.
 
-```sh
-python3 distributions/WINXT/STAGE.PY --windows-files /path/to/windows30-files --out /path/to/new/WINXT
-```
-
-Use a **new output directory**. The staging tool accepts expanded files or
-their compressed SZDD originals, verifies exact hashes and prepares the
-text-mode font privately. A mismatch stops the process. Copy the resulting
-single `WINXT` folder to `C:\WINXT` on your DOS drive.
-
-The public WINXT source excludes the Microsoft support files and derived
-font. **Do not redistribute the completed own-media folder.** See the
-[staging and media requirements](distributions/WINXT/README.MD).
+The public image excludes Microsoft support files and fonts; the completed
+own-media folder contains your private copies. **Do not redistribute it.**
+For direct CF transfer or advanced host-side staging, use the
+[one-folder guide](distributions/WINXT/README.MD).
 
 ### 2. Install through Windows Setup
 

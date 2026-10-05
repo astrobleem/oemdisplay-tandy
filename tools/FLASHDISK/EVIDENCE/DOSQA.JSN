@@ -1,0 +1,275 @@
+{
+  "executable_sha256": "9a900898b1ae51969a7780433207f0015d2dc7030c6a3b9e68a3d590078fdf3f",
+  "executable_bytes": 26181,
+  "profile": "8086_prefetch, normal core, 640KB, no EMS/XMS/UMB/FPU, internal DOS reporting 3.30 (not booted MS-DOS)",
+  "results": [
+    {
+      "name": "F01",
+      "kind": "szdd",
+      "seconds": 128.31,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "success_exit": true,
+        "exact_complete_output": true,
+        "total_bytes": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F02",
+      "kind": "expanded",
+      "seconds": 124.74,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "success_exit": true,
+        "exact_complete_output": true,
+        "total_bytes": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F03",
+      "kind": "private",
+      "seconds": 126.87,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "success_exit": true,
+        "exact_complete_output": true,
+        "total_bytes": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F04",
+      "kind": "mixed",
+      "seconds": 129.4,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "success_exit": true,
+        "exact_complete_output": true,
+        "total_bytes": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F05",
+      "kind": "missing",
+      "seconds": 0.32,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F06",
+      "kind": "corrupt",
+      "seconds": 1.02,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F07",
+      "kind": "ambiguous",
+      "seconds": 1.62,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F08",
+      "kind": "trunchdr",
+      "seconds": 0.32,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F09",
+      "kind": "flags",
+      "seconds": 0.32,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F10",
+      "kind": "literal",
+      "seconds": 0.32,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F11",
+      "kind": "reference",
+      "seconds": 0.32,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F12",
+      "kind": "oversize",
+      "seconds": 0.32,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F13",
+      "kind": "overrun",
+      "seconds": 0.42,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F14",
+      "kind": "trailing",
+      "seconds": 0.42,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F15",
+      "kind": "runtime",
+      "seconds": 6.23,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F16",
+      "kind": "manifest",
+      "seconds": 51.11,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F17",
+      "kind": "lowspace",
+      "seconds": 51.13,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F18",
+      "kind": "cancel",
+      "seconds": 55.38,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F19",
+      "kind": "existingfile",
+      "seconds": 0.33,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F20",
+      "kind": "existingdir",
+      "seconds": 0.33,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F21",
+      "kind": "dos2",
+      "seconds": 0.17,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "refused": true,
+        "no_new_output": true
+      },
+      "passed": true
+    },
+    {
+      "name": "F22",
+      "kind": "powerloss",
+      "seconds": 75.91,
+      "checks": {
+        "all_inputs_unchanged": true,
+        "no_install_marker": true,
+        "partial_output": true,
+        "installer_absent": true
+      },
+      "passed": true
+    }
+  ]
+}

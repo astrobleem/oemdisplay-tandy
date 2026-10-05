@@ -1,37 +1,53 @@
-name: Create release
+name: Build Windows XT disks
 
 on:
+  pull_request:
   push:
-    tags:
-      - 'v*'
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+# Ordinary builds never create releases or change repository content.
+permissions:
+  contents: read
+
+concurrency:
+  group: winxt-disks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
 
-      - name: Verify ready-to-use OEM disk
+      - name: Test FAT12 format and release packaging
         run: |
-          python3 src/splash/tools/TEST.PY
-          python3 oemdisk/TESTDISK.PY
-          python3 MAKEDISK.PY --verify TANDY88.ZIP
+          python3 tools/FLASHDISK/TESTFAT.PY
+          python3 tools/FLASHDISK/TESTPKG.PY
 
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+      - name: Build public 720 KB disk and portable ZIP
+        run: python3 tools/FLASHDISK/MAKEIMG.PY --out dist
 
-      - name: Upload asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify public output and checksums
+        run: |
+          python3 tools/FLASHDISK/TESTPKG.PY --verify dist
+          cd dist
+          sha256sum --check SHA256SUMS
+
+      - name: Upload verified public download artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: TANDY88.ZIP
-          asset_name: TANDY88.ZIP
-          asset_content_type: application/zip
+          name: winxt-720k-${{ github.sha }}
+          path: |
+            dist/WINXT720.IMG
+            dist/WINXT720.ZIP
+            dist/WXTTOOLS.ZIP
+            dist/README.TXT
+            dist/BUILD.JSON
+            dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 30
