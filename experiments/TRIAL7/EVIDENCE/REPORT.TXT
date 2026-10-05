@@ -1,0 +1,323 @@
+TRIAL7 BORDERS AND TEXT PERFORMANCE REPORT
+WindowsXT / Windows 3.0 real-mode Tandy display driver
+Generated 2026-10-05 16:58 UTC
+
+RESULT
+TRIAL7 combines narrowly bounded border/line refresh and short raster-label refresh with the
+exact TRIAL6 DIB optimization. All five modes passed the separate border-only, text-only and
+combined benchmark comparison. This remains a private experimental overlay, not an accepted
+release or a physical Tandy qualification.
+320x200x16 main benchmark medians
+1-pixel Rectangle: 36.323 -> 36.323 ms per call (1.00x).
+2-pixel Rectangle: 88.731 -> 76.900 ms per call (1.15x).
+Short label, cursor away: 2.016 -> 0.526 ms per call (3.84x).
+Short label, cursor overlapping: 2.467 -> 1.383 ms per call (1.78x).
+16x16 DIB, cursor away: 3.077 -> 3.068 ms per call (1.00x).
+80x80 DIB, cursor away: 20.852 -> 20.852 ms per call (1.00x).
+Full-screen DIB: 109.850 -> 109.850 ms per call (1.00x).
+Direct 74-pixel horizontal stroke (MoveTo+LineTo): 0.245 -> 0.113 ms (2.17x).
+Direct 74-pixel vertical stroke (MoveTo+LineTo): 13.508 -> 0.510 ms (26.51x).
+Direct 74-pixel diagonal45 stroke (MoveTo+LineTo): 13.508 -> 3.473 ms (3.89x).
+For comparability, the main benchmark intentionally retains the historical CGA-font fixture even
+in 320x200x16. Native everyday tests separately use the actual EGA fonts for this mode. These
+timings describe this fixed workload, not every font or string.
+These are fixed-cycle DOSBox-X guest-clock measurements. They are not physical 8088 timings,
+host execution timings, or measured whole-application speedups. Differences of a few percent
+should be read in light of the approximately 55 ms guest timer quantum.
+
+WHAT CHANGED
+BORDER7 preserves the original TRIAL6 Output eligibility gate and renderer. One or two validated
+scanline intervals refresh their outward-rounded logical byte columns separately, without
+reconverting the gap. Thin two-point lines refresh a conservative endpoint bounding rectangle.
+Longer/unproven inputs retain the proven row or full-frame fallback. The single full-width span
+keeps the old row path. ROPs are executed once by the unchanged renderer; refresh only copies
+the final shadow.
+TEXT7 first requires the existing proven raster-font row bounds. It adds a fail-closed
+short-label path for 1..64 characters with no explicit width vector or spacing. The pinned font
+header, glyph widths and default-glyph substitution must fit a conservative maximum-width bound.
+Explicit opaque fill is included. Unknown, transformed, decorated or otherwise unsupported cases
+retain the old row/full fallback. Eligible text rows and columns use the already-qualified
+retained-cursor helpers, avoiding hide/redraw when the cursor is elsewhere.
+The new code has no persistent buffer or global-state allocation. Output adds 10 private local
+stack bytes; each text wrapper adds 4 private local bytes plus temporary
+saved-register/span-validation stack use. Final drivers grow by 864..960 bytes over TRIAL6.
+Rasterizers, cursor assembly, DIB bridge, conversion helpers, identity/full-shadow
+resynchronization and package/release pins remain unchanged.
+Monochrome policy: the initial split scanline path measured 6.866 ms against 6.418 ms for TR6.
+The final 640x200x2 build keeps the original scanline row copy and reproduces 6.418 ms, while
+retaining narrow thin-line updates. Superseded candidate measurements are excluded from the
+final table.
+The 1-pixel Rectangle workload remains on its conservative full fallback and is not materially
+accelerated. This trial does not claim every border or every string is optimized.
+
+MAIN BENCHMARK ALL FIVE MODES
+Values are median guest milliseconds per API call over three measured batches. Every measured
+batch lasts at least one guest second. TR6 is the immutable control; BORDER and TEXT isolate
+each change; BOTH combines them. Full replicate counts/ranges appear in PAIRED-SUMMARY.json.
+
+160x200x16
+Workload             TR6        BORDER       TEXT       BOTH
+BORDER_1PX              18.592      18.592     18.592     18.592
+BORDER_2PX              46.917      41.704     46.917     41.704
+TEXT_AWAY                1.283       1.283      0.519      0.519
+TEXT_OVER                1.759       1.759      1.380      1.380
+DIB_16_AWAY              3.077       3.077      3.068      3.068
+DIB_16_OVER              3.862       3.854      3.937      3.862
+DIB_80_AWAY             20.852      20.852     20.852     20.852
+DIB_FULL_OVER           72.094      72.094     72.094     72.094
+Old TR6 medians reproduced exactly: True
+
+320x200x16
+Workload             TR6        BORDER       TEXT       BOTH
+BORDER_1PX              36.323      36.323     36.323     36.323
+BORDER_2PX              88.731      76.900     88.731     76.900
+TEXT_AWAY                2.016       2.027      0.526      0.526
+TEXT_OVER                2.467       2.468      1.380      1.383
+DIB_16_AWAY              3.077       3.077      3.077      3.068
+DIB_16_OVER              3.948       3.947      3.948      3.947
+DIB_80_AWAY             20.852      20.852     20.852     20.852
+DIB_FULL_OVER          109.850     109.850    109.850    109.850
+Old TR6 medians reproduced exactly: True
+
+320x200x4
+Workload             TR6        BORDER       TEXT       BOTH
+BORDER_1PX              13.901      13.901     13.901     13.901
+BORDER_2PX              36.323      32.042     36.323     32.042
+TEXT_AWAY                1.073       1.069      0.321      0.322
+TEXT_OVER                1.475       1.479      1.073      1.073
+DIB_16_AWAY              1.684       1.688      1.684      1.684
+DIB_16_OVER              2.468       2.458      2.467      2.468
+DIB_80_AWAY             12.538      12.538     12.538     12.538
+DIB_FULL_OVER           73.233      73.233     73.233     73.233
+Old TR6 medians reproduced exactly: True
+
+640x200x4
+Workload             TR6        BORDER       TEXT       BOTH
+BORDER_1PX               4.595       4.595      4.595      4.595
+BORDER_2PX              13.429      12.837     13.429     12.837
+TEXT_AWAY                0.708       0.706      0.221      0.221
+TEXT_OVER                1.100       1.095      1.008      1.009
+DIB_16_AWAY              1.646       1.651      1.651      1.646
+DIB_16_OVER              2.414       2.413      2.413      2.405
+DIB_80_AWAY             11.294      11.290     11.290     11.294
+DIB_FULL_OVER          104.864     104.864    104.864    104.864
+Old TR6 medians reproduced exactly: True
+
+640x200x2
+Workload             TR6        BORDER       TEXT       BOTH
+BORDER_1PX               1.538       1.538      1.538      1.538
+BORDER_2PX               6.418       6.418      6.418      6.418
+TEXT_AWAY                0.577       0.577      0.208      0.208
+TEXT_OVER                0.965       0.965      0.966      0.966
+DIB_16_AWAY              1.476       1.476      1.479      1.479
+DIB_16_OVER              2.199       2.199      2.244      2.244
+DIB_80_AWAY             10.266      10.266     10.266     10.266
+DIB_FULL_OVER           99.864      99.864     99.864     99.864
+Old TR6 medians reproduced exactly: True
+
+SUPPLEMENTAL DIRECT LINE MEASUREMENTS
+MoveTo+LineTo horizontal, vertical and 45-degree diagonal strokes are measured independently
+with three batches of at least one second per driver/mode. Eight additional untimed
+cursor/clipping cases per run verify pixels. See line-tests for coordinates, counts, ranges, the
+independent endpoint-exclusive pixel oracle and raw evidence hashes.
+160x200x16   horizontal      0.156 ->    0.113 ms (  1.37x)
+160x200x16   vertical        6.637 ->    0.510 ms ( 13.02x)
+160x200x16   diagonal45      6.637 ->    3.470 ms (  1.91x)
+320x200x16   horizontal      0.245 ->    0.113 ms (  2.17x)
+320x200x16   vertical       13.508 ->    0.510 ms ( 26.51x)
+320x200x16   diagonal45     13.508 ->    3.473 ms (  3.89x)
+320x200x4    horizontal      0.132 ->    0.085 ms (  1.56x)
+320x200x4    vertical        5.198 ->    0.302 ms ( 17.20x)
+320x200x4    diagonal45      5.198 ->    1.472 ms (  3.53x)
+640x200x4    horizontal      0.088 ->    0.073 ms (  1.21x)
+640x200x4    vertical        1.586 ->    0.198 ms (  8.00x)
+640x200x4    diagonal45      1.642 ->    0.394 ms (  4.17x)
+640x200x2    horizontal      0.073 ->    0.071 ms (  1.03x)
+640x200x2    vertical        0.472 ->    0.177 ms (  2.67x)
+640x200x2    diagonal45      0.491 ->    0.245 ms (  2.00x)
+
+CORRECTNESS AND TARGET QUALIFICATION
+- Main benchmark: 480 batches / 560556 successful API calls. All benchmark validators passed,
+with paired active VRAM equality and cursor restoration.
+- Borders/text edge suite: 180 GDI cases per driver/mode, TR6 versus combined across five modes:
+1,800 guest cases. Rectangle and LineTo/Polyline widths/styles, clipping/off-screen edges,
+ROP/fill fallback, TextOut/ExtTextOut opaque and clipped output, spacing, custom advances,
+alignment, bold/italic/underline/strikeout, cursor overlap, reshow and move/hide are covered.
+Every active framebuffer byte matches the exact control; all cursor and padding checks pass.
+This is differential rendering validation, not an independent font or wide-pen rasterizer.
+- DIB regression: 580 guest cases across exact TR6 and combined, all five modes. Independent
+DIB/pixel bounds, odd widths, edge clipping, bands/source crops, 1/4/8/24-bit inputs, cursor
+overlap, input preservation and no-op/rejected cases pass. Black/white patterns exercise
+packing/bounds; this is not an exhaustive color-conversion proof. The DIB assembly is
+byte-identical to TR6, and its earlier partial-failure source invariant remains unchanged; no
+new injected converter-failure claim is made.
+- Direct line suite: 170 independently checked clean frames (plus cursor snapshots) and 14144000
+checked visible pixels; no mismatch, cursor or bank-padding failure.
+- BORDER7: 87 host source/pin/inverse/CRLF/rejection checks, 806,960 exhaustive
+interval/endpoint bound cases, and 180 executed assembly gate/ABI cases (90 original color plus
+90 final monochrome cases).
+- TEXT7: 30 source/pin/inverse/composition checks, 75,000 host geometries (8,905 eligible
+bounds), and 226 executed assembly gate/ABI cases. Actual gates verify bounds, fallback states,
+flags including DF, GPRs, DS/ES and BP/SP; they are separate from complete Windows rendering
+tests.
+- All 15 driver builds pass the 27-object emitted-instruction/link audit, zero unsupported 8086
+instructions, zero unsafe multi-prefix REP sites and zero unaccounted library code bytes. New
+wrappers preserve original renderer calls and returns.
+- Windows runtime uses normal core, cputype=8086_prefetch (DOSBox-X name for its four-byte
+8088-compatible prefetch core), 640 KB conventional RAM, memsize=0, FPU/EMS/XMS/UMB off, and the
+original reservation helper. CPU and later-instruction probes plus Windows FLAGS=64 are
+retained. No 386 or extra-memory workaround is used. Build and functional guard-test clocks are
+separate from the fixed 25000 driver timing profile.
+
+EVERYDAY NATIVE WINDOWS AND ROLLBACK KIT
+FINAL NATIVE WINDOWS 3.0 EVERYDAY VALIDATION
+
+All five final TRIAL7 modes completed the scripted native-app sequence
+against exact TRIAL6 controls. These are actual owned-media Notepad and
+Paintbrush, driven through Windows messages/window APIs, not synthetic
+replacement applications.
+
+Counts from the final terminal logs: 10 fresh emulator/guest sessions;
+20 WIN /R launches (including 10 clean Windows exit/restarts), 20 DOS
+returns, 160 native File-menu open/dismiss cycles, 60 application closes,
+20 Notepad reopens, 20 Paintbrush stroke/Undo sequences and 20 explicit
+No responses to its expected save prompt. All ten final harness runs
+report FAILURES=0. Generated image files remain unchanged on disk.
+
+720 physical VRAM captures produce 360 paired frames and 29,952,000
+visible pixel comparisons. No pixels are masked. Whole-frame exactness:
+- 160x200x16: 72/72 exact
+- 320x200x16: 72/72 exact
+- 320x200x4: 58/72 exact; 224 different pixels in 14 Notepad frames,
+  each exactly a 2x8 black/white caret toggle, following window position
+- 640x200x4: 72/72 exact
+- 640x200x2: 72/72 exact, using the replacement final mono driver
+  fce1790a0fcba793f759d67d38117360818a83e716ffe2126519f6d82ea3358f
+Total: 346/360 frames exact; all non-caret paired pixels match.
+
+Within-run restoration diagnostics separately retain 16/20-pixel native
+Notepad caret rectangles and 6/9/14-pixel clipped bottom-right cursor
+changes in Paintbrush. These are explicitly listed in SUMMARY.json;
+strict restoration flags must not be confused with native execution
+failures or silently presented as zero-difference frames.
+
+All runs use normal 640 KB, strict 8086_prefetch/8088-compatible execution,
+real-mode FLAGS=64, RESERVE overlap protection and no EMS/XMS/UMB/FPU.
+320x200x16 uses EGASYS/EGAFIX/EGAOEM; the other four modes use CGA
+system/fixed/OEM fonts. Installed font and native-app hashes match within
+each pair. Exact control, candidate and harness pins are retained.
+
+Coverage: document/app opening; repeated File menus; actual app window
+move/resize, partial off-screen move and repaint; page scroll/return;
+minimize/restore; native Paintbrush drawing and Undo; native app close/
+reopen; Windows exit/restart. Selected native contact sheets were also
+visually inspected. Narrow 160/320-pixel UI can wrap or clip.
+
+Limits: no physical mouse/keyboard input, Program Manager shell or its
+concurrent-memory load, OEM Setup install, long soak, Windows host wrapper
+or physical Tandy hardware test. This timer-paced suite is not a speed
+benchmark. Bring-up attempts and the superseded mono candidate are
+excluded from final acceptance and export.
+
+Detailed, positively selected export: everyday-tests/PUBLICATION.
+It includes source, logs, pins, raw active VRAM and PNG contact sheets.
+DAY.EXE, all driver/helper/toolchain/OS binaries and all guest trees are
+excluded; rebuild instructions and the tested harness SHA are included.
+
+TRIAL7 PRIVATE ROLLBACK KIT - PACKAGE QA
+=======================================
+PASS: 143 host cases, 76 DOS cases, and 3 SHA-256 known answers.
+All 113/61 prior regression cases rerun; 30/15 new cross-trial identity
+cases added. All five modes passed apply, saved-byte backup, exact restore,
+repeat-apply refusal and repeat restore. All 26 old artifact hashes match.
+
+New kit: package/TRIAL7, installed only by the user at C:\TRIAL7.
+Exact TR5-only baseline at C:\WINXT with Windows at C:\WINDOWS.
+One-shot, one already active mode; no INI, shell, font, launcher, Setup,
+WINXT-original or existing-backup edits. Unknown layouts/identities refuse.
+If TR6 is applied, first RESTORE through its original DIBTR6 kit and backup.
+Apply saves the installed original before any replacement; restore uses
+only that saved, verified original, never a shipped substitute. Keep the
+backup and marker. Present partial targets can recover; missing targets
+or corrupt backups/markers require inspection. Keep a separate storage
+backup and working plain-DOS boot route.
+
+Strict functional QA: Tandy / 8086_prefetch / normal 640 KB, no FPU, EMS,
+XMS or UMB; all 76 cases verified CPU probes and 624 KB conventional,
+592 KB free. Final helper build used fixed 200000 cycles. The first two
+final DOS cases used fixed 1000000; the remaining 74 used fixed 200000.
+All disabled sound/MIDI. Earlier provisional results are excluded. These
+are functional checks with no timing claims. Windows
+detection used synthetic replies. No physical Tandy, CF, or power-loss
+validation; no user computer or physical storage was changed.
+
+Runtime inventory: 20 files, 592260 bytes.
+Helper T7SAFE.EXE: 20355 bytes, SHA-256
+3902562ff1d3b7951b00e915230f84e76513f9b3ef236dd1747f77bf1d0b65da
+Runtime MANIFEST.SHA SHA-256:
+467c53f23d67db1751f498903ee4a307766b3a3dfe905841c4f703286dd26556
+
+Detailed results: package/qa/SUMMARY.JSON, DOSTEST.JSON, HOSTTEST.JSON,
+HOSTMORE.JSON, IDENTITY.JSON, PKGCHECK.JSON; deliverable-safe source/log
+copy: package/QA-EXPORT. Runtime excludes tools, OS/media and shared inputs.
+
+Final all-mode qualification/pins: confirmed by parent.
+
+DRIVER IDENTITIES
+160x200x16  TNDY160.DRV
+  TR5: c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d
+  TR6: ed13da4e5febb03200ea8d7f40cb107ebee0690ce0b5a3aa17d74cb3c46f6be0
+  TR7: a01891505d8acf64d1473076ad05d1a6760d4e0f70bbd074edd6a7c911255e0e  55888 bytes; +960
+versus TR6
+320x200x16  TANDY88.DRV
+  TR5: 33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61
+  TR6: ce8d1c012bc12baa0a6affa5768115c8f4aa30343f7c3acc9df2e963285fa302
+  TR7: f922f12168de69ec2f8a761ce7fce2cbe2080b9e3fcfb06e3a3dac4faba6d502  55904 bytes; +960
+versus TR6
+320x200x4  TNDY3204.DRV
+  TR5: 707dabdd83dafcf80b3f9e2fe07ca785662d3358d08f366cb2ed6b45b2804744
+  TR6: b95538931a85adeecf3714ae56fbf894cef879f6218ec08c03d4616b0386a150
+  TR7: bc2e1ee14f52e1b71732018facd030ba075bb18ce63cabee05f2110e830366e8  55040 bytes; +960
+versus TR6
+640x200x4  TNDY6404.DRV
+  TR5: 50969051a462bbada0be684c247de5c4bde6f51a3d0b9db22bf46d58592e3ca9
+  TR6: 343cefc898d95cccebbc0ad5e0beb2bc65f3deb35d57340bd4151f02005f4895
+  TR7: ce49766434a3c628fdee00aa1fb6e8a79aa3a22f9996c9dc202a5a2d313127cc  54800 bytes; +944
+versus TR6
+640x200x2  TNDY6402.DRV
+  TR5: 3c002227b7b01579787d10c452ae9b3f216a4fd53a8aa5c2190c6bab67d880a2
+  TR6: cee6e3691bcbfe994aed048febc6fb43b72f82cdf778e170123090d1c29a612e
+  TR7: fce1790a0fcba793f759d67d38117360818a83e716ffe2126519f6d82ea3358f  54544 bytes; +864
+versus TR6
+
+REPRODUCTION AND PRESERVATION
+Base source is the verified astrobleem/oemdisplay-tandy commit
+1eac04fdc571f73037b502ecf1f085028271866e. This package supplies a first-party overlay and
+explicit evidence, not the complete repository, Windows installation/media, DDK or compiler.
+Those authorized original inputs remain prerequisites. Apply the overlay to that exact source;
+BLDTR5.PY and BLDTR6.PY retain the exact historical builders. BUILD88.PY --trial7
+border|text|combined selects this trial (default combined). Use a fresh --out and each --mode
+profile with the existing --dosbox argument; every build fails closed on changed pinned
+dependencies.
+The original baseline BENCH.C and byte-identical BENCH.EXE were retained unchanged (EXE SHA256
+f5b0e3f3f9b32c1087e37f19ce5e67b5f097e8c7f6b71f4096a3faec37af080b). The reconstructed paired
+performance fixture intentionally keeps CGA fonts in all modes to preserve the exact historical
+comparison. Native everyday testing separately uses the actual profile fonts: EGA for
+320x200x16, CGA for the other four modes. The baseline, run_benchmark.py, per-run
+configuration/logs, source transformations, independent checkers and build audit JSON are
+supplied. Exact TR6 control binaries can be reproduced with BLDTR6.PY and verified against
+REFERENCE-PINS.json; the previous TRIAL6 private kit also preserves them.
+No public publication, PR, merge, release-package replacement, user-machine modification, CF
+write, shell/wheel change or unrelated cleanup was performed. Existing TR5/TR6 references and
+earlier Library artifacts remain intact. Initial test-harness/staging setup errors were
+corrected and retained separately; final pass claims refer only to the final frozen source,
+final harnesses and exact drivers listed above.
+
+LIMITS
+Physical Tandy EX/HX behavior and timing, genuine DOS variants, CF reliability, power-loss
+recovery, every font/ROP/application and arbitrary invalid caller memory are not established by
+these tests. In particular, the existing 640x200x4 DOSBox-X model qualification remains:
+emulation does not by itself prove original EX/HX mode 0Ah behavior. That mode is four colors
+(black/red/green/white), never 640x200x16. No EMS/XMS/UMB shortcut or logical-plane increase
+changes the physical color depth. Caller buffers still must be valid live stable allocations;
+range/alias checks are not an allocation-ownership proof.

@@ -1,0 +1,38 @@
+TRIAL7 PRIVATE ROLLBACK KIT - PACKAGE QA
+=======================================
+PASS: 143 host cases, 76 DOS cases, and 3 SHA-256 known answers.
+All 113/61 prior regression cases rerun; 30/15 new cross-trial identity
+cases added. All five modes passed apply, saved-byte backup, exact restore,
+repeat-apply refusal and repeat restore. All 26 old artifact hashes match.
+
+New kit: package/TRIAL7, installed only by the user at C:\TRIAL7.
+Exact TR5-only baseline at C:\WINXT with Windows at C:\WINDOWS.
+One-shot, one already active mode; no INI, shell, font, launcher, Setup,
+WINXT-original or existing-backup edits. Unknown layouts/identities refuse.
+If TR6 is applied, first RESTORE through its original DIBTR6 kit and backup.
+Apply saves the installed original before any replacement; restore uses
+only that saved, verified original, never a shipped substitute. Keep the
+backup and marker. Present partial targets can recover; missing targets
+or corrupt backups/markers require inspection. Keep a separate storage
+backup and working plain-DOS boot route.
+
+Strict functional QA: Tandy / 8086_prefetch / normal 640 KB, no FPU, EMS,
+XMS or UMB; all 76 cases verified CPU probes and 624 KB conventional,
+592 KB free. Final helper build used fixed 200000 cycles. The first two
+final DOS cases used fixed 1000000; the remaining 74 used fixed 200000.
+All disabled sound/MIDI. Earlier provisional results are excluded. These
+are functional checks with no timing claims. Windows
+detection used synthetic replies. No physical Tandy, CF, or power-loss
+validation; no user computer or physical storage was changed.
+
+Runtime inventory: 20 files, 592260 bytes.
+Helper T7SAFE.EXE: 20355 bytes, SHA-256
+3902562ff1d3b7951b00e915230f84e76513f9b3ef236dd1747f77bf1d0b65da
+Runtime MANIFEST.SHA SHA-256:
+467c53f23d67db1751f498903ee4a307766b3a3dfe905841c4f703286dd26556
+
+Detailed results: package/qa/SUMMARY.JSON, DOSTEST.JSON, HOSTTEST.JSON,
+HOSTMORE.JSON, IDENTITY.JSON, PKGCHECK.JSON; deliverable-safe source/log
+copy: package/QA-EXPORT. Runtime excludes tools, OS/media and shared inputs.
+
+Final all-mode qualification/pins: confirmed by parent.

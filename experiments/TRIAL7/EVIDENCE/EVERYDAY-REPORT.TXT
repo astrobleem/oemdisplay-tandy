@@ -1,0 +1,53 @@
+FINAL NATIVE WINDOWS 3.0 EVERYDAY VALIDATION
+
+All five final TRIAL7 modes completed the scripted native-app sequence
+against exact TRIAL6 controls. These are actual owned-media Notepad and
+Paintbrush, driven through Windows messages/window APIs, not synthetic
+replacement applications.
+
+Counts from the final terminal logs: 10 fresh emulator/guest sessions;
+20 WIN /R launches (including 10 clean Windows exit/restarts), 20 DOS
+returns, 160 native File-menu open/dismiss cycles, 60 application closes,
+20 Notepad reopens, 20 Paintbrush stroke/Undo sequences and 20 explicit
+No responses to its expected save prompt. All ten final harness runs
+report FAILURES=0. Generated image files remain unchanged on disk.
+
+720 physical VRAM captures produce 360 paired frames and 29,952,000
+visible pixel comparisons. No pixels are masked. Whole-frame exactness:
+- 160x200x16: 72/72 exact
+- 320x200x16: 72/72 exact
+- 320x200x4: 58/72 exact; 224 different pixels in 14 Notepad frames,
+  each exactly a 2x8 black/white caret toggle, following window position
+- 640x200x4: 72/72 exact
+- 640x200x2: 72/72 exact, using the replacement final mono driver
+  fce1790a0fcba793f759d67d38117360818a83e716ffe2126519f6d82ea3358f
+Total: 346/360 frames exact; all non-caret paired pixels match.
+
+Within-run restoration diagnostics separately retain 16/20-pixel native
+Notepad caret rectangles and 6/9/14-pixel clipped bottom-right cursor
+changes in Paintbrush. These are explicitly listed in SUMMARY.json;
+strict restoration flags must not be confused with native execution
+failures or silently presented as zero-difference frames.
+
+All runs use normal 640 KB, strict 8086_prefetch/8088-compatible execution,
+real-mode FLAGS=64, RESERVE overlap protection and no EMS/XMS/UMB/FPU.
+320x200x16 uses EGASYS/EGAFIX/EGAOEM; the other four modes use CGA
+system/fixed/OEM fonts. Installed font and native-app hashes match within
+each pair. Exact control, candidate and harness pins are retained.
+
+Coverage: document/app opening; repeated File menus; actual app window
+move/resize, partial off-screen move and repaint; page scroll/return;
+minimize/restore; native Paintbrush drawing and Undo; native app close/
+reopen; Windows exit/restart. Selected native contact sheets were also
+visually inspected. Narrow 160/320-pixel UI can wrap or clip.
+
+Limits: no physical mouse/keyboard input, Program Manager shell or its
+concurrent-memory load, OEM Setup install, long soak, Windows host wrapper
+or physical Tandy hardware test. This timer-paced suite is not a speed
+benchmark. Bring-up attempts and the superseded mono candidate are
+excluded from final acceptance and export.
+
+Detailed, positively selected export: everyday-tests/PUBLICATION.
+It includes source, logs, pins, raw active VRAM and PNG contact sheets.
+DAY.EXE, all driver/helper/toolchain/OS binaries and all guest trees are
+excluded; rebuild instructions and the tested harness SHA are included.

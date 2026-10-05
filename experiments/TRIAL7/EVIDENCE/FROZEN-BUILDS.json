@@ -1,0 +1,30 @@
+{
+  "status": "FINAL_DRIVER_QUALIFICATION_PASSED_ALL_FIVE_MODES",
+  "profiles": {
+    "160x200x16": {
+      "path": "/workspace/scratch/a84592844d2c/borders-text-20261005/builds/combined/160x200x16/TNDY160.DRV",
+      "sha256": "a01891505d8acf64d1473076ad05d1a6760d4e0f70bbd074edd6a7c911255e0e",
+      "bytes": 55888
+    },
+    "320x200x16": {
+      "path": "/workspace/scratch/a84592844d2c/borders-text-20261005/builds/combined/320x200x16/TANDY88.DRV",
+      "sha256": "f922f12168de69ec2f8a761ce7fce2cbe2080b9e3fcfb06e3a3dac4faba6d502",
+      "bytes": 55904
+    },
+    "320x200x4": {
+      "path": "/workspace/scratch/a84592844d2c/borders-text-20261005/builds/combined/320x200x4/TNDY3204.DRV",
+      "sha256": "bc2e1ee14f52e1b71732018facd030ba075bb18ce63cabee05f2110e830366e8",
+      "bytes": 55040
+    },
+    "640x200x4": {
+      "path": "/workspace/scratch/a84592844d2c/borders-text-20261005/builds/combined/640x200x4/TNDY6404.DRV",
+      "sha256": "ce49766434a3c628fdee00aa1fb6e8a79aa3a22f9996c9dc202a5a2d313127cc",
+      "bytes": 54800
+    },
+    "640x200x2": {
+      "path": "/workspace/scratch/a84592844d2c/borders-text-20261005/builds/combined/640x200x2/TNDY6402.DRV",
+      "sha256": "fce1790a0fcba793f759d67d38117360818a83e716ffe2126519f6d82ea3358f",
+      "bytes": 54544
+    }
+  }
+}
