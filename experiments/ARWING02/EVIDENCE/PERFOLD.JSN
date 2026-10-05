@@ -1,0 +1,11 @@
+{
+  "tag": "fixed-old-320",
+  "mode": "320",
+  "args": "/B /R1 /D1",
+  "cycles": 1500,
+  "cal": false,
+  "natural_exit": false,
+  "seconds": 32.45,
+  "log": "SETTINGS speed=2 stars=32 arwing=1\nSTART driver=C:\\WINDOWS\\SYSTEM\\TRIAL.DRV fast=0 width=320 colors=16 bios=0\nCAPTURE use host screenshot: GDI path\nFLIGHT steps=77 draws=77 fired=10 max_shots=4 polls=77 good=77 disconnects=0 x=144 y=133 injected=1\nEND reason=benchmark fast=0 width=320 colors=16 bios=0 ticks=240 columns=151 frames=4 elapsed_ms=16972 draw_ms=7366 max_draw_ms=220 startup_ms=110 restore_ms=0 free_warm=300320 free_end=300320\nQUIT clean\n",
+  "sha256": "64ce757a1ef2c4e1ecfdfb96a8e1661ae1138cda145ed10f28c3f0c1494d27f5"
+}

@@ -1,0 +1,18 @@
+{
+  "ARWING02.ZIP": {
+    "bytes": 226535,
+    "sha256": "a6cca1ed6b88165e26ef3bb4f0dabac592696383e1bfdbc1db49bb1019664f2e"
+  },
+  "DEMO.GIF": {
+    "bytes": 38165,
+    "sha256": "315fedd085aeb3ade3144a72eb25e5e07e8fc4dbcad59c5f7af14cf70c3c68e2"
+  },
+  "RUN/STARFLD.EXE": {
+    "bytes": 33231,
+    "sha256": "de1af104b4b79f77217a7c6edc5ed5981fa22013359c58cab8f2b8939d743887"
+  },
+  "RUN/TSHELL.EXE": {
+    "bytes": 68979,
+    "sha256": "703383a6944c9c22a0533f15d2e2ff7794edfd57ed0ebced125eca67129a7403"
+  }
+}

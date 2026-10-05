@@ -1,0 +1,10 @@
+V0.1 COMPARISON BASELINE
+The previous private/public draft kit is preserved unchanged.
+ZIP:233000 bytes
+SHA256:4e14cb74210abd1217da2d50a5ee4e0360fabb3749a09bcbbe1434b5c2a0c4e3
+Original draft PR:https://github.com/astrobleem/oemdisplay-tandy/pull/91
+Verified head before correction:beaf0315423de16aaf56e766c83c8d91d5b873d8
+Base main:62f46b2404233f02f548d314ed05fd505bca1fa5
+V0.1 STARFLD.EXE:31599 bytes
+SHA256:2ff451a01c55c1a87ed29d8b24f57ed2d1f0c0885bcf227c9f0008196965aeeb
+No automatic merge or installed/default change is authorized by this kit.

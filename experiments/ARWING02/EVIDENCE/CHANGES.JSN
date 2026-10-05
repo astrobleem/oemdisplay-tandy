@@ -1,0 +1,34 @@
+{
+  "production_changes": [
+    {
+      "file": "STFLY.C",
+      "sha256": "066c6a572fe1faf550386796838f318d9625c54ab811122bb9fa6ca4a8f9db37"
+    },
+    {
+      "file": "STFLY.H",
+      "sha256": "0a0a19e2a6edb718e168bd3f6d03c78682a4dd14ef22bb52073663a25f16701b"
+    },
+    {
+      "file": "STARFLD.C",
+      "sha256": "7b51219ba6b3d47ee924397a5ef25755367bfd17214153975bd5d30b72d4b7b3"
+    }
+  ],
+  "unchanged_components": {
+    "STJOY.H": "61f2703efa6270baa09c42cf94ac357786d5ed56be1c0769dcf112fd16777984",
+    "ARTBUILD.PY": "6c0e6869edd8fed80e3b05e960e24c33b562380dd01f665a8b50a00f3b1d6b1e",
+    "STARFLD.DEF": "6e9ec639b5007830328d883e8ade6712ff4694fb61405455a1851e8806b345db",
+    "STARFLD.RSP": "ad3b12e285bbedf5b4f50d2ef02595f398facf3a5afa85a16a76e10c9850f755",
+    "STJOY.TXT": "a864f55d0cf2176d5e73402105bb9ce28dab1860df2e50a1230a6298d8a8df5d",
+    "JOYLIC.TXT": "925a857112f670926918fc73f1631a85f3a3a73504943551195ae89aacac14c1",
+    "SHIPART.H": "54897de740600b0152a9012ea4ffbecde8b3291146e5caf106d4e15064b2e7f0",
+    "JOYCAP.ASM": "ec3bb4f96e7b29cbdc1813cb90c1db693077579ead346005fc6adddebf506423",
+    "BUILD.BAT": "635e2dd51864ad7322d8dabbe399890d7327fd8dea794614b6c868e0f63d3a79",
+    "JOYCORE.C": "6342c3339ad3ac341425fae2744a5a0790efc3eea48ab1a925047ae2afc7ebae",
+    "BUILD.PY": "75c7edffcc0785a5067e0c9fc38b59f9e0e19f213902e8abae0b37e6aed1b60f",
+    "POSES.PNG": "eb27285706e5e2f47fb342ebc9e9a58db1d5bbdcb0a1de71806ca279d4babbfc",
+    "STJOY.C": "19a00a1d89c3e1a48723e719d7a203102246dce249146a6e46c54902fc7de0c5",
+    "JOYCORE.H": "cbbbb094f860c0adbaed9a1e78fc2edcc9fd8b59a1e5dd58351b87be8286e804"
+  },
+  "tshell_sha256": "703383a6944c9c22a0533f15d2e2ff7794edfd57ed0ebced125eca67129a7403",
+  "baseline_zip_sha256": "4e14cb74210abd1217da2d50a5ee4e0360fabb3749a09bcbbe1434b5c2a0c4e3"
+}
