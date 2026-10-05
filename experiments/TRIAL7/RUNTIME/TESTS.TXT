@@ -1,0 +1,41 @@
+TRIAL7 VALIDATION SCOPE - 2026-10-05
+===================================
+PASS: 143 host cases, 76 real DOS cases, 3 SHA-256 known answers.
+
+All five modes passed apply, byte-exact backup, byte-exact restore,
+repeat-apply refusal, and repeated restore. Full snapshots checked that
+configuration, WINXT source drivers/helpers and unrelated files stayed
+unchanged. Original/test bytes are verified with embedded SHA-256 pins;
+the existing exact TSCHECK helper compares copied bytes.
+
+The 113 original host and 61 original DOS regression cases were rerun.
+Added coverage: 30 host and 15 DOS exact-TR6/old-marker rejection cases.
+TRIAL7 accepts only exact TR5 input; restore any applied TR6 first with
+its own DIBTR6 kit and saved backup. Unknown or cross-trial inputs refuse.
+
+Host fault injection covered interruption during backup, target and restore
+copies, plus commit checkpoints. A partial backup leaves the installed
+original intact and refuses restore. A valid saved backup can restore a
+present partial target. Corrupt backups/markers, unknown candidates,
+wrong arguments/paths/modes, pending shell journals and missing inputs
+were refused without unintended changes. Missing targets deliberately
+require manual inspection. Shipped TR5 files are never restore fallbacks.
+
+DOS tests executed actual APPLY/RESTORE wrappers and final T7SAFE.EXE in
+isolated DOSBox-X fixtures: Tandy, normal 640 KB, strict 8088-compatible
+8086_prefetch; no FPU/XMS/EMS/UMB. All 76 cases checked CPU probes and
+624 KB conventional memory, 592 KB free. Two completed final cases used
+fixed 1000000 cycles; the remaining 74 used established fixed 200000.
+All disabled sound/MIDI. These are functional safety tests, with no
+timing-sensitive assertions or driver-performance claims. The source and helper bytes were unchanged.
+Both Windows-detection branches used synthetic INT 2F status replies,
+not a running Windows DOS box. No physical Tandy, CF or power-loss test
+was performed. Keep a separate storage backup and plain-DOS boot route.
+
+SHA-256 known answers: empty input, abc, one million a characters.
+Helper build: Microsoft C 6 /AS /G0 /W3 /Os and LINK4 5.01.17; no warnings.
+The helper itself was built under the same strict CPU/normal-memory
+configuration, at fixed 200000 cycles. No toolchain or OS input is shipped.
+Driver performance and all-mode qualification are reported separately.
+Machine-readable results and reproducible tests accompany the separate
+source/results archive. Required WindowsXT helpers are not bundled here.

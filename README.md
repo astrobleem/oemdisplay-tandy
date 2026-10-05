@@ -297,6 +297,16 @@ bounded regression evidence, not complete GDI or hardware qualification.
 [Exact binaries](docs/TRIAL5/BUILDS.JSN) ·
 [Timings, regression coverage and limits](docs/TRIAL5/VERIFY.TXT)
 
+### Optional TRIAL7 test build
+
+The [TRIAL7 experimental overlay](experiments/TRIAL7/README.MD) publishes the
+qualified border/text candidate with the retained TR6 DIB optimization,
+source, emulator evidence and a one-shot saved-backup rollback kit. It needs
+the exact default-layout TR5 installation and changes only its already
+active mode. Restore any TR6 overlay first. Stable packages and build
+defaults remain unchanged; physical 8088 timing and EX/HX 640x200 four-color
+behavior still need hardware testing.
+
 ### What still needs testing
 
 - Exact current binaries on physical EX/HX hardware, especially 640×200
