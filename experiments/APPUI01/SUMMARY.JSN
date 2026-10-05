@@ -1,0 +1,410 @@
+{
+  "passed": true,
+  "native_runs": 41,
+  "native_checks": 2663,
+  "production_smoke_modes": 5,
+  "production_apps_per_smoke": 7,
+  "source_inclusive_runs": 30,
+  "swat_exact_runs": 6,
+  "native_summary": [
+    {
+      "app": "COOKIE",
+      "mode": "160",
+      "kind": "source-inclusive native caller",
+      "sha256": "07e5f2198f3c20e95633fd3e3b377365bc3fbb16b00ba09bbff218fe4ae56cd6",
+      "passed": true,
+      "checks": 86
+    },
+    {
+      "app": "PINBALL",
+      "mode": "160",
+      "kind": "source-inclusive native caller",
+      "sha256": "33383282c0a53ff2cb5030aed63cc789862423e186b279d808311e5dd906bc4c",
+      "passed": true,
+      "checks": 16
+    },
+    {
+      "app": "BRIGHT",
+      "mode": "160",
+      "kind": "source-inclusive native caller",
+      "sha256": "17fa0c3009bceeeecfcdb66525fa9499db2db825d25235340304acc71a6252d3",
+      "passed": true,
+      "checks": 196
+    },
+    {
+      "app": "GIFLOAD",
+      "mode": "160",
+      "kind": "source-inclusive native caller",
+      "sha256": "16042d5e33c49bc21a414fa9c06f1bbe2bc33b9b25a1112319f437dae6640694",
+      "passed": true,
+      "checks": 14
+    },
+    {
+      "app": "COOKIE",
+      "mode": "320",
+      "kind": "source-inclusive native caller",
+      "sha256": "07e5f2198f3c20e95633fd3e3b377365bc3fbb16b00ba09bbff218fe4ae56cd6",
+      "passed": true,
+      "checks": 86
+    },
+    {
+      "app": "TABOUT",
+      "mode": "320",
+      "kind": "source-inclusive native caller",
+      "sha256": "956ef5a07359d19e32047e7770849cdafd23ea2b329c2f7ed404e76b0820921c",
+      "passed": true,
+      "checks": 135
+    },
+    {
+      "app": "PINBALL",
+      "mode": "320",
+      "kind": "source-inclusive native caller",
+      "sha256": "33383282c0a53ff2cb5030aed63cc789862423e186b279d808311e5dd906bc4c",
+      "passed": true,
+      "checks": 16
+    },
+    {
+      "app": "BRIGHT",
+      "mode": "320",
+      "kind": "source-inclusive native caller",
+      "sha256": "17fa0c3009bceeeecfcdb66525fa9499db2db825d25235340304acc71a6252d3",
+      "passed": true,
+      "checks": 196
+    },
+    {
+      "app": "GIFLOAD",
+      "mode": "320",
+      "kind": "source-inclusive native caller",
+      "sha256": "16042d5e33c49bc21a414fa9c06f1bbe2bc33b9b25a1112319f437dae6640694",
+      "passed": true,
+      "checks": 14
+    },
+    {
+      "app": "COOKIE",
+      "mode": "320c",
+      "kind": "source-inclusive native caller",
+      "sha256": "07e5f2198f3c20e95633fd3e3b377365bc3fbb16b00ba09bbff218fe4ae56cd6",
+      "passed": true,
+      "checks": 86
+    },
+    {
+      "app": "TABOUT",
+      "mode": "320c",
+      "kind": "source-inclusive native caller",
+      "sha256": "956ef5a07359d19e32047e7770849cdafd23ea2b329c2f7ed404e76b0820921c",
+      "passed": true,
+      "checks": 135
+    },
+    {
+      "app": "PINBALL",
+      "mode": "320c",
+      "kind": "source-inclusive native caller",
+      "sha256": "33383282c0a53ff2cb5030aed63cc789862423e186b279d808311e5dd906bc4c",
+      "passed": true,
+      "checks": 16
+    },
+    {
+      "app": "BRIGHT",
+      "mode": "320c",
+      "kind": "source-inclusive native caller",
+      "sha256": "17fa0c3009bceeeecfcdb66525fa9499db2db825d25235340304acc71a6252d3",
+      "passed": true,
+      "checks": 196
+    },
+    {
+      "app": "GIFLOAD",
+      "mode": "320c",
+      "kind": "source-inclusive native caller",
+      "sha256": "16042d5e33c49bc21a414fa9c06f1bbe2bc33b9b25a1112319f437dae6640694",
+      "passed": true,
+      "checks": 14
+    },
+    {
+      "app": "COOKIE",
+      "mode": "640c",
+      "kind": "source-inclusive native caller",
+      "sha256": "07e5f2198f3c20e95633fd3e3b377365bc3fbb16b00ba09bbff218fe4ae56cd6",
+      "passed": true,
+      "checks": 86
+    },
+    {
+      "app": "TABOUT",
+      "mode": "640c",
+      "kind": "source-inclusive native caller",
+      "sha256": "956ef5a07359d19e32047e7770849cdafd23ea2b329c2f7ed404e76b0820921c",
+      "passed": true,
+      "checks": 135
+    },
+    {
+      "app": "PINBALL",
+      "mode": "640c",
+      "kind": "source-inclusive native caller",
+      "sha256": "33383282c0a53ff2cb5030aed63cc789862423e186b279d808311e5dd906bc4c",
+      "passed": true,
+      "checks": 16
+    },
+    {
+      "app": "BRIGHT",
+      "mode": "640c",
+      "kind": "source-inclusive native caller",
+      "sha256": "17fa0c3009bceeeecfcdb66525fa9499db2db825d25235340304acc71a6252d3",
+      "passed": true,
+      "checks": 196
+    },
+    {
+      "app": "GIFLOAD",
+      "mode": "640c",
+      "kind": "source-inclusive native caller",
+      "sha256": "16042d5e33c49bc21a414fa9c06f1bbe2bc33b9b25a1112319f437dae6640694",
+      "passed": true,
+      "checks": 14
+    },
+    {
+      "app": "COOKIE",
+      "mode": "640m",
+      "kind": "source-inclusive native caller",
+      "sha256": "07e5f2198f3c20e95633fd3e3b377365bc3fbb16b00ba09bbff218fe4ae56cd6",
+      "passed": true,
+      "checks": 86
+    },
+    {
+      "app": "TABOUT",
+      "mode": "640m",
+      "kind": "source-inclusive native caller",
+      "sha256": "956ef5a07359d19e32047e7770849cdafd23ea2b329c2f7ed404e76b0820921c",
+      "passed": true,
+      "checks": 135
+    },
+    {
+      "app": "PINBALL",
+      "mode": "640m",
+      "kind": "source-inclusive native caller",
+      "sha256": "33383282c0a53ff2cb5030aed63cc789862423e186b279d808311e5dd906bc4c",
+      "passed": true,
+      "checks": 16
+    },
+    {
+      "app": "BRIGHT",
+      "mode": "640m",
+      "kind": "source-inclusive native caller",
+      "sha256": "17fa0c3009bceeeecfcdb66525fa9499db2db825d25235340304acc71a6252d3",
+      "passed": true,
+      "checks": 196
+    },
+    {
+      "app": "GIFLOAD",
+      "mode": "640m",
+      "kind": "source-inclusive native caller",
+      "sha256": "16042d5e33c49bc21a414fa9c06f1bbe2bc33b9b25a1112319f437dae6640694",
+      "passed": true,
+      "checks": 14
+    },
+    {
+      "app": "TABOUT",
+      "mode": "160",
+      "kind": "source-inclusive native caller",
+      "sha256": "956ef5a07359d19e32047e7770849cdafd23ea2b329c2f7ed404e76b0820921c",
+      "passed": true,
+      "checks": 135
+    },
+    {
+      "app": "TSHELL",
+      "mode": "160",
+      "kind": "source-inclusive native caller",
+      "sha256": "e87841792417b792207a023c67939d21eefdb04cfe53e89789f8c9ca02613715",
+      "passed": true,
+      "checks": 16
+    },
+    {
+      "app": "SWAT",
+      "mode": "160",
+      "kind": "exact production /T",
+      "sha256": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+      "passed": true,
+      "checks": 23
+    },
+    {
+      "app": "TSHELL",
+      "mode": "320",
+      "kind": "source-inclusive native caller",
+      "sha256": "e87841792417b792207a023c67939d21eefdb04cfe53e89789f8c9ca02613715",
+      "passed": true,
+      "checks": 16
+    },
+    {
+      "app": "SWAT",
+      "mode": "320",
+      "kind": "exact production /T",
+      "sha256": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+      "passed": true,
+      "checks": 23
+    },
+    {
+      "app": "TSHELL",
+      "mode": "320c",
+      "kind": "source-inclusive native caller",
+      "sha256": "e87841792417b792207a023c67939d21eefdb04cfe53e89789f8c9ca02613715",
+      "passed": true,
+      "checks": 16
+    },
+    {
+      "app": "SWAT",
+      "mode": "320c",
+      "kind": "exact production /T",
+      "sha256": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+      "passed": true,
+      "checks": 23
+    },
+    {
+      "app": "TSHELL",
+      "mode": "640c",
+      "kind": "source-inclusive native caller",
+      "sha256": "e87841792417b792207a023c67939d21eefdb04cfe53e89789f8c9ca02613715",
+      "passed": true,
+      "checks": 16
+    },
+    {
+      "app": "SWAT",
+      "mode": "640c",
+      "kind": "exact production /T",
+      "sha256": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+      "passed": true,
+      "checks": 23
+    },
+    {
+      "app": "TSHELL",
+      "mode": "640m",
+      "kind": "source-inclusive native caller",
+      "sha256": "e87841792417b792207a023c67939d21eefdb04cfe53e89789f8c9ca02613715",
+      "passed": true,
+      "checks": 16
+    },
+    {
+      "app": "SWAT",
+      "mode": "640m",
+      "kind": "exact production /T",
+      "sha256": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+      "passed": true,
+      "checks": 23
+    },
+    {
+      "app": "SWAT",
+      "mode": "320",
+      "kind": "exact production fast path",
+      "sha256": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+      "passed": true,
+      "checks": 28
+    },
+    {
+      "mode": "160",
+      "complete": true,
+      "passed": true,
+      "runtime_hashes": {
+        "COOKIE": "9e1899efbd713f05f03379ebe77b14da6797dffb3bafe9de02611184c890a664",
+        "PINBALL": "8464aafca3e023f3a7755e0624254a561cd0673b6fc2fd7f2e5679579f4cbc60",
+        "BRIGHT": "18d78ed99c92d3566713652588d2a1b4b7e72fd2c2bfcf97c7617c9c14b8fbdf",
+        "GIFLOAD": "84fb99fe716acf301cb3101d2ed29ec60aa34119ba40ca28801a042335920cc0",
+        "TABOUT": "5abdc758ec5c99d0f77964bb7edba9f85137d8c3763173c2f70465226d509ec3",
+        "SWAT": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+        "TSHELL": "8d9fbf0aabacc630400a2b716610fc03d38a1d625d3810e7cefb340616912729",
+        "SMOKE": "6866a4151a196c3c55703bc7bc657389446bb683d80fd0974a65d00ab276bfc8"
+      },
+      "seconds": 17.952,
+      "cycles": 25000,
+      "kind": "exact production normal-use observer",
+      "checks": 41
+    },
+    {
+      "mode": "320",
+      "complete": true,
+      "passed": true,
+      "runtime_hashes": {
+        "COOKIE": "9e1899efbd713f05f03379ebe77b14da6797dffb3bafe9de02611184c890a664",
+        "PINBALL": "8464aafca3e023f3a7755e0624254a561cd0673b6fc2fd7f2e5679579f4cbc60",
+        "BRIGHT": "18d78ed99c92d3566713652588d2a1b4b7e72fd2c2bfcf97c7617c9c14b8fbdf",
+        "GIFLOAD": "84fb99fe716acf301cb3101d2ed29ec60aa34119ba40ca28801a042335920cc0",
+        "TABOUT": "5abdc758ec5c99d0f77964bb7edba9f85137d8c3763173c2f70465226d509ec3",
+        "SWAT": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+        "TSHELL": "8d9fbf0aabacc630400a2b716610fc03d38a1d625d3810e7cefb340616912729",
+        "SMOKE": "6866a4151a196c3c55703bc7bc657389446bb683d80fd0974a65d00ab276bfc8"
+      },
+      "seconds": 19.357,
+      "cycles": 25000,
+      "kind": "exact production normal-use observer",
+      "checks": 41
+    },
+    {
+      "mode": "320c",
+      "complete": true,
+      "passed": true,
+      "runtime_hashes": {
+        "COOKIE": "9e1899efbd713f05f03379ebe77b14da6797dffb3bafe9de02611184c890a664",
+        "PINBALL": "8464aafca3e023f3a7755e0624254a561cd0673b6fc2fd7f2e5679579f4cbc60",
+        "BRIGHT": "18d78ed99c92d3566713652588d2a1b4b7e72fd2c2bfcf97c7617c9c14b8fbdf",
+        "GIFLOAD": "84fb99fe716acf301cb3101d2ed29ec60aa34119ba40ca28801a042335920cc0",
+        "TABOUT": "5abdc758ec5c99d0f77964bb7edba9f85137d8c3763173c2f70465226d509ec3",
+        "SWAT": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+        "TSHELL": "8d9fbf0aabacc630400a2b716610fc03d38a1d625d3810e7cefb340616912729",
+        "SMOKE": "6866a4151a196c3c55703bc7bc657389446bb683d80fd0974a65d00ab276bfc8"
+      },
+      "seconds": 17.548,
+      "cycles": 25000,
+      "kind": "exact production normal-use observer",
+      "checks": 41
+    },
+    {
+      "mode": "640c",
+      "complete": true,
+      "passed": true,
+      "runtime_hashes": {
+        "COOKIE": "9e1899efbd713f05f03379ebe77b14da6797dffb3bafe9de02611184c890a664",
+        "PINBALL": "8464aafca3e023f3a7755e0624254a561cd0673b6fc2fd7f2e5679579f4cbc60",
+        "BRIGHT": "18d78ed99c92d3566713652588d2a1b4b7e72fd2c2bfcf97c7617c9c14b8fbdf",
+        "GIFLOAD": "84fb99fe716acf301cb3101d2ed29ec60aa34119ba40ca28801a042335920cc0",
+        "TABOUT": "5abdc758ec5c99d0f77964bb7edba9f85137d8c3763173c2f70465226d509ec3",
+        "SWAT": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+        "TSHELL": "8d9fbf0aabacc630400a2b716610fc03d38a1d625d3810e7cefb340616912729",
+        "SMOKE": "6866a4151a196c3c55703bc7bc657389446bb683d80fd0974a65d00ab276bfc8"
+      },
+      "seconds": 17.251,
+      "cycles": 25000,
+      "kind": "exact production normal-use observer",
+      "checks": 41
+    },
+    {
+      "mode": "640m",
+      "complete": true,
+      "passed": true,
+      "runtime_hashes": {
+        "COOKIE": "9e1899efbd713f05f03379ebe77b14da6797dffb3bafe9de02611184c890a664",
+        "PINBALL": "8464aafca3e023f3a7755e0624254a561cd0673b6fc2fd7f2e5679579f4cbc60",
+        "BRIGHT": "18d78ed99c92d3566713652588d2a1b4b7e72fd2c2bfcf97c7617c9c14b8fbdf",
+        "GIFLOAD": "84fb99fe716acf301cb3101d2ed29ec60aa34119ba40ca28801a042335920cc0",
+        "TABOUT": "5abdc758ec5c99d0f77964bb7edba9f85137d8c3763173c2f70465226d509ec3",
+        "SWAT": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+        "TSHELL": "8d9fbf0aabacc630400a2b716610fc03d38a1d625d3810e7cefb340616912729",
+        "SMOKE": "6866a4151a196c3c55703bc7bc657389446bb683d80fd0974a65d00ab276bfc8"
+      },
+      "seconds": 17.347,
+      "cycles": 25000,
+      "kind": "exact production normal-use observer",
+      "checks": 41
+    }
+  ],
+  "host": {
+    "pinball_stress_ticks": 2000000,
+    "swat_sanitized_stress_ticks": 2000000,
+    "bright_assertions": 136884,
+    "gif_cases": 243,
+    "current_hook_and_DLL_contract": "pass",
+    "legacy_aggregate_host_runner": "fails in unchanged obsolete uppercase fixture; preceding group/lifecycle/saver checks pass, current lowercase hook fixtures and DLL verifier pass separately"
+  },
+  "limits": [
+    "Emulator functional evidence; no physical 8088 timing or manual physical keyboard/mouse acceptance.",
+    "Source-inclusive native callers are separate from exact-binary normal-use observers.",
+    "Five graphics modes with existing driver/font fixtures; custom fonts and hardware text are outside qualification.",
+    "EX/HX 640x200 four-color hardware uncertainty remains.",
+    "No long endurance or forced low-memory qualification.",
+    "Scoped ISA audits exclude imported Windows routines and unresolved indirect continuations."
+  ]
+}
