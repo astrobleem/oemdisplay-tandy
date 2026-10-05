@@ -1,0 +1,74 @@
+TANDINATOR 0.3.2 - QUESTION AND TRAIT REVIEW
+==========================================
+
+Experimental local test kit. Read this before the historical 0.3 QA files.
+No roster expansion; all 256 IDs and 130 question IDs/order are retained.
+UI04 layout, smaller buttons and moving eyes remain intact.
+
+WHAT CHANGED
+14 question wordings clarified; every one of the 130 wordings reviewed.
+32 answer cells changed across 14 characters: 26 film-scope debut/date
+corrections, one Howl Japan-scope correction, four Ahsoka/Catwoman date
+corrections, and one unsupported Miku instrument NO withdrawn to UNKNOWN.
+Eight names now display the film version explicitly in the player roster.
+All 13,115 pre-existing UNKNOWN cells remain UNKNOWN. No question removed.
+
+WHY THE ORIGIN RULE CHANGED
+The old rows mixed literary origins with the named film adaptation.
+Cinderella (Disney) used animation but Bambi (Disney) used books. The
+debut questions now explicitly ask about the version named in the roster.
+Generic book/comic/game identities retain their original medium; a familiar
+screen costume alone does not change them. Sources and interpretations are
+listed per changed cell in data/AUDIT05.JSON. All 130 review decisions and
+per-column coverage appear there and in data/QUEST05.TXT.
+
+MEASURED TRADEOFFS - NOT A FACTUAL ACCURACY SCORE
+                                  Before       After
+Self replay: first guess          235/256      233/256
+Self replay: eventual             256/256      256/256
+Uncertain/soft eventual          3061/3072    3063/3072
+Mixed-noise eventual             2881/3072    2862/3072
+Single early wrong answer        2534/2560    2536/2560
+
+The same corrected answer rows, supplied to both databases, recover
+251/256 on the old database versus 256/256 on the corrected one; first
+guesses improve 224 to 233. Most other row facts remain unverified, so this
+does not establish real user accuracy. The old 19-case independent sparse
+fixture is unchanged: 15 eventual and 4 first guesses in both versions.
+
+Lost false medium distinctions expose remaining knowledge gaps: pairs
+without opposing known answers rise from 200 to 215. No identical rows
+were introduced, but differences involving UNKNOWN do not prove useful
+distinction. No facts were changed merely to increase a score.
+
+COVERAGE AND LIMITS
+Official Disney/D23, Ghibli, DreamWorks, Warner, Paramount, Lucasfilm, DC
+and Crypton references support the bounded corrections. Named-version
+interpretation is labeled separately from direct date evidence.
+Most of the 33,280 answer cells are still not independently verified.
+Country associations, hybrid taxonomy, variable costumes and subjective
+story associations remain disclosed risks. No added-roster accuracy claim.
+All three supported emulator modes passed the complete UI checks: 130
+questions/256 names fit, keys 1-5, mouse targets, moving eyes and redraws.
+Targets: Bambi (Disney), Howl (Studio Ghibli), and Ahsoka Tano.
+No human user study or physical Tandy/8088 run was performed.
+
+REPRODUCIBILITY
+python3 tools/DBBUILD.PY --strict-unique
+python3 tools/COVERAGE.PY
+python3 tests/DBTEST.PY
+python3 tests/CURTEST.PY
+python3 tests/QTEST05.PY
+python3 tools/HUMANSIM.PY --fixture evidence/FACTAUDIT.FIXTURE.JSON
+For before/after replay: use data/BEFORE05.JSON and build/BEFORE05.DAT.
+Fresh emulator runs use tools/EMUTEST.PY run(..., tag="-ui05").
+python3 tests/ARTTEST.PY --require-runtime --runtime-tag=-ui05
+python3 tests/UITEST.PY --runtime-tag=-ui05
+See BUILDING.TXT for the owned compiler/Windows setup and emulator lock.
+Captured evidence can be reconstructed with tools/PREP05.PY from this kit.
+
+INSTALL
+Back up the current app and use RUN/TANDI.EXE with RUN/TANDY.DAT together.
+Use the existing guarded Windows launcher; do not change display setup.
+No Windows/compiler/BIOS/emulator binaries are distributed.
+All distributed file bytes are recorded in SHA256.TXT.

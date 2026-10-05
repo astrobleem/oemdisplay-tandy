@@ -1,0 +1,2666 @@
+{
+  "scope": "All 130 question wordings reviewed; targeted source/scope correction, not a factual audit of all 33280 cells. No roster expansion. No question removed. Pre-existing UNKNOWN values are unchanged.",
+  "baseline_main": "c6ee4b0f20d9a3c5da4b4d2b22bdc65a762c853b",
+  "baseline_source_sha256": "dc46b91ef521711f97326d82e32aa766c01d6951572a20c873e8ec608424f8ce",
+  "source_sha256": "9b6455a7bde9c015e378be8faac0aa2b73e834c8b961d477b35f4a2203aaa341",
+  "reviewed_on": "2026-10-05",
+  "sources": {
+    "pinocchio": {
+      "url": "https://d23.com/a-to-z/pinocchio-film/",
+      "summary": "Disney animated Pinocchio feature, released 1940; adapted from Collodi."
+    },
+    "bambi": {
+      "url": "https://d23.com/a-to-z/bambi-film/",
+      "summary": "Disney film dated 1942; based on Felix Salten, distinct from the book."
+    },
+    "cruella": {
+      "url": "https://d23.com/a-to-z/one-hundred-and-one-dalmatians-film/",
+      "summary": "Disney animated film dated 1961, featuring Cruella and adapted from Dodie Smith."
+    },
+    "kiki": {
+      "url": "https://www.ghibli.jp/works/majo/",
+      "summary": "Studio Ghibli lists its film adaptation with 1989 release and Eiko Kadono source credit."
+    },
+    "howl": {
+      "url": "https://www.ghibli.jp/works/howl/",
+      "summary": "Studio Ghibli lists its adaptation of Diana Wynne Jones with 2004 release."
+    },
+    "arrietty": {
+      "url": "https://www.ghibli.jp/works/karigurashi/",
+      "summary": "Studio Ghibli lists its Mary Norton adaptation with 2010 release."
+    },
+    "nausicaa": {
+      "url": "https://www.ghibli.jp/works/nausicaa/",
+      "summary": "Studio Ghibli catalogue lists the Miyazaki film with 1984 release."
+    },
+    "shrek": {
+      "url": "https://www.dreamworks.com/movies/shrek",
+      "summary": "DreamWorks identifies Shrek as its 2001 animated feature."
+    },
+    "oz": {
+      "url": "https://www.warnerbros.co.jp/home_entertainment/wpvkpa9p73/",
+      "summary": "Warner lists the 1939 live-action film, Judy Garland as Dorothy, and Baum source credit."
+    },
+    "forrest": {
+      "url": "https://www.paramountpictures.com/movies/forrest-gump",
+      "summary": "Paramount lists the Tom Hanks film as a 1994 production."
+    },
+    "miku": {
+      "url": "https://ec.crypton.co.jp/pages/prod/virtualsinger/cv01_us",
+      "summary": "Crypton describes a singing voice synthesizer and gives age 16. This does not establish that the character never plays an instrument."
+    },
+    "ghibli_profile": {
+      "url": "https://www.ghibli.jp/profile/",
+      "summary": "Studio Ghibli history places the studio in Tokyo since 1992, before the 2004 Howl film."
+    },
+    "ahsoka": {
+      "url": "https://www.starwars.com/news/who-is-ahsoka-tano/",
+      "summary": "Lucasfilm identifies her first appearance in The Clone Wars film; official film page dates it 2008."
+    },
+    "clonewars": {
+      "url": "https://www.starwars.com/films/star-wars-the-clone-wars",
+      "summary": "Lucasfilm official release information for the 2008 animated film."
+    },
+    "catwoman": {
+      "url": "https://www.dc.com/characters/catwoman",
+      "summary": "DC lists Catwoman first appearance as BATMAN #1 (1940)."
+    },
+    "kitty": {
+      "url": "https://corporate.sanrio.co.jp/en/business-info/brands/hello_kity/",
+      "summary": "Sanrio identifies a girl designed in 1974, born near London, with piano-playing among her hobbies."
+    }
+  },
+  "questions": [
+    {
+      "id": "real",
+      "before": "Is your character a real person?",
+      "after": "Is your character a real person?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 206,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 50
+      },
+      "added_unknown": 0,
+      "added_total": 128
+    },
+    {
+      "id": "fictional",
+      "before": "Is your character fictional or legendary?",
+      "after": "Is your character fictional or legendary?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 50,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 206
+      },
+      "added_unknown": 0,
+      "added_total": 128
+    },
+    {
+      "id": "male",
+      "before": "Is your character male?",
+      "after": "Is your character male?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 78,
+        "1": 0,
+        "2": 5,
+        "3": 2,
+        "4": 171
+      },
+      "added_unknown": 4,
+      "added_total": 128
+    },
+    {
+      "id": "female",
+      "before": "Is your character female?",
+      "after": "Is your character female?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 173,
+        "1": 0,
+        "2": 6,
+        "3": 0,
+        "4": 77
+      },
+      "added_unknown": 5,
+      "added_total": 128
+    },
+    {
+      "id": "human",
+      "before": "Is your character human?",
+      "after": "Is your character human (including human cyborgs)?",
+      "decision": "clarified",
+      "risk": "taxonomy",
+      "review_note": "Human/animal/machine boundaries can overlap in hybrids, toys and supernatural figures. Retain unresolved cases; do not infer biology from codenames or appearances.",
+      "answer_counts": {
+        "0": 94,
+        "1": 0,
+        "2": 13,
+        "3": 0,
+        "4": 149
+      },
+      "added_unknown": 4,
+      "added_total": 128
+    },
+    {
+      "id": "young",
+      "before": "Is your character usually a child or teenager?",
+      "after": "Is your character usually portrayed as a child or teenager?",
+      "decision": "clarified",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 107,
+        "1": 0,
+        "2": 115,
+        "3": 4,
+        "4": 30
+      },
+      "added_unknown": 107,
+      "added_total": 128
+    },
+    {
+      "id": "animal",
+      "before": "Is your character an animal rather than a human?",
+      "after": "Is your character an animal rather than a human?",
+      "decision": "retained_with_caveat",
+      "risk": "taxonomy",
+      "review_note": "Human/animal/machine boundaries can overlap in hybrids, toys and supernatural figures. Retain unresolved cases; do not infer biology from codenames or appearances.",
+      "answer_counts": {
+        "0": 178,
+        "1": 0,
+        "2": 34,
+        "3": 0,
+        "4": 44
+      },
+      "added_unknown": 31,
+      "added_total": 128
+    },
+    {
+      "id": "robot",
+      "before": "Is your character a robot or artificial machine?",
+      "after": "Is your character a robot or artificial machine?",
+      "decision": "retained_with_caveat",
+      "risk": "taxonomy",
+      "review_note": "Human/animal/machine boundaries can overlap in hybrids, toys and supernatural figures. Retain unresolved cases; do not infer biology from codenames or appearances.",
+      "answer_counts": {
+        "0": 207,
+        "1": 0,
+        "2": 42,
+        "3": 0,
+        "4": 7
+      },
+      "added_unknown": 41,
+      "added_total": 128
+    },
+    {
+      "id": "alien",
+      "before": "Is your character a nonhuman alien species?",
+      "after": "Is your character a nonhuman alien species?",
+      "decision": "retained_with_caveat",
+      "risk": "taxonomy",
+      "review_note": "Human/animal/machine boundaries can overlap in hybrids, toys and supernatural figures. Retain unresolved cases; do not infer biology from codenames or appearances.",
+      "answer_counts": {
+        "0": 204,
+        "1": 0,
+        "2": 39,
+        "3": 0,
+        "4": 13
+      },
+      "added_unknown": 38,
+      "added_total": 128
+    },
+    {
+      "id": "magical_being",
+      "before": "Is your character a magical or supernatural being?",
+      "after": "Is your character a magical or supernatural being?",
+      "decision": "retained_with_caveat",
+      "risk": "taxonomy",
+      "review_note": "Human/animal/machine boundaries can overlap in hybrids, toys and supernatural figures. Retain unresolved cases; do not infer biology from codenames or appearances.",
+      "answer_counts": {
+        "0": 148,
+        "1": 0,
+        "2": 83,
+        "3": 0,
+        "4": 25
+      },
+      "added_unknown": 83,
+      "added_total": 128
+    },
+    {
+      "id": "monster",
+      "before": "Is your character usually called a monster?",
+      "after": "Is your character usually called a monster?",
+      "decision": "retained_with_caveat",
+      "risk": "taxonomy",
+      "review_note": "Human/animal/machine boundaries can overlap in hybrids, toys and supernatural figures. Retain unresolved cases; do not infer biology from codenames or appearances.",
+      "answer_counts": {
+        "0": 153,
+        "1": 0,
+        "2": 93,
+        "3": 0,
+        "4": 10
+      },
+      "added_unknown": 93,
+      "added_total": 128
+    },
+    {
+      "id": "villain",
+      "before": "Is your character mainly a villain?",
+      "after": "Is your character mainly a villain?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 124,
+        "1": 0,
+        "2": 116,
+        "3": 2,
+        "4": 14
+      },
+      "added_unknown": 115,
+      "added_total": 128
+    },
+    {
+      "id": "hero",
+      "before": "Is your character known for heroic adventures?",
+      "after": "Is your character known for heroic adventures?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 69,
+        "1": 0,
+        "2": 68,
+        "3": 11,
+        "4": 108
+      },
+      "added_unknown": 67,
+      "added_total": 128
+    },
+    {
+      "id": "royal",
+      "before": "Is your character royalty?",
+      "after": "Is your character royalty?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 111,
+        "1": 0,
+        "2": 119,
+        "3": 2,
+        "4": 24
+      },
+      "added_unknown": 119,
+      "added_total": 128
+    },
+    {
+      "id": "crown",
+      "before": "Is your character often shown wearing a crown or tiara?",
+      "after": "Is your character often shown wearing a crown or tiara?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 121,
+        "1": 0,
+        "2": 126,
+        "3": 2,
+        "4": 7
+      },
+      "added_unknown": 126,
+      "added_total": 128
+    },
+    {
+      "id": "leader",
+      "before": "Is your character a ruler, commander, or national leader?",
+      "after": "Is your character a ruler, commander, or national leader?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 108,
+        "1": 0,
+        "2": 108,
+        "3": 2,
+        "4": 38
+      },
+      "added_unknown": 108,
+      "added_total": 128
+    },
+    {
+      "id": "sidekick",
+      "before": "Is your character often a hero's helper or sidekick?",
+      "after": "Is your character often a hero's helper or sidekick?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 116,
+        "1": 0,
+        "2": 128,
+        "3": 0,
+        "4": 12
+      },
+      "added_unknown": 127,
+      "added_total": 128
+    },
+    {
+      "id": "comic_relief",
+      "before": "Is being funny a major part of your character's role?",
+      "after": "Is being funny a major part of your character's role?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 94,
+        "1": 0,
+        "2": 120,
+        "3": 0,
+        "4": 42
+      },
+      "added_unknown": 120,
+      "added_total": 128
+    },
+    {
+      "id": "video_origin",
+      "before": "Did your character first become known in video games?",
+      "after": "Did this version of your character debut in video games?",
+      "decision": "clarified",
+      "risk": "adaptation_scope",
+      "review_note": "Distinguish named adaptation from source identity; do not treat a film appearance as the debut of an otherwise generic comic/book identity.",
+      "answer_counts": {
+        "0": 204,
+        "1": 0,
+        "2": 19,
+        "3": 0,
+        "4": 33
+      },
+      "added_unknown": 19,
+      "added_total": 128
+    },
+    {
+      "id": "animation_origin",
+      "before": "Did your character first become known in animation?",
+      "after": "Did this version of your character debut in animation?",
+      "decision": "clarified",
+      "risk": "adaptation_scope",
+      "review_note": "Distinguish named adaptation from source identity; do not treat a film appearance as the debut of an otherwise generic comic/book identity.",
+      "answer_counts": {
+        "0": 175,
+        "1": 0,
+        "2": 13,
+        "3": 0,
+        "4": 68
+      },
+      "added_unknown": 13,
+      "added_total": 128
+    },
+    {
+      "id": "live_origin",
+      "before": "Did your character first become known in live-action fiction?",
+      "after": "Did this version of your character debut in live-action fiction?",
+      "decision": "clarified",
+      "risk": "adaptation_scope",
+      "review_note": "Distinguish named adaptation from source identity; do not treat a film appearance as the debut of an otherwise generic comic/book identity.",
+      "answer_counts": {
+        "0": 217,
+        "1": 0,
+        "2": 16,
+        "3": 0,
+        "4": 23
+      },
+      "added_unknown": 16,
+      "added_total": 128
+    },
+    {
+      "id": "comics_origin",
+      "before": "Did your character first become known in comics or comic strips?",
+      "after": "Did this version debut in comics, comic strips, or manga?",
+      "decision": "clarified",
+      "risk": "adaptation_scope",
+      "review_note": "Distinguish named adaptation from source identity; do not treat a film appearance as the debut of an otherwise generic comic/book identity.",
+      "answer_counts": {
+        "0": 198,
+        "1": 0,
+        "2": 17,
+        "3": 0,
+        "4": 41
+      },
+      "added_unknown": 17,
+      "added_total": 128
+    },
+    {
+      "id": "books_origin",
+      "before": "Did your character first become known in a book or story?",
+      "after": "Did this version debut in a book or prose story?",
+      "decision": "clarified",
+      "risk": "adaptation_scope",
+      "review_note": "Distinguish named adaptation from source identity; do not treat a film appearance as the debut of an otherwise generic comic/book identity.",
+      "answer_counts": {
+        "0": 220,
+        "1": 0,
+        "2": 16,
+        "3": 1,
+        "4": 19
+      },
+      "added_unknown": 16,
+      "added_total": 128
+    },
+    {
+      "id": "folklore",
+      "before": "Is your character from folklore, legend, or mythology?",
+      "after": "Is your character from folklore, legend, or mythology?",
+      "decision": "retained_with_caveat",
+      "risk": "adaptation_scope",
+      "review_note": "Distinguish named adaptation from source identity; do not treat a film appearance as the debut of an otherwise generic comic/book identity.",
+      "answer_counts": {
+        "0": 153,
+        "1": 0,
+        "2": 86,
+        "3": 0,
+        "4": 17
+      },
+      "added_unknown": 86,
+      "added_total": 128
+    },
+    {
+      "id": "movie",
+      "before": "Is your character strongly associated with movies?",
+      "after": "Is your character strongly associated with movies?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 62,
+        "1": 0,
+        "2": 57,
+        "3": 5,
+        "4": 132
+      },
+      "added_unknown": 57,
+      "added_total": 128
+    },
+    {
+      "id": "tv",
+      "before": "Is your character strongly associated with a television series?",
+      "after": "Is your character strongly associated with a television series?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 94,
+        "1": 0,
+        "2": 86,
+        "3": 2,
+        "4": 74
+      },
+      "added_unknown": 86,
+      "added_total": 128
+    },
+    {
+      "id": "singer",
+      "before": "Is your character famous for singing or making music?",
+      "after": "Is your character famous for singing or making music?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 129,
+        "1": 0,
+        "2": 113,
+        "3": 2,
+        "4": 12
+      },
+      "added_unknown": 113,
+      "added_total": 128
+    },
+    {
+      "id": "scientist",
+      "before": "Is your character known as a scientist or mathematician?",
+      "after": "Is your character known as a scientist or mathematician?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 133,
+        "1": 0,
+        "2": 113,
+        "3": 1,
+        "4": 9
+      },
+      "added_unknown": 113,
+      "added_total": 128
+    },
+    {
+      "id": "politician",
+      "before": "Is your character known for politics or governing?",
+      "after": "Is your character known for politics or governing?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 128,
+        "1": 0,
+        "2": 117,
+        "3": 0,
+        "4": 11
+      },
+      "added_unknown": 117,
+      "added_total": 128
+    },
+    {
+      "id": "athlete",
+      "before": "Is your character famous for competitive sports or wrestling?",
+      "after": "Is your character famous for competitive sports or wrestling?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 128,
+        "1": 0,
+        "2": 115,
+        "3": 0,
+        "4": 13
+      },
+      "added_unknown": 115,
+      "added_total": 128
+    },
+    {
+      "id": "performer",
+      "before": "Is your character a professional actor or stage entertainer?",
+      "after": "Is your character a professional actor or stage entertainer?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 123,
+        "1": 0,
+        "2": 118,
+        "3": 0,
+        "4": 15
+      },
+      "added_unknown": 118,
+      "added_total": 128
+    },
+    {
+      "id": "adventurer",
+      "before": "Is your character an explorer or adventurer?",
+      "after": "Is your character an explorer or adventurer?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 103,
+        "1": 1,
+        "2": 120,
+        "3": 0,
+        "4": 32
+      },
+      "added_unknown": 119,
+      "added_total": 128
+    },
+    {
+      "id": "fighter",
+      "before": "Is your character known as a warrior or trained fighter?",
+      "after": "Is your character known as a warrior or trained fighter?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 98,
+        "1": 0,
+        "2": 110,
+        "3": 2,
+        "4": 46
+      },
+      "added_unknown": 110,
+      "added_total": 128
+    },
+    {
+      "id": "detective",
+      "before": "Is your character a detective or investigator?",
+      "after": "Is your character a detective or investigator?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 124,
+        "1": 0,
+        "2": 127,
+        "3": 0,
+        "4": 5
+      },
+      "added_unknown": 127,
+      "added_total": 128
+    },
+    {
+      "id": "inventor",
+      "before": "Is your character known for inventing or building machines?",
+      "after": "Is your character known for inventing or building machines?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 126,
+        "1": 0,
+        "2": 124,
+        "3": 0,
+        "4": 6
+      },
+      "added_unknown": 124,
+      "added_total": 128
+    },
+    {
+      "id": "artist",
+      "before": "Is your character famous as an author or visual artist?",
+      "after": "Is your character famous as an author or visual artist?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 128,
+        "1": 0,
+        "2": 116,
+        "3": 0,
+        "4": 12
+      },
+      "added_unknown": 116,
+      "added_total": 128
+    },
+    {
+      "id": "business",
+      "before": "Is your character known for owning or running a business?",
+      "after": "Is your character known for owning or running a business?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 122,
+        "1": 0,
+        "2": 122,
+        "3": 0,
+        "4": 12
+      },
+      "added_unknown": 122,
+      "added_total": 128
+    },
+    {
+      "id": "wizard",
+      "before": "Is your character a wizard, witch, or sorcerer?",
+      "after": "Is your character a wizard, witch, or sorcerer?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 123,
+        "1": 0,
+        "2": 123,
+        "3": 0,
+        "4": 10
+      },
+      "added_unknown": 123,
+      "added_total": 128
+    },
+    {
+      "id": "student",
+      "before": "Is your character usually a student?",
+      "after": "Is your character usually a student?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 122,
+        "1": 0,
+        "2": 126,
+        "3": 0,
+        "4": 8
+      },
+      "added_unknown": 125,
+      "added_total": 128
+    },
+    {
+      "id": "food",
+      "before": "Is your character strongly associated with food or cooking?",
+      "after": "Is your character strongly associated with food or cooking?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 109,
+        "1": 0,
+        "2": 125,
+        "3": 1,
+        "4": 21
+      },
+      "added_unknown": 125,
+      "added_total": 128
+    },
+    {
+      "id": "american",
+      "before": "Is your character mainly associated with the United States?",
+      "after": "Is your character mainly associated with the United States?",
+      "decision": "retained_with_caveat",
+      "risk": "geographic_association",
+      "review_note": "Broad association is not citizenship, birthplace or creator location. Japan explicitly asks creation; remaining country-association columns need a separately sourced column-wide review.",
+      "answer_counts": {
+        "0": 65,
+        "1": 0,
+        "2": 109,
+        "3": 0,
+        "4": 82
+      },
+      "added_unknown": 109,
+      "added_total": 128
+    },
+    {
+      "id": "japanese",
+      "before": "Was your character created in Japan?",
+      "after": "Was this fictional version created in Japan?",
+      "decision": "clarified",
+      "risk": "geographic_association",
+      "review_note": "Broad association is not citizenship, birthplace or creator location. Japan explicitly asks creation; remaining country-association columns need a separately sourced column-wide review.",
+      "answer_counts": {
+        "0": 138,
+        "1": 0,
+        "2": 74,
+        "3": 0,
+        "4": 44
+      },
+      "added_unknown": 74,
+      "added_total": 128
+    },
+    {
+      "id": "british",
+      "before": "Is your character mainly associated with Britain?",
+      "after": "Is your character mainly associated with Britain?",
+      "decision": "retained_with_caveat",
+      "risk": "geographic_association",
+      "review_note": "Broad association is not citizenship, birthplace or creator location. Japan explicitly asks creation; remaining country-association columns need a separately sourced column-wide review.",
+      "answer_counts": {
+        "0": 103,
+        "1": 0,
+        "2": 123,
+        "3": 0,
+        "4": 30
+      },
+      "added_unknown": 123,
+      "added_total": 128
+    },
+    {
+      "id": "french",
+      "before": "Is your character mainly associated with France?",
+      "after": "Is your character mainly associated with France?",
+      "decision": "retained_with_caveat",
+      "risk": "geographic_association",
+      "review_note": "Broad association is not citizenship, birthplace or creator location. Japan explicitly asks creation; remaining country-association columns need a separately sourced column-wide review.",
+      "answer_counts": {
+        "0": 125,
+        "1": 0,
+        "2": 127,
+        "3": 0,
+        "4": 4
+      },
+      "added_unknown": 127,
+      "added_total": 128
+    },
+    {
+      "id": "european",
+      "before": "Is your character mainly associated with continental Europe?",
+      "after": "Is your character mainly associated with continental Europe?",
+      "decision": "retained_with_caveat",
+      "risk": "geographic_association",
+      "review_note": "Broad association is not citizenship, birthplace or creator location. Japan explicitly asks creation; remaining country-association columns need a separately sourced column-wide review.",
+      "answer_counts": {
+        "0": 122,
+        "1": 0,
+        "2": 119,
+        "3": 0,
+        "4": 15
+      },
+      "added_unknown": 119,
+      "added_total": 128
+    },
+    {
+      "id": "african",
+      "before": "Is your character strongly associated with Africa?",
+      "after": "Is your character strongly associated with Africa?",
+      "decision": "retained_with_caveat",
+      "risk": "geographic_association",
+      "review_note": "Broad association is not citizenship, birthplace or creator location. Japan explicitly asks creation; remaining country-association columns need a separately sourced column-wide review.",
+      "answer_counts": {
+        "0": 126,
+        "1": 0,
+        "2": 124,
+        "3": 0,
+        "4": 6
+      },
+      "added_unknown": 124,
+      "added_total": 128
+    },
+    {
+      "id": "asian",
+      "before": "Is your character strongly associated with Asia outside Japan?",
+      "after": "Is your character strongly associated with Asia outside Japan?",
+      "decision": "retained_with_caveat",
+      "risk": "geographic_association",
+      "review_note": "Broad association is not citizenship, birthplace or creator location. Japan explicitly asks creation; remaining country-association columns need a separately sourced column-wide review.",
+      "answer_counts": {
+        "0": 130,
+        "1": 0,
+        "2": 120,
+        "3": 0,
+        "4": 6
+      },
+      "added_unknown": 120,
+      "added_total": 128
+    },
+    {
+      "id": "pre1800",
+      "before": "Is this a real historical person who lived before 1800?",
+      "after": "Is this a real person who was alive before 1800?",
+      "decision": "clarified",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 225,
+        "1": 0,
+        "2": 21,
+        "3": 0,
+        "4": 10
+      },
+      "added_unknown": 21,
+      "added_total": 128
+    },
+    {
+      "id": "nineteenth",
+      "before": "Is this a real historical person active in the 1800s?",
+      "after": "Was this real person active during 1800-1899?",
+      "decision": "clarified",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 233,
+        "1": 0,
+        "2": 12,
+        "3": 0,
+        "4": 11
+      },
+      "added_unknown": 12,
+      "added_total": 128
+    },
+    {
+      "id": "old_fiction",
+      "before": "Was your fictional character known before 1950?",
+      "after": "Did this fictional version debut before 1950?",
+      "decision": "clarified",
+      "risk": "adaptation_scope",
+      "review_note": "Distinguish named adaptation from source identity; do not treat a film appearance as the debut of an otherwise generic comic/book identity.",
+      "answer_counts": {
+        "0": 209,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 47
+      },
+      "added_unknown": 0,
+      "added_total": 128
+    },
+    {
+      "id": "mid_fiction",
+      "before": "Did your fictional character debut between 1950 and 1979?",
+      "after": "Did this fictional version debut during 1950-1979?",
+      "decision": "clarified",
+      "risk": "adaptation_scope",
+      "review_note": "Distinguish named adaptation from source identity; do not treat a film appearance as the debut of an otherwise generic comic/book identity.",
+      "answer_counts": {
+        "0": 197,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 59
+      },
+      "added_unknown": 0,
+      "added_total": 128
+    },
+    {
+      "id": "late_fiction",
+      "before": "Did your fictional character debut between 1980 and 1999?",
+      "after": "Did this fictional version debut during 1980-1999?",
+      "decision": "clarified",
+      "risk": "adaptation_scope",
+      "review_note": "Distinguish named adaptation from source identity; do not treat a film appearance as the debut of an otherwise generic comic/book identity.",
+      "answer_counts": {
+        "0": 187,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 69
+      },
+      "added_unknown": 0,
+      "added_total": 128
+    },
+    {
+      "id": "new_fiction",
+      "before": "Did your fictional character debut in 2000 or later?",
+      "after": "Did this fictional version debut in 2000 or later?",
+      "decision": "clarified",
+      "risk": "adaptation_scope",
+      "review_note": "Distinguish named adaptation from source identity; do not treat a film appearance as the debut of an otherwise generic comic/book identity.",
+      "answer_counts": {
+        "0": 225,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 31
+      },
+      "added_unknown": 0,
+      "added_total": 128
+    },
+    {
+      "id": "red",
+      "before": "Is red a major color in your character's usual appearance?",
+      "after": "Is red a major color in your character's usual appearance?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 83,
+        "1": 0,
+        "2": 141,
+        "3": 2,
+        "4": 30
+      },
+      "added_unknown": 120,
+      "added_total": 128
+    },
+    {
+      "id": "blue",
+      "before": "Is blue a major color in your character's usual appearance?",
+      "after": "Is blue a major color in your character's usual appearance?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 79,
+        "1": 0,
+        "2": 144,
+        "3": 2,
+        "4": 31
+      },
+      "added_unknown": 121,
+      "added_total": 128
+    },
+    {
+      "id": "green",
+      "before": "Is green a major color in your character's usual appearance?",
+      "after": "Is green a major color in your character's usual appearance?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 89,
+        "1": 0,
+        "2": 143,
+        "3": 2,
+        "4": 22
+      },
+      "added_unknown": 121,
+      "added_total": 128
+    },
+    {
+      "id": "pink",
+      "before": "Is pink a major color in your character's usual appearance?",
+      "after": "Is pink a major color in your character's usual appearance?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 101,
+        "1": 0,
+        "2": 147,
+        "3": 1,
+        "4": 7
+      },
+      "added_unknown": 125,
+      "added_total": 128
+    },
+    {
+      "id": "yellow",
+      "before": "Is yellow or gold a major color in your character's appearance?",
+      "after": "Is yellow or gold a major color in your character's appearance?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 90,
+        "1": 0,
+        "2": 144,
+        "3": 0,
+        "4": 22
+      },
+      "added_unknown": 123,
+      "added_total": 128
+    },
+    {
+      "id": "black",
+      "before": "Is black a major color in your character's usual appearance?",
+      "after": "Is black a major color in your character's usual appearance?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 86,
+        "1": 0,
+        "2": 142,
+        "3": 0,
+        "4": 28
+      },
+      "added_unknown": 122,
+      "added_total": 128
+    },
+    {
+      "id": "white",
+      "before": "Is white a major color in your character's usual appearance?",
+      "after": "Is white a major color in your character's usual appearance?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 76,
+        "1": 0,
+        "2": 136,
+        "3": 1,
+        "4": 43
+      },
+      "added_unknown": 120,
+      "added_total": 128
+    },
+    {
+      "id": "purple",
+      "before": "Is purple a major color in your character's usual appearance?",
+      "after": "Is purple a major color in your character's usual appearance?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 99,
+        "1": 0,
+        "2": 148,
+        "3": 0,
+        "4": 9
+      },
+      "added_unknown": 126,
+      "added_total": 128
+    },
+    {
+      "id": "hat",
+      "before": "Does your character often wear a hat?",
+      "after": "Does your character often wear a hat?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 107,
+        "1": 0,
+        "2": 124,
+        "3": 0,
+        "4": 25
+      },
+      "added_unknown": 124,
+      "added_total": 128
+    },
+    {
+      "id": "mask",
+      "before": "Does your character usually wear a mask or helmet?",
+      "after": "Does your character usually wear a mask or helmet?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 119,
+        "1": 0,
+        "2": 121,
+        "3": 0,
+        "4": 16
+      },
+      "added_unknown": 121,
+      "added_total": 128
+    },
+    {
+      "id": "cape",
+      "before": "Does your character often wear a cape or cloak?",
+      "after": "Does your character often wear a cape or cloak?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 119,
+        "1": 0,
+        "2": 120,
+        "3": 2,
+        "4": 15
+      },
+      "added_unknown": 120,
+      "added_total": 128
+    },
+    {
+      "id": "uniform",
+      "before": "Does your character often wear a work or military uniform?",
+      "after": "Does your character often wear a work or military uniform?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 116,
+        "1": 0,
+        "2": 122,
+        "3": 0,
+        "4": 18
+      },
+      "added_unknown": 122,
+      "added_total": 128
+    },
+    {
+      "id": "formal",
+      "before": "Is your character often shown in a suit or formal clothes?",
+      "after": "Is your character often shown in a suit or formal clothes?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 108,
+        "1": 0,
+        "2": 136,
+        "3": 0,
+        "4": 12
+      },
+      "added_unknown": 119,
+      "added_total": 128
+    },
+    {
+      "id": "glasses",
+      "before": "Is your character usually shown wearing glasses?",
+      "after": "Is your character usually shown wearing glasses?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 127,
+        "1": 0,
+        "2": 123,
+        "3": 2,
+        "4": 4
+      },
+      "added_unknown": 123,
+      "added_total": 128
+    },
+    {
+      "id": "moustache",
+      "before": "Is your character known for having a moustache?",
+      "after": "Is your character known for having a moustache?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 122,
+        "1": 0,
+        "2": 125,
+        "3": 0,
+        "4": 9
+      },
+      "added_unknown": 125,
+      "added_total": 128
+    },
+    {
+      "id": "beard",
+      "before": "Is your character known for having a beard?",
+      "after": "Is your character known for having a beard?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 114,
+        "1": 0,
+        "2": 123,
+        "3": 2,
+        "4": 17
+      },
+      "added_unknown": 123,
+      "added_total": 128
+    },
+    {
+      "id": "blond",
+      "before": "Is your character usually shown with blond hair?",
+      "after": "Is your character usually shown with blond hair?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 109,
+        "1": 0,
+        "2": 126,
+        "3": 2,
+        "4": 19
+      },
+      "added_unknown": 122,
+      "added_total": 128
+    },
+    {
+      "id": "dark_hair",
+      "before": "Is your character usually shown with dark hair?",
+      "after": "Is your character usually shown with dark hair?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 90,
+        "1": 0,
+        "2": 128,
+        "3": 0,
+        "4": 38
+      },
+      "added_unknown": 124,
+      "added_total": 128
+    },
+    {
+      "id": "bald",
+      "before": "Is your character usually bald or almost bald?",
+      "after": "Is your character usually bald or almost bald?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 121,
+        "1": 0,
+        "2": 127,
+        "3": 0,
+        "4": 8
+      },
+      "added_unknown": 127,
+      "added_total": 128
+    },
+    {
+      "id": "long_hair",
+      "before": "Is your character usually shown with long hair?",
+      "after": "Is your character usually shown with long hair?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 99,
+        "1": 0,
+        "2": 123,
+        "3": 0,
+        "4": 34
+      },
+      "added_unknown": 123,
+      "added_total": 128
+    },
+    {
+      "id": "unusual_skin",
+      "before": "Does your character have an unusual nonhuman skin color?",
+      "after": "Does your character have an unusual nonhuman skin color?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 142,
+        "1": 0,
+        "2": 99,
+        "3": 0,
+        "4": 15
+      },
+      "added_unknown": 99,
+      "added_total": 128
+    },
+    {
+      "id": "fur",
+      "before": "Does your character have fur?",
+      "after": "Does your character have fur?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 132,
+        "1": 0,
+        "2": 93,
+        "3": 0,
+        "4": 31
+      },
+      "added_unknown": 93,
+      "added_total": 128
+    },
+    {
+      "id": "feathers",
+      "before": "Does your character have feathers?",
+      "after": "Does your character have feathers?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 154,
+        "1": 0,
+        "2": 98,
+        "3": 0,
+        "4": 4
+      },
+      "added_unknown": 98,
+      "added_total": 128
+    },
+    {
+      "id": "tail",
+      "before": "Does your character have a tail?",
+      "after": "Does your character have a tail?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 135,
+        "1": 0,
+        "2": 94,
+        "3": 0,
+        "4": 27
+      },
+      "added_unknown": 94,
+      "added_total": 128
+    },
+    {
+      "id": "big_ears",
+      "before": "Does your character have conspicuously large or pointed ears?",
+      "after": "Does your character have conspicuously large or pointed ears?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 116,
+        "1": 0,
+        "2": 126,
+        "3": 0,
+        "4": 14
+      },
+      "added_unknown": 126,
+      "added_total": 128
+    },
+    {
+      "id": "small",
+      "before": "Is your character much smaller than an average adult human?",
+      "after": "Is your character much smaller than an average adult human?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 95,
+        "1": 0,
+        "2": 126,
+        "3": 3,
+        "4": 32
+      },
+      "added_unknown": 124,
+      "added_total": 128
+    },
+    {
+      "id": "large",
+      "before": "Is your character unusually large or bulky?",
+      "after": "Is your character unusually large or bulky?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 111,
+        "1": 0,
+        "2": 124,
+        "3": 3,
+        "4": 18
+      },
+      "added_unknown": 124,
+      "added_total": 128
+    },
+    {
+      "id": "strength",
+      "before": "Does your character have extraordinary physical strength?",
+      "after": "Does your character have extraordinary physical strength?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 110,
+        "1": 0,
+        "2": 110,
+        "3": 3,
+        "4": 33
+      },
+      "added_unknown": 110,
+      "added_total": 128
+    },
+    {
+      "id": "flies",
+      "before": "Can your character fly without an ordinary aircraft?",
+      "after": "Can your character fly without an ordinary aircraft?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 139,
+        "1": 0,
+        "2": 88,
+        "3": 3,
+        "4": 26
+      },
+      "added_unknown": 87,
+      "added_total": 128
+    },
+    {
+      "id": "magic",
+      "before": "Does your character use magic or supernatural powers?",
+      "after": "Does your character use magic or supernatural powers?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 138,
+        "1": 0,
+        "2": 75,
+        "3": 4,
+        "4": 39
+      },
+      "added_unknown": 75,
+      "added_total": 128
+    },
+    {
+      "id": "speed",
+      "before": "Is your character known for extraordinary speed?",
+      "after": "Is your character known for extraordinary speed?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 124,
+        "1": 0,
+        "2": 126,
+        "3": 2,
+        "4": 4
+      },
+      "added_unknown": 126,
+      "added_total": 128
+    },
+    {
+      "id": "transforms",
+      "before": "Does your character famously change shape or physical form?",
+      "after": "Does your character famously change shape or physical form?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 148,
+        "1": 0,
+        "2": 87,
+        "3": 3,
+        "4": 18
+      },
+      "added_unknown": 87,
+      "added_total": 128
+    },
+    {
+      "id": "sword",
+      "before": "Is your character associated with a sword or lightsaber?",
+      "after": "Is your character associated with a sword or lightsaber?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 115,
+        "1": 0,
+        "2": 117,
+        "3": 1,
+        "4": 23
+      },
+      "added_unknown": 117,
+      "added_total": 128
+    },
+    {
+      "id": "gun",
+      "before": "Is your character associated with a gun or blaster?",
+      "after": "Is your character associated with a gun or blaster?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 118,
+        "1": 0,
+        "2": 121,
+        "3": 0,
+        "4": 17
+      },
+      "added_unknown": 121,
+      "added_total": 128
+    },
+    {
+      "id": "martial",
+      "before": "Is your character known for martial arts or hand-to-hand combat?",
+      "after": "Is your character known for martial arts or hand-to-hand combat?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 119,
+        "1": 0,
+        "2": 118,
+        "3": 0,
+        "4": 19
+      },
+      "added_unknown": 118,
+      "added_total": 128
+    },
+    {
+      "id": "gadgets",
+      "before": "Does your character rely on special tools or gadgets?",
+      "after": "Does your character rely on special tools or gadgets?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 108,
+        "1": 0,
+        "2": 121,
+        "3": 1,
+        "4": 26
+      },
+      "added_unknown": 121,
+      "added_total": 128
+    },
+    {
+      "id": "instrument",
+      "before": "Is your character known for playing a musical instrument?",
+      "after": "Is your character known for playing a musical instrument?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 122,
+        "1": 0,
+        "2": 124,
+        "3": 0,
+        "4": 10
+      },
+      "added_unknown": 124,
+      "added_total": 128
+    },
+    {
+      "id": "dance",
+      "before": "Is your character famous for dancing?",
+      "after": "Is your character famous for dancing?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 124,
+        "1": 0,
+        "2": 126,
+        "3": 0,
+        "4": 6
+      },
+      "added_unknown": 126,
+      "added_total": 128
+    },
+    {
+      "id": "ball_sport",
+      "before": "Is your character famous for a sport involving a ball?",
+      "after": "Is your character famous for a sport involving a ball?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 127,
+        "1": 0,
+        "2": 120,
+        "3": 1,
+        "4": 8
+      },
+      "added_unknown": 120,
+      "added_total": 128
+    },
+    {
+      "id": "spacecraft",
+      "before": "Is your character strongly associated with spacecraft?",
+      "after": "Is your character strongly associated with spacecraft?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 119,
+        "1": 0,
+        "2": 113,
+        "3": 0,
+        "4": 24
+      },
+      "added_unknown": 113,
+      "added_total": 128
+    },
+    {
+      "id": "vehicle",
+      "before": "Is your character associated with a distinctive vehicle?",
+      "after": "Is your character associated with a distinctive vehicle?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 117,
+        "1": 0,
+        "2": 127,
+        "3": 0,
+        "4": 12
+      },
+      "added_unknown": 127,
+      "added_total": 128
+    },
+    {
+      "id": "water",
+      "before": "Is your character closely associated with water or the sea?",
+      "after": "Is your character closely associated with water or the sea?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 124,
+        "1": 0,
+        "2": 120,
+        "3": 0,
+        "4": 12
+      },
+      "added_unknown": 120,
+      "added_total": 128
+    },
+    {
+      "id": "treasure",
+      "before": "Does your character often search for treasure or ancient objects?",
+      "after": "Does your character often search for treasure or ancient objects?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 123,
+        "1": 0,
+        "2": 127,
+        "3": 0,
+        "4": 6
+      },
+      "added_unknown": 127,
+      "added_total": 128
+    },
+    {
+      "id": "superhero",
+      "before": "Is your character a costumed comic-book-style superhero?",
+      "after": "Is your character a costumed comic-book-style superhero?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 148,
+        "1": 1,
+        "2": 84,
+        "3": 0,
+        "4": 23
+      },
+      "added_unknown": 84,
+      "added_total": 128
+    },
+    {
+      "id": "rescue",
+      "before": "Does your character often rescue or protect other people?",
+      "after": "Does your character often rescue or protect other people?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 95,
+        "1": 0,
+        "2": 128,
+        "3": 0,
+        "4": 33
+      },
+      "added_unknown": 128,
+      "added_total": 128
+    },
+    {
+      "id": "conquest",
+      "before": "Does your character seek power by conquering or ruling others?",
+      "after": "Does your character seek power by conquering or ruling others?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 128,
+        "1": 0,
+        "2": 124,
+        "3": 0,
+        "4": 4
+      },
+      "added_unknown": 124,
+      "added_total": 128
+    },
+    {
+      "id": "crime",
+      "before": "Is your character strongly associated with crime stories?",
+      "after": "Is your character strongly associated with crime stories?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 123,
+        "1": 0,
+        "2": 121,
+        "3": 0,
+        "4": 12
+      },
+      "added_unknown": 121,
+      "added_total": 128
+    },
+    {
+      "id": "space",
+      "before": "Is your character strongly associated with outer space?",
+      "after": "Is your character strongly associated with outer space?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 122,
+        "1": 0,
+        "2": 107,
+        "3": 0,
+        "4": 27
+      },
+      "added_unknown": 107,
+      "added_total": 128
+    },
+    {
+      "id": "fantasy",
+      "before": "Does your character belong mainly to a fantasy world?",
+      "after": "Does your character belong mainly to a fantasy world?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 79,
+        "1": 0,
+        "2": 128,
+        "3": 0,
+        "4": 49
+      },
+      "added_unknown": 128,
+      "added_total": 128
+    },
+    {
+      "id": "ordinary",
+      "before": "Does your character mainly inhabit an everyday Earth-like world?",
+      "after": "Does your character mainly inhabit an everyday Earth-like world?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 78,
+        "1": 0,
+        "2": 131,
+        "3": 0,
+        "4": 47
+      },
+      "added_unknown": 127,
+      "added_total": 128
+    },
+    {
+      "id": "future",
+      "before": "Is your character's world strongly associated with future technology?",
+      "after": "Is your character's world strongly associated with future technology?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 117,
+        "1": 0,
+        "2": 116,
+        "3": 0,
+        "4": 23
+      },
+      "added_unknown": 116,
+      "added_total": 128
+    },
+    {
+      "id": "historical_setting",
+      "before": "Is your character associated with a historical setting?",
+      "after": "Is your character associated with a historical setting?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 109,
+        "1": 0,
+        "2": 126,
+        "3": 3,
+        "4": 18
+      },
+      "added_unknown": 126,
+      "added_total": 128
+    },
+    {
+      "id": "modern",
+      "before": "Is your character associated with modern-day life?",
+      "after": "Is your character associated with modern-day life?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 105,
+        "1": 0,
+        "2": 107,
+        "3": 13,
+        "4": 31
+      },
+      "added_unknown": 107,
+      "added_total": 128
+    },
+    {
+      "id": "comedy",
+      "before": "Is your character mainly associated with comedy?",
+      "after": "Is your character mainly associated with comedy?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 92,
+        "1": 0,
+        "2": 128,
+        "3": 1,
+        "4": 35
+      },
+      "added_unknown": 128,
+      "added_total": 128
+    },
+    {
+      "id": "horror",
+      "before": "Is your character strongly associated with horror stories?",
+      "after": "Is your character strongly associated with horror stories?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 125,
+        "1": 0,
+        "2": 126,
+        "3": 1,
+        "4": 4
+      },
+      "added_unknown": 126,
+      "added_total": 128
+    },
+    {
+      "id": "romance",
+      "before": "Is romance a major theme in your character's best-known story?",
+      "after": "Is romance a major theme in your character's best-known story?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 118,
+        "1": 0,
+        "2": 121,
+        "3": 1,
+        "4": 16
+      },
+      "added_unknown": 121,
+      "added_total": 128
+    },
+    {
+      "id": "mystery",
+      "before": "Are mysteries a major part of your character's stories?",
+      "after": "Are mysteries a major part of your character's stories?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 125,
+        "1": 0,
+        "2": 128,
+        "3": 0,
+        "4": 3
+      },
+      "added_unknown": 128,
+      "added_total": 128
+    },
+    {
+      "id": "team",
+      "before": "Is your character a member of a well-known team or close group?",
+      "after": "Is your character a member of a well-known team or close group?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 92,
+        "1": 0,
+        "2": 81,
+        "3": 0,
+        "4": 83
+      },
+      "added_unknown": 80,
+      "added_total": 128
+    },
+    {
+      "id": "family",
+      "before": "Are family relationships central to your character's story?",
+      "after": "Are family relationships central to your character's story?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 100,
+        "1": 0,
+        "2": 101,
+        "3": 1,
+        "4": 54
+      },
+      "added_unknown": 101,
+      "added_total": 128
+    },
+    {
+      "id": "sibling",
+      "before": "Does your character have a famous brother or sister?",
+      "after": "Does your character have a famous brother or sister?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 121,
+        "1": 0,
+        "2": 115,
+        "3": 1,
+        "4": 19
+      },
+      "added_unknown": 115,
+      "added_total": 128
+    },
+    {
+      "id": "animal_friend",
+      "before": "Does your character have a well-known animal companion?",
+      "after": "Does your character have a well-known animal companion?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 122,
+        "1": 0,
+        "2": 116,
+        "3": 0,
+        "4": 18
+      },
+      "added_unknown": 116,
+      "added_total": 128
+    },
+    {
+      "id": "horse",
+      "before": "Is your character often associated with riding a horse?",
+      "after": "Is your character often associated with riding a horse?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 120,
+        "1": 0,
+        "2": 127,
+        "3": 0,
+        "4": 9
+      },
+      "added_unknown": 127,
+      "added_total": 128
+    },
+    {
+      "id": "castle",
+      "before": "Is your character strongly associated with a castle or kingdom?",
+      "after": "Is your character strongly associated with a castle or kingdom?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 113,
+        "1": 0,
+        "2": 120,
+        "3": 0,
+        "4": 23
+      },
+      "added_unknown": 120,
+      "added_total": 128
+    },
+    {
+      "id": "nature",
+      "before": "Is your character strongly associated with forests or wilderness?",
+      "after": "Is your character strongly associated with forests or wilderness?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 115,
+        "1": 0,
+        "2": 118,
+        "3": 0,
+        "4": 23
+      },
+      "added_unknown": 118,
+      "added_total": 128
+    },
+    {
+      "id": "city",
+      "before": "Is your character closely associated with city life?",
+      "after": "Is your character closely associated with city life?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 117,
+        "1": 0,
+        "2": 116,
+        "3": 0,
+        "4": 23
+      },
+      "added_unknown": 116,
+      "added_total": 128
+    },
+    {
+      "id": "school",
+      "before": "Is your character strongly associated with a school?",
+      "after": "Is your character strongly associated with a school?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 122,
+        "1": 0,
+        "2": 126,
+        "3": 0,
+        "4": 8
+      },
+      "added_unknown": 125,
+      "added_total": 128
+    },
+    {
+      "id": "stage",
+      "before": "Is your character known for appearing on a stage?",
+      "after": "Is your character known for appearing on a stage?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 122,
+        "1": 0,
+        "2": 120,
+        "3": 0,
+        "4": 14
+      },
+      "added_unknown": 120,
+      "added_total": 128
+    },
+    {
+      "id": "quest",
+      "before": "Does your character undertake a major journey or quest?",
+      "after": "Does your character undertake a major journey or quest?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 86,
+        "1": 1,
+        "2": 115,
+        "3": 0,
+        "4": 54
+      },
+      "added_unknown": 114,
+      "added_total": 128
+    },
+    {
+      "id": "science",
+      "before": "Is science or technology central to your character's identity?",
+      "after": "Is science or technology central to your character's identity?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 110,
+        "1": 0,
+        "2": 120,
+        "3": 0,
+        "4": 26
+      },
+      "added_unknown": 120,
+      "added_total": 128
+    },
+    {
+      "id": "teacher",
+      "before": "Is your character known as a teacher, scholar, or wise mentor?",
+      "after": "Is your character known as a teacher, scholar, or wise mentor?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 117,
+        "1": 0,
+        "2": 126,
+        "3": 2,
+        "4": 11
+      },
+      "added_unknown": 124,
+      "added_total": 128
+    },
+    {
+      "id": "peace",
+      "before": "Is your character widely associated with peace or social justice?",
+      "after": "Is your character widely associated with peace or social justice?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 122,
+        "1": 0,
+        "2": 121,
+        "3": 2,
+        "4": 11
+      },
+      "added_unknown": 121,
+      "added_total": 128
+    },
+    {
+      "id": "gloves",
+      "before": "Does your character often wear gloves?",
+      "after": "Does your character often wear gloves?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 87,
+        "1": 0,
+        "2": 148,
+        "3": 0,
+        "4": 21
+      },
+      "added_unknown": 127,
+      "added_total": 128
+    },
+    {
+      "id": "wealthy",
+      "before": "Is great wealth part of your character's well-known image?",
+      "after": "Is great wealth part of your character's well-known image?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 124,
+        "1": 0,
+        "2": 123,
+        "3": 0,
+        "4": 9
+      },
+      "added_unknown": 123,
+      "added_total": 128
+    },
+    {
+      "id": "catchphrase",
+      "before": "Is your character known for a distinctive catchphrase?",
+      "after": "Is your character known for a distinctive catchphrase?",
+      "decision": "retained_with_caveat",
+      "risk": "subjective_association",
+      "review_note": "The qualifier asks a prominent association, not any incidental occurrence. No mass YES/NO rewriting or deletion without sources and replay evidence.",
+      "answer_counts": {
+        "0": 112,
+        "1": 0,
+        "2": 127,
+        "3": 1,
+        "4": 16
+      },
+      "added_unknown": 127,
+      "added_total": 128
+    },
+    {
+      "id": "red_hair",
+      "before": "Is your character usually shown with red or orange hair?",
+      "after": "Is your character usually shown with red or orange hair?",
+      "decision": "retained_with_caveat",
+      "risk": "variable_appearance",
+      "review_note": "Use the named familiar portrayal. Costume, form and animal hair/fur conventions can vary; existing unreviewed values are not certified by this wording pass.",
+      "answer_counts": {
+        "0": 122,
+        "1": 0,
+        "2": 126,
+        "3": 0,
+        "4": 8
+      },
+      "added_unknown": 126,
+      "added_total": 128
+    },
+    {
+      "id": "born_before1970",
+      "before": "Is this a real person born before 1970?",
+      "after": "Is this a real person born before 1970?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 209,
+        "1": 0,
+        "2": 26,
+        "3": 0,
+        "4": 21
+      },
+      "added_unknown": 13,
+      "added_total": 128
+    },
+    {
+      "id": "puppet_tv",
+      "before": "Did your character originate as a TV puppet?",
+      "after": "Did your character originate as a TV puppet?",
+      "decision": "retained",
+      "risk": "bounded_fact",
+      "review_note": "Question is understandable with the named portrayal and stated time bounds. This wording review does not verify every stored answer.",
+      "answer_counts": {
+        "0": 225,
+        "1": 0,
+        "2": 23,
+        "3": 0,
+        "4": 8
+      },
+      "added_unknown": 14,
+      "added_total": 128
+    }
+  ],
+  "cell_changes": [
+    {
+      "character": "bambi",
+      "question": "animation_origin",
+      "old": 0,
+      "new": 4,
+      "source": "bambi",
+      "url": "https://d23.com/a-to-z/bambi-film/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "bambi",
+      "question": "books_origin",
+      "old": 4,
+      "new": 0,
+      "source": "bambi",
+      "url": "https://d23.com/a-to-z/bambi-film/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "pinocchio",
+      "question": "animation_origin",
+      "old": 0,
+      "new": 4,
+      "source": "pinocchio",
+      "url": "https://d23.com/a-to-z/pinocchio-film/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "pinocchio",
+      "question": "books_origin",
+      "old": 4,
+      "new": 0,
+      "source": "pinocchio",
+      "url": "https://d23.com/a-to-z/pinocchio-film/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "cruella_de_vil",
+      "question": "animation_origin",
+      "old": 0,
+      "new": 4,
+      "source": "cruella",
+      "url": "https://d23.com/a-to-z/one-hundred-and-one-dalmatians-film/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "cruella_de_vil",
+      "question": "books_origin",
+      "old": 4,
+      "new": 0,
+      "source": "cruella",
+      "url": "https://d23.com/a-to-z/one-hundred-and-one-dalmatians-film/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "kiki",
+      "question": "animation_origin",
+      "old": 0,
+      "new": 4,
+      "source": "kiki",
+      "url": "https://www.ghibli.jp/works/majo/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "kiki",
+      "question": "books_origin",
+      "old": 4,
+      "new": 0,
+      "source": "kiki",
+      "url": "https://www.ghibli.jp/works/majo/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "howl_jenkins_pendragon",
+      "question": "animation_origin",
+      "old": 0,
+      "new": 4,
+      "source": "howl",
+      "url": "https://www.ghibli.jp/works/howl/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "howl_jenkins_pendragon",
+      "question": "books_origin",
+      "old": 4,
+      "new": 0,
+      "source": "howl",
+      "url": "https://www.ghibli.jp/works/howl/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "howl_jenkins_pendragon",
+      "question": "late_fiction",
+      "old": 4,
+      "new": 0,
+      "source": "howl",
+      "url": "https://www.ghibli.jp/works/howl/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "howl_jenkins_pendragon",
+      "question": "new_fiction",
+      "old": 0,
+      "new": 4,
+      "source": "howl",
+      "url": "https://www.ghibli.jp/works/howl/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "arrietty",
+      "question": "animation_origin",
+      "old": 0,
+      "new": 4,
+      "source": "arrietty",
+      "url": "https://www.ghibli.jp/works/karigurashi/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "arrietty",
+      "question": "books_origin",
+      "old": 4,
+      "new": 0,
+      "source": "arrietty",
+      "url": "https://www.ghibli.jp/works/karigurashi/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "nausicaa",
+      "question": "animation_origin",
+      "old": 0,
+      "new": 4,
+      "source": "nausicaa",
+      "url": "https://www.ghibli.jp/works/nausicaa/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "nausicaa",
+      "question": "comics_origin",
+      "old": 4,
+      "new": 0,
+      "source": "nausicaa",
+      "url": "https://www.ghibli.jp/works/nausicaa/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "shrek",
+      "question": "animation_origin",
+      "old": 0,
+      "new": 4,
+      "source": "shrek",
+      "url": "https://www.dreamworks.com/movies/shrek",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "shrek",
+      "question": "books_origin",
+      "old": 4,
+      "new": 0,
+      "source": "shrek",
+      "url": "https://www.dreamworks.com/movies/shrek",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "shrek",
+      "question": "late_fiction",
+      "old": 4,
+      "new": 0,
+      "source": "shrek",
+      "url": "https://www.dreamworks.com/movies/shrek",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "shrek",
+      "question": "new_fiction",
+      "old": 0,
+      "new": 4,
+      "source": "shrek",
+      "url": "https://www.dreamworks.com/movies/shrek",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "dorothy_gale",
+      "question": "live_origin",
+      "old": 0,
+      "new": 4,
+      "source": "oz",
+      "url": "https://www.warnerbros.co.jp/home_entertainment/wpvkpa9p73/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "dorothy_gale",
+      "question": "books_origin",
+      "old": 4,
+      "new": 0,
+      "source": "oz",
+      "url": "https://www.warnerbros.co.jp/home_entertainment/wpvkpa9p73/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "wicked_witch_west",
+      "question": "live_origin",
+      "old": 0,
+      "new": 4,
+      "source": "oz",
+      "url": "https://www.warnerbros.co.jp/home_entertainment/wpvkpa9p73/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "wicked_witch_west",
+      "question": "books_origin",
+      "old": 4,
+      "new": 0,
+      "source": "oz",
+      "url": "https://www.warnerbros.co.jp/home_entertainment/wpvkpa9p73/",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "forrest_gump",
+      "question": "live_origin",
+      "old": 0,
+      "new": 4,
+      "source": "forrest",
+      "url": "https://www.paramountpictures.com/movies/forrest-gump",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "forrest_gump",
+      "question": "books_origin",
+      "old": 4,
+      "new": 0,
+      "source": "forrest",
+      "url": "https://www.paramountpictures.com/movies/forrest-gump",
+      "reason": "The profile already specifies this film adaptation. Its debut medium/date must follow that version rather than the earlier literary identity. This is a portrayal-scope correction, not a claim the underlying character lacks a book/comic origin.",
+      "tier": "reviewed_primary_scope_interpretation"
+    },
+    {
+      "character": "howl_jenkins_pendragon",
+      "question": "japanese",
+      "old": 0,
+      "new": 4,
+      "source": "howl",
+      "url": "https://www.ghibli.jp/works/howl/",
+      "reason": "Named 2004 Studio Ghibli film adaptation, not the British source-novel identity. Official Ghibli film credits plus studio history place the adaptation at its Tokyo studio; this is an explicit scope interpretation, not a statement about Diana Wynne Jones nationality.",
+      "tier": "reviewed_primary_scope_interpretation",
+      "supporting_url": "https://www.ghibli.jp/profile/"
+    },
+    {
+      "character": "ahsoka_tano",
+      "question": "late_fiction",
+      "old": 4,
+      "new": 0,
+      "source": "ahsoka",
+      "url": "https://www.starwars.com/news/who-is-ahsoka-tano/",
+      "reason": "Lucasfilm places the debut in The Clone Wars (2008), outside 1980-1999.",
+      "tier": "reviewed_primary_date_correction"
+    },
+    {
+      "character": "ahsoka_tano",
+      "question": "new_fiction",
+      "old": 0,
+      "new": 4,
+      "source": "ahsoka",
+      "url": "https://www.starwars.com/news/who-is-ahsoka-tano/",
+      "reason": "Lucasfilm places the debut in The Clone Wars (2008).",
+      "tier": "reviewed_primary_date_correction",
+      "supporting_url": "https://www.starwars.com/films/star-wars-the-clone-wars"
+    },
+    {
+      "character": "catwoman_selina_kyle",
+      "question": "old_fiction",
+      "old": 0,
+      "new": 4,
+      "source": "catwoman",
+      "url": "https://www.dc.com/characters/catwoman",
+      "reason": "DC gives BATMAN #1 (1940), before 1950.",
+      "tier": "reviewed_primary_date_correction"
+    },
+    {
+      "character": "catwoman_selina_kyle",
+      "question": "mid_fiction",
+      "old": 4,
+      "new": 0,
+      "source": "catwoman",
+      "url": "https://www.dc.com/characters/catwoman",
+      "reason": "DC gives BATMAN #1 (1940), not 1950-1979.",
+      "tier": "reviewed_primary_date_correction"
+    },
+    {
+      "character": "hatsune_miku",
+      "question": "instrument",
+      "old": 0,
+      "new": 2,
+      "source": "miku",
+      "url": "https://ec.crypton.co.jp/pages/prod/virtualsinger/cv01_us",
+      "reason": "The official profile does not establish whether instrument playing is a defining association. Withdraw the unsupported NO; do not invent YES.",
+      "tier": "unknown"
+    }
+  ],
+  "name_changes": [
+    {
+      "character": "kiki",
+      "old": "Kiki",
+      "new": "Kiki (Studio Ghibli)"
+    },
+    {
+      "character": "howl_jenkins_pendragon",
+      "old": "Howl Jenkins Pendragon",
+      "new": "Howl (Studio Ghibli)"
+    },
+    {
+      "character": "arrietty",
+      "old": "Arrietty",
+      "new": "Arrietty (Studio Ghibli)"
+    },
+    {
+      "character": "nausicaa",
+      "old": "Nausicaa",
+      "new": "Nausicaa (1984 film)"
+    },
+    {
+      "character": "shrek",
+      "old": "Shrek",
+      "new": "Shrek (DreamWorks)"
+    },
+    {
+      "character": "dorothy_gale",
+      "old": "Dorothy Gale",
+      "new": "Dorothy Gale (1939 film)"
+    },
+    {
+      "character": "wicked_witch_west",
+      "old": "Wicked Witch of the West",
+      "new": "Wicked Witch of the West (1939 film)"
+    },
+    {
+      "character": "forrest_gump",
+      "old": "Forrest Gump",
+      "new": "Forrest Gump (1994 film)"
+    }
+  ],
+  "deferred": [
+    {
+      "character": "captain_marvel_carol_danvers",
+      "issue": "Human/Kree hybrid interpretation merits review; official comics page was blocked and alternate official excerpt insufficient. No answer changed."
+    },
+    {
+      "character": "hello_kitty",
+      "issue": "Official London/piano details found; pre-existing UNKNOWN cells deliberately left unchanged. Human/animal taxonomy remains unresolved."
+    },
+    {
+      "character": "hatsune_miku",
+      "issue": "Official age 16 verified, but pre-existing UNKNOWN young answer deliberately remains UNKNOWN under the bounded pass."
+    }
+  ],
+  "qualification": "Replay/noise results are consistency/robustness measurements only. Source-based interpretation is explicitly distinguished from a direct factual statement."
+}

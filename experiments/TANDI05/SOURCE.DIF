@@ -1,0 +1,687 @@
+--- UI04/data/STARTER.JSON
++++ AUDIT05/data/STARTER.JSON
+@@ -2,7 +2,7 @@
+   "format_version": 1,
+   "title": "TANDINATOR Expanded 256",
+   "license_note": "Original questions and curated answer matrix. Character names and brands remain their owners' property; no affiliation is implied. No Akinator database was used.",
+-  "portrayal_policy": "Best-known mainstream portrayals. Use UNKNOWN for conflicts, missing knowledge or distinctions that would require niche lore. Appearance uses the named familiar portrayal, not every costume or adaptation. Inherited defaults are not independently verified. Cell-level evidence and corrections are in data/COVERAGE.JSON and data/CHANGES.JSON.",
++  "portrayal_policy": "Best-known mainstream portrayals. Use UNKNOWN for conflicts, missing knowledge or distinctions that would require niche lore. Appearance uses the named familiar portrayal, not every costume or adaptation. Inherited defaults are not independently verified. Cell-level evidence and corrections are in data/COVERAGE.JSON and data/CHANGES.JSON. Audit05: debut questions use the named version. Film-specific profiles use that adaptation; generic book/comic/game identities retain their original medium. Appearance alone does not redefine an identity. All pre-existing UNKNOWN cells remain UNKNOWN.",
+   "answer_codes": {
+     "NO": 0,
+     "PROBABLY_NO": 1,
+@@ -540,6 +540,86 @@
+       "status": "primary_search_excerpt_read",
+       "facts": "Counterfactual teacher discussion says Hermione would have made a good teacher and went into politics. It does not deny scholarship or informal mentorship.",
+       "excerpt": "would\u2019ve made an amazing teacher"
++    },
++    "audit05_pinocchio": {
++      "url": "https://d23.com/a-to-z/pinocchio-film/",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Disney animated Pinocchio feature, released 1940; adapted from Collodi."
++    },
++    "audit05_bambi": {
++      "url": "https://d23.com/a-to-z/bambi-film/",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Disney film dated 1942; based on Felix Salten, distinct from the book."
++    },
++    "audit05_cruella": {
++      "url": "https://d23.com/a-to-z/one-hundred-and-one-dalmatians-film/",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Disney animated film dated 1961, featuring Cruella and adapted from Dodie Smith."
++    },
++    "audit05_kiki": {
++      "url": "https://www.ghibli.jp/works/majo/",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Studio Ghibli lists its film adaptation with 1989 release and Eiko Kadono source credit."
++    },
++    "audit05_howl": {
++      "url": "https://www.ghibli.jp/works/howl/",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Studio Ghibli lists its adaptation of Diana Wynne Jones with 2004 release."
++    },
++    "audit05_arrietty": {
++      "url": "https://www.ghibli.jp/works/karigurashi/",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Studio Ghibli lists its Mary Norton adaptation with 2010 release."
++    },
++    "audit05_nausicaa": {
++      "url": "https://www.ghibli.jp/works/nausicaa/",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Studio Ghibli catalogue lists the Miyazaki film with 1984 release."
++    },
++    "audit05_shrek": {
++      "url": "https://www.dreamworks.com/movies/shrek",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "DreamWorks identifies Shrek as its 2001 animated feature."
++    },
++    "audit05_oz": {
++      "url": "https://www.warnerbros.co.jp/home_entertainment/wpvkpa9p73/",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Warner lists the 1939 live-action film, Judy Garland as Dorothy, and Baum source credit."
++    },
++    "audit05_forrest": {
++      "url": "https://www.paramountpictures.com/movies/forrest-gump",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Paramount lists the Tom Hanks film as a 1994 production."
++    },
++    "audit05_miku": {
++      "url": "https://ec.crypton.co.jp/pages/prod/virtualsinger/cv01_us",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Crypton describes a singing voice synthesizer and gives age 16. This does not establish that the character never plays an instrument."
++    },
++    "audit05_ghibli_profile": {
++      "url": "https://www.ghibli.jp/profile/",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Studio Ghibli history places the studio in Tokyo since 1992, before the 2004 Howl film."
++    },
++    "audit05_ahsoka": {
++      "url": "https://www.starwars.com/news/who-is-ahsoka-tano/",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Lucasfilm identifies her first appearance in The Clone Wars film; official film page dates it 2008."
++    },
++    "audit05_clonewars": {
++      "url": "https://www.starwars.com/films/star-wars-the-clone-wars",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Lucasfilm official release information for the 2008 animated film."
++    },
++    "audit05_catwoman": {
++      "url": "https://www.dc.com/characters/catwoman",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "DC lists Catwoman first appearance as BATMAN #1 (1940)."
++    },
++    "audit05_kitty": {
++      "url": "https://corporate.sanrio.co.jp/en/business-info/brands/hello_kity/",
++      "kind": "official rights-holder reference reviewed 2026-10-05",
++      "scope": "Sanrio identifies a girl designed in 1974, born near London, with piano-playing among her hobbies."
+     }
+   },
+   "questions": [
+@@ -561,11 +641,11 @@
+     },
+     {
+       "id": "human",
+-      "text": "Is your character human?"
++      "text": "Is your character human (including human cyborgs)?"
+     },
+     {
+       "id": "young",
+-      "text": "Is your character usually a child or teenager?"
++      "text": "Is your character usually portrayed as a child or teenager?"
+     },
+     {
+       "id": "animal",
+@@ -617,23 +697,23 @@
+     },
+     {
+       "id": "video_origin",
+-      "text": "Did your character first become known in video games?"
++      "text": "Did this version of your character debut in video games?"
+     },
+     {
+       "id": "animation_origin",
+-      "text": "Did your character first become known in animation?"
++      "text": "Did this version of your character debut in animation?"
+     },
+     {
+       "id": "live_origin",
+-      "text": "Did your character first become known in live-action fiction?"
++      "text": "Did this version of your character debut in live-action fiction?"
+     },
+     {
+       "id": "comics_origin",
+-      "text": "Did your character first become known in comics or comic strips?"
++      "text": "Did this version debut in comics, comic strips, or manga?"
+     },
+     {
+       "id": "books_origin",
+-      "text": "Did your character first become known in a book or story?"
++      "text": "Did this version debut in a book or prose story?"
+     },
+     {
+       "id": "folklore",
+@@ -709,7 +789,7 @@
+     },
+     {
+       "id": "japanese",
+-      "text": "Was your character created in Japan?"
++      "text": "Was this fictional version created in Japan?"
+     },
+     {
+       "id": "british",
+@@ -733,27 +813,27 @@
+     },
+     {
+       "id": "pre1800",
+-      "text": "Is this a real historical person who lived before 1800?"
++      "text": "Is this a real person who was alive before 1800?"
+     },
+     {
+       "id": "nineteenth",
+-      "text": "Is this a real historical person active in the 1800s?"
++      "text": "Was this real person active during 1800-1899?"
+     },
+     {
+       "id": "old_fiction",
+-      "text": "Was your fictional character known before 1950?"
++      "text": "Did this fictional version debut before 1950?"
+     },
+     {
+       "id": "mid_fiction",
+-      "text": "Did your fictional character debut between 1950 and 1979?"
++      "text": "Did this fictional version debut during 1950-1979?"
+     },
+     {
+       "id": "late_fiction",
+-      "text": "Did your fictional character debut between 1980 and 1999?"
++      "text": "Did this fictional version debut during 1980-1999?"
+     },
+     {
+       "id": "new_fiction",
+-      "text": "Did your fictional character debut in 2000 or later?"
++      "text": "Did this fictional version debut in 2000 or later?"
+     },
+     {
+       "id": "red",
+@@ -9635,10 +9715,11 @@
+     },
+     {
+       "id": "shrek",
+-      "name": "Shrek",
++      "name": "Shrek (DreamWorks)",
+       "notes": "DreamWorks ogre, originally in a 1990 book. The familiar movie appearance is the reference; not a Disney property.",
+       "sources": [
+-        "general"
++        "general",
++        "audit05_shrek"
+       ],
+       "answers": {
+         "real": 0,
+@@ -9660,10 +9741,10 @@
+         "sidekick": 0,
+         "comic_relief": 4,
+         "video_origin": 0,
+-        "animation_origin": 0,
++        "animation_origin": 4,
+         "live_origin": 0,
+         "comics_origin": 0,
+-        "books_origin": 4,
++        "books_origin": 0,
+         "folklore": 0,
+         "movie": 4,
+         "tv": 0,
+@@ -9692,8 +9773,8 @@
+         "nineteenth": 0,
+         "old_fiction": 0,
+         "mid_fiction": 0,
+-        "late_fiction": 4,
+-        "new_fiction": 0,
++        "late_fiction": 0,
++        "new_fiction": 4,
+         "red": 0,
+         "blue": 0,
+         "green": 4,
+@@ -9771,7 +9852,8 @@
+         "red_hair": 0,
+         "born_before1970": 0,
+         "puppet_tv": 0
+-      }
++      },
++      "origin_scope": "Named film adaptation; source literary identity is not the debut medium for this profile."
+     },
+     {
+       "id": "donkey",
+@@ -19385,8 +19467,8 @@
+         "nineteenth": 0,
+         "old_fiction": 0,
+         "mid_fiction": 0,
+-        "late_fiction": 4,
+-        "new_fiction": 0,
++        "late_fiction": 0,
++        "new_fiction": 4,
+         "red": 2,
+         "blue": 2,
+         "green": 2,
+@@ -20659,8 +20741,8 @@
+         "asian": 2,
+         "pre1800": 0,
+         "nineteenth": 0,
+-        "old_fiction": 0,
+-        "mid_fiction": 4,
++        "old_fiction": 4,
++        "mid_fiction": 0,
+         "late_fiction": 0,
+         "new_fiction": 0,
+         "red": 2,
+@@ -24430,7 +24512,8 @@
+       "notes": "Disney animated feature-film portrayal of the young deer.",
+       "sources": [
+         "disney",
+-        "general"
++        "general",
++        "audit05_bambi"
+       ],
+       "answers": {
+         "real": 0,
+@@ -24452,10 +24535,10 @@
+         "sidekick": 2,
+         "comic_relief": 2,
+         "video_origin": 0,
+-        "animation_origin": 0,
++        "animation_origin": 4,
+         "live_origin": 0,
+         "comics_origin": 0,
+-        "books_origin": 4,
++        "books_origin": 0,
+         "folklore": 2,
+         "movie": 4,
+         "tv": 2,
+@@ -24563,7 +24646,8 @@
+         "red_hair": 2,
+         "born_before1970": 0,
+         "puppet_tv": 0
+-      }
++      },
++      "origin_scope": "Named film adaptation; source literary identity is not the debut medium for this profile."
+     },
+     {
+       "id": "pinocchio",
+@@ -24571,7 +24655,8 @@
+       "notes": "Disney animated feature-film puppet portrayal.",
+       "sources": [
+         "disney",
+-        "general"
++        "general",
++        "audit05_pinocchio"
+       ],
+       "answers": {
+         "real": 0,
+@@ -24593,10 +24678,10 @@
+         "sidekick": 2,
+         "comic_relief": 2,
+         "video_origin": 0,
+-        "animation_origin": 0,
++        "animation_origin": 4,
+         "live_origin": 0,
+         "comics_origin": 0,
+-        "books_origin": 4,
++        "books_origin": 0,
+         "folklore": 2,
+         "movie": 4,
+         "tv": 2,
+@@ -24704,7 +24789,8 @@
+         "red_hair": 2,
+         "born_before1970": 0,
+         "puppet_tv": 0
+-      }
++      },
++      "origin_scope": "Named film adaptation; source literary identity is not the debut medium for this profile."
+     },
+     {
+       "id": "cruella_de_vil",
+@@ -24712,7 +24798,8 @@
+       "notes": "Disney animated One Hundred and One Dalmatians villain; not a real fashion designer.",
+       "sources": [
+         "disney",
+-        "general"
++        "general",
++        "audit05_cruella"
+       ],
+       "answers": {
+         "real": 0,
+@@ -24734,10 +24821,10 @@
+         "sidekick": 2,
+         "comic_relief": 2,
+         "video_origin": 0,
+-        "animation_origin": 0,
++        "animation_origin": 4,
+         "live_origin": 0,
+         "comics_origin": 0,
+-        "books_origin": 4,
++        "books_origin": 0,
+         "folklore": 2,
+         "movie": 4,
+         "tv": 2,
+@@ -24845,7 +24932,8 @@
+         "red_hair": 2,
+         "born_before1970": 0,
+         "puppet_tv": 0
+-      }
++      },
++      "origin_scope": "Named film adaptation; source literary identity is not the debut medium for this profile."
+     },
+     {
+       "id": "olaf",
+@@ -25415,11 +25503,12 @@
+     },
+     {
+       "id": "kiki",
+-      "name": "Kiki",
++      "name": "Kiki (Studio Ghibli)",
+       "notes": "Studio Ghibli Kiki\u2019s Delivery Service (1989) film portrayal, not the original novel\u2019s every detail.",
+       "sources": [
+         "ghibli_kiki",
+-        "general"
++        "general",
++        "audit05_kiki"
+       ],
+       "answers": {
+         "real": 0,
+@@ -25441,10 +25530,10 @@
+         "sidekick": 2,
+         "comic_relief": 2,
+         "video_origin": 0,
+-        "animation_origin": 0,
++        "animation_origin": 4,
+         "live_origin": 0,
+         "comics_origin": 0,
+-        "books_origin": 4,
++        "books_origin": 0,
+         "folklore": 2,
+         "movie": 4,
+         "tv": 2,
+@@ -25552,7 +25641,8 @@
+         "red_hair": 2,
+         "born_before1970": 0,
+         "puppet_tv": 0
+-      }
++      },
++      "origin_scope": "Named film adaptation; source literary identity is not the debut medium for this profile."
+     },
+     {
+       "id": "ponyo",
+@@ -25838,11 +25928,12 @@
+     },
+     {
+       "id": "howl_jenkins_pendragon",
+-      "name": "Howl Jenkins Pendragon",
++      "name": "Howl (Studio Ghibli)",
+       "notes": "Studio Ghibli Howl\u2019s Moving Castle film portrayal; not all details of the source novel.",
+       "sources": [
+         "ghibli_index",
+-        "general"
++        "general",
++        "audit05_howl"
+       ],
+       "answers": {
+         "real": 0,
+@@ -25864,10 +25955,10 @@
+         "sidekick": 2,
+         "comic_relief": 2,
+         "video_origin": 0,
+-        "animation_origin": 0,
++        "animation_origin": 4,
+         "live_origin": 0,
+         "comics_origin": 0,
+-        "books_origin": 4,
++        "books_origin": 0,
+         "folklore": 2,
+         "movie": 4,
+         "tv": 2,
+@@ -25886,7 +25977,7 @@
+         "student": 2,
+         "food": 2,
+         "american": 2,
+-        "japanese": 0,
++        "japanese": 4,
+         "british": 2,
+         "french": 2,
+         "european": 2,
+@@ -25896,8 +25987,8 @@
+         "nineteenth": 0,
+         "old_fiction": 0,
+         "mid_fiction": 0,
+-        "late_fiction": 4,
+-        "new_fiction": 0,
++        "late_fiction": 0,
++        "new_fiction": 4,
+         "red": 2,
+         "blue": 2,
+         "green": 2,
+@@ -25975,7 +26066,8 @@
+         "red_hair": 2,
+         "born_before1970": 0,
+         "puppet_tv": 0
+-      }
++      },
++      "origin_scope": "Named film adaptation; source literary identity is not the debut medium for this profile."
+     },
+     {
+       "id": "san_princess_mononoke",
+@@ -26121,12 +26213,13 @@
+     },
+     {
+       "id": "nausicaa",
+-      "name": "Nausicaa",
++      "name": "Nausicaa (1984 film)",
+       "notes": "Nausicaa of the Valley of the Wind (1984) film portrayal; not a statement about all manga details.",
+       "sources": [
+         "ghibli_index",
+         "general",
+-        "ghibli_nausicaa"
++        "ghibli_nausicaa",
++        "audit05_nausicaa"
+       ],
+       "answers": {
+         "real": 0,
+@@ -26148,9 +26241,9 @@
+         "sidekick": 2,
+         "comic_relief": 2,
+         "video_origin": 2,
+-        "animation_origin": 0,
++        "animation_origin": 4,
+         "live_origin": 2,
+-        "comics_origin": 4,
++        "comics_origin": 0,
+         "books_origin": 2,
+         "folklore": 2,
+         "movie": 4,
+@@ -26259,15 +26352,17 @@
+         "red_hair": 2,
+         "born_before1970": 0,
+         "puppet_tv": 0
+-      }
++      },
++      "origin_scope": "Named film adaptation; source literary identity is not the debut medium for this profile."
+     },
+     {
+       "id": "arrietty",
+-      "name": "Arrietty",
++      "name": "Arrietty (Studio Ghibli)",
+       "notes": "Studio Ghibli The Secret World of Arrietty (2010) film portrayal.",
+       "sources": [
+         "ghibli_index",
+-        "general"
++        "general",
++        "audit05_arrietty"
+       ],
+       "answers": {
+         "real": 0,
+@@ -26289,10 +26384,10 @@
+         "sidekick": 2,
+         "comic_relief": 2,
+         "video_origin": 0,
+-        "animation_origin": 0,
++        "animation_origin": 4,
+         "live_origin": 0,
+         "comics_origin": 0,
+-        "books_origin": 4,
++        "books_origin": 0,
+         "folklore": 2,
+         "movie": 4,
+         "tv": 2,
+@@ -26400,7 +26495,8 @@
+         "red_hair": 2,
+         "born_before1970": 0,
+         "puppet_tv": 0
+-      }
++      },
++      "origin_scope": "Named film adaptation; source literary identity is not the debut medium for this profile."
+     },
+     {
+       "id": "elmo",
+@@ -29179,7 +29275,7 @@
+         "gun": 2,
+         "martial": 2,
+         "gadgets": 2,
+-        "instrument": 0,
++        "instrument": 2,
+         "dance": 2,
+         "ball_sport": 2,
+         "spacecraft": 2,
+@@ -30486,10 +30582,11 @@
+     },
+     {
+       "id": "dorothy_gale",
+-      "name": "Dorothy Gale",
++      "name": "Dorothy Gale (1939 film)",
+       "notes": "The Wizard of Oz, using the familiar 1939 MGM film portrayal; not Baum\u2019s every book adaptation.",
+       "sources": [
+-        "general"
++        "general",
++        "audit05_oz"
+       ],
+       "answers": {
+         "real": 0,
+@@ -30512,9 +30609,9 @@
+         "comic_relief": 2,
+         "video_origin": 0,
+         "animation_origin": 0,
+-        "live_origin": 0,
++        "live_origin": 4,
+         "comics_origin": 0,
+-        "books_origin": 4,
++        "books_origin": 0,
+         "folklore": 2,
+         "movie": 4,
+         "tv": 2,
+@@ -30622,14 +30719,16 @@
+         "red_hair": 2,
+         "born_before1970": 0,
+         "puppet_tv": 0
+-      }
++      },
++      "origin_scope": "Named film adaptation; source literary identity is not the debut medium for this profile."
+     },
+     {
+       "id": "wicked_witch_west",
+-      "name": "Wicked Witch of the West",
++      "name": "Wicked Witch of the West (1939 film)",
+       "notes": "The Wizard of Oz, familiar 1939 MGM film villain; distinct from the novel\u2019s portrayal and Wicked musical.",
+       "sources": [
+-        "general"
++        "general",
++        "audit05_oz"
+       ],
+       "answers": {
+         "real": 0,
+@@ -30652,9 +30751,9 @@
+         "comic_relief": 2,
+         "video_origin": 0,
+         "animation_origin": 0,
+-        "live_origin": 0,
++        "live_origin": 4,
+         "comics_origin": 0,
+-        "books_origin": 4,
++        "books_origin": 0,
+         "folklore": 2,
+         "movie": 4,
+         "tv": 2,
+@@ -30762,7 +30861,8 @@
+         "red_hair": 2,
+         "born_before1970": 0,
+         "puppet_tv": 0
+-      }
++      },
++      "origin_scope": "Named film adaptation; source literary identity is not the debut medium for this profile."
+     },
+     {
+       "id": "terminator_t800",
+@@ -31610,10 +31710,11 @@
+     },
+     {
+       "id": "forrest_gump",
+-      "name": "Forrest Gump",
++      "name": "Forrest Gump (1994 film)",
+       "notes": "Title character from the 1994 film adapted from Winston Groom\u2019s novel; use the film version.",
+       "sources": [
+-        "general"
++        "general",
++        "audit05_forrest"
+       ],
+       "answers": {
+         "real": 0,
+@@ -31636,9 +31737,9 @@
+         "comic_relief": 2,
+         "video_origin": 0,
+         "animation_origin": 0,
+-        "live_origin": 0,
++        "live_origin": 4,
+         "comics_origin": 0,
+-        "books_origin": 4,
++        "books_origin": 0,
+         "folklore": 2,
+         "movie": 4,
+         "tv": 2,
+@@ -31746,7 +31847,8 @@
+         "red_hair": 2,
+         "born_before1970": 0,
+         "puppet_tv": 0
+-      }
++      },
++      "origin_scope": "Named film adaptation; source literary identity is not the debut medium for this profile."
+     },
+     {
+       "id": "katniss_everdeen",
+--- UI04/src/TANDI.C
++++ AUDIT05/src/TANDI.C
+@@ -199,7 +199,7 @@
+             text(dc,8*sx,74,"4 Probably not  5 No");
+             text(dc,8*sx,90,"Tab changes focus. Enter chooses.");
+             text(dc,8*sx,103,"F2 shows scores. Esc exits.");
+-            text(dc,8*sx,119,"Use common portrayals, not disguises.");
++            text(dc,8*sx,119,"Use the version named in the roster.");
+             text(dc,8*sx,132,"Unsure? Don't know is always fine.");
+             text(dc,8*sx,145,"Offline. Answers are never saved.");
+         }
+@@ -207,7 +207,7 @@
+         r.left=6*sx;r.right=102*sx;r.top=43;r.bottom=163;
+         if(RectVisible(dc,&r))mascot(dc);
+         if(state==0){
+-            ticket(dc,"Think of a person or character. The silicon oracle awaits.",45,64);
++            ticket(dc,"Think of a roster character. Use its named version.",45,64);
+         }else if(state==1){
+             ticket(dc,question,42,42);
+             number(temp,engine.turn+1);lstrcpy(line,"Q ");lstrcat(line,temp);
+--- UI04/tests/UITEST.PY
++++ AUDIT05/tests/UITEST.PY
+@@ -2,12 +2,13 @@
+ """Read-only UI04 regression checks against actual emulator screenshots."""
+ from pathlib import Path
+ from PIL import Image
+-import hashlib,json
++import hashlib,json,argparse
+ P=Path(__file__).resolve().parents[1]
++ap=argparse.ArgumentParser();ap.add_argument('--runtime-tag',default='-ui04');args=ap.parse_args()
+ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+ rows=[]
+ for mode in ['320x200x16','640x200x2','640x200x4']:
+- d=P/'evidence'/('art-'+mode+'-ui04');r=json.loads((d/'RESULT.JSON').read_text())
++ d=P/'evidence'/('art-'+mode+args.runtime_tag);r=json.loads((d/'RESULT.JSON').read_text())
+  assert r['exe_sha256']==sha(P/'src/TANDI.EXE')
+  assert r['database_sha256']==sha(P/'build/TANDY.DAT')
+  for text in ['WRAP_FAILURES=0','ALL_QUESTIONS_CHECKED=130','ALL_NAMES_CHECKED=256','FIVE_KEYS_TEN_CORNERS_OUTSIDE=1','ERRORS=0','COMPLETE=1']:
+--- UI04/tools/COVERAGE.PY
++++ AUDIT05/tools/COVERAGE.PY
+@@ -40,6 +40,12 @@
+             urls=[fixture['sources'][ref]['url'] for ref in evidence['source_ids']]
+             apply(case['character'],q,v,'reviewed_primary_diagnostic',urls,evidence['facts'])
+             cv=cs[case['character']]['answers'][q];comparisons.append({'character':case['character'],'question':q,'source_answer':v,'stored_answer':cv,'exact_match':v==cv,'opposing_known':cv!=2 and v!=2 and (cv<2)!=(v<2)})
++    # Later bounded audit overrides only exact current values; never backfills UNKNOWN.
++    ap=P/'data/AUDIT05.JSON'
++    if ap.exists():
++        audit05=json.loads(ap.read_text())
++        for f in audit05['cell_changes']:
++            apply(f['character'],f['question'],f['new'],f['tier'],f['url'],f['reason'])
+     cohorts={}
+     for name,ids in [('all',set(cs)),('original',old),('added',set(cs)-old)]:
+         hist=collections.Counter(t for (cid,q),t in state.items() if cid in ids);cohorts[name]={'characters':len(ids),'cells':sum(hist.values()),'tiers':dict(hist)}
