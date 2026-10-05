@@ -148,9 +148,13 @@ can remain slow. Emulator cycle settings do not establish physical 8088 speed.
 
 ## Install, build and verify
 
-For **current trial drivers**, use [TRIAL4's guide](TRIAL4/README.MD),
-preserve the known-working monochrome fallback and follow its exact overlay
-and rollback contract. Trial overlays are not complete OEM disks.
+For the **current public WINXT kit**, use the
+[unified own-media installation guide](../distributions/WINXT/README.MD)
+and [full installation and rollback instructions](../distributions/WINXT/README.TXT).
+It combines five TR5 graphics choices, experimental text and optional Tandy
+Start 14 in one support folder. The [TR5 guide](TRIAL5/README.MD) covers
+source builds and scoped driver verification. Preserve the separately tried
+TRIAL 3 monochrome fallback; it is not the new TR5 monochrome binary.
 
 For **historical OEM package reproduction**, start with backed-up stock-CGA
 Windows 3.0, extract [TANDY88.ZIP](../TANDY88.ZIP), run `INSTALL` from `DISK1`,
@@ -165,7 +169,7 @@ period assembler/linker/DDK inputs. Every output directory must be new:
 python3 src/tandysw/BUILD88.PY --dosbox /path/to/dosbox-x --out /new/build --mode 320x200x16
 ```
 
-Inspect `RESULT.json` and the [development binary identities](TRIAL4/BUILDS.JSN).
+Inspect `RESULT.json` and the [development binary identities](TRIAL5/BUILDS.JSN).
 The existing package pins deliberately reject unaccepted new builds. Do not
 replace them simply because compilation succeeds. See [BUILDING.MD](../BUILDING.MD),
 [mode evidence](MODES.MD), [OEM evidence](OEMDISK.MD) and
@@ -197,4 +201,3 @@ frames from current functionality. All showcase PNGs are byte-identical copies
 of existing emulator evidence, not new runtime tests or physical photographs.
 Screenshots do not prove timing, audio or full application behavior. Source
 revisions and exact per-asset paths are recorded there.
-
