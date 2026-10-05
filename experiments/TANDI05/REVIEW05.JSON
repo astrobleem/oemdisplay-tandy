@@ -1,0 +1,3137 @@
+{
+  "status": "reviewed_with_disclosed_tradeoffs",
+  "baseline_main": "c6ee4b0f20d9a3c5da4b4d2b22bdc65a762c853b",
+  "source_sha256": "9b6455a7bde9c015e378be8faac0aa2b73e834c8b961d477b35f4a2203aaa341",
+  "database_sha256": "c952b6c4d5f7b12c469ce73bf8fe9a18fa0c560cac03f339df74779b22ae455f",
+  "exe_sha256": "7b3e1260ae259d6bfa9bc248d92de60c6e79ec5d031652aa76c23385af0ccbb9",
+  "question_wordings_reviewed": 130,
+  "wordings_clarified": 14,
+  "answer_cells_changed": 32,
+  "characters_affected": 14,
+  "name_labels_clarified": 8,
+  "existing_unknown_preserved": 13115,
+  "new_unknown_withdrawals": 1,
+  "new_roster_entries": 0,
+  "questions_removed": 0,
+  "decision_counts": {
+    "retained": 15,
+    "clarified": 14,
+    "retained_with_caveat": 101
+  },
+  "replay_comparison": {
+    "matrix_exact": {
+      "old_database_old_answers": {
+        "cases": 256,
+        "success": 256,
+        "first_guess_success": 235,
+        "mean_questions": 14.129,
+        "mean_wrong_guesses": 0.152
+      },
+      "old_database_corrected_answers": {
+        "cases": 256,
+        "success": 251,
+        "first_guess_success": 224,
+        "mean_questions": 14.582,
+        "mean_wrong_guesses": 0.465
+      },
+      "corrected_database_corrected_answers": {
+        "cases": 256,
+        "success": 256,
+        "first_guess_success": 233,
+        "mean_questions": 14.414,
+        "mean_wrong_guesses": 0.164
+      }
+    },
+    "uncertain_soft": {
+      "old_database_old_answers": {
+        "cases": 3072,
+        "success": 3061,
+        "first_guess_success": 2696,
+        "mean_questions": 17.251,
+        "mean_wrong_guesses": 0.273
+      },
+      "old_database_corrected_answers": {
+        "cases": 3072,
+        "success": 2998,
+        "first_guess_success": 2562,
+        "mean_questions": 17.564,
+        "mean_wrong_guesses": 0.569
+      },
+      "corrected_database_corrected_answers": {
+        "cases": 3072,
+        "success": 3063,
+        "first_guess_success": 2680,
+        "mean_questions": 17.471,
+        "mean_wrong_guesses": 0.291
+      }
+    },
+    "mixed_noise": {
+      "old_database_old_answers": {
+        "cases": 3072,
+        "success": 2881,
+        "first_guess_success": 2095,
+        "mean_questions": 19.38,
+        "mean_wrong_guesses": 1.299
+      },
+      "old_database_corrected_answers": {
+        "cases": 3072,
+        "success": 2822,
+        "first_guess_success": 2006,
+        "mean_questions": 19.585,
+        "mean_wrong_guesses": 1.552
+      },
+      "corrected_database_corrected_answers": {
+        "cases": 3072,
+        "success": 2862,
+        "first_guess_success": 2046,
+        "mean_questions": 19.5,
+        "mean_wrong_guesses": 1.417
+      }
+    },
+    "single_flip_each_early_position": {
+      "old_database_old_answers": {
+        "cases": 2560,
+        "success": 2534,
+        "first_guess_success": 1722,
+        "mean_questions": 17.24,
+        "mean_wrong_guesses": 0.709
+      },
+      "old_database_corrected_answers": {
+        "cases": 2560,
+        "success": 2475,
+        "first_guess_success": 1643,
+        "mean_questions": 17.484,
+        "mean_wrong_guesses": 1.006
+      },
+      "corrected_database_corrected_answers": {
+        "cases": 2560,
+        "success": 2536,
+        "first_guess_success": 1722,
+        "mean_questions": 17.414,
+        "mean_wrong_guesses": 0.723
+      }
+    }
+  },
+  "independent_fixture": {
+    "sha256": "1129d0eb2b464b08f0453105628f03128d7290fa70c719169a313cf81112d8bb",
+    "scope": "Unchanged historical targeted 19-case sparse source-answer fixture; not blind, representative or a human study.",
+    "before": {
+      "cases": 19,
+      "success": 15,
+      "first_guess_success": 4,
+      "mean_questions": 24.895,
+      "mean_wrong_guesses": 4.053,
+      "failures": [
+        {
+          "success": 0,
+          "questions": 25,
+          "wrong_guesses": 10,
+          "raw_target_rank": 20,
+          "altered": 0,
+          "unknown": 0,
+          "soft": 0,
+          "flips": 0,
+          "target_score": 0,
+          "winner_score": 0,
+          "character": "crash_bandicoot",
+          "cohort": "original"
+        },
+        {
+          "success": 0,
+          "questions": 25,
+          "wrong_guesses": 10,
+          "raw_target_rank": 35,
+          "altered": 0,
+          "unknown": 0,
+          "soft": 0,
+          "flips": 0,
+          "target_score": 4,
+          "winner_score": 4,
+          "character": "luke_skywalker",
+          "cohort": "original"
+        },
+        {
+          "success": 0,
+          "questions": 25,
+          "wrong_guesses": 10,
+          "raw_target_rank": 34,
+          "altered": 0,
+          "unknown": 0,
+          "soft": 0,
+          "flips": 0,
+          "target_score": 4,
+          "winner_score": 4,
+          "character": "darth_vader",
+          "cohort": "original"
+        },
+        {
+          "success": 0,
+          "questions": 25,
+          "wrong_guesses": 10,
+          "raw_target_rank": 13,
+          "altered": 0,
+          "unknown": 0,
+          "soft": 0,
+          "flips": 0,
+          "target_score": 0,
+          "winner_score": 0,
+          "character": "kirby",
+          "cohort": "original"
+        }
+      ]
+    },
+    "after": {
+      "cases": 19,
+      "success": 15,
+      "first_guess_success": 4,
+      "mean_questions": 25,
+      "mean_wrong_guesses": 4.053,
+      "failures": [
+        {
+          "success": 0,
+          "questions": 25,
+          "wrong_guesses": 10,
+          "raw_target_rank": 20,
+          "altered": 0,
+          "unknown": 0,
+          "soft": 0,
+          "flips": 0,
+          "target_score": 0,
+          "winner_score": 0,
+          "character": "crash_bandicoot",
+          "cohort": "original"
+        },
+        {
+          "success": 0,
+          "questions": 25,
+          "wrong_guesses": 10,
+          "raw_target_rank": 35,
+          "altered": 0,
+          "unknown": 0,
+          "soft": 0,
+          "flips": 0,
+          "target_score": 4,
+          "winner_score": 4,
+          "character": "luke_skywalker",
+          "cohort": "original"
+        },
+        {
+          "success": 0,
+          "questions": 25,
+          "wrong_guesses": 10,
+          "raw_target_rank": 34,
+          "altered": 0,
+          "unknown": 0,
+          "soft": 0,
+          "flips": 0,
+          "target_score": 4,
+          "winner_score": 4,
+          "character": "darth_vader",
+          "cohort": "original"
+        },
+        {
+          "success": 0,
+          "questions": 25,
+          "wrong_guesses": 10,
+          "raw_target_rank": 13,
+          "altered": 0,
+          "unknown": 0,
+          "soft": 0,
+          "flips": 0,
+          "target_score": 0,
+          "winner_score": 0,
+          "character": "kirby",
+          "cohort": "original"
+        }
+      ]
+    }
+  },
+  "discrimination": {
+    "before_zero_opposing_pairs": 200,
+    "after_zero_opposing_pairs": 215,
+    "newly_without_opposition": [
+      [
+        "ahsoka_tano",
+        "bluey_heeler"
+      ],
+      [
+        "ahsoka_tano",
+        "peppa_pig"
+      ],
+      [
+        "ahsoka_tano",
+        "ponyo"
+      ],
+      [
+        "arrietty",
+        "dora_explorer"
+      ],
+      [
+        "aurora_sleeping_beauty",
+        "cruella_de_vil"
+      ],
+      [
+        "bambi",
+        "hercules_greek_myth"
+      ],
+      [
+        "chihiro_ogino",
+        "arrietty"
+      ],
+      [
+        "cinderella",
+        "cruella_de_vil"
+      ],
+      [
+        "dumbo",
+        "bambi"
+      ],
+      [
+        "dumbo",
+        "pinocchio"
+      ],
+      [
+        "emperor_palpatine",
+        "forrest_gump"
+      ],
+      [
+        "kiki",
+        "nausicaa"
+      ],
+      [
+        "kiki",
+        "san_princess_mononoke"
+      ],
+      [
+        "mirabel_madrigal",
+        "arrietty"
+      ],
+      [
+        "moana",
+        "arrietty"
+      ],
+      [
+        "neo_matrix",
+        "forrest_gump"
+      ],
+      [
+        "pinocchio",
+        "hercules_greek_myth"
+      ],
+      [
+        "pocahontas",
+        "kiki"
+      ],
+      [
+        "pocahontas",
+        "nausicaa"
+      ],
+      [
+        "rapunzel",
+        "arrietty"
+      ],
+      [
+        "san_princess_mononoke",
+        "nausicaa"
+      ],
+      [
+        "tiana",
+        "arrietty"
+      ]
+    ],
+    "newly_separated": [
+      [
+        "ahsoka_tano",
+        "totoro"
+      ],
+      [
+        "arrietty",
+        "hatsune_miku"
+      ],
+      [
+        "arrietty",
+        "katniss_everdeen"
+      ],
+      [
+        "bambi",
+        "sun_wukong"
+      ],
+      [
+        "howl_jenkins_pendragon",
+        "forrest_gump"
+      ],
+      [
+        "nausicaa",
+        "sailor_moon"
+      ],
+      [
+        "pinocchio",
+        "sun_wukong"
+      ]
+    ],
+    "identical_profiles": []
+  },
+  "interpretation": [
+    "No sourced answer was chosen to optimize a replay score.",
+    "Same corrected response rows improve recovery from 251 to 256 and first guesses from 224 to 233. Other row values remain largely unverified; this is a controlled consistency comparison, not factual-accuracy validation.",
+    "Each database matched to its own rows gives the older matrix an advantage from distinctions that mix source identities and film portrayals. Exact first guesses nevertheless fall 235 to 233 after the corrections.",
+    "Mixed-noise eventual success falls from 2881 to 2862 of 3072 in self-replay. Uncertain-soft and single-flip eventual recovery improve slightly. Report all policies, not just favorable ones.",
+    "Removing false medium distinctions exposes additional sparse-profile overlaps. Zero-opposition pairs increase from 200 to 215; UNKNOWN differences are not decisive knowledge.",
+    "Added-roster factual accuracy remains unqualified. 130 wording reviews are not 33280 verified cells.",
+    "No new service integration, no physical hardware validation, no publication by this task."
+  ],
+  "exact_replay_diagnostics": {
+    "scope": "C89 engine exact-response replay; source interpretation and dataset factual coverage remain separate.",
+    "self_first_lost": [
+      "cruella_de_vil",
+      "nausicaa",
+      "arrietty",
+      "poseidon_greek_myth"
+    ],
+    "self_first_gained": [
+      "katniss_everdeen",
+      "thor_norse_myth"
+    ],
+    "corrected_response_failures_repaired": [
+      "ahsoka_tano",
+      "bambi",
+      "cruella_de_vil",
+      "howl_jenkins_pendragon",
+      "forrest_gump"
+    ],
+    "changed_traces": [
+      {
+        "character": "princess_peach",
+        "old_self": {
+          "character": "princess_peach",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "princess_peach",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "princess_peach",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "bowser",
+        "old_self": {
+          "character": "bowser",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "bowser",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "bowser",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "princess_zelda",
+        "old_self": {
+          "character": "princess_zelda",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "princess_zelda",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "princess_zelda",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "pac_man",
+        "old_self": {
+          "character": "pac_man",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "pac_man",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "pac_man",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "kirby",
+        "old_self": {
+          "character": "kirby",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "kirby",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "kirby",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "crash_bandicoot",
+        "old_self": {
+          "character": "crash_bandicoot",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "crash_bandicoot",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "crash_bandicoot",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "steve",
+        "old_self": {
+          "character": "steve",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "steve",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "steve",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "master_chief",
+        "old_self": {
+          "character": "master_chief",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "master_chief",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "master_chief",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "yoshi",
+        "old_self": {
+          "character": "yoshi",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "yoshi",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "yoshi",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "isabelle",
+        "old_self": {
+          "character": "isabelle",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "isabelle",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "isabelle",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "mickey_mouse",
+        "old_self": {
+          "character": "mickey_mouse",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "mickey_mouse",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "mickey_mouse",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "minnie_mouse",
+        "old_self": {
+          "character": "minnie_mouse",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "minnie_mouse",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "minnie_mouse",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "goofy",
+        "old_self": {
+          "character": "goofy",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "goofy",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "goofy",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "tweety",
+        "old_self": {
+          "character": "tweety",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "tweety",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "tweety",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "sylvester",
+        "old_self": {
+          "character": "sylvester",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "sylvester",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "sylvester",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "tom",
+        "old_self": {
+          "character": "tom",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "tom",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "tom",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "jerry",
+        "old_self": {
+          "character": "jerry",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "jerry",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "jerry",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "shaggy_rogers",
+        "old_self": {
+          "character": "shaggy_rogers",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "shaggy_rogers",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "shaggy_rogers",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "barney_rubble",
+        "old_self": {
+          "character": "barney_rubble",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "barney_rubble",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "barney_rubble",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "lisa_simpson",
+        "old_self": {
+          "character": "lisa_simpson",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "lisa_simpson",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "lisa_simpson",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "marge_simpson",
+        "old_self": {
+          "character": "marge_simpson",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "marge_simpson",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "marge_simpson",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "spongebob_squarepants",
+        "old_self": {
+          "character": "spongebob_squarepants",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "spongebob_squarepants",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "spongebob_squarepants",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "squidward_tentacles",
+        "old_self": {
+          "character": "squidward_tentacles",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "squidward_tentacles",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "squidward_tentacles",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "popeye",
+        "old_self": {
+          "character": "popeye",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "popeye",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "popeye",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "betty_boop",
+        "old_self": {
+          "character": "betty_boop",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "betty_boop",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "betty_boop",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "snoopy",
+        "old_self": {
+          "character": "snoopy",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "snoopy",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "snoopy",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "garfield",
+        "old_self": {
+          "character": "garfield",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "garfield",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "garfield",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "winnie_the_pooh",
+        "old_self": {
+          "character": "winnie_the_pooh",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "winnie_the_pooh",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "winnie_the_pooh",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "tigger",
+        "old_self": {
+          "character": "tigger",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "tigger",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "tigger",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "elsa",
+        "old_self": {
+          "character": "elsa",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "elsa",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "elsa",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "anna",
+        "old_self": {
+          "character": "anna",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "anna",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "anna",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "mulan",
+        "old_self": {
+          "character": "mulan",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "mulan",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "mulan",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "belle",
+        "old_self": {
+          "character": "belle",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "belle",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "belle",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "shrek",
+        "old_self": {
+          "character": "shrek",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "shrek",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "shrek",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 1
+        }
+      },
+      {
+        "character": "woody",
+        "old_self": {
+          "character": "woody",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "woody",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "woody",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "buzz_lightyear",
+        "old_self": {
+          "character": "buzz_lightyear",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "buzz_lightyear",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "buzz_lightyear",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "simba",
+        "old_self": {
+          "character": "simba",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "simba",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "simba",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "nala",
+        "old_self": {
+          "character": "nala",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "nala",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "nala",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "superman",
+        "old_self": {
+          "character": "superman",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "superman",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "superman",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "hulk",
+        "old_self": {
+          "character": "hulk",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "hulk",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "hulk",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "princess_leia",
+        "old_self": {
+          "character": "princess_leia",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "princess_leia",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "princess_leia",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "yoda",
+        "old_self": {
+          "character": "yoda",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "yoda",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "yoda",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "chewbacca",
+        "old_self": {
+          "character": "chewbacca",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "chewbacca",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "chewbacca",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "r2_d2",
+        "old_self": {
+          "character": "r2_d2",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "r2_d2",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "r2_d2",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "c_3po",
+        "old_self": {
+          "character": "c_3po",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "c_3po",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "c_3po",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "sherlock_holmes",
+        "old_self": {
+          "character": "sherlock_holmes",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "sherlock_holmes",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "sherlock_holmes",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "harry_potter",
+        "old_self": {
+          "character": "harry_potter",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "harry_potter",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "harry_potter",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "hermione_granger",
+        "old_self": {
+          "character": "hermione_granger",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "hermione_granger",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "hermione_granger",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "ron_weasley",
+        "old_self": {
+          "character": "ron_weasley",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "ron_weasley",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "ron_weasley",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "gollum",
+        "old_self": {
+          "character": "gollum",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "gollum",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "gollum",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "dracula",
+        "old_self": {
+          "character": "dracula",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "dracula",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "dracula",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "santa_claus",
+        "old_self": {
+          "character": "santa_claus",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "santa_claus",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "santa_claus",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "merlin",
+        "old_self": {
+          "character": "merlin",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "merlin",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "merlin",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "alice",
+        "old_self": {
+          "character": "alice",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "alice",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "alice",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "paddington_bear",
+        "old_self": {
+          "character": "paddington_bear",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "paddington_bear",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "paddington_bear",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "marie_curie",
+        "old_self": {
+          "character": "marie_curie",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "marie_curie",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "marie_curie",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "ada_lovelace",
+        "old_self": {
+          "character": "ada_lovelace",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "ada_lovelace",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "ada_lovelace",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "cleopatra",
+        "old_self": {
+          "character": "cleopatra",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "cleopatra",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "cleopatra",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "joan_of_arc",
+        "old_self": {
+          "character": "joan_of_arc",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "joan_of_arc",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "joan_of_arc",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "amelia_earhart",
+        "old_self": {
+          "character": "amelia_earhart",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "amelia_earhart",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "amelia_earhart",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "dolly_parton",
+        "old_self": {
+          "character": "dolly_parton",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "dolly_parton",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "dolly_parton",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "beyonce",
+        "old_self": {
+          "character": "beyonce",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "beyonce",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "beyonce",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "serena_williams",
+        "old_self": {
+          "character": "serena_williams",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "serena_williams",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "serena_williams",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "ahsoka_tano",
+        "old_self": {
+          "character": "ahsoka_tano",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "ahsoka_tano",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "ahsoka_tano",
+          "success": false,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 10
+        }
+      },
+      {
+        "character": "padme_amidala",
+        "old_self": {
+          "character": "padme_amidala",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "padme_amidala",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "padme_amidala",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "boba_fett",
+        "old_self": {
+          "character": "boba_fett",
+          "success": true,
+          "first": true,
+          "questions": 13,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "boba_fett",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "boba_fett",
+          "success": true,
+          "first": true,
+          "questions": 13,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "emperor_palpatine",
+        "old_self": {
+          "character": "emperor_palpatine",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "emperor_palpatine",
+          "success": true,
+          "first": true,
+          "questions": 13,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "emperor_palpatine",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "bb8",
+        "old_self": {
+          "character": "bb8",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "bb8",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "bb8",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "catwoman_selina_kyle",
+        "old_self": {
+          "character": "catwoman_selina_kyle",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "catwoman_selina_kyle",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "catwoman_selina_kyle",
+          "success": true,
+          "first": false,
+          "questions": 20,
+          "wrong_guesses": 1
+        }
+      },
+      {
+        "character": "supergirl_kara_zor_el",
+        "old_self": {
+          "character": "supergirl_kara_zor_el",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "supergirl_kara_zor_el",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "supergirl_kara_zor_el",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "snow_white",
+        "old_self": {
+          "character": "snow_white",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "snow_white",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "snow_white",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "maleficent",
+        "old_self": {
+          "character": "maleficent",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "maleficent",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "maleficent",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "dumbo",
+        "old_self": {
+          "character": "dumbo",
+          "success": true,
+          "first": true,
+          "questions": 13,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "dumbo",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "dumbo",
+          "success": true,
+          "first": true,
+          "questions": 13,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "bambi",
+        "old_self": {
+          "character": "bambi",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "bambi",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "bambi",
+          "success": false,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 10
+        }
+      },
+      {
+        "character": "pinocchio",
+        "old_self": {
+          "character": "pinocchio",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "pinocchio",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "pinocchio",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 10
+        }
+      },
+      {
+        "character": "cruella_de_vil",
+        "old_self": {
+          "character": "cruella_de_vil",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "cruella_de_vil",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 2
+        },
+        "old_with_corrected_answers": {
+          "character": "cruella_de_vil",
+          "success": false,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 10
+        }
+      },
+      {
+        "character": "totoro",
+        "old_self": {
+          "character": "totoro",
+          "success": true,
+          "first": true,
+          "questions": 15,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "totoro",
+          "success": true,
+          "first": true,
+          "questions": 19,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "totoro",
+          "success": true,
+          "first": true,
+          "questions": 15,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "kiki",
+        "old_self": {
+          "character": "kiki",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "kiki",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "kiki",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 3
+        }
+      },
+      {
+        "character": "howl_jenkins_pendragon",
+        "old_self": {
+          "character": "howl_jenkins_pendragon",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "howl_jenkins_pendragon",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "howl_jenkins_pendragon",
+          "success": false,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 10
+        }
+      },
+      {
+        "character": "nausicaa",
+        "old_self": {
+          "character": "nausicaa",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "nausicaa",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 1
+        },
+        "old_with_corrected_answers": {
+          "character": "nausicaa",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 6
+        }
+      },
+      {
+        "character": "arrietty",
+        "old_self": {
+          "character": "arrietty",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "arrietty",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 1
+        },
+        "old_with_corrected_answers": {
+          "character": "arrietty",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 9
+        }
+      },
+      {
+        "character": "cookie_monster",
+        "old_self": {
+          "character": "cookie_monster",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "cookie_monster",
+          "success": true,
+          "first": true,
+          "questions": 13,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "cookie_monster",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "big_bird",
+        "old_self": {
+          "character": "big_bird",
+          "success": true,
+          "first": true,
+          "questions": 20,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "big_bird",
+          "success": true,
+          "first": true,
+          "questions": 21,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "big_bird",
+          "success": true,
+          "first": true,
+          "questions": 20,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "son_goku",
+        "old_self": {
+          "character": "son_goku",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "son_goku",
+          "success": true,
+          "first": true,
+          "questions": 7,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "son_goku",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "sailor_moon",
+        "old_self": {
+          "character": "sailor_moon",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "sailor_moon",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "sailor_moon",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "hello_kitty",
+        "old_self": {
+          "character": "hello_kitty",
+          "success": true,
+          "first": true,
+          "questions": 16,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "hello_kitty",
+          "success": true,
+          "first": true,
+          "questions": 13,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "hello_kitty",
+          "success": true,
+          "first": true,
+          "questions": 16,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "fox_mccloud",
+        "old_self": {
+          "character": "fox_mccloud",
+          "success": true,
+          "first": true,
+          "questions": 15,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "fox_mccloud",
+          "success": true,
+          "first": true,
+          "questions": 17,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "fox_mccloud",
+          "success": true,
+          "first": true,
+          "questions": 15,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "princess_daisy",
+        "old_self": {
+          "character": "princess_daisy",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "princess_daisy",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "princess_daisy",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "wario",
+        "old_self": {
+          "character": "wario",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "wario",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "wario",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "ezio_auditore",
+        "old_self": {
+          "character": "ezio_auditore",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "ezio_auditore",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "ezio_auditore",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "dorothy_gale",
+        "old_self": {
+          "character": "dorothy_gale",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "dorothy_gale",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "dorothy_gale",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "wicked_witch_west",
+        "old_self": {
+          "character": "wicked_witch_west",
+          "success": true,
+          "first": true,
+          "questions": 18,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "wicked_witch_west",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "wicked_witch_west",
+          "success": true,
+          "first": true,
+          "questions": 18,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "neo_matrix",
+        "old_self": {
+          "character": "neo_matrix",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "neo_matrix",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "neo_matrix",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "godzilla",
+        "old_self": {
+          "character": "godzilla",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "godzilla",
+          "success": true,
+          "first": true,
+          "questions": 8,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "godzilla",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "king_kong",
+        "old_self": {
+          "character": "king_kong",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "king_kong",
+          "success": true,
+          "first": true,
+          "questions": 13,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "king_kong",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "forrest_gump",
+        "old_self": {
+          "character": "forrest_gump",
+          "success": true,
+          "first": true,
+          "questions": 16,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "forrest_gump",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "forrest_gump",
+          "success": false,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 10
+        }
+      },
+      {
+        "character": "katniss_everdeen",
+        "old_self": {
+          "character": "katniss_everdeen",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 1
+        },
+        "new_self": {
+          "character": "katniss_everdeen",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "katniss_everdeen",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 1
+        }
+      },
+      {
+        "character": "eleven_stranger_things",
+        "old_self": {
+          "character": "eleven_stranger_things",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "eleven_stranger_things",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "eleven_stranger_things",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "zeus_greek_myth",
+        "old_self": {
+          "character": "zeus_greek_myth",
+          "success": true,
+          "first": true,
+          "questions": 23,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "zeus_greek_myth",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "zeus_greek_myth",
+          "success": true,
+          "first": true,
+          "questions": 23,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "athena_greek_myth",
+        "old_self": {
+          "character": "athena_greek_myth",
+          "success": true,
+          "first": true,
+          "questions": 21,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "athena_greek_myth",
+          "success": true,
+          "first": true,
+          "questions": 24,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "athena_greek_myth",
+          "success": true,
+          "first": true,
+          "questions": 21,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "poseidon_greek_myth",
+        "old_self": {
+          "character": "poseidon_greek_myth",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "poseidon_greek_myth",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 1
+        },
+        "old_with_corrected_answers": {
+          "character": "poseidon_greek_myth",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "medusa_greek_myth",
+        "old_self": {
+          "character": "medusa_greek_myth",
+          "success": true,
+          "first": true,
+          "questions": 20,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "medusa_greek_myth",
+          "success": true,
+          "first": true,
+          "questions": 22,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "medusa_greek_myth",
+          "success": true,
+          "first": true,
+          "questions": 20,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "sun_wukong",
+        "old_self": {
+          "character": "sun_wukong",
+          "success": true,
+          "first": true,
+          "questions": 21,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "sun_wukong",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "sun_wukong",
+          "success": true,
+          "first": true,
+          "questions": 21,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "anubis_egyptian_myth",
+        "old_self": {
+          "character": "anubis_egyptian_myth",
+          "success": true,
+          "first": true,
+          "questions": 24,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "anubis_egyptian_myth",
+          "success": true,
+          "first": true,
+          "questions": 16,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "anubis_egyptian_myth",
+          "success": true,
+          "first": true,
+          "questions": 24,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "thor_norse_myth",
+        "old_self": {
+          "character": "thor_norse_myth",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 1
+        },
+        "new_self": {
+          "character": "thor_norse_myth",
+          "success": true,
+          "first": true,
+          "questions": 25,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "thor_norse_myth",
+          "success": true,
+          "first": false,
+          "questions": 25,
+          "wrong_guesses": 1
+        }
+      },
+      {
+        "character": "queen_victoria",
+        "old_self": {
+          "character": "queen_victoria",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "queen_victoria",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "queen_victoria",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "rosa_parks",
+        "old_self": {
+          "character": "rosa_parks",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "rosa_parks",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "rosa_parks",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "frida_kahlo",
+        "old_self": {
+          "character": "frida_kahlo",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "frida_kahlo",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "frida_kahlo",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "harriet_tubman",
+        "old_self": {
+          "character": "harriet_tubman",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "harriet_tubman",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "harriet_tubman",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "simone_biles",
+        "old_self": {
+          "character": "simone_biles",
+          "success": true,
+          "first": true,
+          "questions": 16,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "simone_biles",
+          "success": true,
+          "first": true,
+          "questions": 17,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "simone_biles",
+          "success": true,
+          "first": true,
+          "questions": 16,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "taylor_swift",
+        "old_self": {
+          "character": "taylor_swift",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "taylor_swift",
+          "success": true,
+          "first": true,
+          "questions": 10,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "taylor_swift",
+          "success": true,
+          "first": true,
+          "questions": 9,
+          "wrong_guesses": 0
+        }
+      },
+      {
+        "character": "oprah_winfrey",
+        "old_self": {
+          "character": "oprah_winfrey",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        },
+        "new_self": {
+          "character": "oprah_winfrey",
+          "success": true,
+          "first": true,
+          "questions": 12,
+          "wrong_guesses": 0
+        },
+        "old_with_corrected_answers": {
+          "character": "oprah_winfrey",
+          "success": true,
+          "first": true,
+          "questions": 11,
+          "wrong_guesses": 0
+        }
+      }
+    ]
+  },
+  "gui_runs": [
+    {
+      "mode": "320x200x16",
+      "target": "Bambi (Disney)",
+      "passed": true,
+      "exe_sha256": "7b3e1260ae259d6bfa9bc248d92de60c6e79ec5d031652aa76c23385af0ccbb9",
+      "database_sha256": "c952b6c4d5f7b12c469ce73bf8fe9a18fa0c560cac03f339df74779b22ae455f",
+      "eyes": {
+        "changed_pixels": 50,
+        "only_eye_rectangles_changed": true
+      },
+      "partial_repaint_exact": true,
+      "focus_restore_exact": true,
+      "border_expose_exact": true
+    },
+    {
+      "mode": "640x200x2",
+      "target": "Howl (Studio Ghibli)",
+      "passed": true,
+      "exe_sha256": "7b3e1260ae259d6bfa9bc248d92de60c6e79ec5d031652aa76c23385af0ccbb9",
+      "database_sha256": "c952b6c4d5f7b12c469ce73bf8fe9a18fa0c560cac03f339df74779b22ae455f",
+      "eyes": {
+        "changed_pixels": 100,
+        "only_eye_rectangles_changed": true
+      },
+      "partial_repaint_exact": true,
+      "focus_restore_exact": true,
+      "border_expose_exact": true
+    },
+    {
+      "mode": "640x200x4",
+      "target": "Ahsoka Tano",
+      "passed": true,
+      "exe_sha256": "7b3e1260ae259d6bfa9bc248d92de60c6e79ec5d031652aa76c23385af0ccbb9",
+      "database_sha256": "c952b6c4d5f7b12c469ce73bf8fe9a18fa0c560cac03f339df74779b22ae455f",
+      "eyes": {
+        "changed_pixels": 100,
+        "only_eye_rectangles_changed": true
+      },
+      "partial_repaint_exact": true,
+      "focus_restore_exact": true,
+      "border_expose_exact": true
+    }
+  ]
+}
