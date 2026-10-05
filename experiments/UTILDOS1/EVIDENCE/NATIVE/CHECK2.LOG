@@ -1,0 +1,8 @@
+WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.
+WIN.COM: Approved XT
+WIN.WXB: Original stock
+WIN.WXN: Absent
+CHECK PASS: recognized layout. No files changed.
+Already applied. Start with your usual guarded Windows launcher.
+To undo this update:
+Next: WXTSPL RESTORE C:\WINDOWS

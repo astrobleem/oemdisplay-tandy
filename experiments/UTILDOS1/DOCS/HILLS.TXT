@@ -1,0 +1,63 @@
+GUIDE FOR THE EXISTING HILLS ARTWORK PACKAGE
+This trial includes the revised guide; it changes no BMP artwork.
+
+WINDOWS XT - GREEN HILL DESKTOP
+Original pixel landscape. 4 October 2026.
+Windows 3.0 real mode, Tandy 16-color modes.
+
+This is ordinary Windows desktop wallpaper. It starts with Windows behind
+Tandy Start. It is not the boot splash. No new resident program, timer,
+shell code, driver, or startup application is installed.
+
+INSTALL (RECOMMENDED, OPT IN)
+1. Extract HILLS under C:\WINXT and keep it there. Create C:\WINXT first
+   if needed. Choose HILL160.BMP for 160x200, or HILL320.BMP for 320x200;
+   both require a 16-color mode.
+2. In Windows, open Control Panel, then Desktop. Note your current wallpaper
+   pathname and Tile/Center setting so you can restore them later.
+3. Under Wallpaper, enter the full matching pathname:
+     C:\WINXT\HILLS\HILL160.BMP    (160x200)
+     C:\WINXT\HILLS\HILL320.BMP    (320x200)
+   Choose Center, then OK. Keep the BMP in that location.
+
+ADVANCED: MANUAL WIN.INI INSTALL
+Use this only if the Control Panel route is unsuitable.
+1. Exit Windows. Make a NEW backup of C:\WINDOWS\WIN.INI. Never overwrite
+   an older backup. Example, ONLY if WINBAK.INI does not already exist:
+     COPY C:\WINDOWS\WIN.INI C:\WINXT\HILLS\WINBAK.INI
+2. Open your existing WIN.INI in DOS EDIT. In the EXISTING [desktop] section,
+   set Wallpaper to the full matching BMP path above and TileWallpaper=0.
+   Change only those keys; do not duplicate sections or replace the file.
+3. Restart Windows with your usual guarded launcher.
+
+Choose the file matching your CURRENT color mode. Windows 3.0 does not
+stretch it. These are full-screen, precomputed 4-bit Windows BMPs, with
+native RGBI colors and standard padded rows, not a conversion at startup.
+HILL160.BMP = 16,118 bytes. HILL320.BMP = 32,118 bytes.
+The lower 22 desktop pixels naturally sit behind the Start bar.
+
+RESTORE / DISABLE
+Use Control Panel > Desktop to restore the wallpaper pathname and Tile/Center
+setting you noted, or choose (None) for a plain desktop.
+
+If you used the advanced manual method, exit Windows and compare [desktop]
+in WINBAK.INI with your current WIN.INI. Restore only the previous Wallpaper
+and TileWallpaper values. If a key was absent, remove that key. Keep all
+other current settings and restart Windows with your usual guarded launcher.
+Do not copy the whole backup over newer INI settings.
+
+MODE CHANGES
+Before selecting the 640-pixel monochrome driver, turn wallpaper off or
+restore the earlier settings. This pack is intentionally color-only; no
+monochrome conversion, low-memory auto-switching, or automatic mode change
+is installed. Use the plain desktop if the extra bitmap memory matters.
+
+The existing moon boot splash, drivers, shell executable, sound and saver
+settings are untouched. Physical hardware acceptance is not claimed.
+Native emulator results and limits are in TESTS.TXT.
+
+REBUILD ART
+Run python3 BUILDART.PY on a modern host with Pillow installed. It writes
+verified BMPs and enlarged artwork previews under assets/; no Python is
+needed on the Tandy. HILL160.PNG and HILL320.PNG beside this guide are
+actual Windows emulator captures; their doubled axes are display scaling.

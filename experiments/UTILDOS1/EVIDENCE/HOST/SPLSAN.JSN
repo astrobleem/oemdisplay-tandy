@@ -1,0 +1,16 @@
+{
+  "pass": true,
+  "cases": 1048,
+  "state_grid": "7^3 combinations * CHECK/APPLY/RESTORE",
+  "kinds": [
+    "absent",
+    "exact stock",
+    "exact old Tandy",
+    "exact new",
+    "unknown bytes",
+    "directory",
+    "symlink"
+  ],
+  "all_unrelated_sentinels_unchanged": true,
+  "unknown_states_read_only": true
+}

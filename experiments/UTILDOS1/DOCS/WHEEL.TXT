@@ -1,0 +1,9 @@
+WHEEL SUMMARY POLISH TRIAL
+The final RAW screen groups COM port/base, captured byte count, wheel-event
+count/net, UART errors, decoder errors and protocol counts. It ends with a
+bounded interpretation and the existing reboot instruction. Detailed events
+and the complete raw-byte report remain above it and in redirected output.
+All clean-boot, resident-driver, Windows-active, UART-state, consent,
+restoration and capture-size guards are unchanged. Reboot before ordinary
+mouse/Windows use. No Windows scrolling support or new hardware claim.
+Use WHEELUSE.TXT for the complete unchanged safety and capture workflow.

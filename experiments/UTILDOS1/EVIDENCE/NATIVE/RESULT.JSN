@@ -1,0 +1,34 @@
+{
+  "pass": true,
+  "checks": {
+    "native_pass": true,
+    "original_returned": true,
+    "gap_original_recovered": true,
+    "unknown_stage_preserved": true,
+    "unknown_original_preserved": true,
+    "unrelated_unchanged": true,
+    "input_unchanged": true,
+    "original_named_apply": true,
+    "applied_named_restore": true,
+    "gap_recovery_command": true,
+    "unknown_review": true
+  },
+  "logs": {
+    "RESTORE2.LOG": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nWIN.COM: Original stock\nWIN.WXB: Absent\nWIN.WXN: Approved XT\nALREADY ORIGINAL: WIN.COM recognized. Any stage file is left untouched.\n",
+    "GAPCHECK.LOG": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nWIN.COM: Absent\nWIN.WXB: Original stock\nWIN.WXN: Unknown / refused\nCHECK REFUSED: unknown or conflicting files. No files changed.\nRecover verified WIN.WXB; the unknown stage will be preserved.\nNext: WXTSPL RESTORE C:\\GAP\n",
+    "GAPREST.LOG": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nWIN.COM: Absent\nWIN.WXB: Original stock\nWIN.WXN: Unknown / refused\nRESTORED: original WIN.COM recovered. Stage, if any, left untouched.\n",
+    "REFUSE.LOG": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nWIN.COM: Unknown / refused\nWIN.WXB: Absent\nWIN.WXN: Absent\nCHECK REFUSED: unknown or conflicting files. No files changed.\nPreserve all files and request review before retrying.\n",
+    "RESTORE1.LOG": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nWIN.COM: Approved XT\nWIN.WXB: Original stock\nWIN.WXN: Absent\nRESTORED: original WIN.COM. Approved replacement retained as WIN.WXN.\n",
+    "SHA.LOG": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nPASS SHA-256 empty and abc vectors.\n",
+    "API.LOG": "WHEEL 0.1 - 8088/DOS mouse wheel diagnostic\nWheel API query: AX=574D BX=0000 CX=0001\nWheel API and wheel device reported. Turn wheel up, then down.\nSampling for 20 seconds; Esc stops early. Results appear afterward.\nThis consumes the driver's accumulated wheel count, without resetting the driver.\nWheel-bearing samples=0; net delta=0 (positive means down).\nNo wheel count arrived during this observation window.\n",
+    "APPLY1.LOG": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nWIN.COM: Original stock\nWIN.WXB: Absent\nWIN.WXN: Absent\nAPPLIED: verified original retained as WIN.WXB. Only WIN.COM changed.\n",
+    "APPLY2.LOG": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nWIN.COM: Approved XT\nWIN.WXB: Original stock\nWIN.WXN: Absent\nALREADY APPLIED: WIN.COM is the exact approved WindowsXT version.\n",
+    "CHECK3.LOG": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nWIN.COM: Original stock\nWIN.WXB: Absent\nWIN.WXN: Approved XT\nCHECK PASS: recognized layout. No files changed.\nNext: WXTSPL APPLY C:\\WINDOWS\n",
+    "CHECK1.LOG": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nWIN.COM: Original stock\nWIN.WXB: Absent\nWIN.WXN: Absent\nCHECK PASS: recognized layout. No files changed.\nNext: WXTSPL APPLY C:\\WINDOWS\n",
+    "WHEEL.LOG": "WHEEL 0.1 - 8088/DOS mouse wheel diagnostic\nPASS packet tests (synthetic data only)\n",
+    "CHECK2.LOG": "WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.\nWIN.COM: Approved XT\nWIN.WXB: Original stock\nWIN.WXN: Absent\nCHECK PASS: recognized layout. No files changed.\nAlready applied. Start with your usual guarded Windows launcher.\nTo undo this update:\nNext: WXTSPL RESTORE C:\\WINDOWS\n"
+  },
+  "cpu": "8086_prefetch",
+  "memory_kb": 640,
+  "ems_xms_umb": false
+}

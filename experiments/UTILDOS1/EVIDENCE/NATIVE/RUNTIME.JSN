@@ -1,0 +1,17 @@
+{
+  "WHEEL.EXE": {
+    "bytes": 14207,
+    "sha256": "9ce9be8adaaac9b2f5094264d5574ab9c068ca4923878731614f7177271df352",
+    "executed_guest_sha256": "9ce9be8adaaac9b2f5094264d5574ab9c068ca4923878731614f7177271df352"
+  },
+  "WXTSPL.EXE": {
+    "bytes": 20541,
+    "sha256": "0a876e4620b4dd426ffeac7912b2023a08e80d271320295cb52086b431b74e5b",
+    "executed_guest_sha256": "0a876e4620b4dd426ffeac7912b2023a08e80d271320295cb52086b431b74e5b"
+  },
+  "WXTSPL01.RLE": {
+    "bytes": 4062,
+    "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+    "executed_guest_sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+  }
+}
