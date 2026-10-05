@@ -1,0 +1,37 @@
+ARWING FLIGHT TEST BUILD - RIGHTS AND ATTRIBUTION
+
+The ship is original low-resolution fan art generated from the source
+geometry in SOURCE/ARTBUILD.PY. It is inspired by the Arwing from Star Fox.
+It does not contain extracted Nintendo artwork, ROM data, models, sounds,
+logos or game code. Star Fox and Arwing names/underlying characters belong
+to their respective rights holders, including Nintendo. This independent
+fan project is not affiliated with or endorsed by Nintendo.
+
+Original additions in STFLY.C/H, STJOY.C/H, SHIPART.H, ARTBUILD.PY and their
+tests are provided under the MIT license below to the extent of their
+original authorship. This does not grant rights in third-party characters,
+trademarks, Windows, compiler tools, ROMs, hardware manuals or OS media.
+Existing project files retain their existing notices and provenance.
+JOYCORE.C/H and JOYCAP.ASM are unchanged copies from EXJOY; their complete
+MIT notice is included separately as SOURCE/JOYLIC.TXT.
+
+MIT License
+Copyright (c) 2026 Starfield flight contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the Software),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
