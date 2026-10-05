@@ -1,0 +1,31 @@
+MOCK PASS resident (writes=0, ticks=0)
+MOCK PASS missing (writes=0, ticks=0)
+MOCK PASS active (writes=0, ticks=0)
+MOCK PASS cancel (writes=0, ticks=0)
+MOCK PASS changed (writes=0, ticks=0)
+MOCK PASS txbusy (writes=0, ticks=0)
+MOCK PASS dlab (writes=0, ticks=0)
+FINAL RAW SUMMARY (candidate protocol)
+COM1 03F8 | bytes=20 | wheel events=0 | net=0
+UART errors=0 | decode errors=0 | triples=0 | fourth=0
+No wheel candidates: inconclusive; port/protocol/state may differ.
+UART registers restored; mouse state may differ.
+Raw packets do not enable Windows scrolling.
+Reboot normally before using your usual mouse driver or Windows.
+MOCK PASS escape (writes=11, ticks=21)
+FINAL RAW SUMMARY (candidate protocol)
+COM1 03F8 | bytes=364 | wheel events=82 | net=82
+UART errors=0 | decode errors=0 | triples=82 | fourth=82
+Wheel candidates seen: compare signs with your deliberate up/down turns.
+UART registers restored; mouse state may differ.
+Raw packets do not enable Windows scrolling.
+Reboot normally before using your usual mouse driver or Windows.
+MOCK PASS capture (writes=11, ticks=365)
+FINAL RAW SUMMARY (candidate protocol)
+COM1 03F8 | bytes=364 | wheel events=0 | net=0
+UART errors=364 | decode errors=329 | triples=0 | fourth=0
+Errors present: inspect the capture before drawing conclusions.
+UART registers restored; mouse state may differ.
+Raw packets do not enable Windows scrolling.
+Reboot normally before using your usual mouse driver or Windows.
+MOCK PASS uart (writes=11, ticks=365)

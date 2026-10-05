@@ -1,0 +1,5 @@
+WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.
+WIN.COM: Original stock
+WIN.WXB: Absent
+WIN.WXN: Absent
+APPLIED: verified original retained as WIN.WXB. Only WIN.COM changed.

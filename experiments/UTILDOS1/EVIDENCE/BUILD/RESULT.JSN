@@ -1,0 +1,10 @@
+{
+  "WHEEL.EXE": {
+    "bytes": 14207,
+    "sha256": "9ce9be8adaaac9b2f5094264d5574ab9c068ca4923878731614f7177271df352"
+  },
+  "WXTSPL.EXE": {
+    "bytes": 20541,
+    "sha256": "0a876e4620b4dd426ffeac7912b2023a08e80d271320295cb52086b431b74e5b"
+  }
+}

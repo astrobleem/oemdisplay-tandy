@@ -1,0 +1,11 @@
+WXTSPL STATUS POLISH TRIAL
+The exact artwork, accepted input hashes, write/rename safeguards, Windows
+active guard and recovery rules are unchanged. Keep WXTSPL01.RLE beside the
+program. From plain DOS, run WXTSPL CHECK with your Windows directory.
+Each file now has a named state. CHECK prints the applicable next command:
+APPLY for a recognized original; RESTORE for an interrupted recognized
+update; or the usual guarded launcher after an already-applied result.
+An unknown/conflicting layout still refuses. Preserve its files for review.
+The special absent-live/recognized-backup recovery still offers RESTORE,
+which preserves an unknown staged file. No numeric legend is needed.
+Read SPLASH.TXT for full commands, backup/recovery steps and cautions.

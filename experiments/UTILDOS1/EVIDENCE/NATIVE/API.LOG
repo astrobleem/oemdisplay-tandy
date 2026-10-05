@@ -1,0 +1,7 @@
+WHEEL 0.1 - 8088/DOS mouse wheel diagnostic
+Wheel API query: AX=574D BX=0000 CX=0001
+Wheel API and wheel device reported. Turn wheel up, then down.
+Sampling for 20 seconds; Esc stops early. Results appear afterward.
+This consumes the driver's accumulated wheel count, without resetting the driver.
+Wheel-bearing samples=0; net delta=0 (positive means down).
+No wheel count arrived during this observation window.

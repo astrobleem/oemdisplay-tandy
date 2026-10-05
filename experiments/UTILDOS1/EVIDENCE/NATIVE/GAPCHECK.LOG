@@ -1,0 +1,7 @@
+WindowsXT splash-only updater 0.2 - CHECK before APPLY; exit Windows first.
+WIN.COM: Absent
+WIN.WXB: Original stock
+WIN.WXN: Unknown / refused
+CHECK REFUSED: unknown or conflicting files. No files changed.
+Recover verified WIN.WXB; the unknown stage will be preserved.
+Next: WXTSPL RESTORE C:\GAP
