@@ -1,0 +1,136 @@
+TANDINATOR 0.2 - NATIVE SPRITE UI QA, 2026-10-05
+=================================================
+The 128-character/128-question engine, database, format and authored facts
+are unchanged from corrected v0.1 baseline commit 39688b1. This revision
+changes the Win16 presentation, art slicing, UI test coverage and docs.
+
+NATIVE ART AND DISPLAY
+----------------------
+Two owner-supplied sheets are preserved byte-for-byte. Crop manifests and
+ARTTEST verify exact source slices and packed atlas bytes. The 320x200
+framebuffer must reproduce all 11,520 centered-cabinet pixels exactly.
+The DIB palette uses the driver's logical RGB values to retain the source
+hardware indices, including brown. No smoothing or generated art is used.
+640x200 doubles only horizontal sprite pixels once into a cached bitmap.
+Its deliberately reduced monochrome and red/green palettes match the
+qualified driver contracts. The older v0.1 four-color screenshot decoder
+used stale cyan/magenta colors; this revision corrects the preview palette.
+
+REAL-MODE EMULATOR UI COVERAGE
+-----------------------------
+All three display modes pass a complete Mario game, mixed mouse/keyboard
+answers, Tab focus, help/scores preservation, rejected guess continuation,
+replay, dirty repaint comparisons and exact restoration after occlusion by
+a second top-level window. Escape, system close and clickable EXIT are
+exercised separately across the three modes; all return cleanly to DOS.
+
+Question repaint output equals full repaint byte-for-byte, and cabinet
+blit counters prove the cabinet is untouched during consecutive answers.
+Only the two 7x9 CRT patches change as the pointer moves; native pupil and
+shadow shapes stay bounded in all nine positions. Repeated unchanged
+pointer targets do not redraw. No animation timer runs during normal play.
+No mouse capture, global hotkey, topmost style, display mode or desktop
+configuration change is made. GDI bitmaps/DCs are released on destruction.
+
+The actual system Alt-Tab keyboard sequence and cross-task WM_ACTIVATEAPP
+were not exercised. A same-task second-window activation/expose test is
+not a substitute; physical Windows switching remains a hardware check.
+A discarded automated SC_NEXTWINDOW test could wait for real key input;
+that test is removed and its superseded run is not qualification evidence.
+
+COMPACTNESS / EVIDENCE
+---------------------
+All code is built /G0 small-model with Microsoft C6. The fixed engine remains
+12,624 bytes. The source atlas is 26,624 bytes, with one cached device bitmap.
+DGROUP, stack and heap remain below a 64KB segment. The opcode audit resets
+at LINK public instruction boundaries so one-byte CRT alignment padding
+cannot be misread as part of the next procedure; no later-CPU/FPU opcode is
+found. This audit is not a proof of every possible execution path.
+
+Final RESULT.JSON files pin EXE, database and driver hashes for each run.
+All tests use the existing strict 640KB, no-XMS/EMS/UMB, 8088-compatible
+emulator setup. Scale and corrupted-DAT runs are retained separately.
+Physical CPU/drawing/storage latency is still unmeasured. No user computer,
+CF card, Windows installation or driver was changed by this work.
+
+UNCHANGED ENGINE QUALIFICATION (v0.1 baseline)
+--------------------------------------------
+TANDINATOR 0.1 - FINAL QA SUMMARY, 2026-10-05
+================================================
+Playable: 128 original curated characters, 128 questions, 21,576-byte DAT.
+The following are automated host/emulator tests, not a natural-answer study
+or validation on a physical Tandy 1000 EX. Full per-character data is in
+EVIDENCE/SIMFINAL.JSON, with first/eventual success distinguished explicitly.
+
+SHARED-C STARTER SIMULATION
+--------------------------
+truthful       128/128 first; 128/128 eventual; mean  8.09, median  8, worst 10; wrong guesses 0
+one_wrong       71/128 first; 128/128 eventual; mean 10.97, median 11, worst 13; wrong guesses 57
+one_uncertain  128/128 first; 128/128 eventual; mean  9.18, median  9, worst 11; wrong guesses 0
+two_wrong       39/128 first; 128/128 eventual; mean 13.72, median 14, worst 16; wrong guesses 131
+decisive       128/128 first; 128/128 eventual; mean  8.08, median  8, worst 10; wrong guesses 0
+cautious       128/128 first; 128/128 eventual; mean 12.07, median 12, worst 14; wrong guesses 0
+
+The first wrong answer occurs at/after question 4; two-wrong mode flips two
+such answers. Eventual success allows rejecting incorrect guesses. Decisive
+mode turns stored probable answers into definite Yes/No; cautious turns
+stored definite answers into probable answers. Unknown facts remain unknown.
+These additional styles are model perturbations, not independent factual
+verification or evidence that every human will answer the same way.
+
+All 128 characters first-guessed correctly in the truthful case. There are
+no duplicate full profiles, but some pairs have only a few distinctions.
+One/two wrong answers often produce a wrong first guess. The continuation
+mechanism is important, and no calibrated probability is claimed.
+
+COMPILER, FORMAT, AND C RUNTIME
+------------------------------
+53/53 compiler/data tests pass, including dimensions, IDs, missing targets,
+answer values, printable ASCII, length/UI-wrap bounds, offsets, padding,
+column/row agreement, and single-byte corruption. The compiler accepts the
+full 2,000x256 format. It does not prove that every fact is correct.
+Shared-C invariant tests pass for starter and full scale. ASan/UBSan found
+no error. LeakSanitizer was disabled because it cannot run in this container;
+the core itself makes no heap allocations.
+
+Independent review ran 2,000 additional pathological/random games and tested
+the actual C loader against every single-byte mutation of the starter DAT.
+All were rejected; no repeated-question/rejection-stall or memory issue was
+found. The additive checksum is not cryptographic and does not detect every
+compensating multi-byte change. The compiler performs the stronger checks.
+
+A review-found help clipping issue is fixed and final screenshots verified.
+Quote/backslash names now produce correctly escaped JSON simulation output.
+Future questions must fit three 26-column lines, so the compiler prevents
+new content from silently overflowing the compact question ticket.
+
+WINDOWS AND EYES
+---------------
+Partial question repaints after mixed Tab/click input match full repaint
+byte-for-byte in every mode. Right/bottom expose strips restore exactly,
+and mouse-click PLAY AGAIN starts a new game.
+All three final Windows 3.0 real-mode runs pass: 320x200x16, 640x200x2,
+640x200x4. Main game, help, scores, guess, success and error screens were
+inspected. Keyboard controls, Tab, F1/F2 state preservation, rejecting a
+guess, replay, clean exit and corrupted-file handling pass.
+Changing the mouse target moved 24 pixels only in the eye rectangles;
+unchanged targets did not repaint. There is no normal-play timer animation.
+Four-color use remains subject to the existing driver's hardware caveat.
+
+SCALE
+-----
+Synthetic 2,000x256 data is a stress fixture, not additional authored content.
+All 2,000 truthful synthetic games first-guessed correctly. One-wrong runs
+all eventually recovered. Two-wrong stress runs recovered 1,996/2,000 within
+the simulator's ten-rejection cap; four failed. This limitation is retained
+in SIMSCALE.JSON rather than hidden. The Win16 scale smoke passed under the
+same 640 KB emulator configuration with fixed 12,624-byte engine state.
+
+UNVERIFIED / NEXT HARDWARE CHECK
+--------------------------------
+Physical 8088 instruction, drawing, memory-pressure and real CF/disk latency
+remain unmeasured. Run ordinary play on the user's Tandy later, starting
+with Mario, Darth Vader, Lincoln, Colonel Sanders, Sonic and Batman, then
+try an intentionally mistaken answer and a rejected guess. No real-machine
+or CF writes were performed by this work. There is no dependency on a web
+service and no scraping of Akinator's data.

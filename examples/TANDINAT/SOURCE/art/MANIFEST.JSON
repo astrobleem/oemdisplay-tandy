@@ -1,0 +1,180 @@
+{
+  "source_sha256": {
+    "CABINET.PNG": "960fb2033e3aeaa7c0d550e228e8fcf69cdad6dace8a13571a9b5f068bf5251b",
+    "PARTS.PNG": "6ae9d955e6feaf6bd0585e82fd7ed5cda6b743b929913fede5ac0cb951ebbcb1"
+  },
+  "crops": [
+    {
+      "name": "idle body",
+      "source": "CABINET.PNG",
+      "source_rectangle": [
+        16,
+        16,
+        112,
+        134
+      ],
+      "atlas_xy": [
+        0,
+        2
+      ],
+      "pixel_exact": true
+    },
+    {
+      "name": "idle crown cap",
+      "source": "CABINET.PNG",
+      "source_rectangle": [
+        60,
+        14,
+        66,
+        16
+      ],
+      "atlas_xy": [
+        44,
+        0
+      ],
+      "pixel_exact": true
+    },
+    {
+      "name": "speak body",
+      "source": "CABINET.PNG",
+      "source_rectangle": [
+        114,
+        16,
+        210,
+        134
+      ],
+      "atlas_xy": [
+        0,
+        122
+      ],
+      "pixel_exact": true
+    },
+    {
+      "name": "speak crown cap",
+      "source": "CABINET.PNG",
+      "source_rectangle": [
+        158,
+        14,
+        163,
+        16
+      ],
+      "atlas_xy": [
+        44,
+        120
+      ],
+      "pixel_exact": true
+    },
+    {
+      "name": "fortune body",
+      "source": "CABINET.PNG",
+      "source_rectangle": [
+        212,
+        16,
+        308,
+        134
+      ],
+      "atlas_xy": [
+        0,
+        242
+      ],
+      "pixel_exact": true
+    },
+    {
+      "name": "fortune crown cap",
+      "source": "CABINET.PNG",
+      "source_rectangle": [
+        254,
+        14,
+        259,
+        16
+      ],
+      "atlas_xy": [
+        42,
+        240
+      ],
+      "pixel_exact": true
+    },
+    {
+      "name": "title",
+      "source": "CABINET.PNG",
+      "source_rectangle": [
+        103,
+        0,
+        229,
+        14
+      ],
+      "atlas_xy": [
+        0,
+        360
+      ],
+      "pixel_exact": true
+    },
+    {
+      "name": "title lower left",
+      "source": "CABINET.PNG",
+      "source_rectangle": [
+        103,
+        14,
+        134,
+        16
+      ],
+      "atlas_xy": [
+        0,
+        374
+      ],
+      "pixel_exact": true
+    },
+    {
+      "name": "title lower right",
+      "source": "CABINET.PNG",
+      "source_rectangle": [
+        181,
+        14,
+        213,
+        16
+      ],
+      "atlas_xy": [
+        78,
+        374
+      ],
+      "pixel_exact": true
+    },
+    {
+      "name": "wink",
+      "source": "PARTS.PNG",
+      "source_rectangle": [
+        269,
+        28,
+        317,
+        68
+      ],
+      "atlas_xy": [
+        0,
+        376
+      ],
+      "pixel_exact": true
+    },
+    {
+      "name": "think",
+      "source": "PARTS.PNG",
+      "source_rectangle": [
+        59,
+        88,
+        107,
+        128
+      ],
+      "atlas_xy": [
+        48,
+        376
+      ],
+      "pixel_exact": true
+    }
+  ],
+  "atlas_size": [
+    128,
+    416
+  ],
+  "dib_bytes": 26624,
+  "palette_exact": true,
+  "generation": "Exact crop, black padding and lossless 4-bit index packing. Neighboring title/crown pixels are separated by non-overlapping crop slices. No smoothing, resampling or generated artwork."
+}

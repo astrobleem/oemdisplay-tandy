@@ -231,6 +231,7 @@ them all automatically.
 
 | App | What to try |
 | --- | --- |
+| [TANDINATOR v0.2](examples/TANDINAT/README.MD) | Experimental full-screen character oracle with native sprite art, 128 curated characters and bounded mouse-following eyes. 320/640-pixel displays; hardware testing remains open. |
 | [Cookie Clicker](examples/COOKIE/README.MD) | Click or press Space, buy cookies-per-second upgrades, save and load. Fits 160×200. |
 | [Fly Swat 1.1](examples/SWAT/README.MD) | Mouse-controlled fly hunting with score, three hearts, pause and restart; fullscreen and windowed paths, plus `/G` fallback. |
 | [Pinball](examples/PINBALL/README.MD) | Two flippers, three bumpers and three balls; Space launches, Z/Left and / or Right flip, P pauses. |

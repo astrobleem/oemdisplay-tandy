@@ -1,0 +1,80 @@
+[
+  {
+    "mode": "320x200x16",
+    "exe_sha256": "addccc4271aee92a95ca5c53c18679a7c2c7019a1b96fcb471e2b6ba33bfeeca",
+    "art_init_ms": [
+      "0"
+    ],
+    "free_space_before": [
+      "293632"
+    ],
+    "free_space_with_art": [
+      "266816"
+    ],
+    "free_space_after_game": [
+      "266816"
+    ],
+    "cabinet_repaints_during_consecutive_questions": false,
+    "eyes": {
+      "changed_pixels": 50,
+      "only_eye_rectangles_changed": true
+    },
+    "partial_repaint_exact": true,
+    "focus_restore_exact": true,
+    "exit_method": [
+      "1"
+    ]
+  },
+  {
+    "mode": "640x200x2",
+    "exe_sha256": "addccc4271aee92a95ca5c53c18679a7c2c7019a1b96fcb471e2b6ba33bfeeca",
+    "art_init_ms": [
+      "275"
+    ],
+    "free_space_before": [
+      "262976"
+    ],
+    "free_space_with_art": [
+      "209536"
+    ],
+    "free_space_after_game": [
+      "209536"
+    ],
+    "cabinet_repaints_during_consecutive_questions": false,
+    "eyes": {
+      "changed_pixels": 100,
+      "only_eye_rectangles_changed": true
+    },
+    "partial_repaint_exact": true,
+    "focus_restore_exact": true,
+    "exit_method": [
+      "2"
+    ]
+  },
+  {
+    "mode": "640x200x4",
+    "exe_sha256": "addccc4271aee92a95ca5c53c18679a7c2c7019a1b96fcb471e2b6ba33bfeeca",
+    "art_init_ms": [
+      "275"
+    ],
+    "free_space_before": [
+      "262688"
+    ],
+    "free_space_with_art": [
+      "209248"
+    ],
+    "free_space_after_game": [
+      "209248"
+    ],
+    "cabinet_repaints_during_consecutive_questions": false,
+    "eyes": {
+      "changed_pixels": 100,
+      "only_eye_rectangles_changed": true
+    },
+    "partial_repaint_exact": true,
+    "focus_restore_exact": true,
+    "exit_method": [
+      "3"
+    ]
+  }
+]

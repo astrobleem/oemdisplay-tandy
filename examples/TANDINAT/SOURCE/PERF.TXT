@@ -1,0 +1,86 @@
+TANDINATOR 0.2 UI PERFORMANCE ADDENDUM
+=====================================
+The artwork is converted once at startup into a native GDI bitmap. The
+640-pixel modes also perform one integer horizontal doubling at startup.
+Ordinary question changes update ticket text, question number and focus;
+a measured cabinet blit counter remains unchanged across all such turns.
+Only two 7x9 eye patches are updated for changed mouse positions.
+There is no normal-play timer and no continuous redraw loop.
+
+EVIDENCE/ARTPERF.JSON contains final per-mode initialization time, available memory,
+EXE hash and redraw assertions. GetTickCount has coarse 55ms resolution in
+this fixture; 0ms means below a tick, not zero work. Emulator cycle settings
+are uncalibrated, so these numbers do not establish physical 8088 latency.
+The older engine benchmark below is retained as baseline context only.
+
+MEASUREMENTS AND VALIDATION LIMITS
+================================
+Final 8088-compatible Windows 3.0 real-mode emulator runs, 2026-10-05.
+These are NOT physical Tandy performance claims. DOSBox-X used uncalibrated
+fixed 25,000 cycles, 640 KB, no XMS/EMS/UMB/FPU, 8086_prefetch, WIN /R.
+Windows GetWinFlags returned 64; CPU probes recorded the expected 8086-class
+behavior and no dependence on tested later-CPU operations.
+
+RUNTIME SIZES
+-------------
+EXE: see SHA256.TXT for exact delivered file. Code segment: 13,120 bytes.
+Initialized data segment: 1,935 bytes; minimum data allocation: 17,392 bytes.
+Declared stack: 4,096 bytes. Declared local heap: 1,024 bytes.
+Engine sizeof on Win16: 12,624 bytes. DB state: 42 bytes. These fixed sizes
+are unchanged for the 128-entry starter and 2,000-entry synthetic fixture.
+The whole 21,576-byte/437,842-byte database is never loaded into a heap.
+GDI/Windows bookkeeping and peak total system memory were not profiled.
+
+EMULATOR TICK RESULTS
+---------------------
+Windows timing is quantized near 55 ms. A measured zero means the operation
+fit between ticks, not zero duration. Selection includes ranking, row reads,
+question selection or guess text fetch; it excludes Windows painting.
+
+320x200x16: load 55 ms; answer [0, 0]; select [0, 55] ms
+640x200x2: load 0 ms; answer [0, 0]; select [0, 55] ms
+640x200x4: load 0 ms; answer [0, 0]; select [0, 55] ms
+320x200x16-scale: load 275 ms; answer [0, 55]; select [0, 165] ms
+
+Values in brackets are measured minimum/maximum. In the 2,000x256 run,
+most next-question selections took about 110 ms in this emulator profile.
+These are log snapshots, not hardware-calibrated latencies or statistical
+benchmarks. Physical 4.77 MHz 8088, drawing and CF/disk latency can differ
+materially. Physical validation remains required.
+
+Windows free-space snapshots (bytes, GetFreeSpace(0)):
+320x200x16: 322,048 before UI; 321,920 after test
+640x200x2: 291,392 before UI; 291,264 after test
+640x200x4: 291,104 before UI; 290,976 after test
+320x200x16-scale: 322,048 before UI; 321,920 after test
+The small difference is not an app peak-memory estimate or a leak claim.
+
+DISK ACCESS
+-----------
+Answer scoring reads one column (48 bytes in the starter; 750 at maximum).
+Selection reads up to 64 rows (48 or 96 bytes each), then uses cached bytes.
+Scores/rejections/asked flags stay resident. Startup streams the complete
+file for an integrity checksum and validates table offsets. On slow media,
+row-seek overhead should be measured before selecting a further cache policy.
+The counter reports include startup, F2/top-name reads and GUI test actions;
+see raw logs for cumulative records, bytes and seeks.
+
+VISUAL AND INPUT CHECKS
+----------------------
+Actual Windows painting inspected at 320x200x16, 640x200x2 and 640x200x4.
+Keyboard BEGIN/answers/Y/N, Tab focus, F1/F2 overlays, rejected-guess continue,
+mouse-click replay, success, clean exit and corrupted DAT handling pass.
+Right/bottom expose clips and mixed Tab/click focus transitions match a
+full repaint exactly in every mode. The
+static cabinet is not redrawn for each answer. Two captured mouse positions changed exactly 24 pixels, confined to the
+two eye rectangles, in every tested mode. Repeated identical mouse position
+caused no redraw. Normal gameplay has no timer-driven eye animation.
+
+CPU AUDIT
+---------
+MSC6 /G0, integer-only core, real-mode emulator execution, and a linear
+NE code audit found no later-CPU or FPU opcodes among 5,354 decoded rows.
+The two-byte embedded Microsoft CRT __wflags data word is identified by
+LINK /MAP and excluded from instruction decoding. This linear check is
+not a formal proof of every possible execution path; raw map/disassembly
+and the exact binary hash are included.

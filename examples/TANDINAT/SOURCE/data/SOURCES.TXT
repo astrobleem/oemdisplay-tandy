@@ -1,0 +1,122 @@
+PROVENANCE AND CURATION NOTES
+=============================
+Prepared 2026-10-05 for the original TANDINATOR starter roster.
+
+The questions, representation and answer matrix were composed for this
+project using general knowledge and the targeted primary-reference checks
+below. No Akinator database, question bank, response history, API, extracted
+service content or proprietary training set was copied or queried. No
+character art, logos, movie dialogue or biography passages are included.
+Character names and trademarks belong to their respective owners; this
+project does not imply endorsement by any rightsholder.
+
+The complete 16,384-cell matrix has not been independently source-verified
+cell by cell. Most negative classifications mean the broad trait is not
+part of the character's familiar/main portrayal. They are not a claim that
+no obscure adaptation ever depicts it. General-knowledge entries are
+explicitly labeled general in STARTER.JSON. Each source entry states the
+scope of its check; a reference link is not represented as verifying every
+answer for all characters from that franchise.
+
+PRIMARY SOURCES CHECKED
+-----------------------
+Nintendo Mario character page (publisher search excerpt accessible; direct
+fetch later timed out):
+https://mario.nintendo.com/ca/characters/
+Used for familiar Mario-family roles, Peach and Bowser context. No source
+prose has been copied into the questions.
+
+Nintendo Isabelle character/product description (publisher search excerpt):
+https://www.nintendo.com/us/amiibo/detail/isabelle-amiibo-animal-crossing-series/
+Secretary role and Animal Crossing: New Leaf association.
+
+SEGA Sonic Channel character profiles (Japanese publisher originals):
+https://sonic.sega.jp/SonicChannel/character/knuckles.html
+https://sonic.sega.jp/SonicChannel/character/tails.html
+Knuckles: male echidna, small stature, strength, martial arts and treasure
+hunting. Tails: male young fox, two tails, flight and mechanical inventions.
+
+DC official profiles:
+https://www.dc.com/characters/batman
+https://www.dc.com/characters/wonder-woman
+Batman: human detective/fighter, advanced gadgets, wealth, cape/cowl and
+1939 debut. Wonder Woman: Amazon princess, powers and 1941 debut.
+
+Star Wars official Databank:
+https://www.starwars.com/databank
+https://www.starwars.com/databank/darth-vader
+https://www.starwars.com/databank/Luke-Skywalker
+https://www.starwars.com/databank/yoda
+https://www.starwars.com/databank/leia-organa
+Checks include Vader's humanity and role, Luke/Leia sibling relationship,
+Leia's humanity/royalty/leadership, and Yoda's stature and teacher role.
+Yoda's species name is unknown; no invented species name is used.
+
+KFC official company history:
+https://global.kfc.com/our-history
+Harland Sanders was a real founder, associated with food and a white suit.
+
+Nobel Prize official award summary (search excerpt):
+https://www.nobelprize.org/prizes/physics/1903/summary/
+Marie Curie's physics research. The detailed Marie Curie facts page returned
+an access block; the file does not claim that blocked page was reviewed.
+
+ADDITIONAL REFERENCE ROUTES
+--------------------------
+The following official links are useful for future manual review, but were
+not treated as independent verification of every stored trait:
+https://www.zelda.com/about/
+https://sonic.sega.jp/SonicChannel/character/
+https://www.pokemon.com/us/pokedex/pikachu
+https://www.dc.com/characters
+https://www.marvel.com/characters
+https://characters.disney.com/
+https://www.nobelprize.org/prizes/physics/1903/marie-curie/facts/
+The Pokemon page exposed only an iframe to the text reader. Frozen's former
+Anna/Elsa pages redirected to the franchise landing page. These limitations
+are retained rather than calling incomplete reads verified research.
+
+PORTRAYAL CONVENTIONS
+--------------------
+* A fictional entry uses its familiar version, documented in its notes.
+  Disney Mulan, Ariel, Belle and Aladdin refer to familiar film portrayals;
+  Thor is Marvel's character. Shrek and Donkey are DreamWorks characters,
+  not Disney properties. Origin questions concern the named portrayal.
+* The origin medium is different from later adaptations. Popeye, Snoopy,
+  Charlie Brown and Garfield originated in comic strips; Winnie the Pooh,
+  Tigger and Shrek originated in books; Harley Quinn in animation.
+* Fictional debut bands refer to real publication/release chronology.
+  Yoda, Garfield, Frodo and Aragorn were explicitly checked for band errors
+  during curation. Historical-person questions refer to actual human lives
+  and public activity, not the date of a movie adaptation.
+* Folkloric Santa, Merlin, Robin Hood and King Arthur are fictional/legendary
+  roster entries. The game does not adjudicate religious belief or assert
+  archaeological proof of a specific historical version of a legend.
+* Human classification concerns species, not a humanoid silhouette. Link
+  and Zelda are left unknown; Frodo is a hobbit; Superman is an alien.
+  Toy Story figures are toys. The Hulk and several magical figures have
+  unknown values where form or interpretation changes the answer.
+* Appearance concerns an iconic portrayal rather than every costume.
+  Real performers' variable outfit colors are generally unknown. Skin
+  color questions refer to plainly fantastical colors, never ethnicity.
+  No medical, financial or private-life speculation is encoded.
+* Red_hair explicitly includes orange, including orange animal fur.
+  Hat excludes helmets, which have a separate question. Biological ears
+  are different from points on a superhero's cowl. Flight means flying
+  without an ordinary aircraft; a real-world pilot is not supernatural.
+* Powerful humans are not automatically superhuman. Mr. T, Hulk Hogan and
+  Muhammad Ali do not receive extraordinary-strength ability merely for
+  being athletic or imposing. Competitive wrestling is included in sport.
+* UNKNOWN and probable values deliberately retain ambiguity. The matrix
+  is editable, and a user can answer unknown without making a false claim.
+
+QUALITY AND LIMITS
+------------------
+Every question has more than one answer value across the roster. Every
+character profile is distinct. The closest profiles differ at three
+positions, so the game must handle rejected guesses and mistaken answers.
+The roster includes different media, genders, eras, settings and geographic
+associations, but is weighted toward recognizable English-language popular
+culture and Japanese games. It is a starter, not a representative census.
+The binary tests prove structure and reproducibility, not universal factual
+accuracy or equal recognition by every user.
