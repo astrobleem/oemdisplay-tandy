@@ -1,0 +1,54 @@
+{
+  "qualified_source_base": "b73c77c036e90efc317060bafaaaf2f01b2dba6e",
+  "zip": {
+    "name": "TSFIX01.ZIP",
+    "bytes": 335888,
+    "sha256": "bda9787548c55517e94954e055f2b534556af0bb8b12a3d11e2ec9141e7c248b"
+  },
+  "patch_sha256": "c3439a2a2a140fa8b570507b1a2ddc9b4f41f544f55e524e821a4d65716e7d59",
+  "preview_sha256": "f30ecbce06b2804f407f2c652a798337a40be2709656a24d230610ed0803928b",
+  "summary_sha256": "55cb90b52629dc103413ea75ecee7aabdfffd7d9f430bc7be690db5a5be3c9bd",
+  "runtime": {
+    "TSHELL.EXE": {
+      "bytes": 68451,
+      "sha256": "908ef05cd69783631f1f6e6c0c43cbb7574d80f2a6600029641e6f784cce09fd"
+    },
+    "TSINPUT.DLL": {
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80",
+      "unchanged": true
+    }
+  },
+  "patch_targets": [
+    {
+      "path": "examples/TSHELL/TSHELL.C",
+      "before_sha256": "7afdf47980b483447c8a57e0ab223c8a4eae1613f5e881a4a9412cf818e039ca",
+      "after_sha256": "36e5e45de97c5b1888aa1e24e25ea856dd3a3e6e1f03ee28916b9221fcbd1c84"
+    },
+    {
+      "path": "examples/TSHELL/PROGMENU.C",
+      "before_sha256": "062ce0e653d3863a41bed1d15a7bb20a0051212bd0b097b298092c4cbe18deaf",
+      "after_sha256": "060b0250240d34a872837273dd975d8c2374150a74bb1a6a5db0527464b44e15"
+    },
+    {
+      "path": "examples/TSHELL/TSDATE.C",
+      "before_sha256": "511566292c6ffd951a976e78fc1205d0bc62c126b8495e961b1262fb4b3fb6d6",
+      "after_sha256": "011546c44b1209b1cf1f4e8aea47bbd64d06623b681e8dfb5fa7fdff8910ce6f"
+    },
+    {
+      "path": "examples/TSHELL/TSSAVCFG.C",
+      "before_sha256": "e0a5111958f415687f9148d45c3b4006165191ad5759f4df7be870e96ac32658",
+      "after_sha256": "b40122cfb771d834ccb2c29383091a7b22e6bbb84c1c430a147de7e79b06a72b"
+    },
+    {
+      "path": "examples/TSHELL/TSSVOPT.C",
+      "before_sha256": "3f329279b662379cccd5b2b6f765f99071eb98d5b04da3fb582c7f7ecb5359c2",
+      "after_sha256": "75fefd56216e08b4dc77b89d3b60ce228d80f3e0d9b4ab55894d7b0587bf6f0c"
+    },
+    {
+      "path": "examples/TSHELL/TESTS/RUNHOST.PY",
+      "before_sha256": "0e483b6bf35f897cc956fc74a2702746669721f47294892f200d9329c8b40551",
+      "after_sha256": "595b733918be481d99350ed8c7eb10f37c87dfbaf7ca26e66e91a16f078095ec"
+    }
+  ]
+}
