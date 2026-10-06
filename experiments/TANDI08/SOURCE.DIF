@@ -1,0 +1,689 @@
+--- a/SOURCE/BUILDING.TXT
++++ b/SOURCE/BUILDING.TXT
+@@ -0,0 +1,26 @@
++TANDI08 REPRODUCTION
++Use an isolated source directory and your licensed Microsoft C6/Windows inputs.
++Mount the toolchain as C: and SOURCE/src as D: in DOSBox-X. Run BUILD.BAT.
++The compile flags remain /G0 /Gw /AS. Check BUILD.OK, BUILD.LOG and TANDI.MAP.
++Run tools/AUDIT.PY with GNU objdump to audit the emitted NE code.
++Modern host tests need Python 3, GCC, Pillow and NumPy. They are not DOS inputs.
++Run tests/HOSTTEST.PY,tests/UIGUARD.PY,tests/DBTEST.PY,tests/CURTEST.PY,
++tests/QTEST06.PY,tests/AUDIT08.PY and tests/ROSTER.PY.
++Windows GCC builds run optimized mocks; sanitizer coverage is skipped there.
++On supported POSIX GCC builds the sound/UI mock sanitizer runs remain enabled.
++tests/ROSTER.PY accepts DAT path and output tag; it runs the actual C engine twice.
++Use build/TANDY.DAT CURRENT; build/AUDIT08.DAT AUDIT08; build/BASE128.DAT BASE128.
++tools/APPLY08.PY regenerates only the separate audited source/DAT after guards.
++Native tools/WINQA.PY requires these explicit environment variables:
++TANDI_PRIVATE=new private output parent; TANDI_WINDOWS=owned WINDOWS directory;
++TANDI_DOSBOX=emulator executable; TANDI_RESERVE=accepted RESERVE.COM;
++TANDI_TRIAL7=qualified TRIAL7 NEW driver directory; TANDI_LOCK=shared lock path.
++Every emulator collaborator must use the same lock, with a 60-second acquisition
++bound. Never remove another task's lock or kill another process.
++Run WINQA.PY 320x200x16 fresh-tag; repeat 640x200x2 and640x200x4.
++For bad-DAT: WINQA.PY 320x200x16 fresh-bad-tag bad.
++For saved-off startup: WINQA.PY 640x200x2 fresh-off-tag ok 0.
++The fourth argument selects initial sound preference 0 or 1.
++The fixture edits only private copies. Do not distribute the guest, OS, compiler,
++emulator or drivers through this standalone app packet. Captured Tandy app
++framebuffers and first-party code/data are the qualification evidence.
+--- a/SOURCE/QA08.TXT
++++ b/SOURCE/QA08.TXT
+@@ -0,0 +1,74 @@
++TANDI08 / APP 0.3.5 LOCAL FOLLOW-UP QUALIFICATION
++
++Runtime fixes
++Thinking/worry is painted before synchronous engine work, with no 3/5-tick wait.
++The 220 ms post-compute guard and held-key/double-click protections remain.
++The Continue/Restart/Exit cap screen appears once per game after rejection at 25.
++After Continue, later rejections directly advance. All 256 remain reachable.
++F3 reads/writes WIN.INI [TANDINATOR] Sound. Unsupported NO SOUND, user SOUND OFF
++and a failed-write SOUND UNSAVED label are distinct. Missing setting defaults on.
++The app version is 0.3.5; standard roster revision is 0.3.2, not a character edition.
++Sound timing/ownership/cleanup module bytes are unchanged; no hardware lease bypass.
++
++Fresh verification
++Microsoft C6 /G0 /Gw /AS builds and links. WndProc remains exported.
++Emitted NE audit finds no unsupported or FPU instructions.
++45 extracted production-handler checks pass; 59 sound scenarios pass.
++Windows GCC sanitizer coverage was skipped; optimized mocks ran successfully.
++53 compiler/DAT tests pass. Standard curation/historical-delta tests pass.
++Three fresh Windows 3.0 real-mode runs pass: 320x200x16,640x200x2,640x200x4.
++They use 8086_prefetch,640 KB conventional,25,000 uncalibrated cycles, no FPU/XMS/EMS/UMB.
++Native tests verify all 130 question strings and 256 names, repeated input, overlays,
++cap continuation through all 256 candidates with one gate, preference read/write,
++and Escape/system-close/Exit-button cleanup followed by return to DOS.
++The 640x200x2 run starts with saved Sound=0. Mock settings-write failure/default
++fallback and unsupported-vs-off labels are covered separately.
++Actual corruptDAT gives repair/Exit only and returns to DOS.
++Native art checks pass in all modes: exact source indices, bounded moving eyes,
++byte-exact partial/border/focus redraws, 180 exact captured expression samples.
++Blink, thinking/worry, talking, happy/wink animation remains. The old decorative
++three-frame thinking wait is intentionally absent. Atlas artwork remains unchanged.
++Fresh DOS installer copies all four files and refuses to overwrite a sentinel.
++The installer code is identical to TANDI07; original installer coverage is inherited
++as well. No CF, installed defaults or user runtime directories were written.
++
++Separate experimental data proposal3
++Standard RUN/TANDY.DAT and source STARTER.JSON remain the pinned reviewed TANDI07.
++SOURCE/data/AUDIT08.JSON and SOURCE/build/AUDIT08.DAT are a separate 258-cell,
++21-character source-backed proposal. 255 UNKNOWN fills, Peppa red 0->4, Poseidon
++conquest 0->UNKNOWN and Messi Asia 0->UNKNOWN. All 64 cited source URLs are retained
++in PROPOSE.JSON; exact old/new cell guards and regeneration are in APPLY08.PY.
++No original 128 character source cells or question strings/IDs changed in the variant.
++ENGINE.C and DB.C remain byte-identical. Both DATs run twice through the same
++actual C engine/loader; all 256 targets remain reachable and each repeat is exact.
++Original cohort: 0 cap hits, 0 first misses; mean Q 9.3359375 ->9.3203125.
++Added cohort: 70->65 cap hits, 23->19 first misses, mean Q 19.4921875 ->18.875.
++Whole roster: 233->237 first guesses correct. These measure matrix self-consistency,
++not factual accuracy. Five misses improve, but a new Messi->Ronaldo miss remains.
++See COMPARE.JSN for every changed target and explicit regressions.
++The added cohort still averages 98.3359375 UNKNOWN answers out of 130 (75.64%).
++The full matrix still needs broader sourced coverage; this variant is not ready
++for standard/canonical promotion. No arbitrary yes/no or new geography question
++was introduced to force metrics. Broad association and artist semantics remain
++explicitly deferred in AUDIT08.JSN. Opposing-known pairs means opposing polarity;
++known-vs-UNKNOWN differences can still affect scores.
++
++Limits and handoff
++Native runtime qualification uses only the standard DAT; the separate data variant
++has host loader/engine and exact-delta qualification. No human play study, physical
++Tandy calibration or whole-roster factual certification is claimed.
++No engine threshold, extra questions, undo, loss reveal or canonical promotion.
++The newly supplied Claude harness remains outside this packet's implementation;
++its further policy comparison is a separate parent review.
++The first private fixture attempt missed trailing spaces in [boot] and timed out;
++the parser was fixed. An earlier successful UI run had FPU default on; explicit
++FPU-off runs replaced it. A help sentence clipped at 320; it was shortened and all
++final native runs were repeated. An active shared-lock open failure blocked one
++installer attempt; after the parent confirmed release, the same lease retry passed.
++Only final qualified app captures are packaged. Failed private attempts are retained
++locally in task-7/native-results, and are not presented as successful runs.
++Current main 0c1403088e347f2ebb8f4aef212c6953e525c921 was read-only confirmed by parent.
++Local clone base fc10cdea57f5cafb163b457648013829d08ab4a7 differs only in release
++workflow/FLASHDISK documentation, per parent connector comparison. TANDI paths
++match the verified packet. Network fetch was blocked; no denied action was bypassed.
++This is a local tested packet for review before publication. No push/PR/release/CF.
+--- a/SOURCE/README.TXT
++++ b/SOURCE/README.TXT
+@@ -1,9 +1,19 @@
+-TANDINATOR 0.3.4 - USABILITY TRIAL
+-Think of a character in ROSTER.TXT, using its named version.
+-F1 Help. F2 Diagnostics (warns before showing candidate names). F3 Sound.
+-Escape closes an overlay first; Escape elsewhere or EXIT closes the app.
+-After a rejected guess at question 25, explicitly Continue guessing or Restart.
+-No candidate is removed by a guess cap; the data and inference engine are unchanged.
+-If TANDY.DAT cannot be read, exit, replace that file beside TANDI.EXE and restart.
+-INSTALL.BAT copies the EXE, DAT, roster and this README without overwriting an
+-existing installation. Start through your existing guarded WindowsXT launcher.
++TANDINATOR 0.3.5 - FOLLOW-UP UI TRIAL (TANDI08)
++Think of a character in ROSTER.TXT using its named character edition.
++App version is 0.3.5; the standard roster revision remains 0.3.2.
++F1 Help. F2 Diagnostics warns before candidate names. F3 Sound.
++F3 preference is stored in WIN.INI [TANDINATOR] Sound; answers are not saved.
++NO SOUND means unsupported hardware/mode/timer. SOUND OFF is your preference.
++SOUND UNSAVED means the preference could not be written; it still applies now.
++Escape closes an overlay first. Escape elsewhere or EXIT closes the app.
++Thinking is painted before prompt calculation, without a decorative timer wait.
++The 220 ms input guard, held-key and double-click protections are retained.
++After the first rejected guess at question 25, choose Continue, Restart or Exit.
++After Continue, later rejections directly advance; all candidates stay reachable.
++If TANDY.DAT cannot be read, exit, replace it beside TANDI.EXE and restart.
++INSTALL.BAT copies EXE,DAT,roster and README and refuses existing files.
++Use your existing guarded WindowsXT launcher; do not bypass its errors.
++This optional trial uses the reviewed standard 256-character/130-question DAT.
++The bounded AUDIT08 data proposal is separate in SOURCE/data and SOURCE/build.
++It is not promotion-ready. Read QA08.TXT and SOURCE/evidence/COMPARE.JSN.
++No engine threshold, extra questions, undo or canonical promotion is included.
+--- a/SOURCE/ROSTER.TXT
++++ b/SOURCE/ROSTER.TXT
+@@ -1,6 +1,6 @@
+-TANDINATOR 0.3.2 REVIEWED-WORDING ROSTER
++TANDINATOR ROSTER REVISION 0.3.2
+ ==============================
+-Think of the version named below. Film labels select that adaptation.
++Think of the character edition named below. Film labels select that adaptation.
+ Origin and debut questions refer to that version, not its earlier source.
+ + marks an entry added in 0.3; no names were added in this review.
+ The original 128 names retain their order. See data notes for versions.
+--- a/SOURCE/src/TANDI.C
++++ b/SOURCE/src/TANDI.C
+@@ -14,8 +14,8 @@
+ static HDC artdc;
+ static HBITMAP artbmp,oldart;
+ static DWORD artms;
+-static int animframe=-1,animticks,idleticks,pending,timerok,animredraws,computeticks;
+-static int animcapture,animserial,tickinside,rejectphase,testreset,testwait;
++static int animframe=-1,animticks,idleticks,pending,timerok,animredraws;
++static int animcapture,animserial,tickinside,rejectphase,testreset,testwait,capoffered,soundpref=1,soundsupported,settingssaved=1;
+ static DWORD inputready,animcost,computepeak;
+ static void animpaint(HDC dc);
+ static void capture(char *path);
+@@ -23,6 +23,16 @@
+ static void nextcompute(void);
+ static void next(void);
+ static int inputblocked(void){return busy||(LONG)(GetTickCount()-inputready)<0;}
++
++static char *soundfooter(void){
++    if(!soundsupported)return "F1 HELP F2 DEBUG NO SOUND";
++    if(!settingssaved)return "F1 HELP F2 DEBUG SOUND UNSAVED";
++    return soundpref?"F1 HELP F2 DEBUG F3 SOUND ON":"F1 HELP F2 DEBUG F3 SOUND OFF";
++}
++static void soundsettings(void){
++    soundpref=GetProfileInt("TANDINATOR","Sound",1)!=0;
++    TdSoundEnable(soundpref);
++}
+ 
+ static struct { BITMAPINFOHEADER h; RGBQUAD c[16]; } artinfo;
+ /* Driver logical RGB entries intentionally differ from RGBI display values.
+@@ -239,15 +249,15 @@
+             text(dc,8*sx,74,"4 Probably not  5 No");
+             text(dc,8*sx,90,"Tab changes focus. Enter chooses.");
+             text(dc,8*sx,103,"F2 diagnostics. F3 sound.");
+-            text(dc,8*sx,119,"Use the version named in the roster.");
++            text(dc,8*sx,119,"Use the edition named in ROSTER.TXT.");
+             text(dc,8*sx,132,"Unsure? Don't know is always fine.");
+-            text(dc,8*sx,145,"Esc closes help. Answers not saved.");
++            text(dc,8*sx,145,"App 0.3.5; roster revision 0.3.2.");
+         }
+     }else{
+         r.left=6*sx;r.right=102*sx;r.top=43;r.bottom=163;
+         if(RectVisible(dc,&r))mascot(dc);
+         if(state==0){
+-            ticket(dc,"Think of a roster character. Use its named version.",45,64);
++            ticket(dc,"Think of a roster character. Use its named edition.",45,64);
+         }else if(state==1){
+             ticket(dc,question,42,42);
+             number(temp,engine.turn+1);lstrcpy(line,"Q ");lstrcat(line,temp);
+@@ -279,7 +289,7 @@
+         if(i==focus){r=buttons[i];InflateRect(&r,-2,-2);DrawFocusRect(dc,&r);}
+     }
+     SetTextColor(dc,RGB(255,255,255));SetBkColor(dc,RGB(0,0,0));
+-    text(dc,8,186,busy?"CONSULTING...":(TdSoundEnabled()?"F1 HELP F2 DEBUG F3 SOUND ON":"F1 HELP F2 DEBUG F3 SOUND OFF"));EndPaint(w,&ps);
++    text(dc,8,186,busy?"CONSULTING...":soundfooter());EndPaint(w,&ps);
+ }
+ static void refresh(void){layout();InvalidateRect(window,0,FALSE);UpdateWindow(window);}
+ static void busyfooter(void){
+@@ -329,7 +339,7 @@
+     lstrcpy(debugline[9],"Emulator timing; not physical 8088.");
+ }
+ static void nextcompute(void){
+-    DWORD start;int previous=state,previousfocus=focus;TdSoundStop(window);busy=1;busyfooter();start=GetTickCount();
++    DWORD start;int previous=state,previousfocus=focus;if(!rejectphase)TdSoundStop(window);busy=1;busyfooter();start=GetTickCount();
+     if(eng_confident(&engine,&db)){state=2;db_name(&db,engine.best,name);}
+     else if(eng_choose(&engine,&db)<0){
+         state=(engine.best<0||db.error)?4:2;
+@@ -350,24 +360,18 @@
+     inputready=GetTickCount()+220;
+     if(state==2)TdSoundBegin(window,TD_SND_REVEAL,GetTickCount());
+ }
+-/* Responsive pre-compute phase; the unchanged engine itself is synchronous. */
++/* Paint the thinking expression before synchronous engine work.
++   No decorative timer delay; the post-compute input guard stays intact. */
+ static void next(void){
+-    if(!timerok){nextcompute();return;}
+-    busy=1;pending=1;animticks=0;idleticks=0;computeticks=rejectphase?5:3;busyfooter();
+-    animset(rejectphase?7:6);rejectphase=0;
++    busy=1;pending=0;animticks=0;idleticks=0;busyfooter();
++    animset(rejectphase?7:6);
++    nextcompute();rejectphase=0;
+ }
+ static void animtick(void){
+     static int reveal[5]={1,2,1,4,-1};
+     static int victory[5]={3,4,3,4,3};
+     if(!active||help||debug)return;
+     TdSoundTick(window,GetTickCount());
+-    if(pending){
+-        animticks++;
+-        if(animticks==1)animset(8);
+-        else if(animticks==2)animset(9);
+-        else if(animticks>=computeticks){TdSoundStop(window);nextcompute();}
+-        return;
+-    }
+     if(state==2||state==3){
+         if(animticks<10){animticks++;if(!(animticks%2))
+             animset(state==2?reveal[animticks/2-1]:victory[animticks/2-1]);}
+@@ -386,7 +390,7 @@
+     if(id==30&&state==5){next();return;}
+     if(id==10){
+         if(db.error){state=4;refresh();return;}
+-        TdSoundStop(window);eng_reset(&engine,&db);state=1;next();return;
++        TdSoundStop(window);eng_reset(&engine,&db);capoffered=0;state=1;next();return;
+     }
+     if(id>=0&&id<5&&state==1){
+         TdSoundStop(window);start=GetTickCount();
+@@ -397,9 +401,9 @@
+     if(state==2&&id==20){state=3;animticks=0;animframe=3;
+         refresh();inputready=GetTickCount()+220;TdSoundBegin(window,TD_SND_VICTORY,GetTickCount());return;}
+     if(state==2&&id==21){
+-        eng_reject(&engine,&db);
+-        if(engine.turn>=25){
+-            state=engine.best<0?4:5;busy=pending=0;animticks=0;animframe=-1;
++        TdSoundStop(window);eng_reject(&engine,&db);
++        if(engine.turn>=25&&!capoffered){
++            capoffered=1;state=engine.best<0?4:5;busy=pending=0;animticks=0;animframe=-1;
+             focus=0;refresh();inputready=GetTickCount()+220;
+             TdSoundBegin(window,TD_SND_WRONG,GetTickCount());return;
+         }
+@@ -408,12 +412,12 @@
+ }
+ /* Deterministic fixture setup; inputs under test still use production handlers. */
+ static void testprepare(void){
+-    busy=pending=0;inputready=0;eng_reset(&engine,&db);state=1;
++    busy=pending=0;inputready=0;capoffered=0;eng_reset(&engine,&db);state=1;
+     nextcompute();inputready=0;
+ }
+ static void soundtest(void){
+     WNDCLASS c;HWND peer;TDSNDSTAT before,after;int result;
+-    TdSoundStop(window);TdSoundGetStats(&before);
++    TdSoundStop(window);TdSoundEnable(1);TdSoundGetStats(&before);
+     c.style=0;c.lpfnWndProc=DefWindowProc;c.cbClsExtra=c.cbWndExtra=0;
+     c.hInstance=instance;c.hIcon=0;c.hCursor=0;c.hbrBackground=0;
+     c.lpszMenuName=0;c.lpszClassName="TandyStartupChime";
+@@ -433,7 +437,7 @@
+     result=TdSoundBegin(window,TD_SND_REVEAL,GetTickCount());TdSoundTick(window,GetTickCount());
+     SendMessage(window,WM_ACTIVATEAPP,0,0);TdSoundGetStats(&after);
+     metric("SOUND_FOCUS_RELEASE",result==TD_SND_STARTED&&!after.playing&&!FindWindow("TandyPSGTest",0));
+-    SendMessage(window,WM_ACTIVATEAPP,1,0);inputready=0;
++    SendMessage(window,WM_ACTIVATEAPP,1,0);TdSoundEnable(soundpref);inputready=0;
+ }
+ static void layouttest(void){
+     int i,j,bestq=0,bestn=0,maxq=0,maxn=0,turn,ok=1;char q[80],nm[40];
+@@ -479,7 +483,7 @@
+     SendMessage(window,WM_KEYDOWN,VK_RETURN,0);
+     turn=engine.turn;SendMessage(window,WM_KEYDOWN,VK_RETURN,0);
+     SendMessage(window,WM_LBUTTONDOWN,0,MAKELONG(buttons[0].left+2,buttons[0].top+2));
+-    metric("BUSY_INPUT_IGNORED",engine.turn==turn&&pending);
++    metric("BUSY_INPUT_IGNORED",engine.turn==turn&&!pending&&inputblocked());
+     busy=pending=0;state=2;focus=0;animticks=10;inputready=0;refresh();
+     SendMessage(window,WM_LBUTTONDOWN,0,MAKELONG(210*sx,130));
+     SendMessage(window,WM_LBUTTONDOWN,0,MAKELONG(210*sx,130));
+@@ -489,7 +493,7 @@
+     testprepare();
+ }
+ static void usabilitytest(void){
+-    int turn,leader,i;TDSNDSTAT soundstats;
++    int turn,leader,i,gates,savedpref;
+     testprepare();turn=engine.turn;
+     SendMessage(window,WM_KEYDOWN,VK_F1,0);
+     SendMessage(window,WM_KEYDOWN,VK_ESCAPE,0);
+@@ -505,10 +509,21 @@
+     leader=engine.best;turn=engine.turn;
+     for(i=0;i<6;i++)animtick();
+     metric("GATE_NO_AUTO_GUESS",state==5&&!pending&&engine.best==leader&&engine.turn==turn);
+-    inputready=0;act(30);nextcompute();
++    inputready=0;act(30);
+     metric("EXPLICIT_CONTINUE",state==2&&engine.turn==25&&engine.best==leader);
+-    inputready=0;act(21);inputready=0;act(10);
+-    metric("GATE_RESTART",state==1&&engine.turn==0);
++    inputready=0;act(21);metric("SECOND_REJECTION_NO_GATE",state==2&&capoffered);
++    inputready=0;act(10);
++    metric("GATE_RESTART",state==1&&engine.turn==0&&!capoffered);
++    savedpref=soundpref;SendMessage(window,WM_KEYDOWN,VK_F3,0);
++    metric("SOUND_PREF_SAVED",settingssaved&&(int)GetProfileInt("TANDINATOR","Sound",savedpref)==soundpref);
++    SendMessage(window,WM_KEYDOWN,VK_F3,0x40000000L);
++    metric("SOUND_HELD_KEY_IGNORED",soundpref!=savedpref);
++    SendMessage(window,WM_KEYDOWN,VK_F3,0);
++    testprepare();while(engine.turn<25){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}
++    nextcompute();i=0;gates=0;
++    while(state==2){inputready=0;act(21);i++;if(state==5){gates++;inputready=0;act(30);}}
++    metric("CAP_ALL_CANDIDATES_REACHABLE",state==4&&i==(int)db.nc&&gates==1);
++    metric("CAP_GATE_COUNT",gates);
+     busy=pending=0;TdSoundStop(window);db.error=1;state=4;refresh();
+     metric("BAD_DAT_EXIT_ONLY",nb==1&&ids[0]==99);capture("C:\\BADDB.BIN");
+     db.error=0;testprepare();
+@@ -662,7 +677,11 @@
+     }
+     if(msg==WM_KEYDOWN){
+         if(lp&0x40000000L)return 0;
+-        if(wp==VK_F3){TdSoundEnable(!TdSoundEnabled());refresh();return 0;}
++        if(wp==VK_F3){
++            soundpref=!soundpref;TdSoundEnable(soundpref);
++            settingssaved=WriteProfileString("TANDINATOR","Sound",soundpref?"1":"0");
++            refresh();return 0;
++        }
+         if(wp==VK_ESCAPE){
+             if(help||debug){help=debug=0;focus=0;refresh();inputready=GetTickCount()+220;return 0;}
+             SendMessage(w,WM_CLOSE,0,0);return 0;
+@@ -714,7 +733,9 @@
+     metric("FREE_SPACE_ART",GetFreeSpace(0));
+     layout();ShowWindow(window,show);UpdateWindow(window);
+     timerok=SetTimer(window,2,100,0)!=0;
+-    metric("ANIM_TIMER_READY",timerok);metric("SOUND_READY",TdSoundInit(window,inst,timerok));refresh();
++    metric("ANIM_TIMER_READY",timerok);
++    soundsupported=TdSoundInit(window,inst,timerok);
++    soundsettings();metric("SOUND_READY",soundsupported);metric("SOUND_PREF_LOADED",soundpref);refresh();
+     if(testmode)SetTimer(window,1,100,0);
+     while(GetMessage(&msg,0,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);}
+     TdSoundStop(window);KillTimer(window,2);return msg.wParam;
+--- a/SOURCE/tests/ANIMTEST.PY
++++ b/SOURCE/tests/ANIMTEST.PY
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Exact native animation face pixels in captured Windows framebuffer samples."""
++"""Exact native expression pixels; thinking is painted once before prompt computation."""
+ from pathlib import Path
+ import importlib.machinery,json
+ import numpy as np
+@@ -24,7 +24,7 @@
+ maps={16:list(range(16)),2:[0,0,0,1,0,0,0,1,0,0,1,1,1,1,1,1],4:[0,0,2,2,1,1,1,3,0,0,2,2,1,1,3,3]}
+ report=[]
+ for mode,(w,colors,_,_) in m.MODES.items():
+- run=P/'evidence'/('art-'+mode+'-use07b');samples=sorted((run/'guest').glob('AN*.BIN'))
++ run=P/'evidence'/('art-'+mode+'-ui08g');samples=sorted((run/'guest').glob('AN*.BIN'))
+  assert samples,mode
+  expected={name:np.repeat(np.array([maps[colors][palette[c]] for c in im.getdata()],dtype=np.uint8).reshape(18,24),w//320,axis=1) for name,im in faces.items()}
+  matches={};chosen={}
+@@ -33,6 +33,6 @@
+   names=[name for name,im in expected.items() if np.array_equal(im,actual)]
+   assert names,(mode,file.name)
+   name=names[0];matches[name]=matches.get(name,0)+1;chosen.setdefault(name,file.name)
+- assert all(x in matches for x in ['face blink','face talk1','face talk2','face happy','face wink','face think','face lookleft','face lookright']),matches
++ assert all(x in matches for x in ['face blink','face talk1','face talk2','face happy','face wink','face think']),matches
+  report.append({'mode':mode,'exact_native_face_samples':len(samples),'matches':matches,'representative_files':chosen})
+ print(json.dumps(report,indent=2));(P/'evidence/ANIMTEST.JSON').write_text(json.dumps(report,indent=2)+'\n')
+--- a/SOURCE/tests/AUDIT08.PY
++++ b/SOURCE/tests/AUDIT08.PY
+@@ -0,0 +1,29 @@
++"""Exact proposal delta and repeatable compiled variant; not factual proof."""
++from pathlib import Path
++import hashlib,json,importlib.machinery
++P=Path(__file__).resolve().parents[1]
++r=json.loads((P/'data/PROPOSE.JSON').read_text());a=json.loads((P/'data/STARTER.JSON').read_text());b=json.loads((P/'data/AUDIT08.JSON').read_text())
++assert hashlib.sha256((P/'data/STARTER.JSON').read_bytes()).hexdigest()==r['baseline']['source_sha256']
++assert hashlib.sha256((P/'build/TANDY.DAT').read_bytes()).hexdigest()==r['baseline']['dat_sha256']
++expected={}
++for cid,old,new,sid,qs in r['groups']:
++ for q in qs:
++  assert (cid,q) not in expected and sid in r['source_urls']
++  expected[cid,q]=(old,new)
++assert len(expected)==258 and len({c for c,q in expected})==21
++assert a['questions']==b['questions'] and [c['id'] for c in a['characters']]==[c['id'] for c in b['characters']]
++actual={}
++for ca,cb in zip(a['characters'],b['characters']):
++ assert ca['name']==cb['name']
++ for q,old in ca['answers'].items():
++  new=cb['answers'][q]
++  if new!=old:actual[ca['id'],q]=(old,new)
++assert actual==expected
++assert a['characters'][:128]==b['characters'][:128]
++db=importlib.machinery.SourceFileLoader('db',str(P/'tools/DBBUILD.PY')).load_module()
++blob=db.compile_source(db.load_source(P/'data/AUDIT08.JSON'))
++assert blob==(P/'build/AUDIT08.DAT').read_bytes()
++assert len(db.validate_binary(blob)['rows'])==256
++assert hashlib.sha256((P/'src/ENGINE.C').read_bytes()).hexdigest()=='970f9ff2c1750f71aa392d36e801067a1aca7709fbc64837dfaee4fa86ed4b99'
++assert hashlib.sha256((P/'src/DB.C').read_bytes()).hexdigest()=='e3f078fc5d9534b78b30e102390da98324dce345ec2a3261393a1ae0ebf4a788'
++print('PASS: exact 258-cell separate variant; default DAT, original 128 source cells, engine and loader unchanged')
+--- a/SOURCE/tests/HOSTTEST.PY
++++ b/SOURCE/tests/HOSTTEST.PY
+@@ -8,18 +8,21 @@
+ command = [cc, "-std=c89", "-Wall", "-Wextra", "-Werror", "-pedantic",
+            "-O2", "-DTDSOUND_HOST", "-I.", "-I../src", "-x", "c",
+            "../src/TDSOUND.C", "SNDTST.C",
+-           "-o", "sndtest"]
++           "-o", "sndtest.exe"]
+ subprocess.run(command, cwd=root, check=True)
+-subprocess.run([str(root / "sndtest")], cwd=root, check=True)
+-command[command.index("-O2")] = "-O1"
+-command[1:1] = ["-fsanitize=address,undefined", "-fno-omit-frame-pointer", "-g"]
+-command[-1] = "sndasan"
+-subprocess.run(command, cwd=root, check=True)
+-environment = dict(os.environ)
+-# This workspace runs under tracing; LeakSanitizer cannot attach here.
+-# The module uses no dynamic allocation. Address/undefined checks stay enabled.
+-environment["ASAN_OPTIONS"] = "detect_leaks=0"
+-subprocess.run([str(root / "sndasan")], cwd=root, env=environment, check=True)
++subprocess.run([str(root / "sndtest.exe")], cwd=root, check=True)
++if os.name != "nt":
++    command[command.index("-O2")] = "-O1"
++    command[1:1] = ["-fsanitize=address,undefined", "-fno-omit-frame-pointer", "-g"]
++    command[-1] = "sndasan"
++    subprocess.run(command, cwd=root, check=True)
++    environment = dict(os.environ)
++    # This workspace runs under tracing; LeakSanitizer cannot attach here.
++    # The module uses no dynamic allocation. Address/undefined checks stay enabled.
++    environment["ASAN_OPTIONS"] = "detect_leaks=0"
++    subprocess.run([str(root / "sndasan")], cwd=root, env=environment, check=True)
++else:
++    print("Windows compiler: sanitizer run skipped; optimized host suite passed")
+ for path in list(root.iterdir()) + list((root.parent / "src").iterdir()):
+     if path.suffix.upper() in {".C", ".H", ".TXT", ".PY"}:
+         data = path.read_bytes()
+--- a/SOURCE/tests/ROSTER.C
++++ b/SOURCE/tests/ROSTER.C
+@@ -0,0 +1,27 @@
++/* Truthful full-roster traversal using the shipped ENGINE.C and DB.C. */
++#include <stdio.h>
++#include "../src/TANDI.H"
++static TDB d;static ENGINE e;static U8 row[TD_ROW];
++int main(int argc,char **argv){
++    int c,q,guess,first,miss,cap,unknown,rejects,i;char name[40];
++    if(argc!=2||!db_open(&d,argv[1]))return 2;
++    printf("index,name,questions,cap,first_guess,first_miss,rejections,unknown\n");
++    for(c=0;c<(int)d.nc;c++){
++        if(!db_row(&d,c,row)||!db_name(&d,c,name))return 3;
++        unknown=0;for(i=0;i<(int)d.nq;i++)unknown+=db_value(row,i)==2;
++        eng_reset(&e,&d);first=-1;miss=cap=rejects=0;
++        for(i=0;i<(int)d.nc+(int)d.nq+1;i++){
++            guess=eng_confident(&e,&d);
++            if(!guess){q=eng_choose(&e,&d);guess=q<0;}
++            if(guess){
++                if(e.best<0)return 4;
++                if(first<0){first=e.best;miss=first!=c;cap=e.turn>=25;}
++                if(e.best==c)break;
++                eng_reject(&e,&d);rejects++;
++            }else if(!eng_answer(&e,&d,db_value(row,q)))return 5;
++        }
++        if(e.best!=c)return 6;
++        printf("%d,%s,%d,%d,%d,%d,%d,%d\n",c,name,e.turn,cap,first,miss,rejects,unknown);
++    }
++    db_close();return 0;
++}
+--- a/SOURCE/tests/ROSTER.PY
++++ b/SOURCE/tests/ROSTER.PY
+@@ -0,0 +1,19 @@
++"""Compile the actual engine/loader; record every target twice and compare."""
++from pathlib import Path
++import csv,hashlib,io,json,os,subprocess,sys
++P=Path(__file__).resolve().parents[1]
++cc=os.environ.get('CC','gcc')
++exe=P/'build/ROSTER.EXE'
++subprocess.run([cc,'-std=c89','-O2','-Wall','-Wextra','-pedantic','-I'+str(P/'src'),'-x','c',str(P/'tests/ROSTER.C'),str(P/'src/ENGINE.C'),str(P/'src/DB.C'),'-o',str(exe)],check=True)
++db=Path(sys.argv[1]) if len(sys.argv)>1 else P/'build/TANDY.DAT'
++tag=sys.argv[2] if len(sys.argv)>2 else 'CURRENT'
++runs=[subprocess.check_output([str(exe),str(db)]) for _ in range(2)]
++assert runs[0]==runs[1],'Nondeterministic traversal'
++rows=list(csv.DictReader(io.StringIO(runs[0].decode())))
++def cohort(rs):
++ return {'characters':len(rs),'cap_hits':sum(int(r['cap']) for r in rs),'mean_questions':sum(int(r['questions']) for r in rs)/len(rs),'first_guess_misses':sum(int(r['first_miss']) for r in rs),'mean_unknown':sum(int(r['unknown']) for r in rs)/len(rs),'unknown_range':[min(int(r['unknown']) for r in rs),max(int(r['unknown']) for r in rs)],'total_rejections':sum(int(r['rejections']) for r in rs)}
++report={'database_sha256':hashlib.sha256(db.read_bytes()).hexdigest(),'engine_sha256':hashlib.sha256((P/'src/ENGINE.C').read_bytes()).hexdigest(),'loader_sha256':hashlib.sha256((P/'src/DB.C').read_bytes()).hexdigest(),'repeat_exact':True,'truth_policy':'Use DAT value verbatim; 2 remains unknown. Confirm only intended target; reject every other guess.','all':cohort(rows),'original_128':cohort(rows[:128]),'added':cohort(rows[128:]) if len(rows)>128 else None}
++(P/'evidence'/('ROSTER-'+tag+'.CSV')).write_bytes(runs[0])
++put=lambda p,s:p.write_bytes(s.replace('\n','\r\n').encode('ascii'))
++put(P/'evidence'/('ROSTER-'+tag+'.JSN'),json.dumps(report,indent=2)+'\n')
++print(json.dumps(report,indent=2))
+--- a/SOURCE/tests/UIGUARD.PY
++++ b/SOURCE/tests/UIGUARD.PY
+@@ -3,9 +3,9 @@
+ from pathlib import Path
+ import subprocess,os
+ P=Path(__file__).resolve().parents[1]
+-PRE='\n#include <stdio.h>\n#include <string.h>\n#include "TANDI.H"\ntypedef long LONG; typedef unsigned long DWORD; typedef unsigned UINT,WORD; typedef int HWND;\ntypedef struct {int left,top,right,bottom;} RECT;\n#define FAR\n#define PASCAL\n#define FALSE 0\n#define LOWORD(x) ((x)&65535)\n#define HIWORD(x) (((x)>>16)&65535)\n#define VK_ESCAPE 27\n#define VK_F1 112\n#define VK_F2 113\n#define VK_TAB 9\n#define VK_SHIFT 16\n#define VK_RETURN 13\n#define VK_SPACE 32\n#define WM_PAINT 1\n#define WM_TIMER 2\n#define WM_ACTIVATEAPP 3\n#define WM_MOUSEMOVE 4\n#define WM_LBUTTONDOWN 5\n#define WM_KEYDOWN 6\n#define WM_DESTROY 7\n#define WM_CLOSE 8\n#define lstrcpy strcpy\nstatic TDB db; static ENGINE engine;\nstatic int window=1,screenw=320,screenh=200,sx=1,state,focus,debug,help,busy,testmode,active,testinside,artblits,logfile=-1,closed;\nstatic RECT buttons[6]; static int ids[6],nb;static char labels[6][24],question[80],name[40];\nstatic char *answers[5]={"YES","PROBABLY","DON\'T KNOW","PROBABLY NOT","NO"};\nstatic DWORD answerms,selectms;\nstatic int panelleft(void){return 104*sx;}\nstatic void layout(void);\nstatic void refresh(void){layout();}\nstatic void questionrefresh(int f){layout();}\nstatic void busyfooter(void){}\nstatic DWORD now; static DWORD GetTickCount(void){return now;}\nstatic void metric(char *k,long v){}\nstatic void InvalidateRect(HWND w,RECT *r,int b){}\nstatic void UpdateWindow(HWND w){}\nstatic int GetKeyState(int k){return 0;}\nstatic void SendMessage(HWND w,UINT m,WORD p,LONG l){if(m==WM_CLOSE)closed++;}\nstatic void draw(HWND w){}\nstatic void testtick(void){}\nstatic void look(int x,int y){}\nstatic void debugupdate(void){}\nstatic void artfree(void){}\nstatic void _lclose(int f){}\nstatic void PostQuitMessage(int n){}\nstatic LONG DefWindowProc(HWND w,UINT m,WORD p,LONG l){return 0;}\n\n#define VK_F3 114\n#define WM_KILLFOCUS 9\n#define WM_ACTIVATE 10\n#define WM_QUERYENDSESSION 11\n#define WM_ENDSESSION 12\n#define TD_SND_REVEAL 1\n#define TD_SND_VICTORY 2\n#define TD_SND_WRONG 3\nstatic int animframe=-1,animticks,idleticks,pending,timerok=1,animredraws,computeticks;\nstatic int tickinside,rejectphase,soundenabled=1,soundstops;\nstatic DWORD inputready,computepeak;\nstatic void animset(int f){animframe=f;}\nstatic void KillTimer(int w,int t){}\nstatic int TdSoundBegin(int w,int c,DWORD t){return 1;}\nstatic void TdSoundStop(int w){soundstops++;}\nstatic void TdSoundTick(int w,DWORD t){}\nstatic int TdSoundEnabled(void){return soundenabled;}\nstatic void TdSoundEnable(int v){soundenabled=v;}\n'
+-POST='\nstatic int fails=0,checks=0;\n#define CHECK(x) do{checks++;if(!(x)){fails++;printf("FAIL %d %s\\n",__LINE__,#x);}}while(0)\nstatic void tick(void){now+=110;WndProc(1,WM_TIMER,2,0);}\nstatic void ready(void){while(pending)tick();now+=230;}\nstatic void reset(void){busy=pending=0;inputready=0;active=1;eng_reset(&engine,&db);state=1;next();ready();}\nint main(int argc,char**argv){int turn,old,stops;\n if(argc!=2||!db_open(&db,argv[1]))return 2;\n reset();turn=engine.turn;WndProc(1,WM_KEYDOWN,VK_RETURN,1L<<30);CHECK(engine.turn==turn);\n WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(engine.turn==turn+1&&pending);\n turn=engine.turn;WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(engine.turn==turn);\n WndProc(1,WM_LBUTTONDOWN,0,210|(95L<<16));CHECK(engine.turn==turn);\n ready();CHECK(state==1&&!busy&&!pending);\n reset();while(engine.turn<24){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}next();ready();\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(pending&&engine.turn==25);\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(pending);\n while(pending)tick();old=engine.best;CHECK(state==2);\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!engine.rejected[old]);\n now+=230;WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==3);\n WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==3);\n now+=230;WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==1&&pending);\n stops=soundstops;WndProc(1,WM_ACTIVATEAPP,0,0);CHECK(soundstops>stops);turn=animticks;tick();CHECK(animticks==turn);\n WndProc(1,WM_ACTIVATEAPP,1,0);ready();CHECK(!pending);\n stops=soundstops;WndProc(1,WM_KILLFOCUS,0,0);CHECK(soundstops>stops);\n stops=soundstops;CHECK(WndProc(1,WM_QUERYENDSESSION,0,0)==1);CHECK(soundstops>stops);\n timerok=0;reset();CHECK(!busy&&!pending&&state==1);\n timerok=1;reset();WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(pending);closed=0;\n WndProc(1,WM_LBUTTONDOWN,0,280|(189L<<16));CHECK(closed==1);\n\n reset();turn=engine.turn;closed=0;\n WndProc(1,WM_KEYDOWN,VK_F1,0);CHECK(help==1);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!help&&!debug&&!closed&&engine.turn==turn);\n now+=230;WndProc(1,WM_KEYDOWN,VK_F2,0);CHECK(debug==1&&nb==3&&ids[0]==91);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!debug&&!closed);\n now+=230;WndProc(1,WM_KEYDOWN,VK_F2,0);act(91);CHECK(debug==2);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!debug&&!closed);\n reset();while(engine.turn<25){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}nextcompute();now+=230;old=engine.best;\n act(21);CHECK(state==5&&!pending&&engine.rejected[old]);turn=engine.turn;old=engine.best;\n tick();tick();tick();CHECK(state==5&&!pending&&engine.turn==turn&&engine.best==old);\n now+=230;WndProc(1,WM_KEYDOWN,\'N\',0);CHECK(state==5&&!engine.rejected[old]);\n act(30);CHECK(pending&&state==5);ready();CHECK(state==2&&engine.turn==25&&engine.best==old);\n act(21);CHECK(state==5);now+=230;act(10);ready();CHECK(state==1&&engine.turn==0&&!engine.rejected[old]);\n db.error=1;state=4;layout();CHECK(nb==1&&ids[0]==99);db.error=0;\n /* No cap or lost candidate: every remaining guess remains deliberately reachable. */\n reset();while(engine.turn<25){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}nextcompute();now+=230;turn=0;\n while(state==2){act(21);turn++;if(state==5){now+=230;act(30);ready();}}\n CHECK(state==4&&turn==db.nc&&engine.turn==25);\n\n printf("UI guards/lifecycle: %d checks, %d failures\\n",checks,fails);db_close();return fails!=0;\n}\n'
+-FUNCS=['static int inputblocked(void){', 'static void addbutton(', 'static void layout(void){', 'static void nextcompute(void){', 'static void next(void){', 'static void animtick(void){', 'static void act(int id){', 'LONG FAR PASCAL WndProc(']
++PRE='\n#include <stdio.h>\n#include <string.h>\n#include "TANDI.H"\ntypedef long LONG; typedef unsigned long DWORD; typedef unsigned UINT,WORD; typedef int HWND;\ntypedef struct {int left,top,right,bottom;} RECT;\n#define FAR\n#define PASCAL\n#define FALSE 0\n#define LOWORD(x) ((x)&65535)\n#define HIWORD(x) (((x)>>16)&65535)\n#define VK_ESCAPE 27\n#define VK_F1 112\n#define VK_F2 113\n#define VK_TAB 9\n#define VK_SHIFT 16\n#define VK_RETURN 13\n#define VK_SPACE 32\n#define WM_PAINT 1\n#define WM_TIMER 2\n#define WM_ACTIVATEAPP 3\n#define WM_MOUSEMOVE 4\n#define WM_LBUTTONDOWN 5\n#define WM_KEYDOWN 6\n#define WM_DESTROY 7\n#define WM_CLOSE 8\n#define lstrcpy strcpy\nstatic TDB db; static ENGINE engine;\nstatic int window=1,screenw=320,screenh=200,sx=1,state,focus,debug,help,busy,testmode,active,testinside,artblits,logfile=-1,closed;\nstatic RECT buttons[6]; static int ids[6],nb;static char labels[6][24],question[80],name[40];\nstatic char *answers[5]={"YES","PROBABLY","DON\'T KNOW","PROBABLY NOT","NO"};\nstatic DWORD answerms,selectms;\nstatic int panelleft(void){return 104*sx;}\nstatic void layout(void);\nstatic void refresh(void){layout();}\nstatic void questionrefresh(int f){layout();}\nstatic void busyfooter(void){}\nstatic DWORD now; static DWORD GetTickCount(void){return now;}\nstatic void metric(char *k,long v){}\nstatic void InvalidateRect(HWND w,RECT *r,int b){}\nstatic void UpdateWindow(HWND w){}\nstatic int GetKeyState(int k){return 0;}\nstatic void SendMessage(HWND w,UINT m,WORD p,LONG l){if(m==WM_CLOSE)closed++;}\nstatic void draw(HWND w){}\nstatic void testtick(void){}\nstatic void look(int x,int y){}\nstatic void debugupdate(void){}\nstatic void artfree(void){}\nstatic void _lclose(int f){}\nstatic void PostQuitMessage(int n){}\nstatic LONG DefWindowProc(HWND w,UINT m,WORD p,LONG l){return 0;}\n\n#define VK_F3 114\n#define WM_KILLFOCUS 9\n#define WM_ACTIVATE 10\n#define WM_QUERYENDSESSION 11\n#define WM_ENDSESSION 12\n#define TD_SND_REVEAL 1\n#define TD_SND_VICTORY 2\n#define TD_SND_WRONG 3\nstatic int animframe=-1,animticks,idleticks,pending,timerok=1,animredraws,computeticks;\nstatic int tickinside,rejectphase,capoffered,soundpref=1,soundsupported=1,settingssaved=1,soundenabled=1,soundstops;\nstatic DWORD inputready,computepeak;\nstatic void animset(int f){animframe=f;}\nstatic void KillTimer(int w,int t){}\nstatic int TdSoundBegin(int w,int c,DWORD t){return 1;}\nstatic void TdSoundStop(int w){soundstops++;}\nstatic void TdSoundTick(int w,DWORD t){}\nstatic int TdSoundEnabled(void){return soundenabled;}\nstatic void TdSoundEnable(int v){soundenabled=v;}\nstatic int profilevalue=1,profileok=1;\nstatic int GetProfileInt(char*a,char*b,int d){return profileok?profilevalue:d;}\nstatic int WriteProfileString(char*a,char*b,char*c){if(profileok)profilevalue=c[0]==49;return profileok;}\n'
++POST='\nstatic int fails=0,checks=0;\n#define CHECK(x) do{checks++;if(!(x)){fails++;printf("FAIL %d %s\\n",__LINE__,#x);}}while(0)\nstatic void tick(void){now+=110;WndProc(1,WM_TIMER,2,0);}\nstatic void ready(void){while(pending)tick();now+=230;}\nstatic void reset(void){busy=pending=0;inputready=0;active=1;eng_reset(&engine,&db);capoffered=0;state=1;next();ready();}\nint main(int argc,char**argv){int turn,old,stops;\n if(argc!=2||!db_open(&db,argv[1]))return 2;\n reset();turn=engine.turn;WndProc(1,WM_KEYDOWN,VK_RETURN,1L<<30);CHECK(engine.turn==turn);\n WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(engine.turn==turn+1&&!pending&&!busy);\n turn=engine.turn;WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(engine.turn==turn);\n WndProc(1,WM_LBUTTONDOWN,0,210|(95L<<16));CHECK(engine.turn==turn);\n ready();CHECK(state==1&&!busy&&!pending);\n reset();while(engine.turn<24){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}next();ready();\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!pending&&engine.turn==25);\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!pending);\n while(pending)tick();old=engine.best;CHECK(state==2);\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!engine.rejected[old]);\n now+=230;WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==3);\n WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==3);\n now+=230;WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==1&&!pending);\n stops=soundstops;WndProc(1,WM_ACTIVATEAPP,0,0);CHECK(soundstops>stops);turn=animticks;tick();CHECK(animticks==turn);\n WndProc(1,WM_ACTIVATEAPP,1,0);ready();CHECK(!pending);\n stops=soundstops;WndProc(1,WM_KILLFOCUS,0,0);CHECK(soundstops>stops);\n stops=soundstops;CHECK(WndProc(1,WM_QUERYENDSESSION,0,0)==1);CHECK(soundstops>stops);\n timerok=0;reset();CHECK(!busy&&!pending&&state==1);\n timerok=1;reset();WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(!pending);closed=0;\n WndProc(1,WM_LBUTTONDOWN,0,280|(189L<<16));CHECK(closed==1);\n\n reset();turn=engine.turn;closed=0;\n WndProc(1,WM_KEYDOWN,VK_F1,0);CHECK(help==1);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!help&&!debug&&!closed&&engine.turn==turn);\n now+=230;WndProc(1,WM_KEYDOWN,VK_F2,0);CHECK(debug==1&&nb==3&&ids[0]==91);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!debug&&!closed);\n now+=230;WndProc(1,WM_KEYDOWN,VK_F2,0);act(91);CHECK(debug==2);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!debug&&!closed);\n reset();while(engine.turn<25){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}nextcompute();now+=230;old=engine.best;\n act(21);CHECK(state==5&&!pending&&engine.rejected[old]);turn=engine.turn;old=engine.best;\n tick();tick();tick();CHECK(state==5&&!pending&&engine.turn==turn&&engine.best==old);\n now+=230;WndProc(1,WM_KEYDOWN,\'N\',0);CHECK(state==5&&!engine.rejected[old]);\n act(30);CHECK(!pending&&state==2);ready();CHECK(state==2&&engine.turn==25&&engine.best==old);\n act(21);CHECK(state==2&&capoffered);now+=230;act(10);ready();CHECK(state==1&&engine.turn==0&&!engine.rejected[old]);\n db.error=1;state=4;layout();CHECK(nb==1&&ids[0]==99);db.error=0;\n /* No cap or lost candidate: every remaining guess remains deliberately reachable. */\n reset();while(engine.turn<25){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}nextcompute();now+=230;turn=0;\n old=0;while(state==2){act(21);turn++;if(state==5){old++;now+=230;act(30);}ready();}CHECK(old==1);\n CHECK(state==4&&turn==db.nc&&engine.turn==25);\n\n reset();soundpref=1;profileok=1;WndProc(1,WM_KEYDOWN,VK_F3,0);CHECK(!soundpref&&!soundenabled&&profilevalue==0&&settingssaved);\n WndProc(1,WM_KEYDOWN,VK_F3,1L<<30);CHECK(!soundpref);\n profileok=0;WndProc(1,WM_KEYDOWN,VK_F3,0);CHECK(soundpref&&soundenabled&&!settingssaved&&profilevalue==0);\n profileok=1;profilevalue=0;soundsettings();CHECK(!soundpref&&!soundenabled);\n soundsupported=0;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG NO SOUND"));\n soundsupported=1;settingssaved=1;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG F3 SOUND OFF"));\n profileok=0;soundsettings();CHECK(soundpref&&soundenabled);\n settingssaved=0;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG SOUND UNSAVED"));\n printf("UI guards/lifecycle: %d checks, %d failures\\n",checks,fails);db_close();return fails!=0;\n}\n'
++FUNCS=['static int inputblocked(void){', 'static char *soundfooter(void){', 'static void soundsettings(void){', 'static void addbutton(', 'static void layout(void){', 'static void nextcompute(void){', 'static void next(void){', 'static void animtick(void){', 'static void act(int id){', 'LONG FAR PASCAL WndProc(']
+ def function(text,signature):
+  start=text.index(signature);p=text.index('{',start);depth=1;i=p+1
+  while depth:
+@@ -16,8 +16,8 @@
+ source=(P/'src/TANDI.C').read_text()
+ assert 'c.style=CS_DBLCLKS;c.lpfnWndProc=WndProc' in source
+ (P/'build').mkdir(exist_ok=True)
+-generated=P/'build/UIGUARD.C';exe=P/'build/UIGUARD'
++generated=P/'build/UIGUARD.C';exe=P/'build/UIGUARD.EXE'
+ generated.write_text(PRE+'\n'.join(function(source,f) for f in FUNCS)+POST)
+-subprocess.run(['gcc','-std=c89','-O1','-w','-fsanitize=address,undefined','-I'+str(P/'src'),'-x','c',str(generated),str(P/'src/ENGINE.C'),str(P/'src/DB.C'),'-o',str(exe)],check=True)
++subprocess.run([os.environ.get('CC','gcc'),'-std=c89','-O1','-w']+([] if os.name=='nt' else ['-fsanitize=address,undefined'])+['-I'+str(P/'src'),'-x','c',str(generated),str(P/'src/ENGINE.C'),str(P/'src/DB.C'),'-o',str(exe)],check=True)
+ r=subprocess.run([str(exe),str(P/'build/TANDY.DAT')],env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0'),capture_output=True,text=True,check=True)
+ print(r.stdout,end='');(P/'evidence/UIGUARD.TXT').write_text(r.stdout)
+--- a/SOURCE/tools/APPLY08.PY
++++ b/SOURCE/tools/APPLY08.PY
+@@ -0,0 +1,28 @@
++from pathlib import Path
++import hashlib,json,importlib.machinery
++P=Path(__file__).resolve().parents[1]
++proposal=json.loads((P/'data/PROPOSE.JSON').read_text())
++baseline=proposal['baseline'];groups=proposal['groups']
++def put(p,s):p.write_bytes(s.replace('\n','\r\n').encode('ascii'))
++source=P/'data/STARTER.JSON'
++assert hashlib.sha256(source.read_bytes()).hexdigest()==baseline['source_sha256']
++assert hashlib.sha256((P/'build/TANDY.DAT').read_bytes()).hexdigest()==baseline['dat_sha256']
++out=json.loads(source.read_text());chars={c['id']:c for c in out['characters']};qids={q['id'] for q in out['questions']};seen=set();changes=[]
++for cid,old,new,sid,qs in groups:
++    assert cid in chars and sid in proposal['source_urls']
++    for q in qs:
++        assert q in qids and (cid,q) not in seen and chars[cid]['answers'][q]==old,(cid,q)
++        seen.add((cid,q));chars[cid]['answers'][q]=new
++        changes.append({'character':cid,'question':q,'old':old,'new':new,'source_id':sid,'url':proposal['source_urls'][sid]})
++assert len(changes)==258 and len({c['character'] for c in changes})==21
++assert sum(c['old']==2 for c in changes)==255
++out['portrayal_policy']+=' Separate TANDI08 proposal3 experimental variant: 258 bounded source-backed changes; not promotion-ready. Some prior UNKNOWN cells are filled only by the explicit proposal.'
++put(P/'data/AUDIT08.JSON',json.dumps(out,indent=2)+'\n')
++db=importlib.machinery.SourceFileLoader('db',str(P/'tools/DBBUILD.PY')).load_module()
++loaded=db.load_source(P/'data/AUDIT08.JSON');blob=db.compile_source(loaded);db.validate_binary(blob)
++(P/'build/AUDIT08.DAT').write_bytes(blob)
++report={'status':'separate_experimental_variant','changes':changes,'changed_cells':len(changes),'characters':21,'unknown_fills':255,'baseline':baseline,'source_sha256':hashlib.sha256((P/'data/AUDIT08.JSON').read_bytes()).hexdigest(),'dat_sha256':hashlib.sha256(blob).hexdigest(),'deferred_semantic_issues':['artist means author or visual artist, not musician; Beethoven artist cell is deferred','Messi Asia association reset to UNKNOWN: Saudi Tourism ambassador campaign makes broad association ambiguous; no fabricated NO',
++        'A precise birthplace question is a future option only; current questions remain unchanged',
++        'Zeus water remains ambiguous because question includes water broadly; no invented NO','Poseidon conquest reset to UNKNOWN; broad territorial ambition is not established','Named adaptations and visual clothing refer to the supplied familiar portrayal','Missing broad factual coverage remains; performance is self-consistency, not accuracy'],'publication':'Default/UI TANDY.DAT remains unchanged; no canonical promotion.'}
++put(P/'data/AUDIT08.JSN',json.dumps(report,indent=2)+'\n')
++print(json.dumps({k:v for k,v in report.items() if k!='changes'},indent=2))
+--- a/SOURCE/tools/EMULEASE.PY
++++ b/SOURCE/tools/EMULEASE.PY
+@@ -0,0 +1,26 @@
++from contextlib import contextmanager
++from pathlib import Path
++import os,time
++if os.name=="nt":import msvcrt
++else:import fcntl
++LOCK=Path(os.environ['TANDI_LOCK'])
++@contextmanager
++def lease():
++    with LOCK.open('a+b') as f:
++        f.seek(0,2)
++        if f.tell()==0:f.write(b'0');f.flush()
++        deadline=time.monotonic()+60
++        while True:
++            f.seek(0)
++            try:
++                if os.name=="nt":msvcrt.locking(f.fileno(),msvcrt.LK_NBLCK,1)
++                else:fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB)
++                break
++            except OSError:
++                if time.monotonic()>=deadline:raise TimeoutError('Shared emulator lock busy after 60 seconds')
++                time.sleep(1)
++        try:yield
++        finally:
++            f.seek(0)
++            if os.name=="nt":msvcrt.locking(f.fileno(),msvcrt.LK_UNLCK,1)
++            else:fcntl.flock(f,fcntl.LOCK_UN)
+--- a/SOURCE/tools/WINQA.PY
++++ b/SOURCE/tools/WINQA.PY
+@@ -0,0 +1,97 @@
++"""Private Windows fixture runner: owned media stays outside deliverables."""
++from pathlib import Path
++import hashlib,json,shutil,subprocess,sys,time,os
++import importlib.machinery
++lease=importlib.machinery.SourceFileLoader("emulease",str(Path(__file__).with_name("EMULEASE.PY"))).load_module().lease
++P=Path(__file__).resolve().parents[1]
++root=Path(os.environ['TANDI_PRIVATE'])
++MODES={'320x200x16':'TR53216.DRV','640x200x2':'TR56402.DRV','640x200x4':'TR56404.DRV'}
++def ini(path,section,key,value):
++    out=[];active=False;found=False
++    for line in path.read_text().splitlines():
++        if line.strip().startswith('['):
++            if active and not found:out.append(key+'='+value);found=True
++            active=line.strip().lower()=='['+section.lower()+']'
++        if active and '=' in line and line.split('=',1)[0].strip().lower()==key.lower():
++            out.append(key+'='+value);found=True
++        else:out.append(line)
++    if not found:
++        if not active:out.append('['+section+']')
++        out.append(key+'='+value)
++    path.write_bytes(('\r\n'.join(out)+'\r\n').encode('ascii'))
++def run(mode,tag,negative=False,sound=1):
++    dest=root/'native-results'/(mode+'-'+tag)
++    dest.mkdir(parents=True,exist_ok=False)
++    guest=dest/'guest';guest.mkdir();shutil.copytree(Path(os.environ['TANDI_WINDOWS']),guest/'WINDOWS')
++    shutil.copyfile(Path(os.environ['TANDI_RESERVE']),guest/'RESERVE.COM')
++    shutil.copyfile(Path(os.environ['TANDI_TRIAL7'])/MODES[mode],guest/'WINDOWS/SYSTEM/TRIAL.DRV')
++    shutil.copyfile(P/'src/TANDI.EXE',guest/'WINDOWS/TANDI.EXE')
++    data=bytearray((P/'build/TANDY.DAT').read_bytes())
++    if negative:data[-1]^=1
++    (guest/'WINDOWS/TANDY.DAT').write_bytes(data)
++    for k,v in [('display.drv','TRIAL.DRV'),('shell','TANDI.EXE'),('fonts.fon','CGASYS.FON'),('fixedfon.fon','CGAFIX.FON'),('oemfonts.fon','CGAOEM.FON')]:ini(guest/'WINDOWS/SYSTEM.INI','boot',k,v)
++    for k,v in [('Test','1'),('TestTarget','Mario'),('TestExit',str(list(MODES).index(mode)+1)),('Sound',str(sound))]:ini(guest/'WINDOWS/WIN.INI','TANDINATOR',k,v)
++    for k in ['run','load']:ini(guest/'WINDOWS/WIN.INI','windows',k,'')
++    start='''@ECHO OFF
++RESERVE > RESERVE.TXT
++IF ERRORLEVEL 1 GOTO BAD
++SET PATH=C:\\WINDOWS;Z:\\
++SET TEMP=C:\\WINDOWS\\TEMP
++CD WINDOWS
++WIN /R
++CD \\
++ECHO RETURNED > RETURNED.TXT
++GOTO DONE
++:BAD
++ECHO RESERVE_FAILED > RETURNED.TXT
++:DONE
++EXIT
++'''
++    (guest/'START.BAT').write_bytes(start.replace('\n','\r\n').encode())
++    conf=f'''[sdl]
++fullscreen=false
++output=surface
++[dosbox]
++machine=tandy
++memsize=1
++captures={dest/'captures'}
++[cpu]
++core=normal
++cputype=8086_prefetch
++cycles=fixed 25000
++fpu=false
++[dos]
++xms=false
++ems=false
++umb=false
++[mixer]
++nosound=true
++[speaker]
++tandy=on
++[autoexec]
++@echo off
++mount C "{guest}"
++C:
++START.BAT
++'''
++    (dest/'RUN.CNF').write_bytes(conf.replace('\n','\r\n').encode())
++    si=None;flags=0
++    if os.name=='nt':
++        si=subprocess.STARTUPINFO();si.dwFlags|=subprocess.STARTF_USESHOWWINDOW;si.wShowWindow=0;flags=subprocess.CREATE_NO_WINDOW
++    started=time.monotonic()
++    with lease(),(dest/'HOST.LOG').open('w') as out:
++        r=subprocess.run([os.environ['TANDI_DOSBOX'],'-nopromptfolder','-conf',str(dest/'RUN.CNF')],stdout=out,stderr=subprocess.STDOUT,timeout=180,startupinfo=si,creationflags=flags)
++    log=(guest/'TANDI.LOG').read_text() if (guest/'TANDI.LOG').exists() else ''
++    sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
++    result={'mode':mode,'tag':tag,'negative':negative,'sound_pref':sound,'returncode':r.returncode,'seconds':time.monotonic()-started,'log':log,'exe_sha256':sha(P/'src/TANDI.EXE'),'database_sha256':sha(guest/'WINDOWS/TANDY.DAT'),'driver_sha256':sha(guest/'WINDOWS/SYSTEM/TRIAL.DRV'),'returned':(guest/'RETURNED.TXT').read_text() if (guest/'RETURNED.TXT').exists() else None}
++    (dest/'RESULT.JSN').write_text(json.dumps(result,indent=2))
++    print(json.dumps({k:v for k,v in result.items() if k!='log'},indent=2),flush=True)
++    assert r.returncode==0 and result['returned'] and 'RETURNED' in result['returned']
++    assert 'COMPLETE=1' in log
++    if negative:assert 'APP_ERROR=1' in log and 'BAD_DAT_EXIT_ONLY=1' in log
++    else:
++        for key in ['TARGET_SUCCESS','BUSY_INPUT_IGNORED','DOUBLE_CLICK_STAYS_SUCCESS','HELD_KEY_IGNORED','SECOND_REJECTION_NO_GATE','CAP_ALL_CANDIDATES_REACHABLE','SOUND_PREF_SAVED','SOUND_HELD_KEY_IGNORED','GATE_RESTART']:
++            assert key+'=1' in log,key
++        assert 'CAP_GATE_COUNT=1' in log and 'ERRORS=0' in log and 'WINFLAGS=64' in log
++    return result
++if __name__=='__main__':run(sys.argv[1],sys.argv[2],len(sys.argv)>3 and sys.argv[3]=='bad',int(sys.argv[4]) if len(sys.argv)>4 else 1)

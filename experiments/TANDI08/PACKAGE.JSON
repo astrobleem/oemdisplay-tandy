@@ -1,0 +1,21 @@
+{
+  "packet": "TANDI08",
+  "app_version": "0.3.5",
+  "standard_roster_revision": "0.3.2",
+  "status": "local tested UI packet; separate bounded experimental data",
+  "zip_sha256": "dd34d2948f7f9270072d4d418aacd9c120b5b788846741ec432cf4744377c2d2",
+  "zip_bytes": 2182908,
+  "files": 417,
+  "exe_sha256": "4b7a409e52d306c17b1927ae0233e763f7a03cbd8840ecd5c93cdcb1b07bfe91",
+  "standard_dat_sha256": "c952b6c4d5f7b12c469ce73bf8fe9a18fa0c560cac03f339df74779b22ae455f",
+  "audit_dat_sha256": "8ad48837d8298b5618e253a05d64067cb4858085464d655379e3382d54b34637",
+  "preview_sha256": "e24a24fdf529a8e9230b6761c0a81bb29123879ad2f96cdf45fd0c0a4b2a4b8b",
+  "source_diff_sha256": "617b680d49da28b13e3bc5a43f609ffba1e5fe80ccc46aaf5ab6f99c1db48cb8",
+  "qualified_runtime_modes": [
+    "320x200x16",
+    "640x200x2",
+    "640x200x4"
+  ],
+  "canonical_defaults_changed": false,
+  "publication_performed": false
+}
