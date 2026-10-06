@@ -71,15 +71,43 @@ library, runs format/package tests, verifies every publication file and uploads:
 - `README.TXT`, `BUILD.JSON`, `SHA256SUMS`: instructions, build details, checksums
 
 The artifact is named `winxt-720k-<commit SHA>` and retained for 30 days.
-Download it from the successful run's Artifacts section. Durable, anonymous
-release downloads must be attached to a reviewed GitHub Release separately.
-This public-repository workflow has **contents: read**, uses anonymous Git
+Download it from the successful run's Artifacts section. Version-tag builds
+also create a **draft** GitHub Release with the same six verified assets.
+Drafts are visible to repository maintainers; public anonymous downloads
+become available only after a maintainer explicitly publishes the draft.
+The build job has **contents: read**, uses anonymous Git
 to check out the exact event commit and stores no checkout credentials. It
 materializes only the builder/runtime directories and uses a commit-pinned
 artifact-upload action. Anonymous checkout avoids credential-cleanup errors
-from the repository's historical orphan `dosfetch` gitlink. It cannot create tags/releases, publish a release,
-enable runners or create credentials. An ordinary merge does not publish a
-release. No Windows media or user secrets are needed by GitHub Actions.
+from the repository's historical orphan `dosfetch` gitlink. Pull requests and
+ordinary main pushes never run the release job. An ordinary merge does not
+create a release. No Windows media or user secrets are needed by GitHub Actions.
+
+Only the separate draft-release job has **contents: write**. It downloads
+the successful build's artifact on a fresh runner, executes no repository or
+artifact code, rechecks the public output allowlist, 720 KB geometry and hashes,
+and attaches explicit filenames. It requires an existing version tag matching
+the exact build commit, such as `v1.2.3` or `v1.2.3-rc.1`. Other `v*` tags still
+build artifacts but fail the release version check. Existing releases are
+refused, including drafts; tags and assets are never overwritten. A partial
+upload failure may leave a draft requiring manual inspection; rerunning refuses
+to change that draft. Nothing automatically publishes or promotes a release.
+
+Maintainer paths:
+
+- Push a new version tag at the intended reviewed commit. The tag build
+  verifies the package and creates a draft, never a public release.
+- To retry a build that failed before draft creation, run `release.yml` on
+  that same tag/commit and supply its existing tag as `release_tag`.
+  For example: `gh workflow run release.yml --repo astrobleem/oemdisplay-tandy
+  --ref v1.2.3-rc.1 -f release_tag=v1.2.3-rc.1` (on one line).
+- Leave `release_tag` blank for an ordinary manual artifact-only build.
+
+The workflow must already exist on the default branch to dispatch it. An
+existing registered workflow can also be dispatched on a reviewed feature
+branch whose exact commit has an existing version tag; this allows testing
+the draft job before merging. Maintainers should inspect the draft's six assets
+and checksums before separately deciding whether to publish it.
 
 This is a reproducible **disk/package build from accepted, pinned binaries**.
 It is not a claim that GitHub recompiled the historical MASM/DDK code. The

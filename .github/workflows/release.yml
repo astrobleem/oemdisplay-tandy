@@ -6,14 +6,20 @@ on:
     branches: [main]
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Existing vMAJOR.MINOR.PATCH[-prerelease] tag at this exact commit; blank builds artifacts only'
+        required: false
+        default: ''
+        type: string
 
-# Ordinary builds never create releases or change repository content.
+# Builds and PRs stay read-only; only the gated draft job can write releases.
 permissions:
   contents: read
 
 concurrency:
   group: winxt-disks-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' && !startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
   build:
@@ -65,3 +71,82 @@ jobs:
             dist/SHA256SUMS
           if-no-files-found: error
           retention-days: 30
+
+  draft-release:
+    needs: build
+    # Never run for PRs (including same-repository PRs) or ordinary main pushes.
+    if: >-
+      github.repository == 'astrobleem/oemdisplay-tandy' &&
+      ((github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) ||
+       (github.event_name == 'workflow_dispatch' && inputs.release_tag != ''))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    concurrency:
+      group: winxt-draft-${{ inputs.release_tag || github.ref_name }}
+      cancel-in-progress: false
+    env:
+      GH_REPO: ${{ github.repository }}
+      RELEASE_TAG: ${{ inputs.release_tag || github.ref_name }}
+      SOURCE_SHA: ${{ github.sha }}
+    steps:
+      # This fresh runner never checks out or executes repository/artifact code.
+      - name: Download this run's verified public package
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: winxt-720k-${{ github.sha }}
+          path: dist
+
+      - name: Recheck asset allowlist, geometry, publication flag and hashes
+        run: |
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          out = Path('dist')
+          names = {'WINXT720.IMG', 'WINXT720.ZIP', 'WXTTOOLS.ZIP',
+                   'README.TXT', 'BUILD.JSON', 'SHA256SUMS'}
+          assert {p.name for p in out.iterdir()} == names
+          assert all(p.is_file() and not p.is_symlink() for p in out.iterdir())
+          report = json.loads((out / 'BUILD.JSON').read_bytes())
+          assert report['publication_allowed'] is True
+          assert report['windows_support_included'] is False
+          assert report['kind'] == 'public-support-free'
+          assert report['image_bytes'] == (out / 'WINXT720.IMG').stat().st_size == 737280
+          assert report['geometry'] == {'cylinders': 80, 'heads': 2,
+              'sectors_per_track': 9, 'sector_bytes': 512}
+          expected = ''.join(hashlib.sha256((out / n).read_bytes()).hexdigest()
+              + '  ' + n + '\n' for n in sorted(names - {'SHA256SUMS'}))
+          assert (out / 'SHA256SUMS').read_text() == expected
+          PY
+
+      - name: Create a new draft only for an unchanged existing version tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z]+([.-][0-9A-Za-z]+)*)?$ ]]
+          # Require a real existing tag; resolve annotated/lightweight tags alike.
+          gh api "repos/$GH_REPO/git/ref/tags/$RELEASE_TAG" > /dev/null
+          tag_sha=$(gh api "repos/$GH_REPO/commits/$RELEASE_TAG" --jq .sha)
+          test "$tag_sha" = "$SOURCE_SHA"
+          # Include drafts in the lookup. API/network failure stops the job.
+          existing=$(gh api --paginate "repos/$GH_REPO/releases?per_page=100" \
+            --jq '.[] | .tag_name')
+          if printf '%s\n' "$existing" | grep -Fxq -- "$RELEASE_TAG"; then
+            echo 'Release already exists; refusing to update or overwrite it.' >&2
+            exit 1
+          fi
+          printf '%s\n' \
+            "Verified public 720 KB Windows XT package from commit $SOURCE_SHA." \
+            "Build: https://github.com/$GH_REPO/actions/runs/${{ github.run_id }}" \
+            'Packages accepted pinned binaries; no legacy toolchain recompilation.' \
+            'No Microsoft Windows support files, fonts or toolchain are bundled.' \
+            'Use your own matching Windows 3.0 files; installation needs no Python.' \
+            'Experimental software; physical hardware qualification remains separate.' \
+            > release-notes.txt
+          gh release create "$RELEASE_TAG" --repo "$GH_REPO" \
+            --verify-tag --draft --latest=false \
+            --title "Windows XT $RELEASE_TAG" --notes-file release-notes.txt \
+            dist/WINXT720.IMG dist/WINXT720.ZIP dist/WXTTOOLS.ZIP \
+            dist/README.TXT dist/BUILD.JSON dist/SHA256SUMS
