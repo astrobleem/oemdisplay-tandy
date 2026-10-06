@@ -1,0 +1,11 @@
+{
+  "returncode": 0,
+  "logs": {
+    "DROPRX.LOG": "UNIT PASS\nPASS real mode\nSTYLE bit retained\nSHELL not loaded\nRECEIVED\nC:\\DROP.TXT\nC:\\SECOND.TXT\n2 paths received\nUNIT PASS\nPASS real mode\nSTYLE bit retained\nSHELL not loaded\nCROSS TASK PASS\nDISPLAY PAIR PASS\n",
+    "DROPTX.LOG": "UNIT PASS\nPASS real mode\nSTYLE bit retained\nSHELL not loaded\nDrag to receiver\nCancelled\nESCAPE PASS\nDrag to receiver\nCancelled\nCANCELMODE PASS\nCLOSED TARGET PASS\nQUEUE FAILURE PASS\nCROSS TASK POST PASS\n"
+  },
+  "dos_return": true,
+  "guest": "/workspace/scratch/a84592844d2c/arwing-work-20261005/release-scene-320/guest",
+  "cpu": "8086_prefetch",
+  "memory": 640
+}

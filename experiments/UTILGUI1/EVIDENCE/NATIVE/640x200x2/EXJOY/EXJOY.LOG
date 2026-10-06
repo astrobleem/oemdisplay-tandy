@@ -1,0 +1,19 @@
+PASS window and controls exist
+PASS running timer produced samples
+PASS pure demo performs no hardware I/O
+PASS manual center captured
+PASS center count shown
+PASS partial center count shown
+PASS missing center stays unknown
+PASS Win16 normalization
+PASS Win16 normalization
+PASS Win16 normalization
+PASS Win16 normalization
+PASS pause state
+PASS pause stops polling
+PASS range reset clears center
+PASS resumed polling
+POLLS=23 HARDWARE_POLLS=0 MAX_POLL_MS=0
+PASS window destroyed
+FINAL raw=F0 timed=F early=0 timeout=0 buttons=0
+TOTAL_FAILURES=0 POLLS=23 HARDWARE_POLLS=0 MAX_POLL_MS=0

@@ -1,0 +1,7 @@
+{
+  "bytes": 8847,
+  "sha256": "3456fccc543a785d8fac2d355d465f590b6725e368a992ca998a7c2d650b87df",
+  "cpu": "/G0 8086",
+  "target": "Windows 3.0 real mode",
+  "compiler_flags": "/nologo /c /G0 /Gw /AS /W3 /Od"
+}

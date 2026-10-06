@@ -1,0 +1,14 @@
+UNIT PASS
+PASS real mode
+STYLE bit retained
+SHELL not loaded
+RECEIVED
+C:\DROP.TXT
+C:\SECOND.TXT
+2 paths received
+UNIT PASS
+PASS real mode
+STYLE bit retained
+SHELL not loaded
+CROSS TASK PASS
+DISPLAY PAIR PASS

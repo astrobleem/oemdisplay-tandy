@@ -1,0 +1,13 @@
+{
+  "exit": 0,
+  "seconds": 27.09,
+  "arg": "/test",
+  "cycles": "100000",
+  "logs": {
+    "EXJOY.LOG": "PASS window and controls exist\nPASS running timer produced samples\nPASS pure demo performs no hardware I/O\nPASS manual center captured\nPASS center count shown\nPASS partial center count shown\nPASS missing center stays unknown\nPASS Win16 normalization\nPASS Win16 normalization\nPASS Win16 normalization\nPASS Win16 normalization\nPASS pause state\nPASS pause stops polling\nPASS range reset clears center\nPASS resumed polling\nPOLLS=23 HARDWARE_POLLS=0 MAX_POLL_MS=0\nPASS window destroyed\nFINAL raw=F0 timed=F early=0 timeout=0 buttons=0\nTOTAL_FAILURES=0 POLLS=23 HARDWARE_POLLS=0 MAX_POLL_MS=0\n",
+    "RETURN.LOG": "RETURNED\n"
+  },
+  "app_sha256": "3b0ed6e48fec4a7a20aa2dbe0302dc07ac826b5df6cb0824d248a3b71ea14b61",
+  "system_ini": "[boot]           \n286grabber=cga.gr2\nshell=PROGMAN.EXE\nnetwork.drv=\nlanguage.dll=\nfixedfon.fon=cgafix.fon\ncomm.drv=comm.drv\nsound.drv=sound.drv\noemfonts.fon=cgaoem.fon\nfonts.fon=cgasys.fon\nmouse.drv=mouse.drv\nkeyboard.drv=keyboard.drv\ndisplay.drv=TRIAL.DRV\nsystem.drv=system.drv\n386grabber=\n[keyboard]\nsubtype=\ntype=4\noemansi.bin=\nkeyboard.dll=\n[boot.description]\n\nnetwork.drv=No Network Installed\nlanguage.dll=English (American)\nkeyboard.typ=Enhanced 101 or 102 key US and Non US keyboards\nmouse.drv=Microsoft, or IBM PS/2\ndisplay.drv=CGA\nsystem.drv=MS-DOS or PC-DOS System\n[386Enh]\ndisplay=*vddvga\nkeyboard=*vkd\nmouse=*vmd\nnetwork=\ndevice=*vpicd\ndevice=*vtd\ndevice=*reboot\ndevice=*vdmad\ndevice=*vsd\ndevice=*v86mmgr\ndevice=*pageswap\ndevice=*dosmgr\ndevice=*vmpoll\ndevice=*wshell\ndevice=*vhd\ndevice=*vfd\ndevice=*vpd\ndevice=*parity\ndevice=*biosxlat\ndevice=*vcd\ndevice=*vmcpd\ndevice=*combuff\ndevice=*cdpscsi\nlocal=CON\nFileSysChange=off\n\n[standard]\n\n[NonWindowsApp]\n",
+  "passed": true
+}

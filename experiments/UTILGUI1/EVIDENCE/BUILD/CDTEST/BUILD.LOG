@@ -1,0 +1,11 @@
+CDTEST.C
+
+Microsoft (R) Segmented-Executable Linker  Version 5.01.17
+Copyright (C) Microsoft Corp 1984-1988.  All rights reserved.
+
+Object Modules [.OBJ]: CDTEST.OBJ
+Run File [CDTEST.EXE]: CDTEST.EXE
+List File [NUL.MAP]: CDTEST.MAP
+Libraries [.LIB]: C:\LIB\SLIBCEW.LIB C:\LIB\LIBW.LIB C:\LIB\COMMDLG.LIB
+Definitions File [NUL.DEF]: CDTEST.DEF
+PASS

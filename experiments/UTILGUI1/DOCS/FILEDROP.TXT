@@ -1,0 +1,11 @@
+FILE DROP POLISH TRIAL
+Use the same fixed C:\DROP.TXT / C:\SECOND.TXT fixture workflow as the
+historical example. Copy the matching DROPRX.EXE and DROPTX.EXE to C:\.
+Run DROPRX; drag from the sender onto it. Shift on release sends both paths.
+The receiver shows the last drop count and both received fixture paths.
+A later one-file drop clears the second line. Escape cancels a drag.
+Normal runs create no DROPRX.LOG or DROPTX.LOG. /D opts into diagnostic
+logging, including the launched sender. /A retains the automated QA suite.
+Dropped files are never opened, copied, moved, renamed, or deleted.
+The library still supports its original bounded packet contract; this small
+fixed-fixture demonstration displays at most its two expected paths.

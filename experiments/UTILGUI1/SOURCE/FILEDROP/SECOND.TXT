@@ -1,0 +1,1 @@
+Second read-only drop fixture.
