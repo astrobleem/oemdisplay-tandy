@@ -1,0 +1,44 @@
+PASS COOKIE real mode
+PASS COOKIE WinExec accepted
+PASS COOKIE production window created
+PASS COOKIE ordinary close returns
+PASS PINBALL WinExec accepted
+PASS PINBALL production window created
+PASS PINBALL ordinary close returns
+PASS BRIGHT WinExec accepted
+PASS BRIGHT production window created
+PASS BRIGHT ordinary close returns
+PASS GIFLOAD WinExec accepted
+PASS GIFLOAD production window created
+PASS GIFLOAD open before conversion stays
+PASS GIFLOAD edit control found
+PASS GIFLOAD typed field matches
+PASS GIFLOAD edit control found
+PASS GIFLOAD typed field matches
+PASS GIFLOAD named conversion output exists
+PASS GIFLOAD edit control found
+PASS GIFLOAD typed field matches
+PASS GIFLOAD edited output stays
+PASS GIFLOAD edit control found
+PASS GIFLOAD typed field matches
+PASS GIFLOAD successful Open closes helper
+PASS GIFLOAD Paintbrush opened output
+PASS GIFLOAD Paintbrush title names output
+PASS GIFLOAD ordinary close returns
+PASS GIFLOAD Paintbrush close returns
+PASS TABOUT WinExec accepted
+PASS TABOUT production window created
+PASS TABOUT named conversion output exists
+PASS TABOUT ordinary close returns
+PASS SWAT WinExec accepted
+PASS SWAT production window created
+PASS SWAT ordinary close returns
+PASS TSHELL WinExec accepted
+PASS TSHELL production window created
+PASS TSHELL Run dialog
+PASS TSHELL edit control found
+PASS TSHELL typed field matches
+PASS TSHELL ordinary close returns
+PASS_COUNT=41
+FAIL_COUNT=0
+COMPLETE=1
