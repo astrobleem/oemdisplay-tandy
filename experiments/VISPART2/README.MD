@@ -23,12 +23,14 @@ No new game mechanics or visual effects were added.
 
 ## Important trade-offs
 
-- Windowed Maze's first complete scene takes 2.58 seconds rather than 1.65
-  in the slow emulator fixture. The benefit is responsive, interruptible
-  setup and a visible notice, not faster completion. Steady-state results
-  remain eight frames in roughly ten seconds. The old synchronous direct
-  drawing fallback remains if off-screen bitmap allocation fails; sliced
-  startup is the buffered path.
+- Corrected matched-boundary measurement: windowed Maze's first visible
+  complete scene takes 3.24 seconds rather than 1.65 in the slow emulator
+  fixture. The previously quoted 2.58 seconds measured off-screen preparation
+  and excluded the final 0.659-second copy; it was not the same boundary.
+  A rerun with startup diagnostic log writes suppressed confirms 1.648 versus
+  3.240 seconds. The benefit is interruptible buffered setup and a visible
+  notice, not faster completion. The old synchronous direct-draw fallback
+  remains if off-screen bitmap allocation fails.
 - Maze saver setup improves from 329 to 110 ms. End-to-end 60-tick time is
   within one 55 ms clock tick of the baseline. Its reported draw-phase total
   and maximum are higher in this paired run (3131/110 versus 2910/55 ms), so
@@ -40,6 +42,17 @@ No new game mechanics or visual effects were added.
 - Slosh's one-pixel edge adds 5.5% cumulative drawing time and raises its
   worst paint from 1154 to 1264 ms in a matched stress fixture. That fails
   the negligible-cost condition, so it is omitted from ready executables.
+
+New phase profiling also explains the slow animation: across eight steady
+frames, ray calculation uses 55 ms, GDI rectangle filling 4119 ms and the
+final bitmap-to-window copy 5438 ms. Approximately 99% of the measured work
+is drawing, not the 32-ray calculation. The final copy alone is over half.
+The saver has a separate intentional column-per-tick limit; see TESTS.MD.
+These measurements used the exact experimental TRIAL7 combined driver,
+already including the earlier DIB work. Maze's canvas/copy is a DDB BitBlt
+path, so that DIB-specific speedup is not automatically relevant. TESTS.MD
+identifies the driver and outlines possible follow-up measurements; this
+correction changes no ready program or driver.
 
 These are deliberately slow emulator measurements, not calibrated 4.77 MHz
 EX/HX timings. TESTS.MD contains exact workloads, hashes and limitations.

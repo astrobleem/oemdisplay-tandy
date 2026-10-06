@@ -17,4 +17,9 @@ with zipfile.ZipFile(p/'VISPART2.ZIP') as z:
   assert text.count('changed_units=0 active_ok=1')==16 and 'QA DONE' in text and 'INPUT LEAK' not in text and 'FAIL' not in text
  for tag in ['AR160','AR320','AR640','PL160','PL320','PL640']:
   text=z.read('VISPART2/EVIDENCE/'+tag+'.LOG').decode('ascii');assert text.count('mismatched_bytes=0')==40
-print('PASS sealed Maze/Starfield kit, file hashes, CRC, 32 lifecycle cases, 240 scene comparisons and payload scope.')
+ a=z.read('VISPART2/EVIDENCE/MZQUIET0.LOG').decode('ascii');b=z.read('VISPART2/EVIDENCE/MZQUIET1.LOG').decode('ascii')
+ assert 'PROFILE visible_first_ms=1648' in a and 'PROFILE visible_first_ms=3240' in b
+ assert 'setup_ms=2581' in b
+ assert 'steady ray_ms=55 fills_ms=4119 copy_ms=5438' in b
+ assert json.loads(z.read('VISPART2/EVIDENCE/DRIVER.JSN'))['sha256']=='f922f12168de69ec2f8a761ce7fce2cbe2080b9e3fcfb06e3a3dac4faba6d502'
+print('PASS sealed Maze/Starfield kit, scope, lifecycle/scene checks and corrected matched-boundary timing evidence.')
