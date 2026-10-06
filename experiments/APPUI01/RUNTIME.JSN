@@ -1,0 +1,60 @@
+{
+  "COOKIE": {
+    "file": "RUN/COOKIE.EXE",
+    "bytes": 8527,
+    "sha256": "9e1899efbd713f05f03379ebe77b14da6797dffb3bafe9de02611184c890a664",
+    "source_sha256": "e58e76140e56af8e6b8a37729510a1f27708999d445dd189e85f7a2cfbab2c02",
+    "warnings": []
+  },
+  "PINBALL": {
+    "file": "RUN/PINBALL.EXE",
+    "bytes": 8687,
+    "sha256": "8464aafca3e023f3a7755e0624254a561cd0673b6fc2fd7f2e5679579f4cbc60",
+    "source_sha256": "280845f4a3f5faef98575d930b687c6f24d46ca9541cbb716d1d0cf4c74e7980",
+    "warnings": []
+  },
+  "BRIGHT": {
+    "file": "RUN/BRIGHT.EXE",
+    "bytes": 8255,
+    "sha256": "18d78ed99c92d3566713652588d2a1b4b7e72fd2c2bfcf97c7617c9c14b8fbdf",
+    "source_sha256": "f2c957ac8a6bb3f7a17d888578cd5ffe6d759aab339ab8a9cacbafc3e7ee4134",
+    "warnings": []
+  },
+  "GIFLOAD": {
+    "file": "RUN/GIFLOAD.EXE",
+    "bytes": 21485,
+    "sha256": "84fb99fe716acf301cb3101d2ed29ec60aa34119ba40ca28801a042335920cc0",
+    "source_sha256": "5c8cee6e3e2bc8b904212ace2dd74ae62976010cde4e53a0d098bc5594cee336",
+    "warnings": []
+  },
+  "TABOUT": {
+    "file": "RUN/TABOUT.EXE",
+    "bytes": 6415,
+    "sha256": "5abdc758ec5c99d0f77964bb7edba9f85137d8c3763173c2f70465226d509ec3",
+    "source_sha256": "30310f274477719951761412458e777949b2b31a09685a9c23cc8260dd3015bf",
+    "warnings": []
+  },
+  "TSHELL": {
+    "file": "RUN/TSHELL.EXE",
+    "bytes": 68515,
+    "sha256": "8d9fbf0aabacc630400a2b716610fc03d38a1d625d3810e7cefb340616912729",
+    "source_sha256": "c04d70c2231c6052645ae38d5e55a7e88aacf2e0232bd9092c0d89cd824fc651",
+    "warnings": []
+  },
+  "SWAT": {
+    "file": "RUN/SWAT.EXE",
+    "bytes": 20573,
+    "sha256": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388",
+    "source_sha256": "69916862d653b8670867b4815fb75642f8256d9c880aed3960103d93603fb755",
+    "warnings": [
+      "SWAT.C(178) : warning C4203: 'runtests' : function too large for global optimizations",
+      "SWAT.C(179) : warning C4203: 'WinMain' : function too large for global optimizations"
+    ]
+  },
+  "TSINPUT": {
+    "file": "RUN/TSINPUT.DLL",
+    "bytes": 6281,
+    "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80",
+    "unchanged": true
+  }
+}
