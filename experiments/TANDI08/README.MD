@@ -2,7 +2,8 @@
 
 Local tested TANDI08 / app 0.3.5. Read QA08.TXT inside the packet
 for exact evidence and limitations. Canonical/default files
-remain unchanged. No publication, CF write, private Windows or toolchain payload.
+remain unchanged. Draft publication contains only this isolated experiment.
+No CF write, private Windows or toolchain payload.
 
 - Prompt computation begins after painting thinking; the 220 ms input guard remains.
 - The cap Continue/Restart/Exit choice appears once per game. Later rejections advance.
@@ -26,3 +27,7 @@ The packet does not require redistribution of Windows/compiler/emulator files.
 Run `python TESTPUB.PY` for archive, manifest, pins and platform-exclusion checks.
 [PREVIEW.PNG](PREVIEW.PNG) shows final native screenshots; [SOURCE.DIF](SOURCE.DIF)
 records the relevant differences from the verified TANDI07 packet.
+
+The immutable packet and its qualification report were frozen before draft
+publication. Their publication_performed=false metadata records that qualification
+state; it is not a live PR status. No standard/canonical promotion is proposed.
