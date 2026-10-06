@@ -1,0 +1,30 @@
+PASS normal-flow Windows real mode
+RUNTIME 320 x 200 colors=4 flags=64
+PASS launch EXJOY normal demo
+PASS pause button becomes Run
+PASS capture bounded framebuffer
+PASS resume button becomes Pause
+PASS EXJOY closed
+PASS launch normal receiver
+PASS normal independent sender launched
+PASS post two normal paths
+PASS capture bounded framebuffer
+PASS post one normal path
+PASS capture bounded framebuffer
+PASS drop pair closed
+PASS launch unchanged CDSTART
+PASS normal result path uses read-only list
+PASS explicit edit messages set full path
+PASS selected path displayed exactly
+PASS capture bounded framebuffer
+PASS Cancel clears stale selected path
+PASS capture bounded framebuffer
+PASS normal dialog demo closed
+PASS reopen through unchanged CDSTART
+PASS reopened result field exists
+PASS explicit edit messages set full path
+PASS long selected path wraps across rows
+PASS all long-path bytes remain visible in rows
+PASS capture bounded framebuffer
+PASS reopened demo closed
+FINAL failures=0 step=23

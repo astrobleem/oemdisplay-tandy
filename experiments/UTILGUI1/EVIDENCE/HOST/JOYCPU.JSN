@@ -1,0 +1,69 @@
+{
+  "executable": "EXJOY.EXE",
+  "bytes": 10127,
+  "sha256": "3b0ed6e48fec4a7a20aa2dbe0302dc07ac826b5df6cb0824d248a3b71ea14b61",
+  "code_bytes": 7350,
+  "NE_entry_offset": "0x15d3",
+  "symbol_roots": 35,
+  "excluded_code_segment_data": [
+    {
+      "symbol": "__wflags",
+      "offset": "0x15d1"
+    },
+    {
+      "symbol": "__wflags",
+      "offset": "0x15d1"
+    }
+  ],
+  "reachable_instructions_checked": 2907,
+  "post8088_suspects": [],
+  "indirect_branch_sites": [
+    {
+      "offset": "0x165e",
+      "instruction": "jmp    *%bx"
+    },
+    {
+      "offset": "0x1689",
+      "instruction": "jmp    *0x44c"
+    },
+    {
+      "offset": "0x1a76",
+      "instruction": "jmp    *0x4a2"
+    }
+  ],
+  "io_or_interrupt_flag_instructions": [
+    {
+      "offset": "0x15b5",
+      "instruction": "out    %al,(%dx)"
+    },
+    {
+      "offset": "0x15b6",
+      "instruction": "in     (%dx),%al"
+    },
+    {
+      "offset": "0x173d",
+      "instruction": "int    $0x21"
+    },
+    {
+      "offset": "0x1866",
+      "instruction": "int    $0x21"
+    },
+    {
+      "offset": "0x1891",
+      "instruction": "int    $0x21"
+    },
+    {
+      "offset": "0x18f2",
+      "instruction": "int    $0x21"
+    },
+    {
+      "offset": "0x175f",
+      "instruction": "int    $0x21"
+    },
+    {
+      "offset": "0x18b5",
+      "instruction": "int    $0x21"
+    }
+  ],
+  "scope": "Direct control-flow reachability from NE entry and public segment-1 symbols, including near calls and conditional branches. Imported Windows routines, unresolved indirect continuations and unreachable bytes excluded; not exhaustive ISA or hardware certification."
+}

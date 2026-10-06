@@ -1,0 +1,13 @@
+UNIT PASS
+PASS real mode
+STYLE bit retained
+SHELL not loaded
+Drag to receiver
+Cancelled
+ESCAPE PASS
+Drag to receiver
+Cancelled
+CANCELMODE PASS
+CLOSED TARGET PASS
+QUEUE FAILURE PASS
+CROSS TASK POST PASS

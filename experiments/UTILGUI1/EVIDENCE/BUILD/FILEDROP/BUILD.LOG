@@ -1,0 +1,28 @@
+TDROP.C
+
+Microsoft (R) Library Manager  Version 3.10
+Copyright (C) Microsoft Corp 1983-1988.  All rights reserved.
+
+DROPAPP.C
+DROPAPP.C
+DROPAPP.C(90) : warning C4101: 'p' : unreferenced local variable
+DROPAPP.C(90) : warning C4101: 'target' : unreferenced local variable
+
+Microsoft (R) Segmented-Executable Linker  Version 5.01.17
+Copyright (C) Microsoft Corp 1984-1988.  All rights reserved.
+
+Object Modules [.OBJ]: DROPTX.OBJ
+Run File [DROPTX.EXE]: DROPTX.EXE
+List File [NUL.MAP]: DROPTX.MAP
+Libraries [.LIB]: TDROP.LIB C:\LIB\SLIBCEW.LIB C:\LIB\LIBW.LIB
+Definitions File [NUL.DEF]: DROPTX.DEF
+
+Microsoft (R) Segmented-Executable Linker  Version 5.01.17
+Copyright (C) Microsoft Corp 1984-1988.  All rights reserved.
+
+Object Modules [.OBJ]: DROPRX.OBJ
+Run File [DROPRX.EXE]: DROPRX.EXE
+List File [NUL.MAP]: DROPRX.MAP
+Libraries [.LIB]: TDROP.LIB C:\LIB\SLIBCEW.LIB C:\LIB\LIBW.LIB
+Definitions File [NUL.DEF]: DROPRX.DEF
+PASS

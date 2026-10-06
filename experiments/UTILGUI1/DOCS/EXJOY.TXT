@@ -1,0 +1,7 @@
+EXJOY LABEL POLISH TRIAL
+The normal header says EXJOY Live, EXJOY Paused, or EXJOY Demo. Paused takes
+precedence; a paused demo remains labelled Demo. C reports how many of four axes supplied valid
+center timing; zero still says No center timing. A partial center does not
+claim joystick presence. Polling, calibration, 4 Hz cadence, I/O and timeout
+semantics are unchanged. /demo does no hardware I/O; /test and /porttest
+retain diagnostics. See the included EXJOY README.MD for normal controls.

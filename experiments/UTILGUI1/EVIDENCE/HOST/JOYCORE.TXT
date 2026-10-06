@@ -1,0 +1,4 @@
+PASS 90060 checks: independent synthetic pulse/timeout/button/calibration tests
+Command: cc -std=c89 -pedantic -Wall -Wextra -Werror -fsanitize=address,undefined -g -x c HOSTTEST.C -x c JOYCORE.C -o hosttest
+Run: ASAN_OPTIONS=detect_leaks=0 ./hosttest
+The core files are byte-identical to the historical EXJOY source.

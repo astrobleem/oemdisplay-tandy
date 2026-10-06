@@ -1,0 +1,23 @@
+{
+  "pass": true,
+  "normal_diagnostic_logs_absent": true,
+  "original_fixture_unchanged": true,
+  "returncode": 0,
+  "log": "PASS normal-flow Windows real mode\nRUNTIME 320 x 200 colors=4 flags=64\nPASS launch EXJOY normal demo\nPASS pause button becomes Run\nPASS capture bounded framebuffer\nPASS resume button becomes Pause\nPASS EXJOY closed\nPASS launch normal receiver\nPASS normal independent sender launched\nPASS post two normal paths\nPASS capture bounded framebuffer\nPASS post one normal path\nPASS capture bounded framebuffer\nPASS drop pair closed\nPASS launch unchanged CDSTART\nPASS normal result path uses read-only list\nPASS explicit edit messages set full path\nPASS selected path displayed exactly\nPASS capture bounded framebuffer\nPASS Cancel clears stale selected path\nPASS capture bounded framebuffer\nPASS normal dialog demo closed\nPASS reopen through unchanged CDSTART\nPASS reopened result field exists\nPASS explicit edit messages set full path\nPASS long selected path wraps across rows\nPASS all long-path bytes remain visible in rows\nPASS capture bounded framebuffer\nPASS reopened demo closed\nFINAL failures=0 step=23\n",
+  "runtime": {
+    "EXJOY.EXE": "3b0ed6e48fec4a7a20aa2dbe0302dc07ac826b5df6cb0824d248a3b71ea14b61",
+    "DROPRX.EXE": "3456fccc543a785d8fac2d355d465f590b6725e368a992ca998a7c2d650b87df",
+    "DROPTX.EXE": "69dd16a0029f2b0f3f3bfac31678d335d56204e249fd66bb23bd9f2bec6308f0",
+    "CDTEST.EXE": "58482544f0bcc06e63f27c217d171d57c82ab3293af47a9ae09bfc747237dbe1",
+    "COMMDLG.DLL": "2f244e11acf6605130928c0fdf6e280702740a057198af2221124431ed90c62d",
+    "CDSTART.EXE": "c2cf986d1cd5d44ed02a31a4c327601b4b7b4b6a4dceb94fa41f8909d8136eac"
+  },
+  "harness": "f1817d46b7d1805ce214b7bb131eb4aa14cd9f87ba8a85c8523fd58431d75623",
+  "cpu": "8086_prefetch",
+  "memory_kb": 640,
+  "ems_xms_umb": false,
+  "system_ini": "[boot]           \n286grabber=cga.gr2\nshell=PROGMAN.EXE\nnetwork.drv=\nlanguage.dll=\nfixedfon.fon=cgafix.fon\ncomm.drv=comm.drv\nsound.drv=sound.drv\noemfonts.fon=cgaoem.fon\nfonts.fon=cgasys.fon\nmouse.drv=mouse.drv\nkeyboard.drv=keyboard.drv\ndisplay.drv=TRIAL.DRV\nsystem.drv=system.drv\n386grabber=\n[keyboard]\nsubtype=\ntype=4\noemansi.bin=\nkeyboard.dll=\n[boot.description]\n\nnetwork.drv=No Network Installed\nlanguage.dll=English (American)\nkeyboard.typ=Enhanced 101 or 102 key US and Non US keyboards\nmouse.drv=Microsoft, or IBM PS/2\ndisplay.drv=CGA\nsystem.drv=MS-DOS or PC-DOS System\n[386Enh]\ndisplay=*vddvga\nkeyboard=*vkd\nmouse=*vmd\nnetwork=\ndevice=*vpicd\ndevice=*vtd\ndevice=*reboot\ndevice=*vdmad\ndevice=*vsd\ndevice=*v86mmgr\ndevice=*pageswap\ndevice=*dosmgr\ndevice=*vmpoll\ndevice=*wshell\ndevice=*vhd\ndevice=*vfd\ndevice=*vpd\ndevice=*parity\ndevice=*biosxlat\ndevice=*vcd\ndevice=*vmcpd\ndevice=*combuff\ndevice=*cdpscsi\nlocal=CON\nFileSysChange=off\n\n[standard]\n\n[NonWindowsApp]\n",
+  "cpucheck": "FLAGS high=F000 PUSH SP delta=FFFE 1<<32=0000\n",
+  "latercpu": "PUSHA SPdelta=0000 PUSHimm SPdelta=0000 C0 shift=0001 66prefix AX=0001 INT6=0000\n",
+  "cpu_sentinels_pass": true
+}

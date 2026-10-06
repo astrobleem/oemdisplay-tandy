@@ -1,0 +1,13 @@
+FILE DIALOGS POLISH TRIAL
+Keep CDSTART.EXE, CDTEST.EXE and COMMDLG.DLL together in a new trial folder.
+Launch CDSTART.EXE with no switches from Windows. CDSTART and COMMDLG.DLL
+are byte-identical to the accepted versions; do not replace a system DLL.
+File > Open displays a selected path. Save sample writes the original small
+round-trip sample to your selected file; use a NEW scratch filename. Read
+sample checks that content. Try Cancel demonstrates cancellation. The main
+window shows the outcome and a scrollable, read-only selected-path field.
+Normal runs no longer start ABI checks or create test logs. Explicit /A,
+/B and /C diagnostic caller modes preserve their ABI/round-trip/full suites
+and logs. Run those only in the documented disposable test environment.
+CDSTART still refuses when another COMMDLG module is loaded. Close its apps
+and retry; do not force another DLL into a running session.

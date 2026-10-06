@@ -1,0 +1,94 @@
+BEGIN independent historical COMMDLG.LIB tests
+RUNTIME 320 x 200 colors=4 flags=64
+PASS Windows real mode verified by GetWinFlags
+PASS OPENFILENAME sizeof=72
+PASS OPENFILENAME offsets
+PASS GetFileTitle large buffer
+PASS FAR Pascal stack/DS preserved
+PASS FileTitle canaries
+PASS FileTitle short buffer reports 8 including NUL
+PASS short output no overwrite beyond capacity
+PASS FileTitle exact capacity
+PASS DOS device rejected
+PASS FileTitle empty rejected
+PASS FileTitle wildcard rejected
+PASS FileTitle directory rejected
+PASS FileTitle DOS space rejected
+PASS FileTitle bracket rejected
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS Open bad-size/error repeated
+PASS Save bad-size/error repeated
+PASS success clears error per 1992 SDK
+PASS unsupported multiselect fails explicitly
+PASS hook request fails explicitly
+PASS template request fails explicitly
+PASS separate far allocations
+PASS far structure rejected safely
+PASS separate segment output
+PASS far output canaries
+UNIT RESULT PASS
+PASS UI output canaries
+PASS NOCHANGEDIR restores cwd
+PASS UI success clears error
+C:\WINDOWS\CDROUND.TXT
+PASS filename offset/title output
+PASS caller creates selected output
+PASS caller writes full payload
+PASS caller closes saved sample
+PASS UI output canaries
+PASS NOCHANGEDIR restores cwd
+PASS UI success clears error
+C:\WINDOWS\CDROUND.TXT
+PASS filename offset/title output
+PASS caller opens selected file
+PASS caller real file round-trip
+PASS caller closes read sample
+PASS UI output canaries
+PASS NOCHANGEDIR restores cwd
+PASS UI Cancel distinguished from failure
+UI returned FALSE
+FINAL PASS

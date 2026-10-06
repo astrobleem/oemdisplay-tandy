@@ -1,0 +1,4 @@
+PASS bounded real I/O returns
+PASS window destroyed
+FINAL raw=FF timed=0 early=0 timeout=F buttons=0
+TOTAL_FAILURES=0 POLLS=30 HARDWARE_POLLS=30 MAX_POLL_MS=0

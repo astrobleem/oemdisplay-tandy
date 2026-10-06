@@ -1,0 +1,56 @@
+{
+  "mode": "320x200x4",
+  "gdi_runtime": "320 x 200 colors=4 flags=64",
+  "driver_file": "WINDOWS/SYSTEM/TRIAL.DRV",
+  "driver_sha256": "bc2e1ee14f52e1b71732018facd030ba075bb18ce63cabee05f2110e830366e8",
+  "system_ini_sha256": "9a406dadacf90117e220685fae9edd94e18acf85ec9447cd4e5259eb6b4c7478",
+  "video_file": "kernel_001.avi",
+  "video_sha256": "3cdd4388c415251494a8423b27b9c2f7856023a08b8ea6b369a58d78efd712e9",
+  "video_width": 320,
+  "video_height": 200,
+  "frames": [
+    {
+      "file": "PAUSED.PNG",
+      "seek_seconds": 2.5,
+      "png_sha256": "98433f685cfad70d7ebf3aa80edf868d804c00625023ab19595a261b198dbcea"
+    },
+    {
+      "file": "TWO.PNG",
+      "seek_seconds": 6.5,
+      "png_sha256": "860ee6c3e5d0cd718d9d95684e102220322867b2fd77a5a7bbac27a1c5c1489c"
+    },
+    {
+      "file": "ONE.PNG",
+      "seek_seconds": 8.5,
+      "png_sha256": "8177689dd32d4435fd532afab66ae1a5abeda41975205789e73ef67b200d632b"
+    },
+    {
+      "file": "SELECTED.PNG",
+      "seek_seconds": 13.5,
+      "png_sha256": "23cbc9e95cd95777c5a767c9f8be2688ca9c26ee49c6fad163700b2940f60096"
+    },
+    {
+      "file": "CANCEL.PNG",
+      "seek_seconds": 16.5,
+      "png_sha256": "3c82bc21bd5d614c8af163b1870051fada1830f03ad9488cd06c77b8f1b6fab0"
+    },
+    {
+      "file": "LONGPATH.PNG",
+      "seek_seconds": 22.5,
+      "png_sha256": "ecaf2cca6b6d31ab35a0f85f343bde076e68f79695f64850b469b4ed0ef58614"
+    }
+  ],
+  "forced_observer_sha256": "332bca1c2bbcef8d384e80c82a2a6777e6595cc051cb4bd7d5f42b558e39225b",
+  "queued_observer_sha256": "f1817d46b7d1805ce214b7bb131eb4aa14cd9f87ba8a85c8523fd58431d75623",
+  "raw_sampling": "16384 bytes read from B800:0000 through _lwrite",
+  "forced_timing": "synchronous after cross-task UpdateWindow, UIQA steps 1/6/8; exact raw-to-video timestamp was not recorded",
+  "queued_timing": "no cross-task UpdateWindow; deferred until next observer timer before the next action",
+  "production_hashes_unchanged": {
+    "EXJOY.EXE": "3b0ed6e48fec4a7a20aa2dbe0302dc07ac826b5df6cb0824d248a3b71ea14b61",
+    "DROPRX.EXE": "3456fccc543a785d8fac2d355d465f590b6725e368a992ca998a7c2d650b87df",
+    "DROPTX.EXE": "69dd16a0029f2b0f3f3bfac31678d335d56204e249fd66bb23bd9f2bec6308f0",
+    "CDTEST.EXE": "58482544f0bcc06e63f27c217d171d57c82ab3293af47a9ae09bfc747237dbe1",
+    "COMMDLG.DLL": "2f244e11acf6605130928c0fdf6e280702740a057198af2221124431ed90c62d",
+    "CDSTART.EXE": "c2cf986d1cd5d44ed02a31a4c327601b4b7b4b6a4dceb94fa41f8909d8136eac"
+  }
+}

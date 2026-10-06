@@ -1,0 +1,21 @@
+{
+  "test_kind": "basic",
+  "round_trip_pass": true,
+  "mode": "640x200x4",
+  "returncode": 0,
+  "seconds": 10.4,
+  "pass_count": 87,
+  "fail_lines": [],
+  "suite_pass": false,
+  "final_pass": true,
+  "second_caller_pass": false,
+  "dos_return": true,
+  "cpu": "8086_prefetch",
+  "memory_kb": 640,
+  "xms": false,
+  "ems": false,
+  "umb": false,
+  "cycles": 100000,
+  "timeout_seconds": 180,
+  "temporary_files_remaining": []
+}

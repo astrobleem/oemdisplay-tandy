@@ -1,0 +1,15 @@
+#define WINVER 0x0300
+#include <windows.h>
+#ifndef WM_DROPFILES
+#define WM_DROPFILES 0x0233
+#endif
+/* Independent Win3.0 extension. No SHELL.DLL replacement or implicit aliases. */
+#define TD_MAX 4096
+BOOL FAR PASCAL TDDragAcceptFiles(HWND,BOOL);
+UINT FAR PASCAL TDDragQueryFile(HGLOBAL,UINT,LPSTR,UINT);
+BOOL FAR PASCAL TDDragQueryPoint(HGLOBAL,LPPOINT);
+void FAR PASCAL TDDragFinish(HGLOBAL);
+BOOL FAR PASCAL TDValid(HGLOBAL);
+HWND FAR PASCAL TDTarget(POINT);
+HGLOBAL FAR PASCAL TDPack(LPCSTR,UINT,POINT,BOOL);
+BOOL FAR PASCAL TDPost(HWND,HGLOBAL);

@@ -1,0 +1,486 @@
+{
+  "pass": true,
+  "qualified_cases": 26,
+  "cases": {
+    "PORTTEST": {
+      "result": "EVIDENCE/NATIVE/PORTTEST/RESULT.JSN",
+      "qualified": true
+    },
+    "160x200x16/EXJOY": {
+      "result": "EVIDENCE/NATIVE/160x200x16/EXJOY/RESULT.JSN",
+      "qualified": true
+    },
+    "160x200x16/FILEDROP": {
+      "result": "EVIDENCE/NATIVE/160x200x16/FILEDROP/RESULT.JSN",
+      "qualified": true
+    },
+    "160x200x16/CDFULL": {
+      "result": "EVIDENCE/NATIVE/160x200x16/CDFULL/RESULT.JSN",
+      "qualified": true
+    },
+    "160x200x16/CDBASIC": {
+      "result": "EVIDENCE/NATIVE/160x200x16/CDBASIC/RESULT.JSN",
+      "qualified": true
+    },
+    "160x200x16/NORMAL": {
+      "result": "EVIDENCE/NATIVE/160x200x16/NORMAL/RESULT.JSN",
+      "qualified": true
+    },
+    "320x200x16/EXJOY": {
+      "result": "EVIDENCE/NATIVE/320x200x16/EXJOY/RESULT.JSN",
+      "qualified": true
+    },
+    "320x200x16/FILEDROP": {
+      "result": "EVIDENCE/NATIVE/320x200x16/FILEDROP/RESULT.JSN",
+      "qualified": true
+    },
+    "320x200x16/CDFULL": {
+      "result": "EVIDENCE/NATIVE/320x200x16/CDFULL/RESULT.JSN",
+      "qualified": true
+    },
+    "320x200x16/CDBASIC": {
+      "result": "EVIDENCE/NATIVE/320x200x16/CDBASIC/RESULT.JSN",
+      "qualified": true
+    },
+    "320x200x16/NORMAL": {
+      "result": "EVIDENCE/NATIVE/320x200x16/NORMAL/RESULT.JSN",
+      "qualified": true
+    },
+    "320x200x4/EXJOY": {
+      "result": "EVIDENCE/NATIVE/320x200x4/EXJOY/RESULT.JSN",
+      "qualified": true
+    },
+    "320x200x4/FILEDROP": {
+      "result": "EVIDENCE/NATIVE/320x200x4/FILEDROP/RESULT.JSN",
+      "qualified": true
+    },
+    "320x200x4/CDFULL": {
+      "result": "EVIDENCE/NATIVE/320x200x4/CDFULL/RESULT.JSN",
+      "qualified": true
+    },
+    "320x200x4/CDBASIC": {
+      "result": "EVIDENCE/NATIVE/320x200x4/CDBASIC/RESULT.JSN",
+      "qualified": true
+    },
+    "320x200x4/NORMAL": {
+      "result": "EVIDENCE/NATIVE/320x200x4/NORMAL/RESULT.JSN",
+      "qualified": true
+    },
+    "640x200x4/EXJOY": {
+      "result": "EVIDENCE/NATIVE/640x200x4/EXJOY/RESULT.JSN",
+      "qualified": true
+    },
+    "640x200x4/FILEDROP": {
+      "result": "EVIDENCE/NATIVE/640x200x4/FILEDROP/RESULT.JSN",
+      "qualified": true
+    },
+    "640x200x4/CDFULL": {
+      "result": "EVIDENCE/NATIVE/640x200x4/CDFULL/RESULT.JSN",
+      "qualified": true
+    },
+    "640x200x4/CDBASIC": {
+      "result": "EVIDENCE/NATIVE/640x200x4/CDBASIC/RESULT.JSN",
+      "qualified": true
+    },
+    "640x200x4/NORMAL": {
+      "result": "EVIDENCE/NATIVE/640x200x4/NORMAL/RESULT.JSN",
+      "qualified": true
+    },
+    "640x200x2/EXJOY": {
+      "result": "EVIDENCE/NATIVE/640x200x2/EXJOY/RESULT.JSN",
+      "qualified": true
+    },
+    "640x200x2/FILEDROP": {
+      "result": "EVIDENCE/NATIVE/640x200x2/FILEDROP/RESULT.JSN",
+      "qualified": true
+    },
+    "640x200x2/CDFULL": {
+      "result": "EVIDENCE/NATIVE/640x200x2/CDFULL/RESULT.JSN",
+      "qualified": true
+    },
+    "640x200x2/CDBASIC": {
+      "result": "EVIDENCE/NATIVE/640x200x2/CDBASIC/RESULT.JSN",
+      "qualified": true
+    },
+    "640x200x2/NORMAL": {
+      "result": "EVIDENCE/NATIVE/640x200x2/NORMAL/RESULT.JSN",
+      "qualified": true
+    }
+  },
+  "screens": [
+    {
+      "raw": "PAUSED.RAW",
+      "mode": "160",
+      "logical_dimensions": [
+        160,
+        200
+      ],
+      "sha256_raw": "209a00896ad9ebb3fd57cd4e7c7b6c9b44b9640d019e32650a94278c6bf3fe4b",
+      "png": "PAUSED.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/160x200x16/NORMAL/PAUSED.PNG"
+    },
+    {
+      "raw": "TWO.RAW",
+      "mode": "160",
+      "logical_dimensions": [
+        160,
+        200
+      ],
+      "sha256_raw": "3b5dd731a015588729e21e38ee6a8aee6a340f219c32c39c2a24b59a70cd8f9f",
+      "png": "TWO.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/160x200x16/NORMAL/TWO.PNG"
+    },
+    {
+      "raw": "ONE.RAW",
+      "mode": "160",
+      "logical_dimensions": [
+        160,
+        200
+      ],
+      "sha256_raw": "561ed183f10f3a58bb43a512d9c79ab18670979f3ef3ee1015829e113fc864dd",
+      "png": "ONE.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/160x200x16/NORMAL/ONE.PNG"
+    },
+    {
+      "raw": "SELECTED.RAW",
+      "mode": "160",
+      "logical_dimensions": [
+        160,
+        200
+      ],
+      "sha256_raw": "d26240d4b5c70adb64d403c4c1abedb06c5ef92a450904d7a5c338e0b2bb973d",
+      "png": "SELECTED.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/160x200x16/NORMAL/SELECTED.PNG"
+    },
+    {
+      "raw": "CANCEL.RAW",
+      "mode": "160",
+      "logical_dimensions": [
+        160,
+        200
+      ],
+      "sha256_raw": "e3ebb8e2f88273b11d22aa7572a124f99e3308d376ae40ea01c1e312b7840f7a",
+      "png": "CANCEL.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/160x200x16/NORMAL/CANCEL.PNG"
+    },
+    {
+      "raw": "LONGPATH.RAW",
+      "mode": "160",
+      "logical_dimensions": [
+        160,
+        200
+      ],
+      "sha256_raw": "f1e829850fcc8530dc4facf6156cee875b49fcb855681b327efac31d32406a4b",
+      "png": "LONGPATH.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/160x200x16/NORMAL/LONGPATH.PNG"
+    },
+    {
+      "raw": "PAUSED.RAW",
+      "mode": "baseline",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "9055d7471d97994ccf985b84d53d6a7f928043637af01651209b521d9f84b913",
+      "png": "PAUSED.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x16/NORMAL/PAUSED.PNG"
+    },
+    {
+      "raw": "TWO.RAW",
+      "mode": "baseline",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "c1e42cfc7e8cb04febb47e23be3a5059b548353de9a4465aa834d18f69aab073",
+      "png": "TWO.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x16/NORMAL/TWO.PNG"
+    },
+    {
+      "raw": "ONE.RAW",
+      "mode": "baseline",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "507b90d497800f1206e514befd2e3f38b371a6fd56f37d138e140fff7baa30ee",
+      "png": "ONE.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x16/NORMAL/ONE.PNG"
+    },
+    {
+      "raw": "SELECTED.RAW",
+      "mode": "baseline",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "1ee37757d1bb3e65295789ac77f1d59ae2dcea6a932bf93363755a41c3792aa0",
+      "png": "SELECTED.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x16/NORMAL/SELECTED.PNG"
+    },
+    {
+      "raw": "CANCEL.RAW",
+      "mode": "baseline",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "0a5917e5cd0425609ca59a31d426df12e1f040122144c44e02cc851caf540525",
+      "png": "CANCEL.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x16/NORMAL/CANCEL.PNG"
+    },
+    {
+      "raw": "LONGPATH.RAW",
+      "mode": "baseline",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "6bbc364bde80d48458dff30e391ebb0aa976bc25fb79d94295e6be5f2f99a036",
+      "png": "LONGPATH.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x16/NORMAL/LONGPATH.PNG"
+    },
+    {
+      "raw": "PAUSED.RAW",
+      "mode": "3204",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "ab32849e3bc2c0a81006a67a9ece7bac742b891081caddf6a42058624a48cf70",
+      "png": "PAUSED.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x4/NORMAL/PAUSED.PNG",
+      "source_case": "EVIDENCE/PROBE3204/QUEUED/RESULT.JSN",
+      "observer_note": "Deferred sample after ordinary queued paint; no cross-task UpdateWindow"
+    },
+    {
+      "raw": "TWO.RAW",
+      "mode": "3204",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "15f414e2fb1c2d506258489e39ab983225e70e3d02d90dcf62b99b1b024c4391",
+      "png": "TWO.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x4/NORMAL/TWO.PNG",
+      "source_case": "EVIDENCE/PROBE3204/QUEUED/RESULT.JSN",
+      "observer_note": "Deferred sample after ordinary queued paint; no cross-task UpdateWindow"
+    },
+    {
+      "raw": "ONE.RAW",
+      "mode": "3204",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "c5bbfe21069c46942431329983ab58bd39ec5b9010afa3895313b4cdf75fd7bf",
+      "png": "ONE.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x4/NORMAL/ONE.PNG",
+      "source_case": "EVIDENCE/PROBE3204/QUEUED/RESULT.JSN",
+      "observer_note": "Deferred sample after ordinary queued paint; no cross-task UpdateWindow"
+    },
+    {
+      "raw": "SELECTED.RAW",
+      "mode": "3204",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "62b87ccd36b3e1b50f25a0613b20953a4d8b18bd8de7dedf6ff23f5b1001721c",
+      "png": "SELECTED.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x4/NORMAL/SELECTED.PNG",
+      "source_case": "EVIDENCE/PROBE3204/QUEUED/RESULT.JSN",
+      "observer_note": "Deferred sample after ordinary queued paint; no cross-task UpdateWindow"
+    },
+    {
+      "raw": "CANCEL.RAW",
+      "mode": "3204",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "1ef109225cb17b73efe9f02d0034afef13ceb4fc80ffd64101a1b6cc054b9b13",
+      "png": "CANCEL.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x4/NORMAL/CANCEL.PNG",
+      "source_case": "EVIDENCE/PROBE3204/QUEUED/RESULT.JSN",
+      "observer_note": "Deferred sample after ordinary queued paint; no cross-task UpdateWindow"
+    },
+    {
+      "raw": "LONGPATH.RAW",
+      "mode": "3204",
+      "logical_dimensions": [
+        320,
+        200
+      ],
+      "sha256_raw": "03d972b6b6105b9d509408da1c2d15178505b34315eb0c32bf28457ae798a9b1",
+      "png": "LONGPATH.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/320x200x4/NORMAL/LONGPATH.PNG",
+      "source_case": "EVIDENCE/PROBE3204/QUEUED/RESULT.JSN",
+      "observer_note": "Deferred sample after ordinary queued paint; no cross-task UpdateWindow"
+    },
+    {
+      "raw": "PAUSED.RAW",
+      "mode": "6404",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "c0100082ac790b8ec07fddeb805d3a8c9e256f12301a94a111a36468eac8a5c3",
+      "png": "PAUSED.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x4/NORMAL/PAUSED.PNG"
+    },
+    {
+      "raw": "TWO.RAW",
+      "mode": "6404",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "3b9b8aebd1df7191f1bb9740b8130c62a8427ff371853de0a84a9c954bb371a2",
+      "png": "TWO.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x4/NORMAL/TWO.PNG"
+    },
+    {
+      "raw": "ONE.RAW",
+      "mode": "6404",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "764a89ee24ccec787396821506558a2d5e02b12d40ddc6b6d968c9d03bdddd90",
+      "png": "ONE.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x4/NORMAL/ONE.PNG"
+    },
+    {
+      "raw": "SELECTED.RAW",
+      "mode": "6404",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "f40304c7be3d2d9774374ff5f9ba3ab272e65c274b6923d96d0a319ccbe35a17",
+      "png": "SELECTED.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x4/NORMAL/SELECTED.PNG"
+    },
+    {
+      "raw": "CANCEL.RAW",
+      "mode": "6404",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "605c8cc2a7e681c07b65f6ab2186e1fc04f0e08a87e057af1cd6a85102b3fb36",
+      "png": "CANCEL.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x4/NORMAL/CANCEL.PNG"
+    },
+    {
+      "raw": "LONGPATH.RAW",
+      "mode": "6404",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "47149007c2f104b0cd3d4f7d387ef2d521bb3cb01ab7485d16ff85231ecb4d4f",
+      "png": "LONGPATH.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x4/NORMAL/LONGPATH.PNG"
+    },
+    {
+      "raw": "PAUSED.RAW",
+      "mode": "6402",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "52b0e9dab4afb06aba311f98e699ebe2db1de0c78f7516678db4dbf4c42a85f9",
+      "png": "PAUSED.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x2/NORMAL/PAUSED.PNG"
+    },
+    {
+      "raw": "TWO.RAW",
+      "mode": "6402",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "1f26d03f8e44ab1aa0cb1e925e20755f7cc1c972b63806637050919004ad90a3",
+      "png": "TWO.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x2/NORMAL/TWO.PNG"
+    },
+    {
+      "raw": "ONE.RAW",
+      "mode": "6402",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "af285af79cd5daa0c975be6a204f2cb5af3b40dd73363f6a0e9c4c00c12bca6d",
+      "png": "ONE.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x2/NORMAL/ONE.PNG"
+    },
+    {
+      "raw": "SELECTED.RAW",
+      "mode": "6402",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "7d88f416492dc7d60fbabf21d71ba7ef5a9f590c4d5fe80e7b7a42404d8352bf",
+      "png": "SELECTED.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x2/NORMAL/SELECTED.PNG"
+    },
+    {
+      "raw": "CANCEL.RAW",
+      "mode": "6402",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "a1ea44c9f1cbbb955265d9cdbcd2e56841bdc6952eb1ba8f40a3da0252e02c85",
+      "png": "CANCEL.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x2/NORMAL/CANCEL.PNG"
+    },
+    {
+      "raw": "LONGPATH.RAW",
+      "mode": "6402",
+      "logical_dimensions": [
+        640,
+        200
+      ],
+      "sha256_raw": "6268acfe9c5cb99b0e9f5cd7eb43a98bb0fcaba17d61bc834b7fc8871d37d1b5",
+      "png": "LONGPATH.PNG",
+      "pixel_changes": "none; hardware layout decoding only; 160 DISPLAY duplicates horizontal pixels",
+      "file": "EVIDENCE/NATIVE/640x200x2/NORMAL/LONGPATH.PNG"
+    }
+  ],
+  "supplementary_queued_paint_cases": 1,
+  "queued_paint_record": "EVIDENCE/PROBE3204/QUEUED/RESULT.JSN"
+}

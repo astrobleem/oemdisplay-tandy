@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "cases": 128,
+  "max_instructions_per_capture": 2063,
+  "reads_per_capture": 512,
+  "writes_per_capture": 1,
+  "only_port": "0201h",
+  "routine_hex": "558bec5652518b7604ba0102b9000233c0eeec880446e2fa595a5e5dc3",
+  "exe_sha256": "3b0ed6e48fec4a7a20aa2dbe0302dc07ac826b5df6cb0824d248a3b71ea14b61",
+  "scope": "Exact assembled JOYCAP bytes, simulated IN/OUT and stack/register/buffer checks. No physical or emulator joystick/timing validation."
+}
