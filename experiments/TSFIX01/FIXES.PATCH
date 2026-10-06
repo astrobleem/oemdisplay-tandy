@@ -1,0 +1,135 @@
+diff --git a/examples/TSHELL/PROGMENU.C b/examples/TSHELL/PROGMENU.C
+index 64ccca3..50dc857 100644
+--- a/examples/TSHELL/PROGMENU.C
++++ b/examples/TSHELL/PROGMENU.C
+@@ -240,7 +240,11 @@ static void pmpage(HWND w)
+     if (end > from) SendDlgItemMessage(w, PM_LIST, LB_SETCURSEL, 0, 0L);
+     SetFocus(GetDlgItem(w, PM_LIST));
+     if (!count) pmstatus(w, pmLevel ? "Empty group" : "No groups found");
+-    else if (!pmLevel && pmMoreGroups) pmstatus(w, "First 40 groups");
++    else if (!pmLevel && pmMoreGroups) {
++        /* Keep both navigation and the cap visible in the 15-character row. */
++        wsprintf(status, "40 max %d/%d", pmPage + 1, pages);
++        pmstatus(w, status);
++    }
+ }
+ 
+ static void pmchoose(HWND w)
+diff --git a/examples/TSHELL/TESTS/RUNHOST.PY b/examples/TSHELL/TESTS/RUNHOST.PY
+index b34a891..c2d3ce2 100644
+--- a/examples/TSHELL/TESTS/RUNHOST.PY
++++ b/examples/TSHELL/TESTS/RUNHOST.PY
+@@ -13,11 +13,12 @@ with tempfile.TemporaryDirectory(prefix='tshell-tests-') as tmp:
+  cases=[
+   ('TESTBOOT',['-std=c89','-I'+str(root/'TESTS/HSTINC'),str(root/'TESTS/TESTBOOT.C')]),
+   ('TESTSV',['-std=c89','-DHOST_TEST',str(root/'TESTS/TESTSV.C'),str(root/'SVCORE.C')]),
+-  ('HOSTTEST',['-std=c89',str(root/'IDLE/TESTS/HOSTTEST.C')]),
++  ('HOSTTEST',['-std=c89',str(root/'IDLE/tests/HOSTTEST.C')]),
++  ('HOLDTEST',['-std=c89',str(root/'IDLE/tests/HOLDTEST.C')]),
+  ]
+  for name,args in cases:
+   exe=out/name
+   subprocess.run([cc,'-x','c']+args+['-o',str(exe)],check=True)
+   subprocess.run([str(exe)],check=True)
+-subprocess.run([sys.executable,str(root/'IDLE/TESTS/VERIFY.PY'),str(root/'TSINPUT.DLL')],check=True)
+-print('TSHELL 06 portable host and DLL contract checks PASS')
++subprocess.run([sys.executable,str(root/'IDLE/tests/VERIFY.PY'),str(root/'TSINPUT.DLL')],check=True)
++print('TSHELL portable host and DLL contract checks PASS')
+diff --git a/examples/TSHELL/TSDATE.C b/examples/TSHELL/TSDATE.C
+index 5aec279..f606f91 100644
+--- a/examples/TSHELL/TSDATE.C
++++ b/examples/TSHELL/TSDATE.C
+@@ -188,7 +188,10 @@ BOOL FAR PASCAL DateProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
+         if (wp == DATE_APPLY) {
+             child = GetDlgItem(w, DATE_APPLY);
+             if ((HWND)LOWORD(lp) == child && HIWORD(lp) == BN_CLICKED &&
+-                GetFocus() == child) applyClock(w);
++                IsWindowEnabled(child) && GetActiveWindow() == w) {
++                /* Alt mnemonic clicks need not move focus on Windows 3.0. */
++                SetFocus(child); applyClock(w);
++            }
+             return TRUE;
+         }
+     }
+diff --git a/examples/TSHELL/TSHELL.C b/examples/TSHELL/TSHELL.C
+index 28088a5..5872803 100644
+--- a/examples/TSHELL/TSHELL.C
++++ b/examples/TSHELL/TSHELL.C
+@@ -39,13 +39,14 @@ static int browseDrive,browseFilter,browseBusy,browseValid;
+ static int browseDrawDepth;
+ static HWND browseDrawList;
+ static char FAR *browseDirs;
+-static char *masks[]={"*.EXE","*.COM","*.BAT"};
++static char *masks[]={"*.EXE","*.COM","*.BAT","*.PIF"};
++#define BROWSE_FILTERS (sizeof(masks)/sizeof(masks[0]))
+ static HINSTANCE instance;
+ static HWND start;
+ static int primaryShell, shellMode, width, barHeight=22, minute=-1;
+ static int systemQueued;
+ static char clockText[6]="--:--";
+-static char *names[]={"&Program Mgr"};
++static char *names[]={"Program M&gr"};
+ static char *files[]={"PROGMAN.EXE"};
+ static char paths[1][144];
+ static void findapps(void) {
+@@ -363,7 +364,7 @@ BOOL FAR PASCAL BrowseProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
+   CreateWindow("BUTTON","&Open",WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_DEFPUSHBUTTON,6,142,54,20,w,(HMENU)IDOK,instance,NULL);
+   CreateWindow("BUTTON","&Cancel",WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_PUSHBUTTON,68,142,54,20,w,(HMENU)IDCANCEL,instance,NULL);
+   for(i=0;i<7;i++){child=GetDlgItem(w,i==0?PATHBOX:i==1?FILTER:i==2?FILELIST:i==3?IDOK:i==4?IDCANCEL:i==5?NATIVELIST:SHORTBOX);if(!child){EndDialog(w,IDCANCEL);return TRUE;}SendMessage(child,WM_SETFONT,(WPARAM)GetStockObject(SYSTEM_FIXED_FONT),0L);}
+-  for(i=0;i<3;i++)SendDlgItemMessage(w,FILTER,CB_ADDSTRING,0,(LPARAM)(LPSTR)masks[i]);
++  for(i=0;i<BROWSE_FILTERS;i++)SendDlgItemMessage(w,FILTER,CB_ADDSTRING,0,(LPARAM)(LPSTR)masks[i]);
+   SendDlgItemMessage(w,FILTER,CB_SETCURSEL,browseFilter,0L);
+   if(!listfiles(w,"")){EndDialog(w,IDCANCEL);return TRUE;}
+   SetFocus(GetDlgItem(w,browseBusy?IDCANCEL:FILELIST));return FALSE;
+@@ -376,11 +377,13 @@ BOOL FAR PASCAL BrowseProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
+   KillTimer(w,NAMES_TIMER);TSNamesEnd();browseBusy=0;EndDialog(w,IDCANCEL);return TRUE;
+  }
+  if(m==WM_DESTROY){KillTimer(w,NAMES_TIMER);TSNamesEnd();browseBusy=0;return TRUE;}
+- if(m==WM_QUERYENDSESSION){if(browseBusy)browseready(w,1);return TRUE;}
++ /* DefDlgProc owns the TRUE shutdown result; TRUE here would return
++    the unset dialog message result (zero) and veto shutdown. */
++ if(m==WM_QUERYENDSESSION){if(browseBusy)browseready(w,1);return FALSE;}
+  if(m==WM_ENDSESSION&&wp){KillTimer(w,NAMES_TIMER);TSNamesEnd();browseBusy=0;EndDialog(w,IDCANCEL);return TRUE;}
+  if(m==WM_COMMAND&&browseBusy)return TRUE;
+  if(m==WM_COMMAND&&wp==FILELIST&&HIWORD(lp)==LBN_SELCHANGE){browseselect(w);return TRUE;}
+- if(m==WM_COMMAND&&wp==FILTER&&HIWORD(lp)==CBN_SELCHANGE){browseFilter=(int)SendDlgItemMessage(w,FILTER,CB_GETCURSEL,0,0L);listfiles(w,"");return TRUE;}
++ if(m==WM_COMMAND&&wp==FILTER&&HIWORD(lp)==CBN_SELCHANGE){i=(int)SendDlgItemMessage(w,FILTER,CB_GETCURSEL,0,0L);if(i>=0&&i<BROWSE_FILTERS){browseFilter=i;listfiles(w,"");}return TRUE;}
+  if(m==WM_COMMAND&&(wp==IDOK||(wp==FILELIST&&HIWORD(lp)==LBN_DBLCLK))){
+   if(!browseValid)return TRUE;
+   if(!getcwd(cwd,sizeof(cwd))||lstrcmpi(cwd,browseListed)){listfiles(w,"");return TRUE;}
+diff --git a/examples/TSHELL/TSSAVCFG.C b/examples/TSHELL/TSSAVCFG.C
+index de66dfd..487d9ef 100644
+--- a/examples/TSHELL/TSSAVCFG.C
++++ b/examples/TSHELL/TSSAVCFG.C
+@@ -263,8 +263,13 @@ BOOL FAR PASCAL SaverCfgProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
+         }
+         if (wp == CFG_APPLY || wp == CFG_PREVIEW || wp == CFG_OPTIONS) {
+             child = GetDlgItem(w, wp);
+-            if ((!lp || ((HWND)LOWORD(lp) == child && HIWORD(lp) == BN_CLICKED)) &&
+-                GetFocus() == child && !cfgApplying && !cfgClosing) {
++            /* Explicit button clicks include Alt mnemonics without focus.
++               Implicit Enter must still name the focused button. */
++            if (((lp && (HWND)LOWORD(lp) == child && HIWORD(lp) == BN_CLICKED) ||
++                 (!lp && GetFocus() == child)) && IsWindowEnabled(child) &&
++                GetActiveWindow() == w &&
++                !cfgApplying && !cfgClosing) {
++                SetFocus(child);
+                 if (wp == CFG_APPLY) applyConfig(w);
+                 else if (wp == CFG_OPTIONS) {
+                     if (cfgLoaded && selection(w) == SC_STARFIELD &&
+diff --git a/examples/TSHELL/TSSVOPT.C b/examples/TSHELL/TSSVOPT.C
+index b8ee4bb..282db4f 100644
+--- a/examples/TSHELL/TSSVOPT.C
++++ b/examples/TSHELL/TSSVOPT.C
+@@ -57,7 +57,10 @@ BOOL FAR PASCAL StarOptProc(HWND w,UINT m,WPARAM wp,LPARAM lp)
+   }
+   if(wp==IDOK){
+    button=GetDlgItem(w,IDOK);
+-   if(GetFocus()==button&&(!lp||((HWND)LOWORD(lp)==button&&HIWORD(lp)==BN_CLICKED))){
++   /* Alt+O supplies the real button handle without moving focus. */
++   if(((lp&&(HWND)LOWORD(lp)==button&&HIWORD(lp)==BN_CLICKED)||
++       (!lp&&GetFocus()==button))&&IsWindowEnabled(button)&&GetActiveWindow()==w){
++    SetFocus(button);
+     optSpeed=IsDlgButtonChecked(w,OPT_SLOW)?1:IsDlgButtonChecked(w,OPT_FAST)?3:2;
+     optStars=IsDlgButtonChecked(w,OPT_16)?16:IsDlgButtonChecked(w,OPT_64)?64:32;
+     EndDialog(w,IDOK);

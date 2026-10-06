@@ -1,0 +1,260 @@
+{
+  "baseline": "b73c77c036e90efc317060bafaaaf2f01b2dba6e",
+  "status": "Qualified isolated experimental fix within the documented scope; no installation or default promotion",
+  "production_bytes": 68451,
+  "production_sha256": "908ef05cd69783631f1f6e6c0c43cbb7574d80f2a6600029641e6f784cce09fd",
+  "unchanged_dll_sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80",
+  "accepted_native_runs": [
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "dfff6f835544130a94991a31f63213ecbb49cdb0cf0256ba87f771be4e2c7be6",
+      "native_log": "PASS real mode\nSTAGE=0\nPASS exact production starts\nSTAGE=1\nPASS bar created\nPASS bar fits width\nSTAGE=2\nPASS Run opens\nSTAGE=3\nPASS Browse opens\nPASS PIF filter present\nPASS shutdown query accepted\nPASS canceled query leaves dialog\nSTAGE=4\nPASS Browse cancelled\nPASS Run remains\nSTAGE=5\nPASS Run cancelled\nSTAGE=6\nPASS Run reopens\nSTAGE=7\nPASS Browse reopens\nPASS EXE filter restored on reopen\nSTAGE=8\nSTAGE=9\nSTAGE=10\nPASS secondary bar closes\nPASS_COUNT=16\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "160",
+      "kind": "exact production repeat-open and canceled-query observer",
+      "checks": 16,
+      "cycles": 25000,
+      "production_sha256": "908ef05cd69783631f1f6e6c0c43cbb7574d80f2a6600029641e6f784cce09fd"
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "dfff6f835544130a94991a31f63213ecbb49cdb0cf0256ba87f771be4e2c7be6",
+      "native_log": "PASS real mode\nSTAGE=0\nPASS exact production starts\nSTAGE=1\nPASS bar created\nPASS bar fits width\nSTAGE=2\nPASS Run opens\nSTAGE=3\nPASS Browse opens\nPASS PIF filter present\nPASS shutdown query accepted\nPASS canceled query leaves dialog\nSTAGE=4\nPASS Browse cancelled\nPASS Run remains\nSTAGE=5\nPASS Run cancelled\nSTAGE=6\nPASS Run reopens\nSTAGE=7\nPASS Browse reopens\nPASS EXE filter restored on reopen\nSTAGE=8\nSTAGE=9\nSTAGE=10\nPASS secondary bar closes\nPASS_COUNT=16\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "320",
+      "kind": "exact production repeat-open and canceled-query observer",
+      "checks": 16,
+      "cycles": 25000,
+      "production_sha256": "908ef05cd69783631f1f6e6c0c43cbb7574d80f2a6600029641e6f784cce09fd"
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "dfff6f835544130a94991a31f63213ecbb49cdb0cf0256ba87f771be4e2c7be6",
+      "native_log": "PASS real mode\nSTAGE=0\nPASS exact production starts\nSTAGE=1\nPASS bar created\nPASS bar fits width\nSTAGE=2\nPASS Run opens\nSTAGE=3\nPASS Browse opens\nPASS PIF filter present\nPASS shutdown query accepted\nPASS canceled query leaves dialog\nSTAGE=4\nPASS Browse cancelled\nPASS Run remains\nSTAGE=5\nPASS Run cancelled\nSTAGE=6\nPASS Run reopens\nSTAGE=7\nPASS Browse reopens\nPASS EXE filter restored on reopen\nSTAGE=8\nSTAGE=9\nSTAGE=10\nPASS secondary bar closes\nPASS_COUNT=16\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "320c",
+      "kind": "exact production repeat-open and canceled-query observer",
+      "checks": 16,
+      "cycles": 25000,
+      "production_sha256": "908ef05cd69783631f1f6e6c0c43cbb7574d80f2a6600029641e6f784cce09fd"
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "dfff6f835544130a94991a31f63213ecbb49cdb0cf0256ba87f771be4e2c7be6",
+      "native_log": "PASS real mode\nSTAGE=0\nPASS exact production starts\nSTAGE=1\nPASS bar created\nPASS bar fits width\nSTAGE=2\nPASS Run opens\nSTAGE=3\nPASS Browse opens\nPASS PIF filter present\nPASS shutdown query accepted\nPASS canceled query leaves dialog\nSTAGE=4\nPASS Browse cancelled\nPASS Run remains\nSTAGE=5\nPASS Run cancelled\nSTAGE=6\nPASS Run reopens\nSTAGE=7\nPASS Browse reopens\nPASS EXE filter restored on reopen\nSTAGE=8\nSTAGE=9\nSTAGE=10\nPASS secondary bar closes\nPASS_COUNT=16\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "640c",
+      "kind": "exact production repeat-open and canceled-query observer",
+      "checks": 16,
+      "cycles": 25000,
+      "production_sha256": "908ef05cd69783631f1f6e6c0c43cbb7574d80f2a6600029641e6f784cce09fd"
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "dfff6f835544130a94991a31f63213ecbb49cdb0cf0256ba87f771be4e2c7be6",
+      "native_log": "PASS real mode\nSTAGE=0\nPASS exact production starts\nSTAGE=1\nPASS bar created\nPASS bar fits width\nSTAGE=2\nPASS Run opens\nSTAGE=3\nPASS Browse opens\nPASS PIF filter present\nPASS shutdown query accepted\nPASS canceled query leaves dialog\nSTAGE=4\nPASS Browse cancelled\nPASS Run remains\nSTAGE=5\nPASS Run cancelled\nSTAGE=6\nPASS Run reopens\nSTAGE=7\nPASS Browse reopens\nPASS EXE filter restored on reopen\nSTAGE=8\nSTAGE=9\nSTAGE=10\nPASS secondary bar closes\nPASS_COUNT=16\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "640m",
+      "kind": "exact production repeat-open and canceled-query observer",
+      "checks": 16,
+      "cycles": 25000,
+      "production_sha256": "908ef05cd69783631f1f6e6c0c43cbb7574d80f2a6600029641e6f784cce09fd"
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "11f937dc22f74155bd8c166f702edb62200fb67f98af609e5fe320d85358cfb0",
+      "native_log": "PASS real mode\nPASS callback\nPASS date implicit Enter does not apply\nPASS date wrong button refused\nPASS date disabled Apply refused\nPASS date Alt+A accepted\nPASS saver edit Enter inert\nPASS saver wrong button refused\nPASS saver Alt+O accepted\nPASS saver Alt+A accepted\nPASS preview explicitly focuses button\nPASS saver Alt+P accepted\nPASS options implicit Enter inert\nPASS options Alt+O accepted\nPASS all dialogs tested\nPASS_COUNT=15\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "160",
+      "kind": "native dialog handler with fake actions",
+      "checks": 15,
+      "cycles": 200000
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "11f937dc22f74155bd8c166f702edb62200fb67f98af609e5fe320d85358cfb0",
+      "native_log": "PASS real mode\nPASS callback\nPASS date implicit Enter does not apply\nPASS date wrong button refused\nPASS date disabled Apply refused\nPASS date Alt+A accepted\nPASS saver edit Enter inert\nPASS saver wrong button refused\nPASS saver Alt+O accepted\nPASS saver Alt+A accepted\nPASS preview explicitly focuses button\nPASS saver Alt+P accepted\nPASS options implicit Enter inert\nPASS options Alt+O accepted\nPASS all dialogs tested\nPASS_COUNT=15\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "320",
+      "kind": "native dialog handler with fake actions",
+      "checks": 15,
+      "cycles": 200000
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "11f937dc22f74155bd8c166f702edb62200fb67f98af609e5fe320d85358cfb0",
+      "native_log": "PASS real mode\nPASS callback\nPASS date implicit Enter does not apply\nPASS date wrong button refused\nPASS date disabled Apply refused\nPASS date Alt+A accepted\nPASS saver edit Enter inert\nPASS saver wrong button refused\nPASS saver Alt+O accepted\nPASS saver Alt+A accepted\nPASS preview explicitly focuses button\nPASS saver Alt+P accepted\nPASS options implicit Enter inert\nPASS options Alt+O accepted\nPASS all dialogs tested\nPASS_COUNT=15\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "320c",
+      "kind": "native dialog handler with fake actions",
+      "checks": 15,
+      "cycles": 200000
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "11f937dc22f74155bd8c166f702edb62200fb67f98af609e5fe320d85358cfb0",
+      "native_log": "PASS real mode\nPASS callback\nPASS date implicit Enter does not apply\nPASS date wrong button refused\nPASS date disabled Apply refused\nPASS date Alt+A accepted\nPASS saver edit Enter inert\nPASS saver wrong button refused\nPASS saver Alt+O accepted\nPASS saver Alt+A accepted\nPASS preview explicitly focuses button\nPASS saver Alt+P accepted\nPASS options implicit Enter inert\nPASS options Alt+O accepted\nPASS all dialogs tested\nPASS_COUNT=15\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "640c",
+      "kind": "native dialog handler with fake actions",
+      "checks": 15,
+      "cycles": 200000
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "11f937dc22f74155bd8c166f702edb62200fb67f98af609e5fe320d85358cfb0",
+      "native_log": "PASS real mode\nPASS callback\nPASS date implicit Enter does not apply\nPASS date wrong button refused\nPASS date disabled Apply refused\nPASS date Alt+A accepted\nPASS saver edit Enter inert\nPASS saver wrong button refused\nPASS saver Alt+O accepted\nPASS saver Alt+A accepted\nPASS preview explicitly focuses button\nPASS saver Alt+P accepted\nPASS options implicit Enter inert\nPASS options Alt+O accepted\nPASS all dialogs tested\nPASS_COUNT=15\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "640m",
+      "kind": "native dialog handler with fake actions",
+      "checks": 15,
+      "cycles": 200000
+    }
+  ],
+  "native_checks": 155,
+  "unaccepted_attempts": [
+    {
+      "complete": true,
+      "passed": false,
+      "exe_sha256": "247246596f8b6a1f3cbcac950c35e3df33ef17ce8daa46154580cac42220580f",
+      "native_log": "PASS real mode\nPASS callback\nFAIL dialog manager accepted mnemonic\nFAIL mnemonic generated command\nMNEMONIC_FOCUS=0\nBROWSE_QUERY=0\nPASS both dialogs tested\nPASS_COUNT=3\nFAIL_COUNT=2\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "case": "probe-run320"
+    },
+    {
+      "complete": false,
+      "passed": false,
+      "exe_sha256": "e51e858b9cb121d1289b70c6e9f9a33b9a71f489793caf0669b848f2f1f1939c",
+      "native_log": "",
+      "guest_is_private": true,
+      "case": "final-run320"
+    },
+    {
+      "complete": false,
+      "passed": false,
+      "exe_sha256": "9609f82ce83c8a5e795aeecf717539f20d75b51d4e77eb5dd20a6240873cad99",
+      "native_log": "",
+      "guest_is_private": true,
+      "case": "final03-debug320"
+    },
+    {
+      "complete": false,
+      "passed": false,
+      "exe_sha256": "1097a40e99733287acc71b9ee43e2954af52d59a28aaa14e4d118d13d2356085",
+      "native_log": "PASS real mode\nPASS Run preserves overflow sentinel\nPASS unique Program Manager mnemonic\nPASS callback\nPASS Browse dialog exists\nPASS four filters\nPASS PIF filter\nPASS select PIF\nPASS PIF appears in DOS listing\nPASS invalid filter keeps safe mask\nPASS Browse permits shutdown\nPASS veto elsewhere can retain Browse\nPASS Browse cancellation\nPASS CWD restored\n",
+      "guest_is_private": true,
+      "case": "browse-run320"
+    },
+    {
+      "case": "repeat-run320",
+      "complete": false,
+      "passed": false,
+      "status": "interrupted before a terminal result; process session subsequently unavailable; no pass/fail conclusion about production repeat-open",
+      "planned_cycles": 25000
+    },
+    {
+      "complete": false,
+      "passed": false,
+      "exe_sha256": "368697696cdca11f2dcde8f3a98efd5abf1558d361c5624fe3411bc664dd17dd",
+      "native_log": "",
+      "guest_is_private": true,
+      "case": "repeat-final320"
+    },
+    {
+      "complete": false,
+      "passed": false,
+      "exe_sha256": "5d7cfeb571431c73da5f675cc669914145be532f1e493f8e7bd0c46dac8e7453",
+      "native_log": "PASS real mode\nSTAGE=0\nPASS exact production starts\nSTAGE=1\nPASS bar created\nPASS bar fits width\nSTAGE=2\nPASS Run opens\nSTAGE=3\nPASS Browse opens\nPASS PIF filter present\nPASS shutdown query accepted\nPASS canceled query leaves dialog\nSTAGE=4\nPASS Browse cancelled\nPASS Run remains\nSTAGE=5\nPASS Run cancelled\nSTAGE=6\nPASS Run reopens\n",
+      "guest_is_private": true,
+      "case": "repeat-protocol320"
+    }
+  ],
+  "host": {
+    "aggregate": "pass against final source; corrected obsolete hook fixture path",
+    "date_checks": 306822,
+    "configuration_checks": 143,
+    "page_status_cases": 6,
+    "scoped_isa_instructions": 22293,
+    "post8088_suspects": 0
+  },
+  "limits": [
+    "Exact production observer covers secondary-bar launch, Run/Browse, PIF selection, canceled-query handling, repeat-open and clean close in all five modes. Primary-shell startup/Hold/saver/shutdown lifecycle was not fully rerun.",
+    "Native dialog action tests substitute counters for clock/configuration writes and preview/option actions.",
+    "No physical Tandy timing, manual physical keyboard/mouse, custom fonts, text-mode, endurance or forced-low-memory acceptance.",
+    "Existing EX/HX 640x200 four-color hardware uncertainty remains.",
+    "Scoped ISA excludes imported OS routines and unresolved indirect paths."
+  ],
+  "prior_build_runs": [
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "079f72ee3b78a671171cc76df6af564febdc30fd2cddced5df6bad8693bd85dd",
+      "native_log": "PASS real mode\nPASS exact production starts\nPASS bar created\nPASS bar fits width\nPASS Run opens\nPASS Browse opens\nPASS PIF filter present\nPASS shutdown query accepted\nPASS Browse cancelled\nPASS Run remains\nPASS Run cancelled\nPASS secondary bar closes\nPASS_COUNT=12\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "160",
+      "kind": "exact production normal-use",
+      "checks": 12,
+      "cycles": 200000,
+      "production_sha256": "18f5e26749f9380666e2e62b9b21cb26e1ba42eec369bee976d747efbfeba0b9"
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "079f72ee3b78a671171cc76df6af564febdc30fd2cddced5df6bad8693bd85dd",
+      "native_log": "PASS real mode\nPASS exact production starts\nPASS bar created\nPASS bar fits width\nPASS Run opens\nPASS Browse opens\nPASS PIF filter present\nPASS shutdown query accepted\nPASS Browse cancelled\nPASS Run remains\nPASS Run cancelled\nPASS secondary bar closes\nPASS_COUNT=12\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "320",
+      "kind": "exact production normal-use",
+      "checks": 12,
+      "cycles": 200000,
+      "production_sha256": "18f5e26749f9380666e2e62b9b21cb26e1ba42eec369bee976d747efbfeba0b9"
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "079f72ee3b78a671171cc76df6af564febdc30fd2cddced5df6bad8693bd85dd",
+      "native_log": "PASS real mode\nPASS exact production starts\nPASS bar created\nPASS bar fits width\nPASS Run opens\nPASS Browse opens\nPASS PIF filter present\nPASS shutdown query accepted\nPASS Browse cancelled\nPASS Run remains\nPASS Run cancelled\nPASS secondary bar closes\nPASS_COUNT=12\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "320c",
+      "kind": "exact production normal-use",
+      "checks": 12,
+      "cycles": 200000,
+      "production_sha256": "18f5e26749f9380666e2e62b9b21cb26e1ba42eec369bee976d747efbfeba0b9"
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "079f72ee3b78a671171cc76df6af564febdc30fd2cddced5df6bad8693bd85dd",
+      "native_log": "PASS real mode\nPASS exact production starts\nPASS bar created\nPASS bar fits width\nPASS Run opens\nPASS Browse opens\nPASS PIF filter present\nPASS shutdown query accepted\nPASS Browse cancelled\nPASS Run remains\nPASS Run cancelled\nPASS secondary bar closes\nPASS_COUNT=12\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "640c",
+      "kind": "exact production normal-use",
+      "checks": 12,
+      "cycles": 200000,
+      "production_sha256": "18f5e26749f9380666e2e62b9b21cb26e1ba42eec369bee976d747efbfeba0b9"
+    },
+    {
+      "complete": true,
+      "passed": true,
+      "exe_sha256": "079f72ee3b78a671171cc76df6af564febdc30fd2cddced5df6bad8693bd85dd",
+      "native_log": "PASS real mode\nPASS exact production starts\nPASS bar created\nPASS bar fits width\nPASS Run opens\nPASS Browse opens\nPASS PIF filter present\nPASS shutdown query accepted\nPASS Browse cancelled\nPASS Run remains\nPASS Run cancelled\nPASS secondary bar closes\nPASS_COUNT=12\nFAIL_COUNT=0\nCOMPLETE=1\n",
+      "guest_is_private": true,
+      "mode": "640m",
+      "kind": "exact production normal-use",
+      "checks": 12,
+      "cycles": 200000,
+      "production_sha256": "18f5e26749f9380666e2e62b9b21cb26e1ba42eec369bee976d747efbfeba0b9"
+    }
+  ],
+  "repeat_open_resolution": "Filter retention was removed. The retained-filter build stalls on second Browse; resetting to EXE passes the corrected external observer in all five modes. PIF remains selectable. The final binary is the reset-filter variant."
+}
