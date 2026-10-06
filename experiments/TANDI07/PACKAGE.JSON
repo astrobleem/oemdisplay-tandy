@@ -1,0 +1,17 @@
+{
+  "zip": "TANDI07.ZIP",
+  "version": "0.3.4",
+  "bytes": 3613134,
+  "sha256": "4d1998d6536c1e4b297635f8fd382f85520716f6a8ea3038c42bd8ad55a6ba3f",
+  "exe_sha256": "b7cc1627f973ab266873223c8d8b3968393bb5db349f6f49f2fc42a68db07249",
+  "database_sha256": "c952b6c4d5f7b12c469ce73bf8fe9a18fa0c560cac03f339df74779b22ae455f",
+  "source_sha256": "9b6455a7bde9c015e378be8faac0aa2b73e834c8b961d477b35f4a2203aaa341",
+  "preview_sha256": "1b5549b6a2583998dd399340056a0fdc99679bebaec833561d8c4d41af12e62b",
+  "source_diff_sha256": "f9ca99d8bd5ab78a43dad37a411a8c5c88d28737da3cb6bba07c70c8221453a7",
+  "baseline_main": "b73c77c036e90efc317060bafaaaf2f01b2dba6e",
+  "baseline_experiment": "TANDI05",
+  "host_ui_checks": 36,
+  "host_sound_scenarios": 59,
+  "canonical_modified": false,
+  "driver_or_oem_modified": false
+}
