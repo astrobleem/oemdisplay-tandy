@@ -1,0 +1,91 @@
+{
+  "complete": true,
+  "app_checks_pass": true,
+  "runtime_hashes": {
+    "COOKIE": "9e1899efbd713f05f03379ebe77b14da6797dffb3bafe9de02611184c890a664",
+    "PINBALL": "8464aafca3e023f3a7755e0624254a561cd0673b6fc2fd7f2e5679579f4cbc60",
+    "BRIGHT": "18d78ed99c92d3566713652588d2a1b4b7e72fd2c2bfcf97c7617c9c14b8fbdf",
+    "GIFLOAD": "84fb99fe716acf301cb3101d2ed29ec60aa34119ba40ca28801a042335920cc0",
+    "TABOUT": "5abdc758ec5c99d0f77964bb7edba9f85137d8c3763173c2f70465226d509ec3",
+    "TSHELL": "8d9fbf0aabacc630400a2b716610fc03d38a1d625d3810e7cefb340616912729",
+    "SWAT": "5ad014ee82af6e512b6e63a2cc753ac6b4f2b52260527eebd1054ba7a87f7388"
+  },
+  "video_files": [
+    "APP3204.AVI"
+  ],
+  "log": "PASS COOKIE real mode\nPASS COOKIE WinExec accepted\nPASS COOKIE production window created\nPASS COOKIE ordinary close returns\nPASS PINBALL WinExec accepted\nPASS PINBALL production window created\nPASS PINBALL ordinary close returns\nPASS BRIGHT WinExec accepted\nPASS BRIGHT production window created\nPASS BRIGHT ordinary close returns\nPASS GIFLOAD WinExec accepted\nPASS GIFLOAD production window created\nPASS GIFLOAD open before conversion stays\nPASS GIFLOAD edit control found\nPASS GIFLOAD typed field matches\nPASS GIFLOAD edit control found\nPASS GIFLOAD typed field matches\nPASS GIFLOAD named conversion output exists\nPASS GIFLOAD edit control found\nPASS GIFLOAD typed field matches\nPASS GIFLOAD edited output stays\nPASS GIFLOAD edit control found\nPASS GIFLOAD typed field matches\nPASS GIFLOAD successful Open closes helper\nPASS GIFLOAD Paintbrush opened output\nPASS GIFLOAD Paintbrush title names output\nPASS GIFLOAD ordinary close returns\nPASS GIFLOAD Paintbrush close returns\nPASS TABOUT WinExec accepted\nPASS TABOUT production window created\nPASS TABOUT named conversion output exists\nPASS TABOUT ordinary close returns\nPASS SWAT WinExec accepted\nPASS SWAT production window created\nPASS SWAT ordinary close returns\nPASS TSHELL WinExec accepted\nPASS TSHELL production window created\nPASS TSHELL Run dialog\nPASS TSHELL edit control found\nPASS TSHELL typed field matches\nPASS TSHELL ordinary close returns\nPASS_COUNT=41\nFAIL_COUNT=0\nCOMPLETE=1\n",
+  "observer_sha256": "e46bf8d6c2fc568b04bb017aeeb341d045a0c67adbad7296669024840a2e0a5b",
+  "video_sha256": "30e53080db3dea56a1f56ac1a731b22b3924a7940712f3c9be13694802cac681",
+  "video_bytes": 2988134,
+  "source_base": "APPUI01 e583de38",
+  "selected_frames": [
+    {
+      "app": "COOKIE",
+      "frame_index": 90,
+      "timestamp_seconds": "1.501934",
+      "file": "COOKIE.PNG",
+      "sha256": "1598688d369777ab8314f50e0e785ed576b93fc3e78b26fe5fc1df1f9aeb992b"
+    },
+    {
+      "app": "PINBALL",
+      "frame_index": 192,
+      "timestamp_seconds": "3.204127",
+      "file": "PINBALL.PNG",
+      "sha256": "af1ddd4eb26cfa08efd09bace4fe37c103eabeea531a34ef529b9110ba21a8ae"
+    },
+    {
+      "app": "BRIGHT",
+      "frame_index": 322,
+      "timestamp_seconds": "5.373587",
+      "file": "BRIGHT.PNG",
+      "sha256": "1512b06ff663c5cd35996dc4d0098b7a79cff42ca33c6d5b4cefaf5d296db717"
+    },
+    {
+      "app": "GIFLOAD",
+      "frame_index": 418,
+      "timestamp_seconds": "6.975651",
+      "file": "GIFLOAD.PNG",
+      "sha256": "2673de3554655a80a64166daf3c5a2fee8c7cec35beca49bf52d458402d84bf6"
+    },
+    {
+      "app": "TABOUT",
+      "frame_index": 568,
+      "timestamp_seconds": "9.478875",
+      "file": "TABOUT.PNG",
+      "sha256": "815b5f02cf7f91c0670a5152c7330ababffb518d09f3f0a72c595046286c1d73"
+    },
+    {
+      "app": "SWAT",
+      "frame_index": 685,
+      "timestamp_seconds": "11.431390",
+      "file": "SWAT.PNG",
+      "sha256": "ff177d8e7fe4e165668e18148c7a1b050e736d2d02c2f5872f40d2d55900b747"
+    },
+    {
+      "app": "TSHELL",
+      "frame_index": 818,
+      "timestamp_seconds": "13.650915",
+      "file": "TSHELL.PNG",
+      "sha256": "00a5580b0ee98038da7c93a2362aaa38275a119b8ed3ef047421647b28c3b1e0"
+    }
+  ],
+  "configuration": {
+    "mode": "320x200x4",
+    "cpu": "8086_prefetch",
+    "memory_kb": 640,
+    "fpu": false,
+    "ems_xms_umb": false,
+    "cycles": 25000,
+    "windows": "3.0 real mode"
+  },
+  "about_comparison": {
+    "raw_sha256": "426292394f7a2daa065b6e90a6472b0b3ba848c995e07dd043d5b409daf7f622",
+    "decoded_png_sha256": "a0fc2c192ac16d72c3934175cee6272da0c4160556037370ce98fffd4f771366",
+    "video_frame": 568,
+    "video_timestamp": "9.478875",
+    "identical_pixels": true,
+    "difference_bbox": null,
+    "qualification": "Both inspected images show complete caption and memory fields; normalized RGB pixels match. This is one checkpoint against a later frame, not synchronized or exhaustive visual proof."
+  },
+  "scope": "Additional observer-only video check. Only final observer shutdown differs; production app and TSINPUT bytes are unchanged. Original archive, original dumps, runtime pins and original case counts remain untouched."
+}

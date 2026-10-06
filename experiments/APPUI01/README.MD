@@ -41,3 +41,17 @@ Runs use Windows 3.0 real mode, 640 KB, `8086_prefetch`, FPU off, and no EMS/XMS
 The archive contains the exact seven app sources, unchanged TSINPUT source/runtime, period build inputs, native caller sources, host tests, raw-capture-derived PNGs and verification instructions. `PREVIEW.PNG` is a labelled contact sheet of untouched 320×200 frames, not repainted app artwork. Source baseline: `c6ee4b0`.
 
 No Windows/DOS, compiler, SDK/DDK library, font, ROM or guest installation is included. Supply your own authorized tools and fixtures to rebuild. Existing provenance and notices remain; this package makes no new blanket license grant. Run `TESTPUB.PY` for read-only archive, manifest, source/runtime and payload checks.
+
+## Supplementary capture-method check
+
+The original PNGs are immediate diagnostic framebuffer samples and should not
+be used alone as proof that every queued repaint has reached the ordinary
+visible display. A [supplementary 320x200x4 video check](EVIDENCE/VIDEO/README.MD)
+shows complete captions, fields and controls for all seven unchanged apps,
+plus the Paintbrush handoff. All 41 observer checks passed. No APPUI01
+missing-field regression or general driver defect was established.
+
+The [untouched native recording](EVIDENCE/VIDEO/APP3204.AVI), exact decoded frames
+and byte identities are preserved. The original kit, raw-derived preview,
+original samples and qualification limits remain unchanged; no runtime rebuild
+or promotion is part of this documentation follow-up.
