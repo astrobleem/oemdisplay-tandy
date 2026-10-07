@@ -44,6 +44,13 @@ binary or app. See the [mode table](#display-modes) and
 
 ## Get started
 
+**Public preview: [Windows XT 0.1.0-rc.1](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.1).**
+Download [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.1/WINXT720.ZIP) for the disk image
+and instructions, or [WINXT720.IMG](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.1/WINXT720.IMG) directly
+for GoTek/emulators. [SHA256SUMS](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.1/SHA256SUMS) verifies
+the assets. This is an experimental prerelease; supply your own matching
+Windows 3.0 files and back up your installation.
+
 ### Choose the right package
 
 | What you want | Start here |

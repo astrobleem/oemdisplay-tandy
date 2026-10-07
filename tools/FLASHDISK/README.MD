@@ -1,5 +1,17 @@
 # Windows XT floppy images
 
+## Public downloads
+
+[Windows XT 0.1.0-rc.1](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.1) is a public prerelease from exact
+reviewed commit `a17883908dce8d780d4b1b4b3581cafd695d8d14`.
+Choose [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.1/WINXT720.ZIP) for the image and
+instructions, [WINXT720.IMG](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.1/WINXT720.IMG) for the raw
+disk, or [WXTTOOLS.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.1/WXTTOOLS.ZIP) for reproduction
+tools. [SHA256SUMS](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.1/SHA256SUMS) and
+[BUILD.JSON](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.1/BUILD.JSON) bind asset hashes and format.
+The release notes link exact source, installation/rollback evidence and
+known limits. Public downloads require no GitHub account.
+
 The normal download is **WINXT720.IMG**, a standard 720 KB FAT12 data disk
 for a compatible GoTek, emulator or double-density floppy drive. The image
 inside **WINXT720.ZIP** is identical. It is not bootable and contains no DOS
