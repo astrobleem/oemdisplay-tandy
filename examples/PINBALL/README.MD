@@ -1,68 +1,104 @@
-# Tiny Tandy Pinball
+# Tandy Pinball
 
-A small native Windows 3.0 / 8086 proof of concept: one ball, two flippers,
-three bumpers, three balls per game and a score. No sound or external assets.
-The white-on-black table remains legible in two-, four- and sixteen-color modes.
+A wireframe pinball table for Windows 3.0 real mode on an 8088 Tandy 1000.
+It runs in every Windows XT display mode and keeps the table the right
+shape on a 4:3 monitor.
+
+![Tandy Pinball at 320x200, 16 colors](EVIDENCE/V2/320X16.PNG)
 
 ## Play
 
-Copy PINBALL.EXE somewhere on your Windows 3.0 drive, then run it from
-Program Manager File / Run. Use the accepted Tandy RESERVE/launcher setup
-before starting Windows; this example does not replace or configure drivers.
+Run `PINBALL.EXE` from Start > Run (or Program Manager File > Run).
 
-- Space launches a ball from the center gap. After three drains, Space starts
-  a new game. There is no separate plunger lane in this tiny table.
-- Hold Z or Left Arrow for the left flipper. Hold / or Right Arrow for the
-  right flipper. Releasing the key lets that flipper return.
-- P pauses/resumes. Switching focus away pauses automatically and releases
-  both flippers; press P after returning.
-- Each bumper contact earns 10 points, capped at 999990.
-- Close with the native system menu or Alt+F4.
+| Key | Does |
+| --- | --- |
+| **A** | Left flipper |
+| **L** | Right flipper |
+| **Space** | Hold to pull the plunger, release to shoot. Also starts a game. |
+| **P** | Pause / resume (losing focus pauses too) |
+| **S** | Sound on / off |
 
-The game uses a fixed 144-pixel-wide playfield and a fixed-size native window.
-The minimum verified usable display is 160x200. Movement is visibly stepped
-and can flicker while redrawing; this is an early playable proof of concept.
+Three balls per game. How hard you hold Space decides how far the ball
+goes: a full pull sends it around the top arc, a tap drops it back on the
+plunger to try again.
 
-It is intentionally spare: no multiball, music, saves, high-score file, tilting,
-physics realism claim, or Space Cadet recreation.
+## The table
+
+- **Flippers** swing with real angular speed. A ball hit near the tip goes
+  much faster than one hit near the pivot, so you can aim. Hold a flipper
+  up to **cradle** the ball, let go, and flip when it rolls to the sweet
+  spot.
+- **Plunger lane** with a one-way gate at the top.
+- **Three top lanes.** Roll through to light them; light all three to raise
+  the bonus multiplier (up to X5). The flipper buttons move the lit lanes
+  left and right, like a real machine.
+- **Three pop bumpers** and two **slingshots**.
+- **Drop target bank** on the right. Knock all three down for 5,000 and
+  extra bonus; the bank resets itself.
+- **Inlanes and outlanes.** Balls that slip down the outside are gone.
+- **Ball save** for about 8 seconds after each ball's first plunge.
+- **End-of-ball bonus** = bonus count x 1,000 x multiplier.
+
+| Switch | Points |
+| --- | --- |
+| Pop bumper | 100 |
+| Slingshot | 10 |
+| Top lane (unlit / lit) | 500 / 100 |
+| All three lanes | 5,000 + multiplier |
+| Drop target | 500 |
+| Full drop bank | 5,000 |
+
+## Sound
+
+On a Tandy 1000 it plays short effects on the three-voice PSG: bumpers,
+slings, targets, lanes, flipper clicks and a falling tone on drain. It only
+touches the PSG in real mode, when the Tandy ROM signature is present, and
+while it holds the Windows sound device, the same rules the chime apps
+follow. It mutes every channel when paused, closed or switched away from.
+On other hardware it is silent.
+
+## Display modes
+
+The table is drawn in table units and scaled to the window. Wide modes put
+the score panel beside the table; 160x200 puts it on top.
+
+| 160x200x16 | 320x200x4 | 640x200x4 |
+| --- | --- | --- |
+| ![](EVIDENCE/V2/160X16.PNG) | ![](EVIDENCE/V2/320X4.PNG) | ![](EVIDENCE/V2/640X4.PNG) |
+
+The static table is cached in a bitmap. The ball, flippers and plunger are
+drawn with XOR, so moving them never repaints the table. If the bitmap
+can't be allocated, the table is drawn directly instead.
 
 ## Build
 
-Use the parent project's existing Microsoft C 6 and Windows 3.0 SDK/DDK
-toolchain. This archive does not include Microsoft tools, libraries or media.
-Run BUILD.PY with --repo pointing to the existing toolchain repository,
---dosbox to DOSBox-X, and --out to a new build directory. For example:
+Uses the repository's Microsoft C 6 and Windows 3.0 SDK toolchain inside
+DOSBox-X:
 
-    python3 BUILD.PY --repo /path/to/repo --dosbox /path/to/dosbox-x --out /tmp/pinbuild
+    python3 BUILD.PY --dosbox /path/to/dosbox-x --out /new/build/dir
 
-The flags are /G0 /Gw /AS /W3 /Od, with LINK4 and the small-model Win16 runtime.
-All game source is ASCII/CRLF and filenames are DOS 8.3.
+Flags are `/G0 /Gw /AS /W3 /Od` with LINK4 and the small-model Win16
+runtime. Two builds from the same source are byte-identical.
 
-Host regression:
+## Test
 
-    python3 TEST.PY
+    python3 TEST.PY             # host, 2,000,000 random-play ticks
+    python3 TEST.PY --sanitize  # with AddressSanitizer and UBSan
 
-TEST.C also builds as a native Windows test executable when HOSTMAIN is not
-defined. Copy it as PINBALL.C in a separate build fixture and use the same
-BUILD.BAT/DEF/RSP and PHYSICS.H. It writes C:\PINTEST.LOG and exits.
+`TEST.C` also builds natively: copy it as `PINBALL.C` into a separate
+build folder with `PHYSICS.H` and the build files, run it in Windows, and
+it writes `C:\PINTEST.LOG`. The host and native runs print the same replay
+checksum; because the 8088 build uses 16-bit `int`, a match means no
+arithmetic overflowed. See TESTS.MD.
 
-## Implementation and limits
+## Files
 
-PHYSICS.H is shared unchanged by game and tests. Positions are Q6 fixed point.
-Each 55ms timer message advances exactly four bounded substeps, at most
-1.75 logical pixels per axis per substep. Long intermediates protect projection and
-reflection arithmetic on a 16-bit compiler. Three circle bumpers and four
-line capsules use conservative separation. A tiny deterministic horizontal
-nudge breaks perfectly vertical bumper/ceiling loops.
-
-Delayed Windows timers slow the simulation rather than cause catch-up jumps.
-The timer interval is a request, not a guarantee of 18 frames/sec. Ball updates
-invalidate only its old/new small rectangles; flipper and score areas update
-only when changed. Full repaint happens for launch, drain, pause or exposure.
-A compatible-bitmap cache holds the static table (about 14.5 KB at the tested
-154x181 client size with four logical planes). Repaints copy just the dirty
-rectangle and redraw intersecting dynamic parts; a square ball avoids repeated
-ellipse scan conversion. If allocation fails, direct GDI drawing is retained
-as a slower fallback. No expensive filled polygons are used.
-
-See TESTS.MD for the actual verification record and remaining limits.
+- `PHYSICS.H`: table geometry, integer ball physics and rules. Shared by
+  the game and the tests; no floating point.
+- `PINBALL.C`: window, scaling, drawing, keys and sound.
+- `TEST.C`, `TEST.PY`: regression tests.
+- `EVIDENCE/V2/`: screenshots in every mode, gameplay video, test and
+  build logs for this version.
+- `EVIDENCE/` (other folders), `MILESTONE.ZIP`, `MANIFEST.JSON`: the
+  original 2026-10-02 proof of concept and its recordings, kept intact.
+  Their hashes describe that version, not this one.
