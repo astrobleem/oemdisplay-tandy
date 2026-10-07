@@ -1,6 +1,12 @@
 # Tandy Windows 3.0 startup image
 
-The normal ready-to-use `TANDY88.ZIP` includes `TNDYLOGO.RLE`. Users install it
+Historical TANDY88 / Tandy-picture record. The old splash is retired from
+current installation choices. Current releases use Windows XT in every profile;
+see [the active guide](../../distributions/WINXT/README.MD). The retained source, captures, artifacts and
+backup/recovery support below preserve historical provenance.
+
+
+The historical accepted `TANDY88.ZIP` includes `TNDYLOGO.RLE`. Users install it
 through the same DOS `INSTALL` and Windows Setup **Other display** flow as the
 driver. This directory is for developers reproducing or changing the artwork.
 

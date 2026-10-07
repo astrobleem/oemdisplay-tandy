@@ -7,8 +7,8 @@
 - **Linker:** LINK4 (Segmented Executable Linker v5.x).
 - **Current Build:** `python3 src/tandysw/BUILD88.PY --dosbox <dosbox-x> --out <new-path> [--mode <profile>]`; five profiles are in `docs/MODES.MD`. Omitted mode selects 320x200x16 in the current development pipeline; see docs/TRIAL4/README.MD.
 - **Legacy Build:** `build_driver.bat` -> `BLDTNDY.BAT` builds the old `TNDY16.DRV`, not the accepted driver.
-- **Packaging:** `MAKEDISK.BAT` -> `MAKEDISK.PY` (Python 3.8+). See `BUILDING.MD`.
-- **Install:** own-media OEM disk, five Windows Setup Other display choices, and fail-closed `C:\TANDY88\TANDY88` launcher. Never use manual INI edits as normal install instructions.
+- **Packaging:** current public Windows XT uses `tools/FLASHDISK/MAKEIMG.PY`; test with `TESTFAT.PY` and `TESTPKG.PY`. Root `MAKEDISK` is historical TANDY88 reproduction only. See `BUILDING.MD`.
+- **Install:** current own-media WINXT disk, six Windows Setup Other display choices, and guarded `C:\WINXT\WINXT` launcher. Every profile selects approved `WXTSPL01.RLE`; the old Tandy picture is retired. Never use manual INI edits as normal install instructions.
 
 ## 2. File Handling Rules
 - **Line Endings:** **CRLF** (Windows style) is MANDATORY.
@@ -21,7 +21,7 @@
 - **Calling Convention:** Pascal (`?PLM=1`) for Windows API compliance (Uppercase exports).
 - **Segments:** Use `cmacros.inc` macros (`sBegin`, `sEnd`, `cProc`) to ensure correct segment ordering (`_TEXT`, `_DATA`, etc.).
 
-## 4. Current Build and Package Process
+## 4. Development builds and historical OEM package preservation
 
 The updated BUILD88 source produces the experimental Output-row family recorded
 in docs/TRIAL4/BUILDS.JSN. Existing packaged payloads and exact MAKEDISK pins

@@ -1,3 +1,32 @@
+# Current Windows XT build and splash default
+
+The current public release is built by `tools/FLASHDISK/MAKEIMG.PY` and the
+Windows XT release workflow. Every current Setup display profile selects the
+approved `WXTSPL01.RLE` (SHA-256
+`eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c`).
+The retired Tandy image is not a current installation choice.
+
+```sh
+python3 tools/FLASHDISK/TESTFAT.PY
+python3 tools/FLASHDISK/TESTPKG.PY
+python3 tools/FLASHDISK/MAKEIMG.PY --out /new/winxt-public
+python3 tools/FLASHDISK/TESTPKG.PY --verify /new/winxt-public
+```
+
+These public outputs contain no proprietary WIN.COM or Windows support bytes.
+Use [the current installation guide](distributions/WINXT/README.MD) and the
+[approved XT artwork source](examples/WXTSPL/ART/tools/BUILD.PY). The original
+loader is supplied by owned Windows media; the splash-only updater preserves
+its exact 4,336-byte prefix and keeps an original backup. Installation remains
+an explicit user action. Never run old Setup media merely to change a picture.
+
+## Historical TANDY88 reproduction only
+
+The older OEM builder and the instructions below are retained for archival
+verification. They do not select the current driver or startup picture and
+are retired from current installation guidance. Existing accepted archives,
+artwork and private backups are preserved unchanged.
+
 Development source update (2026-10-04): the current BUILD88 pipeline produces
 new experimental drivers; existing package binaries and exact packaging pins
 remain unchanged. Read docs/TRIAL4/README.MD for build identities, tested scope,
