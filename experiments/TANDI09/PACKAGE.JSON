@@ -1,0 +1,32 @@
+{
+  "packet": "TANDI09",
+  "app_version": "0.3.6",
+  "standard_roster_revision": "0.3.2",
+  "status": "local copy-only UI checkpoint; confirmed experimental noisy-game regression",
+  "zip_sha256": "da14fd8c55ca68782239ded222b60f05735b5a9aaadd18a2b3c324fdcea1b9af",
+  "zip_bytes": 3811333,
+  "files": 789,
+  "exe_sha256": "8995735535c5fa0af7ad3ac44d27ec7d79e69998c3175c363419cecf87b3dc53",
+  "standard_dat_sha256": "c952b6c4d5f7b12c469ce73bf8fe9a18fa0c560cac03f339df74779b22ae455f",
+  "audit_dat_sha256": "8ad48837d8298b5618e253a05d64067cb4858085464d655379e3382d54b34637",
+  "preview_sha256": "7aa018f9ddcba84d9450343a15fd5790f5136cc3a3e37ee29a3a230092c684f4",
+  "source_diff_sha256": "69548d0dfd208317b00320d91980a5627b9b4d4a380be720a43121910c5feabe",
+  "qualified_runtime_modes": [
+    "320x200x16",
+    "640x200x2",
+    "640x200x4"
+  ],
+  "claude_36_vs_31_verified": true,
+  "canonical_defaults_changed": false,
+  "publication_performed": false,
+  "physical_hardware_tested": false,
+  "noise_verification_source": "Parent independent original-harness verifier",
+  "two_wrong_final_failures": {
+    "standard": 31,
+    "audit08": 36
+  },
+  "two_wrong_solved": {
+    "standard": 225,
+    "audit08": 220
+  }
+}
