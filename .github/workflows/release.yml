@@ -40,7 +40,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/tools/FLASHDISK/\n/distributions/WINXT/\n' | git sparse-checkout set --no-cone --stdin
+          printf '/tools/FLASHDISK/\n/distributions/WINXT/\n/examples/WXTSPL/WXTSPL01.RLE\n/examples/WXTSPL/ART/assets/WXTSPL01.RLE\n/src/splash/assets/TNDYLOGO.RLE\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
 

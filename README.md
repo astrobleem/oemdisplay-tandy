@@ -18,6 +18,12 @@ desktop additions and their source and test evidence.
 packaging. The monitor uses an [actual emulator capture](docs/tandy-dib-roundtrip.png).
 [Artwork details](docs/PROMO/README.MD).*
 
+The startup picture is **Windows XT** in every current display profile.
+The retired Tandy picture is not an installation option. Historical OEM
+artifacts remain intact for provenance and recovery. For an older installation,
+the [splash-only updater](examples/WXTSPL/README.TXT) preserves the existing
+loader prefix and original backup; applying it is an explicit DOS command.
+
 ## At a glance
 
 - **Five graphics modes:** 160 or 320 pixels wide in sixteen colors,
@@ -45,7 +51,6 @@ binary or app. See the [mode table](#display-modes) and
 | GoTek, emulator or 720 KB floppy | [Windows XT disk image](tools/FLASHDISK/README.MD): current TR5 drivers, optional desktop and a DOS helper that gathers your own Windows files. No Python needed to install. |
 | Copy directly to CF/hard disk | [One-folder WINXT source and staging guide](distributions/WINXT/README.MD): the same current runtime, with optional host-side staging. |
 | Games and utilities to try on an existing setup | [TANDYLAB test pack](examples/TANDYLAB/README.MD): a separate, versioned app collection. Check individual component guides for newer work. |
-| Reproduce the older OEM installation | [Historical TANDY88 package](TANDY88.ZIP) and [its instructions](README.TXT). This is an older driver baseline, not the current WINXT kit. |
 
 ### 1. Mount the 720 KB disk and prepare Windows XT
 

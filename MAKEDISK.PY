@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Developer builder/verifier for the ready-to-use TANDY88 OEM disk ZIP."""
+"""Historical TANDY88 builder/verifier; its Tandy picture is retired.
+Current Windows XT releases use tools/FLASHDISK/MAKEIMG.PY.
+"""
 import argparse
 import importlib.machinery
 import importlib.util

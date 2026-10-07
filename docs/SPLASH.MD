@@ -1,6 +1,12 @@
 # Custom Tandy startup splash in the ready-to-use disk
 
-The normal `TANDY88.ZIP` now includes the tested custom `TNDYLOGO.RLE` image.
+Historical TANDY88 / Tandy-picture record. The old splash is retired from
+current installation choices. Current releases use Windows XT in every profile;
+see [the active guide](../distributions/WINXT/README.MD). The retained source, captures, artifacts and
+backup/recovery support below preserve historical provenance.
+
+
+The historical `TANDY88.ZIP` includes the tested custom `TNDYLOGO.RLE` image.
 Extract `DISK1`, run DOS `INSTALL`, and use Windows Setup's Other display option
 as described in [README.TXT](../README.TXT). Existing TANDY88 users keep their
 installed DOS helper and rerun the Setup step with the new disk. No Python,

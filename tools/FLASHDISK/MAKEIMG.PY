@@ -6,6 +6,7 @@ own-media install disk; never upload that output to GitHub or other people.
 This packages pinned binaries. It does not compile or qualify new drivers.
 """
 import argparse
+import csv
 import hashlib
 import importlib.machinery
 import importlib.util
@@ -24,6 +25,11 @@ PUBLIC_NAMES = ('HOLD14.TXT', 'HOLD160.PNG', 'HOLD640.PNG', 'INSTALL.BAT',
     'TR56402.DRV', 'TR56404.DRV', 'TSCHECK.EXE', 'TSHELL.EXE', 'TSHELL.INI',
     'TSINPUT.DLL', 'TSREADY.TXT', 'TSSETUP.BAT', 'TSTART.BAT', 'TXTMODE.DRV',
     'WXTSPL01.RLE', 'XPCHIME.EXE')
+
+SPLASH_NAME = 'WXTSPL01.RLE'
+SPLASH_SHA = 'eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c'
+SPLASH_BYTES = 4062
+
 WINDOWS_NAMES = ('CGA.GR2', 'CGALOGO.LGO', 'CGAFIX.FON', 'CGAOEM.FON',
     'CGASYS.FON', 'EGAFIX.FON', 'EGAOEM.FON', 'EGASYS.FON', 'TXTSYS.FON')
 
@@ -56,6 +62,30 @@ def read_file(path):
     return path.read_bytes()
 
 
+
+def verify_default_splash(payload):
+    """Current installs have one approved XT image, never a splash menu."""
+    art = payload.get(SPLASH_NAME, b'')
+    if len(art) != SPLASH_BYTES or hashlib.sha256(art).hexdigest() != SPLASH_SHA:
+        raise PackageError('Current default requires the approved Windows XT splash')
+    section = ''; profiles = set()
+    try:
+        for line in payload['OEMSETUP.INF'].decode('ascii').splitlines():
+            line = line.strip()
+            if not line or line.startswith(';'): continue
+            if line.startswith('['): section = line.lower(); continue
+            if section != '[display]': continue
+            name, separator, value = line.partition('=')
+            name = name.strip().upper()
+            row = next(csv.reader([value], skipinitialspace=True, strict=True))
+            if not separator or name in profiles or len(row) != 9 or row[8].strip().upper() != 'A:' + SPLASH_NAME:
+                raise PackageError('Every current Setup profile must select Windows XT')
+            profiles.add(name)
+    except (KeyError, UnicodeError, csv.Error, StopIteration) as error:
+        raise PackageError('Invalid Windows XT splash selection: ' + str(error))
+    if profiles != {'TR53216', 'TR56404', 'TR51616', 'TR53204', 'TR56402', 'TXTMODE'}:
+        raise PackageError('Expected all six current Windows XT display profiles')
+
 def public_payload(runtime):
     raw = read_file(runtime / 'MANIFEST.SHA')
     manifest = {}
@@ -75,6 +105,7 @@ def public_payload(runtime):
         if sha(data) != manifest[name]:
             raise PackageError('Runtime hash mismatch: ' + name)
         payload[name] = data
+    verify_default_splash(payload)
     payload['MANIFEST.SHA'] = raw
     return payload
 

@@ -1,5 +1,11 @@
 # Five selectable original-Tandy display modes
 
+Historical TANDY88 / Tandy-picture record. The old splash is retired from
+current installation choices. Current releases use Windows XT in every profile;
+see [the active guide](../distributions/WINXT/README.MD). The retained source, captures, artifacts and
+backup/recovery support below preserve historical provenance.
+
+
 This driver set targets **Windows 3.0 real mode on the original 8088-based
 Tandy 1000 EX/HX with normal 640 KB memory**. It uses no 386, expanded-memory,
 EMS/XMS or UMB workaround. The default candidate05 driver is unchanged; four

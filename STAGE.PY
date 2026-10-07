@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Developer utility: complete a Windows 3.0 OEM disk from supplied media.
+"""Historical TANDY88 completion utility; the Tandy picture is retired.
+Current Windows XT staging is distributions/WINXT/STAGE.PY.
 
-Normal users download the ready-to-use TANDY88.ZIP; Python is only for rebuilds.
+Current installs use the Windows XT distribution; this is archival reproduction.
 Python 3.8+, standard library only. This utility never creates an archive.
 """
 import argparse

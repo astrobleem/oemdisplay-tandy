@@ -1,5 +1,11 @@
 # Windows XT: one support folder, six display choices
 
+All six Setup profiles automatically use the approved Windows XT startup
+picture (`WXTSPL01.RLE`); there is no older-picture choice or splash prompt.
+Windows Setup retains the stock CGA loader. An existing installation is changed
+only when you explicitly run INSTALL/Setup or the splash-only APPLY command.
+Recovery preserves your original WIN.COM, even if its picture is old.
+
 This public source deliberately excludes eight Microsoft Windows 3.0 files
 and the derived TXTSYS.FON. INSTALL refuses an incomplete source. Prepare
 one complete own-media folder on a modern computer, then copy only that

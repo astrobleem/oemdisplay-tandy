@@ -1,5 +1,11 @@
 # TANDY88 ready-to-use OEM disk contract
 
+Historical TANDY88 / Tandy-picture record. The old splash is retired from
+current installation choices. Current releases use Windows XT in every profile;
+see [the active guide](../distributions/WINXT/README.MD). The retained source, captures, artifacts and
+backup/recovery support below preserve historical provenance.
+
+
 ## Normal download and developer rebuild
 
 `TANDY88.ZIP` is the complete end-user download. Extract `DISK1` and run its

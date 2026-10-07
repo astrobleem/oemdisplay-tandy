@@ -85,6 +85,50 @@ class PackageTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name)
 
+    def test_windowsxt_is_the_only_current_splash(self):
+        payload = package.public_payload(RUNTIME)
+        expected = 'eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c'
+        self.assertEqual(package.sha(payload['WXTSPL01.RLE']), expected)
+        self.assertEqual(len(payload['WXTSPL01.RLE']), 4062)
+        self.assertNotIn('TNDYLOGO.RLE', payload)
+        self.assertIn(b'WXTSPL01.RLE', payload['TINST.EXE'])
+        self.assertNotIn(b'TNDYLOGO.RLE', payload['TINST.EXE'])
+        for source in ['WXTSPL01.RLE', 'ART/assets/WXTSPL01.RLE']:
+            self.assertEqual((HERE.parents[1] / 'examples/WXTSPL' / source).read_bytes(), payload['WXTSPL01.RLE'])
+        stage = package.load('xt_default_stage', RUNTIME / 'STAGE.PY')
+        stage.verify_default_splash(payload)
+        self.assertEqual(stage.SPLASH_SHA, expected)
+
+    def test_retired_art_rejected_despite_repaired_manifest(self):
+        runtime = self.base / 'runtime'
+        shutil.copytree(RUNTIME, runtime)
+        (runtime / 'WXTSPL01.RLE').write_bytes((HERE.parents[1] / 'src/splash/assets/TNDYLOGO.RLE').read_bytes())
+        manifest = []
+        for line in (runtime / 'MANIFEST.SHA').read_text().splitlines():
+            digest, name = line.split()
+            if name == 'WXTSPL01.RLE': digest = package.sha((runtime / name).read_bytes())
+            manifest.append(digest + '  ' + name)
+        (runtime / 'MANIFEST.SHA').write_bytes(package.dos('\n'.join(manifest) + '\n'))
+        with self.assertRaisesRegex(package.PackageError, 'approved Windows XT'):
+            package.build(runtime, self.base / 'out')
+        self.assertFalse((self.base / 'out').exists())
+
+    def test_setup_cannot_select_retired_or_missing_splash(self):
+        payload = package.public_payload(RUNTIME)
+        stage = package.load('xt_selection_stage', RUNTIME / 'STAGE.PY')
+        original = payload['OEMSETUP.INF']
+        display = [line for line in original.splitlines(keepends=True) if b'= a:' in line]
+        self.assertEqual(len(display), 6)
+        bad = [original.replace(b'a:WXTSPL01.RLE', b'a:TNDYLOGO.RLE', 1),
+               original.replace(display[0], b''), original + b'\r\n[display]\r\n' + display[0]]
+        for inf in bad:
+            changed = dict(payload); changed['OEMSETUP.INF'] = inf
+            with self.assertRaises(package.PackageError): package.verify_default_splash(changed)
+            with self.assertRaises(stage.DiskError): stage.verify_default_splash(changed)
+        for art in [b'', (HERE.parents[1] / 'src/splash/assets/TNDYLOGO.RLE').read_bytes()]:
+            changed = dict(payload); changed['WXTSPL01.RLE'] = art
+            with self.assertRaises(stage.DiskError): stage.verify_default_splash(changed)
+
     def test_reproducible_public_disk_and_exact_allowlist(self):
         a, b = self.base / 'one', self.base / 'two'
         package.build(RUNTIME, a)
