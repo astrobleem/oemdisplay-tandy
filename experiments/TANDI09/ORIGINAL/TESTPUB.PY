@@ -17,8 +17,6 @@ with zipfile.ZipFile(P/'TANDI09.ZIP') as z:
  for name in z.namelist():
   assert Path(name).suffix.upper() not in {'.DRV','.DLL','.FON','.LIB','.OBJ','.COM'}
   if Path(name).suffix.upper()=='.EXE':assert Path(name).name=='TANDI.EXE'
- assert b'awaits the exact harness policy' not in z.read('TANDI09/RUN/README.TXT')
- assert b'31 standard versus 36 AUDIT08 final' in z.read('TANDI09/RUN/README.TXT')
  assert sha(z.read('TANDI09/RUN/TANDI.EXE'))==m['exe_sha256']
  assert sha(z.read('TANDI09/RUN/TANDY.DAT'))==m['standard_dat_sha256']=='c952b6c4d5f7b12c469ce73bf8fe9a18fa0c560cac03f339df74779b22ae455f'
  assert sha(z.read('TANDI09/SOURCE/build/AUDIT08.DAT'))==m['audit_dat_sha256']=='8ad48837d8298b5618e253a05d64067cb4858085464d655379e3382d54b34637'

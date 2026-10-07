@@ -1,0 +1,1912 @@
+--- a/SOURCE/BUILDING.TXT
++++ b/SOURCE/BUILDING.TXT
+@@ -1,10 +1,12 @@
+-TANDI08 REPRODUCTION
++TANDI09 REPRODUCTION FROM PINNED TANDI08
+ Use an isolated source directory and your licensed Microsoft C6/Windows inputs.
+ Mount the toolchain as C: and SOURCE/src as D: in DOSBox-X. Run BUILD.BAT.
+ The compile flags remain /G0 /Gw /AS. Check BUILD.OK, BUILD.LOG and TANDI.MAP.
+ Run tools/AUDIT.PY with GNU objdump to audit the emitted NE code.
+ Modern host tests need Python 3, GCC, Pillow and NumPy. They are not DOS inputs.
+-Run tests/HOSTTEST.PY,tests/UIGUARD.PY,tests/DBTEST.PY,tests/CURTEST.PY,
++Run tests/CHECK09.PY for cue reproduction, UI guards, whole-roster signed
++explanations, 256-answer boundaries, source pins and all name-pair layouts.
++Run tests/DBTEST.PY,tests/CURTEST.PY,
+ tests/QTEST06.PY,tests/AUDIT08.PY and tests/ROSTER.PY.
+ Windows GCC builds run optimized mocks; sanitizer coverage is skipped there.
+ On supported POSIX GCC builds the sound/UI mock sanitizer runs remain enabled.
+@@ -24,3 +26,15 @@
+ The fixture edits only private copies. Do not distribute the guest, OS, compiler,
+ emulator or drivers through this standalone app packet. Captured Tandy app
+ framebuffers and first-party code/data are the qualification evidence.
++
++BASELINE.JSN records every immutable source input hash from TANDI08.ZIP.
++CUE09.PY compiles tests/BEFORE09.C (the exact pinned original) and current
++handlers with actual ENGINE.C,DB.C,TDSOUND.C. Simulated work advances only
++the mock clock by 0/650/5000 ms; it is not an app wait or hardware timing result.
++OBS09.PY verifies each signed clue and total score against actual C scores,
++for all 256 targets with truthful and conflicting-answer paths in both DATs.
++Its exploratory two-wrong policy differs from the original-harness final-failure
++policy confirmed by the parent independent verifier in evidence/NOISE09.JSN.
++Histories retain at most TD_MAXQ unique accepted answers (256), including
++UNKNOWN, independently of the 25-question guessing cap. Invalid/incomplete
++comparisons display a conservative unavailable message.
+--- a/SOURCE/PLAN09.TXT
++++ b/SOURCE/PLAN09.TXT
+@@ -0,0 +1,54 @@
++TANDI09 CHECKPOINT AND NEXT DIRECTIONS
++
++First checkpoint only: sound ordering, honest current leading-group count,
++and scored explanations with complete bounded answer history. No Ask Two,
++reverse mode, learning, demo or vocal code in this checkpoint. Standard and
++AUDIT08 DATs stay byte-identical to TANDI08. All later directions require the
++first checkpoint review before concurrent app changes.
++
++Learning design (next)
++Explicitly opt in; store an overlay beside the app or a user-selected writable
++location, never overwrite the base DAT. Initially accept only base UNKNOWN
++cells. A game contributes a reported answer only after explicit identity
++confirmation; distinguish guesses and demos from that confirmation. Record
++bounded evidence with per-game provenance, answer strength, conflicting
++reports, and overlay/base revision identifiers. Two agreeing games indicate
++repetition, not factual proof or independence. Do not silently turn them into
++certain YES/NO facts. Surface conflicts, pause conflicting cells, permit reset
++per-cell and whole-overlay, and retain a clearly labelled unlearned mode.
++Bound files/cells/records, validate version/dimensions/IDs/value ranges/lengths,
++checksum and full parse before use; fail closed on truncation/corruption and
++mismatched base pins. Write temporary replacement, validate, then rename with
++recoverable prior copy; explicit failure status if save fails. Provenance is
++local pseudonymous game/session identifiers, not personal identity. No upload
++without a separate explicit user action. New roster entries remain a stretch.
++Engine policy and confidence for tentative reports must be designed and tested
++before using learned values in inference.
++
++Attract/demo design (next)
++A separate launch mode/TSHELL command-line contract runs scripted examples
++through the real engine. It never appends learning evidence and never writes
++sound or other user settings, even on F3 or cleanup. Input exits demo cleanly
++to an ordinary game. TSHELL integration must use the installed guarded app
++launcher; no display-driver/lease bypass. Read preferences once, keep changes
++session-only. Inspect existing TSHELL idle ownership and stop-on-input contract
++before selecting the argument/interface. Demonstrations disclose that their
++answers and character are scripted. Use multiple moving positions, alternate
++full-screen layouts, dark intervals and controlled luminance coverage. A
++mostly static cabinet is NOT burn-in protection; measure persistent pixel
++coverage and make dark-screen/blanking the conservative default. Do not claim
++CRT protection without hardware review. Honor sound lease/focus/cleanup and
++stop attract audio as soon as activity occurs.
++
++Short oracle vocal cues (next)
++Keep current note cues and mute preference available. Speech via EX/HX PC
++speaker PWM is possible using the existing first-party experiments; an SL/TL
++DAC is not a prerequisite. CPU load, Windows cooperative timing, sample rate,
++intelligibility and speaker quality limit feasibility. Inspect the approved
++PWM implementations and device ownership before proposing a compatible path.
++No blocking busy-loop speech during input/computation; fail quiet on unsafe
++scheduling/ownership, preserve cleanup, and qualify supported profiles. Use
++short original or explicitly authorized phrases/recordings, no third-party
++engine/code execution or toolchain redistribution. Emulator register/timing
++results do not establish audible quality on Chad's real hardware. Physical
++video/audio assessment needs Chad; no hardware result is claimed.
+--- a/SOURCE/QA09.TXT
++++ b/SOURCE/QA09.TXT
+@@ -0,0 +1,130 @@
++TANDI09 / APP 0.3.6 FIRST-CHECKPOINT REVIEW
++Local copy-only experiment; not published. Original independent-harness noise comparison confirmed by parent.
++
++Baseline and scope
++Extracted from immutable TANDI08.ZIP SHA256
++ dd34d2948f7f9270072d4d418aacd9c120b5b788846741ec432cf4744377c2d2.
++evidence/BASELINE.JSN records every source input hash. ENGINE.C,DB.C,TDSOUND.C,
++ART.H, standard STARTER.JSON/TANDY.DAT and separate AUDIT08 source/DAT are
++byte-identical. No arbitrary dataset edits, threshold/Ask Two changes, reverse
++mode, learning, demo, speech, canonical promotion, publication, merge or CF write.
++Current main was read-only observed as bcea67b298c5a8be6891e5252ebea135cda483c6;
++PR107 was merged. A read-only sandbox fetch hit network restrictions; the same
++approved fetch then hit Git's differing-Windows-identity ownership check. No Git
++ownership/security/config/credential/network settings were changed or fetch
++retried. Parent approved qualification directly from the pinned local packet.
++
++Sound ordering
++The old actual handlers queue WRONG before synchronous next(). On a next guess
++REVEAL replaces it before the first note. On a next question simulated work of
++650 or 5000 ms expires the 300 ms initial deadline and no note plays. CUE09.PY
++compiles both pinned old and new handlers with actual ENGINE.C,DB.C,TDSOUND.C.
++New immediate guesses keep REVEAL and skip WRONG; new questions queue WRONG
++AFTER computation and refresh, using a fresh timestamp. No fake wait was added.
++Both branches pass for work of 0/650/5000 ms, sound on/user off/unsupported:
++18 old and 18 new cases. Off/unsupported write no PSG bytes. Enabled cases start
++one correct cue and emit its first exact PSG note without lateness. Input guard
++stays 220 ms. The sound module itself, ownership checks, lateness drop policy,
++focus/close cleanup and cooperative writer lease are unchanged; its 59 existing
++host lifecycle/timing/ownership scenarios pass. No physical audio claim.
++
++Leading candidates
++Leading: N/M means N of M unrejected names lie within 24 score points of the
++current leader. This is the engine's actual score window, not its at-most-64
++sample size and not a probability. Outside names stay eligible. Only explicit
++rejection removes a name from eligibility. Counts may rise. In the standard
++Luigi conflicting-answer case the leading count rises from 93 to 151 on answer
++6 while all 256 remain eligible. All 256 truthful target paths were traversed through every explicit rejection
++and reset; eligible counts reach zero then reset to 256, and 4118 score-window
++rises after rejection demonstrate the distinction. Whole-roster exploratory
++cases show 448 count
++rises (standard) and 483 (AUDIT08). No elimination or monotonic-count animation.
++
++How I knew
++F4/button on guess or success opens all accepted answers, ranked by absolute
++signed contribution difference against the actual current runner-up. Stable
++ranking preserves answer order for ties. Each page shows the question, user
++answer, both stored DAT values, each signed score change, the clue's signed
++difference and total margin. Negative and neutral/UNKNOWN clues are retained.
++UNKNOWN user answers/facts score zero. Probably values remain labelled Probably.
++The page says Not proof. A margin never claims a name was ruled out. If the
++history or comparison is incomplete/inconsistent or no competitor remains,
++the UI says no complete comparison is available. Every clue and both total
++scores are checked against actual C-engine scores. History is bounded by the
++engine's full TD_MAXQ=256 unique questions, not the 25-question guessing cap.
++130-answer real-DAT and 256-answer boundary histories pass; duplicates, invalid
++answers, corruption and overflow are rejected without inventing evidence.
++
++Examples using the actual standard engine
++Mario vs Luigi: user NO to hero helper/sidekick matches Mario NO (+4) and
++conflicts with Luigi YES (-8): +12 relative to Luigi. This favors Mario; it does
++not eliminate Luigi. Human and male answers match both and are neutral.
++Luigi vs Mario with conflicting answers: user YES to movie association conflicts
++with Luigi NO (-8), matches Mario PROBABLY (+2): -10 against Luigi. The full
++margin is +10 because other answers favor Luigi; the conflict stays visible.
++Messi vs Ronaldo: user NO to USA association matches Messi NO (+4), while
++Ronaldo UNKNOWN scores 0: +4. Unknown is not evidence Ronaldo is American.
++This guess hits the cap at 25, not a certified identity conclusion.
++See EXAMPLES-STANDARD.JSN and EXAMPLES-AUDIT08.JSN for all 256 targets in both
++truthful and conflicting-answer scenarios. OBS09-*.CSV retains every clue.
++
++Confirmed regression / metric boundary
++Truthful first-guess misses reproduce 23 standard and 19 AUDIT08. The new Messi
++-> Ronaldo truthful AUDIT08 miss remains; no data was promoted or altered.
++Parent's independent original TANDISIM verifier now confirms the exact two-flip
++stock-cap-25 final-failure comparison: standard 225 solved / 31 failed;
++final 258-cell AUDIT08 220 solved / 36 failed. AUDIT08 SHA256 is exactly
++8ad48837d8298b5618e253a05d64067cb4858085464d655379e3382d54b34637.
++Original Library identity libfile_1546647ee7ec8191bf42e1a7e4b077b8; archive hash
++3d1e8b66090066d7b9b9eb6da50d5ae2ca0f2010cf4ca69eba06762ec7d0bd4a.
++Policy: from question 4 invert the first two non-UNKNOWN stored answers via 4-v;
++reject wrong guesses; after 25 continue guesses without questions; fail on a
++wrong guess after 10 earlier rejections or no candidates. This is FINAL GAME
++FAILURE, not first-guess miss. Truthful first misses improve 23 -> 19 while
++two-wrong final failures regress 31 -> 36. No data was altered to hide this.
++evidence/NOISE09.JSN records the supplied independent confirmation; this agent
++did not execute or download the original Library harness in this environment.
++Independent comparison: 25 common failures + 11 new failures - 6 rescues:
++31 -> 36. New failures are Catwoman, Lex Luthor, Penguin, Scarlet Witch,
++Black Widow, Captain Marvel, Storm, Dorothy Gale, Godzilla, Eleven and Winston
++Churchill. Rescued are Loki, Cruella, Sephiroth, King Kong, Zeus and Poseidon.
++Both DATs eventually solve all 256 truthful games, despite 23/19 first misses.
++Identical flipping rules do not guarantee identical wrong facts: adaptive
++question selection differs with each DAT and the preceding answers.
++Independent cloud evidence: tandisim-verify/final258-comparison/VERIFICATION.txt
++and four CSVs. This is a cloud evidence locator, not a Windows file path.
++Our different first/fourth-known-answer inversion stress test (144 vs 116 first
++misses) remains an explanation/counterexample test and is not the Claude metric.
++The two DATs each run twice byte-exact through the actual engine/loader;
++512 explanation scenarios each, 8272/8316 clues respectively. All 256 characters
++have examples/counterexamples. These are matrix-consistency tests, not factual
++certification or human play results. AUDIT08 remains separate and experimental.
++
++Host / native verification
++49 actual UI handler guard/lifecycle checks pass. 53 DAT/compiler tests pass.
++All 65536 name pairs and 130 questions fit the narrowest 38-column explanation
++rectangles with the native 8x8-font contract. Native measured layout checks pass.
++C6 /G0 /Gw /AS compiles/links without warnings. NE audit reports no unsupported
++or FPU instructions. Native runs use Windows 3.0 real mode, WINFLAGS=64,
++8086_prefetch, 640 KB conventional, no FPU/XMS/EMS/UMB, 25000 uncalibrated cycles.
++Three final display modes pass: 320x200x16,640x200x2,640x200x4. Saved sound off,
++held/repeated inputs, overlays and page boundaries, actual runner-up/conflicting
++clues, all 130 answers/pages, one cap gate/all 256 candidates, sound persistence
++and three close paths pass. Actual corrupted DAT gives repair/Exit only and
++returns to DOS. Native register/statistics tests do not establish audible quality.
++The shared emulator lock is acquired for every native build/run. A sandbox lock
++open was denied; the same supported approved build/run succeeded without ACL
++or lock replacement. Private Windows/compiler/emulator/driver inputs are excluded.
++The first native fixture reused the scripted player's truth buffer; it was
++separated. Count invalidation and default Yes focus were corrected. A nine-letter
++capture name was corrected to DOS 8.3 and the final exact EXE was requalified.
++Failed/intermediate local runs are retained privately, not presented as final.
++
++Next approved directions (design only)
++PLAN09.TXT covers local opt-in, base-UNKNOWN-only, provenance-aware bounded
++learning with conflict/reset/corruption handling; non-training/non-setting-writing
++TSHELL demo integration with movement/dark intervals rather than a static
++burn-in claim; and short original oracle cues. EX/HX PC-speaker PWM speech is
++possible without an SL/TL DAC, but CPU, cooperative scheduling, quality and
++ownership need qualification. Physical video/audio assessment requires Chad.
++No later feature code was added before this checkpoint review.
+--- a/SOURCE/README.TXT
++++ b/SOURCE/README.TXT
+@@ -1,19 +1,35 @@
+-TANDINATOR 0.3.5 - FOLLOW-UP UI TRIAL (TANDI08)
++TANDINATOR 0.3.6 - LOCAL FIRST CHECKPOINT (TANDI09)
+ Think of a character in ROSTER.TXT using its named character edition.
+-App version is 0.3.5; the standard roster revision remains 0.3.2.
+-F1 Help. F2 Diagnostics warns before candidate names. F3 Sound.
+-F3 preference is stored in WIN.INI [TANDINATOR] Sound; answers are not saved.
+-NO SOUND means unsupported hardware/mode/timer. SOUND OFF is your preference.
+-SOUND UNSAVED means the preference could not be written; it still applies now.
+-Escape closes an overlay first. Escape elsewhere or EXIT closes the app.
+-Thinking is painted before prompt calculation, without a decorative timer wait.
+-The 220 ms input guard, held-key and double-click protections are retained.
+-After the first rejected guess at question 25, choose Continue, Restart or Exit.
+-After Continue, later rejections directly advance; all candidates stay reachable.
+-If TANDY.DAT cannot be read, exit, replace it beside TANDI.EXE and restart.
++App version is 0.3.6; standard roster revision remains 0.3.2.
++F1 Help. F2 Diagnostics warns before names. F3 toggles sound.
++F4 or HOW I KNEW on a guess opens scored clues against the real runner-up.
++PREV/NEXT shows every recorded answer, strongest score differences first.
++Positive clues favor the guess relative to that other name; negative clues
++favor the other name. Neutral or UNKNOWN clues do not establish a distinction.
++DAT facts are stored game data, not certified truth. A score margin is not
++proof of identity, and does not rule out a lower-ranked name.
++Leading means unrejected names within 24 score points of the current leader.
++The displayed denominator counts unrejected names. The leading count can rise;
++other names stay eligible. Only an explicitly rejected guess leaves eligibility.
++An immediate new guess plays REVEAL; a new question queues WRONG after work.
++No decorative computation wait was added. Input guard remains 220 ms.
++F3 is stored in WIN.INI [TANDINATOR] Sound; game answers are not saved.
++NO SOUND is unsupported; SOUND OFF is your preference. SOUND UNSAVED warns
++that the current preference could not be written. Escape closes an overlay
++first; Escape elsewhere and EXIT close the app. Held/repeated inputs are guarded.
++After the first rejected guess at question 25 choose Continue, Restart or Exit.
++Further rejections advance; all candidates remain reachable.
++If TANDY.DAT cannot be read, exit and replace it beside this EXE, then restart.
+ INSTALL.BAT copies EXE,DAT,roster and README and refuses existing files.
+-Use your existing guarded WindowsXT launcher; do not bypass its errors.
+-This optional trial uses the reviewed standard 256-character/130-question DAT.
+-The bounded AUDIT08 data proposal is separate in SOURCE/data and SOURCE/build.
+-It is not promotion-ready. Read QA08.TXT and SOURCE/evidence/COMPARE.JSN.
+-No engine threshold, extra questions, undo or canonical promotion is included.
++Start through your existing guarded WindowsXT launcher; no launcher bypass.
++RUN uses the unchanged standard DAT. AUDIT08 stays separate and experimental.
++Independent original-harness verification confirms a two-wrong regression:
++standard: 225 solved / 31 final failures; AUDIT08: 220 solved / 36 failures.
++This differs from truthful FIRST-GUESS misses: standard 23 / AUDIT08 19.
++Two-flip policy starts at question 4; flips first two non-UNKNOWN facts via 4-v;
++rejects wrong guesses, continues guesses after 25, and fails on a wrong guess
++after 10 earlier rejections or no candidates. See QA09.TXT and NOISE09.JSN.
++AUDIT08 remains experimental. Both DATs eventually solve 256/256 truthful games.
++The same flip rule may flip different facts due to adaptive question selection.
++No Ask Two, reverse, learning, attract mode, vocal cues or canonical promotion.
++This is a local copy-only review kit; no publication or physical hardware claim.
+--- a/SOURCE/src/BUILD.BAT
++++ b/SOURCE/src/BUILD.BAT
+@@ -3,7 +3,7 @@
+ SET INCLUDE=C:\DDK\286\INC;C:\INCLUDE
+ IF EXIST BUILD.OK DEL BUILD.OK
+ IF EXIST TANDI.EXE DEL TANDI.EXE
+-CL /nologo /c /G0 /Gw /AS /W3 /O /DWIN16 TANDI.C DB.C ENGINE.C TDSOUND.C > BUILD.LOG
++CL /nologo /c /G0 /Gw /AS /W3 /O /DWIN16 TANDI.C DB.C ENGINE.C OBSERVE.C TDSOUND.C > BUILD.LOG
+ IF ERRORLEVEL 1 GOTO BAD
+ LINK4 /MAP /NOE /NOD @TANDI.RSP >> BUILD.LOG
+ IF ERRORLEVEL 1 GOTO BAD
+--- a/SOURCE/src/OBSERVE.C
++++ b/SOURCE/src/OBSERVE.C
+@@ -0,0 +1,58 @@
++/* Read-only observations of the unchanged engine. C89, no heap or floats. */
++#include "OBSERVE.H"
++#include <string.h>
++static const short delta[5][5]={
++    {4,2,0,-4,-8},{2,2,0,-2,-4},{0,0,0,0,0},
++    {-4,-2,0,2,2},{-8,-4,0,2,4}
++};
++void obs_reset(TDHISTORY *h){memset(h,0,sizeof(*h));}
++int obs_answer(TDHISTORY *h,ENGINE *e,TDB *d,int a){
++    int i,q=e->current;
++    if(h->count<0||h->count>=TD_MAXQ||q<0||q>=(int)d->nq)return 0;
++    for(i=0;i<h->count;i++)if((int)h->q[i]==q)return 0;
++    if(!eng_answer(e,d,a))return 0;
++    h->q[h->count]=(U16)q;h->a[h->count]=(U8)a;h->count++;
++    return 1;
++}
++void obs_pool(ENGINE *e,TDB *d,TDPOOL *p){
++    int i;p->eligible=p->leading=0;p->cutoff=0;
++    if(e->best<0)return;
++    p->cutoff=(short)(e->score[e->best]-24);
++    for(i=0;i<(int)d->nc;i++)if(!e->rejected[i]){
++        p->eligible++;
++        if(e->score[i]>=p->cutoff)p->leading++;
++    }
++}
++static int magnitude(int v){return v<0?-v:v;}
++int obs_explain(TDHISTORY *h,ENGINE *e,TDB *d,TDEXPLAIN *x){
++    U8 leader[TD_ROW],other[TD_ROW];TDCLUE c;
++    int i,j,q,a,v,w;long ls=0,os=0;
++    memset(x,0,sizeof(*x));x->leader=e->best;x->other=e->second;
++    if(e->best<0||e->second<0||h->count<0||h->count>TD_MAXQ||
++       h->count!=e->turn||e->rejected[e->best]||e->rejected[e->second])
++        return 0;
++    if(!db_row(d,e->best,leader)||!db_row(d,e->second,other))return 0;
++    x->leaderScore=e->score[e->best];x->otherScore=e->score[e->second];
++    for(i=0;i<h->count;i++){
++        q=h->q[i];a=h->a[i];
++        if(q<0||q>=(int)d->nq||a<0||a>4||!e->asked[q])return 0;
++        for(j=0;j<i;j++)if((int)h->q[j]==q)return 0;
++        v=db_value(leader,q);w=db_value(other,q);
++        c.q=(U16)q;c.answer=(U8)a;c.leaderFact=(U8)v;
++        c.otherFact=(U8)w;c.leaderDelta=delta[a][v];
++        c.otherDelta=delta[a][w];
++        c.difference=(short)(c.leaderDelta-c.otherDelta);
++        x->sum+=c.difference;ls+=c.leaderDelta;os+=c.otherDelta;
++        /* Largest signed differences first. Stable ties preserve history.
++           Negative clues and neutral/unknown clues are retained too. */
++        j=x->count;
++        while(j>0&&magnitude(c.difference)>
++              magnitude(x->clue[j-1].difference)){
++            x->clue[j]=x->clue[j-1];j--;
++        }
++        x->clue[j]=c;x->count++;
++    }
++    if(x->sum!=(long)x->leaderScore-x->otherScore||
++       ls!=x->leaderScore||os!=x->otherScore)return 0;
++    x->valid=1;return 1;
++}
+--- a/SOURCE/src/OBSERVE.H
++++ b/SOURCE/src/OBSERVE.H
+@@ -0,0 +1,29 @@
++#ifndef OBSERVE_H
++#define OBSERVE_H
++#include "TANDI.H"
++/* At most one accepted answer per question, not per 25-question guess cap. */
++typedef struct {
++    U16 q[TD_MAXQ];
++    U8 a[TD_MAXQ];
++    int count;
++} TDHISTORY;
++typedef struct {
++    int eligible,leading;
++    short cutoff;
++} TDPOOL;
++typedef struct {
++    U16 q;
++    U8 answer,leaderFact,otherFact;
++    short leaderDelta,otherDelta,difference;
++} TDCLUE;
++typedef struct {
++    int leader,other,count,valid;
++    short leaderScore,otherScore;
++    long sum;
++    TDCLUE clue[TD_MAXQ];
++} TDEXPLAIN;
++void obs_reset(TDHISTORY *);
++int obs_answer(TDHISTORY *,ENGINE *,TDB *,int);
++void obs_pool(ENGINE *,TDB *,TDPOOL *);
++int obs_explain(TDHISTORY *,ENGINE *,TDB *,TDEXPLAIN *);
++#endif
+--- a/SOURCE/src/TANDI.C
++++ b/SOURCE/src/TANDI.C
+@@ -2,11 +2,15 @@
+ #include <windows.h>
+ #include <string.h>
+ #include "TANDI.H"
++#include "OBSERVE.H"
+ #include "ART.H"
+ #include "TDSOUND.H"
+ /* Full-screen client, no standard dialogs. All calculations are outside paint. */
+ static TDB db;
+ static ENGINE engine;
++static TDHISTORY history;
++static TDEXPLAIN explanation;
++static int explaining,explainpage;
+ static HWND window;
+ static HINSTANCE instance;
+ static int screenw,screenh,mono,state,focus,debug,help,busy,testmode;
+@@ -171,7 +175,7 @@
+     if(ny>1)ny=1;if(ny<-1)ny=-1;
+     if(nx==lookx&&ny==looky)return;
+     lookx=nx;looky=ny;
+-    if(help||debug||state>1||!active||!artdc)return;
++    if(help||debug||explaining||state>1||!active||!artdc)return;
+     dc=GetDC(window);eyes(dc);ReleaseDC(window,dc);eyeupdates++;
+ }
+ static void mascot(HDC dc){
+@@ -181,13 +185,13 @@
+ }
+ /* Exact 24x18 face crops from the supplied PARTS sheet. */
+ static void animpaint(HDC dc){
+-    if(animframe>=0&&!help&&!debug)
++    if(animframe>=0&&!help&&!debug&&!explaining)
+         sprite(dc,41*sx,85,24,18,(animframe%4)*32,416+(animframe/4)*20);
+ }
+ static void animset(int frame){
+     HDC dc;DWORD started;int pose;char path[30],digits[12];
+     if(animframe==frame)return;animframe=frame;
+-    if(!active||help||debug||!artdc)return;
++    if(!active||help||debug||explaining||!artdc)return;
+     started=GetTickCount();dc=GetDC(window);if(!dc)return;
+     pose=state==2?1:(state==3?2:0);
+     sprite(dc,41*sx,85,24,18,35,42+pose*120);
+@@ -203,25 +207,58 @@
+ }
+ static void layout(void){
+     int i,left=panelleft(),width=screenw-left-4*sx;nb=0;
+-    if(help||debug){
++    if(help||debug||explaining){
++        if(explaining){
++            if(explainpage>0)addbutton(93,"PREV",8*sx,163,76*sx,16);
++            if(explainpage+1<explanation.count)addbutton(94,"NEXT",90*sx,163,76*sx,16);
++        }
+         if(debug==1)addbutton(91,"SHOW DEBUG",left,125,width,21);
+-        addbutton(90,"BACK [ESC]",left,163,width,16);
++        addbutton(90,"BACK [ESC]",explaining?174*sx:left,163,explaining?142*sx:width,16);
+     }
+     else if(state==0)addbutton(10,"BEGIN  [ENTER]",left,122,width,21);
+     else if(state==1){
+         left+=(width-164*sx)/2;width=164*sx;
+-        for(i=0;i<5;i++)addbutton(i,answers[i],left,88+18*i,width,16);
++        for(i=0;i<5;i++)addbutton(i,answers[i],left,86+17*i,width,16);
+     }
+     else if(state==2){
+         addbutton(20,"YES!  [Y]",left,117,width,21);
+         addbutton(21,"NO, TRY AGAIN [N]",left,144,width,21);
+-    }else if(state==3||(state==4&&!db.error))addbutton(10,"PLAY AGAIN",left,126,width,23);
++        addbutton(92,"HOW I KNEW [F4]",left,100,width,14);
++    }else if(state==3||(state==4&&!db.error)){
++        addbutton(10,"PLAY AGAIN",left,126,width,23);
++        if(state==3)addbutton(92,"HOW I KNEW [F4]",left,152,width,16);
++    }
+     else if(state==5){
+         addbutton(30,"CONTINUE GUESSING",left,121,width,21);
+         addbutton(10,"RESTART",left,148,width,21);
+     }
+     addbutton(99,"EXIT",screenw-49,183,43,14);
+     if(focus>=nb)focus=0;
++}
++static char *factwords[5]={"NO","PROBABLY NOT","UNKNOWN","PROBABLY","YES"};
++static void explaindraw(HDC dc){
++    TDCLUE *c;char a[40],b[40],num[20],q[80];RECT r;
++    if(!explanation.valid){
++        text(dc,8*sx,72,"No complete comparison is available.");
++        text(dc,8*sx,90,"A guess is not proof of identity.");return;
++    }
++    db_name(&db,explanation.leader,a);db_name(&db,explanation.other,b);
++    lstrcpy(line,a);lstrcat(line," vs ");lstrcat(line,b);
++    r.left=8*sx;r.right=screenw-8*sx;r.top=43;r.bottom=68;
++    DrawText(dc,line,-1,&r,DT_WORDBREAK|DT_NOPREFIX);
++    if(explanation.count==0){text(dc,8*sx,80,"No answers yet. A score tie, not proof.");return;}
++    c=&explanation.clue[explainpage];db_question(&db,c->q,q);
++    r.top=71;r.bottom=100;DrawText(dc,q,-1,&r,DT_WORDBREAK|DT_NOPREFIX);
++    lstrcpy(line,"You: ");lstrcat(line,c->answer==2?"DON'T KNOW":factwords[c->answer]);text(dc,8*sx,102,line);
++    lstrcpy(line,"Guess DAT: ");lstrcat(line,factwords[c->leaderFact]);
++    lstrcat(line," (");number(num,c->leaderDelta);lstrcat(line,num);lstrcat(line,")");text(dc,8*sx,114,line);
++    lstrcpy(line,"Other DAT: ");lstrcat(line,factwords[c->otherFact]);
++    lstrcat(line," (");number(num,c->otherDelta);lstrcat(line,num);lstrcat(line,")");text(dc,8*sx,126,line);
++    lstrcpy(line,"Score difference: ");number(num,c->difference);lstrcat(line,num);
++    lstrcat(line,c->difference>0?" for guess":(c->difference<0?" against guess":" neutral"));text(dc,8*sx,138,line);
++    number(num,explanation.sum);lstrcpy(line,"Margin ");lstrcat(line,num);
++    lstrcat(line,". Clue ");number(num,explainpage+1);lstrcat(line,num);lstrcat(line,"/");
++    number(num,explanation.count);lstrcat(line,num);lstrcat(line,". Not proof.");text(dc,8*sx,150,line);
+ }
+ static void draw(HWND w){
+     PAINTSTRUCT ps;HDC dc;int i;RECT r;char temp[24];COLORREF gold;
+@@ -232,13 +269,14 @@
+     SetTextColor(dc,gold);SetBkColor(dc,RGB(0,0,0));
+     if(artdc)sprite(dc,(screenw-126*sx)/2,4,126,16,0,360);
+     else centered(dc,5,"TANDINATOR");
+-    centered(dc,22,help?"HOW TO CONSULT THE ORACLE":(debug?"DIAGNOSTICS - SPOILERS":"THE INCREDIBLE TANDY MIND READER"));
++    centered(dc,22,explaining?"HOW I KNEW - SCORE CLUES":help?"HOW TO CONSULT THE ORACLE":(debug?"DIAGNOSTICS - SPOILERS":"THE INCREDIBLE TANDY MIND READER"));
+     box(dc,6*sx,35,screenw-12*sx,1,gold);
+     box(dc,6*sx,179,screenw-12*sx,1,gold);
+     SetTextColor(dc,RGB(255,255,255));
+-    if(debug||help){
+-        sprite(dc,screenw-55*sx,40,48,40,debug?48:0,376);
+-        if(debug==2){for(i=0;i<10;i++)text(dc,8*sx,43+i*11,debugline[i]);}
++    if(debug||help||explaining){
++        if(!explaining)sprite(dc,screenw-55*sx,40,48,40,debug?48:0,376);
++        if(explaining)explaindraw(dc);
++        else if(debug==2){for(i=0;i<10;i++)text(dc,8*sx,43+i*11,debugline[i]);}
+         else if(debug==1){
+             text(dc,8*sx,87,"This shows likely names and scores.");
+             text(dc,8*sx,103,"It may spoil the guessing game.");
+@@ -248,10 +286,10 @@
+             text(dc,8*sx,61,"1 Yes  2 Probably  3 Don't know");
+             text(dc,8*sx,74,"4 Probably not  5 No");
+             text(dc,8*sx,90,"Tab changes focus. Enter chooses.");
+-            text(dc,8*sx,103,"F2 diagnostics. F3 sound.");
+-            text(dc,8*sx,119,"Use the edition named in ROSTER.TXT.");
+-            text(dc,8*sx,132,"Unsure? Don't know is always fine.");
+-            text(dc,8*sx,145,"App 0.3.5; roster revision 0.3.2.");
++            text(dc,8*sx,103,"Leading = within 24 score points.");
++            text(dc,8*sx,119,"Count may rise. Other names can win.");
++            text(dc,8*sx,132,"F4 on a guess: clues, not proof.");
++            text(dc,8*sx,145,"App 0.3.6; roster revision 0.3.2.");
+         }
+     }else{
+         r.left=6*sx;r.right=102*sx;r.top=43;r.bottom=163;
+@@ -262,6 +300,10 @@
+             ticket(dc,question,42,42);
+             number(temp,engine.turn+1);lstrcpy(line,"Q ");lstrcat(line,temp);
+             SetTextColor(dc,gold);SetBkColor(dc,RGB(0,0,0));text(dc,34*sx,168,line);
++            {TDPOOL pool;obs_pool(&engine,&db,&pool);
++                lstrcpy(line,"Leading: ");number(temp,pool.leading);lstrcat(line,temp);
++                lstrcat(line,"/");number(temp,pool.eligible);lstrcat(line,temp);
++                text(dc,panelleft(),170,line);}
+         }else if(state==2){
+             ticket(dc,"I SUSPECT...",46,20);ticket(dc,name,70,38);
+         }else if(state==3){
+@@ -305,7 +347,7 @@
+     InvalidateRect(window,&buttons[0],FALSE);
+     r.left=panelleft();r.right=screenw-4*sx;r.top=42;r.bottom=84;
+     InvalidateRect(window,&r,FALSE);
+-    r.left=6*sx;r.right=102*sx;r.top=164;r.bottom=177;
++    r.left=6*sx;r.right=screenw-4*sx;r.top=164;r.bottom=178;
+     InvalidateRect(window,&r,FALSE);
+     r.left=8;r.right=screenw-53;r.top=182;r.bottom=199;
+     InvalidateRect(window,&r,FALSE);UpdateWindow(window);
+@@ -339,7 +381,7 @@
+     lstrcpy(debugline[9],"Emulator timing; not physical 8088.");
+ }
+ static void nextcompute(void){
+-    DWORD start;int previous=state,previousfocus=focus;if(!rejectphase)TdSoundStop(window);busy=1;busyfooter();start=GetTickCount();
++    DWORD start;int previous=state,previousfocus=focus;TdSoundStop(window);busy=1;busyfooter();start=GetTickCount();
+     if(eng_confident(&engine,&db)){state=2;db_name(&db,engine.best,name);}
+     else if(eng_choose(&engine,&db)<0){
+         state=(engine.best<0||db.error)?4:2;
+@@ -348,7 +390,7 @@
+     selectms=GetTickCount()-start;metric("SELECT_MS",selectms);
+     if(selectms>computepeak)computepeak=selectms;
+     metric("SAMPLE",engine.count);metric("ROWS",engine.examined);
+-    if(db.error)state=4;busy=0;focus=0;pending=0;
++    if(db.error)state=4;busy=0;explaining=0;focus=0;pending=0;
+     animset(-1);animticks=0;idleticks=0;
+     inputready=GetTickCount()+220;
+     if(state==2)animframe=1;
+@@ -359,6 +401,7 @@
+     }else refresh();
+     inputready=GetTickCount()+220;
+     if(state==2)TdSoundBegin(window,TD_SND_REVEAL,GetTickCount());
++    else if(state==1&&rejectphase)TdSoundBegin(window,TD_SND_WRONG,GetTickCount());
+ }
+ /* Paint the thinking expression before synchronous engine work.
+    No decorative timer delay; the post-compute input guard stays intact. */
+@@ -370,7 +413,7 @@
+ static void animtick(void){
+     static int reveal[5]={1,2,1,4,-1};
+     static int victory[5]={3,4,3,4,3};
+-    if(!active||help||debug)return;
++    if(!active||help||debug||explaining)return;
+     TdSoundTick(window,GetTickCount());
+     if(state==2||state==3){
+         if(animticks<10){animticks++;if(!(animticks%2))
+@@ -385,16 +428,26 @@
+     DWORD start;
+     if(id==99){SendMessage(window,WM_CLOSE,0,0);return;}
+     if(inputblocked())return;
+-    if(id==90){debug=help=0;refresh();return;}
++    if(id==90){debug=help=explaining=0;refresh();return;}
++    if(id==92&&(state==2||state==3)&&!help&&!debug){
++        TdSoundStop(window);explaining=1;explainpage=0;
++        obs_explain(&history,&engine,&db,&explanation);
++        focus=0;refresh();inputready=GetTickCount()+220;return;
++    }
++    if(explaining&&(id==93||id==94)){
++        if(id==93&&explainpage>0)explainpage--;
++        if(id==94&&explainpage+1<explanation.count)explainpage++;
++        focus=0;refresh();inputready=GetTickCount()+220;return;
++    }
+     if(id==91&&debug==1){debug=2;debugupdate();focus=0;refresh();inputready=GetTickCount()+220;return;}
+     if(id==30&&state==5){next();return;}
+     if(id==10){
+         if(db.error){state=4;refresh();return;}
+-        TdSoundStop(window);eng_reset(&engine,&db);capoffered=0;state=1;next();return;
++        TdSoundStop(window);eng_reset(&engine,&db);obs_reset(&history);capoffered=0;state=1;next();return;
+     }
+     if(id>=0&&id<5&&state==1){
+         TdSoundStop(window);start=GetTickCount();
+-        if(!eng_answer(&engine,&db,4-id))state=4;
++        if(!obs_answer(&history,&engine,&db,4-id))state=4;
+         answerms=GetTickCount()-start;metric("ANSWER_MS",answerms);
+         if(state!=4)next();else refresh();return;
+     }
+@@ -407,12 +460,12 @@
+             focus=0;refresh();inputready=GetTickCount()+220;
+             TdSoundBegin(window,TD_SND_WRONG,GetTickCount());return;
+         }
+-        rejectphase=1;TdSoundBegin(window,TD_SND_WRONG,GetTickCount());next();
++        rejectphase=1;next();
+     }
+ }
+ /* Deterministic fixture setup; inputs under test still use production handlers. */
+ static void testprepare(void){
+-    busy=pending=0;inputready=0;capoffered=0;eng_reset(&engine,&db);state=1;
++    busy=pending=0;inputready=0;capoffered=0;eng_reset(&engine,&db);obs_reset(&history);state=1;
+     nextcompute();inputready=0;
+ }
+ static void soundtest(void){
+@@ -440,7 +493,7 @@
+     SendMessage(window,WM_ACTIVATEAPP,1,0);TdSoundEnable(soundpref);inputready=0;
+ }
+ static void layouttest(void){
+-    int i,j,bestq=0,bestn=0,maxq=0,maxn=0,turn,ok=1;char q[80],nm[40];
++    int i,j,bestq=0,bestn=0,maxq=0,maxn=0,turn,ok=1,fit=1;char q[80],nm[40];
+     HDC dc;RECT r;
+     dc=GetDC(window);SelectObject(dc,GetStockObject(SYSTEM_FIXED_FONT));
+     /* Same rectangles as tickets, but an empty clip avoids transient screens. */
+@@ -455,6 +508,16 @@
+         db_name(&db,i,nm);wrapped(dc,nm,&r);
+         if(lstrlen(nm)>maxn){maxn=lstrlen(nm);bestn=i;}
+     }
++    for(i=0;i<(int)db.nq;i++){
++        db_question(&db,i,q);r.left=8*sx;r.right=screenw-8*sx;r.top=71;r.bottom=100;
++        DrawText(dc,q,-1,&r,DT_WORDBREAK|DT_NOPREFIX|DT_CALCRECT);
++        if(r.bottom>100)fit=0;
++    }
++    metric("EXPLAIN_QUESTION_LAYOUT",fit);
++    db_name(&db,bestn,nm);lstrcpy(line,nm);lstrcat(line," vs ");lstrcat(line,nm);
++    r.left=8*sx;r.right=screenw-8*sx;r.top=43;r.bottom=68;
++    DrawText(dc,line,-1,&r,DT_WORDBREAK|DT_NOPREFIX|DT_CALCRECT);
++    metric("EXPLAIN_NAME_LAYOUT",r.bottom<=68);
+     ReleaseDC(window,dc);
+     metric("ALL_QUESTIONS_CHECKED",db.nq);metric("ALL_NAMES_CHECKED",db.nc);
+     metric("WRAP_FAILURES",wrapfail);metric("MAX_TEXT_LINES",wrapmax);
+@@ -497,13 +560,13 @@
+     testprepare();turn=engine.turn;
+     SendMessage(window,WM_KEYDOWN,VK_F1,0);
+     SendMessage(window,WM_KEYDOWN,VK_ESCAPE,0);
+-    metric("ESC_HELP_PRESERVED",!help&&!debug&&engine.turn==turn&&IsWindow(window));
++    metric("ESC_HELP_PRESERVED",!help&&!debug&&!explaining&&engine.turn==turn&&IsWindow(window));
+     inputready=0;SendMessage(window,WM_KEYDOWN,VK_F2,0);
+     metric("DEBUG_WARNING_FIRST",debug==1&&ids[0]==91);capture("C:\\WARN.BIN");
+     SendMessage(window,WM_KEYDOWN,VK_ESCAPE,0);metric("ESC_DEBUG_PRESERVED",!debug&&engine.turn==turn);
+     inputready=0;SendMessage(window,WM_KEYDOWN,VK_F2,0);act(91);
+     metric("DEBUG_EXPLICIT_REVEAL",debug==2);SendMessage(window,WM_KEYDOWN,VK_ESCAPE,0);
+-    testprepare();while(engine.turn<25){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}
++    testprepare();while(engine.turn<25){eng_choose(&engine,&db);obs_answer(&history,&engine,&db,2);}
+     nextcompute();inputready=0;leader=engine.best;act(21);
+     metric("LIMIT_REJECTION_GATE",state==5&&!pending&&engine.rejected[leader]);capture("C:\\CONTINUE.BIN");
+     leader=engine.best;turn=engine.turn;
+@@ -519,7 +582,7 @@
+     SendMessage(window,WM_KEYDOWN,VK_F3,0x40000000L);
+     metric("SOUND_HELD_KEY_IGNORED",soundpref!=savedpref);
+     SendMessage(window,WM_KEYDOWN,VK_F3,0);
+-    testprepare();while(engine.turn<25){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}
++    testprepare();while(engine.turn<25){eng_choose(&engine,&db);obs_answer(&history,&engine,&db,2);}
+     nextcompute();i=0;gates=0;
+     while(state==2){inputready=0;act(21);i++;if(state==5){gates++;inputready=0;act(30);}}
+     metric("CAP_ALL_CANDIDATES_REACHABLE",state==4&&i==(int)db.nc&&gates==1);
+@@ -527,6 +590,51 @@
+     busy=pending=0;TdSoundStop(window);db.error=1;state=4;refresh();
+     metric("BAD_DAT_EXIT_ONLY",nb==1&&ids[0]==99);capture("C:\\BADDB.BIN");
+     db.error=0;testprepare();
++}
++static void observetest(void){
++    int q,a,k,known,i,negative,oldturn;TDPOOL pool;U8 obsrow[TD_ROW];
++    testprepare();db_row(&db,0,obsrow);
++    while(!eng_confident(&engine,&db)){
++        q=eng_choose(&engine,&db);if(q<0)break;
++        obs_answer(&history,&engine,&db,db_value(obsrow,q));
++    }
++    nextcompute();inputready=0;act(92);
++    metric("EXPLAIN_ACTUAL_RUNNER_UP",explaining&&explanation.valid&&
++           explanation.leader==engine.best&&explanation.other==engine.second&&
++           explanation.count==engine.turn);
++    capture("C:\\EXPLAIN.BIN");oldturn=engine.turn;
++    inputready=0;SendMessage(window,WM_KEYDOWN,'Y',0);
++    metric("EXPLAIN_GAME_INPUT_BLOCKED",explaining&&engine.turn==oldturn&&state==2);
++    SendMessage(window,WM_KEYDOWN,VK_ESCAPE,0);
++    metric("EXPLAIN_ESCAPE_PRESERVES",!explaining&&engine.turn==oldturn&&state==2);
++    testprepare();db_row(&db,1,obsrow);known=0;
++    while(!eng_confident(&engine,&db)){
++        q=eng_choose(&engine,&db);if(q<0)break;a=db_value(obsrow,q);
++        if(a!=2){known++;if(known==1||known==4)a=4-a;}
++        obs_answer(&history,&engine,&db,a);
++    }
++    nextcompute();inputready=0;SendMessage(window,WM_KEYDOWN,VK_F4,0);
++    metric("EXPLAIN_F4_OPENS",explaining&&explanation.valid);
++    negative=-1;for(i=0;i<explanation.count;i++)if(explanation.clue[i].difference<0){negative=i;break;}
++    metric("EXPLAIN_CONFLICT_RETAINED",negative>=0);
++    if(negative>=0){
++        for(k=0;k<negative;k++){inputready=0;act(94);}
++        capture("C:\\CONFLICT.BIN");
++    }
++    i=explainpage;SendMessage(window,WM_KEYDOWN,VK_F4,0x40000000L);
++    metric("EXPLAIN_HELD_KEY_IGNORED",explaining&&explainpage==i);
++    SendMessage(window,WM_KEYDOWN,VK_ESCAPE,0);testprepare();
++    for(i=0;i<(int)db.nq;i++){engine.current=i;obs_answer(&history,&engine,&db,2);}
++    nextcompute();inputready=0;act(92);
++    metric("EXPLAIN_FULL_HISTORY",explanation.valid&&explanation.count==(int)db.nq&&history.count>25);
++    for(i=1;i<explanation.count;i++){inputready=0;act(94);}
++    metric("EXPLAIN_LAST_PAGE",explainpage+1==explanation.count);
++    capture("C:\\EXPLAST.BIN");inputready=0;act(94);
++    metric("EXPLAIN_PAGE_BOUND",explainpage+1==explanation.count);
++    SendMessage(window,WM_KEYDOWN,VK_ESCAPE,0);testprepare();obs_pool(&engine,&db,&pool);
++    metric("LEADING_ALL_AT_START",pool.leading==(int)db.nc&&pool.eligible==(int)db.nc);
++    inputready=0;act(0);capture("C:\\COUNTINC.BIN");refresh();capture("C:\\COUNTFUL.BIN");
++    testprepare();
+ }
+ static void testtick(void){
+     int answer,i,turnsaved,statesaved,lx,ly;char nm[40],target[40];RECT damage;HWND peer;HDC testdc;
+@@ -578,7 +686,7 @@
+         SendMessage(window,WM_KEYDOWN,VK_TAB,0);
+         metric("TAB_FOCUS_MOVED",focus==1);
+         SendMessage(window,WM_KEYDOWN,VK_TAB,0);
+-        SendMessage(window,WM_KEYDOWN,VK_RETURN,0);layouttest();usabilitytest();teststep++;return;
++        SendMessage(window,WM_KEYDOWN,VK_RETURN,0);layouttest();usabilitytest();observetest();teststep++;return;
+     }
+     if(state==1){
+         if(!verified){capture("C:\\QUESTION.BIN");verified=1;}
+@@ -683,20 +791,21 @@
+             refresh();return 0;
+         }
+         if(wp==VK_ESCAPE){
+-            if(help||debug){help=debug=0;focus=0;refresh();inputready=GetTickCount()+220;return 0;}
++            if(help||debug||explaining){help=debug=explaining=0;focus=0;refresh();inputready=GetTickCount()+220;return 0;}
+             SendMessage(w,WM_CLOSE,0,0);return 0;
+         }
+         if(inputblocked())return 0;
+-        if(wp==VK_F1){TdSoundStop(window);help=!help;debug=0;focus=0;refresh();return 0;}
+-        if(wp==VK_F2){TdSoundStop(window);debug=debug?0:1;help=0;focus=0;refresh();return 0;}
++        if(wp==VK_F1){TdSoundStop(window);help=!help;debug=explaining=0;focus=0;refresh();return 0;}
++        if(wp==VK_F2){TdSoundStop(window);debug=debug?0:1;help=explaining=0;focus=0;refresh();return 0;}
++        if(wp==VK_F4&&!explaining&&(state==2||state==3)){act(92);return 0;}
+         if(wp==VK_TAB){if(nb){
+             InvalidateRect(w,&buttons[focus],FALSE);
+             focus=(focus+(GetKeyState(VK_SHIFT)<0?nb-1:1))%nb;
+             InvalidateRect(w,&buttons[focus],FALSE);UpdateWindow(w);
+         }return 0;}
+         if(wp==VK_RETURN||wp==VK_SPACE){if(nb)act(ids[focus]);return 0;}
+-        if(!debug&&!help&&state==1&&wp>='1'&&wp<='5'){act(wp-'1');return 0;}
+-        if(!debug&&!help&&state==2&&(wp=='Y'||wp=='N'))act(wp=='Y'?20:21);
++        if(!debug&&!help&&!explaining&&state==1&&wp>='1'&&wp<='5'){act(wp-'1');return 0;}
++        if(!debug&&!help&&!explaining&&state==2&&(wp=='Y'||wp=='N'))act(wp=='Y'?20:21);
+         return 0;
+     }
+     if(msg==WM_DESTROY){KillTimer(window,2);TdSoundStop(window);artfree();db_close();if(logfile!=-1)_lclose(logfile);PostQuitMessage(0);return 0;}
+--- a/SOURCE/src/TANDI.RSP
++++ b/SOURCE/src/TANDI.RSP
+@@ -1,4 +1,4 @@
+-TANDI.OBJ DB.OBJ ENGINE.OBJ TDSOUND.OBJ
++TANDI.OBJ DB.OBJ ENGINE.OBJ OBSERVE.OBJ TDSOUND.OBJ
+ TANDI.EXE
+ TANDI.MAP
+ C:\LIB\SLIBCEW.LIB C:\LIB\LIBW.LIB
+--- a/SOURCE/tests/ANIMTEST.PY
++++ b/SOURCE/tests/ANIMTEST.PY
+@@ -24,7 +24,7 @@
+ maps={16:list(range(16)),2:[0,0,0,1,0,0,0,1,0,0,1,1,1,1,1,1],4:[0,0,2,2,1,1,1,3,0,0,2,2,1,1,3,3]}
+ report=[]
+ for mode,(w,colors,_,_) in m.MODES.items():
+- run=P/'evidence'/('art-'+mode+'-ui08g');samples=sorted((run/'guest').glob('AN*.BIN'))
++ run=P/'evidence'/('art-'+mode+'-ui09c');samples=sorted((run/'guest').glob('AN*.BIN'))
+  assert samples,mode
+  expected={name:np.repeat(np.array([maps[colors][palette[c]] for c in im.getdata()],dtype=np.uint8).reshape(18,24),w//320,axis=1) for name,im in faces.items()}
+  matches={};chosen={}
+--- a/SOURCE/tests/BEFORE09.C
++++ b/SOURCE/tests/BEFORE09.C
+@@ -0,0 +1,742 @@
++#define WINVER 0x0300
++#include <windows.h>
++#include <string.h>
++#include "TANDI.H"
++#include "ART.H"
++#include "TDSOUND.H"
++/* Full-screen client, no standard dialogs. All calculations are outside paint. */
++static TDB db;
++static ENGINE engine;
++static HWND window;
++static HINSTANCE instance;
++static int screenw,screenh,mono,state,focus,debug,help,busy,testmode;
++static int lookx,looky,eyeupdates,sx,colors,active=1,artblits;
++static HDC artdc;
++static HBITMAP artbmp,oldart;
++static DWORD artms;
++static int animframe=-1,animticks,idleticks,pending,timerok,animredraws;
++static int animcapture,animserial,tickinside,rejectphase,testreset,testwait,capoffered,soundpref=1,soundsupported,settingssaved=1;
++static DWORD inputready,animcost,computepeak;
++static void animpaint(HDC dc);
++static void capture(char *path);
++static void animset(int frame);
++static void nextcompute(void);
++static void next(void);
++static int inputblocked(void){return busy||(LONG)(GetTickCount()-inputready)<0;}
++
++static char *soundfooter(void){
++    if(!soundsupported)return "F1 HELP F2 DEBUG NO SOUND";
++    if(!settingssaved)return "F1 HELP F2 DEBUG SOUND UNSAVED";
++    return soundpref?"F1 HELP F2 DEBUG F3 SOUND ON":"F1 HELP F2 DEBUG F3 SOUND OFF";
++}
++static void soundsettings(void){
++    soundpref=GetProfileInt("TANDINATOR","Sound",1)!=0;
++    TdSoundEnable(soundpref);
++}
++
++static struct { BITMAPINFOHEADER h; RGBQUAD c[16]; } artinfo;
++/* Driver logical RGB entries intentionally differ from RGBI display values.
++   This preserves the source sheet's exact 0..15 hardware color indices. */
++static unsigned char rgb[16][3]={{0,0,0},{0,0,128},{0,128,0},{0,128,128},
++ {128,0,0},{128,0,128},{128,128,0},{128,128,128},{64,64,64},
++ {0,0,255},{0,255,0},{0,255,255},{255,0,0},{255,0,255},
++ {255,255,0},{255,255,255}};
++static unsigned char monomap[16]={0,0,0,15,0,0,0,15,0,0,15,15,15,15,15,15};
++static unsigned char lowmap[16]={0,0,10,10,12,12,12,15,0,0,10,10,12,12,15,15};
++static int errors,teststep,wrongguess,finished,testtarget,verified,testinside;
++static int wrapfail,wrapmax;
++static RECT buttons[6];
++static int ids[6],nb;
++static char labels[6][24],question[80],name[40],line[100],dbpath[144];
++static char debugline[10][80];
++static DWORD loadms,answerms,selectms,freespace;
++static HFILE logfile=-1;
++static U8 truth[TD_ROW];
++static char *answers[5]={"YES","PROBABLY","DON'T KNOW",
++                             "PROBABLY NOT","NO"};
++static void number(char *s,long n){
++    char reverse[16];int i=0,j=0;unsigned long u;
++    if(n<0){s[j++]='-';u=(unsigned long)(-n);}else u=n;
++    do{reverse[i++]=(char)('0'+u%10);u/=10;}while(u);
++    while(i)s[j++]=reverse[--i];s[j]=0;
++}
++static void metric(char *key,long n){
++    char s[120],v[20];if(logfile==-1)return;
++    number(v,n);lstrcpy(s,key);lstrcat(s,"=");lstrcat(s,v);
++    lstrcat(s,"\r\n");_lwrite(logfile,s,lstrlen(s));
++}
++static void logtext(char *key,char *s){
++    if(logfile==-1)return;_lwrite(logfile,key,lstrlen(key));
++    _lwrite(logfile,"=",1);_lwrite(logfile,s,lstrlen(s));
++    _lwrite(logfile,"\r\n",2);
++}
++static void text(HDC dc,int x,int y,char *s){TextOut(dc,x,y,s,lstrlen(s));}
++static void box(HDC dc,int x,int y,int w,int h,COLORREF color){
++    RECT r;HBRUSH b;r.left=x;r.top=y;r.right=x+w;r.bottom=y+h;
++    b=CreateSolidBrush(color);FillRect(dc,&r,b);DeleteObject(b);
++}
++static void frame(HDC dc,int x,int y,int w,int h){
++    HBRUSH old;old=SelectObject(dc,GetStockObject(NULL_BRUSH));
++    Rectangle(dc,x,y,x+w,y+h);SelectObject(dc,old);
++}
++static void centered(HDC dc,int y,char *s){
++    RECT r;r.left=4;r.right=screenw-4;r.top=y;r.bottom=y+14;
++    DrawText(dc,s,-1,&r,DT_CENTER|DT_SINGLELINE|DT_NOPREFIX);
++}
++static int panelleft(void){return 104*sx;}
++static void artfree(void){
++    if(artdc){SelectObject(artdc,oldart);DeleteDC(artdc);artdc=0;}
++    if(artbmp){DeleteObject(artbmp);artbmp=0;}
++}
++static int artinit(HDC dc){
++    HBITMAP native,old,scaled;HDC source;int i,j;DWORD start;
++    start=GetTickCount(); /* Static DIB header begins zeroed; initialized once. */
++    artinfo.h.biSize=sizeof(BITMAPINFOHEADER);artinfo.h.biWidth=ART_W;
++    artinfo.h.biHeight=ART_H;artinfo.h.biPlanes=1;
++    artinfo.h.biBitCount=4;artinfo.h.biSizeImage=sizeof(artbits);
++    artinfo.h.biClrUsed=16;
++    for(i=0;i<16;i++){
++        j=i;
++        if(colors==2)j=monomap[i];
++        if(colors==4)j=lowmap[i];
++        artinfo.c[i].rgbRed=rgb[j][0];artinfo.c[i].rgbGreen=rgb[j][1];
++        artinfo.c[i].rgbBlue=rgb[j][2];
++    }
++    native=CreateDIBitmap(dc,&artinfo.h,CBM_INIT,artbits,(BITMAPINFO FAR *)&artinfo,DIB_RGB_COLORS);
++    if(!native)return 0;
++    artdc=CreateCompatibleDC(dc);if(!artdc){DeleteObject(native);return 0;}
++    artbmp=native;oldart=SelectObject(artdc,artbmp);
++    if(sx==2){
++        source=CreateCompatibleDC(dc);scaled=CreateCompatibleBitmap(dc,ART_W*2,ART_H);
++        if(!source||!scaled){if(source)DeleteDC(source);if(scaled)DeleteObject(scaled);artfree();return 0;}
++        old=SelectObject(source,scaled);SetStretchBltMode(source,COLORONCOLOR);
++        if(!StretchBlt(source,0,0,ART_W*2,ART_H,artdc,0,0,ART_W,ART_H,SRCCOPY)){
++            SelectObject(source,old);DeleteDC(source);DeleteObject(scaled);artfree();return 0;}
++        SelectObject(source,old);DeleteDC(source);SelectObject(artdc,oldart);
++        DeleteObject(native);artbmp=scaled;SelectObject(artdc,artbmp);
++    }
++    artms=GetTickCount()-start;return 1;
++}
++static void sprite(HDC dc,int x,int y,int w,int h,int ax,int ay){
++    if(artdc)BitBlt(dc,x,y,w*sx,h,artdc,ax*sx,ay,SRCCOPY);
++}
++/* Measure every line ourselves: Win3 DrawText can clip an exact-fit word
++   wrapped centered line. Spaces are never included in its centering width. */
++static void wrapped(HDC dc,char *s,RECT *r){
++    char row[100];int n,last,take,width,y=r->top,lines=0;TEXTMETRIC tm;
++    GetTextMetrics(dc,&tm);
++    while(*s){
++        while(*s==' ')s++;if(!*s)break;
++        n=0;last=0;
++        while(s[n]&&n<98){
++            row[n]=s[n];row[n+1]=0;
++            width=LOWORD(GetTextExtent(dc,row,n+1));
++            if(width>r->right-r->left)break;
++            if(s[n]==' ')last=n;n++;
++        }
++        take=n;
++        if(s[n]&&s[n]!=' '&&last)take=last;
++        if(!take)take=1;
++        n=take;while(n&&s[n-1]==' ')n--;
++        for(width=0;width<n;width++)row[width]=s[width];row[n]=0;
++        width=LOWORD(GetTextExtent(dc,row,n));
++        if(width>r->right-r->left||y+tm.tmHeight>r->bottom){
++            if(testmode)wrapfail++;
++        }else TextOut(dc,r->left+(r->right-r->left-width)/2,y,row,n);
++        y+=tm.tmHeight;lines++;s+=take;
++    }
++    if(lines>wrapmax)wrapmax=lines;
++}
++static void ticket(HDC dc,char *s,int y,int h){
++    RECT r;int left=panelleft(),width=screenw-left-4*sx;
++    box(dc,left,y,width,h,colors<16?RGB(255,255,255):RGB(255,255,0));
++    box(dc,left+sx,y+1,width-2*sx,h-2,RGB(255,255,255));
++    r.left=left+2*sx;r.right=screenw-6*sx;r.top=y+5;r.bottom=y+h-3;
++    SetTextColor(dc,RGB(0,0,0));SetBkColor(dc,RGB(255,255,255));
++    wrapped(dc,s,&r);
++}
++/* Native 3x6 pupil/shadow shapes, restricted to two white 7x9 patches. */
++static void eyes(HDC dc){
++    int x=6*sx,y=43;
++    if(!artdc||state>1||animframe>=0)return;
++    box(dc,x+39*sx,y+42,7*sx,9,RGB(255,255,255));
++    box(dc,x+47*sx,y+42,7*sx,9,RGB(255,255,255));
++    sprite(dc,x+(42+lookx)*sx,y+44+looky,3,6,42,44);
++    sprite(dc,x+(49+lookx)*sx,y+44+looky,3,6,49,44);
++}
++static void look(int x,int y){
++    int nx,ny,cx=52*sx;HDC dc;
++    nx=(x-cx)/(40*sx);ny=(y-90)/35;
++    if(nx>1)nx=1;if(nx<-1)nx=-1;
++    if(ny>1)ny=1;if(ny<-1)ny=-1;
++    if(nx==lookx&&ny==looky)return;
++    lookx=nx;looky=ny;
++    if(help||debug||state>1||!active||!artdc)return;
++    dc=GetDC(window);eyes(dc);ReleaseDC(window,dc);eyeupdates++;
++}
++static void mascot(HDC dc){
++    int pose=state==2?1:(state==3?2:0);
++    sprite(dc,6*sx,43,96,120,0,pose*120);artblits++;
++    eyes(dc);animpaint(dc);
++}
++/* Exact 24x18 face crops from the supplied PARTS sheet. */
++static void animpaint(HDC dc){
++    if(animframe>=0&&!help&&!debug)
++        sprite(dc,41*sx,85,24,18,(animframe%4)*32,416+(animframe/4)*20);
++}
++static void animset(int frame){
++    HDC dc;DWORD started;int pose;char path[30],digits[12];
++    if(animframe==frame)return;animframe=frame;
++    if(!active||help||debug||!artdc)return;
++    started=GetTickCount();dc=GetDC(window);if(!dc)return;
++    pose=state==2?1:(state==3?2:0);
++    sprite(dc,41*sx,85,24,18,35,42+pose*120);
++    eyes(dc);animpaint(dc);ReleaseDC(window,dc);animredraws++;
++    started=GetTickCount()-started;if(started>animcost)animcost=started;
++    if(testmode&&(teststep>0||testwait<40)&&animserial<120){
++        lstrcpy(path,"C:\\AN");number(digits,animserial++);lstrcat(path,digits);lstrcat(path,".BIN");capture(path);
++    }
++}
++static void addbutton(int id,char *label,int x,int y,int w,int h){
++    RECT *r=&buttons[nb];r->left=x;r->top=y;r->right=x+w;r->bottom=y+h;
++    ids[nb]=id;lstrcpy(labels[nb],label);nb++;
++}
++static void layout(void){
++    int i,left=panelleft(),width=screenw-left-4*sx;nb=0;
++    if(help||debug){
++        if(debug==1)addbutton(91,"SHOW DEBUG",left,125,width,21);
++        addbutton(90,"BACK [ESC]",left,163,width,16);
++    }
++    else if(state==0)addbutton(10,"BEGIN  [ENTER]",left,122,width,21);
++    else if(state==1){
++        left+=(width-164*sx)/2;width=164*sx;
++        for(i=0;i<5;i++)addbutton(i,answers[i],left,88+18*i,width,16);
++    }
++    else if(state==2){
++        addbutton(20,"YES!  [Y]",left,117,width,21);
++        addbutton(21,"NO, TRY AGAIN [N]",left,144,width,21);
++    }else if(state==3||(state==4&&!db.error))addbutton(10,"PLAY AGAIN",left,126,width,23);
++    else if(state==5){
++        addbutton(30,"CONTINUE GUESSING",left,121,width,21);
++        addbutton(10,"RESTART",left,148,width,21);
++    }
++    addbutton(99,"EXIT",screenw-49,183,43,14);
++    if(focus>=nb)focus=0;
++}
++static void draw(HWND w){
++    PAINTSTRUCT ps;HDC dc;int i;RECT r;char temp[24];COLORREF gold;
++    dc=BeginPaint(w,&ps);SetBkMode(dc,OPAQUE);
++    SelectObject(dc,GetStockObject(SYSTEM_FIXED_FONT));
++    box(dc,0,0,screenw,screenh,RGB(0,0,0));
++    gold=colors<16?RGB(255,255,255):RGB(255,255,0);
++    SetTextColor(dc,gold);SetBkColor(dc,RGB(0,0,0));
++    if(artdc)sprite(dc,(screenw-126*sx)/2,4,126,16,0,360);
++    else centered(dc,5,"TANDINATOR");
++    centered(dc,22,help?"HOW TO CONSULT THE ORACLE":(debug?"DIAGNOSTICS - SPOILERS":"THE INCREDIBLE TANDY MIND READER"));
++    box(dc,6*sx,35,screenw-12*sx,1,gold);
++    box(dc,6*sx,179,screenw-12*sx,1,gold);
++    SetTextColor(dc,RGB(255,255,255));
++    if(debug||help){
++        sprite(dc,screenw-55*sx,40,48,40,debug?48:0,376);
++        if(debug==2){for(i=0;i<10;i++)text(dc,8*sx,43+i*11,debugline[i]);}
++        else if(debug==1){
++            text(dc,8*sx,87,"This shows likely names and scores.");
++            text(dc,8*sx,103,"It may spoil the guessing game.");
++        }
++        else{
++            text(dc,8*sx,45,"Think of someone in the roster.");
++            text(dc,8*sx,61,"1 Yes  2 Probably  3 Don't know");
++            text(dc,8*sx,74,"4 Probably not  5 No");
++            text(dc,8*sx,90,"Tab changes focus. Enter chooses.");
++            text(dc,8*sx,103,"F2 diagnostics. F3 sound.");
++            text(dc,8*sx,119,"Use the edition named in ROSTER.TXT.");
++            text(dc,8*sx,132,"Unsure? Don't know is always fine.");
++            text(dc,8*sx,145,"App 0.3.5; roster revision 0.3.2.");
++        }
++    }else{
++        r.left=6*sx;r.right=102*sx;r.top=43;r.bottom=163;
++        if(RectVisible(dc,&r))mascot(dc);
++        if(state==0){
++            ticket(dc,"Think of a roster character. Use its named edition.",45,64);
++        }else if(state==1){
++            ticket(dc,question,42,42);
++            number(temp,engine.turn+1);lstrcpy(line,"Q ");lstrcat(line,temp);
++            SetTextColor(dc,gold);SetBkColor(dc,RGB(0,0,0));text(dc,34*sx,168,line);
++        }else if(state==2){
++            ticket(dc,"I SUSPECT...",46,20);ticket(dc,name,70,38);
++        }else if(state==3){
++            ticket(dc,"THE TANDINATOR KNOWS ALL!",48,32);
++            number(temp,engine.turn);lstrcpy(line,"Questions asked: ");lstrcat(line,temp);ticket(dc,line,84,27);
++        }else if(state==4){
++            ticket(dc,db.error?"Cannot read TANDY.DAT. Exit, replace it beside this EXE, then restart.":
++                  "You have stumped the silicon oracle! Try another character.",45,65);
++        }else if(state==5){
++            ticket(dc,"25 questions used. Try another guess, or restart?",45,65);
++        }
++        if(!artdc){SetTextColor(dc,RGB(255,255,255));text(dc,8,85,"THE ORACLE");text(dc,8,100,"IS LISTENING");}
++    }
++    for(i=0;i<nb;i++){
++        r=buttons[i];if(!RectVisible(dc,&r))continue;
++        box(dc,r.left,r.top,r.right-r.left,r.bottom-r.top,gold);
++        box(dc,r.left+sx,r.top+1,r.right-r.left-2*sx,r.bottom-r.top-2,RGB(255,255,255));
++        SetTextColor(dc,RGB(0,0,0));SetBkColor(dc,RGB(255,255,255));
++        r.top+=3;
++        if(state==1&&!debug&&!help&&ids[i]>=0&&ids[i]<5){
++            number(temp,ids[i]+1);text(dc,r.left+8*sx,r.top,temp);
++            r.left+=24*sx;r.right-=8*sx;
++        }
++        DrawText(dc,labels[i],-1,&r,DT_CENTER|DT_SINGLELINE|DT_NOPREFIX);
++        if(i==focus){r=buttons[i];InflateRect(&r,-2,-2);DrawFocusRect(dc,&r);}
++    }
++    SetTextColor(dc,RGB(255,255,255));SetBkColor(dc,RGB(0,0,0));
++    text(dc,8,186,busy?"CONSULTING...":soundfooter());EndPaint(w,&ps);
++}
++static void refresh(void){layout();InvalidateRect(window,0,FALSE);UpdateWindow(window);}
++static void busyfooter(void){
++    HDC dc;dc=GetDC(window);
++    SelectObject(dc,GetStockObject(SYSTEM_FIXED_FONT));
++    SetTextColor(dc,RGB(255,255,255));SetBkColor(dc,RGB(0,0,0));
++    box(dc,8,182,screenw-61,16,RGB(0,0,0));
++    text(dc,8,186,"CONSULTING...");ReleaseDC(window,dc);
++}
++static void questionrefresh(int previousfocus){
++    RECT r;layout();
++    if(previousfocus>=0&&previousfocus<nb)InvalidateRect(window,&buttons[previousfocus],FALSE);
++    InvalidateRect(window,&buttons[0],FALSE);
++    r.left=panelleft();r.right=screenw-4*sx;r.top=42;r.bottom=84;
++    InvalidateRect(window,&r,FALSE);
++    r.left=6*sx;r.right=102*sx;r.top=164;r.bottom=177;
++    InvalidateRect(window,&r,FALSE);
++    r.left=8;r.right=screenw-53;r.top=182;r.bottom=199;
++    InvalidateRect(window,&r,FALSE);UpdateWindow(window);
++}
++static void capture(char *path){
++    HFILE f;f=_lcreat(path,0);if(f!=-1){
++        _lwrite(f,(const void FAR *)0xb8000000L,32768U);_lclose(f);
++    }
++}
++static void debugupdate(void){
++    int i,j,b,used[5];char nm[40],num[20];
++    for(i=0;i<5;i++){
++        b=-1;for(j=0;j<(int)db.nc;j++){
++            int k,skip=engine.rejected[j];for(k=0;k<i;k++)if(used[k]==j)skip=1;
++            if(!skip&&(b<0||engine.score[j]>engine.score[b]))b=j;
++        }
++        used[i]=b;debugline[i][0]=0;
++        if(b>=0){db_name(&db,b,nm);number(num,engine.score[b]);
++            lstrcpy(debugline[i],nm);lstrcat(debugline[i],"  ");lstrcat(debugline[i],num);}
++    }
++    lstrcpy(debugline[5],"Split Y/N/U: ");number(num,engine.yesw);
++    lstrcat(debugline[5],num);lstrcat(debugline[5],"/");number(num,engine.now);
++    lstrcat(debugline[5],num);lstrcat(debugline[5],"/");number(num,engine.unknownw);
++    lstrcat(debugline[5],num);
++    lstrcpy(debugline[6],"Utility: ");number(num,engine.utility);lstrcat(debugline[6],num);
++    lstrcpy(debugline[7],"Load/answer/select ms: ");number(num,loadms);
++    lstrcat(debugline[7],num);lstrcat(debugline[7],"/");number(num,answerms);
++    lstrcat(debugline[7],num);lstrcat(debugline[7],"/");number(num,selectms);
++    lstrcat(debugline[7],num);
++    lstrcpy(debugline[8],"Rows examined: ");number(num,engine.examined);lstrcat(debugline[8],num);
++    lstrcpy(debugline[9],"Emulator timing; not physical 8088.");
++}
++static void nextcompute(void){
++    DWORD start;int previous=state,previousfocus=focus;if(!rejectphase)TdSoundStop(window);busy=1;busyfooter();start=GetTickCount();
++    if(eng_confident(&engine,&db)){state=2;db_name(&db,engine.best,name);}
++    else if(eng_choose(&engine,&db)<0){
++        state=(engine.best<0||db.error)?4:2;
++        if(state==2)db_name(&db,engine.best,name);
++    }else {state=1;db_question(&db,engine.current,question);}
++    selectms=GetTickCount()-start;metric("SELECT_MS",selectms);
++    if(selectms>computepeak)computepeak=selectms;
++    metric("SAMPLE",engine.count);metric("ROWS",engine.examined);
++    if(db.error)state=4;busy=0;focus=0;pending=0;
++    animset(-1);animticks=0;idleticks=0;
++    inputready=GetTickCount()+220;
++    if(state==2)animframe=1;
++    if(state==4)TdSoundBegin(window,TD_SND_WRONG,GetTickCount());
++    if(previous==1&&state==1&&engine.turn>0){
++        previous=artblits;questionrefresh(previousfocus);
++        metric("QUESTION_CABINET_UNTOUCHED",previous==artblits);
++    }else refresh();
++    inputready=GetTickCount()+220;
++    if(state==2)TdSoundBegin(window,TD_SND_REVEAL,GetTickCount());
++}
++/* Paint the thinking expression before synchronous engine work.
++   No decorative timer delay; the post-compute input guard stays intact. */
++static void next(void){
++    busy=1;pending=0;animticks=0;idleticks=0;busyfooter();
++    animset(rejectphase?7:6);
++    nextcompute();rejectphase=0;
++}
++static void animtick(void){
++    static int reveal[5]={1,2,1,4,-1};
++    static int victory[5]={3,4,3,4,3};
++    if(!active||help||debug)return;
++    TdSoundTick(window,GetTickCount());
++    if(state==2||state==3){
++        if(animticks<10){animticks++;if(!(animticks%2))
++            animset(state==2?reveal[animticks/2-1]:victory[animticks/2-1]);}
++    }else if(state<=1){
++        idleticks++;
++        if(idleticks==36)animset(0);
++        if(idleticks>=38){animset(-1);idleticks=0;}
++    }
++}
++static void act(int id){
++    DWORD start;
++    if(id==99){SendMessage(window,WM_CLOSE,0,0);return;}
++    if(inputblocked())return;
++    if(id==90){debug=help=0;refresh();return;}
++    if(id==91&&debug==1){debug=2;debugupdate();focus=0;refresh();inputready=GetTickCount()+220;return;}
++    if(id==30&&state==5){next();return;}
++    if(id==10){
++        if(db.error){state=4;refresh();return;}
++        TdSoundStop(window);eng_reset(&engine,&db);capoffered=0;state=1;next();return;
++    }
++    if(id>=0&&id<5&&state==1){
++        TdSoundStop(window);start=GetTickCount();
++        if(!eng_answer(&engine,&db,4-id))state=4;
++        answerms=GetTickCount()-start;metric("ANSWER_MS",answerms);
++        if(state!=4)next();else refresh();return;
++    }
++    if(state==2&&id==20){state=3;animticks=0;animframe=3;
++        refresh();inputready=GetTickCount()+220;TdSoundBegin(window,TD_SND_VICTORY,GetTickCount());return;}
++    if(state==2&&id==21){
++        TdSoundStop(window);eng_reject(&engine,&db);
++        if(engine.turn>=25&&!capoffered){
++            capoffered=1;state=engine.best<0?4:5;busy=pending=0;animticks=0;animframe=-1;
++            focus=0;refresh();inputready=GetTickCount()+220;
++            TdSoundBegin(window,TD_SND_WRONG,GetTickCount());return;
++        }
++        rejectphase=1;TdSoundBegin(window,TD_SND_WRONG,GetTickCount());next();
++    }
++}
++/* Deterministic fixture setup; inputs under test still use production handlers. */
++static void testprepare(void){
++    busy=pending=0;inputready=0;capoffered=0;eng_reset(&engine,&db);state=1;
++    nextcompute();inputready=0;
++}
++static void soundtest(void){
++    WNDCLASS c;HWND peer;TDSNDSTAT before,after;int result;
++    TdSoundStop(window);TdSoundEnable(1);TdSoundGetStats(&before);
++    c.style=0;c.lpfnWndProc=DefWindowProc;c.cbClsExtra=c.cbWndExtra=0;
++    c.hInstance=instance;c.hIcon=0;c.hCursor=0;c.hbrBackground=0;
++    c.lpszMenuName=0;c.lpszClassName="TandyStartupChime";
++    if(RegisterClass(&c)){
++        peer=CreateWindow(c.lpszClassName,"Busy test",WS_POPUP,0,0,0,0,0,0,instance,0);
++        if(peer){result=TdSoundBegin(window,TD_SND_REVEAL,GetTickCount());
++            TdSoundTick(window,GetTickCount());TdSoundGetStats(&after);
++            metric("SOUND_BUSY_SILENT",result==TD_SND_BUSY&&after.portWrites==before.portWrites);
++            DestroyWindow(peer);}
++        UnregisterClass(c.lpszClassName,instance);
++    }
++    TdSoundEnable(0);TdSoundGetStats(&before);
++    result=TdSoundBegin(window,TD_SND_VICTORY,GetTickCount());
++    TdSoundTick(window,GetTickCount());TdSoundGetStats(&after);
++    metric("SOUND_OFF_SILENT",result==TD_SND_DISABLED&&before.portWrites==after.portWrites);
++    TdSoundEnable(1);
++    result=TdSoundBegin(window,TD_SND_REVEAL,GetTickCount());TdSoundTick(window,GetTickCount());
++    SendMessage(window,WM_ACTIVATEAPP,0,0);TdSoundGetStats(&after);
++    metric("SOUND_FOCUS_RELEASE",result==TD_SND_STARTED&&!after.playing&&!FindWindow("TandyPSGTest",0));
++    SendMessage(window,WM_ACTIVATEAPP,1,0);TdSoundEnable(soundpref);inputready=0;
++}
++static void layouttest(void){
++    int i,j,bestq=0,bestn=0,maxq=0,maxn=0,turn,ok=1;char q[80],nm[40];
++    HDC dc;RECT r;
++    dc=GetDC(window);SelectObject(dc,GetStockObject(SYSTEM_FIXED_FONT));
++    /* Same rectangles as tickets, but an empty clip avoids transient screens. */
++    IntersectClipRect(dc,0,0,0,0);
++    r.left=panelleft()+2*sx;r.right=screenw-6*sx;r.top=47;r.bottom=81;
++    for(i=0;i<(int)db.nq;i++){
++        db_question(&db,i,q);wrapped(dc,q,&r);
++        if(lstrlen(q)>maxq){maxq=lstrlen(q);bestq=i;}
++    }
++    r.top=75;r.bottom=105;
++    for(i=0;i<(int)db.nc;i++){
++        db_name(&db,i,nm);wrapped(dc,nm,&r);
++        if(lstrlen(nm)>maxn){maxn=lstrlen(nm);bestn=i;}
++    }
++    ReleaseDC(window,dc);
++    metric("ALL_QUESTIONS_CHECKED",db.nq);metric("ALL_NAMES_CHECKED",db.nc);
++    metric("WRAP_FAILURES",wrapfail);metric("MAX_TEXT_LINES",wrapmax);
++    state=1;lstrcpy(question,"Is your character strongly associated with movies?");
++    refresh();capture("C:\\CLIPFIX.BIN");
++    db_question(&db,bestq,question);refresh();capture("C:\\LONGQ.BIN");
++    state=2;db_name(&db,bestn,name);refresh();capture("C:\\LONGNAME.BIN");
++    for(i=0;i<5;i++){
++        testprepare();turn=engine.turn;SendMessage(window,WM_KEYDOWN,'1'+i,0);
++        if(engine.turn!=turn+1)ok=0;
++        for(j=0;j<2;j++){
++            testprepare();turn=engine.turn;
++            SendMessage(window,WM_LBUTTONDOWN,0,MAKELONG(
++                j?buttons[i].right-1:buttons[i].left,
++                j?buttons[i].bottom-1:buttons[i].top));
++            if(engine.turn!=turn+1)ok=0;
++        }
++    }
++    testprepare();turn=engine.turn;
++    SendMessage(window,WM_LBUTTONDOWN,0,MAKELONG(buttons[0].left-1,buttons[0].top+5));
++    if(engine.turn!=turn)ok=0;
++    metric("FIVE_KEYS_TEN_CORNERS_OUTSIDE",ok);
++    testprepare();turn=engine.turn;
++    SendMessage(window,WM_KEYDOWN,VK_RETURN,0x40000000L);
++    metric("HELD_KEY_IGNORED",engine.turn==turn);
++    SendMessage(window,WM_KEYDOWN,VK_RETURN,0);
++    turn=engine.turn;SendMessage(window,WM_KEYDOWN,VK_RETURN,0);
++    SendMessage(window,WM_LBUTTONDOWN,0,MAKELONG(buttons[0].left+2,buttons[0].top+2));
++    metric("BUSY_INPUT_IGNORED",engine.turn==turn&&!pending&&inputblocked());
++    busy=pending=0;state=2;focus=0;animticks=10;inputready=0;refresh();
++    SendMessage(window,WM_LBUTTONDOWN,0,MAKELONG(210*sx,130));
++    SendMessage(window,WM_LBUTTONDOWN,0,MAKELONG(210*sx,130));
++    SendMessage(window,WM_LBUTTONDBLCLK,0,MAKELONG(210*sx,130));
++    metric("DOUBLE_CLICK_STAYS_SUCCESS",state==3);
++    if(!ok||wrapfail)errors++;
++    testprepare();
++}
++static void usabilitytest(void){
++    int turn,leader,i,gates,savedpref;
++    testprepare();turn=engine.turn;
++    SendMessage(window,WM_KEYDOWN,VK_F1,0);
++    SendMessage(window,WM_KEYDOWN,VK_ESCAPE,0);
++    metric("ESC_HELP_PRESERVED",!help&&!debug&&engine.turn==turn&&IsWindow(window));
++    inputready=0;SendMessage(window,WM_KEYDOWN,VK_F2,0);
++    metric("DEBUG_WARNING_FIRST",debug==1&&ids[0]==91);capture("C:\\WARN.BIN");
++    SendMessage(window,WM_KEYDOWN,VK_ESCAPE,0);metric("ESC_DEBUG_PRESERVED",!debug&&engine.turn==turn);
++    inputready=0;SendMessage(window,WM_KEYDOWN,VK_F2,0);act(91);
++    metric("DEBUG_EXPLICIT_REVEAL",debug==2);SendMessage(window,WM_KEYDOWN,VK_ESCAPE,0);
++    testprepare();while(engine.turn<25){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}
++    nextcompute();inputready=0;leader=engine.best;act(21);
++    metric("LIMIT_REJECTION_GATE",state==5&&!pending&&engine.rejected[leader]);capture("C:\\CONTINUE.BIN");
++    leader=engine.best;turn=engine.turn;
++    for(i=0;i<6;i++)animtick();
++    metric("GATE_NO_AUTO_GUESS",state==5&&!pending&&engine.best==leader&&engine.turn==turn);
++    inputready=0;act(30);
++    metric("EXPLICIT_CONTINUE",state==2&&engine.turn==25&&engine.best==leader);
++    inputready=0;act(21);metric("SECOND_REJECTION_NO_GATE",state==2&&capoffered);
++    inputready=0;act(10);
++    metric("GATE_RESTART",state==1&&engine.turn==0&&!capoffered);
++    savedpref=soundpref;SendMessage(window,WM_KEYDOWN,VK_F3,0);
++    metric("SOUND_PREF_SAVED",settingssaved&&(int)GetProfileInt("TANDINATOR","Sound",savedpref)==soundpref);
++    SendMessage(window,WM_KEYDOWN,VK_F3,0x40000000L);
++    metric("SOUND_HELD_KEY_IGNORED",soundpref!=savedpref);
++    SendMessage(window,WM_KEYDOWN,VK_F3,0);
++    testprepare();while(engine.turn<25){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}
++    nextcompute();i=0;gates=0;
++    while(state==2){inputready=0;act(21);i++;if(state==5){gates++;inputready=0;act(30);}}
++    metric("CAP_ALL_CANDIDATES_REACHABLE",state==4&&i==(int)db.nc&&gates==1);
++    metric("CAP_GATE_COUNT",gates);
++    busy=pending=0;TdSoundStop(window);db.error=1;state=4;refresh();
++    metric("BAD_DAT_EXIT_ONLY",nb==1&&ids[0]==99);capture("C:\\BADDB.BIN");
++    db.error=0;testprepare();
++}
++static void testtick(void){
++    int answer,i,turnsaved,statesaved,lx,ly;char nm[40],target[40];RECT damage;HWND peer;HDC testdc;
++    if(inputblocked())return;
++    if(db.error){
++        metric("BAD_DAT_EXIT_ONLY",state==4&&nb==1&&ids[0]==99);
++        capture("C:\\BADDB.BIN");metric("APP_ERROR",db.error);metric("ERRORS",1);metric("COMPLETE",1);
++        KillTimer(window,1);SendMessage(window,WM_CLOSE,0,0);return;
++    }
++    if(testreset){testreset=0;act(10);return;}
++    if((state==2||state==3)&&animticks<10)return;
++    if(teststep==0&&testwait++<40)return;
++    if(teststep==0){
++        lx=lookx;ly=looky;lookx=looky=0;testdc=GetDC(window);eyes(testdc);
++        capture("C:\\NATIVE.BIN");lookx=lx;looky=ly;eyes(testdc);ReleaseDC(window,testdc);
++        capture("C:\\WELCOME.BIN");
++        peer=CreateWindow("STATIC","TANDI focus check",WS_OVERLAPPEDWINDOW,
++                          20,50,140,70,0,0,instance,0);
++        if(peer){
++            statesaved=state;turnsaved=engine.turn;ShowWindow(peer,SW_SHOW);UpdateWindow(peer);
++            metric("FOCUS_OTHER_WINDOW",GetActiveWindow()==peer);
++            SetActiveWindow(window);BringWindowToTop(window);UpdateWindow(window);
++            SetActiveWindow(window);BringWindowToTop(window);DestroyWindow(peer);UpdateWindow(window);
++            metric("FOCUS_RETURNED",GetActiveWindow()==window);
++            metric("FOCUS_STATE_PRESERVED",state==statesaved&&engine.turn==turnsaved);
++            capture("C:\\FOCUS.BIN");
++        }
++        damage.left=screenw-6;damage.top=100;
++        damage.right=screenw-2;damage.bottom=120;
++        InvalidateRect(window,&damage,FALSE);UpdateWindow(window);
++        damage.left=100;damage.top=174;damage.right=125;damage.bottom=180;
++        InvalidateRect(window,&damage,FALSE);UpdateWindow(window);
++        capture("C:\\EXPOSE.BIN");
++        look(0,0);capture("C:\\EYELEFT.BIN");
++        look(screenw-1,screenh-1);capture("C:\\EYERIGHT.BIN");
++        i=eyeupdates;look(screenw-1,screenh-1);
++        metric("UNCHANGED_MOUSE_NO_REDRAW",i==eyeupdates);
++        metric("EYE_REDRAWS",eyeupdates);
++        GetProfileString("TANDINATOR","TestTarget","Mario",target,sizeof(target));
++        for(i=0;i<(int)db.nc;i++){db_name(&db,i,nm);if(!lstrcmp(nm,target)){testtarget=i;break;}}
++        metric("TARGET_FOUND",i<(int)db.nc);
++        db_name(&db,testtarget,nm);logtext("TARGET_NAME",nm);
++        db_row(&db,testtarget,truth);
++        soundtest();inputready=0;SendMessage(window,WM_KEYDOWN,VK_F1,0);capture("C:\\HELP.BIN");
++        SendMessage(window,WM_KEYDOWN,VK_F1,0);
++        SendMessage(window,WM_KEYDOWN,VK_F2,0);
++        SendMessage(window,WM_KEYDOWN,VK_F2,0);
++        metric("OVERLAYS_PRESERVE_STATE",state==0&&engine.turn==0);
++        SendMessage(window,WM_KEYDOWN,VK_TAB,0);
++        metric("TAB_FOCUS_MOVED",focus==1);
++        SendMessage(window,WM_KEYDOWN,VK_TAB,0);
++        SendMessage(window,WM_KEYDOWN,VK_RETURN,0);layouttest();usabilitytest();teststep++;return;
++    }
++    if(state==1){
++        if(!verified){capture("C:\\QUESTION.BIN");verified=1;}
++        else if(verified==1&&engine.turn>0){
++            capture("C:\\PARTIAL.BIN");refresh();
++            capture("C:\\FULLDRAW.BIN");verified=2;
++        }
++        answer=db_value(truth,engine.current);
++        if(engine.turn==0){
++            SendMessage(window,WM_KEYDOWN,VK_TAB,0);
++            SendMessage(window,WM_KEYDOWN,VK_TAB,0);
++            i=4-answer;
++            SendMessage(window,WM_LBUTTONDOWN,0,
++                MAKELONG((buttons[i].left+buttons[i].right)/2,
++                         (buttons[i].top+buttons[i].bottom)/2));
++        }else SendMessage(window,WM_KEYDOWN,(WORD)('1'+4-answer),0);
++        return;
++    }
++    if(state==2){
++        logtext("GUESS",name);metric("QUESTIONS",engine.turn);
++        capture("C:\\GUESS.BIN");
++        if(engine.best==testtarget){
++            if(!wrongguess){
++                /* Exercise explicit rejection and prove another guess/question. */
++                SendMessage(window,WM_KEYDOWN,'N',0);metric("REJECTION_CONTINUED",state==1||state==2);
++                wrongguess=1;testreset=1;return;
++            }
++            SendMessage(window,WM_KEYDOWN,'Y',0);capture("C:\\SUCCESS.BIN");
++            metric("TARGET_SUCCESS",state==3);finished=1;
++        }else {act(21);if(++errors>10)finished=1;}
++    }
++    if(state==5){metric("TEST_CONTINUE_GATE",1);act(30);return;}
++    if(state==4){metric("APP_ERROR",db.error);errors++;finished=1;}
++    if(finished){
++        TDSNDSTAT soundstats;
++        if(inputblocked())return;
++        TdSoundGetStats(&soundstats);
++        metric("SOUND_STARTS_REVEAL",soundstats.starts[0]);
++        metric("SOUND_STARTS_VICTORY",soundstats.starts[1]);
++        metric("SOUND_STARTS_WRONG",soundstats.starts[2]);
++        metric("SOUND_COMPLETE_REVEAL",soundstats.completions[0]);
++        metric("SOUND_COMPLETE_VICTORY",soundstats.completions[1]);
++        metric("SOUND_COMPLETE_WRONG",soundstats.completions[2]);
++        metric("SOUND_BUSY_SKIPS",soundstats.busySkips);
++        metric("SOUND_WRITES",soundstats.portWrites);
++        metric("SOUND_LATE_ABORTS",soundstats.lateAborts);
++        metric("SOUND_FAILURES",soundstats.failures);
++        debug=2;debugupdate();refresh();capture("C:\\DEBUG.BIN");debug=0;
++        if(state==3){
++            refresh();
++            SendMessage(window,WM_LBUTTONDOWN,0,
++                MAKELONG((buttons[0].left+buttons[0].right)/2,
++                         (buttons[0].top+buttons[0].bottom)/2));
++            metric("MOUSE_REPLAY_STARTED",state==1&&engine.turn==0);
++        }
++        metric("ANIM_CAPTURES",animserial);metric("ANIM_REDRAWS",animredraws);metric("ANIM_MAX_MS",animcost);
++        metric("COMPUTE_MAX_MS",computepeak);
++        metric("DB_BYTES",db.bytes);metric("DB_SEEKS",db.seeks);
++        metric("FREE_SPACE_AFTER",GetFreeSpace(0));
++        metric("ERRORS",errors);metric("COMPLETE",1);
++        KillTimer(window,1);
++        i=GetProfileInt("TANDINATOR","TestExit",0);metric("EXIT_METHOD",i);
++        if(i==1)SendMessage(window,WM_KEYDOWN,VK_ESCAPE,0);
++        else if(i==2)SendMessage(window,WM_SYSCOMMAND,SC_CLOSE,0);
++        else if(i==3)SendMessage(window,WM_LBUTTONDOWN,0,
++            MAKELONG((buttons[nb-1].left+buttons[nb-1].right)/2,
++                     (buttons[nb-1].top+buttons[nb-1].bottom)/2));
++        else SendMessage(window,WM_CLOSE,0,0);
++    }
++}
++LONG FAR PASCAL WndProc(HWND w,UINT msg,WORD wp,LONG lp){
++    int i,x,y;
++    if(msg==WM_KILLFOCUS||(msg==WM_ACTIVATE&&wp==0))TdSoundStop(window);
++    if(msg==WM_QUERYENDSESSION){TdSoundStop(window);return 1;}
++    if(msg==WM_ENDSESSION&&wp){TdSoundStop(window);return 0;}
++    if(msg==WM_CLOSE)TdSoundStop(window);
++    if(msg==WM_PAINT){draw(w);return 0;}
++    if(msg==WM_TIMER){
++        if(wp==2&&!tickinside){tickinside=1;animtick();tickinside=0;}
++        if(wp==1&&testmode&&!testinside){testinside=1;testtick();testinside=0;}
++        return 0;
++    }
++    if(msg==WM_ACTIVATEAPP){active=wp!=0;
++        if(!active)TdSoundStop(window);else {inputready=GetTickCount()+220;refresh();}return 0;}
++    if(msg==WM_MOUSEMOVE){look(LOWORD(lp),HIWORD(lp));return 0;}
++    if(msg==WM_LBUTTONDOWN){
++        x=LOWORD(lp);y=HIWORD(lp);
++        if(x>=screenw-49&&x<screenw-6&&y>=183&&y<197){act(99);return 0;}
++        if(inputblocked())return 0;
++        for(i=0;i<nb;i++)if(x>=buttons[i].left&&x<buttons[i].right&&
++           y>=buttons[i].top&&y<buttons[i].bottom){
++            if(focus>=0&&focus<nb)InvalidateRect(w,&buttons[focus],FALSE);
++            focus=i;act(ids[i]);break;
++        }
++        return 0;
++    }
++    if(msg==WM_KEYDOWN){
++        if(lp&0x40000000L)return 0;
++        if(wp==VK_F3){
++            soundpref=!soundpref;TdSoundEnable(soundpref);
++            settingssaved=WriteProfileString("TANDINATOR","Sound",soundpref?"1":"0");
++            refresh();return 0;
++        }
++        if(wp==VK_ESCAPE){
++            if(help||debug){help=debug=0;focus=0;refresh();inputready=GetTickCount()+220;return 0;}
++            SendMessage(w,WM_CLOSE,0,0);return 0;
++        }
++        if(inputblocked())return 0;
++        if(wp==VK_F1){TdSoundStop(window);help=!help;debug=0;focus=0;refresh();return 0;}
++        if(wp==VK_F2){TdSoundStop(window);debug=debug?0:1;help=0;focus=0;refresh();return 0;}
++        if(wp==VK_TAB){if(nb){
++            InvalidateRect(w,&buttons[focus],FALSE);
++            focus=(focus+(GetKeyState(VK_SHIFT)<0?nb-1:1))%nb;
++            InvalidateRect(w,&buttons[focus],FALSE);UpdateWindow(w);
++        }return 0;}
++        if(wp==VK_RETURN||wp==VK_SPACE){if(nb)act(ids[focus]);return 0;}
++        if(!debug&&!help&&state==1&&wp>='1'&&wp<='5'){act(wp-'1');return 0;}
++        if(!debug&&!help&&state==2&&(wp=='Y'||wp=='N'))act(wp=='Y'?20:21);
++        return 0;
++    }
++    if(msg==WM_DESTROY){KillTimer(window,2);TdSoundStop(window);artfree();db_close();if(logfile!=-1)_lclose(logfile);PostQuitMessage(0);return 0;}
++    return DefWindowProc(w,msg,wp,lp);
++}
++int PASCAL WinMain(HANDLE inst,HANDLE prev,LPSTR cmd,int show){
++    WNDCLASS c;MSG msg;HDC dc;DWORD start;int i,len;
++    instance=inst;(void)prev;
++    while(*cmd==' ')cmd++;
++    testmode=(*cmd=='/'&&cmd[1]=='T')||GetProfileInt("TANDINATOR","Test",0);
++    GetModuleFileName(inst,dbpath,sizeof(dbpath));len=lstrlen(dbpath);
++    for(i=len-1;i>=0;i--)if(dbpath[i]=='\\'||dbpath[i]==':')break;
++    lstrcpy(dbpath+i+1,"TANDY.DAT");
++    freespace=GetFreeSpace(0);start=GetTickCount();db_open(&db,dbpath);
++    loadms=GetTickCount()-start;if(db.error)state=4;
++    if(testmode)logfile=_lcreat("C:\\TANDI.LOG",0);
++    metric("WINFLAGS",GetWinFlags());metric("LOAD_MS",loadms);
++    metric("ENGINE_BYTES",sizeof(engine));metric("DB_STRUCT_BYTES",sizeof(db));
++    metric("FREE_SPACE_BEFORE",freespace);metric("CHARACTERS",db.nc);
++    metric("QUESTIONS_AVAILABLE",db.nq);
++    screenw=GetSystemMetrics(SM_CXSCREEN);screenh=GetSystemMetrics(SM_CYSCREEN);
++    metric("WIDTH",screenw);metric("HEIGHT",screenh);
++    c.style=CS_DBLCLKS;c.lpfnWndProc=WndProc;c.cbClsExtra=c.cbWndExtra=0;
++    c.hInstance=inst;c.hIcon=0;c.hCursor=LoadCursor(0,IDC_ARROW);
++    c.hbrBackground=GetStockObject(BLACK_BRUSH);c.lpszMenuName=0;
++    c.lpszClassName="Tandinator02";if(!RegisterClass(&c))return 1;
++    window=CreateWindow(c.lpszClassName,"TANDINATOR",WS_POPUP,0,0,
++                        screenw,screenh,0,0,inst,0);
++    if(!window){db_close();return 1;}
++    sx=screenw>=640?2:1;
++    dc=GetDC(window);colors=GetDeviceCaps(dc,NUMCOLORS);mono=colors==2;
++    metric("ART_READY",artinit(dc));ReleaseDC(window,dc);
++    metric("ART_INIT_MS",artms);metric("ART_DIB_BYTES",sizeof(artbits));
++    metric("FREE_SPACE_ART",GetFreeSpace(0));
++    layout();ShowWindow(window,show);UpdateWindow(window);
++    timerok=SetTimer(window,2,100,0)!=0;
++    metric("ANIM_TIMER_READY",timerok);
++    soundsupported=TdSoundInit(window,inst,timerok);
++    soundsettings();metric("SOUND_READY",soundsupported);metric("SOUND_PREF_LOADED",soundpref);refresh();
++    if(testmode)SetTimer(window,1,100,0);
++    while(GetMessage(&msg,0,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);}
++    TdSoundStop(window);KillTimer(window,2);return msg.wParam;
++}
+--- a/SOURCE/tests/CHECK09.PY
++++ b/SOURCE/tests/CHECK09.PY
+@@ -0,0 +1,42 @@
++"""Reproduce the first checkpoint using first-party code and modern host tools."""
++from pathlib import Path
++import hashlib,importlib.machinery,json,os,subprocess,sys,textwrap
++P=Path(__file__).resolve().parents[1]
++sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
++baseline=json.loads((P/'evidence/BASELINE.JSN').read_text())
++for name in ['src/ENGINE.C','src/DB.C','src/TDSOUND.C','src/ART.H',
++ 'build/TANDY.DAT','build/AUDIT08.DAT','data/STARTER.JSON','data/AUDIT08.JSON']:
++ assert sha(P/name)==baseline['files'][name],name
++assert sha(P/'tests/BEFORE09.C')==baseline['files']['src/TANDI.C']
++for name in ['HOSTTEST.PY','UIGUARD.PY','CUE09.PY','OBS09.PY','QTEST06.PY','AUDIT08.PY']:
++ subprocess.run([sys.executable,str(P/'tests'/name)],check=True)
++db=importlib.machinery.SourceFileLoader('histdb',str(P/'tools/DBBUILD.PY')).load_module()
++qs=[{'id':'q'+str(i),'text':'Boundary question '+str(i)+'?'} for i in range(256)]
++fixture={'format_version':1,'questions':qs,'characters':[
++ {'id':'a','name':'Leader','answers':{q['id']:4 for q in qs}},
++ {'id':'b','name':'Alternative','answers':{q['id']:0 for q in qs}}]}
++(P/'build/HIST256.DAT').write_bytes(db.compile_source(fixture))
++exe=P/'build/HIST09.EXE'
++subprocess.run([os.environ.get('CC','gcc'),'-std=c89','-O2','-Wall','-Wextra','-Werror',
++ '-pedantic','-I'+str(P/'src'),'-x','c',str(P/'tests/HIST09.C'),str(P/'src/ENGINE.C'),
++ str(P/'src/DB.C'),str(P/'src/OBSERVE.C'),'-o',str(exe)],check=True)
++history=subprocess.check_output([str(exe),str(P/'build/HIST256.DAT')]).decode()
++(P/'evidence/HIST09.TXT').write_bytes(history.replace('\n','\r\n').encode())
++count_exe=P/'build/COUNT09.EXE'
++subprocess.run([os.environ.get('CC','gcc'),'-std=c89','-O2','-Wall','-Wextra','-Werror',
++ '-pedantic','-I'+str(P/'src'),'-x','c',str(P/'tests/COUNT09.C'),str(P/'src/ENGINE.C'),
++ str(P/'src/DB.C'),str(P/'src/OBSERVE.C'),'-o',str(count_exe)],check=True)
++count_result=subprocess.check_output([str(count_exe),str(P/'build/TANDY.DAT')]).decode()
++(P/'evidence/COUNT09.TXT').write_bytes(count_result.replace('\n','\r\n').encode())
++source=json.loads((P/'data/STARTER.JSON').read_text());names=[c['name'] for c in source['characters']]
++assert all(len(textwrap.wrap(a+' vs '+b,38))<=3 for a in names for b in names)
++assert all(len(textwrap.wrap(q['text'],38))<=3 for q in source['questions'])
++report={'passed':True,'engine_loader_data_art_sound_unchanged':True,
++ 'history':history.strip(),'all_name_pairs_checked':len(names)**2,
++ 'explanations':json.loads((P/'evidence/OBS09.JSN').read_text()),
++ 'cue_order':json.loads((P/'evidence/CUE09.JSN').read_text()),
++ 'claude_36_vs_31_verified':True,'noise_confirmation':json.loads((P/'evidence/NOISE09.JSN').read_text()),
++ 'blocker':None,
++ 'physical_hardware_tested':False,'publication_performed':False}
++(P/'evidence/CHECK09.JSN').write_bytes((json.dumps(report,indent=2)+'\n').replace('\n','\r\n').encode())
++print(history.strip());print('PASS: first-checkpoint host qualification; exact noisy totals recorded from parent independent verifier')
+--- a/SOURCE/tests/COUNT09.C
++++ b/SOURCE/tests/COUNT09.C
+@@ -0,0 +1,36 @@
++#include <assert.h>
++#include <stdio.h>
++#include "OBSERVE.H"
++static TDB d;static ENGINE e;static TDHISTORY h;static U8 row[TD_ROW];
++int main(int argc,char **argv){int c,q,i,j,rejections,rises=0,before;TDPOOL p;
++ assert(argc==2&&db_open(&d,argv[1]));
++ for(c=0;c<(int)d.nc;c++){
++  eng_reset(&e,&d);obs_reset(&h);obs_pool(&e,&d,&p);
++  assert(p.eligible==d.nc&&p.leading==d.nc&&!h.count);
++  eng_choose(&e,&d);assert(e.count==TD_SAMPLE&&p.leading>e.count);
++  assert(db_row(&d,c,row));
++  while(!eng_confident(&e,&d)){
++   q=eng_choose(&e,&d);if(q<0)break;
++   assert(obs_answer(&h,&e,&d,db_value(row,q)));
++  }
++  obs_pool(&e,&d,&p);rejections=0;
++  while(e.best>=0){
++   before=p.leading;i=e.best;eng_reject(&e,&d);rejections++;
++   obs_pool(&e,&d,&p);
++   assert(e.rejected[i]&&p.eligible==(int)d.nc-rejections);
++   assert(p.leading>=0&&p.leading<=p.eligible);
++   if(p.leading>before)rises++;
++   if(e.best>=0){
++    assert(!e.rejected[e.best]);eng_choose(&e,&d);
++    assert(e.count<=p.leading&&e.count<=TD_SAMPLE);
++    for(j=0;j<e.count;j++)assert(!e.rejected[e.sample[j]]&&
++      e.score[e.sample[j]]>=p.cutoff);
++   }
++  }
++  assert(rejections==d.nc&&!p.leading&&!p.eligible);
++  eng_reset(&e,&d);obs_reset(&h);obs_pool(&e,&d,&p);
++  assert(p.leading==d.nc&&p.eligible==d.nc&&!h.count&&!e.turn);
++ }
++ printf("PASS: %u real targets; %u complete rejection/reset traversals; %d score-window rises after rejection; sample is not count\n",d.nc,d.nc,rises);
++ db_close();return 0;
++}
+--- a/SOURCE/tests/CUE09.PY
++++ b/SOURCE/tests/CUE09.PY
+@@ -0,0 +1,97 @@
++"""Reproduce old ordering; test new handlers with real sound/engine modules."""
++from pathlib import Path
++import json,os,subprocess,sys
++P=Path(__file__).resolve().parents[1]
++def function(text,signature):
++ start=text.index(signature);i=text.index('{',start)+1;depth=1
++ while depth:
++  if text[i]=='{':depth+=1
++  elif text[i]=='}':depth-=1
++  i+=1
++ return text[start:i]+'\n'
++MOCK=(P/'tests/SNDTST.C').read_text().split('int main(void)')[0]
++PRE=r'''
++#include "OBSERVE.H"
++#define FALSE 0
++#define WM_CLOSE 8
++static TDB db;static ENGINE engine;static TDHISTORY history;
++static TDEXPLAIN explanation;static int explaining,explainpage;
++static int window=APP,state=2,focus,busy,pending,animticks,idleticks;
++static int animframe,artblits,rejectphase,capoffered,debug,help;
++static DWORD now,inputready,computepeak,selectms,answerms,slow;
++static char name[40],question[80];
++static DWORD GetTickCount(void){return now;}
++static int inputblocked(void){return busy||(LONG)(now-inputready)<0;}
++static void busyfooter(void){}
++static void animset(int f){animframe=f;}
++static void metric(char *key,long v){}
++static void refresh(void){}
++static void questionrefresh(int f){}
++static void debugupdate(void){}
++static void SendMessage(int w,int m,int p,long l){}
++static int timed_confident(ENGINE *e,TDB *d){now+=slow;return eng_confident(e,d);}
++#define lstrcpy strcpy
++static void nextcompute(void);
++static void next(void);
++'''
++POST=r'''
++int main(int argc,char **argv){
++ int branch,mode,delay;DWORD delays[3]={0,650,5000};
++ TDSNDSTAT before,after;unsigned expected;int failed=0;
++ assert(argc==2&&db_open(&db,argv[1]));
++ for(branch=0;branch<2;branch++)for(mode=0;mode<3;mode++)for(delay=0;delay<3;delay++){
++  reset();eng_reset(&engine,&db);obs_reset(&history);
++  if(mode==1)TdSoundEnable(0);
++  if(mode==2){flags=WF_PMODE;assert(!TdSoundInit(APP,INST,1));}
++  now=1000;slow=delays[delay];inputready=0;busy=pending=0;
++  capoffered=1;state=2;engine.turn=branch?25:1;
++  before=snapshot();act(21);assert(state==(branch?2:1));
++  assert(!writes);TdSoundTick(APP,now+100);after=snapshot();
++  expected=branch?TD_SND_REVEAL:TD_SND_WRONG;
++  printf("%d,%d,%lu,%u,%u,%lu,%lu,%lu,%lu\n",branch,mode,
++    (unsigned long)slow,after.cue,writes,
++    (unsigned long)(after.starts[0]-before.starts[0]),
++    (unsigned long)(after.starts[2]-before.starts[2]),
++    (unsigned long)(after.notes-before.notes),
++    (unsigned long)(after.lateAborts-before.lateAborts));
++  if(!OLD_ORDER){
++   assert((DWORD)(inputready-now)==220);
++   if(mode)assert(!writes&&!after.playing);
++   else{
++    assert(after.cue==expected&&writes==4);
++    check_note(0,branch?170:339,branch?6:7);
++    assert(after.notes-before.notes==1&&after.lateAborts==before.lateAborts);
++    assert(after.starts[expected-1]-before.starts[expected-1]==1);
++    assert(after.starts[expected==1?2:0]==before.starts[expected==1?2:0]);
++   }
++  }else if(!mode&&!branch&&delay){
++    assert(!writes&&after.lateAborts-before.lateAborts==1);failed++;
++  }else if(!mode&&branch){
++    assert(after.starts[2]-before.starts[2]==1&&after.notes-before.notes==1);
++    assert(after.cue==1);failed++;
++  }
++  TdSoundStop(APP);quiet();
++ }
++ assert(!OLD_ORDER||failed==5);
++ db_close();return 0;
++}
++'''
++results={}
++for tag,path in [('OLD',Path(sys.argv[1]) if len(sys.argv)>1 else P/'tests/BEFORE09.C'),('NEW',P/'src/TANDI.C')]:
++ if path is None:continue
++ text=path.read_text();parts=''.join(function(text,f) for f in ['static void nextcompute(void){','static void next(void){','static void act(int id){'])
++ parts=parts.replace('eng_confident(&engine,&db)','timed_confident(&engine,&db)')
++ generated=P/'build'/('CUE09'+tag+'.C');exe=generated.with_suffix('.EXE')
++ generated.write_bytes((MOCK+PRE+parts+POST).replace('\n','\r\n').encode('ascii'))
++ subprocess.run([os.environ.get('CC','gcc'),'-std=c89','-O2','-w','-DTDSOUND_HOST',
++  '-DOLD_ORDER='+str(int(tag=='OLD')),'-I'+str(P/'tests'),'-I'+str(P/'src'),'-x','c',
++  str(generated),str(P/'src/TDSOUND.C'),str(P/'src/ENGINE.C'),str(P/'src/DB.C'),
++  str(P/'src/OBSERVE.C'),'-o',str(exe)],check=True)
++ result=subprocess.check_output([str(exe),str(P/'build/TANDY.DAT')]).decode()
++ (P/'evidence'/('CUE09-'+tag+'.CSV')).write_bytes(('next_guess,mode,compute_ms,cue,writes,reveal_starts,wrong_starts,notes,late_aborts\n'+result).replace('\n','\r\n').encode())
++ results[tag]={'cases':len(result.splitlines()),'old_reproductions':5 if tag=='OLD' else 0,
++  'actual_production_sound_module':True,'actual_engine_loader':True,
++  'simulated_compute_ms':[0,650,5000],'modes':['on','user off','unsupported'],
++  'no_artificial_wait':True,'input_guard_ms':220}
++(P/'evidence/CUE09.JSN').write_bytes((json.dumps(results,indent=2)+'\n').replace('\n','\r\n').encode())
++print(json.dumps(results,indent=2))
+--- a/SOURCE/tests/HIST09.C
++++ b/SOURCE/tests/HIST09.C
+@@ -0,0 +1,15 @@
++#include <assert.h>
++#include <stdio.h>
++#include "OBSERVE.H"
++static TDB d;static ENGINE e;static TDHISTORY h;static TDEXPLAIN x;
++int main(int argc,char **argv){int q,before;assert(argc==2&&db_open(&d,argv[1]));
++ eng_reset(&e,&d);obs_reset(&h);
++ for(q=0;q<256;q++){e.current=q;assert(obs_answer(&h,&e,&d,4));}
++ assert(h.count==256&&e.turn==256&&obs_explain(&h,&e,&d,&x));
++ assert(x.count==256&&x.sum==3072L&&x.leaderScore==1024&&x.otherScore==-2048);
++ before=e.turn;e.current=0;assert(!obs_answer(&h,&e,&d,4)&&e.turn==before);
++ h.count=257;assert(!obs_answer(&h,&e,&d,4));assert(!obs_explain(&h,&e,&d,&x));
++ h.count=256;h.q[1]=h.q[0];assert(!obs_explain(&h,&e,&d,&x));
++ obs_reset(&h);eng_reset(&e,&d);e.current=0;assert(!obs_answer(&h,&e,&d,5));assert(!h.count&&!e.turn);
++ puts("PASS: all 256 questions retained; 3072 signed margin; overflow, duplicate and invalid input rejected");db_close();return 0;
++}
+--- a/SOURCE/tests/OBS09.C
++++ b/SOURCE/tests/OBS09.C
+@@ -0,0 +1,74 @@
++/* Every displayed claim is derived from the actual unchanged engine/loader. */
++#include <stdio.h>
++#include <assert.h>
++#include <string.h>
++#include "../src/OBSERVE.H"
++static TDB d;static ENGINE e;static TDHISTORY h;static TDEXPLAIN x;
++static U8 truth[TD_ROW],leader[TD_ROW],other[TD_ROW];
++static const short delta[5][5]={
++ {4,2,0,-4,-8},{2,2,0,-2,-4},{0,0,0,0,0},
++ {-4,-2,0,2,2},{-8,-4,0,2,4}
++};
++static int ab(int v){return v<0?-v:v;}
++int main(int argc,char **argv){
++    int c,mode,i,j,q,a,v,w,known,flips,last,first;
++    long ls,os;TDPOOL p;char target[40],ln[40],on[40],question[80];
++    if(argc!=2||!db_open(&d,argv[1]))return 2;
++    printf("kind,mode,target,leader,other,q,answer,leader_fact,other_fact,leader_delta,other_delta,difference,leading,eligible\n");
++    for(mode=0;mode<2;mode++)for(c=0;c<(int)d.nc;c++){
++        assert(db_row(&d,c,truth)&&db_name(&d,c,target));
++        eng_reset(&e,&d);obs_reset(&h);known=flips=0;last=d.nc;
++        while(!eng_confident(&e,&d)){
++            q=eng_choose(&e,&d);if(q<0)break;
++            a=db_value(truth,q);
++            /* Exploratory policy only until Claude's exact harness arrives:
++               invert first and fourth known answered facts (never UNKNOWN). */
++            if(a!=2){known++;if(mode&&(known==1||known==4)){a=4-a;flips++;}}
++            assert(obs_answer(&h,&e,&d,a));
++            obs_pool(&e,&d,&p);
++            if(p.leading>last)printf("rise,%d,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
++                mode,target,"","",e.turn,0,0,0,0,0,last,p.leading,p.eligible);
++            last=p.leading;
++        }
++        assert(obs_explain(&h,&e,&d,&x)&&x.valid);
++        assert(x.leader==e.best&&x.other==e.second&&x.count==e.turn);
++        assert(db_row(&d,x.leader,leader)&&db_row(&d,x.other,other));
++        assert(db_name(&d,x.leader,ln)&&db_name(&d,x.other,on));
++        ls=os=0;
++        for(i=0;i<h.count;i++){
++            q=h.q[i];a=h.a[i];v=db_value(leader,q);w=db_value(other,q);
++            ls+=delta[a][v];os+=delta[a][w];
++        }
++        assert(ls==x.leaderScore&&os==x.otherScore&&x.sum==ls-os);
++        obs_pool(&e,&d,&p);
++        printf("case,%d,%s,%s,%s,%d,%d,%d,%d,%ld,%ld,%ld,%d,%d\n",
++               mode,target,ln,on,h.count,flips,e.best!=c,e.turn>=25,ls,os,x.sum,p.leading,p.eligible);
++        for(i=0;i<x.count;i++){
++            TDCLUE *k=&x.clue[i];first=0;
++            for(j=0;j<h.count;j++)if(h.q[j]==k->q&&h.a[j]==k->answer)first++;
++            assert(first==1);
++            assert(k->leaderFact==db_value(leader,k->q));
++            assert(k->otherFact==db_value(other,k->q));
++            assert(k->leaderDelta==delta[k->answer][k->leaderFact]);
++            assert(k->otherDelta==delta[k->answer][k->otherFact]);
++            assert(k->difference==k->leaderDelta-k->otherDelta);
++            if(i)assert(ab(x.clue[i-1].difference)>=ab(k->difference));
++            assert(db_question(&d,k->q,question));
++            /* Question text is retrieved by the reporting wrapper, no CSV quotes. */
++            printf("clue,%d,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
++                mode,target,ln,on,k->q,k->answer,k->leaderFact,k->otherFact,
++                k->leaderDelta,k->otherDelta,k->difference,p.leading,p.eligible);
++        }
++        /* Rejection excludes a candidate by explicit player action only. */
++        eng_reject(&e,&d);obs_pool(&e,&d,&p);assert(p.eligible==(int)d.nc-1);
++    }
++    /* Complete history beyond 25, ending with every available question. */
++    eng_reset(&e,&d);obs_reset(&h);
++    for(i=0;i<(int)d.nq;i++){e.current=i;assert(obs_answer(&h,&e,&d,2));}
++    assert(h.count==d.nq&&h.count>25);
++    assert(obs_explain(&h,&e,&d,&x)&&x.count==d.nq&&x.sum==0);
++    e.current=0;assert(!obs_answer(&h,&e,&d,4));assert(h.count==d.nq);
++    h.a[0]=5;assert(!obs_explain(&h,&e,&d,&x));
++    printf("history,0,,,,%d,,,,,,,,\n",d.nq);
++    db_close();return 0;
++}
+--- a/SOURCE/tests/OBS09.PY
++++ b/SOURCE/tests/OBS09.PY
+@@ -0,0 +1,41 @@
++"""Whole-roster explanations and counterexamples, actual production C code."""
++from pathlib import Path
++import csv,hashlib,io,json,os,subprocess
++P=Path(__file__).resolve().parents[1]
++exe=P/'build/OBS09.EXE'
++subprocess.run([os.environ.get('CC','gcc'),'-std=c89','-O2','-Wall','-Wextra',
++ '-Werror','-pedantic','-I'+str(P/'src'),'-x','c',str(P/'tests/OBS09.C'),
++ str(P/'src/ENGINE.C'),str(P/'src/DB.C'),str(P/'src/OBSERVE.C'),'-o',str(exe)],check=True)
++sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
++reports={}
++for tag,db,source in [('STANDARD','TANDY.DAT','STARTER.JSON'),('AUDIT08','AUDIT08.DAT','AUDIT08.JSON')]:
++ runs=[subprocess.check_output([str(exe),str(P/'build'/db)]) for _ in range(2)]
++ assert runs[0]==runs[1]
++ (P/'evidence'/('OBS09-'+tag+'.CSV')).write_bytes(runs[0].replace(b'\n',b'\r\n'))
++ rows=list(csv.DictReader(io.StringIO(runs[0].decode())))
++ cases=[r for r in rows if r['kind']=='case'];clues=[r for r in rows if r['kind']=='clue']
++ data=json.loads((P/'data'/source).read_text());questions=data['questions']
++ examples=[]
++ for c in cases:
++  cc=[r for r in clues if r['target']==c['target'] and r['mode']==c['mode']]
++  assert len(cc)==int(c['q'])
++  selected=[]
++  for r in cc:
++   if len(selected)<3 or (int(r['difference'])<0 and not any(x['difference']<0 for x in selected)):
++    selected.append({'question':questions[int(r['q'])]['text'],**{k:int(r[k]) for k in ['answer','leader_fact','other_fact','leader_delta','other_delta','difference']}})
++  examples.append({'target':c['target'],'scenario':'truthful' if c['mode']=='0' else 'two known facts inverted',
++   'guess':c['leader'],'alternative':c['other'],'score_margin':int(c['difference']),
++   'answers':len(cc),'clues':selected,'warning':'Score contributions relative to this alternative, not proof or exclusions.'})
++ report={'dat_sha256':sha(P/'build'/db),'engine_sha256':sha(P/'src/ENGINE.C'),
++  'loader_sha256':sha(P/'src/DB.C'),'repeat_exact':True,'cases':len(cases),'clues':len(clues),
++  'truthful_first_misses':sum(int(c['leader_fact']) for c in cases if c['mode']=='0'),
++  'exploratory_two_wrong_first_misses':sum(int(c['leader_fact']) for c in cases if c['mode']=='1'),
++  'exploratory_policy':'Invert first and fourth known answered facts; unknown stays unknown. First-guess miss, not Claude result until exact policy verified.',
++  'leading_count_rises':len([r for r in rows if r['kind']=='rise']),
++  'history_questions':int(next(r['q'] for r in rows if r['kind']=='history')),
++  'negative_clues':sum(int(c['difference'])<0 for c in clues),'neutral_clues':sum(int(c['difference'])==0 for c in clues)}
++ assert report['cases']==512
++ (P/'evidence'/('EXAMPLES-'+tag+'.JSN')).write_bytes((json.dumps(examples,indent=2)+'\n').replace('\n','\r\n').encode('ascii'))
++ reports[tag]=report
++(P/'evidence/OBS09.JSN').write_bytes((json.dumps(reports,indent=2)+'\n').replace('\n','\r\n').encode('ascii'))
++print(json.dumps(reports,indent=2))
+--- a/SOURCE/tests/UIGUARD.PY
++++ b/SOURCE/tests/UIGUARD.PY
+@@ -3,8 +3,8 @@
+ from pathlib import Path
+ import subprocess,os
+ P=Path(__file__).resolve().parents[1]
+-PRE='\n#include <stdio.h>\n#include <string.h>\n#include "TANDI.H"\ntypedef long LONG; typedef unsigned long DWORD; typedef unsigned UINT,WORD; typedef int HWND;\ntypedef struct {int left,top,right,bottom;} RECT;\n#define FAR\n#define PASCAL\n#define FALSE 0\n#define LOWORD(x) ((x)&65535)\n#define HIWORD(x) (((x)>>16)&65535)\n#define VK_ESCAPE 27\n#define VK_F1 112\n#define VK_F2 113\n#define VK_TAB 9\n#define VK_SHIFT 16\n#define VK_RETURN 13\n#define VK_SPACE 32\n#define WM_PAINT 1\n#define WM_TIMER 2\n#define WM_ACTIVATEAPP 3\n#define WM_MOUSEMOVE 4\n#define WM_LBUTTONDOWN 5\n#define WM_KEYDOWN 6\n#define WM_DESTROY 7\n#define WM_CLOSE 8\n#define lstrcpy strcpy\nstatic TDB db; static ENGINE engine;\nstatic int window=1,screenw=320,screenh=200,sx=1,state,focus,debug,help,busy,testmode,active,testinside,artblits,logfile=-1,closed;\nstatic RECT buttons[6]; static int ids[6],nb;static char labels[6][24],question[80],name[40];\nstatic char *answers[5]={"YES","PROBABLY","DON\'T KNOW","PROBABLY NOT","NO"};\nstatic DWORD answerms,selectms;\nstatic int panelleft(void){return 104*sx;}\nstatic void layout(void);\nstatic void refresh(void){layout();}\nstatic void questionrefresh(int f){layout();}\nstatic void busyfooter(void){}\nstatic DWORD now; static DWORD GetTickCount(void){return now;}\nstatic void metric(char *k,long v){}\nstatic void InvalidateRect(HWND w,RECT *r,int b){}\nstatic void UpdateWindow(HWND w){}\nstatic int GetKeyState(int k){return 0;}\nstatic void SendMessage(HWND w,UINT m,WORD p,LONG l){if(m==WM_CLOSE)closed++;}\nstatic void draw(HWND w){}\nstatic void testtick(void){}\nstatic void look(int x,int y){}\nstatic void debugupdate(void){}\nstatic void artfree(void){}\nstatic void _lclose(int f){}\nstatic void PostQuitMessage(int n){}\nstatic LONG DefWindowProc(HWND w,UINT m,WORD p,LONG l){return 0;}\n\n#define VK_F3 114\n#define WM_KILLFOCUS 9\n#define WM_ACTIVATE 10\n#define WM_QUERYENDSESSION 11\n#define WM_ENDSESSION 12\n#define TD_SND_REVEAL 1\n#define TD_SND_VICTORY 2\n#define TD_SND_WRONG 3\nstatic int animframe=-1,animticks,idleticks,pending,timerok=1,animredraws,computeticks;\nstatic int tickinside,rejectphase,capoffered,soundpref=1,soundsupported=1,settingssaved=1,soundenabled=1,soundstops;\nstatic DWORD inputready,computepeak;\nstatic void animset(int f){animframe=f;}\nstatic void KillTimer(int w,int t){}\nstatic int TdSoundBegin(int w,int c,DWORD t){return 1;}\nstatic void TdSoundStop(int w){soundstops++;}\nstatic void TdSoundTick(int w,DWORD t){}\nstatic int TdSoundEnabled(void){return soundenabled;}\nstatic void TdSoundEnable(int v){soundenabled=v;}\nstatic int profilevalue=1,profileok=1;\nstatic int GetProfileInt(char*a,char*b,int d){return profileok?profilevalue:d;}\nstatic int WriteProfileString(char*a,char*b,char*c){if(profileok)profilevalue=c[0]==49;return profileok;}\n'
+-POST='\nstatic int fails=0,checks=0;\n#define CHECK(x) do{checks++;if(!(x)){fails++;printf("FAIL %d %s\\n",__LINE__,#x);}}while(0)\nstatic void tick(void){now+=110;WndProc(1,WM_TIMER,2,0);}\nstatic void ready(void){while(pending)tick();now+=230;}\nstatic void reset(void){busy=pending=0;inputready=0;active=1;eng_reset(&engine,&db);capoffered=0;state=1;next();ready();}\nint main(int argc,char**argv){int turn,old,stops;\n if(argc!=2||!db_open(&db,argv[1]))return 2;\n reset();turn=engine.turn;WndProc(1,WM_KEYDOWN,VK_RETURN,1L<<30);CHECK(engine.turn==turn);\n WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(engine.turn==turn+1&&!pending&&!busy);\n turn=engine.turn;WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(engine.turn==turn);\n WndProc(1,WM_LBUTTONDOWN,0,210|(95L<<16));CHECK(engine.turn==turn);\n ready();CHECK(state==1&&!busy&&!pending);\n reset();while(engine.turn<24){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}next();ready();\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!pending&&engine.turn==25);\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!pending);\n while(pending)tick();old=engine.best;CHECK(state==2);\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!engine.rejected[old]);\n now+=230;WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==3);\n WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==3);\n now+=230;WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==1&&!pending);\n stops=soundstops;WndProc(1,WM_ACTIVATEAPP,0,0);CHECK(soundstops>stops);turn=animticks;tick();CHECK(animticks==turn);\n WndProc(1,WM_ACTIVATEAPP,1,0);ready();CHECK(!pending);\n stops=soundstops;WndProc(1,WM_KILLFOCUS,0,0);CHECK(soundstops>stops);\n stops=soundstops;CHECK(WndProc(1,WM_QUERYENDSESSION,0,0)==1);CHECK(soundstops>stops);\n timerok=0;reset();CHECK(!busy&&!pending&&state==1);\n timerok=1;reset();WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(!pending);closed=0;\n WndProc(1,WM_LBUTTONDOWN,0,280|(189L<<16));CHECK(closed==1);\n\n reset();turn=engine.turn;closed=0;\n WndProc(1,WM_KEYDOWN,VK_F1,0);CHECK(help==1);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!help&&!debug&&!closed&&engine.turn==turn);\n now+=230;WndProc(1,WM_KEYDOWN,VK_F2,0);CHECK(debug==1&&nb==3&&ids[0]==91);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!debug&&!closed);\n now+=230;WndProc(1,WM_KEYDOWN,VK_F2,0);act(91);CHECK(debug==2);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!debug&&!closed);\n reset();while(engine.turn<25){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}nextcompute();now+=230;old=engine.best;\n act(21);CHECK(state==5&&!pending&&engine.rejected[old]);turn=engine.turn;old=engine.best;\n tick();tick();tick();CHECK(state==5&&!pending&&engine.turn==turn&&engine.best==old);\n now+=230;WndProc(1,WM_KEYDOWN,\'N\',0);CHECK(state==5&&!engine.rejected[old]);\n act(30);CHECK(!pending&&state==2);ready();CHECK(state==2&&engine.turn==25&&engine.best==old);\n act(21);CHECK(state==2&&capoffered);now+=230;act(10);ready();CHECK(state==1&&engine.turn==0&&!engine.rejected[old]);\n db.error=1;state=4;layout();CHECK(nb==1&&ids[0]==99);db.error=0;\n /* No cap or lost candidate: every remaining guess remains deliberately reachable. */\n reset();while(engine.turn<25){eng_choose(&engine,&db);eng_answer(&engine,&db,2);}nextcompute();now+=230;turn=0;\n old=0;while(state==2){act(21);turn++;if(state==5){old++;now+=230;act(30);}ready();}CHECK(old==1);\n CHECK(state==4&&turn==db.nc&&engine.turn==25);\n\n reset();soundpref=1;profileok=1;WndProc(1,WM_KEYDOWN,VK_F3,0);CHECK(!soundpref&&!soundenabled&&profilevalue==0&&settingssaved);\n WndProc(1,WM_KEYDOWN,VK_F3,1L<<30);CHECK(!soundpref);\n profileok=0;WndProc(1,WM_KEYDOWN,VK_F3,0);CHECK(soundpref&&soundenabled&&!settingssaved&&profilevalue==0);\n profileok=1;profilevalue=0;soundsettings();CHECK(!soundpref&&!soundenabled);\n soundsupported=0;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG NO SOUND"));\n soundsupported=1;settingssaved=1;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG F3 SOUND OFF"));\n profileok=0;soundsettings();CHECK(soundpref&&soundenabled);\n settingssaved=0;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG SOUND UNSAVED"));\n printf("UI guards/lifecycle: %d checks, %d failures\\n",checks,fails);db_close();return fails!=0;\n}\n'
++PRE='\n#include <stdio.h>\n#include <string.h>\n#include "TANDI.H"\n#include "OBSERVE.H"\nstatic TDHISTORY history; static TDEXPLAIN explanation; static int explaining,explainpage;\ntypedef long LONG; typedef unsigned long DWORD; typedef unsigned UINT,WORD; typedef int HWND;\ntypedef struct {int left,top,right,bottom;} RECT;\n#define FAR\n#define PASCAL\n#define FALSE 0\n#define LOWORD(x) ((x)&65535)\n#define HIWORD(x) (((x)>>16)&65535)\n#define VK_ESCAPE 27\n#define VK_F1 112\n#define VK_F2 113\n#define VK_TAB 9\n#define VK_SHIFT 16\n#define VK_RETURN 13\n#define VK_SPACE 32\n#define WM_PAINT 1\n#define WM_TIMER 2\n#define WM_ACTIVATEAPP 3\n#define WM_MOUSEMOVE 4\n#define WM_LBUTTONDOWN 5\n#define WM_KEYDOWN 6\n#define WM_DESTROY 7\n#define WM_CLOSE 8\n#define lstrcpy strcpy\nstatic TDB db; static ENGINE engine;\nstatic int window=1,screenw=320,screenh=200,sx=1,state,focus,debug,help,busy,testmode,active,testinside,artblits,logfile=-1,closed;\nstatic RECT buttons[6]; static int ids[6],nb;static char labels[6][24],question[80],name[40];\nstatic char *answers[5]={"YES","PROBABLY","DON\'T KNOW","PROBABLY NOT","NO"};\nstatic DWORD answerms,selectms;\nstatic int panelleft(void){return 104*sx;}\nstatic void layout(void);\nstatic void refresh(void){layout();}\nstatic void questionrefresh(int f){layout();}\nstatic void busyfooter(void){}\nstatic DWORD now; static DWORD GetTickCount(void){return now;}\nstatic void metric(char *k,long v){}\nstatic void InvalidateRect(HWND w,RECT *r,int b){}\nstatic void UpdateWindow(HWND w){}\nstatic int GetKeyState(int k){return 0;}\nstatic void SendMessage(HWND w,UINT m,WORD p,LONG l){if(m==WM_CLOSE)closed++;}\nstatic void draw(HWND w){}\nstatic void testtick(void){}\nstatic void look(int x,int y){}\nstatic void debugupdate(void){}\nstatic void artfree(void){}\nstatic void _lclose(int f){}\nstatic void PostQuitMessage(int n){}\nstatic LONG DefWindowProc(HWND w,UINT m,WORD p,LONG l){return 0;}\n\n#define VK_F3 114\n#define VK_F4 115\n#define WM_KILLFOCUS 9\n#define WM_ACTIVATE 10\n#define WM_QUERYENDSESSION 11\n#define WM_ENDSESSION 12\n#define TD_SND_REVEAL 1\n#define TD_SND_VICTORY 2\n#define TD_SND_WRONG 3\nstatic int animframe=-1,animticks,idleticks,pending,timerok=1,animredraws,computeticks;\nstatic int tickinside,rejectphase,capoffered,soundpref=1,soundsupported=1,settingssaved=1,soundenabled=1,soundstops;\nstatic DWORD inputready,computepeak;\nstatic void animset(int f){animframe=f;}\nstatic void KillTimer(int w,int t){}\nstatic int TdSoundBegin(int w,int c,DWORD t){return 1;}\nstatic void TdSoundStop(int w){soundstops++;}\nstatic void TdSoundTick(int w,DWORD t){}\nstatic int TdSoundEnabled(void){return soundenabled;}\nstatic void TdSoundEnable(int v){soundenabled=v;}\nstatic int profilevalue=1,profileok=1;\nstatic int GetProfileInt(char*a,char*b,int d){return profileok?profilevalue:d;}\nstatic int WriteProfileString(char*a,char*b,char*c){if(profileok)profilevalue=c[0]==49;return profileok;}\n'
++POST='\nstatic int fails=0,checks=0;\n#define CHECK(x) do{checks++;if(!(x)){fails++;printf("FAIL %d %s\\n",__LINE__,#x);}}while(0)\nstatic void tick(void){now+=110;WndProc(1,WM_TIMER,2,0);}\nstatic void ready(void){while(pending)tick();now+=230;}\nstatic void reset(void){busy=pending=0;inputready=0;active=1;eng_reset(&engine,&db);obs_reset(&history);capoffered=0;state=1;next();ready();}\nint main(int argc,char**argv){int turn,old,stops;\n if(argc!=2||!db_open(&db,argv[1]))return 2;\n reset();turn=engine.turn;WndProc(1,WM_KEYDOWN,VK_RETURN,1L<<30);CHECK(engine.turn==turn);\n WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(engine.turn==turn+1&&!pending&&!busy);\n turn=engine.turn;WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(engine.turn==turn);\n WndProc(1,WM_LBUTTONDOWN,0,210|(95L<<16));CHECK(engine.turn==turn);\n ready();CHECK(state==1&&!busy&&!pending);\n reset();while(engine.turn<24){eng_choose(&engine,&db);obs_answer(&history,&engine,&db,2);}next();ready();\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!pending&&engine.turn==25);\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!pending);\n while(pending)tick();old=engine.best;CHECK(state==2);\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!engine.rejected[old]);\n now+=230;WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==3);\n WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==3);\n now+=230;WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==1&&!pending);\n stops=soundstops;WndProc(1,WM_ACTIVATEAPP,0,0);CHECK(soundstops>stops);turn=animticks;tick();CHECK(animticks==turn);\n WndProc(1,WM_ACTIVATEAPP,1,0);ready();CHECK(!pending);\n stops=soundstops;WndProc(1,WM_KILLFOCUS,0,0);CHECK(soundstops>stops);\n stops=soundstops;CHECK(WndProc(1,WM_QUERYENDSESSION,0,0)==1);CHECK(soundstops>stops);\n timerok=0;reset();CHECK(!busy&&!pending&&state==1);\n timerok=1;reset();WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(!pending);closed=0;\n WndProc(1,WM_LBUTTONDOWN,0,280|(189L<<16));CHECK(closed==1);\n\n reset();turn=engine.turn;closed=0;\n WndProc(1,WM_KEYDOWN,VK_F1,0);CHECK(help==1);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!help&&!debug&&!closed&&engine.turn==turn);\n now+=230;WndProc(1,WM_KEYDOWN,VK_F2,0);CHECK(debug==1&&nb==3&&ids[0]==91);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!debug&&!closed);\n now+=230;WndProc(1,WM_KEYDOWN,VK_F2,0);act(91);CHECK(debug==2);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!debug&&!closed);\n reset();while(engine.turn<25){eng_choose(&engine,&db);obs_answer(&history,&engine,&db,2);}nextcompute();now+=230;old=engine.best;\n act(21);CHECK(state==5&&!pending&&engine.rejected[old]);turn=engine.turn;old=engine.best;\n tick();tick();tick();CHECK(state==5&&!pending&&engine.turn==turn&&engine.best==old);\n now+=230;WndProc(1,WM_KEYDOWN,\'N\',0);CHECK(state==5&&!engine.rejected[old]);\n act(30);CHECK(!pending&&state==2);ready();CHECK(state==2&&engine.turn==25&&engine.best==old);\n act(21);CHECK(state==2&&capoffered);now+=230;act(10);ready();CHECK(state==1&&engine.turn==0&&!engine.rejected[old]);\n db.error=1;state=4;layout();CHECK(nb==1&&ids[0]==99);db.error=0;\n /* No cap or lost candidate: every remaining guess remains deliberately reachable. */\n reset();while(engine.turn<25){eng_choose(&engine,&db);obs_answer(&history,&engine,&db,2);}nextcompute();now+=230;turn=0;\n old=0;while(state==2){act(21);turn++;if(state==5){old++;now+=230;act(30);}ready();}CHECK(old==1);\n CHECK(state==4&&turn==db.nc&&engine.turn==25);\n\n reset();soundpref=1;profileok=1;WndProc(1,WM_KEYDOWN,VK_F3,0);CHECK(!soundpref&&!soundenabled&&profilevalue==0&&settingssaved);\n WndProc(1,WM_KEYDOWN,VK_F3,1L<<30);CHECK(!soundpref);\n profileok=0;WndProc(1,WM_KEYDOWN,VK_F3,0);CHECK(soundpref&&soundenabled&&!settingssaved&&profilevalue==0);\n profileok=1;profilevalue=0;soundsettings();CHECK(!soundpref&&!soundenabled);\n soundsupported=0;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG NO SOUND"));\n soundsupported=1;settingssaved=1;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG F3 SOUND OFF"));\n profileok=0;soundsettings();CHECK(soundpref&&soundenabled);\n settingssaved=0;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG SOUND UNSAVED"));\n reset();while(engine.turn<25){eng_choose(&engine,&db);obs_answer(&history,&engine,&db,2);}next();ready();WndProc(1,WM_KEYDOWN,VK_F4,0);CHECK(explaining&&explanation.valid&&explanation.count==25);ready();act(94);CHECK(explainpage==1);ready();act(93);CHECK(explainpage==0);WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!explaining&&state==2);\n printf("UI guards/lifecycle: %d checks, %d failures\\n",checks,fails);db_close();return fails!=0;\n}\n'
+ FUNCS=['static int inputblocked(void){', 'static char *soundfooter(void){', 'static void soundsettings(void){', 'static void addbutton(', 'static void layout(void){', 'static void nextcompute(void){', 'static void next(void){', 'static void animtick(void){', 'static void act(int id){', 'LONG FAR PASCAL WndProc(']
+ def function(text,signature):
+  start=text.index(signature);p=text.index('{',start);depth=1;i=p+1
+@@ -18,6 +18,6 @@
+ (P/'build').mkdir(exist_ok=True)
+ generated=P/'build/UIGUARD.C';exe=P/'build/UIGUARD.EXE'
+ generated.write_text(PRE+'\n'.join(function(source,f) for f in FUNCS)+POST)
+-subprocess.run([os.environ.get('CC','gcc'),'-std=c89','-O1','-w']+([] if os.name=='nt' else ['-fsanitize=address,undefined'])+['-I'+str(P/'src'),'-x','c',str(generated),str(P/'src/ENGINE.C'),str(P/'src/DB.C'),'-o',str(exe)],check=True)
++subprocess.run([os.environ.get('CC','gcc'),'-std=c89','-O1','-w']+([] if os.name=='nt' else ['-fsanitize=address,undefined'])+['-I'+str(P/'src'),'-x','c',str(generated),str(P/'src/ENGINE.C'),str(P/'src/DB.C'),str(P/'src/OBSERVE.C'),'-o',str(exe)],check=True)
+ r=subprocess.run([str(exe),str(P/'build/TANDY.DAT')],env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0'),capture_output=True,text=True,check=True)
+ print(r.stdout,end='');(P/'evidence/UIGUARD.TXT').write_text(r.stdout)
+--- a/SOURCE/tests/UITEST.PY
++++ b/SOURCE/tests/UITEST.PY
+@@ -1,24 +1,25 @@
+ #!/usr/bin/env python3
+-"""Read-only UI04 regression checks against actual emulator screenshots."""
++"""Read-only TANDI09 regression checks against actual emulator screenshots."""
+ from pathlib import Path
+ from PIL import Image
+ import hashlib,json,argparse
+ P=Path(__file__).resolve().parents[1]
+-ap=argparse.ArgumentParser();ap.add_argument('--runtime-tag',default='-use07b');args=ap.parse_args()
++ap=argparse.ArgumentParser();ap.add_argument('--runtime-tag',default='-ui09c');args=ap.parse_args()
+ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+ rows=[]
+ for mode in ['320x200x16','640x200x2','640x200x4']:
+  d=P/'evidence'/('art-'+mode+args.runtime_tag);r=json.loads((d/'RESULT.JSON').read_text())
+  assert r['exe_sha256']==sha(P/'src/TANDI.EXE')
+  assert r['database_sha256']==sha(P/'build/TANDY.DAT')
+- for text in ['WRAP_FAILURES=0','ALL_QUESTIONS_CHECKED=130','ALL_NAMES_CHECKED=256','FIVE_KEYS_TEN_CORNERS_OUTSIDE=1','ERRORS=0','COMPLETE=1']:
++ for text in ['WRAP_FAILURES=0','ALL_QUESTIONS_CHECKED=130','ALL_NAMES_CHECKED=256','FIVE_KEYS_TEN_CORNERS_OUTSIDE=1','ERRORS=0','COMPLETE=1','EXPLAIN_QUESTION_LAYOUT=1','EXPLAIN_NAME_LAYOUT=1','EXPLAIN_FULL_HISTORY=1','EXPLAIN_CONFLICT_RETAINED=1']:
+   assert text+'\n' in r['log'],(mode,text)
++ assert r['leading_count_repaint_exact']
+  assert r['partial_repaint_exact'] and r['border_expose_exact'] and r['focus_restore_exact']
+  assert r['eyes']['changed_pixels']>0 and r['eyes']['only_eye_rectangles_changed']
+  im=Image.open(d/'CLIPFIX.PNG').convert('RGB')
+  # Both display geometries normalize to 640x400: buttons 328px vs 424px.
+  for i in range(5):
+-  y=176+36*i
++  y=172+34*i
+   assert im.getpixel((264,y+24))==(255,255,255)
+   assert im.getpixel((574,y+24))==(255,255,255)
+   assert im.getpixel((254,y+2))==(0,0,0)
+--- a/SOURCE/tools/WINQA.PY
++++ b/SOURCE/tools/WINQA.PY
+@@ -90,7 +90,7 @@
+     assert 'COMPLETE=1' in log
+     if negative:assert 'APP_ERROR=1' in log and 'BAD_DAT_EXIT_ONLY=1' in log
+     else:
+-        for key in ['TARGET_SUCCESS','BUSY_INPUT_IGNORED','DOUBLE_CLICK_STAYS_SUCCESS','HELD_KEY_IGNORED','SECOND_REJECTION_NO_GATE','CAP_ALL_CANDIDATES_REACHABLE','SOUND_PREF_SAVED','SOUND_HELD_KEY_IGNORED','GATE_RESTART']:
++        for key in ['TARGET_SUCCESS','BUSY_INPUT_IGNORED','DOUBLE_CLICK_STAYS_SUCCESS','HELD_KEY_IGNORED','SECOND_REJECTION_NO_GATE','CAP_ALL_CANDIDATES_REACHABLE','SOUND_PREF_SAVED','SOUND_HELD_KEY_IGNORED','GATE_RESTART','EXPLAIN_ACTUAL_RUNNER_UP','EXPLAIN_GAME_INPUT_BLOCKED','EXPLAIN_ESCAPE_PRESERVES','EXPLAIN_F4_OPENS','EXPLAIN_CONFLICT_RETAINED','EXPLAIN_HELD_KEY_IGNORED','EXPLAIN_FULL_HISTORY','EXPLAIN_LAST_PAGE','EXPLAIN_PAGE_BOUND','LEADING_ALL_AT_START','EXPLAIN_QUESTION_LAYOUT','EXPLAIN_NAME_LAYOUT']:
+             assert key+'=1' in log,key
+         assert 'CAP_GATE_COUNT=1' in log and 'ERRORS=0' in log and 'WINFLAGS=64' in log
+     return result

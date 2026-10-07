@@ -1,0 +1,130 @@
+TANDI09 / APP 0.3.6 FIRST-CHECKPOINT REVIEW
+Local copy-only experiment; not published. Original independent-harness noise comparison confirmed by parent.
+
+Baseline and scope
+Extracted from immutable TANDI08.ZIP SHA256
+ dd34d2948f7f9270072d4d418aacd9c120b5b788846741ec432cf4744377c2d2.
+evidence/BASELINE.JSN records every source input hash. ENGINE.C,DB.C,TDSOUND.C,
+ART.H, standard STARTER.JSON/TANDY.DAT and separate AUDIT08 source/DAT are
+byte-identical. No arbitrary dataset edits, threshold/Ask Two changes, reverse
+mode, learning, demo, speech, canonical promotion, publication, merge or CF write.
+Current main was read-only observed as bcea67b298c5a8be6891e5252ebea135cda483c6;
+PR107 was merged. A read-only sandbox fetch hit network restrictions; the same
+approved fetch then hit Git's differing-Windows-identity ownership check. No Git
+ownership/security/config/credential/network settings were changed or fetch
+retried. Parent approved qualification directly from the pinned local packet.
+
+Sound ordering
+The old actual handlers queue WRONG before synchronous next(). On a next guess
+REVEAL replaces it before the first note. On a next question simulated work of
+650 or 5000 ms expires the 300 ms initial deadline and no note plays. CUE09.PY
+compiles both pinned old and new handlers with actual ENGINE.C,DB.C,TDSOUND.C.
+New immediate guesses keep REVEAL and skip WRONG; new questions queue WRONG
+AFTER computation and refresh, using a fresh timestamp. No fake wait was added.
+Both branches pass for work of 0/650/5000 ms, sound on/user off/unsupported:
+18 old and 18 new cases. Off/unsupported write no PSG bytes. Enabled cases start
+one correct cue and emit its first exact PSG note without lateness. Input guard
+stays 220 ms. The sound module itself, ownership checks, lateness drop policy,
+focus/close cleanup and cooperative writer lease are unchanged; its 59 existing
+host lifecycle/timing/ownership scenarios pass. No physical audio claim.
+
+Leading candidates
+Leading: N/M means N of M unrejected names lie within 24 score points of the
+current leader. This is the engine's actual score window, not its at-most-64
+sample size and not a probability. Outside names stay eligible. Only explicit
+rejection removes a name from eligibility. Counts may rise. In the standard
+Luigi conflicting-answer case the leading count rises from 93 to 151 on answer
+6 while all 256 remain eligible. All 256 truthful target paths were traversed through every explicit rejection
+and reset; eligible counts reach zero then reset to 256, and 4118 score-window
+rises after rejection demonstrate the distinction. Whole-roster exploratory
+cases show 448 count
+rises (standard) and 483 (AUDIT08). No elimination or monotonic-count animation.
+
+How I knew
+F4/button on guess or success opens all accepted answers, ranked by absolute
+signed contribution difference against the actual current runner-up. Stable
+ranking preserves answer order for ties. Each page shows the question, user
+answer, both stored DAT values, each signed score change, the clue's signed
+difference and total margin. Negative and neutral/UNKNOWN clues are retained.
+UNKNOWN user answers/facts score zero. Probably values remain labelled Probably.
+The page says Not proof. A margin never claims a name was ruled out. If the
+history or comparison is incomplete/inconsistent or no competitor remains,
+the UI says no complete comparison is available. Every clue and both total
+scores are checked against actual C-engine scores. History is bounded by the
+engine's full TD_MAXQ=256 unique questions, not the 25-question guessing cap.
+130-answer real-DAT and 256-answer boundary histories pass; duplicates, invalid
+answers, corruption and overflow are rejected without inventing evidence.
+
+Examples using the actual standard engine
+Mario vs Luigi: user NO to hero helper/sidekick matches Mario NO (+4) and
+conflicts with Luigi YES (-8): +12 relative to Luigi. This favors Mario; it does
+not eliminate Luigi. Human and male answers match both and are neutral.
+Luigi vs Mario with conflicting answers: user YES to movie association conflicts
+with Luigi NO (-8), matches Mario PROBABLY (+2): -10 against Luigi. The full
+margin is +10 because other answers favor Luigi; the conflict stays visible.
+Messi vs Ronaldo: user NO to USA association matches Messi NO (+4), while
+Ronaldo UNKNOWN scores 0: +4. Unknown is not evidence Ronaldo is American.
+This guess hits the cap at 25, not a certified identity conclusion.
+See EXAMPLES-STANDARD.JSN and EXAMPLES-AUDIT08.JSN for all 256 targets in both
+truthful and conflicting-answer scenarios. OBS09-*.CSV retains every clue.
+
+Confirmed regression / metric boundary
+Truthful first-guess misses reproduce 23 standard and 19 AUDIT08. The new Messi
+-> Ronaldo truthful AUDIT08 miss remains; no data was promoted or altered.
+Parent's independent original TANDISIM verifier now confirms the exact two-flip
+stock-cap-25 final-failure comparison: standard 225 solved / 31 failed;
+final 258-cell AUDIT08 220 solved / 36 failed. AUDIT08 SHA256 is exactly
+8ad48837d8298b5618e253a05d64067cb4858085464d655379e3382d54b34637.
+Original Library identity libfile_1546647ee7ec8191bf42e1a7e4b077b8; archive hash
+3d1e8b66090066d7b9b9eb6da50d5ae2ca0f2010cf4ca69eba06762ec7d0bd4a.
+Policy: from question 4 invert the first two non-UNKNOWN stored answers via 4-v;
+reject wrong guesses; after 25 continue guesses without questions; fail on a
+wrong guess after 10 earlier rejections or no candidates. This is FINAL GAME
+FAILURE, not first-guess miss. Truthful first misses improve 23 -> 19 while
+two-wrong final failures regress 31 -> 36. No data was altered to hide this.
+evidence/NOISE09.JSN records the supplied independent confirmation; this agent
+did not execute or download the original Library harness in this environment.
+Independent comparison: 25 common failures + 11 new failures - 6 rescues:
+31 -> 36. New failures are Catwoman, Lex Luthor, Penguin, Scarlet Witch,
+Black Widow, Captain Marvel, Storm, Dorothy Gale, Godzilla, Eleven and Winston
+Churchill. Rescued are Loki, Cruella, Sephiroth, King Kong, Zeus and Poseidon.
+Both DATs eventually solve all 256 truthful games, despite 23/19 first misses.
+Identical flipping rules do not guarantee identical wrong facts: adaptive
+question selection differs with each DAT and the preceding answers.
+Independent cloud evidence: tandisim-verify/final258-comparison/VERIFICATION.txt
+and four CSVs. This is a cloud evidence locator, not a Windows file path.
+Our different first/fourth-known-answer inversion stress test (144 vs 116 first
+misses) remains an explanation/counterexample test and is not the Claude metric.
+The two DATs each run twice byte-exact through the actual engine/loader;
+512 explanation scenarios each, 8272/8316 clues respectively. All 256 characters
+have examples/counterexamples. These are matrix-consistency tests, not factual
+certification or human play results. AUDIT08 remains separate and experimental.
+
+Host / native verification
+49 actual UI handler guard/lifecycle checks pass. 53 DAT/compiler tests pass.
+All 65536 name pairs and 130 questions fit the narrowest 38-column explanation
+rectangles with the native 8x8-font contract. Native measured layout checks pass.
+C6 /G0 /Gw /AS compiles/links without warnings. NE audit reports no unsupported
+or FPU instructions. Native runs use Windows 3.0 real mode, WINFLAGS=64,
+8086_prefetch, 640 KB conventional, no FPU/XMS/EMS/UMB, 25000 uncalibrated cycles.
+Three final display modes pass: 320x200x16,640x200x2,640x200x4. Saved sound off,
+held/repeated inputs, overlays and page boundaries, actual runner-up/conflicting
+clues, all 130 answers/pages, one cap gate/all 256 candidates, sound persistence
+and three close paths pass. Actual corrupted DAT gives repair/Exit only and
+returns to DOS. Native register/statistics tests do not establish audible quality.
+The shared emulator lock is acquired for every native build/run. A sandbox lock
+open was denied; the same supported approved build/run succeeded without ACL
+or lock replacement. Private Windows/compiler/emulator/driver inputs are excluded.
+The first native fixture reused the scripted player's truth buffer; it was
+separated. Count invalidation and default Yes focus were corrected. A nine-letter
+capture name was corrected to DOS 8.3 and the final exact EXE was requalified.
+Failed/intermediate local runs are retained privately, not presented as final.
+
+Next approved directions (design only)
+PLAN09.TXT covers local opt-in, base-UNKNOWN-only, provenance-aware bounded
+learning with conflict/reset/corruption handling; non-training/non-setting-writing
+TSHELL demo integration with movement/dark intervals rather than a static
+burn-in claim; and short original oracle cues. EX/HX PC-speaker PWM speech is
+possible without an SL/TL DAC, but CPU, cooperative scheduling, quality and
+ownership need qualification. Physical video/audio assessment requires Chad.
+No later feature code was added before this checkpoint review.
