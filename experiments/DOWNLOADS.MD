@@ -50,6 +50,17 @@ WHEEL has two bounded physical Tandy EX/Genius NetScroll raw captures. It observ
 
 **TRIAL8 and TPDRV03:** no verified source/runtime packet, test identity or public PR was found in current main or the accessible local workspaces. They are explicitly unresolved inventory items. They cannot be relabeled from TRIAL7 or WHEEL, manufactured, or represented as published tested drivers. A source owner must provide the exact packet/qualification/redistribution record before those particular downloads can be added.
 
+## Other newer qualified desktop/app work
+
+These are also public downloads, rather than PR-only artifacts:
+
+- [VISPART1.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/VISPART1.ZIP): Matrix low-color fallback polish and rounder XTEyes pupil travel, matching source/evidence.
+- [VISPART2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/VISPART2.ZIP): Maze sliced first-frame setup and Starfield overlap repair; includes the tested Arwing02 laser-repair variant. The measured Slosh edge proposal was rejected and is not shipped.
+- [ARWING02.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/ARWING02.ZIP): original optional Starfield flight mode with the qualified horizon/laser correction and its matching optional shell. [ARWING01.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/ARWING01.ZIP) is the historical first version. These alternatives are not silently combined with TSFIX01 or the fourth-saver shell.
+- [UTILGUI1.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/UTILGUI1.ZIP): EXJOY, FileDrop and Dialogs status polish, source and 26 recorded qualified cases/30 native screenshots. The unchanged app-local COMMDLG.DLL is the project's first-party compatibility implementation, not a Microsoft DLL. Follow each fixed fixture/new scratch-file workflow; no installed OS component is replaced.
+
+Experimental hardware text is already the unchanged sixth profile in the baseline. Its source/proof is public under experiments/TEXTMODE; no newer text build was found. TRIAL4 is older than TR5 and retained as historical evidence. Standalone app examples remain public source/runtime in the repository; the newer packets above cover all named current experiments beyond the baseline in this checkout.
+
 ## Older qualified Tandinator checkpoints
 
 These are public historical comparisons, not recommended over 0.3.8: [TANDI03](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/TANDI03.ZIP), [TANDI04](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/TANDI04.ZIP), [TANDI05](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/TANDI05.ZIP), [TANDI07](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/TANDI07.ZIP), [TANDI08](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/TANDI08.ZIP), [TANDI09](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/TANDI09.ZIP). The standard data is retained where documented; AUDIT08 is optional and its known noisy-input regression is disclosed. Earlier canonical TANDI02 remains in examples/TANDINAT. TRIAL4 and older display checkpoints remain historical repository evidence; they are older than the release's TR5 baseline.

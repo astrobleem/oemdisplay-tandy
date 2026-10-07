@@ -81,6 +81,31 @@
       "path": "experiments/LEARN12/LEARN12.ZIP",
       "bytes": 2077708,
       "sha256": "8e94ed45bd3b8512b150d9fdaa9758959d71ee7f8476058abc7d71b669ce5ce8"
+    },
+    "VISPART1.ZIP": {
+      "path": "experiments/VISPART1/VISPART1.ZIP",
+      "bytes": 105616,
+      "sha256": "f1a002ceed11d16c3b08051f629fda249afd7970e19ec057a00c008d23359164"
+    },
+    "VISPART2.ZIP": {
+      "path": "experiments/VISPART2/VISPART2.ZIP",
+      "bytes": 338948,
+      "sha256": "ad891c2928bf0e20d77f46c1abaa0a05e2a53ca593ea75ebd970a6dc5fcfd278"
+    },
+    "ARWING01.ZIP": {
+      "path": "experiments/ARWING01/ARWING01.ZIP",
+      "bytes": 233000,
+      "sha256": "4e14cb74210abd1217da2d50a5ee4e0360fabb3749a09bcbbe1434b5c2a0c4e3"
+    },
+    "ARWING02.ZIP": {
+      "path": "experiments/ARWING02/ARWING02.ZIP",
+      "bytes": 226535,
+      "sha256": "a6cca1ed6b88165e26ef3bb4f0dabac592696383e1bfdbc1db49bb1019664f2e"
+    },
+    "UTILGUI1.ZIP": {
+      "path": "experiments/PUBPKG/UTILGUI1.ZIP",
+      "bytes": 361413,
+      "sha256": "93e864811e79479775a86fcf4e673bf73570a506b74cac799fe6c7c3a9434162"
     }
   },
   "no_installed_default_changes": true,

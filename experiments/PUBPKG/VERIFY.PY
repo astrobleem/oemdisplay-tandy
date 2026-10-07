@@ -8,6 +8,7 @@ for name,item in m['assets'].items():
   for n in z.namelist():
    assert not Path(n).is_absolute() and '..' not in Path(n).parts
    assert Path(n).name.upper() not in {'WIN.COM','KERNEL.EXE','USER.EXE','GDI.EXE','CL.EXE','LINK4.EXE','SETUP.EXE'}
-   assert Path(n).suffix.upper() not in {'.FON','.OBJ','.LIB','.SYS','.PYC'}
+   assert Path(n).suffix.upper() not in {'.FON','.OBJ','.SYS','.PYC'}
+   if Path(n).suffix.upper()=='.LIB':assert name=='UTILGUI1.ZIP' and n=='UTILGUI1/BIN/TDROP.LIB'
   if name=='K3TOOLS.ZIP':assert not any(Path(n).suffix.upper()=='.DRV' for n in z.namelist())
-print('PASS all 16 release ZIP identities, safe paths and private-payload exclusions')
+print('PASS all release ZIP identities, safe paths and private-payload exclusions')

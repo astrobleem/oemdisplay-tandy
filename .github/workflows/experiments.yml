@@ -29,11 +29,12 @@ jobs:
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Verify exact source, runtime and qualification packets
         run: |
-          for p in TRIAL7 TSFIX01 APPUI01 TANDI03 TANDI04 TANDI05 TANDI07 TANDI08 TANDI09 TANDI10 TANDI11; do
+          for p in TRIAL7 TSFIX01 APPUI01 VISPART1 VISPART2 ARWING01 ARWING02 TANDI03 TANDI04 TANDI05 TANDI07 TANDI08 TANDI09 TANDI10 TANDI11; do
             python3 experiments/$p/TESTPUB.PY
           done
           python3 experiments/LEARN11/VERIFY.PY
           python3 experiments/LEARN12/VERIFY.PY
+          python3 experiments/UTILGUI1/QA/TESTPUB.PY
           python3 experiments/UTILDOS1/QA/TESTPUB.PY
           python3 experiments/PUBPKG/VERIFY.PY
       - name: Run serial diagnostic mocked hardware checks
