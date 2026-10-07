@@ -1,0 +1,34 @@
+name: Verify TANDI11 experimental packet
+
+on:
+  pull_request:
+    paths: ['experiments/TANDI11/**', '.github/workflows/tandi11.yml']
+  push:
+    branches: [main]
+    paths: ['experiments/TANDI11/**', '.github/workflows/tandi11.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out exact public packet without credentials
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git sparse-checkout init --no-cone
+          printf '/experiments/TANDI11/\n' | git sparse-checkout set --no-cone --stdin
+          git checkout --detach --force FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Verify exact packet, source and qualification evidence
+        run: python3 experiments/TANDI11/TESTPUB.PY

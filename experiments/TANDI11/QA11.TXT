@@ -1,0 +1,66 @@
+TANDI11 / APP 0.3.8 - LOCAL QUALIFICATION
+PASS: 19 final source-matched native runs; emulator lease released.
+
+Changes: immediate painted thinking/computation; one cap offer; safe subsequent
+rejections; persistent F3 preference and distinct unsupported sound state;
+experimental F5 notebook OFF each launch; optional Ask Two up to Q40.
+Canonical ENGINE.C/DB.C, standard DAT, demo/sound modules and original ART.H
+remain byte-identical to qualified TANDI10. AUDIT08 remains a separate option.
+No installed defaults, user Windows/INI, CF or publication were changed.
+
+Host: 226 actual notebook/engine/file-format checks, plus nine source-derived
+profile API mock checks for failed writes, fallback, held F3 and sound labels.
+Native F3 settings persistence is verified separately. Includes five injected
+save stages and retry, stale files, validated backup fallback, both bad files,
+other-DAT refusal, explicit raw preservation, malformed recomputed-CRC files,
+128-ID and 256-cell limits, reset retaining IDs, explicit fresh rollover,
+five strengths, unknown exclusion, disagreement disabling and QA isolation.
+
+Full roster: 30720 actual-engine/notebook games (10 model/options x 256 targets
+x six answer policies x two identical repeats), maximum 40 unique questions.
+Before-Q25 answers match default OFF traces exactly. Learned use changes only
+an eligible exact base-score tie and never changes base score arrays. After a
+learned rejection, optional Ask Two may sample different remaining candidates.
+The reference study borrows 255 UNKNOWN-cell assumptions from optional AUDIT08;
+it is not an independent factual audit. FALSE/NOISE are scripted stress inputs.
+
+Canonical Q25: 23 truthful first-guess misses, mean 14.4140625 questions;
+two-wrong policy has 31 final failures. Reference assumptions alone: 22 / 28;
+reference plus tie use: 21 / 27. Canonical Ask Two study: 31 -> 10 failures;
+reference assumptions: 28 -> 8, with optional tie use -> 7. These conditional
+results do not guarantee accuracy; false reports can hurt other policies.
+This study voluntarily stops after ten rejections. The runtime has no such
+rejection ceiling; native continuation checks keep all candidates reachable.
+Separate AUDIT08 default two-wrong baseline remains 36 versus standard 31.
+
+Native target: Windows 3 real mode, 640KB, 8086_prefetch, no FPU/XMS/EMS/UMB,
+TRIAL7 combined drivers at 320x200x16 / 640x200x2 / 640x200x4; approved WindowsXT
+splash and accepted RESERVE. Fixed 25000 emulator cycles are uncalibrated and
+are not physical Tandy performance. Each guest is bounded to 180 seconds and
+uses the shared byte lease. App QA records actual loaded DISPLAY module path.
+No claim is made that every Windows DLL was enumerated or is latest upstream.
+
+Native passed coverage: three full game/UI/learning/Ask Two runs, three demo
+runs with explicitly requested cues, natural directory write failure, cold
+persisted-ledger relaunch, valid-backup recovery preserving corrupt primary
+raw bytes, eight production wake/input/capture/focus/close cases, saved-off demo
+and bad-DAT exit-only. Every run preserves normal TANDI.LRN/BAK sentinels.
+Q38+2 and Q39+1 reach 40, rejected Q40 concedes, no Q41, 40 signed clues,
+repeated-input guard, exhausted questions, once-per-game cap and full reachability
+are exercised through production handlers. Saving is explicit and optional.
+
+Artwork qualification: original sheet/DIB/cabinet fidelity in all three modes,
+three demo poses, six placements, exact logos, black interludes/wake and moving
+eyes; smallest-mode loss/picker/review/notebook screens inspected visually.
+
+Limits: logical validated-file recovery is not a power-loss/FAT/cache/disk
+transaction guarantee. Concurrent external notebook editing is unsupported.
+Session IDs prevent duplicate saving of one game, not fabricated independence;
+CRC is not authentication. Capacity is 256 cells and 128 report IDs; reset
+retains IDs, explicit Fresh preserves files and starts another book. No import
+or new unlisted character learning. A learning-enabled game never teaches.
+Physical hardware and CRT burn-in protection are not qualified.
+
+The packet includes only first-party source/data/app captures and runtime.
+No private Windows media, compiler, emulator, drivers or user reports are included.
+Run TESTPUB.PY beside the ZIP for byte-exact manifest/source/evidence verification.
