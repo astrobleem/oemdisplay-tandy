@@ -129,6 +129,7 @@ static void freeboard(void)
     DeleteDC(board);
     DeleteObject(boardbits);
     board = NULL;
+    boardbits = NULL;
 }
 
 static void cache(HDC d)
@@ -139,6 +140,11 @@ static void cache(HDC d)
     boardbits = CreateCompatibleBitmap(d, cw, ch);
     if (!boardbits) { DeleteDC(board); board = NULL; return; }
     oldbits = SelectObject(board, boardbits);
+    if (!oldbits) {                     /* low memory: draw direct      */
+        DeleteDC(board); DeleteObject(boardbits);
+        board = NULL; boardbits = NULL;
+        return;
+    }
     PatBlt(board, 0, 0, cw, ch, BLACKNESS);
     table(board);
 }
@@ -237,6 +243,7 @@ static void refresh(HDC d)
 }
 
 /* ---- info panel -------------------------------------------------------- */
+static int needlayout;                  /* WM_SIZE could not get a DC   */
 static int paused, msgt, msgver, sound = 1, soundok;
 static char msg[24];
 
@@ -355,6 +362,12 @@ static int tandypsg(void)
 static void repaint(HWND w)
 {
     HDC d = GetDC(w);
+    if (!d) return;
+    if (needlayout) {
+        SelectObject(d, GetStockObject(SYSTEM_FIXED_FONT));
+        layout(d);
+        needlayout = 0;
+    }
     cache(d);
     if (board) BitBlt(d, 0, 0, cw, ch, board, 0, 0, SRCCOPY);
     else { PatBlt(d, 0, 0, cw, ch, BLACKNESS); table(d); }
@@ -370,9 +383,10 @@ static void pause(HWND w, int on)
     HDC d;
     paused = on;
     leftkey = rightkey = 0;
-    if (plungekey) setplunger(0);
+    cancelplunger();                    /* never fire on pause          */
     if (soundok) psgmute();
     d = GetDC(w);
+    if (!d) { InvalidateRect(w, NULL, FALSE); return; }
     SelectObject(d, GetStockObject(SYSTEM_FIXED_FONT));
     panel(d);
     ReleaseDC(w, d);
@@ -398,9 +412,12 @@ LONG FAR PASCAL WndProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
         cw = LOWORD(lp); ch = HIWORD(lp);
         freeboard();
         d = GetDC(w);
-        SelectObject(d, GetStockObject(SYSTEM_FIXED_FONT));
-        layout(d);
-        ReleaseDC(w, d);
+        if (d) {
+            SelectObject(d, GetStockObject(SYSTEM_FIXED_FONT));
+            layout(d);
+            ReleaseDC(w, d);
+            needlayout = 0;
+        } else needlayout = 1;
         InvalidateRect(w, NULL, FALSE);
         return 0;
 
@@ -443,6 +460,7 @@ LONG FAR PASCAL WndProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
 
     case WM_TIMER:
         if (paused || IsIconic(w) || !cw) return 0;
+        if (needlayout) { InvalidateRect(w, NULL, FALSE); return 0; }
         ev = tick();
         if (ev & EV_SAVE) say("BALL SAVED", 36);
         if (ev & EV_MULT) {
@@ -458,6 +476,7 @@ LONG FAR PASCAL WndProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
         if (msgt) --msgt;
         sounds(ev);
         d = GetDC(w);
+        if (!d) { InvalidateRect(w, NULL, FALSE); return 0; }
         if (ev & (EV_LANE | EV_TARGET)) refresh(d);
         update(d);
         if (score != pscore || ballnum != pball || state != pstate ||

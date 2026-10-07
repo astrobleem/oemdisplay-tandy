@@ -87,6 +87,18 @@ static int tests(void)
     run(60);
     CHECK(state == ST_LANE && balls == 3);
 
+    /* Pause or focus loss with a charged plunger cancels it: no launch,
+       no ball save used, and the next pull starts from zero. */
+    newgame(); run(3);
+    setplunger(1); run(CHARGE_MAX);
+    cancelplunger();
+    CHECK(vy == 0 && !(events & EV_LAUNCH));
+    run(60);
+    CHECK(state == ST_LANE && balls == 3 && saveavail);
+    setplunger(0);                      /* stray key-up must not fire   */
+    run(10);
+    CHECK(state == ST_LANE && charge == 0);
+
     /* Held flipper cradles a ball near its pivot. */
     newgame(); leftkey = 1; run(2);
     place(30, 188, 200, 0);

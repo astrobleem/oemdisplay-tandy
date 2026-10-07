@@ -3,7 +3,7 @@
 ## Build
 
 `PINBALL.EXE` is 15,487 bytes, SHA-256
-`ad1a725bf47669e2491f2d0d45e8c28bca095a8c1fe07095de2e958da219f15c`.
+`af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f`.
 Two builds with Microsoft C 6 `/G0 /Gw /AS /W3 /Od` and LINK4 in DOSBox-X
 matched byte for byte, with no compiler warnings
 (`EVIDENCE/V2/BUILD.JSON`, `REBUILD.JSON`, `BUILD.LOG`).
@@ -31,6 +31,8 @@ Checked:
 - Ball save works once per ball, then drains count
 - Three drains end the game and keep the high score
 - A ball falling back into the lane can be plunged again
+- Pausing or losing focus with the plunger pulled drops the charge without
+  launching or using the ball save; a stray key-up afterwards does nothing
 - Random play never leaves the table, never exceeds the speed cap, and
   never sits still off a held flipper (2,000,000 ticks host, 20,000
   native)
@@ -69,9 +71,22 @@ installed through Setup.
 - 320x200x16: plunge, full ball cycle, ball save, lane lights, multiplier
   to X3, game over, high score kept, and a new game started.
 - A 45-second random-key session left no XOR residue on screen.
+- Pull the plunger, then press P or Alt+Tab away: the ball stays on the
+  plunger and nothing scores. The earlier build fired the ball in the same
+  sequence (`EVIDENCE/V2/PAUSE.PNG`).
 - `EVIDENCE/V2/GAMEPLAY.MP4` is a 45-second recording of one game
   (4x nearest-neighbor, 4:3). `GAMEPLAY.MKV` is the unscaled capture.
 
 The PSG path ran in the emulator (the Tandy signature check passed and the
 panel offers S SOUND), but sound output was not listened to. Physical Tandy
 hardware has not been tested.
+
+## Low-memory fallbacks
+
+- If the off-screen table bitmap cannot be created or selected, the table
+  is drawn straight to the window instead. Tested in Windows with a build
+  that forces the select to fail: the table, lights and moving parts draw
+  correctly, and a full ball played to a ball save left no residue.
+- If `GetDC` fails, that frame is skipped and a full repaint is queued;
+  a failed `GetDC` during a resize defers the layout to the next paint.
+  Checked by code review only (not forced in the emulator).

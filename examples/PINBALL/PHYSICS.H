@@ -470,6 +470,13 @@ static void setplunger(int down)
     plungekey = down;
 }
 
+/* Drop a held plunger without firing (pause, focus loss). */
+static void cancelplunger(void)
+{
+    plungekey = 0;
+    charge = 0;
+}
+
 /* One 55 ms timer tick. Returns and clears the event mask. */
 static unsigned tick(void)
 {
