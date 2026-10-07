@@ -7,5 +7,3 @@ Independent original-harness verification confirms the experimental AUDIT08 regr
 No publication, merge, canonical promotion or physical hardware claim. Learning, attract/demo and vocal cues have a design plan only.
 
 TANDI09.ZIP includes RUN, source/tests, all-character explanation examples, raw app framebuffer evidence and checksums. PREVIEW.PNG shows final native captures; SOURCE.DIF compares first-party source to immutable TANDI08. No private OS/toolchain/emulator/driver payload. Run python TESTPUB.PY for archive verification.
-
-Documentation revision 1 corrects the embedded RUN README: the original harness has been verified, with 31 standard versus 36 AUDIT08 final failures. Runtime, data, source and native evidence are unchanged. The complete accepted original packet and its verifier remain byte-identical under ORIGINAL/. This explicit correction supersedes its stale embedded sentence; earlier publication flags record the packet assembly checkpoint.

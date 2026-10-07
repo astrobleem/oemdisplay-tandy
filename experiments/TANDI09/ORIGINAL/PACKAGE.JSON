@@ -2,9 +2,9 @@
   "packet": "TANDI09",
   "app_version": "0.3.6",
   "standard_roster_revision": "0.3.2",
-  "status": "documentation-only correction; accepted original packet retained separately",
-  "zip_sha256": "d2e2e7564e7baed852b96a577a7a8ed811a3c69fefd353f589097f0029161d13",
-  "zip_bytes": 3811355,
+  "status": "local copy-only UI checkpoint; confirmed experimental noisy-game regression",
+  "zip_sha256": "da14fd8c55ca68782239ded222b60f05735b5a9aaadd18a2b3c324fdcea1b9af",
+  "zip_bytes": 3811333,
   "files": 789,
   "exe_sha256": "8995735535c5fa0af7ad3ac44d27ec7d79e69998c3175c363419cecf87b3dc53",
   "standard_dat_sha256": "c952b6c4d5f7b12c469ce73bf8fe9a18fa0c560cac03f339df74779b22ae455f",
@@ -28,8 +28,5 @@
   "two_wrong_solved": {
     "standard": 225,
     "audit08": 220
-  },
-  "documentation_revision": 1,
-  "original_zip_sha256": "da14fd8c55ca68782239ded222b60f05735b5a9aaadd18a2b3c324fdcea1b9af",
-  "original_retained": "ORIGINAL/"
+  }
 }
