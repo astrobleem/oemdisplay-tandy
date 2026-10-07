@@ -1,0 +1,1358 @@
+--- a/SOURCE/BUILD10.TXT
++++ b/SOURCE/BUILD10.TXT
+@@ -0,0 +1,32 @@
++TANDI10 REPRODUCTION AND LIMITS
++SOURCE is derived from immutable TANDI09 ZIP da14fd8c55ca68782239ded222b60f05735b5a9aaadd18a2b3c324fdcea1b9af.
++evidence/BASE10.JSN pins original source bytes. Engine/loader/data/art/sound stay
++unchanged. SOURCE.DIF and TSHELL.DIF describe first-party source changes.
++Use your licensed C6/Windows inputs; they are not redistributed. Mount toolchain
++as C: and SOURCE/src as D:, run BUILD.BAT (/G0 /Gw /AS). Check BUILD.OK, BUILD.LOG.
++Mount SOURCE/tests as D: and run BUILD10.BAT to build LAUNCH10.EXE, the first-party
++fixture launcher. Win3 boot shell accepts a filename; LAUNCH10 supplies real args.
++Mount TSHELL as D:, run BUILD.BAT for the optional shell and BUILDQA.BAT for TS10QA.
++Modern host checks: tests/CHECK09.PY, tests/DEMO10.PY, tests/DBTEST.PY,
++tools/AUDIT.PY, TSHELL/TESTS/CONFIG/TESTCFG.C with portable SCFGCORE.C.
++Windows GCC sanitizer coverage is skipped; native Win16 coverage is separate.
++
++Native tools/WINQA10.PY uses your owned private copies with explicit environment:
++TANDI_PRIVATE (new output parent), TANDI_WINDOWS (owned Windows directory),
++TANDI_DOSBOX, TANDI_RESERVE, TANDI_TRIAL7 (qualified NEW drivers), TANDI_LOCK.
++All collaborators must use the same cooperative emulator lock. Acquisition is
++bounded at 60 seconds; run timeout 180 seconds. Never remove another owner's lock.
++Example: WINQA10.PY 320x200x16 fresh-tag ok 1 "/J"
++Repeat 640x200x2; use "/J /C" for cues in 640x200x4. Saved-off: ok 0 "/J /C".
++Production wake: WINQA10.PY 320x200x16 fresh-prod ok 1 "/S" 1
++Cases 1 key,2 delayed double click,3 foreign capture,4 foreign focus/cursor,
++5 close,6 end-session query. Only our own native windows receive fixture messages.
++Normal legacy gameplay: WINQA10.PY MODE fresh-game ok 1 "/T".
++Bad DAT: WINQA10.PY 320x200x16 fresh-bad bad 1 "/T".
++tools/TSQA10.PY MODE fresh-shell tests the fourth-saver preview protocol.
++The /J fixture advances deadlines for bounded native coverage; DEMO10.C tests
++actual early/late pacing and wraparound separately. Timings are uncalibrated fixed
++DOSBox cycles, not physical 8088 benchmarks or a human play study.
++Historical QA08/QA09 and first-checkpoint source/evidence retain their provenance.
++QA10/NATIVE10/ART10/SHELL10 are the current qualification; never treat historical
++native captures as evidence for the new EXE. Private guests/drivers are excluded.
+--- a/SOURCE/PLAN10.TXT
++++ b/SOURCE/PLAN10.TXT
+@@ -0,0 +1,21 @@
++NEXT: OPT-IN LEARNING DESIGN, NOT IMPLEMENTED
++1. Default off. Keep the base DAT immutable and allow an explicitly unlearned
++   game. The demo, replay fixture and ordinary guessing never commit learning.
++2. Start with user-confirmed identity and base UNKNOWN cells only. Before save,
++   show exact questions, reported answer strengths and named character edition.
++   One game is a report, not independent factual proof; repeating it is not proof.
++3. Store a separate bounded overlay with base hash/revision, stable character and
++   question IDs, local session provenance, tentative reports and visible conflicts.
++   Leave conflicting cells inactive; permit per-cell and whole-overlay reset.
++   New roster entries and changing known facts are later, separate design choices.
++4. Validate complete lengths, IDs, dimensions, values, version, checksum and base
++   pin before use. Corrupt, stale or oversized files fall back to unlearned mode.
++   Save via validated temporary replacement and recoverable prior copy; surface
++   an explicit save failure. Define and test Win3/DOS rename failure behavior.
++5. Before runtime implementation, review how tentative overlay facts affect the
++   unchanged engine's weights and confidence. Test truthful and exact Claude noisy
++   paths against pinned standard/AUDIT baselines. Do not force better metrics by
++   inventing facts or changing thresholds. Unknown and conflicting facts stay honest.
++6. Only after that policy and review UI are approved, implement bounded Win16
++   storage/overlay access, input guards and failure paths. No background teaching,
++   automatic identity inference, uploads or changes to installed shell/defaults.
+--- a/SOURCE/QA10.TXT
++++ b/SOURCE/QA10.TXT
+@@ -0,0 +1,54 @@
++TANDI10 / APP 0.3.7 QUALIFICATION - LOCAL ONLY
++Derived from immutable TANDI09. Engine, loader, observation logic, original art,
++sound module, standard DAT and separate AUDIT08 DAT remain byte-identical.
++Dedicated /D or /S is quiet unless /C AND saved sound preference opt into cues.
++/A arms only an untouched welcome screen after 60 seconds; no midgame takeover.
++First wake blanks and stops sound before controls; held/repeated input, chars,
++system keys and mouse double clicks drain before return/closure. No settings,
++answer history, teaching, learning or other app's input is saved/generated.
++Foreground/capture/focus loss stops the demo; foreign cursor/capture are preserved.
++
++19 exact-EXE native runs passed: three demo modes with eight authored targets;
++three fourth-saver protocol previews; saved-off /C; eight real /S launch cases
++(held key, delayed double click, foreign capture/focus/cursor, close and shutdown);
++three normal games including cap continuation, settings fallback and repeated
++input; one corrupt DAT. Every run is a private real-mode Windows 3.0 guest with
++8086_prefetch, 640 KB, no FPU/XMS/EMS/UMB and fixed uncalibrated 25000 cycles.
++Owned native messages exercise the handlers. /J advances deadlines for bounded
++coverage; host checks test no early step, wraparound and no late catch-up.
++This is not physical-hardware timing or a human play study.
++
++Host: 49 normal UI checks; 59 sound/lease/failure cases; 53 DAT compiler tests;
++164 fourth-saver config/path/rollback checks; 64 demo games per DAT repeated byte
++exact across eight characters; whole-roster explanations/counts and 256-answer
++boundaries unchanged. C6 /G0 /Gw /AS builds are warning-free. NE audit finds no
++unsupported/FPU opcode, with scope/embedded-data exclusions in AUDIT.JSON.
++ART10 verifies translated cabinet/face/logo indices, bounded moving eyes, six
++positions, all-black interludes and all-black wake frames in all three modes.
++Moving pixels and black intervals do not power down a CRT or guarantee burn-in
++protection. Use monitor power-off for long absences.
++
++Verified all 37 TSHELL build inputs plus README against current connected main.
++The optional build adds SC_TANDINATOR/TandinatorProgram, absolute path validation,
++its own radio choice, TANDI module duplicate suppression, TandyTandinatorSaver
++preview/close and Hold gates. Starfield options remain in their own section.
++No other saver path is substituted. Native TS10QA includes actual control source;
++the first-party input DLL is unchanged. Physical Hold/hook behavior is not claimed.
++
++Independently confirmed original Claude harness: 31 standard versus 36 AUDIT08
++two-wrong final failures (225 versus 220 solved); 25 common, 11 new, 6 rescues.
++Truthful first misses improve 23 to 19; both eventually solve 256/256 truthful
++games. Adaptive questions can flip different facts under the same policy.
++This agent did not locally run the exact original Claude harness; provenance
++is the parent independent verifier in NOISE09.JSN. Exploratory first-miss checks
++use a separate policy, labelled accordingly. AUDIT08 remains experimental.
++
++Qualification caught and corrected fixture focus/underlay/cursor/opt-in issues
++and a teardown class-cursor edge. Intermediate captures are not final evidence.
++NATIVE10/ART10/SHELL10 bind exact final bits; historical QA08/QA09 retain history.
++No private OS/compiler/emulator/driver payload, installed shell/INI/default change,
++CF write, publication, merge, learning, Ask Two, undo or threshold change.
++PLAN10 describes the next opt-in learning design; it is not implemented.
++
++FINAL EXE SHA256: 42ea5a1381e819283ef7ac1f781f2be307e9e3f8345634f9a0e9c14f4111b3db
++OPTIONAL SHELL SHA256: 5fddc1b37c600ab8e431a70765c6cf769e6ec0cd04212112c02ce51989389e85
+--- a/SOURCE/README.TXT
++++ b/SOURCE/README.TXT
+@@ -1,35 +1,42 @@
+-TANDINATOR 0.3.6 - LOCAL FIRST CHECKPOINT (TANDI09)
+-Think of a character in ROSTER.TXT using its named character edition.
+-App version is 0.3.6; standard roster revision remains 0.3.2.
+-F1 Help. F2 Diagnostics warns before names. F3 toggles sound.
+-F4 or HOW I KNEW on a guess opens scored clues against the real runner-up.
+-PREV/NEXT shows every recorded answer, strongest score differences first.
+-Positive clues favor the guess relative to that other name; negative clues
+-favor the other name. Neutral or UNKNOWN clues do not establish a distinction.
+-DAT facts are stored game data, not certified truth. A score margin is not
+-proof of identity, and does not rule out a lower-ranked name.
+-Leading means unrejected names within 24 score points of the current leader.
+-The displayed denominator counts unrejected names. The leading count can rise;
+-other names stay eligible. Only an explicitly rejected guess leaves eligibility.
+-An immediate new guess plays REVEAL; a new question queues WRONG after work.
+-No decorative computation wait was added. Input guard remains 220 ms.
+-F3 is stored in WIN.INI [TANDINATOR] Sound; game answers are not saved.
+-NO SOUND is unsupported; SOUND OFF is your preference. SOUND UNSAVED warns
+-that the current preference could not be written. Escape closes an overlay
+-first; Escape elsewhere and EXIT close the app. Held/repeated inputs are guarded.
+-After the first rejected guess at question 25 choose Continue, Restart or Exit.
+-Further rejections advance; all candidates remain reachable.
+-If TANDY.DAT cannot be read, exit and replace it beside this EXE, then restart.
+-INSTALL.BAT copies EXE,DAT,roster and README and refuses existing files.
+-Start through your existing guarded WindowsXT launcher; no launcher bypass.
+-RUN uses the unchanged standard DAT. AUDIT08 stays separate and experimental.
+-Independent original-harness verification confirms a two-wrong regression:
+-standard: 225 solved / 31 final failures; AUDIT08: 220 solved / 36 failures.
+-This differs from truthful FIRST-GUESS misses: standard 23 / AUDIT08 19.
+-Two-flip policy starts at question 4; flips first two non-UNKNOWN facts via 4-v;
+-rejects wrong guesses, continues guesses after 25, and fails on a wrong guess
+-after 10 earlier rejections or no candidates. See QA09.TXT and NOISE09.JSN.
+-AUDIT08 remains experimental. Both DATs eventually solve 256/256 truthful games.
+-The same flip rule may flip different facts due to adaptive question selection.
+-No Ask Two, reverse, learning, attract mode, vocal cues or canonical promotion.
+-This is a local copy-only review kit; no publication or physical hardware claim.
++TANDINATOR 0.3.7 - LOCAL DEMO REVIEW (TANDI10)
++App version 0.3.7. Standard roster revision remains 0.3.2.
++RUN uses the unchanged standard DAT; AUDIT08 stays separate and experimental.
++Start Windows through your existing guarded WindowsXT launcher.
++Keep this trial beside its DAT in a NEW DOS-compatible folder such as C:\TD037.
++Program Manager File-Run: C:\TD037\TANDI.EXE
++For the dedicated quiet demonstration: C:\TD037\TANDI.EXE /D
++For optional cues: C:\TD037\TANDI.EXE /D /C
++/C plays cues only when your saved F3 preference is also on. Demo never writes it.
++/S is the dedicated saver-compatible alias; both exit on the first wake gesture.
++For welcome-only idle opt-in: C:\TD037\TANDI.EXE /A
++It arms once after 60 seconds on an untouched welcome screen. Input disarms it.
++It does not replace an active game. Wake returns to a fresh welcome screen.
++Mouse movement, button or key input blanks the demo and stops its sound.
++Held gestures drain before closure/return; mouse drainage includes the system
++double-click interval, with a minimum 220 ms quiet interval. Repeats, chars and
++system keys are consumed. The waking F3 cannot alter your saved preference.
++The demo answers from the actual DAT and engine, using eight authored characters.
++It moves original artwork/eyes, shows reveals and uses full black interludes.
++Movement and black interludes are NOT monitor power management and do not
++guarantee protection from CRT burn-in. Turn off the monitor for long absences.
++
++Normal game: think of someone in ROSTER.TXT using its named character edition.
++F1 Help. F2 Diagnostics warns before names. F3 toggles and stores sound in
++WIN.INI [TANDINATOR] Sound. NO SOUND means unsupported; SOUND OFF is your choice.
++F4 or HOW I KNEW on a guess shows actual signed score clues against the runner-up.
++Unknown, neutral and conflicting clues remain visible. A guess is not proof.
++Leading counts unrejected names within 24 points of the current leader. The
++denominator counts all unrejected names. Other names stay eligible; counts rise.
++The first rejected guess after question 25 offers Continue/Restart/Exit once;
++further rejections advance while keeping all candidates reachable.
++Game answers and demonstrations are not saved. No teaching/learning is enabled.
++If DAT cannot be read, exit, replace it beside the EXE, then restart.
++INSTALL.BAT copies only app/data/docs and refuses existing files. It is optional.
++
++The original Claude harness independently confirms 31 standard versus 36 AUDIT08
++final failures with two wrong answers (225 versus 220 solved). Truthful first
++misses improve 23 to 19; both eventually solve all 256 truthful games. Adaptive
++questions can flip different facts under the same flip rule. No AUDIT08 promotion.
++The separate optional TSHELL build registers a true fourth saver; see its README.
++This kit changes no installed shell/INI/defaults. No CF write, publication, merge,
++physical-hardware claim, Ask Two, reverse mode, vocal cue or threshold change.
+--- a/SOURCE/src/BUILD.BAT
++++ b/SOURCE/src/BUILD.BAT
+@@ -3,7 +3,7 @@
+ SET INCLUDE=C:\DDK\286\INC;C:\INCLUDE
+ IF EXIST BUILD.OK DEL BUILD.OK
+ IF EXIST TANDI.EXE DEL TANDI.EXE
+-CL /nologo /c /G0 /Gw /AS /W3 /O /DWIN16 TANDI.C DB.C ENGINE.C OBSERVE.C TDSOUND.C > BUILD.LOG
++CL /nologo /c /G0 /Gw /AS /W3 /O /DWIN16 TANDI.C DB.C ENGINE.C OBSERVE.C DEMO.C TDSOUND.C > BUILD.LOG
+ IF ERRORLEVEL 1 GOTO BAD
+ LINK4 /MAP /NOE /NOD @TANDI.RSP >> BUILD.LOG
+ IF ERRORLEVEL 1 GOTO BAD
+--- a/SOURCE/src/DEMO.C
++++ b/SOURCE/src/DEMO.C
+@@ -0,0 +1,85 @@
++/* Deterministic, paced demonstration of the unchanged engine. No UI/input/I/O
++   writes, settings, random numbers, learning or artificial engine delays. */
++#include "DEMO.H"
++#include <string.h>
++static const char *names[DEMO_ROSTER]={
++    "Mario","Lara Croft","Bugs Bunny","Mickey Mouse",
++    "SpongeBob SquarePants","Popeye","Snoopy","Charlie Brown"
++};
++int demo_due(U32 now,U32 due){return (U32)(now-due)<0x80000000UL;}
++static int game(TDDEMO *s,ENGINE *e,TDB *d,TDHISTORY *h,U32 now){
++    int q;s->target=s->roster[(s->sequence*3)%DEMO_ROSTER];
++    s->sequence=(s->sequence+1)%DEMO_ROSTER;
++    if(!db_row(d,s->target,s->truth))return 0;
++    for(q=0;q<(int)d->nq;q++)if(db_value(s->truth,q)==2)return 0;
++    eng_reset(e,d);obs_reset(h);s->phase=DEMO_TITLE;
++    s->steps=s->rejections=0;s->due=now+1500UL;return 1;
++}
++int demo_init(TDDEMO *s,ENGINE *e,TDB *d,TDHISTORY *h,U32 now){
++    int n,c,found;char name[40];memset(s,0,sizeof(*s));
++    /* Fail closed if an expected authored character is absent/unknown.
++       The DAT supplies every answer; no hand-coded answer script exists. */
++    for(n=0;n<DEMO_ROSTER;n++){
++        found=-1;
++        for(c=0;c<(int)d->nc;c++){
++            if(!db_name(d,c,name))return 0;
++            if(!strcmp(name,names[n])){found=c;break;}
++        }
++        if(found<0||!db_row(d,found,s->truth))return 0;
++        for(c=0;c<(int)d->nq;c++)if(db_value(s->truth,c)==2)return 0;
++        s->roster[n]=(U16)found;
++    }
++    s->enabled=game(s,e,d,h,now);return s->enabled;
++}
++static int prompt(TDDEMO *s,ENGINE *e,TDB *d,U32 now){
++    if(eng_confident(e,d)||eng_choose(e,d)<0){
++        if(e->best<0||d->error)return -1;
++        s->phase=DEMO_GUESS;s->due=now+2000UL;
++        return DEMO_CHANGED|DEMO_REVEAL;
++    }
++    s->phase=DEMO_QUESTION;s->due=now+1800UL;
++    return DEMO_CHANGED;
++}
++int demo_step(TDDEMO *s,ENGINE *e,TDB *d,TDHISTORY *h,U32 now){
++    int result;
++    if(!s->enabled||!demo_due(now,s->due))return 0;
++    s->side=(s->side+1)%6;
++    if(s->phase==DEMO_TITLE)return prompt(s,e,d,now);
++    if(s->phase==DEMO_QUESTION){
++        s->answer=db_value(s->truth,e->current);s->phase=DEMO_ANSWER;
++        s->due=now+700UL;return DEMO_CHANGED;
++    }
++    if(s->phase==DEMO_ANSWER){
++        if(!obs_answer(h,e,d,s->answer))goto failed;
++        if(++s->steps>(int)d->nq+(int)d->nc)goto failed;
++        result=prompt(s,e,d,now);if(result<0)goto failed;
++        if(e->turn%3==0&&s->phase==DEMO_QUESTION){
++            s->resume=DEMO_QUESTION;s->phase=DEMO_DARK;
++            s->due=now+1500UL;return DEMO_CHANGED|DEMO_STOPCUE;
++        }
++        return result;
++    }
++    if(s->phase==DEMO_GUESS){
++        if(e->best==s->target){
++            s->phase=DEMO_SUCCESS;s->due=now+1800UL;s->games++;
++            return DEMO_CHANGED|DEMO_VICTORY;
++        }
++        if(++s->rejections>=(int)d->nc)goto failed;
++        eng_reject(e,d);result=prompt(s,e,d,now);
++        if(result<0)goto failed;
++        return result;
++    }
++    if(s->phase==DEMO_SUCCESS){
++        s->resume=DEMO_TITLE;s->phase=DEMO_DARK;s->due=now+2200UL;
++        return DEMO_CHANGED|DEMO_STOPCUE;
++    }
++    if(s->phase==DEMO_DARK){
++        if(s->resume==DEMO_TITLE){
++            if(!game(s,e,d,h,now))goto failed;
++            return DEMO_CHANGED;
++        }
++        s->phase=s->resume;s->due=now+1800UL;return DEMO_CHANGED;
++    }
++failed:
++    s->enabled=0;return -1;
++}
+--- a/SOURCE/src/DEMO.H
++++ b/SOURCE/src/DEMO.H
+@@ -0,0 +1,25 @@
++#ifndef DEMO_H
++#define DEMO_H
++#include "OBSERVE.H"
++#define DEMO_ROSTER 8
++#define DEMO_TITLE 0
++#define DEMO_QUESTION 1
++#define DEMO_ANSWER 2
++#define DEMO_GUESS 3
++#define DEMO_SUCCESS 4
++#define DEMO_DARK 5
++#define DEMO_REVEAL 1
++#define DEMO_VICTORY 2
++#define DEMO_CHANGED 4
++#define DEMO_STOPCUE 8
++#define DEMO_IDLE_MS 60000UL
++typedef struct {
++    U16 roster[DEMO_ROSTER];
++    U8 truth[TD_ROW];
++    int enabled,phase,resume,target,sequence,answer,side,steps,rejections;
++    U32 due,games;
++} TDDEMO;
++int demo_init(TDDEMO *,ENGINE *,TDB *,TDHISTORY *,U32);
++int demo_step(TDDEMO *,ENGINE *,TDB *,TDHISTORY *,U32);
++int demo_due(U32,U32);
++#endif
+--- a/SOURCE/src/DEMOUI.H
++++ b/SOURCE/src/DEMOUI.H
+@@ -0,0 +1,317 @@
++/* Own-window input only. No global hook, input synthesis, settings or learning. */
++static void demoDraw(HDC dc){
++    RECT r;int left,x,y;char nm[40],q[80];COLORREF gold;
++    if(demoDrain||demonstration.phase==DEMO_DARK)return;
++    gold=colors<16?RGB(255,255,255):RGB(255,255,0);
++    x=demonstration.side%2?screenw-108*sx:0;
++    y=(demonstration.side/2)*7;
++    SetViewportOrg(dc,x,y);mascot(dc);SetViewportOrg(dc,0,0);
++    left=x?6*sx:104*sx;
++    r.left=left;r.right=left+210*sx;r.top=46+y;r.bottom=r.top+47;
++    SetTextColor(dc,RGB(255,255,255));SetBkColor(dc,RGB(0,0,0));
++    db_name(&db,demonstration.target,nm);
++    if(demonstration.phase==DEMO_TITLE){
++        wrapped(dc,"WATCH THE ORACLE GUESS",&r);r.top+=45;r.bottom+=45;wrapped(dc,nm,&r);
++    }else if(demonstration.phase==DEMO_QUESTION||demonstration.phase==DEMO_ANSWER){
++        db_question(&db,engine.current,q);wrapped(dc,q,&r);
++        r.top+=50;r.bottom+=50;
++        wrapped(dc,demonstration.phase==DEMO_ANSWER?factwords[demonstration.answer]:"CONSULTING...",&r);
++    }else if(demonstration.phase==DEMO_GUESS){
++        wrapped(dc,"I SUSPECT...",&r);r.top+=30;r.bottom+=30;
++        db_name(&db,engine.best,nm);wrapped(dc,nm,&r);
++    }else if(demonstration.phase==DEMO_SUCCESS){
++        wrapped(dc,"THE ORACLE HAS FOUND",&r);r.top+=30;r.bottom+=30;wrapped(dc,nm,&r);
++    }
++    sprite(dc,demonstration.side%2?8*sx:screenw-134*sx,4+y,126,16,0,360);
++    SetTextColor(dc,gold);
++    text(dc,left,170-y,"DEMO - ANY INPUT STOPS");
++}
++static int demoKeysHeld(void){
++    int i;for(i=1;i<256;i++)if(demoDown[i]||(GetAsyncKeyState(i)&0x8000))return 1;
++    return demoMouse!=0;
++}
++static void demoBlank(void){
++    HDC dc;TdSoundStop(window);dc=GetDC(window);
++    if(dc){box(dc,0,0,screenw,screenh,RGB(0,0,0));ReleaseDC(window,dc);}
++}
++static void demoCleanup(int returnFocus){
++    HWND previous=demoPreviousActive,focusBefore=demoPreviousFocus;
++    HCURSOR current;int owned;
++    if(demoReturning)return;demoReturning=1;
++    owned=GetActiveWindow()==window&&GetCapture()==window;
++    demonstration.enabled=demoDrain=0;TdSoundStop(window);animframe=-1;
++    if(owned){
++        /* Preserve a foreign cursor replacement even if ownership changed. */
++        current=SetCursor(NULL);SetCursor(current);
++        if(!current)SetCursor(demoPreviousCursor);
++    }
++    if(GetCapture()==window)ReleaseCapture();demoOwned=0;
++    TdSoundEnable(soundpref);
++    if(demoMode){
++        if(returnFocus&&owned&&previous&&IsWindow(previous)){
++            SetActiveWindow(previous);
++            if(focusBefore&&IsWindow(focusBefore))SetFocus(focusBefore);
++        }
++        DestroyWindow(window);
++    }else{
++        eng_reset(&engine,&db);obs_reset(&history);state=0;help=debug=explaining=0;
++        focus=busy=pending=capoffered=0;inputready=GetTickCount()+220;
++        if(returnFocus&&owned)SetFocus(window);
++        refresh();
++    }
++    demoReturning=0;
++}
++static int demoStart(void){
++    int i;
++    if(demonstration.enabled||demoDrain||busy||state!=0||history.count||
++       help||debug||explaining||!timerok||db.error||GetCapture()||
++       GetSysModalWindow()||GetActiveWindow()!=window||GetFocus()!=window)return 0;
++    if(!demoMode){demoPreviousActive=window;demoPreviousFocus=window;}
++    GetKeyboardState(demoInitial);
++    for(i=0;i<256;i++){
++        demoInitial[i]&=0x80;demoDown[i]=(BYTE)(demoInitial[i]?1:0);
++    }
++    demoMouse=demoMouseGesture=0;
++    if(demoInitial[VK_LBUTTON])demoMouse|=MK_LBUTTON;
++    if(demoInitial[VK_RBUTTON])demoMouse|=MK_RBUTTON;
++    if(demoInitial[VK_MBUTTON])demoMouse|=MK_MBUTTON;
++    GetCursorPos(&demoOrigin);ScreenToClient(window,&demoOrigin);
++    demoStarted=demoLastInput=GetTickCount();
++    if(!demo_init(&demonstration,&engine,&db,&history,(U32)demoStarted))return 0;
++    SetCapture(window);demoOwned=GetCapture()==window;
++    if(!demoOwned||GetActiveWindow()!=window||GetFocus()!=window){demoCleanup(0);return 0;}
++    TdSoundStop(window);TdSoundEnable(demoCues&&soundpref);
++    demoPreviousCursor=SetCursor(NULL);demoArmed=0;nb=0;state=0;
++    lookx=looky=0;animframe=-1;animticks=idleticks=0;
++    InvalidateRect(window,0,FALSE);UpdateWindow(window);return 1;
++}
++static void demoWake(void){
++    if(!demoDrain){demoDrain=1;demoWakeCount++;demoBlank();}
++    demoLastInput=GetTickCount();
++}
++static int demoInput(UINT m,WORD wp,LONG lp){
++    int was,dx,dy;
++    if(!demonstration.enabled&&!demoDrain){
++        if((m>=WM_KEYFIRST&&m<=WM_KEYLAST)||
++           (m>=WM_MOUSEFIRST&&m<=WM_MOUSELAST&&m!=WM_MOUSEMOVE))demoArmed=0;
++        else if(m==WM_MOUSEMOVE){
++            dx=(int)LOWORD(lp)-demoOrigin.x;dy=(int)HIWORD(lp)-demoOrigin.y;
++            if(dx||dy)demoArmed=0;
++        }
++        return 0;
++    }
++    if(m>=WM_KEYFIRST&&m<=WM_KEYLAST){
++        if(m==WM_KEYDOWN||m==WM_SYSKEYDOWN){if(wp<256)demoDown[wp]=1;demoWake();}
++        else if(m==WM_KEYUP||m==WM_SYSKEYUP){
++            was=wp<256?demoInitial[wp]:0;
++            if(wp<256)demoDown[wp]=demoInitial[wp]=0;
++            if(!was||GetTickCount()-demoStarted>=250UL||demoDrain)demoWake();
++        }else demoWake();
++        return 1;
++    }
++    if(m>=WM_MOUSEFIRST&&m<=WM_MOUSELAST){
++        if(m!=WM_MOUSEMOVE)demoMouseGesture=1;
++        demoMouse=wp&(MK_LBUTTON|MK_RBUTTON|MK_MBUTTON);
++        if(m==WM_LBUTTONDOWN||m==WM_LBUTTONDBLCLK)demoMouse|=MK_LBUTTON;
++        if(m==WM_RBUTTONDOWN||m==WM_RBUTTONDBLCLK)demoMouse|=MK_RBUTTON;
++        if(m==WM_MBUTTONDOWN||m==WM_MBUTTONDBLCLK)demoMouse|=MK_MBUTTON;
++        if(m==WM_LBUTTONUP)demoMouse&=~MK_LBUTTON;
++        if(m==WM_RBUTTONUP)demoMouse&=~MK_RBUTTON;
++        if(m==WM_MBUTTONUP)demoMouse&=~MK_MBUTTON;
++        dx=(int)LOWORD(lp)-demoOrigin.x;dy=(int)HIWORD(lp)-demoOrigin.y;
++        if(m!=WM_MOUSEMOVE||dx||dy)demoWake();
++        return 1;
++    }
++    return 0;
++}
++static void demoDrainTick(void){
++    MSG msg;DWORD quiet=demoMouseGesture?(DWORD)GetDoubleClickTime():220UL;
++    if(quiet<220UL)quiet=220UL;
++    if(GetActiveWindow()!=window||GetFocus()!=window||GetCapture()!=window){demoCleanup(0);return;}
++    while(PeekMessage(&msg,window,WM_KEYFIRST,WM_KEYLAST,PM_REMOVE))
++        demoInput(msg.message,msg.wParam,msg.lParam);
++    while(PeekMessage(&msg,window,WM_MOUSEFIRST,WM_MOUSELAST,PM_REMOVE))
++        demoInput(msg.message,msg.wParam,msg.lParam);
++    if(demoKeysHeld()){demoLastInput=GetTickCount();return;}
++    if(GetTickCount()-demoLastInput<quiet)return;
++    demoCleanup(1);
++}
++static void demoPulse(void){
++    int event;DWORD now=GetTickCount();
++    if(GetActiveWindow()!=window||GetCapture()!=window||GetFocus()!=window){demoCleanup(0);return;}
++    TdSoundTick(window,now);
++    event=demo_step(&demonstration,&engine,&db,&history,now);
++    if(event<0){demoCleanup(1);return;}
++    if(event){
++        state=demonstration.phase==DEMO_GUESS?2:(demonstration.phase==DEMO_SUCCESS?3:0);
++        animticks=0;animframe=state==2?1:(state==3?3:-1);
++        if(event&DEMO_STOPCUE)TdSoundStop(window);
++        if(event&DEMO_REVEAL)TdSoundBegin(window,TD_SND_REVEAL,GetTickCount());
++        if(event&DEMO_VICTORY)TdSoundBegin(window,TD_SND_VICTORY,GetTickCount());
++        InvalidateRect(window,0,FALSE);UpdateWindow(window);
++    }else{
++        if(state==2||state==3){
++            if(animticks<10){animticks++;
++                if(!(animticks%2))animset(state==2?(animticks%4?1:2):(animticks%4?3:4));
++            }
++        }else if(demonstration.phase!=DEMO_DARK){
++            idleticks++;lookx=(idleticks/4)%3-1;looky=(idleticks/12)%3-1;
++            if(idleticks==36)animset(0);
++            if(idleticks>=38){animset(-1);idleticks=0;}
++            InvalidateRect(window,0,FALSE);
++        }
++    }
++}
++/* /J is a bounded native fixture; all messages target our own window.
++   It advances demo deadlines for coverage, not production timing. */
++LONG FAR PASCAL DemoPeerProc(HWND w,UINT m,WORD wp,LONG lp){
++    if((m>=WM_KEYFIRST&&m<=WM_KEYLAST)||(m>=WM_MOUSEFIRST&&m<=WM_MOUSELAST)){
++        if(m!=WM_MOUSEMOVE)demoInputLeaks++;return 0;
++    }
++    return DefWindowProc(w,m,wp,lp);
++}
++static void demoQACheck(char *key,int ok){metric(key,ok);if(!ok)demoQAErrors++;}
++static void demoQANew(void){
++    BringWindowToTop(window);SetActiveWindow(window);SetFocus(window);state=0;eng_reset(&engine,&db);obs_reset(&history);
++    demoQACheck("DEMO_START",demoStart());demoTestTicks=0;
++}
++static void demoQATick(void){
++    int i,old;char path[30],n[12];TDSNDSTAT stats;
++    if(++demoTestTicks>1400){metric("DEMO_TIMEOUT",1);SendMessage(window,WM_CLOSE,0,0);return;}
++    if(!demoTestStage){
++        WNDCLASS c;
++        c.style=0;c.lpfnWndProc=DemoPeerProc;c.cbClsExtra=c.cbWndExtra=0;
++        c.hInstance=instance;c.hIcon=0;c.hCursor=LoadCursor(NULL,IDC_CROSS);
++        c.hbrBackground=GetStockObject(WHITE_BRUSH);c.lpszMenuName=0;c.lpszClassName="TandiDemoPeer";
++        RegisterClass(&c);demoPeer=CreateWindow(c.lpszClassName,"DEMO QA",WS_POPUP,
++                            0,0,screenw,screenh,0,0,instance,0);
++        ShowWindow(demoPeer,SW_SHOWNOACTIVATE);
++        BringWindowToTop(window);
++        SetActiveWindow(window);SetFocus(window);
++        demoQASoundPref=soundpref;demoQAInitialSetting=GetProfileInt("TANDINATOR","Sound",-1);
++        demoQACheck("DEMO_TEST_PROFILE_SUPPRESSED",!testmode);
++        /* Opt-in idle arm never starts on an active game. */
++        state=1;history.count=1;demoWelcome=GetTickCount()-DEMO_IDLE_MS;
++        animtick();demoQACheck("DEMO_NO_MIDGAME_ACTIVATION",!demonstration.enabled);
++        state=0;history.count=0;demoArmed=0;animtick();
++        demoQACheck("DEMO_DISARMED_STAYS_OFF",!demonstration.enabled);
++        demoArmed=1;animtick();demoQACheck("DEMO_IDLE_ACTIVATES",demonstration.enabled);
++        demoQACheck("DEMO_CUES_OPTIN",TdSoundEnabled()==(demoCues&&soundpref));
++        demoTestStage=1;demoTestTicks=0;return;
++    }
++    if(demoTestStage==1){
++        if(!demonstration.enabled){demoQACheck("DEMO_CYCLE_ALIVE",0);demoTestStage=99;return;}
++        if(++demoQAPhases%3==0){
++            demonstration.due=GetTickCount();demoPulse();
++            if(demonstration.phase==DEMO_SUCCESS){
++                for(i=0;i<8;i++)if(demonstration.target==(int)demonstration.roster[i])demoQASeen[i]++;
++            }
++            if(demoQAFrames<36){
++                lstrcpy(path,"C:\\D");number(n,demoQAFrames++);lstrcat(path,n);lstrcat(path,".BIN");capture(path);
++                metric("DEMO_FRAME_PHASE",demonstration.phase);metric("DEMO_FRAME_SIDE",demonstration.side);
++            }
++        }else if(demonstration.phase==DEMO_QUESTION&&demoQAEyes<6){
++            lookx=demoQAEyes%3-1;looky=demoQAEyes/3;animframe=-1;
++            InvalidateRect(window,0,FALSE);UpdateWindow(window);
++            lstrcpy(path,"C:\\DEYE");number(n,demoQAEyes++);lstrcat(path,n);lstrcat(path,".BIN");capture(path);
++            metric("DEMO_EYE_SIDE",demonstration.side);
++        }
++        if(demonstration.games<8)return;
++        old=1;for(i=0;i<8;i++)if(demoQASeen[i]!=1)old=0;
++        demoQACheck("DEMO_EIGHT_TARGETS",old);
++        TdSoundGetStats(&stats);metric("DEMO_SOUND_WRITES",stats.portWrites);
++        demoQACheck("DEMO_SOUND_OFF_QUIET",(demoCues&&soundpref)||!stats.portWrites);
++        demoQACheck("DEMO_DEFAULT_QUIET",demoCues||!stats.portWrites);
++        demoCleanup(1);demoTestStage=2;demoQACase=0;return;
++    }
++    if(demoTestStage==2){
++        demoQANew();
++        if(demoQACase==0){
++            SendMessage(window,WM_MOUSEMOVE,0,MAKELONG(demoOrigin.x,demoOrigin.y));
++            demoQACheck("DEMO_IDENTICAL_MOVE_IGNORED",demonstration.enabled&&!demoDrain);
++            demoInitial[VK_F1]=demoDown[VK_F1]=1;demoStarted=GetTickCount();
++            SendMessage(window,WM_KEYUP,VK_F1,0);
++            demoQACheck("DEMO_INITIAL_RELEASE_IGNORED",!demoDrain);
++            SendMessage(window,WM_KEYDOWN,VK_F3,0);
++            SendMessage(window,WM_KEYDOWN,VK_F3,0x40000000L);
++            SendMessage(window,WM_CHAR,'x',0);
++            PostMessage(window,WM_KEYDOWN,VK_RETURN,0);
++            PostMessage(window,WM_CHAR,13,0);
++            PostMessage(window,WM_KEYUP,VK_RETURN,0);
++            demoQACheck("DEMO_FIRST_KEY_BLANKS",demoDrain);
++            capture("C:\\DWAKE.BIN");
++            demoQACheck("DEMO_F3_NO_WRITE",soundpref==demoQASoundPref&&
++                (int)GetProfileInt("TANDINATOR","Sound",-1)==demoQAInitialSetting);
++            TdSoundGetStats(&stats);demoQACheck("DEMO_WAKE_STOPS_SOUND",!stats.playing);
++            demoQAHeldTicks=0;demoTestStage=3;return;
++        }
++        if(demoQACase==1){
++            SendMessage(window,WM_LBUTTONDOWN,MK_LBUTTON,MAKELONG(210*sx,130));
++            SendMessage(window,WM_LBUTTONDBLCLK,MK_LBUTTON,MAKELONG(210*sx,130));
++            demoQAHeldTicks=0;demoTestStage=3;return;
++        }
++        if(demoQACase==2){
++            SendMessage(window,WM_MOUSEMOVE,0,MAKELONG(demoOrigin.x+1,demoOrigin.y));
++            demoQACheck("DEMO_REAL_MOVE_WAKES",demoDrain);demoTestStage=4;return;
++        }
++        if(demoQACase==3){
++            SetCapture(demoPeer);demoPulse();
++            demoQACheck("DEMO_FOREIGN_CAPTURE_PRESERVED",!demonstration.enabled&&GetCapture()==demoPeer);
++            ReleaseCapture();demoTestStage=5;return;
++        }
++        if(demoQACase==4){
++            SetCursor(LoadCursor(NULL,IDC_CROSS));SetFocus(demoPeer);
++            demoQACheck("DEMO_FOCUS_LOSS_STOPS",!demonstration.enabled&&GetFocus()==demoPeer);
++            {HCURSOR cursor=SetCursor(NULL);SetCursor(cursor);
++                demoQACheck("DEMO_FOREIGN_CURSOR_PRESERVED",cursor==LoadCursor(NULL,IDC_CROSS));}
++            demoTestStage=5;return;
++        }
++        if(demoQACase==5){
++            SendMessage(window,WM_CANCELMODE,0,0);
++            demoQACheck("DEMO_CANCEL_STOPS",!demonstration.enabled&&GetCapture()!=window);
++            demoTestStage=5;return;
++        }
++        if(demoQACase==6){
++            SendMessage(window,WM_SYSKEYDOWN,VK_MENU,0);
++            SendMessage(window,WM_SYSCHAR,'x',0);
++            SendMessage(window,WM_SYSKEYUP,VK_MENU,0);
++            demoQACheck("DEMO_SYSTEM_KEY_CONSUMED",demoDrain);demoTestStage=4;return;
++        }
++        if(demoQACase==7){
++            SendMessage(window,WM_ACTIVATEAPP,0,0);
++            demoQACheck("DEMO_TASK_SWITCH_STOPS",!demonstration.enabled&&GetCapture()!=window);
++            demoQACheck("DEMO_INACTIVE_ANIMATION_STOPS",!active);
++            SendMessage(window,WM_ACTIVATEAPP,1,0);demoTestStage=5;return;
++        }
++        /* Dedicated /S restoration shares this exact close path. */
++        demoMode=1;demoPreviousActive=demoPreviousFocus=demoPeer;
++        SendMessage(window,WM_KEYDOWN,VK_RETURN,0);
++        SendMessage(window,WM_KEYUP,VK_RETURN,0);
++        demoQACheck("DEMO_SETTING_UNCHANGED",soundpref==demoQASoundPref&&
++            (int)GetProfileInt("TANDINATOR","Sound",-1)==demoQAInitialSetting);
++        demoQACheck("DEMO_NO_INPUT_LEAKS",!demoInputLeaks);
++        demoQACheck("DEMO_NATIVE_ALL_CHECKS",!demoQAErrors);
++        metric("ERRORS",demoQAErrors);metric("COMPLETE",1);demoTestStage=6;return;
++    }
++    if(demoTestStage==3){
++        if(++demoQAHeldTicks<5)return;
++        demoQACheck("DEMO_HELD_DRAIN",demoDrain&&GetCapture()==window);
++        if(!demoQACase)SendMessage(window,WM_KEYUP,VK_F3,0);
++        else SendMessage(window,WM_LBUTTONUP,0,0);
++        demoTestStage=4;return;
++    }
++    if(demoTestStage==4){
++        if(demoQACase==1&&demoQAHeldTicks<10){
++            if(++demoQAHeldTicks<9)return;
++            demoQACheck("DEMO_DELAYED_DOUBLE_CLICK_DRAIN",demoDrain&&GetCapture()==window);
++            SendMessage(window,WM_LBUTTONDBLCLK,MK_LBUTTON,0);
++            SendMessage(window,WM_LBUTTONUP,0,0);demoQAHeldTicks=10;
++        }
++        if(demoDrain)return;
++        demoQACheck("DEMO_WAKE_NO_GAME_ACTION",state==0&&engine.turn==0&&history.count==0&&!help&&!debug&&!explaining);
++        demoQACheck("DEMO_DRAIN_RELEASED",GetCapture()!=window);
++        demoQACheck("DEMO_IDLE_NOT_REARMED",!demoArmed);demoTestStage=5;
++    }
++    if(demoTestStage==5){demoQACase++;demoTestStage=2;return;}
++    if(demoTestStage==99){metric("ERRORS",demoQAErrors+1);metric("COMPLETE",1);SendMessage(window,WM_CLOSE,0,0);}
++}
+--- a/SOURCE/src/TANDI.C
++++ b/SOURCE/src/TANDI.C
+@@ -3,6 +3,7 @@
+ #include <string.h>
+ #include "TANDI.H"
+ #include "OBSERVE.H"
++#include "DEMO.H"
+ #include "ART.H"
+ #include "TDSOUND.H"
+ /* Full-screen client, no standard dialogs. All calculations are outside paint. */
+@@ -21,9 +22,24 @@
+ static int animframe=-1,animticks,idleticks,pending,timerok,animredraws;
+ static int animcapture,animserial,tickinside,rejectphase,testreset,testwait,capoffered,soundpref=1,soundsupported,settingssaved=1;
+ static DWORD inputready,animcost,computepeak;
++static TDDEMO demonstration;
++static int demoMode,demoAuto,demoArmed,demoCues,demoQA,demoDrain,demoOwned,demoMouse,demoMouseGesture;
++static int demoReturning,demoWakeCount,demoInputLeaks,demoTestStage,demoTestTicks;
++static HWND demoPreviousActive,demoPreviousFocus,demoPeer;
++static HCURSOR demoPreviousCursor;
++static BYTE demoInitial[256],demoDown[256];
++static POINT demoOrigin;
++static DWORD demoStarted,demoLastInput,demoWelcome;
++static void refresh(void);
++static void demoPulse(void);
++static void demoCleanup(int);
++static void demoQATick(void);
++static int demoQACase,demoQAPhases,demoQAHeldTicks,demoQASeen[8],demoQAFrames;
++static int demoQASoundPref,demoQAInitialSetting,demoQAEyes,demoQAErrors;
+ static void animpaint(HDC dc);
+ static void capture(char *path);
+ static void animset(int frame);
++static void animtick(void);
+ static void nextcompute(void);
+ static void next(void);
+ static int inputblocked(void){return busy||(LONG)(GetTickCount()-inputready)<0;}
+@@ -191,6 +207,7 @@
+ static void animset(int frame){
+     HDC dc;DWORD started;int pose;char path[30],digits[12];
+     if(animframe==frame)return;animframe=frame;
++    if(demonstration.enabled){InvalidateRect(window,0,FALSE);return;}
+     if(!active||help||debug||explaining||!artdc)return;
+     started=GetTickCount();dc=GetDC(window);if(!dc)return;
+     pose=state==2?1:(state==3?2:0);
+@@ -260,11 +277,15 @@
+     lstrcat(line,". Clue ");number(num,explainpage+1);lstrcat(line,num);lstrcat(line,"/");
+     number(num,explanation.count);lstrcat(line,num);lstrcat(line,". Not proof.");text(dc,8*sx,150,line);
+ }
++#include "DEMOUI.H"
+ static void draw(HWND w){
+     PAINTSTRUCT ps;HDC dc;int i;RECT r;char temp[24];COLORREF gold;
+     dc=BeginPaint(w,&ps);SetBkMode(dc,OPAQUE);
+     SelectObject(dc,GetStockObject(SYSTEM_FIXED_FONT));
+     box(dc,0,0,screenw,screenh,RGB(0,0,0));
++    if(demonstration.enabled||demoDrain){
++        demoDraw(dc);EndPaint(w,&ps);return;
++    }
+     gold=colors<16?RGB(255,255,255):RGB(255,255,0);
+     SetTextColor(dc,gold);SetBkColor(dc,RGB(0,0,0));
+     if(artdc)sprite(dc,(screenw-126*sx)/2,4,126,16,0,360);
+@@ -289,7 +310,7 @@
+             text(dc,8*sx,103,"Leading = within 24 score points.");
+             text(dc,8*sx,119,"Count may rise. Other names can win.");
+             text(dc,8*sx,132,"F4 on a guess: clues, not proof.");
+-            text(dc,8*sx,145,"App 0.3.6; roster revision 0.3.2.");
++            text(dc,8*sx,145,"App 0.3.7; roster revision 0.3.2.");
+         }
+     }else{
+         r.left=6*sx;r.right=102*sx;r.top=43;r.bottom=163;
+@@ -413,6 +434,10 @@
+ static void animtick(void){
+     static int reveal[5]={1,2,1,4,-1};
+     static int victory[5]={3,4,3,4,3};
++    if(demoDrain){demoDrainTick();return;}
++    if(demonstration.enabled){demoPulse();return;}
++    if(demoAuto&&demoArmed&&state==0&&history.count==0&&!help&&!debug&&!explaining&&
++       GetTickCount()-demoWelcome>=DEMO_IDLE_MS)demoStart();
+     if(!active||help||debug||explaining)return;
+     TdSoundTick(window,GetTickCount());
+     if(state==2||state==3){
+@@ -759,6 +784,21 @@
+ }
+ LONG FAR PASCAL WndProc(HWND w,UINT msg,WORD wp,LONG lp){
+     int i,x,y;
++    if(msg==WM_ACTIVATEAPP)active=wp!=0;
++    if(msg==WM_SETCURSOR&&demoReturning)return 1;
++    if(demoInput(msg,wp,lp))return 0;
++    if((demonstration.enabled||demoDrain)&&
++       (msg==WM_KILLFOCUS||(msg==WM_ACTIVATE&&wp==WA_INACTIVE)||
++        (msg==WM_ACTIVATEAPP&&!wp)||msg==WM_CANCELMODE)){
++        demoCleanup(0);return 0;
++    }
++    if(msg==WM_SETCURSOR&&(demonstration.enabled||demoDrain)&&
++       GetActiveWindow()==w&&GetCapture()==w){SetCursor(NULL);return 1;}
++    if(msg==WM_TIMER&&wp==3&&demoQA){demoQATick();return 0;}
++    if(msg==WM_QUERYENDSESSION||msg==WM_CLOSE||(msg==WM_ENDSESSION&&wp)){
++        if(demonstration.enabled||demoDrain)demoCleanup(0);
++        if(!IsWindow(w))return msg==WM_QUERYENDSESSION?1:0;
++    }
+     if(msg==WM_KILLFOCUS||(msg==WM_ACTIVATE&&wp==0))TdSoundStop(window);
+     if(msg==WM_QUERYENDSESSION){TdSoundStop(window);return 1;}
+     if(msg==WM_ENDSESSION&&wp){TdSoundStop(window);return 0;}
+@@ -808,20 +848,35 @@
+         if(!debug&&!help&&!explaining&&state==2&&(wp=='Y'||wp=='N'))act(wp=='Y'?20:21);
+         return 0;
+     }
+-    if(msg==WM_DESTROY){KillTimer(window,2);TdSoundStop(window);artfree();db_close();if(logfile!=-1)_lclose(logfile);PostQuitMessage(0);return 0;}
++    if(msg==WM_DESTROY){
++        KillTimer(window,2);KillTimer(window,3);TdSoundStop(window);
++        if(GetCapture()==window)ReleaseCapture();
++        if(demoPeer&&IsWindow(demoPeer))DestroyWindow(demoPeer);
++        artfree();db_close();if(logfile!=-1)_lclose(logfile);PostQuitMessage(0);return 0;
++    }
+     return DefWindowProc(w,msg,wp,lp);
+ }
+ int PASCAL WinMain(HANDLE inst,HANDLE prev,LPSTR cmd,int show){
+     WNDCLASS c;MSG msg;HDC dc;DWORD start;int i,len;
+-    instance=inst;(void)prev;
++    instance=inst;
+     while(*cmd==' ')cmd++;
+-    testmode=(*cmd=='/'&&cmd[1]=='T')||GetProfileInt("TANDINATOR","Test",0);
++    for(i=0;cmd[i];i++)if(cmd[i]=='/'&&cmd[i+1]){
++        len=cmd[i+1];if(len>='a'&&len<='z')len-='a'-'A';
++        if(len=='D'||len=='S')demoMode=1;
++        if(len=='A')demoAuto=demoArmed=1;
++        if(len=='C')demoCues=1;
++        if(len=='J')demoQA=demoAuto=demoArmed=1;
++    }
++    if(demoMode&&(prev||FindWindow("TandyTandinatorSaver",NULL)||GetCapture()||GetSysModalWindow()))return 8;
++    demoPreviousActive=GetActiveWindow();demoPreviousFocus=GetFocus();
++    GetCursorPos(&demoOrigin);
++    testmode=!demoMode&&!demoAuto&&!demoQA&&((*cmd=='/'&&cmd[1]=='T')||GetProfileInt("TANDINATOR","Test",0));
+     GetModuleFileName(inst,dbpath,sizeof(dbpath));len=lstrlen(dbpath);
+     for(i=len-1;i>=0;i--)if(dbpath[i]=='\\'||dbpath[i]==':')break;
+     lstrcpy(dbpath+i+1,"TANDY.DAT");
+     freespace=GetFreeSpace(0);start=GetTickCount();db_open(&db,dbpath);
+     loadms=GetTickCount()-start;if(db.error)state=4;
+-    if(testmode)logfile=_lcreat("C:\\TANDI.LOG",0);
++    if(testmode||demoQA)logfile=_lcreat("C:\\TANDI.LOG",0);
+     metric("WINFLAGS",GetWinFlags());metric("LOAD_MS",loadms);
+     metric("ENGINE_BYTES",sizeof(engine));metric("DB_STRUCT_BYTES",sizeof(db));
+     metric("FREE_SPACE_BEFORE",freespace);metric("CHARACTERS",db.nc);
+@@ -829,9 +884,9 @@
+     screenw=GetSystemMetrics(SM_CXSCREEN);screenh=GetSystemMetrics(SM_CYSCREEN);
+     metric("WIDTH",screenw);metric("HEIGHT",screenh);
+     c.style=CS_DBLCLKS;c.lpfnWndProc=WndProc;c.cbClsExtra=c.cbWndExtra=0;
+-    c.hInstance=inst;c.hIcon=0;c.hCursor=LoadCursor(0,IDC_ARROW);
++    c.hInstance=inst;c.hIcon=0;c.hCursor=demoMode?NULL:LoadCursor(0,IDC_ARROW);
+     c.hbrBackground=GetStockObject(BLACK_BRUSH);c.lpszMenuName=0;
+-    c.lpszClassName="Tandinator02";if(!RegisterClass(&c))return 1;
++    c.lpszClassName=demoMode?"TandyTandinatorSaver":"Tandinator02";if(!RegisterClass(&c))return 1;
+     window=CreateWindow(c.lpszClassName,"TANDINATOR",WS_POPUP,0,0,
+                         screenw,screenh,0,0,inst,0);
+     if(!window){db_close();return 1;}
+@@ -840,12 +895,22 @@
+     metric("ART_READY",artinit(dc));ReleaseDC(window,dc);
+     metric("ART_INIT_MS",artms);metric("ART_DIB_BYTES",sizeof(artbits));
+     metric("FREE_SPACE_ART",GetFreeSpace(0));
+-    layout();ShowWindow(window,show);UpdateWindow(window);
++    layout();
++    if(demoMode&&(GetCapture()||GetSysModalWindow()||GetActiveWindow()!=demoPreviousActive)){
++        DestroyWindow(window);return 8;
++    }
++    ShowWindow(window,show);SetActiveWindow(window);SetFocus(window);UpdateWindow(window);
+     timerok=SetTimer(window,2,100,0)!=0;
+     metric("ANIM_TIMER_READY",timerok);
+     soundsupported=TdSoundInit(window,inst,timerok);
+     soundsettings();metric("SOUND_READY",soundsupported);metric("SOUND_PREF_LOADED",soundpref);refresh();
++    demoWelcome=GetTickCount();
++    if(demoMode&&!demoStart()){DestroyWindow(window);return 8;}
++    if(demoQA)SetTimer(window,3,100,0);
+     if(testmode)SetTimer(window,1,100,0);
+-    while(GetMessage(&msg,0,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);}
++    while(GetMessage(&msg,0,0,0)){
++        if(!demonstration.enabled&&!demoDrain)TranslateMessage(&msg);
++        DispatchMessage(&msg);
++    }
+     TdSoundStop(window);KillTimer(window,2);return msg.wParam;
+ }
+--- a/SOURCE/src/TANDI.DEF
++++ b/SOURCE/src/TANDI.DEF
+@@ -7,3 +7,4 @@
+ STACKSIZE 4096
+ EXPORTS
+     WndProc @1
++    DemoPeerProc @2
+--- a/SOURCE/src/TANDI.RSP
++++ b/SOURCE/src/TANDI.RSP
+@@ -1,4 +1,4 @@
+-TANDI.OBJ DB.OBJ ENGINE.OBJ OBSERVE.OBJ TDSOUND.OBJ
++TANDI.OBJ DB.OBJ ENGINE.OBJ OBSERVE.OBJ DEMO.OBJ TDSOUND.OBJ
+ TANDI.EXE
+ TANDI.MAP
+ C:\LIB\SLIBCEW.LIB C:\LIB\LIBW.LIB
+--- a/SOURCE/tests/ART10.PY
++++ b/SOURCE/tests/ART10.PY
+@@ -0,0 +1,67 @@
++from pathlib import Path
++import importlib.machinery,json,re,shutil,hashlib
++from PIL import Image,ImageDraw
++p=Path(__file__).resolve().parents[1]
++m=importlib.machinery.SourceFileLoader('demoart',str(p/'tests/ARTTEST.PY')).load_module()
++atlas=Image.open(p/'art/ATLAS.PNG').convert('RGB')
++source=(p/'src/TANDI.C').read_text()
++palettes={16:m.PALETTE,2:[(0,0,0),(255,255,255)],4:[(0,0,0),(255,85,85),(85,255,85),(255,255,255)]}
++sha=lambda f:hashlib.sha256(f.read_bytes()).hexdigest()
++reports=[];preview=[]
++for mode in m.MODES:
++ old=p/'evidence'/('demo-'+mode);r=json.loads((old/'RESULT.JSN').read_text())
++ assert r['exe_sha256']==sha(p/'src/TANDI.EXE') and 'DEMO_NATIVE_ALL_CHECKS=1\n' in r['log']
++ dest=p/'evidence'/('demo-'+mode);dest.mkdir(exist_ok=True)
++ frames={}
++ for f in old.glob('D*.BIN'):
++  frames[f.stem]=m.decode_vram(f.read_bytes(),mode)
++ phases=list(map(int,re.findall(r'^DEMO_FRAME_PHASE=(\d+)$',r['log'],re.M)))
++ sides=list(map(int,re.findall(r'^DEMO_FRAME_SIDE=(\d+)$',r['log'],re.M)))
++ assert len(phases)==len(sides)==36
++ width,colors,_,_=m.MODES[mode];sx=width//320
++ if colors==16:mapping=list(range(16))
++ else:
++  logical=m.c_array(source,'monomap' if colors==2 else 'lowmap',16)
++  hw={0:0,15:1} if colors==2 else {0:0,12:1,10:2,15:3}
++  mapping=[hw[v] for v in logical]
++ checks=0;black=0;poses=set();positions=set()
++ for n,(phase,side) in enumerate(zip(phases,sides)):
++  frame=frames['D'+str(n)];x0=width-108*sx if side%2 else 0;y0=(side//2)*7
++  if phase==5:assert not any(frame);black+=1;continue
++  pose=1 if phase==3 else 2 if phase==4 else 0;poses.add(pose);positions.add(side)
++  for y in range(120):
++   for x in range(96):
++    if 35<=x<59 and 42<=y<60:continue
++    expected=mapping[m.PALETTE.index(atlas.getpixel((x,y+120*pose)))]
++    for dup in range(sx):
++     actual=frame[(43+y0+y)*width+x0+(6+x)*sx+dup]
++     assert actual==expected,(mode,n,'cabinet',x,y,actual,expected)
++     checks+=1
++  if phase in [3,4]:
++   face=1 if phase==3 else 3
++   for y in range(18):
++    for x in range(24):
++     expected=mapping[m.PALETTE.index(atlas.getpixel((x+(face%4)*32,416+y+(face//4)*20)))]
++     for dup in range(sx):assert frame[(85+y0+y)*width+x0+(41+x)*sx+dup]==expected,(mode,n,'face',x,y)
++  lx=8*sx if side%2 else width-134*sx
++  for y in range(16):
++   for x in range(126):
++    expected=mapping[m.PALETTE.index(atlas.getpixel((x,y+360)))]
++    for dup in range(sx):assert frame[(4+y0+y)*width+lx+x*sx+dup]==expected,(mode,n,'logo',x,y)
++ assert black and poses=={0,1,2} and positions==set(range(6))
++ assert not any(frames['DWAKE'])
++ eyeSides=list(map(int,re.findall(r'^DEMO_EYE_SIDE=(\d+)$',r['log'],re.M)))
++ eyeChecks=[]
++ for a,b in [(0,1),(2,3),(4,5)]:
++  if eyeSides[a]!=eyeSides[b]:continue
++  side=eyeSides[a];x0=width-108*sx if side%2 else 0;y0=(side//2)*7
++  diff=[i for i,(u,v) in enumerate(zip(frames['DEYE'+str(a)],frames['DEYE'+str(b)])) if u!=v]
++  assert diff and all((x0+45*sx<=i%width<x0+52*sx or x0+53*sx<=i%width<x0+60*sx) and 85+y0<=i//width<94+y0 for i in diff),(mode,'eyes',a,b)
++  eyeChecks.append(len(diff))
++ assert eyeChecks
++ report={'mode':mode,'exe_sha256':r['exe_sha256'],'cabinet_pixels_checked':checks,
++  'cabinet_exact_outside_animated_face':True,'logo_exact':True,'cabinet_poses':sorted(poses),
++  'six_positions':True,'all_black_interludes':black,'wake_all_black':True,'eye_pair_changes':eyeChecks,
++  'native_checks_passed':True,'seconds':r['seconds'],'sound_cues_optin':r['command']=='/J /C'}
++ reports.append(report)
++print(json.dumps(reports,indent=2))
+--- a/SOURCE/tests/BUILD10.BAT
++++ b/SOURCE/tests/BUILD10.BAT
+@@ -0,0 +1,13 @@
++@ECHO OFF
++SET PATH=C:\BIN;Z:\
++SET INCLUDE=C:\DDK\286\INC;C:\INCLUDE
++CL /nologo /c /G0 /Gw /AS /W3 /O LAUNCH10.C > BUILD.LOG
++IF ERRORLEVEL 1 GOTO BAD
++LINK4 /MAP /NOE /NOD @LAUNCH10.RSP >> BUILD.LOG
++IF ERRORLEVEL 1 GOTO BAD
++ECHO COMPILE_LINK_OK > BUILD.OK
++GOTO END
++:BAD
++ECHO FAILED >> BUILD.LOG
++:END
++EXIT
+--- a/SOURCE/tests/DEMO10.C
++++ b/SOURCE/tests/DEMO10.C
+@@ -0,0 +1,48 @@
++/* Actual engine/data, deterministic pacing, no UI or synthetic global input. */
++#include <stdio.h>
++#include <string.h>
++#include <assert.h>
++#include "../src/DEMO.H"
++static TDB db;
++static ENGINE engine;
++static TDHISTORY history;
++static TDDEMO demo,copy;
++static int seen[TD_MAXC];
++int main(int argc,char **argv){
++    U32 now=0xfffffe00UL;int event,calls=0,i,games=0,oldphase;
++    if(argc!=2||!db_open(&db,argv[1]))return 2;
++    assert(demo_due(1UL,0xfffffffeUL));
++    assert(!demo_due(0xfffffffeUL,1UL));
++    assert(demo_init(&demo,&engine,&db,&history,now));
++    for(i=0;i<DEMO_ROSTER;i++)assert(!seen[demo.roster[i]]++);
++    memset(seen,0,sizeof(seen));
++    while(demo.games<64){
++        assert(++calls<50000);copy=demo;
++        assert(!demo_step(&demo,&engine,&db,&history,demo.due-1UL));
++        assert(!memcmp(&copy,&demo,sizeof(demo)));
++        oldphase=demo.phase;now=demo.due;
++        event=demo_step(&demo,&engine,&db,&history,now);
++        assert(event>0&&demo.enabled);
++        assert(demo.phase!=oldphase);
++        assert(demo.due!=now&&!demo_due(now,demo.due));
++        assert(engine.turn==history.count);
++        assert(!demo_step(&demo,&engine,&db,&history,now));
++        if(event&DEMO_VICTORY){
++            assert(demo.phase==DEMO_SUCCESS&&engine.best==demo.target);
++            seen[demo.target]++;games++;
++            printf("game=%d target=%d answers=%d rejects=%d\n",games,demo.target,engine.turn,demo.rejections);
++        }
++    }
++    for(i=0;i<DEMO_ROSTER;i++)assert(seen[demo.roster[i]]==8);
++    /* Large timer lateness advances one phase only, no catch-up burst. */
++    copy=demo;now=demo.due+100000UL;
++    assert(demo_step(&demo,&engine,&db,&history,now)>0);
++    assert(demo.phase!=copy.phase&&!demo_step(&demo,&engine,&db,&history,now));
++    demo.enabled=0;copy=demo;
++    assert(!demo_step(&demo,&engine,&db,&history,now+100000UL));
++    assert(!memcmp(&copy,&demo,sizeof(demo)));
++    /* Fail closed before altering the active engine when a name is missing. */
++    db.nc=0;copy=demo;assert(!demo_init(&demo,&engine,&db,&history,now));
++    printf("PASS games=%d calls=%d wrap=1 no_catchup=1 disabled=1 missing=1\n",games,calls);
++    db_close();return 0;
++}
+--- a/SOURCE/tests/DEMO10.PY
++++ b/SOURCE/tests/DEMO10.PY
+@@ -0,0 +1,29 @@
++"""Bounded host qualification of the separate, unfinished demo module."""
++from pathlib import Path
++import hashlib,json,os,subprocess
++p=Path(__file__).resolve().parents[1]
++sha=lambda f:hashlib.sha256(f.read_bytes()).hexdigest()
++base=json.loads((p/'evidence/BASE10.JSN').read_text())
++pins=['src/ENGINE.C','src/DB.C','src/OBSERVE.C','src/ART.H','src/TDSOUND.C',
++      'build/TANDY.DAT','build/AUDIT08.DAT','data/STARTER.JSON','data/AUDIT08.JSON']
++for name in pins:assert sha(p/name)==base['source_files'][name],name
++exe=p/'build/DEMO10.EXE'
++subprocess.run([os.environ.get('CC','gcc'),'-std=c89','-O2','-Wall','-Wextra',
++ '-Werror','-pedantic','-x','c',str(p/'tests/DEMO10.C'),str(p/'src/DEMO.C'),
++ str(p/'src/ENGINE.C'),str(p/'src/DB.C'),str(p/'src/OBSERVE.C'),'-o',str(exe)],check=True)
++reports={}
++for tag,dat in [('STANDARD','TANDY.DAT'),('AUDIT08','AUDIT08.DAT')]:
++ runs=[subprocess.check_output([str(exe),str(p/'build'/dat)]) for _ in range(2)]
++ assert runs[0]==runs[1]
++ assert runs[0].count(b'game=')==64 and b'PASS games=64 ' in runs[0]
++ (p/'evidence'/('DEMO10-'+tag+'.TXT')).write_bytes(runs[0].replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
++ reports[tag]={'games':64,'authored_characters':8,'repeats_per_character':8,
++  'repeat_byte_exact':True,'dat_sha256':sha(p/'build'/dat),
++  'wraparound':True,'no_early_step':True,'no_late_catchup':True,
++  'disabled_no_step':True,'missing_name_fails_closed':True}
++report={'status':'host-only deterministic pacing module checks; see NATIVE10.JSN for separate app qualification',
++ 'source_packet_sha256':base['packet_sha256'],'unchanged_pins':pins,'datasets':reports,
++ 'no_native_demo_claim':True,'no_publication':True,'tshell_integration':
++ 'Verified upstream whitelist supports Matrix/Maze/Starfield. The separate optional TSHELL sources register Tandinator through configuration, launch, preview/close and Hold; see SHELL10.JSN for native evidence.'}
++(p/'evidence/DEMO10.JSN').write_bytes((json.dumps(report,indent=2)+'\n').replace('\n','\r\n').encode())
++print(json.dumps(report,indent=2))
+--- a/SOURCE/tests/LAUNCH10.C
++++ b/SOURCE/tests/LAUNCH10.C
+@@ -0,0 +1,72 @@
++/* First-party private-fixture launcher: Win3 boot shell accepts a file only.
++   Pass real WinMain arguments through WinExec. No global input generation. */
++#define WINVER 0x0300
++#include <windows.h>
++static HWND child,own;static int seen,ticks,mode,stage,leaks;
++static HFILE log=-1;
++static void note(char *s){if(log!=-1){_lwrite(log,s,lstrlen(s));_lwrite(log,"\r\n",2);}}
++LONG FAR PASCAL LaunchProc(HWND w,UINT m,WORD wp,LONG lp){
++    /* This caller owns its deliberately supplied cursor; its class default
++       must not overwrite that value while testing child cleanup. */
++    if(m==WM_SETCURSOR&&mode==4&&stage)return 1;
++    if(m==WM_TIMER){
++        child=FindWindow("TandyTandinatorSaver",NULL);
++        if(child)seen=1;
++        if(GetModuleHandle("TANDI"))seen=1;
++        if(mode&&child){
++            if(++ticks==20){
++                stage=1;
++                if(mode==1){SendMessage(child,WM_KEYDOWN,VK_RETURN,0);SendMessage(child,WM_CHAR,13,0);}
++                else if(mode==2)SendMessage(child,WM_LBUTTONDOWN,MK_LBUTTON,0);
++                else if(mode==3)SetCapture(w);
++                else if(mode==4){SetCursor(LoadCursor(NULL,IDC_CROSS));SetFocus(w);}
++                else if(mode==5)SendMessage(child,WM_CLOSE,0,0);
++                else SendMessage(child,WM_QUERYENDSESSION,0,0);
++                stage=1;
++            }
++            if(stage==1&&ticks==26){
++                if(mode<3){note(IsWindow(child)&&GetCapture()==child?"PRODUCTION HELD PASS":"PRODUCTION HELD FAIL");
++                    if(mode==1)SendMessage(child,WM_KEYUP,VK_RETURN,0);
++                    else SendMessage(child,WM_LBUTTONUP,0,0);}
++                stage=2;
++            }
++            if(mode==2&&stage==2&&ticks==30){
++                note(IsWindow(child)&&GetCapture()==child?"PRODUCTION DOUBLE DRAIN PASS":"PRODUCTION DOUBLE DRAIN FAIL");
++                SendMessage(child,WM_LBUTTONDBLCLK,MK_LBUTTON,0);SendMessage(child,WM_LBUTTONUP,0,0);stage=3;
++            }
++        }
++        if(seen&&!GetModuleHandle("TANDI")){
++            if(mode){
++                note(!leaks?"PRODUCTION INPUT LEAKS ZERO":"PRODUCTION INPUT LEAK FAIL");
++                if(mode<3)note(GetActiveWindow()==w&&GetFocus()==w?"PRODUCTION RESTORE PASS":"PRODUCTION RESTORE FAIL");
++                if(mode==3){note(GetCapture()==w?"PRODUCTION CAPTURE PASS":"PRODUCTION CAPTURE FAIL");ReleaseCapture();}
++                if(mode==4){HCURSOR cursor=SetCursor(NULL);SetCursor(cursor);note(cursor==LoadCursor(NULL,IDC_CROSS)?"PRODUCTION CURSOR PASS":"PRODUCTION CURSOR FAIL");}
++                note("PRODUCTION COMPLETE");
++            }
++            DestroyWindow(w);
++        }
++        return 0;
++    }
++    if((m>=WM_KEYFIRST&&m<=WM_KEYLAST)||(m>=WM_MOUSEFIRST&&m<=WM_MOUSELAST)){
++        if(mode&&stage&&m!=WM_MOUSEMOVE)leaks++;return 0;
++    }
++    if(m==WM_DESTROY){KillTimer(w,1);if(log!=-1)_lclose(log);PostQuitMessage(0);return 0;}
++    return DefWindowProc(w,m,wp,lp);
++}
++int PASCAL WinMain(HANDLE inst,HANDLE prev,LPSTR cmd,int show){
++    WNDCLASS c;MSG m;char args[80],command[100];int result;
++    (void)prev;(void)cmd;
++    c.style=0;c.lpfnWndProc=LaunchProc;c.cbClsExtra=c.cbWndExtra=0;
++    c.hInstance=inst;c.hIcon=0;c.hCursor=LoadCursor(NULL,IDC_ARROW);
++    c.hbrBackground=GetStockObject(WHITE_BRUSH);c.lpszMenuName=0;c.lpszClassName="TandiDemoLaunch";
++    if(!RegisterClass(&c))return 1;
++    own=CreateWindow(c.lpszClassName,"Demo launcher",WS_POPUP,0,0,
++                    GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN),0,0,inst,0);
++    ShowWindow(own,show);SetActiveWindow(own);SetFocus(own);UpdateWindow(own);
++    GetProfileString("DemoFixture","Command","/J",args,sizeof(args));
++    mode=GetProfileInt("DemoFixture","Production",0);log=_lcreat("C:\\LAUNCH.LOG",0);
++    lstrcpy(command,"TANDI.EXE ");lstrcat(command,args);
++    result=WinExec(command,SW_SHOWNORMAL);if(result<32){note("LAUNCH FAILED");DestroyWindow(own);return 1;}
++    SetTimer(own,1,100,NULL);
++    while(GetMessage(&m,0,0,0)){TranslateMessage(&m);DispatchMessage(&m);}return m.wParam;
++}
+--- a/SOURCE/tests/LAUNCH10.DEF
++++ b/SOURCE/tests/LAUNCH10.DEF
+@@ -0,0 +1,8 @@
++NAME LAUNCH10
++EXETYPE WINDOWS
++CODE PRELOAD MOVEABLE DISCARDABLE
++DATA PRELOAD MOVEABLE MULTIPLE
++HEAPSIZE 1024
++STACKSIZE 4096
++EXPORTS
++    LaunchProc @1
+--- a/SOURCE/tests/LAUNCH10.RSP
++++ b/SOURCE/tests/LAUNCH10.RSP
+@@ -0,0 +1,5 @@
++LAUNCH10.OBJ
++LAUNCH10.EXE
++LAUNCH10.MAP
++C:\LIB\SLIBCEW.LIB C:\LIB\LIBW.LIB
++LAUNCH10.DEF
+--- a/SOURCE/tests/OBS09.C
++++ b/SOURCE/tests/OBS09.C
+@@ -21,7 +21,7 @@
+         while(!eng_confident(&e,&d)){
+             q=eng_choose(&e,&d);if(q<0)break;
+             a=db_value(truth,q);
+-            /* Exploratory policy only until Claude's exact harness arrives:
++            /* Separate exploratory policy; not the confirmed Claude policy:
+                invert first and fourth known answered facts (never UNKNOWN). */
+             if(a!=2){known++;if(mode&&(known==1||known==4)){a=4-a;flips++;}}
+             assert(obs_answer(&h,&e,&d,a));
+--- a/SOURCE/tests/OBS09.PY
++++ b/SOURCE/tests/OBS09.PY
+@@ -30,7 +30,7 @@
+   'loader_sha256':sha(P/'src/DB.C'),'repeat_exact':True,'cases':len(cases),'clues':len(clues),
+   'truthful_first_misses':sum(int(c['leader_fact']) for c in cases if c['mode']=='0'),
+   'exploratory_two_wrong_first_misses':sum(int(c['leader_fact']) for c in cases if c['mode']=='1'),
+-  'exploratory_policy':'Invert first and fourth known answered facts; unknown stays unknown. First-guess miss, not Claude result until exact policy verified.',
++  'exploratory_policy':'Invert first and fourth known answered facts; unknown stays unknown. First-guess miss under a different policy from the confirmed original Claude harness.',
+   'leading_count_rises':len([r for r in rows if r['kind']=='rise']),
+   'history_questions':int(next(r['q'] for r in rows if r['kind']=='history')),
+   'negative_clues':sum(int(c['difference'])<0 for c in clues),'neutral_clues':sum(int(c['difference'])==0 for c in clues)}
+--- a/SOURCE/tests/UIGUARD.PY
++++ b/SOURCE/tests/UIGUARD.PY
+@@ -5,6 +5,30 @@
+ P=Path(__file__).resolve().parents[1]
+ PRE='\n#include <stdio.h>\n#include <string.h>\n#include "TANDI.H"\n#include "OBSERVE.H"\nstatic TDHISTORY history; static TDEXPLAIN explanation; static int explaining,explainpage;\ntypedef long LONG; typedef unsigned long DWORD; typedef unsigned UINT,WORD; typedef int HWND;\ntypedef struct {int left,top,right,bottom;} RECT;\n#define FAR\n#define PASCAL\n#define FALSE 0\n#define LOWORD(x) ((x)&65535)\n#define HIWORD(x) (((x)>>16)&65535)\n#define VK_ESCAPE 27\n#define VK_F1 112\n#define VK_F2 113\n#define VK_TAB 9\n#define VK_SHIFT 16\n#define VK_RETURN 13\n#define VK_SPACE 32\n#define WM_PAINT 1\n#define WM_TIMER 2\n#define WM_ACTIVATEAPP 3\n#define WM_MOUSEMOVE 4\n#define WM_LBUTTONDOWN 5\n#define WM_KEYDOWN 6\n#define WM_DESTROY 7\n#define WM_CLOSE 8\n#define lstrcpy strcpy\nstatic TDB db; static ENGINE engine;\nstatic int window=1,screenw=320,screenh=200,sx=1,state,focus,debug,help,busy,testmode,active,testinside,artblits,logfile=-1,closed;\nstatic RECT buttons[6]; static int ids[6],nb;static char labels[6][24],question[80],name[40];\nstatic char *answers[5]={"YES","PROBABLY","DON\'T KNOW","PROBABLY NOT","NO"};\nstatic DWORD answerms,selectms;\nstatic int panelleft(void){return 104*sx;}\nstatic void layout(void);\nstatic void refresh(void){layout();}\nstatic void questionrefresh(int f){layout();}\nstatic void busyfooter(void){}\nstatic DWORD now; static DWORD GetTickCount(void){return now;}\nstatic void metric(char *k,long v){}\nstatic void InvalidateRect(HWND w,RECT *r,int b){}\nstatic void UpdateWindow(HWND w){}\nstatic int GetKeyState(int k){return 0;}\nstatic void SendMessage(HWND w,UINT m,WORD p,LONG l){if(m==WM_CLOSE)closed++;}\nstatic void draw(HWND w){}\nstatic void testtick(void){}\nstatic void look(int x,int y){}\nstatic void debugupdate(void){}\nstatic void artfree(void){}\nstatic void _lclose(int f){}\nstatic void PostQuitMessage(int n){}\nstatic LONG DefWindowProc(HWND w,UINT m,WORD p,LONG l){return 0;}\n\n#define VK_F3 114\n#define VK_F4 115\n#define WM_KILLFOCUS 9\n#define WM_ACTIVATE 10\n#define WM_QUERYENDSESSION 11\n#define WM_ENDSESSION 12\n#define TD_SND_REVEAL 1\n#define TD_SND_VICTORY 2\n#define TD_SND_WRONG 3\nstatic int animframe=-1,animticks,idleticks,pending,timerok=1,animredraws,computeticks;\nstatic int tickinside,rejectphase,capoffered,soundpref=1,soundsupported=1,settingssaved=1,soundenabled=1,soundstops;\nstatic DWORD inputready,computepeak;\nstatic void animset(int f){animframe=f;}\nstatic void KillTimer(int w,int t){}\nstatic int TdSoundBegin(int w,int c,DWORD t){return 1;}\nstatic void TdSoundStop(int w){soundstops++;}\nstatic void TdSoundTick(int w,DWORD t){}\nstatic int TdSoundEnabled(void){return soundenabled;}\nstatic void TdSoundEnable(int v){soundenabled=v;}\nstatic int profilevalue=1,profileok=1;\nstatic int GetProfileInt(char*a,char*b,int d){return profileok?profilevalue:d;}\nstatic int WriteProfileString(char*a,char*b,char*c){if(profileok)profilevalue=c[0]==49;return profileok;}\n'
+ POST='\nstatic int fails=0,checks=0;\n#define CHECK(x) do{checks++;if(!(x)){fails++;printf("FAIL %d %s\\n",__LINE__,#x);}}while(0)\nstatic void tick(void){now+=110;WndProc(1,WM_TIMER,2,0);}\nstatic void ready(void){while(pending)tick();now+=230;}\nstatic void reset(void){busy=pending=0;inputready=0;active=1;eng_reset(&engine,&db);obs_reset(&history);capoffered=0;state=1;next();ready();}\nint main(int argc,char**argv){int turn,old,stops;\n if(argc!=2||!db_open(&db,argv[1]))return 2;\n reset();turn=engine.turn;WndProc(1,WM_KEYDOWN,VK_RETURN,1L<<30);CHECK(engine.turn==turn);\n WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(engine.turn==turn+1&&!pending&&!busy);\n turn=engine.turn;WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(engine.turn==turn);\n WndProc(1,WM_LBUTTONDOWN,0,210|(95L<<16));CHECK(engine.turn==turn);\n ready();CHECK(state==1&&!busy&&!pending);\n reset();while(engine.turn<24){eng_choose(&engine,&db);obs_answer(&history,&engine,&db,2);}next();ready();\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!pending&&engine.turn==25);\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!pending);\n while(pending)tick();old=engine.best;CHECK(state==2);\n WndProc(1,WM_LBUTTONDOWN,0,210|(150L<<16));CHECK(!engine.rejected[old]);\n now+=230;WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==3);\n WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==3);\n now+=230;WndProc(1,WM_LBUTTONDOWN,0,210|(130L<<16));CHECK(state==1&&!pending);\n stops=soundstops;WndProc(1,WM_ACTIVATEAPP,0,0);CHECK(soundstops>stops);turn=animticks;tick();CHECK(animticks==turn);\n WndProc(1,WM_ACTIVATEAPP,1,0);ready();CHECK(!pending);\n stops=soundstops;WndProc(1,WM_KILLFOCUS,0,0);CHECK(soundstops>stops);\n stops=soundstops;CHECK(WndProc(1,WM_QUERYENDSESSION,0,0)==1);CHECK(soundstops>stops);\n timerok=0;reset();CHECK(!busy&&!pending&&state==1);\n timerok=1;reset();WndProc(1,WM_KEYDOWN,VK_RETURN,0);CHECK(!pending);closed=0;\n WndProc(1,WM_LBUTTONDOWN,0,280|(189L<<16));CHECK(closed==1);\n\n reset();turn=engine.turn;closed=0;\n WndProc(1,WM_KEYDOWN,VK_F1,0);CHECK(help==1);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!help&&!debug&&!closed&&engine.turn==turn);\n now+=230;WndProc(1,WM_KEYDOWN,VK_F2,0);CHECK(debug==1&&nb==3&&ids[0]==91);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!debug&&!closed);\n now+=230;WndProc(1,WM_KEYDOWN,VK_F2,0);act(91);CHECK(debug==2);\n WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!debug&&!closed);\n reset();while(engine.turn<25){eng_choose(&engine,&db);obs_answer(&history,&engine,&db,2);}nextcompute();now+=230;old=engine.best;\n act(21);CHECK(state==5&&!pending&&engine.rejected[old]);turn=engine.turn;old=engine.best;\n tick();tick();tick();CHECK(state==5&&!pending&&engine.turn==turn&&engine.best==old);\n now+=230;WndProc(1,WM_KEYDOWN,\'N\',0);CHECK(state==5&&!engine.rejected[old]);\n act(30);CHECK(!pending&&state==2);ready();CHECK(state==2&&engine.turn==25&&engine.best==old);\n act(21);CHECK(state==2&&capoffered);now+=230;act(10);ready();CHECK(state==1&&engine.turn==0&&!engine.rejected[old]);\n db.error=1;state=4;layout();CHECK(nb==1&&ids[0]==99);db.error=0;\n /* No cap or lost candidate: every remaining guess remains deliberately reachable. */\n reset();while(engine.turn<25){eng_choose(&engine,&db);obs_answer(&history,&engine,&db,2);}nextcompute();now+=230;turn=0;\n old=0;while(state==2){act(21);turn++;if(state==5){old++;now+=230;act(30);}ready();}CHECK(old==1);\n CHECK(state==4&&turn==db.nc&&engine.turn==25);\n\n reset();soundpref=1;profileok=1;WndProc(1,WM_KEYDOWN,VK_F3,0);CHECK(!soundpref&&!soundenabled&&profilevalue==0&&settingssaved);\n WndProc(1,WM_KEYDOWN,VK_F3,1L<<30);CHECK(!soundpref);\n profileok=0;WndProc(1,WM_KEYDOWN,VK_F3,0);CHECK(soundpref&&soundenabled&&!settingssaved&&profilevalue==0);\n profileok=1;profilevalue=0;soundsettings();CHECK(!soundpref&&!soundenabled);\n soundsupported=0;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG NO SOUND"));\n soundsupported=1;settingssaved=1;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG F3 SOUND OFF"));\n profileok=0;soundsettings();CHECK(soundpref&&soundenabled);\n settingssaved=0;CHECK(!strcmp(soundfooter(),"F1 HELP F2 DEBUG SOUND UNSAVED"));\n reset();while(engine.turn<25){eng_choose(&engine,&db);obs_answer(&history,&engine,&db,2);}next();ready();WndProc(1,WM_KEYDOWN,VK_F4,0);CHECK(explaining&&explanation.valid&&explanation.count==25);ready();act(94);CHECK(explainpage==1);ready();act(93);CHECK(explainpage==0);WndProc(1,WM_KEYDOWN,VK_ESCAPE,0);CHECK(!explaining&&state==2);\n printf("UI guards/lifecycle: %d checks, %d failures\\n",checks,fails);db_close();return fails!=0;\n}\n'
++# These legacy game checks run with demo disabled. Actual demo/input handlers
++# are qualified by DEMO10 and native /J plus production /S fixtures separately.
++PRE+='''
++#include "DEMO.H"
++#define NULL 0
++#define WA_INACTIVE 0
++#define WM_CANCELMODE 40
++#define WM_SETCURSOR 41
++static TDDEMO demonstration;
++static int demoAuto,demoArmed,demoDrain,demoQA,demoPeer,demoReturning;
++static DWORD demoWelcome;
++static int demoInput(UINT m,WORD w,LONG l){return 0;}
++static void demoCleanup(int r){}
++static void demoQATick(void){}
++static void demoDrainTick(void){}
++static void demoPulse(void){}
++static int demoStart(void){return 0;}
++static int GetActiveWindow(void){return window;}
++static int GetCapture(void){return 0;}
++static void ReleaseCapture(void){}
++static void SetCursor(int c){}
++static int IsWindow(int w){return !closed;}
++static void DestroyWindow(int w){}
++'''
+ FUNCS=['static int inputblocked(void){', 'static char *soundfooter(void){', 'static void soundsettings(void){', 'static void addbutton(', 'static void layout(void){', 'static void nextcompute(void){', 'static void next(void){', 'static void animtick(void){', 'static void act(int id){', 'LONG FAR PASCAL WndProc(']
+ def function(text,signature):
+  start=text.index(signature);p=text.index('{',start);depth=1;i=p+1
+--- a/SOURCE/tools/TSQA10.PY
++++ b/SOURCE/tools/TSQA10.PY
+@@ -0,0 +1,93 @@
++"""Private Windows fixture runner: owned media stays outside deliverables."""
++from pathlib import Path
++import hashlib,json,shutil,subprocess,sys,time,os
++import importlib.machinery
++lease=importlib.machinery.SourceFileLoader("emulease",str(Path(__file__).with_name("EMULEASE.PY"))).load_module().lease
++P=Path(__file__).resolve().parents[1]
++root=Path(os.environ['TANDI_PRIVATE'])
++MODES={'320x200x16':'TR53216.DRV','640x200x2':'TR56402.DRV','640x200x4':'TR56404.DRV'}
++def ini(path,section,key,value):
++    out=[];active=False;found=False
++    for line in path.read_text().splitlines():
++        if line.strip().startswith('['):
++            if active and not found:out.append(key+'='+value);found=True
++            active=line.strip().lower()=='['+section.lower()+']'
++        if active and '=' in line and line.split('=',1)[0].strip().lower()==key.lower():
++            out.append(key+'='+value);found=True
++        else:out.append(line)
++    if not found:
++        if not active:out.append('['+section+']')
++        out.append(key+'='+value)
++    path.write_bytes(('\r\n'.join(out)+'\r\n').encode('ascii'))
++def run(mode,tag):
++    dest=root/'native-results'/(mode+'-'+tag)
++    dest.mkdir(parents=True,exist_ok=False)
++    guest=dest/'guest';guest.mkdir();shutil.copytree(Path(os.environ['TANDI_WINDOWS']),guest/'WINDOWS')
++    shutil.copyfile(Path(os.environ['TANDI_RESERVE']),guest/'RESERVE.COM')
++    shutil.copyfile(Path(os.environ['TANDI_TRIAL7'])/MODES[mode],guest/'WINDOWS/SYSTEM/TRIAL.DRV')
++    shutil.copyfile(P/'src/TANDI.EXE',guest/'WINDOWS/TANDI.EXE')
++    shutil.copyfile(P.parent/'TSHELL/TS10QA.EXE',guest/'WINDOWS/TS10QA.EXE')
++    data=bytearray((P/'build/TANDY.DAT').read_bytes())
++    (guest/'WINDOWS/TANDY.DAT').write_bytes(data)
++    for k,v in [('display.drv','TRIAL.DRV'),('shell','TS10QA.EXE'),('fonts.fon','CGASYS.FON'),('fixedfon.fon','CGAFIX.FON'),('oemfonts.fon','CGAOEM.FON')]:ini(guest/'WINDOWS/SYSTEM.INI','boot',k,v)
++    (guest/'WINDOWS/TSHELL.INI').write_bytes(b'[ScreenSaver]\r\nEnabled=0\r\nChoice=Matrix\r\nIdleSeconds=300\r\nTandinatorProgram=C:\\WINDOWS\\TANDI.EXE\r\n')
++    for k,v in [('Test','1'),('TestTarget','Mario'),('TestExit',str(list(MODES).index(mode)+1)),('Sound','0')]:ini(guest/'WINDOWS/WIN.INI','TANDINATOR',k,v)
++    for k in ['run','load']:ini(guest/'WINDOWS/WIN.INI','windows',k,'')
++    start='''@ECHO OFF
++RESERVE > RESERVE.TXT
++IF ERRORLEVEL 1 GOTO BAD
++SET PATH=C:\\WINDOWS;Z:\\
++SET TEMP=C:\\WINDOWS\\TEMP
++CD WINDOWS
++WIN /R
++CD \\
++ECHO RETURNED > RETURNED.TXT
++GOTO DONE
++:BAD
++ECHO RESERVE_FAILED > RETURNED.TXT
++:DONE
++EXIT
++'''
++    (guest/'START.BAT').write_bytes(start.replace('\n','\r\n').encode())
++    conf=f'''[sdl]
++fullscreen=false
++output=surface
++[dosbox]
++machine=tandy
++memsize=1
++captures={dest/'captures'}
++[cpu]
++core=normal
++cputype=8086_prefetch
++cycles=fixed 25000
++fpu=false
++[dos]
++xms=false
++ems=false
++umb=false
++[mixer]
++nosound=true
++[speaker]
++tandy=on
++[autoexec]
++@echo off
++mount C "{guest}"
++C:
++START.BAT
++'''
++    (dest/'RUN.CNF').write_bytes(conf.replace('\n','\r\n').encode())
++    si=subprocess.STARTUPINFO();si.dwFlags|=subprocess.STARTF_USESHOWWINDOW;si.wShowWindow=0
++    started=time.monotonic()
++    with lease(),(dest/'HOST.LOG').open('w') as out:
++        r=subprocess.run([str(Path(os.environ['TANDI_DOSBOX'])),'-nopromptfolder','-conf',str(dest/'RUN.CNF')],stdout=out,stderr=subprocess.STDOUT,timeout=180,startupinfo=si,creationflags=subprocess.CREATE_NO_WINDOW)
++    log=(guest/'TS10.LOG').read_text() if (guest/'TS10.LOG').exists() else ''
++    sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
++    result={'mode':mode,'tag':tag,'protocol':'fourth-saver actual source','returncode':r.returncode,'seconds':time.monotonic()-started,'log':log,'exe_sha256':sha(P/'src/TANDI.EXE'),'database_sha256':sha(guest/'WINDOWS/TANDY.DAT'),'driver_sha256':sha(guest/'WINDOWS/SYSTEM/TRIAL.DRV'),'returned':(guest/'RETURNED.TXT').read_text() if (guest/'RETURNED.TXT').exists() else None}
++    result['shell_qa_sha256']=sha(guest/'WINDOWS/TS10QA.EXE')
++    result['optional_shell_sha256']=sha(P.parent/'TSHELL/TSHELL.EXE')
++    (dest/'RESULT.JSN').write_text(json.dumps(result,indent=2))
++    print(json.dumps({k:v for k,v in result.items() if k!='log'},indent=2),flush=True)
++    assert r.returncode==0 and result['returned'] and 'RETURNED' in result['returned']
++    assert 'COMPLETE PASS' in log and ' FAIL' not in log,log
++    return result
++if __name__=='__main__':run(sys.argv[1],sys.argv[2])
+--- a/SOURCE/tools/WINQA10.PY
++++ b/SOURCE/tools/WINQA10.PY
+@@ -0,0 +1,105 @@
++"""Private Windows fixture runner: owned media stays outside deliverables."""
++from pathlib import Path
++import hashlib,json,shutil,subprocess,sys,time,os
++import importlib.machinery
++lease=importlib.machinery.SourceFileLoader("emulease",str(Path(__file__).with_name("EMULEASE.PY"))).load_module().lease
++P=Path(__file__).resolve().parents[1]
++root=Path(os.environ['TANDI_PRIVATE'])
++MODES={'320x200x16':'TR53216.DRV','640x200x2':'TR56402.DRV','640x200x4':'TR56404.DRV'}
++def ini(path,section,key,value):
++    out=[];active=False;found=False
++    for line in path.read_text().splitlines():
++        if line.strip().startswith('['):
++            if active and not found:out.append(key+'='+value);found=True
++            active=line.strip().lower()=='['+section.lower()+']'
++        if active and '=' in line and line.split('=',1)[0].strip().lower()==key.lower():
++            out.append(key+'='+value);found=True
++        else:out.append(line)
++    if not found:
++        if not active:out.append('['+section+']')
++        out.append(key+'='+value)
++    path.write_bytes(('\r\n'.join(out)+'\r\n').encode('ascii'))
++def run(mode,tag,negative=False,sound=1,command='/J',production=0):
++    dest=root/'native-results'/(mode+'-'+tag)
++    dest.mkdir(parents=True,exist_ok=False)
++    guest=dest/'guest';guest.mkdir();shutil.copytree(Path(os.environ['TANDI_WINDOWS']),guest/'WINDOWS')
++    shutil.copyfile(Path(os.environ['TANDI_RESERVE']),guest/'RESERVE.COM')
++    shutil.copyfile(Path(os.environ['TANDI_TRIAL7'])/MODES[mode],guest/'WINDOWS/SYSTEM/TRIAL.DRV')
++    shutil.copyfile(P/'src/TANDI.EXE',guest/'WINDOWS/TANDI.EXE')
++    launch=command.startswith('/J') or command.startswith('/S') or command.startswith('/D')
++    if launch:shutil.copyfile(P/'tests/LAUNCH10.EXE',guest/'WINDOWS/LAUNCH10.EXE')
++    data=bytearray((P/'build/TANDY.DAT').read_bytes())
++    if negative:data[-1]^=1
++    (guest/'WINDOWS/TANDY.DAT').write_bytes(data)
++    for k,v in [('display.drv','TRIAL.DRV'),('shell','LAUNCH10.EXE' if launch else 'TANDI.EXE'),('fonts.fon','CGASYS.FON'),('fixedfon.fon','CGAFIX.FON'),('oemfonts.fon','CGAOEM.FON')]:ini(guest/'WINDOWS/SYSTEM.INI','boot',k,v)
++    ini(guest/'WINDOWS/WIN.INI','DemoFixture','Command',command)
++    ini(guest/'WINDOWS/WIN.INI','DemoFixture','Production',str(production))
++    for k,v in [('Test','1'),('TestTarget','Mario'),('TestExit',str(list(MODES).index(mode)+1)),('Sound',str(sound))]:ini(guest/'WINDOWS/WIN.INI','TANDINATOR',k,v)
++    for k in ['run','load']:ini(guest/'WINDOWS/WIN.INI','windows',k,'')
++    start='''@ECHO OFF
++RESERVE > RESERVE.TXT
++IF ERRORLEVEL 1 GOTO BAD
++SET PATH=C:\\WINDOWS;Z:\\
++SET TEMP=C:\\WINDOWS\\TEMP
++CD WINDOWS
++WIN /R
++CD \\
++ECHO RETURNED > RETURNED.TXT
++GOTO DONE
++:BAD
++ECHO RESERVE_FAILED > RETURNED.TXT
++:DONE
++EXIT
++'''
++    (guest/'START.BAT').write_bytes(start.replace('\n','\r\n').encode())
++    conf=f'''[sdl]
++fullscreen=false
++output=surface
++[dosbox]
++machine=tandy
++memsize=1
++captures={dest/'captures'}
++[cpu]
++core=normal
++cputype=8086_prefetch
++cycles=fixed 25000
++fpu=false
++[dos]
++xms=false
++ems=false
++umb=false
++[mixer]
++nosound=true
++[speaker]
++tandy=on
++[autoexec]
++@echo off
++mount C "{guest}"
++C:
++START.BAT
++'''
++    (dest/'RUN.CNF').write_bytes(conf.replace('\n','\r\n').encode())
++    si=subprocess.STARTUPINFO();si.dwFlags|=subprocess.STARTF_USESHOWWINDOW;si.wShowWindow=0
++    started=time.monotonic()
++    with lease(),(dest/'HOST.LOG').open('w') as out:
++        r=subprocess.run([str(Path(os.environ['TANDI_DOSBOX'])),'-nopromptfolder','-conf',str(dest/'RUN.CNF')],stdout=out,stderr=subprocess.STDOUT,timeout=180,startupinfo=si,creationflags=subprocess.CREATE_NO_WINDOW)
++    log=(guest/'TANDI.LOG').read_text() if (guest/'TANDI.LOG').exists() else ''
++    if production:log=(guest/'LAUNCH.LOG').read_text()
++    sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
++    result={'mode':mode,'tag':tag,'negative':negative,'sound_pref':sound,'command':command,'production_case':production,'returncode':r.returncode,'seconds':time.monotonic()-started,'log':log,'exe_sha256':sha(P/'src/TANDI.EXE'),'database_sha256':sha(guest/'WINDOWS/TANDY.DAT'),'driver_sha256':sha(guest/'WINDOWS/SYSTEM/TRIAL.DRV'),'returned':(guest/'RETURNED.TXT').read_text() if (guest/'RETURNED.TXT').exists() else None}
++    (dest/'RESULT.JSN').write_text(json.dumps(result,indent=2))
++    print(json.dumps({k:v for k,v in result.items() if k!='log'},indent=2),flush=True)
++    assert r.returncode==0 and result['returned'] and 'RETURNED' in result['returned']
++    if production:
++        log=(guest/'LAUNCH.LOG').read_text();assert 'PRODUCTION COMPLETE' in log and 'FAIL' not in log,log
++        assert 'PRODUCTION INPUT LEAKS ZERO' in log
++        return result
++    assert 'COMPLETE=1' in log
++    if negative:assert 'APP_ERROR=1' in log and 'BAD_DAT_EXIT_ONLY=1' in log
++    elif command.startswith('/J'):
++        assert 'DEMO_NATIVE_ALL_CHECKS=1' in log and 'ERRORS=0' in log and 'WINFLAGS=64' in log,log
++        assert 'DEMO_SETTING_UNCHANGED=1' in log and 'DEMO_NO_INPUT_LEAKS=1' in log
++        assert 'DEMO_EIGHT_TARGETS=1' in log and 'DEMO_IDLE_ACTIVATES=1' in log
++    else:assert 'TARGET_SUCCESS=1' in log and 'ERRORS=0' in log
++    return result
++if __name__=='__main__':run(sys.argv[1],sys.argv[2],len(sys.argv)>3 and sys.argv[3]=='bad',int(sys.argv[4]) if len(sys.argv)>4 else 1,sys.argv[5] if len(sys.argv)>5 else '/J',int(sys.argv[6]) if len(sys.argv)>6 else 0)

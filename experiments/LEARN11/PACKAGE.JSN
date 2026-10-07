@@ -1,0 +1,17 @@
+{
+  "name": "LEARN11",
+  "scope": "isolated host prototype; review before native integration",
+  "zip_sha256": "d1c00c4afa8ad3e74a37f752e1baa14f66be614c082591145bae5f55acae1b2d",
+  "zip_bytes": 771710,
+  "files": 49,
+  "tandi10_unchanged": true,
+  "tandi10_zip_sha256": "15fb6d3575ceccf1b36e85b0327d32d489a6509fd5a1ea0750b0d519e3f887df",
+  "checks_passed": 68,
+  "evaluated_games": 7168,
+  "training_games": 126,
+  "native_integration": false,
+  "publication_performed": false,
+  "personal_learned_data_accessed": false,
+  "max_overlay_bytes": 7228,
+  "policy": "two exactly agreeing reports; baseUNKNOWN-only; unresolved conflict inactive; learned games cannot teach"
+}

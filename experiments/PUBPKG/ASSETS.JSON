@@ -1,0 +1,88 @@
+{
+  "base_commit": "a17883908dce8d780d4b1b4b3581cafd695d8d14",
+  "tag": "experiments-2026-10-07",
+  "assets": {
+    "TRIAL7.ZIP": {
+      "path": "experiments/TRIAL7/TRIAL7.ZIP",
+      "bytes": 300993,
+      "sha256": "a34deee520743858e89f5fab17f00cb16f9692196d02960f623f29cd2b827d6c"
+    },
+    "SOURCEQA.ZIP": {
+      "path": "experiments/TRIAL7/SOURCEQA.ZIP",
+      "bytes": 4057132,
+      "sha256": "89518578cb921f9bb58ad1ea8818d372f9dff73316ae7af348cd524986956741"
+    },
+    "TSFIX01.ZIP": {
+      "path": "experiments/TSFIX01/TSFIX01.ZIP",
+      "bytes": 335888,
+      "sha256": "bda9787548c55517e94954e055f2b534556af0bb8b12a3d11e2ec9141e7c248b"
+    },
+    "APPUI01.ZIP": {
+      "path": "experiments/APPUI01/APPUI01.ZIP",
+      "bytes": 851130,
+      "sha256": "7577dc90975dbe28e6bea0805a50b9c27676e53b0edc132d9c5d2b3be3c1c310"
+    },
+    "K3TOOLS.ZIP": {
+      "path": "experiments/PUBPKG/K3TOOLS.ZIP",
+      "bytes": 71586,
+      "sha256": "80754dbd4251a5f5ce6a50c76905f52d5e2610a4253cb1bc1b04c4e0ce77b322"
+    },
+    "UTILDOS1.ZIP": {
+      "path": "experiments/PUBPKG/UTILDOS1.ZIP",
+      "bytes": 70768,
+      "sha256": "440a4ce911c0ba3125eefd4a67bc8e2fb2010b02d944cdb9147ba2b784292743"
+    },
+    "TANDI03.ZIP": {
+      "path": "experiments/TANDI03/TANDI03.ZIP",
+      "bytes": 1356383,
+      "sha256": "ae7cd4fbe29c9fa9a9f5d7acdba784fa54ab83d0da26777550cbab06334fd732"
+    },
+    "TANDI04.ZIP": {
+      "path": "experiments/TANDI04/TANDI04.ZIP",
+      "bytes": 965600,
+      "sha256": "75f6843c5351b8995a946be438215b7ebd6bf4ad9fc4ac1e0f6dc4206809e195"
+    },
+    "TANDI05.ZIP": {
+      "path": "experiments/TANDI05/TANDI05.ZIP",
+      "bytes": 1180310,
+      "sha256": "e81841c245a5af04f85675c1eadb1ef5e211625ae5d079d0b637da8649a94c87"
+    },
+    "TANDI07.ZIP": {
+      "path": "experiments/TANDI07/TANDI07.ZIP",
+      "bytes": 3613134,
+      "sha256": "4d1998d6536c1e4b297635f8fd382f85520716f6a8ea3038c42bd8ad55a6ba3f"
+    },
+    "TANDI08.ZIP": {
+      "path": "experiments/TANDI08/TANDI08.ZIP",
+      "bytes": 2182908,
+      "sha256": "dd34d2948f7f9270072d4d418aacd9c120b5b788846741ec432cf4744377c2d2"
+    },
+    "TANDI09.ZIP": {
+      "path": "experiments/TANDI09/TANDI09.ZIP",
+      "bytes": 3811355,
+      "sha256": "d2e2e7564e7baed852b96a577a7a8ed811a3c69fefd353f589097f0029161d13"
+    },
+    "TANDI10.ZIP": {
+      "path": "experiments/TANDI10/TANDI10.ZIP",
+      "bytes": 6235287,
+      "sha256": "15fb6d3575ceccf1b36e85b0327d32d489a6509fd5a1ea0750b0d519e3f887df"
+    },
+    "TANDI11.ZIP": {
+      "path": "experiments/TANDI11/TANDI11.ZIP",
+      "bytes": 2645176,
+      "sha256": "b99c1236b32d4b1735b67a484c0dd45519ae904b57678761992250c7dd6b03da"
+    },
+    "LEARN11.ZIP": {
+      "path": "experiments/LEARN11/LEARN11.ZIP",
+      "bytes": 771710,
+      "sha256": "d1c00c4afa8ad3e74a37f752e1baa14f66be614c082591145bae5f55acae1b2d"
+    },
+    "LEARN12.ZIP": {
+      "path": "experiments/LEARN12/LEARN12.ZIP",
+      "bytes": 2077708,
+      "sha256": "8e94ed45bd3b8512b150d9fdaa9758959d71ee7f8476058abc7d71b669ce5ce8"
+    }
+  },
+  "no_installed_default_changes": true,
+  "private_media_included": false
+}

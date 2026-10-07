@@ -1,0 +1,40 @@
+name: Verify published experimental downloads
+on:
+  push:
+    branches: [ai/public-experiments-20261007]
+    tags: ['experiments-*']
+  pull_request:
+    paths: ['experiments/**', '.github/workflows/experiments.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact public experiments without credentials
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git sparse-checkout init --no-cone
+          printf '/experiments/\n' | git sparse-checkout set --no-cone --stdin
+          git checkout --detach --force FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Verify exact source, runtime and qualification packets
+        run: |
+          for p in TRIAL7 TSFIX01 APPUI01 TANDI03 TANDI04 TANDI05 TANDI07 TANDI08 TANDI09 TANDI10 TANDI11; do
+            python3 experiments/$p/TESTPUB.PY
+          done
+          python3 experiments/LEARN11/VERIFY.PY
+          python3 experiments/LEARN12/VERIFY.PY
+          python3 experiments/UTILDOS1/QA/TESTPUB.PY
+          python3 experiments/PUBPKG/VERIFY.PY
+      - name: Run serial diagnostic mocked hardware checks
+        run: python3 experiments/UTILDOS1/SOURCE/WHEEL/TESTS/MOCKTEST.PY

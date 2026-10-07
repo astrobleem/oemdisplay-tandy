@@ -1,0 +1,54 @@
+TANDI10 / APP 0.3.7 QUALIFICATION - LOCAL ONLY
+Derived from immutable TANDI09. Engine, loader, observation logic, original art,
+sound module, standard DAT and separate AUDIT08 DAT remain byte-identical.
+Dedicated /D or /S is quiet unless /C AND saved sound preference opt into cues.
+/A arms only an untouched welcome screen after 60 seconds; no midgame takeover.
+First wake blanks and stops sound before controls; held/repeated input, chars,
+system keys and mouse double clicks drain before return/closure. No settings,
+answer history, teaching, learning or other app's input is saved/generated.
+Foreground/capture/focus loss stops the demo; foreign cursor/capture are preserved.
+
+19 exact-EXE native runs passed: three demo modes with eight authored targets;
+three fourth-saver protocol previews; saved-off /C; eight real /S launch cases
+(held key, delayed double click, foreign capture/focus/cursor, close and shutdown);
+three normal games including cap continuation, settings fallback and repeated
+input; one corrupt DAT. Every run is a private real-mode Windows 3.0 guest with
+8086_prefetch, 640 KB, no FPU/XMS/EMS/UMB and fixed uncalibrated 25000 cycles.
+Owned native messages exercise the handlers. /J advances deadlines for bounded
+coverage; host checks test no early step, wraparound and no late catch-up.
+This is not physical-hardware timing or a human play study.
+
+Host: 49 normal UI checks; 59 sound/lease/failure cases; 53 DAT compiler tests;
+164 fourth-saver config/path/rollback checks; 64 demo games per DAT repeated byte
+exact across eight characters; whole-roster explanations/counts and 256-answer
+boundaries unchanged. C6 /G0 /Gw /AS builds are warning-free. NE audit finds no
+unsupported/FPU opcode, with scope/embedded-data exclusions in AUDIT.JSON.
+ART10 verifies translated cabinet/face/logo indices, bounded moving eyes, six
+positions, all-black interludes and all-black wake frames in all three modes.
+Moving pixels and black intervals do not power down a CRT or guarantee burn-in
+protection. Use monitor power-off for long absences.
+
+Verified all 37 TSHELL build inputs plus README against current connected main.
+The optional build adds SC_TANDINATOR/TandinatorProgram, absolute path validation,
+its own radio choice, TANDI module duplicate suppression, TandyTandinatorSaver
+preview/close and Hold gates. Starfield options remain in their own section.
+No other saver path is substituted. Native TS10QA includes actual control source;
+the first-party input DLL is unchanged. Physical Hold/hook behavior is not claimed.
+
+Independently confirmed original Claude harness: 31 standard versus 36 AUDIT08
+two-wrong final failures (225 versus 220 solved); 25 common, 11 new, 6 rescues.
+Truthful first misses improve 23 to 19; both eventually solve 256/256 truthful
+games. Adaptive questions can flip different facts under the same policy.
+This agent did not locally run the exact original Claude harness; provenance
+is the parent independent verifier in NOISE09.JSN. Exploratory first-miss checks
+use a separate policy, labelled accordingly. AUDIT08 remains experimental.
+
+Qualification caught and corrected fixture focus/underlay/cursor/opt-in issues
+and a teardown class-cursor edge. Intermediate captures are not final evidence.
+NATIVE10/ART10/SHELL10 bind exact final bits; historical QA08/QA09 retain history.
+No private OS/compiler/emulator/driver payload, installed shell/INI/default change,
+CF write, publication, merge, learning, Ask Two, undo or threshold change.
+PLAN10 describes the next opt-in learning design; it is not implemented.
+
+FINAL EXE SHA256: 42ea5a1381e819283ef7ac1f781f2be307e9e3f8345634f9a0e9c14f4111b3db
+OPTIONAL SHELL SHA256: 5fddc1b37c600ab8e431a70765c6cf769e6ec0cd04212112c02ce51989389e85

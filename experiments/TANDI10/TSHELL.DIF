@@ -1,0 +1,211 @@
+--- a/examples/TSHELL/SCFGCORE.H
++++ b/examples/TSHELL/SCFGCORE.H
+@@ -1,6 +1,6 @@
+ #ifndef SCFGCORE_H
+ #define SCFGCORE_H
+-#define SC_KEYS 8
++#define SC_KEYS 9
+ #define SC_VALUE 128
+ #define SC_ENABLED 0
+ #define SC_SECONDS 1
+@@ -10,10 +10,12 @@
+ #define SC_STARPATH 5
+ #define SC_SPEED 6
+ #define SC_STARS 7
++#define SC_TANDIPATH 8
+ #define SC_NONE 0
+ #define SC_MATRIX 1
+ #define SC_MAZE 2
+ #define SC_STARFIELD 3
++#define SC_TANDINATOR 4
+ #define SC_OK 0
+ #define SC_READFAIL 1
+ #define SC_BADSECONDS 2
+--- a/examples/TSHELL/SCFGCORE.C
++++ b/examples/TSHELL/SCFGCORE.C
+@@ -3,7 +3,7 @@
+ #include "SCFGCORE.H"
+ static const char *defaults[SC_KEYS] = {
+     "0", "300", "Matrix", "C:\\TSTART\\MATRIX.EXE", "C:\\TSTART\\MAZE.EXE",
+-    "C:\\TSTART\\STARFLD.EXE", "2", "32"
++    "C:\\TSTART\\STARFLD.EXE", "2", "32", "C:\\TSTART\\TANDI.EXE"
+ };
+ static int equalcase(const char *a, const char *b)
+ {
+@@ -54,6 +54,7 @@
+     if (equalcase(s, "Matrix")) return SC_MATRIX;
+     if (equalcase(s, "Maze")) return SC_MAZE;
+     if (equalcase(s, "Starfield")) return SC_STARFIELD;
++    if (equalcase(s, "Tandinator")) return SC_TANDINATOR;
+     return -1;
+ }
+ int ScSpeed(const char *s)
+@@ -76,7 +77,7 @@
+     return s[n - 1] != '\\';
+ }
+ const char *ScProgram(const SCCONFIG *c, int choice)
+-{ return ScValue(c, choice == SC_STARFIELD ? SC_STARPATH :
++{ return ScValue(c, choice == SC_TANDINATOR ? SC_TANDIPATH : choice == SC_STARFIELD ? SC_STARPATH :
+                  choice == SC_MAZE ? SC_MAZEPATH : SC_MATRIXPATH); }
+ int ScCommand(const char *path, int speed, int stars, char *out, int capacity)
+ {
+@@ -112,7 +113,7 @@
+     int i, last = -1, failed = 0, changed[SC_KEYS];
+     if (!ScSeconds(seconds)) return SC_BADSECONDS;
+     if (choice != SC_NONE && choice != SC_MATRIX && choice != SC_MAZE &&
+-        choice != SC_STARFIELD) return SC_BADCHOICE;
++        choice != SC_STARFIELD && choice != SC_TANDINATOR) return SC_BADCHOICE;
+     if ((speed || stars) && (!speed || !stars || !ScSpeed(speed) || !ScStars(stars))) return SC_BADOPTIONS;
+     if (ScRead(io, &actual) != SC_OK) return SC_READFAIL;
+     if (!same(before, &actual)) return SC_CONFLICT;
+@@ -123,7 +124,7 @@
+     strcpy(want->value[SC_SECONDS], seconds);
+     if (choice != SC_NONE) {
+         want->present[SC_CHOICE] = 1;
+-        strcpy(want->value[SC_CHOICE], choice == SC_STARFIELD ? "Starfield" :
++        strcpy(want->value[SC_CHOICE], choice == SC_TANDINATOR ? "Tandinator" : choice == SC_STARFIELD ? "Starfield" :
+                choice == SC_MAZE ? "Maze" : "Matrix");
+     }
+     if (speed) {
+--- a/examples/TSHELL/TSSAVER.C
++++ b/examples/TSHELL/TSSAVER.C
+@@ -32,10 +32,11 @@
+         FindWindow("TandyMiniMIDI", NULL) || FindWindow("TandyJoyMIDI", NULL);
+ }
+ static int saverRunning(void)
+-{ return GetModuleHandle("MATRIX") || GetModuleHandle("MAZE") || GetModuleHandle("STARFLD"); }
++{ return GetModuleHandle("MATRIX") || GetModuleHandle("MAZE") || GetModuleHandle("STARFLD") ||
++         GetModuleHandle("TANDI") || FindWindow("TandyTandinatorSaver", NULL); }
+ static int saverWindow(void)
+ { return FindWindow("TandyMatrixSaver", NULL) || FindWindow("TandyMazeSaver", NULL) ||
+-         FindWindow("TandyStarfieldSaver", NULL); }
++         FindWindow("TandyStarfieldSaver", NULL) || FindWindow("TandyTandinatorSaver", NULL); }
+ static void closeSaver(void)
+ {
+     HWND w = FindWindow("TandyMatrixSaver", NULL);
+@@ -43,6 +44,8 @@
+     w = FindWindow("TandyMazeSaver", NULL);
+     if (w) PostMessage(w, WM_CLOSE, 0, 0L);
+     w = FindWindow("TandyStarfieldSaver", NULL);
++    if (w) PostMessage(w, WM_CLOSE, 0, 0L);
++    w = FindWindow("TandyTandinatorSaver", NULL);
+     if (w) PostMessage(w, WM_CLOSE, 0, 0L);
+ }
+ static void releaseHook(void)
+--- a/examples/TSHELL/TSSAVCFG.C
++++ b/examples/TSHELL/TSSAVCFG.C
+@@ -8,6 +8,7 @@
+ #include "TSSVOPT.H"
+ #define CFG_WIDTH 128
+ #define CFG_HEIGHT 164
++#define CFG_TANDI 118
+ #define CFG_MATRIX 120
+ #define CFG_STARFIELD 119
+ #define CFG_MAZE 121
+@@ -25,9 +26,9 @@
+ static SCCONFIG loaded;
+ static char iniPath[144];
+ static char *keys[SC_KEYS] = { "Enabled", "IdleSeconds", "Choice", "Program", "MazeProgram",
+-                             "StarProgram", "Speed", "Stars" };
++                             "StarProgram", "Speed", "Stars", "TandinatorProgram" };
+ static char *section(int key)
+-{ return key >= SC_SPEED ? "Starfield" : "ScreenSaver"; }
++{ return key == SC_SPEED || key == SC_STARS ? "Starfield" : "ScreenSaver"; }
+ 
+ static int iniName(void)
+ {
+@@ -79,7 +80,7 @@
+ {
+     const char *path;
+     OFSTRUCT of;
+-    if (choice != SC_MATRIX && choice != SC_MAZE && choice != SC_STARFIELD) {
++    if (choice != SC_MATRIX && choice != SC_MAZE && choice != SC_STARFIELD && choice != SC_TANDINATOR) {
+         TinyNotice(w, instance, "Saver", "Choose a saver."); return 0;
+     }
+     path = ScProgram(config, choice);
+@@ -87,7 +88,8 @@
+         TinyNotice(w, instance, "Saver", "Bad app path.\nSee TSHELL.INI."); return 0;
+     }
+     if (OpenFile((LPSTR)path, &of, OF_EXIST) == HFILE_ERROR) {
+-        TinyNotice(w, instance, "Saver", choice == SC_STARFIELD ?
++        TinyNotice(w, instance, "Saver", choice == SC_TANDINATOR ?
++                   "Tandinator\nmissing. Check\nits app path." : choice == SC_STARFIELD ?
+                    "Starfield\nmissing. Check\nStarProgram." : choice == SC_MAZE ?
+                    "Maze missing.\nNothing saved." : "Matrix missing.\nNothing saved.");
+         return 0;
+@@ -99,6 +101,7 @@
+     if (IsDlgButtonChecked(w, CFG_MATRIX)) return SC_MATRIX;
+     if (IsDlgButtonChecked(w, CFG_MAZE)) return SC_MAZE;
+     if (IsDlgButtonChecked(w, CFG_STARFIELD)) return SC_STARFIELD;
++    if (IsDlgButtonChecked(w, CFG_TANDI)) return SC_TANDINATOR;
+     if (IsDlgButtonChecked(w, CFG_NONE)) return SC_NONE;
+     return -1;
+ }
+@@ -107,6 +110,7 @@
+     CheckDlgButton(w, CFG_MATRIX, id == CFG_MATRIX);
+     CheckDlgButton(w, CFG_MAZE, id == CFG_MAZE);
+     CheckDlgButton(w, CFG_STARFIELD, id == CFG_STARFIELD);
++    CheckDlgButton(w, CFG_TANDI, id == CFG_TANDI);
+     CheckDlgButton(w, CFG_NONE, id == CFG_NONE);
+ }
+ static void updatePreview(HWND w)
+@@ -201,13 +205,15 @@
+         SetWindowPos(w, NULL, (GetSystemMetrics(SM_CXSCREEN) - ww) / 2,
+                      (GetSystemMetrics(SM_CYSCREEN) - hh) / 2, ww, hh, SWP_NOZORDER);
+         if (!makeControl(w, "BUTTON", "&Matrix", BS_RADIOBUTTON | WS_GROUP,
+-                         6, 0, 116, 16, CFG_MATRIX) ||
++                         6, 0, 116, 14, CFG_MATRIX) ||
+             !makeControl(w, "BUTTON", "Ma&ze", BS_RADIOBUTTON,
+-                         6, 16, 116, 16, CFG_MAZE) ||
++                         6, 14, 116, 14, CFG_MAZE) ||
+             !makeControl(w, "BUTTON", "&Starfield", BS_RADIOBUTTON,
+-                         6, 32, 116, 16, CFG_STARFIELD) ||
++                         6, 28, 116, 14, CFG_STARFIELD) ||
++            !makeControl(w, "BUTTON", "&Tandinator", BS_RADIOBUTTON,
++                         6, 42, 116, 14, CFG_TANDI) ||
+             !makeControl(w, "BUTTON", "&None", BS_RADIOBUTTON,
+-                         6, 48, 54, 16, CFG_NONE) ||
++                         6, 56, 54, 14, CFG_NONE) ||
+             !makeControl(w, "EDIT", "", WS_BORDER | ES_AUTOHSCROLL | WS_GROUP,
+                          6, 80, 116, 18, CFG_SECONDS) ||
+             !makeControl(w, "BUTTON", "&Options...", BS_PUSHBUTTON,
+@@ -228,7 +234,7 @@
+             choice = ScEnabled(&loaded) ? ScChoice(&loaded) : SC_NONE;
+             if (choice >= SC_NONE) choose(w,
+                 choice == SC_MATRIX ? CFG_MATRIX : choice == SC_MAZE ? CFG_MAZE :
+-                choice == SC_STARFIELD ? CFG_STARFIELD : CFG_NONE);
++                choice == SC_TANDINATOR ? CFG_TANDI : choice == SC_STARFIELD ? CFG_STARFIELD : CFG_NONE);
+             stagedSpeed = ScSpeed(ScValue(&loaded, SC_SPEED));
+             stagedStars = ScStars(ScValue(&loaded, SC_STARS));
+             if (!stagedSpeed) stagedSpeed = 2;
+@@ -241,8 +247,8 @@
+         dc = BeginPaint(w, &ps);
+         oldfont = SelectObject(dc, GetStockObject(SYSTEM_FIXED_FONT));
+         SetBkMode(dc, TRANSPARENT); SetTextColor(dc, GetSysColor(COLOR_WINDOWTEXT));
+-        TextOut(dc, 6, 64, "10-3600 sec:", 12);
+-        if (!TSSaverPrimary()) TextOut(dc, 62, 48, "Next run", 8);
++        TextOut(dc, 6, 70, "10-3600 sec:", 12);
++        if (!TSSaverPrimary()) TextOut(dc, 62, 56, "Next run", 8);
+         SelectObject(dc, oldfont); EndPaint(w, &ps); return TRUE;
+     }
+     if (m == WM_COMMAND) {
+@@ -255,7 +261,7 @@
+             else if (child == GetDlgItem(w, CFG_OPTIONS)) wp = CFG_OPTIONS;
+             else return TRUE; /* Enter in the edit never writes or previews. */
+         }
+-        if (wp >= CFG_STARFIELD && wp <= CFG_NONE) {
++        if (wp >= CFG_TANDI && wp <= CFG_NONE) {
+             if (HIWORD(lp) == BN_CLICKED && (HWND)LOWORD(lp) == GetDlgItem(w, wp)) {
+                 choose(w, wp); updatePreview(w);
+             }
+--- a/examples/TSHELL/TSHOLD.C
++++ b/examples/TSHELL/TSHOLD.C
+@@ -90,7 +90,7 @@
+     TSSaverShortcutBusy() || !IsWindowEnabled(owner) || GetCapture() ||
+     GetSysModalWindow() || GetModuleHandle("TEXIT"))return 0;
+  if(FindWindow("TandyMatrixSaver",NULL) || FindWindow("TandyMazeSaver",NULL) ||
+-    FindWindow("TandyStarfieldSaver",NULL))return 0;
++    FindWindow("TandyStarfieldSaver",NULL) || FindWindow("TandyTandinatorSaver",NULL))return 0;
+  active=GetActiveWindow();parent=active?GetWindow(active,GW_OWNER):NULL;
+  if(parent && !IsWindowEnabled(parent))return 0;
+  if(active && GetClassName(active,name,sizeof(name)) && !lstrcmp(name,"#32770"))return 0;

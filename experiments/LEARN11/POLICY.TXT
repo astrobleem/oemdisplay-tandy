@@ -1,0 +1,76 @@
+LEARN11: ISOLATED HOST PROTOTYPE, NOT AN APP RELEASE
+
+Initial policy
+-------------
+Default OFF. Confirm an existing roster identity and its named edition explicitly.
+Only a completed manual game, with opt-in Save Report, may contribute once.
+Only base UNKNOWN cells with observed non-UNKNOWN answers are eligible. Preserve
+NO, PROBABLY NO, PROBABLY YES and YES exactly. Unknown answers teach nothing.
+One report is pending. At least two reports agreeing on the identical strength
+activate a cell. Any different strength is an unresolved conflict; a majority
+never silently overrides it. YES versus PROBABLY YES therefore conflicts too.
+Both counters and conflicts remain visible. Reset a cell to start over, or reset
+all learned facts; retained session tombstones prevent old save/import retries.
+New names, editing known base facts, and automatic identity inference are deferred.
+
+Feedback restraint proposed for review
+-------------------------------------
+Only games played with learning OFF may save reports in this prototype. A game
+using learned facts cannot corroborate those same facts. Agreement collection is
+against a frozen unlearned base; identity is a separate explicit user claim.
+Different tokens identify different local completed sessions, NOT independently
+corroborating people. A user can repeat a false answer and activate a false fact.
+Copies carrying the same token count once. The same token with a changed identity
+or transcript is refused. A renamed/new-token copy cannot be proven independent;
+the prototype makes no such claim. No network/upload or automatic background save.
+
+Format proposal: FACTS.LRN, little endian
+----------------------------------------
+Header, 56 bytes:
+  magic 8 = TDLRN01 plus NUL; version U16=1; reserved flags U16=0;
+  exact base DAT SHA256 32; character/question dimensions U16 each;
+  cell/session counts U16 each; total file bytes U32.
+Cell record, 12 bytes, sorted (character index, question index):
+  character U16, question U16, four U16 counters for values 0,1,3,4.
+Session record, 32 bytes, sorted unique token:
+  128-bit local game token, 128-bit SHA256 transcript/confirmed-identity digest.
+Trailer: CRC32 over header and payload, 4 bytes. Integrity is not authentication.
+Indices are stable ONLY within the exact pinned base, whose source supplies stable
+named IDs/editions. No string table or new identity is imported into the overlay.
+Active status is derived from counters; it is never a mutable authoritative flag.
+Bounded at 256 cells, 128 completed-session tokens, 25 answers per contribution:
+maximum serialized size 7,228 bytes. Saturation never evicts provenance or makes
+room silently. Further contributions are refused while unlearned play continues.
+Reset retains provenance and does not free the 128-session ledger. The long-term
+notebook rollover/retention policy needs review; it is not solved by silent reset.
+
+Loads and writes
+----------------
+Read the size before bounded input; validate magic/version/flags/base/dimensions,
+exact lengths, CRC, sorted unique IDs, base UNKNOWN targets, counter limits and
+aggregate reports <= 25 * sessions. Bad, stale or oversized files stay inactive.
+Try validated primary, then validated backup, otherwise use the unlearned base.
+Save fully to same-directory TMP and fsync, validate, prepare and validate BKT,
+replace BAK only from a valid old primary, then replace primary and validate.
+Any interrupted step leaves the old or new complete valid state. A save retry
+with the same token cannot count twice, including an error reported after replace.
+This is tested host os.replace/fsync behavior. Win3/DOS rename, crash recovery,
+sharing/permission errors and input guarding require a later native implementation.
+This prototype accesses only synthetic files inside its own temporary test dirs.
+
+Native memory/performance review, NOT measured native learning performance
+-------------------------------------------------------------------------
+The accepted TANDI10 DGROUP minimum is 56,624 bytes. Adding two full 7,228-byte
+overlay copies would exceed a 64-KB segment; the host deepcopy transaction cannot
+be ported literally. Propose streaming validation/writes and a compact active
+runtime view, at most 256 * 6 = 1,536 bytes, plus bounded scratch. A full counter
+view is 3,072 bytes; keep the session ledger on disk during gameplay. Do not load
+a full character/question matrix or a second ENGINE. Preserve actual row AND
+column semantics: intercept both DB row and column reads with the same active
+overlay, rather than rewriting canonical DAT or changing engine thresholds.
+Bounded binary search finds a character range in <=9 comparisons for 256 cells;
+a column read may scan <=256 records. These are design bounds, not native timings.
+Host fixtures generate temporary dual-matrix DAT snapshots only to exercise the
+verbatim engine/loader. Those snapshots include no overlay lookup overhead.
+Native code size, stack, DGROUP, 8086 opcodes, 640-KB headroom, disk I/O and owned
+window guards must be measured before integration. None is qualified here.

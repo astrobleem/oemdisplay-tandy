@@ -1,0 +1,33 @@
+320x200 REVIEW UI DESIGN ONLY; NOT A NATIVE SCREENSHOT
+
+Forty 8-pixel columns, 25 rows; one dialog at a time after a completed game.
+The learner does not displace an active game or show a secret identity on loss.
+Skip is the default action. Standard play and demo never save automatically.
+
+1. Confirm identity
+   SAVE A REPORT?  [default Skip]
+   Who did you mean?
+   [Choose roster name...]
+   Show the named edition in two wrapped lines; no automatic leader selection.
+   [Confirm] advances only after explicit selection/confirmation.
+   Learning was used: explain this game cannot teach and offer Close only.
+
+2. Batch review
+   Example from the actual Poseidon fixture: four eligible UNKNOWN-cell answers.
+   Display counts: new reports / become active / conflicts / ignored known facts.
+   Show chosen name/edition again. One sentence: "Reports are not proof."
+   [Details] [Save report] [Skip]. Never require reviewing all 130 questions.
+   Details shows only eligible changed cells, up to three questions per page with
+   exact five-valued answer labels, pending/active/conflict status and counts.
+   It is read-only in this prototype: either save this contribution or skip it.
+   Save failures show "Could not confirm save. Retry / Skip" with the SAME token.
+
+3. Manage local learning
+   Use learned facts: OFF initially. Explicit toggle controls guessing only.
+   Active / pending / conflict counts; cells / 256, reports / 128.
+   [Conflicts] opens only disputed cells; [Reset facts] requires a clear confirm.
+   Reset confirmation says facts are cleared but old report IDs stay remembered.
+   Full/corrupt/stale overlay remains OFF with a short reason and unlearned play.
+
+UI.HTM is an offline clickable design. No persistence, engine integration,
+network requests, Windows API claims, personal learned data or uploads.

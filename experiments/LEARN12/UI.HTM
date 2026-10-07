@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LEARN12 collection UI design</title>
+<style>
+body{font:16px system-ui;background:#eee;color:#222;margin:24px}main{max-width:680px;margin:auto}
+.screen{box-sizing:border-box;width:320px;height:200px;background:black;color:white;position:relative;padding:8px;font:12px/16px monospace;overflow:hidden}
+h2{font:12px monospace;color:#ff0;margin:0 0 16px}p{margin:0 0 10px}button,select{font:12px monospace;max-width:304px}
+button{background:#c0c0c0;color:black;border:2px outset #eee;padding:3px 6px;cursor:pointer}button:disabled{color:#777;cursor:default}
+.bar{position:absolute;bottom:4px;left:8px;right:8px;display:flex;gap:8px;justify-content:space-between}.small{font-size:11px;line-height:14px}
+.note{max-width:640px;line-height:1.5}.detail{font-size:11px;line-height:13px;margin:6px 0;color:white}.status{color:#ff0}
+</style><main><h1>Local report collection</h1>
+<p class="note">Offline clickable design at 320Ãƒâ€”200. The Poseidon report comes from the host fixture. Buttons change this mock only; nothing is stored or uploaded.</p>
+<div id="screen" class="screen" aria-live="polite"></div>
+<p><button onclick="show('confirm')">Report flow</button> <button onclick="show('manage')">Manage view</button></p>
+<p class="note">Skip is the default. Show only eligible answers from this completed game, with optional detail pages. Do not request a review of all 130 questions. Two matching reports are not independent factual corroboration. Reports never affect guesses in this collection-only design.</p>
+<script>
+const rows=[{"question": "Did this version of your character debut in animation?", "answer": "NO", "before": "pending", "after": "active", "reports": 2}, {"question": "Does your character have extraordinary physical strength?", "answer": "YES", "before": "pending", "after": "active", "reports": 2}, {"question": "Is your character royalty?", "answer": "YES", "before": "pending", "after": "active", "reports": 2}, {"question": "Did this version of your character debut in live-action fiction?", "answer": "NO", "before": "pending", "after": "active", "reports": 2}]; let view='confirm', selected=false, page=0, learned=false, saved=false, cleared=false;
+const screen=document.getElementById('screen');
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function bar(s){return '<div class="bar">'+s+'</div>';}
+function btn(label,action,disabled=false){return '<button '+(disabled?'disabled':'')+' onclick="'+action+'">'+label+'</button>';}
+function show(next){view=next;render();}
+function choose(value){selected=value==='poseidon';render();document.getElementById('choice').focus();}
+function render(){let out='';
+if(view==='confirm'){out='<h2>STORE A REPORT?</h2><p>Who did you mean?</p><select id="choice" aria-label="Confirmed roster identity" onchange="choose(this.value)"><option value="">Choose roster name...</option><option value="poseidon" '+(selected?'selected':'')+'>Poseidon (Greek mythology)</option></select><p class="small" style="margin-top:12px">Standard guessing was used.<br>Nothing is saved automatically.</p>'+bar(btn('Confirm',"show('review')",!selected)+btn('Skip',"show('manage')"));}
+else if(view==='review'){out='<h2>REVIEW REPORT</h2><p>Poseidon (Greek mythology)</p><p>4 eligible answers<br>4 reports agree; 0 conflicts</p><p class="small">Known / unknown answers ignored.<br>Reports are not proof.</p>'+bar(btn('Details',"page=0;show('details')")+btn('Save report',"saved=true;show('saved')",saved||cleared)+btn('Skip',"show('manage')"));}
+else if(view==='details'){out='<h2>CHANGED ANSWERS '+(page+1)+' / 2</h2>'+rows.slice(page*2,page*2+2).map(r=>'<div class="detail">'+esc(r.question)+'<br><span class="status">'+esc(r.answer)+'; 2 reports Ã¢â€ â€™ active</span></div>').join('')+bar(btn('Back',"show('review')")+btn(page?'Previous':'Next',"page=1-page;render()"));}
+else if(view==='saved'){out='<h2>REPORT STORED</h2><p>4 answers have matching reports.</p><p>Not used for guessing.</p><p class="small">This game counts once.<br>Reports are not proof.</p>'+bar(btn('Close',"show('manage')"));}
+else if(view==='status'){out='<h2>NOTEBOOK CAPACITY</h2><p>256 cells; 128 report IDs.</p><p class="small">At capacity, new reports are refused.<br>Clear does not free report IDs.<br>Standard guessing stays unchanged.</p>'+bar(btn('Back',"show('manage')"));}
+else if(view==='reset'){out='<h2>CLEAR REPORT NOTES?</h2><p>Clear all report notes?</p><p class="small">Old report IDs stay remembered.<br>Reset does not free report capacity.</p>'+bar(btn('Cancel',"show('manage')")+btn('Clear notes',"cleared=true;learned=false;show('manage')"));}
+else{const active=cleared?0:(saved?11:7),pending=cleared||saved?0:4,reports=saved?42:41;
+out='<h2>LOCAL REPORT NOTEBOOK</h2><p>Not used for guessing. '+''+'</p><p class="small">'+active+' agreed; '+pending+' pending; 0 conflicts<br>Cells '+(cleared?0:11)+'/256; reports '+reports+'/128</p><p class="small">Standard guessing unchanged.<br>Clear keeps old report IDs.</p>'+bar(btn('Status',"show('status')")+btn('Clear notes',"show('reset')")+btn('Close',"show('confirm')"));}
+screen.innerHTML=out;}
+render();
+</script></main></html>

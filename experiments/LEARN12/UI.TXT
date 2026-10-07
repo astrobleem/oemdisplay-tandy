@@ -1,0 +1,12 @@
+COLLECTION-ONLY UI REFINEMENT, HOST DESIGN, NOT A NATIVE SCREENSHOT
+1. Confirm who you meant, including the named edition. No automatic leader pick.
+2. Review a batch summary of eligible UNKNOWN-cell reports, optional Details.
+   Say '4 reports agree', '0 conflicts', 'not used for guessing'. Skip is default.
+   If none are eligible: 'Nothing new to report' and Close; no Save button.
+3. Notebook shows agreed/pending/conflicting report counts, cell/report limits,
+   'Standard guessing unchanged', and Clear Reports with explicit confirmation.
+   Clear keeps old game IDs and does not free the report-ID capacity.
+   At capacity: 'Notebook full. Standard play continues.' No automatic eviction.
+4. Failed or uncertain saves: 'Could not confirm save. Retry / Skip'. Same token.
+Only completed manual base-only games may contribute. No demos or replay imports,
+no new identities, no known-base replacement, no personal learned files accessed.

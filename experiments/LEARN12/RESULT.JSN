@@ -1,0 +1,1639 @@
+{
+  "scope": "host-only fixed post-cap alternatives; canonical engine, scoring, thresholds and DAT unchanged",
+  "fixed_before_evaluation": {
+    "tie": "only after Q25; equal base-score candidates; raw secondary evidence tie-break",
+    "cap2": "only after Q25; base gap <=2; secondary sum/4 truncated, clipped to [-2,+2]",
+    "collection": "reports stored but never influence any guess"
+  },
+  "reference_assumptions": "255 UNKNOWN inputs borrowed as scripted assumptions from AUDIT08; not independently verified or asserted factual here",
+  "canonical_inputs": {
+    "reference_answers": {
+      "failures": 0,
+      "first_misses": 23,
+      "rejections": 42,
+      "mean_questions": 14.4140625,
+      "overlay_pair_checks": 0,
+      "host_seconds": 0.9583621001802385
+    },
+    "claude_one_wrong": {
+      "failures": 1,
+      "first_misses": 53,
+      "rejections": 113,
+      "mean_questions": 17.29296875,
+      "overlay_pair_checks": 0,
+      "host_seconds": 1.2227441002614796
+    },
+    "claude_two_wrong": {
+      "failures": 31,
+      "first_misses": 143,
+      "rejections": 565,
+      "mean_questions": 19.94140625,
+      "overlay_pair_checks": 0,
+      "host_seconds": 1.2687767003662884
+    },
+    "two_unknown": {
+      "failures": 0,
+      "first_misses": 22,
+      "rejections": 48,
+      "mean_questions": 16.046875,
+      "overlay_pair_checks": 0,
+      "host_seconds": 0.6044384995475411
+    },
+    "soft_strength": {
+      "failures": 0,
+      "first_misses": 23,
+      "rejections": 38,
+      "mean_questions": 18.6171875,
+      "overlay_pair_checks": 0,
+      "host_seconds": 0.7198140001855791
+    },
+    "alternate_wrong": {
+      "failures": 12,
+      "first_misses": 115,
+      "rejections": 336,
+      "mean_questions": 19.203125,
+      "overlay_pair_checks": 0,
+      "host_seconds": 0.6917290999554098
+    }
+  },
+  "fixed_reference_inputs": {
+    "reference_answers": {
+      "failures": 0,
+      "first_misses": 22,
+      "rejections": 41,
+      "mean_questions": 14.40625,
+      "overlay_pair_checks": 0,
+      "host_seconds": 0.4372657001949847
+    },
+    "claude_one_wrong": {
+      "failures": 1,
+      "first_misses": 54,
+      "rejections": 118,
+      "mean_questions": 17.2734375,
+      "overlay_pair_checks": 0,
+      "host_seconds": 0.5953580997884274
+    },
+    "claude_two_wrong": {
+      "failures": 28,
+      "first_misses": 144,
+      "rejections": 549,
+      "mean_questions": 19.94140625,
+      "overlay_pair_checks": 0,
+      "host_seconds": 0.7283222996629775
+    },
+    "two_unknown": {
+      "failures": 0,
+      "first_misses": 24,
+      "rejections": 55,
+      "mean_questions": 16.00390625,
+      "overlay_pair_checks": 0,
+      "host_seconds": 0.6039386996999383
+    },
+    "soft_strength": {
+      "failures": 0,
+      "first_misses": 23,
+      "rejections": 36,
+      "mean_questions": 18.6171875,
+      "overlay_pair_checks": 0,
+      "host_seconds": 0.7239867998287082
+    },
+    "alternate_wrong": {
+      "failures": 12,
+      "first_misses": 115,
+      "rejections": 336,
+      "mean_questions": 19.1796875,
+      "overlay_pair_checks": 0,
+      "host_seconds": 0.6892065000720322
+    }
+  },
+  "models": {
+    "REF-collection": {
+      "reference_answers": {
+        "failures": 0,
+        "first_misses": 22,
+        "rejections": 41,
+        "mean_questions": 14.40625,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.44740269985049963
+      },
+      "claude_one_wrong": {
+        "failures": 1,
+        "first_misses": 54,
+        "rejections": 118,
+        "mean_questions": 17.2734375,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.6168841999024153
+      },
+      "claude_two_wrong": {
+        "failures": 28,
+        "first_misses": 144,
+        "rejections": 549,
+        "mean_questions": 19.94140625,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.7197960000485182
+      },
+      "two_unknown": {
+        "failures": 0,
+        "first_misses": 24,
+        "rejections": 55,
+        "mean_questions": 16.00390625,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.5752260000444949
+      },
+      "soft_strength": {
+        "failures": 0,
+        "first_misses": 23,
+        "rejections": 36,
+        "mean_questions": 18.6171875,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.7470411001704633
+      },
+      "alternate_wrong": {
+        "failures": 12,
+        "first_misses": 115,
+        "rejections": 336,
+        "mean_questions": 19.1796875,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.6999220000579953
+      }
+    },
+    "REF-tie": {
+      "reference_answers": {
+        "failures": 0,
+        "first_misses": 21,
+        "rejections": 38,
+        "mean_questions": 14.40625,
+        "overlay_pair_checks": 216,
+        "host_seconds": 0.4623760995455086
+      },
+      "claude_one_wrong": {
+        "failures": 1,
+        "first_misses": 52,
+        "rejections": 113,
+        "mean_questions": 17.2734375,
+        "overlay_pair_checks": 390,
+        "host_seconds": 0.6429467000998557
+      },
+      "claude_two_wrong": {
+        "failures": 27,
+        "first_misses": 144,
+        "rejections": 547,
+        "mean_questions": 19.94140625,
+        "overlay_pair_checks": 3292,
+        "host_seconds": 0.7956465999595821
+      },
+      "two_unknown": {
+        "failures": 0,
+        "first_misses": 23,
+        "rejections": 54,
+        "mean_questions": 16.00390625,
+        "overlay_pair_checks": 161,
+        "host_seconds": 0.5991974999196827
+      },
+      "soft_strength": {
+        "failures": 0,
+        "first_misses": 22,
+        "rejections": 35,
+        "mean_questions": 18.6171875,
+        "overlay_pair_checks": 192,
+        "host_seconds": 0.7732895999215543
+      },
+      "alternate_wrong": {
+        "failures": 12,
+        "first_misses": 115,
+        "rejections": 335,
+        "mean_questions": 19.1796875,
+        "overlay_pair_checks": 2694,
+        "host_seconds": 0.7595504000782967
+      }
+    },
+    "REF-cap2": {
+      "reference_answers": {
+        "failures": 0,
+        "first_misses": 21,
+        "rejections": 38,
+        "mean_questions": 14.40625,
+        "overlay_pair_checks": 216,
+        "host_seconds": 0.45944870030507445
+      },
+      "claude_one_wrong": {
+        "failures": 1,
+        "first_misses": 52,
+        "rejections": 113,
+        "mean_questions": 17.2734375,
+        "overlay_pair_checks": 390,
+        "host_seconds": 0.6279684999026358
+      },
+      "claude_two_wrong": {
+        "failures": 27,
+        "first_misses": 144,
+        "rejections": 547,
+        "mean_questions": 19.94140625,
+        "overlay_pair_checks": 3381,
+        "host_seconds": 0.8270996999926865
+      },
+      "two_unknown": {
+        "failures": 0,
+        "first_misses": 23,
+        "rejections": 54,
+        "mean_questions": 16.00390625,
+        "overlay_pair_checks": 161,
+        "host_seconds": 0.6217728997580707
+      },
+      "soft_strength": {
+        "failures": 0,
+        "first_misses": 23,
+        "rejections": 36,
+        "mean_questions": 18.6171875,
+        "overlay_pair_checks": 537,
+        "host_seconds": 0.7685231999494135
+      },
+      "alternate_wrong": {
+        "failures": 12,
+        "first_misses": 115,
+        "rejections": 335,
+        "mean_questions": 19.1796875,
+        "overlay_pair_checks": 2694,
+        "host_seconds": 0.7591693000867963
+      }
+    },
+    "FALSE-collection": {
+      "reference_answers": {
+        "failures": 0,
+        "first_misses": 22,
+        "rejections": 41,
+        "mean_questions": 14.40625,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.4540250999853015
+      },
+      "claude_one_wrong": {
+        "failures": 1,
+        "first_misses": 54,
+        "rejections": 118,
+        "mean_questions": 17.2734375,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.6243701996281743
+      },
+      "claude_two_wrong": {
+        "failures": 28,
+        "first_misses": 144,
+        "rejections": 549,
+        "mean_questions": 19.94140625,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.7403800999745727
+      },
+      "two_unknown": {
+        "failures": 0,
+        "first_misses": 24,
+        "rejections": 55,
+        "mean_questions": 16.00390625,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.5839998000301421
+      },
+      "soft_strength": {
+        "failures": 0,
+        "first_misses": 23,
+        "rejections": 36,
+        "mean_questions": 18.6171875,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.7476985002867877
+      },
+      "alternate_wrong": {
+        "failures": 12,
+        "first_misses": 115,
+        "rejections": 336,
+        "mean_questions": 19.1796875,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.7175939003936946
+      }
+    },
+    "FALSE-tie": {
+      "reference_answers": {
+        "failures": 0,
+        "first_misses": 22,
+        "rejections": 42,
+        "mean_questions": 14.40625,
+        "overlay_pair_checks": 5101,
+        "host_seconds": 0.46550119994208217
+      },
+      "claude_one_wrong": {
+        "failures": 1,
+        "first_misses": 55,
+        "rejections": 122,
+        "mean_questions": 17.2734375,
+        "overlay_pair_checks": 7138,
+        "host_seconds": 0.6481158002279699
+      },
+      "claude_two_wrong": {
+        "failures": 28,
+        "first_misses": 144,
+        "rejections": 558,
+        "mean_questions": 19.94140625,
+        "overlay_pair_checks": 22133,
+        "host_seconds": 0.8137430003844202
+      },
+      "two_unknown": {
+        "failures": 0,
+        "first_misses": 24,
+        "rejections": 57,
+        "mean_questions": 16.00390625,
+        "overlay_pair_checks": 4081,
+        "host_seconds": 0.595023900270462
+      },
+      "soft_strength": {
+        "failures": 0,
+        "first_misses": 24,
+        "rejections": 39,
+        "mean_questions": 18.6171875,
+        "overlay_pair_checks": 3877,
+        "host_seconds": 0.7792461002245545
+      },
+      "alternate_wrong": {
+        "failures": 12,
+        "first_misses": 115,
+        "rejections": 341,
+        "mean_questions": 19.1796875,
+        "overlay_pair_checks": 16597,
+        "host_seconds": 0.7603763998486102
+      }
+    },
+    "FALSE-cap2": {
+      "reference_answers": {
+        "failures": 0,
+        "first_misses": 22,
+        "rejections": 42,
+        "mean_questions": 14.40625,
+        "overlay_pair_checks": 5101,
+        "host_seconds": 0.47818460036069155
+      },
+      "claude_one_wrong": {
+        "failures": 1,
+        "first_misses": 55,
+        "rejections": 122,
+        "mean_questions": 17.2734375,
+        "overlay_pair_checks": 7138,
+        "host_seconds": 0.6454330999404192
+      },
+      "claude_two_wrong": {
+        "failures": 28,
+        "first_misses": 144,
+        "rejections": 558,
+        "mean_questions": 19.94140625,
+        "overlay_pair_checks": 22260,
+        "host_seconds": 0.8659672997891903
+      },
+      "two_unknown": {
+        "failures": 0,
+        "first_misses": 24,
+        "rejections": 57,
+        "mean_questions": 16.00390625,
+        "overlay_pair_checks": 4081,
+        "host_seconds": 0.6046802997589111
+      },
+      "soft_strength": {
+        "failures": 0,
+        "first_misses": 24,
+        "rejections": 39,
+        "mean_questions": 18.6171875,
+        "overlay_pair_checks": 6475,
+        "host_seconds": 0.7674793996848166
+      },
+      "alternate_wrong": {
+        "failures": 12,
+        "first_misses": 115,
+        "rejections": 341,
+        "mean_questions": 19.1796875,
+        "overlay_pair_checks": 16597,
+        "host_seconds": 0.7613642001524568
+      }
+    },
+    "NOISE-collection": {
+      "reference_answers": {
+        "failures": 0,
+        "first_misses": 22,
+        "rejections": 41,
+        "mean_questions": 14.40625,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.4565865998156369
+      },
+      "claude_one_wrong": {
+        "failures": 1,
+        "first_misses": 54,
+        "rejections": 118,
+        "mean_questions": 17.2734375,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.6522499998100102
+      },
+      "claude_two_wrong": {
+        "failures": 28,
+        "first_misses": 144,
+        "rejections": 549,
+        "mean_questions": 19.94140625,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.7295817001722753
+      },
+      "two_unknown": {
+        "failures": 0,
+        "first_misses": 24,
+        "rejections": 55,
+        "mean_questions": 16.00390625,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.5736756999976933
+      },
+      "soft_strength": {
+        "failures": 0,
+        "first_misses": 23,
+        "rejections": 36,
+        "mean_questions": 18.6171875,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.787351000122726
+      },
+      "alternate_wrong": {
+        "failures": 12,
+        "first_misses": 115,
+        "rejections": 336,
+        "mean_questions": 19.1796875,
+        "overlay_pair_checks": 0,
+        "host_seconds": 0.7425077999942005
+      }
+    },
+    "NOISE-tie": {
+      "reference_answers": {
+        "failures": 0,
+        "first_misses": 22,
+        "rejections": 40,
+        "mean_questions": 14.40625,
+        "overlay_pair_checks": 999,
+        "host_seconds": 0.49730300018563867
+      },
+      "claude_one_wrong": {
+        "failures": 1,
+        "first_misses": 54,
+        "rejections": 116,
+        "mean_questions": 17.2734375,
+        "overlay_pair_checks": 1078,
+        "host_seconds": 0.6537159997969866
+      },
+      "claude_two_wrong": {
+        "failures": 27,
+        "first_misses": 144,
+        "rejections": 547,
+        "mean_questions": 19.94140625,
+        "overlay_pair_checks": 4325,
+        "host_seconds": 0.80399139970541
+      },
+      "two_unknown": {
+        "failures": 0,
+        "first_misses": 24,
+        "rejections": 56,
+        "mean_questions": 16.00390625,
+        "overlay_pair_checks": 738,
+        "host_seconds": 0.5959128001704812
+      },
+      "soft_strength": {
+        "failures": 0,
+        "first_misses": 23,
+        "rejections": 36,
+        "mean_questions": 18.6171875,
+        "overlay_pair_checks": 603,
+        "host_seconds": 0.895856499671936
+      },
+      "alternate_wrong": {
+        "failures": 12,
+        "first_misses": 115,
+        "rejections": 336,
+        "mean_questions": 19.1796875,
+        "overlay_pair_checks": 4376,
+        "host_seconds": 0.7572026997804642
+      }
+    },
+    "NOISE-cap2": {
+      "reference_answers": {
+        "failures": 0,
+        "first_misses": 22,
+        "rejections": 40,
+        "mean_questions": 14.40625,
+        "overlay_pair_checks": 999,
+        "host_seconds": 0.46363449981436133
+      },
+      "claude_one_wrong": {
+        "failures": 1,
+        "first_misses": 54,
+        "rejections": 116,
+        "mean_questions": 17.2734375,
+        "overlay_pair_checks": 1078,
+        "host_seconds": 0.6279405998066068
+      },
+      "claude_two_wrong": {
+        "failures": 27,
+        "first_misses": 144,
+        "rejections": 547,
+        "mean_questions": 19.94140625,
+        "overlay_pair_checks": 4368,
+        "host_seconds": 0.8056332999840379
+      },
+      "two_unknown": {
+        "failures": 0,
+        "first_misses": 24,
+        "rejections": 56,
+        "mean_questions": 16.00390625,
+        "overlay_pair_checks": 738,
+        "host_seconds": 0.6384264002554119
+      },
+      "soft_strength": {
+        "failures": 0,
+        "first_misses": 23,
+        "rejections": 36,
+        "mean_questions": 18.6171875,
+        "overlay_pair_checks": 1251,
+        "host_seconds": 0.7876216000877321
+      },
+      "alternate_wrong": {
+        "failures": 12,
+        "first_misses": 115,
+        "rejections": 336,
+        "mean_questions": 19.1796875,
+        "overlay_pair_checks": 4376,
+        "host_seconds": 0.7900226996280253
+      }
+    }
+  },
+  "invariants": {
+    "REF-collection": {
+      "all_1536_paths_same_base_questions_answers_and_examined": true,
+      "deterministic_repeat": true,
+      "used_only_after_q25": true,
+      "active_cells": 11
+    },
+    "REF-tie": {
+      "all_1536_paths_same_base_questions_answers_and_examined": true,
+      "deterministic_repeat": true,
+      "used_only_after_q25": true,
+      "active_cells": 11
+    },
+    "REF-cap2": {
+      "all_1536_paths_same_base_questions_answers_and_examined": true,
+      "deterministic_repeat": true,
+      "used_only_after_q25": true,
+      "active_cells": 11
+    },
+    "FALSE-collection": {
+      "all_1536_paths_same_base_questions_answers_and_examined": true,
+      "deterministic_repeat": true,
+      "used_only_after_q25": true,
+      "active_cells": 52
+    },
+    "FALSE-tie": {
+      "all_1536_paths_same_base_questions_answers_and_examined": true,
+      "deterministic_repeat": true,
+      "used_only_after_q25": true,
+      "active_cells": 52
+    },
+    "FALSE-cap2": {
+      "all_1536_paths_same_base_questions_answers_and_examined": true,
+      "deterministic_repeat": true,
+      "used_only_after_q25": true,
+      "active_cells": 52
+    },
+    "NOISE-collection": {
+      "all_1536_paths_same_base_questions_answers_and_examined": true,
+      "deterministic_repeat": true,
+      "used_only_after_q25": true,
+      "active_cells": 20
+    },
+    "NOISE-tie": {
+      "all_1536_paths_same_base_questions_answers_and_examined": true,
+      "deterministic_repeat": true,
+      "used_only_after_q25": true,
+      "active_cells": 20
+    },
+    "NOISE-cap2": {
+      "all_1536_paths_same_base_questions_answers_and_examined": true,
+      "deterministic_repeat": true,
+      "used_only_after_q25": true,
+      "active_cells": 20
+    }
+  },
+  "examples": {
+    "REF-collection": [],
+    "REF-tie": [
+      {
+        "name": "Loki (Marvel Comics)",
+        "policy": "reference_answers",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Ernie (Sesame Street)",
+        "policy": "reference_answers",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        },
+        "after": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "reference_answers",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Loki (Marvel Comics)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Ernie (Sesame Street)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        },
+        "after": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        }
+      },
+      {
+        "name": "Groot",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": false,
+          "first_miss": true,
+          "rejections": 10
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        }
+      },
+      {
+        "name": "Ernie (Sesame Street)",
+        "policy": "two_unknown",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        },
+        "after": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "soft_strength",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        },
+        "after": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        }
+      },
+      {
+        "name": "Loki (Marvel Comics)",
+        "policy": "alternate_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      }
+    ],
+    "REF-cap2": [
+      {
+        "name": "Loki (Marvel Comics)",
+        "policy": "reference_answers",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Ernie (Sesame Street)",
+        "policy": "reference_answers",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        },
+        "after": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "reference_answers",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Loki (Marvel Comics)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Ernie (Sesame Street)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        },
+        "after": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        }
+      },
+      {
+        "name": "Groot",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": false,
+          "first_miss": true,
+          "rejections": 10
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        }
+      },
+      {
+        "name": "Ernie (Sesame Street)",
+        "policy": "two_unknown",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        },
+        "after": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        }
+      },
+      {
+        "name": "Loki (Marvel Comics)",
+        "policy": "alternate_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      }
+    ],
+    "FALSE-collection": [],
+    "FALSE-tie": [
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "reference_answers",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Rapunzel (Tangled)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Cruella de Vil (Disney)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        }
+      },
+      {
+        "name": "Loki (Marvel Comics)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        }
+      },
+      {
+        "name": "Rapunzel (Tangled)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        }
+      },
+      {
+        "name": "Dumbo (Disney)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        }
+      },
+      {
+        "name": "Bambi (Disney)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 9
+        }
+      },
+      {
+        "name": "Cruella de Vil (Disney)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "two_unknown",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "two_unknown",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        }
+      },
+      {
+        "name": "Rapunzel (Tangled)",
+        "policy": "soft_strength",
+        "before": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "soft_strength",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        }
+      },
+      {
+        "name": "Dumbo (Disney)",
+        "policy": "alternate_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        }
+      },
+      {
+        "name": "Bambi (Disney)",
+        "policy": "alternate_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 9
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "alternate_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        }
+      }
+    ],
+    "FALSE-cap2": [
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "reference_answers",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Rapunzel (Tangled)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Cruella de Vil (Disney)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        }
+      },
+      {
+        "name": "Loki (Marvel Comics)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        }
+      },
+      {
+        "name": "Rapunzel (Tangled)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        }
+      },
+      {
+        "name": "Dumbo (Disney)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        }
+      },
+      {
+        "name": "Bambi (Disney)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 9
+        }
+      },
+      {
+        "name": "Cruella de Vil (Disney)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "two_unknown",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "two_unknown",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        }
+      },
+      {
+        "name": "Rapunzel (Tangled)",
+        "policy": "soft_strength",
+        "before": {
+          "success": true,
+          "first_miss": false,
+          "rejections": 0
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "soft_strength",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        }
+      },
+      {
+        "name": "Dumbo (Disney)",
+        "policy": "alternate_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 4
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        }
+      },
+      {
+        "name": "Bambi (Disney)",
+        "policy": "alternate_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 9
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "alternate_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 5
+        }
+      }
+    ],
+    "NOISE-collection": [],
+    "NOISE-tie": [
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "reference_answers",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Cruella de Vil (Disney)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Groot",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": false,
+          "first_miss": true,
+          "rejections": 10
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "two_unknown",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      }
+    ],
+    "NOISE-cap2": [
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "reference_answers",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 1
+        }
+      },
+      {
+        "name": "Cruella de Vil (Disney)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "claude_one_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      },
+      {
+        "name": "Groot",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 6
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        }
+      },
+      {
+        "name": "Poseidon (Greek mythology)",
+        "policy": "claude_two_wrong",
+        "before": {
+          "success": false,
+          "first_miss": true,
+          "rejections": 10
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 7
+        }
+      },
+      {
+        "name": "Zeus (Greek mythology)",
+        "policy": "two_unknown",
+        "before": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 2
+        },
+        "after": {
+          "success": true,
+          "first_miss": true,
+          "rejections": 3
+        }
+      }
+    ]
+  },
+  "capacity": {
+    "standard_unknown_cells": 13116,
+    "audit_unknown_cells": 12863,
+    "stored_cell_capacity": 256,
+    "fraction_of_standard_unknown": 0.019518145776151265,
+    "sessions": 128,
+    "max_serialized_bytes": 7228
+  },
+  "evaluated_games": 30720,
+  "native_integration": false,
+  "publication_performed": false
+}

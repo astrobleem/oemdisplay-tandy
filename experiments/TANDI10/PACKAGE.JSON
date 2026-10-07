@@ -1,0 +1,33 @@
+{
+  "packet": "TANDI10",
+  "app_version": "0.3.7",
+  "standard_roster_revision": "0.3.2",
+  "status": "qualified local demo and separate optional fourth-saver review",
+  "zip_sha256": "15fb6d3575ceccf1b36e85b0327d32d489a6509fd5a1ea0750b0d519e3f887df",
+  "zip_bytes": 6235287,
+  "files": 1593,
+  "exe_sha256": "42ea5a1381e819283ef7ac1f781f2be307e9e3f8345634f9a0e9c14f4111b3db",
+  "standard_dat_sha256": "c952b6c4d5f7b12c469ce73bf8fe9a18fa0c560cac03f339df74779b22ae455f",
+  "audit_dat_sha256": "8ad48837d8298b5618e253a05d64067cb4858085464d655379e3382d54b34637",
+  "optional_shell_sha256": "5fddc1b37c600ab8e431a70765c6cf769e6ec0cd04212112c02ce51989389e85",
+  "preview_sha256": "b1c9946be636875f8db339a92211420b3a46c58da1678344fb5d29bfb6ea5b83",
+  "source_diff_sha256": "dc2c29f5e80472e6574e27ab312dbe17c60b1d226cd943f5818eb591354cb65a",
+  "shell_diff_sha256": "fa5f4488297b2431aa2332bf6b03dd4c202cf109c9f84161a541d679ea2d699d",
+  "native_runs": 19,
+  "qualified_runtime_modes": [
+    "320x200x16",
+    "640x200x2",
+    "640x200x4"
+  ],
+  "claude_36_vs_31_verified": true,
+  "two_wrong_final_failures": {
+    "standard": 31,
+    "audit08": 36
+  },
+  "base_packet_sha256": "da14fd8c55ca68782239ded222b60f05735b5a9aaadd18a2b3c324fdcea1b9af",
+  "canonical_defaults_changed": false,
+  "settings_written_by_demo": false,
+  "learning_enabled": false,
+  "publication_performed": false,
+  "physical_hardware_tested": false
+}
