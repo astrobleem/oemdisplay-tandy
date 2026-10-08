@@ -77,4 +77,4 @@ requirements and recovery, see the [user manual](docs/USERMAN.MD).
 
 | [Starfield](experiments/VISPART2/README.MD) | [Matrix](experiments/VISPART1/README.MD) |
 | --- | --- |
-| <img src="experiments/VISPART2/PLAIN.PNG" alt="Native Starfield screen saver capture" width="390"> | <img src="experiments/VISPART1/MATRIX.PNG" alt="Native Matrix screen saver with green trails" width="390"> |
+| <img src="docs/SHOTS/STARS10.PNG" alt="Native Starfield screen saver capture" width="390"> | <img src="docs/SHOTS/MATRIX.PNG" alt="Native Matrix screen saver with green trails" width="390"> |

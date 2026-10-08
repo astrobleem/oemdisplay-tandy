@@ -12,8 +12,8 @@ is installed by the disk image. No UI was generated or repainted.
 | [Buddy Holly animation](https://raw.githubusercontent.com/astrobleem/oemsound-tandy/5411fe5f9c2cccdbe09900a779ebda382a407a74/docs/SHOTS/BUDCAP04.GIF) | Existing BUDCAP 0.4 six-second silent GIF from a genuine native DOSBox-X capture, 320x200, 24 frames. Linked directly to the [Tandy sound companion](https://github.com/astrobleem/oemsound-tandy). [Original capture provenance](https://github.com/astrobleem/oemsound-tandy/blob/5411fe5f9c2cccdbe09900a779ebda382a407a74/docs/SHOTS/README.MD#budcap-04-animated-preview). Reused unchanged; no new video export or runtime test. |
 | [Pinball](../../examples/PINBALL/EVIDENCE/V2/SCORING.PNG) | Current V2 game with a live score, native 320x200. [Guide](../../examples/PINBALL/README.MD) and [test record](../../examples/PINBALL/TESTS.MD). |
 | [Maze preview](XTMAZE.PNG) | Exact left 320x200 frame from the published [two-frame capture](../../examples/MAZE/GAME/EVIDENCE/320X16.PNG), crop `(2,2,322,202)`, without rescaling or retouching. [Current game guide](../../examples/MAZE/GAME/README.MD). PR #116 is merged, but the disk image retains the older saver; the game is a separate preview. |
-| [Starfield](../../experiments/VISPART2/PLAIN.PNG) | Existing genuine plain Starfield capture from the qualified VISPART2 packet, reused unchanged. [Source and native scope](../../experiments/VISPART2/README.MD). |
-| [Matrix](../../experiments/VISPART1/MATRIX.PNG) | Existing genuine Matrix capture with green trails from the qualified VISPART1 packet, reused unchanged. [Source and native scope](../../experiments/VISPART1/README.MD). |
+| [Starfield](../SHOTS/STARS10.PNG) | Final cursor-fixed build 10, actual idle fast/64-star state. Direct SDL capture, 640x400 with doubled rows from logical 640x200 monochrome, reused unchanged. [Source and native scope](../../experiments/VISPART2/README.MD). |
+| [Matrix](../SHOTS/MATRIX.PNG) | Historical on-demand 320x200x16 appearance, decoded from the actual guest framebuffer and verified pixel-for-pixel. Reused unchanged; this still does not verify automatic idle or `/S` behavior. [Source and native scope](../../experiments/VISPART1/README.MD). |
 | [Tandinator](../../examples/TANDINAT/SHOTS/320x200x16.PNG) | Actual canonical v0.2 sixteen-color character-guessing frame, displayed at doubled size. [Guide and native scope](../../examples/TANDINAT/README.MD). The separate [0.3.8 experimental download](../../experiments/TANDI11/README.MD) is available; this image does not depict its notebook UI. |
 
 The shutdown recording's direct DOS test returned exit 0 and DONE.TXT with
@@ -51,8 +51,8 @@ is recorded here; byte identity with a remote YouTube rendition is not claimed.
 Screen-saver image SHA-256 identities:
 
 ```text
-beb75c682ade6758f4a6fe9436c2918a9643e98c8c22935967b72922ff5761bc  experiments/VISPART2/PLAIN.PNG
-b10fe71566250585cec1624a9d8375d0b3cd102ed36a99fd94f319e26ce31229  experiments/VISPART1/MATRIX.PNG
+b1de772388c0fec4ea272acebd096e0254b04a288a4de357cf7cb91d01c25f34  docs/SHOTS/STARS10.PNG
+ec544bf5aba64ab508c92a60b70c00185c762c14a0d717b265ec0324b7b4dddc  docs/SHOTS/MATRIX.PNG
 ```
 
 Buddy Holly GIF SHA-256 (companion-owned asset, referenced unchanged):
