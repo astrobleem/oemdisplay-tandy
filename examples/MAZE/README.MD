@@ -1,5 +1,7 @@
 # Tandy Maze: retained windowed proof
 
+**Current: [Tandy Maze game and saver](GAME/README.MD)** - a playable first-person maze, also the TSHELL Maze saver (`MAZE.EXE /S`). Everything below is the older proof and SAVER10, kept unchanged as history.
+
 The current optional TSHELL-compatible saver is documented in
 [SAVER10/README.MD](SAVER10/README.MD). It retains ordinary windowed operation
 and adds safe GDI fallback for trial drivers, but remains very slow. The

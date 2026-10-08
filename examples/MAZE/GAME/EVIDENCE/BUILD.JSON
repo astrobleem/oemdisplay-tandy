@@ -1,0 +1,8 @@
+{
+  "source": "MAZE.C",
+  "bytes": 28013,
+  "sha256": "9905abccd267dd229502fad2d7e57375f51c34b2c445fc52ea754508407de389",
+  "cpu": "/G0 8086",
+  "target": "Windows 3.0 real mode",
+  "compiler": "CL /nologo /c /G0 /Gw /Gs /AS /W3 /Oit"
+}

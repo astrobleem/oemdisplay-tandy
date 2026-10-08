@@ -1,0 +1,65 @@
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+END reason=ownership-lost fast=0 gdi=0 width=320 colors=16 ticks=0 frames=1 elapsed_ms=0 draw_ms=0 max_draw_ms=0 startup_ms=54 restore_ms=0 free_warm=0 free_end=203424
+QA step=0 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+DRAIN begin
+DRAIN released
+END reason=mouse-button fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=659 draw_ms=55 max_draw_ms=55 startup_ms=55 restore_ms=0 free_warm=203424 free_end=203424
+QA step=1 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+DRAIN begin
+DRAIN released
+END reason=mouse-move fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=275 draw_ms=55 max_draw_ms=55 startup_ms=55 restore_ms=0 free_warm=203424 free_end=203424
+QA step=2 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+END reason=deactivated fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=165 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=203424 free_end=203424
+QA step=3 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+END reason=close fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=165 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=203424 free_end=203424
+QA step=4 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+DRAIN begin
+DRAIN released
+END reason=keyboard fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=329 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=203424 free_end=203424
+QA step=5 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+END reason=cancel-mode fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=165 draw_ms=55 max_draw_ms=55 startup_ms=55 restore_ms=0 free_warm=203424 free_end=203424
+QA step=6 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+END reason=shutdown fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=219 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=203424 free_end=203424
+QA step=7 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+END reason=task-switch fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=165 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=203424 free_end=203424
+QA step=8 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+END reason=repaint-disruption fast=0 gdi=0 width=320 colors=16 ticks=5 frames=2 elapsed_ms=274 draw_ms=55 max_draw_ms=55 startup_ms=55 restore_ms=0 free_warm=203424 free_end=203424
+QA step=9 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+END reason=ownership-lost fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=220 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=203424 free_end=203424
+QA step=10 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+DRAIN begin
+END reason=shutdown-cancelled fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=165 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=203424 free_end=203424
+QA step=11 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+DRAIN begin
+HELD MOUSE PASS
+HELD MOUSE PASS
+DRAIN released
+END reason=mouse-button fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=1593 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=203424 free_end=203424
+QA step=12 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+SYNTHETIC PASS
+DRAIN begin
+DRAIN released
+END reason=key-release fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=275 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=203424 free_end=203424
+QA step=13 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+END reason=ownership-lost fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=274 draw_ms=0 max_draw_ms=0 startup_ms=0 restore_ms=0 free_warm=203424 free_end=203424
+CAPTURE THEFT PASS
+QA step=14 changed_units=0 active_ok=1 raw=0 capture_released=1
+START driver=C:\WINDOWS\SYSTEM\TR53216.DRV fast=0 gdi=0 width=320 colors=16
+END reason=deactivated fast=0 gdi=0 width=320 colors=16 ticks=4 frames=2 elapsed_ms=165 draw_ms=55 max_draw_ms=55 startup_ms=55 restore_ms=0 free_warm=203424 free_end=203424
+QA step=15 changed_units=0 active_ok=1 raw=0 capture_released=1
+QA DONE
+QUIT clean
