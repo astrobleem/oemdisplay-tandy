@@ -4,7 +4,7 @@
 
 ## Supported configuration
 
-- Original Tandy signature checked as in `tanvidasm/TANBOX.ASM`; PCjr is deliberately excluded
+- Original Tandy signature checked as in [archived TANBOX.ASM](https://github.com/astrobleem/oemdisplay-tandy/blob/96ce6971a1757f3c77094322ed82741791c79646/tanvidasm/TANBOX.ASM); PCjr is deliberately excluded
 - Normal 640KB shared-memory layout: BIOS reports 624KB, and the conventional DOS MCB chain ends at segment `9C00h`
 - BIOS text mode 3 when the helper starts
 - DOS 3.0 or newer with allocation-strategy functions
@@ -45,7 +45,7 @@ Run it from a directory containing the helper or put its directory on PATH. Run 
 
 ## Memory layout and implementation
 
-Mode 09 uses physical `98000h-9FFFFh`. The normal Tandy BIOS already excludes `9C000h-9FFFFh` from the DOS arena, leaving the lower 16KB exposed to DOS allocations. This is the overlap described in `tanvidasm/NOTES`.
+Mode 09 uses physical `98000h-9FFFFh`. The normal Tandy BIOS already excludes `9C000h-9FFFFh` from the DOS arena, leaving the lower 16KB exposed to DOS allocations. This is the overlap described in [archived tanvidasm/NOTES](https://github.com/astrobleem/oemdisplay-tandy/blob/96ce6971a1757f3c77094322ed82741791c79646/tanvidasm/NOTES).
 
 The helper uses DOS calls to retain:
 
@@ -99,7 +99,7 @@ These are emulator-level allocator and memory-safety results. They do not establ
 
 ## References
 
-- Repository `tanvidasm/NOTES` and `tanvidasm/TANBOX.ASM`
+- Repository [archived tanvidasm/NOTES](https://github.com/astrobleem/oemdisplay-tandy/blob/96ce6971a1757f3c77094322ed82741791c79646/tanvidasm/NOTES) and [archived TANBOX.ASM](https://github.com/astrobleem/oemdisplay-tandy/blob/96ce6971a1757f3c77094322ed82741791c79646/tanvidasm/TANBOX.ASM)
 - [Microsoft MS-DOS Encyclopedia, system calls](https://www.pcjs.org/documents/books/mspl13/msdos/encyclopedia/section5/): allocation, resize, strategy and TSR interfaces
 - [DOSBox-X DOS process termination implementation](https://github.com/joncampbell123/dosbox-x/blob/master/src/dos/dos_execute.cpp): retention of owned allocations for TSR termination
 - [DOSBox-X CPU settings](https://dosbox-x.com/wiki/Guide%3ACPU-settings-in-DOSBox%E2%80%90X): accepted CPU names; plain `8088` is not a supported selector in the tested build

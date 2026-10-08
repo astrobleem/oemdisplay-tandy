@@ -126,7 +126,7 @@ suite. Windows media and installed Windows files are not included in evidence.
 
 The old `src/ENABLE.C` has a mode-selection sketch marked `future`, incomplete
 exports and a comment saying its shadow flush still needs implementation.
-`src/tandy16/TGAVID.ASM` also contains placeholder plane offsets. Neither is the
+[archived src/tandy16/TGAVID.ASM](https://github.com/astrobleem/oemdisplay-tandy/blob/96ce6971a1757f3c77094322ed82741791c79646/src/tandy16/TGAVID.ASM) also contains placeholder plane offsets. Neither is the
 candidate05 renderer. Merely selecting their mode or changing AX=9 to AX=0Ah
 would give incorrect display memory and GDI behavior.
 

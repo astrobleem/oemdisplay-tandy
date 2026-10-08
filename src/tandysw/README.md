@@ -156,3 +156,8 @@ painting and is emulator throughput only. Large redraws remain slow.
 
 Keep this frozen correctness baseline when testing future dirty-region or
 query/no-flush optimizations, and rerun affected Windows interaction tests.
+
+Cleanup note: the legacy src/tandy16 implementation and tanvidasm
+provenance cited by this historical record are preserved at
+[the exact DEV snapshot](https://github.com/astrobleem/oemdisplay-tandy/tree/96ce6971a1757f3c77094322ed82741791c79646/). Current source and
+accepted binary identities remain unchanged.

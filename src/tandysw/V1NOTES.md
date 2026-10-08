@@ -122,3 +122,8 @@ The module is named DISPLAY and uses canonical Windows 3.0 display ordinals, inc
 - Port all reachable DDK code to actual 8086 instructions
 - Validate conventional/video-memory reservation and then physical hardware
 - Polish OEM installation packaging after runtime coverage
+
+Cleanup note: the legacy src/tandy16 implementation and tanvidasm
+provenance cited by this historical record are preserved at
+[the exact DEV snapshot](https://github.com/astrobleem/oemdisplay-tandy/tree/96ce6971a1757f3c77094322ed82741791c79646/). Current source and
+accepted binary identities remain unchanged.
