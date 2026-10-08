@@ -265,6 +265,7 @@ static void makefiles(void)
     sprintf(line,"IF NOT EXIST %s\\TINST.EXE GOTO FAIL\r\n",src); put(h,line);
     /* Preflight ALL inputs before restoring any original. */
     for(i=0;i<count;i++) {sprintf(line,"IF NOT EXIST %s\\%s GOTO FAIL\r\n",bak,files[i].rel); put(h,line);}
+    sprintf(line,"IF NOT EXIST %s\\WAVE01\\META.TXT GOTO WAVEOFF\r\nIF NOT EXIST %s\\WAVEXT.EXE GOTO FAIL\r\n%s\\WAVEXT.EXE RESTORE %s %s\r\nIF ERRORLEVEL 1 GOTO FAIL\r\n:WAVEOFF\r\n",src,src,src,win,src); put(h,line);
     sprintf(line,"IF NOT EXIST %s\\SHELLSEL.EXE GOTO RECCHECK\r\n%s\\SHELLSEL.EXE RECOVER %s\\SYSTEM.INI\r\nIF ERRORLEVEL 1 GOTO FAIL\r\n:RECCHECK\r\n",src,src,win); put(h,line);
     sprintf(line,"IF EXIST %s\\TSHELL.JRN GOTO FAIL\r\nIF EXIST %s\\TSHELL.NEW GOTO FAIL\r\nIF EXIST %s\\TSHELL.OLD GOTO FAIL\r\nIF EXIST %s\\TSHELL.RST GOTO FAIL\r\n",win,win,win,win); put(h,line);
     sprintf(line,"%s\\TINST.EXE /ZERO\r\nIF ERRORLEVEL 1 GOTO FAIL\r\n",src); put(h,line);
@@ -290,14 +291,20 @@ static void makefiles(void)
         put(h,"IF NOT EXIST C:\\WINXT\\SHREADY.TAG GOTO PLAIN\r\nIF NOT EXIST C:\\WINXT\\TSTART.BAT GOTO PLAIN\r\nIF NOT EXIST C:\\WINDOWS\\TSHELL.EXE GOTO PLAIN\r\nIF NOT EXIST C:\\WINDOWS\\TSINPUT.DLL GOTO PLAIN\r\nIF NOT EXIST C:\\WINDOWS\\TSHELL.INI GOTO PLAIN\r\nIF NOT EXIST C:\\WINXT\\TINST.EXE GOTO SHELLERR\r\nC:\\WINXT\\TINST.EXE /SHELLSAFE C:\\WINDOWS\r\nIF ERRORLEVEL 2 GOTO SHELLERR\r\nIF ERRORLEVEL 1 GOTO PLAIN\r\nC:\\WINXT\\TSTART.BAT\r\nGOTO DONE\r\n:PLAIN\r\n");
     }
     sprintf(line,"%s\\WIN.COM /R\r\nGOTO DONE\r\n:SETUP\r\n",win); put(h,line);
-    /* Keep relative OEM disk paths anchored at the actual source directory. */
-    sprintf(line,"%c:\r\nCD %s\r\nIF ERRORLEVEL 1 GOTO NOWIN\r\nECHO Select Other display, then enter this source path: %s\r\n%s\\SETUP.EXE\r\n",src[0],src,src,win); put(h,line);
+    /* DOS SETUP detects an existing installation from its working directory.
+     * sourceinf already makes the OEM disk path absolute. */
+    sprintf(line,"%c:\r\nCD %s\r\nIF ERRORLEVEL 1 GOTO NOWIN\r\nECHO Select Other display, then enter this source path: %s\r\n%s\\SETUP.EXE\r\n",win[0],win,src,win); put(h,line);
     sprintf(line,"ECHO Windows Setup returned to DOS.\r\nECHO If a disk/source prompt appears, use %s each time.\r\n",src); put(h,line);
     if(!stricmp(src,"C:\\WINXT") && !stricmp(win,"C:\\WINDOWS"))
         put(h,"ECHO Next, optionally install the Start bar: C:\\WINXT\\TSSETUP\r\n");
     sprintf(line,"ECHO Start Windows with %s\\WINXT\r\nECHO Keep rollback instructions in %s\\BACKUP.TXT\r\nGOTO DONE\r\n",src,src); put(h,line);
     put(h,":RECFAIL\r\nECHO Shell recovery failed. Windows and Setup were not started.\r\nGOTO DONE\r\n:SHELLERR\r\nECHO Shell display check failed. Check SYSTEM.INI before starting Windows.\r\nGOTO DONE\r\n:NOHELP\r\nECHO Incomplete helper installation. Windows and Setup were not started.\r\nGOTO DONE\r\n:NOWIN\r\nECHO Windows files or directory unavailable. Nothing started.\r\nGOTO DONE\r\n:FAILED\r\nECHO Video reservation failed. Windows and Setup were not started.\r\nGOTO DONE\r\n:USAGE\r\nECHO Use WINXT or WINXT SETUP from the support folder\r\n:DONE\r\n"); closeout(h);
     join(path,HELP,"BACKUP.TXT"); h=newtext(path); sprintf(line,"Original Windows=%s\r\nBackup=%s\r\nSource=%s\r\nRestore at real DOS: %s\\RESTORE YES\r\n",win,bak,src,bak); put(h,line); closeout(h);
+    /* Original independent wave updater changes only guarded starters/add-on.
+     * The installer guard remains PARTIAL until that transaction verifies. */
+    join(path,src,"WAVEXT.EXE");
+    if(spawnl(P_WAIT,path,path,"APPLY",win,src,NULL))
+        fail("Independent wave preparation refused; Setup was not started.",src);
     /* Atomic final transition: interruption leaves PARTIAL.TAG, never READY.TAG. */
     join(path,HELP,"PARTIAL.TAG"); join(target,HELP,"READY.TAG");
     if(rename(path,target)) fail("Cannot commit ready marker.",target);
@@ -306,7 +313,7 @@ int main(int argc,char **argv)
 {
     char path[PTH],rel[24],out[PTH]; int i, n; unsigned a; struct diskfree_t disk; unsigned long freebytes;
     char *patterns[]={"*.DRV","*.FON","*.FOT","*.TTF","*.GR2","*.GR3","*.LGO","*.RLE","*.INI"};
-    char *required[]={"OEMSETUP.INF","RESERVE.COM","CGA.GR2","CGALOGO.LGO","WXTSPL01.RLE","TR53216.DRV","TR56404.DRV","TR51616.DRV","TR53204.DRV","TR56402.DRV","TXTMODE.DRV","TXTSYS.FON","CGAFIX.FON","CGAOEM.FON","CGASYS.FON","EGAFIX.FON","EGAOEM.FON","EGASYS.FON"};
+    char *required[]={"WAVEXT.EXE","XTWAVE.DAT","XTCLEAN.COM","OEMSETUP.INF","RESERVE.COM","CGA.GR2","CGALOGO.LGO","WXTSPL01.RLE","TR53216.DRV","TR56404.DRV","TR51616.DRV","TR53204.DRV","TR56402.DRV","TXTMODE.DRV","TXTSYS.FON","CGAFIX.FON","CGAOEM.FON","CGASYS.FON","EGAFIX.FON","EGAOEM.FON","EGASYS.FON"};
     char *original[]={"SYSTEM.INI","WIN.INI","WIN.COM"};
     char *boot[]={"CONFIG.SYS","AUTOEXEC.BAT"};
     char *generated[]={"WINXT.BAT","BACKUP.TXT","READY.TAG","READY.NEW","PARTIAL.TAG","SHREADY.TAG","OEMBASE.INF","OEMSETUP.NEW"};

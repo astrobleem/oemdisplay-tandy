@@ -25,10 +25,12 @@ disposable/user-owned C:\WINDOWS clone. Do not redistribute the completed
 private add-on, which contains owned loader bytes. On the DOS target use
 START.BAT from that clone root. No Python is needed on the Tandy.
 
-The current 720 KB DOS Setup installer retains its static RLE fallback; its
-compiled support-file updater has not been changed or represented as wave
-qualified. The portable reproduction toolkit includes this active independent
-default. Keep the original static starter and unmodified WIN.COM for rollback.
+The 720 KB DOS installer now prepares this default from your exact owned
+loader during the guarded installation. The normal `C:\WINXT\WINXT` launcher
+uses the wave for qualified Color mode and static startup for other profiles.
+See [installation and rollback](../../../tools/FLASHDISK/README.MD) and
+[installer qualification](../../../docs/QUAL/WAVEINS.JSON). The independent
+host builder remains available for separate private clones.
 
 Native tests verified all 16 geometries and fixed RGB colors in 210 complete frames,
 key skip, rest settling, relocated/repeated hide, reservation, missing kernel,

@@ -74,7 +74,7 @@ def verify(out, runtime=RUNTIME):
     check(metadata['publication_allowed'] is True and metadata['windows_support_included'] is False
           and metadata['kind'] == 'public-support-free', 'PRIVATE OUTPUT MUST NOT BE PUBLISHED')
     check(metadata['independent_startup_default'] == 'slow-flag-wave'
-          and metadata['disk_setup_startup'] == 'static-RLE-fallback'
+          and metadata['disk_setup_startup'] == 'guarded-color-wave-static-fallback'
           and metadata['wave_payload_sha256'] == {n:package.sha(b) for n,b in package.wave_payload().items()},
           'Independent startup default/provenance mismatch')
     check(metadata['fat_verification'] == actual, 'Build report differs from verified disk')
@@ -89,6 +89,25 @@ class PackageTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(prefix='winxt-package-test-')
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name)
+
+    def test_native_installer_source_and_payload_pins(self):
+        evidence = json.loads((HERE.parents[1] / 'docs/QUAL/WAVEINS.JSON').read_bytes())
+        self.assertEqual(evidence['status'], 'PASS final frozen mounted-image preparation and native installer lifecycle')
+        payload = package.public_payload(RUNTIME)
+        for name, pin in evidence['payload_pins'].items():
+            self.assertEqual(package.sha(payload[name]), pin['sha256'])
+            self.assertEqual(len(payload[name]), pin['bytes'])
+        for name, digest in evidence['source_pins'].items():
+            self.assertEqual(package.sha(package.read_file(HERE.parents[1] / name)), digest)
+        self.assertEqual(evidence['final_helper_sha256'], package.sha(package.helper_payload()['PREPXT.EXE']))
+        self.assertEqual(evidence['rollback_original_files'], 35)
+        self.assertTrue(evidence['normal_color_and_static_dos_return'])
+
+    def test_changed_dos_wave_refused(self):
+        payload = package.public_payload(RUNTIME)
+        for name in ('XTCLEAN.COM', 'XTWAVE.DAT'):
+            bad = dict(payload); bad[name] = payload[name] + b'x'
+            with self.assertRaises(package.PackageError): package.verify_dos_wave(bad)
 
     def test_windowsxt_is_the_only_current_splash(self):
         payload = package.public_payload(RUNTIME)

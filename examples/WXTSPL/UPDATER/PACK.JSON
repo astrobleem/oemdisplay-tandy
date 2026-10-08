@@ -1,0 +1,8 @@
+{
+  "codec": "bounded literal1..128/repeat3..130; no header",
+  "packed_bytes": 6200,
+  "packed_sha256": "f7217d3bbfb0ded0f9699a69d82ba16c7dcc76c7ac1d7d54748ca910928a9a1b",
+  "expanded_bytes": 35971,
+  "expanded_sha256": "8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c",
+  "roundtrip": "PASS"
+}

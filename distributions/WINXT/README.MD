@@ -1,9 +1,10 @@
 # Windows XT: one support folder, six display choices
 
-All six Setup profiles automatically use the approved Windows XT startup
+All six Setup profiles stage the approved static Windows XT fallback
 picture (`WXTSPL01.RLE`); there is no older-picture choice or splash prompt.
 Windows Setup retains the stock CGA loader. An existing installation is changed
-only when you explicitly run INSTALL/Setup or the splash-only APPLY command.
+only when you explicitly run INSTALL/Setup. The guarded launcher enables the
+short slow flag wave for qualified Color; other profiles keep static startup.
 Recovery preserves your original WIN.COM, even if its picture is old.
 
 This public source deliberately excludes eight Microsoft Windows 3.0 files

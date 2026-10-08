@@ -2,8 +2,10 @@
 
 The accepted independent startup default is the [slow flag wave](examples/WXTSPL/WAVE/README.MD).
 The portable toolkit carries its exact qualified module/wrapper and own-media
-preparation tool. The current DOS Setup installer retains its static fallback
-until its compiled updater is separately rebuilt and qualified.
+preparation tool. The guarded DOS installer enables that short pre-load wave
+in qualified Color mode; other profiles retain static startup.
+[Installer qualification and exact pins](docs/QUAL/WAVEINS.JSON) cover normal
+Color/static exits, native refusals and byte-verified rollback.
 
 The current public release is built by `tools/FLASHDISK/MAKEIMG.PY` and the
 Windows XT release workflow. Every current Setup display profile selects the
@@ -20,11 +22,18 @@ python3 tools/FLASHDISK/TESTPKG.PY --verify /new/winxt-public
 ```
 
 These public outputs contain no proprietary WIN.COM or Windows support bytes.
-Use [the current installation guide](distributions/WINXT/README.MD) and the
+Use [the current installation guide](tools/FLASHDISK/README.MD) and the
 [approved XT artwork source](examples/WXTSPL/ART/tools/BUILD.PY). The original
-loader is supplied by owned Windows media; the splash-only updater preserves
-its exact 4,336-byte prefix and keeps an original backup. Installation remains
-an explicit user action. Never run old Setup media merely to change a picture.
+loader is supplied by owned Windows media. The DOS updater privately builds
+the independent loader, changes only guarded starters, and retains exact
+original starter backups. Normal Windows Setup owns display installation.
+Public CI packages the qualified binaries without recompiling the legacy tools.
+
+For original helper-source reproduction, use an existing owned Microsoft C 6
+toolchain: CL /nologo /c /G0 /AS /W3, then LINK4 /NOE /NOD /ST:4096 for
+TINST/PREPXT or /ST:8192 for WAVEXT, with SLIBCE.LIB. The checked-in helper
+BUILD.BAT files use an existing T: toolchain. Changed executable bytes require
+new native qualification and complete manifest/helper pin updates.
 
 ## Historical TANDY88 reproduction only
 

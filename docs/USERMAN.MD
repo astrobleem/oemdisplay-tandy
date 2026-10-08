@@ -62,10 +62,10 @@ binary or app. See the [mode table](#display-modes) and
 
 ## Get started
 
-**Public preview: [Windows XT 0.1.0-rc.2](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.2).**
-Download [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.2/WINXT720.ZIP) for the disk image
-and instructions, or [WINXT720.IMG](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.2/WINXT720.IMG) directly
-for GoTek/emulators. [SHA256SUMS](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.2/SHA256SUMS) verifies
+**Public preview: [Windows XT 0.1.0-rc.3](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.3).**
+Download [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.3/WINXT720.ZIP) for the disk image
+and instructions, or [WINXT720.IMG](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.3/WINXT720.IMG) directly
+for GoTek/emulators. [SHA256SUMS](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.3/SHA256SUMS) verifies
 the assets. This is an experimental prerelease; supply your own matching
 Windows 3.0 files and back up your installation.
 
@@ -445,3 +445,13 @@ Promotional concept art, not official packaging or a physical product.
 [Original artwork and image identities](PROMO/README.MD).
 
 </details>
+
+## Guarded startup and rollback
+
+The public DOS installer enables the accepted slow wave in qualified Color
+mode and retains static startup for other profiles. See the
+[installer guide](../tools/FLASHDISK/README.MD) for preparation and the exact
+wave-only/full rollback commands. This is a short pre-load animation.
+[Native installer qualification](QUAL/WAVEINS.JSON) records normal Color and
+static Windows exits, three native refusals, and 35-file rollback. Tests use
+DOSBox-X Tandy/8086/640 KB; they do not establish physical 8088 speed.

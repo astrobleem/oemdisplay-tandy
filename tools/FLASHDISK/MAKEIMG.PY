@@ -24,7 +24,7 @@ PUBLIC_NAMES = ('HOLD14.TXT', 'HOLD160.PNG', 'HOLD640.PNG', 'INSTALL.BAT',
     'TEXTMODE.TXT', 'TINST.EXE', 'TR51616.DRV', 'TR53204.DRV', 'TR53216.DRV',
     'TR56402.DRV', 'TR56404.DRV', 'TSCHECK.EXE', 'TSHELL.EXE', 'TSHELL.INI',
     'TSINPUT.DLL', 'TSREADY.TXT', 'TSSETUP.BAT', 'TSTART.BAT', 'TXTMODE.DRV',
-    'WXTSPL01.RLE', 'XPCHIME.EXE')
+    'WAVEXT.EXE', 'XTCLEAN.COM', 'XTWAVE.DAT', 'WXTSPL01.RLE', 'XPCHIME.EXE')
 
 SPLASH_NAME = 'WXTSPL01.RLE'
 SPLASH_SHA = 'eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c'
@@ -86,6 +86,27 @@ def verify_default_splash(payload):
     if profiles != {'TR53216', 'TR56404', 'TR51616', 'TR53204', 'TR56402', 'TXTMODE'}:
         raise PackageError('Expected all six current Windows XT display profiles')
 
+def verify_dos_wave(payload):
+    """The DOS updater must expand the exact already-qualified original module."""
+    expected_wrapper = 'be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad'
+    expected_logo = '8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c'
+    if sha(payload.get('XTCLEAN.COM', b'')) != expected_wrapper:
+        raise PackageError('Qualified DOS wrapper changed')
+    packed = payload.get('XTWAVE.DAT', b''); expanded = bytearray(); i = 0
+    while i < len(packed):
+        c = packed[i]; i += 1
+        count = c + 1 if c < 128 else c - 128 + 3
+        if c < 128:
+            if i + count > len(packed): raise PackageError('Truncated wave payload')
+            expanded.extend(packed[i:i+count]); i += count
+        else:
+            if i == len(packed): raise PackageError('Truncated wave run')
+            expanded.extend(bytes([packed[i]]) * count); i += 1
+        if len(expanded) > 35971: raise PackageError('Oversized wave payload')
+    if len(expanded) != 35971 or sha(expanded) != expected_logo:
+        raise PackageError('Qualified DOS logo changed')
+
+
 def public_payload(runtime):
     raw = read_file(runtime / 'MANIFEST.SHA')
     manifest = {}
@@ -106,6 +127,7 @@ def public_payload(runtime):
             raise PackageError('Runtime hash mismatch: ' + name)
         payload[name] = data
     verify_default_splash(payload)
+    verify_dos_wave(payload)
     payload['MANIFEST.SHA'] = raw
     return payload
 
@@ -193,18 +215,18 @@ controller behavior still require hardware qualification. Experimental text
 has known character damage; use graphics modes for ordinary work.
 Public outputs contain no Microsoft support files, fonts, OS boot files or
 compiler/DDK toolchain. Existing project/DDK licensing notices are unchanged.
-The independent startup default is the accepted fixed-color slow flag wave.
-WXTTOOLS.ZIP contains WAVE/MKSTART.PY: on a modern host prepare a PRIVATE
-add-on from your exact owned WIN.CNF for a disposable C:\WINDOWS clone.
-The add-on contains owned loader bytes and must not be redistributed.
-The 720 KB DOS Setup path above retains its static-RLE fallback until its
-compiled updater is separately rebuilt and qualified for the wave.
-The independent startup default is the accepted fixed-color slow flag wave.
-WXTTOOLS.ZIP contains WAVE/MKSTART.PY: on a modern host prepare a PRIVATE
-add-on from your exact owned WIN.CNF for a disposable C:\WINDOWS clone.
-The add-on contains owned loader bytes and must not be redistributed.
-The 720 KB DOS Setup path above retains its static-RLE fallback until its
-compiled updater is separately rebuilt and qualified for the wave.
+The guarded DOS installer enables the short slow flag wave in qualified
+Color mode. A pending key skips it. Mono/other modes retain static startup.
+It privately combines your matching SYSTEM\WIN.CNF with the original logo;
+the updater changes guarded starters, never installed WIN.COM or settings.
+This is a pre-load animation, not simultaneous loading. Wrong loader bytes
+or altered starters/wrapper refuse safely; never bypass the guard.
+To restore only the original static starters at plain DOS:
+  C:\WINXT\WAVEXT RESTORE C:\WINDOWS C:\WINXT
+To re-enable, use APPLY with the same arguments. Full rollback uses the
+numbered WINXT\BACKUP\B001\RESTORE YES path printed by INSTALL. It disables
+the wave first and verifies restored original Windows resources. Added
+helpers remain inactive; do not redistribute the completed own-media folder.
 WXTTOOLS.ZIP is an optional developer/reproduction toolkit; normal users need
 only WINXT720.IMG (or the same image inside WINXT720.ZIP) and their own Windows.
 """)
@@ -334,7 +356,7 @@ def build(runtime, out, windows_files=None):
             'kind': 'private-own-media' if private else 'public-support-free',
             'binary_policy': 'package accepted pinned binaries; no recompilation',
             'independent_startup_default': 'slow-flag-wave',
-            'disk_setup_startup': 'static-RLE-fallback',
+            'disk_setup_startup': 'guarded-color-wave-static-fallback',
             'wave_payload_sha256': {n: sha(b) for n,b in wave.items()},
             'runtime_manifest_sha256': sha(public['MANIFEST.SHA']),
             'helper_sha256': sha(helper['PREPXT.EXE']),

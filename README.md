@@ -42,15 +42,15 @@ Maze is a separate preview; the disk image includes the older saver.
 
 ## Get started
 
-**[Download Windows XT 0.1.0-rc.2](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.2)**
-— [720 KB disk ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.2/WINXT720.ZIP)
-or [disk image](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.2/WINXT720.IMG).
+**[Download Windows XT 0.1.0-rc.3](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.3)**
+— [720 KB disk ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.3/WINXT720.ZIP)
+or [disk image](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.3/WINXT720.IMG).
 
 Back up Windows, then follow the [installation guide](tools/FLASHDISK/README.MD).
 Use the guarded `C:\WINXT\WINXT` launcher after installation.
 
-The [animated startup](examples/WXTSPL/WAVE/README.MD) is an independent
-starter; the disk image currently uses a static startup picture.
+The [short animated startup](examples/WXTSPL/WAVE/README.MD) is enabled by
+the guarded installer in Color mode; other modes retain static startup.
 [Optional experimental downloads](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experiments-2026-10-07)
 have their own installation guides.
 
