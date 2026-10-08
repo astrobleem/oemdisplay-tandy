@@ -17,7 +17,7 @@ first; the combined default path is C:\WINDOWS.
   INSTALL
 
 INSTALL verifies the source, preserves an original-file snapshot under
-C:\WINXT\BACKUP\B001 (or the next unused number), and opens Windows Setup.
+C:\WINXT\BACKUP\B001 (or the next unused number), and pauses so you can record the backup path before Windows Setup.
 It uses your existing Windows SETUP program, not a hand-edited display setting.
 
 In Setup:
@@ -25,7 +25,8 @@ In Setup:
 2. Enter C:\WINXT.
 3. Choose one of the six modes listed below.
 4. Accept the configuration. If prompted for the display disk again, enter
-   the SAME C:\WINXT. No second source directory is needed.
+   the same source folder. INSTALL writes its actual path into OEMSETUP.INF;
+   OEMBASE.INF preserves the original source INF. No second directory is needed.
 5. Accept Complete Changes. If asked about CONFIG.SYS, choose option 3:
    Setup can make NO changes for you.
 
@@ -53,11 +54,11 @@ normally Program Manager on a fresh installation; TSHELL is not qualified
 for that experimental driver.
 
 SIX DISPLAY CHOICES
-320x200, 16 colors  - TR53216.DRV, EGA fonts, TR5 Clock optimization
-640x200, 4 colors   - TR56404.DRV, CGA fonts, TR5 Clock optimization
-160x200, 16 colors  - TR51616.DRV, CGA fonts, TR5 Clock optimization
-320x200, 4 colors   - TR53204.DRV, CGA fonts, TR5 Clock optimization
-640x200, 2 colors   - TR56402.DRV, CGA fonts, TR5 Clock optimization
+320x200, 16 colors  - TR53216.DRV, EGA fonts, TR5 graphics driver
+640x200, 4 colors   - TR56404.DRV, CGA fonts, TR5 graphics driver
+160x200, 16 colors  - TR51616.DRV, CGA fonts, TR5 graphics driver
+320x200, 4 colors   - TR53204.DRV, CGA fonts, TR5 graphics driver
+640x200, 2 colors   - TR56402.DRV, CGA fonts, TR5 graphics driver
 80x25 hardware text - TXTMODE.DRV, EXPERIMENTAL, known character corruption
 
 The text choice is available through the same Setup list, not another folder.
@@ -123,3 +124,24 @@ C:\WINXT plus C:\WINDOWS. DOS 3.3+ is required; no long filenames or spaces.
 Existing generated helpers or partial installs are refused safely. To change
 modes use WINXT SETUP, not INSTALL again. Older root support folders are not
 deleted automatically; this package's fresh layout needs only C:\WINXT.
+
+FIRST-RUN UPDATE (2026-10-08)
+Programs includes a Windows XT group with Matrix, Maze and Starfield /S
+saver previews, About and the bundled Pinball v2. Missing optional apps are
+hidden. TP.EXE and TANDI.EXE appear only if separately supplied at their
+configured C:\WINXT paths; they are not bundled by this disk. Program Manager
+groups remain read-only. Exit keeps Cancel as the initial/default button;
+E selects Exit, Enter initially cancels, and Escape cancels.
+
+EXISTING LONG FILENAMES IN RUN / BROWSE
+Existing VFAT names are read-only labels; DOS 8.3 aliases still own navigation
+and launch. Requires genuine DOS 6.22, Windows 3.0 real mode, and a fixed,
+uncompressed FAT12/FAT16 drive with 512-byte sectors. Network, removable,
+SUBST/JOIN/ASSIGN and compressed volumes fall back to DOS names. The view
+limits each filtered listing to 128 rows and labels to 63 displayed characters
+with ellipsis. It does not create, rename or write long filenames.
+
+The source INF becomes installation-specific after INSTALL. The released
+MANIFEST.SHA pins the original media; OEMBASE.INF retains that original.
+Keep the source drive mounted through Setup. Never run the guarded installer
+directly from a small/read-only floppy: PREPXT stages to a writable C:\WINXT.

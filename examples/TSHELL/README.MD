@@ -41,6 +41,15 @@ the current selector. Follow DOS/BATCH08.TXT for the narrow success-only FINISH
 batch update, preserving configured paths. The complete fresh kit is a simpler
 starting point for a new Windows installation.
 
+The first-run Windows XT runtime in distributions/WINXT adds a bounded
+[Programs] group from the Windows-directory TSHELL.INI. Existing executables
+only are shown; full DOS paths and arguments are retained. The fresh disk
+configures Matrix/Maze/Starfield /S, About and bundled Pinball v2. Existing
+Program Manager groups remain read-only. Enter/Escape cancel the Exit dialog;
+E selects Exit. The standalone 14 runtime/manifest and FRESH14 packet remain
+historical; use the current disk for the matching first-run build.
+See [first-run qualification](../../docs/FIRSTRUN.MD).
+
 ## Start and clock
 
 My Computer opens or restores File Manager. Programs reads original Win3.0 PMCC
@@ -57,10 +66,14 @@ adjust the DOS date/time explicitly. Apply validates and rereads the result;
 Cancel does not change it. The sub-tick DOS rounding correction does not change
 stock Clock's drawing speed.
 
-## Friendly names in Browse
+## Long filename browsing
 
-Run/Browse reads names already stored as VFAT entries on supported fixed local
-FAT12/FAT16 volumes under genuine DOS 6.22 and Windows real mode. It uses bounded
+Start > Run > Browse displays **existing long filenames**, including spaces,
+by reading names already stored as VFAT entries on supported fixed local
+FAT12/FAT16 volumes with 512-byte sectors under genuine DOS 6.22 and Windows
+3.0 real mode. The shell installer's DOS 3.3+ minimum does not qualify raw reads
+on those older DOS versions. FAT32 and emulator host-folder mounts are outside
+this verified volume domain. It uses bounded
 one-sector reads between message-loop turns and never writes filesystem metadata.
 DOS enumeration remains authoritative. Navigation and launch always use the
 existing short alias, shown separately; arguments and working directories remain.

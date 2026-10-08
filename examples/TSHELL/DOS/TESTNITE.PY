@@ -37,10 +37,10 @@ int main(void)
   mode=m;cols=m<2?40:80;page=p;flags=0x80d3;ioerr=0;hidden=1;video_calls=0;
   memset(grid,'?',sizeof(grid));rc=night_draw();
   if(m<=3 || m==7) {
-   assert(rc==1 && row==23 && col==0 && !hidden);
+   assert(rc==1 && row==22 && col==0 && !hidden);
    if(cols==80)assert(memcmp(grid[17]+20,s,39)==0);
    else{assert(memcmp(grid[17]+7,"It's now safe to turn off",25)==0);assert(memcmp(grid[18]+13,"your computer",13)==0);}
-   assert(grid[4][(cols-16*(cols==80?2:1))/2+6*(cols==80?2:1)]==176);assert(attrs[23][0]==7);
+   assert(grid[4][(cols-16*(cols==80?2:1))/2+6*(cols==80?2:1)]==176);assert(attrs[22][0]==7);
    if(cols==80){assert(grid[4][37]==176);assert(grid[8][26]==219 && grid[8][35]==219 && grid[8][36]==' ');}
    else assert(grid[8][13]==219 && grid[8][17]==219 && grid[8][18]==' ');
   } else assert(rc==0 && video_calls==1);
@@ -61,6 +61,7 @@ without=without.replace('remove_snap(jrn,orig,on); restored_notice();','remove_s
 without=without.replace("static int steps;\nstatic int show_night;", "static int steps;")
 without=without.replace('else if(eqi(argv[1],"RECOVER")||eqi(argv[1],"FINISH")) { show_night=eqi(argv[1],"FINISH"); recover(); }','else if(eqi(argv[1],"RECOVER")) recover();')
 without=without.replace('!eqi(argv[1],"RECOVER")&&!eqi(argv[1],"FINISH")&&!eqi(argv[1],"STATUS")','!eqi(argv[1],"RECOVER")&&!eqi(argv[1],"STATUS")').replace('SELECT|RECOVER|FINISH|STATUS','SELECT|RECOVER|STATUS')
+without=without.replace("Shell recovery check passed; no recovery needed.","No active shell selection; SYSTEM.INI unchanged.")
 assert without==old
 oldbatch=(P/'BASESTRT.BAT').read_bytes()
 assert (P/'TSTART.BAT').read_bytes()==oldbatch.replace((P/'OLDWIN.TXT').read_bytes(),(P/'NEWWIN.TXT').read_bytes())
@@ -76,7 +77,7 @@ with tempfile.TemporaryDirectory(prefix='night-gate-') as td:
   (q/'SYSTEM.INI').write_bytes(base);(q/'TSHELL.EXE').write_bytes(h);(q/'WIN.COM').write_bytes(b'\xeb\x09XWtest')
  def run(cmd,env=None):return subprocess.run([str(exe),cmd,str(q/'SYSTEM.INI')],env=dict(os.environ,**(env or {})),capture_output=True)
  reset();assert run('SELECT').returncode==0;x=run('RECOVER');assert x.returncode==0 and x.stdout==b'Original shell restored and reread verified.\n' and msg not in x.stdout;checks.append('ordinary RECOVER exact original success text')
- reset();x=run('FINISH');assert x.returncode==0 and x.stdout==b'No active shell selection; SYSTEM.INI unchanged.\n';checks.append('no-journal unchanged text')
+ reset();x=run('FINISH');assert x.returncode==0 and x.stdout==b'Shell recovery check passed; no recovery needed.\n';checks.append('no-journal unchanged text')
  assert run('SELECT').returncode==0;x=run('FINISH');assert x.returncode==0 and x.stdout==msg and (q/'SYSTEM.INI').read_bytes()==base and not (q/'TSHELL.JRN').exists();checks.append('verified recovery exact plain text')
  x=run('FINISH');assert msg not in x.stdout;checks.append('idempotent no-journal no-success')
  for bad in ['foreign_journal','stale_temp','unexpected_shell','readonly_journal','duplicate_boot']:

@@ -28,17 +28,41 @@ Unknown drawing bounds retain full refresh. Cursor overlap uses synchronous
 hide/restore, and identity screen copies retain full resynchronization. No
 general deferred conversion or asynchronous GDI flush is claimed.
 
+## Public downloads and local candidates
+
+The [0.1.0-rc.1 disk](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.1)
+contains the TR5 baseline and Tandy Start 14. The separate
+[experimental release](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experiments-2026-10-07)
+provides TRIAL7, shell/app fixes and Tandinator 0.3.8. Canonical apps and
+baseline defaults are unchanged by these optional packets.
+
+The [0.1.0-rc.2 first-run update](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.2)
+adds source-path localization, visible backup/next-step guidance, the corrected
+Exit mnemonic, a separate DOS prompt area, Programs entries and bundled
+Pinball v2. Real Setup comparison and Exit cancellation are verified;
+[first-run evidence](FIRSTRUN.MD) separates pending native checks.
+
+The recovered build03 wheel extension has exact reproduction and native
+loader/export/rollback evidence, but actual mouse events and physical wheel
+delivery remain open. It is not included in this disk. BVP video work remains
+local.
+
 ## Current shell and Windows XT additions
 
-Tandy Start 14 includes the 11 friendly-name browser, the narrow-desktop System
+Tandy Start 14 includes the 11 **long filename browser**, the narrow-desktop System
 menu repair, 12 single Exit item with Shift-to-skip-chime, 13 reduced Browse
 redraws and 14 guarded Hold-to-Start support. Source and matching runtimes are
 published together. Friendly-name lookup is read-only; launches retain DOS
-aliases and unsupported metadata falls back to short names.
+aliases and unsupported metadata falls back to short names. Raw reading requires
+DOS 6.22, Win3 real mode, fixed uncompressed FAT12/FAT16 and 512-byte sectors;
+see [Browse requirements](../distributions/WINXT/NAMES11.TXT). The installer's
+DOS 3.3+ minimum and the separate Buddy playback scope are not broader
+long-filename or disk-size qualification.
 
 Current runtime SHA-256 identities:
-- TSHELL.EXE, 68,451 bytes:
-  `4577182c8ba80f3604867710c44403f61c7e684f01cdc4d45e1e6dc92ef74689`.
+- First-run Windows XT TSHELL.EXE, 69,043 bytes:
+  `daeb6948019b9cc4c5e36e05970ea85f8a0e5588486029dc6ba6e1a6be2219d7`.
+  The standalone 14 packet keeps its historical bytes.
 - TSINPUT.DLL, 6,281 bytes:
   `d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80`.
 
@@ -84,7 +108,7 @@ uses GDI on every driver; 16 stars is lightest. Neither is a password lock.
 The 09 Start placement fix, 08 My Computer/FINISH and 07 date/time editor
 remain. My Computer opens or restores File Manager directly from Start.
 
-The date/time editor validates calendar dates (1980–2099) and 24-hour times.
+The date/time editor validates calendar dates (1980â€“2099) and 24-hour times.
 Apply changes only edited values. Reload, Cancel, Escape and closing without
 Apply do not set the clock. Native controls fit the 160-pixel desktop.
 

@@ -1,12 +1,18 @@
 # TRIAL7: experimental border, text and DIB test build
 
-**Public experimental draft, 2026-10-05. Not a replacement for accepted TR5.**
+**Experimental packet prepared 2026-10-05; publicly released 2026-10-07.
+Not a replacement for the accepted TR5 disk.**
 The selected combined TRIAL7 build includes the retained TRIAL6 bounded DIB
 refresh plus fail-closed border/thin-line and short raster-label refresh.
 The shipped drivers and rollback helper are the exact emulator-qualified
 bytes; no physical Tandy timing, CF reliability or power-loss claim is made.
 
 ## Download and use
+
+[Public runtime download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/TRIAL7.ZIP) ·
+[Source/evidence download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/SOURCEQA.ZIP) ·
+[Release checksums](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/SHA256SUMS)
+
 
 - [TRIAL7.ZIP](TRIAL7.ZIP): exact 20-file optional runtime/rollback kit.
 - [Runtime instructions](RUNTIME/README.TXT): read before copying or applying.

@@ -1,0 +1,59 @@
+{
+  "base_main": "0ba5de7141162905ad0382fdbffdf9473b918b0c",
+  "scope": "First-run installer/shell/menu/runtime/docs only; display drivers, splash and TSINPUT preserved",
+  "native_profile": "8086_prefetch, normal core, 640KB, no XMS/EMS/UMB; cycles=fixed 200000, uncalibrated functional evidence",
+  "pinball_sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f",
+  "native_runs": {
+    "setup-baseline-control": {
+      "tag": "setup-baseline-control",
+      "bounded_stop": true,
+      "returned": false,
+      "install_log": "No active shell selection; SYSTEM.INI unchanged.\nWINXT guarded DOS installer (8088)\n\nChecking for an interrupted optional-shell selection before snapshot...\nBacking up 35 original files to C:\\WINXT\\BACKUP\\B001 ...\nVerified backup: C:\\WINXT\\BACKUP\\B001\nSupport/source: C:\\WINXT\nSnapshot follows checked shell recovery. Windows SETUP is next.\nChoose Other display and give source path: C:\\WINXT\nAfter Setup, start Windows with C:\\WINXT\\WINXT\n"
+    },
+    "setup-complete-default-reserved": {
+      "tag": "setup-complete-default-reserved",
+      "bounded_stop": false,
+      "returned": true,
+      "install_log": "Shell recovery check passed; no recovery needed.\nWINXT guarded DOS installer (8088)\n\nChecking for an interrupted optional-shell selection before snapshot...\nBacking up 35 original files to C:\\WINXT\\BACKUP\\B001 ...\nVerified backup: C:\\WINXT\\BACKUP\\B001\nSupport/source: C:\\WINXT\nSnapshot follows checked shell recovery. Windows SETUP is next.\nChoose Other display and give source path: C:\\WINXT\nAfter Setup, start Windows with C:\\WINXT\\WINXT\n"
+    },
+    "setup-complete-alternate": {
+      "tag": "setup-complete-alternate",
+      "bounded_stop": false,
+      "returned": true,
+      "install_log": "Shell recovery check passed; no recovery needed.\nWINXT guarded DOS installer (8088)\n\nChecking for an interrupted optional-shell selection before snapshot...\nBacking up 35 original files to C:\\XTALT\\BACKUP\\B001 ...\nVerified backup: C:\\XTALT\\BACKUP\\B001\nSupport/source: C:\\XTALT\nSnapshot follows checked shell recovery. Windows SETUP is next.\nChoose Other display and give source path: C:\\XTALT\nAfter Setup, start Windows with C:\\XTALT\\WINXT\n"
+    },
+    "ui-enter-cancel-320": {
+      "tag": "ui-enter-cancel-320",
+      "bounded_stop": false,
+      "returned": true,
+      "observer_present": true
+    },
+    "ui-escape-cancel-320": {
+      "tag": "ui-escape-cancel-320",
+      "bounded_stop": false,
+      "returned": true,
+      "observer_present": true
+    },
+    "ui-programs-pinball-640": {
+      "tag": "ui-programs-pinball-640",
+      "bounded_stop": true,
+      "returned": false,
+      "observer_present": true
+    },
+    "ui-programs-pinball-640-paced": {
+      "tag": "ui-programs-pinball-640-paced",
+      "bounded_stop": true,
+      "returned": false,
+      "observer_present": true
+    }
+  },
+  "pending": [
+    "full Programs-group app-launch replay",
+    "full closing Windows video including subsequent DOS prompt",
+    "physical GoTek/EX speed and real keyboard/mouse acceptance"
+  ],
+  "physical_speed_qualified": false,
+  "windows_or_toolchain_bytes_published": false,
+  "final_native_media_test": "Paused after detecting an active user hub DOSBox; no new guest launched.",
+  "native_lease": "All owned runs ended and leases released; active user guest untouched."
+}

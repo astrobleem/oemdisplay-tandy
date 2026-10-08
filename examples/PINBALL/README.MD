@@ -8,7 +8,9 @@ shape on a 4:3 monitor.
 
 ## Play
 
-Run `PINBALL.EXE` from Start > Run (or Program Manager File > Run).
+The first-run Windows XT disk bundles this build: choose Start > Programs >
+Windows XT > Pinball. Separately copied builds can use Start > Run or
+Program Manager File > Run with the full path to `PINBALL.EXE`.
 
 | Key | Does |
 | --- | --- |
@@ -102,3 +104,7 @@ arithmetic overflowed. See TESTS.MD.
 - `EVIDENCE/` (other folders), `MILESTONE.ZIP`, `MANIFEST.JSON`: the
   original 2026-10-02 proof of concept and its recordings, kept intact.
   Their hashes describe that version, not this one.
+
+Functional emulator evidence is not calibrated Tandy EX-speed evidence.
+EX-speed acceptance remains pending separate work; this first-run disk uses
+the exact merged PR 113 build, without changing its physics or performance.
