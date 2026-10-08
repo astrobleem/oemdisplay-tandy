@@ -1,5 +1,0 @@
-vfd.obj+vfdmsg.obj
-vfd.386 /NOI /NOD /NOP
-vfd.map /MAP
-
-vfd.def

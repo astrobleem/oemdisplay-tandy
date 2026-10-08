@@ -1,6 +1,0 @@
-dntrans.obj+
-dosnet.obj
-ldosnet.386 /NOI /NOD /NOP
-ldosnet.map /MAP
-
-ldosnet.def

@@ -2,11 +2,11 @@
 
 ## 1. Environment & Tools
 - **Host OS:** Windows packaging entry point; portable Python backend also tested on Linux.
-- **Emulator:** DOSBox-X (Path: `DOSBox-X\dosbox-x.exe`).
-- **Assembler:** MASM 5.10.
+- **Emulator:** separately supplied DOSBox-X; pass its explicit path via `--dosbox`.
+- **Assembler:** pinned external MASM 5.10; see tools/BUILDDEPS/README.MD.
 - **Linker:** LINK4 (Segmented Executable Linker v5.x).
 - **Current Build:** `python3 src/tandysw/BUILD88.PY --dosbox <dosbox-x> --out <new-path> [--mode <profile>]`; five profiles are in `docs/MODES.MD`. Omitted mode selects 320x200x16 in the current development pipeline; see docs/TRIAL4/README.MD.
-- **Legacy Build:** `build_driver.bat` -> `BLDTNDY.BAT` builds the old `TNDY16.DRV`, not the accepted driver.
+- **Legacy Build:** old TNDY16 source/builders are preserved in [DEV](docs/DEV.MD); use current external source views.
 - **Packaging:** current public Windows XT uses `tools/FLASHDISK/MAKEIMG.PY`; test with `TESTFAT.PY` and `TESTPKG.PY`. Root `MAKEDISK` is historical TANDY88 reproduction only. See `BUILDING.MD`.
 - **Install:** current own-media WINXT disk, six Windows Setup Other display choices, and guarded `C:\WINXT\WINXT` launcher. Every profile selects approved `WXTSPL01.RLE`; the old Tandy picture is retired. Never use manual INI edits as normal install instructions.
 
@@ -64,3 +64,8 @@ retained, host-only nine-character filename; DOS payload names stay 8.3.
 - **[x] Milestone 3: Packaging (2025-12-05)**
     - `makedisk.bat` updated for Windows/PowerShell.
     - Produces `TNDY16.ZIP` ready for distribution.
+
+Source rebuilds use a fresh pinned external workspace; pass that workspace
+through each script's --repo or --toolchain parameter. Main contains no
+bundled DDK/compiler/emulator. Current package CI uses accepted binaries
+and runs host checks, including the current lowercase TSHELL idle/Hold tests.

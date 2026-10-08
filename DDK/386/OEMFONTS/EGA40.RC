@@ -1,5 +1,0 @@
-#include "windows.h"
-
-#include "ega40woa.rcv"
-
-130 FONT EGA24.FNT

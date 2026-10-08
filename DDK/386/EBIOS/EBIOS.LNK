@@ -1,5 +1,0 @@
-ebios.obj
-ebios.386 /NOI /NOD /NOP
-ebios.map /MAP
-
-ebios.def
