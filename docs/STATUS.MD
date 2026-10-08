@@ -108,7 +108,7 @@ uses GDI on every driver; 16 stars is lightest. Neither is a password lock.
 The 09 Start placement fix, 08 My Computer/FINISH and 07 date/time editor
 remain. My Computer opens or restores File Manager directly from Start.
 
-The date/time editor validates calendar dates (1980â€“2099) and 24-hour times.
+The date/time editor validates calendar dates (1980–2099) and 24-hour times.
 Apply changes only edited values. Reload, Cancel, Escape and closing without
 Apply do not set the clock. Native controls fit the 160-pixel desktop.
 
