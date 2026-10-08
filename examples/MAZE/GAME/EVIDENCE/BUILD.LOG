@@ -1,0 +1,11 @@
+MAZE.C
+
+Microsoft (R) Segmented-Executable Linker  Version 5.01.17
+Copyright (C) Microsoft Corp 1984-1988.  All rights reserved.
+
+Object Modules [.OBJ]: MAZE.OBJ
+Run File [MAZE.EXE]: MAZE.EXE
+List File [NUL.MAP]: MAZE.MAP
+Libraries [.LIB]: C:\LIB\SLIBCEW.LIB C:\LIB\LIBW.LIB
+Definitions File [NUL.DEF]: MAZE.DEF
+PASS

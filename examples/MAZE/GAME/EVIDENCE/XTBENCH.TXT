@@ -1,0 +1,19 @@
+MAZE.EXE /T at fixed 360 DOSBox-X cycles (DOSBox-X rates a 4.77 MHz 8088 at ~240,
+so 360 approximates a 7.16 MHz Tandy 1000 EX/HX; not calibrated hardware timing).
+Machine=tandy, 8086_prefetch core, 640 KB, Windows 3.0 real mode, WINXT TR5 drivers.
+40 autopilot steps, level 1. Times are guest GetTickCount totals / 40 per step.
+Build 01e8fd34 (identical to the final MAZE.EXE except the colour of the mono
+level-complete text, which the benchmark never shows).
+
+mode         view      per step  render  blit   map
+160x200x16   64x108      627 ms   243 ms  387 ms    1 ms
+320x200x16   90x76       653 ms   214 ms  399 ms   41 ms
+320x200x4    120x100     583 ms   259 ms  281 ms   33 ms
+640x200x4    168x70      348 ms   212 ms   90 ms   32 ms
+640x200x2    216x90      411 ms   266 ms   90 ms   30 ms
+
+GDI fallback (MAZE.EXE /F, forced FillRect drawing), 640x200x2, same settings:
+  216x90 view: 1597 ms per step (fast path in the same mode: 412 ms).
+
+Previous Maze saver (SAVER10, still the shipped WINXT MAZE.EXE before this change):
+its README records 0.05-0.14 full sweeps per second on the GDI path at ~240 cycles.
