@@ -29,6 +29,21 @@ launcher; it always retains the reservation/recovery guards. Backups remain
 inside WINXT\BACKUP. No extra TDISPLAY/TANDY88/TSTART root is created.
 See README.TXT for complete installation, switching and verified rollback.
 
+**Long filename browsing is included in Tandy Start 14.** Open Run > Browse to
+see existing VFAT long names on supported fixed local FAT12/FAT16 volumes.
+The read-only reader requires DOS 6.22, Win3 real mode and 512-byte sectors;
+launches still use the displayed short DOS alias. It does not create long names
+or let you type long paths in Run. See [NAMES11.TXT](NAMES11.TXT) for limits
+and fallback behavior. The installation directory itself still uses DOS 8.3.
+The "no long filenames or spaces" rule in the retained runtime README.TXT
+refers to installation paths, not the labels displayed in Browse.
+
+The first-run update preserves the original OEM INF as OEMBASE.INF and
+records the actual source path in its disk entry. Real Setup completed at
+C:\WINXT and C:\XTALT; the unchanged release reproduced the bad C:\WINDOWS
+second prompt. Programs has a Windows XT group with savers, About and bundled
+Pinball v2. See [qualification and limits](../../docs/FIRSTRUN.MD).
+
 Five TR5 graphics choices include the tested Clock wide-line optimization.
 The sixth is explicitly EXPERIMENTAL hardware text: character and geometry
 corruption remain. It is not a stable or TR5-optimized graphics replacement.

@@ -1,4 +1,9 @@
-# Tandinator 0.3.8 local experimental review
+# Tandinator 0.3.8 experimental release
+
+[Download TANDI11.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/TANDI11.ZIP) ·
+[Public experimental release and checksums](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experiments-2026-10-07)
+
+This is separate from the canonical v0.2 app and does not replace installed defaults.
 
 TANDI11 contains the confirmed thinking-delay, cap-continuation and F3 sound fixes, the retained quiet demo/artwork, and the explicitly approved experimental notebook and Ask Two option. Learning use starts OFF every launch; Ask Two requires an explicit choice and never exceeds 40 questions.
 
@@ -8,4 +13,6 @@ Qualification passed 226 actual notebook/file-format checks, nine source-derived
 
 Run `python TESTPUB.PY` beside the ZIP to verify every entry and the source/EXE/evidence pins. QA11.TXT explains study assumptions: borrowed reference answers are not independently audited facts; learning can hurt, and the ten-rejection host study limit is not a runtime limit. Logical file recovery is not a physical disk/power-loss guarantee. Physical hardware is untested.
 
-No publication, installed Windows/INI/default or CF change was performed. The packet excludes private Windows media, compilers, emulator, drivers and user reports. Use licensed private inputs to reproduce native checks.
+The original local qualification changed no installed Windows/INI/default or
+CF files. Its immutable packet was subsequently published as the separate
+experimental download above. The packet excludes private Windows media, compilers, emulator, drivers and user reports. Use licensed private inputs to reproduce native checks.

@@ -212,6 +212,45 @@ static void closeout(int h)
 {
     if(_dos_close(h)) fail("Text close failed.",bak);
 }
+/* Setup's second disk prompt must not resolve "." against Windows.
+ * Preserve the exact media INF; create/close the localized INF before renames.
+ * No driver files or installed Windows INIs are written here.
+ */
+static void sourceinf(void)
+{
+    FILE *f;
+    int h, section=0, rows=0;
+    char original[PTH], saved[PTH], temp[PTH], line[512], check[512];
+    char *p;
+    join(original,src,"OEMSETUP.INF");
+    join(saved,src,"OEMBASE.INF");
+    join(temp,src,"OEMSETUP.NEW");
+    f=fopen(original,"rt");
+    if(!f) fail("Cannot read source INF.",original);
+    h=newtext(temp);
+    while(fgets(line,sizeof(line),f)) {
+        if(!strchr(line,'\n') && !feof(f))
+            fail("Source INF line too long.",original);
+        strcpy(check,line); p=trim(check);
+        if(*p=='[') section=!stricmp(p,"[disks]");
+        if(section && !strcmp(p,
+           "a = ., \"Windows XT All-in-One\", OEMSETUP.INF")) {
+            sprintf(line,
+              "a = %s, \"Windows XT All-in-One\", OEMSETUP.INF\n",src);
+            rows++;
+        }
+        /* Text input normalizes CRLF; output stays explicit DOS CRLF. */
+        p=strchr(line,'\n'); if(p) *p=0;
+        put(h,line); put(h,"\r\n");
+    }
+    if(ferror(f) || fclose(f) || rows!=1)
+        fail("Expected one original Windows XT disk path.",original);
+    closeout(h);
+    /* The preserved original is the rollback copy, never overwritten. */
+    if(rename(original,saved) || rename(temp,original))
+        fail("Source INF rename failed; keep partial files.",src);
+}
+
 static void makefiles(void)
 {
     int h,i; char path[PTH], target[PTH], line[512];
@@ -250,7 +289,13 @@ static void makefiles(void)
     if(!stricmp(src,"C:\\WINXT") && !stricmp(win,"C:\\WINDOWS")) {
         put(h,"IF NOT EXIST C:\\WINXT\\SHREADY.TAG GOTO PLAIN\r\nIF NOT EXIST C:\\WINXT\\TSTART.BAT GOTO PLAIN\r\nIF NOT EXIST C:\\WINDOWS\\TSHELL.EXE GOTO PLAIN\r\nIF NOT EXIST C:\\WINDOWS\\TSINPUT.DLL GOTO PLAIN\r\nIF NOT EXIST C:\\WINDOWS\\TSHELL.INI GOTO PLAIN\r\nIF NOT EXIST C:\\WINXT\\TINST.EXE GOTO SHELLERR\r\nC:\\WINXT\\TINST.EXE /SHELLSAFE C:\\WINDOWS\r\nIF ERRORLEVEL 2 GOTO SHELLERR\r\nIF ERRORLEVEL 1 GOTO PLAIN\r\nC:\\WINXT\\TSTART.BAT\r\nGOTO DONE\r\n:PLAIN\r\n");
     }
-    sprintf(line,"%s\\WIN.COM /R\r\nGOTO DONE\r\n:SETUP\r\nECHO Select Other display, then enter this source path: %s\r\n%s\\SETUP.EXE\r\nGOTO DONE\r\n",win,src,win); put(h,line);
+    sprintf(line,"%s\\WIN.COM /R\r\nGOTO DONE\r\n:SETUP\r\n",win); put(h,line);
+    /* Keep relative OEM disk paths anchored at the actual source directory. */
+    sprintf(line,"%c:\r\nCD %s\r\nIF ERRORLEVEL 1 GOTO NOWIN\r\nECHO Select Other display, then enter this source path: %s\r\n%s\\SETUP.EXE\r\n",src[0],src,src,win); put(h,line);
+    sprintf(line,"ECHO Windows Setup returned to DOS.\r\nECHO If a disk/source prompt appears, use %s each time.\r\n",src); put(h,line);
+    if(!stricmp(src,"C:\\WINXT") && !stricmp(win,"C:\\WINDOWS"))
+        put(h,"ECHO Next, optionally install the Start bar: C:\\WINXT\\TSSETUP\r\n");
+    sprintf(line,"ECHO Start Windows with %s\\WINXT\r\nECHO Keep rollback instructions in %s\\BACKUP.TXT\r\nGOTO DONE\r\n",src,src); put(h,line);
     put(h,":RECFAIL\r\nECHO Shell recovery failed. Windows and Setup were not started.\r\nGOTO DONE\r\n:SHELLERR\r\nECHO Shell display check failed. Check SYSTEM.INI before starting Windows.\r\nGOTO DONE\r\n:NOHELP\r\nECHO Incomplete helper installation. Windows and Setup were not started.\r\nGOTO DONE\r\n:NOWIN\r\nECHO Windows files or directory unavailable. Nothing started.\r\nGOTO DONE\r\n:FAILED\r\nECHO Video reservation failed. Windows and Setup were not started.\r\nGOTO DONE\r\n:USAGE\r\nECHO Use WINXT or WINXT SETUP from the support folder\r\n:DONE\r\n"); closeout(h);
     join(path,HELP,"BACKUP.TXT"); h=newtext(path); sprintf(line,"Original Windows=%s\r\nBackup=%s\r\nSource=%s\r\nRestore at real DOS: %s\\RESTORE YES\r\n",win,bak,src,bak); put(h,line); closeout(h);
     /* Atomic final transition: interruption leaves PARTIAL.TAG, never READY.TAG. */
@@ -264,7 +309,7 @@ int main(int argc,char **argv)
     char *required[]={"OEMSETUP.INF","RESERVE.COM","CGA.GR2","CGALOGO.LGO","WXTSPL01.RLE","TR53216.DRV","TR56404.DRV","TR51616.DRV","TR53204.DRV","TR56402.DRV","TXTMODE.DRV","TXTSYS.FON","CGAFIX.FON","CGAOEM.FON","CGASYS.FON","EGAFIX.FON","EGAOEM.FON","EGASYS.FON"};
     char *original[]={"SYSTEM.INI","WIN.INI","WIN.COM"};
     char *boot[]={"CONFIG.SYS","AUTOEXEC.BAT"};
-    char *generated[]={"WINXT.BAT","BACKUP.TXT","READY.TAG","READY.NEW","PARTIAL.TAG","SHREADY.TAG"};
+    char *generated[]={"WINXT.BAT","BACKUP.TXT","READY.TAG","READY.NEW","PARTIAL.TAG","SHREADY.TAG","OEMBASE.INF","OEMSETUP.NEW"};
     if(argc==2 && !stricmp(argv[1],"/ZERO")) return 0;
     if(argc>=2 && !stricmp(argv[1],"/COMPARE")) {
         if(argc!=4) return 2;
@@ -331,6 +376,7 @@ int main(int argc,char **argv)
     join(path,bak,"BOOT"); if(mkdir(path)) fail("Cannot create rollback BOOT.",path);
     printf("Backing up %d original files to %s ...\n",count,bak);
     for(i=0;i<count;i++) {join(out,bak,files[i].rel); copynew(files[i].src,out);}
+    sourceinf();
     makefiles();
     printf("Verified backup: %s\nSupport/source: %s\n",bak,src);
     if(recovery) puts("Snapshot follows checked shell recovery. Windows SETUP is next.");

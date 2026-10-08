@@ -159,3 +159,16 @@ helper instead; they do not need this optional host path.
 After extracting, `python MAKEIMG.PY --out /new/output` rebuilds the public
 image. The source-level FAT12 tool also supports 360 KB for separate payloads;
 that does not turn this full kit into a single 360 KB release.
+
+## Long filename browsing after shell setup
+
+Tandy Start 14 includes [long filename browsing](../../distributions/WINXT/NAMES11.TXT)
+in Run > Browse. Existing VFAT labels are displayed read-only on fixed local
+FAT12/FAT16 volumes under DOS 6.22 and Win3 real mode; actions retain short
+DOS aliases. Floppies, FAT32 and host-folder mounts do not qualify for raw
+long-name reading. The installer and C:\WINXT path still use DOS 8.3 names.
+
+The [0.1.0-rc.2 first-run update](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.2)
+uses matching new media-helper/runtime pins, adds Pinball v2 to the explicit
+public allowlist, and retains all TR5 driver and splash identities. The older
+rc.1 downloads above remain immutable. See [first-run checks](../../docs/FIRSTRUN.MD).

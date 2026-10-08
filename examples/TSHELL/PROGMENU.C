@@ -8,6 +8,7 @@
 
 #define PM_GROUPS 40
 #define PM_PATH 144
+#define PM_BUNDLED 12
 #define PM_LIST 210
 #define PM_BACK 211
 #define PM_NEXT 212
@@ -22,7 +23,12 @@ typedef struct {
 } PmIndex;
 
 /* Only labels and registration numbers survive between group reads. */
-static PmIndex pmIndex[PM_GROUPS];
+static PmIndex pmIndex[PM_GROUPS + 1];
+typedef struct {
+    char name[PM_NAME_MAX + 1], command[PM_CMD_MAX + 1];
+} PmBundled;
+static PmBundled pmBundled[PM_BUNDLED];
+static int pmBundleCount, pmBundleActive;
 static PmGroup pmGroup;
 static HINSTANCE pmInstance;
 static char pmIni[PM_PATH], pmWindows[PM_PATH];
@@ -85,12 +91,46 @@ static int pmgroupfile(int number, char *path)
     return 1;
 }
 
+static void pmbundles(void)
+{
+    char profile[PM_PATH], key[16], name[PM_NAME_MAX + 2];
+    char command[PM_CMD_MAX + 2], token[128];
+    int count, i, n;
+    OFSTRUCT of;
+    pmBundleCount = 0;
+    lstrcpy(profile, pmWindows); lstrcat(profile, "\\TSHELL.INI");
+    count = GetPrivateProfileInt("Programs", "Count", 0, profile);
+    if (count < 0 || count > PM_BUNDLED) return;
+    for (i = 1; i <= count; ++i) {
+        wsprintf(key, "Name%d", i);
+        n = GetPrivateProfileString("Programs", key, "", name,
+                                   sizeof(name), profile);
+        if (!n || n > PM_NAME_MAX) continue;
+        wsprintf(key, "Command%d", i);
+        n = GetPrivateProfileString("Programs", key, "", command,
+                                   sizeof(command), profile);
+        if (!n || n > PM_CMD_MAX ||
+            !PmCommandToken(command, token, sizeof(token)) ||
+            PmTokenKind(token) != 2 ||
+            OpenFile(token, &of, OF_EXIST) == HFILE_ERROR) continue;
+        lstrcpy(pmBundled[pmBundleCount].name, name);
+        lstrcpy(pmBundled[pmBundleCount].command, command);
+        ++pmBundleCount;
+    }
+}
+
 static int pmopen(int number)
 {
     char path[PM_PATH];
     LONG length;
     int status;
-    pmclose();
+    pmclose(); pmBundleActive = number == 0;
+    if (pmBundleActive) {
+        pmbundles();
+        lstrcpy(pmGroup.title, "Windows XT");
+        pmGroup.count = (unsigned)pmBundleCount;
+        return PM_OK;
+    }
     if (pmgroupfile(number, path) != 1) return PM_IO;
     pmFile = _lopen(path, OF_READ | OF_SHARE_DENY_WRITE);
     if (pmFile == HFILE_ERROR) return PM_IO;
@@ -125,6 +165,13 @@ static int pmrefresh(void)
     }
     if (pmGroups == PM_GROUPS && pmgroupfile(PM_GROUPS + 1, path))
         pmMoreGroups = 1;
+    pmbundles();
+    if (pmBundleCount) {
+        lstrcpy(pmIndex[pmGroups].title, "Windows XT");
+        pmIndex[pmGroups].number = 0;
+        pmIndex[pmGroups].status = PM_OK;
+        ++pmGroups;
+    }
     return 1;
 }
 
@@ -221,7 +268,9 @@ static void pmpage(HWND w)
     SendDlgItemMessage(w, PM_LIST, LB_RESETCONTENT, 0, 0L);
     for (i = from; i < end; ++i) {
         if (pmLevel) {
-            result = PmReadName(pmread, &pmFile, &pmGroup,
+            if (pmBundleActive) {
+                lstrcpy(name, pmBundled[i].name); result = PM_OK;
+            } else result = PmReadName(pmread, &pmFile, &pmGroup,
                                 (unsigned)i, name, sizeof(name));
             if (result) lstrcpy(name, "[Read failed]");
         } else lstrcpy(name, pmIndex[i].title);
@@ -261,7 +310,9 @@ static void pmchoose(HWND w)
         pmpage(w);
     } else {
         if (selected >= (int)pmGroup.count) return;
-        status = PmReadCommand(pmread, &pmFile, &pmGroup,
+        if (pmBundleActive) {
+            lstrcpy(command, pmBundled[selected].command); status = PM_OK;
+        } else status = PmReadCommand(pmread, &pmFile, &pmGroup,
                               (unsigned)selected, command, sizeof(command));
         if (status) { pmstatus(w, pmreason(status)); return; }
         /* Close the group handle before WinExec, preserving the parsed command. */

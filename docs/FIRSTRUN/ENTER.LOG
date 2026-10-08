@@ -1,0 +1,24 @@
+tick=1 shell=1 exit=0 pinball=0
+tick=2 shell=1 exit=0 pinball=0
+tick=3 shell=1 exit=0 pinball=0
+tick=4 shell=1 exit=0 pinball=0
+tick=5 shell=1 exit=0 pinball=0
+tick=6 shell=1 exit=0 pinball=0
+tick=7 shell=1 exit=0 pinball=0
+tick=8 shell=1 exit=0 pinball=0
+tick=9 shell=1 exit=0 pinball=0
+tick=10 shell=1 exit=0 pinball=0
+tick=11 shell=1 exit=1 focus=2 default=2 pinball=0
+tick=12 shell=1 exit=1 focus=2 default=2 pinball=0
+tick=13 shell=1 exit=1 focus=2 default=2 pinball=0
+tick=14 shell=1 exit=0 pinball=0
+tick=15 shell=1 exit=0 pinball=0
+tick=16 shell=1 exit=0 pinball=0
+tick=17 shell=1 exit=0 pinball=0
+tick=18 shell=1 exit=0 pinball=0
+tick=19 shell=1 exit=0 pinball=0
+tick=20 shell=1 exit=1 focus=2 default=2 pinball=0
+tick=21 shell=1 exit=1 focus=2 default=2 pinball=0
+tick=22 shell=1 exit=1 focus=2 default=2 pinball=0
+QUERYENDSESSION
+ENDSESSION

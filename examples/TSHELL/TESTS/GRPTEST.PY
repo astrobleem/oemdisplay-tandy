@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Exercise the exact portable GRPREAD.C with read-bound checks and mutations."""
 import ctypes as C
+import os
+import sys
+import _ctypes
 import random
 import struct
 import subprocess
@@ -163,4 +166,12 @@ class Tests(unittest.TestCase):
             out=C.create_string_buffer(128)
             self.assertEqual(LIB.PmCommandToken(command,out,128),0)
 
-if __name__=='__main__': unittest.main(verbosity=2)
+if __name__ == '__main__':
+    try:
+        result = unittest.main(verbosity=2, exit=False).result
+    finally:
+        # Windows keeps loaded libraries open until explicitly unloaded.
+        if os.name == 'nt':
+            _ctypes.FreeLibrary(LIB._handle)
+        BUILD.cleanup()
+    sys.exit(0 if result.wasSuccessful() else 1)

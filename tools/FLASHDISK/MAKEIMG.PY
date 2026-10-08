@@ -18,7 +18,7 @@ import zipfile
 
 HERE = Path(__file__).resolve().parent
 PUBLIC_NAMES = ('HOLD14.TXT', 'HOLD160.PNG', 'HOLD640.PNG', 'INSTALL.BAT',
-    'MATRIX.EXE', 'MAZE.EXE', 'NAMES11.TXT', 'OEMSETUP.INF', 'README.TXT',
+    'MATRIX.EXE', 'MAZE.EXE', 'PINBALL.EXE', 'NAMES11.TXT', 'OEMSETUP.INF', 'README.TXT',
     'RESERVE.COM', 'SHELL14.TXT', 'SHELLSEL.EXE', 'SHFULL.TXT', 'STARFLD.EXE',
     'TABOUT.EXE', 'TCHIME.EXE', 'TESTS.TXT', 'TESTS14.TXT', 'TEXIT.EXE',
     'TEXTMODE.TXT', 'TINST.EXE', 'TR51616.DRV', 'TR53204.DRV', 'TR53216.DRV',
@@ -121,7 +121,14 @@ Boot your existing DOS 3.3+ system first. Requires Windows 3.0 real mode,
 an original-compatible Tandy graphics setup and a writable hard disk/CF.
 Back up Windows before using any experimental driver. No Python or compiler
 is needed to install this disk. The simple path uses C:\WINDOWS and C:\WINXT.
-The disk keeps the five TR5 graphics modes and Tandy Start 14 desktop.
+The disk keeps the five TR5 graphics modes and Tandy Start desktop.
+This first-run update adds the Windows XT Programs group and Pinball v2;
+Matrix, Maze and Starfield entries launch /S saver previews. Existing
+Program Manager groups stay read-only. The installer preserves its source
+INF as OEMBASE.INF and localizes the OEM disk path to the actual source.
+Exit initially focuses Cancel: Enter/Escape cancel, E selects Exit.
+Existing long-name labels in Browse require DOS 6.22, Win3 real mode, fixed
+uncompressed FAT12/FAT16 and 512-byte sectors; actions use DOS short aliases.
 TRIAL7, newer test apps and sound drivers remain separate opt-in packages.
 
 GOTEK / EMULATOR / REAL FLOPPY

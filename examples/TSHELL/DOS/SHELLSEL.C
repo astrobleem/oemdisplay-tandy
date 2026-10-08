@@ -290,13 +290,14 @@ static int night_draw(void)
     night_text(18,(cols-13)/2,"your computer",15);
   }
   attr=(mode==7)?7:8;
-  night_run(21,cols/4,196,attr,cols/2);
+  night_run(20,cols/4,196,attr,cols/2);
   /* Leave a normal, visible DOS cursor and return immediately. */
   r.h.ah=3; r.h.bh=night_page; int86(0x10,&r,&r);
   if(r.h.ch&0x20) {
     r.h.ah=1; r.x.cx=(mode==7)?0x0b0c:0x0607; int86(0x10,&r,&r);
   }
-  night_pos(23,0);
+  /* Four blank rows below the art allow the DOS newline and prompt. */
+  night_pos(22,0);
   return 1;
 }
 #endif
@@ -319,7 +320,7 @@ static void cleanup_restored(void)
 }
 static void recover(void)
 { unsigned z; Shell s;
-  if(!exists(jrn)) { no_temps(); baseline(); if(!exists(ini)) die("SYSTEM.INI missing; no active recovery journal."); z=readall(ini,cur,MAXINI); s=parse(cur,z); if(shellis(cur,s,SEL)) die("TSHELL is selected without an active journal."); puts("No active shell selection; SYSTEM.INI unchanged."); return; }
+  if(!exists(jrn)) { no_temps(); baseline(); if(!exists(ini)) die("SYSTEM.INI missing; no active recovery journal."); z=readall(ini,cur,MAXINI); s=parse(cur,z); if(shellis(cur,s,SEL)) die("TSHELL is selected without an active journal."); puts("Shell recovery check passed; no recovery needed."); return; }
   on=loadsnap(jrn,orig); os=parse(orig,on); if(shellis(orig,os,SEL)) die("Journal original shell is already TSHELL."); if(exists(sav) && !exists(bak)) {
     z=loadsnap(sav,dest);
     if(z!=on || memcmp(dest,orig,on) || !exists(ini) || !same(ini,orig,on) || exists(tmp)||exists(old)||exists(rst)) die("Missing backup outside proven initial preparation.");
