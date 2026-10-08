@@ -7,9 +7,9 @@ utilities to **Windows 3.0 real mode on the original Tandy 1000 EX/HX with
 640 KB RAM**. This repository, OEMDisplay-Tandy, contains the display drivers,
 desktop additions and their source and test evidence.
 
-[Get started](#get-started) Â· [Display modes](#display-modes) Â·
-[The desktop](#tandy-start--tshell) Â· [Apps](#games-and-utilities) Â·
-[Performance](#performance-and-verification) Â·
+[Get started](#get-started) · [Display modes](#display-modes) ·
+[The desktop](#tandy-start--tshell) · [Apps](#games-and-utilities) ·
+[Performance](#performance-and-verification) ·
 [Sound companion](https://github.com/astrobleem/oemsound-tandy)
 
 ![16 COLORS. WOW! Windows 3.0 on a Tandy 1000 EX, with a real Paintbrush capture inside a promotional computer scene](docs/PROMO/16WOW.WEBP)
@@ -36,7 +36,7 @@ loader prefix and original backup; applying it is an explicit DOS command.
   fonts, a guarded launcher and numbered recovery backups.
 - **Small native apps:** Cookie Clicker, Fly Swat, Pinball, XTEyes, GIF
   conversion for Paintbrush and more.
-- **An experimental sixth mode:** real 80Ã—25 hardware text, with known
+- **An experimental sixth mode:** real 80×25 hardware text, with known
   character corruption. Choose a graphics mode for ordinary use.
 
 **Status:** experimental software with emulator tests and limited reports
@@ -106,7 +106,7 @@ CD \WINXT
 INSTALL
 ```
 
-In Setup, select **Display â†’ Other display**, enter **`C:\WINXT`**, choose
+In Setup, select **Display → Other display**, enter **`C:\WINXT`**, choose
 a mode and accept **Complete Changes**. If asked for the display disk again,
 use the same folder. If Setup offers to alter CONFIG.SYS, choose **option 3:
 make no changes**.
@@ -153,7 +153,7 @@ the saved files and disables automatic optional-shell dispatch. New files
 may remain on disk but are no longer selected. Keep the backup until the
 restored system works; resolve any restore failure before starting Windows.
 
-[Full installation and recovery guide](distributions/WINXT/README.TXT) Â·
+[Full installation and recovery guide](distributions/WINXT/README.TXT) ·
 [Installation, six-mode switching and rollback evidence](docs/UNIFIED/README.md)
 
 ## Display modes
@@ -163,20 +163,20 @@ identities in the current public WINXT kit:
 
 | Mode | Palette / purpose | Driver | Physical Tandy status |
 | --- | --- | --- | --- |
-| **320Ã—200, 16 colors** | Full Tandy palette; default profile | `TR53216.DRV` | Paintbrush and TSHELL worked on a later trial; still slow |
-| **640Ã—200, 2 colors** | Wide black-and-white desktop | `TR56402.DRV` | Earlier TRIAL 3 reported substantially faster and usable |
-| **160Ã—200, 16 colors** | Smallest desktop; full Tandy palette | `TR51616.DRV` | Low-resolution report did not identify the exact mode |
-| **320Ã—200, 4 colors** | Black, cyan, magenta, white | `TR53204.DRV` | Operation reported; red hearts mapped to black |
-| **640Ã—200, 4 colors** | Black, red, green, white | `TR56404.DRV` | Unconfirmed; emulator hardware model remains uncertain |
-| **80Ã—25 hardware text** | BIOS mode 03h; 640Ã—200 logical GDI surface | `TXTMODE.DRV` | Lab-only; physical behavior and speed untested |
+| **320×200, 16 colors** | Full Tandy palette; default profile | `TR53216.DRV` | Paintbrush and TSHELL worked on a later trial; still slow |
+| **640×200, 2 colors** | Wide black-and-white desktop | `TR56402.DRV` | Earlier TRIAL 3 reported substantially faster and usable |
+| **160×200, 16 colors** | Smallest desktop; full Tandy palette | `TR51616.DRV` | Low-resolution report did not identify the exact mode |
+| **320×200, 4 colors** | Black, cyan, magenta, white | `TR53204.DRV` | Operation reported; red hearts mapped to black |
+| **640×200, 4 colors** | Black, red, green, white | `TR56404.DRV` | Unconfirmed; emulator hardware model remains uncertain |
+| **80×25 hardware text** | BIOS mode 03h; 640×200 logical GDI surface | `TXTMODE.DRV` | Lab-only; physical behavior and speed untested |
 
 The physical observations above concern earlier trials, with no final-file
 hash readback. **They are not acceptance of the exact TR5 files in this
 table.** The known-working TRIAL 3 monochrome fallback is a different binary;
 keep it separately. [Hardware reports and scope](docs/STATUS.MD).
 
-Original EX/HX 640Ã—200 Tandy graphics has **four colors, not sixteen**.
-Narrow modes can clip stock Windows dialogs. In 320Ã—200 four-color mode,
+Original EX/HX 640×200 Tandy graphics has **four colors, not sixteen**.
+Narrow modes can clip stock Windows dialogs. In 320×200 four-color mode,
 stock Clock's digital digits are invisible; use analog Clock or another mode.
 
 <details>
@@ -191,8 +191,8 @@ characters. It is not ready for everyday use. TSHELL is not qualified for
 this driver; switching back to graphics restores the appropriate fonts and
 optional-shell path.
 
-[Text-mode experiment](experiments/TEXTMODE/README.MD) Â·
-[Known failures and measurements](experiments/TEXTMODE/EVIDENCE/RESULT.JSON) Â·
+[Text-mode experiment](experiments/TEXTMODE/README.MD) ·
+[Known failures and measurements](experiments/TEXTMODE/EVIDENCE/RESULT.JSON) ·
 [Runtime text-mode notes](distributions/WINXT/TEXTMODE.TXT)
 
 </details>
@@ -210,7 +210,7 @@ Program Manager as the editor for your program groups.
 - **Clock and System:** right-click the clock to adjust date/time; double-click
   to open Clock or Calendar. About This Tandy shows system, display and memory
   pages. The compact controls fit the 160-pixel desktop.
-- **Screen savers:** None, Matrix, Maze or Starfield; 10â€“3600-second idle delay,
+- **Screen savers:** None, Matrix, Maze or Starfield; 10–3600-second idle delay,
   unsaved Preview, and Starfield speed/star-count options. Maze can be very slow.
 - **Sounds and exit:** optional Tandy or XP-note startup phrase and pre-exit
   chime. Hold Shift while selecting Exit to skip the chime. Application save
@@ -255,7 +255,7 @@ failures preserve short-name browsing. Genuine DOS tests cover 16 MB and 64 MB
 FAT16 volumes; physical browsing has been reported working, while later redraw
 improvements retain their recorded emulator scope.
 
-[Requirements and fallback behavior](distributions/WINXT/NAMES11.TXT) Â·
+[Requirements and fallback behavior](distributions/WINXT/NAMES11.TXT) ·
 [Native verification](examples/TSHELL/TESTS14.MD)
 
 ### Optional desktop additions
@@ -264,7 +264,7 @@ improvements retain their recorded emulator scope.
 | --- | --- |
 | [Original keyboard support](src/tandyk3/README.md) | Separate compatible real-mode driver candidate; [public tools/probes](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experiments-2026-10-07/K3TOOLS.ZIP) exclude the driver. Guarded install and rollback. Seventeen raw key press/release pairs matched hardware; Windows translation and Hold still need physical verification. |
 | [Windows XT splash updater](examples/WXTSPL/README.TXT) | CHECK, APPLY and RESTORE for a recognized startup file, preserving display drivers, fonts and INI settings. |
-| [Green hill wallpaper](examples/HILLS/README.TXT) | Native RGBI landscapes for 160Ã—200 and 320Ã—200 sixteen-color modes, using about 16 KB / 32 KB of bitmap memory. Turn wallpaper off before switching to monochrome. |
+| [Green hill wallpaper](examples/HILLS/README.TXT) | Native RGBI landscapes for 160×200 and 320×200 sixteen-color modes, using about 16 KB / 32 KB of bitmap memory. Turn wallpaper off before switching to monochrome. |
 | [XTEyes](examples/XTEYES/README.TXT) | A small native GDI window whose eyes follow the pointer, with integer geometry and bounded redraws. Physical responsiveness is unmeasured. |
 
 These standalone additions are opt-in; the main installer does not activate
@@ -275,7 +275,7 @@ them all automatically.
 | App | What to try |
 | --- | --- |
 | [Tandinator 0.3.8](experiments/TANDI11/README.MD) | Optional experimental character oracle with pixel art, moving eyes and a quiet demo. Notebook learning starts off; Ask Two is explicit. [Canonical v0.2](examples/TANDINAT/README.MD) remains separate; physical testing is open. |
-| [Cookie Clicker](examples/COOKIE/README.MD) | Click or press Space, buy cookies-per-second upgrades, save and load. Fits 160Ã—200. |
+| [Cookie Clicker](examples/COOKIE/README.MD) | Click or press Space, buy cookies-per-second upgrades, save and load. Fits 160×200. |
 | [Fly Swat 1.1](examples/SWAT/README.MD) | Mouse-controlled fly hunting with score, three hearts, pause and restart; fullscreen and windowed paths, plus `/G` fallback. |
 | [Pinball](examples/PINBALL/README.MD) | Two flippers, three bumpers and three balls; Space launches, Z/Left and / or Right flip, P pauses. |
 | [Matrix](examples/MATRIX/README.MD) | Fullscreen character rain, on demand or as the shell's idle companion. |
@@ -290,7 +290,7 @@ them all automatically.
 | [EXJOY](examples/EXJOY/README.MD) | Raw joystick axes/buttons, range display and session-only center calibration. Physical input remains unverified. |
 | [DOS WHEEL diagnostic](tools/WHEEL/README.TXT) | Bounded mouse-wheel/API and serial diagnostics. Raw Genius data was detected; this public diagnostic does not install Windows scrolling. |
 
-| Cookie Clicker Â· 320Ã—200Ã—16 | Pinball Â· logical 640Ã—200Ã—4 |
+| Cookie Clicker · 320×200×16 | Pinball · logical 640×200×4 |
 | --- | --- |
 | ![Cookie Clicker native emulator capture](docs/SHOTS/COOKIE.PNG) | ![Pinball native emulator capture, with doubled rows](docs/SHOTS/PINBALL.PNG) |
 
@@ -363,9 +363,9 @@ unchanged.
 
 | Measured operation | TRIAL 4 | TRIAL 5 |
 | --- | ---: | ---: |
-| Two-pixel rectangle, 121Ã—72 client, 160Ã—200Ã—16 | 1,318 ms | 55 ms |
+| Two-pixel rectangle, 121×72 client, 160×200×16 | 1,318 ms | 55 ms |
 
-About **24Ã— faster for that measured operation**, in exclusive paired
+About **24× faster for that measured operation**, in exclusive paired
 DOSBox-X runs at fixed 25,000 cycles. The guest timer resolves roughly
 55 ms; these cycle settings are uncalibrated and **do not predict physical
 8088 speed or an overall Windows speedup**.
@@ -375,8 +375,8 @@ framebuffer differences against TRIAL 4. Coverage included pen widths, all
 16 ROP2 values, clipping, coordinate transforms and cursor corners. This is
 bounded regression evidence, not complete GDI or hardware qualification.
 
-[TR5 design and reproduction](docs/TRIAL5/README.MD) Â·
-[Exact binaries](docs/TRIAL5/BUILDS.JSN) Â·
+[TR5 design and reproduction](docs/TRIAL5/README.MD) ·
+[Exact binaries](docs/TRIAL5/BUILDS.JSN) ·
 [Timings, regression coverage and limits](docs/TRIAL5/VERIFY.TXT)
 
 ### Optional TRIAL7 test build
@@ -391,7 +391,7 @@ behavior still need hardware testing.
 
 ### What still needs testing
 
-- Exact current binaries on physical EX/HX hardware, especially 640Ã—200
+- Exact current binaries on physical EX/HX hardware, especially 640×200
   four-color behavior; the emulator's model remains uncertain.
 - Text-mode character/geometry corruption and DOS-app/grabber switching.
 - Physical Windows keyboard translation, Hold-to-Start and joystick input.

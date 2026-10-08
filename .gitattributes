@@ -1,0 +1,13 @@
+# Preserve reviewed CRLF bytes in both the index and checkout.
+# These paths intentionally bypass Git automatic text normalization.
+.gitattributes -text
+README.md -text
+docs/FIRSTRUN.MD -text
+docs/FIRSTRUN/BUILD.LOG -text
+docs/FIRSTRUN/ENTER.LOG -text
+docs/FIRSTRUN/ESCAPE.LOG -text
+docs/FIRSTRUN/PREPBLD.LOG -text
+docs/FIRSTRUN/RESULT.JSN -text
+docs/STATUS.MD -text
+examples/TSHELL/TESTS/BNDTEST.PY -text
+examples/TSHELL/TESTS/BUNDLE.C -text
