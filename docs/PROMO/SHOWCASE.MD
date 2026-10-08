@@ -1,6 +1,6 @@
 # Windows XT showcase captures
 
-The homepage uses real emulator captures. The hill wallpaper and screen
+The homepage uses real emulator captures and frames from Chad's earlier video. The hill wallpaper and screen
 captures are optional components; the images do not imply that every add-on
 is installed by the disk image. No UI was generated or repainted.
 
@@ -17,6 +17,29 @@ The shutdown recording's direct DOS test returned exit 0 and DONE.TXT with
 no bounded stop on October 8, 2026. Selected frame 60 decoded successfully;
 later parsing stopped after frame 120, so complete-video decoding is not
 claimed. The displayed images are retained screenshots and frames from existing recordings.
+
+## Earlier Windows 3.0 video
+
+The comparison's [Program Manager frame](BEFORE-20m30s-Program-Manager.png)
+is at 20:30.000 (frame 36900, 30 fps). An additional
+[Solitaire frame](BEFORE-22m00s-Solitaire.png) is at 22:00.000 (frame 39600).
+Both are untouched 640x360 decoded images, including the recorded black
+borders, from Chad's supplied local original `windows3old.mp4` (43,602,632 bytes).
+They are compressed-video frames. Their geometry is preserved.
+
+[Source video](https://www.youtube.com/watch?v=yNisFBDLXos), titled
+"Let's Install - Windows 3.0 on a Tandy 1000 EX | 640x200 4 Color Driver",
+identifies the older 640x200 four-color setup. The paired Windows XT desktop
+shows the existing 320x200 sixteen-color mode with optional Tandy Start and
+hill wallpaper. The different modes and recording formats compare appearance;
+these stills provide no speed measurements. The supplied local video's identity
+is recorded here; byte identity with a remote YouTube rendition is not claimed.
+
+```text
+4570c3658dee50c54479b53f33bfd138bc678f77588377334893c35fc58bc221  windows3old.mp4
+3c54b37ee138283daa4afae96b3870d934b768c8b916c562ef5a861a6eda1c46  BEFORE-20m30s-Program-Manager.png
+6a3e1d61d5c9ad9841e247ca92a7480337c61be9d3ee9c4524bb68d67a6b10bd  BEFORE-22m00s-Solitaire.png
+```
 
 ## Image identities
 
