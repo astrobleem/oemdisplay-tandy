@@ -9,6 +9,15 @@ utilities to Windows 3.0 on the Tandy 1000 EX/HX.
 
 [User manual](docs/USERMAN.MD) · [Downloads and installation](#get-started)
 
+## Before and Windows XT
+
+| Before: Windows 3.0, four colors | Windows XT: sixteen colors |
+| --- | --- |
+| <img src="docs/PROMO/BEFORE-20m30s-Program-Manager.png" alt="Program Manager from Chad's older four-color Windows 3.0 video" width="390"> | <img src="examples/HILLS/HILL320.PNG" alt="Windows XT sixteen-color desktop with Tandy Start and green hill wallpaper" width="390"> |
+
+From [Chad's earlier video](https://www.youtube.com/watch?v=yNisFBDLXos&t=1230s).
+Different display modes; this compares appearance. [Capture details](docs/PROMO/SHOWCASE.MD#earlier-windows-30-video).
+
 ## Features
 
 - Five graphics modes, including 320x200 in 16 colors.
