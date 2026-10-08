@@ -6,7 +6,7 @@ is installed by the disk image. No UI was generated or repainted.
 
 | Image | Source and scope |
 | --- | --- |
-| [Startup](XTWAVE.GIF) | Accepted independent slow-wave recording, native 320x200, steady pane colors and lettering. [Capture provenance](XTWAVE.JSON) and [starter guide](../../examples/WXTSPL/WAVE/README.MD). The disk image still uses static startup. |
+| [Startup](XTWAVE.GIF) | Accepted independent slow-wave recording, native 320x200, steady pane colors and lettering. [Capture provenance](XTWAVE.JSON) and [starter guide](../../examples/WXTSPL/WAVE/README.MD). The rc.3 DOS installer enables the guarded wave for eligible Color mode; other modes retain static startup. |
 | [Desktop](../../examples/HILLS/HILL320.PNG) | Actual Windows 3.0 sixteen-color desktop with optional green hill wallpaper and Tandy Start 13; 640x400 emulator output with doubled axes. [Wallpaper guide and capture notes](../../examples/HILLS/README.TXT). |
 | [Shutdown](XTEXIT.PNG) | Frame 60 from the existing `moon-cursor-80-final` native `shellsel_000.avi` recording, decoded losslessly from indexed ZMBV; 640x400 DOS text output. This was a direct FINISH artwork test, not a new full Windows exit test. An earlier [normal Windows exit capture](../SHOTS/NIGHT08.PNG) and [lifecycle provenance](../SHOTS/README.MD) remain available. |
 | [Pinball](../../examples/PINBALL/EVIDENCE/V2/SCORING.PNG) | Current V2 game with a live score, native 320x200. [Guide](../../examples/PINBALL/README.MD) and [test record](../../examples/PINBALL/TESTS.MD). |
@@ -20,30 +20,33 @@ claimed. The displayed images are retained screenshots and frames from existing 
 
 ## Earlier Windows 3.0 video
 
-The comparison's [Program Manager frame](BEFORE-20m30s-Program-Manager.png)
+The comparison's [Program Manager frame](BF2030.PNG)
 is at 20:30.000 (frame 36900, 30 fps). An additional
-[Solitaire frame](BEFORE-22m00s-Solitaire.png) is at 22:00.000 (frame 39600).
+[Solitaire frame](BF2200.PNG) is at 22:00.000 (frame 39600).
 Both are untouched 640x360 decoded images, including the recorded black
 borders, from Chad's supplied local original `windows3old.mp4` (43,602,632 bytes).
 They are compressed-video frames. Their geometry is preserved.
 
 [Source video](https://www.youtube.com/watch?v=yNisFBDLXos), titled
 "Let's Install - Windows 3.0 on a Tandy 1000 EX | 640x200 4 Color Driver",
-identifies the older 640x200 four-color setup. The paired Windows XT desktop
-shows the existing 320x200 sixteen-color mode with optional Tandy Start and
-hill wallpaper. The different modes and recording formats compare appearance;
+identifies the older 640x200 four-color setup. The paired [Windows XT Paintbrush capture](PBRUSH16.PNG) shows the actual
+320x200 sixteen-color mode, one unobstructed Paintbrush window, a complete
+160x100 nearest-neighbor copy of the original hill image, and the full palette.
+It is untouched native frame 300; the palette strip contains 16 distinct RGB
+colors. [Capture identity](PBRUSH16.JSON). The different modes and recording formats compare appearance;
 these stills provide no speed measurements. The supplied local video's identity
 is recorded here; byte identity with a remote YouTube rendition is not claimed.
 
 ```text
 4570c3658dee50c54479b53f33bfd138bc678f77588377334893c35fc58bc221  windows3old.mp4
-3c54b37ee138283daa4afae96b3870d934b768c8b916c562ef5a861a6eda1c46  BEFORE-20m30s-Program-Manager.png
-6a3e1d61d5c9ad9841e247ca92a7480337c61be9d3ee9c4524bb68d67a6b10bd  BEFORE-22m00s-Solitaire.png
+3c54b37ee138283daa4afae96b3870d934b768c8b916c562ef5a861a6eda1c46  BF2030.PNG
+6a3e1d61d5c9ad9841e247ca92a7480337c61be9d3ee9c4524bb68d67a6b10bd  BF2200.PNG
 ```
 
 ## Image identities
 
 ```text
+de807eeab5a5840b9df4a722cd81e626f85200f1dd7c0b2420fa36789a1bedd5  PBRUSH16.PNG
 ec152976482f94ed1c0e11fa1ad64810be584f9ce19461b3f57ed7ff0e01d975  XTWAVE.GIF
 43ced11530f1fba7a354fc6f776ef8e8ad10e4c0a4f47766df2943afa4e1fc7e  examples/HILLS/HILL320.PNG
 e234470b54ccdacf61e354c964386fd1d8a5c3744e20617a34d327fdf4843208  XTEXIT.PNG
