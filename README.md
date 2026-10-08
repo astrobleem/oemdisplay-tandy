@@ -23,11 +23,12 @@ and a supported Tandy 1000 EX/HX with 640 KB RAM.
 
 ## Apps
 
-| [Pinball](examples/PINBALL/README.MD) | [Maze preview](examples/MAZE/GAME/README.MD) | [Cookie Clicker](examples/COOKIE/README.MD) |
+| [Pinball](examples/PINBALL/README.MD) | [Maze preview](examples/MAZE/GAME/README.MD) | [Tandinator](examples/TANDINAT/README.MD) |
 | --- | --- | --- |
-| <img src="examples/PINBALL/EVIDENCE/V2/SCORING.PNG" alt="Current Pinball with an active score" width="260"> | <img src="docs/PROMO/XTMAZE.PNG" alt="New Maze game in Windows XT" width="260"> | <img src="examples/COOKIE/EVIDENCE/baseline/LOADED.PNG" alt="Cookie Clicker with 39 cookies and one cookie per second" width="260"> |
+| <img src="examples/PINBALL/EVIDENCE/V2/SCORING.PNG" alt="Current Pinball with an active score" width="260"> | <img src="docs/PROMO/XTMAZE.PNG" alt="New Maze game in Windows XT" width="260"> | <img src="examples/TANDINAT/SHOTS/320x200x16.PNG" alt="Canonical Tandinator v0.2 character guessing game" width="260"> |
 
 Maze is a separate preview; the disk image includes the older saver.
+[Cookie Clicker](examples/COOKIE/README.MD) and more are in the user manual.
 [Capture details](docs/PROMO/SHOWCASE.MD).
 
 ## Get started
