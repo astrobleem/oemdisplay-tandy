@@ -2,7 +2,9 @@ WINDOWS XT - ONE SUPPORT FOLDER / SIX DISPLAY CHOICES
 Windows 3.0 real mode on Tandy EX/HX / 8088
 
 EVERYTHING GOES IN C:\WINXT
-Unzip on your modern computer. Copy the one WINXT folder to C:\WINXT on
+From the public 720 KB image, run A: then CD \ then INSTALL outside Windows.
+PREPXT verifies your own matching Windows/media files and prepares C:\WINXT.
+Then run C: then CD \WINXT then INSTALL. The complete prepared folder stays on
 your DOS drive. That folder holds all display sources, helpers, shell
 companions and settings templates. Backups are created INSIDE WINXT\BACKUP.
 There is no separate TDISPLAY, TANDY88 or TSTART support directory to create.
@@ -45,13 +47,31 @@ At a fresh DOS prompt:
   C:\WINXT\WINXT
 
 The launcher recovers any interrupted temporary shell selection, reserves
-Tandy video memory, and uses WIN /R. Never bypass a reservation/recovery error
+Tandy video memory, and starts real-mode Windows. Never bypass a reservation/recovery error
 by starting WIN directly. In one of the five TR5 graphics modes, a verified
 TSSETUP installation activates the Windows XT desktop for that session; the
 original shell selection is restored on exit. Without it, your existing
 Windows shell starts. Experimental text mode uses the original shell,
 normally Program Manager on a fresh installation; TSHELL is not qualified
 for that experimental driver.
+
+STARTUP AND ROLLBACK
+The guarded launcher enables the short slow flag wave for TR53216/TANDY88
+Color. Lettering and pane colors stay steady; a key skips the animation.
+This runs before loading Windows. Mono/other modes retain static startup.
+INSTALL privately combines your exact owned SYSTEM\WIN.CNF with the original
+logo module. Installed WIN.COM stays untouched by the wave updater; normal
+Windows Setup still owns its display installation. Wrong loader bytes,
+changed starters or altered wrapper files refuse startup safely.
+
+To disable only the wave at plain DOS:
+  C:\WINXT\WAVEXT RESTORE C:\WINDOWS C:\WINXT
+This restores both original starters, retaining inactive private stages.
+Re-enable with APPLY using the same arguments. Never bypass a refusal.
+Full pre-install rollback uses WINXT\BACKUP\B001\RESTORE YES (use the actual
+number printed by INSTALL). It disables the wave first and byte-verifies
+the original Windows files. Added inactive helpers remain for inspection.
+Do not redistribute the completed folder; it contains your own loader/fonts.
 
 SIX DISPLAY CHOICES
 320x200, 16 colors  - TR53216.DRV, EGA fonts, TR5 graphics driver

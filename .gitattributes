@@ -23,3 +23,10 @@ BUILDING.MD -text
 docs/PROMO/XTWAVE.JSON -text
 docs/USERMAN.MD -text
 docs/PROMO/SHOWCASE.MD -text
+examples/WXTSPL/UPDATER/* -text
+docs/QUAL/WAVEINS.JSON -text
+src/tandysw/TINST.C -text
+distributions/WINXT/* -text
+tools/FLASHDISK/XTPINS.H -text
+tools/FLASHDISK/HELPER.SHA -text
+tools/FLASHDISK/BUILD.BAT -text

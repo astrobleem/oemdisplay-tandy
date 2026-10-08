@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "status": "PASS final frozen mounted-image preparation and native installer lifecycle",
+  "original_implementation": true,
+  "payload_pins": {
+    "TINST.EXE": {
+      "sha256": "607776e7c4d0e1f1adcf7cc36d2a1698d2c81c86853cd39e979f4db5695c1925",
+      "bytes": 26923
+    },
+    "WAVEXT.EXE": {
+      "sha256": "baa0eb11703d809d8bcaaced02f5b99c8a7f21d751e7ba78f268b9c05687889f",
+      "bytes": 27739
+    },
+    "XTCLEAN.COM": {
+      "sha256": "be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad",
+      "bytes": 1071
+    },
+    "XTWAVE.DAT": {
+      "sha256": "f7217d3bbfb0ded0f9699a69d82ba16c7dcc76c7ac1d7d54748ca910928a9a1b",
+      "bytes": 6200
+    }
+  },
+  "source_pins": {
+    "src/tandysw/TINST.C": "9fd1783071ebed0b1144c6be29edfa93c6c73c9b1e8020e4c11c43553b1281d9",
+    "examples/WXTSPL/UPDATER/WAVEXT.C": "1bd204336e29aa3454ebb2cbb50a152c34538cb3355b753ecaa2e1ce2e94e495",
+    "examples/WXTSPL/UPDATER/SHA256.H": "8755dc0c5cf8a839f1aebedece71983eacf1d8306f0c9bdde03eaa25e5bf807e",
+    "tools/FLASHDISK/PREPXT.C": "333815224d67a74cf1d3cdc3e71c8b22755372994893a3553c8cac02f356e2c4"
+  },
+  "native_phases": [
+    "corrected TINST build/pin",
+    "PREPXT embedded pins/build",
+    "50-file preparation using mounted D source",
+    "existing-Windows Setup route and TR53216 selection",
+    "normal guarded Color wave Windows start/exit",
+    "updater CHECK/RESTORE/APPLY/idempotent APPLY",
+    "altered starter/owned loader/live wrapper refusal and exact harness recovery",
+    "35-file full pre-install rollback",
+    "static fallback on restored TR6402 mode and normal Windows start/exit",
+    "final exact starter restore/inactive marker"
+  ],
+  "rollback_original_files": 35,
+  "native_refusals": [
+    "custom starter",
+    "changed owned WIN.CNF",
+    "altered wrapper"
+  ],
+  "normal_color_and_static_dos_return": true,
+  "register_mode_reservation_checks": {
+    "POSTWIN.TXT": {
+      "words": [
+        624,
+        20483,
+        0,
+        90,
+        2213,
+        1024,
+        77,
+        2213,
+        111,
+        20052,
+        22852,
+        21330,
+        12592,
+        38912,
+        1024
+      ],
+      "pass": true
+    },
+    "POSTMONO.TXT": {
+      "words": [
+        624,
+        20483,
+        0,
+        90,
+        2213,
+        1024,
+        77,
+        2213,
+        111,
+        20052,
+        22852,
+        21330,
+        12592,
+        38912,
+        1024
+      ],
+      "pass": true
+    }
+  },
+  "starting_layout": "known Tandy signatures/text3/page0/624KB and exact RESERVE MCB; other layouts refuse",
+  "source_files_and_prior_fixtures_unchanged": true,
+  "private_loader_publication": false,
+  "no_irq_timer_hooks_or_concurrent_loading": true,
+  "scope": "functional DOSBox-X Tandy/8086-prefetch/640KB fixed200000, not physical 8088 speed or concurrent loading",
+  "prior_input_automation_failures": "Preserved failed private harness attempts; only normal exits count as acceptance",
+  "physical_hardware_claim": false,
+  "publication_rule": "Exact frozen image must pass final mounted-image preparation; CI packages pinned bytes without recompilation",
+  "final_helper_sha256": "c853d89ba6d02ade368386b14901bfdac3afc33d32f85d1b15c343353baf8ed6",
+  "final_image": {
+    "sha256": "07d65bbfc76f0e6b66c15306c5e56bd7754e432daf2b97797cf31e02b664a7b9",
+    "bytes": 737280,
+    "free_bytes": 2048,
+    "prepared_files": 50,
+    "owned_inputs_unchanged": true,
+    "native_normal_exit": true,
+    "lease_seconds": 115.937,
+    "lease_released": "2026-10-08T22:24:11.423594+00:00",
+    "source": "exact mounted final FAT12 image; direct DOS PREPXT command with file confirmation"
+  },
+  "public_assets": {
+    "BUILD.JSON": {
+      "sha256": "8af8671568d12b598c615dd02788bdc8f5927507e6f8346b5cc963798b44fcb8",
+      "bytes": 8616
+    },
+    "README.TXT": {
+      "sha256": "860d25405a9e934efc1efd3f841d4a4448ff3b95a0c71f34225b84776de539c0",
+      "bytes": 5766
+    },
+    "SHA256SUMS": {
+      "sha256": "6060b70867d4258e7905802d5a9cfae76d6c42af6e7d844ad732628eb146aa10",
+      "bytes": 391
+    },
+    "WINXT720.IMG": {
+      "sha256": "07d65bbfc76f0e6b66c15306c5e56bd7754e432daf2b97797cf31e02b664a7b9",
+      "bytes": 737280
+    },
+    "WINXT720.ZIP": {
+      "sha256": "3e00a5b6e6cd3e263f999fda0582b5595e3608304b092fd5f79ca08a0ec4e62b",
+      "bytes": 743264
+    },
+    "WXTTOOLS.ZIP": {
+      "sha256": "3a9e0a1b427b1d4af7d8c25455aaecf76dd5116488de38d8ae3b37f219fec9ba",
+      "bytes": 1025988
+    }
+  }
+}
