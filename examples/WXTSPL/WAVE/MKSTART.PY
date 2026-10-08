@@ -6,6 +6,15 @@ import argparse,hashlib,json,shutil
 HERE=Path(__file__).resolve().parent
 CNF_SHA='371bd1935f84505d61873f1e08a17b858d667a5149d71995d4285c6f17782bdb'
 def sha(data):return hashlib.sha256(data).hexdigest()
+def starter_batch():
+ return ('@ECHO OFF\nRESERVE\nIF ERRORLEVEL 1 GOTO BAD\n'
+         'SET PATH=C:\\WINDOWS;C:\\WINDOWS\\SYSTEM;Z:\\\n'
+         'SET TEMP=C:\\WINDOWS\\TEMP\nCD WINDOWS\nXTCLEAN\n'
+         'IF ERRORLEVEL 1 GOTO WINFAIL\nCD \\\n'
+         'ECHO Windows returned.\nGOTO DONE\n'
+         ':WINFAIL\nECHO Windows startup or cleanup failed; see WRAP.BIN.\n'
+         'GOTO DONE\n:BAD\nECHO RESERVE refused; Windows was not started.\n:DONE\n')
+
 def make(windows,out):
  if out.exists():raise ValueError('Choose a new output directory; existing files are preserved')
  policy=json.loads((HERE/'DEFAULT.JSON').read_text())
@@ -23,7 +32,7 @@ def make(windows,out):
  (out/'WINDOWS/XTTEST.COM').write_bytes(combined)
  (out/'WINDOWS/XTCLEAN.COM').write_bytes(data['XTCLEAN.COM'])
  (out/'RESERVE.COM').write_bytes(data['RESERVE.COM'])
- start='@ECHO OFF\nRESERVE\nIF ERRORLEVEL 1 GOTO BAD\nSET PATH=C:\\WINDOWS;C:\\WINDOWS\\SYSTEM;Z:\\\nSET TEMP=C:\\WINDOWS\\TEMP\nCD WINDOWS\nXTCLEAN\nCD \\\nECHO Windows returned.\nGOTO DONE\n:BAD\nECHO RESERVE refused; Windows was not started.\n:DONE\n'
+ start=starter_batch()
  (out/'START.BAT').write_bytes(start.replace('\n','\r\n').encode('ascii'))
  record={'publication_allowed':False,'kind':'private-owned-loader-startup-addon','installed_windows_changed':False,'files':{str(p.relative_to(out)):sha(p.read_bytes()) for p in out.rglob('*') if p.is_file()},'default':'accepted fixed-color slow wave','scope':'C:\\WINDOWS qualified DOS layout; merge add-on into a disposable/user-authorized clone only','qualification_limits':policy['qualification_limits']}
  (out/'PRIVATE.JSON').write_text(json.dumps(record,indent=2));return record
