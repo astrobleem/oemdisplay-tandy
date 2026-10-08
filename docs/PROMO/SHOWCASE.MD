@@ -12,6 +12,8 @@ is installed by the disk image. No UI was generated or repainted.
 | [Buddy Holly animation](https://raw.githubusercontent.com/astrobleem/oemsound-tandy/5411fe5f9c2cccdbe09900a779ebda382a407a74/docs/SHOTS/BUDCAP04.GIF) | Existing BUDCAP 0.4 six-second silent GIF from a genuine native DOSBox-X capture, 320x200, 24 frames. Linked directly to the [Tandy sound companion](https://github.com/astrobleem/oemsound-tandy). [Original capture provenance](https://github.com/astrobleem/oemsound-tandy/blob/5411fe5f9c2cccdbe09900a779ebda382a407a74/docs/SHOTS/README.MD#budcap-04-animated-preview). Reused unchanged; no new video export or runtime test. |
 | [Pinball](../../examples/PINBALL/EVIDENCE/V2/SCORING.PNG) | Current V2 game with a live score, native 320x200. [Guide](../../examples/PINBALL/README.MD) and [test record](../../examples/PINBALL/TESTS.MD). |
 | [Maze preview](XTMAZE.PNG) | Exact left 320x200 frame from the published [two-frame capture](../../examples/MAZE/GAME/EVIDENCE/320X16.PNG), crop `(2,2,322,202)`, without rescaling or retouching. [Current game guide](../../examples/MAZE/GAME/README.MD). PR #116 is merged, but the disk image retains the older saver; the game is a separate preview. |
+| [Starfield](../../experiments/VISPART2/PLAIN.PNG) | Existing genuine plain Starfield capture from the qualified VISPART2 packet, reused unchanged. [Source and native scope](../../experiments/VISPART2/README.MD). |
+| [Matrix](../../experiments/VISPART1/MATRIX.PNG) | Existing genuine Matrix capture with green trails from the qualified VISPART1 packet, reused unchanged. [Source and native scope](../../experiments/VISPART1/README.MD). |
 | [Tandinator](../../examples/TANDINAT/SHOTS/320x200x16.PNG) | Actual canonical v0.2 sixteen-color character-guessing frame, displayed at doubled size. [Guide and native scope](../../examples/TANDINAT/README.MD). The separate [0.3.8 experimental download](../../experiments/TANDI11/README.MD) is available; this image does not depict its notebook UI. |
 
 The shutdown recording's direct DOS test returned exit 0 and DONE.TXT with
@@ -45,6 +47,13 @@ is recorded here; byte identity with a remote YouTube rendition is not claimed.
 ```
 
 ## Image identities
+
+Screen-saver image SHA-256 identities:
+
+```text
+beb75c682ade6758f4a6fe9436c2918a9643e98c8c22935967b72922ff5761bc  experiments/VISPART2/PLAIN.PNG
+b10fe71566250585cec1624a9d8375d0b3cd102ed36a99fd94f319e26ce31229  experiments/VISPART1/MATRIX.PNG
+```
 
 Buddy Holly GIF SHA-256 (companion-owned asset, referenced unchanged):
 `58c9193e3f8454326d1563e215a9972d8e0557cde936f97f1430c6535dbfab99`.

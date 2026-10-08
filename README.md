@@ -72,3 +72,9 @@ SL/TL/RL models. It is not shipped and cannot be used on EX/HX.
 For mode details, the text-mode experiment, app guides, long filename
 requirements and recovery, see the [user manual](docs/USERMAN.MD).
 [Development status](docs/STATUS.MD) · [Build guide](BUILDING.MD)
+
+## Screen savers
+
+| [Starfield](experiments/VISPART2/README.MD) | [Matrix](experiments/VISPART1/README.MD) |
+| --- | --- |
+| <img src="experiments/VISPART2/PLAIN.PNG" alt="Native Starfield screen saver capture" width="390"> | <img src="experiments/VISPART1/MATRIX.PNG" alt="Native Matrix screen saver with green trails" width="390"> |
