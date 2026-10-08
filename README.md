@@ -25,6 +25,12 @@ The portable toolkit includes the own-media preparation tool. The existing
 updater is separately rebuilt and qualified. See the wave kit for rollback
 and the baseline-equivalent EXJOY polling limitation.
 
+![Accepted Windows XT slow flag wave captured in DOSBox-X at native 320x200 pixels](docs/PROMO/XTWAVE.GIF)
+
+*Actual accepted emulator capture: steady colors and lettering, with a short
+flag wave before loading. Available through the independent Color starter;
+the final DOS installer path is still being qualified. [Capture provenance](docs/PROMO/XTWAVE.JSON).*
+
 The startup picture is **Windows XT** in every current display profile.
 The retired Tandy picture is not an installation option. Historical OEM
 artifacts remain intact for provenance and recovery. For an older installation,
@@ -37,8 +43,9 @@ loader prefix and original backup; applying it is an explicit DOS command.
   320 pixels in four colors, or a 640-pixel desktop in two or four colors.
 - **Tandy Start desktop:** Programs, My Computer, Run/Browse, a clock, screen
   savers, optional sounds and guarded Hold-to-Start support.
-- **Long filename browsing:** see existing VFAT names in Run/Browse on supported
-  FAT12/FAT16 drives, while navigation and launch retain DOS short aliases.
+- **[Long filename browsing](#long-filename-browsing):** show existing VFAT labels
+  on supported fixed FAT12/FAT16 volumes under DOS 6.22; navigation and launch
+  use DOS short aliases. Labels are read-only.
 - **One support folder:** `C:\WINXT`, with native Windows Setup, matching
   fonts, a guarded launcher and numbered recovery backups.
 - **Small native apps:** Cookie Clicker, Fly Swat, Pinball, XTEyes, GIF
