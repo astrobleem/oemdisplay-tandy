@@ -32,12 +32,14 @@ and a supported Tandy 1000 EX/HX with 640 KB RAM.
 
 ## Apps
 
-| [Pinball](examples/PINBALL/README.MD) | [Maze preview](examples/MAZE/GAME/README.MD) | [Tandinator](examples/TANDINAT/README.MD) |
+| [Buddy Holly · Tandy sound](https://github.com/astrobleem/oemsound-tandy) | [Maze preview](examples/MAZE/GAME/README.MD) | [Tandinator](examples/TANDINAT/README.MD) |
 | --- | --- | --- |
-| <img src="examples/PINBALL/EVIDENCE/V2/SCORING.PNG" alt="Current Pinball with an active score" width="260"> | <img src="docs/PROMO/XTMAZE.PNG" alt="New Maze game in Windows XT" width="260"> | <img src="examples/TANDINAT/SHOTS/320x200x16.PNG" alt="Canonical Tandinator v0.2 character guessing game" width="260"> |
+| <a href="https://github.com/astrobleem/oemsound-tandy"><img src="https://raw.githubusercontent.com/astrobleem/oemsound-tandy/5411fe5f9c2cccdbe09900a779ebda382a407a74/docs/SHOTS/BUDCAP04.GIF" alt="Genuine Buddy Holly animated capture from the Tandy sound companion" width="260"></a> | <img src="docs/PROMO/XTMAZE.PNG" alt="New Maze game in Windows XT" width="260"> | <img src="examples/TANDINAT/SHOTS/320x200x16.PNG" alt="Canonical Tandinator v0.2 character guessing game" width="260"> |
 
+Buddy Holly is a silent GIF; click it for the sound companion.
 Maze is a separate preview; the disk image includes the older saver.
-[Cookie Clicker](examples/COOKIE/README.MD) and more are in the user manual.
+[Pinball](examples/PINBALL/README.MD), [Cookie Clicker](examples/COOKIE/README.MD)
+and more are in the user manual.
 [Capture details](docs/PROMO/SHOWCASE.MD).
 
 ## Get started
