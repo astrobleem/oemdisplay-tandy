@@ -1,5 +1,10 @@
 # Current Windows XT build and splash default
 
+The accepted independent startup default is the [slow flag wave](examples/WXTSPL/WAVE/README.MD).
+The portable toolkit carries its exact qualified module/wrapper and own-media
+preparation tool. The current DOS Setup installer retains its static fallback
+until its compiled updater is separately rebuilt and qualified.
+
 The current public release is built by `tools/FLASHDISK/MAKEIMG.PY` and the
 Windows XT release workflow. Every current Setup display profile selects the
 approved `WXTSPL01.RLE` (SHA-256
@@ -7,6 +12,7 @@ approved `WXTSPL01.RLE` (SHA-256
 The retired Tandy image is not a current installation choice.
 
 ```sh
+python3 tools/FLASHDISK/TESTWAVE.PY
 python3 tools/FLASHDISK/TESTFAT.PY
 python3 tools/FLASHDISK/TESTPKG.PY
 python3 tools/FLASHDISK/MAKEIMG.PY --out /new/winxt-public

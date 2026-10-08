@@ -172,3 +172,7 @@ The [0.1.0-rc.2 first-run update](https://github.com/astrobleem/oemdisplay-tandy
 uses matching new media-helper/runtime pins, adds Pinball v2 to the explicit
 public allowlist, and retains all TR5 driver and splash identities. The older
 rc.1 downloads above remain immutable. See [first-run checks](../../docs/FIRSTRUN.MD).
+
+## Independent startup default
+
+WXTTOOLS.ZIP now includes the [accepted slow flag wave](../../examples/WXTSPL/WAVE/README.MD) and its private own-media builder. Executable bytes are pinned to native qualification. The 720 KB Setup installer remains the static fallback; this promotion does not replace its compiled updater or any installed WIN.COM.

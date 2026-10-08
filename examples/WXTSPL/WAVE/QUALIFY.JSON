@@ -1,0 +1,14 @@
+{
+  "candidate_sha256": "8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c",
+  "private_combined_sha256": "d144918d757536b625b8ce04dc9b543ffd5592989d1d49855d4f832218e5fc5b",
+  "fixed_rgb_frames": 210,
+  "phases_observed": 16,
+  "final_rest_frames": 18,
+  "synthetic_skip_rest_frames": 17,
+  "relocated_hide": "PASS",
+  "wrapper_error_cleanup": "PASS",
+  "actual_windows_startup_normal_exit": "PASS independent capture/DOSmarker/wrapper checks",
+  "baseline_exjoy_polling": "FAIL2,POLLS3 identical full logs in baseline and wave",
+  "physical_hardware": "NOT TESTED",
+  "manual_input": "NOT TESTED"
+}
