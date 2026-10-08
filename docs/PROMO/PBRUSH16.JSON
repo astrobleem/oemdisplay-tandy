@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "capture": "Unmodified native Windows 3.0 Paintbrush screenshot",
+  "frame": 300,
+  "dimensions": [
+    320,
+    200
+  ],
+  "asset": "PBRUSH16.PNG",
+  "sha256": "de807eeab5a5840b9df4a722cd81e626f85200f1dd7c0b2420fa36789a1bedd5",
+  "display_mode": "320x200x16 TR53216",
+  "palette_rgb_colors": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      170
+    ],
+    [
+      0,
+      170,
+      0
+    ],
+    [
+      0,
+      170,
+      170
+    ],
+    [
+      85,
+      85,
+      85
+    ],
+    [
+      85,
+      85,
+      255
+    ],
+    [
+      85,
+      255,
+      85
+    ],
+    [
+      85,
+      255,
+      255
+    ],
+    [
+      170,
+      0,
+      0
+    ],
+    [
+      170,
+      0,
+      170
+    ],
+    [
+      170,
+      85,
+      0
+    ],
+    [
+      170,
+      170,
+      170
+    ],
+    [
+      255,
+      85,
+      85
+    ],
+    [
+      255,
+      85,
+      255
+    ],
+    [
+      255,
+      255,
+      85
+    ],
+    [
+      255,
+      255,
+      255
+    ]
+  ],
+  "canvas": "160x100 nearest-neighbor copy of original HILL320.BMP; original palette retained",
+  "no_ui_repainting": true,
+  "physical_hardware_claim": false,
+  "source_provenance_sha256": "532504ce7e74567d1c3a7897a4e0e0c8ed28f6c6bb58cab555539c1e3fdd8b89",
+  "source_capture_sha256": "9084a1b9110dc702ba9c05191ce7961f50ca79863fb792723e6d18a28d771bc7",
+  "driver_sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61",
+  "original_art_sha256": "150043a3036e3c99c6919420826c1bf5cf273ff9a3b340132bcde98efdcd735e",
+  "adapted_art_sha256": "23279b48dc79ed0332bb7ad704b6ddda3e053e9a2a7d6fea5365b24d2fd01a82",
+  "public_verified_commit": "96ce6971a1757f3c77094322ed82741791c79646",
+  "limits": "Genuine native emulator capture, not physical hardware. CPU 8086_prefetch, 640KB, fixed 200000 cycles; no performance claim. Palette swatches visible; landscape does not itself use all 16 colors. No separate Maximize action asserted.",
+  "separate_maximize_action_asserted": false
+}

@@ -13,10 +13,10 @@ utilities to Windows 3.0 on the Tandy 1000 EX/HX.
 
 | Before: Windows 3.0, four colors | Windows XT: sixteen colors |
 | --- | --- |
-| <img src="docs/PROMO/BEFORE-20m30s-Program-Manager.png" alt="Program Manager from Chad's older four-color Windows 3.0 video" width="390"> | <img src="examples/HILLS/HILL320.PNG" alt="Windows XT sixteen-color desktop with Tandy Start and green hill wallpaper" width="390"> |
+| <img src="docs/PROMO/BF2030.PNG" alt="Program Manager from Chad's older four-color Windows 3.0 video" width="390"> | <img src="docs/PROMO/PBRUSH16.PNG" alt="Windows XT Paintbrush with a colorful hill canvas and all sixteen palette colors" width="390"> |
 
 From [Chad's earlier video](https://www.youtube.com/watch?v=yNisFBDLXos&t=1230s).
-Different display modes; this compares appearance. [Capture details](docs/PROMO/SHOWCASE.MD#earlier-windows-30-video).
+Paintbrush in 320x200, with all 16 palette colors. Different modes; appearance comparison. [Capture details](docs/PROMO/SHOWCASE.MD#earlier-windows-30-video).
 
 ## Features
 
