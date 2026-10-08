@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "startup_default": "slow-flag-wave",
+  "approval": "Sentinel_8e4b8033cbf88191ae9d3c3bb9b64541",
+  "technique": "one initial frame, fixed RGBI palette, sparse flag-edge updates",
+  "phases": 16,
+  "nominal_period_seconds": 3.2,
+  "maximum_displacement_pixels": 2,
+  "maximum_phase_byte_writes": 26,
+  "maximum_settle_byte_writes": 56,
+  "private_combined_sha256": "d144918d757536b625b8ce04dc9b543ffd5592989d1d49855d4f832218e5fc5b",
+  "payload": {
+    "XTLOGO.LGO": {
+      "bytes": 35971,
+      "sha256": "8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c"
+    },
+    "XTCLEAN.COM": {
+      "bytes": 1071,
+      "sha256": "be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad"
+    },
+    "RESERVE.COM": {
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+    }
+  },
+  "qualification_limits": [
+    "Native DOSBox-X Tandy/8086 real-mode startup/exit, not physical hardware",
+    "EXJOY polling assertions fail identically in unchanged baseline; actual startup/normal exit independently verified",
+    "Manual input and arbitrary starting mode/palette restoration not qualified",
+    "Existing DOS Setup updater remains static fallback until separately rebuilt/qualified; independent starter is active wave default"
+  ]
+}

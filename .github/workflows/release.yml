@@ -40,7 +40,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/examples/TSHELL/\n/tools/FLASHDISK/\n/distributions/WINXT/\n/examples/WXTSPL/WXTSPL01.RLE\n/examples/WXTSPL/ART/assets/WXTSPL01.RLE\n/src/splash/assets/TNDYLOGO.RLE\n' | git sparse-checkout set --no-cone --stdin
+          printf '/examples/TSHELL/\n/tools/FLASHDISK/\n/distributions/WINXT/\n/examples/WXTSPL/WAVE/\n/examples/WXTSPL/WXTSPL01.RLE\n/examples/WXTSPL/ART/assets/WXTSPL01.RLE\n/src/splash/assets/TNDYLOGO.RLE\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
 
@@ -51,6 +51,7 @@ jobs:
           python3 examples/TSHELL/DOS/TESTSEL.PY
           python3 examples/TSHELL/DOS/TESTNITE.PY
           python3 tools/FLASHDISK/TESTFAT.PY
+          python3 tools/FLASHDISK/TESTWAVE.PY
           python3 tools/FLASHDISK/TESTPKG.PY
 
       - name: Build public 720 KB disk and portable ZIP
@@ -58,6 +59,7 @@ jobs:
 
       - name: Verify public output and checksums
         run: |
+          python3 tools/FLASHDISK/TESTWAVE.PY
           python3 tools/FLASHDISK/TESTPKG.PY --verify dist
           cd dist
           sha256sum --check SHA256SUMS

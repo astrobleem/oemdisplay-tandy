@@ -193,6 +193,18 @@ controller behavior still require hardware qualification. Experimental text
 has known character damage; use graphics modes for ordinary work.
 Public outputs contain no Microsoft support files, fonts, OS boot files or
 compiler/DDK toolchain. Existing project/DDK licensing notices are unchanged.
+The independent startup default is the accepted fixed-color slow flag wave.
+WXTTOOLS.ZIP contains WAVE/MKSTART.PY: on a modern host prepare a PRIVATE
+add-on from your exact owned WIN.CNF for a disposable C:\WINDOWS clone.
+The add-on contains owned loader bytes and must not be redistributed.
+The 720 KB DOS Setup path above retains its static-RLE fallback until its
+compiled updater is separately rebuilt and qualified for the wave.
+The independent startup default is the accepted fixed-color slow flag wave.
+WXTTOOLS.ZIP contains WAVE/MKSTART.PY: on a modern host prepare a PRIVATE
+add-on from your exact owned WIN.CNF for a disposable C:\WINDOWS clone.
+The add-on contains owned loader bytes and must not be redistributed.
+The 720 KB DOS Setup path above retains its static-RLE fallback until its
+compiled updater is separately rebuilt and qualified for the wave.
 WXTTOOLS.ZIP is an optional developer/reproduction toolkit; normal users need
 only WINXT720.IMG (or the same image inside WINXT720.ZIP) and their own Windows.
 """)
@@ -251,9 +263,34 @@ def write_zip(path, entries):
                 archive.writestr(info, data)
 
 
+WAVE_NAMES = {'DEFAULT.JSON', 'FRAME.INC', 'MKSTART.PY', 'QUALIFY.JSON',
+              'README.MD', 'RESERVE.COM', 'WAVE.INC', 'XTCLEAN.ASM',
+              'XTCLEAN.COM', 'XTLOGO.ASM', 'XTLOGO.LGO'}
+
+def wave_payload():
+    source = HERE / 'WAVE' if (HERE / 'WAVE').is_dir() else HERE.parents[1] / 'examples/WXTSPL/WAVE'
+    manifest = json.loads(read_file(source / 'FILES.JSON'))
+    if set(manifest) != WAVE_NAMES or {p.name for p in source.iterdir() if p.is_file()} != WAVE_NAMES | {'FILES.JSON'}:
+        raise PackageError('Independent wave allowlist changed')
+    data = {name: read_file(source / name) for name in sorted(WAVE_NAMES)}
+    if any(sha(data[n]) != manifest[n] for n in data):
+        raise PackageError('Independent wave file pin mismatch')
+    pins = {'XTLOGO.LGO': '8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c',
+            'XTCLEAN.COM': 'be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad',
+            'RESERVE.COM': '644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8'}
+    if any(sha(data[n]) != h for n,h in pins.items()):
+        raise PackageError('Native-qualified wave binary changed; requalification required')
+    policy = json.loads(data['DEFAULT.JSON'])
+    if policy['startup_default'] != 'slow-flag-wave' or {n:p['sha256'] for n,p in policy['payload'].items()} != pins:
+        raise PackageError('Independent startup default/pins mismatch')
+    data['FILES.JSON'] = read_file(source / 'FILES.JSON')
+    return {'WAVE/' + n: b for n,b in data.items()}
+
+
 def build(runtime, out, windows_files=None):
     if out.exists():
         raise PackageError('Output exists; choose a fresh directory')
+    wave = wave_payload()
     payload = public_payload(runtime)
     public = dict(payload)
     private = windows_files is not None
@@ -288,6 +325,7 @@ def build(runtime, out, windows_files=None):
             entries = {'WINXT/' + n: b for n, b in public.items()}
             entries['WINXT/STAGE.PY'] = read_file(runtime / 'STAGE.PY')
             entries.update({n: read_file(HERE / n) for n in ('MAKEIMG.PY', 'FAT12.PY')})
+            entries.update(wave)
             entries.update(helper)
             entries['HELPER.SHA'] = read_file(HERE / 'HELPER.SHA')
             entries['README.TXT'] = guide
@@ -295,6 +333,9 @@ def build(runtime, out, windows_files=None):
         metadata = {'schema': 1, 'publication_allowed': not private,
             'kind': 'private-own-media' if private else 'public-support-free',
             'binary_policy': 'package accepted pinned binaries; no recompilation',
+            'independent_startup_default': 'slow-flag-wave',
+            'disk_setup_startup': 'static-RLE-fallback',
+            'wave_payload_sha256': {n: sha(b) for n,b in wave.items()},
             'runtime_manifest_sha256': sha(public['MANIFEST.SHA']),
             'helper_sha256': sha(helper['PREPXT.EXE']),
             'windows_support_included': private, 'image_bytes': image.stat().st_size,

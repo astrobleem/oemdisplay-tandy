@@ -65,6 +65,7 @@ def verify(out, runtime=RUNTIME):
     toolkit = {'WINXT/' + n: b for n, b in package.public_payload(runtime).items()}
     toolkit['WINXT/STAGE.PY'] = package.read_file(runtime / 'STAGE.PY')
     toolkit.update({n: package.read_file(HERE / n) for n in ('MAKEIMG.PY', 'FAT12.PY')})
+    toolkit.update(package.wave_payload())
     toolkit.update(helper)
     toolkit['HELPER.SHA'] = package.read_file(HERE / 'HELPER.SHA')
     toolkit['README.TXT'] = guide
@@ -72,6 +73,10 @@ def verify(out, runtime=RUNTIME):
     metadata = json.loads(data['BUILD.JSON'])
     check(metadata['publication_allowed'] is True and metadata['windows_support_included'] is False
           and metadata['kind'] == 'public-support-free', 'PRIVATE OUTPUT MUST NOT BE PUBLISHED')
+    check(metadata['independent_startup_default'] == 'slow-flag-wave'
+          and metadata['disk_setup_startup'] == 'static-RLE-fallback'
+          and metadata['wave_payload_sha256'] == {n:package.sha(b) for n,b in package.wave_payload().items()},
+          'Independent startup default/provenance mismatch')
     check(metadata['fat_verification'] == actual, 'Build report differs from verified disk')
     check(metadata['runtime_manifest_sha256'] == package.sha(package.public_payload(runtime)['MANIFEST.SHA']),
           'Runtime provenance mismatch')

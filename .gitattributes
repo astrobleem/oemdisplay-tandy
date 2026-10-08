@@ -11,3 +11,12 @@ docs/FIRSTRUN/RESULT.JSN -text
 docs/STATUS.MD -text
 examples/TSHELL/TESTS/BNDTEST.PY -text
 examples/TSHELL/TESTS/BUNDLE.C -text
+
+# Independent startup payload and packaging pins preserve exact bytes.
+examples/WXTSPL/WAVE/* -text
+tools/FLASHDISK/MAKEIMG.PY -text
+tools/FLASHDISK/TESTPKG.PY -text
+tools/FLASHDISK/TESTWAVE.PY -text
+tools/FLASHDISK/README.MD -text
+BUILDING.MD -text
+.github/workflows/release.yml -text

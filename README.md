@@ -18,6 +18,13 @@ desktop additions and their source and test evidence.
 packaging. The monitor uses an [actual emulator capture](docs/tandy-dib-roundtrip.png).
 [Artwork details](docs/PROMO/README.MD).*
 
+The accepted independent startup default is a [slow flag wave](examples/WXTSPL/WAVE/README.MD)
+with steady colors and lettering, exact native-qualified bytes and key skip.
+The portable toolkit includes the own-media preparation tool. The existing
+720 KB DOS Setup path retains its static image fallback until its compiled
+updater is separately rebuilt and qualified. See the wave kit for rollback
+and the baseline-equivalent EXJOY polling limitation.
+
 The startup picture is **Windows XT** in every current display profile.
 The retired Tandy picture is not an installation option. Historical OEM
 artifacts remain intact for provenance and recovery. For an older installation,
