@@ -5,7 +5,7 @@ utilities to Windows 3.0 on the Tandy 1000 EX/HX.
 
 | Startup | Desktop | Shutdown |
 | --- | --- | --- |
-| <img src="docs/PROMO/XTWAVE.GIF" alt="Windows XT slow flag wave startup" width="260"> | <img src="examples/HILLS/HILL320.PNG" alt="Windows XT green hill desktop" width="260"> | <img src="docs/SHOTS/NIGHT08.PNG" alt="Windows XT moon and stars after shutdown" width="260"> |
+| <img src="docs/PROMO/XTWAVE.GIF" alt="Windows XT slow flag wave startup" width="260"> | <img src="examples/HILLS/HILL320.PNG" alt="Windows XT green hill desktop" width="260"> | <img src="docs/PROMO/XTEXIT.PNG" alt="Windows XT moon and stars after shutdown" width="260"> |
 
 [User manual](docs/USERMAN.MD) · [Downloads and installation](#get-started)
 
@@ -20,6 +20,15 @@ utilities to Windows 3.0 on the Tandy 1000 EX/HX.
 
 Experimental software. Requires your own Windows 3.0 installation, DOS 3.3+
 and a supported Tandy 1000 EX/HX with 640 KB RAM.
+
+## Apps
+
+| [Pinball](examples/PINBALL/README.MD) | [Maze preview](examples/MAZE/GAME/README.MD) | [Cookie Clicker](examples/COOKIE/README.MD) |
+| --- | --- | --- |
+| <img src="examples/PINBALL/EVIDENCE/V2/SCORING.PNG" alt="Current Pinball with an active score" width="260"> | <img src="docs/PROMO/XTMAZE.PNG" alt="New Maze game in Windows XT" width="260"> | <img src="examples/COOKIE/EVIDENCE/baseline/LOADED.PNG" alt="Cookie Clicker with 39 cookies and one cookie per second" width="260"> |
+
+Maze is a separate preview; the disk image includes the older saver.
+[Capture details](docs/PROMO/SHOWCASE.MD).
 
 ## Get started
 

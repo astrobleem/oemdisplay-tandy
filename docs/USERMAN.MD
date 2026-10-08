@@ -1,6 +1,6 @@
 # Windows XT user manual
 
-[Project showcase and downloads](../README.MD)
+[Project showcase and downloads](../README.md)
 
 **A colorful little Windows desktop for an 8088 Tandy.**
 
@@ -14,11 +14,11 @@ desktop additions and their source and test evidence.
 [Performance](#performance-and-verification) ·
 [Sound companion](https://github.com/astrobleem/oemsound-tandy)
 
-![16 COLORS. WOW! Windows 3.0 on a Tandy 1000 EX, with a real Paintbrush capture inside a promotional computer scene](../docs/PROMO/16WOW.WEBP)
+![16 COLORS. WOW! Windows 3.0 on a Tandy 1000 EX, with a real Paintbrush capture inside a promotional computer scene](PROMO/16WOW.WEBP)
 
 *Project artwork, not a hardware photograph or official Tandy/Microsoft
-packaging. The monitor uses an [actual emulator capture](../docs/tandy-dib-roundtrip.png).
-[Artwork details](../docs/PROMO/README.MD).*
+packaging. The monitor uses an [actual emulator capture](tandy-dib-roundtrip.png).
+[Artwork details](PROMO/README.MD).*
 
 The accepted independent startup default is a [slow flag wave](../examples/WXTSPL/WAVE/README.MD)
 with steady colors and lettering, exact native-qualified bytes and key skip.
@@ -27,11 +27,11 @@ The portable toolkit includes the own-media preparation tool. The existing
 updater is separately rebuilt and qualified. See the wave kit for rollback
 and the baseline-equivalent EXJOY polling limitation.
 
-![Accepted Windows XT slow flag wave captured in DOSBox-X at native 320x200 pixels](../docs/PROMO/XTWAVE.GIF)
+![Accepted Windows XT slow flag wave captured in DOSBox-X at native 320x200 pixels](PROMO/XTWAVE.GIF)
 
 *Actual accepted emulator capture: steady colors and lettering, with a short
 flag wave before loading. Available through the independent Color starter;
-the final DOS installer path is still being qualified. [Capture provenance](../docs/PROMO/XTWAVE.JSON).*
+the final DOS installer path is still being qualified. [Capture provenance](PROMO/XTWAVE.JSON).*
 
 The startup picture is **Windows XT** in every current display profile.
 The retired Tandy picture is not an installation option. Historical OEM
@@ -58,7 +58,7 @@ loader prefix and original backup; applying it is an explicit DOS command.
 **Status:** experimental software with emulator tests and limited reports
 from a physical Tandy 1000 EX. Hardware reports do not certify every current
 binary or app. See the [mode table](#display-modes) and
-[detailed status](../docs/STATUS.MD).
+[detailed status](STATUS.MD).
 
 ## Get started
 
@@ -170,7 +170,7 @@ may remain on disk but are no longer selected. Keep the backup until the
 restored system works; resolve any restore failure before starting Windows.
 
 [Full installation and recovery guide](../distributions/WINXT/README.TXT) ·
-[Installation, six-mode switching and rollback evidence](../docs/UNIFIED/README.md)
+[Installation, six-mode switching and rollback evidence](UNIFIED/README.md)
 
 ## Display modes
 
@@ -189,7 +189,7 @@ identities in the current public WINXT kit:
 The physical observations above concern earlier trials, with no final-file
 hash readback. **They are not acceptance of the exact TR5 files in this
 table.** The known-working TRIAL 3 monochrome fallback is a different binary;
-keep it separately. [Hardware reports and scope](../docs/STATUS.MD).
+keep it separately. [Hardware reports and scope](STATUS.MD).
 
 Original EX/HX 640×200 Tandy graphics has **four colors, not sixteen**.
 Narrow modes can clip stock Windows dialogs. In 320×200 four-color mode,
@@ -198,7 +198,7 @@ stock Clock's digital digits are invisible; use analog Clock or another mode.
 <details>
 <summary>See the six Setup choices and the text-mode caveat</summary>
 
-![The five TR5 graphics choices and explicitly experimental text choice in native Windows Setup](../docs/UNIFIED/SHOTS/SETUP6.PNG)
+![The five TR5 graphics choices and explicitly experimental text choice in native Windows Setup](UNIFIED/SHOTS/SETUP6.PNG)
 
 Actual Windows 3.0 Setup in the emulator. The experimental text driver runs
 unchanged Program Manager and Notepad in real hardware character cells, but
@@ -288,6 +288,9 @@ them all automatically.
 
 ## Games and utilities
 
+The newer [Maze game preview](../examples/MAZE/GAME/README.MD) is available
+separately. The disk image retains the older Maze saver described below.
+
 | App | What to try |
 | --- | --- |
 | [Tandinator 0.3.8](../experiments/TANDI11/README.MD) | Optional experimental character oracle with pixel art, moving eyes and a quiet demo. Notebook learning starts off; Ask Two is explicit. [Canonical v0.2](../examples/TANDINAT/README.MD) remains separate; physical testing is open. |
@@ -307,7 +310,7 @@ them all automatically.
 | [DOS WHEEL diagnostic](../tools/WHEEL/README.TXT) | Bounded mouse-wheel/API and serial diagnostics. Raw Genius data was detected; this public diagnostic does not install Windows scrolling. |
 
 These are retained emulator captures, not physical performance measurements.
-[Screenshot sources and exact scope](../docs/SHOTS/README.MD).
+[Screenshot sources and exact scope](SHOTS/README.MD).
 
 The [TANDYLAB catalog](../examples/TANDYLAB/CATALOG.TXT) describes the separate
 test pack and paired runtime files. Stock Windows apps shown in project
@@ -318,7 +321,7 @@ The first-run disk update adds a Windows XT group in Programs, with the three
 savers, About and bundled Pinball v2. Existing Program Manager groups remain
 read-only. Setup now records the actual source directory for later disk reads;
 backup/next-step messages and Exit keys are clearer. See the
-[first-run evidence and remaining checks](../docs/FIRSTRUN.MD).
+[first-run evidence and remaining checks](FIRSTRUN.MD).
 
 The recovered experimental Win3 wheel extension has passed exact rebuild and
 loader/rollback tests locally, but actual mouse events and physical wheel
@@ -387,9 +390,9 @@ framebuffer differences against TRIAL 4. Coverage included pen widths, all
 16 ROP2 values, clipping, coordinate transforms and cursor corners. This is
 bounded regression evidence, not complete GDI or hardware qualification.
 
-[TR5 design and reproduction](../docs/TRIAL5/README.MD) ·
-[Exact binaries](../docs/TRIAL5/BUILDS.JSN) ·
-[Timings, regression coverage and limits](../docs/TRIAL5/VERIFY.TXT)
+[TR5 design and reproduction](TRIAL5/README.MD) ·
+[Exact binaries](TRIAL5/BUILDS.JSN) ·
+[Timings, regression coverage and limits](TRIAL5/VERIFY.TXT)
 
 ### Optional TRIAL7 test build
 
@@ -411,15 +414,15 @@ behavior still need hardware testing.
 
 Windows 3.1, standard/enhanced mode, PCjr, other memory layouts and an
 unexpanded 256 KB EX are outside the current acceptance scope. Large redraws
-can still be slow. [Complete development status](../docs/STATUS.MD).
+can still be slow. [Complete development status](STATUS.MD).
 
 ## Build, explore and contribute
 
 - [Build guide](../BUILDING.MD): host tooling and historical package reproduction.
-- [Current TR5 driver guide](../docs/TRIAL5/README.MD): source pipeline, profile
+- [Current TR5 driver guide](TRIAL5/README.MD): source pipeline, profile
   names, audits and exact build identities.
-- [Mode contracts](../docs/MODES.MD): palettes, fonts, memory and retained evidence.
-- [Unified installation evidence](../docs/UNIFIED/README.md): staging, Setup,
+- [Mode contracts](MODES.MD): palettes, fonts, memory and retained evidence.
+- [Unified installation evidence](UNIFIED/README.md): staging, Setup,
   six-mode lifecycle checks and verified rollback.
 - [Source provenance](../src/tandysw/PROVENANCE.md): third-party inputs and notices.
 
@@ -436,9 +439,9 @@ does not grant new rights to Windows, DDK material or fonts.
 <details>
 <summary>Windows XT concept box and project artwork</summary>
 
-<a href="../docs/PROMO/WINXTBOX.WEBP"><img src="../docs/PROMO/WINXTBOX.WEBP" alt="Windows XT concept box for the Tandy Windows 3.0 TShell and Extensions Plus Pack" width="360"></a>
+<a href="PROMO/WINXTBOX.WEBP"><img src="PROMO/WINXTBOX.WEBP" alt="Windows XT concept box for the Tandy Windows 3.0 TShell and Extensions Plus Pack" width="360"></a>
 
 Promotional concept art, not official packaging or a physical product.
-[Original artwork and image identities](../docs/PROMO/README.MD).
+[Original artwork and image identities](PROMO/README.MD).
 
 </details>
