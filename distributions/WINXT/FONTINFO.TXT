@@ -1,0 +1,11 @@
+Original XT Pixels R10 fonts; MIT, see FONTLIC.TXT.
+Collision-free 8.3 names prevent Setup from reusing Microsoft fonts.
+CGASYS.FON -> XTCSYS.FON
+CGAFIX.FON -> XTCFIX.FON
+CGAOEM.FON -> XTCOEM.FON
+EGASYS.FON -> XTESYS.FON
+EGAFIX.FON -> XTEFIX.FON
+EGAOEM.FON -> XTEOEM.FON
+TXTSYS.FON -> XTTSYS.FON
+FON bytes, resource ordinals, System/Terminal faces and metrics unchanged.
+Windows and non-font support dependencies remain. No vintage Python.

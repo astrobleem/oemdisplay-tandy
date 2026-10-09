@@ -1,0 +1,53 @@
+Settings menu source candidate
+==============================
+
+Start > Settings adds Control Panel, Color, Desktop, Date/Time, Fonts,
+International, Keyboard, Mouse, Ports, Printers and Sound. Screen saver
+settings are also reachable here; the existing System and clock entries
+remain. At 160 pixels Settings opens a separate popup after Start closes,
+using the same deferred menu/focus handling as System. Wider modes cascade.
+
+These are the built-in applets found in the owned English Windows 3.0
+CONTROL.EXE, not separate CPL programs. WinMain ignores its command line.
+TSCP opens or restores Control Panel and posts the selected native Settings
+menu command after verifying its caption and enabled state. Open Control
+Panel remains available if an applet cannot be reached. Network and 386
+Enhanced are excluded. Sound is the original Windows beep configuration,
+not a wave/audio device applet. Printers opens the stock applet even when
+no printers are installed; adding drivers still needs the user's media.
+
+If CONTROL.EXE is missing or launch fails, a small notice reports it. If a
+dialog is already open, finish it first. A different/localized Control Panel
+whose menu captions do not match falls back to its own Settings menu.
+Keyboard is grayed only when the loaded KEYBOARD driver's SetSpeed(-1)
+query reports unsupported, or the module/export is absent. This is the
+read-only query used by stock Windows 3.0 Control Panel. It does not set a
+repeat rate. A direct unavailable Keyboard command opens/restores Control
+Panel and shows a compact notice instead of opening the stock warning.
+Supported drivers retain the normal Keyboard entry.
+
+No helper process, hook, polling timer, CPL loader or new runtime dependency
+is added. Windows owns each applet's editing, cancellation and close behavior.
+
+Qualification status:
+- Owned-file inspection confirms window class, ten menu IDs/captions,
+  built-in dialogs and ignored command-line parameters.
+- C89 host tests cover all routes and failure/refusal cases.
+- Existing boot, saver, idle, Hold and DLL host checks pass.
+- Source e501ead built with zero warnings and nine applets opened, focused
+  and canceled in actual 640x200 real mode. Mouse, Ports, Printers and Sound
+  also passed minimized Control Panel restore/reuse in independent fixtures.
+- Stock Keyboard warning was captured from the actual active modal tree:
+  This keyboard cannot change its speed. The capability handling added
+  after that run still needs a native rebuild and qualification.
+- Host tests exercise actual narrow/wide popup composition, deferred
+  Settings dispatch, focus guard, sizing and menu allocation failures.
+- Native keyboard/mouse menu input and 160x200 layout remain unqualified.
+  Stock Color is 317x219 and Printers 548x203 on the 200-high display.
+  Stock dialogs can clip; this integration does not resize their resources.
+
+The checked-in TSHELL.EXE is the previously accepted TStart 14 binary and
+does NOT contain this candidate change. Rebuild the current source through
+the pinned BUILDDEPS shell view before making a runtime copy. Do not update
+release assets, package pins, installed Windows or CF from this source-only
+candidate. See TESTS/CONTROL/README.TXT for the native checklist.

@@ -16,7 +16,7 @@ TANDY88, TSTART or root-level numbered-backup directory was created.
 
 TEXT -> GRAPHICS -> FULL RECOVERY: PASS
 The installed text profile switched through ordinary DOS Setup to TR56402,
-restoring the exact original CGASYS.FON. WINXT then launched TSHELL on that
+restoring the exact original XTCSYS.FON. WINXT then launched TSHELL on that
 qualified graphics mode. After native shell exit, RESTORE YES restored every
 saved ROOT/SYSTEM file, preserved the shell marker as SHREADY.OFF and cleared
 active selector transactions. A fresh WINXT launch used original stock-CGA

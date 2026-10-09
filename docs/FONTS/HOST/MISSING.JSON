@@ -1,0 +1,192 @@
+{
+  "CGASYS.FON": [
+    {
+      "code": 127,
+      "unicode": 127,
+      "status": "fallback"
+    },
+    {
+      "code": 128,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 129,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 141,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 142,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 143,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 144,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 157,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 158,
+      "unicode": null,
+      "status": "fallback"
+    }
+  ],
+  "CGAFIX.FON": [
+    {
+      "code": 127,
+      "unicode": 127,
+      "status": "fallback"
+    },
+    {
+      "code": 128,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 129,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 141,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 142,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 143,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 144,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 157,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 158,
+      "unicode": null,
+      "status": "fallback"
+    }
+  ],
+  "CGAOEM.FON": [],
+  "EGASYS.FON": [
+    {
+      "code": 127,
+      "unicode": 127,
+      "status": "fallback"
+    },
+    {
+      "code": 128,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 129,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 141,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 142,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 143,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 144,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 157,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 158,
+      "unicode": null,
+      "status": "fallback"
+    }
+  ],
+  "EGAFIX.FON": [
+    {
+      "code": 127,
+      "unicode": 127,
+      "status": "fallback"
+    },
+    {
+      "code": 128,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 129,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 141,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 142,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 143,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 144,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 157,
+      "unicode": null,
+      "status": "fallback"
+    },
+    {
+      "code": 158,
+      "unicode": null,
+      "status": "fallback"
+    }
+  ],
+  "EGAOEM.FON": []
+}

@@ -22,16 +22,16 @@ packaging. The monitor uses an [actual emulator capture](tandy-dib-roundtrip.png
 
 The accepted independent startup default is a [slow flag wave](../examples/WXTSPL/WAVE/README.MD)
 with steady colors and lettering, exact native-qualified bytes and key skip.
-The portable toolkit includes the own-media preparation tool. The existing
-720 KB DOS Setup path retains its static image fallback until its compiled
-updater is separately rebuilt and qualified. See the wave kit for rollback
+The portable toolkit includes the own-media preparation tool. The guarded 720 KB DOS installer enables it in Color mode; other profiles
+retain static startup. The qualified faster helper and zero-SHA default
+installation are included in rc.5. See the wave kit for rollback
 and the baseline-equivalent EXJOY polling limitation.
 
 ![Accepted Windows XT slow flag wave captured in DOSBox-X at native 320x200 pixels](PROMO/XTWAVE.GIF)
 
 *Actual accepted emulator capture: steady colors and lettering, with a short
 flag wave before loading. Available through the independent Color starter;
-the final DOS installer path is still being qualified. [Capture provenance](PROMO/XTWAVE.JSON).*
+the final DOS installer path is qualified; normal startup skips SHA work. [Capture provenance](PROMO/XTWAVE.JSON).*
 
 The startup picture is **Windows XT** in every current display profile.
 The retired Tandy picture is not an installation option. Historical OEM
@@ -62,10 +62,10 @@ binary or app. See the [mode table](#display-modes) and
 
 ## Get started
 
-**Public preview: [Windows XT 0.1.0-rc.3](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.3).**
-Download [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.3/WINXT720.ZIP) for the disk image
-and instructions, or [WINXT720.IMG](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.3/WINXT720.IMG) directly
-for GoTek/emulators. [SHA256SUMS](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.3/SHA256SUMS) verifies
+**Public preview: [Windows XT 0.1.0-rc.5](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.5).**
+Download [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.5/WINXT720.ZIP) for the disk image
+and instructions, or [WINXT720.IMG](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.5/WINXT720.IMG) directly
+for GoTek/emulators. [SHA256SUMS](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.5/SHA256SUMS) verifies
 the assets. This is an experimental prerelease; supply your own matching
 Windows 3.0 files and back up your installation.
 
@@ -107,7 +107,8 @@ and stops; supply a directory copied from your own Windows 3.0 media with
 accepted. After validation and your confirmation, it prepares a new
 `C:\WINXT` without changing Windows or overwriting an existing WINXT folder.
 
-The public image excludes Microsoft support files and fonts; the completed
+The public image includes original MIT fonts and excludes proprietary
+Windows support files; the completed
 own-media folder contains your private copies. **Do not redistribute it.**
 For direct CF transfer or advanced host-side staging, use the
 [one-folder guide](../distributions/WINXT/README.MD).
@@ -464,3 +465,17 @@ wave-only/full rollback commands. This is a short pre-load animation.
 [Native installer qualification](QUAL/WAVEINS.JSON) records normal Color and
 static Windows exits, three native refusals, and 35-file rollback. Tests use
 DOSBox-X Tandy/8086/640 KB; they do not establish physical 8088 speed.
+
+## Original fonts in rc.5
+
+The [XT Pixels fonts](FONTS/README.MD) replace all six Windows font dependencies
+and the derived text strike. No font setup media or Python is needed on the
+Tandy. Windows itself, CGA.GR2 and CGALOGO.LGO remain your responsibility.
+Normal preparation/install skips SHA verification and readback; explicit
+/VERIFY is optional, expensive developer diagnostics. System advances and
+dialog metrics stay compatible. Wide 160-pixel dialogs can clip as before;
+experimental 80x25 text corruption remains. Reserved ANSI bytes have documented
+boxes; no Euro or Unicode emoji is supplied. Graphics-mode compatibility and
+complete native byte rendering were tested; physical 8088 timing and every
+Windows dialog are not claimed. The [native previews](FONTS/SHOTS/README.TXT)
+identify real Win3 emulator captures separately from host specimens.

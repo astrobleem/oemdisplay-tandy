@@ -1,0 +1,36 @@
+WINDOWS XT / XT PIXELS R10 - UNPUBLISHED QUALIFIED FONT CANDIDATE
+
+Ready floppy image: PACKAGE\WINXT720.IMG (720KB, non-bootable).
+PACKAGE\WINXT720.ZIP contains the image; WXTTOOLS.ZIP has expanded runtime
+and host disk tools. SOURCE is the selective reproduction source kit.
+FONTS contains all seven original fonts, numeric contracts and MIT LICENSE.
+PREVIEWS has genuine Win3 captures; SPECIMENS has separately labeled host renders.
+
+Use existing DOS and Windows 3.0 real-mode. This is a fresh C:\WINXT workflow:
+1. Mount/write the image as A:. At A:\ run INSTALL. If the two owned non-font
+   resources are missing from Windows, give an owned support folder to INSTALL.
+   Confirm the fresh C:\WINXT staging prompt. See PACKAGE\README.TXT.
+2. C: then CD \WINXT then INSTALL. This creates the numbered backup and
+   prepares the guarded launchers; Windows Setup is still the next step.
+3. Run C:\WINXT\WINXT SETUP. Choose Other display, select the Tandy mode,
+   and use C:\WINXT at EVERY disk/source prompt. Complete Changes. For
+   CONFIG.SYS choose option 3 (no changes). Leave Computer unchanged.
+4. Start with C:\WINXT\WINXT. Existing video/recovery guards remain required.
+5. Rollback after exiting Windows: C:\WINXT\BACKUP\B001\RESTORE YES.
+   Use the numbered path printed by INSTALL; read BACKUP.TXT.
+
+Normal preparation/install does zero SHA verification/readback/comparison.
+/VERIFY is optional, expensive developer diagnostics; not the default 8088 path.
+No Python or Windows FONT files are needed on the vintage PC. Windows itself,
+CGA.GR2, CGALOGO.LGO and other non-font dependencies still require owned files.
+The new 8.3 font names prevent Setup reusing installed same-name Microsoft fonts.
+
+All stock font advances and dialog/system metrics are preserved. At 160 pixels
+some menus wrap and wide dialogs clip, as with the original fonts. The probe
+fits 320/640. Experimental 80x25 text retains known character corruption.
+Missing/reserved ANSI slots use documented boxes; no Euro/Unicode emoji claim.
+
+Default and /VERIFY native transactions passed own-font GDI pixels and exact
+rollback. Host checks passed final disk/ZIP/pins and source reproduction.
+QUALIFY.JSON certifies exact bytes; pre-native BUILD.JSON stays unchanged.
+No publication or changes to existing Windows/CF/candidates/releases occurred.

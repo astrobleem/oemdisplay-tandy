@@ -1,0 +1,34 @@
+{
+  "status": "CASE RUNS COMPLETE; REVIEW EACH RESULT",
+  "allocation_seconds": 60,
+  "production_sha256": "c1c0ae1f7b919f58ef4d7a34cec045f313206409a21955ffff09f63aced8e167",
+  "probe_sha256": "a1bdae80a87ef3d6d19674bef104b994ca697c66ac3f56449faa4a4f4b91ef1e",
+  "cases": [
+    {
+      "applet": "Missing CONTROL.EXE",
+      "number": 3,
+      "status": "PASS",
+      "owned_pid": 15420,
+      "returncode": 0,
+      "normal_exit": true,
+      "log": "TEST_MODE=3\nSELECTED_APPLET=6\nSHELL_WINEXEC=122\nSCREEN_WIDTH=640\nSCREEN_HEIGHT=200\nEXPECTED_WIDTH=640\nCONTROL_MODULE_BEFORE=0\nMISSING_PANEL_NOTICE=4548\nTREE|MISSING_NOTICE|4548|owner=4408|parent=4408|visible=1|enabled=1|#32770|Settings\nTREE|ACTIVE|4548|owner=4408|parent=4408|visible=1|enabled=1|#32770|Settings\nTREE|CHILD|4644|owner=0|parent=4548|visible=1|enabled=1|Button|&OK\nTREE|FOCUS|4644|owner=0|parent=4548|visible=1|enabled=1|Button|&OK\nTREE|POPUP|4028|owner=0|parent=0|visible=0|enabled=1|#32768|\nCONTROL_MODULE=0\nMENU_LEFT=246\nMENU_TOP=52\nMENU_RIGHT=394\nMENU_BOTTOM=147\nMISSING_CANCEL_CLOSED=1\nMISSING_RETURN_ACTIVE=1\nMISSING_RETURN_FOCUS=1\nMISSING_MOUSE_NOTICE=4548\nTREE|MISSING_NOTICE|4548|owner=4408|parent=4408|visible=1|enabled=1|#32770|Settings\nTREE|ACTIVE|4548|owner=4408|parent=4408|visible=1|enabled=1|#32770|Settings\nTREE|CHILD|4644|owner=0|parent=4548|visible=1|enabled=1|Button|&OK\nTREE|FOCUS|4644|owner=0|parent=4548|visible=1|enabled=1|Button|&OK\nTREE|POPUP|4028|owner=0|parent=0|visible=0|enabled=1|#32768|\nCONTROL_MODULE=0\nMENU_LEFT=246\nMENU_TOP=52\nMENU_RIGHT=394\nMENU_BOTTOM=147\nMISSING_CANCEL_CLOSED=1\nMISSING_RETURN_ACTIVE=1\nMISSING_RETURN_FOCUS=1\nPASS=1\nFAIL=0\n",
+      "changed_preexisting_files": [],
+      "settings_unchanged": true
+    },
+    {
+      "applet": "Modal Mouse rejects Color",
+      "number": 4,
+      "status": "PASS",
+      "owned_pid": 240,
+      "returncode": 0,
+      "normal_exit": true,
+      "log": "TEST_MODE=4\nSELECTED_APPLET=6\nSHELL_WINEXEC=122\nSCREEN_WIDTH=640\nSCREEN_HEIGHT=200\nEXPECTED_WIDTH=640\nCONTROL_HANDLE=4756\n&Mouse...=6\nMouse=5504\nDIALOG_WIDTH=420\nDIALOG_HEIGHT=129\nDIALOG_ACTIVE=1\nDIALOG_FOCUS=1\nBUSY_MOUSE_HANDLE=5504\nPANEL_DISABLED=1\nBUSY_NOTICE=6924\nTREE|BUSY_NOTICE|6924|owner=4408|parent=4408|visible=1|enabled=1|#32770|Settings\nTREE|ACTIVE|6924|owner=4408|parent=4408|visible=1|enabled=1|#32770|Settings\nTREE|CHILD|7020|owner=0|parent=6924|visible=1|enabled=1|Button|&OK\nTREE|FOCUS|7020|owner=0|parent=6924|visible=1|enabled=1|Button|&OK\nTREE|APPLET|5504|owner=4756|parent=4756|visible=1|enabled=1|#32770|Mouse\nTREE|CHILD|5600|owner=0|parent=5504|visible=1|enabled=1|Button|&Mouse Tracking Speed\nTREE|CHILD|5672|owner=0|parent=5504|visible=1|enabled=1|Static|Slow\nTREE|CHILD|5744|owner=0|parent=5504|visible=1|enabled=1|Static|Fast\nTREE|CHILD|5816|owner=0|parent=5504|visible=1|enabled=1|ScrollBar|\nTREE|CHILD|5892|owner=0|parent=5504|visible=1|enabled=1|Button|&Double Click Speed\nTREE|CHILD|5964|owner=0|parent=5504|visible=1|enabled=1|Static|Slow\nTREE|CHILD|6036|owner=0|parent=5504|visible=1|enabled=1|Static|Fast\nTREE|CHILD|6108|owner=0|parent=5504|visible=1|enabled=1|ScrollBar|\nTREE|CHILD|6184|owner=0|parent=5504|visible=1|enabled=1|Static|\nTREE|CHILD|6256|owner=0|parent=5504|visible=1|enabled=1|Static|TEST\nTREE|CHILD|6328|owner=0|parent=5504|visible=1|enabled=1|Button|&Swap Left/Right Buttons\nTREE|CHILD|6400|owner=0|parent=5504|visible=1|enabled=1|Static|\nTREE|CHILD|6472|owner=0|parent=5504|visible=1|enabled=1|Static|\nTREE|CHILD|6544|owner=0|parent=5504|visible=1|enabled=1|Static|\nTREE|CHILD|6616|owner=0|parent=5504|visible=1|enabled=1|Static|L\nTREE|CHILD|6688|owner=0|parent=5504|visible=1|enabled=1|Static|R\nTREE|CHILD|6760|owner=0|parent=5504|visible=1|enabled=1|Button|OK\nTREE|CHILD|6832|owner=0|parent=5504|visible=1|enabled=1|Button|Cancel\nTREE|PANEL|4756|owner=0|parent=0|visible=1|enabled=0|CtlPanelClass|Control Panel\nTREE|POPUP|4028|owner=0|parent=0|visible=0|enabled=1|#32768|\nMENU_LEFT=246\nMENU_TOP=52\nMENU_RIGHT=394\nMENU_BOTTOM=147\nBUSY_RETURN_ACTIVE=1\nBUSY_RETURN_FOCUS=1\nTREE|EXISTING_MOUSE|5504|owner=4756|parent=4756|visible=1|enabled=1|#32770|Mouse\nBUSY_NO_COLOR=1\nCANCEL_CLOSED=1\nCONTROL_REUSED=1\nNO_DELAYED_COLOR=1\nOPEN_RESTORED=1\nOPEN_SAME_HANDLE=1\nPASS=1\nFAIL=0\n",
+      "changed_preexisting_files": [],
+      "settings_unchanged": true
+    }
+  ],
+  "acquired": "2026-10-09T06:27:34.404519+00:00",
+  "lease_released": true,
+  "released": "2026-10-09T06:27:46.558137+00:00",
+  "shared_fixture_unchanged": true
+}

@@ -1,0 +1,130 @@
+{
+  "status": "PASS QUALIFIED LOCAL CANDIDATE; NOT PUBLISHED",
+  "base_commit": "8fa96ae8ae05668f2ff993f114af82316bb00b4b",
+  "cause": "RC3/RC4 WINXT always runs deep WAVEXT VERIFY before drawing. Exact RC3 fixture hashes 100247 file bytes and executes 1797 SHA blocks including text/self-test, repeatedly reading/hashchecking both inactive stages and live binaries. START performs zero SHA blocks.",
+  "scope": "Only WAVEXT helper/launcher metadata migration; accepted LGO/private loader/production cleanup wrapper/Windows/CPSET preserved. Existing RC3 native migration and rollback qualified; RC4 source-derived host checks preserve CPSET.",
+  "tests": {
+    "host": "134 final-source checks PASS",
+    "native_transaction": "Original RC3 update/deep verification/repeat apply/exact rollback PASS",
+    "candidate_raster": "All 16 full RGB accepted phase frames PASS; actual Windows GUI Solitaire PASS",
+    "normal_return": "PASS baseline and exact candidate: private original Win16 timer shell; normal owned-process exit/post-EXEC marker; identical wrapper record; reservation equality"
+  },
+  "binaries": {
+    "WAVEXT.EXE": {
+      "bytes": 30971,
+      "sha256": "6b319cbfde241908ca0a90999c52f3b0bf10258e52d5b4bb7b89257a4339ae3d"
+    },
+    "FASTSET.EXE": {
+      "bytes": 39441,
+      "sha256": "2f64c53be2d7e56ac4b2575ac1c28c639cc9b2a897ccf962e8acfd022430b065"
+    }
+  },
+  "baseline_cleanup": {
+    "status": "PASS BASELINE NORMAL WINDOWS AUTOEXIT AND CLEANUP",
+    "normal_owned_process_exit": 0,
+    "markers": [
+      "ASTART.TAG",
+      "ATIMER.TAG",
+      "AEXIT.TAG",
+      "WINRET.TXT",
+      "DONE.OK"
+    ],
+    "wrapper_bytes": [
+      1,
+      0,
+      0,
+      3,
+      80,
+      0,
+      0,
+      23,
+      8,
+      0,
+      0,
+      0,
+      0,
+      3,
+      80,
+      8,
+      0,
+      23,
+      8,
+      22,
+      242
+    ],
+    "memory_identical": true,
+    "memory": "BDA-KB MODE-AX PAGE-BX TOP-TYPE OWNER SIZE OWNER-TYPE SELF SIZE ID0 ID1 ID2 ID3 VIDEO COUNT\r\n0270 5003 0000 005A 0817 0400 004D 0817 006F 4E54 5944 5352 3130 9800 0400 \r\n",
+    "production_unchanged": true,
+    "helper_sha256": "810d5a3765add1d8b1d6b4098e84752785e764f38684d654190a11af71b213a4",
+    "correction": "Initial host acceptance overrequired AQUERY/AEND optional broadcasts; actual requested gates all passed. Original STOPPED status retained; no native rerun or helper/product rebuild.",
+    "native_status": "C:\\Users\\chad\\Documents\\Codex\\2026-10-08\\task-8\\cleanup-fixture\\STATUS.JSON"
+  },
+  "candidate_cleanup": {
+    "status": "PASS EXACT CANDIDATE NORMAL EXIT/CLEANUP; BASELINE QUALIFIED",
+    "allocation_seconds": 60,
+    "runs": [
+      {
+        "case": "CAND",
+        "started": "2026-10-09T05:26:54.755075+00:00",
+        "pid": 30680,
+        "markers": [
+          "ASTART.TAG"
+        ],
+        "exit_code": 0,
+        "finished": "2026-10-09T05:27:18.804440+00:00",
+        "status": "PASS",
+        "wrapper_bytes": [
+          1,
+          0,
+          0,
+          3,
+          80,
+          0,
+          0,
+          23,
+          8,
+          0,
+          0,
+          0,
+          0,
+          3,
+          80,
+          8,
+          0,
+          23,
+          8,
+          22,
+          242
+        ],
+        "memory_identical": true,
+        "memory": "BDA-KB MODE-AX PAGE-BX TOP-TYPE OWNER SIZE OWNER-TYPE SELF SIZE ID0 ID1 ID2 ID3 VIDEO COUNT\r\n0270 5003 0000 005A 0817 0400 004D 0817 006F 4E54 5944 5352 3130 9800 0400 \r\n",
+        "production_bytes_unchanged": true
+      }
+    ],
+    "acquired": "2026-10-09T05:26:54.741072+00:00",
+    "released": "2026-10-09T05:27:18.808441+00:00",
+    "lease_seconds": 24.078
+  },
+  "rendering": {
+    "status": "PASS all 16 exact full RGB accepted phases and actual Windows GUI",
+    "mode9_first_complete_frame": 0,
+    "wave_rest_frame": 192,
+    "wave_rest_capture_seconds": 3.204096,
+    "first_windows_drawing_frame": 324,
+    "first_windows_drawing_capture_seconds": 5.406912
+  },
+  "timing": {
+    "same_private_DOS_fixture": "Released RC3 VERIFY=4 BIOS ticks; START=0 ticks at fixed 200000 cycles; physical XT latency unknown",
+    "construction": "No logo expansion or patching during normal startup. APPLY alone expands 6200-byte transport into 35971-byte LGO and combines owned 3456-byte CNF into 39427-byte private loader.",
+    "loader": "Checks, RESERVE, wrapper DOS EXEC, native loader init precede the first image. Initial framebuffer transfer is 32768 bytes. 192 retrace edges drive the nominal 3.2-second wave, then Windows loads while its rest image remains."
+  },
+  "limits": [
+    "No calibrated physical Tandy/CF measurement.",
+    "One-time migration intentionally keeps deep checks; normal startup removes repeated hashing.",
+    "START defers same-size body corruption to explicit VERIFY.",
+    "Normal exit used a private original timer shell; manual keyboard behavior is separately owned."
+  ],
+  "kit": "C:\\Users\\chad\\Documents\\Codex\\2026-10-08\\task-8\\READY-KIT\\WXTFIX",
+  "published": false,
+  "installed_or_CF_changed": false
+}

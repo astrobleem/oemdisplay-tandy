@@ -20,7 +20,7 @@ PROFILES = {
     "experiments": ("experiments/", "src/tandysw/", "docs/"),
     "tools": ("tools/", "distributions/WINXT/", "examples/WXTSPL/",
               "src/splash/assets/", "src/tandysw/TINST.C", "docs/"),
-    "release": ("tools/FLASHDISK/", "tools/CPSET/", "docs/QUAL/CPSET.JSON",
+    "release": ("tools/XTFONTS/", "docs/FONTS/", "docs/QUAL/FONTSR10.JSON", "docs/QUAL/FONTBLD.JSON", "tools/FLASHDISK/", "tools/CPSET/", "docs/QUAL/CPSET.JSON", "docs/QUAL/FASTINST.JSON", "docs/QUAL/COMBFAST.JSON", "docs/QUAL/STARTFIX.JSON", "docs/QUAL/ZEROFAST.JSON", "docs/QUAL/ZERONATIVE.JSON", "docs/QUAL/ZEROGATE.JSON", "docs/QUAL/STARTZERO.JSON", "docs/QUAL/SETZERO.JSON", "docs/QUAL/SETFAIL.JSON",
                 "distributions/WINXT/",
                 "examples/TSHELL/", "examples/WXTSPL/",
                 "src/splash/assets/", "src/tandysw/TINST.C", "docs/QUAL/WAVEINS.JSON"),

@@ -1,0 +1,8 @@
+{
+  "kind": "Unpublished own rebuilt font candidate",
+  "native_package_qualified": false,
+  "publication_allowed": false,
+  "helper_sha256": "2f42b2e62ee0e1da496239c2dfa43917c83cc984b615fae4afe4e1b270ca8289",
+  "installer_sha256": "2c4ccd665478152fb96b8770f807dc392044915da66d78c31dacae0839e21d2c",
+  "runtime_manifest_sha256": "3e03cc31027cbeaad885f335045480273ec584e3d124a6afa7585fd5f1f39f6f"
+}

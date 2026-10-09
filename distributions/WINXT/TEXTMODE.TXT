@@ -22,8 +22,8 @@ If Setup asks for the display disk again, enter the SAME C:\WINXT.
 Complete Changes; if asked, choose no CONFIG.SYS/AUTOEXEC.BAT changes.
 Reboot, then start with C:\WINXT\WINXT. Do not bypass a reservation error.
 
-Setup automatically selects TXTMODE.DRV and its private TXTSYS.FON 8x8
-fixed-cell system font, plus CGAFIX.FON and CGAOEM.FON. TXTSYS is derived
+Setup automatically selects TXTMODE.DRV and its private XTTSYS.FON 8x8
+fixed-cell system font, plus XTCFIX.FON and XTCOEM.FON. TXTSYS is derived
 from the owner's licensed CGASYS/CGAFIX fonts and is separate from the
 unchanged graphics CGASYS. Do not substitute CGAFIX as both font modules.
 The text choice uses the original shell, normally Program Manager on a
@@ -45,7 +45,7 @@ until you have checked your chosen graphics mode on your own hardware.
 FONT/PAYLOAD PROVENANCE
 TXTMODE.DRV: 72960 bytes, unchanged from the existing experiment.
 SHA256: 943a455baa475071a190b26e69b92a477178b5ced231edef19882abb2a8d2646
-TXTSYS.FON: 4368 bytes, privately derived fixed-cell system font.
+XTTSYS.FON: 4368 bytes, privately derived fixed-cell system font.
 SHA256: b7353ceca94cce0c7cad568ebafa26f8fa5fa855be551a24e3502161415a0807
 Do not publish TXTSYS or other Microsoft support-font binaries with source
 overlays. The first-party FIXFONT.PY recipe checks both owner input hashes.

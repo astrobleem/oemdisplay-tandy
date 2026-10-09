@@ -42,7 +42,7 @@ static char ini[PLEN], jrn[PLEN], bak[PLEN], sav[PLEN];
 static char tmp[PLEN], old[PLEN], rst[PLEN];
 static char names[64][64];
 static unsigned on, cn, dn;
-static int steps;
+static int steps, deep_verify;
 
 typedef struct { unsigned a, b; } Keyboard;
 static Keyboard os, cs;
@@ -102,7 +102,7 @@ static void finish(int fd)
 static unsigned readall(const char *p,unsigned char *b,unsigned lim)
 { int f,n; unsigned z=0; f=open(p,O_RDONLY|O_BINARY); if(f<0) die("Required file cannot be read."); while(z<lim) { n=read(f,b+z,(lim-z)>16000?16000:(lim-z)); if(n<0) { close(f); die("Read failed."); } if(!n) break; z+=(unsigned)n; } if(z==lim) { unsigned char c; n=read(f,&c,1); if(n!=0) {close(f);die("File exceeds safe size limit.");} } if(close(f)) die("Read close failed."); return z; }
 static int same(const char *p,const unsigned char *b,unsigned n)
-{ unsigned char part[256]; unsigned off=0,k; int f,r; f=open(p,O_RDONLY|O_BINARY); if(f<0) return 0; while(off<n) { k=n-off; if(k>sizeof(part)) k=sizeof(part); r=read(f,part,k); if(r!=(int)k || memcmp(part,b+off,k)) {close(f);return 0;} off+=k; } r=read(f,part,1); close(f); return r==0; }
+{ unsigned char part[256]; unsigned off=0,k; int f,r; f=open(p,O_RDONLY|O_BINARY); if(f<0) return 0; while(off<n) { k=n-off; if(k>sizeof(part)) k=sizeof(part); r=read(f,part,k); if(r!=(int)k || memcmp(part,b+off,k)) {close(f);return 0;} off+=k; } r=read(f,part,1); if(close(f)) return 0; return r==0; }
 static unsigned long crc(const unsigned char *p,unsigned n)
 { unsigned long c=0xffffffffUL; unsigned i; while(n--) { c^=*p++; for(i=0;i<8;++i) c=(c&1)?(c>>1)^0xedb88320UL:c>>1; } return (c^0xffffffffUL)&0xffffffffUL; }
 static void snapshot(const char *p,const unsigned char *b,unsigned n)
@@ -132,13 +132,20 @@ static const U32 K[64]={
 #define RR(x,n) (((x)>>(n))|((x)<<(32-(n))))
 static void transform(SHA *s) {
  U32 w[64],a,b,c,d,e,f,g,h,t,u; unsigned i;
+#ifdef ZERO_SHA_TEST
+ if(!deep_verify)die("Default path attempted SHA transform.");
+#endif
  for(i=0;i<16;i++)w[i]=((U32)s->b[i*4]<<24)|((U32)s->b[i*4+1]<<16)|((U32)s->b[i*4+2]<<8)|s->b[i*4+3];
  for(i=16;i<64;i++){a=w[i-15];b=w[i-2];w[i]=w[i-16]+(RR(a,7)^RR(a,18)^(a>>3))+w[i-7]+(RR(b,17)^RR(b,19)^(b>>10));}
  a=s->h[0];b=s->h[1];c=s->h[2];d=s->h[3];e=s->h[4];f=s->h[5];g=s->h[6];h=s->h[7];
  for(i=0;i<64;i++){t=h+(RR(e,6)^RR(e,11)^RR(e,25))+((e&f)^((~e)&g))+K[i]+w[i];u=(RR(a,2)^RR(a,13)^RR(a,22))+((a&b)^(a&c)^(b&c));h=g;g=f;f=e;e=d+t;d=c;c=b;b=a;a=t+u;}
  s->h[0]+=a;s->h[1]+=b;s->h[2]+=c;s->h[3]+=d;s->h[4]+=e;s->h[5]+=f;s->h[6]+=g;s->h[7]+=h;
 }
-static void init(SHA *s){static const U32 h[8]={0x6a09e667UL,0xbb67ae85UL,0x3c6ef372UL,0xa54ff53aUL,0x510e527fUL,0x9b05688cUL,0x1f83d9abUL,0x5be0cd19UL};memcpy(s->h,h,sizeof(h));s->n=0;s->bytes=0;}
+static void init(SHA *s){static const U32 h[8]={0x6a09e667UL,0xbb67ae85UL,0x3c6ef372UL,0xa54ff53aUL,0x510e527fUL,0x9b05688cUL,0x1f83d9abUL,0x5be0cd19UL};
+#ifdef ZERO_SHA_TEST
+ if(!deep_verify)die("Default path attempted SHA initialization.");
+#endif
+memcpy(s->h,h,sizeof(h));s->n=0;s->bytes=0;}
 static void update(SHA *s,const unsigned char *p,unsigned n){s->bytes+=n;while(n--){s->b[s->n++]=*p++;if(s->n==64){transform(s);s->n=0;}}}
 static void sha_finish(SHA *s,char *out){unsigned i,j;U32 bits=s->bytes*8;static const char hex[]="0123456789abcdef";s->b[s->n++]=128;if(s->n>56){while(s->n<64)s->b[s->n++]=0;transform(s);s->n=0;}while(s->n<60)s->b[s->n++]=0;for(i=0;i<4;i++)s->b[60+i]=(unsigned char)(bits>>(24-i*8));transform(s);for(i=0;i<8;i++)for(j=0;j<4;j++){unsigned v=(unsigned)((s->h[i]>>(24-j*8))&255);*out++=hex[v>>4];*out++=hex[v&15];}*out=0;}
 static int selftest(void){SHA s;char h[65];init(&s);sha_finish(&s,h);if(strcmp(h,"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"))return 0;init(&s);update(&s,(const unsigned char *)"abc",3);sha_finish(&s,h);return !strcmp(h,"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");}
@@ -154,8 +161,14 @@ static const char suffix[]="\r\n        t1s0pcxt\r\n        nomouse\r\n        c
 static void hashmem(const unsigned char *b,unsigned n,char *h) { SHA s;init(&s);update(&s,b,n);sha_finish(&s,h); }
 static void hashfile(const char *p,char *h)
 { SHA s;int f,r;unsigned char b[512];init(&s);f=open(p,O_RDONLY|O_BINARY);if(f<0)die("Selected keyboard file unavailable.");while((r=read(f,b,sizeof(b)))>0)update(&s,b,(unsigned)r);if(r<0||close(f))die("Keyboard file read failed.");sha_finish(&s,h); }
+static unsigned locate(const char *s);
 static void source(void)
-{ char h[65];if(!selftest())die("SHA256 self-test failed.");hashmem(orig,on,h);if(strcmp(h,SOURCE_SHA))die("Unknown or modified SETUP.INF. Nothing is overwritten."); }
+{ char h[65];unsigned i;int eof=0;
+ if(on!=49046U)die("Unsupported SETUP.INF size.");
+ for(i=0;i<on;i++){if(orig[i]==26){eof=1;continue;}if(eof&&orig[i]!='\r'&&orig[i]!='\n')die("Invalid SETUP.INF EOF padding.");if(!orig[i]||(orig[i]<32&&orig[i]!='\r'&&orig[i]!='\n'&&orig[i]!='\t'))die("Invalid SETUP.INF text.");}
+ locate("[setup]");locate("[keyboard.drivers]");locate("[io.device]");
+ if(deep_verify){if(!selftest())die("SHA256 self-test failed.");hashmem(orig,on,h);if(strcmp(h,SOURCE_SHA))die("Unknown or modified SETUP.INF. Nothing is overwritten.");}
+ }
 static void join(char *p,const char *name,int system)
 { unsigned n=(unsigned)strlen(win);if(n+strlen(name)+10>=PLEN)die("Path too long.");strcpy(p,win);
 #ifdef HOST_TEST
@@ -190,6 +203,23 @@ static void not_windows(void)
 }
 static int equalpart(const unsigned char *b,unsigned n,const char *s)
 {unsigned i;if(n!=strlen(s))return 0;for(i=0;i<n;++i)if(toupper(b[i])!=toupper((unsigned char)s[i]))return 0;return 1;}
+/* Default keyboard recognition: known filename/size and bounded Windows NE
+ * tables/segments. Same-size body identity is explicit /VERIFY only. */
+static unsigned le16(const unsigned char *b,unsigned p)
+{return (unsigned)b[p]|((unsigned)b[p+1]<<8);}
+static U32 le32(const unsigned char *b,unsigned p)
+{return (U32)le16(b,p)|((U32)le16(b,p+2)<<16);}
+static void keyboard_layout(void)
+{
+ unsigned n,ne,ns,align,table,i,entry,entries,res;U32 off,len;
+ n=readall(drvpath,cur,8000);
+ if(n!=(selected?7640U:7041U)||cur[0]!='M'||cur[1]!='Z'||le32(cur,60)!=128UL)die("Unsupported keyboard size/DOS header.");
+ ne=128;if(cur[ne]!='N'||cur[ne+1]!='E'||cur[ne+54]!=2||!(le16(cur,ne+12)&0x8000))die("Keyboard Windows NE header invalid.");
+ ns=le16(cur,ne+28);align=le16(cur,ne+50);table=le16(cur,ne+34);entry=le16(cur,ne+4);entries=le16(cur,ne+6);res=le16(cur,ne+38);
+ if(!ns||ns>32||align>12||table<64||(U32)ne+table+(U32)ns*8>n||!entries||(U32)ne+entry+entries>n||entry<table+ns*8||(U32)ne+res+11>n)die("Keyboard NE table bounds invalid.");
+ if(cur[ne+res]!=8||memcmp(cur+ne+res+1,"KEYBOARD",8)||le16(cur,ne+res+9))die("Keyboard NE module identity invalid.");
+ for(i=0;i<ns;i++){unsigned at=ne+table+i*8;off=(U32)le16(cur,at)<<align;len=le16(cur,at+2);if(off){if(!len)len=65536UL;if(off>n||len>n-off)die("Keyboard NE segment extent invalid.");}}
+}
 static void installed(void)
 { unsigned n,p=0,e,q,t,v,z,i,keys[4]={0,0,0,0},sections=0,descsections=0,desckeys=0;int boot=0;char values[4][40],h[65],other[PLEN];const char *kn[4]={"system.drv","sound.drv","comm.drv","keyboard.drv"};
  n=readall(sysini,cur,14000);for(i=0;i<n;++i)if(!cur[i]||(cur[i]<32&&cur[i]!='\r'&&cur[i]!='\n'&&cur[i]!='\t'))die("Unsupported SYSTEM.INI content.");
@@ -202,7 +232,7 @@ static void installed(void)
  if(descsections!=1||desckeys!=1)die("Missing or ambiguous Computer description.");if(sections!=1)die("Need exactly one [boot] section.");for(i=0;i<4;++i)if(keys[i]!=1)die("Missing or duplicate core driver entry.");
  if(!eqi(values[0],"system.drv")||!eqi(values[1],"sound.drv")||!eqi(values[2],"comm.drv"))die("Non-generic system/sound/communications selection.");
  if(eqi(values[3],"keyboard.drv"))selected=0;else if(eqi(values[3],"tndyk3.drv"))selected=1;else die("Unknown keyboard selection.");
- join(drvpath,selected?"TNDYK3.DRV":"KEYBOARD.DRV",1);join(other,selected?"TNDYK3.DRV":"KEYBOARD.DRV",0);if(exists(other))die("Keyboard in Windows root makes driver lookup ambiguous.");hashfile(drvpath,h);if(strcmp(h,selected?K3_SHA:KBD_SHA))die("Keyboard binary does not match the verified version.");
+ join(drvpath,selected?"TNDYK3.DRV":"KEYBOARD.DRV",1);join(other,selected?"TNDYK3.DRV":"KEYBOARD.DRV",0);if(exists(other))die("Keyboard in Windows root makes driver lookup ambiguous.");keyboard_layout();if(deep_verify){hashfile(drvpath,h);if(strcmp(h,selected?K3_SHA:KBD_SHA))die("Keyboard binary does not match the verified version.");}
 }
 static unsigned locate(const char *s)
 {unsigned i,l=(unsigned)strlen(s),found=0,count=0;for(i=0;i+l<=on;++i)if(!memcmp(orig+i,s,l)){found=i;++count;}if(count!=1)die("Unexpected SETUP.INF structure.");return found;}
@@ -252,4 +282,10 @@ static void buffers(void)
  }
 }
 int main(int argc,char **argv)
-{if(argc!=3||(!eqi(argv[1],"CHECK")&&!eqi(argv[1],"APPLY")&&!eqi(argv[1],"RESTORE"))){puts("Usage: CPSET CHECK|APPLY|RESTORE C:\\WINDOWS");return 2;}paths(argv[2]);not_windows();buffers();if(eqi(argv[1],"RESTORE"))restore();else check(eqi(argv[1],"APPLY"));free(dest);free(cur);free(orig);return 0;}
+{int verify;
+ setbuf(stdout,NULL);if(argc>1&&eqi(argv[argc-1],"/VERIFY")){deep_verify=1;argc--;}
+ verify=argc==3&&eqi(argv[1],"VERIFY");if(verify)deep_verify=1;
+ if(argc!=3||(!eqi(argv[1],"CHECK")&&!eqi(argv[1],"APPLY")&&!eqi(argv[1],"RESTORE")&&!verify)){puts("Usage: CPSET CHECK|APPLY|RESTORE|VERIFY C:\\WINDOWS [/VERIFY]");return 2;}
+ puts(deep_verify?"CPSET deep SHA verification ON.":"CPSET bounded checks; SHA verification OFF.");
+ paths(argv[2]);not_windows();buffers();if(eqi(argv[1],"RESTORE"))restore();else check(eqi(argv[1],"APPLY"));free(dest);free(cur);free(orig);return 0;
+}

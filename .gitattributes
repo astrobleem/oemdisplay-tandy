@@ -38,3 +38,14 @@ tools/FLASHDISK/PACKPINS.H -text
 tools/FLASHDISK/PREPXT.C -text
 docs/QUAL/CPSET.JSON -text
 tools/FLASHDISK/TESTFAT.PY -text
+docs/QUAL/FASTINST.JSON -text
+
+# Final combined source and qualification byte pins survive checkout unchanged.
+docs/QUAL/* -text
+examples/TSHELL/** -text
+tools/BUILDDEPS/* -text
+
+# Original font source/evidence and publication checks retain exact CRLF bytes.
+tools/XTFONTS/** -text
+docs/FONTS/** -text
+AGENTS.md -text

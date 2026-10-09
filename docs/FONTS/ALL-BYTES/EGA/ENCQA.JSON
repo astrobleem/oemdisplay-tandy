@@ -1,0 +1,134 @@
+{
+  "kind": "Genuine native complete-byte rendering",
+  "family": "EGA",
+  "native_glyph_pages_verified": true,
+  "pixel_origin": [
+    3,
+    18
+  ],
+  "fonts": {
+    "EGASYS.FON": {
+      "all_256_bytes_exact": true,
+      "all_in_range_pixels_and_advances_exact": true,
+      "in_range": [
+        32,
+        255
+      ],
+      "out_of_range_default": 128,
+      "font_sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
+      "outside_range_width_observations": {
+        "0": 4,
+        "1": 4,
+        "2": 4,
+        "3": 4,
+        "4": 4,
+        "5": 4,
+        "6": 4,
+        "7": 4,
+        "8": 4,
+        "9": 4,
+        "10": 4,
+        "11": 4,
+        "12": 4,
+        "13": 4,
+        "14": 4,
+        "15": 4,
+        "16": 4,
+        "17": 4,
+        "18": 4,
+        "19": 4,
+        "20": 4,
+        "21": 4,
+        "22": 4,
+        "23": 4,
+        "24": 4,
+        "25": 4,
+        "26": 4,
+        "27": 4,
+        "28": 4,
+        "29": 4,
+        "30": 4,
+        "31": 4
+      },
+      "outside_range_pixel_differences": [],
+      "capture_sha256": {
+        "S0.BIN": "c92e7ac058a33c30673d39e57012b09770514bc249e3e5f970e5df2fc387dba6",
+        "S1.BIN": "f01f80b3e4f157675de184d244ce72960316e00a0c97b93c458f6afe6292172c",
+        "S2.BIN": "d87089191c4da5a09bf533664df261589bd54ccb588b997088555c7899337f7b",
+        "S3.BIN": "75be3044d88d21d692c0afad8a11d4eb3153aa9df83f1a866bf5b526ff7aae9f"
+      }
+    },
+    "EGAFIX.FON": {
+      "all_256_bytes_exact": true,
+      "all_in_range_pixels_and_advances_exact": true,
+      "in_range": [
+        32,
+        255
+      ],
+      "out_of_range_default": 128,
+      "font_sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+      "outside_range_width_observations": {
+        "0": 8,
+        "1": 8,
+        "2": 8,
+        "3": 8,
+        "4": 8,
+        "5": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 8,
+        "16": 8,
+        "17": 8,
+        "18": 8,
+        "19": 8,
+        "20": 8,
+        "21": 8,
+        "22": 8,
+        "23": 8,
+        "24": 8,
+        "25": 8,
+        "26": 8,
+        "27": 8,
+        "28": 8,
+        "29": 8,
+        "30": 8,
+        "31": 8
+      },
+      "outside_range_pixel_differences": [],
+      "capture_sha256": {
+        "F0.BIN": "d0988ff5243b2fb5c4d7c1135cceeb4b5fbee3fccf5dd33f746b5677268423bb",
+        "F1.BIN": "73e63dd3257c1b7d0b12288b3b17ac957b44b9984fa27d363a37c72d0ea68bb9",
+        "F2.BIN": "066cd041241054a611291a24726502fbcb89fc24f7c1bfbc6073511b4d514f8e",
+        "F3.BIN": "a5b4f08bb82839625635bf98890c22f07a9b5ec58852f44e458fffc01c07dbd0"
+      }
+    },
+    "EGAOEM.FON": {
+      "all_256_bytes_exact": true,
+      "all_in_range_pixels_and_advances_exact": true,
+      "in_range": [
+        1,
+        254
+      ],
+      "out_of_range_default": 32,
+      "font_sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "outside_range_width_observations": {
+        "0": 8,
+        "255": 8
+      },
+      "outside_range_pixel_differences": [],
+      "capture_sha256": {
+        "O0.BIN": "5d1656c1ee0cff0d2d52334283a2478d86c44021c48bb50fff094636828d0ff5",
+        "O1.BIN": "8df6298ccf47e79af4fe50c3877b6eb24fbc7d0e9236cc1078f202f23f9ddf5e",
+        "O2.BIN": "3d54b304cf7c0070a816b3bbd34b18e9eb63a40ab434928bac1842ccb0f71b17",
+        "O3.BIN": "29d26039283f175d68c27a65ebd46703d32fec3656f96dc272c6d14bb3b53a98"
+      }
+    }
+  }
+}

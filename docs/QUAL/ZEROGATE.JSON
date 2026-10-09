@@ -1,0 +1,26 @@
+{
+  "status": "PASS exact reviewed zero-SHA source plus only two unsigned-arithmetic warning fixes",
+  "pins": {
+    "WAVEXT.C": "c0dbbe70105d90103d03523e73f2b002e80732cc2bc7f0355bec50368624043f",
+    "FASTSET.C": "bbab2c252e5db1d5de947bf1781cfa524ff102f6274d1a5fd6f77987de3b87db",
+    "PREPXT.C": "b35c90710aff2c4f2fc429f4ec4f8f721b29afe33fec9d2478630fd04bba67dd",
+    "CPSET.C": "f06321e9392469b5e45865c419734bb578226dc66c1d1cbd33645683d4b080c4",
+    "TINST.C": "541b8a55f42b5bd8512c1602411cc04926d5eb57b525f373cc279f9bb38653fc"
+  },
+  "warning_fix": {
+    "reason": "Strict native qualifier refused PREPXT C4135 count arithmetic and C4018 fixed font length comparison warnings",
+    "audited_before_sha256": "bc24f63f78f67e719f56e8496d3fcc1f10373e5b6ef76706fb8cc7d205e5b97f",
+    "after_sha256": "b35c90710aff2c4f2fc429f4ec4f8f721b29afe33fec9d2478630fd04bba67dd",
+    "semantic_delta": "Explicit U32 cast and UL constants; same nonnegative operands/ranges/bounds; no control-flow, validation, SHA or IO behavior change",
+    "native_failed_evidence": "ZERO-COMBINED180/STATUS.JSON; lease released 2026-10-09T06:59:04.270888+00:00 after15.750seconds; no conflicts",
+    "next": "Re-run final PREP host core/support checks, then fresh explicitly allocated PREP rebuild/default/deep transaction slot. Existing CPSET/TINST source-matched native builds passed without warnings.",
+    "final_host_checks": {
+      "copy_stream": 32,
+      "support_font": 37,
+      "default_sha_initialization_transform_traps": "PASS",
+      "core_evidence": "C:\\Users\\chad\\Documents\\Codex\\2026-10-08\\task-2\\ZERO-PREP-CORE8\\RESULT.JSON",
+      "support_evidence": "C:\\Users\\chad\\Documents\\Codex\\2026-10-08\\task-2\\ZERO-PREP-CORE8\\TESTS.JSON"
+    }
+  },
+  "native_scope": "Fresh120, default and explicit deep checks; no guest yet"
+}

@@ -1,0 +1,95 @@
+{
+  "status": "EXACT SETTINGS SOURCE INTEGRATED; RUNTIME PRIVATELY STAGED; PROMOTION GATED",
+  "created_utc": "2026-10-09T06:30:28.406211+00:00",
+  "source_commit": "adc127d2f3e51b559749a320b0250564847777b4",
+  "copied_source_files": [
+    {
+      "path": "examples/TSHELL/BUILD.BAT",
+      "sha256": "96025ff6dbeafd97af9c299c54075daee5ba13cd6b680420674301aa2d2e0b41"
+    },
+    {
+      "path": "examples/TSHELL/BUILD.PY",
+      "sha256": "5d6580a1b991dd6f0bd75feda3571afaa613a8d69c197e9f654a0ae372e5afac"
+    },
+    {
+      "path": "examples/TSHELL/SETTINGS.TXT",
+      "sha256": "fe40f53acaed46c4b7bc06acd89d53725f924da9397c2e5a666e06f48fdc796e"
+    },
+    {
+      "path": "examples/TSHELL/TESTS/CONTROL/CPREAD.PY",
+      "sha256": "54a4f060cab87eda967c784913a0cfabafefb51d740dd3c6acd3bfab368080da"
+    },
+    {
+      "path": "examples/TSHELL/TESTS/CONTROL/CPTEST.C",
+      "sha256": "d2292cf2c028c043f40cc3d9aaa48eda5a17092b0b2e8d505c02bf660926c870"
+    },
+    {
+      "path": "examples/TSHELL/TESTS/CONTROL/MNTEST.C",
+      "sha256": "0e2d3bb39901c903ec18d5301140c173e5e0e6532dacde5757926a1327431d42"
+    },
+    {
+      "path": "examples/TSHELL/TESTS/CONTROL/README.TXT",
+      "sha256": "52f697187f77b67310ffc712aea72eccaddc6b6ab2723c9307d3ba34dfdec7d0"
+    },
+    {
+      "path": "examples/TSHELL/TESTS/CONTROL/TESTCP.PY",
+      "sha256": "1fa494caa15b4aa9595fadb1e0d9ac11e84a349cef86e4d82f3303332e9c7667"
+    },
+    {
+      "path": "examples/TSHELL/TESTS/CONTROL/TESTMN.PY",
+      "sha256": "77257b1b916181065238ecea96cfd7bc3756a0d4a9b6369f21671d339711b86d"
+    },
+    {
+      "path": "examples/TSHELL/TESTS/CONTROL/WINDOWS.H",
+      "sha256": "54e24f3ac7d9da5ec1efa9fadfa6a5480c8a94adf99d8b986bad46bbec23d7ab"
+    },
+    {
+      "path": "examples/TSHELL/TESTS/RUNHOST.PY",
+      "sha256": "b7d50ab66ace869ad0c841df423f0ef088acb574c6df9dc4fa687d57377595a4"
+    },
+    {
+      "path": "examples/TSHELL/TSCP.C",
+      "sha256": "09350eee3c011f4d67284968cb4a75461b6693705f2e65378db3b3e00267458a"
+    },
+    {
+      "path": "examples/TSHELL/TSCP.H",
+      "sha256": "db41733f59d588c345761f8890dd991de34d052c2928df2b374f1e6f4b7e7e98"
+    },
+    {
+      "path": "examples/TSHELL/TSHELL.C",
+      "sha256": "42977c642acb5eb5ffd64e64a15ea2ac645ca4d7bb77123edf25c0e846d5df55"
+    },
+    {
+      "path": "examples/TSHELL/TSHELL.RSP",
+      "sha256": "69df946e370a9ed8f0310f0749e31617c31dac59ace675e2196ebee22dc508df"
+    }
+  ],
+  "full_native_source_proof_matches": 38,
+  "hold_source_unchanged": {
+    "TSHOLD.C": "07fdc53cf41611d3319afd11a60f3865e566b9aceccbede77dd9c64afb61e378",
+    "TSHOLD.H": "101d433764c5311b681d5273985bf5da65b6c1d0f9e3642d4e72236455fec19e"
+  },
+  "native_failure_evidence": "C:\\Users\\chad\\Documents\\Codex\\2026-10-08\\task-10\\FAIL001\\STATUS.JSON",
+  "native_failure_sha256": "26003e358cca0c062088f4ff125c6ad3d65fa3bc72d8852fb52298d0c0e72196",
+  "required_native_failure_cases": "PASS, missing CONTROL.EXE and modal Mouse refuses Color; exact production pin",
+  "staged_runtime": "C:\\Users\\chad\\Documents\\Codex\\2026-10-08\\task-2\\ZERO-SETTINGS-STAGED",
+  "remaining_native_limitations": [
+    "Native caption mismatch/gray/missing native menu item fallback",
+    "Native WinExec failure and absent/missing driver export fixtures",
+    "Physical mouse menu selection",
+    "Supported Keyboard capability branch on actual suitable keyboard driver/hardware",
+    "Independent native existing System/saver/clock regression"
+  ],
+  "gates": [
+    "Suite-wide audit completion/corrections",
+    "Startup native qualification",
+    "Explicit 180-second combined slot go-ahead; no guest started",
+    "Combined builds/manifests/package and exact qualification before delivery"
+  ],
+  "preservation": "Owner workspace, existing candidate/runtime manifests, installed Windows/CF, and Hold source untouched",
+  "integrated_host_rerun": {
+    "path": "C:\\Users\\chad\\Documents\\Codex\\2026-10-08\\task-2\\ZERO-SETTINGS-HOST.LOG",
+    "sha256": "af5e00c9276bbc897edf156c7d9404fc6ef28e2af8eb3899768caebb2ff574e0",
+    "status": "PASS: Settings, capability/routes, actual extracted popup/focus, boot/saver/idle/Hold/DLL host checks"
+  }
+}
