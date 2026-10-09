@@ -1,0 +1,76 @@
+WindowsXT optional Computer choice - CPSET
+=========================================
+
+INSTALL adds the Windows 3.0 DOS Setup choice:
+  Tandy 1000 EX/HX (WindowsXT)
+It does not select it or change your active Computer or keyboard settings.
+This is a compatibility preset using generic system components, not a new
+BIOS, system driver, PSG sound driver or performance enhancement. No official support or physical qualification is implied.
+
+Integrated installation
+-----------------------
+INSTALL runs read-only CHECK before snapshots, then APPLY after verified
+backups. WINXT SETUP checks again before reserving video RAM. Existing
+CPINFO transactions are refused by a new install; keep them and follow the
+recovery instructions first. Use your actual Windows path in every command.
+
+Exit Windows completely; use a real DOS prompt, never a Windows DOS box:
+  C:\WINXT\CPSET CHECK C:\WINDOWS
+  C:\WINXT\CPSET APPLY C:\WINDOWS
+CHECK changes nothing. APPLY adds the choice without selecting it. Both
+verify the installed keyboard filename and binary for the next startup.
+Disk settings do not prove a loaded driver.
+
+To select it, use the guarded path:
+  C:\WINXT\WINXT SETUP
+Choose Computer, Tandy 1000 EX/HX (WindowsXT), then Complete Changes.
+Reopen Setup to inspect the saved result. Keep video-memory/recovery guards;
+do not launch bare SETUP.
+
+If you later change keyboard drivers, rebuild the captured preset before
+selecting Computer again:
+  C:\WINXT\CPSET RESTORE C:\WINDOWS
+  C:\WINXT\CPSET APPLY C:\WINDOWS
+  C:\WINXT\CPSET CHECK C:\WINDOWS
+An ordinary stock Computer preset can reset TNDYK3 to keyboard.drv.
+
+Scope and defaults
+------------------
+CPSET edits only WINDOWS\SYSTEM\SETUP.INF. It never edits SYSTEM.INI,
+WIN.INI, WIN.COM, driver/font binaries, mouse settings or the launcher.
+Core components are stock system.drv, sound.drv and comm.drv. Keyboard is
+the exact verified KEYBOARD.DRV or TNDYK3.DRV already installed. Fallbacks:
+PC/XT keyboard type, CGA display, no mouse. Existing active selections are
+preserved by the optional preset; no mouse is renamed Tandy and no PSG
+capability is implied. The existing keyboard description is retained.
+
+Requires DOS 3.3+, Windows 3.0 real mode and the exact supported English
+SETUP.INF. Current Computer must be generic MS-DOS/PC-DOS or this profile;
+core system/sound/communications must be generic. Unknown versions, other
+keyboards, altered binaries, malformed metadata and ID collisions refuse.
+Keyboard files in both Windows root and SYSTEM are ambiguous and refused.
+Allow 250 KB free on the Windows drive for transaction files and staging.
+
+Restore and refusals
+--------------------
+  C:\WINXT\CPSET RESTORE C:\WINDOWS
+This restores original Setup metadata and removes the optional menu entry.
+Active Windows settings stay unchanged. An already-selected Tandy Computer
+description can remain visible; that harmless label does not mean failure.
+RESTORE does not reselect stock Computer or reset a custom keyboard.
+
+Keep CPINFO.BAK and CPINFO.SAV beside SETUP.INF; never delete or edit them.
+Interruptions may leave .NEW, .OLD, .RST or .CUR. Run RESTORE before retrying.
+It recognizes only verified transaction states. Foreign, partial or altered
+sidecars refuse without unsafe replacement: preserve all files for review.
+Disk-full partial backups may need manual inspection. SETUP.INF is not
+replaced before its original bytes and ownership metadata are verified.
+Edits after APPLY are protected: RESTORE refuses to overwrite them. Do not
+blindly substitute an old full backup. Full installation rollback uses the
+numbered BACKUP\B001\RESTORE YES path printed by INSTALL; CPSET recovery
+must succeed before any other Windows snapshot files are restored.
+
+Tests use owned emulator fixtures; physical EX/HX qualification is separate.
+Windows 3.1, new OS installation and arbitrary third-party setups are outside
+scope. No Microsoft metadata, OS bytes, fonts or toolchain are included.
+Python runs only on the build/test host, never the DOS target.

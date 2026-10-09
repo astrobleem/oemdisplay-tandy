@@ -155,16 +155,13 @@ and FAT metadata. Repeated builds produce byte-identical files. The verifier
 checks the complete FAT chain/directory structure plus the exact expected
 files and bytes. `SHA256SUMS` covers all published assets except itself.
 
-For a private, complete own-media QA image, optionally use:
-
-```
-python3 tools/FLASHDISK/MAKEIMG.PY --windows-files /your/media --out /new/private-output
-```
-
-That creates `WXTP720.IMG` and a report explicitly marked **not publishable**.
-The public workflow has no media input and its final check rejects private
-output. Do not upload your private artifacts. Normal end users use the DOS
-helper instead; they do not need this optional host path.
+The complete private own-media payload does not fit the 720 KB image.
+`MAKEIMG.PY --windows-files` is unsupported and refuses before creating
+output. Keep the public 720 KB image and all features; use its DOS PREPXT
+helper with matching owned media to prepare the complete `C:\WINXT` folder
+on the hard disk, as described above. No larger disk or reduced app set is
+implied. Advanced host-only staging may still use `WINXT/STAGE.PY` to create
+a private folder; it does not make a floppy image.
 
 `WXTTOOLS.ZIP` contains the same portable scripts and support-free WINXT source.
 After extracting, `python MAKEIMG.PY --out /new/output` rebuilds the public
@@ -186,4 +183,4 @@ rc.1 downloads above remain immutable. See [first-run checks](../../docs/FIRSTRU
 
 ## Independent startup default
 
-WXTTOOLS.ZIP now includes the [accepted slow flag wave](../../examples/WXTSPL/WAVE/README.MD) and its private own-media builder. Executable bytes are pinned to native qualification. The 720 KB Setup installer remains the static fallback; this promotion does not replace its compiled updater or any installed WIN.COM.
+WXTTOOLS.ZIP now includes the [accepted slow flag wave](../../examples/WXTSPL/WAVE/README.MD) and its private own-media builder. Executable bytes are pinned to native qualification. The qualified DOS Setup installer enables the guarded Color wave; other modes retain static startup. It does not patch installed WIN.COM.

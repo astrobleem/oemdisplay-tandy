@@ -1,0 +1,212 @@
+{
+  "schema": 1,
+  "status": "PASS compact Computer profile integration and packed 720KB preparation",
+  "physical_hardware_qualified": false,
+  "native_environment": "DOSBox-X Tandy, 8086_prefetch, 640 KB, no XMS/EMS/UMB; guarded launcher reserves 16 KB shared-video overlap",
+  "payload_pins": {
+    "CPSET.EXE": {
+      "bytes": 33293,
+      "sha256": "ac7befedafc34b5f571f2e3f76908f8233ab23c7ad81440492ce4244f2ff7b53"
+    },
+    "CPSET.TXT": {
+      "bytes": 4089,
+      "sha256": "d6c0328f4ef50eb6301825513e768f4747ea8700deee555e02957d991d6403eb"
+    },
+    "HOLD14.TXT": {
+      "bytes": 3597,
+      "sha256": "4404f44d263c16930cb45795ef9f269f412f7db2a2f8c825cf236811b710ba57"
+    },
+    "HOLD160.PNG": {
+      "bytes": 3776,
+      "sha256": "f0c39aa91ed39850599051a1c798077751dd92857ac705973e55fae1ae035ef2"
+    },
+    "HOLD640.PNG": {
+      "bytes": 3532,
+      "sha256": "ee45f1403cebd9cf388aaf99140cc16790174b07c41d390548840087506481ff"
+    },
+    "INSTALL.BAT": {
+      "bytes": 499,
+      "sha256": "222e2568f059bfad37b9436b507a7a5f45c30364cb67356d318b9d44d17a305b"
+    },
+    "MATRIX.EXE": {
+      "bytes": 14157,
+      "sha256": "0987936c3b80eb9fc5718f3022996514f6885adbdf83cd05128d01bc19de17c8"
+    },
+    "MAZE.EXE": {
+      "bytes": 23215,
+      "sha256": "c8dac5dd6c8b6c9c0c6fb8727dd56919e9c0fd5a71fa63b30c429f4be2c3598a"
+    },
+    "PINBALL.EXE": {
+      "bytes": 15487,
+      "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f"
+    },
+    "NAMES11.TXT": {
+      "bytes": 3660,
+      "sha256": "e8e00a31169272ce94d1118b374f1f284913019e1e5e5efd997523161f50a163"
+    },
+    "OEMSETUP.INF": {
+      "bytes": 1426,
+      "sha256": "a2f16874101434aa11b5c789a49ef60be411e92cc68c5d29fee32a76354e5f8b"
+    },
+    "README.TXT": {
+      "bytes": 9034,
+      "sha256": "79e45d9d886068ba05f7f9443d6e6a69e3ff9625e2b5bfdd5b91bc5580227fe4"
+    },
+    "RESERVE.COM": {
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+    },
+    "SHELL14.TXT": {
+      "bytes": 7211,
+      "sha256": "6c9385ecfaff6367fdb4fc6cca158e22f7213781b061dfd124adbec3bb1930b1"
+    },
+    "SHELLSEL.EXE": {
+      "bytes": 24081,
+      "sha256": "7bca056b88ee5fa0dc30f802bd4696bb8d7bc776653c59ce29a07b0ecb7676ed"
+    },
+    "SHFULL.TXT": {
+      "bytes": 4911,
+      "sha256": "ca8f28a734d4557750557cf74261cd3e028b1670647aa65bac721ef908111461"
+    },
+    "STARFLD.EXE": {
+      "bytes": 16783,
+      "sha256": "e06c9d80f977e1bda1db2d13be8af5f7d8b6f00285daa4f0e0159af00211b8d0"
+    },
+    "TABOUT.EXE": {
+      "bytes": 6479,
+      "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed"
+    },
+    "TCHIME.EXE": {
+      "bytes": 3999,
+      "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121"
+    },
+    "TESTS.TXT": {
+      "bytes": 4950,
+      "sha256": "12c95167d35a857ea27905e1ca6bf3f413e288fb6bdb1601503bbbaf5faef8cf"
+    },
+    "TESTS14.TXT": {
+      "bytes": 6319,
+      "sha256": "16bd35e15dabcedde2dfb02654a743f5d60842e5e87b6735d7c7c0f2ac075165"
+    },
+    "TEXIT.EXE": {
+      "bytes": 8687,
+      "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99"
+    },
+    "TEXTMODE.TXT": {
+      "bytes": 2722,
+      "sha256": "b598424d98adc6816271d5de1682839cd377e0e027654aa231f3ee550fd9d8a7"
+    },
+    "TINST.EXE": {
+      "bytes": 28263,
+      "sha256": "f357fa8aca452aff03e873375147d2f4ffc87bebfc87541e63236b207c909a70"
+    },
+    "TR51616.DRV": {
+      "bytes": 54880,
+      "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d"
+    },
+    "TR53204.DRV": {
+      "bytes": 54032,
+      "sha256": "707dabdd83dafcf80b3f9e2fe07ca785662d3358d08f366cb2ed6b45b2804744"
+    },
+    "TR53216.DRV": {
+      "bytes": 54896,
+      "sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61"
+    },
+    "TR56402.DRV": {
+      "bytes": 53632,
+      "sha256": "3c002227b7b01579787d10c452ae9b3f216a4fd53a8aa5c2190c6bab67d880a2"
+    },
+    "TR56404.DRV": {
+      "bytes": 53808,
+      "sha256": "50969051a462bbada0be684c247de5c4bde6f51a3d0b9db22bf46d58592e3ca9"
+    },
+    "TSCHECK.EXE": {
+      "bytes": 3311,
+      "sha256": "53f5fe88e099ccd37826e23a191c803313ad5ae70dee9c04b3ff19bc95705cbe"
+    },
+    "TSHELL.EXE": {
+      "bytes": 69043,
+      "sha256": "daeb6948019b9cc4c5e36e05970ea85f8a0e5588486029dc6ba6e1a6be2219d7"
+    },
+    "TSHELL.INI": {
+      "bytes": 905,
+      "sha256": "56931fdffa6f4b167a60c2cce893a969968348eaab7650b660aff09c0a3e50c2"
+    },
+    "TSINPUT.DLL": {
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+    },
+    "TSREADY.TXT": {
+      "bytes": 81,
+      "sha256": "ad84cbe02cd8771af516632286b91cc05a2f4581be81e47e6e247b85062e645b"
+    },
+    "TSSETUP.BAT": {
+      "bytes": 3876,
+      "sha256": "24cdfd7f90d89acf10f2f1ed6341691634f46bb5a5331e19ce1b10cab703e96f"
+    },
+    "TSTART.BAT": {
+      "bytes": 2185,
+      "sha256": "0c429b851b5e00b29143894cad6221d63e7c4cfd3782f43b1aefc731c6aa1cd2"
+    },
+    "TXTMODE.DRV": {
+      "bytes": 72960,
+      "sha256": "943a455baa475071a190b26e69b92a477178b5ced231edef19882abb2a8d2646"
+    },
+    "WAVEXT.EXE": {
+      "bytes": 27739,
+      "sha256": "baa0eb11703d809d8bcaaced02f5b99c8a7f21d751e7ba78f268b9c05687889f"
+    },
+    "XTCLEAN.COM": {
+      "bytes": 1071,
+      "sha256": "be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad"
+    },
+    "XTWAVE.DAT": {
+      "bytes": 6200,
+      "sha256": "f7217d3bbfb0ded0f9699a69d82ba16c7dcc76c7ac1d7d54748ca910928a9a1b"
+    },
+    "WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    },
+    "XPCHIME.EXE": {
+      "bytes": 4543,
+      "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f"
+    }
+  },
+  "source_pins": {
+    "tools/CPSET/CPSET.C": "c2db41681fd9c5eaf4bcde6463bae447e638f6e4bc79548e7ac7006da2272546",
+    "tools/FLASHDISK/PREPXT.C": "8718f4e4772e0c42e31e6be943df4440b8d50a2c2771abe3e30bd801ef596aa8",
+    "tools/FLASHDISK/SZSTREAM.H": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68",
+    "tools/FLASHDISK/PACKPINS.H": "2f57aafd1c8084aec17946f50e4c7400f1884eb730ee5c19e5a979d785529c90",
+    "tools/FLASHDISK/SZPACK.PY": "6bbd89bfd90dadc2a4597bb90e1cf485bba7a2c8e9ad86536e799b7a7dc51065",
+    "src/tandysw/TINST.C": "5ffa27463c11d01927d979af376463d21f10d6721513def2c1bfe4182c4fe401"
+  },
+  "final_helper_sha256": "6a7901c3840c62cde3720c0bed99665625a2b26ed8060fd36d3bd4c50646b747",
+  "compiled_XTPINS_sha256": "d7bf6ed952186046bdb2205199df9e1d4a8ddb17321947326ced622e4628cbad",
+  "published_XTPINS_sha256": "afdc1d4f25e9743f61b19b40b2eff099bdb05c24402cdee3569b4da0b0bd4c86",
+  "post_build_source_difference": "XTPINS qualification comment only; all compiled pin declarations byte-identical. BUILD adapters use staged T: inputs; C sources unchanged.",
+  "prepared_runtime_file_count": 52,
+  "native_prepare_seconds": 114.047,
+  "stock_Computer_completion_and_reopen": true,
+  "K3_Computer_completion_and_reopen": true,
+  "stock_and_K3_normal_Windows_return": true,
+  "stock_and_K3_wrapper_child_status": 0,
+  "driver_font_mouse_WINCOM_bytes_unchanged": true,
+  "transient_label_samples_each_case": 65,
+  "setup_saved_change_only": "boot.description/system.drv",
+  "rollback_native_byte_comparisons": 38,
+  "rollback_scope": "Installer-backed-up resources and keyboard selection. Windows writes ACCESSOR.GRP, GAMES.GRP and MAIN.GRP app state identically in stock and K3 sessions; these are outside installer rollback.",
+  "stock_capture_harness_note": "After actual Program Manager and zero-status DOS return, DX-CAPTURE left a nonzero harness status and the first batch stopped. K3 records capture status separately; wrapper record and GUI/DOS return prove Windows exit.",
+  "stock_lease_seconds": 38.0,
+  "K3_lease_seconds": 229.406,
+  "shared_lock_released_no_conflicts": true,
+  "CP_host_cases": 24,
+  "shared_decoder_host_cases": 32,
+  "source_provenance": {
+    "original_CPSET_C_sha256": "0c63cd4af3807bad1517fa31af65efee74640bfd7e0569c79080f814a4660d37",
+    "original_kit_sha256": "0885fedb3aaca27f4fd900b881c7cb814bb9ba4732454a10bbddce6cf8368396",
+    "license": "Original source grants use, modification and redistribution."
+  },
+  "third_party_owned_files_included": false,
+  "existing_rc3_assets_changed": false
+}
