@@ -1,0 +1,134 @@
+{
+  "kind": "Genuine native complete-byte rendering",
+  "family": "TXT",
+  "native_glyph_pages_verified": true,
+  "pixel_origin": [
+    4,
+    18
+  ],
+  "fonts": {
+    "TXTSYS.FON": {
+      "all_256_bytes_exact": true,
+      "all_in_range_pixels_and_advances_exact": true,
+      "in_range": [
+        32,
+        255
+      ],
+      "out_of_range_default": 128,
+      "font_sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa",
+      "outside_range_width_observations": {
+        "0": 8,
+        "1": 8,
+        "2": 8,
+        "3": 8,
+        "4": 8,
+        "5": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 8,
+        "16": 8,
+        "17": 8,
+        "18": 8,
+        "19": 8,
+        "20": 8,
+        "21": 8,
+        "22": 8,
+        "23": 8,
+        "24": 8,
+        "25": 8,
+        "26": 8,
+        "27": 8,
+        "28": 8,
+        "29": 8,
+        "30": 8,
+        "31": 8
+      },
+      "outside_range_pixel_differences": [],
+      "capture_sha256": {
+        "S0.BIN": "08201856d6afe60407bc35f0a3081855101d4d755a1bfb16e04804bd0ed929d9",
+        "S1.BIN": "0cf7d2bc0af170c38ba81c6eef7bc5034781cbdfcd46c0f2b8fb58e2ccbc28ae",
+        "S2.BIN": "3a0a1e4dc5609130863d5e8d6e3128ac024410fc87a9bf0e33099418f018348b",
+        "S3.BIN": "5b173c9277ebba6968bb74f18b3f69cec002d3ab66398570727f609ef11ca014"
+      }
+    },
+    "CGAFIX.FON": {
+      "all_256_bytes_exact": true,
+      "all_in_range_pixels_and_advances_exact": true,
+      "in_range": [
+        32,
+        255
+      ],
+      "out_of_range_default": 128,
+      "font_sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+      "outside_range_width_observations": {
+        "0": 8,
+        "1": 8,
+        "2": 8,
+        "3": 8,
+        "4": 8,
+        "5": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 8,
+        "16": 8,
+        "17": 8,
+        "18": 8,
+        "19": 8,
+        "20": 8,
+        "21": 8,
+        "22": 8,
+        "23": 8,
+        "24": 8,
+        "25": 8,
+        "26": 8,
+        "27": 8,
+        "28": 8,
+        "29": 8,
+        "30": 8,
+        "31": 8
+      },
+      "outside_range_pixel_differences": [],
+      "capture_sha256": {
+        "F0.BIN": "08201856d6afe60407bc35f0a3081855101d4d755a1bfb16e04804bd0ed929d9",
+        "F1.BIN": "0cf7d2bc0af170c38ba81c6eef7bc5034781cbdfcd46c0f2b8fb58e2ccbc28ae",
+        "F2.BIN": "3a0a1e4dc5609130863d5e8d6e3128ac024410fc87a9bf0e33099418f018348b",
+        "F3.BIN": "5b173c9277ebba6968bb74f18b3f69cec002d3ab66398570727f609ef11ca014"
+      }
+    },
+    "CGAOEM.FON": {
+      "all_256_bytes_exact": true,
+      "all_in_range_pixels_and_advances_exact": true,
+      "in_range": [
+        1,
+        254
+      ],
+      "out_of_range_default": 32,
+      "font_sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "outside_range_width_observations": {
+        "0": 8,
+        "255": 8
+      },
+      "outside_range_pixel_differences": [],
+      "capture_sha256": {
+        "O0.BIN": "f75a1cb4a35d892dc52dbf52965924c46637286c092786948a47465cfdde00b8",
+        "O1.BIN": "9b7f92e5d41ee7804c0ca6c2d62d1a0fda5809ee864c27bf4e664adc4a846699",
+        "O2.BIN": "ed3c0b2566c5cb652ac675b30cc792ac4133eef818b6e1f89dbf4874cd3a40ce",
+        "O3.BIN": "5dd05ee3ab95feaa20c3f272a036921a0b2c9dfb0f88a54dc544e9975497dc0b"
+      }
+    }
+  }
+}

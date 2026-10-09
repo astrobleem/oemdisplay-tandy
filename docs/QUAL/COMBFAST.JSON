@@ -1,0 +1,344 @@
+{
+  "schema": 1,
+  "status": "PASS diagnostic-free fast installer and optional VERIFY",
+  "combination": "fast preparation/install plus exact qualified fast START helper",
+  "payload_pins": {
+    "CPSET.EXE": {
+      "sha256": "ac7befedafc34b5f571f2e3f76908f8233ab23c7ad81440492ce4244f2ff7b53",
+      "bytes": 33293
+    },
+    "CPSET.TXT": {
+      "sha256": "d6c0328f4ef50eb6301825513e768f4747ea8700deee555e02957d991d6403eb",
+      "bytes": 4089
+    },
+    "HOLD14.TXT": {
+      "sha256": "4404f44d263c16930cb45795ef9f269f412f7db2a2f8c825cf236811b710ba57",
+      "bytes": 3597
+    },
+    "HOLD160.PNG": {
+      "sha256": "f0c39aa91ed39850599051a1c798077751dd92857ac705973e55fae1ae035ef2",
+      "bytes": 3776
+    },
+    "HOLD640.PNG": {
+      "sha256": "ee45f1403cebd9cf388aaf99140cc16790174b07c41d390548840087506481ff",
+      "bytes": 3532
+    },
+    "INSTALL.BAT": {
+      "sha256": "6cef76ab550280f71191742f6d2f83090faa47a2b250bd73722e2d9c0c18d23c",
+      "bytes": 490
+    },
+    "MATRIX.EXE": {
+      "sha256": "0987936c3b80eb9fc5718f3022996514f6885adbdf83cd05128d01bc19de17c8",
+      "bytes": 14157
+    },
+    "MAZE.EXE": {
+      "sha256": "c8dac5dd6c8b6c9c0c6fb8727dd56919e9c0fd5a71fa63b30c429f4be2c3598a",
+      "bytes": 23215
+    },
+    "NAMES11.TXT": {
+      "sha256": "e8e00a31169272ce94d1118b374f1f284913019e1e5e5efd997523161f50a163",
+      "bytes": 3660
+    },
+    "OEMSETUP.INF": {
+      "sha256": "a2f16874101434aa11b5c789a49ef60be411e92cc68c5d29fee32a76354e5f8b",
+      "bytes": 1426
+    },
+    "PINBALL.EXE": {
+      "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f",
+      "bytes": 15487
+    },
+    "README.TXT": {
+      "sha256": "f3e1e9de90c69a0972bd2dfcda3a805d4e68a47b2ec810b6a228bdee4d28e6b0",
+      "bytes": 9502
+    },
+    "RESERVE.COM": {
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+      "bytes": 1512
+    },
+    "SHELL14.TXT": {
+      "sha256": "6c9385ecfaff6367fdb4fc6cca158e22f7213781b061dfd124adbec3bb1930b1",
+      "bytes": 7211
+    },
+    "SHELLSEL.EXE": {
+      "sha256": "7bca056b88ee5fa0dc30f802bd4696bb8d7bc776653c59ce29a07b0ecb7676ed",
+      "bytes": 24081
+    },
+    "SHFULL.TXT": {
+      "sha256": "ca8f28a734d4557750557cf74261cd3e028b1670647aa65bac721ef908111461",
+      "bytes": 4911
+    },
+    "STARFLD.EXE": {
+      "sha256": "e06c9d80f977e1bda1db2d13be8af5f7d8b6f00285daa4f0e0159af00211b8d0",
+      "bytes": 16783
+    },
+    "TABOUT.EXE": {
+      "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed",
+      "bytes": 6479
+    },
+    "TCHIME.EXE": {
+      "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121",
+      "bytes": 3999
+    },
+    "TESTS.TXT": {
+      "sha256": "12c95167d35a857ea27905e1ca6bf3f413e288fb6bdb1601503bbbaf5faef8cf",
+      "bytes": 4950
+    },
+    "TESTS14.TXT": {
+      "sha256": "16bd35e15dabcedde2dfb02654a743f5d60842e5e87b6735d7c7c0f2ac075165",
+      "bytes": 6319
+    },
+    "TEXIT.EXE": {
+      "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99",
+      "bytes": 8687
+    },
+    "TEXTMODE.TXT": {
+      "sha256": "b598424d98adc6816271d5de1682839cd377e0e027654aa231f3ee550fd9d8a7",
+      "bytes": 2722
+    },
+    "TINST.EXE": {
+      "sha256": "cf868efc3676db5b8dc034308b85bff00647830d3d317c25c6ef218c2ad35bbd",
+      "bytes": 29903
+    },
+    "TR51616.DRV": {
+      "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d",
+      "bytes": 54880
+    },
+    "TR53204.DRV": {
+      "sha256": "707dabdd83dafcf80b3f9e2fe07ca785662d3358d08f366cb2ed6b45b2804744",
+      "bytes": 54032
+    },
+    "TR53216.DRV": {
+      "sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61",
+      "bytes": 54896
+    },
+    "TR56402.DRV": {
+      "sha256": "3c002227b7b01579787d10c452ae9b3f216a4fd53a8aa5c2190c6bab67d880a2",
+      "bytes": 53632
+    },
+    "TR56404.DRV": {
+      "sha256": "50969051a462bbada0be684c247de5c4bde6f51a3d0b9db22bf46d58592e3ca9",
+      "bytes": 53808
+    },
+    "TSCHECK.EXE": {
+      "sha256": "53f5fe88e099ccd37826e23a191c803313ad5ae70dee9c04b3ff19bc95705cbe",
+      "bytes": 3311
+    },
+    "TSHELL.EXE": {
+      "sha256": "daeb6948019b9cc4c5e36e05970ea85f8a0e5588486029dc6ba6e1a6be2219d7",
+      "bytes": 69043
+    },
+    "TSHELL.INI": {
+      "sha256": "56931fdffa6f4b167a60c2cce893a969968348eaab7650b660aff09c0a3e50c2",
+      "bytes": 905
+    },
+    "TSINPUT.DLL": {
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80",
+      "bytes": 6281
+    },
+    "TSREADY.TXT": {
+      "sha256": "ad84cbe02cd8771af516632286b91cc05a2f4581be81e47e6e247b85062e645b",
+      "bytes": 81
+    },
+    "TSSETUP.BAT": {
+      "sha256": "24cdfd7f90d89acf10f2f1ed6341691634f46bb5a5331e19ce1b10cab703e96f",
+      "bytes": 3876
+    },
+    "TSTART.BAT": {
+      "sha256": "0c429b851b5e00b29143894cad6221d63e7c4cfd3782f43b1aefc731c6aa1cd2",
+      "bytes": 2185
+    },
+    "TXTMODE.DRV": {
+      "sha256": "943a455baa475071a190b26e69b92a477178b5ced231edef19882abb2a8d2646",
+      "bytes": 72960
+    },
+    "WAVEXT.EXE": {
+      "sha256": "6b319cbfde241908ca0a90999c52f3b0bf10258e52d5b4bb7b89257a4339ae3d",
+      "bytes": 30971
+    },
+    "WXTSPL01.RLE": {
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+      "bytes": 4062
+    },
+    "XPCHIME.EXE": {
+      "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f",
+      "bytes": 4543
+    },
+    "XTCLEAN.COM": {
+      "sha256": "be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad",
+      "bytes": 1071
+    },
+    "XTWAVE.DAT": {
+      "sha256": "f7217d3bbfb0ded0f9699a69d82ba16c7dcc76c7ac1d7d54748ca910928a9a1b",
+      "bytes": 6200
+    },
+    "MANIFEST.SHA": {
+      "sha256": "7de55c4b1292ee4ba4e2760ae738c4d6033ba267ed8a343fbffefc9300900db2",
+      "bytes": 3998
+    }
+  },
+  "source_pins": {
+    "src/tandysw/TINST.C": "1dde626345725c2787bf650b248e01d9151bf778a36327fa71a8b80c44cb32ad",
+    "tools/FLASHDISK/PREPXT.C": "f161b964db66bca5dab3bdebcf4b10990fdcab6882e10f561c709419ecf4deb7",
+    "tools/FLASHDISK/SZSTREAM.H": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68",
+    "tools/FLASHDISK/PACKPINS.H": "dd33c6035c0e0ce6cc865414faf4cbce2258a8e714e13af8ce6d066e8dcf5941",
+    "tools/FLASHDISK/SZPACK.PY": "050442d6206910604aa29a6faf1926fd8b34f2f3d0090f7ae0c8093e4aea3b94",
+    "tools/FLASHDISK/MAKEIMG.PY": "363a7914332f88e62257fdf3ad7606e166e7c9431f447be083f35d3ffed2ff7c"
+  },
+  "final_helper_sha256": "8745a411f8a7c46b4c72e64c13da478bb97d4a728c23f694de8545014dfa364d",
+  "default_mounted_image_pass": true,
+  "explicit_VERIFY_pass": true,
+  "deliberate_rollback_changes_restored": true,
+  "backup_resources": 35,
+  "expanded_TXTMODE_bytes": 72960,
+  "shipping_diagnostics": false,
+  "default_public_hash_or_output_readback": false,
+  "shared_lock_released_no_conflicts": true,
+  "free_FAT_bytes": 33792,
+  "lease": {
+    "acquired": "2026-10-09T05:44:36.682859+00:00",
+    "released": "2026-10-09T05:45:46.266643+00:00",
+    "lease_seconds": 69.578
+  },
+  "native_cases": [
+    {
+      "phase": "COMPILE",
+      "start": "2026-10-09T05:42:49.566122+00:00",
+      "markers": {},
+      "pid": 7316,
+      "normal_exit": true,
+      "exit_code": 0,
+      "elapsed_seconds": 5.641,
+      "end": "2026-10-09T05:42:55.200450+00:00"
+    },
+    {
+      "phase": "FAST",
+      "start": "2026-10-09T05:44:39.473388+00:00",
+      "markers": {
+        "PREPBEG": 2.422,
+        "PREPEND": 38.328,
+        "INSTEND": 45.719,
+        "ROLLEND": 49.125
+      },
+      "pid": 10524,
+      "elapsed_seconds": 49.328,
+      "normal_exit": true,
+      "exit_code": 0,
+      "end": "2026-10-09T05:45:28.799795+00:00",
+      "startup_START_and_deep_VERIFY_static_fallback": true,
+      "status": "PASS",
+      "original_files_restored": 121,
+      "expanded_files_exact": 52,
+      "backup_resources": 35,
+      "deliberate_CONTROL_WINFILE_changes_restored": true,
+      "TXTMODE_expanded_bytes": 72960,
+      "mode": "FAST"
+    },
+    {
+      "allocation_seconds": 60,
+      "scope": "VERIFY-only exact existing candidate; no rebuild or GUI",
+      "status": "PASS explicit VERIFY preparation/install, static START/deep startup VERIFY and exact rollback",
+      "markers": {
+        "PREPBEG": 2.953,
+        "PREPEND": 21.75,
+        "INSTEND": 28.781,
+        "ROLLEND": 32.0
+      },
+      "acquired": "2026-10-09T05:55:02.892921+00:00",
+      "pid": 8340,
+      "started": "2026-10-09T05:55:03.050952+00:00",
+      "normal_exit": true,
+      "exit_code": 0,
+      "elapsed_seconds": 32.203,
+      "original_files_restored": 121,
+      "expanded_files_exact": 52,
+      "backup_resources": 35,
+      "deliberate_CONTROL_WINFILE_changes_restored": true,
+      "TXTMODE_expanded_bytes": 72960,
+      "candidate_assets_unchanged": true,
+      "PREPXT_sha256": "8745a411f8a7c46b4c72e64c13da478bb97d4a728c23f694de8545014dfa364d",
+      "released": "2026-10-09T05:55:34.748566+00:00",
+      "lease_seconds": 32.234,
+      "remaining_conflicts": [],
+      "phase": "VERIFY"
+    }
+  ],
+  "startup_START_and_deep_VERIFY": true,
+  "startup_source_patch_sha256": "d38c2da806f3f1799226d22b9cb30f8477d8e17dfe1c5d05a460707a49de800f",
+  "startup_source_pins": {
+    "examples/WXTSPL/UPDATER/FASTBLD.BAT": "48a4f83f52a3227a30593cab183fbd0be014cd44e430caaeb08fb54829308d36",
+    "examples/WXTSPL/UPDATER/FASTSET.C": "37c7ac25fa747a795cd897b5a2e1170d247386c2a011945e3aa24b2b6cad9320",
+    "examples/WXTSPL/UPDATER/MIGRATE.MD": "bc836305f8d9d759a43a325df1075632a9aedd6f4de941693f5c017ba05d0470",
+    "examples/WXTSPL/UPDATER/PINFAST.PY": "adbff55ba5ea8320da8757b58cbd66262d142b8eaa35d902258035a9c5cc4c57",
+    "examples/WXTSPL/UPDATER/UNDO.BAT": "4ffdb2b0fa9d8e32bd992628b1a52091bc24cedcb4af9bfa21cdfd12709f6455",
+    "examples/WXTSPL/UPDATER/UPDATE.BAT": "731eb3e551be1b14fef42e3cafe75af0d458dbf7db891c2b88cacfea5baec9a6",
+    "examples/WXTSPL/UPDATER/WAVEXT.C": "a3e7a83ad13e806a339c4a0af82fbe827384d0ebf1a31b90ad55acabd32b8d6f"
+  },
+  "startup_helper_pin": {
+    "bytes": 30971,
+    "sha256": "6b319cbfde241908ca0a90999c52f3b0bf10258e52d5b4bb7b89257a4339ae3d"
+  },
+  "startup_prior_qualification": {
+    "status": {
+      "host": "134 final-source checks PASS",
+      "native_transaction": "Original RC3 update/deep verification/repeat apply/exact rollback PASS",
+      "candidate_raster": "All 16 full RGB accepted phase frames PASS; actual Windows GUI Solitaire PASS",
+      "normal_return": "PASS baseline and exact candidate: private original Win16 timer shell; normal owned-process exit/post-EXEC marker; identical wrapper record; reservation equality"
+    },
+    "source_record_sha256": "d7edf75b036b04d9d4d33d22726b39ca82f2549994b287b88030dabe73b75249"
+  },
+  "historical_records_preserved": [
+    "FASTINST.JSON",
+    "CPSET.JSON",
+    "WAVEINS.JSON"
+  ],
+  "limits": [
+    "Exact new PREPXT: mounted combined default preparation/install/START validation/deep startup VERIFY/rollback PASS; separate PREPXT /VERIFY preparation/install/rollback PASS. No new GUI or physical hardware run in these integration tests. Exact WAVEXT and unchanged production logo/wrapper retain pinned startup owner native matched Windows normal-exit evidence.",
+    "VERIFY used an exact stored-byte host mirror; FAST used actual mounted 720KB image.",
+    "FASTSET migration stays the separate existing-install companion, not an automatic installer action."
+  ],
+  "publication": "Not published; no released assets or installed/CF writes.",
+  "startup_compiled_source_pins": {
+    "examples/WXTSPL/UPDATER/WAVEXT.C": "a3e7a83ad13e806a339c4a0af82fbe827384d0ebf1a31b90ad55acabd32b8d6f",
+    "examples/WXTSPL/UPDATER/FASTSET.C": "37c7ac25fa747a795cd897b5a2e1170d247386c2a011945e3aa24b2b6cad9320",
+    "examples/WXTSPL/UPDATER/SHA256.H": "8755dc0c5cf8a839f1aebedece71983eacf1d8306f0c9bdde03eaa25e5bf807e"
+  },
+  "startup_qualification_record": "docs/QUAL/STARTFIX.JSON",
+  "startup_qualification_record_sha256": "d7edf75b036b04d9d4d33d22726b39ca82f2549994b287b88030dabe73b75249",
+  "startup_current_run": "START and deep VERIFY return documented static fallback on retained TR6402 fixture; exact color GUI and normal exit evidence comes from separate pinned startup owner record.",
+  "final_VERIFY_lease": {
+    "acquired": "2026-10-09T05:55:02.892921+00:00",
+    "released": "2026-10-09T05:55:34.748566+00:00",
+    "lease_seconds": 32.234
+  },
+  "final_candidate_assets": {
+    "BUILD.JSON": {
+      "bytes": 10340,
+      "sha256": "c19ecf0ba3de8435eb66a1a62525917a82b6c3a2d0fb45d6f1641f1d7c61ddf6"
+    },
+    "README.TXT": {
+      "bytes": 6086,
+      "sha256": "b7a42caa6b347b3406b81c99d96b0233307ae96347f944173086d7530f643341"
+    },
+    "SHA256SUMS": {
+      "bytes": 391,
+      "sha256": "37b88c77ec218e8062bfa54f31852c1d3738a649c76a3ebdd1accf510f9fff48"
+    },
+    "WINXT720.IMG": {
+      "bytes": 737280,
+      "sha256": "c3c07b05f1a719c488265940c886d70755f6ae32762a576af6366e02045a81bc"
+    },
+    "WINXT720.ZIP": {
+      "bytes": 743584,
+      "sha256": "a7a6f04378740e9b69213e0852d8ad73eee3f8ac3af6e6ce1884aaa864d77f2d"
+    },
+    "WXTTOOLS.ZIP": {
+      "bytes": 1114142,
+      "sha256": "57d94d8e1be4f9c988f6f9b784524de2e27707ca321b441ea9ea9a08a4d9cbd3"
+    }
+  },
+  "media_scope": "FAST executed from actual mounted720 image; /VERIFY used identical stored-byte source mirror and exact same PREPXT. Both original Windows/media file sets and 35 rollback resources restored byte-for-byte.",
+  "retained_incomplete_attempt_reports": [
+    "CP-COMBINED180/STATUS.JSON",
+    "CP-COMBINED180R2/STATUS.JSON"
+  ]
+}

@@ -1,3 +1,25 @@
+# rc.5 original fonts and exact qualified package
+
+The seven XT Pixels font resources are original MIT grid drawings. Build
+them on a modern Python/Pillow host with tools/XTFONTS/BUILD.PY and TEST.PY;
+see the [font source guide](tools/XTFONTS/README.MD). Windows font media is
+not a generation input. Public CI packages the exact native-tested disk and
+runtime, preserving the qualified zero-SHA/faster START base. No proprietary
+compiler/OS/non-font support resources are fetched or shipped.
+
+After the existing package tests and MAKEIMG build, run
+python3 tools/XTFONTS/HOST.PY PUBLISH.PY --package <dist> --out <new-release-dir> --commit <sha>.
+This verifies qualification/source/runtime pins and produces original-font,
+source and preview downloads. The release workflow verifies the exact tag,
+commit, qualification and complete asset checksums before making a new draft.
+Existing assets/tags are never overwritten. Explicit publication authorization
+promotes that verified draft to a prerelease; it is not a native rebuild.
+
+The packaged BUILD.JSON/README are unchanged pre-publication snapshots so the
+disk and toolkit remain byte-identical. Current QUALIFY.JSON and START-HERE
+carry the final qualification and instructions. Native code/binary changes
+still require a separately allocated emulator slot and new qualification.
+
 # Current Windows XT build and splash default
 
 The accepted independent startup default is the [slow flag wave](examples/WXTSPL/WAVE/README.MD).

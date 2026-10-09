@@ -1,0 +1,25 @@
+WINDOWS XT rc.5 - ORIGINAL XT PIXELS FONTS
+
+Use WINXT720.IMG (720KB data disk) with your existing DOS/Windows 3.0.
+At A:\ run INSTALL, giving an owned support folder if needed. Confirm
+the fresh C:\WINXT stage. Then C: / CD \WINXT / INSTALL.
+Run C:\WINXT\WINXT SETUP. Choose Other display and use C:\WINXT at
+EVERY source prompt. Complete Changes; CONFIG.SYS option 3 means no changes.
+Start with C:\WINXT\WINXT. Keep the video/recovery guards.
+Rollback after exit: C:\WINXT\BACKUP\B001\RESTORE YES; use the printed
+numbered path and read BACKUP.TXT.
+
+No Python or Windows font media is needed on the Tandy. Fonts are original
+MIT drawings. Windows itself, CGA.GR2, CGALOGO.LGO and other non-font
+Windows components still require your owned files; they are not included.
+Normal preparation/install/start skips SHA work. /VERIFY is expensive
+optional developer diagnostics. The qualified faster guarded startup stays.
+
+At 160 pixels wide dialogs can clip with preserved metrics. Experimental
+80x25 text retains known corruption. Missing ANSI slots use boxes; no Euro
+or Unicode emoji is supplied. Native emulator tests are not physical timing.
+
+Image/BUILD/README are unchanged pre-publication snapshots to preserve the
+exact tested bytes. QUALIFY.JSON/RELEASE.JSON and this guide are current.
+Manual: https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/USERMAN.MD
+Fonts: https://github.com/astrobleem/oemdisplay-tandy/tree/main/tools/XTFONTS

@@ -18,7 +18,8 @@ Exit Windows completely; use a real DOS prompt, never a Windows DOS box:
   C:\WINXT\CPSET CHECK C:\WINDOWS
   C:\WINXT\CPSET APPLY C:\WINDOWS
 CHECK changes nothing. APPLY adds the choice without selecting it. Both
-verify the installed keyboard filename and binary for the next startup.
+check the installed keyboard filename, size and bounded NE module layout
+for the next startup. Default CHECK/APPLY/RESTORE perform no SHA work.
 Disk settings do not prove a loaded driver.
 
 To select it, use the guarded path:
@@ -39,17 +40,28 @@ Scope and defaults
 CPSET edits only WINDOWS\SYSTEM\SETUP.INF. It never edits SYSTEM.INI,
 WIN.INI, WIN.COM, driver/font binaries, mouse settings or the launcher.
 Core components are stock system.drv, sound.drv and comm.drv. Keyboard is
-the exact verified KEYBOARD.DRV or TNDYK3.DRV already installed. Fallbacks:
+the supported KEYBOARD.DRV or TNDYK3.DRV already installed. Fallbacks:
 PC/XT keyboard type, CGA display, no mouse. Existing active selections are
 preserved by the optional preset; no mouse is renamed Tandy and no PSG
 capability is implied. The existing keyboard description is retained.
 
 Requires DOS 3.3+, Windows 3.0 real mode and the exact supported English
-SETUP.INF. Current Computer must be generic MS-DOS/PC-DOS or this profile;
+SETUP.INF size and bounded text structure. Current Computer must be generic MS-DOS/PC-DOS or this profile;
 core system/sound/communications must be generic. Unknown versions, other
-keyboards, altered binaries, malformed metadata and ID collisions refuse.
+keyboards, malformed binary layouts, malformed metadata and ID collisions
+refuse. Default structural checks do not identify every same-size body edit.
 Keyboard files in both Windows root and SYSTEM are ambiguous and refused.
 Allow 250 KB free on the Windows drive for transaction files and staging.
+
+Optional deep diagnostics
+-------------------------
+  C:\WINXT\CPSET VERIFY C:\WINDOWS
+  C:\WINXT\CPSET CHECK C:\WINDOWS /VERIFY
+VERIFY is read-only. A trailing /VERIFY also enables deep checks on APPLY
+or RESTORE. SHA checks are opt-in and may be slow on an 8088. Modern-side
+release hashes remain available. Journal CRC, exact ownership-state byte
+comparisons, staged readbacks and interrupted-commit recovery stay active
+on defaults; changed owned files and foreign sidecars are still refused.
 
 Restore and refusals
 --------------------

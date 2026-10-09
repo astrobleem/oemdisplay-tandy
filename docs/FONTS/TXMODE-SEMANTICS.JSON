@@ -1,0 +1,3210 @@
+{
+  "status": "PASS TXTSYS loading/metrics/advances; text driver visual qualification remains experimental",
+  "no_rom_glyph_bitmaps_extracted": true,
+  "font_pixel_art_used_as_renderer_reference": false,
+  "fonts": {
+    "TXTSYS.FON": {
+      "all_encoded_advances_match": true,
+      "primary_cell_origin": [
+        1,
+        2
+      ],
+      "ascii_primary_cells_exact": true,
+      "ascii_primary_cell_mismatches": [],
+      "all_256_primary_cell_observations": [
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        32,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        76,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        95,
+        96,
+        32,
+        219,
+        219,
+        219,
+        219,
+        32,
+        219,
+        219,
+        105,
+        219,
+        219,
+        108,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        116,
+        219,
+        219,
+        32,
+        32,
+        219,
+        219,
+        219,
+        124,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        96,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        32,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219
+      ],
+      "primary_cell_differences": [
+        {
+          "byte": 0,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 1,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 2,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 3,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 4,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 5,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 6,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 7,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 8,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 9,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 10,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 11,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 12,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 13,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 14,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 15,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 16,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 17,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 18,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 19,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 20,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 21,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 22,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 23,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 24,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 25,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 26,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 27,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 28,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 29,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 30,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 31,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 127,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 127
+        },
+        {
+          "byte": 128,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 129,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 129
+        },
+        {
+          "byte": 130,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 130
+        },
+        {
+          "byte": 131,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 131
+        },
+        {
+          "byte": 132,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 132
+        },
+        {
+          "byte": 133,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 133
+        },
+        {
+          "byte": 134,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 134
+        },
+        {
+          "byte": 135,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 135
+        },
+        {
+          "byte": 136,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 136
+        },
+        {
+          "byte": 137,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 137
+        },
+        {
+          "byte": 138,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 138
+        },
+        {
+          "byte": 139,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 139
+        },
+        {
+          "byte": 140,
+          "observed_primary_cell": 76,
+          "expected_byte_or_fnt_default": 140
+        },
+        {
+          "byte": 141,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 141
+        },
+        {
+          "byte": 142,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 142
+        },
+        {
+          "byte": 143,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 143
+        },
+        {
+          "byte": 144,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 144
+        },
+        {
+          "byte": 145,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 145
+        },
+        {
+          "byte": 146,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 146
+        },
+        {
+          "byte": 147,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 147
+        },
+        {
+          "byte": 148,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 148
+        },
+        {
+          "byte": 149,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 149
+        },
+        {
+          "byte": 150,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 150
+        },
+        {
+          "byte": 151,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 151
+        },
+        {
+          "byte": 152,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 152
+        },
+        {
+          "byte": 153,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 153
+        },
+        {
+          "byte": 154,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 154
+        },
+        {
+          "byte": 155,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 155
+        },
+        {
+          "byte": 156,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 156
+        },
+        {
+          "byte": 157,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 157
+        },
+        {
+          "byte": 158,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 158
+        },
+        {
+          "byte": 159,
+          "observed_primary_cell": 95,
+          "expected_byte_or_fnt_default": 159
+        },
+        {
+          "byte": 160,
+          "observed_primary_cell": 96,
+          "expected_byte_or_fnt_default": 160
+        },
+        {
+          "byte": 161,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 161
+        },
+        {
+          "byte": 162,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 162
+        },
+        {
+          "byte": 163,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 163
+        },
+        {
+          "byte": 164,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 164
+        },
+        {
+          "byte": 165,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 165
+        },
+        {
+          "byte": 166,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 166
+        },
+        {
+          "byte": 167,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 167
+        },
+        {
+          "byte": 168,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 168
+        },
+        {
+          "byte": 169,
+          "observed_primary_cell": 105,
+          "expected_byte_or_fnt_default": 169
+        },
+        {
+          "byte": 170,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 170
+        },
+        {
+          "byte": 171,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 171
+        },
+        {
+          "byte": 172,
+          "observed_primary_cell": 108,
+          "expected_byte_or_fnt_default": 172
+        },
+        {
+          "byte": 173,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 173
+        },
+        {
+          "byte": 174,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 174
+        },
+        {
+          "byte": 175,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 175
+        },
+        {
+          "byte": 176,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 176
+        },
+        {
+          "byte": 177,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 177
+        },
+        {
+          "byte": 178,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 178
+        },
+        {
+          "byte": 179,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 179
+        },
+        {
+          "byte": 180,
+          "observed_primary_cell": 116,
+          "expected_byte_or_fnt_default": 180
+        },
+        {
+          "byte": 181,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 181
+        },
+        {
+          "byte": 182,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 182
+        },
+        {
+          "byte": 183,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 183
+        },
+        {
+          "byte": 184,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 184
+        },
+        {
+          "byte": 185,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 185
+        },
+        {
+          "byte": 186,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 186
+        },
+        {
+          "byte": 187,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 187
+        },
+        {
+          "byte": 188,
+          "observed_primary_cell": 124,
+          "expected_byte_or_fnt_default": 188
+        },
+        {
+          "byte": 189,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 189
+        },
+        {
+          "byte": 190,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 190
+        },
+        {
+          "byte": 191,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 191
+        },
+        {
+          "byte": 192,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 192
+        },
+        {
+          "byte": 193,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 193
+        },
+        {
+          "byte": 194,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 194
+        },
+        {
+          "byte": 195,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 195
+        },
+        {
+          "byte": 196,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 196
+        },
+        {
+          "byte": 197,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 197
+        },
+        {
+          "byte": 198,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 198
+        },
+        {
+          "byte": 199,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 199
+        },
+        {
+          "byte": 200,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 200
+        },
+        {
+          "byte": 201,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 201
+        },
+        {
+          "byte": 202,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 202
+        },
+        {
+          "byte": 203,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 203
+        },
+        {
+          "byte": 204,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 204
+        },
+        {
+          "byte": 205,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 205
+        },
+        {
+          "byte": 206,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 206
+        },
+        {
+          "byte": 207,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 207
+        },
+        {
+          "byte": 208,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 208
+        },
+        {
+          "byte": 209,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 209
+        },
+        {
+          "byte": 210,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 210
+        },
+        {
+          "byte": 211,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 211
+        },
+        {
+          "byte": 212,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 212
+        },
+        {
+          "byte": 213,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 213
+        },
+        {
+          "byte": 214,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 214
+        },
+        {
+          "byte": 215,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 215
+        },
+        {
+          "byte": 216,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 216
+        },
+        {
+          "byte": 217,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 217
+        },
+        {
+          "byte": 218,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 218
+        },
+        {
+          "byte": 220,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 220
+        },
+        {
+          "byte": 221,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 221
+        },
+        {
+          "byte": 222,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 222
+        },
+        {
+          "byte": 223,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 223
+        },
+        {
+          "byte": 224,
+          "observed_primary_cell": 96,
+          "expected_byte_or_fnt_default": 224
+        },
+        {
+          "byte": 225,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 225
+        },
+        {
+          "byte": 226,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 226
+        },
+        {
+          "byte": 227,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 227
+        },
+        {
+          "byte": 228,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 228
+        },
+        {
+          "byte": 229,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 229
+        },
+        {
+          "byte": 230,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 230
+        },
+        {
+          "byte": 231,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 231
+        },
+        {
+          "byte": 232,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 232
+        },
+        {
+          "byte": 233,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 233
+        },
+        {
+          "byte": 234,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 234
+        },
+        {
+          "byte": 235,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 235
+        },
+        {
+          "byte": 236,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 236
+        },
+        {
+          "byte": 237,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 237
+        },
+        {
+          "byte": 238,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 238
+        },
+        {
+          "byte": 239,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 239
+        },
+        {
+          "byte": 240,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 240
+        },
+        {
+          "byte": 241,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 241
+        },
+        {
+          "byte": 242,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 242
+        },
+        {
+          "byte": 243,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 243
+        },
+        {
+          "byte": 244,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 244
+        },
+        {
+          "byte": 245,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 245
+        },
+        {
+          "byte": 246,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 246
+        },
+        {
+          "byte": 247,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 247
+        },
+        {
+          "byte": 248,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 248
+        },
+        {
+          "byte": 249,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 249
+        },
+        {
+          "byte": 250,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 250
+        },
+        {
+          "byte": 251,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 251
+        },
+        {
+          "byte": 252,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 252
+        },
+        {
+          "byte": 253,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 253
+        },
+        {
+          "byte": 254,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 254
+        },
+        {
+          "byte": 255,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 255
+        }
+      ],
+      "complete_pixel_font_rendering_qualified": false,
+      "adjacent_cells_contain_known_text_driver_corruption": true
+    },
+    "CGAFIX.FON": {
+      "all_encoded_advances_match": true,
+      "primary_cell_origin": [
+        1,
+        2
+      ],
+      "ascii_primary_cells_exact": true,
+      "ascii_primary_cell_mismatches": [],
+      "all_256_primary_cell_observations": [
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        32,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        76,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        95,
+        96,
+        32,
+        219,
+        219,
+        219,
+        219,
+        32,
+        219,
+        219,
+        105,
+        219,
+        219,
+        108,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        116,
+        219,
+        219,
+        32,
+        32,
+        219,
+        219,
+        219,
+        124,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        96,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        32,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219
+      ],
+      "primary_cell_differences": [
+        {
+          "byte": 0,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 1,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 2,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 3,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 4,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 5,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 6,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 7,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 8,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 9,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 10,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 11,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 12,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 13,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 14,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 15,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 16,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 17,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 18,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 19,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 20,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 21,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 22,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 23,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 24,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 25,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 26,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 27,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 28,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 29,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 30,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 31,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 127,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 127
+        },
+        {
+          "byte": 128,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 129,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 129
+        },
+        {
+          "byte": 130,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 130
+        },
+        {
+          "byte": 131,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 131
+        },
+        {
+          "byte": 132,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 132
+        },
+        {
+          "byte": 133,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 133
+        },
+        {
+          "byte": 134,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 134
+        },
+        {
+          "byte": 135,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 135
+        },
+        {
+          "byte": 136,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 136
+        },
+        {
+          "byte": 137,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 137
+        },
+        {
+          "byte": 138,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 138
+        },
+        {
+          "byte": 139,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 139
+        },
+        {
+          "byte": 140,
+          "observed_primary_cell": 76,
+          "expected_byte_or_fnt_default": 140
+        },
+        {
+          "byte": 141,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 141
+        },
+        {
+          "byte": 142,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 142
+        },
+        {
+          "byte": 143,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 143
+        },
+        {
+          "byte": 144,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 144
+        },
+        {
+          "byte": 145,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 145
+        },
+        {
+          "byte": 146,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 146
+        },
+        {
+          "byte": 147,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 147
+        },
+        {
+          "byte": 148,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 148
+        },
+        {
+          "byte": 149,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 149
+        },
+        {
+          "byte": 150,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 150
+        },
+        {
+          "byte": 151,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 151
+        },
+        {
+          "byte": 152,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 152
+        },
+        {
+          "byte": 153,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 153
+        },
+        {
+          "byte": 154,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 154
+        },
+        {
+          "byte": 155,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 155
+        },
+        {
+          "byte": 156,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 156
+        },
+        {
+          "byte": 157,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 157
+        },
+        {
+          "byte": 158,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 158
+        },
+        {
+          "byte": 159,
+          "observed_primary_cell": 95,
+          "expected_byte_or_fnt_default": 159
+        },
+        {
+          "byte": 160,
+          "observed_primary_cell": 96,
+          "expected_byte_or_fnt_default": 160
+        },
+        {
+          "byte": 161,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 161
+        },
+        {
+          "byte": 162,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 162
+        },
+        {
+          "byte": 163,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 163
+        },
+        {
+          "byte": 164,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 164
+        },
+        {
+          "byte": 165,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 165
+        },
+        {
+          "byte": 166,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 166
+        },
+        {
+          "byte": 167,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 167
+        },
+        {
+          "byte": 168,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 168
+        },
+        {
+          "byte": 169,
+          "observed_primary_cell": 105,
+          "expected_byte_or_fnt_default": 169
+        },
+        {
+          "byte": 170,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 170
+        },
+        {
+          "byte": 171,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 171
+        },
+        {
+          "byte": 172,
+          "observed_primary_cell": 108,
+          "expected_byte_or_fnt_default": 172
+        },
+        {
+          "byte": 173,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 173
+        },
+        {
+          "byte": 174,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 174
+        },
+        {
+          "byte": 175,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 175
+        },
+        {
+          "byte": 176,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 176
+        },
+        {
+          "byte": 177,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 177
+        },
+        {
+          "byte": 178,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 178
+        },
+        {
+          "byte": 179,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 179
+        },
+        {
+          "byte": 180,
+          "observed_primary_cell": 116,
+          "expected_byte_or_fnt_default": 180
+        },
+        {
+          "byte": 181,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 181
+        },
+        {
+          "byte": 182,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 182
+        },
+        {
+          "byte": 183,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 183
+        },
+        {
+          "byte": 184,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 184
+        },
+        {
+          "byte": 185,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 185
+        },
+        {
+          "byte": 186,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 186
+        },
+        {
+          "byte": 187,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 187
+        },
+        {
+          "byte": 188,
+          "observed_primary_cell": 124,
+          "expected_byte_or_fnt_default": 188
+        },
+        {
+          "byte": 189,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 189
+        },
+        {
+          "byte": 190,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 190
+        },
+        {
+          "byte": 191,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 191
+        },
+        {
+          "byte": 192,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 192
+        },
+        {
+          "byte": 193,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 193
+        },
+        {
+          "byte": 194,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 194
+        },
+        {
+          "byte": 195,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 195
+        },
+        {
+          "byte": 196,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 196
+        },
+        {
+          "byte": 197,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 197
+        },
+        {
+          "byte": 198,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 198
+        },
+        {
+          "byte": 199,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 199
+        },
+        {
+          "byte": 200,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 200
+        },
+        {
+          "byte": 201,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 201
+        },
+        {
+          "byte": 202,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 202
+        },
+        {
+          "byte": 203,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 203
+        },
+        {
+          "byte": 204,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 204
+        },
+        {
+          "byte": 205,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 205
+        },
+        {
+          "byte": 206,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 206
+        },
+        {
+          "byte": 207,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 207
+        },
+        {
+          "byte": 208,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 208
+        },
+        {
+          "byte": 209,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 209
+        },
+        {
+          "byte": 210,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 210
+        },
+        {
+          "byte": 211,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 211
+        },
+        {
+          "byte": 212,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 212
+        },
+        {
+          "byte": 213,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 213
+        },
+        {
+          "byte": 214,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 214
+        },
+        {
+          "byte": 215,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 215
+        },
+        {
+          "byte": 216,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 216
+        },
+        {
+          "byte": 217,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 217
+        },
+        {
+          "byte": 218,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 218
+        },
+        {
+          "byte": 220,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 220
+        },
+        {
+          "byte": 221,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 221
+        },
+        {
+          "byte": 222,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 222
+        },
+        {
+          "byte": 223,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 223
+        },
+        {
+          "byte": 224,
+          "observed_primary_cell": 96,
+          "expected_byte_or_fnt_default": 224
+        },
+        {
+          "byte": 225,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 225
+        },
+        {
+          "byte": 226,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 226
+        },
+        {
+          "byte": 227,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 227
+        },
+        {
+          "byte": 228,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 228
+        },
+        {
+          "byte": 229,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 229
+        },
+        {
+          "byte": 230,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 230
+        },
+        {
+          "byte": 231,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 231
+        },
+        {
+          "byte": 232,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 232
+        },
+        {
+          "byte": 233,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 233
+        },
+        {
+          "byte": 234,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 234
+        },
+        {
+          "byte": 235,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 235
+        },
+        {
+          "byte": 236,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 236
+        },
+        {
+          "byte": 237,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 237
+        },
+        {
+          "byte": 238,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 238
+        },
+        {
+          "byte": 239,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 239
+        },
+        {
+          "byte": 240,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 240
+        },
+        {
+          "byte": 241,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 241
+        },
+        {
+          "byte": 242,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 242
+        },
+        {
+          "byte": 243,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 243
+        },
+        {
+          "byte": 244,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 244
+        },
+        {
+          "byte": 245,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 245
+        },
+        {
+          "byte": 246,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 246
+        },
+        {
+          "byte": 247,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 247
+        },
+        {
+          "byte": 248,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 248
+        },
+        {
+          "byte": 249,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 249
+        },
+        {
+          "byte": 250,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 250
+        },
+        {
+          "byte": 251,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 251
+        },
+        {
+          "byte": 252,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 252
+        },
+        {
+          "byte": 253,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 253
+        },
+        {
+          "byte": 254,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 254
+        },
+        {
+          "byte": 255,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 255
+        }
+      ],
+      "complete_pixel_font_rendering_qualified": false,
+      "adjacent_cells_contain_known_text_driver_corruption": true
+    },
+    "CGAOEM.FON": {
+      "all_encoded_advances_match": true,
+      "primary_cell_origin": [
+        1,
+        2
+      ],
+      "ascii_primary_cells_exact": true,
+      "ascii_primary_cell_mismatches": [],
+      "all_256_primary_cell_observations": [
+        32,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        32,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        76,
+        32,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        95,
+        96,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        105,
+        219,
+        219,
+        108,
+        32,
+        219,
+        219,
+        219,
+        219,
+        222,
+        219,
+        116,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        124,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        222,
+        219,
+        32,
+        222,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        219,
+        32,
+        219,
+        219,
+        32,
+        219,
+        219,
+        219,
+        32,
+        32,
+        219,
+        219,
+        219,
+        219,
+        32
+      ],
+      "primary_cell_differences": [
+        {
+          "byte": 1,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 1
+        },
+        {
+          "byte": 2,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 2
+        },
+        {
+          "byte": 3,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 3
+        },
+        {
+          "byte": 4,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 4
+        },
+        {
+          "byte": 5,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 5
+        },
+        {
+          "byte": 6,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 6
+        },
+        {
+          "byte": 7,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 7
+        },
+        {
+          "byte": 8,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 8
+        },
+        {
+          "byte": 9,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 9
+        },
+        {
+          "byte": 10,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 10
+        },
+        {
+          "byte": 11,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 11
+        },
+        {
+          "byte": 12,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 12
+        },
+        {
+          "byte": 13,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 13
+        },
+        {
+          "byte": 14,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 14
+        },
+        {
+          "byte": 15,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 15
+        },
+        {
+          "byte": 16,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 16
+        },
+        {
+          "byte": 17,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 17
+        },
+        {
+          "byte": 18,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 18
+        },
+        {
+          "byte": 19,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 19
+        },
+        {
+          "byte": 20,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 20
+        },
+        {
+          "byte": 21,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 21
+        },
+        {
+          "byte": 22,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 22
+        },
+        {
+          "byte": 23,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 23
+        },
+        {
+          "byte": 24,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 24
+        },
+        {
+          "byte": 25,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 25
+        },
+        {
+          "byte": 26,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 26
+        },
+        {
+          "byte": 27,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 27
+        },
+        {
+          "byte": 28,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 28
+        },
+        {
+          "byte": 29,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 29
+        },
+        {
+          "byte": 30,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 30
+        },
+        {
+          "byte": 31,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 31
+        },
+        {
+          "byte": 127,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 127
+        },
+        {
+          "byte": 128,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 128
+        },
+        {
+          "byte": 129,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 129
+        },
+        {
+          "byte": 130,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 130
+        },
+        {
+          "byte": 131,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 131
+        },
+        {
+          "byte": 132,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 132
+        },
+        {
+          "byte": 133,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 133
+        },
+        {
+          "byte": 134,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 134
+        },
+        {
+          "byte": 135,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 135
+        },
+        {
+          "byte": 136,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 136
+        },
+        {
+          "byte": 137,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 137
+        },
+        {
+          "byte": 138,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 138
+        },
+        {
+          "byte": 139,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 139
+        },
+        {
+          "byte": 140,
+          "observed_primary_cell": 76,
+          "expected_byte_or_fnt_default": 140
+        },
+        {
+          "byte": 141,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 141
+        },
+        {
+          "byte": 142,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 142
+        },
+        {
+          "byte": 143,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 143
+        },
+        {
+          "byte": 144,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 144
+        },
+        {
+          "byte": 145,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 145
+        },
+        {
+          "byte": 146,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 146
+        },
+        {
+          "byte": 147,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 147
+        },
+        {
+          "byte": 148,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 148
+        },
+        {
+          "byte": 149,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 149
+        },
+        {
+          "byte": 150,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 150
+        },
+        {
+          "byte": 151,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 151
+        },
+        {
+          "byte": 152,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 152
+        },
+        {
+          "byte": 153,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 153
+        },
+        {
+          "byte": 154,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 154
+        },
+        {
+          "byte": 155,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 155
+        },
+        {
+          "byte": 156,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 156
+        },
+        {
+          "byte": 157,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 157
+        },
+        {
+          "byte": 158,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 158
+        },
+        {
+          "byte": 159,
+          "observed_primary_cell": 95,
+          "expected_byte_or_fnt_default": 159
+        },
+        {
+          "byte": 160,
+          "observed_primary_cell": 96,
+          "expected_byte_or_fnt_default": 160
+        },
+        {
+          "byte": 161,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 161
+        },
+        {
+          "byte": 162,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 162
+        },
+        {
+          "byte": 163,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 163
+        },
+        {
+          "byte": 164,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 164
+        },
+        {
+          "byte": 165,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 165
+        },
+        {
+          "byte": 166,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 166
+        },
+        {
+          "byte": 167,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 167
+        },
+        {
+          "byte": 168,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 168
+        },
+        {
+          "byte": 169,
+          "observed_primary_cell": 105,
+          "expected_byte_or_fnt_default": 169
+        },
+        {
+          "byte": 170,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 170
+        },
+        {
+          "byte": 171,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 171
+        },
+        {
+          "byte": 172,
+          "observed_primary_cell": 108,
+          "expected_byte_or_fnt_default": 172
+        },
+        {
+          "byte": 173,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 173
+        },
+        {
+          "byte": 174,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 174
+        },
+        {
+          "byte": 175,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 175
+        },
+        {
+          "byte": 176,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 176
+        },
+        {
+          "byte": 177,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 177
+        },
+        {
+          "byte": 178,
+          "observed_primary_cell": 222,
+          "expected_byte_or_fnt_default": 178
+        },
+        {
+          "byte": 179,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 179
+        },
+        {
+          "byte": 180,
+          "observed_primary_cell": 116,
+          "expected_byte_or_fnt_default": 180
+        },
+        {
+          "byte": 181,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 181
+        },
+        {
+          "byte": 182,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 182
+        },
+        {
+          "byte": 183,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 183
+        },
+        {
+          "byte": 184,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 184
+        },
+        {
+          "byte": 185,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 185
+        },
+        {
+          "byte": 186,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 186
+        },
+        {
+          "byte": 187,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 187
+        },
+        {
+          "byte": 188,
+          "observed_primary_cell": 124,
+          "expected_byte_or_fnt_default": 188
+        },
+        {
+          "byte": 189,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 189
+        },
+        {
+          "byte": 190,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 190
+        },
+        {
+          "byte": 191,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 191
+        },
+        {
+          "byte": 192,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 192
+        },
+        {
+          "byte": 193,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 193
+        },
+        {
+          "byte": 194,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 194
+        },
+        {
+          "byte": 195,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 195
+        },
+        {
+          "byte": 196,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 196
+        },
+        {
+          "byte": 197,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 197
+        },
+        {
+          "byte": 198,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 198
+        },
+        {
+          "byte": 199,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 199
+        },
+        {
+          "byte": 200,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 200
+        },
+        {
+          "byte": 201,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 201
+        },
+        {
+          "byte": 202,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 202
+        },
+        {
+          "byte": 203,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 203
+        },
+        {
+          "byte": 204,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 204
+        },
+        {
+          "byte": 205,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 205
+        },
+        {
+          "byte": 206,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 206
+        },
+        {
+          "byte": 207,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 207
+        },
+        {
+          "byte": 208,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 208
+        },
+        {
+          "byte": 209,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 209
+        },
+        {
+          "byte": 210,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 210
+        },
+        {
+          "byte": 211,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 211
+        },
+        {
+          "byte": 212,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 212
+        },
+        {
+          "byte": 213,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 213
+        },
+        {
+          "byte": 214,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 214
+        },
+        {
+          "byte": 215,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 215
+        },
+        {
+          "byte": 216,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 216
+        },
+        {
+          "byte": 217,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 217
+        },
+        {
+          "byte": 218,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 218
+        },
+        {
+          "byte": 219,
+          "observed_primary_cell": 222,
+          "expected_byte_or_fnt_default": 219
+        },
+        {
+          "byte": 220,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 220
+        },
+        {
+          "byte": 221,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 221
+        },
+        {
+          "byte": 223,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 223
+        },
+        {
+          "byte": 224,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 224
+        },
+        {
+          "byte": 225,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 225
+        },
+        {
+          "byte": 226,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 226
+        },
+        {
+          "byte": 227,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 227
+        },
+        {
+          "byte": 228,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 228
+        },
+        {
+          "byte": 229,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 229
+        },
+        {
+          "byte": 230,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 230
+        },
+        {
+          "byte": 231,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 231
+        },
+        {
+          "byte": 232,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 232
+        },
+        {
+          "byte": 233,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 233
+        },
+        {
+          "byte": 234,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 234
+        },
+        {
+          "byte": 235,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 235
+        },
+        {
+          "byte": 236,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 236
+        },
+        {
+          "byte": 237,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 237
+        },
+        {
+          "byte": 238,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 238
+        },
+        {
+          "byte": 239,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 239
+        },
+        {
+          "byte": 240,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 240
+        },
+        {
+          "byte": 241,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 241
+        },
+        {
+          "byte": 242,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 242
+        },
+        {
+          "byte": 243,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 243
+        },
+        {
+          "byte": 244,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 244
+        },
+        {
+          "byte": 245,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 245
+        },
+        {
+          "byte": 246,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 246
+        },
+        {
+          "byte": 247,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 247
+        },
+        {
+          "byte": 248,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 248
+        },
+        {
+          "byte": 249,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 249
+        },
+        {
+          "byte": 250,
+          "observed_primary_cell": 32,
+          "expected_byte_or_fnt_default": 250
+        },
+        {
+          "byte": 251,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 251
+        },
+        {
+          "byte": 252,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 252
+        },
+        {
+          "byte": 253,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 253
+        },
+        {
+          "byte": 254,
+          "observed_primary_cell": 219,
+          "expected_byte_or_fnt_default": 254
+        }
+      ],
+      "complete_pixel_font_rendering_qualified": false,
+      "adjacent_cells_contain_known_text_driver_corruption": true
+    }
+  }
+}

@@ -1,6 +1,15 @@
-/* Original deterministic packed transport; expanded pins stay in XTPINS.H. */
+/* Review-only transport pins; fonts need native acceptance. */
 static struct packed_pin packed_pins[]={
 {"TR53216.DRV","TR53216.DR_","78ada9d92c05db0f4c496b370a65e2f931a7ea656d13209c05905ca61dc505d9",33130UL},
 {"TR56404.DRV","TR56404.DR_","7706bc6780d890c9eef26ddf0d6326558e07c22b76aff485574913cc612d1cf5",32710UL},
+{"TXTMODE.DRV","TXTMODE.DR_","647325fe6531c500387f3410a3f3e28cb595f48e06ce3dcc364b3213c454f0ef",33719UL},
+{"XTCSYS.FON","XTCSYS.FO_","217410356fa5218282ff1fffa16c106f735fa864672be5d763efb6df8980d887",2401UL},
+{"XTCFIX.FON","XTCFIX.FO_","acdd949f718da4932311b02d4b90ef15253018faca179617af0f3ba5bf116ea9",2229UL},
+{"XTCOEM.FON","XTCOEM.FO_","2e5bda9cd68d6db940b004d0e4ae43a3c71abaeccc4ec0c5cd4d2e5d465f46e1",2518UL},
+{"XTESYS.FON","XTESYS.FO_","eb41fb34045c6c575c2a0618b6d6a6b56c1e99c52fd08824deb95a6de4b47999",2606UL},
+{"XTEFIX.FON","XTEFIX.FO_","9421ac270efeb98938ee0ef65399bc906cdda7520d063934336b4b834c8795b3",2299UL},
+{"XTEOEM.FON","XTEOEM.FO_","2e5bda9cd68d6db940b004d0e4ae43a3c71abaeccc4ec0c5cd4d2e5d465f46e1",2518UL},
+{"XTTSYS.FON","XTTSYS.FO_","c6c8b0a9e0c988a82c9624fd2f71aba62faae01bb1ee1e86205b364c89076b32",2229UL},
+{"TSHELL.EXE","TSHELL.EX_","3880b13d927fd6d7e1349fdbc1983c1dc5ea7fa5d9dbabfeb303ab79b3e489bf",41772UL},
 };
 #define NPACKED (sizeof(packed_pins)/sizeof(packed_pins[0]))

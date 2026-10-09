@@ -12,12 +12,22 @@
 #include <fcntl.h>
 #include <io.h>
 #include <process.h>
+#ifdef INSTALL_DIAGNOSTICS
+#include <time.h>
+#define DIAG(x) x
+#else
+#define DIAG(x)
+#endif
 #define MAXF 256
 #define PTH 80
 #define HELP src
 struct saved { char src[PTH]; char rel[24]; unsigned long size; };
 static struct saved files[MAXF];
-static int count, recovery, computer_changed;
+static int count, recovery, computer_changed, deep_verify;
+#ifdef INSTALL_DIAGNOSTICS
+static unsigned long copy_bytes, compare_bytes;
+static clock_t copy_ticks, compare_ticks;
+#endif
 static char win[PTH], sys[PTH], src[PTH], bak[PTH], bakroot[PTH];
 static unsigned char buf[4096], verifybuf[4096];
 static unsigned long total;
@@ -182,23 +192,29 @@ static int comparefiles(char *left, char *right)
     return result;
 }
 
-static void copynew(char *from, char *to)
+static void copynew(char *from, char *to, unsigned long expected)
 {
-    int a,b,c; unsigned n,m,z,date,time,rc; unsigned long copied=0;
+    int a,b,c; unsigned n,m,z,date,time,rc; unsigned long copied=0; DIAG(clock_t started=clock();)
     if(_dos_open(from,O_RDONLY,&a)) fail("Cannot open source.",from);
     if(_dos_creatnew(to,_A_NORMAL,&b)) {_dos_close(a); fail("Cannot create NEW backup/helper; refusing overwrite.",to);}
     if(_dos_getftime(a,&date,&time)) fail("Cannot read file timestamp.",from);
     do {
         if(_dos_read(a,buf,sizeof(buf),&n)) fail("Source read failed.",from);
         if(n && (_dos_write(b,buf,n,&m) || m!=n)) fail("Copy failed (disk full or write error).",to);
-        copied+=n;
+        copied+=n; DIAG(copy_bytes+=n;)
+        if(copied>expected) fail("Source size changed during backup.",from);
     } while(n);
+    if(copied!=expected) fail("Source size changed during backup.",from);
     if(_dos_setftime(b,date,time)) fail("Cannot preserve backup timestamp.",to);
     rc=_dos_close(b); rc|=_dos_close(a); if(rc) fail("File close failed.",to);
+    DIAG(copy_ticks+=clock()-started;)
+    if(!deep_verify) return;
+    DIAG(started=clock();)
     if(_dos_open(from,O_RDONLY,&a) || _dos_open(to,O_RDONLY,&c)) fail("Cannot reopen copy for verification.",to);
     do {
         if(_dos_read(a,buf,sizeof(buf),&n) || _dos_read(c,verifybuf,sizeof(verifybuf),&z) || n!=z || memcmp(buf,verifybuf,n)) fail("Byte-for-byte copy verification failed.",to);
     } while(n);
+    DIAG(compare_bytes+=copied; compare_ticks+=clock()-started;)
     rc=_dos_close(a); rc|=_dos_close(c); if(rc) fail("Verification close failed.",to);
 }
 static int newtext(char *path)
@@ -256,7 +272,7 @@ static void makefiles(void)
 {
     int h,i; char path[PTH], target[PTH], line[512];
     join(path,bak,"FILES.TXT"); h=newtext(path);
-    sprintf(line,"Tandy display pre-SETUP rollback snapshot\r\nWindows=%s\r\nSource=%s\r\nEvery copied file was byte-verified.\r\n\r\n",win,src); put(h,line);
+    sprintf(line,"Tandy display pre-SETUP rollback snapshot\r\nWindows=%s\r\nSource=%s\r\nCopy read/write/close checks completed. Deep verification=%s.\r\n\r\n",win,src,deep_verify?"ON":"OFF"); put(h,line);
     for(i=0;i<count;i++) {sprintf(line,"%s <- %s (%lu bytes)\r\n",files[i].rel,files[i].src,files[i].size); put(h,line);}
     closeout(h);
     join(path,bak,"RESTORE.BAT"); h=newtext(path);
@@ -281,7 +297,7 @@ static void makefiles(void)
     put(h,"ECHO Original Windows configuration and resources restored.\r\nECHO Added driver files and helpers remain; the restored INIs select the old display.\r\nGOTO DONE\r\n:USAGE\r\nECHO Exit Windows. This overwrites Windows files with the pre-install snapshot.\r\n");
     sprintf(line,"ECHO To restore: %s\\RESTORE YES\r\n",bak); put(h,line);
     put(h,"GOTO DONE\r\n:FAIL\r\nECHO Restore incomplete or blocked. Do not start Windows; check the backup/disk.\r\n:DONE\r\n"); closeout(h);
-    join(path,bak,"DONE.TAG"); h=newtext(path); put(h,"Verified original-file snapshot complete.\r\n"); closeout(h);
+    join(path,bak,"DONE.TAG"); h=newtext(path); put(h,"Original-file snapshot complete. I/O and size checks passed.\r\n"); closeout(h);
     /* Payload and support files run in place. Never copy RESERVE onto itself. */
     join(path,HELP,"WINXT.BAT"); h=newtext(path);
     put(h,"@ECHO OFF\r\nREM Generated for this installation. Run only from a real DOS prompt.\r\nIF NOT \"%1\"==\"\" IF NOT \"%1\"==\"SETUP\" IF NOT \"%1\"==\"setup\" GOTO USAGE\r\nIF NOT \"%2\"==\"\" GOTO USAGE\r\n");
@@ -305,26 +321,30 @@ static void makefiles(void)
     sprintf(line,"ECHO Start Windows with %s\\WINXT\r\nECHO Keep rollback instructions in %s\\BACKUP.TXT\r\nGOTO DONE\r\n",src,src); put(h,line);
     put(h,":CPFAIL\r\nECHO Computer-choice check refused. Windows and Setup were not started.\r\nECHO Read CPSET.TXT; a changed keyboard may require RESTORE then APPLY.\r\nGOTO DONE\r\n:RECFAIL\r\nECHO Shell recovery failed. Windows and Setup were not started.\r\nGOTO DONE\r\n:SHELLERR\r\nECHO Shell display check failed. Check SYSTEM.INI before starting Windows.\r\nGOTO DONE\r\n:NOHELP\r\nECHO Incomplete helper installation. Windows and Setup were not started.\r\nGOTO DONE\r\n:NOWIN\r\nECHO Windows files or directory unavailable. Nothing started.\r\nGOTO DONE\r\n:FAILED\r\nECHO Video reservation failed. Windows and Setup were not started.\r\nGOTO DONE\r\n:USAGE\r\nECHO Use WINXT or WINXT SETUP from the support folder\r\n:DONE\r\n"); closeout(h);
     join(path,HELP,"BACKUP.TXT"); h=newtext(path); sprintf(line,"Original Windows=%s\r\nBackup=%s\r\nSource=%s\r\nRestore at real DOS: %s\\RESTORE YES\r\n",win,bak,src,bak); put(h,line); closeout(h);
-    /* Add the optional choice after verified snapshots and recovery script.
+    /* Add the optional choice after completed snapshots and recovery script.
      * APPLY never selects Computer or edits SYSTEM.INI/keyboard binaries. */
     join(path,src,"CPSET.EXE");
     computer_changed=1;
-    if(spawnl(P_WAIT,path,path,"APPLY",win,NULL))
+    if(deep_verify?spawnl(P_WAIT,path,path,"APPLY",win,"/VERIFY",NULL):spawnl(P_WAIT,path,path,"APPLY",win,NULL))
         fail("Optional Computer choice refused; Setup was not started.",src);
     /* Original independent wave updater changes only guarded starters/add-on.
      * The installer guard remains PARTIAL until that transaction verifies. */
     join(path,src,"WAVEXT.EXE");
     if(spawnl(P_WAIT,path,path,"APPLY",win,src,NULL))
         fail("Independent wave preparation refused; Setup was not started.",src);
+    /* WAVEXT APPLY defaults are owned by the updater; explicit diagnostics use
+     * its existing VERIFY command and accept the documented static fallback. */
+    if(deep_verify) {int status=spawnl(P_WAIT,path,path,"VERIFY",win,src,NULL);
+        if(status<0||status>1)fail("Explicit wave verification refused.",src);}
     /* Atomic final transition: interruption leaves PARTIAL.TAG, never READY.TAG. */
     join(path,HELP,"PARTIAL.TAG"); join(target,HELP,"READY.TAG");
     if(rename(path,target)) fail("Cannot commit ready marker.",target);
 }
 int main(int argc,char **argv)
 {
-    char path[PTH],rel[24],out[PTH]; int i, n; unsigned a; struct diskfree_t disk; unsigned long freebytes;
+    char path[PTH],rel[24],out[PTH]; int i, n; DIAG(clock_t phase;) unsigned a; struct diskfree_t disk; unsigned long freebytes;
     char *patterns[]={"*.DRV","*.FON","*.FOT","*.TTF","*.GR2","*.GR3","*.LGO","*.RLE","*.INI"};
-    char *required[]={"CPSET.EXE","CPSET.TXT","WAVEXT.EXE","XTWAVE.DAT","XTCLEAN.COM","OEMSETUP.INF","RESERVE.COM","CGA.GR2","CGALOGO.LGO","WXTSPL01.RLE","TR53216.DRV","TR56404.DRV","TR51616.DRV","TR53204.DRV","TR56402.DRV","TXTMODE.DRV","TXTSYS.FON","CGAFIX.FON","CGAOEM.FON","CGASYS.FON","EGAFIX.FON","EGAOEM.FON","EGASYS.FON"};
+    char *required[]={"CPSET.EXE","CPSET.TXT","WAVEXT.EXE","XTWAVE.DAT","XTCLEAN.COM","OEMSETUP.INF","RESERVE.COM","CGA.GR2","CGALOGO.LGO","WXTSPL01.RLE","TR53216.DRV","TR56404.DRV","TR51616.DRV","TR53204.DRV","TR56402.DRV","TXTMODE.DRV","XTTSYS.FON","XTCFIX.FON","XTCOEM.FON","XTCSYS.FON","XTEFIX.FON","XTEOEM.FON","XTESYS.FON"};
     char *original[]={"SYSTEM.INI","WIN.INI","WIN.COM"};
     char *boot[]={"CONFIG.SYS","AUTOEXEC.BAT"};
     char *generated[]={"WINXT.BAT","BACKUP.TXT","READY.TAG","READY.NEW","PARTIAL.TAG","SHREADY.TAG","OEMBASE.INF","OEMSETUP.NEW"};
@@ -339,9 +359,11 @@ int main(int argc,char **argv)
         n=strlen(win); if(n>3 && win[n-1]=='\\') win[n-1]=0;
         return shellsafe(win);
     }
+    if(argc>1 && !stricmp(argv[argc-1],"/VERIFY")) {deep_verify=1; argc--;}
     puts("WINXT guarded DOS installer (8088)\n");
+    puts(deep_verify?"Deep copy verification ON.":"Fast copies: I/O checks ON; deep verification OFF. Use /VERIFY to enable.");
     if(argc>2 || (argc==2 && (!strcmp(argv[1],"/?") || !stricmp(argv[1],"HELP")))) {
-        puts("From the flat WINXT source directory: INSTALL [C:\\WINDOWS]\nUse real DOS, not a Windows DOS box. Existing helper installs are never replaced."); return 1;
+        puts("From the flat WINXT source directory: INSTALL [C:\\WINDOWS] [/VERIFY]\nUse real DOS, not a Windows DOS box. Existing helper installs are never replaced."); return 1;
     }
     strcpy(win,"C:\\WINDOWS");
     if(argc==2) {if(strlen(argv[1])>=PTH) fail("Windows path too long.",argv[1]); strcpy(win,argv[1]);}
@@ -373,7 +395,7 @@ int main(int argc,char **argv)
         }
     }
     join(path,src,"CPSET.EXE");
-    if(spawnl(P_WAIT,path,path,"CHECK",win,NULL))
+    if(deep_verify?spawnl(P_WAIT,path,path,"CHECK",win,"/VERIFY",NULL):spawnl(P_WAIT,path,path,"CHECK",win,NULL))
         fail("Computer-choice preflight refused; no install snapshot started.",src);
     join(path,src,"SHELLSEL.EXE");
     if(regular(path)) {
@@ -391,7 +413,7 @@ int main(int argc,char **argv)
     }
     if(_dos_getdiskfree(src[0]-'A'+1,&disk)) fail("Cannot inspect support-drive free space.","");
     freebytes=(unsigned long)disk.avail_clusters*disk.sectors_per_cluster*disk.bytes_per_sector;
-    if(freebytes<total+131072UL) fail("Not enough support-drive space for verified backup and helpers.","Free disk space, then try again. No files were changed.");
+    if(freebytes<total+131072UL) fail("Not enough support-drive space for backup and helpers.","Free disk space, then try again. No files were changed.");
     for(n=1;n<=999;n++) {sprintf(path,"%s\\B%03d",bakroot,n); if(!exists(path)) break;}
     if(n>999) fail("All BACKUP\\B001 through BACKUP\\B999 names are occupied.",bakroot);
     {
@@ -405,10 +427,15 @@ int main(int argc,char **argv)
     join(path,bak,"SYSTEM"); if(mkdir(path)) fail("Cannot create rollback SYSTEM.",path);
     join(path,bak,"BOOT"); if(mkdir(path)) fail("Cannot create rollback BOOT.",path);
     printf("Backing up %d original files to %s ...\n",count,bak);
-    for(i=0;i<count;i++) {join(out,bak,files[i].rel); copynew(files[i].src,out);}
+    DIAG(phase=clock();)
+    for(i=0;i<count;i++) {join(out,bak,files[i].rel); copynew(files[i].src,out,files[i].size);}
+    DIAG(printf("Backup phase: %lu clock ticks (%lu ticks/sec); copied=%lu; compared=%lu bytes.\n",(unsigned long)(clock()-phase),(unsigned long)CLOCKS_PER_SEC,copy_bytes,compare_bytes);)
+    DIAG(printf("Copy I/O ticks=%lu; deep comparison ticks=%lu.\n",(unsigned long)copy_ticks,(unsigned long)compare_ticks);)
+    DIAG(phase=clock();)
     sourceinf();
     makefiles();
-    printf("Verified backup: %s\nSupport/source: %s\n",bak,src);
+    DIAG(printf("Helper phase: %lu clock ticks (%lu ticks/sec).\n",(unsigned long)(clock()-phase),(unsigned long)CLOCKS_PER_SEC);)
+    printf("Completed backup: %s\nSupport/source: %s\n",bak,src);
     if(recovery) puts("Snapshot follows checked shell recovery. Windows SETUP is next.");
     else puts("Optional Computer choice added; active settings and keyboard are unchanged. Windows SETUP is next.");
     printf("Choose Other display and give source path: %s\n",src);

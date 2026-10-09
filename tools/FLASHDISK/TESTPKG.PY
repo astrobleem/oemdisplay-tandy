@@ -83,8 +83,8 @@ def verify(out, runtime=RUNTIME):
     toolkit['README.TXT'] = guide
     check(zip_entries(out / 'WXTTOOLS.ZIP') == toolkit, 'Portable toolkit mismatch')
     metadata = json.loads(data['BUILD.JSON'])
-    check(metadata['publication_allowed'] is True and metadata['windows_support_included'] is False
-          and metadata['kind'] == 'public-support-free', 'PRIVATE OUTPUT MUST NOT BE PUBLISHED')
+    check(metadata['publication_allowed'] is False and metadata['windows_support_included'] is False
+          and metadata['kind'] == 'original-font-test-candidate', 'PRIVATE OUTPUT MUST NOT BE PUBLISHED')
     check(metadata['independent_startup_default'] == 'slow-flag-wave'
           and metadata['disk_setup_startup'] == 'guarded-color-wave-static-fallback'
           and metadata['wave_payload_sha256'] == {n:package.sha(b) for n,b in package.wave_payload().items()},
@@ -104,21 +104,14 @@ class PackageTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name)
 
-    def test_native_installer_source_and_payload_pins(self):
-        evidence = json.loads((HERE.parents[1] / 'docs/QUAL/CPSET.JSON').read_bytes())
-        self.assertEqual(evidence['status'], 'PASS compact Computer profile integration and packed 720KB preparation')
+    def test_pre_native_build_snapshot_and_binary_pins(self):
+        evidence = json.loads((HERE.parents[1] / 'docs/QUAL/FONTBLD.JSON').read_bytes())
+        self.assertIs(evidence['native_package_qualified'], False)
+        self.assertIs(evidence['publication_allowed'], False)
         payload = package.public_payload(RUNTIME)
-        for name, pin in evidence['payload_pins'].items():
-            self.assertEqual(package.sha(payload[name]), pin['sha256'])
-            self.assertEqual(len(payload[name]), pin['bytes'])
-        for name, digest in evidence['source_pins'].items():
-            self.assertEqual(package.sha(package.read_file(HERE.parents[1] / name)), digest)
-        self.assertEqual(evidence['final_helper_sha256'], package.sha(package.helper_payload()['PREPXT.EXE']))
-        self.assertEqual(evidence['rollback_native_byte_comparisons'], 38)
-        self.assertTrue(evidence['stock_Computer_completion_and_reopen'])
-        self.assertTrue(evidence['K3_Computer_completion_and_reopen'])
-        self.assertTrue(evidence['shared_lock_released_no_conflicts'])
-        self.assertTrue(evidence['stock_and_K3_normal_Windows_return'])
+        self.assertEqual(evidence['installer_sha256'], package.sha(payload['TINST.EXE']))
+        self.assertEqual(evidence['runtime_manifest_sha256'], package.sha(payload['MANIFEST.SHA']))
+        self.assertEqual(evidence['helper_sha256'], package.sha(package.helper_payload()['PREPXT.EXE']))
 
     def test_changed_dos_wave_refused(self):
         payload = package.public_payload(RUNTIME)
@@ -143,7 +136,7 @@ class PackageTests(unittest.TestCase):
     def test_retired_art_rejected_despite_repaired_manifest(self):
         runtime = self.base / 'runtime'
         shutil.copytree(RUNTIME, runtime)
-        (runtime / 'WXTSPL01.RLE').write_bytes((HERE.parents[1] / 'src/splash/assets/TNDYLOGO.RLE').read_bytes())
+        (runtime / 'WXTSPL01.RLE').write_bytes(b'XT Pixels original unapproved splash test fixture')
         manifest = []
         for line in (runtime / 'MANIFEST.SHA').read_text().splitlines():
             digest, name = line.split()
@@ -166,7 +159,7 @@ class PackageTests(unittest.TestCase):
             changed = dict(payload); changed['OEMSETUP.INF'] = inf
             with self.assertRaises(package.PackageError): package.verify_default_splash(changed)
             with self.assertRaises(stage.DiskError): stage.verify_default_splash(changed)
-        for art in [b'', (HERE.parents[1] / 'src/splash/assets/TNDYLOGO.RLE').read_bytes()]:
+        for art in [b'', b'XT Pixels original unapproved splash test fixture']:
             changed = dict(payload); changed['WXTSPL01.RLE'] = art
             with self.assertRaises(stage.DiskError): stage.verify_default_splash(changed)
 

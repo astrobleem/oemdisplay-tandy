@@ -11,6 +11,7 @@
 #include "TSDATE.H"
 #include "TSNAMES.H"
 #include "TSHOLD.H"
+#include "TSCP.H"
 #define START 1
 #define FIRSTAPP 20
 #define EXITWIN 40
@@ -22,6 +23,7 @@
 #define MYCOMPUTER 47
 #define SAVERSETUP 48
 #define SYSTEMMENU 49
+#define SETTINGSMENU 50
 #define STARTBOOT (WM_USER+3)
 #define OPENSYSTEM (WM_USER+4)
 #define RUNEDIT 100
@@ -98,6 +100,20 @@ static int popupheight(HWND w,HMENU menu) {
  }
  return height;
 }
+static void settingsitems(HMENU menu) {
+ TSControlMenu(menu);
+ AppendMenu(menu,MF_SEPARATOR,0,NULL);
+ AppendMenu(menu,MF_STRING,SAVERSETUP,"Screen sa&ver...");
+}
+static void settingspopup(HWND w) {
+ HMENU menu;RECT r;int y;
+ TSSaverHold(1);menu=CreatePopupMenu();
+ if(!menu){TandyHoldMenuDone(1);TSSaverHold(0);return;}
+ settingsitems(menu);GetWindowRect(w,&r);y=r.top-popupheight(w,menu);if(y<0)y=0;
+ SetActiveWindow(w);SetFocus(w);
+ TrackPopupMenu(menu,0,0,y,0,w,NULL);
+ DestroyMenu(menu);TandyHoldMenuDone(1);TSSaverHold(0);
+}
 static void popup(HWND w) {
  HMENU menu,system;RECT r;int y;
  TSSaverHold(1);BringWindowToTop(w);SetActiveWindow(w);SetFocus(w);findapps();menu=CreatePopupMenu();
@@ -112,6 +128,11 @@ static void popup(HWND w) {
  else {
   system=CreatePopupMenu();
   if(system){AppendMenu(system,MF_STRING,ABOUTSYS,"&About This Tandy");AppendMenu(system,MF_STRING,SAVERSETUP,"Screen &saver...");AppendMenu(menu,MF_POPUP,(UINT)system,"&System");}
+ }
+ if(width<320)AppendMenu(menu,MF_STRING,SETTINGSMENU,"S&ettings...");
+ else {
+  system=CreatePopupMenu();
+  if(system){settingsitems(system);AppendMenu(menu,MF_POPUP,(UINT)system,"S&ettings");}
  }
  AppendMenu(menu,MF_STRING|(paths[0][0]?0:MF_GRAYED),FIRSTAPP,names[0]);
  AppendMenu(menu,MF_SEPARATOR,0,NULL);
@@ -483,7 +504,10 @@ LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
  case STARTBOOT:if(primaryShell){TandyBootBegin(w);TSSaverBegin(w,instance);TandyHoldBegin(w,instance);}return 0;
  case HOLD_START:if(TandyHoldRequest(w,lp))popup(w);return 0;
  case OPENSYSTEM:
-  systemQueued=0;if(GetActiveWindow()==w)systempopup(w);else TandyHoldMenuDone(1);return 0;
+  {int which=systemQueued;systemQueued=0;
+   if(GetActiveWindow()==w){if(which==2)settingspopup(w);else systempopup(w);}
+   else {TandyHoldMenuDone(1);}
+   return 0;}
  case WM_LBUTTONDBLCLK:
   if((int)LOWORD(lp)>=width-45&&(int)LOWORD(lp)<width&&(int)HIWORD(lp)>=0&&(int)HIWORD(lp)<barHeight){TSSaverHold(1);TandyClock(w,instance);TSSaverHold(0);}
   return 0;
@@ -493,11 +517,14 @@ LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
  case WM_SETFOCUS:return 0;
  case WM_COMMAND:
   if(wp==START){popup(w);return 0;}
-  if(wp==SYSTEMMENU){
-   if(!systemQueued){systemQueued=1;if(!PostMessage(w,OPENSYSTEM,0,0L))systemQueued=0;}
+  if(wp==SYSTEMMENU || wp==SETTINGSMENU){
+   if(!systemQueued){systemQueued=wp==SETTINGSMENU?2:1;if(!PostMessage(w,OPENSYSTEM,0,0L))systemQueued=0;}
    return 0;
   }
   TandyHoldAction();
+  if(wp==CP_OPEN || (wp>=CP_FIRST && wp<CP_FIRST+CP_COUNT)){
+   TSSaverHold(1);TSControlPanel(w,instance,wp==CP_OPEN?-1:wp-CP_FIRST);TSSaverHold(0);return 0;
+  }
   if(wp>=FIRSTAPP&&wp<FIRSTAPP+1){launch(w,wp-FIRSTAPP);return 0;}
   if(wp==RUNAPP){TSSaverHold(1);runcommand(w);TSSaverHold(0);return 0;}
   if(wp==PROGRAMS){TSSaverHold(1);PmPrograms(w,instance);TSSaverHold(0);return 0;}

@@ -1,0 +1,137 @@
+{
+  "kind": "Win32 host GDI, not Win16",
+  "results": [
+    {
+      "font": "CGASYS.FON",
+      "loaded": 1,
+      "face": "XT Audit 0",
+      "metrics": [
+        8,
+        7,
+        1,
+        0,
+        7,
+        14
+      ],
+      "codes_rendered": 224,
+      "different_rgb_components": 165,
+      "modern_mapper_different_codes": [
+        129,
+        141,
+        143,
+        144,
+        157
+      ],
+      "extended_oem_direct_bytes_qualified": false,
+      "normal_text_pixel_match_required": true
+    },
+    {
+      "font": "CGAFIX.FON",
+      "loaded": 1,
+      "face": "XT Audit 1",
+      "metrics": [
+        8,
+        7,
+        0,
+        1,
+        8,
+        8
+      ],
+      "codes_rendered": 224,
+      "different_rgb_components": 330,
+      "modern_mapper_different_codes": [
+        129,
+        141,
+        143,
+        144,
+        157
+      ],
+      "extended_oem_direct_bytes_qualified": false,
+      "normal_text_pixel_match_required": true
+    },
+    {
+      "font": "CGAOEM.FON",
+      "loaded": 1,
+      "face": "XT Audit 2",
+      "metrics": [
+        8,
+        7,
+        0,
+        0,
+        8,
+        8
+      ],
+      "codes_rendered": 254,
+      "different_rgb_components": 0,
+      "modern_mapper_different_codes": [],
+      "extended_oem_direct_bytes_qualified": false,
+      "normal_text_pixel_match_required": true
+    },
+    {
+      "font": "EGASYS.FON",
+      "loaded": 1,
+      "face": "XT Audit 3",
+      "metrics": [
+        12,
+        10,
+        2,
+        0,
+        7,
+        14
+      ],
+      "codes_rendered": 224,
+      "different_rgb_components": 210,
+      "modern_mapper_different_codes": [
+        129,
+        141,
+        143,
+        144,
+        157
+      ],
+      "extended_oem_direct_bytes_qualified": false,
+      "normal_text_pixel_match_required": true
+    },
+    {
+      "font": "EGAFIX.FON",
+      "loaded": 1,
+      "face": "XT Audit 4",
+      "metrics": [
+        10,
+        9,
+        2,
+        0,
+        8,
+        8
+      ],
+      "codes_rendered": 224,
+      "different_rgb_components": 405,
+      "modern_mapper_different_codes": [
+        129,
+        141,
+        143,
+        144,
+        157
+      ],
+      "extended_oem_direct_bytes_qualified": false,
+      "normal_text_pixel_match_required": true
+    },
+    {
+      "font": "EGAOEM.FON",
+      "loaded": 1,
+      "face": "XT Audit 5",
+      "metrics": [
+        8,
+        7,
+        0,
+        0,
+        8,
+        8
+      ],
+      "codes_rendered": 254,
+      "different_rgb_components": 0,
+      "modern_mapper_different_codes": [],
+      "extended_oem_direct_bytes_qualified": false,
+      "normal_text_pixel_match_required": true
+    }
+  ]
+}

@@ -18,7 +18,7 @@ import tempfile
 import zipfile
 
 HERE = Path(__file__).resolve().parent
-PUBLIC_NAMES = ('CPSET.EXE', 'CPSET.TXT', 'HOLD14.TXT', 'HOLD160.PNG', 'HOLD640.PNG', 'INSTALL.BAT',
+PUBLIC_NAMES = ('XTCSYS.FON', 'XTCFIX.FON', 'XTCOEM.FON', 'XTESYS.FON', 'XTEFIX.FON', 'XTEOEM.FON', 'XTTSYS.FON', 'FONTLIC.TXT', 'FONTINFO.TXT', 'CPSET.EXE', 'CPSET.TXT', 'HOLD14.TXT', 'HOLD160.PNG', 'HOLD640.PNG', 'INSTALL.BAT',
     'MATRIX.EXE', 'MAZE.EXE', 'PINBALL.EXE', 'NAMES11.TXT', 'OEMSETUP.INF', 'README.TXT',
     'RESERVE.COM', 'SHELL14.TXT', 'SHELLSEL.EXE', 'SHFULL.TXT', 'STARFLD.EXE',
     'TABOUT.EXE', 'TCHIME.EXE', 'TESTS.TXT', 'TESTS14.TXT', 'TEXIT.EXE',
@@ -31,8 +31,7 @@ SPLASH_NAME = 'WXTSPL01.RLE'
 SPLASH_SHA = 'eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c'
 SPLASH_BYTES = 4062
 
-WINDOWS_NAMES = ('CGA.GR2', 'CGALOGO.LGO', 'CGAFIX.FON', 'CGAOEM.FON',
-    'CGASYS.FON', 'EGAFIX.FON', 'EGAOEM.FON', 'EGASYS.FON', 'TXTSYS.FON')
+WINDOWS_NAMES = ('CGA.GR2', 'CGALOGO.LGO')
 
 
 class PackageError(Exception):
@@ -134,106 +133,51 @@ def public_payload(runtime):
 
 
 def readme(private):
-    title = ('PRIVATE OWN-MEDIA DISK - DO NOT REDISTRIBUTE' if private else
-             'PUBLIC DISK - REUSES YOUR OWN WINDOWS SUPPORT FILES')
-    return dos("WINDOWS XT - 720 KB TANDY / GOTEK / EMULATOR DATA DISK\n"
-               + title + r"""
+    return dos(r"""WINDOWS XT - ORIGINAL FONT TEST CANDIDATE - NOT PUBLISHED
 
-This is a DATA disk, not a DOS boot disk or a Windows installation disk.
-Boot your existing DOS 3.3+ system first. Requires Windows 3.0 real mode,
-an original-compatible Tandy graphics setup and a writable hard disk/CF.
-Back up Windows before using any experimental driver. No Python or compiler
-is needed to install this disk. The simple path uses C:\WINDOWS and C:\WINXT.
-The disk keeps the five TR5 graphics modes and Tandy Start desktop.
-This first-run update adds the Windows XT Programs group and Pinball v2;
-Matrix, Maze and Starfield entries launch /S saver previews. Existing
-Program Manager groups stay read-only. The installer preserves its source
-INF as OEMBASE.INF and localizes the OEM disk path to the actual source.
-Exit initially focuses Cancel: Enter/Escape cancel, E selects Exit.
-Existing long-name labels in Browse require DOS 6.22, Win3 real mode, fixed
-uncompressed FAT12/FAT16 and 512-byte sectors; actions use DOS short aliases.
-TRIAL7, newer test apps and sound drivers remain separate opt-in packages.
+This is a 720 KB DATA disk, not a DOS boot disk or a Windows installation.
+Requires DOS 3.3+, Windows 3.0 real mode, a compatible Tandy and writable CF.
+Back up Windows first. No Python/compiler is required on the vintage machine.
+Fonts are original XT Pixels, MIT licensed: WINXT\FONTLIC.TXT and FONTINFO.TXT.
+CGA.GR2 and CGALOGO.LGO still require your own matching Windows files.
+This does not remove Windows itself or other non-font Windows dependencies.
 
-GOTEK / EMULATOR / REAL FLOPPY
-The IMG is standard 720 KB double-density: 737280 bytes; FAT12; 80 cylinders;
-2 heads; 9 sectors/track; 512-byte sectors. No 1.44 MB support is required.
-GoTek firmware and controller must support this geometry; a 360 KB-only
-physical drive cannot read a 720 KB floppy. Verify your own hardware setup.
-FlashFloppy: copy the IMG to USB, select it, then access DOS drive A:.
-Other firmware may use its own image-selection or filename convention.
-Emulators: mount as a 720 KB floppy, not a hard disk or directory.
-DOSBox-X example: IMGMOUNT A WINXT720.IMG -T FLOPPY
-Real media: write the raw IMG to compatible double-density media with an
-image writer. Copying the IMG as an ordinary file is not a disk write.
-Keep the floppy image write-protected where practical.
+1. At plain DOS with the disk selected, run INSTALL from the disk root.
+2. PREPXT searches Windows and SYSTEM for the two owned non-font files.
+   If missing, supply a media directory: INSTALL D:\WIN30SRC
+   Seven original fonts, three drivers and the unchanged shell are expanded
+   by the bounded DOS helper. No Windows font files or local derivation are
+   needed. Up to four owned-media directories may be supplied.
+3. After source checks, confirm the helper prompt. It creates fresh C:\WINXT.
+   It refuses existing output, wrong sizes, malformed compression, missing
+   inputs and insufficient free space. Source Windows/media remain read-only.
+   Default preparation performs ZERO SHA verification. /VERIFY is optional
+   slow developer diagnostics, not the normal 8088 workflow.
+4. C: then CD \WINXT then INSTALL. In Windows Setup select Display -> Other
+   display and source C:\WINXT; choose the mode and Complete Changes.
+   For CONFIG.SYS choose option 3 (no changes). The optional Computer choice
+   preserves the active Computer/keyboard. Read CPSET.TXT before changing it.
+5. Start with C:\WINXT\WINXT. Its video/recovery guards remain mandatory.
+   Optional desktop: C:\WINXT\TSSETUP. Existing Program Manager groups remain
+   read-only. To switch later: WINXT SETUP.
 
-INSTALL (OUTSIDE WINDOWS)
-1. Mount the image, then at a plain DOS prompt:
-     A:
-     CD \
-     INSTALL
-2. PREPXT looks for matching support files in your existing Windows folder
-   and SYSTEM. If some are missing, it tells you which ones and stops.
-   Run again with a directory holding your own Windows 3.0 media files:
-     INSTALL D:\WIN30SRC
-   Up to four media directories can be supplied. Original SZDD compressed
-   files are accepted. Use directories copied from your own media if you
-   have only one floppy drive. No Python is needed on the Tandy.
-3. After all inputs verify, confirm the helper's prompt. It creates a NEW
-   C:\WINXT, gathers/expands only the matching owned support files, derives
-   the text font locally, expands two pinned packed drivers, copies the other
-   pinned runtime files and verifies all expanded bytes against release hashes.
-   Existing C:\WINXT, wrong files, missing inputs and insufficient free
-   space stop preparation. Windows files and boot configuration are untouched.
-4. Then run:
-     C:
-     CD \WINXT
-     INSTALL
-   In Windows Setup choose Display -> Other display, enter C:\WINXT,
-   choose your mode and accept Complete Changes. The installer also adds an
-   optional Computer choice: Tandy 1000 EX/HX (WindowsXT). It leaves the
-   active Computer and keyboard settings unchanged. Read C:\WINXT\CPSET.TXT
-   before selecting it. This uses generic system components, not a new driver. If asked about CONFIG.SYS,
-   choose option 3 (make no changes). Optional desktop: C:\WINXT\TSSETUP.
-5. Start Windows with C:\WINXT\WINXT. Never bypass its video-memory or
-   recovery guards. Use WINXT\README.TXT for switching, backup and rollback.
+160-pixel menus can wrap and wide dialogs clip. Preserved font metrics do not
+make every Windows dialog fit. Full native font and installation/rollback
+acceptance is recorded separately; this local candidate is not a release.
+Experimental TXTMODE is opt-in and retains its known renderer limitations.
+The fixed TXTSYS font is original; font and renderer tests are separate.
 
-The disk itself remains unchanged. Backup/helper writes happen on hard
-disk/CF, never on the mounted floppy. Do not run WINXT\INSTALL directly
-from the floppy. The original guarded installer creates numbered backups.
-Advanced: PREPXT WINXT D:\WIN30 [media directories] prepares the same fresh
-C:\WINXT for a different Windows path; then run INSTALL D:\WIN30 from
-C:\WINXT. The optional desktop remains qualified only at C:\WINDOWS.
+The IMG is FAT12 720 KB: 737280 bytes, 80 cylinders, 2 heads, 9 sectors/track.
+Use compatible GoTek/emulator/physical double-density media. A 360 KB-only
+physical drive cannot read it. DOSBox-X: IMGMOUNT A WINXT720.IMG -T FLOPPY.
+Do not run WINXT\INSTALL directly from a small/read-only floppy; PREPXT stages
+it to writable C:\WINXT. Keep the source mounted throughout Setup.
 
-SUPPORTED OWNED FILES
-The exact supported English Windows 3.0 files are CGA.GR2, CGALOGO.LGO,
-CGASYS.FON, CGAFIX.FON, CGAOEM.FON, EGASYS.FON, EGAFIX.FON and EGAOEM.FON.
-Wrong versions are refused. PREPXT makes TXTSYS.FON privately from your
-CGA fonts; that is used only by the experimental hardware-text choice.
-Do not redistribute the completed C:\WINXT folder or private own-media disk.
-
-PUBLICATION / TEST LIMITS
-GitHub builds the image from exact hash-pinned, already-built runtime files.
-It does not recompile the legacy MASM/DDK source or certify physical hardware.
-The FAT12 layout and emulator file access are tested. Physical GoTek and
-controller behavior still require hardware qualification. Experimental text
-has known character damage; use graphics modes for ordinary work.
-Public outputs contain no Microsoft support files, fonts, OS boot files or
-compiler/DDK toolchain. Existing project/DDK licensing notices are unchanged.
-The guarded DOS installer enables the short slow flag wave in qualified
-Color mode. A pending key skips it. Mono/other modes retain static startup.
-It privately combines your matching SYSTEM\WIN.CNF with the original logo;
-the updater changes guarded starters, never installed WIN.COM or settings.
-This is a pre-load animation, not simultaneous loading. Wrong loader bytes
-or altered starters/wrapper refuse safely; never bypass the guard.
-To restore only the original static starters at plain DOS:
-  C:\WINXT\WAVEXT RESTORE C:\WINDOWS C:\WINXT
-To re-enable, use APPLY with the same arguments. Full rollback uses the
-numbered WINXT\BACKUP\B001\RESTORE YES path printed by INSTALL. It restores
-the guarded Computer metadata first, then disables the wave and verifies restored original Windows resources. Added
-helpers remain inactive; do not redistribute the completed own-media folder.
-WXTTOOLS.ZIP is an optional developer/reproduction toolkit; normal users need
-only WINXT720.IMG (or the same image inside WINXT720.ZIP) and their own Windows.
+Rollback: exit Windows and run the numbered WINXT\BACKUP\B001\RESTORE YES
+path printed by INSTALL. It restores Computer metadata, disables the wave,
+restores prior Windows files and verifies the restored originals. Added driver
+files/helpers remain inactive. Do not redistribute a completed owned-media
+folder containing CGA.GR2 or CGALOGO.LGO. No publication is authorized.
 """)
 
 
@@ -263,7 +207,7 @@ def validate_helper_pins(payload, helper):
     if len(entries) != len(expected) or {e[0] for e in entries} != set(expected):
         raise PackageError('DOS helper pins do not cover the exact runtime')
     for name, digest, size, kind in entries:
-        expected_kind = '2' if name == 'TXTSYS.FON' else ('1' if name in WINDOWS_NAMES else '0')
+        expected_kind = '1' if name in WINDOWS_NAMES else '0'
         if digest != expected[name] or kind != expected_kind:
             raise PackageError('DOS helper pin differs from runtime manifest: ' + name)
         if name in payload and int(size) != len(payload[name]):
@@ -275,7 +219,7 @@ def disk_payload(payload, helper):
     packer = load('winxt_szpack', HERE / 'SZPACK.PY')
     rows = re.findall(r'\{"([A-Z0-9_.]+)","([A-Z0-9_.]+)","([0-9a-f]{64})",([0-9]+)UL\}',
                       helper['PACKPINS.H'].decode('ascii'))
-    if len(rows) != 2 or {n:s for n,s,h,z in rows} != packer.PACKED_NAMES:
+    if len(rows) != 11 or {n:s for n,s,h,z in rows} != packer.PACKED_NAMES:
         raise PackageError('Packed transport allowlist changed')
     staged = dict(payload)
     for name, stored, digest, size in rows:
@@ -297,7 +241,7 @@ def transport_report(public, stored):
 def install_batch():
     return dos('@ECHO OFF\nIF NOT EXIST WINXT\\TINST.EXE GOTO ROOT\n'
                'IF NOT EXIST PREPXT.EXE GOTO ROOT\n'
-               'PREPXT WINXT C:\\WINDOWS %1 %2 %3 %4\n'
+               'PREPXT WINXT C:\\WINDOWS %1 %2 %3 %4 %5\n'
                'IF ERRORLEVEL 1 GOTO STOP\n'
                'ECHO Next: C: then CD \\WINXT then INSTALL\nGOTO DONE\n'
                ':ROOT\nECHO Select the mounted floppy and CD \\ before INSTALL.\n'
@@ -409,9 +353,9 @@ def build(runtime, out, windows_files=None):
             entries['HELPER.SHA'] = read_file(HERE / 'HELPER.SHA')
             entries['README.TXT'] = guide
             write_zip(out / 'WXTTOOLS.ZIP', entries)
-        metadata = {'schema': 1, 'publication_allowed': not private,
-            'kind': 'private-own-media' if private else 'public-support-free',
-            'binary_policy': 'package accepted pinned binaries; no recompilation',
+        metadata = {'schema': 1, 'fonts_are_original': True, 'native_package_qualified': False, 'publication_allowed': False,
+            'kind': 'private-own-media' if private else 'original-font-test-candidate',
+            'binary_policy': 'accepted base payloads plus reviewed rebuilt helper/installer and original fonts',
             'independent_startup_default': 'slow-flag-wave',
             'disk_setup_startup': 'guarded-color-wave-static-fallback',
             'wave_payload_sha256': {n: sha(b) for n,b in wave.items()},

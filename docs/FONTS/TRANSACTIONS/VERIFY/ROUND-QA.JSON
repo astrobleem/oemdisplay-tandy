@@ -1,0 +1,44 @@
+{
+  "status": "PASS native VERIFY preparation/Setup/cold GUI/rollback",
+  "deep": true,
+  "selected": {
+    "286grabber": "CGA.GR2",
+    "fixedfon.fon": "XTEFIX.FON",
+    "oemfonts.fon": "XTEOEM.FON",
+    "fonts.fon": "XTESYS.FON",
+    "display.drv": "TR53216.DRV",
+    "mouse.drv": "MOUSE.DRV",
+    "shell": "C:\\FONTPRB.EXE",
+    "network.drv": "",
+    "language.dll": "",
+    "comm.drv": "COMM.DRV",
+    "sound.drv": "SOUND.DRV",
+    "keyboard.drv": "KEYBOARD.DRV",
+    "system.drv": "SYSTEM.DRV",
+    "386grabber": ""
+  },
+  "staged_fonts_exact": 7,
+  "selected_fonts_exact": 3,
+  "original_windows_files_restored": 113,
+  "deliberate_CONTROL_WININI_changes_restored": true,
+  "boot_files_restored": 2,
+  "sha_blocks": [
+    14399,
+    21335
+  ],
+  "compared_bytes": [
+    485520
+  ],
+  "native_ui_size": [
+    320,
+    200
+  ],
+  "native_system_pixel_anchor": [
+    6,
+    36
+  ],
+  "native_system_runs_exact": 4,
+  "native_fixed_run_exact": true,
+  "native_oem_codes_exact": 64,
+  "native_visual_review_required": true
+}

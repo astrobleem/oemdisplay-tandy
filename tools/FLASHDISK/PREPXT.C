@@ -1,6 +1,6 @@
 /* PREPXT.C - own-media WINXT staging, DOS 3.3+, 8086/8088.
  * Build with Microsoft C 6: CL /AS /G0 /W3 PREPXT.C
- * No Windows bytes are embedded. All accepted content is SHA-256 pinned.
+ * No Windows bytes are embedded. Release pins retained; public hash/readback passes require /VERIFY.
  * Source media and Windows are read-only. Output is fresh C:\WINXT only.
  */
 #include <stdio.h>
@@ -12,23 +12,32 @@
 #include <direct.h>
 #include <fcntl.h>
 #include <io.h>
+#ifdef INSTALL_DIAGNOSTICS
+#include <time.h>
+#define DIAG(x) x
+#else
+#define DIAG(x)
+#endif
 #define PTH 80
 #define MAXFONT 6000
 #define DEST "C:\\WINXT"
 typedef unsigned long U32;
 struct pin { char *name; char *hex; U32 size; int kind; };
-/* kind: 0 public runtime, 1 user-owned support, 2 locally derived font. */
+/* kind: 0 public runtime (including XT Pixels), 1 owned non-font support. */
 #include "XTPINS.H"
 #define NPINS (sizeof(pins)/sizeof(pins[0]))
 struct packed_pin { char *name; char *stored; char *hex; U32 size; };
 #include "PACKPINS.H"
 #include "SZSTREAM.H"
-static int packed_mode[NPINS];
+static int packed_mode[NPINS], deep_verify;
+#ifdef INSTALL_DIAGNOSTICS
+static U32 sha_blocks, output_readback;
+#endif
 /* Only a create-new packed output belongs to this cleanup path. */
 static char stream_output[PTH];
 struct sha { U32 h[8], bytes; unsigned used; unsigned char block[64]; };
 static struct sha state;
-static unsigned char io[4096], verifybuf[4096], work[MAXFONT], derived[MAXFONT], ring[4096];
+static unsigned char io[4096], verifybuf[4096], work[MAXFONT], ring[4096];
 static char dirs[7][PTH], chosen[8][PTH], runtime[PTH], windir[PTH];
 static int ndirs, made, opened=-1, nsupport;
 static unsigned char support_slot[NPINS];
@@ -47,6 +56,10 @@ static U32 kk[64]={
 static void block(struct sha *s)
 {
  U32 a,b,c,d,e,f,g,h,t,u,x,y; unsigned i; unsigned char *p;
+#ifdef ZERO_SHA_TEST
+ if(!deep_verify){fprintf(stderr,"Default path attempted SHA transform.\n");exit(87);}
+#endif
+ DIAG(sha_blocks++;)
  for(i=0;i<16;i++){p=s->block+4*i;w[i]=((U32)p[0]<<24)|((U32)p[1]<<16)|((U32)p[2]<<8)|p[3];}
  for(i=16;i<64;i++){x=w[i-15];y=w[i-2];w[i]=w[i-16]+(R(x,7)^R(x,18)^(x>>3))+w[i-7]+(R(y,17)^R(y,19)^(y>>10));}
  a=s->h[0];b=s->h[1];c=s->h[2];d=s->h[3];e=s->h[4];f=s->h[5];g=s->h[6];h=s->h[7];
@@ -55,6 +68,9 @@ static void block(struct sha *s)
 }
 static void sha_init(struct sha *s)
 {
+#ifdef ZERO_SHA_TEST
+ if(!deep_verify){fprintf(stderr,"Default path attempted SHA initialization.\n");exit(87);}
+#endif
  s->h[0]=0x6a09e667UL;s->h[1]=0xbb67ae85UL;s->h[2]=0x3c6ef372UL;s->h[3]=0xa54ff53aUL;
  s->h[4]=0x510e527fUL;s->h[5]=0x9b05688cUL;s->h[6]=0x1f83d9abUL;s->h[7]=0x5be0cd19UL;s->bytes=0;s->used=0;
 }
@@ -111,14 +127,17 @@ static void adddir(char *path)
 }
 static void hashmem(unsigned char *p,unsigned n,char *expected,char *name)
 {
- char hex[65];checkcancel();sha_init(&state);sha_add(&state,p,n);sha_end(&state,hex);
+ char hex[65];if(!deep_verify)return;checkcancel();sha_init(&state);sha_add(&state,p,n);sha_end(&state,hex);
  if(strcmp(hex,expected))stop("SHA-256 mismatch (corrupt or different Windows/runtime version).",name);
 }
 static void hashfile(char *path,struct pin *p)
 {
  FILE *f;unsigned n;U32 size=0;char hex[65];unsigned a;
  if(!attr(path,&a)||(a&(_A_SUBDIR|_A_VOLID)))stop("Required regular file is missing.",path);
- f=fopen(path,"rb");if(!f)stop("Cannot read file.",path);sha_init(&state);
+ f=fopen(path,"rb");if(!f)stop("Cannot read file.",path);
+ if(!deep_verify){long length;int bad;bad=fseek(f,0L,SEEK_END);length=ftell(f);if(fclose(f))bad=1;
+  if(bad||length<0||(U32)length!=p->size)stop("File size/seek/close error.",path);return;}
+ sha_init(&state);
  while((n=fread(io,1,sizeof(io),f))!=0){checkcancel();size+=n;if(size>p->size){fclose(f);stop("File size does not match the pinned release.",path);}sha_add(&state,io,n);}
  if(ferror(f)){fclose(f);stop("Read error.",path);}fclose(f);sha_end(&state,hex);
  if(size!=p->size||strcmp(hex,p->hex))stop("SHA-256/size mismatch in pinned file.",path);
@@ -134,19 +153,19 @@ static void packedhash(char *path,int j)
 static void putbytes(unsigned char *p,unsigned n,char *path);
 static int stream_emit(unsigned char *p,unsigned n,void *ctx)
 {
- checkcancel();sha_add(&state,p,n);if(ctx)putbytes(p,n,(char *)ctx);return 0;
+ checkcancel();if(deep_verify)sha_add(&state,p,n);if(ctx)putbytes(p,n,(char *)ctx);return 0;
 }
 static void unpack_public(char *path,struct pin *p,char *output)
 {
  FILE *f;char *error,hex[65];int bad;
  f=fopen(path,"rb");if(!f)stop("Cannot read packed runtime.",path);
- sha_init(&state);error=szdd_stream(f,p->size,ring,io,stream_emit,output);
+ if(deep_verify)sha_init(&state);error=szdd_stream(f,p->size,ring,io,stream_emit,output);
  bad=ferror(f);if(fclose(f))bad=1;
  if(error||bad)stop(error?error:"Packed runtime read error.",path);
- sha_end(&state,hex);if(strcmp(hex,p->hex))stop("Expanded runtime hash differs from its release pin.",path);
+ if(deep_verify){sha_end(&state,hex);if(strcmp(hex,p->hex))stop("Expanded runtime hash differs from its release pin.",path);}
 }
-/* Both names present is ambiguous. Hash transport and expanded bytes before
- * creating the destination folder; recheck both on the actual copy. */
+/* Both names present is ambiguous. Check sizes before output. /VERIFY also
+ * hashes transport/expanded bytes and repeats readback after copying. */
 static void public_source(unsigned k)
 {
  char path[PTH],stored[PTH];unsigned a;int raw,packed=0,j=packedindex(pins[k].name);
@@ -154,10 +173,10 @@ static void public_source(unsigned k)
  if(j>=0){join(stored,runtime,packed_pins[j].stored);packed=attr(stored,&a);}
  if(raw&&packed)stop("Both raw and packed runtime names are present.",path);
  printf("Checking %s\n",packed?stored:path);
- if(packed){packedhash(stored,j);unpack_public(stored,&pins[k],NULL);packed_mode[k]=1;}
+ if(packed){packedhash(stored,j);if(deep_verify)unpack_public(stored,&pins[k],NULL);packed_mode[k]=1;}
  else hashfile(path,&pins[k]);
 }
-/* Only exact, <=6000-byte pinned support files are accepted, never arbitrary
+/* Only size-pinned, <=6000-byte support files are accepted, never arbitrary
  * expansion sizes. The 4096-byte SZDD ring and every stream read are bounded. */
 static unsigned expand(char *path,unsigned want)
 {
@@ -184,7 +203,17 @@ static unsigned expand(char *path,unsigned want)
   while(pos<want){n=fread(work+pos,1,want-pos,f);if(!n)break;pos+=n;checkcancel();}
   if(pos!=want||fgetc(f)!=EOF||ferror(f)){fclose(f);stop("Expanded Windows support size/read mismatch.",path);}
  }
- fclose(f);return pos;
+ if(fclose(f))stop("Support close failed.",path);return pos;
+}
+/* Default recognition checks bounded file/resource topology, not body identity.
+ * /VERIFY retains full byte pins. All arithmetic is wide before bounds tests. */
+static void support_layout(int k,unsigned char *b,unsigned n)
+{
+ char *name=pins[k].name;
+ if(n!=(unsigned)pins[k].size)stop("Support file size mismatch.",name);
+ if(!strcmp(name,"CGALOGO.LGO")){if(n<8||memcmp(b,"LOGO",4))stop("Logo header invalid.",name);return;}
+ if(!strcmp(name,"CGA.GR2")){if(n<12||b[0]!=0xe9||b[3]!=0xe9||b[6]!=0xe9||b[9]!=0xe9)stop("Grabber entry header invalid.",name);return;}
+ stop("Unknown support format.",name);
 }
 static void find_support(int k)
 {
@@ -194,7 +223,7 @@ static void find_support(int k)
   strcpy(name,pins[k].name);if(v)name[strlen(name)-1]='_';join(path,dirs[i],name);
   if(attr(path,&a)){
    if(a&(_A_SUBDIR|_A_VOLID))stop("Support candidate is not a regular file.",path);
-   printf("Checking %s\n",path);expand(path,(unsigned)pins[k].size);hashmem(work,(unsigned)pins[k].size,pins[k].hex,path);
+   printf("Checking %s\n",path);expand(path,(unsigned)pins[k].size);support_layout(k,work,(unsigned)pins[k].size);hashmem(work,(unsigned)pins[k].size,pins[k].hex,path);
    if(!found){strcpy(chosen[slot],path);found=1;}
   }
  }
@@ -205,21 +234,6 @@ static char *supportpath(unsigned k)
 {
  if(!support_slot[k]||support_slot[k]>8)stop("Internal support path error.",pins[k].name);
  return chosen[support_slot[k]-1];
-}
-static int pinindex(char *name)
-{
- unsigned i;for(i=0;i<NPINS;i++)if(!strcmp(pins[i].name,name))return i;stop("Internal pin table error.",name);return 0;
-}
-static void derive_font(void)
-{
- int a=pinindex("CGASYS.FON"),b=pinindex("CGAFIX.FON"),d=pinindex("TXTSYS.FON");
- expand(supportpath(a),(unsigned)pins[a].size);hashmem(work,(unsigned)pins[a].size,pins[a].hex,supportpath(a));memcpy(derived,work,(unsigned)pins[a].size);
- expand(supportpath(b),(unsigned)pins[b].size);hashmem(work,(unsigned)pins[b].size,pins[b].hex,supportpath(b));
- /* Pinned NE resource locations: FONTDIR (1216,128), FONT 27
-  * (1344,2832 in CGAFIX; 1344,2992 in CGASYS). Exact input hashes above
-  * guarantee these offsets. Preserve CGASYS NE metadata and zero tail. */
- memcpy(derived+1216,work+1216,128);memcpy(derived+1344,work+1344,2832);memset(derived+4176,0,160);
- hashmem(derived,(unsigned)pins[d].size,pins[d].hex,"locally derived TXTSYS.FON");
 }
 static void diskspace(void)
 {
@@ -259,7 +273,7 @@ static void verifyfile(char *path,char *source,unsigned char *bytes,U32 size)
   checkcancel();if(total+n>size){fclose(a);if(b)fclose(b);stop("Output size changed during readback.",path);}
   if(b){m=fread(verifybuf,1,n,b);if(m!=n||memcmp(io,verifybuf,n)){fclose(a);fclose(b);stop("Output/source byte comparison failed.",path);}}
   else if(memcmp(io,bytes+(unsigned)total,n)){fclose(a);stop("Output/support byte comparison failed.",path);}
-  total+=n;
+  total+=n; DIAG(output_readback+=n;)
  }
  if(ferror(a)||total!=size){fclose(a);if(b)fclose(b);stop("Output readback error or size mismatch.",path);}fclose(a);
  if(b){if(fgetc(b)!=EOF||ferror(b)){fclose(b);stop("Source changed or read failed during byte comparison.",source);}fclose(b);}
@@ -268,26 +282,25 @@ static void copyone(unsigned k)
 {
  char from[PTH],to[PTH],hex[65];FILE *f;unsigned n;U32 total=0;
  join(to,DEST,!strcmp(pins[k].name,"INSTALL.BAT")?"INSTALL.NEW":pins[k].name);
- if(pins[k].kind==1){expand(supportpath(k),(unsigned)pins[k].size);hashmem(work,(unsigned)pins[k].size,pins[k].hex,supportpath(k));createout(to);putbytes(work,(unsigned)pins[k].size,to);closeout(to);}
- else if(pins[k].kind==2){hashmem(derived,(unsigned)pins[k].size,pins[k].hex,pins[k].name);createout(to);putbytes(derived,(unsigned)pins[k].size,to);closeout(to);}
+ if(pins[k].kind==1){expand(supportpath(k),(unsigned)pins[k].size);support_layout(k,work,(unsigned)pins[k].size);hashmem(work,(unsigned)pins[k].size,pins[k].hex,supportpath(k));createout(to);putbytes(work,(unsigned)pins[k].size,to);closeout(to);}
  else if(packed_mode[k]){
   int j=packedindex(pins[k].name);
   if(j<0)stop("Internal packed runtime pin error.",pins[k].name);
   join(from,runtime,packed_pins[j].stored);packedhash(from,j);
   createout(to);strcpy(stream_output,to);
   unpack_public(from,&pins[k],to);closeout(to);
-  hashfile(to,&pins[k]);packedhash(from,j);stream_output[0]=0;
+  if(deep_verify){hashfile(to,&pins[k]);DIAG(output_readback+=pins[k].size;)packedhash(from,j);}stream_output[0]=0;
  }
  else{
-  join(from,runtime,pins[k].name);f=fopen(from,"rb");if(!f)stop("Cannot reread runtime source.",from);createout(to);sha_init(&state);
-  while((n=fread(io,1,sizeof(io),f))!=0){total+=n;if(total>pins[k].size){fclose(f);stop("Runtime source changed after validation.",from);}sha_add(&state,io,n);putbytes(io,n,to);}
-  if(ferror(f)){fclose(f);stop("Source read error.",from);}fclose(f);closeout(to);sha_end(&state,hex);
-  if(total!=pins[k].size||strcmp(hex,pins[k].hex))stop("Runtime source changed after validation.",from);
+  join(from,runtime,pins[k].name);f=fopen(from,"rb");if(!f)stop("Cannot reread runtime source.",from);createout(to);if(deep_verify)sha_init(&state);
+  while((n=fread(io,1,sizeof(io),f))!=0){total+=n;if(total>pins[k].size){fclose(f);stop("Runtime source changed after validation.",from);}if(deep_verify)sha_add(&state,io,n);putbytes(io,n,to);}
+  if(ferror(f)){fclose(f);stop("Source read error.",from);}if(fclose(f))stop("Source close error.",from);closeout(to);if(deep_verify)sha_end(&state,hex);
+  if(total!=pins[k].size||(deep_verify&&strcmp(hex,pins[k].hex)))stop("Runtime source changed after validation.",from);
  }
- if(pins[k].kind==0&&!packed_mode[k])verifyfile(to,from,NULL,pins[k].size);
- else if(pins[k].kind==0){/* Exact expanded SHA-256 readback completed above. */}
- else verifyfile(to,NULL,pins[k].kind==1?work:derived,pins[k].size);
- printf("Verified %s\n",to);
+ if(deep_verify && pins[k].kind==0&&!packed_mode[k])verifyfile(to,from,NULL,pins[k].size);
+ else if(pins[k].kind==0){/* Packed readback is opt-in; stream bounds and I/O are always checked. */}
+ else if(deep_verify && pins[k].kind!=0)verifyfile(to,NULL,work,pins[k].size);
+ printf("%s %s\n",deep_verify?"Verified":"Copied",to);
 }
 static void not_windows(void)
 {
@@ -304,36 +317,45 @@ static int selftest(void)
  sha_init(&state);sha_add(&state,(unsigned char *)msg,strlen(msg));sha_end(&state,h);if(strcmp(h,"248d6a61d20638b8e5c026930c3e6039a33ce45964ff2167f6ecedd419db06c1"))return 1;
  puts("SHA-256 self-test passed (empty, abc, two-block vector).");return 0;
 }
+static int pinindex(char *name)
+{
+ unsigned i;for(i=0;i<NPINS;i++)if(!strcmp(pins[i].name,name))return i;stop("Internal pin table error.",name);return 0;
+}
 int main(int argc,char **argv)
 {
- char path[PTH],target[PTH],answer[16];unsigned a,i;int install;union REGS r;
+ char path[PTH],target[PTH],answer[16];unsigned a,i;int install;DIAG(clock_t phase;)union REGS r;
  setbuf(stdout,NULL);signal(SIGINT,onbreak);
- if(argc==2&&!stricmp(argv[1],"/SELFTEST"))return selftest();
- puts("PREPXT - verified own-media preparation for WINXT (8088 / DOS 3.3+)");
- if(argc<3||argc>7){puts("Usage: PREPXT runtime-dir Windows-dir [media-dir ...]\nExample: PREPXT WINXT C:\\WINDOWS C:\\WIN30SRC\nOutput is fresh C:\\WINXT only. No Python or network is needed.\nUse real DOS; leave each source drive mounted for the whole run.");return 1;}
+ if(argc==2&&!stricmp(argv[1],"/SELFTEST")){deep_verify=1;return selftest();}
+ if(argc>1&&!stricmp(argv[argc-1],"/VERIFY")){deep_verify=1;argc--;}
+ puts("PREPXT - own-media preparation for WINXT (8088 / DOS 3.3+)");
+ puts(deep_verify?"Deep verification ON.":"Fast preparation: I/O/size checks ON; all SHA verification OFF.");
+ if(argc<3||argc>7){puts("Usage: PREPXT runtime-dir Windows-dir [media-dir ...] [/VERIFY]\nExample: PREPXT WINXT C:\\WINDOWS C:\\WIN30SRC\nOutput is fresh C:\\WINXT only. No Python or network is needed.\nUse real DOS; leave each source drive mounted for the whole run.");return 1;}
  r.h.ah=0x30;intdos(&r,&r);if(r.h.al<3||(r.h.al==3&&r.h.ah<30))stop("DOS 3.3 or later is required.","");
  not_windows();
- if(sizeof(U32)!=4||selftest())stop("SHA-256 implementation self-test failed.","");
+ if(sizeof(U32)!=4||(deep_verify&&selftest()))stop("SHA-256 implementation self-test failed.","");
  if(attr(DEST,&a))stop("C:\\WINXT already exists. It will never be overwritten or resumed.","Keep an existing installation. To retry a partial stage, review/remove it first.");
  absolute(runtime,argv[1]);absolute(windir,argv[2]);adddir(runtime);adddir(windir);join(path,windir,"SYSTEM");if(attr(path,&a)){directory(path);adddir(path);}
  for(i=3;i<(unsigned)argc;i++){absolute(path,argv[i]);adddir(path);}
- puts("Checking all sources before creating any output. This can take a while on an 8088.\nProgress is shown for each file; please leave all source drives mounted.");
+ DIAG(phase=clock();)
+ puts("Checking runtime sizes and owned non-font support before output.");
  for(i=0;i<NPINS;i++)if(pins[i].kind==1)find_support(i);
- derive_font();
  for(i=0;i<NPINS;i++)if(pins[i].kind==0)public_source(i);
+ DIAG(printf("Preflight: %lu clock ticks (%lu ticks/sec); SHA blocks=%lu.\n",(U32)(clock()-phase),(U32)CLOCKS_PER_SEC,sha_blocks);)
  checkcancel();diskspace();
- puts("All source hashes match. Windows and boot configuration will not be changed.");
- puts("Create the complete, verified C:\\WINXT folder now? Type Y then Enter, or N to cancel:");
+ puts("Source checks complete. Windows and boot configuration will not be changed.");
+ puts("Create the complete C:\\WINXT folder now? Type Y then Enter, or N to cancel:");
  if(!fgets(answer,sizeof(answer),stdin)||toupper((unsigned char)answer[0])!='Y'||(answer[1]!='\n'&&answer[1]!='\r'&&answer[1]!=0))stop("Cancelled.","");
  checkcancel();diskspace();if(attr(DEST,&a))stop("C:\\WINXT appeared after validation; refusing overwrite.","");
  if(mkdir(DEST))stop("Cannot create fresh C:\\WINXT.","");made=1;
- /* INSTALL.BAT is staged as INSTALL.NEW after every other file passes
-  * readback. Rename only after its own readback, so no incomplete batch is
+ /* INSTALL.BAT is staged as INSTALL.NEW after every other copy succeeds.
+  * Rename only after its own close and optional readback, so no incomplete batch is
   * runnable. PREPXT never writes READY.TAG, PARTIAL.TAG or an install marker. */
+ DIAG(phase=clock();sha_blocks=0;)
  install=pinindex("INSTALL.BAT");for(i=0;i<NPINS;i++)if(i!=(unsigned)install)copyone(i);copyone((unsigned)install);
+ DIAG(printf("Copy: %lu clock ticks (%lu ticks/sec); SHA blocks=%lu; output readback=%lu bytes.\n",(U32)(clock()-phase),(U32)CLOCKS_PER_SEC,sha_blocks,output_readback);)
  checkcancel();join(path,DEST,"INSTALL.NEW");join(target,DEST,"INSTALL.BAT");
- if(attr(target,&a)||rename(path,target))stop("Cannot commit verified INSTALL.BAT.",target);
- made=0;puts("\nComplete C:\\WINXT verified. Preparation succeeded; Setup was not started.");
+ if(attr(target,&a)||rename(path,target))stop("Cannot commit INSTALL.BAT.",target);
+ made=0;puts("\nComplete C:\\WINXT copied. Preparation succeeded; Setup was not started.");
  printf("Next at DOS: C:\nCD \\WINXT\nINSTALL %s\n",windir);
  puts("Use Windows Setup's Other display choice. Experimental text remains opt-in.");
  return 0;

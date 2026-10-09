@@ -21,4 +21,6 @@ with tempfile.TemporaryDirectory(prefix='tshell-tests-') as tmp:
   subprocess.run([cc,'-x','c']+args+['-o',str(exe)],check=True)
   subprocess.run([str(exe)],check=True)
 subprocess.run([sys.executable,str(root/'IDLE/tests/VERIFY.PY'),str(root/'TSINPUT.DLL')],check=True)
+subprocess.run([sys.executable,str(root/'TESTS/CONTROL/TESTCP.PY')],check=True)
+subprocess.run([sys.executable,str(root/'TESTS/CONTROL/TESTMN.PY')],check=True)
 print('TSHELL 06 portable host and DLL contract checks PASS')

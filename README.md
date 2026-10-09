@@ -25,6 +25,8 @@ Paintbrush in 320x200, with all 16 palette colors. Different modes; appearance c
 - Long filename browsing for existing names on supported DOS 6.22 FAT volumes.
 - Games, screen savers, green hill wallpaper and optional
   [Tandy sound](https://github.com/astrobleem/oemsound-tandy).
+- Original MIT-licensed bitmap fonts, with no Windows font-media requirement.
+- Faster guarded startup and normal installation with zero SHA verification.
 - Short animated startup and a moon-and-stars shutdown screen.
 
 Experimental software. Requires your own Windows 3.0 installation, DOS 3.3+
@@ -44,15 +46,17 @@ and more are in the user manual.
 
 ## Get started
 
-**[Download Windows XT 0.1.0-rc.3](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.3)**
-— [720 KB disk ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.3/WINXT720.ZIP)
-or [disk image](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.3/WINXT720.IMG).
+**[Download Windows XT 0.1.0-rc.5](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.5)**
+— [720 KB disk ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.5/WINXT720.ZIP)
+or [disk image](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.5/WINXT720.IMG).
 
 Back up Windows, then follow the [installation guide](tools/FLASHDISK/README.MD).
 Use the guarded `C:\WINXT\WINXT` launcher after installation.
 
 The [short animated startup](examples/WXTSPL/WAVE/README.MD) is enabled by
 the guarded installer in Color mode; other modes retain static startup.
+The [original fonts](docs/FONTS/README.MD) are included. Windows and the two
+non-font support files still come from your own installation/media.
 [Optional experimental downloads](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experiments-2026-10-07)
 have their own installation guides.
 

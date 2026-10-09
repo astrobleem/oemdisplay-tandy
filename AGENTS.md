@@ -69,3 +69,14 @@ Source rebuilds use a fresh pinned external workspace; pass that workspace
 through each script's --repo or --toolchain parameter. Main contains no
 bundled DDK/compiler/emulator. Current package CI uses accepted binaries
 and runs host checks, including the current lowercase TSHELL idle/Hold tests.
+
+## 8. Original XT Pixels fonts / rc.5
+
+Current runtime fonts use XTC*/XTE*/XTTSYS filenames; NE identities, every
+advance and required system/dialog metrics remain compatible. tools/XTFONTS
+contains original MIT grids and reproducible host generation. Never clone
+Microsoft/ROM glyph bitmaps. docs/QUAL/FONTSR10.JSON binds the qualified disk,
+helper/source/runtime/font bytes. Historical BUILD/ZERO records retain their
+snapshot scope. Publication uses PUBLISH.PY and the guarded release workflow,
+with no old asset/tag overwrite. Keep DOS/Windows and non-font owned resources
+out of new public payloads. An emulator launch still requires an explicit slot.

@@ -3,12 +3,20 @@ Windows 3.0 real mode on Tandy EX/HX / 8088
 
 EVERYTHING GOES IN C:\WINXT
 From the public 720 KB image, run A: then CD \ then INSTALL outside Windows.
-PREPXT verifies your own matching Windows/media files and prepares C:\WINXT.
+PREPXT checks matching owned fonts and stages C:\WINXT with I/O/size checks.
 Then run C: then CD \WINXT then INSTALL. The complete prepared folder stays on
 your DOS drive. That folder holds all display sources, helpers, shell
 companions and settings templates. Backups are created INSIDE WINXT\BACKUP.
 There is no separate TDISPLAY, TANDY88 or TSTART support directory to create.
 Windows keeps its normal operating-system and active driver files in WINDOWS.
+
+DEEP VERIFICATION (OPTIONAL)
+Normal INSTALL uses fast copies with I/O and size checks. Add /VERIFY last
+to hash public files and reread outputs during preparation, or byte-compare
+backups during installation. Use INSTALL /VERIFY at each stage if wanted.
+With media: A:\INSTALL D:\WIN30SRC /VERIFY. Another Windows directory:
+PREPXT WINXT D:\WIN30 D:\WIN30SRC /VERIFY, then INSTALL D:\WIN30 /VERIFY.
+Font version checks and rollback remain active in both modes.
 
 FRESH INSTALL
 Start at a plain DOS prompt, outside Windows. Install Windows 3.0 normally
@@ -18,7 +26,7 @@ first; the combined default path is C:\WINDOWS.
   CD \WINXT
   INSTALL
 
-INSTALL verifies the source, preserves an original-file snapshot under
+INSTALL checks sources and preserves an original-file snapshot under
 C:\WINXT\BACKUP\B001 (or the next unused number), and pauses so you can record the backup path before Windows Setup.
 It uses your existing Windows SETUP program, not a hand-edited display setting.
 
@@ -84,7 +92,7 @@ SIX DISPLAY CHOICES
 The text choice is available through the same Setup list, not another folder.
 Read TEXTMODE.TXT before choosing it. It is the existing feasibility driver,
 not a stable replacement or a TR5-optimized driver. Setup selects its separate
-TXTSYS.FON fixed-cell font; original graphics fonts remain unchanged.
+XTTSYS.FON fixed-cell font; original graphics fonts remain unchanged.
 
 CHANGE DISPLAY MODE
 Exit Windows completely, then run:
@@ -131,9 +139,10 @@ CLOCK.EXE is unchanged. See TESTS.TXT for exact coverage and qualifications.
 The moon startup art is installed by Windows Setup with the Windows-owned
 loader preserved. No replacement Windows/DOS installation is included.
 
-This complete package contains your licensed Microsoft fonts, grabber and
-logo loader, plus privately derived TXTSYS.FON. Do not mirror or redistribute
-those support files publicly. Public source staging requires your own media.
+XT Pixels fonts are original MIT-licensed files; see FONTLIC.TXT and
+FONTINFO.TXT. Windows fonts and locally derived TXTSYS are no longer
+source-media dependencies. CGA.GR2 and CGALOGO.LGO still require your
+own matching Windows media and must not be redistributed publicly.
 Host build/source/evidence archives are separate; none is needed on the CF.
 See SHELL14.TXT and HOLD14.TXT for shell/keyboard navigation details.
 

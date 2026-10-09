@@ -133,7 +133,15 @@ class DependencyTests(unittest.TestCase):
     def test_release_view_retains_computer_package_requirements(self):
         required = {"tools/CPSET/CPSET.C": b"computer source\r\n",
                     "tools/CPSET/FILES.SHA": b"source pins\r\n",
-                    "docs/QUAL/CPSET.JSON": b"{}\r\n"}
+                    "docs/QUAL/CPSET.JSON": b"{}\r\n",
+                    "docs/QUAL/COMBFAST.JSON": b"{}\r\n",
+                    "docs/QUAL/STARTFIX.JSON": b"{}\r\n",
+                    "docs/QUAL/ZEROFAST.JSON": b"{}\r\n",
+                    "docs/QUAL/ZERONATIVE.JSON": b"{}\r\n",
+                    "docs/QUAL/ZEROGATE.JSON": b"{}\r\n",
+                    "docs/QUAL/STARTZERO.JSON": b"{}\r\n",
+                    "docs/QUAL/SETZERO.JSON": b"{}\r\n",
+                    "docs/QUAL/SETFAIL.JSON": b"{}\r\n"}
         for name, content in required.items():
             path = self.repo / name
             path.parent.mkdir(parents=True, exist_ok=True)

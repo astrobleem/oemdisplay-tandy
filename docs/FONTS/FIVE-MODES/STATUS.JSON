@@ -1,0 +1,50 @@
+{
+  "allocation_seconds": 300,
+  "cpu": "8086_prefetch",
+  "core": "normal",
+  "cycles": "fixed 200000",
+  "runtime_kb": 640,
+  "xms": false,
+  "ems": false,
+  "umb": false,
+  "runs": [
+    {
+      "name": "BUILD",
+      "exit_code": 0,
+      "seconds": 4.016
+    },
+    {
+      "name": "C6402",
+      "exit_code": 0,
+      "seconds": 24.406
+    },
+    {
+      "name": "E320",
+      "exit_code": 0,
+      "seconds": 24.813
+    },
+    {
+      "name": "C320",
+      "exit_code": 0,
+      "seconds": 24.219
+    },
+    {
+      "name": "C160",
+      "exit_code": 0,
+      "seconds": 24.437
+    },
+    {
+      "name": "C6404",
+      "exit_code": 0,
+      "seconds": 25.047
+    }
+  ],
+  "native_qualified": false,
+  "acquired_utc": "2026-10-09T20:03:22.745056+00:00",
+  "active": "C6404",
+  "active_pid": null,
+  "status": "COMPLETED; REVIEW METRICS/PIXELS/CLIPPING BEFORE ACCEPTANCE",
+  "lease_seconds": 129.406,
+  "released_utc": "2026-10-09T20:05:32.150801+00:00",
+  "remaining_conflicts": []
+}

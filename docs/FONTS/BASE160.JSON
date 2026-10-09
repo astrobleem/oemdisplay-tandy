@@ -1,0 +1,22 @@
+{
+  "baseline": {
+    "DIALOG_BASE": 524296,
+    "DIALOG_LEFT": 0,
+    "DIALOG_RIGHT": 218,
+    "DIALOG_BOTTOM": 106,
+    "DIALOG_SCREEN_OVERFLOW": 1,
+    "CANCEL_TEXT_WIDTH": 44,
+    "CANCEL_CLIENT_WIDTH": 88
+  },
+  "original_font_candidate": {
+    "DIALOG_BASE": 524296,
+    "DIALOG_LEFT": 0,
+    "DIALOG_RIGHT": 218,
+    "DIALOG_BOTTOM": 106,
+    "DIALOG_SCREEN_OVERFLOW": 1,
+    "CANCEL_TEXT_WIDTH": 44,
+    "CANCEL_CLIENT_WIDTH": 88
+  },
+  "stock_metric_match": true,
+  "same_geometry": true
+}

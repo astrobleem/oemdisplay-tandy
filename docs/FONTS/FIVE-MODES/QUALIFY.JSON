@@ -1,0 +1,341 @@
+{
+  "kind": "Saved genuine Win3 framebuffer/stock metrics verification",
+  "native_ui_slice_passed": true,
+  "native_package_qualified": false,
+  "full_native_encoding_pixels_qualified": false,
+  "system_fixed_native_pixels_qualified": false,
+  "oem_out_of_range_native_behavior_qualified": false,
+  "txtsys_native_renderer_qualified": false,
+  "modes": {
+    "C6402": {
+      "stock_metrics": {
+        "13": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 1,
+          "EXTERNAL": 0,
+          "AVERAGE": 7,
+          "MAXIMUM": 14,
+          "FIRST": 32,
+          "LAST": 255,
+          "DEFAULT": 128,
+          "CHARSET": 0
+        },
+        "16": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 0,
+          "EXTERNAL": 1,
+          "AVERAGE": 8,
+          "MAXIMUM": 8,
+          "FIRST": 32,
+          "LAST": 255,
+          "DEFAULT": 128,
+          "CHARSET": 0
+        },
+        "10": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 0,
+          "EXTERNAL": 0,
+          "AVERAGE": 8,
+          "MAXIMUM": 8,
+          "FIRST": 1,
+          "LAST": 254,
+          "DEFAULT": 32,
+          "CHARSET": 255
+        }
+      },
+      "all_system_advances_preserved": true,
+      "pixel_anchor": [
+        10,
+        36
+      ],
+      "exact_native_system_runs": 4,
+      "exact_native_oem_codes": "B0..EF (64 codes)",
+      "direct_ansi_reserved_codes_tested": [
+        "7F",
+        "80",
+        "81"
+      ],
+      "native_capture_size": [
+        640,
+        200
+      ],
+      "dialog": {
+        "DIALOG_BASE": 524296,
+        "DIALOG_LEFT": 0,
+        "DIALOG_RIGHT": 228,
+        "DIALOG_BOTTOM": 91,
+        "DIALOG_SCREEN_OVERFLOW": 0,
+        "CANCEL_TEXT_WIDTH": 44,
+        "CANCEL_CLIENT_WIDTH": 88
+      },
+      "native_image_visual_review_required": true
+    },
+    "E320": {
+      "stock_metrics": {
+        "13": {
+          "HEIGHT": 12,
+          "ASCENT": 10,
+          "INTERNAL": 2,
+          "EXTERNAL": 0,
+          "AVERAGE": 7,
+          "MAXIMUM": 14,
+          "FIRST": 32,
+          "LAST": 255,
+          "DEFAULT": 128,
+          "CHARSET": 0
+        },
+        "16": {
+          "HEIGHT": 10,
+          "ASCENT": 9,
+          "INTERNAL": 2,
+          "EXTERNAL": 0,
+          "AVERAGE": 8,
+          "MAXIMUM": 8,
+          "FIRST": 32,
+          "LAST": 255,
+          "DEFAULT": 128,
+          "CHARSET": 0
+        },
+        "10": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 0,
+          "EXTERNAL": 0,
+          "AVERAGE": 8,
+          "MAXIMUM": 8,
+          "FIRST": 1,
+          "LAST": 254,
+          "DEFAULT": 32,
+          "CHARSET": 255
+        }
+      },
+      "all_system_advances_preserved": true,
+      "pixel_anchor": [
+        6,
+        36
+      ],
+      "exact_native_system_runs": 4,
+      "exact_native_oem_codes": "B0..EF (64 codes)",
+      "direct_ansi_reserved_codes_tested": [
+        "7F",
+        "80",
+        "81"
+      ],
+      "native_capture_size": [
+        320,
+        200
+      ],
+      "dialog": {
+        "DIALOG_BASE": 786440,
+        "DIALOG_LEFT": 0,
+        "DIALOG_RIGHT": 218,
+        "DIALOG_BOTTOM": 117,
+        "DIALOG_SCREEN_OVERFLOW": 0,
+        "CANCEL_TEXT_WIDTH": 44,
+        "CANCEL_CLIENT_WIDTH": 88
+      },
+      "native_image_visual_review_required": true
+    },
+    "C320": {
+      "stock_metrics": {
+        "13": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 1,
+          "EXTERNAL": 0,
+          "AVERAGE": 7,
+          "MAXIMUM": 14,
+          "FIRST": 32,
+          "LAST": 255,
+          "DEFAULT": 128,
+          "CHARSET": 0
+        },
+        "16": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 0,
+          "EXTERNAL": 1,
+          "AVERAGE": 8,
+          "MAXIMUM": 8,
+          "FIRST": 32,
+          "LAST": 255,
+          "DEFAULT": 128,
+          "CHARSET": 0
+        },
+        "10": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 0,
+          "EXTERNAL": 0,
+          "AVERAGE": 8,
+          "MAXIMUM": 8,
+          "FIRST": 1,
+          "LAST": 254,
+          "DEFAULT": 32,
+          "CHARSET": 255
+        }
+      },
+      "all_system_advances_preserved": true,
+      "pixel_anchor": [
+        6,
+        36
+      ],
+      "exact_native_system_runs": 4,
+      "exact_native_oem_codes": "B0..EF (64 codes)",
+      "direct_ansi_reserved_codes_tested": [
+        "7F",
+        "80",
+        "81"
+      ],
+      "native_capture_size": [
+        320,
+        200
+      ],
+      "dialog": {
+        "DIALOG_BASE": 524296,
+        "DIALOG_LEFT": 0,
+        "DIALOG_RIGHT": 218,
+        "DIALOG_BOTTOM": 91,
+        "DIALOG_SCREEN_OVERFLOW": 0,
+        "CANCEL_TEXT_WIDTH": 44,
+        "CANCEL_CLIENT_WIDTH": 88
+      },
+      "native_image_visual_review_required": true
+    },
+    "C160": {
+      "stock_metrics": {
+        "13": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 1,
+          "EXTERNAL": 0,
+          "AVERAGE": 7,
+          "MAXIMUM": 14,
+          "FIRST": 32,
+          "LAST": 255,
+          "DEFAULT": 128,
+          "CHARSET": 0
+        },
+        "16": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 0,
+          "EXTERNAL": 1,
+          "AVERAGE": 8,
+          "MAXIMUM": 8,
+          "FIRST": 32,
+          "LAST": 255,
+          "DEFAULT": 128,
+          "CHARSET": 0
+        },
+        "10": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 0,
+          "EXTERNAL": 0,
+          "AVERAGE": 8,
+          "MAXIMUM": 8,
+          "FIRST": 1,
+          "LAST": 254,
+          "DEFAULT": 32,
+          "CHARSET": 255
+        }
+      },
+      "all_system_advances_preserved": true,
+      "pixel_anchor": [
+        6,
+        51
+      ],
+      "exact_native_system_runs": 4,
+      "exact_native_oem_codes": "B0..EF (64 codes)",
+      "direct_ansi_reserved_codes_tested": [
+        "7F",
+        "80",
+        "81"
+      ],
+      "native_capture_size": [
+        160,
+        200
+      ],
+      "dialog": {
+        "DIALOG_BASE": 524296,
+        "DIALOG_LEFT": 0,
+        "DIALOG_RIGHT": 218,
+        "DIALOG_BOTTOM": 106,
+        "DIALOG_SCREEN_OVERFLOW": 1,
+        "CANCEL_TEXT_WIDTH": 44,
+        "CANCEL_CLIENT_WIDTH": 88
+      },
+      "native_image_visual_review_required": true
+    },
+    "C6404": {
+      "stock_metrics": {
+        "13": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 1,
+          "EXTERNAL": 0,
+          "AVERAGE": 7,
+          "MAXIMUM": 14,
+          "FIRST": 32,
+          "LAST": 255,
+          "DEFAULT": 128,
+          "CHARSET": 0
+        },
+        "16": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 0,
+          "EXTERNAL": 1,
+          "AVERAGE": 8,
+          "MAXIMUM": 8,
+          "FIRST": 32,
+          "LAST": 255,
+          "DEFAULT": 128,
+          "CHARSET": 0
+        },
+        "10": {
+          "HEIGHT": 8,
+          "ASCENT": 7,
+          "INTERNAL": 0,
+          "EXTERNAL": 0,
+          "AVERAGE": 8,
+          "MAXIMUM": 8,
+          "FIRST": 1,
+          "LAST": 254,
+          "DEFAULT": 32,
+          "CHARSET": 255
+        }
+      },
+      "all_system_advances_preserved": true,
+      "pixel_anchor": [
+        10,
+        36
+      ],
+      "exact_native_system_runs": 4,
+      "exact_native_oem_codes": "B0..EF (64 codes)",
+      "direct_ansi_reserved_codes_tested": [
+        "7F",
+        "80",
+        "81"
+      ],
+      "native_capture_size": [
+        640,
+        200
+      ],
+      "dialog": {
+        "DIALOG_BASE": 524296,
+        "DIALOG_LEFT": 0,
+        "DIALOG_RIGHT": 228,
+        "DIALOG_BOTTOM": 91,
+        "DIALOG_SCREEN_OVERFLOW": 0,
+        "CANCEL_TEXT_WIDTH": 44,
+        "CANCEL_CLIENT_WIDTH": 88
+      },
+      "native_image_visual_review_required": true
+    }
+  }
+}

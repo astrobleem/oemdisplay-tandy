@@ -1,0 +1,29 @@
+#include <windows.h>
+FONTMENU MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Open...", 201
+        MENUITEM "E&xit", 202
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Copy", 203
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Preferences...", 204
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About", 205
+    END
+END
+FONTDLG DIALOG 0, 0, 104, 52
+STYLE WS_POPUP | WS_CAPTION | DS_MODALFRAME
+CAPTION "Save document"
+BEGIN
+    LTEXT "Save changes before exit?", -1, 4, 5, 96, 12
+    DEFPUSHBUTTON "OK", IDOK, 8, 28, 36, 14
+    PUSHBUTTON "Cancel", 101, 52, 28, 44, 14
+END
