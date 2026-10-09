@@ -18,12 +18,14 @@ numeric CONTRACT.JSON. No Windows font media, installed font rasterization,
 compiler or emulator is required to generate the original fonts.
 
 ```
-python tools/XTFONTS/BUILD.PY --out NEW-FONTS
-python tools/XTFONTS/TEST.PY --out NEW-FONTS
-python tools/XTFONTS/HOSTGDI.PY --out NEW-FONTS
+python tools/XTFONTS/HOST.PY BUILD.PY --out NEW-FONTS
+python tools/XTFONTS/HOST.PY TEST.PY --out NEW-FONTS
+python tools/XTFONTS/HOST.PY HOSTGDI.PY --out NEW-FONTS
 ```
 
-Use a fresh output directory. HOSTGDI requires modern Windows. Change the
+Use a fresh output directory. HOST.PY supports uppercase source imports
+on case-sensitive hosts while preserving the original generator files.
+HOSTGDI requires modern Windows. Change the
 hand-authored grids/rules in GLYPHS.PY and BUILD.PY to edit glyphs. No Python,
 Pillow or font generation is needed on the vintage computer. Packaged names
 use XTC*/XTE*/XTTSYS to prevent Windows Setup retaining installed same-name

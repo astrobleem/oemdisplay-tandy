@@ -8,7 +8,7 @@ runtime, preserving the qualified zero-SHA/faster START base. No proprietary
 compiler/OS/non-font support resources are fetched or shipped.
 
 After the existing package tests and MAKEIMG build, run
-tools/XTFONTS/PUBLISH.PY --package <dist> --out <new-release-dir> --commit <sha>.
+python3 tools/XTFONTS/HOST.PY PUBLISH.PY --package <dist> --out <new-release-dir> --commit <sha>.
 This verifies qualification/source/runtime pins and produces original-font,
 source and preview downloads. The release workflow verifies the exact tag,
 commit, qualification and complete asset checksums before making a new draft.

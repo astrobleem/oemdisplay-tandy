@@ -64,12 +64,12 @@ jobs:
 
       - name: Verify original font reproduction and saved native glyph evidence
         run: |
-          python3 tools/XTFONTS/BUILD.PY --out font-build
-          python3 tools/XTFONTS/TEST.PY --out font-build
-          python3 tools/XTFONTS/NATIVEQA.PY --native docs/FONTS/FIVE-MODES --fonts font-build
-          python3 tools/XTFONTS/ENCQA.PY --guest docs/FONTS/ALL-BYTES/CGA --fonts font-build --family CGA
-          python3 tools/XTFONTS/ENCQA.PY --guest docs/FONTS/ALL-BYTES/EGA --fonts font-build --family EGA
-          python3 tools/XTFONTS/ENCQA.PY --guest docs/FONTS/ALL-BYTES/TXFONT --fonts font-build --family TXT
+          python3 tools/XTFONTS/HOST.PY BUILD.PY --out font-build
+          python3 tools/XTFONTS/HOST.PY TEST.PY --out font-build
+          python3 tools/XTFONTS/HOST.PY NATIVEQA.PY --native docs/FONTS/FIVE-MODES --fonts font-build
+          python3 tools/XTFONTS/HOST.PY ENCQA.PY --guest docs/FONTS/ALL-BYTES/CGA --fonts font-build --family CGA
+          python3 tools/XTFONTS/HOST.PY ENCQA.PY --guest docs/FONTS/ALL-BYTES/EGA --fonts font-build --family EGA
+          python3 tools/XTFONTS/HOST.PY ENCQA.PY --guest docs/FONTS/ALL-BYTES/TXFONT --fonts font-build --family TXT
 
       - name: Build public 720 KB disk and portable ZIP
         run: python3 tools/FLASHDISK/MAKEIMG.PY --out dist
@@ -85,8 +85,8 @@ jobs:
         env:
           SOURCE_SHA: ${{ github.sha }}
         run: |
-          python3 tools/XTFONTS/PUBLISH.PY --package dist --out release --commit "$SOURCE_SHA"
-          python3 tools/XTFONTS/PUBLISH.PY --verify release --commit "$SOURCE_SHA"
+          python3 tools/XTFONTS/HOST.PY PUBLISH.PY --package dist --out release --commit "$SOURCE_SHA"
+          python3 tools/XTFONTS/HOST.PY PUBLISH.PY --verify release --commit "$SOURCE_SHA"
           cd release
           sha256sum --check SHA256SUMS
 
