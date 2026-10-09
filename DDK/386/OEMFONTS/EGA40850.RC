@@ -1,5 +1,0 @@
-#include "windows.h"
-
-#include "ega40850.rcv"
-
-130 FONT EGA24850.FNT

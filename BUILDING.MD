@@ -56,7 +56,7 @@ Normal users download the ready-to-use `TANDY88.ZIP`, extract `DISK1`, and follo
 ## Five driver profiles and unchanged reservation helper
 
 This package targets Windows 3.0 real mode on the accepted 8086/8088 normal-640K
-Tandy configuration. The old root `TNDY16.DRV` and `build_driver.bat` belong to
+Tandy configuration. The archived root `TNDY16.DRV` and `build_driver.bat` belong to
 an earlier path and are not package inputs.
 
 The builder uses the five pinned drivers in `src/tandysw/bin/` and the shared
@@ -68,7 +68,7 @@ The builder uses the five pinned drivers in `src/tandysw/bin/` and the shared
 The four additional driver identities, sizes and their matching build evidence
 are listed in [docs/MODES.MD](docs/MODES.MD#binary-identities).
 
-To reproduce a driver with the repository's MASM 5.10, LINK and resource tools
+To reproduce a driver with the pinned external MASM 5.10, LINK and resource tools
 in DOSBox-X, give each profile a fresh output directory:
 
 ```sh
@@ -134,7 +134,7 @@ rebuild explanation; users should obtain the complete download instead.
 to write a ready-to-use extracted disk as well. Add `--windows-dir D:\WIN30`
 (quote it on Unix shells) for a nondefault guest Windows path; the helper stays
 at `C:\TANDY88`. Output paths must be new and their parent directories must
-exist. Existing historical `disk1/`, root binaries, and archives are untouched.
+exist. Historical disk1 and old root binaries are preserved in DEV; accepted release archives remain unchanged.
 
 The complete ZIP contains `DISK1/` and a root README. Its disk includes the
 completion marker `LOCAL.TXT` and `MANIFEST.SHA`; Python is not bundled into
@@ -227,3 +227,14 @@ Paintbrush reopen and final rebuilt ZIP verification. See
 All edited source and generated DOS text uses CRLF. The native Windows wrapper
 was statically reviewed; portable Python and DOS helper execution were tested.
 Physical hardware and genuine MS-DOS variants remain separate acceptance checks.
+
+## External inputs for source rebuilds
+
+Current package commands above run directly from main without the DDK or
+compiler. Native source rebuild recipes run from a fresh external source
+view, prepared with [the pinned dependency adapter](tools/BUILDDEPS/README.MD).
+Use the display, keyboard, shell, examples, tools or textmode profile, then
+run the existing build script from that view with the view as --repo or
+--toolchain as documented by the script. Supply an external DOSBox-X path.
+The preserved baseline is documented in [DEV](docs/DEV.MD). Do not restore
+floating toolchain directories into main or change accepted binary pins.

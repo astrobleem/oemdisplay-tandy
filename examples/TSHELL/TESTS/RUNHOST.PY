@@ -13,11 +13,12 @@ with tempfile.TemporaryDirectory(prefix='tshell-tests-') as tmp:
  cases=[
   ('TESTBOOT',['-std=c89','-I'+str(root/'TESTS/HSTINC'),str(root/'TESTS/TESTBOOT.C')]),
   ('TESTSV',['-std=c89','-DHOST_TEST',str(root/'TESTS/TESTSV.C'),str(root/'SVCORE.C')]),
-  ('HOSTTEST',['-std=c89',str(root/'IDLE/TESTS/HOSTTEST.C')]),
+  ('HOSTTEST',['-std=c89',str(root/'IDLE/tests/HOSTTEST.C')]),
+  ('HOLDTEST',['-std=c89',str(root/'IDLE/tests/HOLDTEST.C')]),
  ]
  for name,args in cases:
   exe=out/name
   subprocess.run([cc,'-x','c']+args+['-o',str(exe)],check=True)
   subprocess.run([str(exe)],check=True)
-subprocess.run([sys.executable,str(root/'IDLE/TESTS/VERIFY.PY'),str(root/'TSINPUT.DLL')],check=True)
+subprocess.run([sys.executable,str(root/'IDLE/tests/VERIFY.PY'),str(root/'TSINPUT.DLL')],check=True)
 print('TSHELL 06 portable host and DLL contract checks PASS')

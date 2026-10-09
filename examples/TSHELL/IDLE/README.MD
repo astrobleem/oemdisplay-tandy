@@ -29,7 +29,11 @@ BUILD.BAT expects C:\BIN, C:\DDK\286\INC, C:\INCLUDE and C:\LIB. It builds
 TSINPUT.DLL and IDLEPROB.EXE. IDLEPROB is an optional observation test app, not
 a required runtime companion; its binary is not distributed here.
 
-TESTS/HOSTTEST.C includes ../TSINPUT.C, which selects TESTS/WINSTUB.H only for
-host tests. The source is checked through ../TESTS/RUNHOST.PY; TESTS/VERIFY.PY
+tests/HOSTTEST.C includes ../TSINPUT.C, which selects tests/WINSTUB.H only for
+host tests. The source is checked through ../TESTS/RUNHOST.PY; tests/VERIFY.PY
 checks the actual DLL NE layout. See ../TESTS.MD for final native results and
 physical-hardware limitations. No Windows, SDK or compiler files are included.
+
+The lowercase tests suite also checks the current Hold exports and supplies
+HOLDTEST.C. The earlier uppercase idle-only suite is preserved unchanged at
+[the pre-cleanup DEV snapshot](https://github.com/astrobleem/oemdisplay-tandy/tree/96ce6971a1757f3c77094322ed82741791c79646/examples/TSHELL/IDLE/TESTS).

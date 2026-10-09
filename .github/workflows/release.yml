@@ -26,8 +26,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      # This public repo has a historical orphan gitlink (dosfetch).
-      # Anonymous Git avoids checkout-action submodule credential cleanup;
+      # Anonymous Git preserves the exact public event-SHA checkout;
       # exact event-SHA checkout still tests GitHub's PR merge commit.
       - name: Check out exact public source without credentials
         env:
@@ -40,14 +39,16 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/examples/TSHELL/\n/tools/FLASHDISK/\n/distributions/WINXT/\n/examples/WXTSPL/WAVE/\n/examples/WXTSPL/WXTSPL01.RLE\n/examples/WXTSPL/ART/assets/WXTSPL01.RLE\n/src/splash/assets/TNDYLOGO.RLE\n/src/tandysw/TINST.C\n/examples/WXTSPL/UPDATER/\n/docs/QUAL/WAVEINS.JSON\n' | git sparse-checkout set --no-cone --stdin
+          printf '/examples/TSHELL/\n/tools/FLASHDISK/\n/tools/BUILDDEPS/\n/distributions/WINXT/\n/examples/WXTSPL/WAVE/\n/examples/WXTSPL/WXTSPL01.RLE\n/examples/WXTSPL/ART/assets/WXTSPL01.RLE\n/src/splash/assets/TNDYLOGO.RLE\n/src/tandysw/TINST.C\n/examples/WXTSPL/UPDATER/\n/docs/QUAL/WAVEINS.JSON\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
 
       - name: Test FAT12 format and release packaging
         run: |
+          python3 tools/BUILDDEPS/TESTDEPS.PY
           python3 examples/TSHELL/TESTS/BNDTEST.PY
           python3 examples/TSHELL/TESTS/GRPTEST.PY
+          python3 examples/TSHELL/TESTS/RUNHOST.PY
           python3 examples/TSHELL/DOS/TESTSEL.PY
           python3 examples/TSHELL/DOS/TESTNITE.PY
           python3 tools/FLASHDISK/TESTFAT.PY

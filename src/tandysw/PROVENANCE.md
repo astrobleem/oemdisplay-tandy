@@ -58,3 +58,8 @@ optional developer rebuild route. See ../../README.TXT, ../../BUILDING.MD and
 ../../docs/OEMDISK.MD for the installer, provenance hashes and verification.
 Existing third-party notices remain applicable; this packaging change does
 not create or assert a new license for those components.
+
+Cleanup note: the legacy src/tandy16 implementation and tanvidasm
+provenance cited by this historical record are preserved at
+[the exact DEV snapshot](https://github.com/astrobleem/oemdisplay-tandy/tree/96ce6971a1757f3c77094322ed82741791c79646/). Current source and
+accepted binary identities remain unchanged.

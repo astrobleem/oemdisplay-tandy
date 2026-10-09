@@ -1,5 +1,0 @@
-#include "windows.h"
-
-#include "cga80woa.rcv"
-
-101 FONT CGA08.FNT

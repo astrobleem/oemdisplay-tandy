@@ -5,7 +5,7 @@ development. It is not a support claim for an unreleased binary.
 
 ## Historical starting point
 
-The repository already contains `win2/TANDYDSP.DRV`, a 25,840-byte Windows 2.x
+The repository already contains [archived win2/TANDYDSP.DRV](https://github.com/astrobleem/oemdisplay-tandy/blob/96ce6971a1757f3c77094322ed82741791c79646/win2/TANDYDSP.DRV), a 25,840-byte Windows 2.x
 Tandy display driver. SHA256:
 `d593c03e52e338074df3c5c70973197bc61deeb72d615459ad90124afea126e0`.
 The accompanying README identifies a Windows 2.03 driver supplied by James
@@ -26,7 +26,7 @@ Static inspection of the tracked binary shows:
 - Complete historical drawing, text and cursor entry points
 - No Windows 3 DIB conversion exports or modern driver parity claim
 
-The tracked `src/tandy4` files are byte-identical generic Microsoft one-plane
+The tracked [archived src/tandy4](https://github.com/astrobleem/oemdisplay-tandy/tree/96ce6971a1757f3c77094322ed82741791c79646/src/tandy4) files are byte-identical generic Microsoft one-plane
 DDK source, not the source for TANDYDSP. The tracked Ghidra databases contain
 imported binary analyses, not a reproducible source build. The binary and
 archive entered the repository at commit `1614b56`; this work did not download
