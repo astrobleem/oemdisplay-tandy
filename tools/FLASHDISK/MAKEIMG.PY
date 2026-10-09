@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Build reproducible 720 KB WINXT data disks from the accepted runtime.
 
-Public builds exclude Windows support files. --windows-files makes a private,
-own-media install disk; never upload that output to GitHub or other people.
+Public builds exclude Windows support files. The complete private own-media
+payload does not fit 720 KB; --windows-files is refused. Use PREPXT to prepare
+the complete folder on your DOS hard disk from your own matching media.
 This packages pinned binaries. It does not compile or qualify new drivers.
 """
 import argparse
@@ -17,7 +18,7 @@ import tempfile
 import zipfile
 
 HERE = Path(__file__).resolve().parent
-PUBLIC_NAMES = ('HOLD14.TXT', 'HOLD160.PNG', 'HOLD640.PNG', 'INSTALL.BAT',
+PUBLIC_NAMES = ('CPSET.EXE', 'CPSET.TXT', 'HOLD14.TXT', 'HOLD160.PNG', 'HOLD640.PNG', 'INSTALL.BAT',
     'MATRIX.EXE', 'MAZE.EXE', 'PINBALL.EXE', 'NAMES11.TXT', 'OEMSETUP.INF', 'README.TXT',
     'RESERVE.COM', 'SHELL14.TXT', 'SHELLSEL.EXE', 'SHFULL.TXT', 'STARFLD.EXE',
     'TABOUT.EXE', 'TCHIME.EXE', 'TESTS.TXT', 'TESTS14.TXT', 'TEXIT.EXE',
@@ -177,10 +178,11 @@ INSTALL (OUTSIDE WINDOWS)
      INSTALL D:\WIN30SRC
    Up to four media directories can be supplied. Original SZDD compressed
    files are accepted. Use directories copied from your own media if you
-   have only one floppy drive. No Internet or Python is needed on the Tandy.
+   have only one floppy drive. No Python is needed on the Tandy.
 3. After all inputs verify, confirm the helper's prompt. It creates a NEW
    C:\WINXT, gathers/expands only the matching owned support files, derives
-   the text font locally, copies our pinned runtime and verifies the result.
+   the text font locally, expands two pinned packed drivers, copies the other
+   pinned runtime files and verifies all expanded bytes against release hashes.
    Existing C:\WINXT, wrong files, missing inputs and insufficient free
    space stop preparation. Windows files and boot configuration are untouched.
 4. Then run:
@@ -188,7 +190,10 @@ INSTALL (OUTSIDE WINDOWS)
      CD \WINXT
      INSTALL
    In Windows Setup choose Display -> Other display, enter C:\WINXT,
-   choose your mode and accept Complete Changes. If asked about CONFIG.SYS,
+   choose your mode and accept Complete Changes. The installer also adds an
+   optional Computer choice: Tandy 1000 EX/HX (WindowsXT). It leaves the
+   active Computer and keyboard settings unchanged. Read C:\WINXT\CPSET.TXT
+   before selecting it. This uses generic system components, not a new driver. If asked about CONFIG.SYS,
    choose option 3 (make no changes). Optional desktop: C:\WINXT\TSSETUP.
 5. Start Windows with C:\WINXT\WINXT. Never bypass its video-memory or
    recovery guards. Use WINXT\README.TXT for switching, backup and rollback.
@@ -224,8 +229,8 @@ or altered starters/wrapper refuse safely; never bypass the guard.
 To restore only the original static starters at plain DOS:
   C:\WINXT\WAVEXT RESTORE C:\WINDOWS C:\WINXT
 To re-enable, use APPLY with the same arguments. Full rollback uses the
-numbered WINXT\BACKUP\B001\RESTORE YES path printed by INSTALL. It disables
-the wave first and verifies restored original Windows resources. Added
+numbered WINXT\BACKUP\B001\RESTORE YES path printed by INSTALL. It restores
+the guarded Computer metadata first, then disables the wave and verifies restored original Windows resources. Added
 helpers remain inactive; do not redistribute the completed own-media folder.
 WXTTOOLS.ZIP is an optional developer/reproduction toolkit; normal users need
 only WINXT720.IMG (or the same image inside WINXT720.ZIP) and their own Windows.
@@ -240,7 +245,7 @@ def helper_payload():
         if not re.fullmatch('[a-f0-9]{64}', digest) or name in expected or '/' in name or '\\' in name:
             raise PackageError('Invalid helper manifest')
         expected[name] = digest
-    if set(expected) != {'PREPXT.EXE', 'PREPXT.C', 'XTPINS.H', 'BUILD.BAT'}:
+    if set(expected) != {'PREPXT.EXE', 'PREPXT.C', 'XTPINS.H', 'BUILD.BAT', 'SZSTREAM.H', 'PACKPINS.H', 'SZPACK.PY'}:
         raise PackageError('Helper manifest changed; review the explicit publication allowlist')
     data = {}
     for name, digest in expected.items():
@@ -263,6 +268,30 @@ def validate_helper_pins(payload, helper):
             raise PackageError('DOS helper pin differs from runtime manifest: ' + name)
         if name in payload and int(size) != len(payload[name]):
             raise PackageError('DOS helper size differs from runtime: ' + name)
+
+
+def disk_payload(payload, helper):
+    """Transport packing only: installed names/expanded release pins stay exact."""
+    packer = load('winxt_szpack', HERE / 'SZPACK.PY')
+    rows = re.findall(r'\{"([A-Z0-9_.]+)","([A-Z0-9_.]+)","([0-9a-f]{64})",([0-9]+)UL\}',
+                      helper['PACKPINS.H'].decode('ascii'))
+    if len(rows) != 2 or {n:s for n,s,h,z in rows} != packer.PACKED_NAMES:
+        raise PackageError('Packed transport allowlist changed')
+    staged = dict(payload)
+    for name, stored, digest, size in rows:
+        packed = packer.pack(payload[name])
+        if len(packed) != int(size) or sha(packed) != digest or stored in staged:
+            raise PackageError('Packed transport differs from its reviewed pin: ' + name)
+        del staged[name]
+        staged[stored] = packed
+    return staged
+
+def transport_report(public, stored):
+    packer = load('winxt_szreport', HERE / 'SZPACK.PY')
+    return {name: {'stored_name': target, 'stored_bytes': len(stored[target]),
+                  'stored_sha256': sha(stored[target]), 'expanded_bytes': len(public[name]),
+                  'expanded_sha256': sha(public[name])}
+            for name,target in packer.PACKED_NAMES.items()}
 
 
 def install_batch():
@@ -309,15 +338,42 @@ def wave_payload():
     return {'WAVE/' + n: b for n,b in data.items()}
 
 
+CP_SOURCE_NAMES = {'BUILD.BAT', 'BUILD.TXT', 'CPSET.C', 'CPSET.TXT'}
+
+def computer_source_payload():
+    source = HERE / 'CPSET' if (HERE / 'CPSET').is_dir() else HERE.parent / 'CPSET'
+    raw = read_file(source / 'FILES.SHA')
+    manifest = {}
+    for line in raw.decode('ascii').splitlines():
+        digest, name = line.split()
+        if name in manifest or not re.fullmatch('[a-f0-9]{64}', digest):
+            raise PackageError('Invalid Computer source manifest')
+        manifest[name] = digest
+    if set(manifest) != CP_SOURCE_NAMES:
+        raise PackageError('Computer source allowlist changed')
+    data = {name:read_file(source / name) for name in sorted(manifest)}
+    if any(sha(data[n]) != manifest[n] for n in data):
+        raise PackageError('Computer source pin mismatch')
+    data['FILES.SHA'] = raw
+    return {'CPSET/' + name:content for name,content in data.items()}
+
+
 def build(runtime, out, windows_files=None):
+    if windows_files is not None:
+        raise PackageError('Complete own-media payload does not fit the 720 KB disk; '
+                           '--windows-files is unsupported. Build the public image and '
+                           'use PREPXT with your matching Windows media to prepare C:\\WINXT '
+                           'on the DOS hard disk. No output was created.')
     if out.exists():
         raise PackageError('Output exists; choose a fresh directory')
     wave = wave_payload()
+    computer_source = computer_source_payload()
     payload = public_payload(runtime)
     public = dict(payload)
     private = windows_files is not None
     helper = helper_payload()
     validate_helper_pins(public, helper)
+    payload = disk_payload(public, helper)
     fat = load('winxt_fat12', HERE / 'FAT12.PY')
     with tempfile.TemporaryDirectory(prefix='winxt-disk-') as temporary:
         temp = Path(temporary).resolve()
@@ -348,6 +404,7 @@ def build(runtime, out, windows_files=None):
             entries['WINXT/STAGE.PY'] = read_file(runtime / 'STAGE.PY')
             entries.update({n: read_file(HERE / n) for n in ('MAKEIMG.PY', 'FAT12.PY')})
             entries.update(wave)
+            entries.update(computer_source)
             entries.update(helper)
             entries['HELPER.SHA'] = read_file(HERE / 'HELPER.SHA')
             entries['README.TXT'] = guide
@@ -358,7 +415,9 @@ def build(runtime, out, windows_files=None):
             'independent_startup_default': 'slow-flag-wave',
             'disk_setup_startup': 'guarded-color-wave-static-fallback',
             'wave_payload_sha256': {n: sha(b) for n,b in wave.items()},
+            'computer_source_sha256': {n: sha(b) for n,b in computer_source.items()},
             'runtime_manifest_sha256': sha(public['MANIFEST.SHA']),
+            'packed_transport': transport_report(public, payload),
             'helper_sha256': sha(helper['PREPXT.EXE']),
             'windows_support_included': private, 'image_bytes': image.stat().st_size,
             'geometry': {'cylinders': 80, 'heads': 2, 'sectors_per_track': 9,
@@ -375,7 +434,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--runtime', type=Path, default=default)
     parser.add_argument('--out', type=Path, required=True, help='New output directory')
-    parser.add_argument('--windows-files', type=Path, help='Own media only; output is PRIVATE and must not be shared')
+    parser.add_argument('--windows-files', type=Path, help='Unsupported complete private 720 KB image; use public image + DOS PREPXT instead')
     args = parser.parse_args()
     try:
         report = build(args.runtime, args.out, args.windows_files)

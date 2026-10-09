@@ -1,0 +1,27 @@
+CPSET compact source candidate
+==============================
+Original licensed CPSET source recovered byte-exact from the optional kit.
+Original CPSET.C SHA-256:
+0c63cd4af3807bad1517fa31af65efee74640bfd7e0569c79080f814a4660d37
+Recovered kit ZIP SHA-256:
+0885fedb3aaca27f4fd900b881c7cb814bb9ba4732454a10bbddce6cf8368396
+
+The integration candidate retains its transaction and exact metadata/keyboard
+pins. Three bounded <64 KiB buffers now use large-model malloc, reducing the
+executable image without reducing the working set. Allocation failure stops
+before any file writes. It still needs about 180 KiB for those three buffers.
+
+Build with the project's existing Microsoft C 6 compiler/segmented linker:
+/AL /G0 /Gs /Od, LLIBCE.LIB and a 4096-byte stack. No Windows libraries.
+Stage your owned toolchain with tools/BUILDDEPS and mount it as T:.
+BUILD.BAT uses T:\BIN, T:\INCLUDE and T:\LIB, including LLIBCE.LIB. It also
+builds CPFAIL.EXE with test-only interruption checkpoints; never ship CPFAIL.
+No compiler, library or original Windows setup metadata is included here.
+
+Current candidate: host transaction checks, source-matched MSC6 DOS build,
+mounted preparation, guarded install/rollback and stock Computer selection /
+completion / Setup reopening passed in private fixtures. Stock and TNDYK3
+Computer selection, guarded Windows startup/normal exit and final rollback
+also passed.
+Historical large-static-buffer kit evidence is not this candidate's result.
+Physical Tandy qualification remains separate from emulator tests.

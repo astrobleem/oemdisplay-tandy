@@ -20,7 +20,8 @@ PROFILES = {
     "experiments": ("experiments/", "src/tandysw/", "docs/"),
     "tools": ("tools/", "distributions/WINXT/", "examples/WXTSPL/",
               "src/splash/assets/", "src/tandysw/TINST.C", "docs/"),
-    "release": ("tools/FLASHDISK/", "distributions/WINXT/",
+    "release": ("tools/FLASHDISK/", "tools/CPSET/", "docs/QUAL/CPSET.JSON",
+                "distributions/WINXT/",
                 "examples/TSHELL/", "examples/WXTSPL/",
                 "src/splash/assets/", "src/tandysw/TINST.C", "docs/QUAL/WAVEINS.JSON"),
 }

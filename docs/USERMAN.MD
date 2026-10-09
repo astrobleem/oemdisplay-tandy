@@ -127,6 +127,15 @@ a mode and accept **Complete Changes**. If asked for the display disk again,
 use the same folder. If Setup offers to alter CONFIG.SYS, choose **option 3:
 make no changes**.
 
+The new Computer choice is optional: **Tandy 1000 EX/HX (WindowsXT)**.
+INSTALL adds it without selecting it or changing the active keyboard. To use
+it, run `C:\WINXT\WINXT SETUP`, select Computer, then this choice, and accept
+Complete Changes. Close and reopen Setup before changing another item: the
+Computer screen can temporarily display VGA and an enhanced-keyboard default.
+Reopening shows the saved display and keyboard; the Computer-only change
+preserves those settings. Check them before starting Windows. A separately
+installed, verified TNDYK3 keyboard remains selected; this disk does not add it.
+
 For the optional Tandy Start desktop, run once from DOS:
 
 ```bat

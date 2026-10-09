@@ -246,6 +246,13 @@ class FAT12Tests(unittest.TestCase):
                      "A[X].TXT", "A,X.TXT", "A\u00c9.TXT", "CON", "CON.TXT", "PRN",
                      "AUX.BIN", "NUL", "COM1.TXT", "LPT9", "CLOCK$"):
             with self.subTest(name=name):
+                # Validate names that Windows cannot materialize without
+                # mapping a DOS device or normalizing a trailing period.
+                with self.assertRaises(fat12.ImageError):
+                    fat12._short_name(name)
+                if os.name == "nt" and (name.endswith(".") or
+                        name.split(".")[0] in fat12.DEVICE_NAMES):
+                    continue
                 target = self.put(name)
                 try:
                     with self.assertRaises(fat12.ImageError):

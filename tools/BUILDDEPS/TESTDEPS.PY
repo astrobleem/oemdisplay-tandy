@@ -130,6 +130,25 @@ class DependencyTests(unittest.TestCase):
         for name, content in self.original.items():
             self.assertEqual((out / name).read_bytes(), content)
 
+    def test_release_view_retains_computer_package_requirements(self):
+        required = {"tools/CPSET/CPSET.C": b"computer source\r\n",
+                    "tools/CPSET/FILES.SHA": b"source pins\r\n",
+                    "docs/QUAL/CPSET.JSON": b"{}\r\n"}
+        for name, content in required.items():
+            path = self.repo / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(content)
+        deps.git(self.repo, "-c", "core.autocrlf=false", "add", ".")
+        deps.git(self.repo, "-c", "user.name=Fixture", "-c",
+                 "user.email=fixture@example.invalid", "commit", "-m", "release closure")
+        commit = deps.git(self.repo, "rev-parse", "HEAD").decode().strip()
+        out = self.root / "release"
+        deps.main(["view", "--deps", str(self.materialize()), "--lock", str(self.lockfile),
+                   "--allow-provisional", "--source-repo", str(self.repo),
+                   "--source-commit", commit, "--profile", "release", "--out", str(out)])
+        for name, content in required.items():
+            self.assertEqual((out / name).read_bytes(), content)
+
     def test_build_view_rejects_bad_inputs_before_creating_output(self):
         inputs = self.materialize()
         (inputs / "LIB/LIBW.LIB").write_bytes(b"wrong")

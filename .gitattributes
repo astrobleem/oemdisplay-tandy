@@ -30,3 +30,11 @@ distributions/WINXT/* -text
 tools/FLASHDISK/XTPINS.H -text
 tools/FLASHDISK/HELPER.SHA -text
 tools/FLASHDISK/BUILD.BAT -text
+docs/PROMO/PBRUSH16.JSON -text
+docs/PROMO/VERIFY.PY -text
+tools/CPSET/* -text
+tools/FLASHDISK/SZ* -text
+tools/FLASHDISK/PACKPINS.H -text
+tools/FLASHDISK/PREPXT.C -text
+docs/QUAL/CPSET.JSON -text
+tools/FLASHDISK/TESTFAT.PY -text

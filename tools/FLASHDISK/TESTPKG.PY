@@ -41,15 +41,26 @@ def zip_entries(path):
         return {i.filename: archive.read(i) for i in entries}
 
 
+def artifact_file(path):
+    # Reproduction sources make the toolkit larger than the input-file cap.
+    # Only this named release artifact has a 2 MiB limit. Individual ZIP
+    # members and all runtime/helper inputs retain their 1 MiB bounds.
+    if path.name != 'WXTTOOLS.ZIP':
+        return package.read_file(path)
+    check(not path.is_symlink() and path.is_file() and path.stat().st_size <= 2097152,
+          'Missing, linked or oversized reproduction toolkit')
+    return path.read_bytes()
+
+
 def verify(out, runtime=RUNTIME):
     check(out.is_dir() and not out.is_symlink(), 'Invalid artifact directory')
     check({p.name for p in out.iterdir()} == OUTPUT_NAMES, 'Unexpected public output files')
-    data = {p.name: package.read_file(p) for p in out.iterdir()}
+    data = {p.name: artifact_file(p) for p in out.iterdir()}
     expected_sha = ''.join(package.sha(data[n]) + '  ' + n + '\n'
                            for n in sorted(OUTPUT_NAMES - {'SHA256SUMS'}))
     check(data['SHA256SUMS'] == expected_sha.encode(), 'Artifact SHA256 list mismatch')
-    expected = {'WINXT/' + name: content for name, content in package.public_payload(runtime).items()}
     helper = package.helper_payload()
+    expected = {'WINXT/' + name: content for name, content in package.disk_payload(package.public_payload(runtime), helper).items()}
     package.validate_helper_pins(package.public_payload(runtime), helper)
     guide = package.readme(False)
     expected.update({'README.TXT': guide, 'INSTALL.BAT': package.install_batch(),
@@ -66,6 +77,7 @@ def verify(out, runtime=RUNTIME):
     toolkit['WINXT/STAGE.PY'] = package.read_file(runtime / 'STAGE.PY')
     toolkit.update({n: package.read_file(HERE / n) for n in ('MAKEIMG.PY', 'FAT12.PY')})
     toolkit.update(package.wave_payload())
+    toolkit.update(package.computer_source_payload())
     toolkit.update(helper)
     toolkit['HELPER.SHA'] = package.read_file(HERE / 'HELPER.SHA')
     toolkit['README.TXT'] = guide
@@ -77,9 +89,11 @@ def verify(out, runtime=RUNTIME):
           and metadata['disk_setup_startup'] == 'guarded-color-wave-static-fallback'
           and metadata['wave_payload_sha256'] == {n:package.sha(b) for n,b in package.wave_payload().items()},
           'Independent startup default/provenance mismatch')
+    check(metadata['computer_source_sha256'] == {n:package.sha(b) for n,b in package.computer_source_payload().items()}, 'Computer source provenance mismatch')
     check(metadata['fat_verification'] == actual, 'Build report differs from verified disk')
     check(metadata['runtime_manifest_sha256'] == package.sha(package.public_payload(runtime)['MANIFEST.SHA']),
           'Runtime provenance mismatch')
+    check(metadata['packed_transport'] == package.transport_report(package.public_payload(runtime), package.disk_payload(package.public_payload(runtime), helper)), 'Packed transport provenance mismatch')
     check(metadata['helper_sha256'] == package.sha(helper['PREPXT.EXE']), 'Helper provenance mismatch')
     return actual
 
@@ -91,8 +105,8 @@ class PackageTests(unittest.TestCase):
         self.base = Path(self.temp.name)
 
     def test_native_installer_source_and_payload_pins(self):
-        evidence = json.loads((HERE.parents[1] / 'docs/QUAL/WAVEINS.JSON').read_bytes())
-        self.assertEqual(evidence['status'], 'PASS final frozen mounted-image preparation and native installer lifecycle')
+        evidence = json.loads((HERE.parents[1] / 'docs/QUAL/CPSET.JSON').read_bytes())
+        self.assertEqual(evidence['status'], 'PASS compact Computer profile integration and packed 720KB preparation')
         payload = package.public_payload(RUNTIME)
         for name, pin in evidence['payload_pins'].items():
             self.assertEqual(package.sha(payload[name]), pin['sha256'])
@@ -100,8 +114,11 @@ class PackageTests(unittest.TestCase):
         for name, digest in evidence['source_pins'].items():
             self.assertEqual(package.sha(package.read_file(HERE.parents[1] / name)), digest)
         self.assertEqual(evidence['final_helper_sha256'], package.sha(package.helper_payload()['PREPXT.EXE']))
-        self.assertEqual(evidence['rollback_original_files'], 35)
-        self.assertTrue(evidence['normal_color_and_static_dos_return'])
+        self.assertEqual(evidence['rollback_native_byte_comparisons'], 38)
+        self.assertTrue(evidence['stock_Computer_completion_and_reopen'])
+        self.assertTrue(evidence['K3_Computer_completion_and_reopen'])
+        self.assertTrue(evidence['shared_lock_released_no_conflicts'])
+        self.assertTrue(evidence['stock_and_K3_normal_Windows_return'])
 
     def test_changed_dos_wave_refused(self):
         payload = package.public_payload(RUNTIME)
@@ -152,6 +169,14 @@ class PackageTests(unittest.TestCase):
         for art in [b'', (HERE.parents[1] / 'src/splash/assets/TNDYLOGO.RLE').read_bytes()]:
             changed = dict(payload); changed['WXTSPL01.RLE'] = art
             with self.assertRaises(stage.DiskError): stage.verify_default_splash(changed)
+
+    def test_private_720_mode_refused_before_output_or_input_reads(self):
+        out = self.base / 'private'
+        with mock.patch.object(package, 'public_payload') as payload:
+            with self.assertRaisesRegex(package.PackageError, 'does not fit.*PREPXT'):
+                package.build(self.base / 'missing-runtime', out, self.base / 'missing-media')
+            payload.assert_not_called()
+        self.assertFalse(out.exists())
 
     def test_reproducible_public_disk_and_exact_allowlist(self):
         a, b = self.base / 'one', self.base / 'two'
