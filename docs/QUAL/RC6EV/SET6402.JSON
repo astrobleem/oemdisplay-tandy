@@ -1,0 +1,24 @@
+{
+  "native_Setup_pass": true,
+  "row": 4,
+  "phase": 6,
+  "actions": 6,
+  "common_bytes": 7879,
+  "wave_unchanged": true,
+  "selected_boot": {
+    "286grabber": "CGA.GR2",
+    "display.drv": "TR56402.DRV",
+    "fixedfon.fon": "XTCFIX.FON",
+    "fonts.fon": "XTCSYS.FON",
+    "oemfonts.fon": "XTCOEM.FON"
+  },
+  "text_GUI_quality_claim": false,
+  "DOS_KB": 624,
+  "DOS_mode": 3,
+  "original_runner_failure_preserved": true,
+  "original_runner_error": "Incomplete native controller phases",
+  "validator_correction": "Required phase transitions are 1..6; media-path prompts are optional. Seven actions was an incorrect host assertion.",
+  "corrected_validator_sha256": "1f9fa43ca535bc39a508abd2bfbd90e462a19b0326ea4e30c7471066c9101a4b",
+  "native_host_seconds": 52.297,
+  "genuine_capture": "SETUP/SET6402/capture/setup_000.avi"
+}

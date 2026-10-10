@@ -1,0 +1,12 @@
+{
+  "native_compile_pass": true,
+  "source_pins": {
+    "PACKPINS.H": "5222fe457fec1984a35da258b5c7ff636a07acadd0d7d95497b65f9ffdf3caf8",
+    "PREPXT.C": "e6ddd0cfc7068a00fc0f97b07f7842ea2410b3872b6f24bac0aa149e5267cfa7",
+    "SZSTREAM.H": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68",
+    "XTPINS.H": "7a914108407b3fb6dd2f5d8fe94e999fffed86bc7b85df9182384ee06b4b637d"
+  },
+  "flags": "/c /AS /G0 /W3 /Od",
+  "binary_sha256": "5817a16b619377307f8f503b379f0d2bfec7b455797ee24f56f4c767e4eb59e5",
+  "log_sha256": "d71dbbb81b8b7c67634e0e3df4a99c718ed11202d78db291f01c04d5c63fb63e"
+}

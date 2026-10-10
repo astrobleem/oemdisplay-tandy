@@ -3,7 +3,7 @@ Windows 3.0 real mode on Tandy EX/HX / 8088
 
 EVERYTHING GOES IN C:\WINXT
 From the public 720 KB image, run A: then CD \ then INSTALL outside Windows.
-PREPXT checks matching owned fonts and stages C:\WINXT with I/O/size checks.
+PREPXT checks the matching owned CGA grabber and stages C:\WINXT with I/O/size checks.
 Then run C: then CD \WINXT then INSTALL. The complete prepared folder stays on
 your DOS drive. That folder holds all display sources, helpers, shell
 companions and settings templates. Backups are created INSIDE WINXT\BACKUP.
@@ -67,8 +67,8 @@ STARTUP AND ROLLBACK
 The guarded launcher enables the short slow flag wave for TR53216/TANDY88
 Color. Lettering and pane colors stay steady; a key skips the animation.
 This runs before loading Windows. Mono/other modes retain static startup.
-INSTALL privately combines your exact owned SYSTEM\WIN.CNF with the original
-logo module. Installed WIN.COM stays untouched by the wave updater; normal
+INSTALL privately combines your exact owned SYSTEM\WIN.CNF with the original XTLOGO.LGO
+wave module. Installed WIN.COM stays untouched by the wave updater; normal
 Windows Setup still owns its display installation. Wrong loader bytes,
 changed starters or altered wrapper files refuse startup safely.
 
@@ -79,7 +79,7 @@ Re-enable with APPLY using the same arguments. Never bypass a refusal.
 Full pre-install rollback uses WINXT\BACKUP\B001\RESTORE YES (use the actual
 number printed by INSTALL). It disables the wave first and byte-verifies
 the original Windows files. Added inactive helpers remain for inspection.
-Do not redistribute the completed folder; it contains your own loader/fonts.
+Do not redistribute the completed folder; it contains your owned loader/grabber.
 
 SIX DISPLAY CHOICES
 320x200, 16 colors  - TR53216.DRV, EGA fonts, TR5 graphics driver
@@ -94,15 +94,21 @@ Read TEXTMODE.TXT before choosing it. It is the existing feasibility driver,
 not a stable replacement or a TR5-optimized driver. Setup selects its separate
 XTTSYS.FON fixed-cell font; original graphics fonts remain unchanged.
 
-CHANGE DISPLAY MODE
+CHANGE DISPLAY MODE / UNDO / RECOVER
 Exit Windows completely, then run:
 
-  C:\WINXT\WINXT SETUP
+  C:\WINXT\MODES
 
-Select Display -> Other, use C:\WINXT again, and choose your mode. Reboot
-and use C:\WINXT\WINXT. This uses ordinary DOS Setup, not a live in-Windows
-hardware mode switch. Switching back to a qualified graphics mode restores
-its graphics fonts and enables the verified optional-shell launch path again.
+Choose 32016, 6404, 16016, 3204 or 6402; TEXT remains experimental and opt-in.
+The first run installs the exact original mode resources once. Later choices
+update the display/font/grabber/description settings with a verified journal.
+Choose U in the MODES menu to undo the one previous selection. This is plain
+DOS switching; restart Windows through the guarded WINXT/TSTART launcher.
+Unrelated SYSTEM.INI bytes stay intact. Guarded startup runs RECOVER before
+Windows; incomplete or inconsistent state refuses startup. Keep C:\WINXT and
+the mode journal/resource sidecars. Do not hand-edit INI settings or delete
+sidecars to bypass a refusal. Read MODEINFO.TXT for advanced recovery.
+The original Windows Setup path remains available through WINXT SETUP.
 
 RECOVER YOUR ORIGINAL WINDOWS CONFIGURATION
 From plain DOS, use the backup path printed by INSTALL. For example:
@@ -136,12 +142,12 @@ ABOUT THIS PACKAGE
 The five graphics drivers include the bounded scanline-flush correction that
 removes Clock's slow thick-border painting in the tested emulator. Stock
 CLOCK.EXE is unchanged. See TESTS.TXT for exact coverage and qualifications.
-The moon startup art is installed by Windows Setup with the Windows-owned
-loader preserved. No replacement Windows/DOS installation is included.
+The original Windows XT static artwork is installed by Windows Setup with
+the Windows-owned loader preserved. No replacement Windows/DOS installation is included.
 
 XT Pixels fonts are original MIT-licensed files; see FONTLIC.TXT and
 FONTINFO.TXT. Windows fonts and locally derived TXTSYS are no longer
-source-media dependencies. CGA.GR2 and CGALOGO.LGO still require your
+source-media dependencies. CGA.GR2 still requires your
 own matching Windows media and must not be redistributed publicly.
 Host build/source/evidence archives are separate; none is needed on the CF.
 See SHELL14.TXT and HOLD14.TXT for shell/keyboard navigation details.
@@ -151,7 +157,8 @@ The display installer supports another Windows path, e.g. INSTALL D:\WIN30,
 and writable 8.3 source paths. The integrated optional shell is specifically
 C:\WINXT plus C:\WINDOWS. DOS 3.3+ is required; no long filenames or spaces.
 Existing generated helpers or partial installs are refused safely. To change
-modes use WINXT SETUP, not INSTALL again. Older root support folders are not
+modes later, exit Windows fully and run MODES; choose U to undo the previous
+selection. Guarded startup performs RECOVER first. WINXT SETUP remains available. Older root support folders are not
 deleted automatically; this package's fresh layout needs only C:\WINXT.
 
 FIRST-RUN UPDATE (2026-10-08)
@@ -174,3 +181,16 @@ The source INF becomes installation-specific after INSTALL. The released
 MANIFEST.SHA pins the original media; OEMBASE.INF retains that original.
 Keep the source drive mounted through Setup. Never run the guarded installer
 directly from a small/read-only floppy: PREPXT stages to a writable C:\WINXT.
+
+ORIGINAL STATIC LOGO REVISION (UNPUBLISHED)
+XTSTATIC.LGO replaces owned CGALOGO.LGO in Setup and static WIN.COM.
+Only CGA.GR2 is gathered from owned support; owned Windows/WIN.CNF remain.
+The accepted Color slow wave is unchanged. Final emulator Setup 6402/TEXT and
+PREPXT default/VERIFY qualification passed; see the SHA-bound QUALIFICATION.JSON.
+Windows itself, WIN.CNF, Setup/kernel and other non-font dependencies remain.
+
+DOS MODE SWITCHER REVISION (UNPUBLISHED)
+After initial INSTALL, exit Windows fully and run C:\WINXT\MODES.
+Select a graphics mode, and choose U for the previous selection. Read
+MODEINFO.TXT for undo/recovery, completed qualification and remaining limits.
+No Python/compiler or default SHA scan is needed on the vintage computer.

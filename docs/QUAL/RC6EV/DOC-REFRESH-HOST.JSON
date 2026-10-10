@@ -1,0 +1,19 @@
+{
+  "host_only": true,
+  "no_additional_guest_or_lease": true,
+  "document_refresh_pass": true,
+  "native_code_source_unchanged": true,
+  "all_binary_rows_match_source": 59,
+  "only_document_runtime_files_changed": 3,
+  "only_document_pin_data_changed": true,
+  "refreshed_executable_rerun_in_guest": false,
+  "helper_sha256": "192b936631a67324b83e4dabaaac396885e541973e74df8699adac7085746845",
+  "negative_tests": [
+    "non-document font-pin change rejected",
+    "owned grabber size change rejected",
+    "filename mutation rejected"
+  ],
+  "original_fonts_drivers_wave_catalog_and_helpers_unchanged": true,
+  "preserved_native_records_untouched": true,
+  "proof_sha256": "9169bc557dc539aaedd577244186046d4ec14ab4958a751292642c5da8ac5289"
+}

@@ -1,0 +1,15 @@
+{
+  "kind": "Unpublished original-static-logo native build; runtime qualification pending",
+  "native_package_qualified": false,
+  "publication_allowed": false,
+  "helper_sha256": "1aa7fae2788f8fd9ccf3dfe5e3c454470f9ec47bcd13f7de942e17b6b3264e7c",
+  "installer_sha256": "c123e4338fd372d68d99e9e6048cdf6cd9db0c97fcf59fd5f2a814368310804b",
+  "runtime_manifest_sha256": "d21876775402818d725e32cc6d4fb6becb0bc3005cccf852603478a49d0f1660",
+  "static_logo_sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef",
+  "source_pins": {
+    "src/tandysw/TINST.C": "783b315294d98d515f27bf1829de29830e8d600b1e443333bd57e2c92e0d2cfc",
+    "tools/FLASHDISK/PREPXT.C": "e6ddd0cfc7068a00fc0f97b07f7842ea2410b3872b6f24bac0aa149e5267cfa7",
+    "tools/FLASHDISK/XTPINS.H": "79ff6b5775336f417cc1dc23e79463a757219c543cc64cf923a9eb472aa73adf",
+    "tools/XTLOGO/STATIC.ASM": "a7d080f3b69e4b3847e0c17e7871e8c7e46736c6ac704ceb991e88178f2c7d2a"
+  }
+}

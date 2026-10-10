@@ -80,3 +80,13 @@ helper/source/runtime/font bytes. Historical BUILD/ZERO records retain their
 snapshot scope. Publication uses PUBLISH.PY and the guarded release workflow,
 with no old asset/tag overwrite. Keep DOS/Windows and non-font owned resources
 out of new public payloads. An emulator launch still requires an explicit slot.
+
+## Current rc.6 release
+
+Use tools/FLASHDISK/PUBLISH.PY for rc.6. Keep the rc.5 font publisher and
+qualification historical. docs/QUAL/RC6.JSON binds the current source/runtime
+and accepted native records. PREPXT code is the measured native implementation;
+DOCPINS reproduces a bounded documentation-data refresh. The refreshed helper
+was not rerun in the guest. Preserve that distinction. New source archives
+exclude historical binary ZIP bundles via export-ignore. No owned Windows
+resources, compiler or emulator bytes belong in new downloads.

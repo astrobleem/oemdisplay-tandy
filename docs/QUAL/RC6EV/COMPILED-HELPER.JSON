@@ -1,0 +1,37 @@
+{
+  "kind": "Fresh native production build and preparation acceptance; final package binding separate",
+  "native_package_qualified": false,
+  "native_preparation_qualified": true,
+  "publication_allowed": false,
+  "helper_sha256": "5817a16b619377307f8f503b379f0d2bfec7b455797ee24f56f4c767e4eb59e5",
+  "installer_sha256": "cc0036bbb82c89cef6dfbe025c10f7d61732d1271f9805031070d4b515517df1",
+  "runtime_manifest_sha256": "030acc0de847611c27278410db3e86d80531ab8dfc50658b58e5716c980ddf81",
+  "mode_helper_sha256": "34ff85d216a7c0233066aedc27c2199c2772e278438e627ce548d07909de4160",
+  "compiled_source_pins": {
+    "PACKPINS.H": "5222fe457fec1984a35da258b5c7ff636a07acadd0d7d95497b65f9ffdf3caf8",
+    "PREPXT.C": "e6ddd0cfc7068a00fc0f97b07f7842ea2410b3872b6f24bac0aa149e5267cfa7",
+    "SZSTREAM.H": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68",
+    "XTPINS.H": "7a914108407b3fb6dd2f5d8fe94e999fffed86bc7b85df9182384ee06b4b637d"
+  },
+  "compiler_flags": {
+    "PREPXT": "/c /AS /G0 /W3 /Od",
+    "ZEROPREP": "/c /AS /G0 /W3 /Od /DINSTALL_DIAGNOSTICS /DZERO_SHA_TEST"
+  },
+  "native_preparation_results": {
+    "PRODBLD": "6bb97d8ce13281132834b0b5c5d0cc0308f2cdda19554a9e7ddf981d470badca",
+    "ZEROBLD": "88db079d102f6b7262d0860e2dafd4da33c493461117e51c76f6f66230eabb1a",
+    "PFAST": "c899a7f6385307b1b146ba81c3e45f80b80ff88c084e1ebc6b75a0af6e971bf0",
+    "PZERO": "ee31db8630c07e1a4f1870b64952e3f010668fc616c22ade12befd07e480fc03",
+    "PVERIFY": "cf02538d454dc90003e0ba72c9b29f635a8a7e096712908f55fc0153e14f0f88"
+  },
+  "measured_host_seconds": {
+    "PRODBLD": 20.875,
+    "ZEROBLD": 20.86,
+    "PFAST": 41.531,
+    "PZERO": 41.547,
+    "PVERIFY": 138.875
+  },
+  "zero_SHA_evidence": "Instrumented source-coupled default: [0,0] SHA blocks; zero output readback. Production default separately byte-verified.",
+  "immutable_runtime_notes": "MODEINFO.TXT is the frozen pre-test text; qualification records contain subsequent measurement.",
+  "failure_checkpoint": "R4 Setup validator required seven actions incorrectly; native controller had all six required phases."
+}

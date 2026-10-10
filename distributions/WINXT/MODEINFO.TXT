@@ -1,0 +1,51 @@
+WINDOWS XT DOS MODE SWITCHER - UNPUBLISHED REVIEW CANDIDATE
+
+Requires a completed Windows XT installation, DOS 3.3+ and plain DOS outside
+Windows. Windows 3.0 real mode on original EX/HX remains the target. Exit
+Windows fully, then use C:\WINXT\MODES. This prepares the original mode
+resources once and presents the mode menu. No Python/compiler is required.
+Selections: 32016, 6404, 16016, 3204, 6402. TEXT is experimental and opt-in.
+Example: MODES 6404. To undo the last selection: run MODES and choose U.
+Start Windows with C:\WINXT\WINXT or the guarded C:\WINXT\TSTART.
+
+The selector changes six display/font/grabber/description settings while
+preserving unrelated INI bytes. It uses one-level UNDO and verified journals.
+Interrupted work is recovered before startup. Unknown or inconsistent state
+refuses startup. Keep the C:\WINXT source folder available. Do not remove
+journal files manually; use RECOVER/UNDO or investigate the printed error.
+Do not use manual SYSTEM.INI edits as the normal installation procedure.
+
+INSTALL copies original resources; the owned common CGA.GR2 and WIN.COM must
+already be correct. WIN.COM here uses the original static module layout:
+owned WIN.CNF + XTSTATIC.LGO + WXTSPL01.RLE (7,879 bytes before wave routing).
+This does not remove Windows itself or non-font Windows dependencies.
+Windows Setup remains available via WINXT SETUP; completed mode history is
+accepted first. The numbered whole-install RESTORE disables mode/wave state
+before restoring the recorded pre-install files. Added resources stay inactive.
+
+Cheap structural/size checks are the default. VERIFY scans selected original
+resources with CRC32 when explicitly requested. No default SHA scans added.
+PREPXT default preparation uses size/I/O/structural checks. The source-coupled
+instrumented default measured zero SHA blocks in preflight and copy, with zero
+output readback. Production default independently passed exact-output checks.
+Emulator host times were about 42 seconds for default and 139 for /VERIFY.
+These are emulator timings, not physical 8088 speed estimates. /VERIFY remains
+explicit developer diagnostics and is never the default vintage workflow.
+
+All five graphics modes passed native cold-launch GDI/advance comparison using
+the generated launchers. Actual Windows-launched DOS tests refused all ten
+mutation/verification/menu commands and preserved 254 preimage files. Native
+resource copy, six selections, interrupted recovery, one-level UNDO and whole
+120-file installer rollback passed. These are emulator checks, not hardware
+qualification. At 160 pixels a stock 218-pixel dialog clips. Small menus can
+wrap. TEXT retains known extended/adjacent-cell renderer corruption; its font
+contains complete CP437 box/block/shading glyphs. No TEXT GUI quality claim.
+
+Final emulator Setup 6402/TEXT, production and diagnostic builds, default
+preparation and explicit /VERIFY passed. Setup selected exact original
+resources, preserved the slow wave and returned to 624 KB DOS mode 3.
+QUALIFICATION.JSON binds these results and the current documentation update.
+The measured executable code is unchanged; updated documentation pins were
+verified on the host. This private candidate is unpublished.
+No publication is authorized. Source tools/XTMODE and runtime MODELIC.TXT
+contain original MIT source and provenance.

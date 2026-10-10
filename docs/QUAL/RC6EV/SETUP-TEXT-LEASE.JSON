@@ -1,0 +1,37 @@
+{
+  "deadline_utc": "2026-10-10T06:16:56.669054+00:00",
+  "jobs": [
+    {
+      "purpose": "SETTEXT",
+      "started_utc": "2026-10-10T06:15:50.580253+00:00",
+      "pid": 34576,
+      "exit_code": 0,
+      "seconds": 56.672,
+      "stop_reason": "process_exited",
+      "exit_code_after_stop": 0,
+      "validation": {
+        "native_Setup_pass": true,
+        "row": 5,
+        "phase": 6,
+        "actions": 6,
+        "common_bytes": 7879,
+        "wave_unchanged": true,
+        "selected_boot": {
+          "286grabber": "CGA.GR2",
+          "display.drv": "TXTMODE.DRV",
+          "fixedfon.fon": "XTCFIX.FON",
+          "fonts.fon": "XTTSYS.FON",
+          "oemfonts.fon": "XTCOEM.FON"
+        },
+        "text_GUI_quality_claim": false,
+        "DOS_KB": 624,
+        "DOS_mode": 3
+      }
+    }
+  ],
+  "native_qualified": false,
+  "acquired_utc": "2026-10-10T06:15:49.896122+00:00",
+  "active": "released",
+  "released_utc": "2026-10-10T06:16:47.263654+00:00",
+  "conflicts_after": []
+}

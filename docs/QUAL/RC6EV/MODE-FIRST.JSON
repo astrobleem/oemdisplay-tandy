@@ -1,0 +1,71 @@
+{
+  "qualified": false,
+  "kind": "Native DOSBox-X 8086 real-mode evidence; screenshots decoded from native B800 VRAM",
+  "source_sha256": "6742d188ec5d9929de6cd67d4acae471d1ec036659dc941444620cd9b48218e9",
+  "checks": {
+    "native_copy_switch_undo_interrupted_rename_recovery": "PASS all 15 resources, six selections, rollback to 6402",
+    "W1600": "PASS 10 coded Windows refusal paths using native INT2F response stub; not actual Windows DOS-app launch",
+    "W4680": "PASS 10 coded Windows refusal paths using native INT2F response stub; not actual Windows DOS-app launch",
+    "pending_mode_generated_WINXT_and_TSTART": "PASS refusal before video reservation; BDA 624KB and mode3 retained",
+    "native_new_installer_rollback": {
+      "pass": true,
+      "preimage_files": 120,
+      "original_settings_and_boot_exact": true,
+      "DOS_memory": "BDA-KB MODE-AX PAGE-BX TOP-TYPE OWNER SIZE OWNER-TYPE SELF SIZE ID0 ID1 ID2 ID3 VIDEO COUNT\n0270 5003 0000 0000 0000 0000 \n"
+    }
+  },
+  "real_Windows_query": "NATIVE WIN16 flags=0000:0040 AX1600=1600 AX4680=4680\nDONE\n",
+  "real_Windows_query_limit": "An actual DOS app launched from real-mode Windows remains untested. The Win16 query left AX1600/AX4680 unchanged; do not claim actual active-Windows guard qualification.",
+  "graphics": {
+    "32016": {
+      "pass": true,
+      "native_224_advances_exact": true,
+      "raw_framebuffers_identical_to_prior_qualified_native_GDI": {
+        "NORMAL": true,
+        "DIALOG": true
+      },
+      "DOS_memory": "BDA-KB MODE-AX PAGE-BX TOP-TYPE OWNER SIZE OWNER-TYPE SELF SIZE ID0 ID1 ID2 ID3 VIDEO COUNT\n0270 5003 0000 005A 0817 0400 004D 0817 006F 4E54 5944 5352 3130 9800 0400 \n",
+      "known_clipping": null
+    },
+    "6404": {
+      "pass": true,
+      "native_224_advances_exact": true,
+      "raw_framebuffers_identical_to_prior_qualified_native_GDI": {
+        "NORMAL": true,
+        "DIALOG": true
+      },
+      "DOS_memory": "BDA-KB MODE-AX PAGE-BX TOP-TYPE OWNER SIZE OWNER-TYPE SELF SIZE ID0 ID1 ID2 ID3 VIDEO COUNT\n0270 5003 0000 005A 0817 0400 004D 0817 006F 4E54 5944 5352 3130 9800 0400 \n",
+      "known_clipping": null
+    },
+    "16016": {
+      "pass": true,
+      "native_224_advances_exact": true,
+      "raw_framebuffers_identical_to_prior_qualified_native_GDI": {
+        "NORMAL": true,
+        "DIALOG": true
+      },
+      "DOS_memory": "BDA-KB MODE-AX PAGE-BX TOP-TYPE OWNER SIZE OWNER-TYPE SELF SIZE ID0 ID1 ID2 ID3 VIDEO COUNT\n0270 5003 0000 005A 0817 0400 004D 0817 006F 4E54 5944 5352 3130 9800 0400 \n",
+      "known_clipping": "Stock 218-pixel dialog exceeds 160-pixel viewport"
+    },
+    "3204": {
+      "pass": true,
+      "native_224_advances_exact": true,
+      "raw_framebuffers_identical_to_prior_qualified_native_GDI": {
+        "NORMAL": true,
+        "DIALOG": true
+      },
+      "DOS_memory": "BDA-KB MODE-AX PAGE-BX TOP-TYPE OWNER SIZE OWNER-TYPE SELF SIZE ID0 ID1 ID2 ID3 VIDEO COUNT\n0270 5003 0000 005A 0817 0400 004D 0817 006F 4E54 5944 5352 3130 9800 0400 \n",
+      "known_clipping": null
+    },
+    "6402": {
+      "pass": false,
+      "status": "prepared, not completed in this lease"
+    }
+  },
+  "blockers": [
+    "Static DOS Setup 6402 and TEXT controller runs timed out; retain AVIs, do not stage qualified package",
+    "Actual DOS application launched from real-mode Windows guard test pending",
+    "6402 generated-launcher GDI pending if not completed above",
+    "Fresh PREPXT integration/pins/capacity/media build pending; no publication or E staging"
+  ]
+}

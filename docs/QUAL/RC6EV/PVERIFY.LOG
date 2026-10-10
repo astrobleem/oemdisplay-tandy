@@ -1,0 +1,133 @@
+PREPXT - own-media preparation for WINXT (8088 / DOS 3.3+)
+Deep verification ON.
+SHA-256 self-test passed (empty, abc, two-block vector).
+Checking runtime sizes and owned non-font support before output.
+Checking C:\WINDOWS\SYSTEM\CGA.GR2
+Checking C:\MEDIA\CGA.GR2
+Checking A:\WINXT\CPSET.EXE
+Checking A:\WINXT\CPSET.TXT
+Checking A:\WINXT\FONTINFO.TXT
+Checking A:\WINXT\FONTLIC.TXT
+Checking A:\WINXT\HOLD14.TXT
+Checking A:\WINXT\HOLD160.PNG
+Checking A:\WINXT\HOLD640.PNG
+Checking A:\WINXT\INSTALL.BAT
+Checking A:\WINXT\LOGOINFO.TXT
+Checking A:\WINXT\LOGOLIC.TXT
+Checking A:\WINXT\MANIFEST.SHA
+Checking A:\WINXT\MATRIX.EXE
+Checking A:\WINXT\MAZE.EXE
+Checking A:\WINXT\MODEINFO.TXT
+Checking A:\WINXT\MODELIC.TXT
+Checking A:\WINXT\NAMES11.TXT
+Checking A:\WINXT\OEMSETUP.INF
+Checking A:\WINXT\PINBALL.EXE
+Checking A:\WINXT\README.TXT
+Checking A:\WINXT\RESERVE.COM
+Checking A:\WINXT\SHELL14.TXT
+Checking A:\WINXT\SHELLSEL.EXE
+Checking A:\WINXT\SHFULL.TXT
+Checking A:\WINXT\STARFLD.EXE
+Checking A:\WINXT\TABOUT.EXE
+Checking A:\WINXT\TCHIME.EXE
+Checking A:\WINXT\TESTS.TXT
+Checking A:\WINXT\TESTS14.TXT
+Checking A:\WINXT\TEXIT.EXE
+Checking A:\WINXT\TEXTMODE.TXT
+Checking A:\WINXT\TINST.EXE
+Checking A:\WINXT\TR51616.DR_
+Checking A:\WINXT\TR53204.DRV
+Checking A:\WINXT\TR53216.DR_
+Checking A:\WINXT\TR56402.DRV
+Checking A:\WINXT\TR56404.DR_
+Checking A:\WINXT\TSCHECK.EXE
+Checking A:\WINXT\TSHELL.EX_
+Checking A:\WINXT\TSHELL.INI
+Checking A:\WINXT\TSINPUT.DLL
+Checking A:\WINXT\TSREADY.TXT
+Checking A:\WINXT\TSSETUP.BAT
+Checking A:\WINXT\TSTART.BAT
+Checking A:\WINXT\TXTMODE.DR_
+Checking A:\WINXT\WAVEXT.EXE
+Checking A:\WINXT\WXTSPL01.RLE
+Checking A:\WINXT\XPCHIME.EXE
+Checking A:\WINXT\XTCFIX.FO_
+Checking A:\WINXT\XTCLEAN.COM
+Checking A:\WINXT\XTCOEM.FO_
+Checking A:\WINXT\XTCSYS.FO_
+Checking A:\WINXT\XTEFIX.FO_
+Checking A:\WINXT\XTEOEM.FO_
+Checking A:\WINXT\XTESYS.FO_
+Checking A:\WINXT\XTMODE.EX_
+Checking A:\WINXT\XTSTATIC.LGO
+Checking A:\WINXT\XTTSYS.FO_
+Checking A:\WINXT\XTWAVE.DAT
+C: free 2013265920 bytes; staging requires 2490368 bytes including headroom.
+Source checks complete. Windows and boot configuration will not be changed.
+Create the complete C:\WINXT folder now? Type Y then Enter, or N to cancel:
+C: free 2013265920 bytes; staging requires 2490368 bytes including headroom.
+Verified C:\WINXT\CGA.GR2
+Verified C:\WINXT\CPSET.EXE
+Verified C:\WINXT\CPSET.TXT
+Verified C:\WINXT\FONTINFO.TXT
+Verified C:\WINXT\FONTLIC.TXT
+Verified C:\WINXT\HOLD14.TXT
+Verified C:\WINXT\HOLD160.PNG
+Verified C:\WINXT\HOLD640.PNG
+Verified C:\WINXT\LOGOINFO.TXT
+Verified C:\WINXT\LOGOLIC.TXT
+Verified C:\WINXT\MANIFEST.SHA
+Verified C:\WINXT\MATRIX.EXE
+Verified C:\WINXT\MAZE.EXE
+Verified C:\WINXT\MODEINFO.TXT
+Verified C:\WINXT\MODELIC.TXT
+Verified C:\WINXT\NAMES11.TXT
+Verified C:\WINXT\OEMSETUP.INF
+Verified C:\WINXT\PINBALL.EXE
+Verified C:\WINXT\README.TXT
+Verified C:\WINXT\RESERVE.COM
+Verified C:\WINXT\SHELL14.TXT
+Verified C:\WINXT\SHELLSEL.EXE
+Verified C:\WINXT\SHFULL.TXT
+Verified C:\WINXT\STARFLD.EXE
+Verified C:\WINXT\TABOUT.EXE
+Verified C:\WINXT\TCHIME.EXE
+Verified C:\WINXT\TESTS.TXT
+Verified C:\WINXT\TESTS14.TXT
+Verified C:\WINXT\TEXIT.EXE
+Verified C:\WINXT\TEXTMODE.TXT
+Verified C:\WINXT\TINST.EXE
+Verified C:\WINXT\TR51616.DRV
+Verified C:\WINXT\TR53204.DRV
+Verified C:\WINXT\TR53216.DRV
+Verified C:\WINXT\TR56402.DRV
+Verified C:\WINXT\TR56404.DRV
+Verified C:\WINXT\TSCHECK.EXE
+Verified C:\WINXT\TSHELL.EXE
+Verified C:\WINXT\TSHELL.INI
+Verified C:\WINXT\TSINPUT.DLL
+Verified C:\WINXT\TSREADY.TXT
+Verified C:\WINXT\TSSETUP.BAT
+Verified C:\WINXT\TSTART.BAT
+Verified C:\WINXT\TXTMODE.DRV
+Verified C:\WINXT\WAVEXT.EXE
+Verified C:\WINXT\WXTSPL01.RLE
+Verified C:\WINXT\XPCHIME.EXE
+Verified C:\WINXT\XTCFIX.FON
+Verified C:\WINXT\XTCLEAN.COM
+Verified C:\WINXT\XTCOEM.FON
+Verified C:\WINXT\XTCSYS.FON
+Verified C:\WINXT\XTEFIX.FON
+Verified C:\WINXT\XTEOEM.FON
+Verified C:\WINXT\XTESYS.FON
+Verified C:\WINXT\XTMODE.EXE
+Verified C:\WINXT\XTSTATIC.LGO
+Verified C:\WINXT\XTTSYS.FON
+Verified C:\WINXT\XTWAVE.DAT
+Verified C:\WINXT\INSTALL.NEW
+
+Complete C:\WINXT copied. Preparation succeeded; Setup was not started.
+Next at DOS: C:
+CD \WINXT
+INSTALL C:\WINDOWS
+Use Windows Setup's Other display choice. Experimental text remains opt-in.

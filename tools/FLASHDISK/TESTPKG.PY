@@ -78,18 +78,23 @@ def verify(out, runtime=RUNTIME):
     toolkit.update({n: package.read_file(HERE / n) for n in ('MAKEIMG.PY', 'FAT12.PY')})
     toolkit.update(package.wave_payload())
     toolkit.update(package.computer_source_payload())
+    toolkit.update(package.mode_source_payload())
+    toolkit.update(package.font_source_payload())
+    toolkit.update(package.document_pin_source_payload())
     toolkit.update(helper)
     toolkit['HELPER.SHA'] = package.read_file(HERE / 'HELPER.SHA')
     toolkit['README.TXT'] = guide
     check(zip_entries(out / 'WXTTOOLS.ZIP') == toolkit, 'Portable toolkit mismatch')
     metadata = json.loads(data['BUILD.JSON'])
     check(metadata['publication_allowed'] is False and metadata['windows_support_included'] is False
-          and metadata['kind'] == 'original-font-test-candidate', 'PRIVATE OUTPUT MUST NOT BE PUBLISHED')
+          and metadata['kind'] == 'dos-mode-switcher-test-candidate', 'PRIVATE OUTPUT MUST NOT BE PUBLISHED')
     check(metadata['independent_startup_default'] == 'slow-flag-wave'
           and metadata['disk_setup_startup'] == 'guarded-color-wave-static-fallback'
           and metadata['wave_payload_sha256'] == {n:package.sha(b) for n,b in package.wave_payload().items()},
           'Independent startup default/provenance mismatch')
     check(metadata['computer_source_sha256'] == {n:package.sha(b) for n,b in package.computer_source_payload().items()}, 'Computer source provenance mismatch')
+    check(metadata['mode_source_sha256'] == {n:package.sha(b) for n,b in package.mode_source_payload().items()}, 'Mode source provenance mismatch')
+    check(metadata['font_source_sha256'] == {n:package.sha(b) for n,b in package.font_source_payload().items()}, 'Font source provenance mismatch')
     check(metadata['fat_verification'] == actual, 'Build report differs from verified disk')
     check(metadata['runtime_manifest_sha256'] == package.sha(package.public_payload(runtime)['MANIFEST.SHA']),
           'Runtime provenance mismatch')
@@ -104,10 +109,12 @@ class PackageTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name)
 
-    def test_pre_native_build_snapshot_and_binary_pins(self):
-        evidence = json.loads((HERE.parents[1] / 'docs/QUAL/FONTBLD.JSON').read_bytes())
+    def test_native_implementation_and_document_binding(self):
+        evidence = json.loads((HERE.parents[1] / 'docs/QUAL/MODEBLD.JSON').read_bytes())
         self.assertIs(evidence['native_package_qualified'], False)
         self.assertIs(evidence['publication_allowed'], False)
+        self.assertTrue(evidence['document_data_binding']['MZ_header_code_relocations_non_document_data_exact'])
+        self.assertTrue(evidence['document_data_binding']['all_59_binary_pin_rows_match_source'])
         payload = package.public_payload(RUNTIME)
         self.assertEqual(evidence['installer_sha256'], package.sha(payload['TINST.EXE']))
         self.assertEqual(evidence['runtime_manifest_sha256'], package.sha(payload['MANIFEST.SHA']))

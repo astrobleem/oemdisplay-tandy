@@ -260,3 +260,18 @@ run the existing build script from that view with the view as --repo or
 --toolchain as documented by the script. Supply an external DOSBox-X path.
 The preserved baseline is documented in [DEV](docs/DEV.MD). Do not restore
 floating toolchain directories into main or change accepted binary pins.
+
+## Current Windows XT rc.6 publication
+
+Run tools/FLASHDISK/MAKEIMG.PY --out NEW-PACKAGE, then TESTPKG.PY --verify
+NEW-PACKAGE. Run tools/FLASHDISK/PUBLISH.PY --package NEW-PACKAGE --out
+NEW-RELEASE --commit EXACT-COMMIT, followed by --verify NEW-RELEASE with the
+same commit. This checks source/runtime/accepted evidence and reproduces
+original fonts plus the documentation pin binding. It does not run a guest.
+
+The original static module uses an explicitly supplied OpenWatcom assembler
+and linker; tools/XTLOGO documents the recipe. XTMODE and the installer use
+the pinned external legacy compiler. No Python runs on the vintage machine.
+The 720 KB disk excludes CGA.GR2 and all Windows/DOS components. The
+refreshed PREPXT differs only in four documentation pin rows from its measured
+native base; code, MZ header and relocation bytes are unchanged.

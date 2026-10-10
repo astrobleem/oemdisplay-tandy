@@ -1,0 +1,324 @@
+{
+  "status": "UNQUALIFIED CHECKPOINT",
+  "native_package_qualified": false,
+  "publication_allowed": false,
+  "baseline": "0c400228eede1b0aedde8c91c3598636b1ea7e1c",
+  "lease": {
+    "deadline_utc": "2026-10-09T23:47:44+00:00",
+    "jobs": [
+      {
+        "purpose": "BUILD",
+        "started_utc": "2026-10-09T23:28:38.211664+00:00",
+        "pid": 23612,
+        "exit_code": 0,
+        "seconds": 14.437
+      },
+      {
+        "purpose": "ABI",
+        "started_utc": "2026-10-09T23:28:52.938518+00:00",
+        "pid": 7704,
+        "exit_code": 0,
+        "seconds": 3.016
+      },
+      {
+        "purpose": "REBUILD",
+        "started_utc": "2026-10-09T23:31:21.139049+00:00",
+        "pid": 5036,
+        "exit_code": 0,
+        "seconds": 8.906
+      },
+      {
+        "purpose": "TR53216",
+        "started_utc": "2026-10-09T23:33:15.999240+00:00",
+        "pid": 10248,
+        "exit_code": 0,
+        "seconds": 40.375
+      },
+      {
+        "purpose": "TR56404",
+        "started_utc": "2026-10-09T23:33:56.668653+00:00",
+        "pid": 10660,
+        "exit_code": 0,
+        "seconds": 40.391
+      },
+      {
+        "purpose": "TR51616",
+        "started_utc": "2026-10-09T23:34:37.355631+00:00",
+        "pid": 20084,
+        "exit_code": 0,
+        "seconds": 40.062
+      },
+      {
+        "purpose": "TR53204",
+        "started_utc": "2026-10-09T23:35:17.714185+00:00",
+        "pid": 1952,
+        "exit_code": 0,
+        "seconds": 39.969
+      },
+      {
+        "purpose": "TR56402",
+        "started_utc": "2026-10-09T23:35:58.030251+00:00",
+        "pid": 24064,
+        "exit_code": 0,
+        "seconds": 40.125
+      },
+      {
+        "purpose": "TXTMODE",
+        "started_utc": "2026-10-09T23:36:38.467064+00:00",
+        "pid": 29240,
+        "exit_code": 0,
+        "seconds": 40.0
+      },
+      {
+        "purpose": "FAILURES",
+        "started_utc": "2026-10-09T23:37:18.783734+00:00",
+        "pid": 26140,
+        "exit_code": 0,
+        "seconds": 6.063
+      },
+      {
+        "purpose": "TR53216-INSTALL",
+        "started_utc": "2026-10-09T23:37:25.154719+00:00",
+        "pid": 13252,
+        "exit_code": 0,
+        "seconds": 4.391
+      },
+      {
+        "purpose": "TR53216-SETUP",
+        "started_utc": "2026-10-09T23:37:29.887400+00:00",
+        "pid": 30900,
+        "exit_code": null,
+        "seconds": 58.547
+      },
+      {
+        "purpose": "TR56404-INSTALL",
+        "started_utc": "2026-10-09T23:38:28.772239+00:00",
+        "pid": 20116,
+        "exit_code": 0,
+        "seconds": 4.282
+      },
+      {
+        "purpose": "TR56404-SETUP",
+        "started_utc": "2026-10-09T23:38:33.357154+00:00",
+        "pid": 14488,
+        "exit_code": 0,
+        "seconds": 38.25
+      },
+      {
+        "purpose": "TR51616-INSTALL",
+        "started_utc": "2026-10-09T23:39:11.916612+00:00",
+        "pid": 16824,
+        "exit_code": 0,
+        "seconds": 4.328
+      },
+      {
+        "purpose": "A-COLD",
+        "started_utc": "2026-10-09T23:39:16.547634+00:00",
+        "pid": 34368,
+        "exit_code": 0,
+        "seconds": 24.828
+      },
+      {
+        "purpose": "TR51616-SETUP",
+        "started_utc": "2026-10-09T23:39:41.707509+00:00",
+        "pid": 6208,
+        "exit_code": 3221225477,
+        "seconds": 37.906
+      },
+      {
+        "purpose": "A-CAPTURE",
+        "started_utc": "2026-10-09T23:40:19.919389+00:00",
+        "pid": 33844,
+        "exit_code": null,
+        "seconds": 23.063
+      },
+      {
+        "purpose": "TR53204-INSTALL",
+        "started_utc": "2026-10-09T23:40:43.331398+00:00",
+        "pid": 14472,
+        "exit_code": 0,
+        "seconds": 4.281
+      },
+      {
+        "purpose": "TR53204-SETUP",
+        "started_utc": "2026-10-09T23:40:47.925970+00:00",
+        "pid": 33600,
+        "exit_code": 3221225477,
+        "seconds": 38.203
+      },
+      {
+        "purpose": "TR56402-INSTALL",
+        "started_utc": "2026-10-09T23:41:26.429941+00:00",
+        "pid": 12340,
+        "exit_code": 0,
+        "seconds": 4.312
+      },
+      {
+        "purpose": "TR56402-SETUP",
+        "started_utc": "2026-10-09T23:41:31.056498+00:00",
+        "pid": 18580,
+        "exit_code": 3221225477,
+        "seconds": 38.172
+      },
+      {
+        "purpose": "TXTMODE-INSTALL",
+        "started_utc": "2026-10-09T23:42:09.534061+00:00",
+        "pid": 25340,
+        "exit_code": 0,
+        "seconds": 4.266
+      },
+      {
+        "purpose": "TXTMODE-SETUP",
+        "started_utc": "2026-10-09T23:42:14.095745+00:00",
+        "pid": 11080,
+        "exit_code": 3221225477,
+        "seconds": 38.156
+      },
+      {
+        "purpose": "A-FIX-TR51616",
+        "started_utc": "2026-10-09T23:42:52.566882+00:00",
+        "pid": 28000,
+        "exit_code": 0,
+        "seconds": 23.75
+      },
+      {
+        "purpose": "A-FIX-TR53204",
+        "started_utc": "2026-10-09T23:43:16.613332+00:00",
+        "pid": 25764,
+        "exit_code": 0,
+        "seconds": 24.125
+      },
+      {
+        "purpose": "A-FIX-TR53216",
+        "started_utc": "2026-10-09T23:43:41.031406+00:00",
+        "pid": 14484,
+        "exit_code": 0,
+        "seconds": 23.547
+      },
+      {
+        "purpose": "A-FIX-TR56402",
+        "started_utc": "2026-10-09T23:44:04.878173+00:00",
+        "pid": 11988,
+        "exit_code": 3221225477,
+        "seconds": 23.734
+      },
+      {
+        "purpose": "A-FIX-TR56404",
+        "started_utc": "2026-10-09T23:44:28.911218+00:00",
+        "pid": 29308,
+        "exit_code": 3221225477,
+        "seconds": 23.594
+      },
+      {
+        "purpose": "A-FIX-TXTMODE",
+        "started_utc": "2026-10-09T23:44:52.801265+00:00",
+        "pid": 10988,
+        "exit_code": null,
+        "seconds": 33.375
+      },
+      {
+        "purpose": "MISSLGO",
+        "started_utc": "2026-10-09T23:45:26.509668+00:00",
+        "pid": 31904,
+        "exit_code": 0,
+        "seconds": 3.063
+      },
+      {
+        "purpose": "SHORTLGO",
+        "started_utc": "2026-10-09T23:45:29.905420+00:00",
+        "pid": 26992,
+        "exit_code": 0,
+        "seconds": 3.063
+      },
+      {
+        "purpose": "BADGR2",
+        "started_utc": "2026-10-09T23:45:33.261916+00:00",
+        "pid": 22616,
+        "exit_code": 0,
+        "seconds": 3.032
+      },
+      {
+        "purpose": "VERIFYLGO",
+        "started_utc": "2026-10-09T23:45:36.594687+00:00",
+        "pid": 27112,
+        "exit_code": 0,
+        "seconds": 9.796
+      },
+      {
+        "purpose": "A-BADCNF",
+        "started_utc": "2026-10-09T23:45:46.690850+00:00",
+        "pid": 15204,
+        "exit_code": 0,
+        "seconds": 5.0
+      },
+      {
+        "purpose": "VERIFYART",
+        "started_utc": "2026-10-09T23:45:51.995325+00:00",
+        "pid": 7540,
+        "exit_code": 0,
+        "seconds": 9.765
+      },
+      {
+        "purpose": "TR53216-GUI",
+        "started_utc": "2026-10-09T23:46:02.059495+00:00",
+        "pid": 508,
+        "exit_code": null,
+        "seconds": 58.547
+      },
+      {
+        "purpose": "TR56404-GUI",
+        "started_utc": "2026-10-09T23:47:00.934217+00:00",
+        "pid": 6944,
+        "exit_code": null,
+        "seconds": 28.61
+      }
+    ],
+    "native_qualified": false,
+    "acquired_utc": "2026-10-09T23:28:36.232729+00:00",
+    "active": "released",
+    "error": "Insufficient allocated time for bounded job",
+    "released_utc": "2026-10-09T23:47:29.868134+00:00",
+    "conflicts_after": []
+  },
+  "package_sha256": "174163b469673e91b40a5df8d549d64f0bbab9dc4429e342cf6f7807c841fe23",
+  "completed": [
+    "Recompiled and repinned installer/preparation helper",
+    "Host package tests 16 passed",
+    "Host CPU ABI, exact frame, 76 malformed-resource refusals",
+    "Native exact static VRAM, relocation/repeated hide, malformed RLE and truncation refusal",
+    "Six zero-SHA preparations with sole CGA.GR2 support",
+    "Five Setup-selected graphics configurations and exact 7879-byte private COM",
+    "Cold static TR53216 Windows GDI probe and normal DOS mode 3 return",
+    "Native absent/short LGO, bad grabber, VERIFY altered LGO/art refusals",
+    "Changed loader-header preparation refusal"
+  ],
+  "blocked": [
+    "Color-wave GUI exceeded 58.547 second bound",
+    "640x4 fallback GUI exceeded 28.610 second bound",
+    "Several Setup process exits were DOSBox host 0xC0000005 despite saved configuration; unresolved",
+    "Experimental text Setup timed out and retained TR53216",
+    "Remaining per-mode GDI and menu/dialog checks not run",
+    "Exact native rollback of complete fixtures unqualified; bad-loader rollback incomplete",
+    "No separate qualified E candidate staged"
+  ],
+  "loader_nonzero_kernel_exit": {
+    "rc5_and_new_static": "Both return DOS status zero and leave BIOS mode 6 when hide is skipped",
+    "zero_exit": "Both restore mode 3",
+    "missing_kernel": "New loader stays mode 3 before show",
+    "slow_wave_wrapper": "Restores mode 3 even after failing kernel stub",
+    "reservation": "BDA 624 KB and top 16 KB reservation owner/size unchanged",
+    "limit": "No promise to restore screen pixels, palette or other arbitrary state; loader branch fix out of scope"
+  },
+  "bad_loader_recovery": {
+    "native_batch_completed": false,
+    "all_112_input_Windows_files_byte_exact": true,
+    "partial_guard_retained": true,
+    "ready_marker_absent": true,
+    "note": "The deliberately malformed WIN.CNF remains identical to its test input; no loader patch was attempted. Recovery command returned nonzero and did not reach DONE.OK."
+  },
+  "screenshots": {
+    "ABI/NATIVE640.PNG": "Decoded genuine DOSBox-X 8088 static-module VRAM, not a Windows GUI screenshot",
+    "COLD320.PNG": "Decoded genuine cold static Win3 real-mode GDI probe VRAM, 320x200",
+    "STATIC-HOST-R2/HOST640.PNG": "Host artwork specimen, not native evidence"
+  }
+}

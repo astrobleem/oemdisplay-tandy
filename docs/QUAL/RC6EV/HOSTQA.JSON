@@ -1,0 +1,73 @@
+{
+  "host_only": true,
+  "native_calls": [],
+  "preflight_initial": {
+    "host_preflight_pass": true,
+    "fixtures": 5,
+    "frozen_inputs": 321,
+    "catalog_sha256": "54f1e0a2639ca1420d3842002655df940cc66647e90cf8e4542a40ad7489652e",
+    "native_evidence": false
+  },
+  "negative_cases": [
+    {
+      "case": "SET6402 RC5 source catalog",
+      "rejected_before_lease_or_guest": true,
+      "reason": "Changed input C:\\Users\\chad\\Documents\\Codex\\2026-10-09\\task-7\\FINAL-GATES-AUDIT\\REPRO3\\KIT\\SETUP\\SET6402\\GUEST\\WINXT\\OEMSETUP.INF"
+    },
+    {
+      "case": "SETTEXT RC5 source catalog",
+      "rejected_before_lease_or_guest": true,
+      "reason": "Changed input C:\\Users\\chad\\Documents\\Codex\\2026-10-09\\task-7\\FINAL-GATES-AUDIT\\REPRO3\\KIT\\SETUP\\SETTEXT\\GUEST\\WINXT\\OEMSETUP.INF"
+    },
+    {
+      "case": "shared PREP RC5 source catalog",
+      "rejected_before_lease_or_guest": true,
+      "reason": "Changed input C:\\Users\\chad\\Documents\\Codex\\2026-10-09\\task-7\\FINAL-GATES-AUDIT\\REPRO3\\KIT\\TRANSPORT\\WINXT\\OEMSETUP.INF"
+    },
+    {
+      "case": "wrong source helper",
+      "rejected_before_lease_or_guest": true,
+      "reason": "Changed input C:\\Users\\chad\\Documents\\Codex\\2026-10-09\\task-7\\FINAL-GATES-AUDIT\\REPRO3\\KIT\\SETUP\\SET6402\\GUEST\\WINXT\\XTMODE.EXE"
+    },
+    {
+      "case": "wrong compiler headers",
+      "rejected_before_lease_or_guest": true,
+      "reason": "Changed input C:\\Users\\chad\\Documents\\Codex\\2026-10-09\\task-7\\FINAL-GATES-AUDIT\\REPRO3\\KIT\\PREP\\BUILD\\XTPINS.H"
+    },
+    {
+      "case": "wrong fixture mount",
+      "rejected_before_lease_or_guest": true,
+      "reason": "Changed input C:\\Users\\chad\\Documents\\Codex\\2026-10-09\\task-7\\FINAL-GATES-AUDIT\\REPRO3\\KIT\\SETUP\\SET6402\\RUN.CNF"
+    },
+    {
+      "case": "changed initial INI",
+      "rejected_before_lease_or_guest": true,
+      "reason": "Changed input C:\\Users\\chad\\Documents\\Codex\\2026-10-09\\task-7\\FINAL-GATES-AUDIT\\REPRO3\\KIT\\SETUP\\SET6402\\GUEST\\WINDOWS\\SYSTEM.INI"
+    },
+    {
+      "case": "wrong owned grabber",
+      "rejected_before_lease_or_guest": true,
+      "reason": "Changed input C:\\Users\\chad\\Documents\\Codex\\2026-10-09\\task-7\\FINAL-GATES-AUDIT\\REPRO3\\KIT\\PREP\\PFAST\\GUEST\\MEDIA\\CGA.GR2"
+    },
+    {
+      "case": "changed font payload",
+      "rejected_before_lease_or_guest": true,
+      "reason": "Changed input C:\\Users\\chad\\Documents\\Codex\\2026-10-09\\task-7\\FINAL-GATES-AUDIT\\REPRO3\\KIT\\CANDIDATE\\XTCSYS.FON"
+    },
+    {
+      "case": "self-consistent old-logo catalog hash",
+      "rejected": true,
+      "reason": "Stale logo/grabber/art TR53216"
+    },
+    {
+      "case": "missing native production binding",
+      "rejected": true
+    }
+  ],
+  "restored_all_test_mutations": true,
+  "portable_numeric_contracts_reproduced": true,
+  "seven_original_fonts_reproduced_exact": true,
+  "normal_SHA_new_binary_measured": false,
+  "seconds": 3.391,
+  "no_guest_or_lock_acquisition": true
+}

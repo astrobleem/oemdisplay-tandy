@@ -24,7 +24,7 @@ The accepted independent startup default is a [slow flag wave](../examples/WXTSP
 with steady colors and lettering, exact native-qualified bytes and key skip.
 The portable toolkit includes the own-media preparation tool. The guarded 720 KB DOS installer enables it in Color mode; other profiles
 retain static startup. The qualified faster helper and zero-SHA default
-installation are included in rc.5. See the wave kit for rollback
+installation are included in rc.6. See the wave kit for rollback
 and the baseline-equivalent EXJOY polling limitation.
 
 ![Accepted Windows XT slow flag wave captured in DOSBox-X at native 320x200 pixels](PROMO/XTWAVE.GIF)
@@ -62,10 +62,10 @@ binary or app. See the [mode table](#display-modes) and
 
 ## Get started
 
-**Public preview: [Windows XT 0.1.0-rc.5](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.5).**
-Download [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.5/WINXT720.ZIP) for the disk image
-and instructions, or [WINXT720.IMG](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.5/WINXT720.IMG) directly
-for GoTek/emulators. [SHA256SUMS](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.5/SHA256SUMS) verifies
+**Public preview: [Windows XT 0.1.0-rc.6](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.6).**
+Download [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.ZIP) for the disk image
+and instructions, or [WINXT720.IMG](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.IMG) directly
+for GoTek/emulators. [SHA256SUMS](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/SHA256SUMS) verifies
 the assets. This is an experimental prerelease; supply your own matching
 Windows 3.0 files and back up your installation.
 
@@ -466,11 +466,11 @@ wave-only/full rollback commands. This is a short pre-load animation.
 static Windows exits, three native refusals, and 35-file rollback. Tests use
 DOSBox-X Tandy/8086/640 KB; they do not establish physical 8088 speed.
 
-## Original fonts in rc.5
+## Original fonts in rc.6
 
 The [XT Pixels fonts](FONTS/README.MD) replace all six Windows font dependencies
 and the derived text strike. No font setup media or Python is needed on the
-Tandy. Windows itself, CGA.GR2 and CGALOGO.LGO remain your responsibility.
+Tandy. Windows itself, CGA.GR2, WIN.CNF and other non-font components remain yours.
 Normal preparation/install skips SHA verification and readback; explicit
 /VERIFY is optional, expensive developer diagnostics. System advances and
 dialog metrics stay compatible. Wide 160-pixel dialogs can clip as before;
@@ -479,3 +479,20 @@ boxes; no Euro or Unicode emoji is supplied. Graphics-mode compatibility and
 complete native byte rendering were tested; physical 8088 timing and every
 Windows dialog are not claimed. The [native previews](FONTS/SHOTS/README.TXT)
 identify real Win3 emulator captures separately from host specimens.
+
+## Display mode menu in rc.6
+
+After the initial Windows Setup install, exit Windows and run
+`C:\WINXT\MODES` at DOS. Select one of the five graphics modes. `U` restores
+the previous selection; interrupted changes are recovered before video
+reservation at the next guarded startup. Keep launching through
+`C:\WINXT\WINXT`. The 160-pixel mode can clip stock dialogs; TEXT remains
+an opt-in experiment with known renderer corruption. Read `MODEINFO.TXT`
+for commands and recovery, and `BACKUP.TXT` for whole-install rollback.
+
+The original static module replaces the CGALOGO.LGO setup-media requirement.
+CGA.GR2, DOS/Windows, Setup, WIN.CNF and other non-font Windows components
+still come from your owned installation/media. Native emulator acceptance
+is recorded in docs/QUAL/RC6.JSON. PREPXT's documentation pin data was then
+refreshed on the host, preserving measured code and relocations; that
+refreshed helper was not rerun in a guest. Physical hardware is unqualified.
