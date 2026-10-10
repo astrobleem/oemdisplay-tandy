@@ -1,0 +1,18 @@
+{
+  "native_Setup_pass": true,
+  "row": 5,
+  "phase": 6,
+  "actions": 6,
+  "common_bytes": 7879,
+  "wave_unchanged": true,
+  "selected_boot": {
+    "286grabber": "CGA.GR2",
+    "display.drv": "TXTMODE.DRV",
+    "fixedfon.fon": "XTCFIX.FON",
+    "fonts.fon": "XTTSYS.FON",
+    "oemfonts.fon": "XTCOEM.FON"
+  },
+  "text_GUI_quality_claim": false,
+  "DOS_KB": 624,
+  "DOS_mode": 3
+}

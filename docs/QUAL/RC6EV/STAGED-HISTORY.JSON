@@ -1,0 +1,103 @@
+{
+  "Setup_6402_acceptance": "R4 completed at 52.297s; all six phases and bytes passed corrected validator. Incorrect seven-action assertion preserved. Later bounded repeat timeout preserved and not accepted.",
+  "Setup_TEXT_acceptance": "R7 completed at 56.672s with all six phases and expected resources.",
+  "candidate_font_pins": {
+    "XTCFIX.FON": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+    "XTCOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+    "XTCSYS.FON": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326",
+    "XTEFIX.FON": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+    "XTEOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+    "XTESYS.FON": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
+    "XTTSYS.FON": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa"
+  },
+  "compiled_source_pins": {
+    "PACKPINS.H": "5222fe457fec1984a35da258b5c7ff636a07acadd0d7d95497b65f9ffdf3caf8",
+    "PREPXT.C": "e6ddd0cfc7068a00fc0f97b07f7842ea2410b3872b6f24bac0aa149e5267cfa7",
+    "SZSTREAM.H": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68",
+    "XTPINS.H": "bafdf849c7baa510704cda6e9e21c765850f184af4f4669b63b9c79df301a4d5"
+  },
+  "documentation_refresh": {
+    "all_59_binary_rows_match_source": true,
+    "host_record_sha256": "f871ad7bc7eb995f76b1731244354d5fa63ea4b7c52b23b5813e7fe27dcceaf2",
+    "measured_native_implementation_unchanged": true,
+    "original_evidence_unchanged": true,
+    "pass": true,
+    "proof_sha256": "9169bc557dc539aaedd577244186046d4ec14ab4958a751292642c5da8ac5289",
+    "refreshed_binary_rerun_in_guest": false,
+    "source_archive_sha256": "6cfe1c3d6d912d9ee8ba685fda1aa9e8a735bd2e4443d87bb23d0d3dea3326c3",
+    "source_archive_verified": {
+      "helper_rebinding_reproduced_exact": true,
+      "no_guest": true,
+      "no_owned_Windows_media_bytes": true,
+      "resource_contracts_reproduced_exact": true,
+      "seven_fonts_reproduced_exact": true,
+      "source_zip_pass": true
+    }
+  },
+  "evidence_sha256": {
+    "COMPILED-HELPER": "f7ad83ab6355b3718754c02b2cc801ab25f166cd5ef2282b2edc70c3296fedfd",
+    "HOSTQA": "ccc905d2026ae6066fd2e9b08d9bda1d187013589a841e5d36b272cedcda5709",
+    "PFAST": "c899a7f6385307b1b146ba81c3e45f80b80ff88c084e1ebc6b75a0af6e971bf0",
+    "PREP-LEASE": "2f97924f26c07926bde17218aecf62e1a8a488827ed70da51b07c5359f3fb4ef",
+    "PRESERVED-REPEAT-TIMEOUT": "a1679cf6bdc09a06e14dd9606c8ad11b0e078eadb721628e66de06776dd23d62",
+    "PRODBLD": "6bb97d8ce13281132834b0b5c5d0cc0308f2cdda19554a9e7ddf981d470badca",
+    "PVERIFY": "cf02538d454dc90003e0ba72c9b29f635a8a7e096712908f55fc0153e14f0f88",
+    "PZERO": "ee31db8630c07e1a4f1870b64952e3f010668fc616c22ade12befd07e480fc03",
+    "SET6402": "3974d7fbda51c8a07ce8e5332af58601814c4fc078d0e87f30a0ef9f7e27ced1",
+    "SETTEXT": "12363dfccc7a383b1e76e3c4f7a73a0287c39f1b4aff8e4468d389d2bd4449c6",
+    "SETUP-FIRST-LEASE": "2af0bf035cb2cbc0be9b8ce7f233ec455857abac3a001e766c8c72db12f8bfb6",
+    "SETUP-TEXT-LEASE": "08c031b06ead3c1fc52f0f623739dc572cf7f9777335dd3254ab2ddd4ec8c701",
+    "SOURCE-REPRO": "5a092dc3f18e4aa1c63325cc309c4a5af8917de687bb62e18114aa5f783ccab6",
+    "ZEROBLD": "88db079d102f6b7262d0860e2dafd4da33c493461117e51c76f6f66230eabb1a"
+  },
+  "hardware_qualified": false,
+  "helper_sha256": "192b936631a67324b83e4dabaaac396885e541973e74df8699adac7085746845",
+  "host_checks": {
+    "FAT12_pass": true,
+    "FAT12_tests_run": 35,
+    "FAT12_tests_skipped_optional": 7,
+    "document_binding_negative_tests": 3,
+    "fonts_reproduced_exact": 7,
+    "free_floppy_bytes": 11264,
+    "package_tests": 16,
+    "package_tests_pass": true,
+    "rejection_cases": 11,
+    "source_blueprint_reproduced_exact": true
+  },
+  "native_base_helper_sha256": "5817a16b619377307f8f503b379f0d2bfec7b455797ee24f56f4c767e4eb59e5",
+  "native_captures": [
+    "FINAL-GATES-R4/SETUP/SET6402/capture/setup_000.avi",
+    "FINAL-GATES-R7/SETUP/SETTEXT/capture/setup_000.avi"
+  ],
+  "native_timing_seconds": {
+    "PFAST": 41.531,
+    "PRODBLD": 20.875,
+    "PVERIFY": 138.875,
+    "PZERO": 41.547,
+    "ZEROBLD": 20.86
+  },
+  "no_installed_Windows_CF_or_existing_candidate_changes": true,
+  "package_artifact_sha256": {
+    "BUILD.JSON": "d4bfaca07919fbaf8ce4dc46b6d7bb20395d03c13cae0eab95aca83970e7b823",
+    "README.TXT": "b27ce2baa4230f6b26d39adee61b2c703d327c755ec5725380ad35998fce0191",
+    "SHA256SUMS": "ae86135a2d94715fc1f0fac6aab371f32985e56019d4fb00cad9394507bcf6d2",
+    "WINXT720.IMG": "8339582a2d4b53d936e553a940342189e9d983a01df05fdec5f25109d8125b34",
+    "WINXT720.ZIP": "afe67d08b223d03ff36d7db50ce5256ccff138278bec1c6fdb8b16c8c57ba885",
+    "WXTTOOLS.ZIP": "e31beb415423f0178b52f842ee2ee6848555d8da065f629bf3ea3e4343524af4"
+  },
+  "publication_allowed": false,
+  "remaining_release_blockers": [
+    "Explicit public publication authorization is absent",
+    "Existing public release guards remain pinned to rc.5; review/update them only when publication is authorized"
+  ],
+  "required_final_gates_pass": true,
+  "runtime_manifest_sha256": "1a651e1cfda2dc13bc5da3bdc631958fffc71655647b5547637e1d1474b9829c",
+  "schema": 1,
+  "scope_limits": [
+    "Emulator acceptance; no original hardware claim",
+    "160-pixel stock dialogs can clip; small menus can wrap",
+    "TEXT retains known extended/adjacent renderer corruption and is opt-in",
+    "Windows/DOS, Setup, WIN.CNF, CGA.GR2 and other non-font Windows components remain required"
+  ],
+  "zero_SHA_scope": "Instrumented default [0,0] SHA blocks and output readback=0; uninstrumented production default separately byte-verified."
+}

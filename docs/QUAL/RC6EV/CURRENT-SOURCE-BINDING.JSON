@@ -1,0 +1,102 @@
+{
+  "kind": "Measured native implementation with host-only document data refresh",
+  "native_package_qualified": false,
+  "native_preparation_qualified": true,
+  "publication_allowed": false,
+  "helper_sha256": "192b936631a67324b83e4dabaaac396885e541973e74df8699adac7085746845",
+  "installer_sha256": "cc0036bbb82c89cef6dfbe025c10f7d61732d1271f9805031070d4b515517df1",
+  "runtime_manifest_sha256": "1a651e1cfda2dc13bc5da3bdc631958fffc71655647b5547637e1d1474b9829c",
+  "mode_helper_sha256": "34ff85d216a7c0233066aedc27c2199c2772e278438e627ce548d07909de4160",
+  "compiled_source_pins": {
+    "PACKPINS.H": "5222fe457fec1984a35da258b5c7ff636a07acadd0d7d95497b65f9ffdf3caf8",
+    "PREPXT.C": "e6ddd0cfc7068a00fc0f97b07f7842ea2410b3872b6f24bac0aa149e5267cfa7",
+    "SZSTREAM.H": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68",
+    "XTPINS.H": "bafdf849c7baa510704cda6e9e21c765850f184af4f4669b63b9c79df301a4d5"
+  },
+  "compiler_flags": {
+    "PREPXT": "/c /AS /G0 /W3 /Od",
+    "ZEROPREP": "/c /AS /G0 /W3 /Od /DINSTALL_DIAGNOSTICS /DZERO_SHA_TEST"
+  },
+  "native_preparation_results": {
+    "PRODBLD": "6bb97d8ce13281132834b0b5c5d0cc0308f2cdda19554a9e7ddf981d470badca",
+    "ZEROBLD": "88db079d102f6b7262d0860e2dafd4da33c493461117e51c76f6f66230eabb1a",
+    "PFAST": "c899a7f6385307b1b146ba81c3e45f80b80ff88c084e1ebc6b75a0af6e971bf0",
+    "PZERO": "ee31db8630c07e1a4f1870b64952e3f010668fc616c22ade12befd07e480fc03",
+    "PVERIFY": "cf02538d454dc90003e0ba72c9b29f635a8a7e096712908f55fc0153e14f0f88"
+  },
+  "measured_host_seconds": {
+    "PRODBLD": 20.875,
+    "ZEROBLD": 20.86,
+    "PFAST": 41.531,
+    "PZERO": 41.547,
+    "PVERIFY": 138.875
+  },
+  "zero_SHA_evidence": "Instrumented source-coupled default: [0,0] SHA blocks; zero output readback. Production default separately byte-verified.",
+  "immutable_runtime_notes": "Current documentation now reflects completed qualification; original native snapshots and failures remain preserved.",
+  "failure_checkpoint": "R4 Setup validator required seven actions incorrectly; native controller had all six required phases.",
+  "native_base_source_pins": {
+    "PACKPINS.H": "5222fe457fec1984a35da258b5c7ff636a07acadd0d7d95497b65f9ffdf3caf8",
+    "PREPXT.C": "e6ddd0cfc7068a00fc0f97b07f7842ea2410b3872b6f24bac0aa149e5267cfa7",
+    "SZSTREAM.H": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68",
+    "XTPINS.H": "7a914108407b3fb6dd2f5d8fe94e999fffed86bc7b85df9182384ee06b4b637d"
+  },
+  "document_data_binding": {
+    "binding_kind": "Host documentation data refresh of measured native implementation",
+    "refreshed_binary_rerun_in_guest": false,
+    "native_base_sha256": "5817a16b619377307f8f503b379f0d2bfec7b455797ee24f56f4c767e4eb59e5",
+    "helper_sha256": "192b936631a67324b83e4dabaaac396885e541973e74df8699adac7085746845",
+    "base_header_sha256": "7a914108407b3fb6dd2f5d8fe94e999fffed86bc7b85df9182384ee06b4b637d",
+    "updated_header_sha256": "bafdf849c7baa510704cda6e9e21c765850f184af4f4669b63b9c79df301a4d5",
+    "all_59_binary_pin_rows_match_source": true,
+    "only_document_data_changed": true,
+    "changed_rows": [
+      {
+        "name": "LOGOINFO.TXT",
+        "old_sha256": "73b298c85dc6850f298b79f357598d105cebcb509f59c4b06f391e221749c8cf",
+        "new_sha256": "7ccfd313de28970f2b9b8e0f9c0c5c420a945f6b2654398784148e5c34467dbf",
+        "old_size": 349,
+        "new_size": 886,
+        "digest_offset": 21468,
+        "size_offset": 26864
+      },
+      {
+        "name": "MANIFEST.SHA",
+        "old_sha256": "030acc0de847611c27278410db3e86d80531ab8dfc50658b58e5716c980ddf81",
+        "new_sha256": "1a651e1cfda2dc13bc5da3bdc631958fffc71655647b5547637e1d1474b9829c",
+        "old_size": 4554,
+        "new_size": 4554,
+        "digest_offset": 21623,
+        "size_offset": 26884
+      },
+      {
+        "name": "MODEINFO.TXT",
+        "old_sha256": "51e9d7152ac21b3bb3e553e4f62524df82db7122f2e2f09ecf55c8714a22f9f0",
+        "new_sha256": "ae1f7f5ef59342d47707b4208c10127c6b1a591fa64022f8d05ba4368b1b92fe",
+        "old_size": 2828,
+        "new_size": 3390,
+        "digest_offset": 21851,
+        "size_offset": 26914
+      },
+      {
+        "name": "README.TXT",
+        "old_sha256": "69ad2c1eb9224dfc875ea7c5c1e6cd6bc934c88f1188e4bf02387a37739d873f",
+        "new_sha256": "eeeb4899a1a351fad1fefe9a707e26d442dac9df64e950cd42171c9c71bc33fc",
+        "old_size": 10155,
+        "new_size": 10935,
+        "digest_offset": 22236,
+        "size_offset": 26964
+      }
+    ],
+    "changed_byte_count": 242,
+    "MZ_header_code_relocations_non_document_data_exact": true,
+    "protected_prefix_sha256": "13a78e81fd6ab3189582b3f84e949ce4c0f19ccdd5403efa19d9939445a3f803",
+    "protected_suffix_sha256": "1fff3fd09b7241f172f1dd766f605130329a099c43935ab988223c2140d90817",
+    "allowed_documents": [
+      "LOGOINFO.TXT",
+      "MANIFEST.SHA",
+      "MODEINFO.TXT",
+      "README.TXT"
+    ],
+    "code_contract": "No function, control flow, buffer, pathname or non-document resource pin changed."
+  }
+}

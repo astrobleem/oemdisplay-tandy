@@ -1,0 +1,12 @@
+Original MIT XTSTATIC.LGO; source tools/XTLOGO.
+Windows Setup joins owned WIN.CNF + original XTSTATIC.LGO + original
+WXTSPL01.RLE into the 7,879-byte common WIN.COM. The 361-byte static module
+replaces the owned CGALOGO.LGO dependency. No Microsoft code was copied.
+Only owned CGA.GR2 (2,104 bytes) is gathered. Windows/DOS, WIN.CNF, Setup,
+kernel and other non-font Windows components remain necessary. Seven original
+MIT fonts replace the former Windows font-media dependencies. No target
+Python/compiler is needed. The accepted Color slow wave bytes are unchanged.
+Final native emulator Setup 6402 and TEXT acceptance passed exact resource,
+loader, unchanged-wave and DOS-return checks. See QUALIFICATION.JSON for
+saved evidence, the corrected six-phase controller validation and preserved
+later repeat timeout. This is a private candidate; no publication is authorized.

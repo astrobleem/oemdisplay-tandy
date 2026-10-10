@@ -18,7 +18,7 @@ import tempfile
 import zipfile
 
 HERE = Path(__file__).resolve().parent
-PUBLIC_NAMES = ('XTCSYS.FON', 'XTCFIX.FON', 'XTCOEM.FON', 'XTESYS.FON', 'XTEFIX.FON', 'XTEOEM.FON', 'XTTSYS.FON', 'FONTLIC.TXT', 'FONTINFO.TXT', 'CPSET.EXE', 'CPSET.TXT', 'HOLD14.TXT', 'HOLD160.PNG', 'HOLD640.PNG', 'INSTALL.BAT',
+PUBLIC_NAMES = ('XTMODE.EXE', 'MODELIC.TXT', 'MODEINFO.TXT', 'XTSTATIC.LGO', 'LOGOLIC.TXT', 'LOGOINFO.TXT', 'XTCSYS.FON', 'XTCFIX.FON', 'XTCOEM.FON', 'XTESYS.FON', 'XTEFIX.FON', 'XTEOEM.FON', 'XTTSYS.FON', 'FONTLIC.TXT', 'FONTINFO.TXT', 'CPSET.EXE', 'CPSET.TXT', 'HOLD14.TXT', 'HOLD160.PNG', 'HOLD640.PNG', 'INSTALL.BAT',
     'MATRIX.EXE', 'MAZE.EXE', 'PINBALL.EXE', 'NAMES11.TXT', 'OEMSETUP.INF', 'README.TXT',
     'RESERVE.COM', 'SHELL14.TXT', 'SHELLSEL.EXE', 'SHFULL.TXT', 'STARFLD.EXE',
     'TABOUT.EXE', 'TCHIME.EXE', 'TESTS.TXT', 'TESTS14.TXT', 'TEXIT.EXE',
@@ -31,7 +31,7 @@ SPLASH_NAME = 'WXTSPL01.RLE'
 SPLASH_SHA = 'eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c'
 SPLASH_BYTES = 4062
 
-WINDOWS_NAMES = ('CGA.GR2', 'CGALOGO.LGO')
+WINDOWS_NAMES = ('CGA.GR2',)
 
 
 class PackageError(Exception):
@@ -68,6 +68,9 @@ def verify_default_splash(payload):
     art = payload.get(SPLASH_NAME, b'')
     if len(art) != SPLASH_BYTES or hashlib.sha256(art).hexdigest() != SPLASH_SHA:
         raise PackageError('Current default requires the approved Windows XT splash')
+    logo=payload.get('XTSTATIC.LGO', b'')
+    if len(logo)!=361 or hashlib.sha256(logo).hexdigest()!='995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef':
+        raise PackageError('Original static logo pin mismatch')
     section = ''; profiles = set()
     try:
         for line in payload['OEMSETUP.INF'].decode('ascii').splitlines():
@@ -78,7 +81,7 @@ def verify_default_splash(payload):
             name, separator, value = line.partition('=')
             name = name.strip().upper()
             row = next(csv.reader([value], skipinitialspace=True, strict=True))
-            if not separator or name in profiles or len(row) != 9 or row[8].strip().upper() != 'A:' + SPLASH_NAME:
+            if not separator or name in profiles or len(row) != 9 or row[8].strip().upper() != 'A:' + SPLASH_NAME or row[3].strip().upper() != 'A:CGA.GR2' or row[4].strip().upper() != 'A:XTSTATIC.LGO':
                 raise PackageError('Every current Setup profile must select Windows XT')
             profiles.add(name)
     except (KeyError, UnicodeError, csv.Error, StopIteration) as error:
@@ -133,37 +136,43 @@ def public_payload(runtime):
 
 
 def readme(private):
-    return dos(r"""WINDOWS XT - ORIGINAL FONT TEST CANDIDATE - NOT PUBLISHED
+    return dos(r"""WINDOWS XT - DOS MODE SWITCHER TEST CANDIDATE - NOT PUBLISHED
 
 This is a 720 KB DATA disk, not a DOS boot disk or a Windows installation.
 Requires DOS 3.3+, Windows 3.0 real mode, a compatible Tandy and writable CF.
 Back up Windows first. No Python/compiler is required on the vintage machine.
 Fonts are original XT Pixels, MIT licensed: WINXT\FONTLIC.TXT and FONTINFO.TXT.
-CGA.GR2 and CGALOGO.LGO still require your own matching Windows files.
+Only CGA.GR2 requires a matching owned support file. Static logo and fonts are original.
 This does not remove Windows itself or other non-font Windows dependencies.
 
 1. At plain DOS with the disk selected, run INSTALL from the disk root.
-2. PREPXT searches Windows and SYSTEM for the two owned non-font files.
+2. PREPXT searches Windows and SYSTEM for the owned non-font grabber.
    If missing, supply a media directory: INSTALL D:\WIN30SRC
-   Seven original fonts, three drivers and the unchanged shell are expanded
+   Seven original fonts, four drivers, XTMODE and the unchanged shell are expanded
    by the bounded DOS helper. No Windows font files or local derivation are
    needed. Up to four owned-media directories may be supplied.
 3. After source checks, confirm the helper prompt. It creates fresh C:\WINXT.
    It refuses existing output, wrong sizes, malformed compression, missing
    inputs and insufficient free space. Source Windows/media remain read-only.
-   Default preparation performs ZERO SHA verification. /VERIFY is optional
-   slow developer diagnostics, not the normal 8088 workflow.
+   Default uses size/I/O/structural checks. Source-coupled diagnostic default
+   measured zero SHA blocks in both phases and zero output readback. Production
+   default separately passed exact native output checks. Emulator times were
+   about 42 seconds default and 139 seconds /VERIFY, not hardware estimates.
+   /VERIFY stays explicit, expensive developer diagnostics.
 4. C: then CD \WINXT then INSTALL. In Windows Setup select Display -> Other
    display and source C:\WINXT; choose the mode and Complete Changes.
    For CONFIG.SYS choose option 3 (no changes). The optional Computer choice
    preserves the active Computer/keyboard. Read CPSET.TXT before changing it.
 5. Start with C:\WINXT\WINXT. Its video/recovery guards remain mandatory.
    Optional desktop: C:\WINXT\TSSETUP. Existing Program Manager groups remain
-   read-only. To switch later: WINXT SETUP.
+   read-only. To switch later, exit Windows fully and use C:\WINXT\MODES.
+   Run MODES and choose U to undo one prior mode. Read MODEINFO.TXT for recovery/limits.
+   Windows Setup remains available via WINXT SETUP.
 
 160-pixel menus can wrap and wide dialogs clip. Preserved font metrics do not
 make every Windows dialog fit. Full native font and installation/rollback
-acceptance is recorded separately; this local candidate is not a release.
+acceptance passed; docs/QUAL/RC6.JSON binds native evidence and this release.
+Documentation pins were refreshed on the host; measured executable code is unchanged.
 Experimental TXTMODE is opt-in and retains its known renderer limitations.
 The fixed TXTSYS font is original; font and renderer tests are separate.
 
@@ -177,7 +186,7 @@ Rollback: exit Windows and run the numbered WINXT\BACKUP\B001\RESTORE YES
 path printed by INSTALL. It restores Computer metadata, disables the wave,
 restores prior Windows files and verifies the restored originals. Added driver
 files/helpers remain inactive. Do not redistribute a completed owned-media
-folder containing CGA.GR2 or CGALOGO.LGO. No publication is authorized.
+folder containing CGA.GR2.
 """)
 
 
@@ -196,7 +205,24 @@ def helper_payload():
         data[name] = read_file(HERE / name)
         if sha(data[name]) != digest:
             raise PackageError('Helper source/binary mismatch: ' + name)
+    # Replay the document binding before carrying forward native acceptance.
+    rebinder = load('verified_document_rebinding', HERE / 'DOCPINS' / 'REBIND.PY')
+    rebuilt, proof = rebinder.bind(HERE / 'XTPINS.H')
+    if rebuilt != data['PREPXT.EXE']:
+        raise PackageError('Document binding differs from helper binary')
+    if proof != json.loads(read_file(HERE / 'DOCPINS' / 'BIND.JSON')):
+        raise PackageError('Document binding report differs from replay')
+    native = json.loads(read_file(HERE / 'DOCPINS' / 'NATIVE.BIND.JSON'))
+    for name in ('PREPXT.C', 'SZSTREAM.H', 'PACKPINS.H'):
+        if sha(data[name]) != native['compiled_source_pins'][name]:
+            raise PackageError('Measured native source changed: ' + name)
     return data
+
+
+def document_pin_source_payload():
+    """Include the reproducible host data binding and its measured base."""
+    names = ('REBIND.PY', 'BASE.EXE', 'BASEPINS.H', 'BASE.MAP', 'BIND.JSON', 'NATIVE.BIND.JSON')
+    return {'DOCPINS/' + n: read_file(HERE / 'DOCPINS' / n) for n in names}
 
 
 def validate_helper_pins(payload, helper):
@@ -219,7 +245,7 @@ def disk_payload(payload, helper):
     packer = load('winxt_szpack', HERE / 'SZPACK.PY')
     rows = re.findall(r'\{"([A-Z0-9_.]+)","([A-Z0-9_.]+)","([0-9a-f]{64})",([0-9]+)UL\}',
                       helper['PACKPINS.H'].decode('ascii'))
-    if len(rows) != 11 or {n:s for n,s,h,z in rows} != packer.PACKED_NAMES:
+    if len(rows) != 13 or {n:s for n,s,h,z in rows} != packer.PACKED_NAMES:
         raise PackageError('Packed transport allowlist changed')
     staged = dict(payload)
     for name, stored, digest, size in rows:
@@ -302,6 +328,50 @@ def computer_source_payload():
     return {'CPSET/' + name:content for name,content in data.items()}
 
 
+MODE_SOURCE_NAMES = {'BUILD.BAT', 'GENPINS.PY', 'LICENSE.TXT', 'PAYLOADS.JSN',
+    'README.TXT', 'TESTCOPY.PY', 'TESTHOST.PY', 'TESTLAUN.PY', 'XTMODE.C',
+    'XTPINS.H', 'QUERY.ASM', 'WINQUERY.C', 'WINQUERY.DEF', 'DOSGUARD.C',
+    'WINGUARD.C', 'WINGUARD.DEF'}
+
+def mode_source_payload():
+    source = HERE / 'XTMODE' if (HERE / 'XTMODE').is_dir() else HERE.parent / 'XTMODE'
+    raw = read_file(source / 'FILES.SHA')
+    manifest = {}
+    for line in raw.decode('ascii').splitlines():
+        digest, name = line.split()
+        if name in manifest or not re.fullmatch('[a-f0-9]{64}', digest):
+            raise PackageError('Invalid mode source manifest')
+        manifest[name] = digest
+    if set(manifest) != MODE_SOURCE_NAMES:
+        raise PackageError('Mode source allowlist changed')
+    data = {name:read_file(source / name) for name in sorted(manifest)}
+    if any(sha(data[n]) != manifest[n] for n in data):
+        raise PackageError('Mode source pin mismatch')
+    data['FILES.SHA'] = raw
+    return {'XTMODE/' + name:content for name,content in data.items()}
+
+
+FONT_SOURCE_NAMES = {'BUILD.PY', 'GLYPHS.PY', 'CONTRACT.JSON', 'INSPECT.PY',
+    'ALIAS.PY', 'HOST.PY', 'LICENSE', 'README.MD'}
+
+def font_source_payload():
+    source = HERE / 'XTFONTS' if (HERE / 'XTFONTS').is_dir() else HERE.parent / 'XTFONTS'
+    raw = read_file(source / 'FILES.SHA')
+    manifest = {}
+    for line in raw.decode('ascii').splitlines():
+        digest, name = line.split()
+        if name in manifest or not re.fullmatch('[a-f0-9]{64}', digest):
+            raise PackageError('Invalid font source manifest')
+        manifest[name] = digest
+    if set(manifest) != FONT_SOURCE_NAMES:
+        raise PackageError('Font source allowlist changed')
+    data = {name:read_file(source / name) for name in sorted(manifest)}
+    if any(sha(data[n]) != manifest[n] for n in data):
+        raise PackageError('Font source pin mismatch')
+    data['FILES.SHA'] = raw
+    return {'XTFONTS/' + name:content for name,content in data.items()}
+
+
 def build(runtime, out, windows_files=None):
     if windows_files is not None:
         raise PackageError('Complete own-media payload does not fit the 720 KB disk; '
@@ -312,6 +382,8 @@ def build(runtime, out, windows_files=None):
         raise PackageError('Output exists; choose a fresh directory')
     wave = wave_payload()
     computer_source = computer_source_payload()
+    mode_source = mode_source_payload()
+    font_source = font_source_payload()
     payload = public_payload(runtime)
     public = dict(payload)
     private = windows_files is not None
@@ -349,17 +421,26 @@ def build(runtime, out, windows_files=None):
             entries.update({n: read_file(HERE / n) for n in ('MAKEIMG.PY', 'FAT12.PY')})
             entries.update(wave)
             entries.update(computer_source)
+            entries.update(mode_source)
+            entries.update(font_source)
+            entries.update(document_pin_source_payload())
             entries.update(helper)
             entries['HELPER.SHA'] = read_file(HERE / 'HELPER.SHA')
             entries['README.TXT'] = guide
             write_zip(out / 'WXTTOOLS.ZIP', entries)
         metadata = {'schema': 1, 'fonts_are_original': True, 'native_package_qualified': False, 'publication_allowed': False,
-            'kind': 'private-own-media' if private else 'original-font-test-candidate',
+            'native_implementation_qualified': True, 'documentation_pin_refresh_verified': True,
+            'refreshed_binary_rerun_in_guest': False,
+            'qualification_scope': 'Measured native implementation; host-verified document pin refresh. See QUALIFICATION.JSON.',
+            'documentation_binding_sha256': sha(read_file(HERE / 'DOCPINS' / 'BIND.JSON')),
+            'kind': 'private-own-media' if private else 'dos-mode-switcher-test-candidate',
             'binary_policy': 'accepted base payloads plus reviewed rebuilt helper/installer and original fonts',
             'independent_startup_default': 'slow-flag-wave',
             'disk_setup_startup': 'guarded-color-wave-static-fallback',
             'wave_payload_sha256': {n: sha(b) for n,b in wave.items()},
             'computer_source_sha256': {n: sha(b) for n,b in computer_source.items()},
+            'mode_source_sha256': {n: sha(b) for n,b in mode_source.items()},
+            'font_source_sha256': {n: sha(b) for n,b in font_source.items()},
             'runtime_manifest_sha256': sha(public['MANIFEST.SHA']),
             'packed_transport': transport_report(public, payload),
             'helper_sha256': sha(helper['PREPXT.EXE']),

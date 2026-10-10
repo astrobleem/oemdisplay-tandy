@@ -287,6 +287,7 @@ static void makefiles(void)
     sprintf(line,"IF NOT EXIST %s\\CPSET.EXE GOTO FAIL\r\n%s\\CPSET.EXE RESTORE %s\r\nIF ERRORLEVEL 1 GOTO FAIL\r\n",src,src,win); put(h,line);
     sprintf(line,"IF NOT EXIST %s\\WAVE01\\META.TXT GOTO WAVEOFF\r\nIF NOT EXIST %s\\WAVEXT.EXE GOTO FAIL\r\n%s\\WAVEXT.EXE RESTORE %s %s\r\nIF ERRORLEVEL 1 GOTO FAIL\r\n:WAVEOFF\r\n",src,src,src,win,src); put(h,line);
     sprintf(line,"IF NOT EXIST %s\\SHELLSEL.EXE GOTO RECCHECK\r\n%s\\SHELLSEL.EXE RECOVER %s\\SYSTEM.INI\r\nIF ERRORLEVEL 1 GOTO FAIL\r\n:RECCHECK\r\n",src,src,win); put(h,line);
+    sprintf(line,"IF NOT EXIST %s\\XTMODE.EXE GOTO FAIL\r\n%s\\XTMODE.EXE FORGET %s\\SYSTEM.INI\r\nIF ERRORLEVEL 1 GOTO FAIL\r\n",src,src,win); put(h,line);
     sprintf(line,"IF EXIST %s\\TSHELL.JRN GOTO FAIL\r\nIF EXIST %s\\TSHELL.NEW GOTO FAIL\r\nIF EXIST %s\\TSHELL.OLD GOTO FAIL\r\nIF EXIST %s\\TSHELL.RST GOTO FAIL\r\n",win,win,win,win); put(h,line);
     sprintf(line,"%s\\TINST.EXE /ZERO\r\nIF ERRORLEVEL 1 GOTO FAIL\r\n",src); put(h,line);
     sprintf(line,"IF NOT EXIST %s\\SHREADY.TAG GOTO FILES\r\nREN %s\\SHREADY.TAG SHREADY.OFF\r\nIF EXIST %s\\SHREADY.TAG GOTO FAIL\r\nIF NOT EXIST %s\\SHREADY.OFF GOTO FAIL\r\n:FILES\r\n",src,src,src,src); put(h,line);
@@ -304,6 +305,10 @@ static void makefiles(void)
     sprintf(line,"IF NOT EXIST %s\\READY.TAG GOTO NOHELP\r\nIF NOT EXIST %s\\RESERVE.COM GOTO NOHELP\r\n",src,src); put(h,line);
     sprintf(line,"IF NOT EXIST %s\\WIN.COM GOTO NOWIN\r\nIF \"%%1\"==\"SETUP\" IF NOT EXIST %s\\SETUP.EXE GOTO NOWIN\r\nIF \"%%1\"==\"setup\" IF NOT EXIST %s\\SETUP.EXE GOTO NOWIN\r\n",win,win,win); put(h,line);
     sprintf(line,"IF NOT EXIST %s\\SHELLSEL.EXE GOTO RECOVERED\r\n%s\\SHELLSEL.EXE RECOVER %s\\SYSTEM.INI\r\nIF ERRORLEVEL 1 GOTO RECFAIL\r\n:RECOVERED\r\n",src,src,win); put(h,line);
+    sprintf(line,"IF NOT EXIST %s\\XTMODE.EXE GOTO NOHELP\r\n%s\\XTMODE.EXE RECOVER %s\\SYSTEM.INI\r\nIF ERRORLEVEL 1 GOTO MODEFAIL\r\n",src,src,win); put(h,line);
+    put(h,"IF \"%1\"==\"SETUP\" GOTO MODESET\r\nIF \"%1\"==\"setup\" GOTO MODESET\r\n");
+    sprintf(line,"%s\\XTMODE.EXE GUARD %s\\SYSTEM.INI\r\nIF ERRORLEVEL 1 GOTO MODEFAIL\r\nGOTO MODEOK\r\n:MODESET\r\n",src,win); put(h,line);
+    sprintf(line,"%s\\XTMODE.EXE ACCEPT %s\\SYSTEM.INI\r\nIF ERRORLEVEL 1 GOTO MODEFAIL\r\n:MODEOK\r\n",src,win); put(h,line);
     sprintf(line,"IF \"%%1\"==\"SETUP\" GOTO CPCHECK\r\nIF \"%%1\"==\"setup\" GOTO CPCHECK\r\nGOTO CPOK\r\n:CPCHECK\r\nIF NOT EXIST %s\\CPSET.EXE GOTO CPFAIL\r\n%s\\CPSET.EXE CHECK %s\r\nIF ERRORLEVEL 1 GOTO CPFAIL\r\n:CPOK\r\n",src,src,win); put(h,line);
     sprintf(line,"%s\\RESERVE.COM\r\nIF ERRORLEVEL 1 GOTO FAILED\r\n",src); put(h,line);
     sprintf(line,"%c:\r\nCD %s\r\nIF ERRORLEVEL 1 GOTO NOWIN\r\nIF \"%%1\"==\"SETUP\" GOTO SETUP\r\nIF \"%%1\"==\"setup\" GOTO SETUP\r\n",win[0],win); put(h,line);
@@ -319,7 +324,14 @@ static void makefiles(void)
     if(!stricmp(src,"C:\\WINXT") && !stricmp(win,"C:\\WINDOWS"))
         put(h,"ECHO Next, optionally install the Start bar: C:\\WINXT\\TSSETUP\r\n");
     sprintf(line,"ECHO Start Windows with %s\\WINXT\r\nECHO Keep rollback instructions in %s\\BACKUP.TXT\r\nGOTO DONE\r\n",src,src); put(h,line);
-    put(h,":CPFAIL\r\nECHO Computer-choice check refused. Windows and Setup were not started.\r\nECHO Read CPSET.TXT; a changed keyboard may require RESTORE then APPLY.\r\nGOTO DONE\r\n:RECFAIL\r\nECHO Shell recovery failed. Windows and Setup were not started.\r\nGOTO DONE\r\n:SHELLERR\r\nECHO Shell display check failed. Check SYSTEM.INI before starting Windows.\r\nGOTO DONE\r\n:NOHELP\r\nECHO Incomplete helper installation. Windows and Setup were not started.\r\nGOTO DONE\r\n:NOWIN\r\nECHO Windows files or directory unavailable. Nothing started.\r\nGOTO DONE\r\n:FAILED\r\nECHO Video reservation failed. Windows and Setup were not started.\r\nGOTO DONE\r\n:USAGE\r\nECHO Use WINXT or WINXT SETUP from the support folder\r\n:DONE\r\n"); closeout(h);
+    put(h,":CPFAIL\r\nECHO Computer-choice check refused. Windows and Setup were not started.\r\nECHO Read CPSET.TXT; a changed keyboard may require RESTORE then APPLY.\r\nGOTO DONE\r\n"); put(h,":MODEFAIL\r\nECHO Mode recovery/resource check refused. Keep all XTMODE and XTFILES sidecars.\r\nECHO Windows and Setup were not started.\r\nGOTO DONE\r\n:RECFAIL\r\nECHO Shell recovery failed. Windows and Setup were not started.\r\nGOTO DONE\r\n"); put(h,":SHELLERR\r\nECHO Shell display check failed. Check SYSTEM.INI before starting Windows.\r\nGOTO DONE\r\n:NOHELP\r\nECHO Incomplete helper installation. Windows and Setup were not started.\r\nGOTO DONE\r\n:NOWIN\r\nECHO Windows files or directory unavailable. Nothing started.\r\nGOTO DONE\r\n"); put(h,":FAILED\r\nECHO Video reservation failed. Windows and Setup were not started.\r\nGOTO DONE\r\n:USAGE\r\nECHO Use WINXT or WINXT SETUP from the support folder\r\n:DONE\r\n"); closeout(h);
+    join(path,HELP,"MODES.BAT"); h=newtext(path);
+    put(h,"@ECHO OFF\r\nIF NOT \"%3\"==\"\" GOTO USAGE\r\n");
+    sprintf(line,"IF NOT EXIST %s\\READY.TAG GOTO FAIL\r\nIF NOT EXIST %s\\XTMODE.EXE GOTO FAIL\r\n",src,src); put(h,line);
+    sprintf(line,"%s\\XTMODE.EXE INSTALL %s\\SYSTEM.INI %s\r\nIF ERRORLEVEL 1 GOTO FAIL\r\n",src,win,src); put(h,line);
+    sprintf(line,"%s\\XTMODE.EXE RECOVER %s\\SYSTEM.INI\r\nIF ERRORLEVEL 1 GOTO FAIL\r\nIF NOT \"%%1\"==\"\" GOTO SELECT\r\n",src,win); put(h,line);
+    sprintf(line,"%s\\XTMODE.EXE MENU %s\\SYSTEM.INI\r\nGOTO DONE\r\n:SELECT\r\n%s\\XTMODE.EXE SET %s\\SYSTEM.INI %%1 %%2\r\nGOTO DONE\r\n",src,win,src,win); put(h,line);
+    put(h,":FAIL\r\nECHO Mode install/recovery refused. Windows was not started. Keep sidecars.\r\nGOTO DONE\r\n:USAGE\r\nECHO Use MODES, MODES 6404, or MODES TEXT /TEXT after exiting Windows.\r\n:DONE\r\n"); closeout(h);
     join(path,HELP,"BACKUP.TXT"); h=newtext(path); sprintf(line,"Original Windows=%s\r\nBackup=%s\r\nSource=%s\r\nRestore at real DOS: %s\\RESTORE YES\r\n",win,bak,src,bak); put(h,line); closeout(h);
     /* Add the optional choice after completed snapshots and recovery script.
      * APPLY never selects Computer or edits SYSTEM.INI/keyboard binaries. */
@@ -344,10 +356,10 @@ int main(int argc,char **argv)
 {
     char path[PTH],rel[24],out[PTH]; int i, n; DIAG(clock_t phase;) unsigned a; struct diskfree_t disk; unsigned long freebytes;
     char *patterns[]={"*.DRV","*.FON","*.FOT","*.TTF","*.GR2","*.GR3","*.LGO","*.RLE","*.INI"};
-    char *required[]={"CPSET.EXE","CPSET.TXT","WAVEXT.EXE","XTWAVE.DAT","XTCLEAN.COM","OEMSETUP.INF","RESERVE.COM","CGA.GR2","CGALOGO.LGO","WXTSPL01.RLE","TR53216.DRV","TR56404.DRV","TR51616.DRV","TR53204.DRV","TR56402.DRV","TXTMODE.DRV","XTTSYS.FON","XTCFIX.FON","XTCOEM.FON","XTCSYS.FON","XTEFIX.FON","XTEOEM.FON","XTESYS.FON"};
+    char *required[]={"XTMODE.EXE","CPSET.EXE","CPSET.TXT","WAVEXT.EXE","XTWAVE.DAT","XTCLEAN.COM","OEMSETUP.INF","RESERVE.COM","CGA.GR2","XTSTATIC.LGO","WXTSPL01.RLE","TR53216.DRV","TR56404.DRV","TR51616.DRV","TR53204.DRV","TR56402.DRV","TXTMODE.DRV","XTTSYS.FON","XTCFIX.FON","XTCOEM.FON","XTCSYS.FON","XTEFIX.FON","XTEOEM.FON","XTESYS.FON"};
     char *original[]={"SYSTEM.INI","WIN.INI","WIN.COM"};
     char *boot[]={"CONFIG.SYS","AUTOEXEC.BAT"};
-    char *generated[]={"WINXT.BAT","BACKUP.TXT","READY.TAG","READY.NEW","PARTIAL.TAG","SHREADY.TAG","OEMBASE.INF","OEMSETUP.NEW"};
+    char *generated[]={"MODES.BAT","WINXT.BAT","BACKUP.TXT","READY.TAG","READY.NEW","PARTIAL.TAG","SHREADY.TAG","OEMBASE.INF","OEMSETUP.NEW"};
     if(argc==2 && !stricmp(argv[1],"/ZERO")) return 0;
     if(argc>=2 && !stricmp(argv[1],"/COMPARE")) {
         if(argc!=4) return 2;
@@ -381,10 +393,13 @@ int main(int argc,char **argv)
     if(exists(bakroot) && (_dos_getfileattr(bakroot,&a) || !(a&_A_SUBDIR)))
         fail("BACKUP exists but is not a directory.",bakroot);
     if(_dos_getfileattr(win,&a) || !(a&_A_SUBDIR)) fail("Windows directory not found.",win);
+    if(2*strlen(src)+strlen(win)+42>126)fail("Mode installer command exceeds DOS command-tail limit.",src);
     join(sys,win,"SYSTEM");
     if(_dos_getfileattr(sys,&a) || !(a&_A_SUBDIR)) fail("Windows SYSTEM directory not found.",sys);
     for(i=0;i<sizeof(required)/sizeof(required[0]);i++) {join(path,src,required[i]); if(!regular(path)) fail("Flat source folder is incomplete.",path);}
     join(path,win,"SETUP.EXE"); if(!regular(path)) fail("Windows DOS SETUP.EXE missing.",path);
+    { char *side[]={"XTMODE.JRN","XTMODE.NEW","XTMODE.OLD","XTMODE.RST","XTFILES.JRN","XTFILES.NEW","XTFILES.RDY"};
+      for(i=0;i<sizeof(side)/sizeof(side[0]);i++){join(path,win,side[i]);if(exists(path))fail("Existing mode history; run XTMODE FORGET before reinstalling.",path);} }
     /* A new integration never adopts an older standalone CPSET journal.
      * CHECK is read-only and precedes all recovery/snapshot/source mutations. */
     {

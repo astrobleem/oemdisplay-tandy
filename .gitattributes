@@ -49,3 +49,14 @@ tools/BUILDDEPS/* -text
 tools/XTFONTS/** -text
 docs/FONTS/** -text
 AGENTS.md -text
+
+# New source archives exclude historical binary bundles; Git history is preserved.
+*.ZIP export-ignore
+*.zip export-ignore
+tools/XTMODE/** -text
+tools/XTLOGO/** -text
+tools/FLASHDISK/DOCPINS/** -text
+tools/FLASHDISK/PUBLISH.PY -text
+tools/FLASHDISK/TESTPUB.PY -text
+
+docs/QUAL/** -text

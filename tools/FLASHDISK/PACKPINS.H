@@ -1,5 +1,7 @@
-/* Review-only transport pins; fonts need native acceptance. */
+/* Exact mode-revision transport inputs; rebuild PREPXT before use. */
 static struct packed_pin packed_pins[]={
+{"TR51616.DRV","TR51616.DR_","7ba71201079c8a0f931436f87113e32205da1be08b56062c55d7611262fec371",33108UL},
+{"XTMODE.EXE","XTMODE.EX_","f8f09725726db58ada8d6cfaa7c9e6b04288ae462179931fd298771568562dbf",27399UL},
 {"TR53216.DRV","TR53216.DR_","78ada9d92c05db0f4c496b370a65e2f931a7ea656d13209c05905ca61dc505d9",33130UL},
 {"TR56404.DRV","TR56404.DR_","7706bc6780d890c9eef26ddf0d6326558e07c22b76aff485574913cc612d1cf5",32710UL},
 {"TXTMODE.DRV","TXTMODE.DR_","647325fe6531c500387f3410a3f3e28cb595f48e06ce3dcc364b3213c454f0ef",33719UL},

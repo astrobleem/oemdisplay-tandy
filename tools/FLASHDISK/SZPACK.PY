@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Original deterministic SZDD packing for three pinned public driver payloads."""
+"""Original deterministic SZDD packing for pinned original public runtime payloads."""
 from collections import defaultdict, deque
-PACKED_NAMES = {'TR53216.DRV': 'TR53216.DR_', 'TR56404.DRV': 'TR56404.DR_', 'TXTMODE.DRV': 'TXTMODE.DR_', 'XTCSYS.FON': 'XTCSYS.FO_', 'XTCFIX.FON': 'XTCFIX.FO_', 'XTCOEM.FON': 'XTCOEM.FO_', 'XTESYS.FON': 'XTESYS.FO_', 'XTEFIX.FON': 'XTEFIX.FO_', 'XTEOEM.FON': 'XTEOEM.FO_', 'XTTSYS.FON': 'XTTSYS.FO_', 'TSHELL.EXE': 'TSHELL.EX_'}
+PACKED_NAMES = {'TR51616.DRV': 'TR51616.DR_', 'XTMODE.EXE': 'XTMODE.EX_', 'TR53216.DRV': 'TR53216.DR_', 'TR56404.DRV': 'TR56404.DR_', 'TXTMODE.DRV': 'TXTMODE.DR_', 'XTCSYS.FON': 'XTCSYS.FO_', 'XTCFIX.FON': 'XTCFIX.FO_', 'XTCOEM.FON': 'XTCOEM.FO_', 'XTESYS.FON': 'XTESYS.FO_', 'XTEFIX.FON': 'XTEFIX.FO_', 'XTEOEM.FON': 'XTEOEM.FO_', 'XTTSYS.FON': 'XTTSYS.FO_', 'TSHELL.EXE': 'TSHELL.EX_'}
 def pack(data):
  out=bytearray(b'SZDD\x88\xf0\x27\x33A\x00'+len(data).to_bytes(4,'little'));d=defaultdict(deque);pos=0
  while pos<len(data):

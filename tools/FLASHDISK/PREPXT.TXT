@@ -1,23 +1,26 @@
-PREPXT - ORIGINAL XT PIXELS FONT TEST CANDIDATE
+PREPXT - QUALIFIED PRIVATE STATIC-LOGO / MODE-SWITCHER CANDIDATE
 
 DOS 3.3+, 8086/8088, 640 KB. Exit Windows before preparation.
 At disk root: INSTALL [owned-media directory]. Advanced:
   PREPXT WINXT C:\WINDOWS [media-dir1 ... media-dir4] [/VERIFY]
 
-Only CGA.GR2 (2104 bytes) and CGALOGO.LGO (880 bytes) require matching owned
-Windows media. Seven MIT-licensed fonts are public original runtime files.
-There is no mandatory Windows-font hash, private-font transplant or vintage
-Python dependency. Other non-font Windows dependencies remain.
+Only matching owned CGA.GR2 (2104 bytes) is gathered. Seven original MIT fonts
+and original XTSTATIC.LGO remove Windows font-media and CGALOGO.LGO source
+dependencies. Windows/DOS, WIN.CNF, Setup/kernel and other non-font components
+remain required. No vintage Python/compiler is required.
 
-Default copying performs zero SHA checks; bounded decompression, size and
-I/O checks remain. /VERIFY enables slow deep checks and readbacks. Do not
-make /VERIFY the default on vintage hardware. All inputs remain read-only.
-The output must be fresh C:\WINXT. INSTALL.BAT is committed last after safe
-copy/close checks. Existing output, missing inputs, malformed data, low space
-and declined confirmation are refused. PREPXT never starts Windows/Setup.
+Default uses size/I/O/structural checks. The source-coupled instrumented
+default measured zero SHA blocks in preflight and copy and zero output
+readback. Production default separately passed exact native output/preimage
+checks. Emulator host times were about 42 seconds default and 139 seconds
+explicit /VERIFY. These are not physical 8088 estimates. /VERIFY enables
+expensive deep verification/readbacks; it stays optional developer diagnostics.
 
-After success, C: then CD \WINXT then INSTALL. Setup owns display/font
-installation; the generated WINXT launcher and numbered backup own guarded
-start/switch and rollback. See the disk README and CPSET.TXT. No publication
-is authorized. This source workspace has no rebuilt PREPXT.EXE or HELPER.SHA
-until the approved compiler and subsequent native/host checks pass.
+Inputs remain read-only. Output must be fresh C:\WINXT; INSTALL.BAT commits
+last. Existing output, malformed/missing input, low space and declined
+confirmation refuse preparation. PREPXT never launches Windows or Setup.
+Native builds, defaults, VERIFY and Setup 6402/TEXT passed. QUALIFICATION.JSON
+binds evidence and the host-only document pin refresh. Executable code remains
+the measured native implementation; refreshed data pins were host-verified.
+Preserved failures include the corrected six-phase validator and a timed-out
+repeat. No extra guest was launched for documentation. No publication.

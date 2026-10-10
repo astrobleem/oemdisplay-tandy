@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Host-only private WINXT staging. No Python is needed on the DOS target.
 SZDD expansion follows the existing distribution STAGE.PY. XT Pixels fonts are public first-party payloads; only the non-font grabber
-and logo loader require owned media. No Python is needed on the DOS target.
+requires owned media; the static logo is original. No Python is needed on the DOS target.
 """
 from pathlib import Path
 import argparse,csv,hashlib,re,struct
 class DiskError(Exception):pass
-SUPPORT_HASHES = {'CGA.GR2': '1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067', 'CGALOGO.LGO': 'd9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807'}
+SUPPORT_HASHES = {'CGA.GR2': '1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067'}
 
 SPLASH_NAME = 'WXTSPL01.RLE'
 SPLASH_SHA = 'eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c'
@@ -68,6 +68,9 @@ def verify_default_splash(payload):
     art = payload.get(SPLASH_NAME, b'')
     if len(art) != SPLASH_BYTES or hashlib.sha256(art).hexdigest() != SPLASH_SHA:
         raise DiskError('Current default requires the approved Windows XT splash')
+    logo=payload.get('XTSTATIC.LGO', b'')
+    if len(logo)!=361 or hashlib.sha256(logo).hexdigest()!='995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef':
+        raise DiskError('Original static logo pin mismatch')
     section = ''; profiles = set()
     try:
         for line in payload['OEMSETUP.INF'].decode('ascii').splitlines():
@@ -78,7 +81,7 @@ def verify_default_splash(payload):
             name, separator, value = line.partition('=')
             name = name.strip().upper()
             row = next(csv.reader([value], skipinitialspace=True, strict=True))
-            if not separator or name in profiles or len(row) != 9 or row[8].strip().upper() != 'A:' + SPLASH_NAME:
+            if not separator or name in profiles or len(row) != 9 or row[8].strip().upper() != 'A:' + SPLASH_NAME or row[3].strip().upper() != 'A:CGA.GR2' or row[4].strip().upper() != 'A:XTSTATIC.LGO':
                 raise DiskError('Every current Setup profile must select Windows XT')
             profiles.add(name)
     except (KeyError, UnicodeError, csv.Error, StopIteration) as error:
@@ -94,7 +97,7 @@ def stage(support,out):
   h,n=line.split()
   if not re.fullmatch(r'[0-9a-f]{64}',h) or not re.fullmatch(r'[A-Z0-9_]{1,8}\.[A-Z0-9_]{1,3}',n) or n in manifest:raise DiskError('Bad manifest')
   manifest[n]=h
- required=set(SUPPORT_HASHES)|{'XTTSYS.FON','TR53216.DRV','TR56404.DRV','TR51616.DRV','TR53204.DRV','TR56402.DRV','TXTMODE.DRV','INSTALL.BAT','TINST.EXE','OEMSETUP.INF','RESERVE.COM','TSSETUP.BAT','TSTART.BAT','SHELLSEL.EXE','TSCHECK.EXE','TSHELL.EXE','TSHELL.INI','TSINPUT.DLL',SPLASH_NAME}
+ required=set(SUPPORT_HASHES)|{'XTMODE.EXE','MODEINFO.TXT','MODELIC.TXT','XTSTATIC.LGO','XTTSYS.FON','TR53216.DRV','TR56404.DRV','TR51616.DRV','TR53204.DRV','TR56402.DRV','TXTMODE.DRV','INSTALL.BAT','TINST.EXE','OEMSETUP.INF','RESERVE.COM','TSSETUP.BAT','TSTART.BAT','SHELLSEL.EXE','TSCHECK.EXE','TSHELL.EXE','TSHELL.INI','TSINPUT.DLL',SPLASH_NAME}
  if not required<=set(manifest):raise DiskError('Incomplete runtime manifest')
  data={}
  for n,h in SUPPORT_HASHES.items():
@@ -111,6 +114,7 @@ def stage(support,out):
    if p.is_symlink() or not p.is_file() or p.stat().st_size>1024*1024:raise DiskError('Invalid runtime file: '+n)
    data[n]=p.read_bytes()
   if digest(data[n])!=h:raise DiskError('Payload hash mismatch: '+n)
+ if b'XTSTATIC.LGO' not in data['TINST.EXE'] or b'CGALOGO.LGO' in data['TINST.EXE']:raise DiskError('Native static-logo installer must be rebuilt before staging')
  verify_default_splash(data)
  data['MANIFEST.SHA']=(root/'MANIFEST.SHA').read_bytes()
  out.mkdir(parents=False)
@@ -120,6 +124,6 @@ def stage(support,out):
  print('Copy this single folder to C:\\WINXT, then run INSTALL at DOS.')
  print('Experimental text remains opt-in and has known character corruption.')
 if __name__=='__main__':
- a=argparse.ArgumentParser(description=__doc__);a.add_argument('--windows-files',type=Path,required=True,help='Folder with two original non-font Windows 3.0 support files, expanded or SZDD');a.add_argument('--out',type=Path,required=True,help='Fresh output folder, usually WINXT');v=a.parse_args()
+ a=argparse.ArgumentParser(description=__doc__);a.add_argument('--windows-files',type=Path,required=True,help='Folder with owned CGA.GR2, expanded or SZDD');a.add_argument('--out',type=Path,required=True,help='Fresh output folder, usually WINXT');v=a.parse_args()
  try:stage(v.windows_files,v.out)
  except (DiskError,OSError,ValueError,KeyError,struct.error) as e:a.exit(1,'Refused: '+str(e)+'\n')

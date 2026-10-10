@@ -1,0 +1,21 @@
+{
+  "deadline_utc": "2026-10-10T06:14:25.057623+00:00",
+  "jobs": [
+    {
+      "purpose": "SET6402",
+      "started_utc": "2026-10-10T06:11:25.699746+00:00",
+      "pid": 20016,
+      "exit_code": null,
+      "seconds": 58.281,
+      "stop_reason": "individual_timeout",
+      "exit_code_after_stop": 1
+    }
+  ],
+  "native_qualified": false,
+  "allocated_minutes_from_acquisition": 3,
+  "acquired_utc": "2026-10-10T06:11:25.057623+00:00",
+  "active": "released",
+  "error": "Bounded guest did not return; dependent jobs stopped",
+  "released_utc": "2026-10-10T06:12:23.992860+00:00",
+  "conflicts_after": []
+}

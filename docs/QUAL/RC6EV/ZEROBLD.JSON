@@ -1,0 +1,12 @@
+{
+  "native_compile_pass": true,
+  "source_pins": {
+    "PACKPINS.H": "5222fe457fec1984a35da258b5c7ff636a07acadd0d7d95497b65f9ffdf3caf8",
+    "PREPXT.C": "e6ddd0cfc7068a00fc0f97b07f7842ea2410b3872b6f24bac0aa149e5267cfa7",
+    "SZSTREAM.H": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68",
+    "XTPINS.H": "7a914108407b3fb6dd2f5d8fe94e999fffed86bc7b85df9182384ee06b4b637d"
+  },
+  "flags": "/c /AS /G0 /W3 /Od /DINSTALL_DIAGNOSTICS /DZERO_SHA_TEST",
+  "binary_sha256": "07abf563769a156285464135858feadb15803b4077103fcd65b7318cd5b5ff43",
+  "log_sha256": "d71dbbb81b8b7c67634e0e3df4a99c718ed11202d78db291f01c04d5c63fb63e"
+}

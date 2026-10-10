@@ -1,0 +1,12 @@
+{
+  "native_pass": true,
+  "runtime_and_owned_bytes_exact": true,
+  "Windows_and_boot_preimages_exact": true,
+  "default_counters": [
+    0,
+    0
+  ],
+  "log_sha256": "e533cd5fff2cebe43f83820d854c46aa172906ac52305f38589b6d495f61aaf8",
+  "DOS_KB": 624,
+  "DOS_mode": 3
+}

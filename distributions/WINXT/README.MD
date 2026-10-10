@@ -1,13 +1,17 @@
-# Windows XT rc.5 runtime
+# Unpublished combined source revision
 
-The expanded public runtime includes seven original MIT bitmap fonts.
-No Windows font media, local font transplant or vintage Python is needed.
-Windows itself, CGA.GR2 and CGALOGO.LGO remain user-supplied non-font inputs.
+Seven original MIT fonts remove Windows font-media and vintage Python needs.
+Original XTSTATIC.LGO replaces the owned CGALOGO.LGO source resource. Matching
+owned CGA.GR2, installed DOS/Windows, Setup, SYSTEM/WIN.CNF and other non-font
+Windows components remain dependencies. Every OEM row uses XTSTATIC.LGO and
+WXTSPL01.RLE; Setup constructs the common 7,879-byte WIN.COM.
 
-Use the [ready 720 KB image and DOS installation guide](../../tools/FLASHDISK/README.MD).
-The guarded C:\WINXT\WINXT launcher and numbered backups remain required.
-Optional TSSETUP selects Tandy Start in supported graphics modes. Every Setup
-profile uses the approved Windows XT fallback picture; Color enables the
-qualified short wave. Normal preparation/install/start skips SHA work;
-explicit /VERIFY is developer diagnostics. Detailed limits are in the
-[user manual](../../docs/USERMAN.MD) and [font guide](../../docs/FONTS/README.MD).
+The mode selector and generated startup guards passed the recorded graphics,
+recovery and Windows-launched DOS refusal tests. Whole combined-package
+qualification is still incomplete. Read the final-gates preflight and native
+records before staging. No publication or installed Windows/CF writes.
+
+Default SHA verification is disabled by design; counters for the corrected
+helper revision are not yet measured. /VERIFY stays explicit and optional.
+The guarded WINXT/TSTART launchers and numbered rollback remain mandatory.
+160-pixel dialogs can clip; experimental TEXT retains renderer corruption.

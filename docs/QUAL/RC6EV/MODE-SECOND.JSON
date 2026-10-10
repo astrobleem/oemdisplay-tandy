@@ -1,0 +1,110 @@
+{
+  "complete_package_qualified": false,
+  "lease": {
+    "deadline_utc": "2026-10-10T02:15:05.237273+00:00",
+    "jobs": [
+      {
+        "purpose": "COMPDOS",
+        "started_utc": "2026-10-10T02:11:05.567333+00:00",
+        "pid": 21492,
+        "exit_code": 0,
+        "seconds": 3.75,
+        "stop_reason": "process_exited",
+        "exit_code_after_stop": 0
+      },
+      {
+        "purpose": "COMPDOS2",
+        "started_utc": "2026-10-10T02:11:46.653951+00:00",
+        "pid": 34436,
+        "exit_code": 0,
+        "seconds": 7.421,
+        "stop_reason": "process_exited",
+        "exit_code_after_stop": 0
+      },
+      {
+        "purpose": "COMPWIN",
+        "started_utc": "2026-10-10T02:11:54.379271+00:00",
+        "pid": 15148,
+        "exit_code": 0,
+        "seconds": 7.516,
+        "stop_reason": "process_exited",
+        "exit_code_after_stop": 0
+      },
+      {
+        "purpose": "G6402",
+        "started_utc": "2026-10-10T02:12:40.271227+00:00",
+        "pid": 12016,
+        "exit_code": 0,
+        "seconds": 27.64,
+        "stop_reason": "process_exited",
+        "exit_code_after_stop": 0
+      },
+      {
+        "purpose": "WINDOS",
+        "started_utc": "2026-10-10T02:13:08.232546+00:00",
+        "pid": 33848,
+        "exit_code": 0,
+        "seconds": 24.875,
+        "stop_reason": "process_exited",
+        "exit_code_after_stop": 0
+      }
+    ],
+    "native_qualified": false,
+    "allocated_minutes_from_acquisition": 4,
+    "acquired_utc": "2026-10-10T02:11:05.237273+00:00",
+    "active": "released",
+    "paused_reason": "Missing guest completion evidence after COMPWIN",
+    "error": "Insufficient allocated time for bounded job",
+    "released_utc": "2026-10-10T02:14:55.901460+00:00",
+    "conflicts_after": []
+  },
+  "production_helper_sha256": "34ff85d216a7c0233066aedc27c2199c2772e278438e627ce548d07909de4160",
+  "G6402": {
+    "pass": true,
+    "native_advances_exact": true,
+    "native_framebuffers_identical": {
+      "NORMAL": true,
+      "DIALOG": true
+    },
+    "native_framebuffer_pngs": "G6402/NORMAL.PNG and DIALOG.PNG; genuine emulator B800 decode",
+    "return_and_memory": "BDA-KB MODE-AX PAGE-BX TOP-TYPE OWNER SIZE OWNER-TYPE SELF SIZE ID0 ID1 ID2 ID3 VIDEO COUNT\n0270 5003 0000 005A 0817 0400 004D 0817 006F 4E54 5944 5352 3130 9800 0400 \n"
+  },
+  "actual_Windows_launched_DOS_guard": {
+    "pass": true,
+    "raw_responses": {
+      "AX1600": "1600",
+      "AX4680": "0000"
+    },
+    "refused_commands": [
+      "CHECK",
+      "INSTALL",
+      "SET",
+      "RECOVER",
+      "UNDO",
+      "GUARD",
+      "VERIFY",
+      "FORGET",
+      "ACCEPT",
+      "MENU"
+    ],
+    "active_Windows_message_verified_for_each": true,
+    "all_preimage_files_unchanged": 254,
+    "returned_to_DOS": true,
+    "CHECK_again_succeeded_in_DOS": true,
+    "DOS_memory": "BDA-KB MODE-AX PAGE-BX TOP-TYPE OWNER SIZE OWNER-TYPE SELF SIZE ID0 ID1 ID2 ID3 VIDEO COUNT\n0270 5003 0000 005A 0813 0400 004D 0813 006F 4E54 5944 5352 3130 9800 0400 \n",
+    "Win16_log_limitation": "wsprintf varargs %s received a near pointer, corrupting names/numeric presentation. Original native log/capture preserved. LPSTR cast fixed in source, but the bounded runner refused its rebuild/rerun for insufficient remaining lease time. This does not change readable DOS refusal evidence, unchanged bytes, or native return/CHECK markers."
+  },
+  "compiled_test_sources": {
+    "DOSGUARD.C": "90d2b032a53cac1547df70afea4086cb416c059050d6be414806993ddf786341",
+    "WINGUARD.C": "30718459b3198c95281c3450dae87a544cee03088acde73f0e3b1782c24d0d06"
+  },
+  "current_test_sources": {
+    "DOSGUARD.C": "90d2b032a53cac1547df70afea4086cb416c059050d6be414806993ddf786341",
+    "WINGUARD.C": "505f9102f81e0fe745384ecfd99f36d6bfa12b85dac571d018875e01bac41bf0"
+  },
+  "remaining": [
+    "Native build/rerun of presentation-only Win16 log fix",
+    "Host Setup copy-source transition repair and instruction QA, then separately allocated native Setup 6402/TEXT tests",
+    "PREPXT integration, pins, manifests, capacity and unqualified draft packaging"
+  ]
+}

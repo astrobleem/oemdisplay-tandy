@@ -39,7 +39,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/examples/TSHELL/\n/tools/FLASHDISK/\n/tools/BUILDDEPS/\n/distributions/WINXT/\n/examples/WXTSPL/WAVE/\n/examples/WXTSPL/WXTSPL01.RLE\n/examples/WXTSPL/ART/assets/WXTSPL01.RLE\n/src/tandysw/TINST.C\n/examples/WXTSPL/UPDATER/\n/docs/QUAL/WAVEINS.JSON\n/docs/QUAL/CPSET.JSON\n/tools/CPSET/\n/docs/PROMO/VERIFY.PY\n/docs/PROMO/PBRUSH16.JSON\n/docs/PROMO/SHOWCASE.MD\n/README.md\n/tools/XTFONTS/\n/docs/FONTS/\n/docs/QUAL/\n' | git sparse-checkout set --no-cone --stdin
+          printf '/examples/TSHELL/\n/tools/FLASHDISK/\n/tools/BUILDDEPS/\n/distributions/WINXT/\n/examples/WXTSPL/WAVE/\n/examples/WXTSPL/WXTSPL01.RLE\n/examples/WXTSPL/ART/assets/WXTSPL01.RLE\n/src/tandysw/TINST.C\n/examples/WXTSPL/UPDATER/\n/docs/QUAL/WAVEINS.JSON\n/docs/QUAL/CPSET.JSON\n/tools/CPSET/\n/docs/PROMO/VERIFY.PY\n/docs/PROMO/PBRUSH16.JSON\n/docs/PROMO/SHOWCASE.MD\n/README.md\n/tools/XTMODE/\n/tools/XTLOGO/\n/tools/XTFONTS/\n/docs/FONTS/\n/docs/QUAL/\n/.github/\n/.gitattributes\n/AGENTS.md\n/BUILDING.MD\n/docs/USERMAN.MD\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
 
@@ -81,12 +81,13 @@ jobs:
           cd dist
           sha256sum --check SHA256SUMS
 
-      - name: Build and verify exact qualified original-font publication assets
+      - name: Build and verify rc.6 source, native evidence and documentation binding
         env:
           SOURCE_SHA: ${{ github.sha }}
         run: |
-          python3 tools/XTFONTS/HOST.PY PUBLISH.PY --package dist --out release --commit "$SOURCE_SHA"
-          python3 tools/XTFONTS/HOST.PY PUBLISH.PY --verify release --commit "$SOURCE_SHA"
+          python3 tools/FLASHDISK/PUBLISH.PY --package dist --out release --commit "$SOURCE_SHA"
+          python3 tools/FLASHDISK/PUBLISH.PY --verify release --commit "$SOURCE_SHA"
+          python3 tools/FLASHDISK/TESTPUB.PY --release release
           cd release
           sha256sum --check SHA256SUMS
 
@@ -131,26 +132,33 @@ jobs:
           from pathlib import Path
           out = Path('dist')
           names = {'WINXT720.IMG','WINXT720.ZIP','WXTTOOLS.ZIP','README.TXT','BUILD.JSON',
-              'PKGSUMS.TXT','XT-PIXELS-R10-SOURCE.zip','XT-PIXELS-R10-FONTS.zip',
-              'XT-PIXELS-R10-PREVIEWS.zip','FONT-LICENSE.TXT','START-HERE.TXT',
+              'PKGSUMS.TXT','WINXT-RC6-SOURCE.zip','WINXT-RC6-FONTS.zip',
+              'WINXT-RC6-PREVIEWS.zip','FONT-LICENSE.TXT','START-HERE.TXT',
               'QUALIFY.JSON','RELEASE.JSON','SHA256SUMS'}
           assert {p.name for p in out.iterdir()} == names
           assert all(p.is_file() and not p.is_symlink() for p in out.iterdir())
           q = json.loads((out/'QUALIFY.JSON').read_bytes())
           r = json.loads((out/'RELEASE.JSON').read_bytes())
           snapshot = json.loads((out/'BUILD.JSON').read_bytes())
-          assert q['publication_allowed'] is True and q['native_package_qualified'] is True
-          assert r['publication_allowed'] is True and r['native_binary_identity_preserved'] is True
+          assert q['publication_allowed'] is True and q['required_final_gates_pass'] is True
+          assert q['native_implementation_qualified'] is True and q['documentation_pin_refresh_verified'] is True
+          assert q['refreshed_binary_rerun_in_guest'] is False and q['hardware_qualified'] is False
+          assert r['publication_allowed'] is True and r['native_code_identity_preserved'] is True
+          assert r['document_pin_data_refreshed'] is True and r['refreshed_helper_executed_in_guest'] is False
           assert r['Windows_support_included'] is False
           assert q['publication_commit'] == r['publication_commit'] == os.environ['SOURCE_SHA']
           assert q['release_tag'] == r['release_tag'] == os.environ['RELEASE_TAG']
           assert snapshot['publication_allowed'] is False and snapshot['native_package_qualified'] is False
-          assert snapshot['windows_support_included'] is False and snapshot['kind'] == 'original-font-test-candidate'
+          assert snapshot['windows_support_included'] is False and snapshot['kind'] == 'dos-mode-switcher-test-candidate'
           assert snapshot['image_bytes'] == (out/'WINXT720.IMG').stat().st_size == 737280
           assert hashlib.sha256((out/'WINXT720.IMG').read_bytes()).hexdigest() == q['disk_sha256']
-          assert q['native_default_transaction']['sha_blocks'] == [0,0]
-          assert q['native_default_transaction']['compared_bytes'] == [0]
-          assert all(q['native_verify_transaction']['sha_blocks'])
+          assert q['zero_SHA_scope']['default_sha_blocks'] == [0,0]
+          assert q['zero_SHA_scope']['default_output_readback_bytes'] == 0
+          assert q['zero_SHA_scope']['explicit_VERIFY_pass'] is True
+          assert q['release_tag'] == 'v0.1.0-rc.6'
+          assert snapshot['native_implementation_qualified'] is True
+          assert snapshot['documentation_pin_refresh_verified'] is True
+          assert snapshot['refreshed_binary_rerun_in_guest'] is False
           for n,h in q['package_sha256'].items():
               assert n in {'WINXT720.IMG','WINXT720.ZIP','WXTTOOLS.ZIP','BUILD.JSON','README.TXT','SHA256SUMS'}
               name = 'PKGSUMS.TXT' if n == 'SHA256SUMS' else n
@@ -184,15 +192,16 @@ jobs:
             "Verified public 720 KB Windows XT package from commit $SOURCE_SHA." \
             "Build: https://github.com/$GH_REPO/actions/runs/${{ github.run_id }}" \
             'Packages accepted pinned binaries; no legacy toolchain recompilation.' \
-            'Original MIT XT Pixels fonts are included; proprietary Windows support/toolchain are not.' \
-            'Use owned Windows3.0 and the two non-font support files; no vintage Python/font media needed.' \
-            'Experimental software; physical hardware qualification remains separate.' \
+            'Original MIT fonts, static logo and DOS mode menu; no Windows support/toolchain included.' \
+            'Use owned Windows 3.0, WIN.CNF and CGA.GR2; no vintage Python/font media needed.' \
+            'Measured native implementation; reproducible host-only documentation pin refresh.' \
+            'Refreshed helper was not rerun in a guest. Experimental; physical hardware remains separate.' \
             > release-notes.txt
           gh release create "$RELEASE_TAG" --repo "$GH_REPO" \
             --verify-tag --draft --latest=false \
             --title "Windows XT $RELEASE_TAG" --notes-file release-notes.txt \
             dist/WINXT720.IMG dist/WINXT720.ZIP dist/WXTTOOLS.ZIP \
             dist/README.TXT dist/BUILD.JSON dist/PKGSUMS.TXT \
-            dist/XT-PIXELS-R10-SOURCE.zip dist/XT-PIXELS-R10-FONTS.zip \
-            dist/XT-PIXELS-R10-PREVIEWS.zip dist/FONT-LICENSE.TXT \
+            dist/WINXT-RC6-SOURCE.zip dist/WINXT-RC6-FONTS.zip \
+            dist/WINXT-RC6-PREVIEWS.zip dist/FONT-LICENSE.TXT \
             dist/START-HERE.TXT dist/QUALIFY.JSON dist/RELEASE.JSON dist/SHA256SUMS

@@ -1,0 +1,110 @@
+{
+  "deadline_utc": "2026-10-10T06:12:44.903028+00:00",
+  "jobs": [
+    {
+      "purpose": "PRODBLD",
+      "started_utc": "2026-10-10T06:05:45.435130+00:00",
+      "pid": 6764,
+      "exit_code": 0,
+      "seconds": 20.875,
+      "stop_reason": "process_exited",
+      "exit_code_after_stop": 0,
+      "validation": {
+        "native_compile_pass": true,
+        "source_pins": {
+          "PACKPINS.H": "5222fe457fec1984a35da258b5c7ff636a07acadd0d7d95497b65f9ffdf3caf8",
+          "PREPXT.C": "e6ddd0cfc7068a00fc0f97b07f7842ea2410b3872b6f24bac0aa149e5267cfa7",
+          "SZSTREAM.H": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68",
+          "XTPINS.H": "7a914108407b3fb6dd2f5d8fe94e999fffed86bc7b85df9182384ee06b4b637d"
+        },
+        "flags": "/c /AS /G0 /W3 /Od",
+        "binary_sha256": "5817a16b619377307f8f503b379f0d2bfec7b455797ee24f56f4c767e4eb59e5",
+        "log_sha256": "d71dbbb81b8b7c67634e0e3df4a99c718ed11202d78db291f01c04d5c63fb63e"
+      }
+    },
+    {
+      "purpose": "ZEROBLD",
+      "started_utc": "2026-10-10T06:06:06.857182+00:00",
+      "pid": 20636,
+      "exit_code": 0,
+      "seconds": 20.86,
+      "stop_reason": "process_exited",
+      "exit_code_after_stop": 0,
+      "validation": {
+        "native_compile_pass": true,
+        "source_pins": {
+          "PACKPINS.H": "5222fe457fec1984a35da258b5c7ff636a07acadd0d7d95497b65f9ffdf3caf8",
+          "PREPXT.C": "e6ddd0cfc7068a00fc0f97b07f7842ea2410b3872b6f24bac0aa149e5267cfa7",
+          "SZSTREAM.H": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68",
+          "XTPINS.H": "7a914108407b3fb6dd2f5d8fe94e999fffed86bc7b85df9182384ee06b4b637d"
+        },
+        "flags": "/c /AS /G0 /W3 /Od /DINSTALL_DIAGNOSTICS /DZERO_SHA_TEST",
+        "binary_sha256": "07abf563769a156285464135858feadb15803b4077103fcd65b7318cd5b5ff43",
+        "log_sha256": "d71dbbb81b8b7c67634e0e3df4a99c718ed11202d78db291f01c04d5c63fb63e"
+      }
+    },
+    {
+      "purpose": "PFAST",
+      "started_utc": "2026-10-10T06:06:28.289133+00:00",
+      "pid": 21144,
+      "exit_code": 0,
+      "seconds": 41.531,
+      "stop_reason": "process_exited",
+      "exit_code_after_stop": 0,
+      "validation": {
+        "native_pass": true,
+        "runtime_and_owned_bytes_exact": true,
+        "Windows_and_boot_preimages_exact": true,
+        "default_counters": "not instrumented in production",
+        "log_sha256": "4bedde59f8cc5cebcdcc84fe2e4dd1a4551a33c4cf2327f2408f721276f81e04",
+        "DOS_KB": 624,
+        "DOS_mode": 3
+      }
+    },
+    {
+      "purpose": "PZERO",
+      "started_utc": "2026-10-10T06:07:10.482738+00:00",
+      "pid": 8344,
+      "exit_code": 0,
+      "seconds": 41.547,
+      "stop_reason": "process_exited",
+      "exit_code_after_stop": 0,
+      "validation": {
+        "native_pass": true,
+        "runtime_and_owned_bytes_exact": true,
+        "Windows_and_boot_preimages_exact": true,
+        "default_counters": [
+          0,
+          0
+        ],
+        "log_sha256": "e533cd5fff2cebe43f83820d854c46aa172906ac52305f38589b6d495f61aaf8",
+        "DOS_KB": 624,
+        "DOS_mode": 3
+      }
+    },
+    {
+      "purpose": "PVERIFY",
+      "started_utc": "2026-10-10T06:07:52.769310+00:00",
+      "pid": 3764,
+      "exit_code": 0,
+      "seconds": 138.875,
+      "stop_reason": "process_exited",
+      "exit_code_after_stop": 0,
+      "validation": {
+        "native_pass": true,
+        "runtime_and_owned_bytes_exact": true,
+        "Windows_and_boot_preimages_exact": true,
+        "default_counters": "not instrumented in production",
+        "log_sha256": "d77dc12f5967b681e674a9b2d04b24a4f6d71a2b81858620ffeeab777b677396",
+        "DOS_KB": 624,
+        "DOS_mode": 3
+      }
+    }
+  ],
+  "native_qualified": false,
+  "allocated_minutes_from_acquisition": 7,
+  "acquired_utc": "2026-10-10T06:05:44.903028+00:00",
+  "active": "released",
+  "released_utc": "2026-10-10T06:10:11.696503+00:00",
+  "conflicts_after": []
+}

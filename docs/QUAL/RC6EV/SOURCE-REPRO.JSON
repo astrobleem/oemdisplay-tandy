@@ -1,0 +1,27 @@
+{
+  "host_only": true,
+  "independent_dependency_review_pass": true,
+  "blueprint_reproduced_byte_exact": true,
+  "source_kit_sha256": "dd1a207d8e8435f6ec4087748fdd80cf5177aee50dea3c21bee1bd72b4f047b4",
+  "owned_source_dependencies": [
+    "CGA.GR2"
+  ],
+  "common_loader_dependency": "Owned WIN.CNF 3456 + original XTSTATIC.LGO 361 + original WXTSPL01.RLE 4062 = 7879",
+  "Windows_DOS_kernel_Setup_still_required": true,
+  "required_mode_resources_exact": 15,
+  "stale_baseline_fixes": [
+    "RC5 OEM catalog replaced with candidate; prepared source path taken from actual native TINST output",
+    "Inherited native-qualification and owned CGALOGO README claims removed",
+    "Portable GENPINS dependency on INSPECT included and loaded by exact .PY filename",
+    "Incorrect MODES UNDO instruction corrected to MODES menu U"
+  ],
+  "font_and_driver_payloads_unchanged": true,
+  "prior_helper_snapshot_preserved": true,
+  "new_PREPXT_source_headers_require_rebuild": true,
+  "new_zero_SHA_counter_claim": false,
+  "historical_refs_not_dependencies": [
+    "ALIAS.PY migrates historical font filenames",
+    "Static CONTRACT.MD documents old 8398-byte loader before replacement"
+  ],
+  "no_guest_launch_or_E_staging": true
+}

@@ -211,7 +211,6 @@ static void support_layout(int k,unsigned char *b,unsigned n)
 {
  char *name=pins[k].name;
  if(n!=(unsigned)pins[k].size)stop("Support file size mismatch.",name);
- if(!strcmp(name,"CGALOGO.LGO")){if(n<8||memcmp(b,"LOGO",4))stop("Logo header invalid.",name);return;}
  if(!strcmp(name,"CGA.GR2")){if(n<12||b[0]!=0xe9||b[3]!=0xe9||b[6]!=0xe9||b[9]!=0xe9)stop("Grabber entry header invalid.",name);return;}
  stop("Unknown support format.",name);
 }
