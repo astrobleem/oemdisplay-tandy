@@ -66,10 +66,12 @@ jobs:
         run: |
           python3 tools/XTFONTS/HOST.PY BUILD.PY --out font-build
           python3 tools/XTFONTS/HOST.PY TEST.PY --out font-build
-          python3 tools/XTFONTS/HOST.PY NATIVEQA.PY --native docs/FONTS/FIVE-MODES --fonts font-build
-          python3 tools/XTFONTS/HOST.PY ENCQA.PY --guest docs/FONTS/ALL-BYTES/CGA --fonts font-build --family CGA
-          python3 tools/XTFONTS/HOST.PY ENCQA.PY --guest docs/FONTS/ALL-BYTES/EGA --fonts font-build --family EGA
-          python3 tools/XTFONTS/HOST.PY ENCQA.PY --guest docs/FONTS/ALL-BYTES/TXFONT --fonts font-build --family TXT
+          # Validators emit derived PNG/JSON files; keep pinned evidence pristine.
+          cp -a docs/FONTS "$RUNNER_TEMP/native-font-checks"
+          python3 tools/XTFONTS/HOST.PY NATIVEQA.PY --native "$RUNNER_TEMP/native-font-checks/FIVE-MODES" --fonts font-build
+          python3 tools/XTFONTS/HOST.PY ENCQA.PY --guest "$RUNNER_TEMP/native-font-checks/ALL-BYTES/CGA" --fonts font-build --family CGA
+          python3 tools/XTFONTS/HOST.PY ENCQA.PY --guest "$RUNNER_TEMP/native-font-checks/ALL-BYTES/EGA" --fonts font-build --family EGA
+          python3 tools/XTFONTS/HOST.PY ENCQA.PY --guest "$RUNNER_TEMP/native-font-checks/ALL-BYTES/TXFONT" --fonts font-build --family TXT
 
       - name: Build public 720 KB disk and portable ZIP
         run: python3 tools/FLASHDISK/MAKEIMG.PY --out dist
