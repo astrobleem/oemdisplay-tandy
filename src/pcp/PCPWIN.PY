@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Scripted Windows 3.0 session for PCP3216.DRV on an 86Box ColorPlus XT.
+"""Scripted Windows 3.0 session for PCP3216.DRV on an 86Box ColorPlus XT,
+or with --width 640 --target pc1512 for PC1512.DRV on 86Box's PC1512.
 
   python3 src/pcp/PCPWIN.PY --vm <prepared --mouse pty VM> --box <AppRun> --roms <dir>
 
-Runs one complete session and saves exact 320x200 frames (SHOTDEC) and raw
-86Box captures to <vm>/dec, plus a step log <vm>/RUN.JSN. It judges nothing
-itself; PCPCHK.PY checks the frames afterwards. Input is byte-exact: keys
+Runs one complete session and saves exact 320x200 (or 640x200) frames
+(SHOTDEC) and raw 86Box captures to <vm>/dec, plus a step log <vm>/RUN.JSN.
+It judges nothing itself except whether a palette-arrow pointer landed
+(re-sent if not, logged in <vm>/LANDING.JSN); PCPCHK.PY checks the frames
+afterwards. Input is byte-exact: keys
 through xdotool, mouse packets through PCPMOUSE.PY on a COM1 pty (one
 mickey is one pixel with WIN.INI MouseSpeed=0). Expect about 40 minutes at
 4.77 MHz.
@@ -41,8 +44,23 @@ LAYOUTS = {
         BOX=(40, 31, 52, 60, 28, 54),  # x0, x step, y0, y step, width, height
         CANVAS=(37, 49, 290, 170), CANVAS_ORIGIN=(36, 48),
         ICON=(100, 140)),        # minimized Program Manager: x < 100, y >= 140
+    640: dict(  # Amstrad PC1512 640x200x16 (PC1512.DRV), measured in 86Box
+        PAL_X0=152, PAL_PITCH=35, PAL_Y=(186, 193),
+        PALETTE={15: (0, 0), 12: (0, 2), 14: (0, 3), 10: (0, 4), 11: (0, 5), 9: (0, 6), 13: (0, 7),
+                 0: (1, 0), 7: (1, 1), 4: (1, 2), 6: (1, 3), 2: (1, 4), 3: (1, 5), 1: (1, 6),
+                 5: (1, 7), 8: (1, 9)},
+        FILLED_BOX=(43, 109), PARK=(639, 199),
+        PM_TITLE=(450, 45),      # right of Calculator (x 152-413) on Program Manager's title
+        NOTEPAD_TITLE=(500, 5),  # Notepad's title bar, above Program Manager (y >= 36)
+        MENU_FILE=(90, 60), CALC_TITLE=(300, 6), CALC_DRAG=(60, 40),
+        CALC_TPL=(154, 1, 411, 9),  # Calculator opens at x 152: its title bar rows
+        BOX=(80, 64, 45, 62, 56, 54),
+        CANVAS=(64, 33, 605, 171), CANVAS_ORIGIN=(64, 33),
+        ICON=(180, 160)),        # minimized Program Manager: x < 180, y >= 160
 }
 WIDTH = 320
+LANDING_TRIES = 8     # palette-arrow moves re-sent at most this often
+LANDING_WAIT = 20     # seconds between tries
 
 
 def use_width(width):
@@ -148,6 +166,38 @@ class Run:
     def shot(self, name, settle=2.0, decode=True):
         self.b.shot(name, settle=settle, decode=decode)
         self.log("shot " + name, frame=name, decoded=decode, source=self.b.log[-1]["source"])
+
+    def frame(self, name):
+        from PIL import Image
+        with Image.open(self.b.out / (name + ".png")) as im:
+            return im.tobytes()
+
+    def wall_glyph(self):
+        """Arrow pixels relative to the hotspot, merged from the 16
+        wallpaper frames (each bar hides the glyph pixels of its own
+        colour); PCPCHK verifies this glyph against the driver resource."""
+        wall, w, bar = self.frame("wall_parked"), self.width, self.width // 16
+        glyph = {}
+        for c in range(16):
+            f = self.frame(f"warrow_{c:02d}")
+            hx = c * bar + bar // 2
+            for i in range(w * 200):
+                if f[i] != wall[i] and not (i % w >= w - 4 and i // w >= 196):
+                    glyph[(i % w - hx, i // w - 100)] = f[i]
+        return [(dx, dy, v) for (dx, dy), v in glyph.items()]
+
+    def landed(self, name, ref, glyph, hx, hy):
+        """Frame equals ref with the glyph at (hx, hy); the parked-cursor
+        corner is ignored, as in PCPCHK."""
+        exp = bytearray(ref)
+        for dx, dy, v in glyph:
+            x, y = hx + dx, hy + dy
+            if 0 <= x < self.width and 0 <= y < 200:
+                exp[y * self.width + x] = v
+        f = self.frame(name)
+        w = self.width
+        return all(f[i] == exp[i] for i in range(w * 200)
+                   if not (i % w >= w - 4 and i // w >= 196))
 
     def key(self, *k, wait=3):
         self.b.key(*k, wait=wait)
@@ -302,11 +352,30 @@ class Run:
         self.to(*PARK, wait=6)
         self.shot("pb_drawn")
 
-        # 5. Arrow cursor over every palette colour.
+        # 5. Arrow cursor over every palette colour. Each frame must show the
+        #    arrow (the glyph measured over the wallpaper) exactly at the
+        #    hotspot that was sent; if it does not, the pointer did not land
+        #    there (see docs/PC1512.MD, "Pointer landing"), so the frame is
+        #    kept as arrow_NN_missK, logged, and the move is sent again.
+        #    PCPCHK judges only the final frames, with the same strict rule.
+        glyph = self.wall_glyph()
+        ref = self.frame("pb_drawn")
+        self.landing = []
         for c in range(16):
             r, k = PALETTE[c]
-            self.rehome(PAL_X0 + PAL_PITCH * k, PAL_Y[r], wait=4)
-            self.shot(f"arrow_{c:02d}", settle=1)
+            hx, hy = PAL_X0 + PAL_PITCH * k, PAL_Y[r]
+            name = f"arrow_{c:02d}"
+            for attempt in range(1, LANDING_TRIES + 1):
+                self.rehome(hx, hy, wait=4)
+                self.shot(name, settle=1)
+                if self.landed(name, ref, glyph, hx, hy):
+                    break
+                miss = f"{name}_miss{attempt}"
+                (self.b.out / (name + ".png")).rename(self.b.out / (miss + ".png"))
+                self.log("pointer did not land: " + miss, frame=miss, hotspot=[hx, hy])
+                time.sleep(LANDING_WAIT)
+            self.landing.append({"frame": name, "hotspot": [hx, hy], "attempts": attempt})
+        (self.vm / "LANDING.JSN").write_text(json.dumps(self.landing, indent=1) + "\n")
         self.to(*PARK, wait=4)
         self.shot("arrow_parked")
 

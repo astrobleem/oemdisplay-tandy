@@ -1,0 +1,10 @@
+ok   clean frames pass (88 checks)
+ok   arrow_one_pixel: arrow_full_glyph_over_bars=FAIL
+ok   arrow_missing: arrow_over_bar_07=FAIL
+ok   calc_not_moved: calc_dragged_by_mouse=FAIL
+ok   drift_short: mouse_drift_drift_0=FAIL
+ok   drift_no_cursor: mouse_drift_drift_1=FAIL
+ok   dialog_not_open: about_restores=FAIL
+ok   restore_off: about_restores=FAIL
+ok   cross_one_pixel: cursor_xor_over_colour_00=FAIL
+PCPMUT: PASS

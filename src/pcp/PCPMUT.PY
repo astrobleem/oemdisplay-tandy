@@ -3,6 +3,7 @@
 
   python3 src/pcp/PCPMUT.PY --vm <run dir>            (frames in <vm>/dec)
   python3 src/pcp/PCPMUT.PY --evidence docs/pcp       (committed frames)
+  add --width 640 --target pc1512 for the PC1512 session (docs/pc1512)
 
 Builds a frames-only copy of a passing PCPWIN session, checks that PCPCHK
 --no-disk passes it, then applies one fault at a time and requires the
@@ -31,6 +32,8 @@ from PIL import Image
 HERE = Path(__file__).resolve().parent
 SHOTDEC = importlib.machinery.SourceFileLoader("shotdec", str(HERE / "SHOTDEC.PY")).load_module()
 W = importlib.machinery.SourceFileLoader("pcpwin", str(HERE / "PCPWIN.PY")).load_module()
+WD = 320
+TARGET = "pcp"
 
 
 def load(d, name):
@@ -38,11 +41,12 @@ def load(d, name):
 
 
 def save(d, name, frame):
-    SHOTDEC.save(bytes(frame), str(d / "dec" / (name + ".png")))
+    SHOTDEC.save(bytes(frame), str(d / "dec" / (name + ".png")), WD)
 
 
 def run_chk(d):
-    r = subprocess.run([sys.executable, str(HERE / "PCPCHK.PY"), "--vm", str(d), "--no-disk"],
+    r = subprocess.run([sys.executable, str(HERE / "PCPCHK.PY"), "--vm", str(d), "--no-disk",
+                        "--width", str(WD), "--target", TARGET],
                        capture_output=True, text=True)
     out = json.loads(r.stdout)
     return {c["check"]: c["result"] for c in out["checks"]}
@@ -51,12 +55,12 @@ def run_chk(d):
 def arrow_glyph(d):
     """Cursor pixels of warrow_00 relative to its hotspot."""
     wall, f = load(d, "wall_parked"), load(d, "warrow_00")
-    hx, hy = 10, 100
-    return [(i % 320 - hx, i // 320 - hy, f[i]) for i in range(64000) if f[i] != wall[i]]
+    hx, hy = WD // 32, 100
+    return [(i % WD - hx, i // WD - hy, f[i]) for i in range(WD * 200) if f[i] != wall[i]]
 
 
 def mutations(d):
-    bar = 20
+    bar = WD // 16
     wall = load(d, "wall_parked")
     glyph = arrow_glyph(d)
 
@@ -64,14 +68,14 @@ def mutations(d):
         f = bytearray(wall)
         for dx, dy, v in glyph:
             x, y = hx + dx, hy + dy
-            if 0 <= x < 320 and 0 <= y < 200:
-                f[y * 320 + x] = v
+            if 0 <= x < WD and 0 <= y < 200:
+                f[y * WD + x] = v
         return f
 
     def arrow_one_pixel():
         for c in range(16):
             f = bytearray(wall)
-            i = 100 * 320 + c * bar + bar // 2
+            i = 100 * WD + c * bar + bar // 2
             f[i] = 15 if f[i] != 15 else 0
             save(d, f"warrow_{c:02d}", f)
         return ["arrow_full_glyph_over_bars"]
@@ -98,7 +102,7 @@ def mutations(d):
 
     def restore_off():
         f = load(d, "about_closed")
-        f[150 * 320 + 200] ^= 1
+        f[150 * WD + 200] ^= 1
         save(d, "about_closed", f)
         return ["about_restores"]
 
@@ -107,7 +111,7 @@ def mutations(d):
         for c in range(16):
             x0, y0, x1, y1 = W.rect(c)
             f = bytearray(ref)
-            i = ((y0 + y1) // 2) * 320 + (x0 + x1) // 2
+            i = ((y0 + y1) // 2) * WD + (x0 + x1) // 2
             f[i] ^= 15
             save(d, f"cross_{c:02d}", f)
         return ["cursor_xor_over_colour_00"]
@@ -121,7 +125,12 @@ def main():
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--vm")
     g.add_argument("--evidence")
+    ap.add_argument("--width", type=int, default=320, choices=sorted(W.LAYOUTS))
+    ap.add_argument("--target", default="pcp", choices=["pcp", "pc1512"])
     a = ap.parse_args()
+    global WD, TARGET
+    WD, TARGET = a.width, a.target
+    W.use_width(WD)
     with tempfile.TemporaryDirectory() as tmp:
         base = Path(tmp) / "clean"
         (base / "dec").mkdir(parents=True)

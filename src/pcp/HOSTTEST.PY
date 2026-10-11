@@ -10,7 +10,10 @@
    non-uniform scale, a blurred capture and a frame shifted by one logical
    pixel (decodes, but no longer equals the source).
 2. PCPMOUSE packets round-trip through a model of MSTEST.ASM's decoder for
-   every dx, dy in -128..127, both button states; split() sums exactly.
+   every dx, dy in -128..127, both button states; split() and steps() sum
+   exactly. PCPWIN's palette pointer-landing test builds the full arrow from
+   the wallpaper frames and accepts only that glyph at the hotspot sent
+   (320 and 640 wide).
 3. On Linux, PCP86's PID ownership: a recorded PID is only "ours" while the
    kernel start time still matches, so a reused PID is never signalled.
 Runs on Windows too (sections needing /proc or ptys are skipped).
@@ -119,6 +122,42 @@ def main():
     expect("split() sums exactly in steps of at most 127", ok)
     b0 = MOUSE.packet(0, 0, False, True)[0]
     expect("right button sets bit 4 only", b0 == 0x50)
+    ok = all(tuple(map(sum, zip(*MOUSE.steps(dx, dy, m)))) == (dx, dy)
+             and all(abs(a) <= m and abs(b) <= m for a, b in MOUSE.steps(dx, dy, m))
+             for dx in range(-720, 721, 13) for dy in range(-300, 301, 17) for m in (1, 16, 127)
+             if (dx, dy) != (0, 0))
+    expect("steps() sums exactly with at most S mickeys per axis", ok)
+
+    # 2b. PCPWIN's pointer-landing test (palette arrows): accepts only the
+    #     exact glyph at the hotspot that was sent.
+    W = importlib.machinery.SourceFileLoader("pcpwin", str(HERE / "PCPWIN.PY")).load_module()
+    for width in (320, 640):
+        with tempfile.TemporaryDirectory() as tmp:
+            r = W.Run(tmp, None, None, width=width, target="pcp" if width == 320 else "pc1512")
+            r.b.out = Path(tmp)
+            bar = width // 16
+            wall = bytes((i % width) // bar for i in range(width * 200))
+            arrow = [(0, 0, 0), (1, 1, 15), (0, 1, 0), (0, 2, 0), (1, 2, 15), (2, 2, 0)]
+
+            def put(base, hx, hy):
+                f = bytearray(base)
+                for dx, dy, v in arrow:
+                    f[(hy + dy) * width + hx + dx] = v
+                return bytes(f)
+            SHOTDEC.save(wall, str(Path(tmp) / "wall_parked.png"), width)
+            for c in range(16):
+                SHOTDEC.save(put(wall, c * bar + bar // 2, 100), str(Path(tmp) / f"warrow_{c:02d}.png"), width)
+            glyph = r.wall_glyph()
+            expect(f"{width}: glyph merged from all bars (black over black hidden in one)",
+                   sorted(glyph) == sorted(arrow))
+            ref = bytes(rnd.randrange(16) for _ in range(width * 200))
+            SHOTDEC.save(put(ref, 50, 150), str(Path(tmp) / "a.png"), width)
+            SHOTDEC.save(put(ref, 51, 150), str(Path(tmp) / "b.png"), width)
+            SHOTDEC.save(ref, str(Path(tmp) / "c.png"), width)
+            expect(f"{width}: landed() accepts the glyph at the hotspot sent",
+                   r.landed("a", ref, glyph, 50, 150))
+            expect(f"{width}: landed() rejects a 1-pixel miss and a missing cursor",
+                   not r.landed("b", ref, glyph, 50, 150) and not r.landed("c", ref, glyph, 50, 150))
 
     # 3. PID ownership (Linux /proc): cleanup must never signal a process
     #    that merely reuses a recorded PID.

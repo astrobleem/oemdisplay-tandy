@@ -3,7 +3,7 @@
 
   python3 src/pcp/PCPCHK.PY --vm <vm dir> [--json <out>]
 
-Every check compares exact 320x200 IRGB frames (SHOTDEC) or files read back
+Every check compares exact 320x200 or 640x200 IRGB frames (SHOTDEC) or files read back
 from the guest disk with mtools after Windows has exited. Exit 0 only if no
 check fails; the verdict is PASS only if none was skipped either. The 86Box
 VM must be stopped (the disk is read). --no-disk judges the frames alone
@@ -304,8 +304,9 @@ def main():
         idx = bmp.load()
         irgb = lambda v: ((v >> 3) & 1) << 3 | (v & 1) << 2 | ((v >> 1) & 1) << 1 | ((v >> 2) & 1)
         found = None
-        for ox in range(20, 60):
-            for oy in range(30, 70):
+        cox, coy = W.CANVAS_ORIGIN
+        for ox in range(cox - 16, cox + 24):
+            for oy in range(coy - 18, coy + 22):
                 bad = 0
                 for y in range(y0, y1 + 1, 2):
                     for x in range(x0, x1 + 1, 2):

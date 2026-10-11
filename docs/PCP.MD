@@ -266,6 +266,12 @@ matches, so a reused PID (or an old PID file) is never signalled. Covered by
     python3 src/pcp/PCPCHK.PY --vm <dir> --cursor <BUILD88 out>/resources/NORMAL.CUR --json CHECKS.JSN
     python3 src/pcp/PCPMUT.PY --vm <dir>            # or --evidence docs/pcp
 
+Since the PC1512 work ([PC1512.MD](PC1512.MD)) the same scripts also take
+`--width 640 --target pc1512`, and PCPWIN checks each palette-arrow frame
+as it is taken and re-sends a move whose pointer did not land (logged in
+`LANDING.JSN`). The run committed here predates that; all its palette
+frames passed as first taken.
+
 Host tests, no emulator: `python3 src/pcp/HOSTTEST.PY` (SHOTDEC decodes
 synthetic 86Box captures exactly and rejects distorted ones, at 320 and 640
 wide; mouse packets round-trip through MSTEST's decoder for every value;

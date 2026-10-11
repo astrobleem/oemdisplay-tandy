@@ -1,0 +1,15 @@
+{
+ "toolchain": "pinned MASM 5.10 / LINK / DDK EXE2BIN in DOSBox-X",
+ "built": {
+  "P15ID.COM": {
+   "bytes": 452,
+   "sha256": "fe9441a4acf6c560ecb0dcb8e499e74ab18c82fc2ee8fb3d879b86bef34b7b8e"
+  },
+  "P15SHOW.COM": {
+   "bytes": 668,
+   "sha256": "d2b672cc2d314d29e0e858d09f567942b81fc33bf82f52cd2ae7d5966b6bbab6"
+  }
+ },
+ "verdict": "PASS",
+ "problems": []
+}

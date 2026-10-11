@@ -15,6 +15,8 @@ serve: opens a pty pair, writes the slave path to <vm>/mouse.pty, and
 reads commands, one per line, from the FIFO <vm>/mouse.ctl:
     ident on|off    repeat 'M' every 100 ms (mouse detection) or stop
     move DX DY      exact relative motion, split into packets of +-127
+                    (or of at most S per axis, evenly, after 'step S')
+    step S          largest per-axis packet for later moves (1-127)
     down | up       left button state
     click           left down then up
     rclick          right down then up
@@ -54,6 +56,20 @@ def split(v):
     return out
 
 
+def steps(dx, dy, most=127):
+    """(dx, dy) as packets of at most `most` mickeys per axis, spread evenly
+    (like a hand-moved mouse); the packets sum exactly to (dx, dy)."""
+    if most >= 127:
+        xs, ys = split(dx), split(dy)
+        n = max(len(xs), len(ys))
+        return list(zip(xs + [0] * (n - len(xs)), ys + [0] * (n - len(ys))))
+    n = max(1, -(-max(abs(dx), abs(dy)) // most))
+    out = []
+    for k in range(1, n + 1):
+        out.append((dx * k // n - dx * (k - 1) // n, dy * k // n - dy * (k - 1) // n))
+    return out
+
+
 def serve(vm):
     # Unix-only: imported here so packet()/split() load on any host.
     import pty
@@ -73,7 +89,7 @@ def serve(vm):
         ctl.unlink()
     os.mkfifo(ctl)
     state = {"ident": False, "left": False, "packets": 0, "bytes_out": 0, "bytes_in": 0,
-             "byte_s": BYTE_TIME, "gap_s": 0.02}
+             "byte_s": BYTE_TIME, "gap_s": 0.02, "step": 127}
     lock = threading.Lock()
 
     def put(data):
@@ -112,11 +128,7 @@ def serve(vm):
                         state["ident"] = cmd[1] == "on"
                     elif cmd[0] == "move":
                         dx, dy = int(cmd[1]), int(cmd[2])
-                        xs, ys = split(dx), split(dy)
-                        n = max(len(xs), len(ys))
-                        xs += [0] * (n - len(xs))
-                        ys += [0] * (n - len(ys))
-                        for a, c in zip(xs, ys):
+                        for a, c in steps(dx, dy, state["step"]):
                             put(packet(a, c, state["left"]))
                             state["packets"] += 1
                             time.sleep(state["gap_s"])
@@ -130,6 +142,8 @@ def serve(vm):
                     elif cmd[0] == "pace":
                         state["byte_s"] = float(cmd[1]) / 1000.0
                         state["gap_s"] = float(cmd[2]) / 1000.0
+                    elif cmd[0] == "step":
+                        state["step"] = max(1, min(127, int(cmd[1])))
                     elif cmd[0] == "burst":
                         n, dx, dy = int(cmd[1]), int(cmd[2]), int(cmd[3])
                         for _ in range(n):
