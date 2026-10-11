@@ -196,8 +196,11 @@ runtime candidate. Their local reports are retained in private media storage.
 Newer-CPU incompatibility is derived from decoded instructions, not raw-byte
 pattern searches. Non-additive relocation chains are followed; when a fixup
 touches instruction code or a control-flow target, the affected path is marked
-uncertain rather than treating raw file bytes as the loaded instruction. Static
-reachability limits are reported separately.
+uncertain rather than treating raw file bytes as the loaded instruction. For
+each chain site, W31CHECK expands the full relocation source width into the
+affected-byte map. Overlapping spans accumulate their fixups, and any span that
+crosses a segment boundary is rejected. Static reachability limits are reported
+separately.
 
 ## Validation and next experiment
 
@@ -215,7 +218,7 @@ The current source run was:
 
 ```text
 python -m unittest discover -s tools/W31CHECK -p 'test_*.py' -v
-Ran 50 tests in 1.308s
+Ran 51 tests in 1.385s
 OK
 ```
 

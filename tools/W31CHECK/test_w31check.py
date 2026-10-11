@@ -267,6 +267,28 @@ class NEParserTests(unittest.TestCase):
         with self.assertRaisesRegex(NEFormatError, "relocation source span"):
             NEImage(bytes(data))
 
+    def test_chained_pointer_fixup_expands_each_overlapping_source_span(self):
+        code = bytearray(b"\x90" * 0x1004)
+        code[:9] = bytes.fromhex("b8 02 00 10 90 cb 90 90 cb")
+        code[0x1000:0x1002] = b"\xff\xff"
+        data = bytearray(make_ne(code=bytes(code), internal_fixups=[(1, 1, 0)]))
+        relocation_record = 0xA0 + len(code) + 2
+        data[relocation_record] = 3  # POINTER32 source width, linked by 16-bit sites.
+        data[relocation_record + 1] = 0  # Non-additive chain: 1 -> 2 -> 0x1000.
+
+        image = NEImage(bytes(data))
+        relocation = image.segments[0].relocations[0]
+        self.assertEqual(relocation["source_width"], 4)
+        self.assertEqual(relocation["chain_sites"], (1, 2, 0x1000))
+
+        report = analyze_bytes(bytes(data), "CHAINED-POINTER-SPANS.EXE")
+        affected = {
+            item["offset"]: item["fixup_sites"]
+            for item in report["cpu_analysis"]["relocation_affected_instructions"]
+        }
+        self.assertEqual(affected[0], [1, 2])
+        self.assertEqual(affected[3], [3, 4, 5])
+
     def test_zero_segment_file_length_means_64k(self):
         empty_segment = bytearray(make_ne(code=None))
         struct.pack_into("<H", empty_segment, 0x40 + 0x1C, 1)
