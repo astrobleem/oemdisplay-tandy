@@ -19,6 +19,11 @@ expected Windows version byte as proof of compatibility. Windows 386 targets,
 286+/386 CPU declarations, protected-mode dependencies, and verified missing
 Windows 3.0 imports are reported as blockers.
 
+`kwaj_method3.py` is a separate bounded host-side decoder for local KWAJ
+method-3 files. It requires a declared output length, caps input and output
+size, and writes only validated MZ/NE images. It does not execute the decoded
+file or run automatically from the analyzer.
+
 ## Usage
 
 ```powershell
@@ -89,15 +94,30 @@ python -m unittest discover -s tools/W31CHECK -p "test_*.py" -v
 The default suite builds original synthetic NE fixtures in memory for valid,
 truncated, segment-boundary, name/ordinal import, internal-relocation,
 missing-API, protected-mode, newer-CPU, and conservative code-reachability
-cases. It has an opt-in host smoke test for private Windows 3.0 Calculator and
-Notepad copies; the Windows executables are not included in the repository.
-That smoke test is skipped unless both private-media paths are set:
+cases. Synthetic KWAJ method-3 tests cover malformed streams, size limits,
+Huffman tables, and MZ/NE validation. Opt-in smoke tests use private Windows
+3.0 Calculator/Notepad copies and the local Windows 3.0 export reference; a
+separate opt-in test checks exact local Windows 3.11 Calculator/Notepad copies.
+No proprietary binaries are included in the repository. The media checks are
+skipped unless their private paths are set:
 
 ```powershell
 $env:W31CHECK_REAL_APPS_DIR = 'C:\private\w31check-apps'
 $env:W31CHECK_WINDOWS_30_API_DIR = 'C:\private\windows-3.0'
+$env:W31CHECK_KWAJ_APPS_DIR = 'C:\private\w31check-kwaj-apps'
 python -m unittest discover -s tools/W31CHECK -p "test_*.py" -v
 ```
 
-Capstone is the only third-party runtime dependency. Use the pinned version in
-`requirements.txt`; do not fetch or install it automatically from the analyzer.
+To decode one local Windows NE file, create a private destination directory
+first and choose a new output name:
+
+```powershell
+python tools/W31CHECK/kwaj_method3.py C:\private\CALC.EX_ `
+  C:\private\decoded\CALC.EXE
+```
+
+The decoder accepts KWAJ method 3 only, refuses to overwrite its destination,
+and checks the declared size and MZ/NE signature before writing. It uses only
+the Python standard library. Capstone is the analyzer's only third-party
+runtime dependency; use the pinned version in `requirements.txt` and do not
+fetch or install it automatically from the analyzer.
