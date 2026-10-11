@@ -108,6 +108,12 @@ $env:W31CHECK_KWAJ_APPS_DIR = 'C:\private\w31check-kwaj-apps'
 python -m unittest discover -s tools/W31CHECK -p "test_*.py" -v
 ```
 
+The current suite contains 51 tests. GitHub Actions runs the same command with
+all three private-media paths explicitly empty, so the synthetic tests run and
+the opt-in media checks are skipped. CI installs the pinned Capstone dependency
+from `requirements.txt` in a temporary environment; it uses no private media,
+secrets, or repository token.
+
 To decode one local Windows NE file, create a private destination directory
 first and choose a new output name:
 
