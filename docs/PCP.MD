@@ -1,7 +1,7 @@
 # Plantronics ColorPlus 320x200x16 driver (PCP3216): first build
 
 Status: **PCP3216.DRV runs Windows 3.0 real mode on an emulated IBM PC/XT
-with a Plantronics ColorPlus card in 86Box 6.0, and passes all 63 checks of
+with a Plantronics ColorPlus card in 86Box 6.0, and passes all 88 checks of
 a scripted session: desktop redraws, overlapping windows moved with the
 mouse, menus, dialogs, the cursor over all 16 colours, a 16-colour
 Paintbrush image saved, closed, reopened and read back, exit to DOS and a
@@ -119,7 +119,8 @@ Changes to the private copy of the install, made and logged by
 (SHA-256 `67f8a3d7...c7c406`); CONFIG.SYS reduced to FILES/BUFFERS (HIMEM,
 SMARTDRV and EGA.SYS need XMS or an EGA); `[keyboard] type=1` (XT keyboard);
 WIN.INI `MouseSpeed=0` (no acceleration, so a test move of N mickeys is N
-pixels); test tools in `C:\PCP`. The EGA fonts, grabber and group files of
+pixels); WIN.INI `Wallpaper=BARS16.BMP`, a generated 16-bar test image;
+test tools in `C:\PCP`. The EGA fonts, grabber and group files of
 the original install are unchanged. Windows media stayed in private
 temporary folders; only frames, logs and the Paintbrush test image are here.
 
@@ -156,41 +157,58 @@ detection with `M` and sending 3-byte packets at 1200-baud byte timing.
 - MSTEST under DOS received exactly what was sent:
   `B=000F P=0005 X=0046 Y=0032 BAD=0000` for moves of +100/+50/-30 and a
   click.
-- Under Windows, with the pointer homed in the (0,0) corner, 40 packets of
-  (+5,+3) at full 1200-baud rate put the arrow's hotspot exactly at
-  (200,120), twice, and again with wider byte spacing (`pcp/P86DRIFT.JSN`).
-  The driver's interrupt-time cursor redraw does not cost mouse bytes on a
-  4.77 MHz 8088.
+- Under Windows, over the bar wallpaper, the pointer is homed in the (0,0)
+  corner and then sent 40 separate packets of (+5,+3). The capture waits
+  for PCPMOUSE's `sync` (every byte sent), then 6 s. Four trials, at full
+  1200-baud byte rate, repeated, with 30 ms between bytes and with 300 ms
+  between packets: each frame equals the wallpaper with the verified arrow
+  at exactly (200,120) (`pcp/P86DRIFT.JSN`, checks `mouse_drift_*`). An
+  earlier version of this trial captured before the slow pacing had
+  finished sending and stopped short; it is superseded. So no mouse input
+  was lost, and the driver's interrupt-time cursor redraw does not cost
+  mouse bytes on a 4.77 MHz 8088.
 - Applications confine the cursor during drags, so the script re-homes the
   pointer before every click and drag instead of dead-reckoning.
 
 ### The session and its checks
 
-`src/pcp/PCPWIN.PY` runs one scripted session (about 45 minutes at 4.77 MHz)
-and saves 59 86Box screenshots. `SHOTDEC.PY` decodes each graphics capture to
+`src/pcp/PCPWIN.PY` runs one scripted session (about 55 minutes at 4.77 MHz)
+and saves 81 86Box screenshots. `SHOTDEC.PY` decodes each graphics capture to
 exact 320x200 IRGB pixels and rejects any capture that does not decode
-exactly; all 57 graphics frames matched their raw capture
-(`pcp/P86RAW.JSN`). `src/pcp/PCPCHK.PY` then judges the frames and files read
-back from the guest disk: **63 of 63 checks pass** (`pcp/P86CHK.JSN`).
+exactly; all 79 graphics frames are committed and each equals the exact
+decode of its raw capture (`pcp/P86RAW.JSN`). `src/pcp/PCPCHK.PY` then judges
+the frames and files read back from the guest disk: **88 of 88 checks pass**
+(`pcp/P86CHK.JSN`).
 
 | Area | What was checked | Result |
 | --- | --- | --- |
 | Colour bars | PCPSHOW, 16 bars, every pixel | PASS |
-| Menus, dialogs | Program Manager File menu opened by keyboard and by a mouse click, Help > About opened and closed: each time the desktop returns to the reference frame exactly | PASS (0 pixels differ) |
-| Overlapping windows | Notepad under Program Manager under Calculator; Calculator dragged +60,+40 by its title bar with the mouse; both closed: desktop identical to the reference | PASS |
+| Menus, dialogs | File menu by keyboard and by mouse click, Help > About: each must change at least 1,000 pixels when open (5,199 by keyboard, 5,172 by mouse, 28,216 for About) and leave the desktop exactly as before when closed | PASS |
+| Wallpaper | `BARS16.BMP` (16 bars, the driver's colour table) as the desktop with Program Manager minimized: every pixel outside the icon is the expected bar colour | PASS |
+| Arrow over all colours | Arrow over the middle of each bar: the drawn glyph is identical in all 16 frames and equals the driver's own arrow resource (`NORMAL.CUR`, SHA-256 `09954aac...`) as Windows shows it on 200 lines (scanline pairs ANDed): all 72 of 72 pixels, nothing extra; each frame is exactly the bar background plus that glyph | PASS (16 colours) |
+| Mouse | Four drift trials land exactly (see Input); Program Manager restored from its icon exactly | PASS |
+| Overlapping windows | Notepad under Program Manager under Calculator; Calculator dragged +60,+40 by its title bar with the mouse: its title bar is found exactly at the new position (1,506 pixels, the 15 under the pointer excluded) and no longer at the old one; both closed: desktop identical | PASS |
 | Paintbrush drawing | 16 Filled Box rectangles drawn with the mouse, one per colour picked from the palette: every pixel of each 27x53 box is its colour, the rest of the canvas untouched | PASS (16 boxes) |
-| Arrow cursor over all colours | Arrow placed over each of the 16 palette colours: each frame equals the background with one identical black/white arrow composited in, nothing else changed; background restored exactly after moving away | PASS (16 colours) |
-| Inverting cursor over all colours | Paintbrush's tool cursor over the centre of each box: every changed pixel is the box colour XOR 15, nothing outside the cursor changed, restored exactly | PASS (16 colours) |
+| Inverting cursor over all colours | Paintbrush's tool cursor over each box: 46 changed pixels, every one the box colour XOR 15, the same footprint over all 16 colours, nothing outside it, restored exactly | PASS (16 colours) |
+| Arrow over the palette | The earlier palette-cell arrow check is kept (16 frames, exact composite) | PASS |
 | Save, close, reopen | TEST16.BMP saved, Paintbrush closed, reopened with the file: canvas identical; the saved 320x170 4-bit BMP equals the screen at all 30,988 visible canvas pixels | PASS |
-| Exit to DOS | Exit Windows twice: PCPID afterwards reads BIOS mode 03h, 80 columns, ColorPlus still identified; text screen captured (`P86_09.PNG`) | PASS |
+| Exit to DOS | Exit Windows twice: PCPID afterwards reads BIOS mode 03h, 80 columns, ColorPlus still identified (`pcp/P86PCPID.TXT`) | PASS |
 | Second launch | WIN /R again in the same boot: desktop identical to the first launch | PASS |
 
+**The checks catch broken sessions.** `src/pcp/PCPMUT.PY` copies the
+committed frames, confirms they pass, then injects one fault at a time and
+requires the targeted check to fail: a 1-pixel arrow, a missing arrow, a
+Calculator that never moved, a drift frame with the arrow 5 px short and one
+with no cursor, an About box that never opened, a 1-pixel restore error, and
+a 1-pixel inverting cursor. All eight are caught (`pcp/P86MUT.TXT`).
+
 Screenshots straight from 86Box: `pcp/P86_01.PNG` bars, `_02` About (Windows
-3.0, Real Mode, 337K free), `_03` File menu opened by mouse, `_04`
-Calculator dragged, `_05` the 16 boxes, `_06` arrow over light gray, `_07`
-inverted cursor over blue (shown yellow), `_08` reopened image, `_09` DOS
-after exit, `_10` second launch. All 57 decoded frames: `pcp/FRAMES`, named in
-`pcp/P86RAW.JSN`; the image Paintbrush saved: `pcp/TEST16.BMP`; step log: `pcp/P86RUN.JSN`.
+3.0, Real Mode, 337K free), `_03` Calculator dragged, `_04` wallpaper,
+`_05` arrow over bar 5, `_06` drift trial 4 landed, `_07` the 16 boxes,
+`_08` inverted cursor over blue (shown yellow), `_09` reopened image, `_10`
+DOS after exit, `_11` second launch. All 79 decoded frames: `pcp/FRAMES`,
+named in `pcp/P86RAW.JSN`; the image Paintbrush saved: `pcp/TEST16.BMP`;
+step log: `pcp/P86RUN.JSN`.
 
 ### Findings
 
@@ -205,15 +223,24 @@ after exit, `_10` second launch. All 57 decoded frames: `pcp/FRAMES`, named in
   wait for repainting; early runs that did not were harness failures, not
   driver faults (`P86RUN.JSN` records the final run only).
 - Paintbrush fills a box up to, not including, the release point.
+- On 200-line displays Windows halves cursor shapes by ANDing scanline
+  pairs; the arrow check models exactly that.
+
+### Harness safety
+
+`PCP86.PY` and `PCPMOUSE.PY` record each process as PID plus its kernel
+start time. `stop` signals a recorded PID only while that start time still
+matches, so a reused PID (or an old PID file) is never signalled. Covered by
+`HOSTTEST.PY` on Linux.
 
 ### Passed in 86Box / still needs real hardware
 
 | Passed in 86Box 6.0 (emulated IBM XT + Plantronics ColorPlus) | Still needs real hardware |
 | --- | --- |
 | Driver loads; Windows 3.0 /R starts, runs, exits and restarts | A real ColorPlus and the clones (ATI Small Wonder, Paradise EGA 480, V6355 cards, ...), whose 3DDh handling may differ from 86Box's model |
-| Plane split and bit order (PCPSHOW, PCPID) | Real monitor output: timing and colours on a real RGB display (86Box's snow emulation was on, its default; it applies to text modes) |
+| Plane split and bit order (PCPSHOW, PCPID); DIB wallpaper drawn exactly | Real monitor output: timing and colours on a real RGB display (86Box's snow emulation was on, its default; it applies to text modes) |
 | Redraws, overlap, menus, dialogs, window drag by mouse | Real 8250 and mouse timing, other mice (bus, InPort) |
-| Cursor drawing and restore over all 16 colours | A real XT keyboard path and XT BIOS variants |
+| Cursor drawing and restore over all 16 colours, arrow equal to the driver resource | A real XT keyboard path and XT BIOS variants |
 | Paintbrush draw / save / close / reopen, file equals screen | PC DOS with real memory managers, TSRs, other DOS versions |
 | Exit to DOS restores text mode 03h; second launch identical | A clean CGA-class install (CGA fonts and grabber instead of the EGA ones reused here), DOS boxes and grabber switching |
 | Mouse delivery exact at 1200 baud at 4.77 MHz | Performance and responsiveness on real 8088 and V20 machines |
@@ -234,16 +261,17 @@ after exit, `_10` second launch. All 57 decoded frames: `pcp/FRAMES`, named in
     python3 src/pcp/PCPMOUSE.PY serve --vm <dir> &
     python3 src/pcp/PCP86.PY start --vm <dir> --box <86Box AppRun> --roms <rom dir>
     sleep 75   # XT POST and DOS boot
-    python3 src/pcp/PCPWIN.PY --vm <dir> --box <AppRun> --roms <rom dir> \
-        --menu-file 82,60 --calc-title 90,7
+    python3 src/pcp/PCPWIN.PY --vm <dir> --box <AppRun> --roms <rom dir>
     python3 src/pcp/PCP86.PY stop --vm <dir>
-    python3 src/pcp/PCPCHK.PY --vm <dir> --json CHECKS.JSN
+    python3 src/pcp/PCPCHK.PY --vm <dir> --cursor <BUILD88 out>/resources/NORMAL.CUR --json CHECKS.JSN
+    python3 src/pcp/PCPMUT.PY --vm <dir>            # or --evidence docs/pcp
 
 Host tests, no emulator: `python3 src/pcp/HOSTTEST.PY` (SHOTDEC decodes
-synthetic 86Box captures exactly and rejects distorted ones; mouse packets
-round-trip through MSTEST's decoder for every value) and
-`python3 src/pcjr/CHKTEST.PY`. Built tools: `pcp/PCPIDB.JSN`, `pcp/MSTESTB.JSN`
-(pinned MASM 5.10, both rebuilt to the same hash).
+synthetic 86Box captures exactly and rejects distorted ones, at 320 and 640
+wide; mouse packets round-trip through MSTEST's decoder for every value;
+PID ownership on Linux; runs on Windows, where the pty and /proc parts are
+skipped) and `python3 src/pcjr/CHKTEST.PY`. Built tools: `pcp/PCPIDB.JSN`,
+`pcp/MSTESTB.JSN` (pinned MASM 5.10, both rebuilt to the same hash).
 
 ## Next steps
 

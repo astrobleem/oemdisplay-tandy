@@ -50,7 +50,8 @@ def focus():
 
 
 class Box:
-    def __init__(self, vm, display=":79", out=None):
+    def __init__(self, vm, display=":79", out=None, width=320):
+        self.width = width
         self.vm = Path(vm)
         self.display = display
         os.environ["DISPLAY"] = display
@@ -82,10 +83,10 @@ class Box:
             shutil.copyfile(src, self.out / (name + ".png"))
             self.log.append({"name": name, "source": src.name, "geometry": "raw 86Box capture"})
             return None
-        idx, worst, bad, size, geom = SHOTDEC.decode(str(src))
+        idx, worst, bad, size, geom = SHOTDEC.decode(str(src), self.width)
         if bad:
             raise SystemExit(f"PCP86: {src.name} did not decode exactly ({bad} samples)")
-        SHOTDEC.save(idx, str(self.out / (name + ".png")))
+        SHOTDEC.save(idx, str(self.out / (name + ".png")), self.width)
         self.log.append({"name": name, "source": src.name, "geometry": geom})
         return bytes(idx)
 
@@ -157,6 +158,35 @@ hdd_01_parameters = 17, 4, 615, 0, ide
 """
 
 
+# The driver's colour table (DDK order: index bit 0 red, 1 green, 2 blue,
+# 3 intensity) as RGB, i.e. the values Windows itself writes into 4-bit BMPs
+# on this driver (see TEST16.BMP). IRGB screen colour c is table index
+# drv_index(c), so a DIB with these entries maps to exact device colours.
+DRIVER_RGB = [(0, 0, 0), (128, 0, 0), (0, 128, 0), (128, 128, 0), (0, 0, 128), (128, 0, 128),
+              (0, 128, 128), (128, 128, 128), (64, 64, 64), (255, 0, 0), (0, 255, 0), (255, 255, 0),
+              (0, 0, 255), (255, 0, 255), (0, 255, 255), (255, 255, 255)]
+
+
+def drv_index(c):
+    return (c & 8) | ((c >> 2) & 1) | (((c >> 1) & 1) << 1) | ((c & 1) << 2)
+
+
+def bars_bmp(width, height=200):
+    """4-bit BMP: 16 vertical bars, bar c (width/16 pixels) shows IRGB c."""
+    import struct
+    row = bytearray(width // 2)
+    for x in range(width):
+        v = drv_index(x * 16 // width)
+        row[x // 2] |= v << 4 if x % 2 == 0 else v
+    stride = (len(row) + 3) & ~3
+    pixels = (bytes(row) + bytes(stride - len(row))) * height
+    pal = b"".join(bytes((b, g, r, 0)) for r, g, b in DRIVER_RGB)
+    off = 14 + 40 + len(pal)
+    return (b"BM" + struct.pack("<IHHI", off + len(pixels), 0, 0, off) +
+            struct.pack("<IiiHHIIiiII", 40, width, height, 1, 4, 0, len(pixels), 0, 0, 16, 16) +
+            pal + pixels)
+
+
 def sha(path):
     import hashlib
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -176,7 +206,26 @@ def edit(text, old, new):
     return text.replace(old, new)
 
 
-def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial"):
+TARGETS = {
+    "pcp": {"drv": "PCP3216.DRV", "sha": DRV_SHA, "dir": "PCP", "id": "PCPID",
+            "tools": ("PCPID.COM", "PCPSHOW.EXE", "SHADOW.BIN", "MSTEST.COM")},
+    "pc1512": {"drv": "PC1512.DRV", "sha": None, "dir": "P15", "id": "P15ID",
+               "tools": ("P15ID.COM", "P15SHOW.COM", "MSTEST.COM")},
+}
+# Amstrad PC1512: 8086 at 8 MHz, its own fixed 640x200x16 video, 640KB.
+# Its built-in Amstrad mouse is not used (Windows 3.0 has no driver for it).
+PC1512_MACHINE = """[Machine]
+machine = pc1512
+cpu_family = 8086
+cpu_speed = 8000000
+cpu_multi = 1
+cpu_use_dynarec = 0
+mem_size = 640
+time_sync = disabled
+"""
+
+
+def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", target="pcp", drv_sha=None):
     """Build a private disk from the verified PCjs image plus the test files.
 
     control_ega: identical machine and disk changes, but an IBM EGA card and
@@ -188,8 +237,12 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial"):
         raise SystemExit(f"PCP86: {img} exists; use a fresh VM folder")
     if sha(pristine) != PRISTINE_SHA:
         raise SystemExit("PCP86: pristine image hash mismatch")
-    if sha(drv) != DRV_SHA:
-        raise SystemExit("PCP86: PCP3216.DRV hash mismatch")
+    tg = TARGETS[target]
+    want = drv_sha or tg["sha"]
+    if want is None:
+        raise SystemExit("PCP86: --drv-sha is required for target " + target)
+    if sha(drv) != want:
+        raise SystemExit(f"PCP86: {tg['drv']} hash mismatch")
     import shutil
     shutil.copyfile(pristine, img)
     i = f"{img}{PART}"
@@ -199,28 +252,42 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial"):
     (tmp / "CONFIG.SYS").write_bytes(CONFIG_SYS.encode())
     mt("mcopy", "-o", "-i", i, str(tmp / "CONFIG.SYS"), "::/CONFIG.SYS")
     changes.append("CONFIG.SYS: only files=30, buffers=30 (removed HIMEM, SMARTDRV, EGA.SYS: an XT has no XMS and no EGA)")
-    (tmp / "AUTOEXEC.BAT").write_bytes(AUTOEXEC.encode())
+    autoexec = AUTOEXEC if target == "pcp" else (
+        AUTOEXEC.replace("C:\\PCP", "C:\\" + tg["dir"]).replace("CD \\PCP", "CD \\" + tg["dir"])
+        .replace("PCPID", tg["id"]))
+    (tmp / "AUTOEXEC.BAT").write_bytes(autoexec.encode())
     mt("mcopy", "-o", "-i", i, str(tmp / "AUTOEXEC.BAT"), "::/AUTOEXEC.BAT")
-    changes.append("AUTOEXEC.BAT: PATH/TEMP as before, run C:\\PCP\\PCPID, stay at the DOS prompt (no automatic WIN)")
+    changes.append(f"AUTOEXEC.BAT: PATH/TEMP as before, run C:\\{tg['dir']}\\{tg['id']}, stay at the DOS prompt (no automatic WIN)")
     ini = mt("mtype", "-i", i, "::/WINDOWS/SYSTEM.INI").decode("latin1")
     if not control_ega:
-        ini = edit(ini, "display.drv=ega.drv", "display.drv=PCP3216.DRV")
+        ini = edit(ini, "display.drv=ega.drv", "display.drv=" + tg["drv"])
     ini = edit(ini, "[keyboard]\r\nsubtype=\r\ntype=3", "[keyboard]\r\nsubtype=\r\ntype=1")
     (tmp / "SYSTEM.INI").write_bytes(ini.encode("latin1"))
     mt("mcopy", "-o", "-i", i, str(tmp / "SYSTEM.INI"), "::/WINDOWS/SYSTEM.INI")
     changes.append(("SYSTEM.INI: display.drv unchanged (ega.drv, CONTROL)" if control_ega else
-                    "SYSTEM.INI: display.drv=PCP3216.DRV") + "; [keyboard] type=1 (PC/XT 83-key instead of AT)")
+                    "SYSTEM.INI: display.drv=" + tg["drv"]) + "; [keyboard] type=1 (PC/XT 83-key instead of AT)")
     win = mt("mtype", "-i", i, "::/WINDOWS/WIN.INI").decode("latin1")
     win = edit(win, "swapdisk=\r\n", "swapdisk=\r\nMouseSpeed=0\r\n")
+    win = edit(win, "Wallpaper=(None)", "Wallpaper=BARS16.BMP")
     (tmp / "WIN.INI").write_bytes(win.encode("latin1"))
     mt("mcopy", "-o", "-i", i, str(tmp / "WIN.INI"), "::/WINDOWS/WIN.INI")
-    changes.append("WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact)")
-    mt("mcopy", "-o", "-i", i, str(drv), "::/WINDOWS/SYSTEM/PCP3216.DRV")
-    mt("mmd", "-i", i, "::/PCP")
-    for n in ("PCPID.COM", "PCPSHOW.EXE", "SHADOW.BIN", "MSTEST.COM"):
-        mt("mcopy", "-o", "-i", i, str(Path(tools) / n), "::/PCP/" + n)
-    changes.append("added WINDOWS/SYSTEM/PCP3216.DRV and PCP/PCPID.COM, PCPSHOW.EXE, SHADOW.BIN, MSTEST.COM")
+    changes.append("WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); "
+                   "Wallpaper=BARS16.BMP (a full-screen 16-colour bar test image, centred)")
+    width = 640 if target == "pc1512" else 320
+    (tmp / "BARS16.BMP").write_bytes(bars_bmp(width))
+    mt("mcopy", "-o", "-i", i, str(tmp / "BARS16.BMP"), "::/WINDOWS/BARS16.BMP")
+    changes.append(f"added WINDOWS/BARS16.BMP: {width}x200 4-bit, 16 bars of {width // 16} pixels, "
+                   "palette = the driver's colour table (generated, sha256 " + sha(tmp / "BARS16.BMP") + ")")
+    mt("mcopy", "-o", "-i", i, str(drv), "::/WINDOWS/SYSTEM/" + tg["drv"])
+    mt("mmd", "-i", i, "::/" + tg["dir"])
+    for n in tg["tools"]:
+        mt("mcopy", "-o", "-i", i, str(Path(tools) / n), "::/" + tg["dir"] + "/" + n)
+    changes.append(f"added WINDOWS/SYSTEM/{tg['drv']} and {tg['dir']}/" + ", ".join(tg["tools"]))
     cfg = CFG.replace("gfxcard = plantronics", "gfxcard = ega") if control_ega else CFG
+    if target == "pc1512":
+        a = cfg.index("[Machine]")
+        b = cfg.index("[Input devices]")
+        cfg = cfg[:a] + PC1512_MACHINE + "\n" + cfg[b:]
     if mouse == "pty":
         # COM1 -> host pty served by PCPMOUSE.PY; start() fills in the path.
         cfg = cfg.replace("mouse_type = msserial", "mouse_type = none")
@@ -229,24 +296,48 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial"):
     else:
         cfg = cfg.replace("mouse_type = msserial", "mouse_type = " + mouse)
     (vm / "86box.cfg").write_text(cfg)
-    rec = {"pristine_sha256": PRISTINE_SHA, "driver_sha256": DRV_SHA,
-           "tools": {n: sha(Path(tools) / n) for n in ("PCPID.COM", "PCPSHOW.EXE", "SHADOW.BIN", "MSTEST.COM")},
+    rec = {"target": target, "pristine_sha256": PRISTINE_SHA, "driver": tg["drv"], "driver_sha256": want,
+           "tools": {n: sha(Path(tools) / n) for n in tg["tools"]},
            "control_ega": control_ega, "mouse": mouse, "changes": changes, "86box_cfg": cfg}
     (vm / "PREP.JSN").write_text(json.dumps(rec, indent=1) + "\n")
     return rec
 
 
-def running(vm):
-    pf = Path(vm) / "86box.pid"
-    if not pf.exists():
-        return None
-    pid = int(pf.read_text())
+def proc_identity(pid):
+    """(state, start time in clock ticks) from /proc, or None if gone."""
     try:
-        os.kill(pid, 0)
-        state = Path(f"/proc/{pid}/stat").read_text().rsplit(")", 1)[1].split()[0]
+        fields = Path(f"/proc/{pid}/stat").read_text().rsplit(")", 1)[1].split()
     except OSError:
         return None
-    return None if state == "Z" else pid
+    return fields[0], fields[19]
+
+
+def record_pid(path, pid):
+    """Store PID with its kernel start time, so a reused PID is never ours."""
+    ident = proc_identity(pid)
+    if ident is None:
+        raise SystemExit(f"PCP86: process {pid} vanished at start")
+    Path(path).write_text(f"{pid} {ident[1]}\n")
+
+
+def owned_pid(path):
+    """The recorded process if it is still that same process and not a
+    zombie; None otherwise. A PID file without a start time is rejected."""
+    p = Path(path)
+    if not p.exists():
+        return None
+    parts = p.read_text().split()
+    if len(parts) != 2:
+        return None
+    pid, start = int(parts[0]), parts[1]
+    ident = proc_identity(pid)
+    if ident is None or ident[1] != start or ident[0] == "Z":
+        return None
+    return pid
+
+
+def running(vm):
+    return owned_pid(Path(vm) / "86box.pid")
 
 
 def stop(vm, wait=15):
@@ -259,6 +350,8 @@ def stop(vm, wait=15):
         time.sleep(0.25)
         if running(vm) is None:
             return "stopped"
+    if running(vm) != pid:
+        return "stopped"
     os.kill(pid, signal.SIGKILL)
     time.sleep(1)
     if running(vm) is not None:
@@ -280,11 +373,13 @@ def main():
     ap.add_argument("--out")
     ap.add_argument("--control-ega", action="store_true")
     ap.add_argument("--mouse", default="msserial", choices=["msserial", "logibus", "pty"])
+    ap.add_argument("--target", default="pcp", choices=sorted(TARGETS))
+    ap.add_argument("--drv-sha", help="expected SHA-256 of --drv (required for pc1512)")
     a = ap.parse_args()
     os.environ["DISPLAY"] = a.display
     vm = Path(a.vm)
     if a.cmd == "prepare":
-        print(json.dumps(prepare(vm, a.pristine, a.drv, a.tools, a.control_ega, a.mouse), indent=1))
+        print(json.dumps(prepare(vm, a.pristine, a.drv, a.tools, a.control_ega, a.mouse, a.target, a.drv_sha), indent=1))
     elif a.cmd == "start":
         if running(vm) is not None:
             raise SystemExit("PCP86: an 86Box instance for this VM is already running")
@@ -304,7 +399,7 @@ def main():
             p = subprocess.Popen([a.box, "-N", "-R", a.roms, "-P", str(vm), str(vm / "86box.cfg")],
                                  cwd=vm, env=env, stdout=log, stderr=subprocess.STDOUT,
                                  stdin=subprocess.DEVNULL, start_new_session=True)
-        (vm / "86box.pid").write_text(str(p.pid))
+        record_pid(vm / "86box.pid", p.pid)
         print(f"PCP86: started pid {p.pid}")
     elif a.cmd == "shot":
         b = Box(vm, a.display, a.out)
@@ -315,12 +410,13 @@ def main():
         # so nothing is pending on the disk image.
         print("PCP86: " + stop(vm))
         mp = vm / "mouse.pid"
+        pid = owned_pid(mp)
+        if pid is not None:
+            os.kill(pid, 15)
+            print("PCP86: mouse helper stopped")
+        elif mp.exists():
+            print("PCP86: mouse.pid is stale or reused; nothing signalled")
         if mp.exists():
-            try:
-                os.kill(int(mp.read_text()), 15)
-                print("PCP86: mouse helper stopped")
-            except OSError:
-                pass
             mp.unlink()
     return 0
 

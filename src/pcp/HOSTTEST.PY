@@ -11,6 +11,9 @@
    pixel (decodes, but no longer equals the source).
 2. PCPMOUSE packets round-trip through a model of MSTEST.ASM's decoder for
    every dx, dy in -128..127, both button states; split() sums exactly.
+3. On Linux, PCP86's PID ownership: a recorded PID is only "ours" while the
+   kernel start time still matches, so a reused PID is never signalled.
+Runs on Windows too (sections needing /proc or ptys are skipped).
 """
 import importlib.machinery
 import random
@@ -33,25 +36,26 @@ def expect(label, ok):
         fails.append(label)
 
 
-def render(idx, size, border=True):
+def render(idx, size, border=True, width=320, method=Image.BILINEAR):
     w, h = (656, 416) if border else (640, 400)
     o = 8 if border else 0
+    xs = 640 // width
     im = Image.new("RGB", (w, h), (0, 0, 0))
     px = im.load()
     for y in range(200):
-        for x in range(320):
-            c = SHOTDEC.PAL[idx[y * 320 + x]]
+        for x in range(width):
+            c = SHOTDEC.PAL[idx[y * width + x]]
             for dy in (0, 1):
-                for dx in (0, 1):
-                    px[o + 2 * x + dx, o + 2 * y + dy] = c
-    return im.resize(size, Image.BILINEAR)
+                for dx in range(xs):
+                    px[o + xs * x + dx, o + 2 * y + dy] = c
+    return im.resize(size, method)
 
 
-def decode_png(im, tmp, name):
+def decode_png(im, tmp, name, width=320):
     p = Path(tmp) / name
     im.save(p)
     try:
-        idx, worst, bad, size, geom = SHOTDEC.decode(str(p))
+        idx, worst, bad, size, geom = SHOTDEC.decode(str(p), width)
     except SystemExit:
         return None, None
     return bytes(idx), bad
@@ -94,6 +98,13 @@ def main():
         shifted = bytes(idx[i + 1] if i % 320 != 319 else 0 for i in range(64000))
         got, bad = decode_png(render(shifted, (1368, 868)), tmp, "s.png")
         expect("one-pixel shift detected (decodes, differs from source)", bad == 0 and got != idx)
+        wide = bytes(rnd.randrange(16) for _ in range(128000))
+        # 86Box runs with nearest-neighbour output (video_filter_method = 0).
+        got, bad = decode_png(render(wide, (1368, 868), width=640, method=Image.NEAREST), tmp, "w.png", 640)
+        expect("640-wide nearest capture 1368x868 decodes exactly (PC1512)", got == wide and bad == 0)
+        got, bad = decode_png(render(wide, (1368, 868), width=640), tmp, "wb.png", 640)
+        expect("640-wide smoothed capture is exact or rejected, never silently wrong",
+               got is not None and (bad > 0 or got == wide))
 
     ok = True
     for left in (False, True):
@@ -108,6 +119,30 @@ def main():
     expect("split() sums exactly in steps of at most 127", ok)
     b0 = MOUSE.packet(0, 0, False, True)[0]
     expect("right button sets bit 4 only", b0 == 0x50)
+
+    # 3. PID ownership (Linux /proc): cleanup must never signal a process
+    #    that merely reuses a recorded PID.
+    if sys.platform.startswith("linux"):
+        import subprocess
+        P86 = importlib.machinery.SourceFileLoader("pcp86", str(HERE / "PCP86.PY")).load_module()
+        with tempfile.TemporaryDirectory() as tmp:
+            f = Path(tmp) / "x.pid"
+            child = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"])
+            try:
+                P86.record_pid(f, child.pid)
+                expect("recorded live process is ours", P86.owned_pid(f) == child.pid)
+                pid, start = f.read_text().split()
+                f.write_text(f"{pid} {int(start) + 1}\n")
+                expect("same PID, different start time (reused) is not ours", P86.owned_pid(f) is None)
+                f.write_text(f"{pid}\n")
+                expect("PID file without start time is not ours", P86.owned_pid(f) is None)
+            finally:
+                child.kill()
+                child.wait()
+            f.write_text(f"{pid} {start}\n")
+            expect("exited process is not ours", P86.owned_pid(f) is None)
+    else:
+        print("skip PID ownership tests (needs Linux /proc)")
 
     print("HOSTTEST: " + ("PASS" if not fails else f"FAIL ({len(fails)})"))
     return 1 if fails else 0

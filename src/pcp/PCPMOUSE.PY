@@ -20,6 +20,8 @@ reads commands, one per line, from the FIFO <vm>/mouse.ctl:
     rclick          right down then up
     pace B G        seconds/1000 between bytes (B) and after packets (G)
     burst N DX DY   N separate packets of DX,DY (like a real moving mouse)
+    sync TOKEN      write TOKEN to <vm>/mouse.sync once all earlier commands
+                    have been sent in full (commands run in order)
     log             append counters to <vm>/mouse.log
 A pty carries no DTR/RTS, so the helper cannot see a mouse reset; it
 answers detection by repeating 'M'. A lone 'M' is a sync byte without data
@@ -27,12 +29,9 @@ bytes, which the protocol discards. Packets are paced at 1200-baud byte
 timing (7N1 = 9 bits, 7.5 ms) so the emulated 8250 cannot overrun.
 """
 import os
-import pty
-import select
 import sys
 import threading
 import time
-import tty
 from pathlib import Path
 
 # Seconds between bytes. 1200-baud 7N1 is 7.5 ms; PCPMOUSE_BYTE_MS overrides.
@@ -56,12 +55,19 @@ def split(v):
 
 
 def serve(vm):
+    # Unix-only: imported here so packet()/split() load on any host.
+    import pty
+    import select
+    import tty
     vm = Path(vm)
     master, slave = pty.openpty()
     tty.setraw(slave)
     name = os.ttyname(slave)
     (vm / "mouse.pty").write_text(name + "\n")
-    (vm / "mouse.pid").write_text(str(os.getpid()))
+    # PID plus kernel start time (see PCP86.owned_pid): a reused PID is
+    # never mistaken for this helper.
+    start = Path(f"/proc/{os.getpid()}/stat").read_text().rsplit(")", 1)[1].split()[19]
+    (vm / "mouse.pid").write_text(f"{os.getpid()} {start}\n")
     ctl = vm / "mouse.ctl"
     if ctl.exists():
         ctl.unlink()
@@ -135,6 +141,9 @@ def serve(vm):
                             put(packet(0, 0, state["left"], st))
                             state["packets"] += 1
                             time.sleep(0.15)
+                    elif cmd[0] == "sync":
+                        # Every earlier command has been sent in full.
+                        (vm / "mouse.sync").write_text(cmd[1] + "\n")
                     elif cmd[0] == "log":
                         with open(vm / "mouse.log", "a") as lf:
                             lf.write(" ".join(f"{k}={v}" for k, v in state.items()) + "\n")

@@ -25,30 +25,58 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 P = importlib.machinery.SourceFileLoader("pcp86", str(HERE / "PCP86.PY")).load_module()
 
-# Maximized Paintbrush layout (measured from an exact frame of this setup).
-PAL_X0, PAL_PITCH, PAL_Y = 78, 17, (189, 195)
-PALETTE = {15: (0, 0), 12: (0, 2), 14: (0, 3), 10: (0, 4), 11: (0, 5), 9: (0, 6), 13: (0, 7),
-           0: (1, 0), 7: (1, 1), 4: (1, 2), 6: (1, 3), 2: (1, 4), 3: (1, 5), 1: (1, 6),
-           5: (1, 7), 8: (1, 9)}
-FILLED_BOX = (24, 117)
-PARK = (319, 199)
-PM_TITLE = (250, 45)    # Program Manager title bar, clear of the test windows
-NOTEPAD_TITLE = (30, 5) # full-screen Notepad's title, left of Program Manager
+# Screen layouts, measured from exact frames of each setup. use_width()
+# selects one and binds the module names below; 320 is the default.
+LAYOUTS = {
+    320: dict(  # Plantronics ColorPlus 320x200x16 (PCP3216.DRV)
+        PAL_X0=78, PAL_PITCH=17, PAL_Y=(189, 195),
+        PALETTE={15: (0, 0), 12: (0, 2), 14: (0, 3), 10: (0, 4), 11: (0, 5), 9: (0, 6), 13: (0, 7),
+                 0: (1, 0), 7: (1, 1), 4: (1, 2), 6: (1, 3), 2: (1, 4), 3: (1, 5), 1: (1, 6),
+                 5: (1, 7), 8: (1, 9)},
+        FILLED_BOX=(24, 117), PARK=(319, 199),
+        PM_TITLE=(250, 45),      # Program Manager title bar, clear of the test windows
+        NOTEPAD_TITLE=(30, 5),   # full-screen Notepad's title, left of Program Manager
+        MENU_FILE=(82, 60), CALC_TITLE=(90, 7), CALC_DRAG=(60, 40),
+        CALC_TPL=(2, 1, 170, 9),  # title-bar template inside Calculator at (0,0)
+        BOX=(40, 31, 52, 60, 28, 54),  # x0, x step, y0, y step, width, height
+        CANVAS=(37, 49, 290, 170), CANVAS_ORIGIN=(36, 48),
+        ICON=(100, 140)),        # minimized Program Manager: x < 100, y >= 140
+}
+WIDTH = 320
+
+
+def use_width(width):
+    global WIDTH
+    if width not in LAYOUTS:
+        raise SystemExit(f"PCPWIN: no measured layout for width {width}")
+    WIDTH = width
+    globals().update(LAYOUTS[width])
+
+
+use_width(320)
 
 
 def rect(i):
-    """Screen rectangle for color i: two rows of eight 28x54 boxes."""
+    """Screen rectangle for colour i: two rows of eight filled boxes, given as
+    press point and release point (Paintbrush fills up to, not including,
+    the release point)."""
+    x0, xs, y0, ys, w, h = BOX
     col, row = i % 8, i // 8
-    x0 = 40 + 31 * col
-    y0 = 52 + 60 * row
-    return x0, y0, x0 + 27, y0 + 53
+    x = x0 + xs * col
+    y = y0 + ys * row
+    return x, y, x + w - 1, y + h - 1
 
 
 class Run:
-    def __init__(self, vm, box, roms):
+    TARGETS = {"pcp": ("PCP", "PCPID", "PCPSHOW"), "pc1512": ("P15", "P15ID", "P15SHOW")}
+
+    def __init__(self, vm, box, roms, width=320, display=":79", target="pcp"):
+        use_width(width)
+        self.tdir, self.tid, self.tshow = self.TARGETS[target]
         self.vm = Path(vm)
+        self.width = width
         self.box, self.roms = box, roms
-        self.b = P.Box(self.vm)
+        self.b = P.Box(self.vm, display=display, width=width)
         self.steps = []
         self.cx = self.cy = None
 
@@ -62,13 +90,25 @@ class Run:
         subprocess.run([sys.executable, str(HERE / "PCPMOUSE.PY"), "send", "--vm", str(self.vm),
                         *map(str, words)], check=True)
 
+    def sync(self, token, timeout=180):
+        """Return once PCPMOUSE has sent every earlier command in full."""
+        f = self.vm / "mouse.sync"
+        if f.exists():
+            f.unlink()
+        self.m("sync", token)
+        for _ in range(timeout * 4):
+            if f.exists() and f.read_text().strip() == token:
+                return
+            time.sleep(0.25)
+        raise SystemExit("PCPWIN: mouse helper did not reach sync " + token)
+
     def home(self):
-        self.m("move", -400, -300)
+        self.m("move", -(self.width + 80), -300)
         time.sleep(3)
         self.cx, self.cy = 0, 0
 
     def to(self, x, y, wait=2.5):
-        assert 0 <= x <= 319 and 0 <= y <= 199
+        assert 0 <= x < self.width and 0 <= y <= 199
         self.m("move", x - self.cx, y - self.cy)
         self.cx, self.cy = x, y
         time.sleep(wait)
@@ -142,7 +182,7 @@ class Run:
         self.key("alt+F4", wait=8)
         self.shot(tag + "_exitdlg")
         self.key("Return", wait=30)
-        self.text("C:\\PCP\\PCPID")
+        self.text("C:\\%s\\%s" % (self.tdir, self.tid))
         self.key("Return", wait=8)
         self.shot(tag + "_dos", decode=False)
 
@@ -151,9 +191,9 @@ class Run:
         subprocess.run(["xdotool", "mousemove", "600", "400"])
         self.log("boot")
         # 0. Pre-Windows: identification and colour bars.
-        self.text("CD \\PCP")
+        self.text("CD \\" + self.tdir)
         self.key("Return", wait=2)
-        self.text("PCPSHOW")
+        self.text(self.tshow)
         self.key("Return", wait=20)
         self.shot("bars")
         self.key("space", wait=6)
@@ -182,6 +222,44 @@ class Run:
         self.to(*PARK, wait=3)
         self.shot("menu_mouse_closed")
 
+        # 2b. Wallpaper: Program Manager minimized, the BARS16.BMP wallpaper
+        #     (16 vertical bars, IRGB 0..15) fills the screen. The arrow is
+        #     placed over the middle of every bar, then the mouse drift
+        #     trials run over it, then Program Manager is restored.
+        self.key("alt+space", wait=5)
+        self.key("n", wait=30)
+        self.rehome(*PARK, wait=6)
+        self.shot("wall_parked")
+        bar = self.width // 16
+        for c in range(16):
+            self.rehome(c * bar + bar // 2, 100, wait=4)
+            self.shot(f"warrow_{c:02d}", settle=1)
+        # Drift: home, then 40 separate packets of (+5,+3) at a given pacing;
+        # the capture waits until PCPMOUSE has sent every byte, then settles.
+        trials = [("1200-baud bytes, 20 ms between packets", 7.5, 20),
+                  ("1200-baud bytes, 20 ms between packets (repeat)", 7.5, 20),
+                  ("30 ms between bytes, 20 ms between packets", 30, 20),
+                  ("1200-baud bytes, 300 ms between packets", 7.5, 300)]
+        self.drift = []
+        for k, (label, bms, gms) in enumerate(trials):
+            self.m("pace", 7.5, 20)
+            self.home()
+            self.m("pace", bms, gms)
+            self.m("burst", 40, 5, 3)
+            self.sync(f"drift{k}")
+            self.m("pace", 7.5, 20)
+            self.cx, self.cy = 200, 120
+            self.shot(f"drift_{k}", settle=6)
+            self.drift.append({"trial": label, "byte_ms": bms, "gap_ms": gms,
+                               "packets": 40, "each": [5, 3], "expected_hotspot": [200, 120],
+                               "frame": f"drift_{k}"})
+        (self.vm / "DRIFT.JSN").write_text(json.dumps(self.drift, indent=1) + "\n")
+        self.rehome(*PARK, wait=4)
+        self.key("alt+space", wait=5)        # minimized Program Manager's menu
+        self.key("r", wait=40)               # Restore
+        self.rehome(*PARK, wait=6)
+        self.shot("pm_restored")
+
         # 3. Overlapping windows: Notepad (full screen) under Program Manager
         #    under Calculator; the active Calculator is dragged with the
         #    mouse, then both applications are closed. Calculator's rounded
@@ -196,7 +274,7 @@ class Run:
         self.key("Return", wait=90)
         self.shot("calc_over_pm_notepad")
         self.log("mouse: drag the active Calculator by its title bar")
-        self.drag(*self.calc_title, self.calc_title[0] + 60, self.calc_title[1] + 40,
+        self.drag(*self.calc_title, self.calc_title[0] + CALC_DRAG[0], self.calc_title[1] + CALC_DRAG[1],
                   wait=60, press_wait=4, steps=2)
         self.shot("calc_moved")
         self.key("alt+F4", wait=60)          # Calculator (active)
@@ -271,12 +349,15 @@ def main():
     ap.add_argument("--vm", required=True)
     ap.add_argument("--box", required=True)
     ap.add_argument("--roms", required=True)
-    ap.add_argument("--menu-file", default="9,40", help="x,y of Program Manager's File menu")
-    ap.add_argument("--calc-title", default="120,60", help="x,y on Calculator's title bar")
+    ap.add_argument("--width", type=int, default=320, choices=sorted(LAYOUTS))
+    ap.add_argument("--display", default=":79")
+    ap.add_argument("--target", default="pcp", choices=["pcp", "pc1512"])
+    ap.add_argument("--menu-file", help="x,y of Program Manager's File menu (default: layout)")
+    ap.add_argument("--calc-title", help="x,y on Calculator's title bar (default: layout)")
     a = ap.parse_args()
-    r = Run(a.vm, a.box, a.roms)
-    r.menu_file = tuple(int(v) for v in a.menu_file.split(","))
-    r.calc_title = tuple(int(v) for v in a.calc_title.split(","))
+    r = Run(a.vm, a.box, a.roms, a.width, a.display, a.target)
+    r.menu_file = tuple(int(v) for v in a.menu_file.split(",")) if a.menu_file else MENU_FILE
+    r.calc_title = tuple(int(v) for v in a.calc_title.split(",")) if a.calc_title else CALC_TITLE
     r.scenario()
     return 0
 
