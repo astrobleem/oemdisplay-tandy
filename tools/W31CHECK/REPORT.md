@@ -22,7 +22,11 @@ newer-CPU instructions, but neither is a static candidate after the fixup and
 dynamic-lookup checks: Calculator has 472 relocation-affected instructions;
 Notepad uses dynamic API lookup and has an overlapping/decode failure. No
 Windows 3.0 app is currently supported as a first runtime candidate by this
-report.
+report. Notepad is the better of the two for the next host-side investigation:
+its imports are verified, no newer-CPU or 8087 instructions were found, and it
+has fewer unresolved edges than Calculator. It remains **UNKNOWN** and should
+not be promoted to a guest trial until its dynamic lookup and decode failure
+are resolved.
 
 ## Existing repository experiments
 
@@ -164,8 +168,9 @@ Both Windows 3.0 baseline files have expected version flag 3.0, program flags
 reported by Capstone. Calculator has 524 relocation-affected instructions,
 which makes its static reachability uncertain. Notepad has dynamic API lookup
 and one decode failure. Both remain **UNKNOWN**, despite complete direct-import
-matches; neither is yet supported as a first runtime candidate. Their local
-reports are retained in private media storage.
+matches. Notepad is the more useful next host-side investigation because it
+has no detected 8087 instructions and fewer unresolved edges; it is not yet a
+runtime candidate. Their local reports are retained in private media storage.
 
 ## Analyzer verdict rules
 
@@ -221,6 +226,7 @@ synthetic parser, disassembler, and KWAJ tests require no proprietary binaries.
 Neither Windows 3.11 Calculator, Notepad, nor CharMap is eligible for the next
 target trial: Calc and Notepad have reachable 80186 instructions, and CharMap
 imports a Windows 3.0 API ordinal absent from the supplied GDI reference. The
-Windows 3.0 baseline copies remain UNKNOWN for the reasons above. A later
-host-side analysis should identify another candidate before requesting a
-bounded guest slot. No guest was launched for this work.
+Windows 3.0 baseline copies remain UNKNOWN for the reasons above; Notepad is
+the better first target for follow-up host-side analysis. Resolve its dynamic
+lookup and decode uncertainty, or identify another candidate, before
+requesting a bounded guest slot. No guest was launched for this work.
