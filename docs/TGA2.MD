@@ -61,8 +61,12 @@ by analogy with EX/HX), the probe reports the mapping and writes nothing;
 a write test there needs a separate, explicitly reserved design.
 
 `T2CHECK.PY` verifies a dump byte-for-byte and can render an illustrative
-decode. It exits 0 only for a verified pattern, 2 ("not tested") when there
-is no dump, and with `--expect-unmapped` it checks a negative control.
+decode. It exits 0 only for a verified pattern whose report proves the
+mapping safe (`SAFE_TO_WRITE=01`, `PATTERN_RAN=01`, `MAPPED_PARAS=1000`,
+`MAP_INCONSISTENT=00`); a correct-looking image under any other report is a
+FAIL. It exits 2 ("not tested") when there is no dump, and with
+`--expect-unmapped` it checks a negative control. `src/pcjr/CHKTEST.PY`
+covers these cases on the host.
 `T2PROBE.TXT` also records INT 15h C0h model/submodel/revision and a read of
 port 65h, to find a reliable SL/TL/RL detection signature later.
 

@@ -4,7 +4,10 @@
 Usage: python3 src/tga2/T2CHECK.PY <dir-with-T2PROBE.TXT> [--png <out.png>]
        python3 src/tga2/T2CHECK.PY <dir> --expect-unmapped   (negative control)
 
-Exit 0 only for a verified pattern (or, with --expect-unmapped, for a
+Exit 0 only for a verified pattern written under a report that proves the
+mapping safe (SAFE_TO_WRITE=01, PATTERN_RAN=01, MAPPED_PARAS=1000,
+MAP_INCONSISTENT=00); a matching image under any other report is a FAIL.
+(Or, with --expect-unmapped, for a
 complete report showing zero mapped paragraphs and no write). A report
 without a pattern is exit 2, "not tested", never success.
 
@@ -43,8 +46,10 @@ def main(argv):
         out["verdict"] = "PASS: unmapped negative control" if ok else "FAIL: expected an unmapped window"
         print(json.dumps(out, indent=1, sort_keys=True))
         return 0 if ok else 1
-    if dump.exists() and (rep.get("PATTERN_RAN") != "01" or dump.stat().st_size != 0x10000):
-        out["verdict"] = "FAIL: dump present but report/size inconsistent"
+    safe = (rep.get("SAFE_TO_WRITE") == "01" and rep.get("PATTERN_RAN") == "01"
+            and rep.get("MAPPED_PARAS") == "1000" and rep.get("MAP_INCONSISTENT") == "00")
+    if dump.exists() and (not safe or dump.stat().st_size != 0x10000):
+        out["verdict"] = "FAIL: dump present but report does not prove a safe mapping, or size wrong"
         print(json.dumps(out, indent=1, sort_keys=True))
         return 1
     if dump.exists():

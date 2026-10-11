@@ -1,5 +1,6 @@
 {
  "b800_equals_written_page": false,
+ "b800_low_16k_distinct_bytes": 17,
  "b800_low_16k_equals_a_page_half": true,
  "b800_low_equals_high_16k": true,
  "first_mismatch": null,

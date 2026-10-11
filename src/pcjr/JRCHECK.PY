@@ -10,7 +10,9 @@ Checks, without trusting the guest's own conclusions:
      not clear them first.
   2. Whether the B800h window is a 16KB window aliased at BC00h
      (PCjr-style) or a full distinct 32KB window (Tandy-style), and
-     whether it shows the same bytes as the physical page.
+     whether it shows the same bytes as the physical page. An alias is
+     only accepted when its 16KB equal one half of the verified page;
+     identical-but-unrelated halves (all zero, open bus) are a FAIL.
 Writes a JSON verdict to stdout. --png renders an ILLUSTRATIVE preview of
 JRVRAM.BIN decoded with the formula and a standard IRGB palette; it is a
 raw-VRAM decode, not an emulator screenshot.
@@ -70,6 +72,7 @@ def main(argv):
     alias16 = lo == hi
     same_as_page = b800 == vram
     same_as_low16 = lo == vram[:0x4000] or lo == vram[0x4000:]
+    lo_distinct = len(set(lo))
     verdict = {
         "report": rep,
         "pattern_bytes": len(exp),
@@ -78,11 +81,12 @@ def main(argv):
         "b800_low_equals_high_16k": alias16,
         "b800_equals_written_page": same_as_page,
         "b800_low_16k_equals_a_page_half": same_as_low16,
+        "b800_low_16k_distinct_bytes": lo_distinct,
     }
     if rep.get("MODEL") == "FD":
         if mism:
             verdict["interpretation"] = "PCjr: physical-segment write FAILED"
-        elif alias16 and not same_as_page:
+        elif alias16 and same_as_low16 and lo_distinct > 1 and not same_as_page:
             verdict["interpretation"] = (
                 "PCjr: physical-segment write correct; B800 shows one 16KB "
                 "CPU page aliased at BC00 (documented PCjr behavior)")

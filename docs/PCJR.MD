@@ -44,7 +44,9 @@ of the allocator. The Tandy RESERVE helper deliberately refuses PCjrs.
 **TNDYJR.DRV runs Windows 3.0 real mode on DOSBox-X `machine=pcjr`.** The
 desktop, a dialog, Program Manager and Solitaire draw correctly in 16 colors
 with a working mouse cursor; windows open and close; Exit Windows returns to
-a clean DOS text screen; `WIN /R` starts again. The unmodified TR5 driver in
+a clean DOS text screen. A scripted guard, Windows, guard, Windows, guard
+cycle (`pcjr/JRCYCLE.BAT`) passed with every JRGUARD returning 0
+(`pcjr/JRCYCLE.TXT`). The unmodified TR5 driver in
 the same guest shows the expected PCjr "venetian blinds".
 
 | Capture | What it shows |
@@ -53,8 +55,10 @@ the same guest shows the expected PCjr "venetian blinds".
 | `pcjr/WINJR02.PNG` | Solitaire running, card art and colors intact |
 | `pcjr/WINJR03.PNG` | Solitaire closed, Program Manager redrawn |
 | `pcjr/WINJR04.PNG` | Exit Windows dialog |
-| `pcjr/WINJR05.PNG` | Back in DOS text mode after exit |
-| `pcjr/WINJR06.PNG` | Second `WIN /R` in the same session |
+| `pcjr/WINJR05.PNG` | Back in DOS after exit. Superseded as restart evidence: its post-exit `JRGUARD` ran from `C:\WINDOWS` and was not found ("Bad command or filename") |
+| `pcjr/WINJR06.PNG` | Second `WIN /R` typed by hand, **unguarded**; shows only that Windows restarts |
+| `pcjr/WINJR08.PNG` | Second Windows session of the guarded cycle |
+| `pcjr/WINJR07.PNG` | End of the guarded cycle: third JRGUARD reports the page held by a DOS system block, then the log shows all three guards at exit 0 |
 | `pcjr/CTLJR01.PNG` | Control: unmodified TR5 320x200x16 driver, same guest: every other pair of lines lands in the wrong bank |
 
 How it was run (2026-10-10):
@@ -69,7 +73,11 @@ How it was run (2026-10-10):
   type and PS/2-or-serial mouse driver are unchanged.
 - DOSBox-X 2024.03.01, `machine=pcjr`, `memsizekb=640`, `cputype=8086_prefetch`,
   `cycles=fixed 200000`, no XMS/EMS/UMB, serial mouse. DOSBox-X's own DOS,
-  not PC DOS. `JRGUARD` then `WIN /R`.
+  not PC DOS. First boot: `JRGUARD` then `WIN /R`. Restart evidence: the
+  `JRCYCLE.BAT` autoexec, which calls `C:\JRGUARD.COM` by full path before
+  each Windows start and after the last exit, stops on any nonzero exit, and
+  logs each step to `C:\JRLOG.TXT`. Windows was exited through Exit Windows
+  both times.
 - Captures are X11 screenshots of the DOSBox-X window under Xvfb (640x400,
   each line doubled), input sent with xdotool.
 
@@ -114,7 +122,13 @@ An external review of the first version found real problems. Fixed:
 chain and 40:8Ah before/after mode 09h. Only after the safety gate passes does
 it write a 320x200x16 pattern with the TANDY88 bank formula through the
 physical page and dump the page and the B800h window separately. `JRCHECK.PY`
-verifies the dumps on the host without trusting the guest.
+verifies the dumps on the host without trusting the guest. It accepts a
+16KB alias only when that 16KB equals one half of the verified page, so a
+blank, open-bus or unrelated window that merely repeats is a FAIL. The four
+rows below were re-verified with that rule (`*CHK.JSN`; each window holds
+17 distinct byte values). `src/pcjr/CHKTEST.PY` runs both host verifiers
+against synthetic good and bad dumps, including all-zero and all-FFh B800h
+windows and good TGA-II images under unsafe reports; it needs no emulator.
 
 | Guest | 40:8Ah after mode 9 | Page | Pattern (32,000 bytes) | B800h window |
 | --- | --- | --- | --- | --- |
