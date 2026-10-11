@@ -69,3 +69,6 @@ docs/tga2/* -text
 docs/PCJR.MD -text
 docs/TGA2.MD -text
 docs/GAPSURV.MD -text
+src/pcp/* -text
+docs/pcp/* -text
+docs/PCP.MD -text
