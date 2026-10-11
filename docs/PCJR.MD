@@ -1,8 +1,8 @@
 # IBM PCjr driver proposal (TNDYJR): first probe results
 
-Status: **a PCjr driver candidate, TNDYJR.DRV, now builds through the pinned
-BUILD88 pipeline and passes its instruction, REP-prefix and link audits. It
-has not run under Windows yet.** Nothing here changes the shipped TANDY88/TR5
+Status: **TNDYJR.DRV builds through the pinned BUILD88 pipeline, passes its
+audits, and boots Windows 3.0 real mode on DOSBox-X's PCjr machine (see
+below). Not yet run on a real PCjr.** Nothing here changes the shipped TANDY88/TR5
 drivers, the WINXT disk, the accepted hashes or the Tandy RESERVE helper.
 Every result below is DOSBox / DOSBox-X emulation; no physical PCjr has run
 any of it.
@@ -38,6 +38,49 @@ expansion, that page sits under DOS unless a PCjr memory driver keeps it out
 of the allocator. The Tandy RESERVE helper deliberately refuses PCjrs.
 
 **3. Identity.** PCjr: F000:FFFE = FDh. Tandy: FFh plus FC00:0000 = 21h.
+
+## First Windows 3.0 boot on an emulated PCjr
+
+**TNDYJR.DRV runs Windows 3.0 real mode on DOSBox-X `machine=pcjr`.** The
+desktop, a dialog, Program Manager and Solitaire draw correctly in 16 colors
+with a working mouse cursor; windows open and close; Exit Windows returns to
+a clean DOS text screen; `WIN /R` starts again. The unmodified TR5 driver in
+the same guest shows the expected PCjr "venetian blinds".
+
+| Capture | What it shows |
+| --- | --- |
+| `pcjr/WINJR01.PNG` | First screen after `JRGUARD` + `WIN /R`: dialog, cursor |
+| `pcjr/WINJR02.PNG` | Solitaire running, card art and colors intact |
+| `pcjr/WINJR03.PNG` | Solitaire closed, Program Manager redrawn |
+| `pcjr/WINJR04.PNG` | Exit Windows dialog |
+| `pcjr/WINJR05.PNG` | Back in DOS text mode after exit |
+| `pcjr/WINJR06.PNG` | Second `WIN /R` in the same session |
+| `pcjr/CTLJR01.PNG` | Control: unmodified TR5 320x200x16 driver, same guest: every other pair of lines lands in the wrong bank |
+
+How it was run (2026-10-10):
+
+- Windows: the public Foxlum/pcjs-wiki `PCDOS320-WIN300-EGA.json` disk linked
+  by the Windows XT browser workshop (an AT/EGA PC DOS 3.20 + Windows 3.0
+  install), converted with `src/pcjr/PCJSIMG.PY` and extracted with mtools.
+  Raw image SHA-256 `f55fe24b...117561`. No Microsoft file is in this
+  repository; the guest stayed in a private temporary directory.
+- Only change to the install: `display.drv=TNDYJR.DRV` (SHA-256
+  `a29cabba...a23c4`) in SYSTEM.INI. Its EGA fonts, EGA grabber, AT keyboard
+  type and PS/2-or-serial mouse driver are unchanged.
+- DOSBox-X 2024.03.01, `machine=pcjr`, `memsizekb=640`, `cputype=8086_prefetch`,
+  `cycles=fixed 200000`, no XMS/EMS/UMB, serial mouse. DOSBox-X's own DOS,
+  not PC DOS. `JRGUARD` then `WIN /R`.
+- Captures are X11 screenshots of the DOSBox-X window under Xvfb (640x400,
+  each line doubled), input sent with xdotool.
+
+Expected rough edges from reusing an EGA install, not driver faults: Program
+Manager reports its group files as damaged (they were saved at 640x350), and
+saved window positions sit partly off the 320x200 screen.
+
+Not covered yet: the PCjr's own keyboard path (input came through DOSBox-X's
+keyboard emulation), PC DOS on a real expanded PCjr, Paintbrush save/reopen,
+the repository's MODETEST frame oracle (it reads VRAM through B800h and would
+need the same physical-page change), a CGA-grabber install, and real hardware.
 
 ## Review fixes (2026-10-10)
 
@@ -188,10 +231,9 @@ emulator negative tests only.
 2. Decide whether JRGUARD should grow into a reserving helper (RESERVE-style,
    last-fit allocation of exactly 1800h-1FFFh) or keep requiring an existing
    PCjr memory driver. That depends on what item 1 finds.
-3. Runtime: Windows 3.0 real mode on DOSBox-X `machine=pcjr` with owned
-   media, display.drv=TNDYJR.DRV, launched through JRGUARD; then the usual
-   CPU/memory/framebuffer, cursor-edge, ROP, text and paint/save/reopen
-   tests. The build itself is done (above).
+3. Runtime beyond the first boot: a CGA-grabber install with CGA-class
+   fonts, MODETEST frame-by-frame checks (after teaching its VRAM reader the
+   physical page), cursor edges, ROPs, text and Paintbrush save/reopen.
 4. Keyboard, mouse and speed: the PCjr's keyboard reaches INT 9 through its
    BIOS translation, it has no DMA controller, and RAM in the low 128KB is
    slowed by video contention. Each needs its own Windows check.
