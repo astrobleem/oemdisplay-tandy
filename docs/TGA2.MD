@@ -38,28 +38,41 @@ an unknown window:
 
 1. Shrinks itself, allocates the largest free DOS block, and stamps every
    paragraph of that block with its own segment and a tag.
-2. Sets BIOS mode 09h, then applies the hypothesis: array register 5 = 1
-   (index to 3DAh, data to 3DEh) and CRTC R4=FFh, R5=06h, R6=C8h, R7=E0h,
-   R9=00h, keeping the horizontal timing from mode 09h.
+2. Only on a machine with the Tandy signature (F000:FFFE = FFh and
+   FC00:0000 = 21h): sets BIOS mode 09h, then applies the hypothesis: array
+   register 5 = 1 (index to 3DAh, data to 3DEh) and CRTC R4=FFh, R5=06h,
+   R6=C8h, R7=E0h, R9=00h, keeping the horizontal timing from mode 09h.
+   Anything else gets a report and no register writes.
 3. Scans A000:0000-FFFF read-only for the tags. Each tag found names the
    physical paragraph behind that window offset.
-4. Only if all 4,096 window paragraphs map with one constant offset into its
-   own block or RAM above the DOS arena does it write a linear 640x200x16
-   pattern and dump the window (`T2VRAM.BIN`). `/W` holds the pattern on
-   screen for a photo.
+4. Writes a linear 640x200x16 pattern and dumps the window (`T2VRAM.BIN`)
+   **only if all 4,096 window paragraphs were found by tag, with one constant
+   offset, so the entire 64KB window is proven to be the probe's own block.**
+   A partial, inconsistent or out-of-block mapping writes nothing. `/W`
+   holds the pattern on screen for a photo.
 5. Clears register 5, restores the BIOS mode and frees its block.
+   Exit 0 = pattern written and dumped, 2 = report only, 1 = setup failure.
+
+Review fix (2026-10-10): the first version also accepted window paragraphs
+it had not found by tag, as long as the computed address fell above the DOS
+arena, so it could write 64KB after verifying only part of the mapping. That
+allowance is gone. If the window turns out to live above the arena (likely,
+by analogy with EX/HX), the probe reports the mapping and writes nothing;
+a write test there needs a separate, explicitly reserved design.
 
 `T2CHECK.PY` verifies a dump byte-for-byte and can render an illustrative
-decode. `T2PROBE.TXT` also records INT 15h C0h model/submodel/revision and a
-read of port 65h, to find a reliable SL/TL/RL detection signature later.
+decode. It exits 0 only for a verified pattern, 2 ("not tested") when there
+is no dump, and with `--expect-unmapped` it checks a negative control.
+`T2PROBE.TXT` also records INT 15h C0h model/submodel/revision and a read of
+port 65h, to find a reliable SL/TL/RL detection signature later.
 
 **Negative controls only so far** (EX/HX-class emulation, which has no Video
 II): DOSBox-X and DOSBox `machine=tandy` both report zero mapped paragraphs,
-`SAFE_TO_WRITE=00`, and no pattern write. INT 15h C0h returned model FFh,
-submodel 0Ah, revision 10h on both. Reports: `tga2/XTNT2.TXT`,
-`tga2/DTNT2.TXT`. Build: JWasm 2.21 `-bin`, MASM 5.1 syntax,
-`T2PROBE.COM` SHA256
-`0a1c1e6430e02f21f52c27c807acffaca5e5f94792f46ae602f53f9cab28621b`.
+`SAFE_TO_WRITE=00`, no pattern write and exit 2; `T2CHECK --expect-unmapped`
+passes on both (`tga2/*T2CHK.JSN`). INT 15h C0h returned model FFh, submodel
+0Ah, revision 10h on both. Built with the pinned MASM 5.10 / LINK / EXE2BIN
+(`src/pcjr/BUILDCOM.PY`), `T2PROBE.COM` SHA256
+`c844192ef549c0f52d359ff3a1005e104ca1ca0b990cb6b7275d70a25ba4acaa`.
 The positive path (mapping found, pattern written) has **not** executed
 anywhere yet.
 
@@ -84,8 +97,8 @@ anywhere yet.
 
 ## What would help most
 
-- One run of `T2PROBE /W` on a real SL, TL or RL: the report file and a
-  photo of the screen.
+- One run of `T2PROBE /W` on a real SL, TL or RL from a fresh boot: the
+  report file, its exit code, and a photo of the screen if it drew.
 - Or an 86Box SL2 machine with the owner's own BIOS ROM images, using the
   same command. ROMs are not supplied by this repository.
 

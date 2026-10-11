@@ -39,46 +39,77 @@ of the allocator. The Tandy RESERVE helper deliberately refuses PCjrs.
 
 **3. Identity.** PCjr: F000:FFFE = FDh. Tandy: FFh plus FC00:0000 = 21h.
 
+## Review fixes (2026-10-10)
+
+An external review of the first version found real problems. Fixed:
+
+- **JRGUARD accepted any program's memory.** It passed when any in-use MCB
+  covered the page, including a TSR, another program or the launching
+  COMMAND.COM, any of which can release or reuse that memory. It now passes
+  only when the page lies above the DOS arena or inside one block owned by
+  DOS itself (owner 0008h). Demonstrated: with `JRHOLDT` (emulator-only)
+  holding 1800h-1FFFh as an ordinary resident program, the old guard
+  reported OK (`pcjr/OLDGOUT.TXT`); the new one fails.
+- **JRPROBE was destructive on real hardware.** Setting BIOS mode 09h clears
+  the page, and the probe then wrote a pattern there, without checking who
+  owned it. It now checks the predicted page with the same rule as JRGUARD
+  *before* the mode set, writes only to the page it validated, touches video
+  on non-PCjr machines only with `/C` (emulator control runs), and exits
+  0 = pattern written and dumped, 2 = report only.
+- **Test tools reported success on missing data.** JRRUN now records exact
+  exit codes (0/1/2/3+), takes expectations (`--expect JRGUARD=1`) and fails
+  on any mismatch, missing result or emulator error. JRCHECK fails unless the
+  report is complete, the pattern was written, mode 09h was confirmed and both
+  dumps are exactly 32KB.
+- **JWasm builds.** The DOS tools are now built with the pinned MASM 5.10,
+  LINK and DDK EXE2BIN (`BUILDCOM.PY`). MASM 5.10 rejected four conditional
+  jumps that JWasm had silently extended; they now branch around near jumps.
+
 ## Evidence (DOSBox-X 2024.03.01 and DOSBox 0.74-3, Ubuntu packages)
 
 `src/pcjr/JRPROBE.ASM` records machine identity, BIOS memory, the real MCB
-chain, 40:8Ah before/after mode 09h, which MCB holds the page, then writes a
-320x200x16 pattern with the TANDY88 bank formula through the physical page,
-and dumps the page and the B800h window separately. `JRCHECK.PY` verifies the
-dumps on the host without trusting the guest.
+chain and 40:8Ah before/after mode 09h. Only after the safety gate passes does
+it write a 320x200x16 pattern with the TANDY88 bank formula through the
+physical page and dump the page and the B800h window separately. `JRCHECK.PY`
+verifies the dumps on the host without trusting the guest.
 
 | Guest | 40:8Ah after mode 9 | Page | Pattern (32,000 bytes) | B800h window |
 | --- | --- | --- | --- | --- |
 | DOSBox-X `machine=pcjr` | F6h (CRT page 6) | 1800h, held by a DOS-owned (0008h) MCB of exactly 0800h paragraphs | 0 mismatches | 16KB, repeated at BC00h |
 | DOSBox 0.74 `machine=pcjr` | F6h | same | 0 mismatches | full 32KB (more lenient than a real PCjr) |
-| DOSBox-X `machine=tandy` control | F6h | B800h | 0 mismatches | full 32KB; BIOS 624KB, arena ends 9C00h as in ALTMODES.MD |
-| DOSBox 0.74 `machine=tandy` control | F6h | B800h | 0 mismatches | full 32KB; this build reports 608KB |
+| DOSBox-X `machine=tandy`, `/C` control | F6h | B800h | 0 mismatches | full 32KB; BIOS 624KB, arena ends 9C00h as in ALTMODES.MD |
+| DOSBox 0.74 `machine=tandy`, `/C` control | F6h | B800h | 0 mismatches | full 32KB; this build reports 608KB |
 
 The DOSBox-X PCjr result matches the documented PCjr window behavior and is
 the one to design against. Writing through the physical segment is correct on
-both emulators; writing through B800h is correct on only one of them. See
-`pcjr/XJRCHK.JSN`, the raw probe reports `pcjr/*PRB.TXT`, guest output
-`pcjr/*OUT.TXT` and exact configs `pcjr/*.CNF`. `pcjr/XJRPREV.PNG` is an
-illustrative decode of the DOSBox-X page dump with a standard IRGB palette,
-not an emulator screenshot.
+both emulators; writing through B800h is correct on only one of them.
 
-Both emulators' DOS layers pre-reserve the page. A real PC DOS on a real
-expanded PCjr may not; that is exactly what the guard below checks.
+Full matrix, all run with `JRRUN.PY` and explicit expected exit codes; every
+row's verdict is PASS on both emulators (`pcjr/*RUN.JSN`, guest output
+`pcjr/*OUT.TXT`, probe reports `pcjr/*PRB.TXT`, host checks `pcjr/*CHK.JSN`):
 
-## Starter pieces in src/pcjr
+| Scenario (machine) | JRPROBE | JRGUARD | Other |
+| --- | --- | --- | --- |
+| Page reserved by DOS (pcjr) | 0, pattern verified | 0 | |
+| DOS block freed by `JRFREET` (pcjr) | 2, did not set the mode | 1 | |
+| Page held by resident `JRHOLDT` (pcjr) | 2, did not set the mode | 1 | old guard: 0 (false pass) |
+| `/C` control (tandy) | 0, pattern verified | 1, not a PCjr | T2PROBE 2, unmapped |
+| No `/C` (tandy) | 2, untouched | | |
+
+`pcjr/XJRPREV.PNG` is an illustrative decode of the DOSBox-X page dump with a
+standard IRGB palette, not an emulator screenshot.
+
+Both emulators' DOS layers pre-reserve the page as a 0008h block. A real PC
+DOS on a real expanded PCjr may not, and a PCjr memory driver might reserve
+it some other way. JRGUARD is deliberately strict; widening it needs evidence
+from real configurations.
+
+## Tools in src/pcjr
 
 **JRGUARD.COM** - read-only pre-Windows check, the PCjr counterpart of the
-RESERVE step in the launcher. Exit 0 only if the DOS arena ends below
-segment 1800h, or one in-use MCB (not free, not the guard's own PSP) covers
-1800h-1FFFh. It shrinks its own allocation first; an early version without
-that passed incorrectly because a COM program owns the largest free block
-and could be "protecting" the page itself. Results:
-
-| Case | DOSBox-X | DOSBox 0.74 |
-| --- | --- | --- |
-| PCjr, page reserved by DOS | PASS, exit 0 | PASS, exit 0 |
-| PCjr after `JRFREET` frees that block (emulator-only test) | FAIL, exit 1 | FAIL, exit 1 |
-| Tandy control | FAIL (not a PCjr), exit 1 | FAIL, exit 1 |
+RESERVE step in the launcher. Exit 0 only if the DOS arena ends at or below
+segment 1800h, or one MCB owned by DOS (0008h) covers 1800h-1FFFh. It
+shrinks its own allocation first so its own block is never judged.
 
 **JRPATCH.PY / BUILDJR.PY** - the driver change. Three edits, each of which
 must match an exact count or nothing is written:
@@ -116,20 +147,26 @@ PCjr build is 80 bytes larger. The binary is not committed; rebuild it or
 take it from the session hand-off. The listing confirms the 8086 encodings
 (`26: 8E 06` for the ES-override load, `D3 E0` for `shl ax,cl`).
 
-**JRRUN.PY** reproduces the emulator matrix with an explicit emulator path:
+**BUILDCOM.PY** builds JRPROBE, JRGUARD, JRFREET, JRHOLDT and T2PROBE with
+the pinned MASM 5.10 / LINK / EXE2BIN in DOSBox-X and fails on any severe
+error, link/convert error or missing output (`pcjr/COMBUILD.JSN`):
 
-    python3 src/pcjr/JRRUN.PY --emu dosbox-x --exe <dosbox-x> --machine pcjr \
-        --bin <built-COMs> --out <fresh-dir> --cmd JRPROBE.COM --cmd JRGUARD.COM
-    python3 src/pcjr/JRCHECK.PY <fresh-dir>
-
-Build note: the probes are MASM 5.1 syntax, `.8086`, assembled here with
-JWasm 2.21 (`-bin`, commit 7f6f32e) because the pinned MASM 5.10 toolchain
-was not available in this session. Rebuild with MASM 5.10 + EXE2BIN before
-anything ships. Hashes of the tested JWasm builds:
-
-    JRPROBE.COM 43a23cc6ff124af337275dd4a4b2430f94abdee0bfe3dc39a5c0a53f074c4576
-    JRGUARD.COM 16ac8ab9cef7fb73b43ca1f52e75c67f81d93e8c72a565d307dd7fd8d46324b9
+    JRPROBE.COM 548c64188a777bbf4e8e51fbb57955a6287ad2ce07d702c462ba3746eed8e439
+    JRGUARD.COM 10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756
     JRFREET.COM d5924644eb5d383c2bb9d0b5291e8417788055bb682fca821f9041658adff676
+    JRHOLDT.COM 23903985c4e96191564c7d46e8c1515b847b5194166bac3881e438ff98ea7109
+    T2PROBE.COM c844192ef549c0f52d359ff3a1005e104ca1ca0b990cb6b7275d70a25ba4acaa
+
+JRFREET and JRHOLDT damage DOS's memory bookkeeping on purpose; they are for
+emulator negative tests only.
+
+**JRRUN.PY** reproduces a matrix row with an explicit emulator path:
+
+    python3 src/pcjr/BUILDCOM.PY --deps <inputs> --dosbox <dosbox-x> --out <bin>
+    python3 src/pcjr/JRRUN.PY --emu dosbox-x --exe <dosbox-x> --machine pcjr \
+        --bin <bin> --out <fresh-dir> --cmd JRHOLDT.COM --cmd JRGUARD.COM \
+        --cmd JRPROBE.COM --expect JRGUARD=1 --expect JRPROBE=2
+    python3 src/pcjr/JRCHECK.PY <fresh-dir-of-a-pattern-run>
 
 ## Proposed launcher (not yet in any package)
 
@@ -139,14 +176,15 @@ anything ships. Hashes of the tested JWasm builds:
     WIN /R
     GOTO DONE
     :FAILED
-    ECHO PCjr video page is not protected. Windows was not started.
+    ECHO PCjr video page is not reserved by DOS. Windows was not started.
     :DONE
 
 ## Open items, in order
 
-1. Run `JRPROBE` on a real PCjr with the owner's actual memory expansion
-   and DOS. Record 40:8Ah, the MCB holding 18000h, and photograph the screen.
-   The guard's fixed 1800h assumption comes from emulators only.
+1. Run `JRPROBE` (report-only unless the page is DOS-reserved) on a real
+   PCjr with the owner's actual memory expansion and DOS. Record 40:8Ah and
+   the MCB holding 18000h. The guard's fixed 1800h assumption comes from
+   emulators only.
 2. Decide whether JRGUARD should grow into a reserving helper (RESERVE-style,
    last-fit allocation of exactly 1800h-1FFFh) or keep requiring an existing
    PCjr memory driver. That depends on what item 1 finds.

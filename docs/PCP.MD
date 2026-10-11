@@ -87,6 +87,11 @@ goes to RAM, not B800h.
 
 Reports: `pcp/PCPTEST.JSN`, `pcp/MUTANT.JSN`.
 
+`PCPTEST.PY` fails unless MASM reports exactly 0 severe errors, LINK reports
+no error, the EXE exists, the emulator exits 0, the guest reports RUN=PASS
+and VRAM.BIN is exactly 32,768 bytes; only then are bytes and pixels judged.
+`BUILDPCP.PY` refuses a BUILD88 result that does not say PASS.
+
 **Not yet tested:** the cursor paths, the column and retained-cursor flushes
 at runtime, mode switching, and everything under Windows.
 

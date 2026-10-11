@@ -1,0 +1,3 @@
+JRHOLDT EXIT=0
+JRGUARD: OK, video page is held by an in-use DOS block.
+JRGUARD EXIT=0

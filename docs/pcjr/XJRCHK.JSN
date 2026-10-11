@@ -12,16 +12,20 @@
   "ARENA_OK": "01",
   "BIOSKB": "0280",
   "COMPLETE": "1",
+  "CONTROL": "00",
   "MODEL": "FD",
   "MODE_AFTER": "09",
   "MODE_BEFORE": "03",
   "PAGE8A_AFTER": "F6",
   "PAGE8A_BEFORE": "3F",
+  "PAGE_OK": "01",
   "TANDYTAG": "00",
   "TARGET_SEG": "1800",
   "VIDEO_IN_ARENA": "01",
   "VIDEO_MCB": "17FF",
   "VIDEO_MCB_PARAS": "0800",
-  "VIDEO_OWNER": "0008"
- }
+  "VIDEO_OWNER": "0008",
+  "WROTE": "01"
+ },
+ "verdict": "PASS"
 }

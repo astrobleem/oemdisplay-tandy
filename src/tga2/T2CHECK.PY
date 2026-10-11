@@ -2,10 +2,15 @@
 """Host verifier for T2PROBE output (see docs/TGA2.MD).
 
 Usage: python3 src/tga2/T2CHECK.PY <dir-with-T2PROBE.TXT> [--png <out.png>]
+       python3 src/tga2/T2CHECK.PY <dir> --expect-unmapped   (negative control)
+
+Exit 0 only for a verified pattern (or, with --expect-unmapped, for a
+complete report showing zero mapped paragraphs and no write). A report
+without a pattern is exit 2, "not tested", never success.
 
 Prints the probe's mapping verdict. When T2VRAM.BIN exists (the probe only
-writes it after proving the window maps onto its own RAM or RAM above the
-DOS arena), checks every byte of the 640x200x16 LINEAR hypothesis:
+writes it after proving every window paragraph maps onto its own DOS
+block), checks every byte of the 640x200x16 LINEAR hypothesis:
 offset = y*320 + xb, high nibble = left pixel, 64,000 bytes, 1,536 tail
 bytes not judged. --png decodes the dump with an illustrative IRGB palette;
 it is a raw-VRAM decode, not a photo or emulator screenshot of the display.
@@ -21,12 +26,27 @@ def main(argv):
         return 2
     d = Path(argv[1])
     rep = {}
-    for tok in (d / "T2PROBE.TXT").read_text(errors="replace").split():
+    rf = d / "T2PROBE.TXT"
+    for tok in (rf.read_text(errors="replace").split() if rf.exists() else []):
         if "=" in tok:
             k, v = tok.split("=", 1)
             rep[k] = v
     out = {"report": rep}
+    if rep.get("COMPLETE") != "1":
+        out["verdict"] = "FAIL: T2PROBE.TXT missing or incomplete"
+        print(json.dumps(out, indent=1, sort_keys=True))
+        return 1
     dump = d / "T2VRAM.BIN"
+    if "--expect-unmapped" in argv:
+        ok = (rep.get("MAPPED_PARAS") == "0000" and rep.get("PATTERN_RAN") == "00"
+              and rep.get("SAFE_TO_WRITE") == "00" and not dump.exists())
+        out["verdict"] = "PASS: unmapped negative control" if ok else "FAIL: expected an unmapped window"
+        print(json.dumps(out, indent=1, sort_keys=True))
+        return 0 if ok else 1
+    if dump.exists() and (rep.get("PATTERN_RAN") != "01" or dump.stat().st_size != 0x10000):
+        out["verdict"] = "FAIL: dump present but report/size inconsistent"
+        print(json.dumps(out, indent=1, sort_keys=True))
+        return 1
     if dump.exists():
         v = dump.read_bytes()
         bad = 0
@@ -55,8 +75,12 @@ def main(argv):
             img.save(argv[argv.index("--png") + 1])
     else:
         out["pattern"] = "not run (window unmapped or not provably safe)"
+        out["verdict"] = "NOT TESTED"
+        print(json.dumps(out, indent=1, sort_keys=True))
+        return 2
+    out["verdict"] = "PASS" if out["pattern_mismatches"] == 0 else "FAIL"
     print(json.dumps(out, indent=1, sort_keys=True))
-    return 0 if out.get("pattern_mismatches", 0) == 0 else 1
+    return 0 if out["verdict"] == "PASS" else 1
 
 
 if __name__ == "__main__":

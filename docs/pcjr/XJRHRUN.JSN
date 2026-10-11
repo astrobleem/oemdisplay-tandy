@@ -1,0 +1,21 @@
+{
+ "emulator_exit": 0,
+ "expected": {
+  "JRHOLDT": "0",
+  "JRGUARD": "1",
+  "JRPROBE": "2"
+ },
+ "observed": {
+  "JRHOLDT": [
+   "0"
+  ],
+  "JRGUARD": [
+   "1"
+  ],
+  "JRPROBE": [
+   "2"
+  ]
+ },
+ "verdict": "PASS",
+ "problems": []
+}

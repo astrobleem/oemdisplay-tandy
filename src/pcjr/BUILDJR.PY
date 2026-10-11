@@ -63,6 +63,8 @@ def main():
         raise SystemExit("BUILDJR: PCjr edits were never applied")
 
     result = json.loads((out / "RESULT.json").read_text())
+    if result.get("build") != "PASS":
+        raise SystemExit("build did not report PASS; see RESULT.json")
     built = out / Path(result["mode"]["driver"]).name if isinstance(result.get("mode"), dict) and "driver" in result["mode"] else None
     if built is None or not built.exists():
         drvs = [p for p in out.glob("*.DRV")]

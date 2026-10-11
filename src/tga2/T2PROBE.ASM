@@ -15,16 +15,18 @@
 ;       CRTC R4=FFh R5=06h R6=C8h R7=E0h R9=00h (R0-R3 kept from mode 09h)
 ;  3. Read-only scan of A000:0000-FFFF for the tags: each tagged paragraph
 ;     names the physical RAM behind that window offset.
-;  4. ONLY if every one of the 4096 window paragraphs maps, with one
-;     constant offset, into this program's own block or into RAM above the
-;     DOS arena (below A0000h), write a 640x200x16 linear test pattern
-;     (320 bytes per row, high nibble = left pixel) and dump the window.
-;     Otherwise nothing is written through the window.
+;  4. ONLY if all 4096 window paragraphs were found by tag, with one
+;     constant offset, so the whole 64KB window is proven to be this
+;     program's own block, write a 640x200x16 linear test pattern (320 bytes
+;     per row, high nibble = left pixel) and dump the window. A partial or
+;     inconsistent mapping writes nothing through the window.
 ;  5. Clear register 5, restore the original BIOS mode, free the block.
 ;
 ; Command line /W waits for a key while the pattern is on screen (for a
 ; photo on real hardware). Outputs: T2PROBE.TXT, and T2VRAM.BIN when the
-; pattern step ran. Never stays resident. Reboot after testing on hardware.
+; pattern step ran. Exit 0 = pattern written and dumped, 2 = report only,
+; 1 = setup failure. Video registers are touched only on machines with the
+; Tandy signature (F000:FFFE = FFh, FC00:0000 = 21h). Never stays resident.
 
 .8086
 code segment para public 'CODE'
@@ -110,7 +112,9 @@ tail_done:
  mov bx,(stack_end - entry + 100h + 15) / 16
  mov ah,4ah
  int 21h
- jc setup_fail
+ jnc lj1
+ jmp setup_fail
+lj1:
 
  ; ---- identity ----------------------------------------------------------
  mov ax,0f000h
@@ -171,10 +175,14 @@ walk_done:
  mov bx,0ffffh
  int 21h                  ; fails; BX = largest available
  or bx,bx
- jz setup_fail
+ jnz lj2
+ jmp setup_fail
+lj2:
  mov ah,48h
  int 21h
- jc setup_fail
+ jnc lj3
+ jmp setup_fail
+lj3:
  mov blk,ax
  mov blk_size,bx
  mov cx,bx
@@ -193,6 +201,14 @@ tag:
  mov ah,0fh
  int 10h
  mov mode_before,al
+ ; Tandy signature only; anything else gets a report and no register writes.
+ cmp model_byte,0ffh
+ jne not_tandy
+ cmp tandy_tag,21h
+ je is_tandy
+not_tandy:
+ jmp free_block
+is_tandy:
  mov ax,9
  int 10h
  mov ah,0fh
@@ -252,8 +268,9 @@ scan_next:
  jb scan
 
  ; ---- decide whether a pattern write is provably harmless ----------------
- cmp mapped,0
- je decided
+ ; Every one of the 4096 window paragraphs must have been found by its tag.
+ cmp mapped,1000h
+ jne decided
  cmp mismatch,0
  jne decided
  xor bp,bp
@@ -266,12 +283,7 @@ check:
  mov bx,ax
  sub bx,blk
  cmp bx,blk_size
- jb check_ok              ; inside our own block
- cmp arena_ok,1
- jne decided
- cmp ax,arena_end
- jb decided               ; DOS memory we do not own
-check_ok:
+ jae decided              ; must be inside our own block, nothing else
  inc bp
  cmp bp,1000h
  jb check
@@ -348,6 +360,7 @@ restore:
  mov al,mode_before
  xor ah,ah
  int 10h
+free_block:
  mov es,blk
  mov ah,49h
  int 21h
@@ -427,7 +440,9 @@ restore:
  mov ah,3ch
  xor cx,cx
  int 21h
- jc setup_fail
+ jnc lj4
+ jmp setup_fail
+lj4:
  mov bx,ax
  mov cx,di
  sub cx,offset report
@@ -440,6 +455,10 @@ restore:
  mov ah,9
  int 21h
  mov ax,4c00h
+ cmp pattern_ran,1
+ je exit_now
+ mov al,2
+exit_now:
  int 21h
 
 setup_fail:

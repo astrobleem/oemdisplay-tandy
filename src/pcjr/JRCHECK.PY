@@ -46,7 +46,22 @@ def main(argv):
         print(__doc__)
         return 2
     d = Path(argv[1])
-    rep = parse_report((d / "JRPROBE.TXT").read_text(errors="replace"))
+    problems = []
+    rep_file = d / "JRPROBE.TXT"
+    rep = parse_report(rep_file.read_text(errors="replace")) if rep_file.exists() else {}
+    if rep.get("COMPLETE") != "1":
+        problems.append("JRPROBE.TXT missing or incomplete")
+    if rep.get("WROTE") != "01":
+        problems.append("probe did not write/dump the pattern (WROTE=%s)" % rep.get("WROTE"))
+    if rep.get("MODE_AFTER") != "09":
+        problems.append("mode 09h not confirmed (MODE_AFTER=%s)" % rep.get("MODE_AFTER"))
+    for name in ("JRVRAM.BIN", "JRB800.BIN"):
+        f = d / name
+        if not f.exists() or f.stat().st_size != 0x8000:
+            problems.append(name + " missing or not 32768 bytes")
+    if problems:
+        print(json.dumps({"report": rep, "verdict": "FAIL", "problems": problems}, indent=1))
+        return 1
     vram = (d / "JRVRAM.BIN").read_bytes()
     b800 = (d / "JRB800.BIN").read_bytes()
     exp = expected()
@@ -81,6 +96,9 @@ def main(argv):
         verdict["interpretation"] = (
             "Non-PCjr control: full 32KB at B800"
             if same_as_page and not mism else "Control: unexpected; inspect dumps")
+    accepted = verdict["interpretation"].startswith((
+        "PCjr: physical-segment write correct", "Non-PCjr control: full 32KB"))
+    verdict["verdict"] = "PASS" if (accepted and not mism) else "FAIL"
     print(json.dumps(verdict, indent=1, sort_keys=True))
     if "--png" in argv:
         from PIL import Image
@@ -97,7 +115,7 @@ def main(argv):
                 px[2 * xb, y] = pal[b >> 4]
                 px[2 * xb + 1, y] = pal[b & 15]
         img.save(argv[argv.index("--png") + 1])
-    return 0 if not mism else 1
+    return 0 if verdict["verdict"] == "PASS" else 1
 
 
 if __name__ == "__main__":

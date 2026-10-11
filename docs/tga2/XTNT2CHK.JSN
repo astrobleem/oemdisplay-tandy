@@ -1,11 +1,10 @@
 {
- "pattern": "not run (window unmapped or not provably safe)",
  "report": {
   "ARENA_END": "9C00",
   "ARENA_OK": "01",
   "BIOSKB": "0270",
-  "BLOCK": "08BE",
-  "BLOCK_PARAS": "9342",
+  "BLOCK": "08BF",
+  "BLOCK_PARAS": "9341",
   "C0_MODEL": "FF",
   "C0_REV": "10",
   "C0_SUB": "0A",
@@ -22,5 +21,6 @@
   "SAFE_TO_WRITE": "00",
   "TANDYTAG": "21",
   "WINDOW_PHYS_SEG": "0000"
- }
+ },
+ "verdict": "PASS: unmapped negative control"
 }

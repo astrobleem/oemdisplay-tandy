@@ -12,9 +12,11 @@
 ;    the page's PHYSICAL segment (PCjr) or B800h (others), then dumped back
 ;  - a separate 32KB dump of B800:0000 to measure B800/BC00 aliasing
 ;
-; WARNING: on PCjr the page usually lives inside DOS memory. This probe
-; writes the pattern there. Run it from a fresh boot with nothing resident
-; you care about, and reboot afterwards.
+; Safety: before it sets mode 09h (which itself clears the page) the probe
+; checks that the predicted PCjr page 1800h-1FFFh is above the DOS arena or
+; inside one DOS-owned (0008h) block. Otherwise it only writes the report
+; and exits 2. On other machines it touches video only with /C, which is
+; for emulator control runs. Exit 0 means the pattern was written and dumped.
 
 .8086
 code segment para public 'CODE'
@@ -37,6 +39,9 @@ video_mcb   dw 0
 video_owner dw 0ffffh
 video_size  dw 0
 video_in    db 0
+page_ok     db 0
+wrote       db 0
+control     db 0
 
 f_txt  db 'JRPROBE.TXT',0
 f_vram db 'JRVRAM.BIN',0
@@ -57,14 +62,31 @@ s_vmcb  db ' VIDEO_MCB=',0
 s_vown  db ' VIDEO_OWNER=',0
 s_vin   db ' VIDEO_IN_ARENA=',0
 s_vsz   db ' VIDEO_MCB_PARAS=',0
+s_pok   db 'PAGE_OK=',0
+s_wr    db ' WROTE=',0
+s_ctl   db ' CONTROL=',0
 s_done  db 'COMPLETE=1',0
 s_fail  db 'JRPROBE: file write failed',13,10,'$'
-s_ok    db 'JRPROBE: wrote JRPROBE.TXT JRVRAM.BIN JRB800.BIN',13,10,'$'
+s_ok    db 'JRPROBE: report in JRPROBE.TXT',13,10,'$'
 
 start:
  push cs
  pop ds
  cld
+ ; /C = emulator control run on a non-PCjr (writes the Tandy mode 9 page).
+ mov si,81h
+ mov cl,ds:[80h]
+ xor ch,ch
+tail:
+ jcxz tail_done
+ lodsb
+ and al,0dfh
+ cmp al,'C'
+ jne tail_next
+ mov control,1
+tail_next:
+ loop tail
+tail_done:
 
  ; ---- machine identity -------------------------------------------------
  mov ax,0f000h
@@ -106,11 +128,48 @@ walk_ok:
 walk_last:
  mov arena_ok,1
 walk_done:
-
- ; ---- enter mode 9 ----------------------------------------------------
  mov ah,0fh
  int 10h
  mov mode_before,al
+
+ ; ---- gate: nothing below runs unless the page is provably not in use ----
+ ; PCjr: the predicted page 1800h-1FFFh must lie above the DOS arena, or
+ ; inside ONE block owned by DOS itself (0008h). Setting BIOS mode 09h
+ ; already clears the page, so this check comes before the mode set.
+ ; Other machines: only with /C (emulator control runs).
+ cmp model_byte,0fdh
+ je gate_jr
+ mov al,control
+ mov page_ok,al
+ jmp short gate_done
+gate_jr:
+ mov target_seg,1800h
+ call find_page
+ cmp arena_ok,1
+ jne gate_done
+ cmp arena_end,1800h
+ jbe gate_yes
+ cmp video_in,1
+ jne gate_done
+ cmp video_owner,0008h
+ jne gate_done
+ mov ax,video_mcb
+ inc ax
+ cmp ax,1800h
+ ja gate_done
+ add ax,video_size
+ jc gate_done
+ cmp ax,2000h
+ jb gate_done
+gate_yes:
+ mov page_ok,1
+gate_done:
+ cmp page_ok,1
+ je mode9
+ jmp report
+
+ ; ---- enter mode 9 ----------------------------------------------------
+mode9:
  mov ax,9
  int 10h
  mov ah,0fh
@@ -129,33 +188,14 @@ walk_done:
  shl ax,cl
  mov target_seg,ax
 target_ready:
-
- ; ---- which MCB holds the target page? (read only) ---------------------
- cmp arena_ok,1
- jne pattern
- mov ax,arena_first
-find:
- mov es,ax
- mov dx,es:[3]
- add dx,ax
- inc dx
- mov bx,target_seg
- cmp bx,ax
- jbe find_next
- cmp bx,dx
- jae find_next
- mov video_mcb,ax
- mov bx,es:[1]
- mov video_owner,bx
- mov bx,es:[3]
- mov video_size,bx
- mov video_in,1
- jmp short pattern
-find_next:
- cmp byte ptr es:[0],'Z'
- je pattern
- mov ax,dx
- jmp short find
+ ; PCjr: write only to the page that was validated before the mode set.
+ cmp model_byte,0fdh
+ jne target_checked
+ cmp target_seg,1800h
+ je target_checked
+ jmp restore
+target_checked:
+ call find_page
 
  ; ---- write the 320x200x16 pattern with the TANDY88 formula -----------
  ; base = (y & 3) * 8192 + (y >> 2) * 160 + xb
@@ -200,19 +240,26 @@ pat_byte:
  mov dx,offset f_vram
  mov ax,target_seg
  call dump32k
- jc failed
+ jnc lj1
+ jmp failed
+lj1:
  mov dx,offset f_b800
  mov ax,0b800h
  call dump32k
- jc failed
+ jnc lj2
+ jmp failed
+lj2:
+ mov wrote,1
 
  ; ---- back to the original mode ---------------------------------------
+restore:
  mov al,mode_before
  xor ah,ah
  int 10h
 
  ; ---- text report ------------------------------------------------------
- mov di,offset report
+report:
+ mov di,offset report_buf
  mov si,offset s_model
  call puts
  mov al,model_byte
@@ -277,6 +324,19 @@ pat_byte:
  mov ax,video_size
  call hex4
  call crlf
+ mov si,offset s_pok
+ call puts
+ mov al,page_ok
+ call hex2
+ mov si,offset s_wr
+ call puts
+ mov al,wrote
+ call hex2
+ mov si,offset s_ctl
+ call puts
+ mov al,control
+ call hex2
+ call crlf
  mov si,offset s_done
  call puts
  call crlf
@@ -285,20 +345,29 @@ pat_byte:
  mov ah,3ch
  xor cx,cx
  int 21h
- jc failed
+ jnc lj3
+ jmp failed
+lj3:
  mov bx,ax
  mov cx,di
- sub cx,offset report
- mov dx,offset report
+ sub cx,offset report_buf
+ mov dx,offset report_buf
  mov ah,40h
  int 21h
- jc failed
+ jnc lj4
+ jmp failed
+lj4:
  mov ah,3eh
  int 21h
  mov dx,offset s_ok
  mov ah,9
  int 21h
+ ; Exit 0 only when the pattern was written and dumped; 2 = nothing tested.
  mov ax,4c00h
+ cmp wrote,1
+ je exit_now
+ mov al,2
+exit_now:
  int 21h
 
 failed:
@@ -380,6 +449,38 @@ hex1_store:
  ret
 hex4 endp
 
-report db 512 dup(0)
+; Read-only: which MCB holds target_seg? Fills video_mcb/owner/size/in.
+find_page proc near
+ mov video_in,0
+ cmp arena_ok,1
+ jne fp_done
+ mov ax,arena_first
+fp_walk:
+ mov es,ax
+ mov dx,es:[3]
+ add dx,ax
+ inc dx
+ mov bx,target_seg
+ cmp bx,ax
+ jbe fp_next
+ cmp bx,dx
+ jae fp_next
+ mov video_mcb,ax
+ mov bx,es:[1]
+ mov video_owner,bx
+ mov bx,es:[3]
+ mov video_size,bx
+ mov video_in,1
+ ret
+fp_next:
+ cmp byte ptr es:[0],'Z'
+ je fp_done
+ mov ax,dx
+ jmp short fp_walk
+fp_done:
+ ret
+find_page endp
+
+report_buf db 640 dup(0)
 code ends
 end entry

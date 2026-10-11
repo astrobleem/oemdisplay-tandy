@@ -11,8 +11,9 @@
 ;
 ; PASS (exit 0) when either
 ;   a) the DOS arena ends at or below segment 1800h, or
-;   b) one in-use MCB covers paragraphs 1800h-1FFFh entirely, and its owner
-;      is neither 0 (free) nor this program's own PSP.
+;   b) one MCB owned by DOS itself (owner 0008h) covers paragraphs
+;      1800h-1FFFh entirely. Any other owner fails: a program, TSR or the
+;      launching COMMAND.COM may free or reuse its memory.
 ; Anything else, including a corrupt chain, a non-PCjr machine or DOS < 3,
 ; fails closed with exit 1. The launcher must not start Windows on failure.
 ;
@@ -32,10 +33,10 @@ PAGE_HI equ 2000h
 m_notjr  db 'JRGUARD: not an IBM PCjr (F000:FFFE is not FDh).',13,10,'$'
 m_dos    db 'JRGUARD: DOS 3.0 or newer is required.',13,10,'$'
 m_chain  db 'JRGUARD: DOS memory chain is not valid. Not starting.',13,10,'$'
-m_free   db 'JRGUARD: video page 18000h-1FFFFh is not protected from DOS.',13,10
+m_free   db 'JRGUARD: video page 18000h-1FFFFh is not reserved by DOS.',13,10
          db '         Load a PCjr memory driver that reserves it, see PCJR.MD.',13,10,'$'
 m_above  db 'JRGUARD: OK, DOS memory ends below the video page.',13,10,'$'
-m_owned  db 'JRGUARD: OK, video page is held by an in-use DOS block.',13,10,'$'
+m_owned  db 'JRGUARD: OK, video page is held by a DOS system block.',13,10,'$'
 
 start:
  cli
@@ -86,12 +87,12 @@ walk_ok:
  ja next
  cmp cx,PAGE_HI
  jb next
+ ; Only DOS's own system blocks (owner 0008h) count as protection. Free
+ ; memory (0), this program, its parent COMMAND.COM, a TSR or any other
+ ; program's allocation could be released or reused while Windows runs.
  mov dx,offset m_free
- cmp word ptr es:[1],0
- je fail
- mov ax,cs
- cmp word ptr es:[1],ax      ; our own PSP does not count as protection
- je fail
+ cmp word ptr es:[1],0008h
+ jne fail
  mov dx,offset m_owned
  jmp short pass
 next:

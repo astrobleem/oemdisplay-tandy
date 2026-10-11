@@ -115,18 +115,32 @@ def main():
     (out / "RUN.CONF").write_text(conf)
     env = dict(os.environ, SDL_VIDEODRIVER="dummy", SDL_AUDIODRIVER="dummy")
     with open(out / "HOST.LOG", "wb") as log:
-        subprocess.run([str(a.dosbox), "-nopromptfolder", "-nogui", "-nomenu", "-conf",
-                        str(out / "RUN.CONF")], env=env, stdout=log, stderr=subprocess.STDOUT,
-                       timeout=300, check=True)
+        rc = subprocess.run([str(a.dosbox), "-nopromptfolder", "-nogui", "-nomenu", "-conf",
+                             str(out / "RUN.CONF")], env=env, stdout=log, stderr=subprocess.STDOUT,
+                            timeout=300).returncode
+    if rc != 0:
+        raise SystemExit(f"PCPTEST: emulator exited {rc}; see HOST.LOG")
     for tool in ("MASM.EXE", "LINK.EXE"):
         (out / tool).unlink()
-    masm = (out / "MASM.LOG").read_text(errors="replace")
-    if " 0 Severe  Errors" not in masm.replace("\r", ""):
-        raise SystemExit("PCPTEST: MASM reported errors; see MASM.LOG")
+    import re
+    masm = (out / "MASM.LOG").read_text(errors="replace") if (out / "MASM.LOG").exists() else ""
+    link = (out / "LINK.LOG").read_text(errors="replace") if (out / "LINK.LOG").exists() else ""
+    if re.findall(r"(\d+)\s+Severe\s+Errors", masm) != ["0"]:
+        raise SystemExit("PCPTEST: MASM did not report 0 severe errors; see MASM.LOG")
+    if re.search(r"error L\d+|fatal error", link, re.I) or not (out / (name + ".EXE")).is_file():
+        raise SystemExit("PCPTEST: LINK failed or produced no EXE; see LINK.LOG")
     if a.show:
         print(f"PCPTEST: built {out / 'PCPSHOW.EXE'} (run with SHADOW.BIN beside it)")
         return 0
-    vram = (out / "VRAM.BIN").read_bytes()
+    run_log = (out / "RUN.LOG").read_text(errors="replace").strip() if (out / "RUN.LOG").exists() else ""
+    vfile = out / "VRAM.BIN"
+    if run_log != "RUN=PASS" or not vfile.is_file() or vfile.stat().st_size != 0x8000:
+        result = {"run": run_log or "missing", "vram_bytes": vfile.stat().st_size if vfile.exists() else 0,
+                  "verdict": "FAIL", "problem": "guest run failed or VRAM.BIN missing/short"}
+        (out / "RESULT.JSN").write_text(json.dumps(result, indent=1) + "\n")
+        print(json.dumps(result, indent=1))
+        return 1
+    vram = vfile.read_bytes()
     model = P.model_flush(shadow)
     byte_bad = sum(1 for i in range(0x8000) if vram[i] != model[i])
     pix_bad = sum(1 for y in range(200) for x in range(320)
@@ -134,7 +148,7 @@ def main():
     result = {"run": (out / "RUN.LOG").read_text().strip(), "vram_bytes": len(vram),
               "byte_mismatches_vs_model": byte_bad, "pixels_checked": 64000,
               "pixel_mismatches_vs_tr5_colors": pix_bad,
-              "verdict": "PASS" if (byte_bad == 0 and pix_bad == 0) else "FAIL"}
+              "verdict": "PASS" if (run_log == "RUN=PASS" and byte_bad == 0 and pix_bad == 0) else "FAIL"}
     (out / "RESULT.JSN").write_text(json.dumps(result, indent=1) + "\n")
     print(json.dumps(result, indent=1))
     return 0 if result["verdict"] == "PASS" else 1
