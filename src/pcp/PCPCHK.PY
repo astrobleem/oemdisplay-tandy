@@ -351,6 +351,15 @@ def main():
            "passed": sum(r["result"] == "PASS" for r in res),
            "failed": sum(r["result"] == "FAIL" for r in res),
            "skipped": sum(r["result"] == "SKIPPED" for r in res), "total": len(res)}
+    # Palette-arrow moves PCPWIN had to re-send (LANDING.JSN): reported, so a
+    # final PASS never hides how many cases needed a retry.
+    land = vm / "LANDING.JSN"
+    if land.exists():
+        rows = json.loads(land.read_text())
+        out["palette_arrow_landing"] = {
+            "cases": len(rows), "first_try": sum(1 for r in rows if r.get("attempts") == 1),
+            "recovered_by_retry": [{"frame": r["frame"], "attempts": r["attempts"],
+                                    "misses": r.get("misses", [])} for r in rows if (r.get("attempts") or 0) > 1]}
     out["verdict"] = "PASS" if out["failed"] == 0 and out["skipped"] == 0 else (
         "FRAMES-ONLY PASS" if out["failed"] == 0 else "FAIL")
     text = json.dumps(out, indent=1)

@@ -199,6 +199,19 @@ class Run:
         return all(f[i] == exp[i] for i in range(w * 200)
                    if not (i % w >= w - 4 and i // w >= 196))
 
+    def describe_miss(self, name, ref, hx, hy):
+        """What a rejected attempt showed: the changed pixels against the
+        reference and whether they surround the hotspot that was sent (a
+        cursor at the right place with another shape) or not (elsewhere)."""
+        f, w = self.frame(name), self.width
+        d = [i for i in range(w * 200) if f[i] != ref[i] and not (i % w >= w - 4 and i // w >= 196)]
+        box = [min(i % w for i in d), min(i // w for i in d), max(i % w for i in d), max(i // w for i in d)] if d else None
+        at = bool(box) and box[0] <= hx <= box[2] and box[1] <= hy <= box[3]
+        kind = ("no cursor visible" if not d else
+                "cursor at the hotspot, other shape" if at else "cursor elsewhere")
+        return {"frame": name, "hotspot": [hx, hy], "changed_pixels": len(d), "changed_box": box,
+                "classified": kind}
+
     def key(self, *k, wait=3):
         self.b.key(*k, wait=wait)
 
@@ -354,10 +367,12 @@ class Run:
 
         # 5. Arrow cursor over every palette colour. Each frame must show the
         #    arrow (the glyph measured over the wallpaper) exactly at the
-        #    hotspot that was sent; if it does not, the pointer did not land
-        #    there (see docs/PC1512.MD, "Pointer landing"), so the frame is
-        #    kept as arrow_NN_missK, logged, and the move is sent again.
-        #    PCPCHK judges only the final frames, with the same strict rule.
+        #    hotspot that was sent. Every attempt is its own frame,
+        #    arrow_NN_tK; an attempt that does not show that is logged with
+        #    what it did show (see docs/PC1512.MD, "Pointer landing") and the
+        #    move is sent again. The first attempt that does is copied to
+        #    arrow_NN, which PCPCHK judges with the same strict rule;
+        #    LANDING.JSN and PCPCHK's output report how many tries it took.
         glyph = self.wall_glyph()
         ref = self.frame("pb_drawn")
         self.landing = []
@@ -365,16 +380,24 @@ class Run:
             r, k = PALETTE[c]
             hx, hy = PAL_X0 + PAL_PITCH * k, PAL_Y[r]
             name = f"arrow_{c:02d}"
+            misses = []
             for attempt in range(1, LANDING_TRIES + 1):
+                tryname = f"{name}_t{attempt}"
                 self.rehome(hx, hy, wait=4)
-                self.shot(name, settle=1)
-                if self.landed(name, ref, glyph, hx, hy):
+                self.shot(tryname, settle=1)
+                if self.landed(tryname, ref, glyph, hx, hy):
+                    import shutil
+                    shutil.copyfile(self.b.out / (tryname + ".png"), self.b.out / (name + ".png"))
+                    self.log(f"accepted {tryname} as {name}", frame=name, copied_from=tryname)
                     break
-                miss = f"{name}_miss{attempt}"
-                (self.b.out / (name + ".png")).rename(self.b.out / (miss + ".png"))
-                self.log("pointer did not land: " + miss, frame=miss, hotspot=[hx, hy])
+                miss = self.describe_miss(tryname, ref, hx, hy)
+                misses.append(miss)
+                self.log(f"not as expected: {tryname}", **miss)
                 time.sleep(LANDING_WAIT)
-            self.landing.append({"frame": name, "hotspot": [hx, hy], "attempts": attempt})
+            else:
+                attempt = None
+            self.landing.append({"frame": name, "hotspot": [hx, hy], "attempts": attempt,
+                                 "first_try": attempt == 1, "misses": misses})
         (self.vm / "LANDING.JSN").write_text(json.dumps(self.landing, indent=1) + "\n")
         self.to(*PARK, wait=4)
         self.shot("arrow_parked")

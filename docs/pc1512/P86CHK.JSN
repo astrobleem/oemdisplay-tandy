@@ -951,5 +951,16 @@
  "failed": 0,
  "skipped": 0,
  "total": 88,
+ "palette_arrow_landing": {
+  "cases": 16,
+  "first_try": 15,
+  "recovered_by_retry": [
+   {
+    "frame": "arrow_12",
+    "attempts": 2,
+    "misses": []
+   }
+  ]
+ },
  "verdict": "PASS"
 }

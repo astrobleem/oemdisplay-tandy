@@ -1,0 +1,23 @@
+{
+ "note": "Derived from the recorded frames with PCPWIN.describe_miss; P86LAND.JSN is the run record.",
+ "palette_cases": 16,
+ "first_try": 15,
+ "recovered_by_retry": 1,
+ "misses": [
+  {
+   "frame": "arrow_12_t1",
+   "hotspot": [
+    222,
+    186
+   ],
+   "changed_pixels": 46,
+   "changed_box": [
+    206,
+    178,
+    237,
+    193
+   ],
+   "classified": "cursor at the hotspot, other shape"
+  }
+ ]
+}

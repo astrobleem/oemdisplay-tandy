@@ -1,5 +1,5 @@
 {
- "note": "Shot order of the final run (p15m). source = 86Box Ctrl+F11 capture; repo_file = its exact 640x200 decode (index = IRGB colour); raw_copy = the 86Box capture itself, where kept. arrow_12_miss1 is the first, rejected try of arrow_12 (pointer shape left as the crosshair; see P86LAND.JSN).",
+ "note": "Shot order of the final run (p15m); every capture has its own id. source = 86Box Ctrl+F11 capture; repo_file = its exact 640x200 decode (index = IRGB colour); raw_copy = the 86Box capture itself, where kept. Palette-arrow attempts are arrow_NN_tK; arrow_NN names the accepted attempt (accepted_from). The recorded RUN.JSN predates per-attempt ids: its first \"shot arrow_12\" is attempt 1 (kept on disk as arrow_12_miss1), its second is attempt 2; each pairing was confirmed by decoding the raw capture.",
  "frames": [
   {
    "frame": "bars",
@@ -231,258 +231,332 @@
    "raw_copy": "P86_07.PNG"
   },
   {
-   "frame": "arrow_00",
+   "frame": "arrow_00_t1",
    "source": "Monitor_1_20261011-170420-564.png",
    "decoded": true,
    "repo_file": "FRAMES/F37.PNG"
   },
   {
-   "frame": "arrow_01",
+   "frame": "arrow_00",
+   "accepted_from": "arrow_00_t1",
+   "repo_file": "FRAMES/F37.PNG"
+  },
+  {
+   "frame": "arrow_01_t1",
    "source": "Monitor_1_20261011-170429-960.png",
    "decoded": true,
    "repo_file": "FRAMES/F38.PNG"
   },
   {
-   "frame": "arrow_02",
+   "frame": "arrow_01",
+   "accepted_from": "arrow_01_t1",
+   "repo_file": "FRAMES/F38.PNG"
+  },
+  {
+   "frame": "arrow_02_t1",
    "source": "Monitor_1_20261011-170439-305.png",
    "decoded": true,
    "repo_file": "FRAMES/F39.PNG"
   },
   {
-   "frame": "arrow_03",
+   "frame": "arrow_02",
+   "accepted_from": "arrow_02_t1",
+   "repo_file": "FRAMES/F39.PNG"
+  },
+  {
+   "frame": "arrow_03_t1",
    "source": "Monitor_1_20261011-170448-603.png",
    "decoded": true,
    "repo_file": "FRAMES/F40.PNG"
   },
   {
-   "frame": "arrow_04",
+   "frame": "arrow_03",
+   "accepted_from": "arrow_03_t1",
+   "repo_file": "FRAMES/F40.PNG"
+  },
+  {
+   "frame": "arrow_04_t1",
    "source": "Monitor_1_20261011-170457-963.png",
    "decoded": true,
    "repo_file": "FRAMES/F41.PNG"
   },
   {
-   "frame": "arrow_05",
+   "frame": "arrow_04",
+   "accepted_from": "arrow_04_t1",
+   "repo_file": "FRAMES/F41.PNG"
+  },
+  {
+   "frame": "arrow_05_t1",
    "source": "Monitor_1_20261011-170507-576.png",
    "decoded": true,
    "repo_file": "FRAMES/F42.PNG"
   },
   {
-   "frame": "arrow_06",
+   "frame": "arrow_05",
+   "accepted_from": "arrow_05_t1",
+   "repo_file": "FRAMES/F42.PNG"
+  },
+  {
+   "frame": "arrow_06_t1",
    "source": "Monitor_1_20261011-170517-004.png",
    "decoded": true,
    "repo_file": "FRAMES/F43.PNG"
   },
   {
-   "frame": "arrow_07",
+   "frame": "arrow_06",
+   "accepted_from": "arrow_06_t1",
+   "repo_file": "FRAMES/F43.PNG"
+  },
+  {
+   "frame": "arrow_07_t1",
    "source": "Monitor_1_20261011-170526-383.png",
    "decoded": true,
    "repo_file": "FRAMES/F44.PNG"
   },
   {
-   "frame": "arrow_08",
+   "frame": "arrow_07",
+   "accepted_from": "arrow_07_t1",
+   "repo_file": "FRAMES/F44.PNG"
+  },
+  {
+   "frame": "arrow_08_t1",
    "source": "Monitor_1_20261011-170535-761.png",
    "decoded": true,
    "repo_file": "FRAMES/F45.PNG"
   },
   {
-   "frame": "arrow_09",
+   "frame": "arrow_08",
+   "accepted_from": "arrow_08_t1",
+   "repo_file": "FRAMES/F45.PNG"
+  },
+  {
+   "frame": "arrow_09_t1",
    "source": "Monitor_1_20261011-170545-124.png",
    "decoded": true,
    "repo_file": "FRAMES/F46.PNG"
   },
   {
-   "frame": "arrow_10",
+   "frame": "arrow_09",
+   "accepted_from": "arrow_09_t1",
+   "repo_file": "FRAMES/F46.PNG"
+  },
+  {
+   "frame": "arrow_10_t1",
    "source": "Monitor_1_20261011-170554-654.png",
    "decoded": true,
    "repo_file": "FRAMES/F47.PNG"
   },
   {
-   "frame": "arrow_11",
+   "frame": "arrow_10",
+   "accepted_from": "arrow_10_t1",
+   "repo_file": "FRAMES/F47.PNG"
+  },
+  {
+   "frame": "arrow_11_t1",
    "source": "Monitor_1_20261011-170604-031.png",
    "decoded": true,
    "repo_file": "FRAMES/F48.PNG"
   },
   {
-   "frame": "arrow_12",
+   "frame": "arrow_11",
+   "accepted_from": "arrow_11_t1",
+   "repo_file": "FRAMES/F48.PNG"
+  },
+  {
+   "frame": "arrow_12_t1",
    "source": "Monitor_1_20261011-170613-393.png",
    "decoded": true,
    "repo_file": "FRAMES/F49.PNG"
   },
   {
-   "frame": "arrow_12_miss1",
-   "source": null,
+   "frame": "arrow_12_t2",
+   "source": "Monitor_1_20261011-170642-740.png",
    "decoded": true,
    "repo_file": "FRAMES/F50.PNG"
   },
   {
    "frame": "arrow_12",
-   "source": "Monitor_1_20261011-170642-740.png",
+   "accepted_from": "arrow_12_t2",
+   "repo_file": "FRAMES/F50.PNG"
+  },
+  {
+   "frame": "arrow_13_t1",
+   "source": "Monitor_1_20261011-170652-102.png",
    "decoded": true,
    "repo_file": "FRAMES/F51.PNG"
   },
   {
    "frame": "arrow_13",
-   "source": "Monitor_1_20261011-170652-102.png",
+   "accepted_from": "arrow_13_t1",
+   "repo_file": "FRAMES/F51.PNG"
+  },
+  {
+   "frame": "arrow_14_t1",
+   "source": "Monitor_1_20261011-170701-498.png",
    "decoded": true,
    "repo_file": "FRAMES/F52.PNG"
   },
   {
    "frame": "arrow_14",
-   "source": "Monitor_1_20261011-170701-498.png",
+   "accepted_from": "arrow_14_t1",
+   "repo_file": "FRAMES/F52.PNG"
+  },
+  {
+   "frame": "arrow_15_t1",
+   "source": "Monitor_1_20261011-170710-826.png",
    "decoded": true,
    "repo_file": "FRAMES/F53.PNG"
   },
   {
    "frame": "arrow_15",
-   "source": "Monitor_1_20261011-170710-826.png",
-   "decoded": true,
-   "repo_file": "FRAMES/F54.PNG"
+   "accepted_from": "arrow_15_t1",
+   "repo_file": "FRAMES/F53.PNG"
   },
   {
    "frame": "arrow_parked",
    "source": "Monitor_1_20261011-170718-202.png",
    "decoded": true,
-   "repo_file": "FRAMES/F55.PNG"
+   "repo_file": "FRAMES/F54.PNG"
   },
   {
    "frame": "cross_00",
    "source": "Monitor_1_20261011-170727-564.png",
    "decoded": true,
-   "repo_file": "FRAMES/F56.PNG"
+   "repo_file": "FRAMES/F55.PNG"
   },
   {
    "frame": "cross_01",
    "source": "Monitor_1_20261011-170736-926.png",
    "decoded": true,
-   "repo_file": "FRAMES/F57.PNG",
+   "repo_file": "FRAMES/F56.PNG",
    "raw_copy": "P86_08.PNG"
   },
   {
    "frame": "cross_02",
    "source": "Monitor_1_20261011-170746-372.png",
    "decoded": true,
-   "repo_file": "FRAMES/F58.PNG"
+   "repo_file": "FRAMES/F57.PNG"
   },
   {
    "frame": "cross_03",
    "source": "Monitor_1_20261011-170755-772.png",
    "decoded": true,
-   "repo_file": "FRAMES/F59.PNG"
+   "repo_file": "FRAMES/F58.PNG"
   },
   {
    "frame": "cross_04",
    "source": "Monitor_1_20261011-170805-151.png",
    "decoded": true,
-   "repo_file": "FRAMES/F60.PNG"
+   "repo_file": "FRAMES/F59.PNG"
   },
   {
    "frame": "cross_05",
    "source": "Monitor_1_20261011-170814-513.png",
    "decoded": true,
-   "repo_file": "FRAMES/F61.PNG"
+   "repo_file": "FRAMES/F60.PNG"
   },
   {
    "frame": "cross_06",
    "source": "Monitor_1_20261011-170823-909.png",
    "decoded": true,
-   "repo_file": "FRAMES/F62.PNG"
+   "repo_file": "FRAMES/F61.PNG"
   },
   {
    "frame": "cross_07",
    "source": "Monitor_1_20261011-170833-270.png",
    "decoded": true,
-   "repo_file": "FRAMES/F63.PNG"
+   "repo_file": "FRAMES/F62.PNG"
   },
   {
    "frame": "cross_08",
    "source": "Monitor_1_20261011-170842-716.png",
    "decoded": true,
-   "repo_file": "FRAMES/F64.PNG"
+   "repo_file": "FRAMES/F63.PNG"
   },
   {
    "frame": "cross_09",
    "source": "Monitor_1_20261011-170852-127.png",
    "decoded": true,
-   "repo_file": "FRAMES/F65.PNG"
+   "repo_file": "FRAMES/F64.PNG"
   },
   {
    "frame": "cross_10",
    "source": "Monitor_1_20261011-170901-494.png",
    "decoded": true,
-   "repo_file": "FRAMES/F66.PNG"
+   "repo_file": "FRAMES/F65.PNG"
   },
   {
    "frame": "cross_11",
    "source": "Monitor_1_20261011-170910-872.png",
    "decoded": true,
-   "repo_file": "FRAMES/F67.PNG"
+   "repo_file": "FRAMES/F66.PNG"
   },
   {
    "frame": "cross_12",
    "source": "Monitor_1_20261011-170920-304.png",
    "decoded": true,
-   "repo_file": "FRAMES/F68.PNG"
+   "repo_file": "FRAMES/F67.PNG"
   },
   {
    "frame": "cross_13",
    "source": "Monitor_1_20261011-170929-680.png",
    "decoded": true,
-   "repo_file": "FRAMES/F69.PNG"
+   "repo_file": "FRAMES/F68.PNG"
   },
   {
    "frame": "cross_14",
    "source": "Monitor_1_20261011-170939-075.png",
    "decoded": true,
-   "repo_file": "FRAMES/F70.PNG"
+   "repo_file": "FRAMES/F69.PNG"
   },
   {
    "frame": "cross_15",
    "source": "Monitor_1_20261011-170948-387.png",
    "decoded": true,
-   "repo_file": "FRAMES/F71.PNG"
+   "repo_file": "FRAMES/F70.PNG"
   },
   {
    "frame": "cross_parked",
    "source": "Monitor_1_20261011-170955-713.png",
    "decoded": true,
-   "repo_file": "FRAMES/F72.PNG"
+   "repo_file": "FRAMES/F71.PNG"
   },
   {
    "frame": "saveas_dlg",
    "source": "Monitor_1_20261011-171016-940.png",
    "decoded": true,
-   "repo_file": "FRAMES/F73.PNG"
+   "repo_file": "FRAMES/F72.PNG"
   },
   {
    "frame": "saved",
    "source": "Monitor_1_20261011-171102-399.png",
    "decoded": true,
-   "repo_file": "FRAMES/F74.PNG"
+   "repo_file": "FRAMES/F73.PNG"
   },
   {
    "frame": "pb_closed",
    "source": "Monitor_1_20261011-171130-151.png",
    "decoded": true,
-   "repo_file": "FRAMES/F75.PNG"
+   "repo_file": "FRAMES/F74.PNG"
   },
   {
    "frame": "pb_reopened",
    "source": "Monitor_1_20261011-171410-277.png",
    "decoded": true,
-   "repo_file": "FRAMES/F76.PNG",
+   "repo_file": "FRAMES/F75.PNG",
    "raw_copy": "P86_09.PNG"
   },
   {
    "frame": "pb_closed2",
    "source": "Monitor_1_20261011-171440-032.png",
    "decoded": true,
-   "repo_file": "FRAMES/F77.PNG"
+   "repo_file": "FRAMES/F76.PNG"
   },
   {
    "frame": "s1_exitdlg",
    "source": "Monitor_1_20261011-171501-393.png",
    "decoded": true,
-   "repo_file": "FRAMES/F78.PNG"
+   "repo_file": "FRAMES/F77.PNG"
   },
   {
    "frame": "s1_dos",
@@ -494,14 +568,14 @@
    "frame": "s2_desktop",
    "source": "Monitor_1_20261011-171903-977.png",
    "decoded": true,
-   "repo_file": "FRAMES/F79.PNG",
+   "repo_file": "FRAMES/F78.PNG",
    "raw_copy": "P86_11.PNG"
   },
   {
    "frame": "s2_exitdlg",
    "source": "Monitor_1_20261011-171925-290.png",
    "decoded": true,
-   "repo_file": "FRAMES/F80.PNG"
+   "repo_file": "FRAMES/F79.PNG"
   },
   {
    "frame": "s2_dos",

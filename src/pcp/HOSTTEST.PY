@@ -158,6 +158,15 @@ def main():
                    r.landed("a", ref, glyph, 50, 150))
             expect(f"{width}: landed() rejects a 1-pixel miss and a missing cursor",
                    not r.landed("b", ref, glyph, 50, 150) and not r.landed("c", ref, glyph, 50, 150))
+            SHOTDEC.save(put(ref, 90, 40), str(Path(tmp) / "d.png"), width)
+            cross = bytearray(ref)
+            for k in range(-3, 4):
+                cross[150 * width + 50 + k] ^= 15
+                cross[(150 + k) * width + 50] ^= 15
+            SHOTDEC.save(bytes(cross), str(Path(tmp) / "x.png"), width)
+            kinds = [r.describe_miss(n, ref, 50, 150)["classified"] for n in ("x", "c", "d")]
+            expect(f"{width}: misses classified (other shape at hotspot / none / elsewhere)",
+                   kinds == ["cursor at the hotspot, other shape", "no cursor visible", "cursor elsewhere"])
 
     # 3. PID ownership (Linux /proc): cleanup must never signal a process
     #    that merely reuses a recorded PID.
