@@ -243,6 +243,10 @@ class NEImage:
                                 raise NEFormatError(
                                     f"relocation chain in segment {index + 1} exceeds its {length}-byte segment"
                                 )
+                            if chain_offset + source_width > length:
+                                raise NEFormatError(
+                                    f"relocation source span in segment {index + 1} exceeds its {length}-byte segment"
+                                )
                             seen_chain_offsets.add(chain_offset)
                             chain_sites.append(chain_offset)
                             next_offset = _u16(segment_data, chain_offset, "relocation-chain link")
@@ -547,6 +551,10 @@ def _cpu_requirement(insn: Any, x86_const: Any) -> tuple[str | None, str | None]
     else:
         opcode = None
     operand_override = 0x66 in prefix_bytes
+    if any(byte in (0x64, 0x65) for byte in prefix_bytes):
+        return "80386", "FS/GS segment override is newer than 8086/8088"
+    if any(byte in (0x66, 0x67) for byte in prefix_bytes):
+        return "80386", "operand/address-size override is newer than 8086/8088"
     cpu_186 = {
         "bound", "enter", "leave", "insb", "insw", "outsb", "outsw", "pusha", "pushaw", "popa", "popaw",
     }
@@ -572,10 +580,6 @@ def _cpu_requirement(insn: Any, x86_const: Any) -> tuple[str | None, str | None]
     # changes them to CWDE/CDQ (and therefore requires a 386).
     if opcode in {0x98, 0x99} and not operand_override:
         return None, None
-    if any(byte in (0x64, 0x65) for byte in prefix_bytes):
-        return "80386", "FS/GS segment override is newer than 8086/8088"
-    if any(byte in (0x66, 0x67) for byte in prefix_bytes):
-        return "80386", "operand/address-size override is newer than 8086/8088"
     if opcode == 0x0F and len(raw) > len(prefix_bytes) + 1:
         return "80286", "0F escape instruction family is newer than 8086/8088"
     if mnemonic in cpu_186:
@@ -654,7 +658,10 @@ def _disassemble_reachable(image: NEImage) -> dict[str, Any]:
     for segment in image.segments:
         sites: dict[int, list[dict[str, Any]]] = {}
         for relocation in segment.relocations:
+            relocation_sites: set[int] = set()
             for site in relocation["chain_sites"]:
+                relocation_sites.update(range(site, site + relocation["source_width"]))
+            for site in sorted(relocation_sites):
                 sites.setdefault(site, []).append(relocation)
         fixups_by_site[segment.number] = sites
     uncertain_instruction_keys: set[tuple[int, int]] = set()

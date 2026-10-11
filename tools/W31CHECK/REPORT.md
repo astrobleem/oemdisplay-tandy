@@ -215,7 +215,7 @@ The current source run was:
 
 ```text
 python -m unittest discover -s tools/W31CHECK -p 'test_*.py' -v
-Ran 46 tests in 1.560s
+Ran 50 tests in 1.308s
 OK
 ```
 

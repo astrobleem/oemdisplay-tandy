@@ -258,6 +258,15 @@ class NEParserTests(unittest.TestCase):
         with self.assertRaisesRegex(NEFormatError, "cyclic relocation chain"):
             NEImage(bytes(data))
 
+    def test_rejects_relocation_chain_site_whose_source_span_crosses_segment_end(self):
+        code = bytes.fromhex("e9 05 00 90 90 ff ff")
+        data = bytearray(make_ne(code=code, internal_fixups=[(1, 1, 5)]))
+        relocation_record = 0xA0 + len(code) + 2
+        data[relocation_record] = 3  # POINTER32 source width.
+        data[relocation_record + 1] = 0  # Non-additive chain visits offset 5.
+        with self.assertRaisesRegex(NEFormatError, "relocation source span"):
+            NEImage(bytes(data))
+
     def test_zero_segment_file_length_means_64k(self):
         empty_segment = bytearray(make_ne(code=None))
         struct.pack_into("<H", empty_segment, 0x40 + 0x1C, 1)
@@ -302,6 +311,23 @@ class NEParserTests(unittest.TestCase):
         self.assertEqual(report["verdict"], "BLOCKED")
         self.assertEqual(report["cpu_analysis"]["unsupported_instructions"][0]["minimum_cpu"], "80386")
 
+    def test_instruction_prefixes_are_classified_before_mnemonic_early_returns(self):
+        prefix_sequences = (
+            b"\x64", b"\x65", b"\x66", b"\x67",
+            b"\x64\x66", b"\x66\x64", b"\x65\x67", b"\x67\x65",
+            b"\x64\x66\x67", b"\x67\x66\x64", b"\x65\x66\x67", b"\x66\x67\x65",
+        )
+        bodies = (bytes.fromhex("d9 07 c3"), b"\x98\xC3", b"\x99\xC3")
+        for prefix in prefix_sequences:
+            for body in bodies:
+                with self.subTest(prefix=prefix.hex(), body=body.hex()):
+                    report = analyze_bytes(make_ne(code=prefix + body), "PREFIXED.EXE")
+                    self.assertEqual(report["verdict"], "BLOCKED")
+                    self.assertEqual(
+                        report["cpu_analysis"]["unsupported_instructions"][0]["minimum_cpu"],
+                        "80386",
+                    )
+
     def test_unclassified_instruction_family_is_not_assumed_8086(self):
         fake = SimpleNamespace(mnemonic="futureop", bytes=b"\x90", operands=(), prefix=())
         cpu, reason = _cpu_requirement(fake, SimpleNamespace(X86_OP_IMM=1, X86_OP_REG=2))
@@ -315,8 +341,32 @@ class NEParserTests(unittest.TestCase):
         cpu = report["cpu_analysis"]
         self.assertEqual(report["verdict"], "UNKNOWN")
         self.assertEqual(cpu["unsupported_instructions"], [])
-        self.assertEqual(cpu["relocation_affected_instructions"][0]["fixup_sites"], [1])
+        self.assertEqual(cpu["relocation_affected_instructions"][0]["fixup_sites"], [1, 2])
         self.assertEqual(cpu["relocation_affected_instructions"][0]["offset"], 0)
+
+    def test_word_fixup_span_makes_the_following_opcode_uncertain(self):
+        code = bytes.fromhex("b8 00 00 68 00 00 cb")
+        report = analyze_bytes(make_ne(code=code, internal_fixups=[(2, 1, 0)]), "FIXUP-SPAN.EXE")
+        cpu = report["cpu_analysis"]
+        self.assertEqual(report["verdict"], "UNKNOWN")
+        self.assertEqual(cpu["unsupported_instructions"], [])
+        following_opcode = next(item for item in cpu["relocation_affected_instructions"] if item["offset"] == 3)
+        self.assertEqual(following_opcode["fixup_sites"], [3])
+        self.assertEqual(following_opcode["opcode_or_modrm_sites"], [3])
+
+    def test_overlapping_word_fixup_spans_mark_each_affected_byte(self):
+        code = bytes.fromhex("b8 00 00 68 00 00 cb")
+        fixups = [(1, 1, 0), (2, 1, 0)]
+        report = analyze_bytes(make_ne(code=code, internal_fixups=fixups), "OVERLAPPING-FIXUPS.EXE")
+        cpu = report["cpu_analysis"]
+        self.assertEqual(report["verdict"], "UNKNOWN")
+        self.assertEqual(cpu["unsupported_instructions"], [])
+        self.assertEqual(
+            next(item for item in cpu["relocation_affected_instructions"] if item["offset"] == 0)["fixup_sites"],
+            [1, 2],
+        )
+        next_opcode = next(item for item in cpu["relocation_affected_instructions"] if item["offset"] == 3)
+        self.assertEqual(next_opcode["opcode_or_modrm_sites"], [3])
 
     def test_chained_fixup_path_is_marked_uncertain_before_decoding_raw_target(self):
         code = bytes.fromhex("e9 08 00 68 00 00 cb 90 ff ff cb")
@@ -326,7 +376,7 @@ class NEParserTests(unittest.TestCase):
         report = analyze_bytes(bytes(data), "CHAINED-JUMP.EXE")
         self.assertEqual(report["verdict"], "UNKNOWN")
         self.assertEqual(report["cpu_analysis"]["unsupported_instructions"], [])
-        self.assertEqual(report["cpu_analysis"]["relocation_affected_instructions"][0]["fixup_sites"], [1])
+        self.assertEqual(report["cpu_analysis"]["relocation_affected_instructions"][0]["fixup_sites"], [1, 2])
 
     def test_detects_286_arpl_at_reachable_entry(self):
         app = make_ne(code=b"\x63\x00\xCB")
