@@ -1,18 +1,39 @@
 """Synthetic NE/parser tests plus an opt-in host-side real-media smoke test."""
 
 import json
+import hashlib
 import os
 import struct
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
-from w31check import NEFormatError, NEImage, analyze_bytes
+from w31check import NEFormatError, NEImage, _cpu_requirement, analyze_bytes
 
 
 def _pstring(value):
     raw = value.encode("ascii")
     return bytes([len(raw)]) + raw
+
+
+def runtime_evidence(image, filename="PASS.EXE"):
+    return {
+        "schema": "w31check-runtime-v1",
+        "result": "PASS",
+        "image": {
+            "filename": filename,
+            "size_bytes": len(image),
+            "sha256": hashlib.sha256(image).hexdigest(),
+        },
+        "target": {
+            "windows": "3.0", "mode": "real", "cpu": "8088", "memory_kb": 640,
+            "display": "320x200x16",
+        },
+        "actions": {
+            "input": True, "representative_task": True, "redraw": True, "clean_exit": True,
+        },
+    }
 
 
 def make_ne(
@@ -32,6 +53,7 @@ def make_ne(
     segment_table_offset = 0x40
     segment_data_offset = 0xA0
     segment_count = 1 if code is not None else 0
+    code_data = bytearray(code) if code is not None else None
     modules = []
     for module, _symbol, _kind in imports:
         if module.upper() not in {item.upper() for item in modules}:
@@ -49,21 +71,30 @@ def make_ne(
 
     relocations = bytearray()
     for _index, (module, symbol, kind) in enumerate(imports):
-        target_flags = 1 if kind == "ordinal" else 2
+        target_flags = (1 if kind == "ordinal" else 2) | 0x04
         target2 = int(symbol) if kind == "ordinal" else name_offsets[symbol.upper()]
-        relocations.extend(struct.pack("<BBHHH", 0, target_flags, 0, modules.index(module) + 1, target2))
+        source_offset = len(code_data)
+        code_data.extend(b"\0\0")
+        relocations.extend(
+            struct.pack("<BBHHH", 5, target_flags, source_offset, modules.index(module) + 1, target2)
+        )
     for source_offset, target_segment, target_offset in internal_fixups:
-        relocations.extend(struct.pack("<BBHHH", 0, 0, source_offset, target_segment, target_offset))
+        relocations.extend(struct.pack("<BBHHH", 5, 0x04, source_offset, target_segment, target_offset))
     relocation_count = len(imports) + len(internal_fixups)
     relocation_data = struct.pack("<H", relocation_count) + relocations if code is not None else b""
 
     entry_table = bytes([1, 1, 0, 0, 0, 0]) if include_fixed_entry and code is not None else b"\0"
     resident_names = bytearray(_pstring("TESTMOD") + struct.pack("<H", 0))
-    for ordinal, name in enumerate(exports, 1):
+    for index, export in enumerate(exports, 1):
+        ordinal, name = export if isinstance(export, tuple) else (index, export)
         resident_names.extend(_pstring(name) + struct.pack("<H", ordinal))
     resident_names.append(0)
 
-    entry_table_offset = segment_data_offset - ne_offset if code is None else segment_data_offset + len(code) + len(relocation_data) - ne_offset
+    entry_table_offset = (
+        segment_data_offset - ne_offset
+        if code_data is None
+        else segment_data_offset + len(code_data) + len(relocation_data) - ne_offset
+    )
     resident_names_offset = entry_table_offset + len(entry_table)
     module_table_offset = resident_names_offset + len(resident_names)
     import_table_offset = module_table_offset + 2 * len(modules)
@@ -86,13 +117,13 @@ def make_ne(
     result[h + 0x36] = target_os
     struct.pack_into("<H", result, h + 0x3E, windows_version)
 
-    if code is not None:
+    if code_data is not None:
         # One aligned code segment with a relocation table following its bytes.
-        stored_length = 0 if len(code) == 0x10000 else len(code)
+        stored_length = 0 if len(code_data) == 0x10000 else len(code_data)
         struct.pack_into("<HHHH", result, ne_offset + segment_table_offset,
                          segment_data_offset, stored_length, 0x0100, 0)
-        result[segment_data_offset : segment_data_offset + len(code)] = code
-        result[segment_data_offset + len(code) : segment_data_offset + len(code) + len(relocation_data)] = relocation_data
+        result[segment_data_offset : segment_data_offset + len(code_data)] = code_data
+        result[segment_data_offset + len(code_data) : segment_data_offset + len(code_data) + len(relocation_data)] = relocation_data
     result[ne_offset + entry_table_offset : ne_offset + entry_table_offset + len(entry_table)] = entry_table
     result[ne_offset + resident_names_offset : ne_offset + resident_names_offset + len(resident_names)] = resident_names
     for index, module in enumerate(modules):
@@ -124,7 +155,7 @@ class NEParserTests(unittest.TestCase):
             NEImage(unterminated_imports)
 
         bad_relocation = bytearray(make_ne(imports=[("KERNEL", "GetVersion", "name")]))
-        relocation_record = 0xA0 + 2 + 2
+        relocation_record = 0xA0 + 2 + 2 + 2
         struct.pack_into("<H", bad_relocation, relocation_record + 2, 0xFFFF)
         with self.assertRaises(NEFormatError):
             NEImage(bytes(bad_relocation))
@@ -161,6 +192,22 @@ class NEParserTests(unittest.TestCase):
         status = next(item for item in report["api_reference"]["items"] if item.get("import") == "#1")
         self.assertEqual(status["status"], "AVAILABLE_IN_REFERENCE")
 
+    def test_imported_far_call_fixup_does_not_create_a_false_unknown_path(self):
+        code = bytes.fromhex("9a 00 00 00 00 cb")
+        app = bytearray(make_ne(code=code, imports=[("KERNEL", "GetVersion", "name")]))
+        relocation_record = 0xA0 + len(code) + 2 + 2
+        app[relocation_record] = 3  # POINTER32 fixup over the far-call operand.
+        struct.pack_into("<H", app, relocation_record + 2, 1)
+        kernel = make_ne(code=None, exports=["GetVersion"])
+        with tempfile.TemporaryDirectory() as temp:
+            api_dir = Path(temp)
+            (api_dir / "KERNEL.EXE").write_bytes(kernel)
+            report = analyze_bytes(bytes(app), "IMPORTED-CALL.EXE", api_dir)
+        self.assertEqual(report["verdict"], "CANDIDATE")
+        self.assertEqual(report["cpu_analysis"]["relocation_affected_instructions"], [])
+        self.assertEqual(report["cpu_analysis"]["import_fixup_instruction_count"], 1)
+        self.assertIn("imported API far call", [edge["kind"] for edge in report["cpu_analysis"]["unresolved_control_flow"]])
+
     def test_missing_import_ordinal_is_proven_against_complete_reference(self):
         app = make_ne(imports=[("KERNEL", 7, "ordinal")])
         kernel = make_ne(code=None, exports=["GetVersion"])
@@ -177,6 +224,39 @@ class NEParserTests(unittest.TestCase):
         self.assertEqual(len(fixups), 1)
         self.assertEqual(fixups[0]["target_segment"], 1)
         self.assertTrue(fixups[0]["target_is_code"])
+
+    def test_unused_and_constant_entry_bundles_preserve_ordinals(self):
+        for bundle, constant_ordinals, expected_entry_ordinal in (
+            (bytes([1, 0, 1, 1, 0, 0, 0, 0]), frozenset(), 2),
+            (bytes([1, 0xFE, 0, 0x34, 0x12, 1, 1, 0, 0, 0, 0]), frozenset({1}), 2),
+        ):
+            with self.subTest(bundle=bundle):
+                data = bytearray(make_ne(code=b"\x90\xCB"))
+                table_offset = len(data) - 0x40
+                data.extend(bundle)
+                struct.pack_into("<HH", data, 0x40 + 4, table_offset, len(bundle))
+                image = NEImage(bytes(data))
+                self.assertTrue(image.entry_table_complete)
+                self.assertEqual(image.constant_entry_ordinals, constant_ordinals)
+                self.assertEqual([entry.ordinal for entry in image.entry_points], [expected_entry_ordinal])
+                self.assertIn(expected_entry_ordinal, image.exports()[1])
+                self.assertTrue(constant_ordinals.issubset(image.exports()[1]))
+
+    def test_nonadditive_relocation_chain_is_followed_and_bounded(self):
+        code = bytes.fromhex("e9 08 00 68 00 00 cb 90 ff ff cb")
+        data = bytearray(make_ne(code=code, internal_fixups=[(1, 1, 5)]))
+        relocation_record = 0xA0 + len(code) + 2
+        data[relocation_record + 1] = 0
+        image = NEImage(bytes(data))
+        self.assertEqual(image.segments[0].relocations[0]["chain_sites"], (1, 8))
+
+    def test_rejects_cyclic_nonadditive_relocation_chain(self):
+        code = bytes.fromhex("e9 01 00 cb")
+        data = bytearray(make_ne(code=code, internal_fixups=[(1, 1, 5)]))
+        relocation_record = 0xA0 + len(code) + 2
+        data[relocation_record + 1] = 0
+        with self.assertRaisesRegex(NEFormatError, "cyclic relocation chain"):
+            NEImage(bytes(data))
 
     def test_zero_segment_file_length_means_64k(self):
         empty_segment = bytearray(make_ne(code=None))
@@ -211,6 +291,42 @@ class NEParserTests(unittest.TestCase):
         self.assertEqual(report["verdict"], "BLOCKED")
         self.assertEqual(report["cpu_analysis"]["unsupported_instructions"][0]["minimum_cpu"], "80186")
         self.assertEqual(report["cpu_analysis"]["unsupported_instructions"][0]["mnemonic"], "push")
+
+    def test_detects_leave_as_80186(self):
+        report = analyze_bytes(make_ne(code=bytes.fromhex("c9 cb")), "LEAVE.EXE")
+        self.assertEqual(report["verdict"], "BLOCKED")
+        self.assertEqual(report["cpu_analysis"]["unsupported_instructions"][0]["minimum_cpu"], "80186")
+
+    def test_detects_fs_segment_override_as_386(self):
+        report = analyze_bytes(make_ne(code=bytes.fromhex("64 8b 07 cb")), "FS386.EXE")
+        self.assertEqual(report["verdict"], "BLOCKED")
+        self.assertEqual(report["cpu_analysis"]["unsupported_instructions"][0]["minimum_cpu"], "80386")
+
+    def test_unclassified_instruction_family_is_not_assumed_8086(self):
+        fake = SimpleNamespace(mnemonic="futureop", bytes=b"\x90", operands=(), prefix=())
+        cpu, reason = _cpu_requirement(fake, SimpleNamespace(X86_OP_IMM=1, X86_OP_REG=2))
+        self.assertEqual(cpu, "UNKNOWN")
+        self.assertIn("unclassified", reason)
+
+    def test_additive_offset16_fixup_makes_branch_path_unknown(self):
+        code = bytes.fromhex("e9 00 00 68 00 00 cb 90 cb")
+        app = make_ne(code=code, internal_fixups=[(1, 1, 5)])
+        report = analyze_bytes(app, "RELOCATED-JUMP.EXE")
+        cpu = report["cpu_analysis"]
+        self.assertEqual(report["verdict"], "UNKNOWN")
+        self.assertEqual(cpu["unsupported_instructions"], [])
+        self.assertEqual(cpu["relocation_affected_instructions"][0]["fixup_sites"], [1])
+        self.assertEqual(cpu["relocation_affected_instructions"][0]["offset"], 0)
+
+    def test_chained_fixup_path_is_marked_uncertain_before_decoding_raw_target(self):
+        code = bytes.fromhex("e9 08 00 68 00 00 cb 90 ff ff cb")
+        data = bytearray(make_ne(code=code, internal_fixups=[(1, 1, 5)]))
+        relocation_record = 0xA0 + len(code) + 2
+        data[relocation_record + 1] = 0
+        report = analyze_bytes(bytes(data), "CHAINED-JUMP.EXE")
+        self.assertEqual(report["verdict"], "UNKNOWN")
+        self.assertEqual(report["cpu_analysis"]["unsupported_instructions"], [])
+        self.assertEqual(report["cpu_analysis"]["relocation_affected_instructions"][0]["fixup_sites"], [1])
 
     def test_detects_286_arpl_at_reachable_entry(self):
         app = make_ne(code=b"\x63\x00\xCB")
@@ -258,6 +374,19 @@ class NEParserTests(unittest.TestCase):
             (api_dir / "KERNEL.EXE").write_bytes(kernel)
             report = analyze_bytes(app, "DYNAMIC.EXE", api_dir)
         self.assertTrue(report["dynamic_import_resolution_seen"])
+        self.assertEqual(report["verdict"], "UNKNOWN")
+
+    def test_ordinal_getprocaddress_export_triggers_dynamic_lookup_uncertainty(self):
+        app = make_ne(imports=[("KERNEL", 207, "ordinal")])
+        kernel = make_ne(code=None, exports=[(207, "GetProcAddress")])
+        with tempfile.TemporaryDirectory() as temp:
+            api_dir = Path(temp)
+            (api_dir / "KERNEL.EXE").write_bytes(kernel)
+            report = analyze_bytes(app, "DYNAMIC-ORDINAL.EXE", api_dir)
+        self.assertTrue(report["api_reference"]["all_imports_verified"])
+        self.assertTrue(report["dynamic_import_resolution_seen"])
+        row = next(item for item in report["api_reference"]["items"] if item.get("import") == "#207")
+        self.assertEqual(row["resolved_names"], ["GETPROCADDRESS"])
         self.assertEqual(report["verdict"], "UNKNOWN")
 
     def test_missing_windows_3_0_api_is_proven_from_export_table(self):
@@ -324,14 +453,43 @@ class NEParserTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             evidence = root / "runtime.json"
-            evidence.write_text(json.dumps({
-                "result": "PASS",
-                "target": {"windows": "3.0", "mode": "real", "cpu": "8088", "memory_kb": 640,
-                           "display": "320x200x16"},
-                "actions": {"input": True, "representative_task": True, "redraw": True, "clean_exit": True},
-            }), encoding="utf-8")
+            evidence.write_text(json.dumps(runtime_evidence(app)), encoding="utf-8")
             report = analyze_bytes(app, "PASS.EXE", root, evidence)
         self.assertEqual(report["verdict"], "COMPATIBLE")
+
+    def test_runtime_evidence_cannot_be_reused_for_a_different_image(self):
+        evidence_image = make_ne(code=b"\x90\xCB")
+        analyzed_image = make_ne(code=b"\x90\xC3")
+        with tempfile.TemporaryDirectory() as temp:
+            evidence = Path(temp) / "runtime.json"
+            evidence.write_text(json.dumps(runtime_evidence(evidence_image)), encoding="utf-8")
+            report = analyze_bytes(analyzed_image, "PASS.EXE", Path(temp), evidence)
+        self.assertEqual(report["verdict"], "UNKNOWN")
+        self.assertFalse(report["runtime_evidence"]["accepted"])
+        self.assertIn("identity", report["runtime_evidence"]["error"])
+
+    def test_runtime_evidence_rejects_malformed_or_incomplete_records(self):
+        app = make_ne(code=b"\x90\xCB")
+        good = runtime_evidence(app)
+        malformed_records = [
+            [],
+            {key: value for key, value in good.items() if key != "image"},
+            {**good, "image": {**good["image"], "filename": "OTHER.EXE"}},
+            {**good, "actions": {"input": True, "representative_task": "true", "redraw": True, "clean_exit": True}},
+            {**good, "unexpected": "extra"},
+        ]
+        with tempfile.TemporaryDirectory() as temp:
+            evidence = Path(temp) / "runtime.json"
+            for index, value in enumerate(malformed_records):
+                with self.subTest(index=index):
+                    evidence.write_text(json.dumps(value), encoding="utf-8")
+                    report = analyze_bytes(app, "PASS.EXE", Path(temp), evidence)
+                    self.assertEqual(report["verdict"], "UNKNOWN")
+                    self.assertFalse(report["runtime_evidence"]["accepted"])
+            evidence.write_text('{"schema":"w31check-runtime-v1","schema":"w31check-runtime-v1"}', encoding="utf-8")
+            report = analyze_bytes(app, "PASS.EXE", Path(temp), evidence)
+            self.assertEqual(report["verdict"], "UNKNOWN")
+            self.assertIn("duplicate", report["runtime_evidence"]["error"])
 
 
 @unittest.skipUnless(
@@ -351,6 +509,20 @@ class LocalMediaSmokeTests(unittest.TestCase):
                 self.assertTrue(report["api_reference"]["all_imports_verified"])
                 self.assertEqual(report["api_reference"]["missing_3_0_apis"], [])
                 self.assertEqual(report["static_blockers"], [])
+
+
+@unittest.skipUnless(
+    os.environ.get("W31CHECK_WINDOWS_30_API_DIR"),
+    "set W31CHECK_WINDOWS_30_API_DIR to the private Windows 3.0 API reference",
+)
+class LocalOrdinalResolutionTests(unittest.TestCase):
+    def test_windows_30_kernel_ordinal_207_is_verified_from_entry_table(self):
+        app = make_ne(imports=[("KERNEL", 207, "ordinal")])
+        report = analyze_bytes(app, "DYNAMIC-ORDINAL.EXE", Path(os.environ["W31CHECK_WINDOWS_30_API_DIR"]))
+        row = next(item for item in report["api_reference"]["items"] if item.get("import") == "#207")
+        self.assertEqual(row["status"], "AVAILABLE_IN_REFERENCE")
+        self.assertEqual(row["resolved_names"], [])
+        self.assertFalse(report["dynamic_import_resolution_seen"])
 
 
 if __name__ == "__main__":

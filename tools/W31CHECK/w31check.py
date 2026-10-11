@@ -9,7 +9,9 @@ be BLOCKED, CANDIDATE, or UNKNOWN; COMPATIBLE requires explicit runtime evidence
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import re
 import struct
 import sys
 from dataclasses import asdict, dataclass
@@ -103,6 +105,8 @@ class NEImage:
         5: "BOSS",
     }
     SEGMENT_RELOCATIONS = 0x0100
+    RELOCATION_ADDITIVE = 0x04
+    RELOCATION_WIDTHS = {0: 1, 2: 2, 3: 4, 5: 2, 11: 6, 13: 4}
 
     def __init__(self, data: bytes, source: str = "<memory>") -> None:
         self.data = data
@@ -159,7 +163,7 @@ class NEImage:
             self.nonresident_names_file_offset + self.nonresident_names_length,
             "nonresident names",
         )
-        self.entry_points, self.entry_table_complete = self._read_entry_table()
+        self.entry_points, self.constant_entry_ordinals, self.entry_table_complete = self._read_entry_table()
 
     def _relative(self, relative: int, length: int, label: str) -> int:
         absolute = self.ne_offset + relative
@@ -216,19 +220,50 @@ class NEImage:
                 for rindex in range(count):
                     q = reloc_base + 2 + rindex * 8
                     source_type = self.data[q]
+                    source_address_type = source_type & 0x7F
                     source_offset = _u16(self.data, q + 2, "relocation source offset")
-                    source_width = {0: 1, 2: 2, 3: 4, 5: 2}.get(source_type & 0x07, 1)
+                    source_width = self.RELOCATION_WIDTHS.get(source_address_type, 1)
                     if source_offset + source_width > length:
                         raise NEFormatError(
                             f"relocation source in segment {index + 1} exceeds its {length}-byte segment"
                         )
+                    target_flags = self.data[q + 1]
+                    if target_flags & self.RELOCATION_ADDITIVE:
+                        chain_sites = [source_offset]
+                    else:
+                        chain_sites = []
+                        chain_offset = source_offset
+                        seen_chain_offsets: set[int] = set()
+                        while True:
+                            if chain_offset in seen_chain_offsets:
+                                raise NEFormatError(
+                                    f"cyclic relocation chain in segment {index + 1} at 0x{chain_offset:04X}"
+                                )
+                            if chain_offset + 2 > length:
+                                raise NEFormatError(
+                                    f"relocation chain in segment {index + 1} exceeds its {length}-byte segment"
+                                )
+                            seen_chain_offsets.add(chain_offset)
+                            chain_sites.append(chain_offset)
+                            next_offset = _u16(segment_data, chain_offset, "relocation-chain link")
+                            if next_offset == 0xFFFF:
+                                break
+                            if next_offset >= length:
+                                raise NEFormatError(
+                                    f"relocation chain in segment {index + 1} points outside the segment "
+                                    f"at 0x{next_offset:04X}"
+                                )
+                            chain_offset = next_offset
                     relocations.append(
                         {
                             "source_type": source_type,
-                            "target_flags": self.data[q + 1],
+                            "target_flags": target_flags,
                             "source_offset": source_offset,
                             "target1": _u16(self.data, q + 4, "relocation target1"),
                             "target2": _u16(self.data, q + 6, "relocation target2"),
+                            "source_width": source_width,
+                            "source_type_known": source_address_type in self.RELOCATION_WIDTHS,
+                            "chain_sites": tuple(chain_sites),
                         }
                     )
             result.append(
@@ -339,25 +374,39 @@ class NEImage:
             return ()
         raise NEFormatError(f"unterminated {label} table")
 
-    def _read_entry_table(self) -> tuple[tuple[EntryPoint, ...], bool]:
+    def _read_entry_table(self) -> tuple[tuple[EntryPoint, ...], frozenset[int], bool]:
         if self.entry_table_length == 0:
-            return (), True
+            return (), frozenset(), True
         if self.entry_table_offset < self.HEADER_SIZE:
             raise NEFormatError("NE entry table overlaps the NE header")
         start = self._relative(self.entry_table_offset, self.entry_table_length, "NE entry table")
         end = start + self.entry_table_length
         entries: list[EntryPoint] = []
+        constant_ordinals: set[int] = set()
         ordinal = 1
         pos = start
         while pos < end:
             count = self.data[pos]
             pos += 1
             if count == 0:
-                return tuple(entries), True
+                return tuple(entries), frozenset(constant_ordinals), True
             if pos >= end:
                 raise NEFormatError("truncated NE entry-table bundle")
             segment_number = self.data[pos]
             pos += 1
+            if segment_number == 0:
+                # An unused bundle reserves ordinals but contains no entry records.
+                ordinal += count
+                continue
+            if segment_number == 0xFE:
+                # Constant bundles contain flags and a WORD value per ordinal.
+                if pos + count * 3 > end:
+                    raise NEFormatError("truncated constant NE entry-table bundle")
+                for _ in range(count):
+                    constant_ordinals.add(ordinal)
+                    ordinal += 1
+                    pos += 3
+                continue
             if segment_number == 0xFF:
                 # A movable bundle stores flags, a two-byte INT 3Fh marker,
                 # an 8-bit segment number, and a 16-bit offset per entry.
@@ -373,10 +422,6 @@ class NEImage:
                     ordinal += 1
                     pos += 6
                 continue
-            if segment_number in (0, 0xFE):
-                # These exceptional bundles use linker-specific records. Preserve
-                # the known roots and report incomplete table reachability.
-                return tuple(entries), False
             if segment_number > self.segment_count:
                 raise NEFormatError(f"entry bundle refers to invalid segment {segment_number}")
             for _ in range(count):
@@ -387,7 +432,7 @@ class NEImage:
                 entries.append(EntryPoint(ordinal, segment_number, offset, "entry table"))
                 ordinal += 1
                 pos += 3
-        return tuple(entries), False
+        return tuple(entries), frozenset(constant_ordinals), False
 
     def exports(self) -> tuple[dict[str, int], set[int], bool]:
         by_name: dict[str, int] = {}
@@ -398,6 +443,7 @@ class NEImage:
                 ordinals.add(ordinal)
         for entry in self.entry_points:
             ordinals.add(entry.ordinal)
+        ordinals.update(self.constant_entry_ordinals)
         complete = self.entry_table_complete
         return by_name, ordinals, complete
 
@@ -463,44 +509,75 @@ def _read_api_directory(path: Path) -> tuple[dict[str, tuple[dict[str, int], set
     return modules, warnings
 
 
-def _opcode_after_prefix(insn: Any) -> int | None:
-    prefixes = {0xF0, 0xF2, 0xF3, 0x26, 0x2E, 0x36, 0x3E, 0x64, 0x65, 0x66, 0x67}
-    for byte in insn.bytes:
-        if byte not in prefixes:
-            return byte
-    return None
+_X86_PREFIXES = {0xF0, 0xF2, 0xF3, 0x26, 0x2E, 0x36, 0x3E, 0x64, 0x65, 0x66, 0x67}
+_8086_MNEMONICS = {
+    "aaa", "aad", "aam", "aas", "adc", "add", "and", "call", "cbw", "clc", "cld", "cli",
+    "cmc", "cmp", "cmpsb", "cmpsw", "cwd", "daa", "das", "dec", "div", "lcall", "ljmp",
+    "esc", "hlt", "idiv", "imul", "in", "inc", "int", "into", "iret", "ja", "jae", "jb",
+    "jbe", "jc", "jcxz", "je", "jg", "jge", "jl", "jle", "jna", "jnae", "jnb", "jnbe",
+    "jnc", "jne", "jng", "jnge", "jnl", "jnle", "jno", "jnp", "jns", "jnz", "jo", "jp",
+    "jpe", "jpo", "js", "jz", "jmp", "lahf", "lds", "lea", "les", "lock", "lodsb", "lodsw",
+    "loop", "loope", "loopne", "loopnz", "loopz", "mov", "movsb", "movsw", "mul", "neg", "nop",
+    "not", "or", "out", "pop", "popf", "push", "pushf", "rcl", "rcr", "ret", "retf", "rol",
+    "ror", "sahf", "sal", "sar", "sbb", "scasb", "scasw", "shl", "shr", "stc", "std", "sti",
+    "stosb", "stosw", "sub", "test", "wait", "xchg", "xlat", "xlatb", "xor",
+}
+_8087_MNEMONICS = {
+    "f2xm1", "fabs", "fadd", "faddp", "fbld", "fbstp", "fchs", "fclex", "fcom", "fcomp",
+    "fcompp", "fdecstp", "fdiv", "fdivp", "fdivr", "fdivrp", "ffree", "fiadd", "ficom",
+    "ficomp", "fidiv", "fidivr", "fild", "fimul", "fincstp", "finit", "fist", "fistp", "fisub",
+    "fisubr", "fld", "fld1", "fldcw", "fldenv", "fldl2e", "fldl2t", "fldlg2", "fldln2", "fldpi",
+    "fldz", "fmul", "fmulp", "fnclex", "fninit", "fnop", "fnsave", "fnstcw", "fnstenv", "fnstsw",
+    "fpatan", "fprem", "fptan", "frndint", "frstor", "fsave", "fscale", "fsqrt", "fst", "fstcw",
+    "fstenv", "fstp", "fstsw", "fsub", "fsubp", "fsubr", "fsubrp", "ftst", "fxam", "fxch", "fyl2x",
+    "fyl2xp1",
+}
 
 
 def _cpu_requirement(insn: Any, x86_const: Any) -> tuple[str | None, str | None]:
     """Return (minimum CPU/FPU class, issue kind) for decoded instructions."""
     mnemonic = insn.mnemonic.lower()
-    opcode = _opcode_after_prefix(insn)
-    operand_override = 0x66 in insn.prefix
+    raw = bytes(insn.bytes)
+    prefix_bytes: list[int] = []
+    for byte in raw:
+        if byte not in _X86_PREFIXES:
+            opcode = byte
+            break
+        prefix_bytes.append(byte)
+    else:
+        opcode = None
+    operand_override = 0x66 in prefix_bytes
     cpu_186 = {
-        "bound", "enter", "insb", "insw", "outsb", "outsw", "pusha", "pushaw", "popa", "popaw",
+        "bound", "enter", "leave", "insb", "insw", "outsb", "outsw", "pusha", "pushaw", "popa", "popaw",
     }
     cpu_286 = {
         "arpl", "clts", "lar", "lgdt", "lidt", "lldt", "lmsw", "loadall",
-        "ltr", "sgdt", "sidt", "sldt", "smsw", "str", "lsl", "verr", "verw",
+        "ltr", "sgdt", "sidt", "sldt", "smsw", "str", "verr", "verw",
     }
     cpu_386 = {
         "bsf", "bsr", "bt", "btc", "btr", "bts", "cdq", "cwde", "iretd", "insd", "outsd",
-        "lfs", "lgs", "lsl", "movsx", "movzx", "popfd", "pushfd", "shld",
+        "lfs", "lgs", "movsx", "movzx", "popfd", "pushfd", "shld",
         "shrd", "seta", "setae", "setb", "setbe", "sete", "setg", "setge", "pushad", "popad",
         "setl", "setle", "setne", "setno", "setnp", "setns", "seto", "setp",
-        "sets", "lar", "lsl",
+        "sets",
     }
     cpu_486 = {"bswap", "cmpxchg", "invd", "invlpg", "wbinvd", "xadd"}
     cpu_pentium = {"cpuid", "rdmsr", "rdtsc", "wrmsr"}
-    if mnemonic.startswith("f") and mnemonic not in {"fail"}:
+    if mnemonic in _8087_MNEMONICS:
         return "8087", "8087 coprocessor instruction; Windows software emulation needs runtime validation"
+    if mnemonic.startswith("f") and mnemonic != "fail":
+        return "UNKNOWN", f"unclassified coprocessor instruction family {mnemonic!r}"
     # Capstone 5.0.7 reports 16-bit-mode opcode 98h/99h using their 32-bit
     # mnemonic aliases. On 8086, CBW/CWD are the unprefixed forms; only 66h
     # changes them to CWDE/CDQ (and therefore requires a 386).
     if opcode in {0x98, 0x99} and not operand_override:
         return None, None
-    if any(byte in (0x66, 0x67) for byte in insn.prefix):
+    if any(byte in (0x64, 0x65) for byte in prefix_bytes):
+        return "80386", "FS/GS segment override is newer than 8086/8088"
+    if any(byte in (0x66, 0x67) for byte in prefix_bytes):
         return "80386", "operand/address-size override is newer than 8086/8088"
+    if opcode == 0x0F and len(raw) > len(prefix_bytes) + 1:
+        return "80286", "0F escape instruction family is newer than 8086/8088"
     if mnemonic in cpu_186:
         return "80186", "instruction is newer than 8086/8088"
     if mnemonic in cpu_286:
@@ -511,6 +588,8 @@ def _cpu_requirement(insn: Any, x86_const: Any) -> tuple[str | None, str | None]
         return "80486", "instruction is newer than 8086/8088"
     if mnemonic in cpu_pentium:
         return "Pentium", "instruction is newer than 8086/8088"
+    if mnemonic == "int1":
+        return "UNKNOWN", "undocumented INT1 opcode family is not classified for 8088"
     if mnemonic == "push" and len(insn.operands) == 1 and insn.operands[0].type == x86_const.X86_OP_IMM:
         return "80186", "immediate PUSH is newer than 8086/8088"
     if mnemonic == "imul" and len(insn.operands) == 3:
@@ -525,7 +604,32 @@ def _cpu_requirement(insn: Any, x86_const: Any) -> tuple[str | None, str | None]
                 return "80386", f"register {name} is newer than 8086/8088"
     if mnemonic in {"ud2", "sysenter", "sysexit", "syscall", "sysret"}:
         return "80386", "instruction is newer than 8086/8088"
-    return None, None
+    prefix_parts = mnemonic.split(maxsplit=1)
+    if (
+        len(prefix_parts) == 2
+        and prefix_parts[0] in {"rep", "repe", "repne", "repnz", "repz"}
+        and prefix_parts[1] in _8086_MNEMONICS
+    ):
+        return None, None
+    if mnemonic in _8086_MNEMONICS:
+        return None, None
+    return "UNKNOWN", f"Capstone decoded unclassified instruction family {mnemonic!r}"
+
+
+def _operation_bytes(insn: Any) -> set[int]:
+    """Return raw prefix/opcode/ModRM positions that define the instruction family."""
+    raw = bytes(insn.bytes)
+    prefix_count = 0
+    while prefix_count < len(raw) and raw[prefix_count] in _X86_PREFIXES:
+        prefix_count += 1
+    if prefix_count >= len(raw):
+        return set(range(len(raw)))
+    opcode_length = 2 if raw[prefix_count] == 0x0F and prefix_count + 1 < len(raw) else 1
+    end = prefix_count + opcode_length
+    modrm_offset = getattr(insn, "modrm_offset", 0)
+    if modrm_offset:
+        end = max(end, modrm_offset + 1)
+    return set(range(end))
 
 
 def _disassemble_reachable(image: NEImage) -> dict[str, Any]:
@@ -538,11 +642,22 @@ def _disassemble_reachable(image: NEImage) -> dict[str, Any]:
     decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_16)
     decoder.detail = True
     unsupported: list[dict[str, Any]] = []
+    instruction_uncertainties: list[dict[str, Any]] = []
+    fixup_uncertainties: list[dict[str, Any]] = []
+    import_fixup_instruction_count = 0
     coprocessor: list[dict[str, Any]] = []
     decode_failures: list[dict[str, Any]] = []
     unresolved_edges: list[dict[str, Any]] = []
     decoded: set[tuple[int, int]] = set()
     covered: dict[int, set[int]] = {}
+    fixups_by_site: dict[int, dict[int, list[dict[str, Any]]]] = {}
+    for segment in image.segments:
+        sites: dict[int, list[dict[str, Any]]] = {}
+        for relocation in segment.relocations:
+            for site in relocation["chain_sites"]:
+                sites.setdefault(site, []).append(relocation)
+        fixups_by_site[segment.number] = sites
+    uncertain_instruction_keys: set[tuple[int, int]] = set()
     roots = image.code_roots()
     valid_roots: list[EntryPoint] = []
 
@@ -588,6 +703,48 @@ def _disassemble_reachable(image: NEImage) -> dict[str, Any]:
                         {"segment": root.segment, "offset": address, "reason": "instruction overlaps another decode"}
                     )
                     break
+                affecting_sites = sorted(instruction_bytes.intersection(fixups_by_site[root.segment]))
+                imported_fixup_sites = [
+                    site for site in affecting_sites
+                    if all((fixup["target_flags"] & 0x03) in (1, 2)
+                           for fixup in fixups_by_site[root.segment][site])
+                ]
+                unresolved_fixup_sites = [site for site in affecting_sites if site not in imported_fixup_sites]
+                if affecting_sites:
+                    operation_sites = sorted(
+                        address + position
+                        for position in _operation_bytes(instruction)
+                        if address + position in affecting_sites
+                    )
+                    if not operation_sites and not unresolved_fixup_sites:
+                        import_fixup_instruction_count += 1
+                    elif key not in uncertain_instruction_keys:
+                        uncertain_instruction_keys.add(key)
+                        fixup_uncertainties.append(
+                            {
+                                "segment": root.segment,
+                                "offset": address,
+                                "instruction": instruction.mnemonic,
+                                "operands": instruction.op_str,
+                                "fixup_sites": affecting_sites,
+                                "unresolved_fixup_sites": unresolved_fixup_sites,
+                                "opcode_or_modrm_sites": operation_sites,
+                                "reason": (
+                                    "NE relocation changes opcode or ModRM bytes; instruction decode is unreliable"
+                                    if operation_sites else
+                                    "internal or OS fixup changes an immediate or displacement operand; its value is not final"
+                                ),
+                            }
+                        )
+                    if operation_sites:
+                        unresolved_edges.append(
+                            {
+                                "segment": root.segment,
+                                "offset": address,
+                                "kind": "NE relocation affects opcode or ModRM bytes",
+                            }
+                        )
+                        break
                 bytes_seen.update(instruction_bytes)
 
                 cpu, reason = _cpu_requirement(instruction, x86_const)
@@ -596,6 +753,8 @@ def _disassemble_reachable(image: NEImage) -> dict[str, Any]:
                            "operands": instruction.op_str, "minimum_cpu": cpu, "reason": reason}
                     if cpu == "8087":
                         coprocessor.append(row)
+                    elif cpu == "UNKNOWN":
+                        instruction_uncertainties.append(row)
                     else:
                         unsupported.append(row)
 
@@ -605,12 +764,19 @@ def _disassemble_reachable(image: NEImage) -> dict[str, Any]:
                 if operands and operands[0].type == x86_const.X86_OP_IMM:
                     direct_target = int(operands[0].imm) & 0xFFFF
                 next_offset = address + instruction.size
+                control_operand_relocated = bool(affecting_sites)
 
                 if mnemonic in {"ret", "retf", "iret", "iretd", "hlt", "ud2"}:
                     break
                 if mnemonic in {"jmp", "ljmp"}:
                     if mnemonic == "jmp" and direct_target is not None:
-                        queue.append(direct_target)
+                        if control_operand_relocated:
+                            unresolved_edges.append(
+                                {"segment": root.segment, "offset": address,
+                                 "kind": "relocated unconditional-branch target"}
+                            )
+                        else:
+                            queue.append(direct_target)
                     elif mnemonic == "jmp":
                         unresolved_edges.append(
                             {"segment": root.segment, "offset": address, "kind": "indirect jump"}
@@ -621,7 +787,7 @@ def _disassemble_reachable(image: NEImage) -> dict[str, Any]:
                         )
                     break
                 if mnemonic.startswith("j") or mnemonic in {"loop", "loope", "loopne", "loopnz", "loopz"}:
-                    if direct_target is not None:
+                    if direct_target is not None and not control_operand_relocated:
                         if direct_target < len(segment.data):
                             queue.append(direct_target)
                         else:
@@ -631,16 +797,44 @@ def _disassemble_reachable(image: NEImage) -> dict[str, Any]:
                             )
                     else:
                         unresolved_edges.append(
-                            {"segment": root.segment, "offset": address, "kind": "indirect conditional jump"}
+                            {
+                                "segment": root.segment,
+                                "offset": address,
+                                "kind": (
+                                    "relocated conditional-branch target"
+                                    if control_operand_relocated else "indirect conditional jump"
+                                ),
+                            }
                         )
                     offset = next_offset
                     continue
                 if mnemonic in {"call", "lcall"}:
                     if mnemonic == "call" and direct_target is not None:
-                        queue.append(direct_target)
+                        if control_operand_relocated:
+                            unresolved_edges.append(
+                                {
+                                    "segment": root.segment,
+                                    "offset": address,
+                                    "kind": (
+                                        "imported API call target"
+                                        if imported_fixup_sites and not unresolved_fixup_sites
+                                        else "relocated call target"
+                                    ),
+                                }
+                            )
+                        else:
+                            queue.append(direct_target)
                     else:
                         unresolved_edges.append(
-                            {"segment": root.segment, "offset": address, "kind": "indirect or far call"}
+                            {
+                                "segment": root.segment,
+                                "offset": address,
+                                "kind": (
+                                    "imported API far call"
+                                    if imported_fixup_sites and not unresolved_fixup_sites
+                                    else "indirect or far call"
+                                ),
+                            }
                         )
                 if next_offset >= len(segment.data):
                     break
@@ -652,7 +846,10 @@ def _disassemble_reachable(image: NEImage) -> dict[str, Any]:
         "reachable_instruction_count": len(decoded),
         "code_bytes_reached": sum(len(x) for x in covered.values()),
         "unsupported_instructions": unsupported,
+        "instruction_classification_uncertainties": instruction_uncertainties,
         "coprocessor_instructions": coprocessor,
+        "relocation_affected_instructions": fixup_uncertainties,
+        "import_fixup_instruction_count": import_fixup_instruction_count,
         "decode_failures": decode_failures,
         "unresolved_control_flow": unresolved_edges,
         "entry_table_complete": image.entry_table_complete,
@@ -691,8 +888,12 @@ def _api_statuses(image: NEImage, api_dir: Path | None) -> tuple[list[dict[str, 
             }
             if item.kind == "name":
                 present = item.name.upper() in names
+                row["resolved_names"] = [item.name]
             else:
                 present = item.ordinal in ordinals
+                row["resolved_names"] = sorted(
+                    name for name, exported_ordinal in names.items() if exported_ordinal == item.ordinal
+                )
             if present:
                 row["status"] = "AVAILABLE_IN_REFERENCE"
             elif exports_complete:
@@ -706,13 +907,54 @@ def _api_statuses(image: NEImage, api_dir: Path | None) -> tuple[list[dict[str, 
     return statuses, missing, all_verified
 
 
-def _runtime_evidence(path: Path | None) -> tuple[bool, str | None]:
+def _runtime_evidence(path: Path | None, data: bytes, source: str) -> tuple[bool, str | None]:
     if path is None:
         return False, None
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        raw = path.read_bytes()
+    except OSError as exc:
         return False, f"runtime evidence could not be read: {exc}"
+    if len(raw) > 64 * 1024:
+        return False, "runtime evidence exceeds the 64 KiB limit"
+
+    def unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        result: dict[str, Any] = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"duplicate runtime-evidence key: {key}")
+            result[key] = value
+        return result
+
+    try:
+        value = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_object)
+    except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+        return False, f"runtime evidence is invalid JSON: {exc}"
+    if not isinstance(value, dict):
+        return False, "runtime evidence must be a JSON object"
+    if set(value) != {"schema", "result", "image", "target", "actions"}:
+        return False, "runtime evidence does not match the required schema"
+    if value.get("schema") != "w31check-runtime-v1":
+        return False, "runtime evidence schema version is missing or unsupported"
+    if value.get("result") != "PASS":
+        return False, "runtime evidence result is not PASS"
+
+    image = value.get("image")
+    if not isinstance(image, dict) or set(image) != {"filename", "size_bytes", "sha256"}:
+        return False, "runtime evidence lacks an exact image identity"
+    expected_image = {
+        "filename": Path(source).name,
+        "size_bytes": len(data),
+        "sha256": hashlib.sha256(data).hexdigest(),
+    }
+    if (
+        type(image.get("filename")) is not str
+        or type(image.get("size_bytes")) is not int
+        or type(image.get("sha256")) is not str
+        or not re.fullmatch(r"[0-9a-f]{64}", image["sha256"])
+        or image != expected_image
+    ):
+        return False, "runtime evidence image identity does not match the analyzed input"
+
     target = value.get("target", {})
     actions = value.get("actions", {})
     required_target = {
@@ -720,10 +962,13 @@ def _runtime_evidence(path: Path | None) -> tuple[bool, str | None]:
         "display": "320x200x16",
     }
     required_actions = {"input": True, "representative_task": True, "redraw": True, "clean_exit": True}
-    if value.get("result") != "PASS":
-        return False, "runtime evidence result is not PASS"
-    if any(target.get(key) != expected for key, expected in required_target.items()):
+    if not isinstance(target, dict) or set(target) != set(required_target):
+        return False, "runtime evidence target is incomplete or has unsupported fields"
+    if any(type(target.get(key)) is not type(expected) or target[key] != expected
+           for key, expected in required_target.items()):
         return False, "runtime evidence target does not match Windows 3.0 real mode on 8088/640 KB/320x200x16"
+    if not isinstance(actions, dict) or set(actions) != set(required_actions):
+        return False, "runtime evidence actions are incomplete or have unsupported fields"
     if any(actions.get(key) is not expected for key, expected in required_actions.items()):
         return False, "runtime evidence lacks input, representative-task, redraw, or clean-exit proof"
     return True, None
@@ -746,9 +991,13 @@ def analyze_bytes(
         },
         key=str.upper,
     )
+    dynamic_names = {"GETPROCADDRESS", "LOADLIBRARY", "LOADLIBRARYA", "LOADLIBRARYW"}
     dynamic_import_resolution = any(
-        item.name and item.name.upper() in {"GETPROCADDRESS", "LOADLIBRARY", "LOADLIBRARYA", "LOADLIBRARYW"}
-        for item in image.imports
+        item.name and item.name.upper() in dynamic_names for item in image.imports
+    ) or any(
+        name.upper() in dynamic_names
+        for status in api_statuses if "import" in status
+        for name in status.get("resolved_names", [])
     )
     has_win87em = any(module.upper() == "WIN87EM" for module in image.modules)
 
@@ -771,12 +1020,21 @@ def analyze_bytes(
     if missing_apis:
         static_blockers.append("import(s) missing from supplied Windows 3.0 API reference: " + ", ".join(missing_apis))
 
-    runtime_pass, runtime_error = _runtime_evidence(runtime_evidence)
+    runtime_pass, runtime_error = _runtime_evidence(runtime_evidence, data, source)
     if static_blockers:
         verdict = "BLOCKED"
     elif runtime_pass:
         verdict = "COMPATIBLE"
-    elif not apis_verified or dynamic_import_resolution or disassembly["decode_failures"] or not disassembly["roots"]:
+    elif runtime_evidence is not None:
+        verdict = "UNKNOWN"
+    elif (
+        not apis_verified
+        or dynamic_import_resolution
+        or disassembly["decode_failures"]
+        or disassembly["instruction_classification_uncertainties"]
+        or disassembly["relocation_affected_instructions"]
+        or not disassembly["roots"]
+    ):
         verdict = "UNKNOWN"
     elif disassembly["coprocessor_instructions"] and not has_win87em:
         verdict = "UNKNOWN"
@@ -833,7 +1091,7 @@ def analyze_bytes(
                               "accepted": runtime_pass, "error": runtime_error},
         "verdict": verdict,
         "verdict_notes": {
-            "compatible": "requires explicit passing runtime evidence for input, representative task, redraw, and clean exit",
+            "compatible": "requires explicit passing runtime evidence bound to this exact image and target run conditions",
             "candidate": "static checks found no known blocker; indirect control flow and code outside reachable roots remain incomplete",
             "blocked": "a specific static incompatibility was proven",
             "unknown": "static evidence or target API reference is insufficient",
@@ -877,15 +1135,21 @@ def render_markdown(result: dict[str, Any]) -> str:
     if not module_rows:
         lines.append("- No module references or imports were recorded.")
     status_by_import = {
-        (item["module"].upper(), item["import"]): item["status"] for item in import_rows
+        (item["module"].upper(), item["import"]): (item["status"], item.get("resolved_names", []))
+        for item in import_rows
     }
     lines.extend(["", "## Imports and Windows 3.0 API comparison", ""])
     for item in result["imports"]:
         symbol = item["name"] if item["kind"] == "name" else f"#{item['ordinal']}"
-        status = status_by_import.get((item["module"].upper(), symbol), "UNVERIFIED")
+        status, resolved_names = status_by_import.get((item["module"].upper(), symbol), ("UNVERIFIED", []))
+        resolved_suffix = (
+            f" (export-name mapping: {', '.join(resolved_names)})"
+            if item["kind"] == "ordinal" and resolved_names else ""
+        )
         lines.append(
             f"- `{item['module']}!{symbol}`: {status} "
             f"(segment {item['segment']}:{item['source_offset']}, relocation type {item['source_type']})"
+            f"{resolved_suffix}"
         )
     if not result["imports"]:
         lines.append("- No import relocations were recorded.")
@@ -922,6 +1186,11 @@ def render_markdown(result: dict[str, Any]) -> str:
     lines.append(f"- Entry table complete: {cpu['entry_table_complete']}")
     lines.append(f"- Unresolved control-flow edges: {len(cpu['unresolved_control_flow'])}")
     lines.append(f"- Decode failures: {len(cpu['decode_failures'])}")
+    lines.append(f"- Relocation-affected instructions: {len(cpu['relocation_affected_instructions'])}")
+    lines.append(f"- Instructions with imported-target fixups: {cpu['import_fixup_instruction_count']}")
+    lines.append(
+        f"- Unclassified instruction families: {len(cpu['instruction_classification_uncertainties'])}"
+    )
     lines.append("- Static analysis is not a runtime compatibility result.")
     if result["static_blockers"]:
         lines.extend(["", "## Proven blockers", ""])
