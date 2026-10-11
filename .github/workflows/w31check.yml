@@ -1,0 +1,56 @@
+name: W31CHECK synthetic tests
+
+on:
+  pull_request:
+    paths:
+      - 'tools/W31CHECK/**'
+      - '.github/workflows/w31check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/W31CHECK/**'
+      - '.github/workflows/w31check.yml'
+  workflow_dispatch:
+
+# Public source only; no token is passed to commands, and no private media or secrets are used.
+permissions: {}
+
+concurrency:
+  group: w31check-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  synthetic-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      W31CHECK_REAL_APPS_DIR: ''
+      W31CHECK_WINDOWS_30_API_DIR: ''
+      W31CHECK_KWAJ_APPS_DIR: ''
+    steps:
+      - name: Check out exact public source without credentials
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git sparse-checkout init --no-cone
+          printf '/tools/W31CHECK/\n' | git sparse-checkout set --no-cone --stdin
+          git checkout --detach --force FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+
+      - name: Install pinned analyzer dependency
+        run: |
+          python3 -m venv "$RUNNER_TEMP/w31check-python"
+          "$RUNNER_TEMP/w31check-python/bin/python" -m pip install \
+            --disable-pip-version-check --no-input \
+            -r tools/W31CHECK/requirements.txt
+
+      - name: Run W31CHECK tests
+        run: >-
+          "$RUNNER_TEMP/w31check-python/bin/python" -m unittest discover
+          -s tools/W31CHECK -p 'test_*.py' -v
