@@ -111,8 +111,9 @@ python -m unittest discover -s tools/W31CHECK -p "test_*.py" -v
 The current suite contains 51 tests. GitHub Actions runs the same command with
 all three private-media paths explicitly empty, so the synthetic tests run and
 the opt-in media checks are skipped. CI installs the pinned Capstone dependency
-from `requirements.txt` in a temporary environment; it uses no private media,
-secrets, or repository token.
+from `requirements.txt` in a temporary environment. It fetches public source
+anonymously, passes no token to commands, and uses no private media or secrets;
+the runner's platform token retains only GitHub's default metadata-read access.
 
 To decode one local Windows NE file, create a private destination directory
 first and choose a new output name:

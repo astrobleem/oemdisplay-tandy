@@ -12,7 +12,7 @@ on:
       - '.github/workflows/w31check.yml'
   workflow_dispatch:
 
-# Public source only; no repository token, private media, or secrets.
+# Public source only; no token is passed to commands, and no private media or secrets are used.
 permissions: {}
 
 concurrency:
