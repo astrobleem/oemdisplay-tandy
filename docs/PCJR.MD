@@ -1,9 +1,11 @@
 # IBM PCjr driver proposal (TNDYJR): first probe results
 
-Status: **proposal plus probes. No Windows driver binary exists.** Nothing in
-this folder changes the shipped TANDY88/TR5 drivers, the WINXT disk, the
-accepted hashes or the Tandy RESERVE helper. Every result below is DOSBox /
-DOSBox-X emulation; no physical PCjr has run any of it.
+Status: **a PCjr driver candidate, TNDYJR.DRV, now builds through the pinned
+BUILD88 pipeline and passes its instruction, REP-prefix and link audits. It
+has not run under Windows yet.** Nothing here changes the shipped TANDY88/TR5
+drivers, the WINXT disk, the accepted hashes or the Tandy RESERVE helper.
+Every result below is DOSBox / DOSBox-X emulation; no physical PCjr has run
+any of it.
 
 ## Why the PCjr is close
 
@@ -11,8 +13,9 @@ The Tandy 1000 was built as a PCjr clone, and the current 320x200x16 driver
 already has the right shape for it:
 
 - It uses BIOS mode 09h, which the PCjr introduced (with 08h and 0Ah).
-- All drawing goes to a private four-plane shadow; only `FlushRows` in
-  `V1.ASM` and two cursor routines in `TCURSOR.ASM` touch video memory.
+- All drawing goes to a private four-plane shadow; only the flush routines
+  (one site in raw `V1.ASM`, four after TR5 staging) and two cursor routines
+  in `TCURSOR.ASM` touch video memory.
 - The renderer never programs the video gate array directly, so the
   PCjr/Tandy difference in palette-register data ports (PCjr writes data
   to 3DAh; Tandy uses 3DEh) does not affect it.
@@ -77,14 +80,41 @@ and could be "protecting" the page itself. Results:
 | PCjr after `JRFREET` frees that block (emulator-only test) | FAIL, exit 1 | FAIL, exit 1 |
 | Tandy control | FAIL (not a PCjr), exit 1 | FAIL, exit 1 |
 
-**JRPATCH.PY** - stages `V1JR.ASM` and `TCURJR.ASM` from the current sources
-with three edits and refuses to write anything if any edit does not match
-exactly: a public `video_seg` word (default B800h); in `TEnable`, after INT
-10h mode 09h, on a PCjr only, `video_seg = (40:8Ah & 6) * 400h`; and the
-three VRAM sites load ES from `video_seg`. `FlushRows` reads it before DS
-switches to the shadow segment. On non-PCjr machines the staged code takes
-the same B800h path as today. Run `python3 src/pcjr/JRPATCH.PY --diff` to
-review; `--check` is a source self-test only.
+**JRPATCH.PY / BUILDJR.PY** - the driver change. Three edits, each of which
+must match an exact count or nothing is written:
+
+1. a public `video_seg` word (default B800h) in the driver Data segment;
+2. in `TEnable`, after INT 10h mode 09h, on a PCjr only,
+   `video_seg = (40:8Ah & 6) * 400h`;
+3. every VRAM site loads ES with `mov ax,seg video_seg / mov es,ax /
+   mov es,es:video_seg` instead of `mov ax,0B800h / mov es,ax`. That is the
+   same `seg` idiom the renderer already uses for `shadow_bits`, does not
+   depend on DS, and clobbers only AX as before.
+
+After all TR5 port steps the staged renderer has **four** VRAM sites (full
+flush, retained-cursor rows, retained-cursor columns, column flush) and the
+cursor has two; the raw `V1.ASM` has only one, which is why the build applies
+the edits to the staged sources, not to `src/tandysw`. On non-PCjr machines
+`video_seg` stays B800h, so the drawing path is today's.
+
+`BUILDJR.PY` runs the view's unchanged `BUILD88.PY` for 320x200x16 and
+interposes only between staging and the first assembly:
+
+    python3 tools/BUILDDEPS/DEPS.PY view ... --profile display --out <view>
+    python3 src/pcjr/BUILDJR.PY --repo <view> --dosbox <dosbox-x> --out <fresh>
+
+Result (`pcjr/JRRES.JSN`, full BUILD88 report `pcjr/JRBUILD.JSN`):
+
+    TNDYJR.DRV  54,976 bytes
+    SHA256 a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4
+
+Two independent builds gave the same hash. As a control, the same pipeline
+and emulator (DOSBox-X 2024.03.01 Ubuntu package, not the 2026 nightly in
+other records) reproduced the accepted TR5 320x200x16 driver exactly:
+54,896 bytes, `33f681b0...6cef61`, matching `docs/TRIAL5/BUILDS.JSN`. The
+PCjr build is 80 bytes larger. The binary is not committed; rebuild it or
+take it from the session hand-off. The listing confirms the 8086 encodings
+(`26: 8E 06` for the ES-override load, `D3 E0` for `shl ax,cl`).
 
 **JRRUN.PY** reproduces the emulator matrix with an explicit emulator path:
 
@@ -120,10 +150,10 @@ anything ships. Hashes of the tested JWasm builds:
 2. Decide whether JRGUARD should grow into a reserving helper (RESERVE-style,
    last-fit allocation of exactly 1800h-1FFFh) or keep requiring an existing
    PCjr memory driver. That depends on what item 1 finds.
-3. Build the staged sources with the pinned DDK/MASM through a BUILD88
-   profile under a new 8.3 name (proposed `TNDYJR.DRV`), then the usual
-   CPU/memory/framebuffer, cursor-edge, ROP, text and paint/save/reopen tests.
-   Windows 3.0 on DOSBox-X `machine=pcjr` is the first runtime target.
+3. Runtime: Windows 3.0 real mode on DOSBox-X `machine=pcjr` with owned
+   media, display.drv=TNDYJR.DRV, launched through JRGUARD; then the usual
+   CPU/memory/framebuffer, cursor-edge, ROP, text and paint/save/reopen
+   tests. The build itself is done (above).
 4. Keyboard, mouse and speed: the PCjr's keyboard reaches INT 9 through its
    BIOS translation, it has no DMA controller, and RAM in the low 128KB is
    slowed by video contention. Each needs its own Windows check.

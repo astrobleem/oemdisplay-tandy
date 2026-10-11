@@ -14,7 +14,7 @@ driver, not that one never existed; corrections are welcome.
 | Rank | Hardware | Hardware can do | Windows used | Fit with this codebase |
 | --- | --- | --- | --- | --- |
 | 1 | IBM PCjr | 320x200x16, 640x200x4 | CGA-class | Very high: same modes and banks; see [PCJR.MD](PCJR.MD) |
-| 2 | Plantronics ColorPlus family (ATI Graphics Solution/"Small Wonder", Paradise EGA 480 in CGA mode as in the Amstrad PC1640, some Tandy cards) | 320x200x16, 640x200x4 | CGA (no Windows driver found; GEM had 640x200x4) | High: same color depths as TR5 profiles; only the flush layout (two 16KB planes at B800h/BC00h via port 3DDh) changes, and video RAM is on the card, so no shared-RAM reservation |
+| 2 | Plantronics ColorPlus family (ATI Graphics Solution/"Small Wonder", Paradise EGA 480 in CGA mode as in the Amstrad PC1640, some Tandy cards) | 320x200x16, 640x200x4 | CGA. A community Windows 3.0/3.1 driver for 640x200x4, [WINPCP](https://github.com/cluehawk/WINPCP), is in early development; GEM had 640x200x4 | High: same color depths as TR5 profiles; only the flush layout (two 16KB planes at B800h/BC00h via port 3DDh) changes, and video RAM is on the card, so no shared-RAM reservation |
 | 3 | Tandy 1000 SL/TL/RL Video II | 640x200x16 | EX/HX-class modes at best | Medium: new 64KB linear target; see [TGA2.MD](TGA2.MD) |
 | 4 | Amstrad PC1512 | 640x200x16 (four color planes on a CGA base) | Windows up to 3.0 runs; no dedicated driver found. GEM supported the mode | Medium: the four-plane DDK shadow already matches its plane model; 640-wide shadow is 64,000 bytes |
 | 5 | Olivetti M24 / AT&T 6300 with the graphics memory expansion | 640x400 with up to 16 colors | 640x400 treated as monochrome | Low-medium: a 640x400 four-plane shadow (128,000 bytes) does not fit one real-mode segment; needs direct rendering |
@@ -35,8 +35,14 @@ B8000h as two planes (second plane normally at BC000h); you set a normal CGA
 graphics mode, then turn on the extended mode with bits 4-6 of port 3DDh.
 Because the TR5 driver already keeps a private shadow and converts on flush,
 a Plantronics profile is mostly a new flush/cursor layout plus detection.
-No Windows driver was found; software support in general was thin (CompuShow,
-GEM drivers for 640x200x4).
+Software support was thin (CompuShow, GEM drivers for 640x200x4). WINPCP
+(MIT, last commit 2026-02-07) targets 640x200x4 only; at that commit it has
+stubs and text-expansion code but no Enable, BitBlt or cursor yet, and it
+assembles as .186 (V20), so it is not 8088-safe as written. Its notes record
+the hardware facts this survey needs: 320x200x16 is BIOS mode 5 plus 3DDh =
+10h, with red/green bits at B800:0000 and blue/intensity bits at B800:4000,
+2 bits per pixel each, CGA even/odd interleave. A 320x200x16 Plantronics
+profile here would not overlap WINPCP's 640x200x4 goal.
 
 **Amstrad PC1512.** An 8MHz 8086 with a CGA-compatible chip extended to
 640x200 in 16 colors using four color planes. GEM, bundled with the machine,
