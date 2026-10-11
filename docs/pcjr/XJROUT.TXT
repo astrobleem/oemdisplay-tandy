@@ -1,0 +1,4 @@
+JRPROBE: wrote JRPROBE.TXT JRVRAM.BIN JRB800.BIN
+JRPROBE EXIT=0
+JRGUARD: OK, video page is held by an in-use DOS block.
+JRGUARD EXIT=0

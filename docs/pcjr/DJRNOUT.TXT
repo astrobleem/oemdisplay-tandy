@@ -1,0 +1,4 @@
+JRFREET EXIT=0
+JRGUARD: video page 18000h-1FFFFh is not protected from DOS.
+         Load a PCjr memory driver that reserves it, see PCJR.MD.
+JRGUARD EXIT=1

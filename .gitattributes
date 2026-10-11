@@ -60,3 +60,12 @@ tools/FLASHDISK/PUBLISH.PY -text
 tools/FLASHDISK/TESTPUB.PY -text
 
 docs/QUAL/** -text
+
+# PCjr / TGA-II groundwork and survey: CRLF, exact evidence bytes.
+src/pcjr/* -text
+src/tga2/* -text
+docs/pcjr/* -text
+docs/tga2/* -text
+docs/PCJR.MD -text
+docs/TGA2.MD -text
+docs/GAPSURV.MD -text

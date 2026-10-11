@@ -1,0 +1,27 @@
+{
+ "b800_equals_written_page": true,
+ "b800_low_16k_equals_a_page_half": true,
+ "b800_low_equals_high_16k": false,
+ "first_mismatch": null,
+ "interpretation": "Non-PCjr control: full 32KB at B800",
+ "pattern_bytes": 32000,
+ "pattern_mismatches": 0,
+ "report": {
+  "ARENA_END": "9C00",
+  "ARENA_FIRST": "017C",
+  "ARENA_OK": "01",
+  "BIOSKB": "0270",
+  "COMPLETE": "1",
+  "MODEL": "FF",
+  "MODE_AFTER": "09",
+  "MODE_BEFORE": "03",
+  "PAGE8A_AFTER": "F6",
+  "PAGE8A_BEFORE": "3F",
+  "TANDYTAG": "21",
+  "TARGET_SEG": "B800",
+  "VIDEO_IN_ARENA": "00",
+  "VIDEO_MCB": "0000",
+  "VIDEO_MCB_PARAS": "0000",
+  "VIDEO_OWNER": "FFFF"
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "pattern": "not run (window unmapped or not provably safe)",
+ "report": {
+  "ARENA_END": "9C00",
+  "ARENA_OK": "01",
+  "BIOSKB": "0270",
+  "BLOCK": "08BE",
+  "BLOCK_PARAS": "9342",
+  "C0_MODEL": "FF",
+  "C0_REV": "10",
+  "C0_SUB": "0A",
+  "COMPLETE": "1",
+  "FIRST_MAPPED_P": "FFFF",
+  "INT15C0_CF": "00",
+  "MAPPED_PARAS": "0000",
+  "MAP_INCONSISTENT": "00",
+  "MODEL": "FF",
+  "MODE_AFTER": "09",
+  "MODE_BEFORE": "03",
+  "PATTERN_RAN": "00",
+  "PORT65": "FF",
+  "SAFE_TO_WRITE": "00",
+  "TANDYTAG": "21",
+  "WINDOW_PHYS_SEG": "0000"
+ }
+}
