@@ -1,0 +1,54 @@
+[
+ {
+  "trial": "real 7.5ms bytes, 20ms gaps",
+  "expected": [
+   200,
+   120
+  ],
+  "found": [
+   [
+    200,
+    120
+   ]
+  ]
+ },
+ {
+  "trial": "real 7.5ms bytes, 20ms gaps (repeat)",
+  "expected": [
+   200,
+   120
+  ],
+  "found": [
+   [
+    200,
+    120
+   ]
+  ]
+ },
+ {
+  "trial": "30ms bytes, 20ms gaps",
+  "expected": [
+   200,
+   120
+  ],
+  "found": [
+   [
+    200,
+    120
+   ]
+  ]
+ },
+ {
+  "trial": "7.5ms bytes, 300ms gaps",
+  "expected": [
+   200,
+   120
+  ],
+  "found": [
+   [
+    175,
+    105
+   ]
+  ]
+ }
+]

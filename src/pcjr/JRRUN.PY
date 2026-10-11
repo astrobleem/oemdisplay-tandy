@@ -3,7 +3,7 @@
 
 Usage:
   python3 src/pcjr/JRRUN.PY --emu <dosbox-x|dosbox> --exe <path-to-emulator>
-      --machine <pcjr|tandy> --bin <dir with built .COM files>
+      --machine <pcjr|tandy|cga> --bin <dir with built .COM files>
       --out <new-dir> --cmd JRPROBE.COM [--cmd "JRPROBE.COM /C" ...]
 
 Each --cmd runs in order inside one guest boot from a fresh output folder
@@ -28,7 +28,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--emu", choices=["dosbox", "dosbox-x"], required=True)
     ap.add_argument("--exe", required=True)
-    ap.add_argument("--machine", choices=["pcjr", "tandy"], required=True)
+    ap.add_argument("--machine", choices=["pcjr", "tandy", "cga"], required=True)
     ap.add_argument("--bin", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--cmd", action="append", required=True)

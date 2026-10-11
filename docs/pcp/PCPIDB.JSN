@@ -1,0 +1,11 @@
+{
+ "toolchain": "pinned MASM 5.10 / LINK / DDK EXE2BIN in DOSBox-X",
+ "built": {
+  "PCPID.COM": {
+   "bytes": 399,
+   "sha256": "ecc75e483648759643884c41472977d7e15627a16669ae99af47eb5af9129b49"
+  }
+ },
+ "verdict": "PASS",
+ "problems": []
+}

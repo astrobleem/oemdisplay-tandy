@@ -3,13 +3,14 @@
 
 Usage:
   python3 src/pcjr/BUILDCOM.PY --deps <DEPS.PY materialized inputs> \
-      --dosbox <dosbox-x> --out <fresh-dir>
+      --dosbox <dosbox-x> --out <fresh-dir> [--src src/pcp/PCPID.ASM ...]
 
 Assembles each source with BIN/MASM.EXE, links with BIN/LINK.EXE and
 converts with DDK/TOOLS/EXE2BIN.EXE inside DOSBox-X, as RESERVE.PY does for
 RESERVE.COM. Fails unless every module reports exactly 0 severe errors, no
 LINK/EXE2BIN error appears and every .COM exists. BUILD.JSN records sizes
 and SHA-256. The toolchain copies are removed from the output afterwards.
+--src (repeatable) builds the named sources instead of the default list.
 """
 import argparse
 import hashlib
@@ -33,11 +34,12 @@ def main():
     ap.add_argument("--deps", type=Path, required=True)
     ap.add_argument("--dosbox", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--src", action="append", default=None)
     a = ap.parse_args()
     out = a.out.resolve()
     out.mkdir(parents=True, exist_ok=False)
     names = []
-    for src in SOURCES:
+    for src in (a.src or SOURCES):
         shutil.copyfile(ROOT / src, out / Path(src).name)
         names.append(Path(src).stem)
     for dst, rel in TOOLS.items():
