@@ -176,6 +176,8 @@ class Presenter:
             del s[2:]
 
     def blit(self, sx, sy, w, h, ddx, ddy):
+        if ddx == 0 and ddy == 0:
+            return                                       # identity copy
         rows = range(ROWS - 1, -1, -1) if ddy > 0 else range(ROWS)
         cols = range(COLS - 1, -1, -1) if ddx > 0 else range(COLS)
         for cy in rows:

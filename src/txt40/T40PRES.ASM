@@ -972,6 +972,11 @@ t40_blit proc near
     mov t40_ey,bx
     mov t40_ddx,si
     mov t40_ddy,di
+    mov ax,si
+    or ax,di
+    jnz tb_moves
+    jmp tb_done                 ; identity copy: nothing moves
+tb_moves:
     ; rows bottom-up when moving down, columns right-to-left when moving right
     xor ax,ax
     mov bx,1
