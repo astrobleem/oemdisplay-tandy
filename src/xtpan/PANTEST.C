@@ -178,6 +178,12 @@ BOOL FAR PASCAL DlgProc(HWND hdlg, unsigned msg, WORD wParam, LONG lParam)
         GetWindowRect(hdlg, &r);
         wsprintf(buf, "DIALOG rect=%d,%d,%d,%d", r.left, r.top, r.right, r.bottom);
         LogLine(buf);
+        GetWindowRect(GetDlgItem(hdlg, IDB_TOP), &r);
+        wsprintf(buf, "DLGITEM Top rect=%d,%d,%d,%d", r.left, r.top, r.right, r.bottom);
+        LogLine(buf);
+        GetWindowRect(GetDlgItem(hdlg, IDB_BOTTOM), &r);
+        wsprintf(buf, "DLGITEM Bottom rect=%d,%d,%d,%d", r.left, r.top, r.right, r.bottom);
+        LogLine(buf);
         return TRUE;
     }
     if (msg == WM_COMMAND && (wParam == IDB_TOP || wParam == IDB_BOTTOM)) {
@@ -360,6 +366,17 @@ int PASCAL WinMain(HANDLE hI, HANDLE hPrev, LPSTR lpCmd, int nShow)
         hbr[i] = CreateSolidBrush(rgb16[i]);
     wsprintf(buf, "START cmd=%s free=%lu top=%d", lpCmd, GetFreeSpace(0), PanTop());
     LogLine(buf);
+    {
+        HDC hdc = GetDC(NULL);
+        TEXTMETRIC tm;
+        GetTextMetrics(hdc, &tm);
+        ReleaseDC(NULL, hdc);
+        wsprintf(buf, "METRICS screen=%dx%d cycaption=%d cymenu=%d cyframe=%d tmheight=%d tmextlead=%d",
+                 GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN),
+                 GetSystemMetrics(SM_CYCAPTION), GetSystemMetrics(SM_CYMENU),
+                 GetSystemMetrics(SM_CYFRAME), tm.tmHeight, tm.tmExternalLeading);
+        LogLine(buf);
+    }
 
     if (!hPrev) {
         wc.style = CS_HREDRAW | CS_VREDRAW;
@@ -411,11 +428,29 @@ int PASCAL WinMain(HANDLE hI, HANDLE hPrev, LPSTR lpCmd, int nShow)
         AppendMenu(hPop, MF_STRING, 205, "Epsilon");
         AppendMenu(hMenu, MF_POPUP, hPop, "Pick");
         hMain = Make("Menu below 200", style, 0, 230, 240, 100, hMenu);
+        {
+            RECT wr;
+            POINT o;
+            GetWindowRect(hMain, &wr);
+            o.x = 0;
+            o.y = 0;
+            ClientToScreen(hMain, &o);
+            wsprintf(buf, "MENUWIN rect=%d,%d,%d,%d client=%d,%d", wr.left, wr.top, wr.right, wr.bottom, o.x, o.y);
+            LogLine(buf);
+        }
     } else if (Is(lpCmd, "EDIT")) {
         nMode = 5;
         hMain = Make("Edit across 200", style, 0, 100, 320, 270, NULL);
         hEdit = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | ES_MULTILINE,
                              0, 0, 312, 240, hMain, (HMENU)1, hI, NULL);
+        {
+            POINT o;
+            o.x = 0;
+            o.y = 0;
+            ClientToScreen(hEdit, &o);
+            wsprintf(buf, "EDITORG x=%d y=%d", o.x, o.y);
+            LogLine(buf);
+        }
         buf[0] = 0;
         for (i = 1; i <= 30; i++) {
             wsprintf(buf + lstrlen(buf), "Line %02d\r\n", i);
