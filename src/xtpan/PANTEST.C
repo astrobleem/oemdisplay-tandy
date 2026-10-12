@@ -9,7 +9,8 @@
  *       in the rightmost 32 columns 12 + ((y+off)/8)/16 mod 4, so every
  *       8-row band of the 400 rows is unique. HIDE hides the pointer.
  *       Keys: S = ScrollWindow up 56 rows (screen-to-screen copy, the
- *       exposed strip repainted with off += 56); R = repaint all; Q = quit.
+ *       exposed strip repainted with off += 56); R = repaint all; P = log
+ *       the pointer position, viewport top and offset; Q = quit.
  *       Clicks are logged in desktop coordinates.
  *   PANTEST DIALOG   a modal dialog about 300 pixels tall (DialogBoxIndirect)
  *       with buttons "Top" near its top and "Bottom" near its bottom.
@@ -264,6 +265,13 @@ long FAR PASCAL WndProc(HWND hwnd, unsigned msg, WORD wParam, LONG lParam)
             ScrollWindow(hwnd, 0, -56, NULL, NULL);
             UpdateWindow(hwnd);
             wsprintf(buf, "SCROLL off=%d top=%d", nOff, PanTop());
+            LogLine(buf);
+            return 0;
+        }
+        if (wParam == 'p' || wParam == 'P') {
+            POINT cur;
+            GetCursorPos(&cur);
+            wsprintf(buf, "CURSOR x=%d y=%d top=%d off=%d", cur.x, cur.y, PanTop(), nOff);
             LogLine(buf);
             return 0;
         }

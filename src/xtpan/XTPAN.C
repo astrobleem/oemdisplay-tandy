@@ -73,6 +73,18 @@ static int PanEscape(int want)
     return nTop;
 }
 
+/* After a pan the pointer did not cause (keys, follow), keep the pointer
+ * inside the viewport so that what is clicked is always what is shown. */
+static void KeepPointer(void)
+{
+    POINT pt;
+    GetCursorPos(&pt);
+    if (pt.y < nTop)
+        SetCursorPos(pt.x, nTop + nEdge);
+    else if (pt.y >= nTop + nView)
+        SetCursorPos(pt.x, nTop + nView - 1 - nEdge);
+}
+
 static void PanTo(int want, LPSTR why)
 {
     char buf[96];
@@ -107,28 +119,27 @@ static int StepUp(int y)
     return t;
 }
 
-static int ModsDown(void)
+/* Bit 15: down now; bit 0: pressed since the previous call. A short tap
+ * between two 55 ms ticks shows only in bit 0. Every key is read on every
+ * tick so that bit 0 never carries over from an older press. */
+static int Hit(int vk)
 {
-    if ((nMods & 1) && !(GetAsyncKeyState(VK_CONTROL) & 0x8000))
-        return 0;
-    if ((nMods & 2) && !(GetAsyncKeyState(VK_MENU) & 0x8000))
-        return 0;
-    if ((nMods & 4) && !(GetAsyncKeyState(VK_SHIFT) & 0x8000))
-        return 0;
-    return 1;
+    return (GetAsyncKeyState(vk) & 0x8001) != 0;
+}
+
+static int Held(int vk)
+{
+    return (GetAsyncKeyState(vk) & 0x8000) != 0;
 }
 
 static void Keys(void)
 {
+    int ctl = Hit(VK_CONTROL), alt = Hit(VK_MENU), sh = Hit(VK_SHIFT);
+    int dn = Hit(vkDown), up = Hit(vkUp), tp = Hit(vkTop);
+    int mods = (!(nMods & 1) || ctl) && (!(nMods & 2) || alt) && (!(nMods & 4) || sh);
     int which = 0;
-    if (ModsDown()) {
-        if (GetAsyncKeyState(vkDown) & 0x8000)
-            which = 1;
-        else if (GetAsyncKeyState(vkUp) & 0x8000)
-            which = 2;
-        else if (GetAsyncKeyState(vkTop) & 0x8000)
-            which = 3;
-    }
+    if (mods)
+        which = dn ? 1 : up ? 2 : tp ? 3 : 0;
     if (which && !bKeyWasDown) {
         if (which == 1)
             PanTo(nTop + nStep, "key-down");
@@ -136,8 +147,10 @@ static void Keys(void)
             PanTo(nTop - nStep, "key-up");
         else
             PanTo(0, "key-top");
+        KeepPointer();
     }
-    bKeyWasDown = which;
+    /* a key still held down does not repeat the pan */
+    bKeyWasDown = which && Held(which == 1 ? vkDown : which == 2 ? vkUp : vkTop);
 }
 
 static void Follow(void)
@@ -163,6 +176,7 @@ static void Follow(void)
         t = (r.top / nStep) * nStep;
     }
     PanTo(t, "follow");
+    KeepPointer();
 }
 
 static void Tick(void)
