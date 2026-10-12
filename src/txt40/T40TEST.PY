@@ -469,6 +469,17 @@ def synthetic(rnd, font, ops, model, n):
     s.present(y - 8, y + 16, (x >> 3) - 2, (x >> 3) + 2)
     s.add(x, y, font[ch], M.ansi_to_cp437(ch))
     s.present(y, y + 1, (x >> 3) - 1, x >> 3)
+    # a focused button label: a dotted line through rows 0 and 7 of the
+    # glyphs; and an underscore whose line was painted over
+    x, y = 8 * rnd.randrange(2, 30) + rnd.randrange(8), 8 * rnd.randrange(1, 22) + rnd.randrange(8)
+    s.fill(x - 8, y - 8, x + 40, y + 16, 15)
+    s.text(x, y, [ord(c) for c in "OK_A"], font, 0, 15)
+    for c in range(x - 1, x + 33, 2):
+        for yy in (y, y + 7):
+            s.frame[yy * W + c] = 0 if s.frame[yy * W + c] == 15 else 15
+    s.fill(x + 16, y + 7, x + 24, y + 8, 15)
+    s.load()
+    s.present(y - 8, y + 16, (x >> 3) - 1, (x >> 3) + 6)
     # same position redrawn: the newer hint replaces, the older one in that
     # cell survives, and comes back when its pixels are restored
     x, y = 8 * rnd.randrange(1, 38) + 2, 8 * rnd.randrange(1, 23) + 1

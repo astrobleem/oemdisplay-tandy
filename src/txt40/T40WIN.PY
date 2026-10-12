@@ -48,8 +48,9 @@ class Session:
         self.r.shot(name, settle=0.5, decode=False)
         return self.r.b.out / (name + ".png")
 
-    def settle(self, name, timeout=240, every=8):
-        """Capture until two captures in a row are identical."""
+    def settle(self, name, timeout=240, every=8, want=()):
+        """Capture until two captures in a row are identical (and, with want,
+        every wanted string is on screen: typed keys may still be queued)."""
         t0 = time.time()
         prev = None
         n = 0
@@ -59,7 +60,9 @@ class Session:
             if self.tv:
                 return None
             frame = SHOT.decode(path)
-            if prev is not None and frame == prev:
+            rows = SHOT.rows(frame, self.font) if want else []
+            shown = all(any(s in row for row in rows) for s in want)
+            if prev is not None and frame == prev and shown:
                 self.frames[name] = frame
                 self.timing[name] = round(time.time() - t0, 1)
                 (self.r.b.out / f"{name}_{n}.png").rename(self.r.b.out / f"{name}.png")
@@ -83,9 +86,22 @@ class Session:
         for s in strings:
             self.check(f"{name}: shows '{s}'", any(s in row for row in rows))
 
-    def same(self, a, b, what):
-        if not self.tv:
-            self.check(what, self.frames[a] == self.frames[b])
+    def same(self, a, b, what, caret_after=None):
+        """Frames a and b identical. caret_after: a typed string; the cells of
+        the text caret's column just after it (blinking) may differ."""
+        if self.tv:
+            return
+        fa, fb = self.frames[a], self.frames[b]
+        allow = set()
+        if caret_after:
+            rows = SHOT.rows(fa, self.font)
+            for r, row in enumerate(rows):
+                c = row.find(caret_after)
+                if c >= 0:
+                    c += len(caret_after)
+                    allow = {(r - 1, c), (r, c), (r + 1, c)}
+        diff = set(((i // 320) >> 3, (i % 320) >> 3) for i in range(64000) if fa[i] != fb[i])
+        self.check(what, not (diff - allow), differing_cells=sorted(diff), caret_cells=sorted(allow))
 
     def cursor(self, a, b, ca, cb):
         """Frames a and b differ exactly in cells ca and cb, each by XOR 77h."""
@@ -116,13 +132,15 @@ class Session:
         for _ in range(6):            # damaged EGA-era group files: one message each
             r.key("Escape", wait=10)
         r.home()
-        self.settle("desktop", timeout=400)
-        self.expect("desktop", "Program Manager", "File", "Options", "Window", "Help")
+        desk = ("Program Manager", "File", "Options", "Window", "Help")
+        self.settle("desktop", timeout=400, want=desk)
+        self.expect("desktop", *desk)
 
         r.key("alt+f", wait=5)
-        self.settle("filemenu")
-        self.expect("filemenu", "New...", "Open", "Move...", "Copy...", "Delete", "Properties...",
-                    "Run...", "Exit Windows...")
+        menu = ("New...", "Open", "Move...", "Copy...", "Delete", "Properties...", "Run...",
+                "Exit Windows...")
+        self.settle("filemenu", want=menu)
+        self.expect("filemenu", *menu)
         r.key("Escape", wait=3)
         r.key("Escape", wait=3)
         self.settle("menuclosed")
@@ -138,31 +156,35 @@ class Session:
 
         r.key("alt+f", wait=5)
         r.key("r", wait=8)
-        self.settle("rundlg")
-        self.expect("rundlg", "Run", "Command Line:", "Run Minimized", "OK", "Cancel")
+        run = ("Run", "Command Line:", "Run Minimized", "OK", "Cancel")
+        self.settle("rundlg", want=run)
+        self.expect("rundlg", *run)
         r.text("NOTEPAD")
         r.key("Return", wait=40)
-        self.settle("notepad0", timeout=400)
+        self.settle("notepad0", timeout=400, want=("Notepad - (untitled)",))
         r.text("Hello TV owners! 40x25", wait=4)
-        self.settle("notepad", timeout=400)
-        self.expect("notepad", "Notepad - (untitled)", "File", "Edit", "Search", "Help",
-                    "Hello TV owners! 40x25")
+        note = ("Notepad - (untitled)", "File", "Edit", "Search", "Help", "Hello TV owners! 40x25")
+        self.settle("notepad", timeout=400, want=note)
+        self.expect("notepad", *note)
         r.key("alt+e", wait=5)
-        self.settle("editmenu")
-        self.expect("editmenu", "Undo", "Cut", "Copy", "Paste", "Delete", "Select All",
-                    "Time/Date", "Word Wrap")
+        edit = ("Undo", "Cut", "Copy", "Paste", "Delete", "Select All", "Time/Date", "Word Wrap")
+        self.settle("editmenu", want=edit)
+        self.expect("editmenu", *edit)
         r.key("Escape", wait=3)
         r.key("Escape", wait=3)
         self.settle("editclosed")
-        self.same("notepad", "editclosed", "Edit menu closed: screen identical to Notepad before")
+        self.same("notepad", "editclosed", "Edit menu closed: screen identical to Notepad before "
+                  "(except the blinking caret's cells after the typed line)",
+                  caret_after="Hello TV owners! 40x25")
 
         # keyboard move: screen-to-screen BitBlt carries the text hints along
         r.key("alt+space", wait=4)
         r.key("m", wait=3)
         r.key("Down", "Down", "Down", "Down", "Right", "Right", "Right", "Right", wait=3)
         r.key("Return", wait=20)
-        self.settle("moved", timeout=400)
-        self.expect("moved", "Notepad - (untitled)", "Hello TV owners! 40x25")
+        moved = ("Notepad - (untitled)", "Hello TV owners! 40x25")
+        self.settle("moved", timeout=400, want=moved)
+        self.expect("moved", *moved)
         if not self.tv:
             self.check("moved: Notepad is somewhere else",
                        self.frames["moved"] != self.frames["notepad"])
@@ -172,8 +194,8 @@ class Session:
         self.settle("closed", timeout=400)
         r.click(*PCPWIN.PM_TITLE, wait=6)
         r.key("alt+F4", wait=8)
-        self.settle("exitdlg")
-        self.expect("exitdlg", "This will end your Windows session.")
+        self.settle("exitdlg", want=("This will end your Windows",))
+        self.expect("exitdlg", "This will end your Windows", "OK", "Cancel")
         r.key("Return", wait=40)
         r.text("C:\\T40\\T40ID")
         r.key("Return", wait=10)
@@ -188,7 +210,7 @@ class Session:
         for _ in range(6):
             r.key("Escape", wait=10)
         r.home()
-        self.settle("desktop2", timeout=400)
+        self.settle("desktop2", timeout=400, want=desk)
         self.same("desktop", "desktop2", "second launch: desktop identical to the first")
         r.click(*PCPWIN.PM_TITLE, wait=6)
         r.key("alt+F4", wait=8)

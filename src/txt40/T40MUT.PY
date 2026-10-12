@@ -37,6 +37,8 @@ MUTANTS = [
     ("blit-inside-test", "    jg tbo_done\r\n    mov bx,word ptr t40_snap[di+2]",
      "    jge tbo_done\r\n    mov bx,word ptr t40_snap[di+2]"),
     ("same-place-replace", "    jne ta_push", "    jmp ta_push"),
+    ("no-second-check", "    mov t40_rows,07Eh", "    mov t40_rows,0"),
+    ("second-check-any-glyph", "    or al,[si+10]\r\n    jz tvf_fail", "    or al,[si+10]\r\n    jmp short $+2"),
     ("stale-after-add", "    or t40_vst[bx],80h", "    or t40_vst[bx],00h"),
     ("touch-never", "    stc\r\n    ret\r\ntch_no:", "    clc\r\n    ret\r\ntch_no:"),
     ("touch-narrow-window", "    cmp ax,t40_px1\r\n    jge tch_no\r\n    add ax,8", "    cmp ax,t40_px1\r\n    jge tch_no\r\n    add ax,7"),

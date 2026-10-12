@@ -135,8 +135,31 @@ trb_nohi:
 t40_rowbits endp
 
 ; ---- t40_verify: SI = slot. CF=0: AL = attribute B<<4|F. CF=1: not shown.
-; ES = shadow. Preserves BX-DI.
+; Strict check of all rows; if that fails and the glyph has ink in rows 1-6,
+; rows 1-6 only (a focus rectangle crosses rows 0 and 7). ES = shadow.
+; Preserves BX-DI.
 t40_verify proc near
+    mov t40_rows,0FFh
+    call t40_vrows
+    jnc tvf_done
+    mov al,[si+5]
+    or al,[si+6]
+    or al,[si+7]
+    or al,[si+8]
+    or al,[si+9]
+    or al,[si+10]
+    jz tvf_fail
+    mov t40_rows,07Eh
+    call t40_vrows
+tvf_done:
+    ret
+tvf_fail:
+    stc
+    ret
+t40_verify endp
+
+; ---- t40_vrows: the check for the rows set in t40_rows (bit r = row r).
+t40_vrows proc near
     push bx
     push cx
     push dx
@@ -179,8 +202,13 @@ tv_mask:
     add ax,t40_b0
     mov di,ax
     mov cl,byte ptr t40_sh
+    mov dh,1
     xor bx,bx
 tv_row:
+    test t40_rows,dh
+    jnz tv_row_on
+    jmp tv_next
+tv_row_on:
     mov ax,[si+2]
     add ax,bx
     cmp ax,0
@@ -257,6 +285,7 @@ tv_bgpart:
 tv_setbg:
     mov t40_bg,al
 tv_next:
+    shl dh,1
     add di,160
     inc bx
     cmp bx,8
@@ -310,7 +339,7 @@ tv_fail:
     pop bx
     stc
     ret
-t40_verify endp
+t40_vrows endp
 
 ; ---- t40_shown: BX = cell. Sets t40_vst[BX] (0 none, 1/2 slot) and
 ; t40_vat[BX]. ES = shadow. Preserves BX.

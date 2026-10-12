@@ -120,10 +120,22 @@ def shadow_from_frame(frame):
 
 
 def verify(shadow, hint):
-    """Attribute B<<4|F if the hint's glyph is exactly present, else None."""
+    """Attribute B<<4|F if the hint's glyph is present, else None.
+
+    Strict: all 8 rows as described above. If that fails and the glyph has
+    ink in rows 1-6, a second check uses rows 1-6 only: a focused button's
+    dotted focus rectangle runs through the label's top and bottom rows.
+    Glyphs blank in rows 1-6 (space, underscore) get no second check."""
+    a = verify_rows(shadow, hint, range(8))
+    if a is None and any(hint[2][1:7]):
+        a = verify_rows(shadow, hint, range(1, 7))
+    return a
+
+
+def verify_rows(shadow, hint, rows):
     x, y, glyph, code = hint
     fg = bg = None
-    for r in range(8):
+    for r in rows:
         yy = y + r
         if not 0 <= yy < H:
             continue
@@ -144,7 +156,7 @@ def verify(shadow, hint):
                     bg = v
                 elif v != bg:
                     return None
-    if glyph[7] == 0 and 0 <= y + 7 < H:
+    if 7 in rows and glyph[7] == 0 and 0 <= y + 7 < H:
         row7 = set(pixel(shadow, x + c, y + 7) for c in range(8) if 0 <= x + c < W)
         if len(row7) != 1:
             return None

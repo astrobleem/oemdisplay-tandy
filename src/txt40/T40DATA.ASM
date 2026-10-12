@@ -17,6 +17,7 @@ t40_ca      db 0
 t40_cb      db 0
 t40_na      db 0
 t40_nbf     db 0                ; t40_cell: which neighbours exist
+t40_rows    db 0                ; t40_vrows: rows to check, bit r = row r
 t40_fm      db 4 dup (0)        ; t40_setfm: plane masks of one colour
 t40_v       db 4 dup (0)        ; t40_verify: one window row, R,G,B,I
 t40_x       dw 0
