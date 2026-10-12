@@ -35,7 +35,9 @@ For every cell (ideal()):
    No unclaimed pixels: a space in the background colour of the first
    claiming neighbour in row-major order.
 present(ay, by, cx, dx) rewrites only the cells a change of pixel rows
-ay..by-1, byte columns cx..dx-1 can affect: two cells of margin each way.
+ay..by-1, byte columns cx..dx-1 can affect. A glyph window spans at most
+two cell rows and columns, so that is the dirty cells plus one cell each
+way; shown hints are re-verified one cell beyond that.
 """
 import json
 import sys
@@ -45,9 +47,9 @@ W, H, COLS, ROWS = 320, 200, 40, 25
 NCELL = COLS * ROWS
 POP = [bin(i).count("1") for i in range(256)]
 
-# Block characters in trial order: (code, 8 rows).
+# Half blocks in trial order: (code, 8 rows). The foreground is never the
+# majority colour, so a full block or dark shade can never be the answer.
 SHAPES = [
-    (0xDB, [0xFF] * 8),              # full block
     (0xDF, [0xFF] * 4 + [0] * 4),    # upper half
     (0xDC, [0] * 4 + [0xFF] * 4),    # lower half
     (0xDD, [0xF0] * 8),              # left half
@@ -64,8 +66,6 @@ def pick_char(mask, live):
     on = sum(POP[m] for m in mask)
     if on == 0:
         return 0x20
-    if on == n:
-        return 0xDB
     rows = [i for i in range(8) if live[i] == 0xFF and mask[i] == 0xFF]
     nr = len(rows)
     colmask = 0xFF
@@ -89,8 +89,8 @@ def pick_char(mask, live):
             best, best_d = code, d
     if best_d * 8 <= n:
         return best
-    q = on * 8 // n
-    return 0x20 if q == 0 else 0xB0 if q <= 2 else 0xB1 if q <= 5 else 0xB2 if q <= 6 else 0xDB
+    q = on * 8 // n                  # 0..4: foreground is at most half
+    return 0x20 if q == 0 else 0xB0 if q <= 2 else 0xB1
 
 
 def pixel(shadow, x, y):
@@ -254,8 +254,8 @@ class Presenter:
         cx, dx = max(cx, 0), min(dx, COLS)
         if ay >= by or cx >= dx:
             return
-        r0, r1 = max((ay >> 3) - 2, 0), min(((by - 1) >> 3) + 2, ROWS - 1)
-        c0, c1 = max(cx - 2, 0), min(dx - 1 + 2, COLS - 1)
+        r0, r1 = max((ay >> 3) - 1, 0), min(((by - 1) >> 3) + 1, ROWS - 1)
+        c0, c1 = max(cx - 1, 0), min(dx - 1 + 1, COLS - 1)
         shown = [None] * NCELL
         for cy in range(max(r0 - 1, 0), min(r1 + 1, ROWS - 1) + 1):
             for x in range(max(c0 - 1, 0), min(c1 + 1, COLS - 1) + 1):
