@@ -1,0 +1,29 @@
+{
+ "driver": "XTPAN.DRV",
+ "checks": [
+  {
+   "check": "measure: benchmark ran",
+   "result": "PASS",
+   "bench": [
+    "BENCH fills400 ms=8459 text200 ms=17850 scroll50 ms=39711"
+   ]
+  }
+ ],
+ "measurements": {
+  "bench": [
+   "BENCH fills400 ms=8459 text200 ms=17850 scroll50 ms=39711"
+  ],
+  "free": [
+   "START cmd=BENCH free=236128 top=0"
+  ],
+  "xtpan_log_head": [],
+  "xtpan_log": [],
+  "pantest_log": [
+   "START cmd=BENCH free=236128 top=0",
+   "METRICS screen=320x400 cycaption=16 cymenu=14 cyframe=4 tmheight=10 tmextlead=0",
+   "BENCH fills400 ms=8459 text200 ms=17850 scroll50 ms=39711"
+  ]
+ },
+ "passed": 1,
+ "failed": 0
+}

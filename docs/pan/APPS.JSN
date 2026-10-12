@@ -1,0 +1,12 @@
+{
+  "XTPAN.EXE": {
+    "bytes": 6415,
+    "sha256": "42ffb2eac4310aac811ec74e8e2b0417cf1afbc31ef54982933b442845c12ef8"
+  },
+  "PANTEST.EXE": {
+    "bytes": 10047,
+    "sha256": "fd92bc4437cdd98b16a9ec6817d3f2af7622998a1d78d1d591e57abcffb258ad"
+  },
+  "compiler_flags": "/nologo /c /G0 /Gw /AS /W3 /Od",
+  "target": "Windows 3.0 real mode, 8086"
+}

@@ -1,0 +1,16 @@
+{
+  "driver": "XTPAN.DRV",
+  "logical_rows": 400,
+  "built_as": "TANDY88.DRV",
+  "driver_bytes": 55232,
+  "driver_sha256": "4367985b1a95aa82a22fabe407915e7b03d219121dee73230b4313adb5c60a97",
+  "base": "BUILD88 320x200x16 (TR5) from the supplied view",
+  "xtpan_edits_staged_sha256": {
+    "TSOFT.ASM": "b34726f4a082c849913f9aec191898c3195959bb0bec9c8acec46cbbba9b5357",
+    "TCURSOR.ASM": "e51beebe1ce83a9782593e2aac2feb2588162c566cf2957a1713481551331813",
+    "SDIB88.ASM": "182056b3f10de47367e243ead6e6cc21a9f1c859fefe00697b4f14ccbd8b5337",
+    "TSOFT.DEF": "9facc9a2707f260a8d4879698aa7fe561557353eafe68aa82ed86e417ad21457"
+  },
+  "build88_audits": "see RESULT.json (instruction, REP-prefix, link)",
+  "runtime": "NOT_TESTED"
+}

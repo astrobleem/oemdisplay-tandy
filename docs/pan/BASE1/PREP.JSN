@@ -1,0 +1,28 @@
+{
+ "target": "xtbase",
+ "pristine_sha256": "f55fe24baf83d9557e6c16612fbf8b4af5b175bf6b9b6d876e5784222e117561",
+ "driver": "TR53216.DRV",
+ "driver_sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61",
+ "tools": {
+  "RESERVE.COM": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+  "MSTEST.COM": "51dd0966a76cbc6349f1685ef65bbdeb4883897679d5426168d8f9c5a9f462bc",
+  "XTPAN.EXE": "b8e2995720aa71d2b278a8c4fdb89577bbf4564d4d5dd3cc716095f2ebab9260",
+  "PANTEST.EXE": "a3906ea884bca6a6a6655bdb00bb2c5c4c0a0c40cee39cee059467cc6ddc226a"
+ },
+ "control_ega": false,
+ "mouse": "pty",
+ "fonts": null,
+ "grid": 0,
+ "tv": false,
+ "only_8x8": false,
+ "changes": [
+  "CONFIG.SYS: only files=30, buffers=30 (removed HIMEM, SMARTDRV, EGA.SYS: an XT has no XMS and no EGA)",
+  "AUTOEXEC.BAT: PATH/TEMP as before, run C:\\XTPAN\\RESERVE, stay at the DOS prompt (no automatic WIN)",
+  "SYSTEM.INI: display.drv=TR53216.DRV; [keyboard] type=1 (PC/XT 83-key instead of AT)",
+  "WIN.INI: load=C:\\XTPAN\\XTPAN.EXE; [XTPan] LogFile=C:\\XTPAN\\XTPAN.LOG (defaults for Step, Dwell, Edge, keys and FollowActive)",
+  "WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); Wallpaper=BARS16.BMP (a full-screen 16-colour bar test image, centred)",
+  "added WINDOWS/BARS16.BMP: 320x200 4-bit, 16 bars of 20 pixels, palette = the driver's colour table (generated, sha256 42c3959625954073173f743ed2b432c68a75385135dafa1d643c70f93ce38fbe)",
+  "added WINDOWS/SYSTEM/TR53216.DRV and XTPAN/RESERVE.COM, MSTEST.COM, XTPAN.EXE, PANTEST.EXE"
+ ],
+ "86box_cfg": "[General]\nconfirm_exit = 0\nconfirm_reset = 0\nconfirm_save = 0\nvid_renderer = qt_software\nvideo_filter_method = 0\nscale = 3\n\n[Machine]\nmachine = tandy1000hx\ncpu_family = 8088\ncpu_speed = 7159092\ncpu_multi = 1\ncpu_use_dynarec = 0\nmem_size = 640\ntime_sync = disabled\n\n[Video]\ngfxcard = internal\n\n[Input devices]\nmouse_type = none\n\n[Storage controllers]\nhdc_1 = xtide\n\n[PC/XT XTIDE #1]\nbios = xt\n\n[Hard disks]\nhdd_01_fn = pcp.img\nhdd_01_ide_channel = 0:0\nhdd_01_parameters = 17, 4, 615, 0, ide\n\n[Ports (COM & LPT)]\nserial1_enabled = 1\nserial1_device = serial_passthrough\n\n[Serial Passthrough (COM) #1]\npath = @PTY@\nreconnect = 1\n"
+}

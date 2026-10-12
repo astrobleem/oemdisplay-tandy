@@ -1,0 +1,46 @@
+{
+ "driver": "XTPAN.DRV",
+ "checks": [
+  {
+   "check": "helper started with the XTPAN driver",
+   "result": "PASS",
+   "log": [
+    "START top=0 view=200 logical=400 step=50 dwell=400 edge=3 free=239872",
+    "PAN 0 100 follow t=23398 ms=1098"
+   ]
+  },
+  {
+   "check": "pat_top0: PANTEST reports pointer and viewport",
+   "result": "FAIL"
+  },
+  {
+   "check": "keyboard: four Ctrl+Alt+PgDn give four pans of 50 rows",
+   "result": "FAIL",
+   "log": [
+    "PAN 50 100 key-down t=302087 ms=989",
+    "PAN 100 150 key-down t=308458 ms=1044",
+    "PAN 150 200 key-down t=314885 ms=1043"
+   ]
+  },
+  {
+   "check": "pat_key200: PANTEST reports pointer and viewport",
+   "result": "FAIL"
+  },
+  {
+   "check": "pat_key150: PANTEST reports pointer and viewport",
+   "result": "FAIL"
+  },
+  {
+   "check": "pat_keytop: PANTEST reports pointer and viewport",
+   "result": "FAIL"
+  },
+  {
+   "check": "keyboard: Ctrl+Alt+PgUp then Ctrl+Alt+Home go to 150 then 0",
+   "result": "FAIL",
+   "log": []
+  }
+ ],
+ "measurements": {},
+ "passed": 1,
+ "failed": 6
+}
