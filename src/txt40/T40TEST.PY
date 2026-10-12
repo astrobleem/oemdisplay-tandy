@@ -301,6 +301,13 @@ class Scene:
         self.ops = ops
         self.model = model
         self.expect = []
+        self.shadow = bytes(32000)
+        self.flushed = bytearray(32000)   # shadow as covered by flushes so far
+
+    def disciplined(self):
+        """The driver flushes every pixel it changes; so must the scenes."""
+        if bytes(self.flushed) != bytes(self.shadow):
+            raise SystemExit("T40TEST: a scene changed pixels it never flushed")
 
     def fill(self, x0, y0, x1, y1, c):
         x0, y0, x1, y1 = max(x0, 0), max(y0, 0), min(x1, W), min(y1, H)
@@ -341,6 +348,10 @@ class Scene:
         self.ops.append(struct.pack("<Bhhhh", 3, ay, by, cx, dx))
         self.model.present(self.shadow, ay, by, cx, dx)
         self.expect.append(list(self.model.text))
+        for y in range(max(ay, 0), min(by, H)):
+            for p in range(4):
+                o = y * 160 + p * 40
+                self.flushed[o + max(cx, 0):o + min(dx, 40)] = self.shadow[o + max(cx, 0):o + min(dx, 40)]
 
     def move(self, sx, sy, w, h, ddx, ddy):
         old = bytes(self.frame)
@@ -409,6 +420,7 @@ def synthetic(rnd, font, ops, model, n):
     expect_ideal = [(len(s.expect) - 1, model.ideal(s.shadow))]
     # overpaint, partial flushes, more text, moves
     for step in range(8):
+        s.disciplined()
         r = rnd.random()
         if r < 0.3:
             x0, y0 = rnd.randrange(W), rnd.randrange(H)
@@ -446,6 +458,17 @@ def synthetic(rnd, font, ops, model, n):
             s.frame[yy * W + xx] = (s.frame[yy * W + xx] + rnd.randrange(1, 16)) % 16
             s.load()
             s.present(yy, yy + 1, xx >> 3, (xx >> 3) + 1)
+    # a hint recorded for pixels already on screen, then a flush beside it
+    # whose output range holds its cell but whose pixels do not touch it:
+    # the cell must still be re-verified (stale), not keep its old state
+    x, y = 8 * rnd.randrange(3, 37), 8 * rnd.randrange(1, 23)
+    ch = rnd.choice(chars)
+    s.fill(x - 16, y - 8, x + 16, y + 16, 7)
+    s.glyph(x, y, font[ch], 0, 7)
+    s.load()
+    s.present(y - 8, y + 16, (x >> 3) - 2, (x >> 3) + 2)
+    s.add(x, y, font[ch], M.ansi_to_cp437(ch))
+    s.present(y, y + 1, (x >> 3) - 1, x >> 3)
     # same position redrawn: the newer hint replaces, the older one in that
     # cell survives, and comes back when its pixels are restored
     x, y = 8 * rnd.randrange(1, 38) + 2, 8 * rnd.randrange(1, 23) + 1
@@ -459,10 +482,11 @@ def synthetic(rnd, font, ops, model, n):
     s.glyph(x, y, font[new2], 15, 4)
     s.add(x, y, font[new2], M.ansi_to_cp437(new2))
     s.load()
-    s.present(y - 8, y + 16, (x >> 3) - 1, (x >> 3) + 2)
+    s.present(y - 8, y + 16, (x >> 3) - 1, (x >> 3) + 3)
     s.frame = bytearray(saved)
     s.load()
-    s.present(y - 8, y + 16, (x >> 3) - 1, (x >> 3) + 2)
+    s.present(y - 8, y + 16, (x >> 3) - 1, (x >> 3) + 3)
+    s.disciplined()
     s.present(0, 200, 0, 40)
     expect_ideal.append((len(s.expect) - 1, model.ideal(s.shadow)))
     return s.expect, expect_ideal

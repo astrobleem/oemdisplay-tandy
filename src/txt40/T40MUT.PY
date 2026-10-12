@@ -13,9 +13,11 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 
 # (name, exact original line, replacement); the first occurrence is changed.
-# Not listed, because no test can tell them apart: the extra verify margin
-# (T40PRES.ASM recomputes shown hints one cell beyond the output range;
-# with every pixel change flushed, those cells' state is already current).
+# Not listed, because no test can tell them apart: changes that make the
+# presenter re-verify MORE cells (a wider touch test, a verify range beyond
+# the output range). With every pixel change flushed, which T40TEST.PY
+# enforces for its scenes, re-verifying a cell whose kept state is current
+# gives the same state.
 MUTANTS = [
     ("light-shade-threshold", "    cmp ax,2", "    cmp ax,1"),
     ("half-block-count", "    cmp di,36", "    cmp di,27"),
@@ -35,6 +37,10 @@ MUTANTS = [
     ("blit-inside-test", "    jg tbo_done\r\n    mov bx,word ptr t40_snap[di+2]",
      "    jge tbo_done\r\n    mov bx,word ptr t40_snap[di+2]"),
     ("same-place-replace", "    jne ta_push", "    jmp ta_push"),
+    ("stale-after-add", "    or t40_vst[bx],80h", "    or t40_vst[bx],00h"),
+    ("touch-never", "    stc\r\n    ret\r\ntch_no:", "    clc\r\n    ret\r\ntch_no:"),
+    ("touch-narrow-window", "    cmp ax,t40_px1\r\n    jge tch_no\r\n    add ax,8", "    cmp ax,t40_px1\r\n    jge tch_no\r\n    add ax,7"),
+    ("touch-short-window", "    cmp ax,t40_py1\r\n    jge tch_no\r\n    add ax,8", "    cmp ax,t40_py1\r\n    jge tch_no\r\n    add ax,7"),
     ("underline-row", "    cmp byte ptr [si+11],0\r\n    jne tv_normal",
      "    cmp byte ptr [si+11],1\r\n    jne tv_normal"),
     ("second-slot", "    add si,16\r\n    cmp byte ptr [si+13],0", "    add si,32\r\n    cmp byte ptr [si+13],0"),

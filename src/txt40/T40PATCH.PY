@@ -325,6 +325,113 @@ def pres_text():
             + fragment("T40PRES.ASM") + PRES_TAIL + ansi_table_text())
 
 
+BOUNDS_MACROS = crlf("""; T40PATCH: a full-screen flush costs seconds on an 8088 in text mode, so
+; bound text flushes by columns too. dirty=2 (rows proven by text_bounds):
+; columns of the validated clip rectangle, widened by a validated opaque
+; rectangle. ExtTextOut with no characters and an opaque fill draws only
+; that rectangle: bound it the same way instead of a full flush.
+t40_rect_cols macro ptr
+local t40c_left_kept,t40c_right_kept
+    les di,ptr
+    mov ax,es:[di].left
+    mov cl,3
+    shr ax,cl
+    cmp ax,colfirst
+    jge t40c_left_kept
+    mov colfirst,ax
+t40c_left_kept:
+    mov ax,es:[di].right
+    add ax,7
+    shr ax,cl
+    cmp ax,collast
+    jle t40c_right_kept
+    mov collast,ax
+t40c_right_kept:
+endm
+
+t40_bounds macro extended
+local rows,done,zero_ok
+    push ax
+    push cx
+    push di
+    push es
+    mov colfirst,40
+    mov collast,0
+    if extended
+    cmp dirty,1
+    jne rows
+    cmp count,0
+    jne rows
+    test options,ETO_OPAQUE_FILL
+    jz rows
+    les di,opaquerect
+    mov ax,es
+    or ax,ax
+    jz rows
+    cmp di,0ffffh-((size RECT)-1)
+    ja rows
+    mov ax,es:[di].left
+    or ax,ax
+    js rows
+    cmp ax,es:[di].right
+    jg rows
+    cmp word ptr es:[di].right,SCREEN_WIDTH
+    jg rows
+    mov ax,es:[di].top
+    or ax,ax
+    js rows
+    cmp ax,es:[di].bottom
+    jg rows
+    cmp word ptr es:[di].bottom,SCREEN_HEIGHT
+    jg rows
+    mov rowfirst,ax
+    mov ax,es:[di].bottom
+    mov rowlast,ax
+    t40_rect_cols opaquerect
+    mov dirty,2
+    jmp done
+    endif
+rows:
+    cmp dirty,2
+    jne done
+    t40_rect_cols clip
+    if extended
+    test options,ETO_OPAQUE_FILL
+    jz done
+    t40_rect_cols opaquerect
+    endif
+done:
+    pop es
+    pop di
+    pop cx
+    pop ax
+endm
+
+t40_flush macro
+local full,done
+    push ax
+    push bx
+    push cx
+    push dx
+    cmp dirty,2
+    jne full
+    mov ax,rowfirst
+    mov bx,rowlast
+    mov cx,colfirst
+    mov dx,collast
+    call FlushColumns
+    jmp short done
+full:
+    call FlushShadow
+done:
+    pop dx
+    pop cx
+    pop bx
+    pop ax
+endm
+
+""")
+
 RECORD_MACRO = crlf("""; T40PATCH: after map_device, dirty=1 means the destination is the screen.
 t40_record macro extended
 local skip,go
@@ -445,7 +552,18 @@ def patch_tsoft(t):
     t = replace_n(t, SEG_ANCHOR, SEG_ANCHOR + seg_text(), 1, "segment _T40")
     t = replace_n(t, DATA_ANCHOR, DATA_ANCHOR + DATA_NEW, 1, "text parameters")
     t = replace_n(t, ENABLE_OLD, ENABLE_NEW, 1, "enable mode")
-    t = replace_n(t, "cProc TStrBlt,", RECORD_MACRO + "cProc TStrBlt,", 1, "record macro")
+    t = replace_n(t, "cProc TStrBlt,", BOUNDS_MACROS + RECORD_MACRO + "cProc TStrBlt,", 1, "record macro")
+    t = replace_n(t, "    localW rowfirst\r\n    localW rowlast\r\ncBegin\r\n",
+                  "    localW rowfirst\r\n    localW rowlast\r\n    localW colfirst\r\n    localW collast\r\n"
+                  "cBegin\r\n", 2, "column locals")
+    t = replace_n(t, "    text_bounds 0,0,0\r\n    cCall RStrBlt",
+                  "    text_bounds 0,0,0\r\n    t40_bounds 0\r\n    cCall RStrBlt", 1, "StrBlt columns")
+    t = replace_n(t, "    text_bounds 1,opaquerect,options\r\n    cCall RExtTextOut",
+                  "    text_bounds 1,opaquerect,options\r\n    t40_bounds 1\r\n    cCall RExtTextOut", 1,
+                  "ExtTextOut columns")
+    t = replace_n(t, "    text_flush\r\nTStrBlt_done:", "    t40_flush\r\nTStrBlt_done:", 1, "StrBlt flush")
+    t = replace_n(t, "    text_flush\r\nTExtTextOut_done:", "    t40_flush\r\nTExtTextOut_done:", 1,
+                  "ExtTextOut flush")
     t = replace_n(t, "TStrBlt_render:\r\n    text_bounds 0,0,0\r\n",
                   "TStrBlt_render:\r\n    t40_record 0\r\n    text_bounds 0,0,0\r\n", 1, "StrBlt hints")
     t = replace_n(t, "TExtTextOut_render:\r\n    text_bounds 1,opaquerect,options\r\n",

@@ -37,10 +37,13 @@ For every cell (ideal()):
 present(ay, by, cx, dx) rewrites only the cells a change of pixel rows
 ay..by-1, byte columns cx..dx-1 can affect. A glyph window spans at most
 two cell rows and columns, so that is the dirty cells plus one cell each
-way. Which hint a cell shows (slot and attribute) is re-verified for those
-cells and kept between flushes; neighbours outside the range use their
-kept state. That equals ideal() as long as every pixel change and every
-hint change is followed by a flush covering it, which the driver does.
+way. Which hint a cell shows (slot and attribute) is kept between flushes
+and re-verified only for cells of that range whose hints changed since
+(add() marks the cell stale) or have a window touching the dirty pixels;
+any other kept state is still exact, because every pixel change is
+flushed. Neighbours outside the range use their kept state. The result
+equals ideal() whenever every pixel change is followed by a flush covering
+it, which the driver does.
 """
 import json
 import sys
@@ -166,6 +169,7 @@ class Presenter:
         self.slots = [[] for _ in range(NCELL)]     # newest first, at most 2
         self.text = [0] * NCELL                      # attr<<8 | code
         self.kept = [None] * NCELL                   # (slot index, attr) shown
+        self.stale = [False] * NCELL                 # slots changed since kept
 
     def add(self, x, y, glyph, code):
         k = hint_cell(x, y)
@@ -178,6 +182,7 @@ class Presenter:
         else:
             s.insert(0, h)
             del s[2:]
+        self.stale[k] = True
 
     def blit(self, sx, sy, w, h, ddx, ddy):
         if ddx == 0 and ddy == 0:
@@ -268,7 +273,12 @@ class Presenter:
         c0, c1 = max(cx - 1, 0), min(dx - 1 + 1, COLS - 1)
         for cy in range(r0, r1 + 1):
             for x in range(c0, c1 + 1):
-                self.kept[cy * COLS + x] = self.shown_slot(shadow, cy * COLS + x)
+                k = cy * COLS + x
+                touched = any(h[0] < 8 * dx and h[0] + 8 > 8 * cx and h[1] < by and h[1] + 8 > ay
+                              for h in self.slots[k])
+                if self.stale[k] or touched:
+                    self.kept[k] = self.shown_slot(shadow, k)
+                    self.stale[k] = False
         shown = [None if s is None else (self.slots[k][s[0]], s[1]) for k, s in enumerate(self.kept)]
         for cy in range(r0, r1 + 1):
             for x in range(c0, c1 + 1):

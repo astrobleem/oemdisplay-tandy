@@ -1,7 +1,8 @@
 ; T40DATA.ASM - TXT40 presenter state (fragment for segment _T40).
 ; t40_slot must stay first: slot addresses are cell*32 from offset 0.
 t40_slot    db 32000 dup (0)    ; 1000 cells x 2 hint slots x 16 bytes
-t40_vst     db 1000 dup (0)     ; per cell: 0 nothing shown, 1/2 slot shown
+t40_vst     db 1000 dup (0)     ; per cell: 0 nothing shown, 1/2 slot shown;
+                                ; bit 7: slots changed since (stale)
 t40_vat     db 1000 dup (0)     ; per cell: attribute of the shown hint
 ; t40_reset clears the 34000 bytes above.
 t40_cnt     dw 16 dup (0)       ; colour counts of the cell being approximated
@@ -15,7 +16,8 @@ t40_rem     db 8 dup (0)        ; t40_two: live pixels not of the first
 t40_ca      db 0
 t40_cb      db 0
 t40_na      db 0
-            db 0
+t40_nbf     db 0                ; t40_cell: which neighbours exist
+t40_fm      db 4 dup (0)        ; t40_setfm: plane masks of one colour
 t40_v       db 4 dup (0)        ; t40_verify: one window row, R,G,B,I
 t40_x       dw 0
 t40_b0      dw 0
@@ -51,3 +53,7 @@ t40_ex      dw 0
 t40_ey      dw 0
 t40_ddx     dw 0
 t40_ddy     dw 0
+t40_px0     dw 0                ; t40_present: dirty pixels, columns
+t40_px1     dw 0
+t40_py0     dw 0                ; and rows (end exclusive)
+t40_py1     dw 0

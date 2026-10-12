@@ -42,6 +42,28 @@ t40_shapes label byte
 
 assume ds:_T40
 
+; AX = AX * 40 (cell rows) without MUL, which costs ~120 cycles on an 8088.
+; Clobbers DX.
+t40_x40 macro
+    mov dx,ax
+    shl ax,1
+    shl ax,1
+    add ax,dx
+    shl ax,1
+    shl ax,1
+    shl ax,1
+endm
+
+; AX = AX * 1280 (shadow bytes per cell row) for AX <= 51. Clobbers DX.
+t40_x1280 macro
+    mov dx,ax
+    shl ax,1
+    shl ax,1
+    add ax,dx
+    mov ah,al
+    xor al,al
+endm
+
 ; ---- t40_uni: AH = nonzero column mask. CF=0: AL = the single IRGB colour
 ; of those pixels in t40_v (R,G,B,I). CF=1: more than one colour.
 tu_bit macro idx
@@ -145,6 +167,18 @@ tv_mask:
     mov t40_fg,0FFh
     mov t40_bg,0FFh
     mov t40_r7,0FFh
+    ; DI = shadow offset of the window's first row at byte t40_b0 (modulo
+    ; 64K, so rows above the screen are simply skipped)
+    mov ax,[si+2]
+    mov dx,ax
+    shl ax,1
+    shl ax,1
+    add ax,dx
+    mov cl,5
+    shl ax,cl
+    add ax,t40_b0
+    mov di,ax
+    mov cl,byte ptr t40_sh
     xor bx,bx
 tv_row:
     mov ax,[si+2]
@@ -157,7 +191,30 @@ tv_top_ok:
     jl tv_on
     jmp tv_next
 tv_on:
+    cmp t40_b0,0
+    jl tv_edge
+    cmp t40_b0,39
+    jge tv_edge
+    mov ax,es:[di]
+    xchg al,ah
+    shl ax,cl
+    mov t40_v,ah
+    mov ax,es:[di+40]
+    xchg al,ah
+    shl ax,cl
+    mov t40_v+1,ah
+    mov ax,es:[di+80]
+    xchg al,ah
+    shl ax,cl
+    mov t40_v+2,ah
+    mov ax,es:[di+120]
+    xchg al,ah
+    shl ax,cl
+    mov t40_v+3,ah
+    jmp short tv_bits
+tv_edge:
     call t40_rowbits
+tv_bits:
     mov dl,[si+bx+4]
     cmp bx,7
     jne tv_normal
@@ -200,6 +257,7 @@ tv_bgpart:
 tv_setbg:
     mov t40_bg,al
 tv_next:
+    add di,160
     inc bx
     cmp bx,8
     jae tv_rows_done
@@ -286,7 +344,9 @@ t40_claim_from proc near
     mov di,bx
     mov cl,5
     shl di,cl
-    cmp t40_vst[bx],1
+    mov al,t40_vst[bx]
+    and al,3
+    cmp al,1
     je tcf_slot
     add di,16
 tcf_slot:
@@ -512,48 +572,52 @@ tp_q3:
     ret
 t40_pick endp
 
-; ---- t40_eqrow: AL = colour, SI = row. AH = live-independent mask of the
-; row's pixels equal to that colour (t40_pl). Preserves AL and all others.
-t40_eqrow proc near
-    push di
-    push dx
-    mov di,si
-    shl di,1
-    shl di,1
-    mov dl,al
-    xor dh,dh
-    test dl,4
-    jz te_r
-    not dh
-te_r:
-    xor dh,t40_pl[di]
-    mov ah,dh
-    xor dh,dh
-    test dl,2
-    jz te_g
-    not dh
-te_g:
-    xor dh,t40_pl[di+1]
-    or ah,dh
-    xor dh,dh
-    test dl,1
-    jz te_b
-    not dh
-te_b:
-    xor dh,t40_pl[di+2]
-    or ah,dh
-    xor dh,dh
-    test dl,8
-    jz te_i
-    not dh
-te_i:
-    xor dh,t40_pl[di+3]
-    or ah,dh
-    not ah
-    pop dx
-    pop di
+; ---- t40_setfm: AL = IRGB colour -> t40_fm = 00h/FFh per plane (R,G,B,I).
+; Preserves all but flags.
+t40_setfm proc near
+    push ax
+    push bx
+    mov bl,al
+    xor ax,ax
+    test bl,4
+    jz tsf_r
+    dec al
+tsf_r:
+    test bl,2
+    jz tsf_g
+    dec ah
+tsf_g:
+    mov word ptr t40_fm,ax
+    xor ax,ax
+    test bl,1
+    jz tsf_b
+    dec al
+tsf_b:
+    test bl,8
+    jz tsf_i
+    dec ah
+tsf_i:
+    mov word ptr t40_fm+2,ax
+    pop bx
+    pop ax
     ret
-t40_eqrow endp
+t40_setfm endp
+
+; AH = pixels of row DI/4 equal to the t40_setfm colour. Clobbers AL.
+t40_eq macro
+    mov ah,t40_pl[di]
+    xor ah,t40_fm
+    mov al,t40_pl[di+1]
+    xor al,t40_fm+1
+    or ah,al
+    mov al,t40_pl[di+2]
+    xor al,t40_fm+2
+    or ah,al
+    mov al,t40_pl[di+3]
+    xor al,t40_fm+3
+    or ah,al
+    not ah
+endm
 
 ; ---- t40_first: SI -> 8 row masks. CF=1: all zero. Else AL = IRGB colour
 ; of the first set pixel (row-major, leftmost first) in t40_pl.
@@ -623,11 +687,13 @@ t40_two proc near
     ret
 tw_a:
     mov t40_ca,al
+    call t40_setfm
     xor si,si
+    xor di,di
     xor dx,dx
     xor bx,bx
 tw_arow:
-    call t40_eqrow
+    t40_eq
     mov cl,t40_live[si]
     mov ch,cl
     and ch,ah
@@ -638,6 +704,7 @@ tw_arow:
     and cl,ah
     mov t40_rem[si],cl
     or dh,cl
+    add di,4
     inc si
     cmp si,8
     jb tw_arow
@@ -652,10 +719,12 @@ tw_b:
     mov si,offset t40_rem
     call t40_first
     mov t40_cb,al
+    call t40_setfm
     xor si,si
+    xor di,di
     xor dx,dx
 tw_brow:
-    call t40_eqrow
+    t40_eq
     mov cl,t40_rem[si]
     mov ch,cl
     and ch,ah
@@ -665,6 +734,7 @@ tw_brow:
     not ah
     and cl,ah
     or dh,cl
+    add di,4
     inc si
     cmp si,8
     jb tw_brow
@@ -700,11 +770,29 @@ tw_mask:
     ret
 t40_two endp
 
+; One neighbour: BX = this cell. Claims from cell BX+off when the t40_nbf
+; bits in need are all set and that cell shows a hint.
+t40_nb macro off,need
+local skip
+    if need
+    mov al,t40_nbf
+    and al,need
+    cmp al,need
+    jne skip
+    endif
+    test t40_vst[bx+off],3
+    jz skip
+    push bx
+    add bx,off
+    call t40_claim_from
+    pop bx
+skip:
+endm
+
 ; ---- t40_cell: text word for cell t40_cy/t40_cx in AX. ES = shadow.
 t40_cell proc near
     mov ax,t40_cy
-    mov cx,40
-    mul cx
+    t40_x40
     add ax,t40_cx
     mov bx,ax
     mov al,t40_vst[bx]
@@ -727,50 +815,40 @@ tc_approx:
     mov word ptr t40_live+4,ax
     mov word ptr t40_live+6,ax
     mov t40_cbg,0FFh
-    mov ax,t40_cy
-    dec ax
-    mov t40_ny,ax
-tc_ny:
-    mov ax,t40_ny
-    cmp ax,0
-    jl tc_ny_next
-    cmp ax,24
-    jg tc_ny_next
-    mov ax,t40_cx
-    dec ax
-    mov t40_nx,ax
-tc_nx:
-    mov ax,t40_nx
-    cmp ax,0
-    jl tc_nx_next
-    cmp ax,39
-    jg tc_nx_next
-    mov ax,t40_ny
-    mov cx,40
-    mul cx
-    add ax,t40_nx
-    mov bx,ax
-    cmp t40_vst[bx],0
-    je tc_nx_next
-    call t40_claim_from
-tc_nx_next:
-    inc t40_nx
-    mov ax,t40_cx
-    inc ax
-    cmp t40_nx,ax
-    jle tc_nx
-tc_ny_next:
-    inc t40_ny
-    mov ax,t40_cy
-    inc ax
-    cmp t40_ny,ax
-    jle tc_ny
+    ; neighbours in row-major order; t40_nbf bit 0 = row above exists,
+    ; 1 = row below, 2 = column left, 3 = column right
+    xor al,al
+    cmp t40_cy,0
+    je tc_nb_top
+    or al,1
+tc_nb_top:
+    cmp t40_cy,24
+    je tc_nb_bottom
+    or al,2
+tc_nb_bottom:
+    cmp t40_cx,0
+    je tc_nb_left
+    or al,4
+tc_nb_left:
+    cmp t40_cx,39
+    je tc_nb_right
+    or al,8
+tc_nb_right:
+    mov t40_nbf,al
+    t40_nb -41,5
+    t40_nb -40,1
+    t40_nb -39,9
+    t40_nb -1,4
+    t40_nb 0,0
+    t40_nb 1,8
+    t40_nb 39,6
+    t40_nb 40,2
+    t40_nb 41,10
     ; live = not claimed; load the cell's plane bytes
     xor si,si
     xor di,di
     mov ax,t40_cy
-    mov cx,1280
-    mul cx
+    t40_x1280
     add ax,t40_cx
     mov bx,ax
 tc_load:
@@ -788,6 +866,59 @@ tc_load:
     inc si
     cmp si,8
     jb tc_load
+    ; no claims and every row the same single colour: a blank cell
+    mov ax,0FFFFh
+    cmp word ptr t40_live,ax
+    jne tc_mixed
+    cmp word ptr t40_live+2,ax
+    jne tc_mixed
+    cmp word ptr t40_live+4,ax
+    jne tc_mixed
+    cmp word ptr t40_live+6,ax
+    jne tc_mixed
+    mov ax,word ptr t40_pl
+    mov dx,word ptr t40_pl+2
+    mov si,4
+tc_solid_row:
+    cmp ax,word ptr t40_pl[si]
+    jne tc_mixed
+    cmp dx,word ptr t40_pl[si+2]
+    jne tc_mixed
+    add si,4
+    cmp si,32
+    jb tc_solid_row
+    xor bl,bl
+    cmp al,0
+    je tc_s_r
+    cmp al,0FFh
+    jne tc_mixed
+    or bl,4
+tc_s_r:
+    cmp ah,0
+    je tc_s_g
+    cmp ah,0FFh
+    jne tc_mixed
+    or bl,2
+tc_s_g:
+    cmp dl,0
+    je tc_s_b
+    cmp dl,0FFh
+    jne tc_mixed
+    or bl,1
+tc_s_b:
+    cmp dh,0
+    je tc_s_i
+    cmp dh,0FFh
+    jne tc_mixed
+    or bl,8
+tc_s_i:
+    mov ah,bl
+    mov cl,4
+    shl ah,cl
+    or ah,bl
+    mov al,20h
+    ret
+tc_mixed:
     call t40_two
     jnc tc_fast
     jmp tc_counts
@@ -976,6 +1107,30 @@ tc_m4:
     ret
 t40_cell endp
 
+; ---- t40_touch: SI = slot. CF=1 if it is valid and its 8x8 window touches
+; the dirty pixels t40_px0..t40_px1-1 x t40_py0..t40_py1-1. Clobbers AX.
+t40_touch proc near
+    cmp byte ptr [si+13],0
+    je tch_no
+    mov ax,[si]
+    cmp ax,t40_px1
+    jge tch_no
+    add ax,8
+    cmp ax,t40_px0
+    jle tch_no
+    mov ax,[si+2]
+    cmp ax,t40_py1
+    jge tch_no
+    add ax,8
+    cmp ax,t40_py0
+    jle tch_no
+    stc
+    ret
+tch_no:
+    clc
+    ret
+t40_touch endp
+
 ; ---- t40_present ---------------------------------------------------------
 ; A glyph window spans at most two cell rows and two cell columns, so pixels
 ; of the dirty cells can change only the dirty cells and one cell around
@@ -986,6 +1141,18 @@ t40_present proc near
     mov ds,si
     mov si,T40_SHSEG
     mov es,si
+    mov t40_py0,ax
+    mov t40_py1,bx
+    mov si,cx
+    shl si,1
+    shl si,1
+    shl si,1
+    mov t40_px0,si
+    mov si,dx
+    shl si,1
+    shl si,1
+    shl si,1
+    mov t40_px1,si
     mov si,cx
     mov cl,3
     shr ax,cl
@@ -1012,7 +1179,8 @@ tpr_c0:
     mov dx,39
 tpr_c1:
     mov t40_c1,dx
-    ; re-verify the shown hint of every output cell (kept in t40_vst/vat)
+    ; re-verify output cells that are stale or have a hint window touching
+    ; the dirty pixels; every other kept state is still exact
     mov ax,t40_r0
     mov t40_cy,ax
 tpr_vrow:
@@ -1020,11 +1188,22 @@ tpr_vrow:
     mov t40_cx,ax
 tpr_vcol:
     mov ax,t40_cy
-    mov cx,40
-    mul cx
+    t40_x40
     add ax,t40_cx
     mov bx,ax
+    test t40_vst[bx],80h
+    jnz tpr_verify
+    mov si,bx
+    mov cl,5
+    shl si,cl
+    call t40_touch
+    jc tpr_verify
+    add si,16
+    call t40_touch
+    jnc tpr_kept
+tpr_verify:
     call t40_shown
+tpr_kept:
     inc t40_cx
     mov ax,t40_cx
     cmp ax,t40_c1
@@ -1043,8 +1222,7 @@ tpr_ocol:
     call t40_cell
     push ax
     mov ax,t40_cy
-    mov cx,40
-    mul cx
+    t40_x40
     add ax,t40_cx
     shl ax,1
     mov di,ax
@@ -1094,8 +1272,7 @@ ta_in:
     add ax,4
     mov cl,3
     shr ax,cl
-    mov cx,40
-    mul cx
+    t40_x40
     mov di,t40_ax
     add di,4
     mov cl,3
@@ -1135,6 +1312,10 @@ ta_glyph:
     loop ta_glyph
     mov [di+12],dl
     mov byte ptr [di+13],1
+    mov bx,di                   ; mark the cell stale: re-verify it at the
+    mov cl,5                    ; next flush whose output range holds it
+    shr bx,cl
+    or t40_vst[bx],80h
 ta_done:
     pop ds
     pop di
@@ -1196,8 +1377,7 @@ tb_cdir:
     mov t40_nx,bx
 tb_col:
     mov ax,t40_cy
-    mov cx,40
-    mul cx
+    t40_x40
     add ax,t40_cx
     mov cl,5
     shl ax,cl
