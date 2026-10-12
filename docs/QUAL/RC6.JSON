@@ -276,11 +276,11 @@
     }
   },
   "source_pins": {
-    ".gitattributes": "eb2f0679a528c7a00ba829adf61d0f8b052ea5454f1899f0e75acd1c76f2160c",
+    ".gitattributes": "07b11d9bb6035ee62413c640a7ca3d05ba5d69c5756143048b7bcb606151cd9a",
     ".github/workflows/release.yml": "ef6926ac9243afebb5089e517966c4d56e7df59208648e0222aa9449fd0b7dd4",
     "AGENTS.md": "55f23a639f68b942c04140c7099fd75e703e144c437ecc53671c665e3edbc51d",
     "BUILDING.MD": "d8334babf8f505898ee2f12120c9f409e47b214e4992765f9c8273abc6643fb2",
-    "README.md": "294d0188c1e0c8a5a0eeef42d3f6bec027a8704dabe201d6fe0df2c16a3fc6e0",
+    "README.md": "da0d73209c3eb000bc458c9122bc78367b6f3ce9f7037da487507cc99a589d1b",
     "distributions/WINXT/CPSET.EXE": "c8207fa1eadf085d77cc0a69ffcc2c70bccb94e08c9507df225bc42c7918fdc9",
     "distributions/WINXT/CPSET.TXT": "796108f7051585ffd6863fb407b050e995a2dcefacec2c803dfe3999c38993a6",
     "distributions/WINXT/FONTINFO.TXT": "5a558123562bdc78ddae4ce3c7182b1a27a246c394481e3f5f56be82f8f9dc4b",

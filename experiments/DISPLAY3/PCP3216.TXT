@@ -1,0 +1,56 @@
+PCP3216.DRV - EXPERIMENTAL PLANTRONICS COLORPLUS DISPLAY
+320x200, 16 colors, Windows 3.0 real mode
+
+This ZIP contains a ready-built driver, not Windows or a Setup disk.
+Use a bootable backup/disposable clone of an existing Windows 3.0 install.
+Retain a plain-DOS recovery route. Exit Windows completely before changes.
+
+TARGET
+Plantronics ColorPlus on an IBM PC/XT with normal 640KB RAM.
+ATI Small Wonder and other ColorPlus-class clones have not been qualified.
+Not ordinary CGA, Tandy/PCjr shared video RAM or PC1512 planar video.
+No RESERVE/JRGUARD step: ColorPlus video RAM is on the card.
+
+INSTALL IN A CLONE
+1. Extract the complete ZIP to a new C:\PCPEXP. Verify SHA256.SUM on a
+   modern host. Do not reuse an old backup directory.
+2. Back up the complete Windows installation/image before continuing.
+3. At plain DOS: COPY C:\WINDOWS\SYSTEM.INI C:\PCPEXP\SYSBACK.INI
+   Stop if SYSBACK.INI already exists. Record the old display.drv setting.
+4. Preserve an existing C:\WINDOWS\SYSTEM\PCP3216.DRV before replacing it.
+5. COPY C:\PCPEXP\PCP3216.DRV C:\WINDOWS\SYSTEM\PCP3216.DRV
+6. With a DOS text editor, change only [boot] display.drv in SYSTEM.INI to
+   display.drv=PCP3216.DRV.
+7. CD \WINDOWS, then WIN /R. Use plain Windows startup, not the Tandy
+   WINXT reservation/animation route.
+
+These fixed C:\WINDOWS paths describe the qualified cloned-install route.
+For another Windows directory, substitute that directory consistently.
+The recorded tests reused an AT/EGA install with its EGA fonts/grabber.
+Fresh CGA-class Setup/fonts/grabber integration and DOS boxes are untested.
+The package does not change keyboard or mouse configuration.
+
+STARTUP LOGO
+This ZIP supplies no startup logo and does not rebuild WIN.COM or run Setup.
+WIN /R retains your existing WIN.COM's startup behavior. A compatible stock
+Windows loader can show its original static logo; a customized loader can
+show different art or no logo. The separate Tandy wave is not invoked.
+There is no automatic logo fallback. Use a nonanimated WIN.COM; logo
+appearance/compatibility on this adapter is not separately qualified.
+
+ROLLBACK FROM PLAIN DOS
+Exit Windows fully, or reboot to DOS if Windows will not start.
+COPY C:\PCPEXP\SYSBACK.INI C:\WINDOWS\SYSTEM.INI
+Restore a pre-existing PCP3216.DRV if you replaced one. A newly added driver
+may remain inactive after restoring the old setting. Restore the complete
+image/installation backup if additional configuration was changed.
+Never share a completed guest or backup containing Windows/DOS files.
+
+WHAT WAS TESTED / WHAT WAS NOT
+The exact driver passed 88/88 recorded Windows 3.0 checks on 86Box 6.0's
+IBM XT + ColorPlus model, including save/reopen, cursors and restart.
+Physical ColorPlus/clones, RGB output/timing, real serial/bus mice, XT BIOS
+and keyboard variants, fresh Setup and DOS/grabber switching remain
+unqualified. Fixed emulator cycles do not measure real-machine performance.
+
+See PINS.JSN, NOTICE.TXT and the companion source/qualification records.

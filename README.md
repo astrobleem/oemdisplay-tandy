@@ -61,6 +61,23 @@ non-font support file still come from your own installation/media.
 [Optional experimental downloads](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experiments-2026-10-07)
 have their own installation guides.
 
+## Other video hardware: experimental drivers
+
+These are separate driver-only experiments for cloned Windows 3.0 installs.
+Back up the complete installation and follow the machine's recovery guide.
+Physical hardware and fresh Windows Setup integration remain unqualified.
+
+| Machine/card | Mode and download | Status and guide |
+| --- | --- | --- |
+| Amstrad PC1512 | [PC1512.DRV, 640x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) | Emulator rendering evidence; one cursor-state case remains unresolved. [Install/recover](experiments/DISPLAY3/PC1512.TXT) |
+| IBM PCjr | [TNDYJR.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCJR.ZIP) | Guard required before every start; expanded-memory reservation on real PCjr is unqualified. [Install/recover](experiments/DISPLAY3/PCJR.TXT) |
+| IBM XT + Plantronics ColorPlus | [PCP3216.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP) | Emulator rendering evidence; requires the ColorPlus card and its dedicated VRAM. [Install/recover](experiments/DISPLAY3/PCP3216.TXT) |
+
+[Experimental release, source and checksums](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experimental-displays-2026-10-12)
+and [qualification scope](experiments/DISPLAY3/README.MD). Tandy EX/HX users
+should continue with Windows XT rc.6 above. This release includes no TXT40
+or TGA-II driver and no Windows, DOS, font/grabber, ROM or compiler files.
+
 ## Display modes
 
 | Resolution | Colors |
