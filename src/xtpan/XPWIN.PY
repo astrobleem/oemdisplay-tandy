@@ -24,7 +24,6 @@ HERE = Path(__file__).resolve().parent
 PCPWIN = importlib.machinery.SourceFileLoader("pcpwin", str(HERE / "PCPWIN.PY")).load_module()
 PANCHK = importlib.machinery.SourceFileLoader("panchk", str(HERE / "PANCHK.PY")).load_module()
 PART = "@@8704"
-PTR = (16, 20)          # pointer box checked as "pointer", width x height from the hot spot
 
 
 class Session:
@@ -115,9 +114,22 @@ class Session:
         m = self.wait_line(r"CURSOR x=(-?\d+) y=(-?\d+) top=(-?\d+) off=(-?\d+)", n, 30)
         return tuple(int(v) for v in m.groups()) if m else None
 
+    def arrow(self):
+        """The pointer as the driver under test draws it (PANCHK.arrow), read
+        from the driver file on the guest disk, so the check follows the
+        exact binary being run."""
+        if getattr(self, "_arrow", None) is None:
+            drv = "TR53216.DRV" if self.base else "XTPAN.DRV"
+            p = subprocess.run(["mtype", "-i", f"{self.vm / 'pcp.img'}{PART}", "::/WINDOWS/SYSTEM/" + drv],
+                               capture_output=True, check=True)
+            self._arrow = PANCHK.arrow(p.stdout)
+        return self._arrow
+
     def pattern(self, name, pointer_check=True):
-        """Capture and check the pattern exactly, the pointer box apart; and
-        that everything differing is inside the pointer box at its video row."""
+        """Capture and check the whole frame exactly: the pattern rows the
+        viewport shows, with the driver's arrow composited at the hot spot
+        PANTEST reports (shape and position, every pixel; no box skipped).
+        pointer_check=False only where the pointer is known to be hidden."""
         w = self.where()
         if w is None:
             self.check(f"{name}: PANTEST reports pointer and viewport", False)
@@ -126,26 +138,19 @@ class Session:
         self.r.shot(name, settle=1.5, decode=False)
         cap = self.r.b.out / (name + ".png")
         vy = y - top
-        box = (x, vy, x + PTR[0], vy + PTR[1])
+        cur = (x, vy, self.arrow()) if pointer_check else None
         try:
-            res = PANCHK.check(cap, top, off, [box], self.map)
+            res = PANCHK.check(cap, top, off, (), self.map, cur)
         except SystemExit as e:           # capture not decodable: a failed check, not the end
             res = {"verdict": "FAIL", "error": str(e)}
         if res.get("verdict") == "PASS":
             self.map = res["map"]
         self.check(f"{name}: all video rows equal logical rows {top}..{top + 199} of the pattern "
-                   f"(off {off}), pointer box apart", res.get("verdict") == "PASS",
+                   f"(off {off}) with the arrow drawn exactly at hot spot ({x},{vy})",
+                   res.get("verdict") == "PASS",
                    pixels=res.get("pixels_checked"), mismatches=res.get("mismatches"),
+                   cursor_pixels=res.get("cursor_pixels"), cursor_mismatches=res.get("cursor_mismatches"),
                    first=res.get("first_mismatch"), pointer=[x, y], top=top)
-        if pointer_check and 0 <= vy < 200:
-            try:
-                full = PANCHK.check(cap, top, off, [], self.map)
-            except SystemExit:
-                full = {"mismatches": 0}
-            inside = full.get("mismatches", 0) - res.get("mismatches", 0)
-            self.check(f"{name}: pointer drawn at its logical position, video row {vy} "
-                       f"({inside} pointer pixels, none elsewhere)",
-                       res.get("mismatches") == 0 and inside > 0)
         return w
 
     def pans(self, start):

@@ -176,6 +176,29 @@ static void Keys(void)
     bKeyWasDown = which && Held(which == 1 ? vkDown : which == 2 ? vkUp : vkTop);
 }
 
+/* The viewport top that brings window rows [wtop, wbot) into view with the
+ * smallest move: exact rows, not Steps (a 190-row window at rows 30..220
+ * seen from top 0 needs top 20; whole 50-row steps would give 50 and then,
+ * to show row 30, 0 again, leaving it cut off). A window taller than the
+ * viewport shows its top (title bar). The result is clamped to the
+ * desktop, so a window hanging off the desktop is shown as far as it can
+ * be. Pure arithmetic: HOSTTEST.PY runs the same rule. */
+static int FollowTop(int top, int view, int logical, int wtop, int wbot)
+{
+    int t = top;
+    if (wbot - wtop > view)
+        t = wtop;
+    else if (wbot > t + view)
+        t = wbot - view;
+    else if (wtop < t)
+        t = wtop;
+    if (t > logical - view)
+        t = logical - view;
+    if (t < 0)
+        t = 0;
+    return t;
+}
+
 static void Follow(void)
 {
     HWND h = GetActiveWindow();
@@ -189,15 +212,7 @@ static void Follow(void)
     GetWindowRect(h, &r);
     if (r.top >= nTop && r.bottom <= nTop + nView)
         return;
-    t = nTop;
-    if (r.bottom - r.top <= nView) {
-        while (r.bottom > t + nView)
-            t += nStep;
-        while (r.top < t)
-            t -= nStep;
-    } else {
-        t = (r.top / nStep) * nStep;
-    }
+    t = FollowTop(nTop, nView, nLogical, r.top, r.bottom);
     PanTo(t, "follow");
     KeepPointer();
 }
