@@ -96,3 +96,61 @@ Tandy video RAM is the top of system RAM: with mode 09h, 32KB of the
 16KB), so DOS starts with at most 608KB. The software approach adds
 32,000 bytes to the driver's fixed data (64,000-byte shadow instead of
 32,000); video RAM stays 32KB. Measured figures follow in section 5.
+
+Link maps of the two builds (`TSOFT.MAP`): the shadow segment `_SHADOW`
+grows from 7D00h (32,000) to FA00h (64,000) bytes; code grows by 308
+bytes (`_TEXT` +234 for the viewport clipping and `pan_set`, `_BLUEMOON`
++74 for the escape); `_DATA` by 2 bytes (`pan_top`). The driver is
+PRELOAD FIXED, so all of it is taken from conventional memory for the
+whole session: **+32,310 bytes**.
+
+## 4. The prototype as built
+
+Branch `ai/xt-pan`. Nothing in any release changes.
+
+| File | Purpose |
+| --- | --- |
+| `src/xtpan/PANPATCH.PY`, `BUILDPAN.PY` | The driver edits (section 1) and their build on BUILD88's 320x200x16 profile, which reproduces the shipped `TR53216.DRV` byte for byte without the edits |
+| `src/xtpan/XTPAN.C` | The panning helper (a Windows application, task time only) |
+| `src/xtpan/PANTEST.C` | Test fixture: exact test pattern, tall dialog, overlapping windows, drag, menu, edit selection, benchmarks; logs what Windows reports |
+| `src/xtpan/BUILDAPP.PY` | Builds both applications with the pinned compiler (`/G0 /Gw /AS`, LINK4) |
+| `src/xtpan/PANCHK.PY` | Checks a capture of the test pattern pixel by pixel against the viewport top |
+| `src/xtpan/XPWIN.PY` | The scripted 86Box session |
+| `src/xtpan/EMULOCK.PY` | Runs every emulator job under the shared lock (non-blocking, refuses if another emulator runs, bounded) |
+| `src/xtpan/PCP86.PY` etc. | Copies of the 86Box harness (`PROVENANCE.TXT`), with Tandy 1000 HX targets |
+
+**Driver (XTPAN.DRV).** GDI and USER see a 320x400 screen. All drawing
+goes to the 64,000-byte shadow as before; flushes present only the rows
+inside the viewport; the cursor is drawn at its logical row minus the
+viewport top. The viewport moves only through the Control escape 5850h
+(input: new top, or FFFFh to query; output: top, 200, 400), which
+converts the 200 visible rows in task time.
+
+**Helper (XTPAN.EXE)**, started by WIN.INI `load=`, runs a 55 ms timer:
+
+- *Edge dwell:* the pointer rests in the bottom (top) `Edge` rows of the
+  viewport for `Dwell` ms: one `Step` down (up). A pass through the
+  band shorter than the dwell does nothing.
+- *Pointer outside the viewport* (USER lets the pointer go anywhere in
+  the 400 rows, so a fast move can leave the viewport): pan at once, in
+  whole steps, to show it. The drawn pointer and the click target are
+  never apart.
+- *Keys* `KeyMods`+`KeyDown`/`KeyUp`/`KeyTop` (default Ctrl+Alt+PgDn,
+  PgUp, Home), polled with GetAsyncKeyState including taps between
+  ticks.
+- *FollowActive:* a newly activated window not wholly visible is brought
+  into view (Windows centres dialogs on the 400-row desktop, so they
+  otherwise appear straddling the viewport edge). After a key or follow
+  pan the pointer is moved into the viewport if it was left outside.
+- Each pan is logged with its duration when `LogFile` is set.
+
+WIN.INI `[XTPan]` settings and defaults: `Enabled=1`, `Step=50`,
+`Dwell=400`, `Edge=3`, `KeyMods=3` (1 Ctrl, 2 Alt, 4 Shift),
+`KeyDown=34` (VK_NEXT), `KeyUp=33` (VK_PRIOR), `KeyTop=36` (VK_HOME),
+`FollowActive=1`, `LogFile=` (none).
+
+**Turning it off.** `[XTPan] Enabled=0` stops the helper (the desktop
+stays 320x400, viewport at the top). To remove the experiment, set
+`display.drv=TR53216.DRV` in SYSTEM.INI again (the shipped Windows XT
+driver) and remove `XTPAN.EXE` from `load=`; the helper also exits by
+itself under any other display driver.
