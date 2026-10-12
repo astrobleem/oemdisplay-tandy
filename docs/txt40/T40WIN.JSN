@@ -164,16 +164,7 @@
   {
    "check": "Edit menu closed: screen identical to Notepad before (except the blinking caret's cells after the typed line)",
    "result": "PASS",
-   "differing_cells": [
-    [
-     4,
-     24
-    ],
-    [
-     5,
-     24
-    ]
-   ],
+   "differing_cells": [],
    "caret_cells": [
     [
      4,
@@ -222,19 +213,19 @@
  ],
  "settle_seconds": {
   "groupmsg": 11.5,
-  "desktop": 11.4,
-  "filemenu": 21.1,
+  "desktop": 11.5,
+  "filemenu": 21.2,
   "menuclosed": 11.4,
   "cursor_a": 11.4,
   "cursor_b": 11.4,
-  "rundlg": 40.8,
-  "notepad0": 11.5,
-  "notepad": 79.6,
+  "rundlg": 60.1,
+  "notepad0": 11.4,
+  "notepad": 79.5,
   "editmenu": 21.1,
-  "editclosed": 11.4,
-  "moved": 40.5,
-  "closed": 21.2,
-  "exitdlg": 40.5,
+  "editclosed": 21.1,
+  "moved": 40.6,
+  "closed": 21.1,
+  "exitdlg": 40.7,
   "desktop2": 11.4
  },
  "passed": 45,

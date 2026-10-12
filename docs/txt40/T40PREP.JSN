@@ -2,7 +2,7 @@
  "target": "txt40",
  "pristine_sha256": "f55fe24baf83d9557e6c16612fbf8b4af5b175bf6b9b6d876e5784222e117561",
  "driver": "TXT40.DRV",
- "driver_sha256": "88628cd684f77bcf8d80763d1d275fe29f4cea65f76bfd3148d89733a59cfee2",
+ "driver_sha256": "fb9622abc72c3c0035e484153f001fd12287a12604def1a8c875ef3b7ca6e958",
  "tools": {
   "T40ID.COM": "75d8e076f14defc240aa96a34a5f366a2012c4173cd258d0c376d310074c3174",
   "MSTEST.COM": "51dd0966a76cbc6349f1685ef65bbdeb4883897679d5426168d8f9c5a9f462bc"
