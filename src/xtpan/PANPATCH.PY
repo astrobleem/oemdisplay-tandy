@@ -34,8 +34,24 @@ import sys
 from pathlib import Path
 
 VIEW_ROWS = 200
-LOGICAL_ROWS = 400
+LOGICAL_ROWS = 400          # set_rows() changes it before patch_staged()
 XTPAN_ESC = 0x5850
+
+
+def set_rows(rows):
+    """Logical height: 200 < rows <= 409 (the shadow, rows x 160 bytes, must
+    stay below 64KB), a multiple of 4 so every derived size is whole."""
+    global LOGICAL_ROWS
+    if not (200 < rows <= 409 and rows % 4 == 0):
+        raise SystemExit("PANPATCH: rows must be a multiple of 4 in 204..408")
+    LOGICAL_ROWS = rows
+
+
+def scaled(v):
+    """A GDIINFO vertical quantity of the 200-row driver, scaled."""
+    if (v * LOGICAL_ROWS) % 200:
+        raise SystemExit(f"PANPATCH: {v} does not scale to {LOGICAL_ROWS} rows exactly")
+    return v * LOGICAL_ROWS // 200
 
 
 def crlf(s):
@@ -165,21 +181,23 @@ def patch_tsoft(t):
                   "VIEW_ROWS equ %d                  ; PANPATCH: rows on screen\n"
                   "XTPAN_ESC equ %05Xh               ; PANPATCH: Control escape\n"
                   % (LOGICAL_ROWS, VIEW_ROWS, XTPAN_ESC), 1, "screen height")
-    t = replace_n(t, "shadow_bits db 32000 dup (0)\n", "shadow_bits db 64000 dup (0)\n", 1, "shadow size")
+    rows = LOGICAL_ROWS
+    t = replace_n(t, "shadow_bits db 32000 dup (0)\n", "shadow_bits db %d dup (0)\n" % (rows * 160), 1,
+                  "shadow size")
     t = replace_n(t, "BITMAP <0,320,200,40,4,1,0,8000,0,0,0,0,0,0>",
-                  "BITMAP <0,320,400,40,4,1,0,16000,0,0,0,0,0,0>", 1, "shadow descriptor")
+                  "BITMAP <0,320,%d,40,4,1,0,%d,0,0,0,0,0,0>" % (rows, rows * 40), 1, "shadow descriptor")
     t = replace_n(t, "BITMAP <1,320,200,40,4,1,0,8000,0,0,0,0,0,0>",
-                  "BITMAP <1,320,400,40,4,1,0,16000,0,0,0,0,0,0>", 1, "physical descriptor")
+                  "BITMAP <1,320,%d,40,4,1,0,%d,0,0,0,0,0,0>" % (rows, rows * 40), 1, "physical descriptor")
     t = replace_n(t, "    dw 0300h,DT_RASDISPLAY,240,180,320,200,1,4\n",
-                  "    dw 0300h,DT_RASDISPLAY,240,360,320,400,1,4\n", 1, "GDIINFO size/resolution")
-    for old, new in (("2400,1800,320,-200", "2400,3600,320,-400"),
-                     ("24000,18000,320,-200", "24000,36000,320,-400"),
-                     ("1200,900,406,-254", "1200,1800,406,-508"),
-                     ("12000,9000,406,-254", "12000,18000,406,-508"),
-                     ("17280,12960,406,-254", "17280,25920,406,-508")):
-        t = replace_n(t, "    dw %s\n" % old, "    dw %s\n" % new, 1, "mapping extents " + old)
-    t = replace_n(t, "    mov cx,16000\n    cld\n    rep stosw\n", "    mov cx,32000\n    cld\n    rep stosw\n",
-                  1, "enable clears shadow")
+                  "    dw 0300h,DT_RASDISPLAY,240,%d,320,%d,1,4\n" % (scaled(180), rows), 1,
+                  "GDIINFO size/resolution")
+    for wx, wy, vx, vy in ((2400, 1800, 320, -200), (24000, 18000, 320, -200), (1200, 900, 406, -254),
+                           (12000, 9000, 406, -254), (17280, 12960, 406, -254)):
+        old = "%d,%d,%d,%d" % (wx, wy, vx, vy)
+        t = replace_n(t, "    dw %s\n" % old, "    dw %d,%d,%d,%d\n" % (wx, scaled(wy), vx, scaled(vy)), 1,
+                      "mapping extents " + old)
+    t = replace_n(t, "    mov cx,16000\n    cld\n    rep stosw\n",
+                  "    mov cx,%d\n    cld\n    rep stosw\n" % (rows * 80), 1, "enable clears shadow")
     t = replace_n(t, DATA_ANCHOR, DATA_ANCHOR + DATA_NEW, 1, "pan_top")
     # every flush: clip to the viewport after its own clamps
     for label, tag in (("\nflush_last_clamped:\n", "fr"), ("\nkeep_last_clamped:\n", "kr"),
@@ -246,8 +264,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--staged", type=Path, help="dry run against a staged EGA dir (nothing written)")
+    ap.add_argument("--rows", type=int, default=400, help="logical rows (default 400)")
     a = ap.parse_args()
     assert "pan_fr_first" in pan_clip("fr") and LOGICAL_ROWS * 160 == 64000
+    ap_rows = a.rows if hasattr(a, "rows") else 400
+    set_rows(ap_rows)
     if a.staged:
         for name, fn in (("TSOFT.ASM", patch_tsoft), ("TCURSOR.ASM", patch_tcursor),
                          ("TSOFT.DEF", patch_def)):

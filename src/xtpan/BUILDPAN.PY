@@ -31,7 +31,9 @@ def main():
     ap.add_argument("--repo", type=Path, required=True)
     ap.add_argument("--dosbox", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--rows", type=int, default=400, help="logical desktop rows (default 400)")
     a = ap.parse_args()
+    PANPATCH.set_rows(a.rows)
     repo, out = a.repo.resolve(), a.out.resolve()
     tandysw = repo / "src" / "tandysw"
     sys.path.insert(0, str(tandysw))
@@ -71,11 +73,12 @@ def main():
         if len(drvs) != 1:
             raise SystemExit("BUILDPAN: expected exactly one built driver, found %d" % len(drvs))
         built = drvs[0]
-    target = out / "XTPAN.DRV"
+    target = out / ("XTPAN.DRV" if a.rows == 400 else "XTPAN%d.DRV" % a.rows)
     shutil.copyfile(built, target)
     data = target.read_bytes()
     summary = {
-        "driver": "XTPAN.DRV",
+        "driver": target.name,
+        "logical_rows": a.rows,
         "built_as": built.name,
         "driver_bytes": len(data),
         "driver_sha256": hashlib.sha256(data).hexdigest(),
