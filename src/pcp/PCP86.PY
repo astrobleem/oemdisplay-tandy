@@ -211,7 +211,27 @@ TARGETS = {
             "tools": ("PCPID.COM", "PCPSHOW.EXE", "SHADOW.BIN", "MSTEST.COM")},
     "pc1512": {"drv": "PC1512.DRV", "sha": None, "dir": "P15", "id": "P15ID",
                "tools": ("P15ID.COM", "P15SHOW.COM", "MSTEST.COM")},
+    # Experimental 40x25 colour text driver (src/txt40) on an IBM XT with an
+    # IBM CGA card; --tv switches the CGA output to composite (a TV set).
+    "txt40": {"drv": "TXT40.DRV", "sha": None, "dir": "T40", "id": "T40ID",
+              "tools": ("T40ID.COM", "MSTEST.COM")},
 }
+# First-party 8x8 fonts (tools/XTFONTS; distributions/WINXT XT*.FON): the
+# fixed-cell system font plus the CGA fixed and OEM fonts.
+FONTS8 = {"fonts.fon": "XTTSYS.FON", "fixedfon.fon": "XTCFIX.FON", "oemfonts.fon": "XTCOEM.FON"}
+FONT_SHA = {"XTTSYS.FON": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa",
+            "XTCFIX.FON": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+            "XTCOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"}
+CGA_CARD = """[Video]
+gfxcard = cga
+
+[IBM CGA]
+display_type = {display}
+composite_type = 1
+rgb_type = 0
+snow_enabled = 1
+double_type = 0
+"""
 # Amstrad PC1512: 8086 at 8 MHz, its own fixed 640x200x16 video, 640KB.
 # Its built-in Amstrad mouse is not used (Windows 3.0 has no driver for it).
 PC1512_MACHINE = """[Machine]
@@ -225,12 +245,16 @@ time_sync = disabled
 """
 
 
-def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", target="pcp", drv_sha=None):
+def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", target="pcp", drv_sha=None,
+            fonts=None, grid=0, tv=False):
     """Build a private disk from the verified PCjs image plus the test files.
 
     control_ega: identical machine and disk changes, but an IBM EGA card and
     the install's own Microsoft EGA.DRV, to separate driver faults from
-    emulator or harness behaviour."""
+    emulator or harness behaviour.
+    fonts: folder with the first-party 8x8 fonts (FONTS8), installed as the
+    system, fixed and OEM fonts. grid: WIN.INI GridGranularity (units of 8
+    pixels). tv: CGA composite output instead of RGB (txt40 only)."""
     vm.mkdir(parents=True, exist_ok=True)
     img = vm / "pcp.img"
     if img.exists():
@@ -262,6 +286,17 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", targe
     if not control_ega:
         ini = edit(ini, "display.drv=ega.drv", "display.drv=" + tg["drv"])
     ini = edit(ini, "[keyboard]\r\nsubtype=\r\ntype=3", "[keyboard]\r\nsubtype=\r\ntype=1")
+    if fonts:
+        for key, name in FONTS8.items():
+            if sha(Path(fonts) / name) != FONT_SHA[name]:
+                raise SystemExit("PCP86: font hash mismatch: " + name)
+            old = [l for l in ini.split("\r\n") if l.lower().startswith(key + "=")]
+            if len(old) != 1:
+                raise SystemExit("PCP86: SYSTEM.INI has no single " + key)
+            ini = edit(ini, old[0] + "\r\n", key + "=" + name + "\r\n")
+            mt("mcopy", "-o", "-i", i, str(Path(fonts) / name), "::/WINDOWS/SYSTEM/" + name)
+        changes.append("8x8 fonts: " + ", ".join(f"{k}={v}" for k, v in FONTS8.items()) +
+                       " (first-party XT fonts, hashes checked)")
     (tmp / "SYSTEM.INI").write_bytes(ini.encode("latin1"))
     mt("mcopy", "-o", "-i", i, str(tmp / "SYSTEM.INI"), "::/WINDOWS/SYSTEM.INI")
     changes.append(("SYSTEM.INI: display.drv unchanged (ega.drv, CONTROL)" if control_ega else
@@ -269,6 +304,9 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", targe
     win = mt("mtype", "-i", i, "::/WINDOWS/WIN.INI").decode("latin1")
     win = edit(win, "swapdisk=\r\n", "swapdisk=\r\nMouseSpeed=0\r\n")
     win = edit(win, "Wallpaper=(None)", "Wallpaper=BARS16.BMP")
+    if grid:
+        win = edit(win, "GridGranularity=0", f"GridGranularity={grid}")
+        changes.append(f"WIN.INI: GridGranularity={grid} (windows snap to {8 * grid}-pixel steps)")
     (tmp / "WIN.INI").write_bytes(win.encode("latin1"))
     mt("mcopy", "-o", "-i", i, str(tmp / "WIN.INI"), "::/WINDOWS/WIN.INI")
     changes.append("WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); "
@@ -284,6 +322,11 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", targe
         mt("mcopy", "-o", "-i", i, str(Path(tools) / n), "::/" + tg["dir"] + "/" + n)
     changes.append(f"added WINDOWS/SYSTEM/{tg['drv']} and {tg['dir']}/" + ", ".join(tg["tools"]))
     cfg = CFG.replace("gfxcard = plantronics", "gfxcard = ega") if control_ega else CFG
+    if target == "txt40":
+        cfg = cfg.replace("[Video]\ngfxcard = plantronics\n", CGA_CARD.replace("\r\n", "\n")
+                          .format(display=1 if tv else 0))
+    elif tv:
+        raise SystemExit("PCP86: --tv needs --target txt40")
     if target == "pc1512":
         a = cfg.index("[Machine]")
         b = cfg.index("[Input devices]")
@@ -298,7 +341,8 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", targe
     (vm / "86box.cfg").write_text(cfg)
     rec = {"target": target, "pristine_sha256": PRISTINE_SHA, "driver": tg["drv"], "driver_sha256": want,
            "tools": {n: sha(Path(tools) / n) for n in tg["tools"]},
-           "control_ega": control_ega, "mouse": mouse, "changes": changes, "86box_cfg": cfg}
+           "control_ega": control_ega, "mouse": mouse, "fonts": fonts and dict(FONT_SHA),
+           "grid": grid, "tv": tv, "changes": changes, "86box_cfg": cfg}
     (vm / "PREP.JSN").write_text(json.dumps(rec, indent=1) + "\n")
     return rec
 
@@ -374,12 +418,16 @@ def main():
     ap.add_argument("--control-ega", action="store_true")
     ap.add_argument("--mouse", default="msserial", choices=["msserial", "logibus", "pty"])
     ap.add_argument("--target", default="pcp", choices=sorted(TARGETS))
-    ap.add_argument("--drv-sha", help="expected SHA-256 of --drv (required for pc1512)")
+    ap.add_argument("--drv-sha", help="expected SHA-256 of --drv (required for pc1512, txt40)")
+    ap.add_argument("--fonts", help="folder with XTTSYS.FON, XTCFIX.FON, XTCOEM.FON (8x8 fonts)")
+    ap.add_argument("--grid", type=int, default=0, help="WIN.INI GridGranularity")
+    ap.add_argument("--tv", action="store_true", help="txt40: CGA composite output (a TV)")
     a = ap.parse_args()
     os.environ["DISPLAY"] = a.display
     vm = Path(a.vm)
     if a.cmd == "prepare":
-        print(json.dumps(prepare(vm, a.pristine, a.drv, a.tools, a.control_ega, a.mouse, a.target, a.drv_sha), indent=1))
+        print(json.dumps(prepare(vm, a.pristine, a.drv, a.tools, a.control_ega, a.mouse, a.target, a.drv_sha,
+                                 a.fonts, a.grid, a.tv), indent=1))
     elif a.cmd == "start":
         if running(vm) is not None:
             raise SystemExit("PCP86: an 86Box instance for this VM is already running")
