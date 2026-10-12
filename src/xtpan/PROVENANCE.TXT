@@ -1,0 +1,7 @@
+PCP86.PY, PCPMOUSE.PY, SHOTDEC.PY, PCPWIN.PY, HOSTTEST.PY and MSTEST.ASM are
+copies of src/pcp/ from branch ai/txt40-tv, commit
+a27aa9fdab634fef2f5def634253f651ab801e0b (itself based on
+ai/pcjr-tga2-groundwork), so that this experiment does not depend on or
+modify the Plantronics/PC1512/PCjr line. Changes here: PCP86.PY targets
+"xtpan" and "xtbase" (Tandy 1000 HX in 86Box, helper load line and log
+setting). Everything else is unchanged.
