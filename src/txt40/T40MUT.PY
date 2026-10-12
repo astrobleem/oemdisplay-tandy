@@ -25,6 +25,8 @@ MUTANTS = [
     ("claim-window-rows", "    cmp ax,8\r\n    jae tcf_skip", "    cmp ax,7\r\n    jae tcf_skip"),
     ("background-tie-order", "    jbe tc_bg_next", "    jb tc_bg_next"),
     ("foreground-tie-order", "    jbe tc_fg_next", "    jb tc_fg_next"),
+    ("two-colour-tie", "    ja tw_a_bg", "    jae tw_a_bg"),
+    ("two-colour-third", "    jz tw_two", "    jmp tw_two"),
     ("box-down-edge", "    cmp t40_rl,7", "    cmp t40_rl,6"),
     ("thin-line-stray", "    jle tp_thin", "    jl tp_thin"),
     ("half-block-tolerance", "    ja tp_density", "    jae tp_density"),

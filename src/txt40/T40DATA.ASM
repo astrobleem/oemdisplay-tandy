@@ -3,11 +3,19 @@
 t40_slot    db 32000 dup (0)    ; 1000 cells x 2 hint slots x 16 bytes
 t40_vst     db 1000 dup (0)     ; per cell: 0 nothing shown, 1/2 slot shown
 t40_vat     db 1000 dup (0)     ; per cell: attribute of the shown hint
+; t40_reset clears the 34000 bytes above.
 t40_cnt     dw 16 dup (0)       ; colour counts of the cell being approximated
 t40_pl      db 32 dup (0)       ; cell planes, 8 rows x (R,G,B,I)
 t40_live    db 8 dup (0)        ; claimed rows, then unclaimed (live) rows
 t40_mask    db 8 dup (0)        ; foreground pixels within live
 t40_snap    db 32 dup (0)       ; t40_blit: copy of one cell's slots
+t40_eqa     db 8 dup (0)        ; t40_two: live pixels of the first colour
+t40_eqb     db 8 dup (0)        ; t40_two: live pixels of the second colour
+t40_rem     db 8 dup (0)        ; t40_two: live pixels not of the first
+t40_ca      db 0
+t40_cb      db 0
+t40_na      db 0
+            db 0
 t40_v       db 4 dup (0)        ; t40_verify: one window row, R,G,B,I
 t40_x       dw 0
 t40_b0      dw 0

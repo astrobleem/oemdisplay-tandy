@@ -85,11 +85,11 @@ ENABLE_NEW = crlf("""    mov ax,1                  ; T40PATCH: BIOS 40x25 colour
     mov cx,1000
     cld
     rep stosw
-    mov ax,seg t40_slot       ; forget every hint (t40_reset, inline:
-    mov es,ax                 ; TEnable is in another code segment)
-    xor di,di
+    mov ax,seg t40_slot       ; forget every hint and shown state
+    mov es,ax                 ; (t40_reset inline: TEnable is in
+    xor di,di                 ; another code segment)
     xor ax,ax
-    mov cx,16000
+    mov cx,17000
     rep stosw
 """)
 

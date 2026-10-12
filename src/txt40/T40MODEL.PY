@@ -37,7 +37,10 @@ For every cell (ideal()):
 present(ay, by, cx, dx) rewrites only the cells a change of pixel rows
 ay..by-1, byte columns cx..dx-1 can affect. A glyph window spans at most
 two cell rows and columns, so that is the dirty cells plus one cell each
-way; shown hints are re-verified one cell beyond that.
+way. Which hint a cell shows (slot and attribute) is re-verified for those
+cells and kept between flushes; neighbours outside the range use their
+kept state. That equals ideal() as long as every pixel change and every
+hint change is followed by a flush covering it, which the driver does.
 """
 import json
 import sys
@@ -162,6 +165,7 @@ class Presenter:
     def __init__(self):
         self.slots = [[] for _ in range(NCELL)]     # newest first, at most 2
         self.text = [0] * NCELL                      # attr<<8 | code
+        self.kept = [None] * NCELL                   # (slot index, attr) shown
 
     def add(self, x, y, glyph, code):
         k = hint_cell(x, y)
@@ -188,10 +192,14 @@ class Presenter:
                         self.add(x + ddx, y + ddy, g, c)
 
     def shown(self, shadow, k):
-        for h in self.slots[k]:
+        i = self.shown_slot(shadow, k)
+        return None if i is None else (self.slots[k][i[0]], i[1])
+
+    def shown_slot(self, shadow, k):
+        for i, h in enumerate(self.slots[k]):
             a = verify(shadow, h)
             if a is not None:
-                return h, a
+                return i, a
         return None
 
     def cell(self, shadow, cy, cx, shown):
@@ -258,10 +266,10 @@ class Presenter:
             return
         r0, r1 = max((ay >> 3) - 1, 0), min(((by - 1) >> 3) + 1, ROWS - 1)
         c0, c1 = max(cx - 1, 0), min(dx - 1 + 1, COLS - 1)
-        shown = [None] * NCELL
-        for cy in range(max(r0 - 1, 0), min(r1 + 1, ROWS - 1) + 1):
-            for x in range(max(c0 - 1, 0), min(c1 + 1, COLS - 1) + 1):
-                shown[cy * COLS + x] = self.shown(shadow, cy * COLS + x)
+        for cy in range(r0, r1 + 1):
+            for x in range(c0, c1 + 1):
+                self.kept[cy * COLS + x] = self.shown_slot(shadow, cy * COLS + x)
+        shown = [None if s is None else (self.slots[k][s[0]], s[1]) for k, s in enumerate(self.kept)]
         for cy in range(r0, r1 + 1):
             for x in range(c0, c1 + 1):
                 self.text[cy * COLS + x] = self.cell(shadow, cy, x, shown)

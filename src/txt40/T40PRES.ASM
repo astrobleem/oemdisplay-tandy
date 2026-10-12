@@ -512,6 +512,194 @@ tp_q3:
     ret
 t40_pick endp
 
+; ---- t40_eqrow: AL = colour, SI = row. AH = live-independent mask of the
+; row's pixels equal to that colour (t40_pl). Preserves AL and all others.
+t40_eqrow proc near
+    push di
+    push dx
+    mov di,si
+    shl di,1
+    shl di,1
+    mov dl,al
+    xor dh,dh
+    test dl,4
+    jz te_r
+    not dh
+te_r:
+    xor dh,t40_pl[di]
+    mov ah,dh
+    xor dh,dh
+    test dl,2
+    jz te_g
+    not dh
+te_g:
+    xor dh,t40_pl[di+1]
+    or ah,dh
+    xor dh,dh
+    test dl,1
+    jz te_b
+    not dh
+te_b:
+    xor dh,t40_pl[di+2]
+    or ah,dh
+    xor dh,dh
+    test dl,8
+    jz te_i
+    not dh
+te_i:
+    xor dh,t40_pl[di+3]
+    or ah,dh
+    not ah
+    pop dx
+    pop di
+    ret
+t40_eqrow endp
+
+; ---- t40_first: SI -> 8 row masks. CF=1: all zero. Else AL = IRGB colour
+; of the first set pixel (row-major, leftmost first) in t40_pl.
+t40_first proc near
+    push bx
+    push dx
+    push di
+    xor bx,bx
+tf_row:
+    mov dl,[bx+si]
+    or dl,dl
+    jnz tf_found
+    inc bx
+    cmp bx,8
+    jb tf_row
+    pop di
+    pop dx
+    pop bx
+    stc
+    ret
+tf_found:
+    mov dh,80h
+tf_bit:
+    test dl,dh
+    jnz tf_bit_ok
+    shr dh,1
+    jmp short tf_bit
+tf_bit_ok:
+    mov di,bx
+    shl di,1
+    shl di,1
+    xor al,al
+    test t40_pl[di+3],dh
+    jz tf_i
+    or al,8
+tf_i:
+    test t40_pl[di],dh
+    jz tf_r
+    or al,4
+tf_r:
+    test t40_pl[di+1],dh
+    jz tf_g
+    or al,2
+tf_g:
+    test t40_pl[di+2],dh
+    jz tf_b
+    or al,1
+tf_b:
+    pop di
+    pop dx
+    pop bx
+    clc
+    ret
+t40_first endp
+
+; ---- t40_two: colours of the live pixels when there are at most two.
+; CF=1: three or more (use the counting path). CF=0: AL = background
+; (0FFh: no live pixel), AH = foreground (0FFh: one colour only); with two
+; colours t40_mask = live pixels of the foreground. Same choice as the
+; counting path: more pixels wins, the lower index on a tie.
+t40_two proc near
+    mov si,offset t40_live
+    call t40_first
+    jnc tw_a
+    mov ax,0FFFFh
+    clc
+    ret
+tw_a:
+    mov t40_ca,al
+    xor si,si
+    xor dx,dx
+    xor bx,bx
+tw_arow:
+    call t40_eqrow
+    mov cl,t40_live[si]
+    mov ch,cl
+    and ch,ah
+    mov t40_eqa[si],ch
+    mov bl,ch
+    add dl,cs:t40_pop[bx]
+    not ah
+    and cl,ah
+    mov t40_rem[si],cl
+    or dh,cl
+    inc si
+    cmp si,8
+    jb tw_arow
+    mov t40_na,dl
+    or dh,dh
+    jnz tw_b
+    mov al,t40_ca
+    mov ah,0FFh
+    clc
+    ret
+tw_b:
+    mov si,offset t40_rem
+    call t40_first
+    mov t40_cb,al
+    xor si,si
+    xor dx,dx
+tw_brow:
+    call t40_eqrow
+    mov cl,t40_rem[si]
+    mov ch,cl
+    and ch,ah
+    mov t40_eqb[si],ch
+    mov bl,ch
+    add dl,cs:t40_pop[bx]
+    not ah
+    and cl,ah
+    or dh,cl
+    inc si
+    cmp si,8
+    jb tw_brow
+    or dh,dh
+    jz tw_two
+    stc
+    ret
+tw_two:
+    ; DL = pixels of b, t40_na = pixels of a
+    mov al,t40_ca
+    mov ah,t40_cb
+    cmp t40_na,dl
+    ja tw_a_bg
+    jb tw_b_bg
+    cmp al,ah
+    jb tw_a_bg
+tw_b_bg:
+    xchg al,ah
+    mov si,offset t40_eqa
+    jmp short tw_mask
+tw_a_bg:
+    mov si,offset t40_eqb
+tw_mask:
+    mov bx,[si]
+    mov word ptr t40_mask,bx
+    mov bx,[si+2]
+    mov word ptr t40_mask+2,bx
+    mov bx,[si+4]
+    mov word ptr t40_mask+4,bx
+    mov bx,[si+6]
+    mov word ptr t40_mask+6,bx
+    clc
+    ret
+t40_two endp
+
 ; ---- t40_cell: text word for cell t40_cy/t40_cx in AX. ES = shadow.
 t40_cell proc near
     mov ax,t40_cy
@@ -600,7 +788,33 @@ tc_load:
     inc si
     cmp si,8
     jb tc_load
-    ; colour counts of live pixels
+    call t40_two
+    jnc tc_fast
+    jmp tc_counts
+tc_fast:
+    cmp al,0FFh
+    jne tc_fast_live
+    jmp tc_nolive
+tc_fast_live:
+    cmp ah,0FFh
+    jne tc_fast_two
+    mov ah,al
+    mov cl,4
+    shl ah,cl
+    or ah,al
+    mov al,20h
+    ret
+tc_fast_two:
+    mov t40_bgc,al
+    mov t40_fgc,ah
+    call t40_pick
+    mov ah,t40_bgc
+    mov cl,4
+    shl ah,cl
+    or ah,t40_fgc
+    ret
+tc_counts:
+    ; three or more colours: colour counts of live pixels
     xor ax,ax
     xor si,si
 tc_zero:
@@ -664,6 +878,7 @@ tc_bg_next:
     jb tc_bg
     cmp dl,0FFh
     jne tc_have_bg
+tc_nolive:
     mov al,t40_cbg
     cmp al,0FFh
     jne tc_cbg
@@ -764,8 +979,8 @@ t40_cell endp
 ; ---- t40_present ---------------------------------------------------------
 ; A glyph window spans at most two cell rows and two cell columns, so pixels
 ; of the dirty cells can change only the dirty cells and one cell around
-; them (output range). Shown state is recomputed one cell further (verify
-; range) so every output cell sees its whole 3x3 neighbourhood fresh.
+; them (output range). Their shown hints are re-verified; neighbours keep
+; the state from the flush that last covered them.
 t40_present proc near
     mov si,seg t40_slot
     mov ds,si
@@ -797,19 +1012,11 @@ tpr_c0:
     mov dx,39
 tpr_c1:
     mov t40_c1,dx
-    ; verification range: one more cell each way
+    ; re-verify the shown hint of every output cell (kept in t40_vst/vat)
     mov ax,t40_r0
-    dec ax
-    jge tpr_vr0
-    xor ax,ax
-tpr_vr0:
     mov t40_cy,ax
 tpr_vrow:
     mov ax,t40_c0
-    dec ax
-    jge tpr_vc0
-    xor ax,ax
-tpr_vc0:
     mov t40_cx,ax
 tpr_vcol:
     mov ax,t40_cy
@@ -819,22 +1026,12 @@ tpr_vcol:
     mov bx,ax
     call t40_shown
     inc t40_cx
-    mov ax,t40_c1
-    inc ax
-    cmp ax,39
-    jle tpr_vc1
-    mov ax,39
-tpr_vc1:
-    cmp t40_cx,ax
+    mov ax,t40_cx
+    cmp ax,t40_c1
     jle tpr_vcol
     inc t40_cy
-    mov ax,t40_r1
-    inc ax
-    cmp ax,24
-    jle tpr_vr1
-    mov ax,24
-tpr_vr1:
-    cmp t40_cy,ax
+    mov ax,t40_cy
+    cmp ax,t40_r1
     jle tpr_vrow
     ; output range
     mov ax,t40_r0
@@ -1080,7 +1277,7 @@ t40_reset proc near
     mov es,ax
     xor di,di
     xor ax,ax
-    mov cx,16000
+    mov cx,17000                ; slots, t40_vst and t40_vat
     cld
     rep stosw
     pop es
