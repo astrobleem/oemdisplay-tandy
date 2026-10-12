@@ -2,7 +2,7 @@
 
 Status: **TXT40.DRV runs Windows 3.0 real mode on an emulated IBM PC/XT
 (8088, 4.77 MHz) with an IBM CGA card in 86Box 6.0, with the whole screen
-in BIOS 40x25 colour text. A scripted session passes @@CHECKS@@ checks: menus, a
+in BIOS 40x25 colour text. A scripted session passes all 45 checks: menus, a
 message box, a dialog, Notepad typing, a window move, the mouse cursor,
 exit to DOS and an identical second launch. The same session also ran on
 86Box's composite (TV) output. It has not run on real hardware or a real
@@ -74,7 +74,7 @@ flush rewrites, and how hints follow screen-to-screen copies.
 the driver build inserts it verbatim.
 
 - `T40TEST.PY` assembles the same `T40PRES.ASM` into a DOS program and
-  runs it under DOSBox-X (8086 prefetch core) on @@FLUSHES@@ flushes: seeded
+  runs it under DOSBox-X (8086 prefetch core) on 252 flushes: seeded
   synthetic screens (rectangles, lines, dither, text at every alignment and
   at the screen edges, opaque, transparent and underlined, every pixel
   density, every box junction, focus rectangles, overpainting, moves, and
@@ -83,10 +83,10 @@ the driver build inserts it verbatim.
   and every full flush must equal the model's from-scratch answer. The
   scenes must also flush every pixel they change, as the driver does.
   Result: `txt40/T40TEST.JSN` (PASS).
-- `T40MUT.PY` makes @@MUTANTS@@ one-line changes to `T40PRES.ASM` (thresholds,
+- `T40MUT.PY` makes 27 one-line changes to `T40PRES.ASM` (thresholds,
   tie-breaks, edges, margins, the stale and touch rules, slot handling, the
   second check, the blit order) and requires `T40TEST.PY` to fail on every
-  one. Result: `txt40/T40MUT.JSN` (@@MUTANTS@@/@@MUTANTS@@ caught). Changes that make the
+  one. Result: `txt40/T40MUT.JSN` (27/27 caught). Changes that make the
   presenter re-verify more cells are not listed: with every pixel change
   flushed they cannot change the result.
 
@@ -112,13 +112,13 @@ listings. The edits:
 - New segment `_T40` (34KB hint table and presenter state).
 - Cursor: the cell cursor above.
 
-Result: `txt40/T40BUILD.JSN`, TXT40.DRV @@DRVBYTES@@ bytes, SHA-256
-`@@DRVSHA@@`. `src/txt40/T40ID.ASM` (built with
+Result: `txt40/T40BUILD.JSN`, TXT40.DRV 58,784 bytes, SHA-256
+`fb9622abc72c3c0035e484153f001fd12287a12604def1a8c875ef3b7ca6e958`. `src/txt40/T40ID.ASM` (built with
 `src/pcjr/BUILDCOM.PY`, `txt40/T40IDB.JSN`) checks for a colour CGA-class
 text adapter and reports the BIOS mode, for use at the DOS prompt before
 and after Windows.
 
-## Windows 3.0 in 86Box (@@DATE@@)
+## Windows 3.0 in 86Box (2026-10-12)
 
 ### Setup
 
@@ -148,21 +148,37 @@ screens as text in `txt40/*.TXT`.
 
 | Step | Check | Result |
 | --- | --- | --- |
-@@TABLE@@
+| Startup message box | shows "Program group file", "is invalid or damaged", "OK" | PASS |
+| Desktop | shows "Program Manager", "File", "Options", "Window", "Help" | PASS |
+| File menu | shows "New...", "Open", "Move...", "Copy...", "Delete", "Properties...", "Run...", "Exit Windows..." | PASS |
+| File menu closed | screen identical to the desktop before | PASS |
+| Mouse cursor | only cells (22, 0) and (22, 5) change, each by attribute XOR 77h | PASS |
+| Run dialog | shows "Run", "Command Line:", "Run Minimized", "OK", "Cancel" | PASS |
+| Notepad, typed line | shows "Notepad - (untitled)", "File", "Edit", "Search", "Help", "Hello TV owners! 40x25" | PASS |
+| Edit menu | shows "Undo", "Cut", "Copy", "Paste", "Delete", "Select All", "Time/Date", "Word Wrap" | PASS |
+| Edit menu closed | screen identical to Notepad before (except the blinking caret's cells after the typed line) | PASS |
+| Notepad moved (keyboard) | shows "Notepad - (untitled)", "Hello TV owners! 40x25"; Notepad is somewhere else | PASS |
+| Exit dialog | shows "This will end your Windows", "OK", "Cancel" | PASS |
+| Second launch | desktop identical to the first | PASS |
 
 ### Speed
 
 `T40TEST.PY --bench` builds the presenter into a DOS program that times
 flushes of a desktop-like screen (wallpaper bars, a window, a menu bar,
 15 lines of text) with the BIOS clock. Run on the emulated 4.77 MHz 8088
-(`txt40/T40BENCH.JSN`), its text output equals the DOSBox-X run:
+(`txt40/T40BENCH.JSN`; measured just before the rows 1-6 second check was
+added, which only runs for glyphs that fail the strict check), its text
+output equals the DOSBox-X run:
 
 | Flush | Time on the emulated XT |
 | --- | --- |
-@@SPEED@@
+| full screen | 2376 ms |
+| one text line (8 rows, full width) | 292 ms |
+| menu item (10 rows, 12 columns) | 51 ms |
+| caret (1 column, 10 rows) | 13 ms |
 
 During the session, typing the 22 characters of the Notepad line took
-about @@TYPING@@ s until all of them were on screen. That is slow but usable, and much
+about 75 s until all of them were on screen. That is slow, and much
 slower than TR5 on the same machine, which only copies bytes.
 
 ### On a TV (composite)
@@ -173,11 +189,11 @@ slower than TR5 on the same machine, which only copies bytes.
 
 | Passed in 86Box 6.0 (emulated IBM XT + IBM CGA) | Still needs real hardware |
 | --- | --- |
-| Driver loads; Windows 3.0 /R starts, runs, exits to DOS (mode 03h, 80 columns restored) and restarts identically | A real IBM CGA and clones, whose handling of 3D8h bit 5 (blink) and 40-column timing may differ; PCjr and Tandy video are not CGA and are not targets |
+| Driver loads; Windows 3.0 /R starts, runs, exits to DOS (T40ID afterwards reads mode 03h, 80 columns: `txt40/DOSAFTER.PNG`) and restarts identically | A real IBM CGA and clones, whose handling of 3D8h bit 5 (blink) may differ; PCjr and Tandy video control blink differently and were not tried |
 | Text recognized in menus, a message box (focused OK), the Run dialog, Notepad, the exit dialog | A real TV over composite (and RF modulators): legibility of 40-column text, colours, overscan cutting off the edge cells |
-| Menus close back to the identical screen; a moved window keeps its text | Real 8088 and V20 speed; CGA snow does not apply to 40-column text, but needs a look |
+| Menus close back to the identical screen; a moved window keeps its text | Real 8088 and V20 speed (CGA snow happens only in 80-column text, not in the 40-column mode used here) |
 | Mouse cursor is exactly the hot-spot cell, XOR 77h | Other mice, keyboards, BIOS variants, DOS versions |
-| Presenter equals the specification on @@FLUSHES@@ flushes; @@MUTANTS@@ mutants caught | A clean CGA install (CGA grabber and fonts instead of the EGA ones reused here), DOS boxes |
+| Presenter equals the specification on 252 flushes; 27 mutants caught | A clean CGA install (CGA grabber and fonts instead of the EGA ones reused here), DOS boxes |
 
 ### Limits
 
