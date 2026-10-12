@@ -28,9 +28,10 @@ PTR = (16, 20)          # pointer box checked as "pointer", width x height from 
 
 
 class Session:
-    def __init__(self, vm, base):
+    def __init__(self, vm, base, measure_only=False):
         self.vm = Path(vm)
         self.base = base
+        self.measure_only = measure_only
         self.r = PCPWIN.Run(vm, None, None, width=320, target="pcp")
         self.r.tdir, self.r.tid = "XTPAN", "RESERVE"
         self.checks = []
@@ -157,6 +158,8 @@ class Session:
         self.windows()
         if self.base:
             return self.base_scenario()
+        if self.measure_only:
+            return self.measure_scenario()
         start = self.log("XTPAN.LOG")
         self.check("helper started with the XTPAN driver", any(l.startswith("START top=") for l in start),
                    log=start[:2])
@@ -391,6 +394,12 @@ class Session:
         self.pattern("relaunch_top100")
         self.key("q", wait=6)
 
+    def measure_scenario(self):
+        """Memory and drawing only (for the helper-disabled run)."""
+        self.bench()
+        self.check("measure: benchmark ran", bool(self.measure.get("bench")), bench=self.measure.get("bench"))
+        self.measure["xtpan_log_head"] = self.log("XTPAN.LOG")[:3]
+
     def base_scenario(self):
         r = self.r
         n = len(self.log())
@@ -415,8 +424,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--vm", required=True)
     ap.add_argument("--base", action="store_true")
+    ap.add_argument("--measure", action="store_true", help="memory and drawing only")
     a = ap.parse_args()
-    s = Session(a.vm, a.base)
+    s = Session(a.vm, a.base, a.measure)
     try:
         s.scenario()
     finally:

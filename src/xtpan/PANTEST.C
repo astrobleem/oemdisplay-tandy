@@ -118,13 +118,16 @@ static void LogClick(LPSTR what, HWND hwnd, LONG lParam)
     LogLine(buf);
 }
 
+/* All drawing stays inside the 320x200 screen of the unchanged driver, so
+ * both drivers do the same work (text crossing the bottom of a 200-row
+ * screen makes the unchanged driver flush the whole screen). */
 static void Bench(HWND hwnd)
 {
     HDC hdc = GetDC(hwnd);
-    DWORD t0, t1, t2;
+    DWORD t0, t1, t2, t3;
     int i;
     RECT r;
-    char buf[96];
+    char buf[120];
     t0 = GetCurrentTime();
     for (i = 0; i < 400; i++) {
         r.left = (i * 7) % 280;
@@ -136,10 +139,16 @@ static void Bench(HWND hwnd)
     t1 = GetCurrentTime();
     SetBkColor(hdc, RGB(0xFF, 0xFF, 0xFF));
     for (i = 0; i < 200; i++)
-        TextOut(hdc, (i * 5) % 160, (i * 9) % 190, "Bench text 0123", 15);
+        TextOut(hdc, (i * 5) % 160, (i * 9) % 150, "Bench text 0123", 15);
     t2 = GetCurrentTime();
+    GetClientRect(hwnd, &r);
+    r.bottom = 150;
+    for (i = 0; i < 50; i++)
+        ScrollWindow(hwnd, 0, -8, &r, &r);
+    ValidateRect(hwnd, NULL);
+    t3 = GetCurrentTime();
     ReleaseDC(hwnd, hdc);
-    wsprintf(buf, "BENCH fills400 ms=%lu text200 ms=%lu", t1 - t0, t2 - t1);
+    wsprintf(buf, "BENCH fills400 ms=%lu text200 ms=%lu scroll50 ms=%lu", t1 - t0, t2 - t1, t3 - t2);
     LogLine(buf);
 }
 
@@ -400,7 +409,7 @@ int PASCAL WinMain(HANDLE hI, HANDLE hPrev, LPSTR lpCmd, int nShow)
 
     if (Is(lpCmd, "BENCH")) {
         nMode = 6;
-        hMain = Make("Bench", style, 0, 0, 320, 200, NULL);
+        hMain = Make("Bench", style, 0, 0, 320, 180, NULL);
         UpdateWindow(hMain);
         Bench(hMain);
         DestroyWindow(hMain);
