@@ -151,8 +151,8 @@ converts the 200 visible rows in task time.
   never apart.
 - *Keys* `KeyMods`+`KeyDown`/`KeyUp`/`KeyTop` (default Alt+PgDn,
   Alt+PgUp, Alt+F9, NumLock off; see section 7 for why not Ctrl+Alt or
-  Shift), polled with GetAsyncKeyState; a modifier seen within 250 ms counts, polled with GetAsyncKeyState including taps between
-  ticks.
+  Shift), polled with GetAsyncKeyState, including taps between ticks; a
+  modifier seen within the last 250 ms counts as held.
 - *FollowActive:* a newly activated window not wholly visible is brought
   into view (Windows centres dialogs on the 400-row desktop, so they
   otherwise appear straddling the viewport edge). After a key or follow
@@ -310,3 +310,31 @@ escape. Nothing needed a kernel or USER change.
   200-row steps only) or VGA-style assumptions.
 - Before any wider use: a real Tandy 1000 EX or HX, the WINXT keyboard
   setup, and a check that 1 s pans feel acceptable on real hardware.
+
+## 9. Reproducing
+
+All inputs are explicit and pinned (`tools/BUILDDEPS/README.MD`); nothing
+is fetched. Windows media, ROMs and Microsoft fonts stay private.
+
+1. Driver (DOSBox-X, pinned MASM/DDK view):
+   `python3 src/xtpan/BUILDPAN.PY --repo <deps view> --dosbox <dosbox-x> --out <fresh dir>`
+   gives `XTPAN.DRV` and `PANRES.JSON` (`--rows 300` gives `XTPAN300.DRV`).
+   Without the edits the same profile rebuilds `TR53216.DRV`
+   (sha256 `33f681b0...`) byte for byte; `python3 src/xtpan/PANPATCH.PY --check`
+   verifies every edit anchor matches exactly once.
+2. Applications: `python3 src/xtpan/BUILDAPP.PY --repo <deps view> --dosbox <dosbox-x> --out <fresh dir>`
+   gives `XTPAN.EXE` and `PANTEST.EXE`.
+3. VM (settings in `pan/EMU.TXT`): put `XTPAN.DRV` (or `TR53216.DRV`),
+   `XTPAN.EXE`, `PANTEST.EXE`, `RESERVE.COM` and `MSTEST.COM` in one folder, then
+   `python3 src/xtpan/PCP86.PY prepare --target xtpan --vm <new dir> --pristine <disk image> --drv <XTPAN.DRV> --tools <folder>`
+   (`--target xtbase --drv TR53216.DRV` for the unchanged baseline).
+4. Session, under the shared emulator lock (Xvfb on `:79`):
+   `python3 src/xtpan/EMULOCK.PY --lock <shared lock> --seconds 5400 --status <vm>/LOCK.JSN --purpose xtpan -- <script>`
+   where the script starts `PCPMOUSE.PY serve --vm <vm>` (with
+   `PCPMOUSE_BYTE_MS=7.5`), `PCP86.PY start --box <86Box AppRun> --roms <roms> --vm <vm>`,
+   waits 80 s for the DOS prompt, runs `XPWIN.PY --vm <vm>` (add `--base`
+   for the baseline, `--measure` for memory and drawing only), then
+   `PCP86.PY stop --vm <vm>`. Results land in `<vm>/XPWIN.JSN`.
+5. A single capture: `python3 src/xtpan/PANCHK.PY <capture> --top <T> [--exclude x0,y0,x1,y1]`.
+6. Demonstration: `python3 src/xtpan/DEMO.PY --out pan/DEMO.GIF --frame <png> "<caption>" ...`
+   (the frames used are listed in the commit that added `pan/DEMO.GIF`).
