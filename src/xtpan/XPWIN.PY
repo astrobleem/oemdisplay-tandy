@@ -42,7 +42,10 @@ class Session:
     def log(self, name="PANTEST.LOG"):
         p = subprocess.run(["mtype", "-i", f"{self.vm / 'pcp.img'}{PART}", "::/XTPAN/" + name],
                            capture_output=True)
-        return p.stdout.decode("latin-1").replace("\r", "").split("\n") if p.returncode == 0 else []
+        if p.returncode != 0:
+            return []
+        # complete lines only: a trailing newline must not count as a line
+        return [ln for ln in p.stdout.decode("latin-1").replace("\r", "").split("\n") if ln]
 
     def wait_line(self, regex, start, timeout=60, name="PANTEST.LOG"):
         """First line after index start matching regex (re.Match), or None."""
