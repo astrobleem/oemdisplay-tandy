@@ -326,10 +326,13 @@ def pres_text():
 
 
 BOUNDS_MACROS = crlf("""; T40PATCH: a full-screen flush costs seconds on an 8088 in text mode, so
-; bound text flushes by columns too. dirty=2 (rows proven by text_bounds):
-; columns of the validated clip rectangle, widened by a validated opaque
-; rectangle. ExtTextOut with no characters and an opaque fill draws only
-; that rectangle: bound it the same way instead of a full flush.
+; bound every text flush by rows and columns. dirty=2 (rows proven by
+; text_bounds): columns of the validated clip rectangle, widened by a
+; validated opaque rectangle. dirty=1 (text_bounds could not prove rows:
+; no characters, or a clip rectangle reaching past the screen, which is
+; normal for windows wider than 320 pixels): the renderer draws only inside
+; the clip rectangle and the opaque rectangle, so flush their union clamped
+; to the screen. An unreadable or unordered rectangle keeps the full flush.
 t40_rect_cols macro ptr
 local t40c_left_kept,t40c_right_kept
     les di,ptr
@@ -349,61 +352,134 @@ t40c_left_kept:
 t40c_right_kept:
 endm
 
-t40_bounds macro extended
-local rows,done,zero_ok
-    push ax
+; Union the RECT at ptr, clamped to the screen, into rowfirst..rowlast and
+; colfirst..collast. Unreadable or unordered: jump to failed.
+t40_rect_union macro ptr,failed
+local empty,l0,r0,t0,b0,k1,k2,k3,k4,t40u_b,t40u_rows,t40u_rf,t40u_rl,t40u_cf,t40u_cl
+    les di,ptr
+    mov ax,es
+    or ax,ax
+    jnz l0
+    jmp failed
+l0:
+    cmp di,0ffffh-((size RECT)-1)
+    jbe r0
+    jmp failed
+r0:
+    mov ax,es:[di].left
+    cmp ax,es:[di].right
+    jle t0
+    jmp failed
+t0:
+    mov ax,es:[di].top
+    cmp ax,es:[di].bottom
+    jle b0
+    jmp failed
+b0:
+    mov ax,es:[di].left
+    or ax,ax
+    jns k1
+    xor ax,ax
+k1:
+    mov cx,es:[di].right
+    cmp cx,SCREEN_WIDTH
+    jle k2
+    mov cx,SCREEN_WIDTH
+k2:
+    cmp ax,cx
+    jl k3
+    jmp empty
+k3:
+    mov bx,es:[di].top
+    or bx,bx
+    jns k4
+    xor bx,bx
+k4:
+    mov dx,es:[di].bottom
+    cmp dx,SCREEN_HEIGHT
+    jle t40u_b
+    mov dx,SCREEN_HEIGHT
+t40u_b:
+    cmp bx,dx
+    jl t40u_rows
+    jmp empty
+t40u_rows:
+    cmp bx,rowfirst
+    jge t40u_rf
+    mov rowfirst,bx
+t40u_rf:
+    cmp dx,rowlast
+    jle t40u_rl
+    mov rowlast,dx
+t40u_rl:
     push cx
+    mov cl,3
+    shr ax,cl
+    pop cx
+    cmp ax,colfirst
+    jge t40u_cf
+    mov colfirst,ax
+t40u_cf:
+    add cx,7
+    push ax
+    mov ax,cx
+    mov cl,3
+    shr ax,cl
+    cmp ax,collast
+    jle t40u_cl
+    mov collast,ax
+t40u_cl:
+    pop ax
+empty:
+endm
+
+t40_bounds macro extended
+local proven,unproven,full,done,t40b_set,t40b_pop,t40b_uop
+    push ax
+    push bx
+    push cx
+    push dx
     push di
     push es
     mov colfirst,40
     mov collast,0
-    if extended
-    cmp dirty,1
-    jne rows
-    cmp count,0
-    jne rows
-    test options,ETO_OPAQUE_FILL
-    jz rows
-    les di,opaquerect
-    mov ax,es
-    or ax,ax
-    jz rows
-    cmp di,0ffffh-((size RECT)-1)
-    ja rows
-    mov ax,es:[di].left
-    or ax,ax
-    js rows
-    cmp ax,es:[di].right
-    jg rows
-    cmp word ptr es:[di].right,SCREEN_WIDTH
-    jg rows
-    mov ax,es:[di].top
-    or ax,ax
-    js rows
-    cmp ax,es:[di].bottom
-    jg rows
-    cmp word ptr es:[di].bottom,SCREEN_HEIGHT
-    jg rows
-    mov rowfirst,ax
-    mov ax,es:[di].bottom
-    mov rowlast,ax
-    t40_rect_cols opaquerect
-    mov dirty,2
-    jmp done
-    endif
-rows:
     cmp dirty,2
-    jne done
+    je proven
+    cmp dirty,1
+    je unproven
+    jmp done
+proven:
     t40_rect_cols clip
     if extended
     test options,ETO_OPAQUE_FILL
-    jz done
+    jnz t40b_pop
+    jmp done
+t40b_pop:
     t40_rect_cols opaquerect
     endif
+    jmp done
+unproven:
+    mov rowfirst,SCREEN_HEIGHT
+    mov rowlast,0
+    t40_rect_union clip,full
+    if extended
+    test options,ETO_OPAQUE_FILL
+    jnz t40b_uop
+    jmp t40b_set
+t40b_uop:
+    t40_rect_union opaquerect,full
+t40b_set:
+    endif
+    mov dirty,2
+    jmp done
+full:
+    mov dirty,1
 done:
     pop es
     pop di
+    pop dx
     pop cx
+    pop bx
     pop ax
 endm
 

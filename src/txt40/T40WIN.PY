@@ -129,7 +129,12 @@ class Session:
         r.text("WIN /R")
         r.key("Return", wait=120)
         r.m("ident", "off")
-        for _ in range(6):            # damaged EGA-era group files: one message each
+        # Program Manager reports its EGA-era group files as damaged: a
+        # message box with a focused OK button (dotted focus rectangle)
+        msg = ("Program group file", "is invalid or damaged", "OK")
+        self.settle("groupmsg", timeout=300, want=msg[:2])
+        self.expect("groupmsg", *msg)
+        for _ in range(6):            # one message per damaged group file
             r.key("Escape", wait=10)
         r.home()
         desk = ("Program Manager", "File", "Options", "Window", "Help")
