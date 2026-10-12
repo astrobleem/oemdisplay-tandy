@@ -165,8 +165,9 @@ def main():
                 cross[(150 + k) * width + 50] ^= 15
             SHOTDEC.save(bytes(cross), str(Path(tmp) / "x.png"), width)
             kinds = [r.describe_miss(n, ref, 50, 150)["classified"] for n in ("x", "c", "d")]
-            expect(f"{width}: misses classified (other shape at hotspot / none / elsewhere)",
-                   kinds == ["cursor at the hotspot, other shape", "no cursor visible", "cursor elsewhere"])
+            expect(f"{width}: differences described without inferring a cursor or cause",
+                   kinds == ["changes surround requested hotspot; shape/origin unverified",
+                             "no changed pixels", "changes elsewhere; shape/origin unverified"])
 
     # 3. PID ownership (Linux /proc): cleanup must never signal a process
     #    that merely reuses a recorded PID.

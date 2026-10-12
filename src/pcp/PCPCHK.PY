@@ -24,6 +24,7 @@ sys.path.insert(0, str(HERE))
 import importlib.machinery  # noqa: E402
 
 W = importlib.machinery.SourceFileLoader("pcpwin", str(HERE / "PCPWIN.PY")).load_module()
+E = importlib.machinery.SourceFileLoader("pcpevid", str(HERE / "PCPEVID.PY")).load_module()
 PAL = [(0, 0, 0), (0, 0, 170), (0, 170, 0), (0, 170, 170),
        (170, 0, 0), (170, 0, 170), (170, 85, 0), (170, 170, 170),
        (85, 85, 85), (85, 85, 255), (85, 255, 85), (85, 255, 255),
@@ -174,6 +175,7 @@ def main():
               missing_or_wrong=len(missing), extra=len(extra))
     else:
         skipped("arrow_equals_driver_cursor_resource", "no --cursor resource given")
+    verified_arrow = dict(glyph)
 
     def composite(base, hx, hy):
         exp = bytearray(base)
@@ -351,22 +353,36 @@ def main():
            "passed": sum(r["result"] == "PASS" for r in res),
            "failed": sum(r["result"] == "FAIL" for r in res),
            "skipped": sum(r["result"] == "SKIPPED" for r in res), "total": len(res)}
-    # Palette-arrow moves PCPWIN had to re-send (LANDING.JSN): reported, so a
-    # final PASS never hides how many cases needed a retry.
+    # Attempt provenance is additional qualification, not another pixel check.
+    # A stale alias must never turn an exhausted/partial session into PASS.
+    evidence_errors = []
     land = vm / "LANDING.JSN"
     if land.exists():
-        rows = json.loads(land.read_text())
-        out["palette_arrow_landing"] = {
-            "cases": len(rows), "first_try": sum(1 for r in rows if r.get("attempts") == 1),
-            "recovered_by_retry": [{"frame": r["frame"], "attempts": r["attempts"],
-                                    "misses": r.get("misses", [])} for r in rows if (r.get("attempts") or 0) > 1]}
-    out["verdict"] = "PASS" if out["failed"] == 0 and out["skipped"] == 0 else (
-        "FRAMES-ONLY PASS" if out["failed"] == 0 else "FAIL")
+        hotspots = {f"arrow_{c:02d}": (W.PAL_X0 + W.PAL_PITCH * W.PALETTE[c][1],
+                                      W.PAL_Y[W.PALETTE[c][0]]) for c in range(16)}
+        def accepts(name, hx, hy):
+            exp = bytearray(F["pb_drawn"])
+            for (dx, dy), value in verified_arrow.items():
+                x, y = hx + dx, hy + dy
+                if 0 <= x < WD and 0 <= y < 200:
+                    exp[y * WD + x] = value
+            return not diff(F[name], bytes(exp))
+        try:
+            rows = json.loads(land.read_text())
+            out["palette_arrow_landing"] = E.landing_report(rows, F.__getitem__, hotspots, accepts)
+            evidence_errors.extend(out["palette_arrow_landing"]["errors"])
+        except (OSError, ValueError) as exc:
+            evidence_errors.append("invalid LANDING.JSN: " + str(exc))
+    elif args.target == "pc1512":
+        evidence_errors.append("missing LANDING.JSN for PC1512")
+    out["evidence_errors"] = evidence_errors
+    failed = bool(out["failed"] or evidence_errors)
+    out["verdict"] = "FAIL" if failed else ("FRAMES-ONLY PASS" if out["skipped"] else "PASS")
     text = json.dumps(out, indent=1)
     if args.json:
         Path(args.json).write_text(text + "\n")
     print(text)
-    return 0 if out["failed"] == 0 else 1
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":

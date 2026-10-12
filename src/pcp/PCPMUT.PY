@@ -32,6 +32,7 @@ from PIL import Image
 HERE = Path(__file__).resolve().parent
 SHOTDEC = importlib.machinery.SourceFileLoader("shotdec", str(HERE / "SHOTDEC.PY")).load_module()
 W = importlib.machinery.SourceFileLoader("pcpwin", str(HERE / "PCPWIN.PY")).load_module()
+E = importlib.machinery.SourceFileLoader("pcpevid", str(HERE / "PCPEVID.PY")).load_module()
 WD = 320
 TARGET = "pcp"
 
@@ -49,7 +50,10 @@ def run_chk(d):
                         "--width", str(WD), "--target", TARGET],
                        capture_output=True, text=True)
     out = json.loads(r.stdout)
-    return {c["check"]: c["result"] for c in out["checks"]}
+    results = {c["check"]: c["result"] for c in out["checks"]}
+    if out.get("evidence_errors"):
+        results["attempt_evidence"] = "FAIL"
+    return results
 
 
 def arrow_glyph(d):
@@ -139,13 +143,18 @@ def main():
             for p in (vm / "dec").glob("*.png"):
                 shutil.copyfile(p, base / "dec" / p.name)
             shutil.copyfile(vm / "DRIFT.JSN", base / "DRIFT.JSN")
+            if (vm / "LANDING.JSN").exists():
+                shutil.copyfile(vm / "LANDING.JSN", base / "LANDING.JSN")
         else:
             ev = Path(a.evidence)
             index = json.loads((ev / "P86RAW.JSN").read_bytes())
-            for e in index["frames"]:
+            records = E.validate_index(index, ev, WD)
+            for e in records.values():
                 if "repo_file" in e:
                     shutil.copyfile(ev / e["repo_file"], base / "dec" / (e["frame"] + ".png"))
             shutil.copyfile(ev / "P86DRIFT.JSN", base / "DRIFT.JSN")
+            if (ev / "P86LAND.JSN").exists():
+                shutil.copyfile(ev / "P86LAND.JSN", base / "LANDING.JSN")
         clean = run_chk(base)
         bad = sorted(k for k, v in clean.items() if v == "FAIL")
         print(("ok   " if not bad else "FAIL ") + f"clean frames pass ({len(clean)} checks)" + (f": {bad}" if bad else ""))

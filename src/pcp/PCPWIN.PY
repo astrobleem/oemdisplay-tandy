@@ -200,17 +200,65 @@ class Run:
                    if not (i % w >= w - 4 and i // w >= 196))
 
     def describe_miss(self, name, ref, hx, hy):
-        """What a rejected attempt showed: the changed pixels against the
-        reference and whether they surround the hotspot that was sent (a
-        cursor at the right place with another shape) or not (elsewhere)."""
+        """Describe changed pixels without inferring a cursor or its cause.
+        A bounding box around the hotspot is not a known cursor footprint."""
         f, w = self.frame(name), self.width
         d = [i for i in range(w * 200) if f[i] != ref[i] and not (i % w >= w - 4 and i // w >= 196)]
         box = [min(i % w for i in d), min(i // w for i in d), max(i % w for i in d), max(i // w for i in d)] if d else None
         at = bool(box) and box[0] <= hx <= box[2] and box[1] <= hy <= box[3]
-        kind = ("no cursor visible" if not d else
-                "cursor at the hotspot, other shape" if at else "cursor elsewhere")
+        kind = ("no changed pixels" if not d else
+                "changes surround requested hotspot; shape/origin unverified" if at else
+                "changes elsewhere; shape/origin unverified")
         return {"frame": name, "hotspot": [hx, hy], "changed_pixels": len(d), "changed_box": box,
                 "classified": kind}
+
+    def reset_palette(self):
+        """Invalidate earlier results before any new session or palette run."""
+        self.landing = []
+        (self.vm / "LANDING.JSN").write_text("[]\n")
+        for c in range(16):
+            self.clear_palette_case(f"arrow_{c:02d}")
+
+    def clear_palette_case(self, name):
+        alias = self.b.out / (name + ".png")
+        if alias.exists():
+            alias.unlink()
+        for previous in self.b.out.glob(name + "_t*.png"):
+            previous.unlink()
+
+    def palette_case(self, name, hx, hy, ref, glyph):
+        """Keep each attempt; publish an alias only for an exact acceptance."""
+        import shutil
+        self.clear_palette_case(name)
+        misses, accepted = [], None
+        for attempt in range(1, LANDING_TRIES + 1):
+            tryname = f"{name}_t{attempt}"
+            self.rehome(hx, hy, wait=4)
+            self.shot(tryname, settle=1)
+            if self.landed(tryname, ref, glyph, hx, hy):
+                shutil.copyfile(self.b.out / (tryname + ".png"), self.b.out / (name + ".png"))
+                self.log(f"accepted {tryname} as {name}", frame=name, copied_from=tryname)
+                accepted = tryname
+                break
+            miss = self.describe_miss(tryname, ref, hx, hy)
+            misses.append(miss)
+            self.log(f"not as expected: {tryname}", **miss)
+            if attempt < LANDING_TRIES:
+                time.sleep(LANDING_WAIT)
+        return dict(frame=name, hotspot=[hx, hy], accepted_from=accepted,
+                    attempts=attempt if accepted else None, attempt_count=attempt,
+                    first_try=accepted is not None and attempt == 1, misses=misses)
+
+    def palette_arrows(self):
+        self.reset_palette()
+        glyph, ref = self.wall_glyph(), self.frame("pb_drawn")
+        for c in range(16):
+            r, k = PALETTE[c]
+            row = self.palette_case(f"arrow_{c:02d}", PAL_X0 + PAL_PITCH * k, PAL_Y[r], ref, glyph)
+            self.landing.append(row)
+            (self.vm / "LANDING.JSN").write_text(json.dumps(self.landing, indent=1) + "\n")
+            if row["accepted_from"] is None:
+                raise SystemExit("PCPWIN: no accepted palette attempt for " + row["frame"])
 
     def key(self, *k, wait=3):
         self.b.key(*k, wait=wait)
@@ -250,6 +298,7 @@ class Run:
         self.shot(tag + "_dos", decode=False)
 
     def scenario(self):
+        self.reset_palette()
         b = self.b
         subprocess.run(["xdotool", "mousemove", "600", "400"])
         self.log("boot")
@@ -373,32 +422,7 @@ class Run:
         #    move is sent again. The first attempt that does is copied to
         #    arrow_NN, which PCPCHK judges with the same strict rule;
         #    LANDING.JSN and PCPCHK's output report how many tries it took.
-        glyph = self.wall_glyph()
-        ref = self.frame("pb_drawn")
-        self.landing = []
-        for c in range(16):
-            r, k = PALETTE[c]
-            hx, hy = PAL_X0 + PAL_PITCH * k, PAL_Y[r]
-            name = f"arrow_{c:02d}"
-            misses = []
-            for attempt in range(1, LANDING_TRIES + 1):
-                tryname = f"{name}_t{attempt}"
-                self.rehome(hx, hy, wait=4)
-                self.shot(tryname, settle=1)
-                if self.landed(tryname, ref, glyph, hx, hy):
-                    import shutil
-                    shutil.copyfile(self.b.out / (tryname + ".png"), self.b.out / (name + ".png"))
-                    self.log(f"accepted {tryname} as {name}", frame=name, copied_from=tryname)
-                    break
-                miss = self.describe_miss(tryname, ref, hx, hy)
-                misses.append(miss)
-                self.log(f"not as expected: {tryname}", **miss)
-                time.sleep(LANDING_WAIT)
-            else:
-                attempt = None
-            self.landing.append({"frame": name, "hotspot": [hx, hy], "attempts": attempt,
-                                 "first_try": attempt == 1, "misses": misses})
-        (self.vm / "LANDING.JSN").write_text(json.dumps(self.landing, indent=1) + "\n")
+        self.palette_arrows()
         self.to(*PARK, wait=4)
         self.shot("arrow_parked")
 

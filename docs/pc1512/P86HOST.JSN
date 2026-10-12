@@ -1,0 +1,93 @@
+{
+ "scope": "Host-only tests of harness changes and committed evidence; no emulator, native build, guest disk read or physical hardware qualification.",
+ "baseline_commit": "6abb40f2ef9f083ea7e489ef26eb8b5753521009",
+ "source_sha256": {
+  "src/pcp/PCPEVID.PY": "5a610bf966e452e9ccdd03c891f358ad4321b0a845708c5ddc6b6547b4b3fc0e",
+  "src/pcp/TESTEVID.PY": "284fe9ba3865ef0498c9fd9093dcacef8007bd123eee7361b5957b99729b9dad",
+  "src/pcp/PCPWIN.PY": "fbabd2ab1d7cf62afb9b5abf8543c7f8a30660c94b9a1d3b91356f1cccebe8f0",
+  "src/pcp/PCPCHK.PY": "17fb57bbb51dd46f906d6c0890f89e399b9d7ce80a967c34a69c2f36b634b494",
+  "src/pcp/PCPMUT.PY": "0903d96b9083f3c797ab03d81d5bbf4ac29b0b2b75757af52c3124c4002d3287",
+  "src/pcp/HOSTTEST.PY": "75d5f46c621216a3d1d17340b0363f9346d366df1afe46900046bafb4cfee3b3"
+ },
+ "new_regressions": {
+  "command": "python3 src/pcp/TESTEVID.PY",
+  "tests": 24,
+  "result": "PASS",
+  "covers": [
+   "fresh/reused retry exhaustion",
+   "failed/partial/missing current acceptance",
+   "accepted alias and earlier-attempt pixel verification",
+   "duplicate frame/raw-source IDs and invalid accepted-from provenance",
+   "incorrect retained raw binding",
+   "neutral classification of one-pixel paint damage",
+   "recorded 46-pixel translated crosshair"
+  ]
+ },
+ "hosttest": {
+  "command": "python3 src/pcp/HOSTTEST.PY",
+  "result": "PASS",
+  "linux_pid_tests": "SKIPPED on Windows; unchanged."
+ },
+ "recorded_replays": [
+  {
+   "target": "pcp",
+   "verdict": "PASS",
+   "passed": 88,
+   "total": 88,
+   "cursor_resource_sha256": "09954aac641a28e50680d584193cbb2552ed001234f1af38f5faa049ed287fe4",
+   "expected_cursor_pixels": 72,
+   "landing": null,
+   "disk_scope": "Saved committed BMP; BIOS text mocked from original report, no guest disk read."
+  },
+  {
+   "target": "pc1512",
+   "verdict": "PASS",
+   "passed": 88,
+   "total": 88,
+   "cursor_resource_sha256": "09954aac641a28e50680d584193cbb2552ed001234f1af38f5faa049ed287fe4",
+   "expected_cursor_pixels": 72,
+   "landing": {
+    "cases": 16,
+    "first_try": 15,
+    "recovered_by_retry": [
+     {
+      "frame": "arrow_12",
+      "attempts": 2,
+      "accepted_from": "arrow_12_t2",
+      "misses": []
+     }
+    ],
+    "errors": [],
+    "valid": true
+   },
+   "disk_scope": "Saved committed BMP; BIOS text mocked from original report, no guest disk read."
+  }
+ ],
+ "provenance": {
+  "pc1512": {
+   "result": "PASS",
+   "unique_frame_ids": 98,
+   "raw_sources": 82,
+   "decoded_captures": 80,
+   "accepted_aliases": 16,
+   "retained_raw_redecodes": 10
+  },
+  "pcp": {
+   "result": "PASS",
+   "unique_frame_ids": 81,
+   "decoded_captures": 79,
+   "retained_raw_redecodes": 10
+  },
+  "limit": "Raw sources absent from the repository cannot be independently redecoded; filenames and captured image identity are not proof of upstream input cause."
+ },
+ "mutations": {
+  "pc1512": "PASS; all eight targeted mutations caught",
+  "pcp": "PASS; all eight targeted mutations caught"
+ },
+ "windows_xt_regressions": {
+  "TESTPKG.PY": "PASS: 16 tests",
+  "TESTFAT.PY": "PASS: 35 tests, seven existing optional skips",
+  "TESTWAVE.PY": "PASS: three tests"
+ },
+ "historical_evidence": "P86CHK.JSN, P86LAND.JSN, P86RUN.JSN and all image/BMP bytes unchanged. Original final result is 88/88, 15/16 first attempts and one recovery."
+}
