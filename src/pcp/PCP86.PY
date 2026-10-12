@@ -246,7 +246,7 @@ time_sync = disabled
 
 
 def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", target="pcp", drv_sha=None,
-            fonts=None, grid=0, tv=False):
+            fonts=None, grid=0, tv=False, only8=False):
     """Build a private disk from the verified PCjs image plus the test files.
 
     control_ega: identical machine and disk changes, but an IBM EGA card and
@@ -307,6 +307,18 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", targe
     if grid:
         win = edit(win, "GridGranularity=0", f"GridGranularity={grid}")
         changes.append(f"WIN.INI: GridGranularity={grid} (windows snap to {8 * grid}-pixel steps)")
+    if only8:
+        if not fonts:
+            raise SystemExit("PCP86: --only-8x8 needs --fonts")
+        head, sep, rest = win.partition("[fonts]\r\n")
+        body, nxt, tail = rest.partition("\r\n[")
+        gone = [ln for ln in body.split("\r\n") if ln and not ln.startswith(";")]
+        if not sep or not gone:
+            raise SystemExit("PCP86: WIN.INI has no [fonts] entries to disable")
+        body = "\r\n".join(ln if (not ln or ln.startswith(";")) else ";" + ln for ln in body.split("\r\n"))
+        win = head + sep + body + nxt + tail
+        changes.append("WIN.INI [fonts]: every entry commented out (" + "; ".join(gone) +
+                       "), so the font mapper can only choose the 8x8 System and Terminal fonts")
     (tmp / "WIN.INI").write_bytes(win.encode("latin1"))
     mt("mcopy", "-o", "-i", i, str(tmp / "WIN.INI"), "::/WINDOWS/WIN.INI")
     changes.append("WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); "
@@ -342,7 +354,7 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", targe
     rec = {"target": target, "pristine_sha256": PRISTINE_SHA, "driver": tg["drv"], "driver_sha256": want,
            "tools": {n: sha(Path(tools) / n) for n in tg["tools"]},
            "control_ega": control_ega, "mouse": mouse, "fonts": fonts and dict(FONT_SHA),
-           "grid": grid, "tv": tv, "changes": changes, "86box_cfg": cfg}
+           "grid": grid, "tv": tv, "only_8x8": only8, "changes": changes, "86box_cfg": cfg}
     (vm / "PREP.JSN").write_text(json.dumps(rec, indent=1) + "\n")
     return rec
 
@@ -422,12 +434,14 @@ def main():
     ap.add_argument("--fonts", help="folder with XTTSYS.FON, XTCFIX.FON, XTCOEM.FON (8x8 fonts)")
     ap.add_argument("--grid", type=int, default=0, help="WIN.INI GridGranularity")
     ap.add_argument("--tv", action="store_true", help="txt40: CGA composite output (a TV)")
+    ap.add_argument("--only-8x8", action="store_true",
+                    help="comment out WIN.INI [fonts] so all text uses the 8x8 fonts (needs --fonts)")
     a = ap.parse_args()
     os.environ["DISPLAY"] = a.display
     vm = Path(a.vm)
     if a.cmd == "prepare":
         print(json.dumps(prepare(vm, a.pristine, a.drv, a.tools, a.control_ega, a.mouse, a.target, a.drv_sha,
-                                 a.fonts, a.grid, a.tv), indent=1))
+                                 a.fonts, a.grid, a.tv, a.only_8x8), indent=1))
     elif a.cmd == "start":
         if running(vm) is not None:
             raise SystemExit("PCP86: an 86Box instance for this VM is already running")

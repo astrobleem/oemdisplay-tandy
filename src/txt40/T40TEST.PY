@@ -56,8 +56,12 @@ _T40 ends
 hd segment para public 'HD'
 fn_in   db 'OPS.BIN',0
 fn_out  db 'TEXT.BIN',0
+fn_time db 'TIME.BIN',0
 h_in    dw 0
 h_out   dw 0
+h_time  dw 0
+t_left  dw 0
+t_start dw 0
 buf     db 16 dup(0)
 hd ends
 code segment para public 'CODE'
@@ -104,6 +108,13 @@ s1: mov h_in,ax
     jnc s2
     jmp fail
 s2: mov h_out,ax
+    mov dx,offset fn_time
+    mov ah,3ch
+    xor cx,cx
+    int 21h
+    jnc s3
+    jmp fail
+s3: mov h_time,ax
     call t40_reset
 next_op:
     mov ax,hd
@@ -198,14 +209,58 @@ op4ok:
     jmp next_op
 op5:
     cmp al,5
-    jne bad_op
+    jne op6
     call t40_reset
+    jmp next_op
+op6:
+    ; timed flush: ay, by, cx, dx, repeat count; BIOS ticks to TIME.BIN
+    cmp al,6
+    jne bad_op
+    mov dx,offset buf
+    mov cx,10
+    call rd
+    jnc op6r
+    jmp fail
+op6r:
+    mov ax,word ptr buf+8
+    mov t_left,ax
+    xor ah,ah
+    int 1ah
+    mov t_start,dx
+op6_loop:
+    mov ax,hd
+    mov ds,ax
+    mov ax,word ptr buf
+    mov bx,word ptr buf+2
+    mov cx,word ptr buf+4
+    mov dx,word ptr buf+6
+    cld
+    call t40_present
+    mov ax,hd
+    mov ds,ax
+    dec t_left
+    jnz op6_loop
+    xor ah,ah
+    int 1ah
+    sub dx,t_start
+    mov word ptr buf+12,dx
+    mov bx,h_time
+    mov dx,offset buf+12
+    mov cx,2
+    mov ah,40h
+    int 21h
+    jnc op6w
+    jmp fail
+op6w:
     jmp next_op
 bad_op:
     jmp fail
 finish:
     mov ax,hd
     mov ds,ax
+    mov bx,h_time
+    mov ah,3eh
+    int 21h
     mov bx,h_out
     mov ah,3eh
     int 21h
@@ -413,6 +468,35 @@ def synthetic(rnd, font, ops, model, n):
     return s.expect, expect_ideal
 
 
+BENCH = [  # (name, ay, by, cx, dx, repeats)
+    ("full screen", 0, 200, 0, 40, 4),
+    ("one text line (8 rows, full width)", 96, 104, 0, 40, 16),
+    ("menu item (10 rows, 12 columns)", 70, 80, 4, 16, 16),
+    ("caret (1 column, 10 rows)", 50, 60, 9, 10, 64),
+]
+
+
+def bench_scene(rnd, font, ops, model):
+    """A desktop-like screen: wallpaper bars, a window with a title, a menu
+    bar and lines of text, then the BENCH flushes, timed by the guest."""
+    s = Scene(ops, model)
+    for x in range(W):
+        s.fill(x, 0, x + 1, H, x // 20)
+    s.fill(24, 16, 312, 192, 15)
+    s.fill(24, 16, 312, 26, 1)
+    chars = [c for c in font if 33 <= c < 127]
+    s.text(120, 17, [ord(c) for c in "Program Manager"], font, 15, 1)
+    s.text(32, 28, [ord(c) for c in "File  Options  Window  Help"], font, 0, 15)
+    s.fill(24, 37, 312, 38, 0)
+    for k in range(14):
+        s.text(32, 42 + 10 * k, [rnd.choice(chars) for _ in range(30)], font, 0, 15)
+    s.load()
+    s.present(0, 200, 0, 40)
+    for name, ay, by, cx, dx, n in BENCH:
+        ops.append(struct.pack("<Bhhhhh", 6, ay, by, cx, dx, n))
+    return s.expect, [(0, model.ideal(s.shadow))]
+
+
 def frame_scene(path, ops, model):
     from PIL import Image
     frame = Image.open(path).tobytes()
@@ -435,6 +519,8 @@ def main():
     ap.add_argument("--frames", type=Path)
     ap.add_argument("--scenes", type=int, default=6)
     ap.add_argument("--pres", type=Path, help="alternative T40PRES.ASM (mutation runs)")
+    ap.add_argument("--bench", action="store_true",
+                    help="only the timed desktop scene; T40TEST.EXE + OPS.BIN also run on an XT")
     a = ap.parse_args()
     if a.pres:
         SOURCES["T40PRES.ASM"] = a.pres
@@ -445,7 +531,7 @@ def main():
     font = {c: g for c, g in font.items()}
     rnd = random.Random(4025)
     ops, expect, ideal_checks, names = [], [], [], []
-    for i in range(a.scenes):
+    for i in range(0 if a.bench else a.scenes):
         model = M.Presenter()
         ops.append(bytes([5]))
         base = len(expect)
@@ -453,6 +539,13 @@ def main():
         expect += e
         ideal_checks += [(base + k, t) for k, t in ideal]
         names += [f"synthetic{i}"] * len(e)
+    if a.bench:
+        model = M.Presenter()
+        ops.append(bytes([5]))
+        e, ideal = bench_scene(rnd, font, ops, model)
+        expect += e
+        ideal_checks += [(k, t) for k, t in ideal]
+        names += ["bench"] * len(e)
     if a.frames:
         for p in sorted(a.frames.glob("*.png")):
             model = M.Presenter()
@@ -503,9 +596,11 @@ def main():
             bad.append({"flush": i, "scene": names[i], "cells": len(diff), "first": k,
                         "got": hex(dumps[i][k]), "want": hex(want[k])})
     ideal_bad = sum(1 for i, t in ideal_checks if i >= len(dumps) or dumps[i] != t)
+    ticks = (out / "TIME.BIN").read_bytes() if (out / "TIME.BIN").exists() else b""
     result = {"run": run_log or "missing", "flushes": len(expect), "dumps": len(dumps),
               "cells_compared": 1000 * len(expect), "mismatched_flushes": bad[:20],
               "full_flush_vs_ideal_failures": ideal_bad,
+              "timed_flushes_here": len(ticks) // 2,
               "verdict": "PASS" if (run_log == "RUN=PASS" and not bad and not ideal_bad
                                     and len(dumps) == len(expect)) else "FAIL"}
     (out / "RESULT.JSN").write_text(json.dumps(result, indent=1) + "\n")
