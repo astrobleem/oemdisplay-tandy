@@ -1,0 +1,10 @@
+{
+ "run": "RUN=PASS",
+ "flushes": 252,
+ "dumps": 252,
+ "cells_compared": 252000,
+ "mismatched_flushes": [],
+ "full_flush_vs_ideal_failures": 0,
+ "timed_flushes_here": 0,
+ "verdict": "PASS"
+}

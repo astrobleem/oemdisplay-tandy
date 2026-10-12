@@ -1,0 +1,145 @@
+{
+ "summary": {
+  "mutants": 27,
+  "killed": 27,
+  "survived": [],
+  "verdict": "PASS"
+ },
+ "results": [
+  {
+   "mutant": "light-shade-threshold",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "half-block-count",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "box-junction-table",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "right-edge-mask",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "claim-window-rows",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "background-tie-order",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "foreground-tie-order",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "two-colour-tie",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "two-colour-third",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "box-down-edge",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "thin-line-stray",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "half-block-tolerance",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "hint-bottom-edge",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "blit-row-order",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "blit-inside-test",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "same-place-replace",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "no-second-check",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "second-check-any-glyph",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "stale-after-add",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "touch-never",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "touch-narrow-window",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "touch-short-window",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "underline-row",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "second-slot",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "output-margin-top",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "output-margin-left",
+   "test_exit": 1,
+   "killed": true
+  },
+  {
+   "mutant": "output-margin-bottom",
+   "test_exit": 1,
+   "killed": true
+  }
+ ]
+}

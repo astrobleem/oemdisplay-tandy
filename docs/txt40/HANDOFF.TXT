@@ -1,0 +1,8 @@
+TXT40 checkpoint (session limit). State at this commit:
+- Driver builds (BUILDT40.PY, docs/txt40/T40BUILD.JSN = latest build, clamped text bounds).
+- T40TEST: 252 flushes identical; T40MUT: 27/27 killed.
+- 86Box RGB session docs/txt40/T40WIN.JSN: 45/45 PASS (build 88628cd6..., one step older:
+  clip-union bounds). A run with the latest build (fb9622ab...) was in progress, unfinished.
+- XT bench docs/txt40/T40BENCH.JSN.
+TODO: finish RGB run on latest build; TV run (PCP86 prepare --tv, T40WIN --tv); fill the
+@@ placeholders in docs/TXT40.MD; add TV/RGB PNGs; line in docs/GAPSURV.MD.
