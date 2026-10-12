@@ -22,6 +22,7 @@ driver, not that one never existed; corrections are welcome.
 | 7 | 8088 machines with an SVGA chip (including PicoGraph's CL5429 module) | 800x600x16 and beyond | Windows 3.0 real mode: standard VGA 640x480x16 | Medium-high for 800x600x16: see below |
 | - | Hercules InColor | 720x350x16 (64-color palette) | Hercules shipped a Windows driver; version coverage unclear | Low priority: vendor support existed |
 | - | CGA composite artifact color | ~16 artifact colors | CGA mono | Curiosity only; depends on monitor |
+| - | CGA on a TV (composite): 40x25 colour text | 40x25 text, 16+16 colours | Graphics modes only, unreadable on a TV | Started: TR5 renderer presented as text cells, see [TXT40.MD](TXT40.MD) |
 
 ## Notes per entry
 

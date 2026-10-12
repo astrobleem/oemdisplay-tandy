@@ -183,7 +183,15 @@ slower than TR5 on the same machine, which only copies bytes.
 
 ### On a TV (composite)
 
-@@TV@@
+The same session ran with `--tv` (86Box `display_type = 1`, composite;
+`txt40/TVPREP.JSN`). Composite colour artifacts cannot be decoded back to
+cells, so these captures were taken after the script's fixed waits rather
+than when the screen had settled, and some show a redraw in progress.
+`txt40/TVDESK.PNG` is the desktop; `txt40/TVNOTE.PNG` is Notepad with the
+typed line, moved (taken when the script asked for the exit dialog, before
+it had appeared). In both, title bars, menus and the typed text read
+clearly through the colour fringing; the 320x200 graphics drivers do not.
+Whether a real TV does as well is the open question.
 
 ### Passed in 86Box / still needs real hardware
 
