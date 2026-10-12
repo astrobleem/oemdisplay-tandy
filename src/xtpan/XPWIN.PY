@@ -88,7 +88,7 @@ class Session:
         time.sleep(wait)
 
     def key(self, *k, wait=3):
-        if len(k) == 1 and k[0].startswith("alt+shift+"):
+        if len(k) == 1 and k[0] in ("alt+Next", "alt+Prior", "alt+F9"):
             return self.pankey(k[0], wait)
         self.r.key(*k, wait=wait)
 
@@ -182,19 +182,19 @@ class Session:
         self.pattern("pat_top0")
         p0 = len(self.log("XTPAN.LOG"))
         for _ in range(4):
-            self.key("alt+shift+Next", wait=6)
-        self.check("keyboard: four Alt+Shift+PgDn give four pans of 50 rows",
+            self.key("alt+Next", wait=6)
+        self.check("keyboard: four Alt+PgDn give four pans of 50 rows",
                    [l.split()[1:3] for l in self.pans(p0)] == [["0", "50"], ["50", "100"], ["100", "150"],
                                                                ["150", "200"]], log=self.pans(p0))
         w = self.pattern("pat_key200")
         if w:
             self.x, self.y = w[0], w[1]
         p0 = len(self.log("XTPAN.LOG"))
-        self.key("alt+shift+Prior", wait=6)
+        self.key("alt+Prior", wait=6)
         self.pattern("pat_key150")
-        self.key("alt+shift+F9", wait=6)
+        self.key("alt+F9", wait=6)
         self.pattern("pat_keytop")
-        self.check("keyboard: Alt+Shift+PgUp then Alt+Shift+F9 go to 150 then 0",
+        self.check("keyboard: Alt+PgUp then Alt+F9 go to 150 then 0",
                    [l.split()[1:3] for l in self.pans(p0)] == [["200", "150"], ["150", "0"]], log=self.pans(p0))
 
         # edge dwell: a brief touch of the bottom edge does not pan, a rest does
@@ -240,16 +240,16 @@ class Session:
             self.key("s", wait=8)
         self.pattern("pat_scroll_top0")
         for _ in range(4):
-            self.key("alt+shift+Next", wait=6)
+            self.key("alt+Next", wait=6)
         self.pattern("pat_scroll_top200")
 
         # repeated panning
         p0 = len(self.log("XTPAN.LOG"))
         for i in range(10):
-            self.key("alt+shift+Prior" if i % 2 == 0 else "alt+shift+Next", wait=5)
+            self.key("alt+Prior" if i % 2 == 0 else "alt+Next", wait=5)
         self.check("repeated: ten alternating pans all happen", len(self.pans(p0)) == 10, log=self.pans(p0))
         self.pattern("pat_repeat")
-        self.key("alt+shift+F9", wait=6)
+        self.key("alt+F9", wait=6)
         self.pattern("pat_repeat_top")
         self.key("q", wait=8)
 
@@ -400,8 +400,8 @@ class Session:
         self.home()
         self.to(40, 60)
         self.pattern("relaunch_top0")
-        self.key("alt+shift+Next", wait=6)
-        self.key("alt+shift+Next", wait=6)
+        self.key("alt+Next", wait=6)
+        self.key("alt+Next", wait=6)
         self.pattern("relaunch_top100")
         self.key("q", wait=6)
 

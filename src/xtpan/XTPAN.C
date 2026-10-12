@@ -9,9 +9,10 @@
  *   - the pointer outside the viewport (fast motion) -> pan at once, in
  *     whole Steps, so the pointer and the click target are always visible;
  *   - keys (polled with GetAsyncKeyState): KeyMods + KeyDown / KeyUp /
- *     KeyTop (default Alt+Shift+PgDn / PgUp / F9; Ctrl+Alt+PgDn is the
- *     fullscreen hotkey of 86Box and other emulators, and Shift with a
- *     keypad key such as Home can arrive as a digit on XT/Tandy keyboards);
+ *     KeyTop (default Alt+PgDn / Alt+PgUp / Alt+F9. Not Shift: with Shift a
+ *     keypad key (PgDn, Home on XT/Tandy keyboards) arrives as a digit or
+ *     wrapped in transient "Shift up" codes. Not Ctrl+Alt: Ctrl+Alt+PgDn is
+ *     the fullscreen hotkey of 86Box and other emulators. NumLock off.);
  *   - FollowActive: a newly activated window that is not wholly visible is
  *     brought into view (dialogs are centred on the 400-row desktop).
  * Settings: WIN.INI [XTPan]. Enabled=0 makes the helper exit at once.
@@ -29,6 +30,8 @@ static int nTop, nView = 200, nLogical = 400;
 static int nEdgeDir;
 static DWORD dwEdgeSince;
 static int bKeyWasDown;
+static int bLogKeys;
+static DWORD dwSeen[3];         /* last time Ctrl, Alt, Shift was seen down */
 static HWND hLastActive;
 static char szLog[80];
 
@@ -134,12 +137,30 @@ static int Held(int vk)
     return (GetAsyncKeyState(vk) & 0x8000) != 0;
 }
 
+/* A modifier counts if it was seen down within the last 250 ms: keyboard
+ * paths that wrap grey navigation keys in transient "Shift up" codes, or a
+ * modifier pressed one tick before the key, must not lose the press. */
+static int Recent(int i, int now_down, DWORD now)
+{
+    if (now_down)
+        dwSeen[i] = now;
+    return dwSeen[i] && now - dwSeen[i] <= 250;
+}
+
 static void Keys(void)
 {
+    DWORD now = GetCurrentTime();
     int ctl = Hit(VK_CONTROL), alt = Hit(VK_MENU), sh = Hit(VK_SHIFT);
     int dn = Hit(vkDown), up = Hit(vkUp), tp = Hit(vkTop);
-    int mods = (!(nMods & 1) || ctl) && (!(nMods & 2) || alt) && (!(nMods & 4) || sh);
+    int mods = (!(nMods & 1) || Recent(0, ctl, now)) && (!(nMods & 2) || Recent(1, alt, now)) &&
+               (!(nMods & 4) || Recent(2, sh, now));
     int which = 0;
+    if (bLogKeys && (ctl || alt || sh || dn || up || tp)) {
+        char buf[64];
+        wsprintf(buf, "KEYS t=%lu ctl=%d alt=%d sh=%d dn=%d up=%d tp=%d was=%d",
+                 GetCurrentTime(), ctl, alt, sh, dn, up, tp, bKeyWasDown);
+        LogLine(buf);
+    }
     if (mods)
         which = dn ? 1 : up ? 2 : tp ? 3 : 0;
     if (which && !bKeyWasDown) {
@@ -242,11 +263,12 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
     nStep = GetProfileInt("XTPan", "Step", 50);
     nDwell = GetProfileInt("XTPan", "Dwell", 400);
     nEdge = GetProfileInt("XTPan", "Edge", 3);
-    nMods = GetProfileInt("XTPan", "KeyMods", 6);
+    nMods = GetProfileInt("XTPan", "KeyMods", 2);
     vkDown = GetProfileInt("XTPan", "KeyDown", VK_NEXT);
     vkUp = GetProfileInt("XTPan", "KeyUp", VK_PRIOR);
     vkTop = GetProfileInt("XTPan", "KeyTop", VK_F9);
     bFollow = GetProfileInt("XTPan", "FollowActive", 1);
+    bLogKeys = GetProfileInt("XTPan", "LogKeys", 0);
     GetProfileString("XTPan", "LogFile", "", szLog, sizeof(szLog));
     if (nStep < 8)
         nStep = 8;
