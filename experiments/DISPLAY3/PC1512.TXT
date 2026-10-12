@@ -32,6 +32,14 @@ Keep that font/grabber configuration for the first reproduction. Fresh
 CGA-class Setup/fonts/grabber integration and DOS boxes remain untested.
 The driver package does not change keyboard or mouse configuration.
 
+STARTUP LOGO
+This ZIP supplies no startup logo and does not rebuild WIN.COM or run Setup.
+WIN /R retains your existing WIN.COM's startup behavior. A compatible stock
+Windows loader can show its original static logo; a customized loader can
+show different art or no logo. The separate Tandy wave is not invoked.
+There is no automatic logo fallback. Use a nonanimated WIN.COM; logo
+appearance/compatibility on this adapter is not separately qualified.
+
 ROLLBACK FROM PLAIN DOS
 Exit Windows fully, or reboot to DOS if Windows will not start.
 COPY C:\P15EXP\SYSBACK.INI C:\WINDOWS\SYSTEM.INI

@@ -19,6 +19,15 @@ The PC1512 cursor-state failure is unresolved. PCjr has narrower Windows
 application coverage and requires an already reserved DOS-owned video page.
 The PCjr guard does not reserve RAM. The other two cards have dedicated VRAM.
 
+The packets supply no startup logo and do not run Setup or rebuild WIN.COM.
+PC1512/ColorPlus use the existing `WIN /R`; PCjr uses JRWIN's guarded call to
+the existing `WIN.COM /R`. Its prior static art or no-logo behavior is retained.
+The independent Tandy wave is not called, and there is no automatic fallback
+or logo selection. A stock compatible Windows loader can show Microsoft's
+static logo; a modified one may show other art. The new PCjr test clone used
+the original CGA logo code plus our static WXTSPL01.RLE artwork; logo pixels
+and stock-logo compatibility on all three adapters were not separately tested.
+
 Runtime pins and historical evidence are from
 [ba980d4ccf9092c38ea22b006373f420d0f059e2](https://github.com/astrobleem/oemdisplay-tandy/commit/ba980d4ccf9092c38ea22b006373f420d0f059e2).
 [Native rebuild/launcher evidence](NATIVE.JSN) records exact driver/staged

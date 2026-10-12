@@ -38,6 +38,16 @@ a small 8086 DOS COM program; it shrinks its own block before the guard.
 The first release supports these fixed C: paths. Do not silently relocate
 only part of the package or launch through an unguarded shortcut.
 
+STARTUP LOGO
+This ZIP supplies no startup logo and does not rebuild WIN.COM or run Setup.
+After the guard, JRWIN runs your existing WIN.COM /R and retains that file's
+startup behavior. A compatible stock Windows loader can show its original
+static logo; a customized loader can show different art or no logo. The
+separate Tandy wave is not invoked; there is no automatic logo fallback.
+Use a nonanimated WIN.COM. Logo appearance/compatibility on PCjr is not
+separately qualified; keep using JRWIN even for an existing static/no-logo
+loader, so the memory guard remains mandatory before every Windows start.
+
 ROLLBACK FROM PLAIN DOS
 Exit Windows fully, or reboot to DOS if Windows will not start.
 COPY C:\PCJREXP\SYSBACK.INI C:\WINDOWS\SYSTEM.INI
@@ -55,7 +65,7 @@ physical PC DOS on an expanded PCjr. Saved groups/window positions can
 look damaged or clipped after changing the display geometry.
 Full Paintbrush save/reopen/ROP/frame-oracle coverage, fresh CGA-class
 Setup, real memory expansions, keyboard/mouse paths, timing and physical
-hardware remain unqualified. Use a static startup; Tandy palette animation
+hardware remain unqualified. Use a nonanimated WIN.COM; Tandy palette animation
 programs the wrong data port for a PCjr.
 The new JRWIN launcher also passed 14 stub-Windows control cases, actual
 guard acceptance/refusal, and two guarded real Windows 3.0 starts and normal
