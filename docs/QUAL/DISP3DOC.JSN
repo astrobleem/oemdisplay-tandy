@@ -1,0 +1,18 @@
+{
+ "kind": "documentation_and_scoped_attributes_only",
+ "baseline_main_commit": "d83dc41651797138a2797ccf3fcbf92d0b6d64f7",
+ "experimental_release_commit": "37b504be3619032f435381eded7d92a504d8d9da",
+ "source_pin_updates": {
+  ".gitattributes": {
+   "old_sha256": "eb2f0679a528c7a00ba829adf61d0f8b052ea5454f1899f0e75acd1c76f2160c",
+   "new_sha256": "07b11d9bb6035ee62413c640a7ca3d05ba5d69c5756143048b7bcb606151cd9a"
+  },
+  "README.md": {
+   "old_sha256": "294d0188c1e0c8a5a0eeef42d3f6bec027a8704dabe201d6fe0df2c16a3fc6e0",
+   "new_sha256": "da0d73209c3eb000bc458c9122bc78367b6f3ce9f7037da487507cc99a589d1b"
+  }
+ },
+ "native_and_runtime_pins_unchanged": true,
+ "all_other_RC6_fields_unchanged": true,
+ "scope": "Root README adds separate experimental release links; Git attributes preserve qualified DISPLAY3 source CRLF and only the new workflow. No Tandy release asset, runtime, helper, compiled-source pin or native evidence changes. This host-only documentation/configuration refresh makes no new native qualification claim."
+}
