@@ -264,11 +264,18 @@ captures. None was a driver fault:
   benchmark's text crossed row 200, where the shipped driver (rightly)
   flushes the whole screen, which made it look twice as slow. The bench
   now stays inside 200 rows for both drivers.
-- run 4 (`pan/RUN4`, 41/43): two of 23 emulator key taps (12 ms, shorter
-  than the helper's 55 ms poll) were not seen. People hold keys longer;
-  the final run presses keys for 150 ms. The helper also reads Windows'
-  "pressed since last call" bit, which catches most short taps but, as
-  run 4 shows, not all.
+- run 4 (`pan/RUN4`, 41/43) and run 5 (`pan/RUN5`, 40/43): Alt+Shift+PgDn
+  and PgUp were sometimes not seen (2 of 23 quick taps; 4 of 10 presses
+  held for 150 ms). The helper's raw key log (`LogKeys=1`, `pan/KEYDIAG`)
+  showed why: with Shift held, PgUp/PgDn arrive wrapped in transient
+  "Shift up" codes (the scheme enhanced keyboards use around the grey
+  navigation keys), and Windows 3.0's XT keyboard driver takes them
+  literally, so Shift reads as released while PgDn is down. On a real
+  EX/HX keyboard PgUp/PgDn are keypad keys, which Shift turns into
+  digits. Shift is the wrong modifier either way: the default keys are
+  now Alt+PgDn, Alt+PgUp and Alt+F9, and a modifier seen within the last
+  250 ms counts. Keys still need NumLock off (Alt with a keypad digit is
+  Windows' Alt+number character entry).
 
 ## 8. Recommendation
 
