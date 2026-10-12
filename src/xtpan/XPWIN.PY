@@ -178,9 +178,9 @@ class Session:
         p0 = len(self.log("XTPAN.LOG"))
         self.key("alt+shift+Prior", wait=6)
         self.pattern("pat_key150")
-        self.key("alt+shift+Home", wait=6)
+        self.key("alt+shift+F9", wait=6)
         self.pattern("pat_keytop")
-        self.check("keyboard: Alt+Shift+PgUp then Alt+Shift+Home go to 150 then 0",
+        self.check("keyboard: Alt+Shift+PgUp then Alt+Shift+F9 go to 150 then 0",
                    [l.split()[1:3] for l in self.pans(p0)] == [["200", "150"], ["150", "0"]], log=self.pans(p0))
 
         # edge dwell: a brief touch of the bottom edge does not pan, a rest does
@@ -202,14 +202,17 @@ class Session:
         p0 = len(self.log("XTPAN.LOG"))
         self.to(100, 330, wait=4)
         pl = self.pans(p0)
-        self.check("outside: pointer moved to row 330 is shown at once (50 -> 150)",
-                   len(pl) == 1 and pl[0].split()[1:4] == ["50", "150", "outside"], log=pl)
+        # the 180-row move arrives as two serial packets, so one or two pans
+        self.check("outside: pointer moved to row 330 is shown at once (viewport 150..349), no dwell",
+                   1 <= len(pl) <= 2 and all(l.split()[3] == "outside" for l in pl) and pl[-1].split()[2] == "150",
+                   log=pl)
         self.pattern("pat_out150")
 
         # hit tests: clicks report the logical point under the drawn pointer
         for (cx, cy) in ((20, 160), (300, 345), (150, 300)):
             n = len(self.log())
-            self.to(cx, cy, wait=3)
+            self.home()
+            self.to(cx, cy, wait=4)
             self.click(wait=3)
             m = self.wait_line(r"CLICK x=(-?\d+) y=(-?\d+) cursor=(-?\d+),(-?\d+) top=(-?\d+)", n, 30)
             got = tuple(int(v) for v in m.groups()) if m else None
@@ -232,7 +235,7 @@ class Session:
             self.key("alt+shift+Prior" if i % 2 == 0 else "alt+shift+Next", wait=5)
         self.check("repeated: ten alternating pans all happen", len(self.pans(p0)) == 10, log=self.pans(p0))
         self.pattern("pat_repeat")
-        self.key("alt+shift+Home", wait=6)
+        self.key("alt+shift+F9", wait=6)
         self.pattern("pat_repeat_top")
         self.key("q", wait=8)
 
@@ -267,6 +270,7 @@ class Session:
         self.run("C:\\XTPAN\\PANTEST OVERLAP", wait=50)
         for name, (cx, cy) in (("A", (40, 260)), ("B", (260, 310)), ("A", (60, 150))):
             k = len(self.log())
+            self.home()                   # a follow pan may have moved the pointer
             self.to(cx, cy, wait=4)
             self.click(wait=6)
             mc = self.wait_line(r"CLICK (\w) x=(-?\d+) y=(-?\d+)", k, 30)
@@ -340,6 +344,7 @@ class Session:
             self.to(ox + 40, y2, wait=4)
             self.r.m("up")
             time.sleep(6)
+            self.wait_line(r"SELECT \d+ (?!9 )\d+", n, 30)
             sel = [ln for ln in self.log()[n:] if ln.startswith("SELECT ")]
             ms = re.search(r"SELECT (\d+) (\d+)", sel[-1]) if sel else None
             ok = bool(ms) and int(ms.group(1)) == 9 and int(ms.group(2)) // 9 + 1 == 18
@@ -396,7 +401,12 @@ class Session:
             b = [int(v) for v in m.groups()]
             self.check(f"before: the tall dialog's Bottom button lies at rows {b[1]}..{b[3]}, below the "
                        "200-row screen", b[1] >= 200, button=b)
-        self.key("Escape", wait=8)
+        # the keyboard still reaches it: Tab to Bottom, Space
+        n = len(self.log())
+        self.key("Tab", wait=3)
+        self.key("space", wait=6)
+        mb = self.wait_line(r"BUTTON Bottom", n, 30)
+        self.check("before: the Bottom button is reachable by keyboard only (Tab, Space)", mb is not None)
         self.bench()
         self.check("before: benchmark ran", bool(self.measure.get("bench")), bench=self.measure.get("bench"))
 

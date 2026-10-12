@@ -9,8 +9,9 @@
  *   - the pointer outside the viewport (fast motion) -> pan at once, in
  *     whole Steps, so the pointer and the click target are always visible;
  *   - keys (polled with GetAsyncKeyState): KeyMods + KeyDown / KeyUp /
- *     KeyTop (default Alt+Shift+PgDn / PgUp / Home; Ctrl+Alt+PgDn is the
- *     fullscreen hotkey of 86Box and other emulators);
+ *     KeyTop (default Alt+Shift+PgDn / PgUp / F9; Ctrl+Alt+PgDn is the
+ *     fullscreen hotkey of 86Box and other emulators, and Shift with a
+ *     keypad key such as Home can arrive as a digit on XT/Tandy keyboards);
  *   - FollowActive: a newly activated window that is not wholly visible is
  *     brought into view (dialogs are centred on the 400-row desktop).
  * Settings: WIN.INI [XTPan]. Enabled=0 makes the helper exit at once.
@@ -244,7 +245,7 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
     nMods = GetProfileInt("XTPan", "KeyMods", 6);
     vkDown = GetProfileInt("XTPan", "KeyDown", VK_NEXT);
     vkUp = GetProfileInt("XTPan", "KeyUp", VK_PRIOR);
-    vkTop = GetProfileInt("XTPan", "KeyTop", VK_HOME);
+    vkTop = GetProfileInt("XTPan", "KeyTop", VK_F9);
     bFollow = GetProfileInt("XTPan", "FollowActive", 1);
     GetProfileString("XTPan", "LogFile", "", szLog, sizeof(szLog));
     if (nStep < 8)

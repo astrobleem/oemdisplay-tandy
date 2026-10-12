@@ -186,9 +186,14 @@ BOOL FAR PASCAL DlgProc(HWND hdlg, unsigned msg, WORD wParam, LONG lParam)
         LogLine(buf);
         return TRUE;
     }
+    if (msg == WM_COMMAND && wParam == IDCANCEL) {
+        LogLine("DIALOG cancelled");
+        EndDialog(hdlg, 0);
+        return TRUE;
+    }
     if (msg == WM_COMMAND && (wParam == IDB_TOP || wParam == IDB_BOTTOM)) {
         GetWindowRect(GetDlgItem(hdlg, wParam), &r);
-        wsprintf(buf, "BUTTON %s rect=%d,%d,%d,%d top=%d", wParam == IDB_TOP ? "Top" : "Bottom",
+        wsprintf(buf, "BUTTON %s rect=%d,%d,%d,%d top=%d", (LPSTR)(wParam == IDB_TOP ? "Top" : "Bottom"),
                  r.left, r.top, r.right, r.bottom, PanTop());
         LogLine(buf);
         if (wParam == IDB_BOTTOM)
@@ -298,7 +303,7 @@ long FAR PASCAL WndProc(HWND hwnd, unsigned msg, WORD wParam, LONG lParam)
         return 0;
     case WM_ACTIVATE:
         if (nMode == 2 && wParam) {
-            wsprintf(buf, "ACTIVATE %s", GetWindowWord(hwnd, 0) ? "B" : "A");
+            wsprintf(buf, "ACTIVATE %s", (LPSTR)(GetWindowWord(hwnd, 0) ? "B" : "A"));
             LogLine(buf);
         }
         break;

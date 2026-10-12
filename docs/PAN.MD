@@ -136,7 +136,8 @@ converts the 200 visible rows in task time.
   whole steps, to show it. The drawn pointer and the click target are
   never apart.
 - *Keys* `KeyMods`+`KeyDown`/`KeyUp`/`KeyTop` (default Alt+Shift+PgDn,
-  PgUp, Home; Ctrl+Alt+PgDn is 86Box's fullscreen hotkey), polled with GetAsyncKeyState including taps between
+  PgUp, F9; Ctrl+Alt+PgDn is 86Box's fullscreen hotkey, and Shift with a
+  keypad key such as Home can arrive as a digit on XT and Tandy keyboards), polled with GetAsyncKeyState including taps between
   ticks.
 - *FollowActive:* a newly activated window not wholly visible is brought
   into view (Windows centres dialogs on the 400-row desktop, so they
@@ -146,7 +147,7 @@ converts the 200 visible rows in task time.
 
 WIN.INI `[XTPan]` settings and defaults: `Enabled=1`, `Step=50`,
 `Dwell=400`, `Edge=3`, `KeyMods=6` (1 Ctrl, 2 Alt, 4 Shift),
-`KeyDown=34` (VK_NEXT), `KeyUp=33` (VK_PRIOR), `KeyTop=36` (VK_HOME),
+`KeyDown=34` (VK_NEXT), `KeyUp=33` (VK_PRIOR), `KeyTop=120` (VK_F9),
 `FollowActive=1`, `LogFile=` (none).
 
 **Turning it off.** `[XTPan] Enabled=0` stops the helper (the desktop
