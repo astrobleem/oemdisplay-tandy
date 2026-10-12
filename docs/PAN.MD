@@ -1,5 +1,19 @@
 # Edge-panning desktop for Windows XT (experimental): investigation
 
+**Summary.** XTPAN.DRV gives Windows 3.0 a 320x400 desktop on the Tandy
+1000 EX/HX's 320x200 16-colour screen, panned vertically in 50-row steps
+by a small helper (edge dwell, keys, following new windows). In 86Box's
+Tandy 1000 HX (the EX's sibling; 86Box has no EX) the final scripted
+session passes @@FINAL@@: every viewport position shows the exact logical
+rows, the pointer is drawn where it clicks, and a 275-row dialog's bottom
+button, a menu below row 200, overlapping windows, a window dragged across
+the boundary, a text selection across it, ScrollWindow copies, repeated
+panning and exit/relaunch all work. Costs: **40,320 bytes** of Windows'
+free memory (32,320 driver, 8,000 helper; 15% of the 268,448 bytes the
+unchanged driver leaves), **about 1.05 s per pan** on the emulated
+7.16 MHz 8088, and no measurable cost for ordinary drawing. Not tried on
+real hardware. Recommendation in section 8.
+
 Branch `ai/xt-pan`, separate from every release line. Target: Tandy 1000
 EX (8088, 640KB, Windows 3.0 real mode), driver profile 320x200x16
 (TANDY88.DRV). Goal: present Windows with a 320x400 logical desktop, show
@@ -155,3 +169,130 @@ stays 320x400, viewport at the top). To remove the experiment, set
 `display.drv=TR53216.DRV` in SYSTEM.INI again (the shipped Windows XT
 driver) and remove `XTPAN.EXE` from `load=`; the helper also exits by
 itself under any other display driver.
+
+## 5. Evidence (86Box Tandy 1000 HX)
+
+Emulator, ROMs, machine settings and guest changes: `pan/EMU.TXT`. The
+session (`src/xtpan/XPWIN.PY`) drives Windows with xdotool keys and the
+byte-exact serial mouse, and checks what Windows reports (log lines the
+fixture and the helper write on the guest disk, read while it runs) and
+exact pixels (`PANCHK.PY`: the capture decoded to 320x200 IRGB pixels;
+every video row must equal the logical row `top + row` of the test
+pattern, whose 8-row bands are all distinct, with one consistent colour
+mapping; the 16x20 box at the pointer's logical position is checked
+separately and must be the only difference).
+
+| What | Check | Final run |
+| --- | --- | --- |
+| Presentation | The test pattern, drawn once over all 400 rows, is exact at viewport tops 0, 50, 150, 200 and after relaunch | @@P1@@ |
+| Pointer | Drawn at logical row minus viewport top in every capture, nowhere else | @@P2@@ |
+| Keys | Alt+Shift+PgDn x4 = four 50-row pans; PgUp, F9 back to 150 and 0 | @@P3@@ |
+| Edge dwell | A brief touch of the bottom edge does not pan; resting there pans one step | @@P4@@ |
+| Pointer outside | A fast move to row 330 shows it at once | @@P5@@ |
+| Hit testing | Clicks at (20,160), (300,345), (150,300) are reported there, inside the viewport | @@P6@@ |
+| Screen copies | ScrollWindow x3 of the 400-row pattern, then viewed at tops 0 and 200 | @@P7@@ |
+| Repeated panning | 10 alternating pans, then exact pixels | @@P8@@ |
+| Tall dialog | A 275-row DialogBoxIndirect dialog; its Bottom button (rows 259-277) clicked after panning | @@P9@@ |
+| Overlap | Two windows across row 200: clicks reach the window on top at each point | @@P10@@ |
+| Drag | Caption dragged from row 146 to 296: window ends exactly 150 rows lower; the viewport followed during the drag | @@P11@@ |
+| Menu | A menu bar at row ~250: its fourth item clicked, command 204 received | @@P12@@ |
+| Selection | Drag-select in an edit control from line 2 (row 131) to line 18 (row 291) | @@P13@@ |
+| Exit and relaunch | Windows exits to DOS and restarts; pattern exact again | @@P14@@ |
+
+The same tall dialog on the unchanged driver (`pan/BASE.JSN`, picture
+`pan/BEFORE.PNG`): Windows moves it to row 0 and its Bottom button lies at
+rows 238-256, below the 200-row screen; only the keyboard (Tab, Space)
+reaches it.
+
+## 6. Measurements
+
+Same machine, same disk, same fixture; free memory is GetFreeSpace(0) as
+the first test application starts; times are sums over many operations
+with the 55 ms BIOS tick.
+
+| | TR53216.DRV (shipped) | XTPAN.DRV, helper off | XTPAN.DRV + XTPAN.EXE |
+| --- | --- | --- | --- |
+| Windows free memory | 268,448 | 236,128 (-32,320) | 228,128 (-40,320) |
+| 400 rectangle fills | 8,404 ms | 8,459 ms (+0.7%) | 8,513 ms (+1.3%) |
+| 200 TextOut lines | 17,850 ms | 17,850 ms (0) | 17,960 ms (+0.6%) |
+| 50 ScrollWindow | 39,711 ms | 39,711 ms (0) | 39,986 ms (+0.7%) |
+
+The driver's cost matches its link map (+32,310 bytes: 32,000 shadow,
+308 code, 2 data). The helper costs about 8 KB (its code, data, 4 KB
+stack and a 1 KB heap); its 55 ms timer explains the small slowdown in
+the last column. With the helper off, drawing costs the same as the
+shipped driver: only rows inside the viewport are converted, exactly as
+before.
+
+**Pan latency:** 40 pans alternating 0 and 200: 42,182 ms, **1,055 ms
+each**; alternating 0 and 50: 42,951 ms, 1,074 ms each; the 62 pans the
+helper made in run 4 averaged 1,053 ms (`pan/RUN4/XTPAN.LOG`). A pan is
+one conversion of the 200 visible rows by the unchanged TR5 code, the
+same work as one full-screen flush of the shipped driver, so its cost
+does not depend on the step. The mouse interrupt path is unchanged
+except for one subtraction (the cursor origin); no pan, redraw or
+allocation happens in it or in the timer interrupt.
+
+**Conventional memory on a 640 KB EX/HX:** 32 KB of the 640 KB is video
+RAM (the BIOS keeps 16 KB, RESERVE.COM the other 16 KB) with either
+driver. Inside Windows the experiment takes 40,320 of the 268,448 free
+bytes (15%), leaving 228,128.
+
+**A smaller virtual height** is a build option (`BUILDPAN.PY --rows`, a
+multiple of 4 from 204 to 408). `--rows 300` builds and links with a
+48,000-byte shadow (+16,000 bytes instead of +32,000; link map in
+`pan/BUILD300.JSN`); it was not run in the emulator. 300 rows hold the
+275-row test dialog.
+
+## 7. Failures on the way (kept)
+
+Every failed run is kept under `pan/` with its logs, lock record and
+captures. None was a driver fault:
+
+- run 1 (`pan/RUN1`): the session counted a file's trailing newline as a
+  line and missed every new log line; aborted.
+- run 2 (`pan/RUN2`): Ctrl+Alt+PgDn, then the default pan key, is 86Box's
+  fullscreen hotkey: the emulator took one key press and resized its
+  window. The default keys became Alt+Shift.
+- run 3 (`pan/RUN3`, 36/43): the fixture passed near strings to
+  wsprintf's `%s` (garbled log lines); the session's dead-reckoned
+  pointer went stale after the helper moved the pointer into view;
+  Alt+Shift+Home never registered (with Shift, a NumLock-off keypad key
+  can arrive as a digit on XT/Tandy keyboards): the default "top" key
+  became Alt+Shift+F9.
+- baseline 1 and 2: Escape did not close the fixture's dialog; the
+  benchmark's text crossed row 200, where the shipped driver (rightly)
+  flushes the whole screen, which made it look twice as slow. The bench
+  now stays inside 200 rows for both drivers.
+- run 4 (`pan/RUN4`, 41/43): two of 23 emulator key taps (12 ms, shorter
+  than the helper's 55 ms poll) were not seen. People hold keys longer;
+  the final run presses keys for 150 ms. The helper also reads Windows'
+  "pressed since last call" bit, which catches most short taps but, as
+  run 4 shows, not all.
+
+## 8. Recommendation
+
+The architecture works and is contained: GDI and USER only need the
+larger screen in GDIINFO; drawing, clipping, pixel reads and screen
+copies already go through the shadow; only presentation and the cursor
+origin know about the viewport; panning happens in task time through an
+escape. Nothing needed a kernel or USER change.
+
+- **Keep it an opt-in experiment**, not part of the release. It is worth
+  offering to EX/HX users who keep hitting dialogs that do not fit, with
+  the costs stated: 40 KB of Windows memory and about a second per pan
+  step on a 7.16 MHz machine.
+- **Prefer the 300-row build** if wider testing shows 300 rows are enough
+  for the dialogs people meet (half the memory cost); keep 400 rows for
+  the largest dialogs.
+- **Pan speed** is the weak point. Two routes, both future work: (1) the
+  CRTC start address in a ring of video memory, so a 50-row step converts
+  only the 50 new rows (about a quarter of the time); this needs the
+  gate array's address wrap within each 8 KB bank confirmed on real
+  hardware first; (2) a table-driven nibble conversion, which would speed
+  every flush, not only pans, but touches the shared TR5 path and needs
+  its own qualification.
+- **Do not** add hardware page flipping (another 32 KB of system RAM,
+  200-row steps only) or VGA-style assumptions.
+- Before any wider use: a real Tandy 1000 EX or HX, the WINXT keyboard
+  setup, and a check that 1 s pans feel acceptable on real hardware.
