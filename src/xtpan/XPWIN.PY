@@ -115,7 +115,10 @@ class Session:
         cap = self.r.b.out / (name + ".png")
         vy = y - top
         box = (x, vy, x + PTR[0], vy + PTR[1])
-        res = PANCHK.check(cap, top, off, [box], self.map)
+        try:
+            res = PANCHK.check(cap, top, off, [box], self.map)
+        except SystemExit as e:           # capture not decodable: a failed check, not the end
+            res = {"verdict": "FAIL", "error": str(e)}
         if res.get("verdict") == "PASS":
             self.map = res["map"]
         self.check(f"{name}: all video rows equal logical rows {top}..{top + 199} of the pattern "
@@ -123,7 +126,10 @@ class Session:
                    pixels=res.get("pixels_checked"), mismatches=res.get("mismatches"),
                    first=res.get("first_mismatch"), pointer=[x, y], top=top)
         if pointer_check and 0 <= vy < 200:
-            full = PANCHK.check(cap, top, off, [], self.map)
+            try:
+                full = PANCHK.check(cap, top, off, [], self.map)
+            except SystemExit:
+                full = {"mismatches": 0}
             inside = full.get("mismatches", 0) - res.get("mismatches", 0)
             self.check(f"{name}: pointer drawn at its logical position, video row {vy} "
                        f"({inside} pointer pixels, none elsewhere)",
@@ -162,19 +168,19 @@ class Session:
         self.pattern("pat_top0")
         p0 = len(self.log("XTPAN.LOG"))
         for _ in range(4):
-            self.key("ctrl+alt+Next", wait=6)
-        self.check("keyboard: four Ctrl+Alt+PgDn give four pans of 50 rows",
+            self.key("alt+shift+Next", wait=6)
+        self.check("keyboard: four Alt+Shift+PgDn give four pans of 50 rows",
                    [l.split()[1:3] for l in self.pans(p0)] == [["0", "50"], ["50", "100"], ["100", "150"],
                                                                ["150", "200"]], log=self.pans(p0))
         w = self.pattern("pat_key200")
         if w:
             self.x, self.y = w[0], w[1]
         p0 = len(self.log("XTPAN.LOG"))
-        self.key("ctrl+alt+Prior", wait=6)
+        self.key("alt+shift+Prior", wait=6)
         self.pattern("pat_key150")
-        self.key("ctrl+alt+Home", wait=6)
+        self.key("alt+shift+Home", wait=6)
         self.pattern("pat_keytop")
-        self.check("keyboard: Ctrl+Alt+PgUp then Ctrl+Alt+Home go to 150 then 0",
+        self.check("keyboard: Alt+Shift+PgUp then Alt+Shift+Home go to 150 then 0",
                    [l.split()[1:3] for l in self.pans(p0)] == [["200", "150"], ["150", "0"]], log=self.pans(p0))
 
         # edge dwell: a brief touch of the bottom edge does not pan, a rest does
@@ -217,16 +223,16 @@ class Session:
             self.key("s", wait=8)
         self.pattern("pat_scroll_top0")
         for _ in range(4):
-            self.key("ctrl+alt+Next", wait=6)
+            self.key("alt+shift+Next", wait=6)
         self.pattern("pat_scroll_top200")
 
         # repeated panning
         p0 = len(self.log("XTPAN.LOG"))
         for i in range(10):
-            self.key("ctrl+alt+Prior" if i % 2 == 0 else "ctrl+alt+Next", wait=5)
+            self.key("alt+shift+Prior" if i % 2 == 0 else "alt+shift+Next", wait=5)
         self.check("repeated: ten alternating pans all happen", len(self.pans(p0)) == 10, log=self.pans(p0))
         self.pattern("pat_repeat")
-        self.key("ctrl+alt+Home", wait=6)
+        self.key("alt+shift+Home", wait=6)
         self.pattern("pat_repeat_top")
         self.key("q", wait=8)
 
@@ -375,8 +381,8 @@ class Session:
         self.home()
         self.to(40, 60)
         self.pattern("relaunch_top0")
-        self.key("ctrl+alt+Next", wait=6)
-        self.key("ctrl+alt+Next", wait=6)
+        self.key("alt+shift+Next", wait=6)
+        self.key("alt+shift+Next", wait=6)
         self.pattern("relaunch_top100")
         self.key("q", wait=6)
 
