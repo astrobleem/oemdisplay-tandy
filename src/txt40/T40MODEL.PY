@@ -1,44 +1,51 @@
 #!/usr/bin/env python3
-"""Reference model of the TXT40 presenter: 320x200x16 pixels -> 40x25 text.
+"""Reference model of the TXT40 presenter: 320x200x16 shadow -> 40x25 text.
 
   python3 src/txt40/T40MODEL.PY <frame.png> <out.png> [--json <cells.json>]
       [--font <cga font: 2048 bytes>]
+  python3 src/txt40/T40MODEL.PY --check
 
-present(frame, hints) is the specification the driver's presenter must
-reproduce exactly (src/txt40/T40TEST.PY runs the driver code against it).
+Presenter is the specification the driver's T40PRES.ASM must reproduce
+byte for byte (T40TEST.PY runs the assembled driver code against it).
 
-frame: 64000 IRGB colour indexes (row-major, 320 wide); a CGA text
-attribute nibble is the same IRGB value, so no colour conversion is needed.
-hints: what the driver recorded when Windows drew text in an 8x8 font:
-(x, y, glyph, code): the glyph's exact top-left pixel, its 8 bitmap rows
-(bit 7 = left) and the CP437 character to show. At most one hint per cell;
-the cell is the one holding the glyph's centre pixel (x + 4, y + 4).
+Pixels: the TR5 shadow, 200 rows of four 40-byte planes (red, green, blue,
+intensity at +0, +40, +80, +120; bit 7 = leftmost pixel). A pixel's colour
+is the IRGB nibble I<<3|R<<2|G<<1|B, which is also a CGA text attribute
+nibble, so no colour conversion is needed. Cell (cx, cy) covers pixels
+8cx..8cx+7 x 8cy..8cy+7; cell index = cy*40 + cx; text word = attr<<8|code.
 
-For every cell, in this order:
-1. Hint check. A hint is shown only if the pixels still hold its glyph
-   exactly: within its 8x8 window (clipped to the screen), every glyph pixel
-   has one colour F, every other pixel has one colour B, F != B; or the
-   glyph is blank and all pixels share one colour. Row 7 may instead be one
-   solid colour when the glyph's row 7 is empty (a mnemonic underline). A
-   verified hint shows (code, B << 4 | F) and claims its 8x8 window.
-2. Otherwise the cell is approximated from its own pixels that no verified
-   hint claims:
-   - none, or one colour: a space in that colour (all claimed: the colour
-     of the claiming hints' background);
-   - otherwise background = most frequent colour (lowest index on ties),
-     foreground = second most frequent; each unclaimed pixel is
-     foreground if it equals the foreground colour, else background; the
-     8x8 mask then picks a character (pick_char).
+Hints are what the driver recorded when Windows drew text in an 8x8 font
+on the screen: (x, y, glyph, code) = the glyph's exact top-left pixel, its
+8 rows, and the CP437 character to show. A hint belongs to the cell holding
+its centre pixel (x+4, y+4); hints whose centre is off screen are dropped.
+Each cell keeps at most two hints, newest first (add()). A screen-to-screen
+copy (blit()) re-adds every hint wholly inside the source at its new place.
+
+For every cell (ideal()):
+1. The newest hint whose glyph is still exactly in the pixels is shown
+   (verify()): within its 8x8 window, on-screen pixels only, every glyph
+   pixel has one colour F, every other pixel one colour B, F != B; or the
+   glyph is blank and all pixels share one colour. If the glyph's row 7 is
+   empty, row 7 need only be one solid colour (a mnemonic underline).
+   Shows (code, B<<4|F) and claims its window's pixels for neighbours too.
+2. Otherwise approximate from the cell's own pixels that no shown hint of
+   the 3x3 neighbourhood claims: background = most frequent colour (lowest
+   index on ties), foreground = the next; pick_char() turns the foreground
+   mask into a space, block, half block, shade or box-drawing character.
+   No unclaimed pixels: a space in the background colour of the first
+   claiming neighbour in row-major order.
+present(ay, by, cx, dx) rewrites only the cells a change of pixel rows
+ay..by-1, byte columns cx..dx-1 can affect: two cells of margin each way.
 """
 import json
 import sys
 from pathlib import Path
 
 W, H, COLS, ROWS = 320, 200, 40, 25
-
+NCELL = COLS * ROWS
 POP = [bin(i).count("1") for i in range(256)]
 
-# Block and shade characters: (code, 8 rows) in the CGA ROM's CP437 order.
+# Block characters in trial order: (code, 8 rows).
 SHAPES = [
     (0xDB, [0xFF] * 8),              # full block
     (0xDF, [0xFF] * 4 + [0] * 4),    # upper half
@@ -46,83 +53,82 @@ SHAPES = [
     (0xDD, [0xF0] * 8),              # left half
     (0xDE, [0x0F] * 8),              # right half
 ]
-# Box-drawing by (left, right, up, down) line ends present.
-BOX = {
-    (1, 1, 0, 0): 0xC4, (0, 0, 1, 1): 0xB3, (1, 1, 1, 1): 0xC5,
-    (0, 1, 0, 1): 0xDA, (1, 0, 0, 1): 0xBF, (0, 1, 1, 0): 0xC0, (1, 0, 1, 0): 0xD9,
-    (0, 1, 1, 1): 0xC3, (1, 0, 1, 1): 0xB4, (1, 1, 0, 1): 0xC2, (1, 1, 1, 0): 0xC1,
-    (1, 0, 0, 0): 0xC4, (0, 1, 0, 0): 0xC4, (0, 0, 1, 0): 0xB3, (0, 0, 0, 1): 0xB3,
-}
+# Box-drawing junction by index left<<3 | right<<2 | up<<1 | down.
+BOX16 = [0xC5, 0xB3, 0xB3, 0xB3, 0xC4, 0xDA, 0xC0, 0xC3,
+         0xC4, 0xBF, 0xD9, 0xB4, 0xC4, 0xC2, 0xC1, 0xC5]
 
 
 def pick_char(mask, live):
-    """mask, live: 8 row bytes. live marks unclaimed pixels. Returns code."""
+    """mask (foreground, within live), live (unclaimed): 8 row bytes each."""
     n = sum(POP[r] for r in live)
-    on = sum(POP[m & l] for m, l in zip(mask, live))
+    on = sum(POP[m] for m in mask)
     if on == 0:
         return 0x20
     if on == n:
         return 0xDB
-    # Thin lines: full rows / full columns of foreground, little else.
-    full_rows = [i for i in range(8) if live[i] == 0xFF and mask[i] == 0xFF]
+    rows = [i for i in range(8) if live[i] == 0xFF and mask[i] == 0xFF]
+    nr = len(rows)
     colmask = 0xFF
     for m, l in zip(mask, live):
-        colmask &= (m | ~l) & 0xFF
-    full_cols = POP[colmask]
-    if (full_rows or full_cols) and len(full_rows) <= 2 and full_cols <= 2:
-        stray = on - 8 * len(full_rows) - 8 * full_cols + len(full_rows) * full_cols
+        colmask &= (m | (~l & 0xFF))
+    nc = POP[colmask]
+    if (nr or nc) and nr <= 2 and nc <= 2:
+        stray = on - 8 * nr - 8 * nc + nr * nc
         if stray <= 2:
-            if full_rows and full_cols:
-                r0, r1 = full_rows[0], full_rows[-1]
-                c = colmask
-                left = 1 if any((mask[r] & 0x80) for r in full_rows) and not (c & 0x80) else 0
-                right = 1 if any((mask[r] & 0x01) for r in full_rows) and not (c & 0x01) else 0
-                up = 1 if r0 > 0 and (mask[0] & c) else 0
-                down = 1 if r1 < 7 and (mask[7] & c) else 0
-                left = 1 if (c & 0x80) == 0 else left
-                right = 1 if (c & 0x01) == 0 else right
-                key = (left, right, up, down)
-                return BOX.get(key, 0xC5)
-            return 0xC4 if full_rows else 0xB3
-    best, best_d = None, 65
-    for code, rows in SHAPES:
-        d = sum(POP[(m ^ s) & l] for m, s, l in zip(mask, rows, live))
+            if nr and nc:
+                left = 1 if not (colmask & 0x80) else 0
+                right = 1 if not (colmask & 0x01) else 0
+                up = 1 if rows[0] > 0 and (mask[0] & colmask) else 0
+                down = 1 if rows[-1] < 7 and (mask[7] & colmask) else 0
+                return BOX16[left << 3 | right << 2 | up << 1 | down]
+            return 0xC4 if nr else 0xB3
+    best, best_d = 0, 65
+    for code, srows in SHAPES:
+        d = sum(POP[(m ^ s) & l] for m, s, l in zip(mask, srows, live))
         if d < best_d:
             best, best_d = code, d
     if best_d * 8 <= n:
         return best
-    q = on * 8 // n                  # density in eighths
+    q = on * 8 // n
     return 0x20 if q == 0 else 0xB0 if q <= 2 else 0xB1 if q <= 5 else 0xB2 if q <= 6 else 0xDB
 
 
-def window(frame, x, y):
-    """Pixels of the 8x8 window at (x, y); None for off-screen pixels."""
-    out = []
+def pixel(shadow, x, y):
+    base = y * 160 + (x >> 3)
+    bit = 7 - (x & 7)
+    return (((shadow[base + 120] >> bit) & 1) << 3 | ((shadow[base] >> bit) & 1) << 2
+            | ((shadow[base + 40] >> bit) & 1) << 1 | ((shadow[base + 80] >> bit) & 1))
+
+
+def shadow_from_frame(frame):
+    sh = bytearray(32000)
+    for y in range(H):
+        for x in range(W):
+            v = frame[y * W + x]
+            b = 0x80 >> (x & 7)
+            base = y * 160 + (x >> 3)
+            for p, bitv in ((0, 4), (40, 2), (80, 1), (120, 8)):
+                if v & bitv:
+                    sh[base + p] |= b
+    return sh
+
+
+def verify(shadow, hint):
+    """Attribute B<<4|F if the hint's glyph is exactly present, else None."""
+    x, y, glyph, code = hint
+    fg = bg = None
     for r in range(8):
         yy = y + r
-        row = []
+        if not 0 <= yy < H:
+            continue
+        if r == 7 and glyph[7] == 0:
+            continue
         for c in range(8):
             xx = x + c
-            row.append(frame[yy * W + xx] if 0 <= xx < W and 0 <= yy < H else None)
-        out.append(row)
-    return out
-
-
-def verify(frame, hint):
-    """(fg, bg) if the hint's glyph is exactly present, else None."""
-    x, y, glyph, code = hint
-    win = window(frame, x, y)
-    fg = bg = None
-    blank = not any(glyph)
-    for r in range(8):
-        for c in range(8):
-            v = win[r][c]
-            if v is None:
+            if not 0 <= xx < W:
                 continue
-            on = (glyph[r] >> (7 - c)) & 1
-            if r == 7 and glyph[7] == 0:
-                continue                      # judged below
-            if on:
+            v = pixel(shadow, xx, yy)
+            if (glyph[r] >> (7 - c)) & 1:
                 if fg is None:
                     fg = v
                 elif v != fg:
@@ -132,77 +138,131 @@ def verify(frame, hint):
                     bg = v
                 elif v != bg:
                     return None
-    row7 = [v for v in win[7] if v is not None]
-    if glyph[7] == 0 and row7:
-        if bg is None:
-            bg = row7[0]
-        if len(set(row7)) != 1:
+    if glyph[7] == 0 and 0 <= y + 7 < H:
+        row7 = set(pixel(shadow, x + c, y + 7) for c in range(8) if 0 <= x + c < W)
+        if len(row7) != 1:
             return None
-    if blank:
-        return (bg, bg) if bg is not None else None
+        if bg is None:
+            bg = row7.pop()
+    if not any(glyph):
+        return None if bg is None else bg << 4 | bg
     if fg is None or bg is None or fg == bg:
         return None
-    return fg, bg
+    return bg << 4 | fg
 
 
-def present(frame, hints):
-    cells = [[(0x20, 0)] * COLS for _ in range(ROWS)]
-    claimed = bytearray(W * H)
-    claim_bg = [[None] * COLS for _ in range(ROWS)]
-    by_cell = {}
-    for h in hints:
-        cx, cy = (h[0] + 4) >> 3, (h[1] + 4) >> 3
-        if 0 <= cx < COLS and 0 <= cy < ROWS:
-            by_cell[(cx, cy)] = h
-    shown = {}
-    for (cx, cy), h in sorted(by_cell.items(), key=lambda kv: (kv[0][1], kv[0][0])):
-        v = verify(frame, h)
-        if v is None:
-            continue
-        fg, bg = v
-        shown[(cx, cy)] = (h[3], (bg << 4) | fg)
-        x, y = h[0], h[1]
+def hint_cell(x, y):
+    cx, cy = (x + 4) >> 3, (y + 4) >> 3
+    if 0 <= cx < COLS and 0 <= cy < ROWS:
+        return cy * COLS + cx
+    return None
+
+
+class Presenter:
+    def __init__(self):
+        self.slots = [[] for _ in range(NCELL)]     # newest first, at most 2
+        self.text = [0] * NCELL                      # attr<<8 | code
+
+    def add(self, x, y, glyph, code):
+        k = hint_cell(x, y)
+        if k is None:
+            return
+        s = self.slots[k]
+        h = (x, y, list(glyph), code)
+        if s and s[0][0] == x and s[0][1] == y:
+            s[0] = h
+        else:
+            s.insert(0, h)
+            del s[2:]
+
+    def blit(self, sx, sy, w, h, ddx, ddy):
+        rows = range(ROWS - 1, -1, -1) if ddy > 0 else range(ROWS)
+        cols = range(COLS - 1, -1, -1) if ddx > 0 else range(COLS)
+        for cy in rows:
+            for cx in cols:
+                snap = list(self.slots[cy * COLS + cx])
+                for (x, y, g, c) in reversed(snap):       # older first
+                    if sx <= x and x + 8 <= sx + w and sy <= y and y + 8 <= sy + h:
+                        self.add(x + ddx, y + ddy, g, c)
+
+    def shown(self, shadow, k):
+        for h in self.slots[k]:
+            a = verify(shadow, h)
+            if a is not None:
+                return h, a
+        return None
+
+    def cell(self, shadow, cy, cx, shown):
+        own = shown[cy * COLS + cx]
+        if own is not None:
+            h, a = own
+            return a << 8 | h[3]
+        claim = [0] * 8
+        claim_bg = None
+        for ny in (cy - 1, cy, cy + 1):
+            for nx in (cx - 1, cx, cx + 1):
+                if not (0 <= ny < ROWS and 0 <= nx < COLS):
+                    continue
+                s = shown[ny * COLS + nx]
+                if s is None:
+                    continue
+                (x, y, _, _), a = s
+                dxo = x - 8 * cx
+                if dxo >= 8 or dxo <= -8:
+                    continue
+                bits = (0xFF >> dxo) if dxo >= 0 else (0xFF << -dxo) & 0xFF
+                hit = False
+                for r in range(8):
+                    if y <= 8 * cy + r < y + 8:
+                        claim[r] |= bits
+                        hit = True
+                if hit and claim_bg is None:
+                    claim_bg = a >> 4
+        live = [~c & 0xFF for c in claim]
+        counts = [0] * 16
         for r in range(8):
             for c in range(8):
-                xx, yy = x + c, y + r
-                if 0 <= xx < W and 0 <= yy < H:
-                    claimed[yy * W + xx] = 1
-                    tx, ty = xx >> 3, yy >> 3
-                    if claim_bg[ty][tx] is None:
-                        claim_bg[ty][tx] = bg
-    for cy in range(ROWS):
-        for cx in range(COLS):
-            if (cx, cy) in shown:
-                cells[cy][cx] = shown[(cx, cy)]
-                continue
-            counts = [0] * 16
-            pix = []
-            for r in range(8):
-                for c in range(8):
-                    i = (cy * 8 + r) * W + cx * 8 + c
-                    if not claimed[i]:
-                        counts[frame[i]] += 1
-                        pix.append((r, c, frame[i]))
-            used = [k for k in range(16) if counts[k]]
-            if not used:
-                b = claim_bg[cy][cx] or 0
-                cells[cy][cx] = (0x20, (b << 4) | b)
-                continue
-            order = sorted(used, key=lambda k: (-counts[k], k))
-            bg = order[0]
-            if len(order) == 1:
-                cells[cy][cx] = (0x20, (bg << 4) | bg)
-                continue
-            fg = order[1]
-            mask = [0] * 8
-            live = [0] * 8
-            for r, c, v in pix:
-                live[r] |= 0x80 >> c
-                if v == fg:
-                    mask[r] |= 0x80 >> c
-            code = pick_char(mask, live)
-            cells[cy][cx] = (code, (bg << 4) | fg)
-    return cells
+                if live[r] & (0x80 >> c):
+                    counts[pixel(shadow, 8 * cx + c, 8 * cy + r)] += 1
+        bg = fg = None
+        for k in range(16):
+            if counts[k] and (bg is None or counts[k] > counts[bg]):
+                bg = k
+        if bg is None:
+            b = claim_bg or 0
+            return (b << 4 | b) << 8 | 0x20
+        for k in range(16):
+            if k != bg and counts[k] and (fg is None or counts[k] > counts[fg]):
+                fg = k
+        if fg is None:
+            return (bg << 4 | bg) << 8 | 0x20
+        mask = [0] * 8
+        for r in range(8):
+            for c in range(8):
+                b = 0x80 >> c
+                if live[r] & b and pixel(shadow, 8 * cx + c, 8 * cy + r) == fg:
+                    mask[r] |= b
+        return (bg << 4 | fg) << 8 | pick_char(mask, live)
+
+    def ideal(self, shadow):
+        shown = [self.shown(shadow, k) for k in range(NCELL)]
+        return [self.cell(shadow, k // COLS, k % COLS, shown) for k in range(NCELL)]
+
+    def present(self, shadow, ay, by, cx, dx):
+        """Flush of pixel rows ay..by-1, byte columns cx..dx-1 (clamped)."""
+        ay, by = max(ay, 0), min(by, H)
+        cx, dx = max(cx, 0), min(dx, COLS)
+        if ay >= by or cx >= dx:
+            return
+        r0, r1 = max((ay >> 3) - 2, 0), min(((by - 1) >> 3) + 2, ROWS - 1)
+        c0, c1 = max(cx - 2, 0), min(dx - 1 + 2, COLS - 1)
+        shown = [None] * NCELL
+        for cy in range(max(r0 - 1, 0), min(r1 + 1, ROWS - 1) + 1):
+            for x in range(max(c0 - 1, 0), min(c1 + 1, COLS - 1) + 1):
+                shown[cy * COLS + x] = self.shown(shadow, cy * COLS + x)
+        for cy in range(r0, r1 + 1):
+            for x in range(c0, c1 + 1):
+                self.text[cy * COLS + x] = self.cell(shadow, cy, x, shown)
 
 
 # ---- previews and oracle hints (host only) --------------------------------
@@ -221,35 +281,35 @@ def ansi_to_cp437(c):
         return ord("?")
 
 
-def render(cells, font):
-    """40x25 cells drawn with an 8x8 CP437 font as a 320x200 RGB image."""
+def render(text, font):
+    """40x25 text words drawn with an 8x8 CP437 font as a 320x200 RGB image."""
     from PIL import Image
     im = Image.new("RGB", (W, H))
     px = im.load()
-    for cy in range(ROWS):
-        for cx in range(COLS):
-            code, attr = cells[cy][cx]
-            fg, bg = PAL[attr & 15], PAL[attr >> 4]
-            for r in range(8):
-                bits = font[code * 8 + r]
-                for c in range(8):
-                    px[cx * 8 + c, cy * 8 + r] = fg if (bits >> (7 - c)) & 1 else bg
+    for k, word in enumerate(text):
+        cy, cx = divmod(k, COLS)
+        code, attr = word & 255, word >> 8
+        fg, bg = PAL[attr & 15], PAL[attr >> 4]
+        for r in range(8):
+            bits = font[code * 8 + r]
+            for c in range(8):
+                px[cx * 8 + c, cy * 8 + r] = fg if (bits >> (7 - c)) & 1 else bg
     return im
 
 
 def oracle_hints(frame, fonts):
-    """Hints found by searching the frame for runs of exact glyphs.
+    """Hints found by searching a picture for runs of exact glyphs.
 
     Stands in for the driver's text recording when only a picture exists
     (reference frames from the Plantronics driver). Only letters, digits
     and punctuation with 6+ pixels, in runs of 2+ on an 8-pixel pitch,
     count, so that lines are not mistaken for '-' or '|'.
     """
+    import importlib.machinery
+    F = importlib.machinery.SourceFileLoader(
+        "fntread", str(Path(__file__).with_name("FNTREAD.PY"))).load_module()
     table = {}
     for path, oem in fonts:
-        import importlib.machinery
-        F = importlib.machinery.SourceFileLoader(
-            "fntread", str(Path(__file__).with_name("FNTREAD.PY"))).load_module()
         for c, g in F.glyphs(path).items():
             code = c if oem else ansi_to_cp437(c)
             if (32 < c < 127 or c >= 160) and sum(POP[b] for b in g) >= 6:
@@ -270,16 +330,51 @@ def oracle_hints(frame, fonts):
     for (x, y), h in found.items():
         if (x - 8, y) in found or (x + 8, y) in found:
             hints.append(h)
-    # Spaces between words in a run: blank glyph where both neighbours are text.
     for (x, y) in list(found):
         if (x + 16, y) in found and (x + 8, y) not in found:
-            t = window(frame, x + 8, y)
-            if len(set(v for row in t for v in row if v is not None)) == 1:
+            t = set(frame[(y + r) * W + x + 8 + c] for r in range(8) for c in range(8))
+            if len(t) == 1:
                 hints.append((x + 8, y, [0] * 8, 0x20))
     return hints
 
 
+def check():
+    """Self-test of properties the driver relies on (no emulator)."""
+    import random
+    rnd = random.Random(40)
+    p = Presenter()
+    sh = bytearray(32000)
+    g = [0x18, 0x3C, 0x66, 0x7E, 0x66, 0x66, 0x66, 0x00]
+    spots = ((13, 21), (0, 0), (192, 312), (100, 4))
+    for y0, x0 in spots:
+        for r in range(8):
+            for c in range(8):
+                v = 15 if (g[r] >> (7 - c)) & 1 else 1
+                x, yy = x0 + c, y0 + r
+                for pl, bitv in ((0, 4), (40, 2), (80, 1), (120, 8)):
+                    if v & bitv:
+                        sh[yy * 160 + pl + (x >> 3)] |= 0x80 >> (x & 7)
+        p.add(x0, y0, g, ord("A"))
+    t = p.ideal(sh)
+    for y0, x0 in spots:
+        k = hint_cell(x0, y0)
+        assert t[k] == (0x1F << 8 | 0x41), (x0, y0, hex(t[k]))
+    p.present(sh, 0, 200, 0, 40)
+    assert p.text == t
+    # Partial presents keep the text equal to the ideal after pixel edits.
+    for _ in range(40):
+        y = rnd.randrange(200)
+        xb = rnd.randrange(40)
+        sh[y * 160 + xb + 40 * rnd.randrange(4)] ^= 1 << rnd.randrange(8)
+        p.present(sh, y, y + 1, xb, xb + 1)
+        assert p.text == p.ideal(sh)
+    print("T40MODEL: check PASS")
+    return 0
+
+
 def main(argv):
+    if "--check" in argv:
+        return check()
     from PIL import Image
     if len(argv) < 3:
         print(__doc__)
@@ -289,16 +384,17 @@ def main(argv):
         raise SystemExit("T40MODEL: expects a decoded 320x200 frame")
     root = Path(__file__).resolve().parents[2] / "distributions" / "WINXT"
     fonts = [(root / "XTTSYS.FON", False), (root / "XTCOEM.FON", True)]
-    hints = oracle_hints(frame, fonts)
-    cells = present(frame, hints)
+    p = Presenter()
+    for h in oracle_hints(frame, fonts):
+        p.add(*h)
+    text = p.ideal(shadow_from_frame(frame))
     if "--font" in argv:
         font = Path(argv[argv.index("--font") + 1]).read_bytes()
-        render(cells, font).save(argv[2])
+        render(text, font).save(argv[2])
     if "--json" in argv:
-        Path(argv[argv.index("--json") + 1]).write_text(json.dumps(
-            {"hints": hints, "cells": cells}))
-    shown = sum(1 for row in cells for c in row if 32 < c[0] < 127)
-    print(f"T40MODEL: {len(hints)} hints, {shown} cells show letters/digits/punctuation")
+        Path(argv[argv.index("--json") + 1]).write_text(json.dumps(text))
+    shown = sum(1 for w in text if 32 < (w & 255) < 127)
+    print(f"T40MODEL: {shown} cells show letters/digits/punctuation")
     return 0
 
 
