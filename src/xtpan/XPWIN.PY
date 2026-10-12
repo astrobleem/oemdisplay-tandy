@@ -88,7 +88,18 @@ class Session:
         time.sleep(wait)
 
     def key(self, *k, wait=3):
+        if len(k) == 1 and k[0].startswith("alt+shift+"):
+            return self.pankey(k[0], wait)
         self.r.key(*k, wait=wait)
+
+    def pankey(self, combo, wait):
+        """A pan key pressed like a person does (held 150 ms), not a 12 ms
+        emulator tap: the helper polls every 55 ms (see PAN.MD)."""
+        PCPWIN.P.focus()
+        subprocess.run(["xdotool", "keydown", combo], check=True)
+        time.sleep(0.15)
+        subprocess.run(["xdotool", "keyup", combo], check=True)
+        time.sleep(wait)
 
     def run(self, cmd, wait=40):
         self.key("alt+f", wait=5)
