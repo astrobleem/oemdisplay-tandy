@@ -1,0 +1,42 @@
+Emulator and inputs for the XTPAN evidence (docs/PAN.MD)
+
+86Box 6.0 build 9001, official Linux AppImage (86Box-Linux-x86_64-b9001.AppImage,
+  sha256 535d3c329f8c32b601103970c86d80aa80298f345452c3524ea2f433624727a4),
+  run unpacked under Xvfb 1600x1200x24 with the Qt software renderer.
+86Box ROM set https://github.com/86Box/roms tag v6.0, commit
+  26761b5ab25786b4405c6829236fa745436e5399, files kept private:
+  c7d7cb0cdec5178898001cdde05442a9d2f64b56bfdf94003ee5e814f98f6bce  machines/tandy1000hx/v020000.u12
+  fd8be2d46b0d46913dd96c37d8872287cbe0a3982592161f4958bc8eb0c62922  hdd/xtide/ide_xt.bin
+
+Machine (86box.cfg, written by src/xtpan/PCP86.PY prepare --target xtpan|xtbase):
+  machine = tandy1000hx        Tandy 1000 HX. 86Box has no Tandy 1000 EX; the HX
+                               is the EX's sibling (same 8088 at 7.16 MHz, same
+                               video gate array, video RAM in system RAM; the HX
+                               adds DOS in ROM and a different case).
+  cpu_family = 8088, cpu_speed = 7159092, cpu_multi = 1, cpu_use_dynarec = 0
+                               86Box's cycle-counted 8088 interpreter at the EX/HX
+                               clock. This is not a DOSBox "cycles" setting; still,
+                               it is an emulation, and real 8088 timing (wait
+                               states, DRAM refresh, video contention) may differ.
+  mem_size = 640, time_sync = disabled
+  gfxcard = internal           the HX's own Tandy video
+  hdc_1 = xtide (XT BIOS)      PC DOS 3.20 + Windows 3.0 disk image (raw sha256
+                               f55fe24b...117561, src/pcjr/PCJSIMG.PY on the PCjr
+                               line), private
+  serial1 = serial passthrough to a host pty, driven byte-exactly by PCPMOUSE.PY
+                               (Microsoft serial mouse protocol, 1200 baud)
+  keyboard: the HX's own; keys sent with xdotool
+
+Guest changes (PREP.JSN of each run): display.drv = XTPAN.DRV or TR53216.DRV
+(the shipped Windows XT driver); CONFIG.SYS FILES/BUFFERS only; [keyboard]
+type=1; WIN.INI MouseSpeed=0, Wallpaper=BARS16.BMP, load=C:\XTPAN\XTPAN.EXE,
+[XTPan] LogFile=C:\XTPAN\XTPAN.LOG (and Enabled=0 for the helper-off run);
+AUTOEXEC runs RESERVE.COM (the shipped helper) before the DOS prompt.
+
+Timing: all times are measured inside the emulated machine with Windows'
+GetCurrentTime (BIOS tick, 55 ms resolution), summed over many operations.
+They describe 86Box's emulated HX, not a real EX/HX.
+
+Every guest run held the shared emulator lock (src/xtpan/EMULOCK.PY): a
+non-blocking flock refused when busy, no other emulator process running,
+a time bound, release in finally; each run's LOCK.JSN is kept with it.
