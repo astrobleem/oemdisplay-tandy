@@ -333,9 +333,9 @@ BOUNDS_MACROS = crlf("""; T40PATCH: a full-screen flush costs seconds on an 8088
 ; normal for windows wider than 320 pixels): the renderer draws only inside
 ; the clip rectangle and the opaque rectangle, so flush their union clamped
 ; to the screen. An unreadable or unordered rectangle keeps the full flush.
-t40_rect_cols macro ptr
+t40_rect_cols macro rp
 local t40c_left_kept,t40c_right_kept
-    les di,ptr
+    les di,rp
     mov ax,es:[di].left
     mov cl,3
     shr ax,cl
@@ -352,11 +352,11 @@ t40c_left_kept:
 t40c_right_kept:
 endm
 
-; Union the RECT at ptr, clamped to the screen, into rowfirst..rowlast and
+; Union the RECT at rp, clamped to the screen, into rowfirst..rowlast and
 ; colfirst..collast. Unreadable or unordered: jump to failed.
-t40_rect_union macro ptr,failed
+t40_rect_union macro rp,failed
 local empty,l0,r0,t0,b0,k1,k2,k3,k4,t40u_b,t40u_rows,t40u_rf,t40u_rl,t40u_cf,t40u_cl
-    les di,ptr
+    les di,rp
     mov ax,es
     or ax,ax
     jnz l0
@@ -479,6 +479,87 @@ done:
     pop di
     pop dx
     pop cx
+    pop bx
+    pop ax
+endm
+
+; T40PATCH: windows wider than 320 pixels have clip (and opaque) rectangles
+; reaching past the screen, which text_bounds rejects, costing a flush of
+; the whole clip area. Give text_bounds and t40_bounds screen-clamped copies
+; on the private stack frame; the renderer still gets the caller's pointers.
+t40_clamp1 macro rp,copy,saved
+local skip
+    push bx
+    lea bx,saved
+    mov ax,word ptr rp
+    mov ss:[bx],ax
+    mov ax,word ptr rp+2
+    mov ss:[bx+2],ax
+    les di,rp
+    mov ax,es
+    or ax,ax
+    jz skip
+    cmp di,0ffffh-((size RECT)-1)
+    ja skip
+    lea bx,copy
+    mov ax,es:[di].left
+    t40_clampax SCREEN_WIDTH
+    mov ss:[bx].left,ax
+    mov ax,es:[di].right
+    t40_clampax SCREEN_WIDTH
+    mov ss:[bx].right,ax
+    mov ax,es:[di].top
+    t40_clampax SCREEN_HEIGHT
+    mov ss:[bx].top,ax
+    mov ax,es:[di].bottom
+    t40_clampax SCREEN_HEIGHT
+    mov ss:[bx].bottom,ax
+    mov word ptr rp,bx
+    mov word ptr rp+2,ss
+skip:
+    pop bx
+endm
+
+t40_clampax macro limit
+local low_ok,high_ok
+    or ax,ax
+    jns low_ok
+    xor ax,ax
+low_ok:
+    cmp ax,limit
+    jle high_ok
+    mov ax,limit
+high_ok:
+endm
+
+t40_clamp macro extended
+    push ax
+    push di
+    push es
+    t40_clamp1 clip,t40cr,t40sclip
+    if extended
+    t40_clamp1 opaquerect,t40or,t40sopq
+    endif
+    pop es
+    pop di
+    pop ax
+endm
+
+t40_unclamp macro extended
+    push ax
+    push bx
+    lea bx,t40sclip
+    mov ax,ss:[bx]
+    mov word ptr clip,ax
+    mov ax,ss:[bx+2]
+    mov word ptr clip+2,ax
+    if extended
+    lea bx,t40sopq
+    mov ax,ss:[bx]
+    mov word ptr opaquerect,ax
+    mov ax,ss:[bx+2]
+    mov word ptr opaquerect+2,ax
+    endif
     pop bx
     pop ax
 endm
@@ -631,20 +712,20 @@ def patch_tsoft(t):
     t = replace_n(t, "cProc TStrBlt,", BOUNDS_MACROS + RECORD_MACRO + "cProc TStrBlt,", 1, "record macro")
     t = replace_n(t, "    localW rowfirst\r\n    localW rowlast\r\ncBegin\r\n",
                   "    localW rowfirst\r\n    localW rowlast\r\n    localW colfirst\r\n    localW collast\r\n"
-                  "cBegin\r\n", 2, "column locals")
+                  "    localV t40cr,%d\r\n    localV t40or,%d\r\n    localD t40sclip\r\n    localD t40sopq\r\n"
+                  "cBegin\r\n" % (8, 8), 2, "column locals")
     t = replace_n(t, "    text_bounds 0,0,0\r\n    cCall RStrBlt",
-                  "    text_bounds 0,0,0\r\n    t40_bounds 0\r\n    cCall RStrBlt", 1, "StrBlt columns")
+                  "    t40_clamp 0\r\n    text_bounds 0,0,0\r\n    t40_bounds 0\r\n    t40_unclamp 0\r\n"
+                  "    cCall RStrBlt", 1, "StrBlt columns")
     t = replace_n(t, "    text_bounds 1,opaquerect,options\r\n    cCall RExtTextOut",
-                  "    text_bounds 1,opaquerect,options\r\n    t40_bounds 1\r\n    cCall RExtTextOut", 1,
-                  "ExtTextOut columns")
+                  "    t40_clamp 1\r\n    text_bounds 1,opaquerect,options\r\n    t40_bounds 1\r\n"
+                  "    t40_unclamp 1\r\n    cCall RExtTextOut", 1, "ExtTextOut columns")
     t = replace_n(t, "    text_flush\r\nTStrBlt_done:", "    t40_flush\r\nTStrBlt_done:", 1, "StrBlt flush")
     t = replace_n(t, "    text_flush\r\nTExtTextOut_done:", "    t40_flush\r\nTExtTextOut_done:", 1,
                   "ExtTextOut flush")
-    t = replace_n(t, "TStrBlt_render:\r\n    text_bounds 0,0,0\r\n",
-                  "TStrBlt_render:\r\n    t40_record 0\r\n    text_bounds 0,0,0\r\n", 1, "StrBlt hints")
-    t = replace_n(t, "TExtTextOut_render:\r\n    text_bounds 1,opaquerect,options\r\n",
-                  "TExtTextOut_render:\r\n    t40_record 1\r\n    text_bounds 1,opaquerect,options\r\n",
-                  1, "ExtTextOut hints")
+    t = replace_n(t, "TStrBlt_render:\r\n", "TStrBlt_render:\r\n    t40_record 0\r\n", 1, "StrBlt hints")
+    t = replace_n(t, "TExtTextOut_render:\r\n", "TExtTextOut_render:\r\n    t40_record 1\r\n", 1,
+                  "ExtTextOut hints")
     t = replace_n(t, BLIT_OLD, BLIT_NEW, 1, "BitBlt hint moves")
     for gone in ("get_nibble\r\n    or al,dl", "and ax,3\r\n    mov cl,13\r\n", "call cursor_begin_retain"):
         if gone in t:
