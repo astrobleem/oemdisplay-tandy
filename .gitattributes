@@ -60,3 +60,7 @@ tools/FLASHDISK/PUBLISH.PY -text
 tools/FLASHDISK/TESTPUB.PY -text
 
 docs/QUAL/** -text
+
+# Experimental packet pins include the exact native-qualified launcher source.
+experiments/DISPLAY3/** -text
+.github/workflows/display3.yml -text

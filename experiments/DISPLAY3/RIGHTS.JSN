@@ -1,0 +1,5 @@
+{
+ "publication_owner_authorized": true,
+ "component_notices_preserved": true,
+ "record": "Release owner explicitly authorized these separate experimental derivative driver packages. Existing Microsoft DDK renderer/resource copyright notices remain applicable; the new packaging/launcher MIT license grants no rights to those components. Historical DDK license-envelope terms are not present in the materialized inputs. This record is publication authorization and preservation of notices, not a blanket third-party license grant. Original DDK, compiler, Windows, DOS, fonts/grabbers and ROM inputs are excluded."
+}

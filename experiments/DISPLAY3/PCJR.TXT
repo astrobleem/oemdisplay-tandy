@@ -1,0 +1,66 @@
+TNDYJR.DRV - EXPERIMENTAL IBM PCjr DISPLAY
+320x200, 16 colors, Windows 3.0 real mode
+
+THIS DRIVER REQUIRES THE MEMORY GUARD BEFORE EVERY WINDOWS START.
+JRGUARD checks an existing reservation. IT DOES NOT RESERVE RAM.
+Never bypass a refusal, remove the guard, or use the Tandy RESERVE helper.
+
+TARGET / MEMORY CONTRACT
+IBM PCjr with normal expanded conventional memory and a 32KB video page
+already excluded from program allocations. The qualified emulator exposes
+segments 1800h-1FFFh inside one DOS-owned system MCB (owner 0008h).
+JRGUARD also permits that page wholly above the DOS arena. Ordinary program,
+TSR or COMMAND.COM ownership is refused. A real memory driver's different
+reservation scheme is unqualified; do not widen the gate to make it pass.
+PCjr has no 640x200x16 mode. TGA-II and TXT40 are not in this package.
+
+INSTALL IN A CLONE
+Use a bootable backup/disposable clone, with a plain-DOS recovery route.
+Exit Windows completely before changes. This is not a fresh Setup disk.
+1. Extract ALL files to a new C:\PCJREXP. Verify SHA256.SUM on a modern
+   host. JRWIN.COM uses this fixed location and C:\WINDOWS.
+2. Back up the complete Windows installation/image before continuing.
+3. COPY C:\WINDOWS\SYSTEM.INI C:\PCJREXP\SYSBACK.INI
+   Stop if SYSBACK.INI already exists. Record the old display.drv setting.
+4. Preserve an existing C:\WINDOWS\SYSTEM\TNDYJR.DRV before replacing it.
+5. COPY C:\PCJREXP\TNDYJR.DRV C:\WINDOWS\SYSTEM\TNDYJR.DRV
+6. With a DOS editor, change only [boot] display.drv in SYSTEM.INI to
+   display.drv=TNDYJR.DRV. Retain the existing font/grabber configuration.
+7. Start ONLY with C:\PCJREXP\JRWIN. Repeat that command after every exit;
+   every invocation checks JRGUARD again before WIN /R.
+
+The launcher works from another current directory/drive. It switches to
+C:\WINDOWS only after the guard passes. A refused guard returns its
+nonzero DOS status and does not start Windows. Missing prerequisites or an
+EXEC/abnormal-termination error return 1. Normal Windows exit status is
+preserved. Successful Windows exit returns to DOS in C:\WINDOWS. JRWIN is
+a small 8086 DOS COM program; it shrinks its own block before the guard.
+The first release supports these fixed C: paths. Do not silently relocate
+only part of the package or launch through an unguarded shortcut.
+
+ROLLBACK FROM PLAIN DOS
+Exit Windows fully, or reboot to DOS if Windows will not start.
+COPY C:\PCJREXP\SYSBACK.INI C:\WINDOWS\SYSTEM.INI
+Restore a pre-existing TNDYJR.DRV if you replaced one. Restore the complete
+image/installation backup if other settings changed. Only after restoring
+the original display configuration may its original startup route be used.
+Never share a completed guest or backup containing Windows/DOS files.
+
+WHAT WAS TESTED / WHAT WAS NOT
+The exact driver previously booted Windows 3.0 in DOSBox-X PCjr emulation:
+dialogs, Program Manager, Solitaire, exit and guarded restart.
+That test reused an AT/EGA installation, EGA fonts/grabber, AT keyboard
+setting and emulated serial input. It used DOSBox-X's internal DOS, not
+physical PC DOS on an expanded PCjr. Saved groups/window positions can
+look damaged or clipped after changing the display geometry.
+Full Paintbrush save/reopen/ROP/frame-oracle coverage, fresh CGA-class
+Setup, real memory expansions, keyboard/mouse paths, timing and physical
+hardware remain unqualified. Use a static startup; Tandy palette animation
+programs the wrong data port for a PCjr.
+The new JRWIN launcher also passed 14 stub-Windows control cases, actual
+guard acceptance/refusal, and two guarded real Windows 3.0 starts and normal
+exits at 320x200x16. That clone used EGA fonts, CGA.GR2, standard mouse/sound
+and empty Program Manager groups. It checks caps and normal exit, not new
+full rendering or DOS-box coverage. See the companion NATIVE.JSN record.
+
+See PINS.JSN, NOTICE.TXT and the companion source/qualification records.

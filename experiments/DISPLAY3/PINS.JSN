@@ -1,0 +1,57 @@
+{
+ "runtime_source_commit": "ba980d4ccf9092c38ea22b006373f420d0f059e2",
+ "dependency_commit": "96ce6971a1757f3c77094322ed82741791c79646",
+ "release_tag": "experimental-displays-2026-10-12",
+ "drivers": {
+  "PC1512": {
+   "archive": "PC1512.ZIP",
+   "file": "PC1512.DRV",
+   "bytes": 54448,
+   "sha256": "31aca63699f05ef57094443de0b3f6926de2c516657aaabc5ee580ac4f65d9f7",
+   "mode": "640x200x16",
+   "hardware": "Amstrad PC1512 built-in planar video",
+   "evidence": "docs/pc1512/P86CHK.JSN",
+   "staged": {
+    "TSOFT.ASM": "30b2c183a6382700df91981387f5e6ace82d5fa1379876065b78610751054ab0",
+    "TCURSOR.ASM": "4ded456320df4280c8bd8f074bbe5143325d8099dd3323a44f70d9e3f1beb775"
+   }
+  },
+  "PCJR": {
+   "archive": "PCJR.ZIP",
+   "file": "TNDYJR.DRV",
+   "bytes": 54976,
+   "sha256": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4",
+   "mode": "320x200x16",
+   "hardware": "IBM PCjr with already DOS-reserved 32KB page at segments 1800h-1FFFh",
+   "evidence": "docs/pcjr/JRCYCLE.TXT",
+   "guard": {
+    "file": "JRGUARD.COM",
+    "bytes": 800,
+    "sha256": "10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756"
+   },
+   "launcher": {
+    "file": "JRWIN.COM",
+    "bytes": 1182,
+    "sha256": "18ccaa02759e5462b746af9e28ebd31af32c43f29e9d4eea400e6673cc764e96",
+    "source_sha256": "32e971b32608d2f1ad23fd5e2552708af2e0207e231b4b1188e5f508cd63740e"
+   },
+   "staged": {
+    "TSOFT.ASM": "74c5ce9b9b2265a19dd195e67b7601790b9a6a601de1a31ab745f372b4a83b0e",
+    "TCURSOR.ASM": "17ce8f16445cb010e97720d85b4e6d3a86c0e8a78273b8802bf665e1d51d9524"
+   }
+  },
+  "PCP3216": {
+   "archive": "PCP3216.ZIP",
+   "file": "PCP3216.DRV",
+   "bytes": 54832,
+   "sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406",
+   "mode": "320x200x16",
+   "hardware": "Plantronics ColorPlus on an IBM PC/XT; other clones unqualified",
+   "evidence": "docs/pcp/P86CHK.JSN",
+   "staged": {
+    "TSOFT.ASM": "340008a6a33951e89d423ca260ab2b540baff7dc8fd68ed2d3ab6994e5634acc",
+    "TCURSOR.ASM": "314173b064683b522f8682d0832b17e9fc31ef52f1f011fc417539cee4b14aff"
+   }
+  }
+ }
+}

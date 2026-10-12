@@ -1,0 +1,38 @@
+name: Experimental display packet checks
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/DISPLAY3/**'
+      - '.github/workflows/display3.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/DISPLAY3/**'
+      - '.github/workflows/display3.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  host:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Check out exact public source without credentials
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git sparse-checkout init --no-cone
+          printf '/experiments/DISPLAY3/\n/.gitattributes\n' | git sparse-checkout set --no-cone --stdin
+          git checkout --detach --force FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Test deterministic packets and refusal paths without private inputs
+        run: python3 -B experiments/DISPLAY3/TESTPKG.PY

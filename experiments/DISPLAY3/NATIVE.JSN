@@ -1,0 +1,158 @@
+{
+ "verdict": "PASS",
+ "drivers": {
+  "PC1512": {
+   "bytes": 54448,
+   "sha256": "31aca63699f05ef57094443de0b3f6926de2c516657aaabc5ee580ac4f65d9f7",
+   "staged_source_match": true
+  },
+  "PCP3216": {
+   "bytes": 54832,
+   "sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406",
+   "staged_source_match": true
+  },
+  "PCJR": {
+   "bytes": 54976,
+   "sha256": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4",
+   "staged_source_match": true
+  }
+ },
+ "launcher_sha256": "18ccaa02759e5462b746af9e28ebd31af32c43f29e9d4eea400e6673cc764e96",
+ "launcher_source_sha256": "32e971b32608d2f1ad23fd5e2552708af2e0207e231b4b1188e5f508cd63740e",
+ "native_cases": [
+  {
+   "name": "CASE0C",
+   "verdict": "PASS",
+   "trace": "GW",
+   "cwd": "C:\\WINDOWS",
+   "expected_exit": 0
+  },
+  {
+   "name": "CASE0D",
+   "verdict": "PASS",
+   "trace": "GW",
+   "cwd": "C:\\WINDOWS",
+   "expected_exit": 0
+  },
+  {
+   "name": "CASE1C",
+   "verdict": "PASS",
+   "trace": "G",
+   "cwd": "C:\\FOREIGN",
+   "expected_exit": 1
+  },
+  {
+   "name": "CASE1D",
+   "verdict": "PASS",
+   "trace": "G",
+   "cwd": "D:\\FOREIGN",
+   "expected_exit": 1
+  },
+  {
+   "name": "CASE2C",
+   "verdict": "PASS",
+   "trace": "G",
+   "cwd": "C:\\FOREIGN",
+   "expected_exit": 2
+  },
+  {
+   "name": "CASE2D",
+   "verdict": "PASS",
+   "trace": "G",
+   "cwd": "D:\\FOREIGN",
+   "expected_exit": 2
+  },
+  {
+   "name": "CASE7C",
+   "verdict": "PASS",
+   "trace": "G",
+   "cwd": "C:\\FOREIGN",
+   "expected_exit": 7
+  },
+  {
+   "name": "CASE7D",
+   "verdict": "PASS",
+   "trace": "G",
+   "cwd": "D:\\FOREIGN",
+   "expected_exit": 7
+  },
+  {
+   "name": "CASE128C",
+   "verdict": "PASS",
+   "trace": "G",
+   "cwd": "C:\\FOREIGN",
+   "expected_exit": 128
+  },
+  {
+   "name": "CASE128D",
+   "verdict": "PASS",
+   "trace": "G",
+   "cwd": "D:\\FOREIGN",
+   "expected_exit": 128
+  },
+  {
+   "name": "RELAUNCH",
+   "verdict": "PASS",
+   "trace": "GWGW",
+   "cwd": "C:\\WINDOWS",
+   "expected_exit": 0
+  },
+  {
+   "name": "WINERR",
+   "verdict": "PASS",
+   "trace": "GW",
+   "cwd": "C:\\WINDOWS",
+   "expected_exit": 7
+  },
+  {
+   "name": "NOGUARD",
+   "verdict": "PASS",
+   "trace": "",
+   "cwd": "D:\\FOREIGN",
+   "expected_exit": 1
+  },
+  {
+   "name": "NOWIN",
+   "verdict": "PASS",
+   "trace": "G",
+   "cwd": "D:\\FOREIGN",
+   "expected_exit": 1
+  }
+ ],
+ "actual_guard_positive": {
+  "name": "REALGUARD",
+  "verdict": "PASS",
+  "trace": "W",
+  "cwd": "C:\\WINDOWS",
+  "expected_exit": 0
+ },
+ "actual_guard_negative": {
+  "name": "WRONGMODEL",
+  "verdict": "PASS",
+  "trace": "",
+  "cwd": "D:\\FOREIGN",
+  "expected_exit": 1
+ },
+ "real_windows_cycles": 2,
+ "windows": {
+  "cycles": 2,
+  "normal_returns": [
+   "FIRST_RETURN=0",
+   "SECOND_RETURN=0",
+   "PASS"
+  ],
+  "observations": [
+   "WINDOWS_VERSION=3.0",
+   "WINDOWS_ENTERED width=320 height=200 colors=16",
+   "NORMAL_EXIT_REQUESTED=1",
+   "WINDOWS_VERSION=3.0",
+   "WINDOWS_ENTERED width=320 height=200 colors=16",
+   "NORMAL_EXIT_REQUESTED=1"
+  ],
+  "scope": "Owned Windows 3.0 clone, normalized EGA fonts/CGA grabber, standard mouse/sound, empty groups; caps/normal exit only, not a new full GDI or DOS-box oracle."
+ },
+ "emulator_sha256": "769fb38a5a94475488be2107856d9a9fcca65487df35676188f5c2ccd5a2e964",
+ "physical_hardware_qualified": false,
+ "reused_verified_native_builds": true,
+ "elapsed_seconds": 88.22
+}
