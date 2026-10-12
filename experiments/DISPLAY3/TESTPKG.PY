@@ -8,6 +8,7 @@ import importlib.machinery
 import json
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 from unittest.mock import patch
 
@@ -161,6 +162,38 @@ class Packets(unittest.TestCase):
         self.sums()
         with self.assertRaisesRegex(ValueError, "qualification/source binding"):
             self.verify()
+
+    def test_noncanonical_archive_names_refused_by_writer_and_reader(self):
+        for name in ("../EVIL.PY", "/EVIL.PY", "C:/EVIL.PY", "a/../EVIL.PY",
+                     "a/./EVIL.PY", "a//EVIL.PY", "a\\EVIL.PY", "a/"):
+            archive = self.root / "unsafe.zip"
+            with self.subTest(name=name), self.assertRaisesRegex(ValueError, "unsafe archive path"):
+                P.zip_bytes(archive, {name: b"SYNTHETIC TEST ONLY"})
+            # Adversarial ZIP construction bypasses the safe publisher writer.
+            with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_STORED) as z:
+                info = zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0))
+                info.filename = name  # Preserve adversarial native separators.
+                info.create_system, info.external_attr = 0, 0x20
+                z.writestr(info, b"SYNTHETIC TEST ONLY")
+            with self.subTest(name=name), self.assertRaisesRegex(ValueError, "unsafe archive path"):
+                P.zip_members(archive)
+
+    def test_source_traversal_refused_after_manifest_and_checksums_refresh(self):
+        self.build()
+        archive = self.out / "DISP3SRC.ZIP"
+        members = P.zip_members(archive)
+        members["../EVIL.PY"] = b"SYNTHETIC TEST ONLY"
+        manifest = json.loads(members["SOURCE.JSN"])
+        manifest["files"]["../EVIL.PY"] = P.sha(members["../EVIL.PY"])
+        members["SOURCE.JSN"] = P.js(manifest)
+        with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_STORED) as z:
+            for name, data in sorted(members.items()):
+                info = zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0))
+                info.create_system, info.external_attr = 0, 0x20
+                z.writestr(info, data)
+        self.sums()
+        with self.assertRaisesRegex(ValueError, "unsafe archive path"):
+            self.verify(True)
 
     def test_txt40_tga2_and_private_source_inputs_refused(self):
         for name in ("src/txt40/NEW.ASM", "src/tga2/T2PROBE.ASM", "DDK/README.TXT", "WINDOWS/WIN.COM"):

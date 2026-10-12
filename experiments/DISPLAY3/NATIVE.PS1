@@ -9,7 +9,7 @@ param(
     [string]$ReuseNative,
     [string]$Python = 'python.exe',
     [ValidateRange(30,600)][int]$Seconds = 600,
-    [string]$LockPath = 'C:\Users\chad\Documents\Codex\2026-10-06\tandy-emulator.lock'
+    [Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()][string]$LockPath
 )
 $ErrorActionPreference='Stop'
 if (!$NativeSlotAllocated) { throw 'Native allocation required.' }

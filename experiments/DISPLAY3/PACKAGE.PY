@@ -62,11 +62,16 @@ def pinned_file(root, pin):
     return data
 
 
+def safe_archive_name(name):
+    if not re.fullmatch(r"[A-Za-z0-9_.\-/]+", name) or any(
+            part in {"", ".", ".."} for part in name.split("/")):
+        raise ValueError("unsafe archive path: " + name)
+
+
 def zip_bytes(path, members):
     with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_STORED) as archive:
         for name, data in sorted(members.items()):
-            if not re.fullmatch(r"[A-Za-z0-9_.\-/]+", name) or ".." in name.split("/") or name.startswith("/"):
-                raise ValueError("unsafe archive path: " + name)
+            safe_archive_name(name)
             info = zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0))
             info.create_system, info.external_attr = 0, 0x20
             archive.writestr(info, data)
@@ -78,6 +83,9 @@ def zip_members(path):
         if names != sorted(set(names)) or archive.comment:
             raise ValueError("archive duplicate/order/comment")
         for info in archive.infolist():
+            # zipfile may normalize native separators or truncate a NUL name.
+            safe_archive_name(info.orig_filename)
+            safe_archive_name(info.filename)
             if info.date_time != (1980, 1, 1, 0, 0, 0) or info.create_system != 0 or \
                     info.external_attr != 0x20 or info.compress_type != zipfile.ZIP_STORED or \
                     info.extra or info.comment or info.flag_bits:

@@ -33,6 +33,13 @@ caps and normal exit, not a fresh full rendering oracle.
 It runs no emulator and uses no private inputs. The synthetic fixtures are
 never public runtime candidates.
 
+`pwsh -File experiments/DISPLAY3/TESTLOCK.PS1` tests wrapper refusals using
+synthetic locks and a nonexistent worker executable; it launches no emulator.
+Native qualification requires a separately allocated slot and an explicit
+`-LockPath` naming that host's existing shared lock. The wrapper never creates
+or substitutes a private lock. Supply the remaining required paths shown by
+`Get-Help experiments/DISPLAY3/NATIVE.PS1 -Full`; use fresh owned output.
+
 `PACKAGE.PY build` consumes exact pinned qualified drivers plus a matching
 native launcher record, release-owner authorization/notices and two
 complete source commit pins. It produces three runtime ZIPs, one matching

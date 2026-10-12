@@ -36,3 +36,6 @@ jobs:
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Test deterministic packets and refusal paths without private inputs
         run: python3 -B experiments/DISPLAY3/TESTPKG.PY
+      - name: Test native wrapper refusals without launching a worker or emulator
+        shell: pwsh
+        run: ./experiments/DISPLAY3/TESTLOCK.PS1
