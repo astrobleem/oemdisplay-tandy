@@ -89,7 +89,7 @@ ENABLE_NEW = crlf("""    mov ax,1                  ; T40PATCH: BIOS 40x25 colour
     mov es,ax                 ; (t40_reset inline: TEnable is in
     xor di,di                 ; another code segment)
     xor ax,ax
-    mov cx,T40_NCELL*(T40_CELLB+2)/2
+    mov cx,T40_CLRB/2
     rep stosw
     mov es:t40_snv,0          ; no snapshot held
 """)
@@ -113,12 +113,16 @@ t40_tch db 0
 SEG_ANCHOR = "sEnd ShadowSeg\r\n"
 
 
-GEOMETRY = {"T40_COLS": 40, "T40_NROWS": 25, "T40_SLOTB": 16, "T40_SNAPB": 8192}
+GEOMETRY = {"T40_COLS": 40, "T40_NROWS": 25, "T40_VROWS": 25, "T40_NGLYPH": 1024, "T40_GLIMIT": 896,
+            "T40_SNAPB": 8192}
+SEGMENTS = {"T40_SHSEG": "seg shadow_bits", "T40_VSEG": "0b800h", "T40_LSEG": "0b800h",
+            "T40_SNSEG": "seg t40_snapbuf"}
 
 
 def geometry_text():
-    return crlf("; T40PATCH: presenter geometry (T40DATA.ASM).\n" +
-                "".join(f"{k} equ {v}\n" for k, v in GEOMETRY.items()))
+    return crlf("; T40PATCH: presenter geometry and segments (T40DATA.ASM).\n" +
+                "".join(f"{k} equ {v}\n" for k, v in GEOMETRY.items()) +
+                "".join(f"{k} equ <{v}>\n" for k, v in SEGMENTS.items()))
 
 
 def seg_text():
@@ -339,9 +343,7 @@ assumes es,nothing
 def pres_text():
     return (crlf("; T40PATCH: presenter, verbatim from src/txt40/T40PRES.ASM.\n"
                  ".errnz (offset shadow_bits)\n"
-                 "T40_SHSEG equ <seg shadow_bits>\n"
-                 "T40_SNSEG equ <seg t40_snapbuf>\n"
-                 "T40_VSEG equ <0b800h>\n")
+                 )
             + fragment("T40PRES.ASM") + PRES_TAIL + ansi_table_text())
 
 

@@ -14,8 +14,8 @@ port step and before the first assembly, applies:
    shadow clear, and SDIB88's screen bounds. The 16-colour mapper stays.
    The 640x200x4 profile's palette and four-colour flush are not used.
 2. T40PATCH, configured for 80 columns: the same presenter source
-   (T40PRES/T40DATA with T40_COLS=80, 14-byte hint slots so two hints per
-   cell and the state fit one segment), text-call hints, hint moves,
+   (T40PRES/T40DATA with T40_COLS=80; compact hints: two 4-byte slots per
+   cell and a 1,024-entry glyph dictionary, about 29 KB in one segment), text-call hints, hint moves,
    snapshot-diff flushes and clip-bounded text flushes.
 3. Mode: BIOS mode 03h (80x25 colour), blink off on every adapter class
    that has it: CGA-compatible mode register 3D8h = 09h (and BIOS 40:65h),
@@ -37,7 +37,8 @@ T40 = importlib.machinery.SourceFileLoader("t40patch_t80", str(HERE.parent / "tx
 crlf, replace_n = T40.crlf, T40.replace_n
 
 COLS = 80
-GEOMETRY = {"T40_COLS": 80, "T40_NROWS": 25, "T40_SLOTB": 14, "T40_SNAPB": 8192}
+GEOMETRY = {"T40_COLS": 80, "T40_NROWS": 25, "T40_VROWS": 25, "T40_NGLYPH": 1024, "T40_GLIMIT": 896,
+            "T40_SNAPB": 8192}
 
 # (old, new) on the final staged TSOFT.ASM, each exactly once; from the
 # 640x200x4 profile's list without its colour-specific entries.
@@ -93,7 +94,7 @@ t80e_noega:
     mov es,ax                 ; (t40_reset inline: TEnable is in
     xor di,di                 ; another code segment)
     xor ax,ax
-    mov cx,T40_NCELL*(T40_CELLB+2)/2
+    mov cx,T40_CLRB/2
     rep stosw
     mov es:t40_snv,0          ; no snapshot held
 """)

@@ -1,16 +1,22 @@
 ; T40DATA.ASM - TXT40/TEXT80 presenter state (fragment for segment _T40).
-; Geometry: the includer defines T40_COLS (40 or 80), T40_NROWS (25),
-; T40_SLOTB (hint slot bytes: 16, or 14 to fit 80x25 in one segment) and
-; T40_SNAPB (snapshot buffer bytes) before this fragment. TXT40 is 40, 25,
-; 16. (MASM 5.1 rejects IFNDEF defaults here as forward references.)
+; Geometry: the includer defines, before this fragment, T40_COLS (40 or
+; 80), T40_NROWS (25 or 50), T40_NGLYPH (glyph dictionary entries, a power
+; of two), T40_GLIMIT (< T40_NGLYPH: glyphs kept before a reset) and
+; T40_SNAPB (snapshot buffer bytes). (MASM 5.1 rejects IFNDEF defaults here
+; as forward references; its symbols are case-insensitive, hence NROWS.)
 if (T40_COLS ne 40) and (T40_COLS ne 80)
 .err T40_COLS must be 40 or 80
 endif
-if (T40_SLOTB ne 16) and (T40_SLOTB ne 14)
-.err T40_SLOTB must be 16 or 14
+if T40_GLIMIT ge T40_NGLYPH
+.err T40_GLIMIT must be below T40_NGLYPH
 endif
+; T40_VROWS (text rows shown: T40_NROWS, or 25 of 50 when panning) and the
+; segment equates T40_SHSEG (shadow; 0 when the includer sets t40_sh0 and
+; t40_sh1 at run time), T40_VSEG (video text buffer) and T40_LSEG (logical
+; text buffer: T40_VSEG itself when nothing pans) come from the includer too.
 T40_NCELL equ T40_COLS*T40_NROWS
-T40_CELLB equ 2*T40_SLOTB           ; two slots per cell
+T40_PAN equ T40_VROWS lt T40_NROWS      ; -1 (true) when the screen pans
+T40_BANDS equ (T40_NROWS+24)/25         ; 200-row shadow segments (1 or 2)
 T40_W equ 8*T40_COLS                ; pixels
 T40_H equ 8*T40_NROWS
 T40_ROWB equ 4*T40_COLS             ; shadow bytes per pixel row (4 planes)
@@ -19,17 +25,32 @@ T40_ROWSH equ 5                     ; T40_ROWB = 5 shl T40_ROWSH
 else
 T40_ROWSH equ 6
 endif
-; t40_slot must stay first: slot addresses are cell*T40_CELLB from offset 0.
-t40_slot    db T40_NCELL*T40_CELLB dup (0)  ; 2 hint slots per cell
+; Hints (compact): each cell has two 4-byte slots, newest first, at
+; cell*8 and cell*8+4: byte 0 = 80h (valid) | dy<<3 | dx, where the glyph's
+; top-left pixel is (8cx-4+dx, 8cy-4+dy); bytes 1-2 = glyph dictionary
+; index; byte 3 = CP437 code. The 8 glyph rows live once in t40_gly.
+t40_slot    db T40_NCELL*8 dup (0)  ; t40_slot must stay first
 t40_vst     db T40_NCELL dup (0)    ; per cell: 0 nothing shown, 1/2 slot shown;
                                     ; bit 7: slots changed since (stale)
 t40_vat     db T40_NCELL dup (0)    ; per cell: attribute of the shown hint
-; t40_reset clears the T40_NCELL*(T40_CELLB+2) bytes above.
+t40_guse    db T40_NGLYPH/8 dup (0) ; dictionary entries in use (bitmap)
+t40_gcnt    dw 0                    ; entries in use
+; t40_reset clears the T40_CLRB bytes above.
+T40_CLRB equ T40_NCELL*10+T40_NGLYPH/8+2
+t40_gly     db T40_NGLYPH*8 dup (0) ; glyph rows, 8 bytes per entry
+t40_xs      db 14 dup (0)           ; one slot unpacked: x, y, rows 0-7,
+                                    ; code, valid (t40_unpack)
+t40_sh0     dw T40_SHSEG            ; shadow rows 0-199 (segment)
+t40_sh1     dw 0                    ; shadow rows 200-399 (two bands only)
+t40_vtop    dw 0                    ; first logical text row shown
+t40_voff    dw 0                    ; t40_vtop * T40_COLS * 2
+t40_gidx    dw 0                    ; t40_add: dictionary index
+t40_acell   dw 0                    ; t40_add: the cell being written
 t40_cnt     dw 16 dup (0)       ; colour counts of the cell being approximated
 t40_pl      db 32 dup (0)       ; cell planes, 8 rows x (R,G,B,I)
 t40_live    db 8 dup (0)        ; claimed rows, then unclaimed (live) rows
 t40_mask    db 8 dup (0)        ; foreground pixels within live
-t40_snap    db T40_CELLB dup (0) ; t40_blit: copy of one cell's slots
+t40_snap    db 28 dup (0)       ; t40_blit: one cell's two slots unpacked
 t40_eqa     db 8 dup (0)        ; t40_two: live pixels of the first colour
 t40_eqb     db 8 dup (0)        ; t40_two: live pixels of the second colour
 t40_rem     db 8 dup (0)        ; t40_two: live pixels not of the first
@@ -74,10 +95,6 @@ t40_ex      dw 0
 t40_ey      dw 0
 t40_ddx     dw 0
 t40_ddy     dw 0
-if T40_SLOTB ne 16
-t40_tmp     dw 0                ; t40_slotof scratch
-t40_acell   dw 0                ; t40_add: the cell being written
-endif
 t40_snv     db 0                ; t40_snap: a snapshot is held
             db 0
 t40_sy0     dw 0                ; its rectangle (clamped): rows, bytes

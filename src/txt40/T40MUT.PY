@@ -44,16 +44,24 @@ MUTANTS = [
     ("blit-row-order", "    jle tb_rdir", "    jmp tb_rdir"),
     ("blit-inside-test", "    jg tbo_done\r\n    mov bx,word ptr t40_snap[di+2]",
      "    jge tbo_done\r\n    mov bx,word ptr t40_snap[di+2]"),
-    ("same-place-replace", "    jne ta_push", "    jmp ta_push"),
+    ("same-place-replace", "    je ta_write                 ; same place: the newer replaces", "    jmp short ta_push"),
     ("no-second-check", "    mov t40_rows,07Eh", "    mov t40_rows,0"),
     ("second-check-any-glyph", "    or al,[si+10]\r\n    jz tvf_fail", "    or al,[si+10]\r\n    jmp short $+2"),
-    ("stale-after-add", "    or t40_vst[bx],80h", "    or t40_vst[bx],00h"),
+    ("stale-after-add", "    or t40_vst[bx],80h          ; next flush whose output range holds it",
+     "    or t40_vst[bx],00h"),
     ("touch-never", "    stc\r\n    ret\r\ntch_no:", "    clc\r\n    ret\r\ntch_no:"),
     ("touch-narrow-window", "    cmp ax,t40_px1\r\n    jge tch_no\r\n    add ax,8", "    cmp ax,t40_px1\r\n    jge tch_no\r\n    add ax,7"),
     ("touch-short-window", "    cmp ax,t40_py1\r\n    jge tch_no\r\n    add ax,8", "    cmp ax,t40_py1\r\n    jge tch_no\r\n    add ax,7"),
     ("underline-row", "    cmp byte ptr [si+11],0\r\n    jne tv_normal",
      "    cmp byte ptr [si+11],1\r\n    jne tv_normal"),
-    ("second-slot", "    add si,T40_SLOTB\r\n    cmp byte ptr [si+13],0", "    add si,2*T40_SLOTB\r\n    cmp byte ptr [si+13],0"),
+    ("second-slot", "    add di,4\r\n    call t40_unpack\r\n    cmp byte ptr [si+13],0",
+     "    add di,8\r\n    call t40_unpack\r\n    cmp byte ptr [si+13],0"),
+    # compact hints (TEXT80): unpacking and the glyph dictionary
+    ("unpack-x-off-by-one", "    sub ax,4\r\n    mov cl,dl\r\n    and cl,7", "    sub ax,3\r\n    mov cl,dl\r\n    and cl,7"),
+    ("unpack-y-uses-dx", "    shr cl,1\r\n    shr cl,1\r\n    shr cl,1\r\n    and cl,7", "    nop\r\n    shr cl,1\r\n    shr cl,1\r\n    and cl,7"),
+    ("gfind-half-compare", "    mov cx,8\r\ntgf_cmp:", "    mov cx,4\r\ntgf_cmp:"),
+    ("gfind-never-full", "    cmp t40_gcnt,T40_GLIMIT", "    cmp t40_gcnt,0FFFFh"),
+    ("add-push-keeps-older", "    mov ax,[di+2]\r\n    mov [di+6],ax", "    mov ax,[di+6]\r\n    mov [di+6],ax"),
     ("output-margin-top", "    sub ax,1\r\n    jge tpr_r0", "    sub ax,0\r\n    jge tpr_r0"),
     ("output-margin-left", "    sub si,1\r\n    jge tpr_c0", "    sub si,0\r\n    jge tpr_c0"),
     ("output-margin-bottom", "    add bx,1\r\n    cmp bx,T40_NROWS-1\r\n    jle tpr_r1",
@@ -85,7 +93,8 @@ def classify(rc, out):
 
 def run_test(a, out, name, asm=None):
     cmd = [sys.executable, str(HERE / "T40TEST.PY"), "--deps", str(a.deps), "--dosbox", str(a.dosbox),
-           "--out", str(out / name), "--scenes", str(a.scenes), "--cols", str(a.cols)]
+           "--out", str(out / name), "--scenes", str(a.scenes), "--cols", str(a.cols),
+           "--glimit", str(a.glimit)]
     if asm:
         cmd += ["--pres", str(asm)]
     rc = subprocess.run(cmd, capture_output=True, text=True).returncode
@@ -99,6 +108,8 @@ def main():
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--scenes", type=int, default=12)
     ap.add_argument("--cols", type=int, default=40, choices=(40, 80))
+    ap.add_argument("--glimit", type=int, default=64,
+                    help="glyph dictionary limit for the tests (64: the scenes overflow it)")
     a = ap.parse_args()
     out = a.out.resolve()
     out.mkdir(parents=True, exist_ok=False)

@@ -52,16 +52,19 @@ from pathlib import Path
 W, H, COLS, ROWS = 320, 200, 40, 25
 NCELL = COLS * ROWS
 ROWB = 4 * COLS                     # shadow bytes per pixel row (4 planes)
+VROWS = ROWS                        # text rows shown (the viewport)
 
 
-def geometry(cols, rows=25):
-    """Select the text geometry: 40x25 (TXT40, 320x200 shadow) or 80x25
-    (TEXT80, 640x200 shadow). Planes of a row are at +0, +COLS, +2*COLS,
-    +3*COLS (red, green, blue, intensity) in both."""
-    global W, H, COLS, ROWS, NCELL, ROWB
-    if cols not in (40, 80):
-        raise ValueError("cols must be 40 or 80")
+def geometry(cols, rows=25, vrows=None):
+    """Select the text geometry: 40x25 (TXT40, 320x200 shadow), 80x25
+    (TEXT80, 640x200), 80x50 (640x400; VGA 80x50 shows all 50 rows, the
+    panned 80x25 desktop shows vrows=25 of them). Planes of a row are at +0,
+    +COLS, +2*COLS, +3*COLS (red, green, blue, intensity) in all."""
+    global W, H, COLS, ROWS, NCELL, ROWB, VROWS
+    if cols not in (40, 80) or rows not in (25, 50):
+        raise ValueError("cols must be 40 or 80, rows 25 or 50")
     COLS, ROWS = cols, rows
+    VROWS = vrows or rows
     W, H, NCELL, ROWB = 8 * cols, 8 * rows, cols * rows, 4 * cols
 POP = [bin(i).count("1") for i in range(256)]
 
@@ -189,17 +192,37 @@ def hint_cell(x, y):
 
 
 class Presenter:
+    # Glyph dictionary (TEXT80 compact hints): a hint keeps the index of its
+    # 8-byte glyph in a dictionary of distinct glyph bitmaps. Adding a glyph
+    # not yet in it when it already holds GLIMIT glyphs first forgets every
+    # hint and every glyph (as reset() does); nothing else ever removes one.
+    GLIMIT = 896
+
     def __init__(self):
         self.written = set()                         # cells rewritten (T40TEST probes)
+        self.glyphs = set()
         self.slots = [[] for _ in range(NCELL)]     # newest first, at most 2
-        self.text = [0] * NCELL                      # attr<<8 | code
+        self.text = [0] * NCELL                      # attr<<8 | code (logical)
+        self.vtop = 0                                # first logical row shown
         self.kept = [None] * NCELL                   # (slot index, attr) shown
         self.stale = [False] * NCELL                 # slots changed since kept
+
+    def reset(self):
+        """Forget every hint, shown state and glyph (the text stays)."""
+        self.slots = [[] for _ in range(NCELL)]
+        self.kept = [None] * NCELL
+        self.stale = [False] * NCELL
+        self.glyphs = set()
 
     def add(self, x, y, glyph, code):
         k = hint_cell(x, y)
         if k is None:
             return
+        g = tuple(glyph)
+        if g not in self.glyphs:
+            if len(self.glyphs) >= self.GLIMIT:
+                self.reset()
+            self.glyphs.add(g)
         s = self.slots[k]
         h = (x, y, list(glyph), code)
         if s and s[0][0] == x and s[0][1] == y:
@@ -309,6 +332,16 @@ class Presenter:
             for x in range(c0, c1 + 1):
                 self.text[cy * COLS + x] = self.cell(shadow, cy, x, shown)
                 self.written.add(cy * COLS + x)
+
+    # ---- viewport (panned 80x25 over 80x50) -----------------------------------
+    # Every flush keeps the logical text of all ROWS rows; the screen shows
+    # VROWS of them from vtop. A pan only moves the window: the screen is
+    # then a copy of those logical rows, no cell is converted again.
+    def pan(self, top):
+        self.vtop = max(0, min(top, ROWS - VROWS))
+
+    def video(self):
+        return self.text[self.vtop * COLS:(self.vtop + VROWS) * COLS]
 
     # ---- snapshot diff (TEXT80 speed-up; used by TXT40 too) ----------------
     # A drawing call snapshots the shadow bytes of the rectangle it is about

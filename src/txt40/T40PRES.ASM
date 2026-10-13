@@ -5,8 +5,9 @@
 ; segment; T40TEST.PY assembles the same bytes into a DOS harness. The
 ; includer provides:
 ;   segment _T40 holding the T40DATA.ASM fragment (t40_slot at offset 0)
-;   T40_SHSEG  text equate: segment value of the shadow (shadow at offset 0)
-;   T40_VSEG   text equate: segment value of the text buffer (B800h)
+;   T40_SHSEG, T40_VSEG, T40_LSEG and the geometry: see T40DATA.ASM. The
+;   shadow is read through t40_sh0/t40_sh1 (t40_rowes); with two bands the
+;   includer stores both segments there before the first call.
 ; Entry points (near; all preserve CS/SS/SP and BP):
 ;   t40_present AX=first row, BX=end row, CX=first byte, DX=end byte;
 ;               clamped and non-empty. Clobbers AX-DI, DS, ES.
@@ -24,12 +25,12 @@
 ;   t40_blit    AX=src x, BX=src y, CX=width, DX=height, SI=dx, DI=dy.
 ;               Preserves all.
 ;   t40_reset   forget every hint. Preserves all.
-; Geometry equates (T40_COLS, T40_NROWS, T40_SLOTB and those derived from
+; Geometry equates (T40_COLS, T40_NROWS, T40_NGLYPH, ... and those derived from
 ; them) come from T40DATA.ASM; with none given, 40x25 as TXT40 has always
 ; been, assembling to the same bytes.
-; Slot (T40_SLOTB = 16 or 14 bytes): +0 x, +2 y, +4 glyph rows 0-7, +12
-; code, +13 valid. Cell k owns slots at k*T40_CELLB (newest) and
-; k*T40_CELLB+T40_SLOTB.
+; Hints are stored packed (T40DATA.ASM: 4-byte slots, glyph rows in a
+; dictionary). t40_unpack expands one into t40_xs with the layout every
+; check uses: +0 x, +2 y, +4 glyph rows 0-7, +12 code, +13 valid.
 
 t40_pop label byte
     db 0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5
@@ -71,20 +72,35 @@ t40_x40 macro
   endif
 endm
 
-; reg = reg * T40_CELLB (cell -> its first slot). Clobbers CL; with 14-byte
-; slots also t40_tmp. reg must not be CX.
-t40_slotof macro reg
-  if T40_SLOTB eq 16
-    mov cl,5
-    shl reg,cl
+; AX = pixel row (0 <= AX < T40_H) -> ES = the shadow segment holding it,
+; AX = the row's offset there. Two bands: rows 200-399 are in t40_sh1 at
+; (row - 200) * T40_ROWB. DS = _T40. Clobbers DX.
+t40_rowes macro
+local tre_b0,tre_done
+  if T40_BANDS eq 1
+    mov dx,T40_ROWB
+    mul dx
+    mov es,t40_sh0
   else
-    mov cl,2
-    shl reg,cl
-    mov t40_tmp,reg
+    cmp ax,200
+    jb tre_b0
+    sub ax,200
+    mov dx,T40_ROWB
+    mul dx
+    mov es,t40_sh1
+    jmp short tre_done
+tre_b0:
+    mov dx,T40_ROWB
+    mul dx
+    mov es,t40_sh0
+tre_done:
+  endif
+endm
+
+; reg = reg * 8 (cell -> its first packed slot). Clobbers CL. Not CX.
+t40_slotof macro reg
     mov cl,3
     shl reg,cl
-    sub reg,t40_tmp
-  endif
 endm
 
 ; AX = AX * 8 * T40_ROWB (shadow bytes per cell row: 1280 or 2560) for
@@ -134,6 +150,150 @@ tu_fail:
     ret
 t40_uni endp
 
+; ---- t40_unpack: DI = packed slot of cell BX -> t40_xs (x, y, glyph rows,
+; code, valid); SI = offset t40_xs. DS = _T40. Preserves BX, CX, DX, DI.
+t40_unpack proc near
+    push cx
+    push dx
+    push di
+    mov si,offset t40_xs
+    mov byte ptr [si+13],0
+    mov dl,[di]
+    test dl,80h
+    jz tup_done
+    mov byte ptr [si+13],1
+    mov al,[di+3]
+    mov [si+12],al
+    mov ax,bx
+    mov cl,T40_COLS
+    div cl                      ; AL = cell row, AH = cell column
+    mov ch,al
+    mov al,ah
+    xor ah,ah
+    mov cl,3
+    shl ax,cl
+    sub ax,4
+    mov cl,dl
+    and cl,7
+    add al,cl
+    adc ah,0
+    mov [si],ax                 ; x = 8cx - 4 + dx
+    mov al,ch
+    xor ah,ah
+    mov cl,3
+    shl ax,cl
+    sub ax,4
+    mov cl,dl
+    shr cl,1
+    shr cl,1
+    shr cl,1
+    and cl,7
+    add al,cl
+    adc ah,0
+    mov [si+2],ax               ; y = 8cy - 4 + dy
+    mov ax,[di+1]
+    and ax,T40_NGLYPH-1
+    mov cl,3
+    shl ax,cl
+    mov di,ax
+    mov ax,word ptr t40_gly[di]
+    mov [si+4],ax
+    mov ax,word ptr t40_gly[di+2]
+    mov [si+6],ax
+    mov ax,word ptr t40_gly[di+4]
+    mov [si+8],ax
+    mov ax,word ptr t40_gly[di+6]
+    mov [si+10],ax
+tup_done:
+    pop di
+    pop dx
+    pop cx
+    ret
+t40_unpack endp
+
+; ---- t40_gfind: ES:SI = 8 glyph rows -> AX = their dictionary index,
+; added if new. A new glyph when T40_GLIMIT are kept first resets every hint
+; and the dictionary (t40_reset). DS = _T40. Preserves BX-DI.
+t40_gfind proc near
+    push bx
+    push cx
+    push dx
+    push di
+tgf_again:
+    xor ax,ax
+    xor bx,bx
+    mov cx,8
+tgf_hash:
+    rol ax,1
+    rol ax,1
+    rol ax,1
+    xor al,es:[bx+si]
+    inc bx
+    loop tgf_hash
+    and ax,T40_NGLYPH-1
+    mov bx,ax
+tgf_probe:
+    mov di,bx
+    mov cl,3
+    shr di,cl                   ; byte of the in-use bitmap
+    mov cl,bl
+    and cl,7
+    mov dl,1
+    shl dl,cl                   ; its bit
+    test t40_guse[di],dl
+    jz tgf_empty
+    push si
+    push di
+    mov di,bx
+    mov cl,3
+    shl di,cl
+    mov cx,8
+tgf_cmp:
+    mov al,es:[si]
+    cmp al,t40_gly[di]
+    jne tgf_ne
+    inc si
+    inc di
+    loop tgf_cmp
+    pop di
+    pop si
+    mov ax,bx
+    jmp short tgf_done
+tgf_ne:
+    pop di
+    pop si
+    inc bx
+    and bx,T40_NGLYPH-1
+    jmp short tgf_probe
+tgf_empty:
+    cmp t40_gcnt,T40_GLIMIT
+    jb tgf_insert
+    call t40_reset
+    jmp short tgf_again
+tgf_insert:
+    or t40_guse[di],dl
+    inc t40_gcnt
+    push si
+    mov di,bx
+    mov cl,3
+    shl di,cl
+    mov cx,8
+tgf_copy:
+    mov al,es:[si]
+    mov t40_gly[di],al
+    inc si
+    inc di
+    loop tgf_copy
+    pop si
+    mov ax,bx
+tgf_done:
+    pop di
+    pop dx
+    pop cx
+    pop bx
+    ret
+t40_gfind endp
+
 ; ---- t40_rowbits: AX = pixel row (on screen). t40_v[p] = the 8 pixels of
 ; plane p starting at x = t40_x (t40_b0 = x sar 3, t40_sh = x and 7);
 ; off-screen columns read as 0. ES = shadow. Preserves BX-DI.
@@ -142,8 +302,7 @@ t40_rowbits proc near
     push cx
     push dx
     push di
-    mov cx,T40_ROWB
-    mul cx
+    t40_rowes
     mov di,ax
     add di,t40_b0
     xor bx,bx
@@ -260,6 +419,15 @@ tv_on:
     jl tv_edge
     cmp t40_b0,T40_COLS-1
     jge tv_edge
+  if T40_BANDS ne 1
+    push dx                     ; this row's band and offset
+    mov ax,[si+2]
+    add ax,bx
+    t40_rowes
+    add ax,t40_b0
+    mov di,ax
+    pop dx
+  endif
     mov ax,es:[di]
     xchg al,ah
     shl ax,cl
@@ -382,8 +550,9 @@ t40_vrows endp
 ; t40_vat[BX]. ES = shadow. Preserves BX.
 t40_shown proc near
     mov t40_vst[bx],0
-    mov si,bx
-    t40_slotof si
+    mov di,bx
+    t40_slotof di
+    call t40_unpack
     cmp byte ptr [si+13],0
     je ts_second
     call t40_verify
@@ -392,7 +561,8 @@ t40_shown proc near
     mov t40_vst[bx],1
     ret
 ts_second:
-    add si,T40_SLOTB
+    add di,4
+    call t40_unpack
     cmp byte ptr [si+13],0
     je ts_none
     call t40_verify
@@ -412,9 +582,10 @@ t40_claim_from proc near
     and al,3
     cmp al,1
     je tcf_slot
-    add di,T40_SLOTB
+    add di,4
 tcf_slot:
-    mov ax,[di]
+    call t40_unpack
+    mov ax,word ptr t40_xs
     mov dx,t40_cx
     mov cl,3
     shl dx,cl
@@ -441,7 +612,7 @@ tcf_bits:
     mov ax,t40_cy
     mov cl,3
     shl ax,cl
-    sub ax,[di+2]
+    sub ax,word ptr t40_xs+2
     xor si,si
     xor dh,dh
 tcf_row:
@@ -866,9 +1037,9 @@ t40_cell proc near
     t40_slotof di
     cmp al,1
     je tc_own
-    add di,T40_SLOTB
+    add di,4
 tc_own:
-    mov al,[di+12]
+    mov al,[di+3]
     mov ah,t40_vat[bx]
     ret
 tc_approx:
@@ -910,8 +1081,15 @@ tc_nb_right:
     ; live = not claimed; load the cell's plane bytes
     xor si,si
     xor di,di
+  if T40_BANDS eq 1
     mov ax,t40_cy
     t40_x1280
+  else
+    mov ax,t40_cy               ; a cell row never spans two bands
+    mov cl,3
+    shl ax,cl
+    t40_rowes
+  endif
     add ax,t40_cx
     mov bx,ax
 tc_load:
@@ -1202,8 +1380,7 @@ t40_touch endp
 t40_present proc near
     mov si,seg t40_slot
     mov ds,si
-    mov si,T40_SHSEG
-    mov es,si
+    mov es,t40_sh0
     mov t40_py0,ax
     mov t40_py1,bx
     mov si,cx
@@ -1256,11 +1433,13 @@ tpr_vcol:
     mov bx,ax
     test t40_vst[bx],80h
     jnz tpr_verify
-    mov si,bx
-    t40_slotof si
+    mov di,bx
+    t40_slotof di
+    call t40_unpack
     call t40_touch
     jc tpr_verify
-    add si,T40_SLOTB
+    add di,4
+    call t40_unpack
     call t40_touch
     jnc tpr_kept
 tpr_verify:
@@ -1289,11 +1468,26 @@ tpr_ocol:
     shl ax,1
     mov di,ax
     pop ax
+  if T40_PAN
+    mov si,T40_LSEG             ; the logical text of every row
+    mov es,si
+    mov es:[di],ax
+    mov si,t40_cy               ; and the screen, if the row is shown
+    sub si,t40_vtop
+    jb tpr_hidden
+    cmp si,T40_VROWS
+    jae tpr_hidden
+    sub di,t40_voff
     mov si,T40_VSEG
     mov es,si
     mov es:[di],ax
-    mov si,T40_SHSEG
+tpr_hidden:
+  else
+    mov si,T40_VSEG
     mov es,si
+    mov es:[di],ax
+  endif
+    mov es,t40_sh0
     inc t40_cx
     mov ax,t40_cx
     cmp ax,t40_c1
@@ -1304,6 +1498,52 @@ tpr_ocol:
     jle tpr_orow
     ret
 t40_present endp
+
+; ---- t40_pan: AX = first logical text row to show (clamped to
+; 0..T40_NROWS-T40_VROWS): the screen becomes a copy of those logical rows;
+; no cell is converted. Preserves all but flags. (Panned builds only.)
+  if T40_PAN
+t40_pan proc near
+    push ax
+    push cx
+    push dx
+    push si
+    push di
+    push ds
+    push es
+    mov si,seg t40_slot
+    mov ds,si
+    or ax,ax
+    jns tpn_lo
+    xor ax,ax
+tpn_lo:
+    cmp ax,T40_NROWS-T40_VROWS
+    jle tpn_hi
+    mov ax,T40_NROWS-T40_VROWS
+tpn_hi:
+    mov t40_vtop,ax
+    t40_x40
+    shl ax,1
+    mov t40_voff,ax
+    mov si,ax
+    xor di,di
+    mov ax,T40_VSEG
+    mov es,ax
+    mov ax,T40_LSEG
+    mov ds,ax
+    mov cx,T40_VROWS*T40_COLS
+    cld
+    rep movsw
+    pop es
+    pop ds
+    pop di
+    pop si
+    pop dx
+    pop cx
+    pop ax
+    ret
+t40_pan endp
+  endif
 
 ; ---- t40_drop: forget the snapshot. Preserves all but flags.
 t40_drop proc near
@@ -1363,24 +1603,23 @@ tsn_right:
     mul t40_snc                 ; rows * bytes <= 200 * 80
     cmp ax,T40_SNAPB/4
     ja tsn_done
-    mov dx,t40_sy1
-    sub dx,t40_sy0              ; rows
+    mov t40_snv,1
     mov bx,t40_snc
-    mov ax,t40_sy0
-    mov cx,T40_ROWB
+    mov dx,t40_sy0              ; DX = row
+    xor di,di
+    cld
+tsn_row:
     push dx
-    mul cx
+    mov ax,dx
+    t40_rowes                   ; ES:AX = the row (in its band)
     pop dx
     add ax,t40_sx0
     mov si,ax
-    mov t40_snv,1
+    push ds
+    push es
+    pop ds                      ; DS:SI = shadow row
     mov ax,T40_SNSEG
-    mov es,ax
-    xor di,di
-    mov ax,T40_SHSEG
-    mov ds,ax
-    cld
-tsn_row:
+    mov es,ax                   ; ES:DI = snapshot
     mov cx,bx
     push si
     rep movsb
@@ -1400,9 +1639,10 @@ tsn_row:
     push si
     rep movsb
     pop si
-    add si,T40_COLS             ; next pixel row
-    dec dx
-    jnz tsn_row
+    pop ds
+    inc dx
+    cmp dx,t40_sy1
+    jb tsn_row
 tsn_done:
     pop es
     pop ds
@@ -1447,9 +1687,8 @@ tch2_yb:
 tch2_rows:
     push bx                     ; rows
     push ax                     ; first row
-    mov cx,T40_ROWB             ; DI = first row * ROWB + column (shadow)
-    mul cx
-    add ax,t40_dcx
+    t40_rowes                   ; ES:DI = first row, this column (the
+    add ax,t40_dcx              ; cell's rows are in one band)
     mov di,ax
     pop ax                      ; SI = (first row - sy0) * 4 * nc + column - sx0
     sub ax,t40_sy0
@@ -1461,8 +1700,6 @@ tch2_rows:
     mov si,ax
     pop cx                      ; rows
     mov bx,t40_snc
-    mov ax,T40_SHSEG
-    mov es,ax
     push ds
     mov ax,T40_SNSEG
     mov ds,ax
@@ -1626,8 +1863,10 @@ ta_out:
 ta_in:
     mov t40_ax,ax
     mov t40_ay,bx
-    push dx
-    mov ax,bx
+    push dx                     ; DL = code
+    call t40_gfind              ; first: it may reset every hint
+    mov t40_gidx,ax
+    mov ax,bx                   ; cell = ((y+4)>>3)*T40_COLS + ((x+4)>>3)
     add ax,4
     mov cl,3
     shr ax,cl
@@ -1637,50 +1876,37 @@ ta_in:
     mov cl,3
     shr di,cl
     add ax,di
-  if T40_SLOTB ne 16
     mov t40_acell,ax
-  endif
+    mov bx,t40_ay               ; packed position: 80h | dy<<3 | dx
+    add bx,4
+    and bx,7
+    shl bl,1
+    shl bl,1
+    shl bl,1
+    mov cx,t40_ax
+    add cx,4
+    and cx,7
+    or bl,cl
+    or bl,80h
     t40_slotof ax
     mov di,ax
     pop dx
-    cmp byte ptr [di+13],0
-    je ta_write
-    mov ax,[di]
-    cmp ax,t40_ax
-    jne ta_push
-    mov ax,[di+2]
-    cmp ax,t40_ay
-    je ta_write
+    test byte ptr [di],80h
+    jz ta_write                 ; no hint here yet
+    cmp [di],bl
+    je ta_write                 ; same place: the newer replaces
 ta_push:
-    mov cx,T40_SLOTB/2
-    xor bx,bx
-ta_copy:
-    mov ax,[bx+di]
-    mov [bx+di+T40_SLOTB],ax
-    add bx,2
-    loop ta_copy
+    mov ax,[di]
+    mov [di+4],ax
+    mov ax,[di+2]
+    mov [di+6],ax
 ta_write:
-    mov ax,t40_ax
-    mov [di],ax
-    mov ax,t40_ay
-    mov [di+2],ax
-    mov cx,8
-    xor bx,bx
-ta_glyph:
-    mov al,es:[bx+si]
-    mov [bx+di+4],al
-    inc bx
-    loop ta_glyph
-    mov [di+12],dl
-    mov byte ptr [di+13],1
-  if T40_SLOTB eq 16
-    mov bx,di                   ; mark the cell stale: re-verify it at the
-    mov cl,5                    ; next flush whose output range holds it
-    shr bx,cl
-  else
-    mov bx,t40_acell
-  endif
-    or t40_vst[bx],80h
+    mov [di],bl
+    mov ax,t40_gidx
+    mov [di+1],ax
+    mov [di+3],dl
+    mov bx,t40_acell            ; mark the cell stale: re-verify it at the
+    or t40_vst[bx],80h          ; next flush whose output range holds it
 ta_done:
     pop ds
     pop di
@@ -1744,16 +1970,27 @@ tb_col:
     mov ax,t40_cy
     t40_x40
     add ax,t40_cx
-    t40_slotof ax
-    mov si,ax
-    xor bx,bx
-tb_snap:
-    mov ax,[bx+si]
-    mov word ptr t40_snap[bx],ax
-    add bx,2
-    cmp bx,T40_CELLB
-    jb tb_snap
-    mov di,T40_SLOTB
+    mov bx,ax
+    mov di,ax
+    t40_slotof di
+    call t40_unpack             ; both slots, unpacked, newest first
+    xor si,si
+tb_snap0:
+    mov al,t40_xs[si]
+    mov t40_snap[si],al
+    inc si
+    cmp si,14
+    jb tb_snap0
+    add di,4
+    call t40_unpack
+    xor si,si
+tb_snap1:
+    mov al,t40_xs[si]
+    mov t40_snap[si+14],al
+    inc si
+    cmp si,14
+    jb tb_snap1
+    mov di,14
     call t40_blit_one
     xor di,di
     call t40_blit_one
@@ -1771,12 +2008,8 @@ tb_row_done:
     cmp ax,0
     jl tb_done
     cmp ax,T40_NROWS-1
-  if (T40_COLS eq 40) and (T40_SLOTB eq 16)
-    jle tb_row
-  else
     jg tb_done
     jmp tb_row
-  endif
 tb_done:
     pop es
     pop ds
@@ -1789,7 +2022,7 @@ tb_done:
     ret
 t40_blit endp
 
-; DI = 0 or T40_SLOTB: snapshot slot to re-add if wholly inside the source.
+; DI = 0 or 14: snapshot slot to re-add if wholly inside the source.
 t40_blit_one proc near
     cmp byte ptr t40_snap[di+13],0
     je tbo_done
@@ -1826,7 +2059,7 @@ t40_reset proc near
     mov es,ax
     xor di,di
     xor ax,ax
-    mov cx,T40_NCELL*(T40_CELLB+2)/2 ; slots, t40_vst and t40_vat
+    mov cx,T40_CLRB/2           ; slots, t40_vst, t40_vat, dictionary use
     cld
     rep stosw
     pop es
