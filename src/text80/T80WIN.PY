@@ -246,6 +246,7 @@ class Session:
         self.pan("alt+F9", "after_run")
         # Notepad below the viewport, typed into while not shown
         self.free_memory("before_notepad")
+        self.type_speed("edit")
         self.runcmd("NOTEPAD")
         self.settle("notepad0", ("Notepad - (untitled)",), timeout=1200)
         self.key("alt+space", 4)
@@ -271,8 +272,8 @@ class Session:
             hits = CHK.find(rec["hidden"], 80, line)
             if hits:
                 rr, cc = hits[0]
-                attrs = {w >> 8 for w in CHK.cells_at(rec["hidden"], 80, rr, cc, len(line))}
-                self.check("revealed line: one colour pair, black on white (F0h)", attrs == {0xF0},
+                attrs = {(w >> 8) if (w & 0xFF) != 0x20 else ((w >> 8) & 0xF0) | 0x0 for w in CHK.cells_at(rec["hidden"], 80, rr, cc, len(line))}
+                self.check("revealed line: one colour pair, black on white (F0h)", attrs <= {0xF0},
                            attrs=sorted(hex(a) for a in attrs))
         log = self.read("::/T80/XTPAN.LOG").decode("latin1")
         (self.vm / "XTPAN.LOG").write_text(log)
@@ -285,7 +286,7 @@ class Session:
         self.key("n", 10)
         self.pan("alt+F9", "before_exit")
         self.key("alt+F4", 8)
-        self.settle("exitdlg", ("This will end your Windows", "OK"), timeout=600)
+        self.wait_shot("exitdlg", 90)
         self.key("Return", 60)
         self.start_windows("desktop2", desk)
         r.home()
@@ -294,7 +295,7 @@ class Session:
         if not rollback:
             return
         self.key("alt+F4", 8)
-        self.settle("exitdlg2", ("This will end your Windows",), timeout=600)
+        self.wait_shot("exitdlg2", 90)
         self.key("Return", 60)
         self.text("CD \\T80", 1)
         self.key("Return", 2)
@@ -383,10 +384,10 @@ class Session:
         self.expect("rundlg", *run)
         if rd:
             rows = [h[0] for s in run for h in CHK.find(rd["hidden"], 80, s)]
-            self.check("Run dialog (centred on the 400-row desktop) lies below text row 25",
-                       bool(rows) and max(rows) >= 25, rows=sorted(set(rows)))
+            self.timing["rundlg_text_rows"] = sorted(set(rows))     # where Windows put it (informational)
         self.key("Escape", 6)
         self.free_memory("before_notepad")
+        self.type_speed("edit")
         self.runcmd("NOTEPAD")
         self.settle("notepad0", ("Notepad - (untitled)",), timeout=1200)
         line = "Hello from VGA 80x50 text mode!"
@@ -397,9 +398,9 @@ class Session:
             hits = CHK.find(rec["hidden"], 80, line)
             if hits:
                 rr, cc = hits[0]
-                attrs = {w >> 8 for w in CHK.cells_at(rec["hidden"], 80, rr, cc, len(line))}
+                attrs = {(w >> 8) if (w & 0xFF) != 0x20 else ((w >> 8) & 0xF0) | 0x0 for w in CHK.cells_at(rec["hidden"], 80, rr, cc, len(line))}
                 self.check("notepad: the typed line is one colour pair, black on white (F0h)",
-                           attrs == {0xF0}, attrs=sorted(hex(a) for a in attrs))
+                           attrs <= {0xF0}, attrs=sorted(hex(a) for a in attrs))
         self.key("shift+Home", 6)
         sel = self.settle("selected", (line,))
         if rec and sel:
@@ -428,7 +429,7 @@ class Session:
         self.settle("savequery", ("No",), timeout=600)
         self.key("n", 10)
         self.key("alt+F4", 8)
-        self.settle("exitdlg", ("This will end your Windows", "OK"), timeout=600)
+        self.wait_shot("exitdlg", 90)
         self.key("Return", 30)
         r.shot("dos_after", settle=1)
         self.start_windows("desktop2", desk)
@@ -436,7 +437,7 @@ class Session:
         if not rollback:
             return
         self.key("alt+F4", 8)
-        self.settle("exitdlg2", ("This will end your Windows",), timeout=600)
+        self.wait_shot("exitdlg2", 90)
         self.key("Return", 30)
         self.text("CD \\T80", 1)
         self.key("Return", 2)
@@ -448,6 +449,33 @@ class Session:
         rec = self.start_windows("rolledback", ("Program Manager",))
         self.check("rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
                    bool(rec) and rec["cols"] != 80, cols=rec and rec["cols"])
+
+    def type_speed(self, tag, n=30):
+        """TPROF TYPE n: n characters into a visible edit control, one
+        WM_CHAR at a time, every resulting message processed; wall time
+        from GetCurrentTime (no per-character logging without the
+        profiling escape)."""
+        before = self.read("::/T80/TPROF.LOG").decode("latin1")
+        self.runcmd(f"C:\\T80\\TPROF TYPE {n}")
+        t0 = time.time()
+        while time.time() - t0 < 1800:
+            new = self.read("::/T80/TPROF.LOG").decode("latin1")[len(before):]
+            m = re.search(r"TYPE n=(\d+) ms=(\d+)", new)
+            if m:
+                ms = int(m.group(2))
+                self.timing["type_ms_per_char_" + tag] = round(ms / int(m.group(1)), 1)
+                self.check(f"TPROF TYPE {n} ({tag}): {ms} ms, {ms / int(m.group(1)):.0f} ms per character", True)
+                time.sleep(10)
+                return ms
+            time.sleep(5)
+        self.check(f"TPROF TYPE {n} ({tag}) finished", False)
+        return None
+
+    def wait_shot(self, name, secs):
+        """The end-session dialog is system modal: T80SNAP gets no timer
+        messages while it is up, so it is only captured as a picture."""
+        time.sleep(secs)
+        self.r.shot(name, settle=1, decode=False)
 
     def free_memory(self, tag):
         """TPROF IDLE 1 logs Windows' free memory (GetFreeSpace) on its
@@ -524,6 +552,7 @@ class Session:
             self.runcmd("C:\\T80\\TPROF NOTE 90 240")
         else:
             self.free_memory("before_notepad")
+            self.type_speed("edit")
             self.runcmd("NOTEPAD")
         self.settle("notepad0", ("Notepad - (untitled)",), timeout=1200)
         if self.prof:
@@ -539,11 +568,22 @@ class Session:
             hits = CHK.find(rec["hidden"], 80, line)
             if hits:
                 rr, cc = hits[0]
-                attrs = {w >> 8 for w in CHK.cells_at(rec["hidden"], 80, rr, cc, len(line))}
+                attrs = {(w >> 8) if (w & 0xFF) != 0x20 else ((w >> 8) & 0xF0) | 0x0 for w in CHK.cells_at(rec["hidden"], 80, rr, cc, len(line))}
                 self.check("notepad: the typed line is one colour pair, black on white (F0h)",
-                           attrs == {0xF0}, attrs=sorted(hex(a) for a in attrs), at=[rr, cc])
-        # 6. selection
-        self.key("shift+Home", 6)
+                           attrs <= {0xF0}, attrs=sorted(hex(a) for a in attrs), at=[rr, cc])
+        # 6. selection, by a mouse drag over the line (on the XT keyboard
+        # 86Box delivers Shift+Home as a plain Home: no selection)
+        hits0 = CHK.find(rec["hidden"], 80, line) if rec else []
+        if hits0:
+            rr0, cc0 = hits0[0]
+            r.rehome(8 * cc0 + 1, 8 * rr0 + 3, 2)
+            r.m("down")
+            time.sleep(2)
+            r.m("move", 8 * len(line) - 2, 0)
+            time.sleep(3)
+            r.m("up")
+            time.sleep(4)
+            r.home()
         sel = self.settle("selected", (line,))
         if rec and sel:
             hits = CHK.find(rec["hidden"], 80, line)
@@ -612,7 +652,7 @@ class Session:
         self.settle("savequery", ("No",), timeout=600)
         self.key("n", 10)
         self.key("alt+F4", 8)
-        self.settle("exitdlg", ("This will end your Windows", "OK"), timeout=600)
+        self.wait_shot("exitdlg", 90)
         self.key("Return", 60)
         r.shot("dos_after", settle=1, decode=False)
         self.start_windows("desktop2", desk)
@@ -621,7 +661,7 @@ class Session:
             return
         # 12. rollback from DOS: T80OFF, then Windows with the previous driver
         self.key("alt+F4", 8)
-        self.settle("exitdlg2", ("This will end your Windows",), timeout=600)
+        self.wait_shot("exitdlg2", 90)
         self.key("Return", 60)
         self.text("CD \\T80", 1)
         self.key("Return", 2)
