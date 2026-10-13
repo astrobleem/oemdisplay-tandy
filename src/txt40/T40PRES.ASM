@@ -1,4 +1,4 @@
-; T40PRES.ASM - TXT40 presenter: TR5 shadow pixels -> CGA 40x25 text cells.
+; T40PRES.ASM - TXT40/TEXT80 presenter: TR5 shadow pixels -> text cells.
 ; Specification: src/txt40/T40MODEL.PY (Presenter). MASM 5.1, 8086 only.
 ;
 ; This is a fragment. T40PATCH.PY inserts it into the driver's code
@@ -14,8 +14,12 @@
 ;   t40_blit    AX=src x, BX=src y, CX=width, DX=height, SI=dx, DI=dy.
 ;               Preserves all.
 ;   t40_reset   forget every hint. Preserves all.
-; Slot (16 bytes): +0 x, +2 y, +4 glyph rows 0-7, +12 code, +13 valid.
-; Cell k owns slots at k*32 (newest) and k*32+16.
+; Geometry equates (T40_COLS, T40_ROWS, T40_SLOTB and those derived from
+; them) come from T40DATA.ASM; with none given, 40x25 as TXT40 has always
+; been, assembling to the same bytes.
+; Slot (T40_SLOTB = 16 or 14 bytes): +0 x, +2 y, +4 glyph rows 0-7, +12
+; code, +13 valid. Cell k owns slots at k*T40_CELLB (newest) and
+; k*T40_CELLB+T40_SLOTB.
 
 t40_pop label byte
     db 0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5
@@ -42,8 +46,8 @@ t40_shapes label byte
 
 assume ds:_T40
 
-; AX = AX * 40 (cell rows) without MUL, which costs ~120 cycles on an 8088.
-; Clobbers DX.
+; AX = AX * T40_COLS (cell rows) without MUL, which costs ~120 cycles on an
+; 8088. Clobbers DX.
 t40_x40 macro
     mov dx,ax
     shl ax,1
@@ -52,9 +56,29 @@ t40_x40 macro
     shl ax,1
     shl ax,1
     shl ax,1
+  if T40_COLS eq 80
+    shl ax,1
+  endif
 endm
 
-; AX = AX * 1280 (shadow bytes per cell row) for AX <= 51. Clobbers DX.
+; reg = reg * T40_CELLB (cell -> its first slot). Clobbers CL; with 14-byte
+; slots also t40_tmp. reg must not be CX.
+t40_slotof macro reg
+  if T40_SLOTB eq 16
+    mov cl,5
+    shl reg,cl
+  else
+    mov cl,2
+    shl reg,cl
+    mov t40_tmp,reg
+    mov cl,3
+    shl reg,cl
+    sub reg,t40_tmp
+  endif
+endm
+
+; AX = AX * 8 * T40_ROWB (shadow bytes per cell row: 1280 or 2560) for
+; AX <= 51. Clobbers DX.
 t40_x1280 macro
     mov dx,ax
     shl ax,1
@@ -62,6 +86,9 @@ t40_x1280 macro
     add ax,dx
     mov ah,al
     xor al,al
+  if T40_COLS eq 80
+    shl ax,1
+  endif
 endm
 
 ; ---- t40_uni: AH = nonzero column mask. CF=0: AL = the single IRGB colour
@@ -105,7 +132,7 @@ t40_rowbits proc near
     push cx
     push dx
     push di
-    mov cx,160
+    mov cx,T40_ROWB
     mul cx
     mov di,ax
     add di,t40_b0
@@ -117,13 +144,13 @@ trb_plane:
     jl trb_nolo
     mov ah,es:[di]
 trb_nolo:
-    cmp t40_b0,39
+    cmp t40_b0,T40_COLS-1
     jge trb_nohi
     mov al,es:[di+1]
 trb_nohi:
     shl ax,cl
     mov t40_v[bx],ah
-    add di,40
+    add di,T40_COLS
     inc bx
     cmp bx,4
     jb trb_plane
@@ -181,7 +208,7 @@ t40_vrows proc near
     shr dl,cl
     jmp short tv_mask
 tv_right:
-    sub ax,312
+    sub ax,T40_W-8
     jle tv_mask
     mov cl,al
     shl dl,cl
@@ -197,7 +224,7 @@ tv_mask:
     shl ax,1
     shl ax,1
     add ax,dx
-    mov cl,5
+    mov cl,T40_ROWSH
     shl ax,cl
     add ax,t40_b0
     mov di,ax
@@ -215,27 +242,27 @@ tv_row_on:
     jge tv_top_ok
     jmp tv_next
 tv_top_ok:
-    cmp ax,200
+    cmp ax,T40_H
     jl tv_on
     jmp tv_next
 tv_on:
     cmp t40_b0,0
     jl tv_edge
-    cmp t40_b0,39
+    cmp t40_b0,T40_COLS-1
     jge tv_edge
     mov ax,es:[di]
     xchg al,ah
     shl ax,cl
     mov t40_v,ah
-    mov ax,es:[di+40]
+    mov ax,es:[di+T40_COLS]
     xchg al,ah
     shl ax,cl
     mov t40_v+1,ah
-    mov ax,es:[di+80]
+    mov ax,es:[di+2*T40_COLS]
     xchg al,ah
     shl ax,cl
     mov t40_v+2,ah
-    mov ax,es:[di+120]
+    mov ax,es:[di+3*T40_COLS]
     xchg al,ah
     shl ax,cl
     mov t40_v+3,ah
@@ -286,7 +313,7 @@ tv_setbg:
     mov t40_bg,al
 tv_next:
     shl dh,1
-    add di,160
+    add di,T40_ROWB
     inc bx
     cmp bx,8
     jae tv_rows_done
@@ -346,8 +373,7 @@ t40_vrows endp
 t40_shown proc near
     mov t40_vst[bx],0
     mov si,bx
-    mov cl,5
-    shl si,cl
+    t40_slotof si
     cmp byte ptr [si+13],0
     je ts_second
     call t40_verify
@@ -356,7 +382,7 @@ t40_shown proc near
     mov t40_vst[bx],1
     ret
 ts_second:
-    add si,16
+    add si,T40_SLOTB
     cmp byte ptr [si+13],0
     je ts_none
     call t40_verify
@@ -371,13 +397,12 @@ t40_shown endp
 ; into t40_live (claim rows) for cell t40_cy/t40_cx; first hit sets t40_cbg.
 t40_claim_from proc near
     mov di,bx
-    mov cl,5
-    shl di,cl
+    t40_slotof di
     mov al,t40_vst[bx]
     and al,3
     cmp al,1
     je tcf_slot
-    add di,16
+    add di,T40_SLOTB
 tcf_slot:
     mov ax,[di]
     mov dx,t40_cx
@@ -828,11 +853,10 @@ t40_cell proc near
     or al,al
     jz tc_approx
     mov di,bx
-    mov cl,5
-    shl di,cl
+    t40_slotof di
     cmp al,1
     je tc_own
-    add di,16
+    add di,T40_SLOTB
 tc_own:
     mov al,[di+12]
     mov ah,t40_vat[bx]
@@ -851,7 +875,7 @@ tc_approx:
     je tc_nb_top
     or al,1
 tc_nb_top:
-    cmp t40_cy,24
+    cmp t40_cy,T40_ROWS-1
     je tc_nb_bottom
     or al,2
 tc_nb_bottom:
@@ -859,20 +883,20 @@ tc_nb_bottom:
     je tc_nb_left
     or al,4
 tc_nb_left:
-    cmp t40_cx,39
+    cmp t40_cx,T40_COLS-1
     je tc_nb_right
     or al,8
 tc_nb_right:
     mov t40_nbf,al
-    t40_nb -41,5
-    t40_nb -40,1
-    t40_nb -39,9
+    t40_nb -(T40_COLS+1),5
+    t40_nb -T40_COLS,1
+    t40_nb -(T40_COLS-1),9
     t40_nb -1,4
     t40_nb 0,0
     t40_nb 1,8
-    t40_nb 39,6
-    t40_nb 40,2
-    t40_nb 41,10
+    t40_nb T40_COLS-1,6
+    t40_nb T40_COLS,2
+    t40_nb T40_COLS+1,10
     ; live = not claimed; load the cell's plane bytes
     xor si,si
     xor di,di
@@ -884,13 +908,13 @@ tc_load:
     not t40_live[si]
     mov al,es:[bx]
     mov t40_pl[di],al
-    mov al,es:[bx+40]
+    mov al,es:[bx+T40_COLS]
     mov t40_pl[di+1],al
-    mov al,es:[bx+80]
+    mov al,es:[bx+2*T40_COLS]
     mov t40_pl[di+2],al
-    mov al,es:[bx+120]
+    mov al,es:[bx+3*T40_COLS]
     mov t40_pl[di+3],al
-    add bx,160
+    add bx,T40_ROWB
     add di,4
     inc si
     cmp si,8
@@ -1193,9 +1217,9 @@ tpr_r0:
     dec bx
     shr bx,cl
     add bx,1
-    cmp bx,24
+    cmp bx,T40_ROWS-1
     jle tpr_r1
-    mov bx,24
+    mov bx,T40_ROWS-1
 tpr_r1:
     mov t40_r1,bx
     sub si,1
@@ -1203,9 +1227,9 @@ tpr_r1:
     xor si,si
 tpr_c0:
     mov t40_c0,si
-    cmp dx,39
+    cmp dx,T40_COLS-1
     jle tpr_c1
-    mov dx,39
+    mov dx,T40_COLS-1
 tpr_c1:
     mov t40_c1,dx
     ; re-verify output cells that are stale or have a hint window touching
@@ -1223,11 +1247,10 @@ tpr_vcol:
     test t40_vst[bx],80h
     jnz tpr_verify
     mov si,bx
-    mov cl,5
-    shl si,cl
+    t40_slotof si
     call t40_touch
     jc tpr_verify
-    add si,16
+    add si,T40_SLOTB
     call t40_touch
     jnc tpr_kept
 tpr_verify:
@@ -1285,11 +1308,11 @@ t40_add proc near
     mov ds,di
     cmp ax,-4
     jl ta_out
-    cmp ax,316
+    cmp ax,T40_W-4
     jge ta_out
     cmp bx,-4
     jl ta_out
-    cmp bx,196
+    cmp bx,T40_H-4
     jl ta_in
 ta_out:
     jmp ta_done
@@ -1307,8 +1330,10 @@ ta_in:
     mov cl,3
     shr di,cl
     add ax,di
-    mov cl,5
-    shl ax,cl
+  if T40_SLOTB ne 16
+    mov t40_acell,ax
+  endif
+    t40_slotof ax
     mov di,ax
     pop dx
     cmp byte ptr [di+13],0
@@ -1320,11 +1345,11 @@ ta_in:
     cmp ax,t40_ay
     je ta_write
 ta_push:
-    mov cx,8
+    mov cx,T40_SLOTB/2
     xor bx,bx
 ta_copy:
     mov ax,[bx+di]
-    mov [bx+di+16],ax
+    mov [bx+di+T40_SLOTB],ax
     add bx,2
     loop ta_copy
 ta_write:
@@ -1341,9 +1366,13 @@ ta_glyph:
     loop ta_glyph
     mov [di+12],dl
     mov byte ptr [di+13],1
+  if T40_SLOTB eq 16
     mov bx,di                   ; mark the cell stale: re-verify it at the
     mov cl,5                    ; next flush whose output range holds it
     shr bx,cl
+  else
+    mov bx,t40_acell
+  endif
     or t40_vst[bx],80h
 ta_done:
     pop ds
@@ -1389,7 +1418,7 @@ tb_moves:
     mov bx,1
     cmp di,0
     jle tb_rdir
-    mov ax,24
+    mov ax,T40_ROWS-1
     mov bx,-1
 tb_rdir:
     mov t40_cy,ax
@@ -1399,7 +1428,7 @@ tb_row:
     mov bx,1
     cmp t40_ddx,0
     jle tb_cdir
-    mov ax,39
+    mov ax,T40_COLS-1
     mov bx,-1
 tb_cdir:
     mov t40_cx,ax
@@ -1408,17 +1437,16 @@ tb_col:
     mov ax,t40_cy
     t40_x40
     add ax,t40_cx
-    mov cl,5
-    shl ax,cl
+    t40_slotof ax
     mov si,ax
     xor bx,bx
 tb_snap:
     mov ax,[bx+si]
     mov word ptr t40_snap[bx],ax
     add bx,2
-    cmp bx,32
+    cmp bx,T40_CELLB
     jb tb_snap
-    mov di,16
+    mov di,T40_SLOTB
     call t40_blit_one
     xor di,di
     call t40_blit_one
@@ -1427,7 +1455,7 @@ tb_snap:
     mov ax,t40_cx
     cmp ax,0
     jl tb_row_done
-    cmp ax,39
+    cmp ax,T40_COLS-1
     jle tb_col
 tb_row_done:
     mov ax,t40_ny
@@ -1435,7 +1463,7 @@ tb_row_done:
     mov ax,t40_cy
     cmp ax,0
     jl tb_done
-    cmp ax,24
+    cmp ax,T40_ROWS-1
     jle tb_row
 tb_done:
     pop es
@@ -1449,7 +1477,7 @@ tb_done:
     ret
 t40_blit endp
 
-; DI = 0 or 16: snapshot slot to re-add if wholly inside the source.
+; DI = 0 or T40_SLOTB: snapshot slot to re-add if wholly inside the source.
 t40_blit_one proc near
     cmp byte ptr t40_snap[di+13],0
     je tbo_done
@@ -1486,7 +1514,7 @@ t40_reset proc near
     mov es,ax
     xor di,di
     xor ax,ax
-    mov cx,17000                ; slots, t40_vst and t40_vat
+    mov cx,T40_NCELL*(T40_CELLB+2)/2 ; slots, t40_vst and t40_vat
     cld
     rep stosw
     pop es

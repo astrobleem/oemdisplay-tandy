@@ -1,15 +1,43 @@
-; T40DATA.ASM - TXT40 presenter state (fragment for segment _T40).
-; t40_slot must stay first: slot addresses are cell*32 from offset 0.
-t40_slot    db 32000 dup (0)    ; 1000 cells x 2 hint slots x 16 bytes
-t40_vst     db 1000 dup (0)     ; per cell: 0 nothing shown, 1/2 slot shown;
-                                ; bit 7: slots changed since (stale)
-t40_vat     db 1000 dup (0)     ; per cell: attribute of the shown hint
-; t40_reset clears the 34000 bytes above.
+; T40DATA.ASM - TXT40/TEXT80 presenter state (fragment for segment _T40).
+; Geometry: the includer may define T40_COLS (40 or 80), T40_ROWS (25) and
+; T40_SLOTB (hint slot bytes: 16, or 14 to fit 80x25 in one segment);
+; without them this is TXT40's 40x25 with 16-byte slots.
+ifndef T40_COLS
+T40_COLS equ 40
+endif
+ifndef T40_ROWS
+T40_ROWS equ 25
+endif
+ifndef T40_SLOTB
+T40_SLOTB equ 16
+endif
+if (T40_COLS ne 40) and (T40_COLS ne 80)
+.err T40_COLS must be 40 or 80
+endif
+if (T40_SLOTB ne 16) and (T40_SLOTB ne 14)
+.err T40_SLOTB must be 16 or 14
+endif
+T40_NCELL equ T40_COLS*T40_ROWS
+T40_CELLB equ 2*T40_SLOTB           ; two slots per cell
+T40_W equ 8*T40_COLS                ; pixels
+T40_H equ 8*T40_ROWS
+T40_ROWB equ 4*T40_COLS             ; shadow bytes per pixel row (4 planes)
+if T40_COLS eq 40
+T40_ROWSH equ 5                     ; T40_ROWB = 5 shl T40_ROWSH
+else
+T40_ROWSH equ 6
+endif
+; t40_slot must stay first: slot addresses are cell*T40_CELLB from offset 0.
+t40_slot    db T40_NCELL*T40_CELLB dup (0)  ; 2 hint slots per cell
+t40_vst     db T40_NCELL dup (0)    ; per cell: 0 nothing shown, 1/2 slot shown;
+                                    ; bit 7: slots changed since (stale)
+t40_vat     db T40_NCELL dup (0)    ; per cell: attribute of the shown hint
+; t40_reset clears the T40_NCELL*(T40_CELLB+2) bytes above.
 t40_cnt     dw 16 dup (0)       ; colour counts of the cell being approximated
 t40_pl      db 32 dup (0)       ; cell planes, 8 rows x (R,G,B,I)
 t40_live    db 8 dup (0)        ; claimed rows, then unclaimed (live) rows
 t40_mask    db 8 dup (0)        ; foreground pixels within live
-t40_snap    db 32 dup (0)       ; t40_blit: copy of one cell's slots
+t40_snap    db T40_CELLB dup (0) ; t40_blit: copy of one cell's slots
 t40_eqa     db 8 dup (0)        ; t40_two: live pixels of the first colour
 t40_eqb     db 8 dup (0)        ; t40_two: live pixels of the second colour
 t40_rem     db 8 dup (0)        ; t40_two: live pixels not of the first
@@ -54,6 +82,10 @@ t40_ex      dw 0
 t40_ey      dw 0
 t40_ddx     dw 0
 t40_ddy     dw 0
+if T40_SLOTB ne 16
+t40_tmp     dw 0                ; t40_slotof scratch
+t40_acell   dw 0                ; t40_add: the cell being written
+endif
 t40_px0     dw 0                ; t40_present: dirty pixels, columns
 t40_px1     dw 0
 t40_py0     dw 0                ; and rows (end exclusive)

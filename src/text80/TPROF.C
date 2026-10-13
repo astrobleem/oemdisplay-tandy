@@ -14,7 +14,7 @@
  *                    with real keys); b seconds later read them and exit.
  *                    TPROF has no window and sleeps in GetMessage on a
  *                    timer, so it takes no CPU time from Notepad.
- * Every reading is logged raw to C:\T80\TPROF.LOG (times in 1/65536 BIOS
+ * Every reading is logged raw to TPROF.LOG beside TPROF.EXE (times in 1/65536 BIOS
  * tick = 0.838 us; the host converts them). Without escape 5450h only the
  * wall time from GetCurrentTime is logged.
  */
@@ -40,7 +40,7 @@ static HWND hMain, hEdit;
 static PROF FAR *pb;
 static HANDLE hpb;
 static int bProf;
-static char szLog[] = "C:\\T80\\TPROF.LOG";
+static char szLog[128];        /* TPROF.LOG beside TPROF.EXE */
 static char line[200];
 
 static void LogLine(LPSTR text)
@@ -218,6 +218,8 @@ static void TypeTest(int n)
             Read(1);
             wsprintf(label, "CHAR %d", i);
             Dump(label, t0);
+            /* logging is disk I/O: restart the clock and counters after it */
+            Read(1);
             t0 = pb->stamp;
         }
     }
@@ -231,6 +233,12 @@ int PASCAL WinMain(HANDLE hI, HANDLE hPrev, LPSTR lpCmd, int nShow)
 {
     DWORD t0, w0;
     hInst = hI;
+    {
+        int n = GetModuleFileName(hI, szLog, sizeof(szLog) - 10);
+        while (n > 0 && szLog[n - 1] != '\\' && szLog[n - 1] != ':')
+            n--;
+        lstrcpy(szLog + n, "TPROF.LOG");
+    }
     hpb = GlobalAlloc(GMEM_FIXED, (DWORD)sizeof(PROF));
     if (!hpb)
         return 0;

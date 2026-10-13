@@ -51,6 +51,18 @@ from pathlib import Path
 
 W, H, COLS, ROWS = 320, 200, 40, 25
 NCELL = COLS * ROWS
+ROWB = 4 * COLS                     # shadow bytes per pixel row (4 planes)
+
+
+def geometry(cols, rows=25):
+    """Select the text geometry: 40x25 (TXT40, 320x200 shadow) or 80x25
+    (TEXT80, 640x200 shadow). Planes of a row are at +0, +COLS, +2*COLS,
+    +3*COLS (red, green, blue, intensity) in both."""
+    global W, H, COLS, ROWS, NCELL, ROWB
+    if cols not in (40, 80):
+        raise ValueError("cols must be 40 or 80")
+    COLS, ROWS = cols, rows
+    W, H, NCELL, ROWB = 8 * cols, 8 * rows, cols * rows, 4 * cols
 POP = [bin(i).count("1") for i in range(256)]
 
 # Half blocks in trial order: (code, 8 rows). The foreground is never the
@@ -100,20 +112,20 @@ def pick_char(mask, live):
 
 
 def pixel(shadow, x, y):
-    base = y * 160 + (x >> 3)
+    base = y * ROWB + (x >> 3)
     bit = 7 - (x & 7)
-    return (((shadow[base + 120] >> bit) & 1) << 3 | ((shadow[base] >> bit) & 1) << 2
-            | ((shadow[base + 40] >> bit) & 1) << 1 | ((shadow[base + 80] >> bit) & 1))
+    return (((shadow[base + 3 * COLS] >> bit) & 1) << 3 | ((shadow[base] >> bit) & 1) << 2
+            | ((shadow[base + COLS] >> bit) & 1) << 1 | ((shadow[base + 2 * COLS] >> bit) & 1))
 
 
 def shadow_from_frame(frame):
-    sh = bytearray(32000)
+    sh = bytearray(ROWB * H)
     for y in range(H):
         for x in range(W):
             v = frame[y * W + x]
             b = 0x80 >> (x & 7)
-            base = y * 160 + (x >> 3)
-            for p, bitv in ((0, 4), (40, 2), (80, 1), (120, 8)):
+            base = y * ROWB + (x >> 3)
+            for p, bitv in ((0, 4), (COLS, 2), (2 * COLS, 1), (3 * COLS, 8)):
                 if v & bitv:
                     sh[base + p] |= b
     return sh
@@ -371,37 +383,45 @@ def oracle_hints(frame, fonts):
 
 
 def check():
-    """Self-test of properties the driver relies on (no emulator)."""
+    """Self-test of properties the driver relies on (no emulator), for the
+    40- and 80-column geometries."""
+    for cols in (40, 80):
+        geometry(cols)
+        check_one()
+    geometry(40)
+    print("T40MODEL: check PASS")
+    return 0
+
+
+def check_one():
     import random
     rnd = random.Random(40)
     p = Presenter()
-    sh = bytearray(32000)
+    sh = bytearray(ROWB * H)
     g = [0x18, 0x3C, 0x66, 0x7E, 0x66, 0x66, 0x66, 0x00]
-    spots = ((13, 21), (0, 0), (192, 312), (100, 4))
+    spots = ((13, 21), (0, 0), (H - 8, W - 8), (100, 4))
     for y0, x0 in spots:
         for r in range(8):
             for c in range(8):
                 v = 15 if (g[r] >> (7 - c)) & 1 else 1
                 x, yy = x0 + c, y0 + r
-                for pl, bitv in ((0, 4), (40, 2), (80, 1), (120, 8)):
+                for pl, bitv in ((0, 4), (COLS, 2), (2 * COLS, 1), (3 * COLS, 8)):
                     if v & bitv:
-                        sh[yy * 160 + pl + (x >> 3)] |= 0x80 >> (x & 7)
+                        sh[yy * ROWB + pl + (x >> 3)] |= 0x80 >> (x & 7)
         p.add(x0, y0, g, ord("A"))
     t = p.ideal(sh)
     for y0, x0 in spots:
         k = hint_cell(x0, y0)
         assert t[k] == (0x1F << 8 | 0x41), (x0, y0, hex(t[k]))
-    p.present(sh, 0, 200, 0, 40)
+    p.present(sh, 0, H, 0, COLS)
     assert p.text == t
     # Partial presents keep the text equal to the ideal after pixel edits.
     for _ in range(40):
-        y = rnd.randrange(200)
-        xb = rnd.randrange(40)
-        sh[y * 160 + xb + 40 * rnd.randrange(4)] ^= 1 << rnd.randrange(8)
+        y = rnd.randrange(H)
+        xb = rnd.randrange(COLS)
+        sh[y * ROWB + xb + COLS * rnd.randrange(4)] ^= 1 << rnd.randrange(8)
         p.present(sh, y, y + 1, xb, xb + 1)
         assert p.text == p.ideal(sh)
-    print("T40MODEL: check PASS")
-    return 0
 
 
 def main(argv):
