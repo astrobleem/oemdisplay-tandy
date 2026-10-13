@@ -102,6 +102,14 @@ TC_NEW = T40.TC_NEW.replace("    cmp ax,320\r\n", "    cmp ax,640\r\n").replace(
     "    mov dx,40\r\n", "    mov dx,80\r\n").replace("; T40PATCH: text-mode cursor.", "; T80PATCH: text-mode cursor (80 columns).")
 
 
+def enable_long(t):
+    """TEXT80's mode setup is longer than TXT40's: TEnable's short jump over
+    it to enable_ok becomes a long one."""
+    return replace_n(t, "    cmp enabled_flag,0\r\n    jne enable_ok\r\n    call cursor_invalidate\r\n",
+                     "    cmp enabled_flag,0\r\n    je t80e_first\r\n    jmp enable_ok\r\nt80e_first:\r\n"
+                     "    call cursor_invalidate\r\n", 1, "enable_ok jump")
+
+
 def geometry640(t):
     for old, new in GEOM640:
         t = replace_n(t, old, new, 1, "640: " + old)
@@ -129,7 +137,7 @@ def configure():
                          "TEXT80 80x25 color text, 640x200 (experimental)", 1, "description")
     T40.patch_def = patch_def
     real_tsoft = T40.patch_tsoft
-    T40.patch_tsoft = lambda t: geometry640(real_tsoft(t))
+    T40.patch_tsoft = lambda t: enable_long(geometry640(real_tsoft(t)))
 
 
 def patch_staged(ega_dir):

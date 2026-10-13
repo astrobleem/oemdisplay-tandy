@@ -6,8 +6,8 @@ pinned DOS toolchain (CL /G0 /Gw /AS /W3 /Od, LINK4), under DOSBox-X.
       --dosbox <dosbox-x> --out <fresh dir> --app TPROF [--app T80HELP ...]
 
 Each NAME needs NAME.C, NAME.DEF and NAME.RSP in src/text80 (or src/xtpan).
---dos-app NAME builds a DOS program from NAME.C alone (CL /AS, default
-DOS small-model library SLIBCE.LIB, the pinned LINK).
+--dos-app NAME builds a DOS program from NAME.C alone (CL /c /AS, then the
+pinned DOS LINK with the small-model library SLIBCE.LIB).
 Results: <out>/NAME.EXE and <out>/RESULT.JSON (bytes and SHA-256 of each).
 """
 import argparse
@@ -79,7 +79,8 @@ def main():
     for app in a.dos_app:
         data = find(app + ".C").read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
         (out / (app + ".C")).write_bytes(data)
-        bat += [f"CL /nologo /AS /W3 /Od {app}.C >> BUILD.LOG", "IF ERRORLEVEL 1 GOTO FAIL"]
+        bat += [f"CL /nologo /c /AS /W3 /Od {app}.C >> BUILD.LOG", "IF ERRORLEVEL 1 GOTO FAIL",
+                f"LINK {app}.OBJ,{app}.EXE,{app}.MAP,C:\\LIB\\SLIBCE.LIB; >> BUILD.LOG", "IF ERRORLEVEL 1 GOTO FAIL"]
     bat += ["ECHO PASS >> BUILD.LOG", "GOTO END", ":FAIL", "ECHO FAIL >> BUILD.LOG", ":END", "EXIT"]
     (out / "BUILD.BAT").write_bytes(("\r\n".join(bat) + "\r\n").encode())
     (out / "BUILD.CNF").write_text(CONF.format(repo=repo, out=out))

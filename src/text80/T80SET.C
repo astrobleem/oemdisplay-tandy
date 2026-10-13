@@ -27,7 +27,7 @@
 #ifndef SEP
 #define SEP "\\"                /* the host test (T80SETT.PY) builds with "/" */
 #endif
-#define MAXF 32000
+#define MAXF 24000
 static char inbuf[MAXF + 1];
 static char outbuf[MAXF + 600];
 static char path[160], path2[160], tmp[160];
@@ -256,7 +256,7 @@ int main(int argc, char **argv)
             return fail("already set up (SYSTEM.T80/WIN.T80 exist); run T80SET OFF first");
         join(tmp, argv[2], "SYSTEM.INI");
         if (readfile(tmp) < 0)
-            return fail("cannot read SYSTEM.INI (or larger than 32000 bytes)");
+            return fail("cannot read SYSTEM.INI (or larger than 24000 bytes)");
         sprintf(sysset[0], "display.drv=%s", drv);
         strcpy(sysset[1], "fonts.fon=XTTSYS.FON");
         strcpy(sysset[2], "fixedfon.fon=XTCFIX.FON");

@@ -13,6 +13,7 @@
 ; t40_save      AX..DX as t40_present, raw: keep the shadow bytes of that
 ;               rectangle (clamped) for the next t40_pdiff, if they fit in
 ;               T40_SNAPB bytes. Preserves all.
+;   t40_drop    forget the snapshot. Preserves all but flags.
 ;   t40_pdiff   AX..DX as t40_present: present only what can differ from
 ;               the snapshot (T40MODEL.Presenter.present_diff); without a
 ;               matching snapshot, t40_present. Drops the snapshot.
@@ -1304,6 +1305,18 @@ tpr_ocol:
     ret
 t40_present endp
 
+; ---- t40_drop: forget the snapshot. Preserves all but flags.
+t40_drop proc near
+    push ds
+    push ax
+    mov ax,seg t40_slot
+    mov ds,ax
+    mov t40_snv,0
+    pop ax
+    pop ds
+    ret
+t40_drop endp
+
 ; ---- t40_save --------------------------------------------------------------
 t40_save proc near
     push ax
@@ -1537,15 +1550,20 @@ tpd_col:
     ; need = column <= c1 and (stale or changed)
     mov ax,t40_dcx
     cmp ax,t40_dc1
-    jg tpd_no
+    jle tpd_inside
+    jmp tpd_no
+tpd_inside:
     mov ax,t40_dcy
     t40_x40
     add ax,t40_dcx
     mov bx,ax
     test t40_vst[bx],80h
-    jnz tpd_yes
+    jz tpd_cmp
+    jmp tpd_yes
+tpd_cmp:
     call t40_changed
-    jc tpd_yes
+    jnc tpd_no
+    jmp tpd_yes
 tpd_no:
     cmp t40_drun,0
     jl tpd_next
@@ -1572,7 +1590,9 @@ tpd_next:
     mov ax,t40_dc1
     inc ax
     cmp t40_dcx,ax
-    jle tpd_col
+    jg tpd_rowend
+    jmp tpd_col
+tpd_rowend:
     inc t40_dcy
     mov ax,t40_dcy
     cmp ax,t40_dr1

@@ -59,13 +59,14 @@ MUTANTS = [
     ("output-margin-bottom", "    add bx,1\r\n    cmp bx,T40_NROWS-1\r\n    jle tpr_r1",
      "    add bx,0\r\n    cmp bx,T40_NROWS-1\r\n    jle tpr_r1"),
     # snapshot-diff flushes (TEXT80)
-    ("diff-ignores-stale", "    test t40_vst[bx],80h\r\n    jnz tpd_yes", "    test t40_vst[bx],00h\r\n    jnz tpd_yes"),
-    ("diff-never-changed", "    jc tpd_yes", "    clc"),
+    ("diff-ignores-stale", "    test t40_vst[bx],80h\r\n    jz tpd_cmp", "    test t40_vst[bx],00h\r\n    jz tpd_cmp"),
+    ("diff-never-changed", "    jnc tpd_no\r\n    jmp tpd_yes", "    jmp tpd_no\r\n    jmp tpd_yes"),
     ("diff-skips-plane-3", "    cmp al,es:[di+3*T40_COLS]", "    cmp al,al"),
     ("diff-first-row-only", "    loop tch2_row", "    nop"),
     ("diff-run-half-rows", "    add bx,8\r\n    mov cx,t40_drun", "    add bx,4\r\n    mov cx,t40_drun"),
     ("diff-no-left-margin", "    sub si,1\r\n    jge tpd_c0", "    sub si,0\r\n    jge tpd_c0"),
     ("diff-any-rectangle", "    je tpd_go", "    jmp short tpd_go"),
+    ("diff-ignores-rect-rows", "    cmp ax,t40_sy0\r\n    jne tpd_full", "    cmp ax,ax\r\n    jne tpd_full"),
     ("diff-snapshot-columns", "    sub dx,cx\r\n    mov t40_snc,dx", "    sub dx,cx\r\n    mov t40_snc,cx"),
 ]
 

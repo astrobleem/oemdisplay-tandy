@@ -822,7 +822,14 @@ def regression_diff_flush(font, ops, model):
     s.load()
     s.present_diff(64, 112, 0, COLS)
     checks.append((len(s.expect) - 1, cell10(), "not", ord("Q")))
-    # (6) mismatched rectangles
+    # (6) a snapshot one column narrower than the flush (only the right edge
+    # differs), and a change in that last column: an ordinary flush
+    s.snap(64, 112, 0, COLS - 1)
+    s.fill(W - 8, 72, W, 80, 2)
+    s.load()
+    s.present_diff(64, 112, 0, COLS)
+    checks.append((len(s.expect) - 1, 9 * COLS + COLS - 1, "is", 0x20))
+    # (7) mismatched rectangles
     s.snap(0, 8, 0, 4)
     s.glyph(x3 + 8, P[1], font[ord("T")], 15, 1)
     s.add(x3 + 8, P[1], font[ord("T")], ord("T"))

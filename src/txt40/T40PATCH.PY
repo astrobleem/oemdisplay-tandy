@@ -506,7 +506,7 @@ endm
 ; rectangles here, which for Notepad was the whole client area on every
 ; keystroke (2.6 s of a 3.1 s keystroke on an XT, docs/TEXT80.MD).
 t40_bounds macro extended
-local proven,unproven,full,done,t40b_chars,t40b_none
+local proven,unproven,full,done,t40b_chars,t40b_none,t40b_np,t40b_up,t40b_nochars,t40b_fill
     push ax
     push bx
     push cx
@@ -516,10 +516,14 @@ local proven,unproven,full,done,t40b_chars,t40b_none
     mov colfirst,SCREEN_W_BYTES
     mov collast,0
     cmp dirty,2
-    je proven
+    jne t40b_np
+    jmp proven
+t40b_np:
     cmp dirty,1
-    je unproven
+    je t40b_up
     jmp done
+t40b_up:
+    jmp unproven
 proven:
     t40_rect_cols clip
     t40_rect_isect clip
@@ -528,10 +532,14 @@ unproven:
     mov rowfirst,SCREEN_HEIGHT
     mov rowlast,0
     cmp count,0
-    jg t40b_chars
+    jle t40b_nochars
+    jmp t40b_chars
+t40b_nochars:
     if extended
     test options,ETO_OPAQUE_FILL
-    jz t40b_none
+    jnz t40b_fill
+    jmp t40b_none
+t40b_fill:
     t40_rect_union opaquerect,full
     t40_rect_isect clip
     mov dirty,2

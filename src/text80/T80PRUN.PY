@@ -26,12 +26,14 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 PCPWIN = importlib.machinery.SourceFileLoader("pcpwin", str(HERE.parent / "pcp" / "PCPWIN.PY")).load_module()
 SHOT = importlib.machinery.SourceFileLoader("t40shot", str(HERE.parent / "txt40" / "T40SHOT.PY")).load_module()
+CHK = importlib.machinery.SourceFileLoader("t80chk", str(HERE / "T80CHK.PY")).load_module()
 PART = "@@8704"
 
 
 class Run:
-    def __init__(self, vm, tdir, font):
-        self.font = Path(font).read_bytes()
+    def __init__(self, vm, tdir, font, snap=False):
+        self.snapmode = snap
+        self.font = Path(font).read_bytes() if font else None
         self.n = 0
         self.vm = Path(vm)
         self.tdir = tdir
@@ -55,7 +57,28 @@ class Run:
         self.events.append({"timeout": prefix, "after_s": timeout})
         return None
 
+    def snaprows(self):
+        """--snap: the text buffer via T80SNAP (Scroll Lock), any width."""
+        def recs():
+            p = subprocess.run(["mtype", "-i", f"{self.vm / 'pcp.img'}{PART}", f"::/{self.tdir}/SNAPS.BIN"],
+                               capture_output=True)
+            try:
+                return CHK.parse(p.stdout) if p.returncode == 0 else []
+            except ValueError:
+                return []
+        n = len(recs())
+        subprocess.run(["xdotool", "key", "--delay", "150", "Scroll_Lock"], check=False)
+        t0 = time.time()
+        while time.time() - t0 < 120:
+            r = recs()
+            if len(r) > n:
+                return CHK.rows(r[-1]["hidden"], r[-1]["cols"])
+            time.sleep(3)
+        return []
+
     def rows(self, name="look"):
+        if self.snapmode:
+            return self.snaprows()
         self.n += 1
         nm = f"{name}_{self.n}"
         self.r.shot(nm, settle=0.5, decode=False)
@@ -97,8 +120,16 @@ class Run:
         self.events.append({"run_failed": cmd})
         return False
 
-    def session(self, chars, note, secs):
+    def session(self, chars, note, secs, t80on=False):
         r = self.r
+        if t80on:
+            r.text("C:", wait=1)
+            r.key("Return", wait=2)
+            r.text("CD \\T80", wait=1)
+            r.key("Return", wait=2)
+            r.text("T80ON", wait=1)
+            r.key("Return", wait=25)
+            r.shot("t80on", settle=1, decode=False)
         r.text("CD \\WINDOWS")
         r.key("Return", wait=2)
         r.m("ident", "on")
@@ -132,12 +163,14 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--vm", required=True)
     ap.add_argument("--dir", default="T40")
-    ap.add_argument("--font", type=Path, required=True)
+    ap.add_argument("--font", type=Path, help="CGA 8x8 font (40-column screenshots); not with --snap")
+    ap.add_argument("--snap", action="store_true", help="read screens from T80SNAP buffers (TEXT80)")
+    ap.add_argument("--t80on", action="store_true", help="run T80ON at the DOS prompt first")
     ap.add_argument("--chars", type=int, default=30)
     ap.add_argument("--note", default="Hello TV owners 40x25")
     ap.add_argument("--secs", type=int, default=300)
     a = ap.parse_args()
-    Run(a.vm, a.dir, a.font).session(a.chars, a.note, a.secs)
+    Run(a.vm, a.dir, a.font, a.snap).session(a.chars, a.note, a.secs, a.t80on)
     return 0
 
 
