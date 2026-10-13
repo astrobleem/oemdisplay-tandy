@@ -980,6 +980,19 @@ def regression_diff_flush(font, ops, model):
     s.snap(64, 112, 0, DW)
     s.present_diff(72, 112, 0, DW)
     checks.append((len(s.expect) - 1, 8 * COLS + 5, "not", 0x20))
+    # (10) a glyph recoloured from grey (7) to white (15): only the
+    # intensity plane (plane 3) differs, and the diff flush must see it
+    xi, yi = 8 * 30, 8 * 11
+    s.glyph(xi, yi, font[ord("I")], 7, 1)
+    s.add(xi, yi, font[ord("I")], ord("I"))
+    s.load()
+    s.present(yi, yi + 8, 29, 32)
+    checks.append((len(s.expect) - 1, 11 * COLS + 30, "word", 0x1749))
+    s.snap(yi, yi + 8, 28, 33)
+    s.glyph(xi, yi, font[ord("I")], 15, 1)               # no new hint: only pixels changed
+    s.load()
+    s.present_diff(yi, yi + 8, 28, 33)
+    checks.append((len(s.expect) - 1, 11 * COLS + 30, "word", 0x1F49))
     s.present(0, H, 0, COLS)                     # probe buffers hold 0FFFFh: compare a full one
     return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
 
