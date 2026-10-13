@@ -46,6 +46,10 @@ T40 = T80.T40
 crlf, replace_n = T40.crlf, T40.replace_n
 
 ROWS = 400
+# fault injection (test build t80panfail only): GlobalAlloc is asked for
+# 7FA00h bytes, which real-mode Windows cannot satisfy, so Enable takes its
+# allocation-failure path on every machine
+FAIL_ALLOC = False
 PAN_ESC = 0x5850
 SHADOW_BYTES = 65536 + 64000          # band 0, its fill, band 1
 
@@ -70,7 +74,7 @@ ALLOC_OLD = ("    mov ax,seg shadow_bits\r\n    mov word ptr shadow_device.bmBit
 ALLOC_NEW = crlf("""    cmp t80_shh,0             ; T80TALL: the 640x400 shadow (huge, two bands)
     jne t80a_have
     xor ax,ax                 ; GMEM_FIXED
-    mov bx,SHADOW_HI
+    mov bx,ALLOC_HI
     mov cx,SHADOW_LO
     cCall GlobalAlloc,<ax,bx,cx>
     or ax,ax
@@ -347,7 +351,9 @@ def patch_tsoft(t, kind):
                   "SCREEN_HEIGHT equ %d              ; T80TALL: logical rows\r\n"
                   "PAN_ESC equ %05Xh                 ; T80TALL: Control escape (XTPAN's)\r\n"
                   "SHADOW_HI equ %d                  ; T80TALL: GlobalAlloc size\r\n"
-                  "SHADOW_LO equ %05Xh\r\n" % (ROWS, PAN_ESC, SHADOW_BYTES >> 16, SHADOW_BYTES & 0xFFFF),
+                  "SHADOW_LO equ %05Xh\r\n"
+                  "ALLOC_HI equ %d                   ; T80TALL: high word of the request\r\n"
+                  % (ROWS, PAN_ESC, SHADOW_BYTES >> 16, SHADOW_BYTES & 0xFFFF, 7 if FAIL_ALLOC else SHADOW_BYTES >> 16),
                   1, "screen height")
     t = replace_n(t, "externFP AllocSelector\r\n",
                   "externFP AllocSelector\r\nexternFP GlobalAlloc\r\nexternFP GlobalLock\r\n"
@@ -428,6 +434,9 @@ def configure(kind):
 
 
 def patch_staged(ega_dir, kind):
+    global FAIL_ALLOC
+    if kind == "panfail":
+        FAIL_ALLOC, kind = True, "pan"
     configure(kind)
     done = T40.patch_staged(ega_dir)
     sd = Path(ega_dir).parent / "SDIB88.ASM"

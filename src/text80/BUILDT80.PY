@@ -14,6 +14,8 @@ REP-prefix and link audits then run on the edited listings):
   t80prof    t80 + T80PROF
   t80pan     TEXT80 80x25 over a 640x400 desktop, panned (T80TALL pan)
   t80panprof t80pan + T80PROF
+  t80panfail t80pan with GlobalAlloc asked for 7FA00h bytes (fault
+             injection: Enable's allocation-failure path; test build only)
   t80vga     TEXT80 VGA 80x50, 640x400 (T80TALL vga)
   t80vgaprof t80vga + T80PROF
 Further variants are added by the TEXT80 work as it lands.
@@ -63,6 +65,8 @@ def variants():
         "t80pan": dict(mode="320x200x16", out="T80PAN.DRV", edits=[tall("pan")], res=res640, res_sha=RES640_SHA),
         "t80panprof": dict(mode="320x200x16", out="T80PANP.DRV", edits=[tall("pan"), prof.patch_staged],
                            res=res640, res_sha=RES640_SHA),
+        "t80panfail": dict(mode="320x200x16", out="T80PAN.DRV", edits=[tall("panfail")], res=res640,
+                           res_sha=RES640_SHA),
         "t80vga": dict(mode="320x200x16", out="T80VGA.DRV", edits=[tall("vga")], res=res640, res_sha=RES640_SHA),
         "t80vgaprof": dict(mode="320x200x16", out="T80VGAP.DRV", edits=[tall("vga"), prof.patch_staged],
                            res=res640, res_sha=RES640_SHA),

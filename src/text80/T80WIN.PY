@@ -33,6 +33,7 @@ Results: <vm>/T80WIN.JSN.
 import argparse
 import importlib.machinery
 import json
+import re
 import subprocess
 import time
 from pathlib import Path
@@ -244,6 +245,7 @@ class Session:
         self.key("Escape", 6)
         self.pan("alt+F9", "after_run")
         # Notepad below the viewport, typed into while not shown
+        self.free_memory("before_notepad")
         self.runcmd("NOTEPAD")
         self.settle("notepad0", ("Notepad - (untitled)",), timeout=1200)
         self.key("alt+space", 4)
@@ -307,6 +309,164 @@ class Session:
         self.check("rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
                    bool(rec) and rec["cols"] != 80, cols=rec and rec["cols"])
 
+    def run_allocfail(self, rollback=True):
+        """T80PAN.DRV built with the allocation fault injected (BUILDT80
+        t80panfail): Enable's GlobalAlloc fails on every machine. Windows
+        must not start in a broken state: back at a usable DOS prompt, then
+        T80OFF and Windows with the previous driver."""
+        r = self.r
+        self.text("C:", 1)
+        self.key("Return", 2)
+        self.text("CD \\T80", 1)
+        self.key("Return", 2)
+        self.text("T80ON C:\\WINDOWS PAN", 1)
+        self.key("Return", 25)
+        sysini = self.read("::/WINDOWS/SYSTEM.INI").decode("latin1")
+        self.check("T80ON PAN (fault-injected driver): display.drv=T80PAN.DRV", "display.drv=T80PAN.DRV" in sysini)
+        self.text("CD \\WINDOWS", 1)
+        self.key("Return", 2)
+        self.text("WIN /R", 1)
+        self.key("Return", 240)
+        r.shot("allocfail_after_win", settle=1, decode=False)
+        for _ in range(3):
+            self.key("Escape", 5)
+            self.key("Return", 10)
+        r.shot("allocfail_keys", settle=1, decode=False)
+        self.text("ECHO ALIVE> C:\\T80\\ALIVE.TXT", 1)
+        self.key("Return", 15)
+        alive = self.read("::/T80/ALIVE.TXT")
+        self.check("allocation failure: Windows does not start and the DOS prompt is usable (a command ran)",
+                   alive.strip() == b"ALIVE", got=alive[:20].decode("latin1"))
+        self.text("CD \\T80", 1)
+        self.key("Return", 2)
+        self.text("T80OFF", 1)
+        self.key("Return", 25)
+        sysini = self.read("::/WINDOWS/SYSTEM.INI").decode("latin1")
+        self.check("T80OFF after the failure: SYSTEM.INI restored", "T80PAN" not in sysini.upper()
+                   and not self.read("::/WINDOWS/SYSTEM.T80"))
+        rec = self.start_windows("rolledback", ("Program Manager",))
+        self.check("rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
+                   bool(rec) and rec["cols"] != 80, cols=rec and rec["cols"])
+
+    def run_vga(self, rollback=True):
+        """VGA 80x50 (T80VGA.DRV) in DOSBox-X (machine=vgaonly): all 50 rows
+        of the 640x400 desktop shown. Keyboard-driven; the pointer is
+        checked wherever it is."""
+        r = self.r
+        self.text("C:", 1)
+        self.key("Return", 2)
+        self.text("CD \\T80", 1)
+        self.key("Return", 2)
+        self.text("T80ON C:\\WINDOWS VGA", 1)
+        self.key("Return", 15)
+        sysini = self.read("::/WINDOWS/SYSTEM.INI").decode("latin1")
+        self.check("T80ON VGA: display.drv=T80VGA.DRV, originals saved",
+                   "display.drv=T80VGA.DRV" in sysini and bool(self.read("::/WINDOWS/SYSTEM.T80")))
+        desk = ("Program Manager", "File", "Options", "Window", "Help")
+        rec = self.start_windows("desktop", desk)
+        self.check("Windows runs in VGA 80x50 text (BIOS columns 80, rows 50)",
+                   bool(rec) and rec["cols"] == 80 and rec["rows"] == 50, rows=rec and rec["rows"])
+        self.expect("desktop", *desk)
+        self.cursor("desktop")
+        self.key("alt+f", 8)
+        menu = ("New...", "Open", "Move...", "Copy...", "Delete", "Properties...", "Run...", "Exit Windows...")
+        self.settle("filemenu", menu)
+        self.expect("filemenu", *menu)
+        self.key("Escape", 4)
+        self.key("Escape", 4)
+        self.settle("menuclosed")
+        self.identical("desktop", "menuclosed", "File menu closed: every cell as on the desktop before")
+        self.key("alt+f", 8)
+        self.key("r", 8)
+        run = ("Run", "Command Line:", "Run Minimized", "OK", "Cancel")
+        rd = self.settle("rundlg", run)
+        self.expect("rundlg", *run)
+        if rd:
+            rows = [h[0] for s in run for h in CHK.find(rd["hidden"], 80, s)]
+            self.check("Run dialog (centred on the 400-row desktop) lies below text row 25",
+                       bool(rows) and max(rows) >= 25, rows=sorted(set(rows)))
+        self.key("Escape", 6)
+        self.free_memory("before_notepad")
+        self.runcmd("NOTEPAD")
+        self.settle("notepad0", ("Notepad - (untitled)",), timeout=1200)
+        line = "Hello from VGA 80x50 text mode!"
+        self.text(line, 2)
+        rec = self.settle("notepad", ("Notepad - (untitled)", line), timeout=1200)
+        self.expect("notepad", "Notepad - (untitled)", line)
+        if rec:
+            hits = CHK.find(rec["hidden"], 80, line)
+            if hits:
+                rr, cc = hits[0]
+                attrs = {w >> 8 for w in CHK.cells_at(rec["hidden"], 80, rr, cc, len(line))}
+                self.check("notepad: the typed line is one colour pair, black on white (F0h)",
+                           attrs == {0xF0}, attrs=sorted(hex(a) for a in attrs))
+        self.key("shift+Home", 6)
+        sel = self.settle("selected", (line,))
+        if rec and sel:
+            hits = CHK.find(rec["hidden"], 80, line)
+            if hits:
+                rr, cc = hits[0]
+                before = CHK.cells_at(rec["hidden"], 80, rr, cc, len(line))
+                after = CHK.cells_at(sel["hidden"], 80, rr, cc, len(line))
+                self.check("selection: the selected cells keep their characters and all change colour",
+                           all((a & 0xFF) == (b & 0xFF) and (a >> 8) != (b >> 8) for a, b in zip(before, after)))
+        self.key("End", 6)
+        for i in range(1, 51):
+            self.key("Return", 0.5)
+            self.text(f"line {i:02d}", 0.5)
+        sc = self.settle("scrolled", ("line 50",), timeout=2400)
+        rows = CHK.rows(sc["hidden"], 80) if sc else []
+        self.check("scrolling: the last line is visible and the first typed line has scrolled away",
+                   bool(sc) and any("line 50" in rw for rw in rows) and not any(line in rw for rw in rows))
+        self.key("alt+Escape", 8)
+        pm = self.settle("pmfront", ("Program Manager",))
+        self.key("alt+Escape", 8)
+        np = self.settle("npfront", ("Notepad - (untitled)",))
+        self.check("overlap: switching windows changes which one is on top (cells differ), and back",
+                   bool(pm and np) and pm["hidden"] != np["hidden"])
+        self.key("alt+F4", 8)
+        self.settle("savequery", ("No",), timeout=600)
+        self.key("n", 10)
+        self.key("alt+F4", 8)
+        self.settle("exitdlg", ("This will end your Windows", "OK"), timeout=600)
+        self.key("Return", 30)
+        r.shot("dos_after", settle=1)
+        self.start_windows("desktop2", desk)
+        self.identical("desktop", "desktop2", "relaunch: the desktop is identical to the first launch")
+        if not rollback:
+            return
+        self.key("alt+F4", 8)
+        self.settle("exitdlg2", ("This will end your Windows",), timeout=600)
+        self.key("Return", 30)
+        self.text("CD \\T80", 1)
+        self.key("Return", 2)
+        self.text("T80OFF", 1)
+        self.key("Return", 15)
+        sysini = self.read("::/WINDOWS/SYSTEM.INI").decode("latin1")
+        self.check("T80OFF: SYSTEM.INI no longer names T80VGA.DRV and the backups are gone",
+                   "T80VGA" not in sysini.upper() and not self.read("::/WINDOWS/SYSTEM.T80"))
+        rec = self.start_windows("rolledback", ("Program Manager",))
+        self.check("rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
+                   bool(rec) and rec["cols"] != 80, cols=rec and rec["cols"])
+
+    def free_memory(self, tag):
+        """TPROF IDLE 1 logs Windows' free memory (GetFreeSpace) on its
+        START line; a driver without the profiling escape logs only that."""
+        before = self.read("::/T80/TPROF.LOG").decode("latin1")
+        self.runcmd("C:\\T80\\TPROF IDLE 1")
+        t0 = time.time()
+        while time.time() - t0 < 600:
+            log = self.read("::/T80/TPROF.LOG").decode("latin1")
+            new = log[len(before):]
+            m = re.search(r"START cmd=IDLE 1 prof=(\d) free=(\d+)", new)
+            if m and "END" in new[m.end():]:
+                self.timing["free_bytes_" + tag] = int(m.group(2))
+                self.check(f"free memory recorded ({tag}): {m.group(2)} bytes", True)
+                return int(m.group(2))
+            time.sleep(5)
+        self.check(f"free memory recorded ({tag})", False)
+        return None
+
     def cursor_at(self, name, x, y):
         self.to(x, y, 4)
         self.settle(name)
@@ -363,6 +523,7 @@ class Session:
         if self.prof:
             self.runcmd("C:\\T80\\TPROF NOTE 90 240")
         else:
+            self.free_memory("before_notepad")
             self.runcmd("NOTEPAD")
         self.settle("notepad0", ("Notepad - (untitled)",), timeout=1200)
         if self.prof:
@@ -480,12 +641,24 @@ def main():
     ap.add_argument("--vm", required=True)
     ap.add_argument("--prof", action="store_true")
     ap.add_argument("--skip-rollback", action="store_true")
-    ap.add_argument("--profile", choices=("25", "pan"), default="25")
+    ap.add_argument("--profile", choices=("25", "pan", "allocfail", "vga"), default="25")
+    ap.add_argument("--emulator", choices=("86box", "dosbox"), default="86box",
+                    help="dosbox: DOSBox-X machine=vgaonly (T80DBX.PY), started and stopped here")
+    ap.add_argument("--dosbox", default="/usr/bin/dosbox-x")
     a = ap.parse_args()
     s = Session(a.vm, a.prof)
+    dbx = None
+    if a.emulator == "dosbox":
+        DBXM = importlib.machinery.SourceFileLoader("t80dbx", str(HERE / "T80DBX.PY")).load_module()
+        dbx = DBXM.DBX(a.vm, a.dosbox)
+        s.r = dbx
+        dbx.start()
     try:
-        (s.run_pan if a.profile == "pan" else s.run)(rollback=not a.skip_rollback)
+        {"pan": s.run_pan, "allocfail": s.run_allocfail, "vga": s.run_vga}.get(a.profile, s.run)(
+            rollback=not a.skip_rollback)
     finally:
+        if dbx:
+            dbx.stop()
         (s.vm / "T80WIN.JSN").write_text(json.dumps(s.result(), indent=1) + "\n")
         (s.vm / "SNAPS.BIN").write_bytes(s.read("::/T80/SNAPS.BIN"))
         if a.prof:
