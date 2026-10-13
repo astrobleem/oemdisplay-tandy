@@ -1007,6 +1007,38 @@ def regression_blit_overlap(font, ops, model):
     return s.expect, [(k, model.ideal(s.shadow))], checks
 
 
+def regression_touch_edges(font, ops, model):
+    """A shown glyph whose window's last (first) column is the only one
+    inside a flushed byte column: one pixel there changes, only that byte
+    is flushed. The hint's window touches the flush, so it must be
+    re-verified and no longer shown, although its own cell is not dirty.
+    (Rows 0 and 7 are not tested this way: the presenter tolerates them,
+    for focus rectangles.)"""
+    out_expect, out_ideal, checks = [], [], []
+    g = font[ord("M")]
+    for name, (x, y), (px, py), rect in (
+            ("last column", (81, 81), (88, 84), (84, 85, 11, 12)),     # window 81..88: col 88 is byte 11
+            ("first column", (87, 81), (87, 84), (84, 85, 10, 11))):   # window 87..94: col 87 is byte 10
+        s = Scene(ops, model.__class__())
+        ops.append(bytes([5]))
+        _blank(s)
+        s.glyph(x, y, g, 15, 1)
+        s.add(x, y, g, ord("M"))
+        s.load()
+        s.present(y - 8, y + 16, (x >> 3) - 1, (x >> 3) + 3)
+        k = M.hint_cell(x, y)
+        base = len(out_expect)
+        checks.append((base + len(s.expect) - 1, k, "is", ord("M")))
+        s.frame[py * W + px] = 4 if s.frame[py * W + px] != 4 else 2
+        s.load()
+        s.present(*rect)
+        checks.append((base + len(s.expect) - 1, k, "not", ord("M")))
+        s.present(0, H, 0, COLS)
+        out_ideal.append((base + len(s.expect) - 1, s.model.ideal(s.shadow)))
+        out_expect += s.expect
+    return out_expect, out_ideal, checks
+
+
 VCHECKS = []        # (VIDEO.BIN dump index, screen cell, code shown there)
 
 
@@ -1043,6 +1075,7 @@ def regression_pan(font, ops, model):
 
 
 REGRESSIONS = (regression_same_position, regression_two_positions, regression_partial_overpaint,
+               regression_touch_edges,
                regression_diff_flush, regression_blit_overlap)
 
 
