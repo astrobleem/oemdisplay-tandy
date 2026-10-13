@@ -2,6 +2,14 @@
 """Mutation check for T40TEST: every listed one-line change to T40PRES.ASM
 must make T40TEST.PY fail, or the test is not sensitive to that rule.
 
+A mutant counts as caught only when T40TEST built and ran it and its
+comparison with the model found a difference: exit code 1 and a RESULT.JSN
+with verdict FAIL. A build or tool failure (exit 3) or a harness failure
+(exit 4, emulator or timeout) is "invalid", never "caught", and fails the
+whole check. Before the mutants, the unmutated presenter must pass, and a
+deliberately unassemblable control must come back invalid (proving that the
+classification works).
+
   python3 src/txt40/T40MUT.PY --deps <inputs> --dosbox <dosbox-x> --out <fresh-dir>
 """
 import argparse
@@ -52,6 +60,27 @@ MUTANTS = [
 ]
 
 
+CONTROL_BROKEN = ("control-unassemblable", "    cmp ax,2", "    cmp ax,2,,")
+
+
+def classify(rc, out):
+    res = out / "RESULT.JSN"
+    if rc == 0:
+        return "survived"
+    if rc == 1 and res.exists() and json.loads(res.read_text()).get("verdict") == "FAIL":
+        return "caught"
+    return "invalid"
+
+
+def run_test(a, out, name, asm=None):
+    cmd = [sys.executable, str(HERE / "T40TEST.PY"), "--deps", str(a.deps), "--dosbox", str(a.dosbox),
+           "--out", str(out / name), "--scenes", str(a.scenes)]
+    if asm:
+        cmd += ["--pres", str(asm)]
+    rc = subprocess.run(cmd, capture_output=True, text=True).returncode
+    return rc, classify(rc, out / name)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--deps", type=Path, required=True)
@@ -62,6 +91,15 @@ def main():
     out = a.out.resolve()
     out.mkdir(parents=True, exist_ok=False)
     src = (HERE / "T40PRES.ASM").read_bytes().decode("ascii")
+    base_rc, base = run_test(a, out, "unmutated")
+    print("unmutated", base)
+    controls = {"unmutated": {"test_exit": base_rc, "class": base, "want": "survived"}}
+    name, old, new = CONTROL_BROKEN
+    mut = out / f"{name}.ASM"
+    mut.write_bytes(src.replace(old + "\r\n", new + "\r\n", 1).encode("ascii"))
+    rc, cls = run_test(a, out, name, mut)
+    print(name, cls)
+    controls[name] = {"test_exit": rc, "class": cls, "want": "invalid"}
     results = []
     for name, old, new in MUTANTS:
         old_t, new_t = old + "\r\n", new + "\r\n"
@@ -69,17 +107,18 @@ def main():
             raise SystemExit(f"T40MUT: {name}: original text not found")
         mut = out / f"{name}.ASM"
         mut.write_bytes(src.replace(old_t, new_t, 1).encode("ascii"))
-        rc = subprocess.run([sys.executable, str(HERE / "T40TEST.PY"), "--deps", str(a.deps),
-                             "--dosbox", str(a.dosbox), "--out", str(out / name), "--pres", str(mut),
-                             "--scenes", str(a.scenes)], capture_output=True, text=True).returncode
-        results.append({"mutant": name, "test_exit": rc, "killed": rc != 0})
-        print(name, "killed" if rc else "SURVIVED")
-    survived = [r["mutant"] for r in results if not r["killed"]]
-    summary = {"mutants": len(results), "killed": len(results) - len(survived),
-               "survived": survived, "verdict": "PASS" if not survived else "FAIL"}
+        rc, cls = run_test(a, out, name, mut)
+        results.append({"mutant": name, "test_exit": rc, "class": cls, "killed": cls == "caught"})
+        print(name, cls)
+    survived = [r["mutant"] for r in results if r["class"] == "survived"]
+    invalid = [r["mutant"] for r in results if r["class"] == "invalid"]
+    controls_ok = all(c["class"] == c["want"] for c in controls.values())
+    summary = {"mutants": len(results), "killed": sum(r["killed"] for r in results),
+               "survived": survived, "invalid": invalid, "controls": controls,
+               "verdict": "PASS" if not survived and not invalid and controls_ok else "FAIL"}
     (out / "RESULT.JSN").write_text(json.dumps({"summary": summary, "results": results}, indent=1) + "\n")
     print(json.dumps(summary, indent=1))
-    return 0 if not survived else 1
+    return 0 if summary["verdict"] == "PASS" else 1
 
 
 if __name__ == "__main__":

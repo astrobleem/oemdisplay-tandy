@@ -511,6 +511,110 @@ BENCH = [  # (name, ay, by, cx, dx, repeats)
 ]
 
 
+# ---- review regressions with explicit expected cells -------------------------
+# Each returns (expect, ideal checks, explicit checks); an explicit check is
+# (flush index within the scene, cell, kind, code): kind "is" = the cell shows
+# that code, "not" = it does not. They are checked on the model when the
+# scene is built (a failure there is a specification bug) and on every
+# presenter text buffer.
+P = (83, 81)        # a glyph window not aligned to the grid; holding cell (10, 10)
+Q = (78, 79)        # another position whose window centre is in the same cell
+CELL = 10 * 40 + 10
+
+
+def _blank(s):
+    s.fill(0, 0, W, H, 1)
+    s.load()
+    s.present(0, 200, 0, 40)
+
+
+def _flush_cell(s):
+    s.load()
+    s.present(72, 96, 8, 13)        # the cell and its neighbours, every glyph pixel
+
+
+def regression_same_position(font, ops, model):
+    """A then B drawn at the same position: B replaces A's hint. B is shown;
+    when A's pixels come back without a new hint (a bitmap restore), neither
+    the stale B nor the replaced A may be shown."""
+    s = Scene(ops, model)
+    _blank(s)
+    checks = []
+    for ch in "AB":
+        s.glyph(*P, font[ord(ch)], 15, 1)
+        s.add(*P, font[ord(ch)], ord(ch))
+        _flush_cell(s)
+        checks.append((len(s.expect) - 1, CELL, "is", ord(ch)))
+    s.glyph(*P, font[ord("A")], 15, 1)      # pixels only, no hint
+    _flush_cell(s)
+    checks += [(len(s.expect) - 1, CELL, "not", ord("B")), (len(s.expect) - 1, CELL, "not", ord("A"))]
+    return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
+
+
+def regression_two_positions(font, ops, model):
+    """A at P, then X at Q over it (same cell, another position): X is shown;
+    when A's pixels are restored (a closing menu), A comes back from the
+    second slot."""
+    s = Scene(ops, model)
+    _blank(s)
+    s.glyph(*P, font[ord("A")], 15, 1)
+    s.add(*P, font[ord("A")], ord("A"))
+    _flush_cell(s)
+    s.glyph(*Q, font[ord("X")], 14, 1)
+    s.add(*Q, font[ord("X")], ord("X"))
+    _flush_cell(s)
+    checks = [(len(s.expect) - 1, CELL, "is", ord("X"))]
+    s.fill(Q[0], Q[1], Q[0] + 8, Q[1] + 8, 1)
+    s.glyph(*P, font[ord("A")], 15, 1)
+    _flush_cell(s)
+    checks.append((len(s.expect) - 1, CELL, "is", ord("A")))
+    return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
+
+
+def regression_partial_overpaint(font, ops, model):
+    """H is shown, then part of its window is overpainted and only that part
+    is flushed: the hint is stale and must not be shown. Cases: the left
+    half in the background colour, the top four rows in another colour,
+    one ink pixel, one background pixel set to the ink colour."""
+    out_expect, out_ideal, checks = [], [], []
+    g = font[ord("H")]
+    ink = [(r, c) for r in range(8) for c in range(8) if (g[r] >> (7 - c)) & 1]
+    paper = [(r, c) for r in range(1, 7) for c in range(8) if not (g[r] >> (7 - c)) & 1]
+    cases = [("left half", [(r, c, 1) for r in range(8) for c in range(4)]),
+             ("top rows", [(r, c, 4) for r in range(4) for c in range(8)]),
+             ("one ink pixel", [(ink[len(ink) // 2][0], ink[len(ink) // 2][1], 1)]),
+             ("one paper pixel", [(paper[0][0], paper[0][1], 15)])]
+    for name, pix in cases:
+        s = Scene(ops, model.__class__())
+        ops.append(bytes([5]))
+        _blank(s)
+        s.glyph(*P, g, 15, 1)
+        s.add(*P, g, ord("H"))
+        _flush_cell(s)
+        base = len(out_expect)
+        checks.append((base + len(s.expect) - 1, CELL, "is", ord("H")))
+        for r, c, col in pix:
+            s.frame[(P[1] + r) * W + P[0] + c] = col
+        rows = [P[1] + r for r, _, _ in pix]
+        cols = [(P[0] + c) >> 3 for _, c, _ in pix]
+        s.load()
+        s.present(min(rows), max(rows) + 1, min(cols), max(cols) + 1)    # only the overpainted part
+        checks.append((base + len(s.expect) - 1, CELL, "not", ord("H")))
+        s.present(0, 200, 0, 40)
+        checks.append((base + len(s.expect) - 1, CELL, "not", ord("H")))
+        out_ideal.append((base + len(s.expect) - 1, s.model.ideal(s.shadow)))
+        out_expect += s.expect
+    return out_expect, out_ideal, checks
+
+
+REGRESSIONS = (regression_same_position, regression_two_positions, regression_partial_overpaint)
+
+
+def explicit_ok(text, cell, kind, code):
+    shown = text[cell] & 0xFF
+    return shown == code if kind == "is" else shown != code
+
+
 def bench_scene(rnd, font, ops, model):
     """A desktop-like screen: wallpaper bars, a window with a title, a menu
     bar and lines of text, then the BENCH flushes, timed by the guest."""
@@ -546,6 +650,19 @@ def frame_scene(path, ops, model):
     return s.expect, [(0, model.ideal(s.shadow))]
 
 
+# Exit codes (T40MUT relies on them): 0 the presenter equals the model;
+# 1 the comparison ran and found a difference (a detected fault);
+# 3 the presenter or harness did not assemble or link (a tool/build
+# failure, never a detected fault); 4 the harness itself failed (emulator
+# exit, timeout, no output to compare).
+EXIT_DIFF, EXIT_BUILD, EXIT_HARNESS = 1, 3, 4
+
+
+def fail(code, message):
+    print(message, file=sys.stderr)
+    sys.exit(code)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--deps", type=Path, required=True)
@@ -574,6 +691,20 @@ def main():
         expect += e
         ideal_checks += [(base + k, t) for k, t in ideal]
         names += [f"synthetic{i}"] * len(e)
+    explicit = []
+    for fn in ([] if a.bench else REGRESSIONS):
+        model = M.Presenter()
+        ops.append(bytes([5]))
+        base = len(expect)
+        e, ideal, checks = fn(font, ops, model)
+        for k, cell, kind, code in checks:
+            if not explicit_ok(e[k], cell, kind, code):
+                fail(EXIT_BUILD, f"T40TEST: specification fails regression {fn.__name__}: flush {k}, "
+                                 f"cell {cell} {kind} {code:#x}, model shows {e[k][cell]:#06x}")
+        expect += e
+        ideal_checks += [(base + k, t) for k, t in ideal]
+        explicit += [(fn.__name__, base + k, cell, kind, code) for k, cell, kind, code in checks]
+        names += [fn.__name__] * len(e)
     if a.bench:
         model = M.Presenter()
         ops.append(bytes([5]))
@@ -601,23 +732,28 @@ def main():
             f"mount c \"{out}\"\nc:\n" + "\n".join(run) + "\nexit\n")
     (out / "RUN.CONF").write_text(conf)
     env = dict(os.environ, SDL_VIDEODRIVER="dummy", SDL_AUDIODRIVER="dummy")
-    with open(out / "HOST.LOG", "wb") as log:
-        rc = subprocess.run([str(a.dosbox), "-nopromptfolder", "-nogui", "-nomenu", "-conf",
-                             str(out / "RUN.CONF")], env=env, stdout=log, stderr=subprocess.STDOUT,
-                            timeout=1800).returncode
+    try:
+        with open(out / "HOST.LOG", "wb") as log:
+            rc = subprocess.run([str(a.dosbox), "-nopromptfolder", "-nogui", "-nomenu", "-conf",
+                                 str(out / "RUN.CONF")], env=env, stdout=log, stderr=subprocess.STDOUT,
+                                timeout=1800).returncode
+    except subprocess.TimeoutExpired:
+        rc = "timeout"
     for tool in ("MASM.EXE", "LINK.EXE"):
         (out / tool).unlink()
-    if rc != 0:
-        raise SystemExit(f"T40TEST: emulator exited {rc}; see HOST.LOG")
     masm = (out / "MASM.LOG").read_text(errors="replace") if (out / "MASM.LOG").exists() else ""
     link = (out / "LINK.LOG").read_text(errors="replace") if (out / "LINK.LOG").exists() else ""
     if re.findall(r"(\d+)\s+Severe\s+Errors", masm) != ["0"]:
         print(masm)
-        raise SystemExit("T40TEST: MASM did not report 0 severe errors; see MASM.LOG")
+        fail(EXIT_BUILD, "T40TEST: MASM did not report 0 severe errors; see MASM.LOG")
     if re.search(r"error L\d+|fatal error", link, re.I) or not (out / "T40TEST.EXE").is_file():
         print(link)
-        raise SystemExit("T40TEST: LINK failed; see LINK.LOG")
+        fail(EXIT_BUILD, "T40TEST: LINK failed; see LINK.LOG")
+    if rc != 0:
+        fail(EXIT_HARNESS, f"T40TEST: emulator exited {rc}; see HOST.LOG")
     run_log = (out / "RUN.LOG").read_text(errors="replace").strip() if (out / "RUN.LOG").exists() else ""
+    if run_log not in ("RUN=PASS", "RUN=FAIL"):
+        fail(EXIT_HARNESS, "T40TEST: the test program did not run to its end (no RUN.LOG); see HOST.LOG")
     got = (out / "TEXT.BIN").read_bytes() if (out / "TEXT.BIN").exists() else b""
     dumps = [list(struct.unpack("<1000H", got[i:i + 2000])) for i in range(0, len(got) - 1999, 2000)]
     bad = []
@@ -631,16 +767,20 @@ def main():
             bad.append({"flush": i, "scene": names[i], "cells": len(diff), "first": k,
                         "got": hex(dumps[i][k]), "want": hex(want[k])})
     ideal_bad = sum(1 for i, t in ideal_checks if i >= len(dumps) or dumps[i] != t)
+    explicit_bad = [{"regression": n, "flush": i, "cell": c, "kind": k, "code": code,
+                     "shown": dumps[i][c] if i < len(dumps) else None}
+                    for n, i, c, k, code in explicit if i >= len(dumps) or not explicit_ok(dumps[i], c, k, code)]
     ticks = (out / "TIME.BIN").read_bytes() if (out / "TIME.BIN").exists() else b""
     result = {"run": run_log or "missing", "flushes": len(expect), "dumps": len(dumps),
               "cells_compared": 1000 * len(expect), "mismatched_flushes": bad[:20],
               "full_flush_vs_ideal_failures": ideal_bad,
+              "explicit_regression_checks": len(explicit), "explicit_failures": explicit_bad,
               "timed_flushes_here": len(ticks) // 2,
-              "verdict": "PASS" if (run_log == "RUN=PASS" and not bad and not ideal_bad
+              "verdict": "PASS" if (run_log == "RUN=PASS" and not bad and not ideal_bad and not explicit_bad
                                     and len(dumps) == len(expect)) else "FAIL"}
     (out / "RESULT.JSN").write_text(json.dumps(result, indent=1) + "\n")
     print(json.dumps(result, indent=1))
-    return 0 if result["verdict"] == "PASS" else 1
+    return 0 if result["verdict"] == "PASS" else EXIT_DIFF
 
 
 if __name__ == "__main__":
