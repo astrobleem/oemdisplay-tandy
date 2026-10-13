@@ -55,9 +55,9 @@ def main():
     run = json.loads((a.run / "XPWIN.JSN").read_text())
     out, fails, mapping = [], 0, {}
     for c in run["checks"]:
-        if "pointer" not in c:
-            continue
         name = c["check"].split(":")[0]
+        if "pointer" not in c or name not in SHORT:      # pattern captures only
+            continue
         off = int(re.search(r"\(off (\d+)\)", c["check"]).group(1))
         x, y = c["pointer"]
         top = c["top"]

@@ -1,0 +1,17 @@
+{
+ "purpose": "xtpan-session-fit-cursor",
+ "command": [
+  "bash",
+  "/tmp/claude-0/-home-claude-oemdisplay-tandy/ce43402d-a3a1-5fd0-9e53-eb877bbd30e0/scratchpad/sess.sh",
+  "/home/claude/work/86box/xp6"
+ ],
+ "bound_seconds": 7000,
+ "lock": "/home/claude/work/EMU.LOCK",
+ "acquired_utc": "2026-10-12T23:53:34.279870+00:00",
+ "conflicts_before": [],
+ "pid": 516,
+ "exit_code": 0,
+ "conflicts_after": [],
+ "released_utc": "2026-10-13T00:26:46.114498+00:00",
+ "seconds": 1991.8
+}

@@ -2,16 +2,19 @@
 
 **Summary.** XTPAN.DRV gives Windows 3.0 a 320x400 desktop on the Tandy
 1000 EX/HX's 320x200 16-colour screen, panned vertically in 50-row steps
-by a small helper (edge dwell, keys, following new windows). In 86Box's
-Tandy 1000 HX (the EX's sibling; 86Box has no EX) the final scripted
-session passes all 43 of its checks: every viewport position shows the exact logical
-rows, the pointer is drawn where it clicks, and a 275-row dialog's bottom
+by a small helper (edge dwell, keys, following new windows exactly). In
+86Box's Tandy 1000 HX (the EX's sibling; 86Box has no EX) the current
+scripted session passes all 33 of its checks: every viewport position
+shows the exact logical rows, the pointer's exact shape is drawn where it
+clicks, a window that fits is shown whole, and a 275-row dialog's bottom
 button, a menu below row 200, overlapping windows, a window dragged across
 the boundary, a text selection across it, ScrollWindow copies, repeated
 panning and exit/relaunch all work. Costs: **40,416 bytes** of Windows'
 free memory (32,320 driver, 8,096 helper; 15% of the 268,448 bytes the
 unchanged driver leaves), **about 1.05 s per pan** on the emulated
-7.16 MHz 8088, and no measurable cost for ordinary drawing. Not tried on
+7.16 MHz 8088. Ordinary drawing costs at most 0.7% more with the
+helper off (+0.7% for fills, none for text or scrolling) and 0.6-1.3%
+more with it running (fills +1.3%). Not tried on
 real hardware. Recommendation in section 8.
 
 Branch `ai/xt-pan`, separate from every release line. Target: Tandy 1000
@@ -155,8 +158,12 @@ converts the 200 visible rows in task time.
   modifier seen within the last 250 ms counts as held.
 - *FollowActive:* a newly activated window not wholly visible is brought
   into view (Windows centres dialogs on the 400-row desktop, so they
-  otherwise appear straddling the viewport edge). After a key or follow
-  pan the pointer is moved into the viewport if it was left outside.
+  otherwise appear straddling the viewport edge). The move is exact, not
+  in Steps: the smallest change of top that shows the whole window, or
+  its top row if it is taller than 200 rows (`FollowTop` in XTPAN.C). The
+  helper re-reads the viewport top from the driver first, in case another
+  program panned. After a key or follow pan the pointer is moved into
+  the viewport if it was left outside.
 - Each pan is logged with its duration when `LogFile` is set.
 
 WIN.INI `[XTPan]` settings and defaults: `Enabled=1`, `Step=50`,
@@ -172,11 +179,17 @@ itself under any other display driver.
 
 ## 5. Evidence (86Box Tandy 1000 HX)
 
-Final run: `pan/FINAL` (`XPWIN.JSN`: 43 checks, 0 failures; the guest's
-own logs `PANTEST.LOG` and `XTPAN.LOG`; the lock record; every capture,
-decoded to exact pixels). Demonstration: `pan/DEMO.GIF` (frames from the
-baseline and the final run). Builds: `pan/BUILD.JSN` (XTPAN.DRV, SHA-256
-`4367985b...c60a97`), `pan/BUILD300.JSN`, `pan/APPS.JSN`.
+Current run: `pan/FIT` (`XPWIN.JSN`: 33 checks, 0 failures), made after
+review with the exact-fit follow and the exact pointer check below; the
+guest's own logs `PANTEST.LOG` and `XTPAN.LOG`, the lock record and every
+capture, decoded to exact pixels, are kept with it. The previous run,
+`pan/FINAL` (43/43), used the older helper and the weaker pointer check;
+it is kept, and its 12 pattern captures were re-checked against the
+exact arrow afterwards (`pan/FINAL/CURSOR.JSN`, 12/12; see section 7).
+Demonstration: `pan/DEMO.GIF` (frames from the baseline and `FINAL`).
+Builds: `pan/BUILD.JSN` (XTPAN.DRV, SHA-256 `4367985b...c60a97`, the
+same driver in both runs), `pan/BUILD300.JSN`, `pan/APPS.JSN` (the
+applications of `FIT`; `pan/FINAL/APPS.JSN` those of `FINAL`).
 
 Emulator, ROMs, machine settings and guest changes: `pan/EMU.TXT`. The
 session (`src/xtpan/XPWIN.PY`) drives Windows with xdotool keys and the
@@ -185,20 +198,30 @@ fixture and the helper write on the guest disk, read while it runs) and
 exact pixels (`PANCHK.PY`: the capture decoded to 320x200 IRGB pixels;
 every video row must equal the logical row `top + row` of the test
 pattern, whose 8-row bands are all distinct, with one consistent colour
-mapping; the 16x20 box at the pointer's logical position is checked
-separately and must be the only difference).
+mapping). The pointer is part of the expected frame, not a skipped box:
+the session reads the driver file from the guest disk, takes its
+OCR_NORMAL arrow (32x32 resource) and the cursor compression factors in
+its OEM configuration resource (1 horizontal, 2 vertical: USER hands
+the driver a 32x16 cursor, each row the AND of two resource rows), and
+composites it as TCURSOR.ASM draws it (AND bit 0 gives black, then XOR
+bit 1 inverts the IRGB nibble) with its hot spot at the logged pointer
+position minus the viewport top. Every pixel of the frame must match.
+`CURCHK.PY` re-checks a kept run the same way and proves the check can
+fail: the arrow one pixel left, right, up or down, no arrow, and one mask
+bit flipped must each mismatch (the flipped bit by exactly one pixel).
 
-| What | Check | Final run |
+| What | Check | `FIT` run |
 | --- | --- | --- |
 | Presentation | The test pattern, drawn once over all 400 rows, is exact at viewport tops 0, 50, 150, 200 and after relaunch | PASS |
-| Pointer | Drawn at logical row minus viewport top in every capture, nowhere else | PASS |
-| Keys | Alt+Shift+PgDn x4 = four 50-row pans; PgUp, F9 back to 150 and 0 | PASS |
+| Pointer | The driver's 32x16 arrow, exact in every pixel, with its hot spot at the logged position minus the viewport top, in all 12 pattern captures (including clipped at the bottom edge) | PASS |
+| Keys | Alt+PgDn x4 = four 50-row pans; Alt+PgUp, Alt+F9 back to 150 and 0 | PASS |
 | Edge dwell | A brief touch of the bottom edge does not pan; resting there pans one step | PASS |
 | Pointer outside | A fast move to row 330 shows it at once | PASS |
 | Hit testing | Clicks at (20,160), (300,345), (150,300) are reported there, inside the viewport | PASS |
 | Screen copies | ScrollWindow x3 of the 400-row pattern, then viewed at tops 0 and 200 | PASS |
 | Repeated panning | 10 alternating pans, then exact pixels | PASS |
 | Tall dialog | A 275-row DialogBoxIndirect dialog; its Bottom button (rows 259-277) clicked after panning | PASS |
+| Exact follow | A bordered 190-row window at rows 30-220 shown from top 0: the helper pans 0 to 20 (logged), and all 190 rows, border included, are on screen at video rows 10-199 | PASS |
 | Overlap | Two windows across row 200: clicks reach the window on top at each point | PASS |
 | Drag | Caption dragged from row 146 to 296: window ends exactly 150 rows lower; the viewport followed during the drag | PASS |
 | Menu | A menu bar at row ~250: its fourth item clicked, command 204 received | PASS |
@@ -215,7 +238,11 @@ reaches it.
 Same machine, same disk, same fixture (`pan/BASE`, `pan/NOHELP`,
 `pan/FINAL`); free memory is GetFreeSpace(0) as the first test
 application starts; times are sums over many operations
-with the 55 ms BIOS tick.
+with the 55 ms BIOS tick. The helper measured is the `FINAL` build; the
+`FIT` build differs only when the active window changes (the exact-fit
+arithmetic and one driver query), and the benchmark was not repeated with
+it. Its pans took the same time (79 pans in `pan/FIT/XTPAN.LOG`, average
+1044 ms).
 
 | | TR53216.DRV (shipped) | XTPAN.DRV, helper off | XTPAN.DRV + XTPAN.EXE |
 | --- | --- | --- | --- |
@@ -227,9 +254,11 @@ with the 55 ms BIOS tick.
 The driver's cost matches its link map (+32,310 bytes: 32,000 shadow,
 308 code, 2 data). The helper costs 8,096 bytes (its code, data, 4 KB
 stack and a 1 KB heap); its 55 ms timer explains the small slowdown in
-the last column. With the helper off, drawing costs the same as the
-shipped driver: only rows inside the viewport are converted, exactly as
-before.
+the last column (fills +1.3%, text +0.6%, scrolling +0.7%). With the
+helper off, text and scrolling cost exactly what they cost on the shipped
+driver and fills 0.7% more (one 55 ms tick in 400 fills, at the
+resolution of the measurement): only rows inside the viewport are
+converted, as before.
 
 **Pan latency:** 40 pans alternating 0 and 200: 42,182 ms, **1,055 ms
 each**; alternating 0 and 50: 42,951 ms, 1,074 ms each; the 65 pans the
@@ -284,6 +313,24 @@ captures. None was a driver fault:
   250 ms counts. Keys still need NumLock off (Alt with a keypad digit is
   Windows' Alt+number character entry).
 
+Found in review after `FINAL` (both fixed and re-run as `pan/FIT`):
+
+- FollowActive moved in whole 50-row Steps, down until the bottom showed,
+  then up until the top showed. A 190-row window at rows 30-220 seen from
+  top 0 went to 50, then back to 0, and stayed cut off although it fits.
+  It now uses the exact smallest move (`FollowTop`), tested on the host
+  for every top and every window position (`HOSTPAN.PY`, 16,120,200
+  cases, compiled from XTPAN.C itself) and in the emulator.
+- The pointer check excluded a 16x20 box at the pointer from the pattern
+  check and then only required that the box differed somewhere. One wrong
+  pixel would have passed it. It now checks the actual arrow, as above.
+  Doing so showed that the arrow on screen is 32x16, not the 32x32
+  resource: USER compresses it by the driver's own factors. The rule
+  for combining two rows into one (AND, for both masks) was identified
+  by comparing one capture (`FINAL/PTOP0`) with the resource. It is one
+  fixed rule, and the other 23 pattern captures of `FINAL` and `FIT`
+  match it exactly.
+
 ## 8. Recommendation
 
 The architecture works and is contained: GDI and USER only need the
@@ -335,6 +382,8 @@ is fetched. Windows media, ROMs and Microsoft fonts stay private.
    waits 80 s for the DOS prompt, runs `XPWIN.PY --vm <vm>` (add `--base`
    for the baseline, `--measure` for memory and drawing only), then
    `PCP86.PY stop --vm <vm>`. Results land in `<vm>/XPWIN.JSN`.
-5. A single capture: `python3 src/xtpan/PANCHK.PY <capture> --top <T> [--exclude x0,y0,x1,y1]`.
+5. A single capture: `python3 src/xtpan/PANCHK.PY <capture> --top <T> [--off <O>] --drv <XTPAN.DRV> --cursor <X>,<VY>`;
+   a whole kept run with negative controls: `python3 src/xtpan/CURCHK.PY --run docs/pan/FIT --drv <XTPAN.DRV>`.
+   Host tests (no emulator): `python3 src/xtpan/HOSTPAN.PY [--drv <XTPAN.DRV>]` and `python3 src/xtpan/HOSTTEST.PY`.
 6. Demonstration: `python3 src/xtpan/DEMO.PY --out pan/DEMO.GIF --frame <png> "<caption>" ...`
    (the frames used are listed in the commit that added `pan/DEMO.GIF`).

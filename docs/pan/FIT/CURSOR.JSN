@@ -1,0 +1,508 @@
+{
+ "run": "docs/pan/FIT",
+ "driver_sha256": "4367985b1a95aa82a22fabe407915e7b03d219121dee73230b4313adb5c60a97",
+ "arrow_hot_spot": [
+  0,
+  0
+ ],
+ "arrow_size": [
+  32,
+  16
+ ],
+ "captures": [
+  {
+   "capture": "PTOP0.PNG",
+   "top": 0,
+   "off": 0,
+   "hot_spot": [
+    40,
+    60
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 72,
+   "arrow_pixels_differing_from_pattern": 72,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 72
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  },
+  {
+   "capture": "PKEY200.PNG",
+   "top": 200,
+   "off": 0,
+   "hot_spot": [
+    40,
+    3
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 72,
+   "arrow_pixels_differing_from_pattern": 72,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 72
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  },
+  {
+   "capture": "PKEY150.PNG",
+   "top": 150,
+   "off": 0,
+   "hot_spot": [
+    40,
+    53
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 72,
+   "arrow_pixels_differing_from_pattern": 72,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 72
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  },
+  {
+   "capture": "PKEYTOP.PNG",
+   "top": 0,
+   "off": 0,
+   "hot_spot": [
+    40,
+    196
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 24,
+   "arrow_pixels_differing_from_pattern": 24,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 14
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 14
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 19
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 15
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 24
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  },
+  {
+   "capture": "PDWELL.PNG",
+   "top": 50,
+   "off": 0,
+   "hot_spot": [
+    100,
+    100
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 72,
+   "arrow_pixels_differing_from_pattern": 72,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 72
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  },
+  {
+   "capture": "POUT150.PNG",
+   "top": 150,
+   "off": 0,
+   "hot_spot": [
+    100,
+    180
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 72,
+   "arrow_pixels_differing_from_pattern": 72,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 72
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  },
+  {
+   "capture": "PSCRL0.PNG",
+   "top": 0,
+   "off": 168,
+   "hot_spot": [
+    40,
+    60
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 72,
+   "arrow_pixels_differing_from_pattern": 72,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 72
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  },
+  {
+   "capture": "PSCRL20.PNG",
+   "top": 200,
+   "off": 168,
+   "hot_spot": [
+    40,
+    3
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 72,
+   "arrow_pixels_differing_from_pattern": 24,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 30
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 30
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 32
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 31
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 24
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  },
+  {
+   "capture": "PREPEAT.PNG",
+   "top": 200,
+   "off": 168,
+   "hot_spot": [
+    40,
+    3
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 72,
+   "arrow_pixels_differing_from_pattern": 24,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 30
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 30
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 32
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 31
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 24
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  },
+  {
+   "capture": "PREPTOP.PNG",
+   "top": 0,
+   "off": 168,
+   "hot_spot": [
+    40,
+    196
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 24,
+   "arrow_pixels_differing_from_pattern": 24,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 14
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 14
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 19
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 15
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 24
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  },
+  {
+   "capture": "RELTOP0.PNG",
+   "top": 0,
+   "off": 0,
+   "hot_spot": [
+    40,
+    60
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 72,
+   "arrow_pixels_differing_from_pattern": 72,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 72
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  },
+  {
+   "capture": "REL100.PNG",
+   "top": 100,
+   "off": 0,
+   "hot_spot": [
+    40,
+    3
+   ],
+   "frame_pixels": 64000,
+   "mismatches": 0,
+   "arrow_pixels_in_view": 72,
+   "arrow_pixels_differing_from_pattern": 72,
+   "negative_controls": {
+    "left": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "right": {
+     "verdict": "FAIL",
+     "mismatches": 42
+    },
+    "up": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "down": {
+     "verdict": "FAIL",
+     "mismatches": 48
+    },
+    "no arrow": {
+     "verdict": "FAIL",
+     "mismatches": 72
+    },
+    "one mask bit flipped": {
+     "verdict": "FAIL",
+     "mismatches": 1
+    }
+   },
+   "result": "PASS",
+   "first_mismatch": null
+  }
+ ],
+ "passed": 12,
+ "failed": 0
+}

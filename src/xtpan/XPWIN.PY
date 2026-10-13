@@ -283,6 +283,9 @@ class Session:
         else:
             self.check("tall dialog: button geometry logged", False)
 
+        # B2. a window that fits the viewport but not the 50-row grid
+        self.fit_window()
+
         # C. overlapping windows across row 200
         self.home()
         n = len(self.log())
@@ -391,6 +394,57 @@ class Session:
         lines = self.log()[n:]
         self.measure["bench"] = [ln for ln in lines if ln.startswith("BENCH")]
         self.measure["free"] = [ln for ln in lines if ln.startswith("START")]
+
+    def fit_window(self):
+        """PANTEST FIT: a bordered 200x190 window at rows 30..220 opened at
+        top 0. FollowActive must pan exactly to 20 (the smallest move that
+        shows it all), and every row of it, both borders included, must be
+        on the screen at video row (logical row - top)."""
+        self.home()
+        n, p0 = len(self.log()), len(self.log("XTPAN.LOG"))
+        self.run("C:\\XTPAN\\PANTEST FIT", wait=40)
+        mw = self.wait_line(r"FITWIN rect=(-?\d+),(-?\d+),(-?\d+),(-?\d+) top=(-?\d+)", n, 30)
+        w = self.where()
+        pans = self.pans(p0)
+        if not mw or not w:
+            self.check("fit: window geometry and viewport logged", False, pans=pans)
+            self.key("q", wait=6)
+            return
+        l, t, r, b = (int(v) for v in mw.groups()[:4])
+        px, py, top, _ = w
+        self.check(f"fit: {b - t}-row window at rows {t}..{b} from top 0: follow pans to top {b - 200} "
+                   f"exactly (got {top})", top == b - 200 and any(ln.split()[1:4] == ["0", str(top), "follow"]
+                                                                 for ln in pans), pans=pans, rect=[l, t, r, b])
+        self.r.shot("fit_window", settle=1.5, decode=False)
+        cap = self.r.b.out / "fit_window.png"
+        res = {"pointer": [px, py], "top": top, "rect": [l, t, r, b]}
+        try:
+            idx, worst, bad, size, geom = PANCHK.SHOTDEC.decode(str(cap), 320)
+        except SystemExit as e:
+            idx, bad, res["error"] = None, 1, str(e)
+        vt, vb = t - top, b - top
+        ok = idx is not None and not bad and 0 <= vt and vb <= 200
+        # the pointer's 32x16 arrow must not cover the window, so every pixel is known
+        ax0, ay0 = px, py - top
+        if not (ax0 + 32 <= l or ax0 >= r or ay0 + 16 <= vt or ay0 >= vb):
+            ok = False
+            res["error"] = "pointer over the window"
+        if ok:
+            fill = idx[(vt + 1) * 320 + l + 1]
+            wrong = []
+            for y in range(vt, vb):
+                for x in range(l, r):
+                    edge = y in (vt, vb - 1) or x in (l, r - 1)
+                    want = 0 if edge else fill
+                    if idx[y * 320 + x] != want:
+                        wrong.append([x, y])
+            res.update(fill_irgb=fill, wrong_pixels=len(wrong), first_wrong=wrong[:3],
+                       video_rows=[vt, vb - 1])
+            ok = not wrong and fill != 0
+        self.check(f"fit: every row of the window ({t}..{b - 1}) is on screen at video rows "
+                   f"{vt}..{vb - 1}: black border all round, solid fill inside", ok, **res)
+        self.key("q", wait=6)
+        self.key("alt+F9", wait=6)
 
     def exit_relaunch(self):
         r = self.r

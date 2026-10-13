@@ -14,7 +14,8 @@
  *     wrapped in transient "Shift up" codes. Not Ctrl+Alt: Ctrl+Alt+PgDn is
  *     the fullscreen hotkey of 86Box and other emulators. NumLock off.);
  *   - FollowActive: a newly activated window that is not wholly visible is
- *     brought into view (dialogs are centred on the 400-row desktop).
+ *     brought into view with the smallest exact move (FollowTop; dialogs
+ *     are centred on the 400-row desktop).
  * Settings: WIN.INI [XTPan]. Enabled=0 makes the helper exit at once.
  * With any other display driver the escape is unsupported and the helper
  * exits quietly. C89, /G0 /Gw /AS.
@@ -209,6 +210,9 @@ static void Follow(void)
     hLastActive = h;
     if (!h || !bFollow || IsIconic(h))
         return;
+    /* re-read the viewport: another program may have panned (Control
+       escape), and the fit must start from the top really shown */
+    PanEscape(-1);
     GetWindowRect(h, &r);
     if (r.top >= nTop && r.bottom <= nTop + nView)
         return;

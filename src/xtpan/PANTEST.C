@@ -82,6 +82,15 @@ static int PanTop(void)
     return out[0];
 }
 
+static int PanSet(int top)
+{
+    int out[3];
+    out[0] = 0;
+    if (ScreenEscape(XTPAN_ESC, sizeof(int), (LPSTR)&top, (LPSTR)out) <= 0)
+        return -1;
+    return out[0];
+}
+
 static int Colour(int x, int y)
 {
     int band = (y + nOff) >> 3;
@@ -276,6 +285,9 @@ long FAR PASCAL WndProc(HWND hwnd, unsigned msg, WORD wParam, LONG lParam)
         else if (nMode == 2) {
             GetClientRect(hwnd, &r);
             FillRect(ps.hdc, &r, hbr[GetWindowWord(hwnd, 0) ? 12 : 9]);
+        } else if (nMode == 7) {
+            GetClientRect(hwnd, &r);
+            FillRect(ps.hdc, &r, hbr[9]);
         }
         EndPaint(hwnd, &ps);
         return 0;
@@ -331,6 +343,18 @@ long FAR PASCAL WndProc(HWND hwnd, unsigned msg, WORD wParam, LONG lParam)
         }
         break;
     case WM_TIMER:
+        if (nMode == 7) {
+            /* show the window from a known viewport top 0, whatever the
+               Run dialog and Program Manager did before */
+            KillTimer(hwnd, 2);
+            PanSet(0);
+            ShowWindow(hwnd, SW_SHOW);
+            UpdateWindow(hwnd);
+            GetWindowRect(hwnd, &r);
+            wsprintf(buf, "FITWIN rect=%d,%d,%d,%d top=%d", r.left, r.top, r.right, r.bottom, PanTop());
+            LogLine(buf);
+            return 0;
+        }
         if (nMode == 5 && hEdit) {
             sel = SendMessage(hEdit, EM_GETSEL, 0, 0L);
             if (LOWORD(sel) != wLastSelLo || HIWORD(sel) != wLastSelHi) {
@@ -479,6 +503,15 @@ int PASCAL WinMain(HANDLE hI, HANDLE hPrev, LPSTR lpCmd, int nShow)
         SendMessage(hEdit, EM_SETSEL, 0, MAKELONG(0, 0));
         SetFocus(hEdit);
         SetTimer(hMain, 1, 300, NULL);
+    } else if (Is(lpCmd, "FIT")) {
+        /* a window that fits the viewport but not the 50-row step grid:
+           rows 30..220 (190 rows), seen from top 0; FollowActive must show
+           all of it (top 20), not step to 50 and back to 0 */
+        nMode = 7;
+        hMain = CreateWindow("PanTest", NULL, WS_POPUP | WS_BORDER, 40, 30, 200, 190,
+                             NULL, NULL, hI, NULL);
+        if (hMain)
+            SetTimer(hMain, 2, 1500, NULL);
     } else {
         nMode = 0;
         hMain = CreateWindow("PanTest", NULL, WS_POPUP | WS_VISIBLE, 0, 0, 320, 400,
