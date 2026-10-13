@@ -886,7 +886,10 @@ def regression_diff_flush(font, ops, model):
     the glyph is shown. (3) A hint recorded for pixels already on screen,
     inside a rectangle whose pixels do not change: the cell is stale and
     must show the glyph. (4) A snapshot of one rectangle, then a flush of
-    another: an ordinary flush."""
+    another: an ordinary flush. Wide rectangles are DW = 40 columns, so a
+    snapshot of 48 rows still fits the 8192-byte buffer in 80 columns (a
+    wider one is never taken, and every flush would be ordinary)."""
+    DW = 40
     s = Scene(ops, model)
     _blank(s)
     checks = []
@@ -894,12 +897,12 @@ def regression_diff_flush(font, ops, model):
     s.add(*P, font[ord("Q")], ord("Q"))
     _flush_cell(s)
     before = list(s.model.text)
-    s.snap(64, 112, 0, COLS)
-    s.fill(0, 64, W, 112, 1)                     # identical rewrite, then the glyph again
+    s.snap(64, 112, 0, DW)
+    s.fill(0, 64, 8 * DW, 112, 1)                     # identical rewrite, then the glyph again
     s.glyph(*P, font[ord("Q")], 15, 1)
     s.add(*P, font[ord("Q")], ord("Q"))
     s.load()
-    s.present_diff(64, 112, 0, COLS)
+    s.present_diff(64, 112, 0, DW)
     checks.append((len(s.expect) - 1, cell10(), "is", ord("Q")))
     if s.model.text != before:
         fail(EXIT_BUILD, "T40TEST: specification: an identical rewrite changed the text")
@@ -936,15 +939,15 @@ def regression_diff_flush(font, ops, model):
     s.snap(0, 8, 0, 4)
     s.fill(P[0], P[1], P[0] + 8, P[1] + 8, 4)
     s.load()
-    s.present_diff(64, 112, 0, COLS)
+    s.present_diff(64, 112, 0, DW)
     checks.append((len(s.expect) - 1, cell10(), "not", ord("Q")))
     # (6) a snapshot one column narrower than the flush (only the right edge
     # differs), and a change in that last column: an ordinary flush
-    s.snap(64, 112, 0, COLS - 1)
-    s.fill(W - 8, 72, W, 80, 2)
+    s.snap(64, 112, 0, DW - 1)
+    s.fill(8 * DW - 8, 72, 8 * DW, 80, 2)
     s.load()
-    s.present_diff(64, 112, 0, COLS)
-    checks.append((len(s.expect) - 1, 9 * COLS + COLS - 1, "is", 0x20))
+    s.present_diff(64, 112, 0, DW)
+    checks.append((len(s.expect) - 1, 9 * COLS + DW - 1, "is", 0x20))
     # (7) mismatched rectangles
     s.snap(0, 8, 0, 4)
     s.glyph(x3 + 8, P[1], font[ord("T")], 15, 1)
@@ -974,8 +977,8 @@ def regression_diff_flush(font, ops, model):
     # range holds that cell row, and an ordinary flush recomputes it
     s.fill(40, 64, 48, 68, 6)
     s.load()
-    s.snap(64, 112, 0, COLS)
-    s.present_diff(72, 112, 0, COLS)
+    s.snap(64, 112, 0, DW)
+    s.present_diff(72, 112, 0, DW)
     checks.append((len(s.expect) - 1, 8 * COLS + 5, "not", 0x20))
     s.present(0, H, 0, COLS)                     # probe buffers hold 0FFFFh: compare a full one
     return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
