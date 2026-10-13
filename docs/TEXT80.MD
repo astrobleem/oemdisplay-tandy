@@ -89,9 +89,10 @@ Typing, `TPROF TYPE 30`, ms per character, visible edit control:
 |---|---|---|---|
 | Stock TXT40 (`fb9622ab`) | release | **3,166** | baseline |
 | TXT40 with this branch's fixes | release-style | **286** | 11x faster |
-| TEXT80 25 | release-style | **247** | |
+| TEXT80 25 | release-style | **245** | |
+| TEXT80 PAN | release-style | 265 | |
 | TXT40 fixed | profiling | 370 | |
-| TEXT80 25 | profiling | 327 | |
+| TEXT80 25 | profiling | 328 | |
 
 TEXT80 25 per character (profiling build, readings 16 onwards): Windows
 and the edit control 138 ms, rendering into the shadow 27 ms, flushes
@@ -102,16 +103,23 @@ no single step dominates any more.
 Scrolling (`TPROF LINES 30`: a line typed, Enter, the edit control scrolls
 by one line; ms per line once it scrolls):
 
-| Driver | ms/line |
-|---|---|
-| TXT40 fixed (40x25) | 3,266 |
-| TEXT80 25, before whole-cell copies | 6,400 (profiling) |
-| TEXT80 25, whole-cell copies | 3,466 (release-style), 5,284 (profiling) |
+| Driver | Build | ms/line |
+|---|---|---|
+| TXT40 fixed (40x25), b6 | release-style | 3,266 |
+| TEXT80 25 before whole-cell copies (b5) | profiling | 6,400 |
+| TEXT80 25 with whole-cell copies (b6) | release-style / profiling | 3,466 / 5,284 |
+| TEXT80 25, hint moves bounded (b7, final) | release-style / profiling | **2,686** / 4,115 |
+| TEXT80 PAN (b7, final) | release-style | 2,792 |
 
-A scroll is still about 3.5 s per line on a 4.77 MHz 8088: the BitBlt in
-the 64 KB shadow costs 1.6 s by itself, and the edit control repaints the
-new line plus about twenty fully clipped lines that each cost a small
-flush. @@B7SCROLL@@
+A scroll still costs about 2.7 s per line on a 4.77 MHz 8088. Per
+scrolled line (profiling build b7): Notepad and GDI 0.44 s, drawing and
+the BitBlt in the shadow 0.46 s (1.63 s before hint moves were bounded),
+flushes 3.2 s. The largest flush is the scrolled area itself, 1.6 s:
+Notepad's lines sit 3 pixels below the cell grid (y = 67), so of the 10
+cell rows the top three and bottom three (the partly copied row, its
+neighbour and the extra layer) are matched again and only the middle is
+moved; the new line costs another 0.5 s. The edit control also redraws
+about twenty fully clipped lines; each costs under 1 ms.
 
 ## 3. Memory
 
@@ -169,7 +177,16 @@ buffer into video memory. `XTPAN.LOG` timestamps put every pan at 0-55 ms
 1.05 s per pan for the XTPAN graphics desktop on the Tandy 1000 HX
 (docs/PAN.MD), because text mode moves 4,000 bytes instead of re-drawing
 a 16 KB graphics page. Off-screen drawing goes into the shadow and the
-logical text buffer and appears exactly when panned to. @@B7PAN@@
+logical text buffer and appears exactly when panned to.
+
+Final PAN session (b7, 86Box XT/CGA, 23/23): Alt+PgDn moves to top 56
+and screen rows 0-17 are exactly rows 7-24 seen before; Alt+PgUp
+restores every cell; repeated Alt+PgDn continues row for row and stops
+at top 200; the pointer below row 200 is exactly one cell; Alt+F9 goes
+home; the Run dialog is shown whole after a follow pan; a line typed
+into Notepad while scrolled out of view appears, exact, when panned to;
+21 helper pans logged at 0 or 55 ms each; relaunch identical; T80OFF
+removes `XTPAN.EXE` from `load=` again and the previous driver starts.
 
 ## 5. VGA 80x50
 
@@ -238,8 +255,8 @@ Results (b6 builds unless stated):
 
 | Session | Machine | Result |
 |---|---|---|
-| TEXT80 25 | 86Box XT/CGA | 49 pass, 1 fail (the overlap check looked for the wrong title; fixed) @@B7S25@@ |
-| TEXT80 PAN | 86Box XT/CGA | @@B7SPAN@@ |
+| TEXT80 25 | 86Box XT/CGA | **b7: 50/50**. b6: 49/1 (the overlap check looked for the wrong title; fixed) |
+| TEXT80 PAN | 86Box XT/CGA | **b7: 23/23**. b6 stopped after 10 passes on a harness limit (pointer moves past row 199; fixed) |
 | TEXT80 VGA | DOSBox-X vgaonly | @@B7SVGA@@ |
 | Allocation failure (`t80panfail`) | 86Box XT/CGA | Windows does not start; DOS prompt works; T80OFF rollback; Windows starts with the previous driver |
 | TEXT80 25 on Tandy 1000 HX | 86Box `tandy1000hx` 7.16 MHz | @@B7SHX@@ |
@@ -323,13 +340,13 @@ packages, release workflows, pins and hashes are untouched.
 
 ## 9. Limits and open questions
 
-- **Scrolling is slow**: about 3.5 s per scrolled line in an edit
-  control on a 4.77 MHz 8088 (typing is ~0.25 s per character). The
-  profiling build splits a scrolled line into GDI drawing and BitBlt in
-  the shadow (~1.6 s), presenting (~3.2 s, of which ~1.3 s glyph matching
-  of the ring and the repainted line) and the application (~0.4 s). A
-  text-native scroll (moving video text and skipping the shadow BitBlt)
-  is the next step if scrolling is to feel good.
+- **Scrolling is slow**: about 2.7 s per scrolled line in an edit
+  control on a 4.77 MHz 8088 (typing is ~0.25 s per character); see
+  section 2 for where it goes. Next steps, in order of payoff: drop hints
+  whose pixels a copy overwrote, which makes the extra ring layer
+  unnecessary (about a third of the 1.6 s area flush); then a
+  text-native scroll that moves video text without matching the edge
+  rows again.
 - Windows 3.0 wants 640 KB; the Tandy 1000 EX needs its memory expansion.
 - Only 8-pixel-high faces become text; anything larger is drawn as block
   approximations (section 7). Graphics are always approximations.
