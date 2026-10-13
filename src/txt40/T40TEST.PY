@@ -1070,22 +1070,48 @@ def regression_aligned_attr(font, ops, model):
 
 def regression_aligned_wider_flush(font, ops, model):
     """An aligned copy whose following flush is wider than its destination
-    (here one more column, with a glyph drawn there earlier and not yet
-    flushed): an ordinary flush, which must show that glyph."""
+    (here two more columns, with a glyph drawn in the second one earlier and
+    not yet flushed, beyond the reach of the destination's strips): an
+    ordinary flush, which must show that glyph."""
     s = Scene(ops, model)
     _blank(s)
-    for i in range(5):
+    for i in range(8):
         s.text(32, 32 + 8 * i, [ord(c) for c in "abcde"], font, 15, 1)
     s.load()
-    s.present(32, 72, 4, 9)
-    s.glyph(72, 40, font[ord("W")], 14, 1)                 # column 9, not flushed yet
-    s.add(72, 40, font[ord("W")], ord("W"))
-    s.move(32, 40, 40, 32, 0, -8)
+    s.present(32, 96, 4, 9)
+    s.glyph(80, 40, font[ord("W")], 14, 1)                 # column 10, not flushed yet
+    s.add(80, 40, font[ord("W")], ord("W"))
+    s.move(32, 40, 40, 56, 0, -8)                          # interior rows 6..8, columns 6..6
     s.load()
-    s.present(32, 64, 4, 10)                               # destination is columns 4..8
+    s.present(32, 88, 4, 11)                               # destination is columns 4..8
     k = len(s.expect) - 1
     s.present(0, H, 0, COLS)
-    return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], [(k, 5 * COLS + 9, "is", ord("W"))]
+    return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], [(k, 5 * COLS + 10, "is", ord("W"))]
+
+
+def regression_aligned_ring_claim(font, ops, model):
+    """Why the flush after an aligned copy presents one layer more than the
+    ring: a cell just outside the copied interior keeps an old hint that
+    still verifies on the copied pixels (the source has the same glyph
+    there, drawn without a hint), so it claims the top rows of the first
+    interior cell below it, which the source cell's neighbour did not.
+    That interior cell must be presented again (blank in the background
+    colour, the claimed rows not counted), not keep the copied cell."""
+    s = Scene(ops, model)
+    _blank(s)
+    g = font[ord("H")]
+    s.glyph(56, 43, g, 14, 1)                              # source: no hint
+    s.glyph(56, 35, g, 14, 1)                              # cell (4, 7), hinted, 3 rows into row 5
+    s.add(56, 35, g, ord("H"))
+    s.load()
+    s.present(32, 56, 6, 9)
+    s.move(24, 40, 64, 48, 0, -8)                          # destination 24..88 x 32..80
+    s.load()
+    s.present(32, 80, 3, 11)
+    k = len(s.expect) - 1
+    s.present(0, H, 0, COLS)
+    return (s.expect, [(k, model.ideal(s.shadow)), (len(s.expect) - 1, model.ideal(s.shadow))],
+            [(k, 5 * COLS + 7, "word", 0x1120)])
 
 
 def scroll_scene(rnd, font, ops, model):
@@ -1158,10 +1184,13 @@ def regression_pan(font, ops, model):
 
 REGRESSIONS = (regression_same_position, regression_two_positions, regression_partial_overpaint,
                regression_touch_edges, regression_aligned_attr, regression_aligned_wider_flush,
+               regression_aligned_ring_claim,
                regression_diff_flush, regression_blit_overlap)
 
 
 def explicit_ok(text, cell, kind, code):
+    if kind == "word":                                     # attribute and code
+        return text[cell] == code
     shown = text[cell] & 0xFF
     return shown == code if kind == "is" else shown != code
 
