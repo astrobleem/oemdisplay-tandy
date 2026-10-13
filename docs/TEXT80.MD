@@ -5,7 +5,31 @@ changes a released driver, an installer default, a package, a pin or a
 release hash. A rebuild is not runtime acceptance: everything below was
 run in emulators, none of it on real hardware yet.
 
-@@VERDICT@@
+## Verdict
+
+**Usable: TEXT80 25 (80x25 colour text).** Program Manager, menus, the Run
+dialog, Notepad, selection, overlapping and dragged windows are all exact
+text cells. That held in every session: 50/50 checks on an 86Box
+4.77 MHz XT with CGA, 49/50 on a Tandy 1000 HX (the one failure is the
+harness, not the driver). Typing costs about 0.25 s per character on the
+4.77 MHz XT and 0.15 s on the HX. Stock TXT40 took 3.2 s per character;
+TXT40 with the same fixes takes 0.29 s. Setup and rollback work from DOS
+and keep `load=` and the font list.
+
+**Usable but costly: TEXT80 PAN.** An 80x25 view of a 640x400 desktop.
+Pans take under 55 ms, where the graphics XTPAN desktop takes about 1 s.
+Text typed while out of view is correct when panned to. It costs about
+100 KB more of Windows' memory than 80x25.
+
+**Shown working, not timed: TEXT80 VGA 80x50.** It passed every check
+(34/34), but only in DOSBox-X, which says nothing about speed on an 8088.
+
+**Slow:**
+- Scrolling: about 2.7 s per line on the 4.77 MHz XT, 1.7 s on the HX.
+- Text larger than 8 pixels and all graphics show as block approximations.
+- A real IBM CGA will snow.
+
+**What Chad should test** is in section 10.
 
 ## 1. Profiles
 
