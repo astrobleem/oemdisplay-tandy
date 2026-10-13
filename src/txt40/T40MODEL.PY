@@ -308,6 +308,66 @@ class Presenter:
             for x in range(c0, c1 + 1):
                 self.text[cy * COLS + x] = self.cell(shadow, cy, x, shown)
 
+    # ---- snapshot diff (TEXT80 speed-up; used by TXT40 too) ----------------
+    # A drawing call snapshots the shadow bytes of the rectangle it is about
+    # to flush (snap); its flush (present_diff) then presents only what can
+    # differ. Within the flush's output range (dirty cells plus one around),
+    # a cell needs work if it is stale (its hints changed) or, inside the
+    # rectangle, any of its bytes there differs from the snapshot. Each run
+    # of such cells along a cell row is presented as an ordinary flush of
+    # those cells' full pixel rows. present() is exact for any flushed area
+    # that covers every changed pixel, so over-flushing is safe; cells left
+    # out had no changed pixels and no hint changes, so their kept state and
+    # text are already what a full flush would produce. A snapshot larger
+    # than SNAPB bytes is not taken, and a flush of another rectangle than
+    # the snapshot's is an ordinary present(); either way the snapshot is
+    # dropped.
+    SNAPB = 8192
+
+    def snap(self, shadow, ay, by, cx, dx):
+        ay, by, cx, dx = max(ay, 0), min(by, H), max(cx, 0), min(dx, COLS)
+        self.snapped = None
+        if ay >= by or cx >= dx or (by - ay) * (dx - cx) * 4 > self.SNAPB:
+            return
+        buf = bytearray()
+        for y in range(ay, by):
+            for p in range(4):
+                o = y * ROWB + p * COLS
+                buf += shadow[o + cx:o + dx]
+        self.snapped = ((ay, by, cx, dx), bytes(buf))
+
+    def present_diff(self, shadow, ay, by, cx, dx):
+        rect = (max(ay, 0), min(by, H), max(cx, 0), min(dx, COLS))
+        snapped, self.snapped = getattr(self, "snapped", None), None
+        if snapped is None or snapped[0] != rect:
+            self.present(shadow, ay, by, cx, dx)
+            return
+        ay, by, cx, dx = rect
+        if ay >= by or cx >= dx:
+            return
+        buf, nc = snapped[1], dx - cx
+        r0, r1 = max((ay >> 3) - 1, 0), min(((by - 1) >> 3) + 1, ROWS - 1)
+        c0, c1 = max(cx - 1, 0), min(dx, COLS - 1)
+
+        def changed(cy, x):
+            if not cx <= x < dx:
+                return False
+            for y in range(max(ay, 8 * cy), min(by, 8 * cy + 8)):
+                for p in range(4):
+                    if shadow[y * ROWB + p * COLS + x] != buf[(y - ay) * 4 * nc + p * nc + x - cx]:
+                        return True
+            return False
+
+        for cy in range(r0, r1 + 1):
+            run = None
+            for x in range(c0, c1 + 2):
+                need = x <= c1 and (self.stale[cy * COLS + x] or changed(cy, x))
+                if need and run is None:
+                    run = x
+                elif not need and run is not None:
+                    self.present(shadow, 8 * cy, 8 * cy + 8, run, x)
+                    run = None
+
 
 # ---- previews and oracle hints (host only) --------------------------------
 
@@ -421,6 +481,21 @@ def check_one():
         xb = rnd.randrange(COLS)
         sh[y * ROWB + xb + COLS * rnd.randrange(4)] ^= 1 << rnd.randrange(8)
         p.present(sh, y, y + 1, xb, xb + 1)
+        assert p.text == p.ideal(sh)
+    # Snapshot-diff flushes: rectangles rewritten partly identically, partly
+    # changed, with hints added for pixels already on screen; the text must
+    # still equal the ideal after every flush.
+    for _ in range(60):
+        y0, x0 = rnd.randrange(H), rnd.randrange(COLS)
+        y1, x1 = min(H, y0 + rnd.randrange(1, 24)), min(COLS, x0 + rnd.randrange(1, 12))
+        p.snap(sh, y0, y1, x0, x1)
+        for _ in range(rnd.randrange(0, 4)):
+            y, xb = rnd.randrange(y0, y1), rnd.randrange(x0, x1)
+            sh[y * ROWB + xb + COLS * rnd.randrange(4)] ^= 1 << rnd.randrange(8)
+        if rnd.random() < 0.3:
+            k = rnd.randrange(NCELL)
+            p.add(8 * (k % COLS) + rnd.randrange(-3, 4), 8 * (k // COLS) + rnd.randrange(-3, 4), g, ord("A"))
+        p.present_diff(sh, y0, y1, x0, x1)
         assert p.text == p.ideal(sh)
 
 

@@ -10,6 +10,15 @@
 ; Entry points (near; all preserve CS/SS/SP and BP):
 ;   t40_present AX=first row, BX=end row, CX=first byte, DX=end byte;
 ;               clamped and non-empty. Clobbers AX-DI, DS, ES.
+;   t40_snap    AX..DX as t40_present, raw: keep the shadow bytes of that
+;               rectangle (clamped) for the next t40_pdiff, if they fit in
+;               T40_SNAPB bytes. Preserves all.
+;   t40_pdiff   AX..DX as t40_present: present only what can differ from
+;               the snapshot (T40MODEL.Presenter.present_diff); without a
+;               matching snapshot, t40_present. Drops the snapshot.
+;               Clobbers AX-DI, DS, ES.
+; The includer also provides T40_SNSEG: the segment of a T40_SNAPB-byte
+; snapshot buffer at offset 0.
 ;   t40_add     AX=x, BX=y, ES:SI=8 glyph rows, DL=CP437 code. Preserves all.
 ;   t40_blit    AX=src x, BX=src y, CX=width, DX=height, SI=dx, DI=dy.
 ;               Preserves all.
@@ -1294,6 +1303,278 @@ tpr_ocol:
     jle tpr_orow
     ret
 t40_present endp
+
+; ---- t40_snap --------------------------------------------------------------
+t40_snap proc near
+    push ax
+    push bx
+    push cx
+    push dx
+    push si
+    push di
+    push ds
+    push es
+    push ax
+    mov ax,seg t40_slot
+    mov ds,ax
+    pop ax
+    mov t40_snv,0
+    cmp ax,0
+    jge tsn_top
+    xor ax,ax
+tsn_top:
+    cmp bx,T40_H
+    jle tsn_bottom
+    mov bx,T40_H
+tsn_bottom:
+    cmp cx,0
+    jge tsn_left
+    xor cx,cx
+tsn_left:
+    cmp dx,T40_COLS
+    jle tsn_right
+    mov dx,T40_COLS
+tsn_right:
+    cmp ax,bx
+    jge tsn_done
+    cmp cx,dx
+    jge tsn_done
+    mov t40_sy0,ax
+    mov t40_sy1,bx
+    mov t40_sx0,cx
+    mov t40_sx1,dx
+    sub dx,cx
+    mov t40_snc,dx
+    mov ax,bx
+    sub ax,t40_sy0
+    mul t40_snc                 ; rows * bytes <= 200 * 80
+    cmp ax,T40_SNAPB/4
+    ja tsn_done
+    mov dx,t40_sy1
+    sub dx,t40_sy0              ; rows
+    mov bx,t40_snc
+    mov ax,t40_sy0
+    mov cx,T40_ROWB
+    push dx
+    mul cx
+    pop dx
+    add ax,t40_sx0
+    mov si,ax
+    mov t40_snv,1
+    mov ax,T40_SNSEG
+    mov es,ax
+    xor di,di
+    mov ax,T40_SHSEG
+    mov ds,ax
+    cld
+tsn_row:
+    mov cx,bx
+    push si
+    rep movsb
+    pop si
+    add si,T40_COLS
+    mov cx,bx
+    push si
+    rep movsb
+    pop si
+    add si,T40_COLS
+    mov cx,bx
+    push si
+    rep movsb
+    pop si
+    add si,T40_COLS
+    mov cx,bx
+    push si
+    rep movsb
+    pop si
+    add si,T40_COLS             ; next pixel row
+    dec dx
+    jnz tsn_row
+tsn_done:
+    pop es
+    pop ds
+    pop di
+    pop si
+    pop dx
+    pop cx
+    pop bx
+    pop ax
+    ret
+t40_snap endp
+
+; ---- t40_changed: CF=1 if cell t40_dcy/t40_dcx lies in the snapshot's
+; columns and one of its bytes within the snapshot's rows differs from it.
+; DS = _T40. Clobbers AX-DI, ES; restores DS.
+t40_changed proc near
+    mov ax,t40_dcx
+    cmp ax,t40_sx0
+    jl tch2_same
+    cmp ax,t40_sx1
+    jge tch2_same
+    mov ax,t40_dcy              ; rows max(sy0, 8cy) .. min(sy1, 8cy+8)
+    mov cl,3
+    shl ax,cl
+    mov bx,ax
+    add bx,8
+    cmp ax,t40_sy0
+    jge tch2_ya
+    mov ax,t40_sy0
+tch2_ya:
+    cmp bx,t40_sy1
+    jle tch2_yb
+    mov bx,t40_sy1
+tch2_yb:
+    sub bx,ax
+    jle tch2_same
+    push bx                     ; rows
+    push ax                     ; first row
+    mov cx,T40_ROWB             ; DI = first row * ROWB + column (shadow)
+    mul cx
+    add ax,t40_dcx
+    mov di,ax
+    pop ax                      ; SI = (first row - sy0) * 4 * nc + column - sx0
+    sub ax,t40_sy0
+    shl ax,1
+    shl ax,1
+    mul t40_snc
+    add ax,t40_dcx
+    sub ax,t40_sx0
+    mov si,ax
+    pop cx                      ; rows
+    mov bx,t40_snc
+    mov ax,T40_SHSEG
+    mov es,ax
+    push ds
+    mov ax,T40_SNSEG
+    mov ds,ax
+tch2_row:
+    mov al,[si]
+    cmp al,es:[di]
+    jne tch2_diff
+    mov al,[bx+si]
+    cmp al,es:[di+T40_COLS]
+    jne tch2_diff
+    add si,bx
+    mov al,[bx+si]
+    cmp al,es:[di+2*T40_COLS]
+    jne tch2_diff
+    add si,bx
+    mov al,[bx+si]
+    cmp al,es:[di+3*T40_COLS]
+    jne tch2_diff
+    add si,bx
+    add si,bx                   ; next snapshot row
+    add di,T40_ROWB
+    loop tch2_row
+    pop ds
+tch2_same:
+    clc
+    ret
+tch2_diff:
+    pop ds
+    stc
+    ret
+t40_changed endp
+
+; ---- t40_pdiff -------------------------------------------------------------
+t40_pdiff proc near
+    mov si,seg t40_slot
+    mov ds,si
+    cmp t40_snv,0
+    je tpd_full
+    mov t40_snv,0
+    cmp ax,t40_sy0
+    jne tpd_full
+    cmp bx,t40_sy1
+    jne tpd_full
+    cmp cx,t40_sx0
+    jne tpd_full
+    cmp dx,t40_sx1
+    je tpd_go
+tpd_full:
+    jmp t40_present
+tpd_go:
+    ; output range: as t40_present
+    mov si,cx
+    mov cl,3
+    shr ax,cl
+    sub ax,1
+    jge tpd_r0
+    xor ax,ax
+tpd_r0:
+    mov t40_dr0,ax
+    dec bx
+    shr bx,cl
+    add bx,1
+    cmp bx,T40_ROWS-1
+    jle tpd_r1
+    mov bx,T40_ROWS-1
+tpd_r1:
+    mov t40_dr1,bx
+    sub si,1
+    jge tpd_c0
+    xor si,si
+tpd_c0:
+    mov t40_dc0,si
+    cmp dx,T40_COLS-1
+    jle tpd_c1
+    mov dx,T40_COLS-1
+tpd_c1:
+    mov t40_dc1,dx
+    mov ax,t40_dr0
+    mov t40_dcy,ax
+tpd_row:
+    mov t40_drun,-1
+    mov ax,t40_dc0
+    mov t40_dcx,ax
+tpd_col:
+    ; need = column <= c1 and (stale or changed)
+    mov ax,t40_dcx
+    cmp ax,t40_dc1
+    jg tpd_no
+    mov ax,t40_dcy
+    t40_x40
+    add ax,t40_dcx
+    mov bx,ax
+    test t40_vst[bx],80h
+    jnz tpd_yes
+    call t40_changed
+    jc tpd_yes
+tpd_no:
+    cmp t40_drun,0
+    jl tpd_next
+    ; close the run: present its cells' full pixel rows
+    mov ax,t40_dcy
+    mov cl,3
+    shl ax,cl
+    mov bx,ax
+    add bx,8
+    mov cx,t40_drun
+    mov dx,t40_dcx
+    call t40_present
+    mov si,seg t40_slot
+    mov ds,si
+    mov t40_drun,-1
+    jmp short tpd_next
+tpd_yes:
+    cmp t40_drun,0
+    jge tpd_next
+    mov ax,t40_dcx
+    mov t40_drun,ax
+tpd_next:
+    inc t40_dcx
+    mov ax,t40_dc1
+    inc ax
+    cmp t40_dcx,ax
+    jle tpd_col
+    inc t40_dcy
+    mov ax,t40_dcy
+    cmp ax,t40_dr1
+    jg tpd_done
+    jmp tpd_row
+tpd_done:
+    ret
+t40_pdiff endp
 
 ; ---- t40_add ---------------------------------------------------------------
 t40_add proc near

@@ -82,15 +82,16 @@ ENABLE_NEW = crlf("""    mov ax,1                  ; T40PATCH: BIOS 40x25 colour
     mov es,ax
     xor di,di
     xor ax,ax
-    mov cx,1000
+    mov cx,T40_NCELL
     cld
     rep stosw
     mov ax,seg t40_slot       ; forget every hint and shown state
     mov es,ax                 ; (t40_reset inline: TEnable is in
     xor di,di                 ; another code segment)
     xor ax,ax
-    mov cx,17000
+    mov cx,T40_NCELL*(T40_CELLB+2)/2
     rep stosw
+    mov es:t40_snv,0          ; no snapshot held
 """)
 
 DATA_ANCHOR = "diag_markers dw 0,0,0,0\r\n"
@@ -115,7 +116,13 @@ SEG_ANCHOR = "sEnd ShadowSeg\r\n"
 def seg_text():
     return (crlf("; T40PATCH: hints and presenter state.\n"
                  "createSeg _T40,T40Seg,word,public,DATA\n"
-                 "sBegin T40Seg\n") + fragment("T40DATA.ASM") + crlf("sEnd T40Seg\n"))
+                 "sBegin T40Seg\n") + fragment("T40DATA.ASM") + crlf(
+                 "sEnd T40Seg\n"
+                 "; T40PATCH: snapshot of a text call's flush rectangle (t40_snap).\n"
+                 "createSeg _T40N,T40NSeg,word,public,DATA\n"
+                 "sBegin T40NSeg\n"
+                 "t40_snapbuf db T40_SNAPB dup (0)\n"
+                 "sEnd T40NSeg\n"))
 
 
 FLUSH = crlf("""; T40PATCH: every flush presents the dirty rectangle as text cells.
@@ -159,6 +166,7 @@ public FlushColumns
 FlushColumns proc near
     cmp enabled_flag,0
     jne t40f_start
+    call t40_drop
     ret
 t40f_start:
     push ax
@@ -189,10 +197,13 @@ t40f_right:
     call cursor_hide
     cld
     cmp ax,bx
-    jge t40f_done
+    jge t40f_empty
     cmp cx,dx
-    jge t40f_done
-    call t40_present
+    jge t40f_empty
+    call t40_pdiff              ; drops the snapshot
+    jmp short t40f_done
+t40f_empty:
+    call t40_drop
 t40f_done:
     pop es
     pop ds
@@ -321,6 +332,7 @@ def pres_text():
     return (crlf("; T40PATCH: presenter, verbatim from src/txt40/T40PRES.ASM.\n"
                  ".errnz (offset shadow_bits)\n"
                  "T40_SHSEG equ <seg shadow_bits>\n"
+                 "T40_SNSEG equ <seg t40_snapbuf>\n"
                  "T40_VSEG equ <0b800h>\n")
             + fragment("T40PRES.ASM") + PRES_TAIL + ansi_table_text())
 
@@ -433,15 +445,67 @@ t40u_cl:
 empty:
 endm
 
+; Intersect rowfirst..rowlast, colfirst..collast with the RECT at rp
+; (screen-clamped copy). Unreadable or unordered: unchanged (a superset).
+t40_rect_isect macro rp
+local keep,k1,k2,k3,k4
+    les di,rp
+    mov ax,es
+    or ax,ax
+    jz keep
+    cmp di,0ffffh-((size RECT)-1)
+    ja keep
+    mov ax,es:[di].left
+    cmp ax,es:[di].right
+    jg keep
+    mov ax,es:[di].top
+    cmp ax,es:[di].bottom
+    jg keep
+    mov ax,es:[di].top
+    cmp ax,rowfirst
+    jle k1
+    mov rowfirst,ax
+k1:
+    mov ax,es:[di].bottom
+    cmp ax,rowlast
+    jge k2
+    mov rowlast,ax
+k2:
+    mov ax,es:[di].left
+    mov cl,3
+    sar ax,cl
+    cmp ax,colfirst
+    jle k3
+    mov colfirst,ax
+k3:
+    mov ax,es:[di].right
+    add ax,7
+    sar ax,cl
+    cmp ax,collast
+    jge k4
+    mov collast,ax
+k4:
+keep:
+endm
+
+; The renderer draws only inside the clip rectangle: every flush bound is
+; intersected with it. dirty=2 (rows proven by text_bounds: the text and,
+; with ETO_OPAQUE fill, the opaque rows): those rows, the clip columns.
+; dirty=1 (rows not proven): with characters, the clip rectangle; with no
+; characters (an opaque-only ExtTextOut, e.g. an edit control erasing the
+; rest of a line), the opaque rectangle if ETO_OPAQUE fills, else nothing
+; is drawn. TEXT80: TXT40 flushed the union of the clip and opaque
+; rectangles here, which for Notepad was the whole client area on every
+; keystroke (2.6 s of a 3.1 s keystroke on an XT, docs/TEXT80.MD).
 t40_bounds macro extended
-local proven,unproven,full,done,t40b_set,t40b_pop,t40b_uop
+local proven,unproven,full,done,t40b_chars,t40b_none
     push ax
     push bx
     push cx
     push dx
     push di
     push es
-    mov colfirst,40
+    mov colfirst,SCREEN_W_BYTES
     mov collast,0
     cmp dirty,2
     je proven
@@ -450,26 +514,28 @@ local proven,unproven,full,done,t40b_set,t40b_pop,t40b_uop
     jmp done
 proven:
     t40_rect_cols clip
-    if extended
-    test options,ETO_OPAQUE_FILL
-    jnz t40b_pop
-    jmp done
-t40b_pop:
-    t40_rect_cols opaquerect
-    endif
+    t40_rect_isect clip
     jmp done
 unproven:
     mov rowfirst,SCREEN_HEIGHT
     mov rowlast,0
-    t40_rect_union clip,full
+    cmp count,0
+    jg t40b_chars
     if extended
     test options,ETO_OPAQUE_FILL
-    jnz t40b_uop
-    jmp t40b_set
-t40b_uop:
+    jz t40b_none
     t40_rect_union opaquerect,full
-t40b_set:
+    t40_rect_isect clip
+    mov dirty,2
+    jmp done
     endif
+t40b_none:
+    mov rowfirst,0              ; nothing is drawn: an empty flush
+    mov rowlast,0
+    mov dirty,2
+    jmp done
+t40b_chars:
+    t40_rect_union clip,full
     mov dirty,2
     jmp done
 full:
@@ -562,6 +628,29 @@ t40_unclamp macro extended
     endif
     pop bx
     pop ax
+endm
+
+; T40PATCH: before the renderer draws, keep the pixels of the proven flush
+; rectangle (t40_snap); the flush then presents only cells that changed or
+; whose hints did (t40_pdiff). Not proven: no snapshot (ordinary flush).
+t40_takesnap macro
+local skip
+    cmp dirty,2
+    jne skip
+    push ax
+    push bx
+    push cx
+    push dx
+    mov ax,rowfirst
+    mov bx,rowlast
+    mov cx,colfirst
+    mov dx,collast
+    call t40_snap
+    pop dx
+    pop cx
+    pop bx
+    pop ax
+skip:
 endm
 
 t40_flush macro
@@ -716,10 +805,10 @@ def patch_tsoft(t):
                   "cBegin\r\n" % (8, 8), 2, "column locals")
     t = replace_n(t, "    text_bounds 0,0,0\r\n    cCall RStrBlt",
                   "    t40_clamp 0\r\n    text_bounds 0,0,0\r\n    t40_bounds 0\r\n    t40_unclamp 0\r\n"
-                  "    cCall RStrBlt", 1, "StrBlt columns")
+                  "    t40_takesnap\r\n    cCall RStrBlt", 1, "StrBlt columns")
     t = replace_n(t, "    text_bounds 1,opaquerect,options\r\n    cCall RExtTextOut",
                   "    t40_clamp 1\r\n    text_bounds 1,opaquerect,options\r\n    t40_bounds 1\r\n"
-                  "    t40_unclamp 1\r\n    cCall RExtTextOut", 1, "ExtTextOut columns")
+                  "    t40_unclamp 1\r\n    t40_takesnap\r\n    cCall RExtTextOut", 1, "ExtTextOut columns")
     t = replace_n(t, "    text_flush\r\nTStrBlt_done:", "    t40_flush\r\nTStrBlt_done:", 1, "StrBlt flush")
     t = replace_n(t, "    text_flush\r\nTExtTextOut_done:", "    t40_flush\r\nTExtTextOut_done:", 1,
                   "ExtTextOut flush")
@@ -810,7 +899,7 @@ def patch_tcursor(t):
 def patch_def(t):
     t = replace_n(t, "Tandy 320x200 16-color software raster",
                   "TXT40 CGA 40x25 color text (experimental)", 1, "description")
-    t = replace_n(t, " _SHADOW PRELOAD FIXED\r\n", " _SHADOW PRELOAD FIXED\r\n _T40 PRELOAD FIXED\r\n", 1,
+    t = replace_n(t, " _SHADOW PRELOAD FIXED\r\n", " _SHADOW PRELOAD FIXED\r\n _T40 PRELOAD FIXED\r\n _T40N PRELOAD FIXED\r\n", 1,
                   "segment list")
     return t
 

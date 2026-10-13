@@ -1,0 +1,2707 @@
+{
+ "readings": [
+  {
+   "wall_ms": 716.57,
+   "driver_calls_ms": 601.7,
+   "render_ms": 5.47,
+   "app_gdi_ms": 114.87,
+   "flush_ms": 596.24,
+   "flushes": 2,
+   "present_ms": 594.57,
+   "verify_ms": 23.07,
+   "convert_ms": 530.11,
+   "cells": 168,
+   "write_loop_ms": 40.69,
+   "writes": 168,
+   "cursor_etc_ms": 1.66,
+   "verified": 1,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     601.7
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      2
+     ],
+     "ms": 42.24,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      2,
+      40
+     ],
+     "ms": 554.0,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 0"
+  },
+  {
+   "wall_ms": 1425.86,
+   "driver_calls_ms": 600.29,
+   "render_ms": 6.17,
+   "app_gdi_ms": 825.56,
+   "flush_ms": 594.12,
+   "flushes": 2,
+   "present_ms": 592.45,
+   "verify_ms": 24.75,
+   "convert_ms": 527.0,
+   "cells": 168,
+   "write_loop_ms": 40.0,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 2,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     600.29
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      3
+     ],
+     "ms": 42.71,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 551.41,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 1"
+  },
+  {
+   "wall_ms": 1384.93,
+   "driver_calls_ms": 592.69,
+   "render_ms": 5.47,
+   "app_gdi_ms": 792.23,
+   "flush_ms": 587.23,
+   "flushes": 2,
+   "present_ms": 585.56,
+   "verify_ms": 28.72,
+   "convert_ms": 514.04,
+   "cells": 168,
+   "write_loop_ms": 42.1,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 3,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     592.69
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      4
+     ],
+     "ms": 57.6,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      4,
+      40
+     ],
+     "ms": 529.62,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 2"
+  },
+  {
+   "wall_ms": 1390.69,
+   "driver_calls_ms": 592.83,
+   "render_ms": 5.47,
+   "app_gdi_ms": 797.86,
+   "flush_ms": 587.36,
+   "flushes": 2,
+   "present_ms": 585.7,
+   "verify_ms": 32.2,
+   "convert_ms": 512.77,
+   "cells": 168,
+   "write_loop_ms": 40.02,
+   "writes": 168,
+   "cursor_etc_ms": 1.66,
+   "verified": 4,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     592.83
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      5
+     ],
+     "ms": 61.72,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      5,
+      40
+     ],
+     "ms": 525.64,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 3"
+  },
+  {
+   "wall_ms": 1396.38,
+   "driver_calls_ms": 599.63,
+   "render_ms": 6.17,
+   "app_gdi_ms": 796.75,
+   "flush_ms": 593.46,
+   "flushes": 2,
+   "present_ms": 591.79,
+   "verify_ms": 35.62,
+   "convert_ms": 514.14,
+   "cells": 168,
+   "write_loop_ms": 41.32,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 5,
+   "hints_ms": 1.46,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     599.63
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      6
+     ],
+     "ms": 72.02,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      6,
+      40
+     ],
+     "ms": 521.44,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 4"
+  },
+  {
+   "wall_ms": 1424.91,
+   "driver_calls_ms": 617.32,
+   "render_ms": 5.47,
+   "app_gdi_ms": 807.59,
+   "flush_ms": 611.85,
+   "flushes": 2,
+   "present_ms": 610.18,
+   "verify_ms": 44.1,
+   "convert_ms": 525.38,
+   "cells": 168,
+   "write_loop_ms": 40.0,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 6,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     617.32
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      7
+     ],
+     "ms": 99.49,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      7,
+      40
+     ],
+     "ms": 512.36,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 5"
+  },
+  {
+   "wall_ms": 1421.44,
+   "driver_calls_ms": 627.2,
+   "render_ms": 5.47,
+   "app_gdi_ms": 794.24,
+   "flush_ms": 621.73,
+   "flushes": 2,
+   "present_ms": 620.07,
+   "verify_ms": 41.2,
+   "convert_ms": 538.15,
+   "cells": 168,
+   "write_loop_ms": 40.01,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 7,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     627.2
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      8
+     ],
+     "ms": 110.64,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      8,
+      40
+     ],
+     "ms": 511.1,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 6"
+  },
+  {
+   "wall_ms": 1433.43,
+   "driver_calls_ms": 625.12,
+   "render_ms": 5.47,
+   "app_gdi_ms": 808.31,
+   "flush_ms": 619.65,
+   "flushes": 2,
+   "present_ms": 617.99,
+   "verify_ms": 50.48,
+   "convert_ms": 526.12,
+   "cells": 168,
+   "write_loop_ms": 40.69,
+   "writes": 168,
+   "cursor_etc_ms": 1.66,
+   "verified": 8,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     625.12
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      9
+     ],
+     "ms": 131.83,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      9,
+      40
+     ],
+     "ms": 487.83,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 7"
+  },
+  {
+   "wall_ms": 1428.59,
+   "driver_calls_ms": 630.04,
+   "render_ms": 5.47,
+   "app_gdi_ms": 798.55,
+   "flush_ms": 624.57,
+   "flushes": 2,
+   "present_ms": 622.9,
+   "verify_ms": 51.71,
+   "convert_ms": 529.09,
+   "cells": 168,
+   "write_loop_ms": 41.4,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 9,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     630.04
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      10
+     ],
+     "ms": 150.83,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      10,
+      40
+     ],
+     "ms": 473.74,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 8"
+  },
+  {
+   "wall_ms": 1432.48,
+   "driver_calls_ms": 633.28,
+   "render_ms": 5.47,
+   "app_gdi_ms": 799.2,
+   "flush_ms": 627.81,
+   "flushes": 2,
+   "present_ms": 626.15,
+   "verify_ms": 57.01,
+   "convert_ms": 527.73,
+   "cells": 168,
+   "write_loop_ms": 40.69,
+   "writes": 168,
+   "cursor_etc_ms": 1.66,
+   "verified": 10,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     633.28
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      11
+     ],
+     "ms": 166.88,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      11,
+      40
+     ],
+     "ms": 460.93,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 9"
+  },
+  {
+   "wall_ms": 1539.74,
+   "driver_calls_ms": 646.87,
+   "render_ms": 5.47,
+   "app_gdi_ms": 892.87,
+   "flush_ms": 641.4,
+   "flushes": 2,
+   "present_ms": 639.73,
+   "verify_ms": 63.36,
+   "convert_ms": 533.09,
+   "cells": 168,
+   "write_loop_ms": 42.57,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 11,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     646.87
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      12
+     ],
+     "ms": 194.78,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      12,
+      40
+     ],
+     "ms": 446.62,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 10"
+  },
+  {
+   "wall_ms": 1476.21,
+   "driver_calls_ms": 647.91,
+   "render_ms": 5.47,
+   "app_gdi_ms": 828.3,
+   "flush_ms": 642.44,
+   "flushes": 2,
+   "present_ms": 640.77,
+   "verify_ms": 60.31,
+   "convert_ms": 532.63,
+   "cells": 168,
+   "write_loop_ms": 47.13,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 12,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     647.91
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      13
+     ],
+     "ms": 208.39,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      13,
+      40
+     ],
+     "ms": 434.05,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 11"
+  },
+  {
+   "wall_ms": 1473.2,
+   "driver_calls_ms": 644.04,
+   "render_ms": 5.47,
+   "app_gdi_ms": 829.16,
+   "flush_ms": 638.57,
+   "flushes": 2,
+   "present_ms": 636.91,
+   "verify_ms": 64.42,
+   "convert_ms": 531.78,
+   "cells": 168,
+   "write_loop_ms": 40.0,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 13,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     644.04
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      14
+     ],
+     "ms": 229.1,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      14,
+      40
+     ],
+     "ms": 409.47,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 12"
+  },
+  {
+   "wall_ms": 1474.11,
+   "driver_calls_ms": 649.78,
+   "render_ms": 5.47,
+   "app_gdi_ms": 824.33,
+   "flush_ms": 644.32,
+   "flushes": 2,
+   "present_ms": 642.65,
+   "verify_ms": 73.25,
+   "convert_ms": 528.7,
+   "cells": 168,
+   "write_loop_ms": 39.99,
+   "writes": 168,
+   "cursor_etc_ms": 1.66,
+   "verified": 14,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     649.78
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      15
+     ],
+     "ms": 249.37,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      15,
+      40
+     ],
+     "ms": 394.95,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 13"
+  },
+  {
+   "wall_ms": 1493.32,
+   "driver_calls_ms": 654.06,
+   "render_ms": 5.47,
+   "app_gdi_ms": 839.26,
+   "flush_ms": 648.59,
+   "flushes": 2,
+   "present_ms": 646.92,
+   "verify_ms": 74.02,
+   "convert_ms": 532.19,
+   "cells": 168,
+   "write_loop_ms": 40.0,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 15,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     654.06
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      16
+     ],
+     "ms": 265.58,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      16,
+      40
+     ],
+     "ms": 383.01,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 14"
+  },
+  {
+   "wall_ms": 1492.97,
+   "driver_calls_ms": 667.05,
+   "render_ms": 5.47,
+   "app_gdi_ms": 825.92,
+   "flush_ms": 661.58,
+   "flushes": 2,
+   "present_ms": 659.91,
+   "verify_ms": 76.19,
+   "convert_ms": 536.37,
+   "cells": 168,
+   "write_loop_ms": 46.65,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 16,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     667.05
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      17
+     ],
+     "ms": 292.17,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      17,
+      40
+     ],
+     "ms": 369.41,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 15"
+  },
+  {
+   "wall_ms": 1496.14,
+   "driver_calls_ms": 667.39,
+   "render_ms": 6.18,
+   "app_gdi_ms": 828.75,
+   "flush_ms": 661.21,
+   "flushes": 2,
+   "present_ms": 659.55,
+   "verify_ms": 77.11,
+   "convert_ms": 539.83,
+   "cells": 168,
+   "write_loop_ms": 41.9,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 17,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     667.39
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      18
+     ],
+     "ms": 304.88,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      18,
+      40
+     ],
+     "ms": 356.33,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 16"
+  },
+  {
+   "wall_ms": 1502.6,
+   "driver_calls_ms": 661.88,
+   "render_ms": 5.46,
+   "app_gdi_ms": 840.71,
+   "flush_ms": 656.42,
+   "flushes": 2,
+   "present_ms": 654.75,
+   "verify_ms": 82.01,
+   "convert_ms": 527.53,
+   "cells": 168,
+   "write_loop_ms": 44.51,
+   "writes": 168,
+   "cursor_etc_ms": 1.66,
+   "verified": 18,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     661.88
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      19
+     ],
+     "ms": 323.3,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      19,
+      40
+     ],
+     "ms": 333.12,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 17"
+  },
+  {
+   "wall_ms": 1501.71,
+   "driver_calls_ms": 667.99,
+   "render_ms": 5.47,
+   "app_gdi_ms": 833.72,
+   "flush_ms": 662.52,
+   "flushes": 2,
+   "present_ms": 660.86,
+   "verify_ms": 91.38,
+   "convert_ms": 528.77,
+   "cells": 168,
+   "write_loop_ms": 40.0,
+   "writes": 168,
+   "cursor_etc_ms": 1.66,
+   "verified": 19,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     667.99
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      20
+     ],
+     "ms": 343.86,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      20,
+      40
+     ],
+     "ms": 318.67,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 18"
+  },
+  {
+   "wall_ms": 1576.94,
+   "driver_calls_ms": 671.38,
+   "render_ms": 5.47,
+   "app_gdi_ms": 905.56,
+   "flush_ms": 665.91,
+   "flushes": 2,
+   "present_ms": 664.24,
+   "verify_ms": 89.76,
+   "convert_ms": 533.8,
+   "cells": 168,
+   "write_loop_ms": 39.98,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 20,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     671.38
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      21
+     ],
+     "ms": 358.55,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      21,
+      40
+     ],
+     "ms": 307.36,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 19"
+  },
+  {
+   "wall_ms": 1519.12,
+   "driver_calls_ms": 687.66,
+   "render_ms": 5.47,
+   "app_gdi_ms": 831.45,
+   "flush_ms": 682.19,
+   "flushes": 2,
+   "present_ms": 680.53,
+   "verify_ms": 99.33,
+   "convert_ms": 540.5,
+   "cells": 168,
+   "write_loop_ms": 39.99,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 21,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     687.66
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      22
+     ],
+     "ms": 389.53,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      22,
+      40
+     ],
+     "ms": 292.66,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 20"
+  },
+  {
+   "wall_ms": 1532.68,
+   "driver_calls_ms": 687.45,
+   "render_ms": 6.18,
+   "app_gdi_ms": 845.23,
+   "flush_ms": 681.27,
+   "flushes": 2,
+   "present_ms": 679.61,
+   "verify_ms": 98.57,
+   "convert_ms": 540.34,
+   "cells": 168,
+   "write_loop_ms": 39.98,
+   "writes": 168,
+   "cursor_etc_ms": 1.66,
+   "verified": 22,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     687.45
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      23
+     ],
+     "ms": 403.21,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      23,
+      40
+     ],
+     "ms": 278.06,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 21"
+  },
+  {
+   "wall_ms": 1518.42,
+   "driver_calls_ms": 681.64,
+   "render_ms": 5.47,
+   "app_gdi_ms": 836.79,
+   "flush_ms": 676.17,
+   "flushes": 2,
+   "present_ms": 674.5,
+   "verify_ms": 104.26,
+   "convert_ms": 529.52,
+   "cells": 168,
+   "write_loop_ms": 40.0,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 23,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     681.64
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      24
+     ],
+     "ms": 422.81,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      24,
+      40
+     ],
+     "ms": 253.35,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 22"
+  },
+  {
+   "wall_ms": 1522.65,
+   "driver_calls_ms": 686.9,
+   "render_ms": 5.47,
+   "app_gdi_ms": 835.75,
+   "flush_ms": 681.43,
+   "flushes": 2,
+   "present_ms": 679.07,
+   "verify_ms": 108.18,
+   "convert_ms": 530.18,
+   "cells": 168,
+   "write_loop_ms": 40.01,
+   "writes": 168,
+   "cursor_etc_ms": 2.36,
+   "verified": 24,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     686.9
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      25
+     ],
+     "ms": 441.92,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      25,
+      40
+     ],
+     "ms": 239.51,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 23"
+  },
+  {
+   "wall_ms": 1538.29,
+   "driver_calls_ms": 691.75,
+   "render_ms": 5.46,
+   "app_gdi_ms": 846.54,
+   "flush_ms": 686.29,
+   "flushes": 2,
+   "present_ms": 684.62,
+   "verify_ms": 113.31,
+   "convert_ms": 529.9,
+   "cells": 168,
+   "write_loop_ms": 40.7,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 25,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     691.75
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      26
+     ],
+     "ms": 460.62,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      26,
+      40
+     ],
+     "ms": 225.67,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 24"
+  },
+  {
+   "wall_ms": 1542.44,
+   "driver_calls_ms": 703.95,
+   "render_ms": 5.47,
+   "app_gdi_ms": 838.49,
+   "flush_ms": 698.49,
+   "flushes": 2,
+   "present_ms": 696.82,
+   "verify_ms": 115.13,
+   "convert_ms": 540.99,
+   "cells": 168,
+   "write_loop_ms": 39.98,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 26,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     703.95
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      27
+     ],
+     "ms": 486.06,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      27,
+      40
+     ],
+     "ms": 212.43,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 25"
+  },
+  {
+   "wall_ms": 1555.2,
+   "driver_calls_ms": 704.94,
+   "render_ms": 5.47,
+   "app_gdi_ms": 850.26,
+   "flush_ms": 699.47,
+   "flushes": 2,
+   "present_ms": 697.8,
+   "verify_ms": 116.3,
+   "convert_ms": 540.11,
+   "cells": 168,
+   "write_loop_ms": 40.0,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 27,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     704.94
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      28
+     ],
+     "ms": 502.84,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      28,
+      40
+     ],
+     "ms": 196.63,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 26"
+  },
+  {
+   "wall_ms": 1537.42,
+   "driver_calls_ms": 701.08,
+   "render_ms": 6.18,
+   "app_gdi_ms": 836.35,
+   "flush_ms": 694.9,
+   "flushes": 2,
+   "present_ms": 693.23,
+   "verify_ms": 121.87,
+   "convert_ms": 530.67,
+   "cells": 168,
+   "write_loop_ms": 39.99,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 28,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     701.08
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      29
+     ],
+     "ms": 521.41,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      29,
+      40
+     ],
+     "ms": 173.49,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 27"
+  },
+  {
+   "wall_ms": 1614.42,
+   "driver_calls_ms": 707.29,
+   "render_ms": 5.46,
+   "app_gdi_ms": 907.13,
+   "flush_ms": 701.83,
+   "flushes": 2,
+   "present_ms": 700.16,
+   "verify_ms": 123.35,
+   "convert_ms": 536.1,
+   "cells": 168,
+   "write_loop_ms": 40.0,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 29,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     707.29
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      30
+     ],
+     "ms": 539.52,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      30,
+      40
+     ],
+     "ms": 162.31,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 28"
+  },
+  {
+   "wall_ms": 1551.7,
+   "driver_calls_ms": 709.21,
+   "render_ms": 5.46,
+   "app_gdi_ms": 842.49,
+   "flush_ms": 703.74,
+   "flushes": 2,
+   "present_ms": 702.07,
+   "verify_ms": 127.48,
+   "convert_ms": 533.2,
+   "cells": 168,
+   "write_loop_ms": 40.68,
+   "writes": 168,
+   "cursor_etc_ms": 1.67,
+   "verified": 30,
+   "hints_ms": 0.75,
+   "hint_calls": 2,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "ExtTextOut": [
+     2,
+     709.21
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      0,
+      31
+     ],
+     "ms": 556.6,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      19,
+      27
+     ],
+     "bytes": [
+      31,
+      40
+     ],
+     "ms": 147.15,
+     "from": "ExtTextOut"
+    }
+   ],
+   "ring_complete": true,
+   "label": "CHAR 29"
+  },
+  {
+   "wall_ms": 70791.88,
+   "driver_calls_ms": 66693.18,
+   "render_ms": 438.88,
+   "app_gdi_ms": 4098.69,
+   "flush_ms": 66254.31,
+   "flushes": 88,
+   "present_ms": 66174.08,
+   "verify_ms": 32630.71,
+   "convert_ms": 29752.2,
+   "cells": 15462,
+   "write_loop_ms": 3758.0,
+   "writes": 15462,
+   "cursor_etc_ms": 80.22,
+   "verified": 5435,
+   "hints_ms": 17.14,
+   "hint_calls": 42,
+   "hintmove_ms": 0.0,
+   "calls": {
+    "BitBlt": [
+     46,
+     1673.4
+    ],
+    "ExtTextOut": [
+     42,
+     65019.78
+    ]
+   },
+   "flush_rects": [
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      4
+     ],
+     "ms": 23.69,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      4
+     ],
+     "ms": 28.16,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      4
+     ],
+     "ms": 23.71,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      4
+     ],
+     "ms": 31.08,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      4
+     ],
+     "ms": 25.16,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 466.08,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2659.23,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      4,
+      5
+     ],
+     "ms": 27.21,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      4,
+      5
+     ],
+     "ms": 23.45,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 443.67,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2627.33,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      5,
+      6
+     ],
+     "ms": 27.37,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      5,
+      6
+     ],
+     "ms": 22.9,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 443.97,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2631.07,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      6,
+      7
+     ],
+     "ms": 28.06,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      6,
+      7
+     ],
+     "ms": 23.61,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 450.16,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2633.61,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      7,
+      8
+     ],
+     "ms": 29.37,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      7,
+      8
+     ],
+     "ms": 24.92,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 450.73,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2636.33,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      8,
+      9
+     ],
+     "ms": 31.63,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      8,
+      9
+     ],
+     "ms": 24.91,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 452.34,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2638.33,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      9,
+      10
+     ],
+     "ms": 28.06,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      9,
+      10
+     ],
+     "ms": 23.6,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 455.32,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2641.77,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      10,
+      11
+     ],
+     "ms": 28.09,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      10,
+      11
+     ],
+     "ms": 22.96,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 456.4,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2645.12,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      11,
+      12
+     ],
+     "ms": 28.14,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      11,
+      12
+     ],
+     "ms": 27.51,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 458.45,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2645.38,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      12,
+      13
+     ],
+     "ms": 28.14,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      12,
+      13
+     ],
+     "ms": 23.68,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 461.56,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2648.79,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      13,
+      14
+     ],
+     "ms": 35.07,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      13,
+      14
+     ],
+     "ms": 29.91,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 459.18,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2646.67,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      14,
+      15
+     ],
+     "ms": 35.56,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      14,
+      15
+     ],
+     "ms": 30.57,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 460.89,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2648.2,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      15,
+      16
+     ],
+     "ms": 34.88,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      15,
+      16
+     ],
+     "ms": 34.26,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 457.96,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2645.32,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      16,
+      17
+     ],
+     "ms": 34.25,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      16,
+      17
+     ],
+     "ms": 34.32,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 454.4,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2642.24,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      17,
+      18
+     ],
+     "ms": 35.72,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      17,
+      18
+     ],
+     "ms": 35.82,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 453.04,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2638.87,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      18,
+      19
+     ],
+     "ms": 29.73,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      18,
+      19
+     ],
+     "ms": 32.44,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 450.8,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2634.91,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      19,
+      20
+     ],
+     "ms": 39.73,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      19,
+      20
+     ],
+     "ms": 36.63,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 445.11,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2630.93,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      20,
+      21
+     ],
+     "ms": 42.23,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      20,
+      21
+     ],
+     "ms": 42.43,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 438.42,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2625.02,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      21,
+      22
+     ],
+     "ms": 45.18,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      21,
+      22
+     ],
+     "ms": 42.31,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 433.49,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2619.53,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      22,
+      23
+     ],
+     "ms": 43.37,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      22,
+      23
+     ],
+     "ms": 45.72,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 425.16,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2610.87,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      23,
+      24
+     ],
+     "ms": 37.0,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      23,
+      24
+     ],
+     "ms": 43.6,
+     "from": "BitBlt"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      3,
+      36
+     ],
+     "ms": 416.35,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      140
+     ],
+     "bytes": [
+      3,
+      40
+     ],
+     "ms": 2604.15,
+     "from": "ExtTextOut"
+    },
+    {
+     "rows": [
+      44,
+      52
+     ],
+     "bytes": [
+      24,
+      25
+     ],
+     "ms": 41.01,
+     "from": "BitBlt"
+    }
+   ],
+   "ring_complete": true,
+   "label": "NOTE"
+  }
+ ],
+ "lines": [
+  "START cmd=TYPE 30 prof=1 free=258560 size=4236",
+  "TYPE n=30 ms=44654",
+  "END",
+  "START cmd=NOTE 60 300 prof=1 free=258560 size=4236",
+  "READY",
+  "NOTE ms=77170",
+  "END"
+ ],
+ "type_average_per_char": {
+  "wall_ms": 1463.8,
+  "app_gdi_ms": 808.5,
+  "render_ms": 5.6,
+  "flush_ms": 649.8,
+  "verify_ms": 75.6,
+  "convert_ms": 530.7,
+  "write_loop_ms": 41.0,
+  "cursor_etc_ms": 1.7,
+  "hints_ms": 0.8,
+  "flushes": 2.0,
+  "cells": 168.0,
+  "writes": 168.0,
+  "verified": 15.5
+ }
+}

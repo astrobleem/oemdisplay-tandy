@@ -17,6 +17,9 @@ endif
 if (T40_SLOTB ne 16) and (T40_SLOTB ne 14)
 .err T40_SLOTB must be 16 or 14
 endif
+ifndef T40_SNAPB
+T40_SNAPB equ 8192                  ; snapshot buffer bytes (segment T40_SNSEG)
+endif
 T40_NCELL equ T40_COLS*T40_ROWS
 T40_CELLB equ 2*T40_SLOTB           ; two slots per cell
 T40_W equ 8*T40_COLS                ; pixels
@@ -86,6 +89,24 @@ if T40_SLOTB ne 16
 t40_tmp     dw 0                ; t40_slotof scratch
 t40_acell   dw 0                ; t40_add: the cell being written
 endif
+t40_snv     db 0                ; t40_snap: a snapshot is held
+            db 0
+t40_sy0     dw 0                ; its rectangle (clamped): rows, bytes
+t40_sy1     dw 0
+t40_sx0     dw 0
+t40_sx1     dw 0
+t40_snc     dw 0                ; its bytes per plane row
+t40_dy0     dw 0                ; t40_pdiff: the flush rectangle
+t40_dy1     dw 0
+t40_dx0     dw 0
+t40_dx1     dw 0
+t40_dr0     dw 0                ; its output range (cells)
+t40_dr1     dw 0
+t40_dc0     dw 0
+t40_dc1     dw 0
+t40_dcy     dw 0                ; current cell row and column
+t40_dcx     dw 0
+t40_drun    dw 0                ; first column of the open run, -1 none
 t40_px0     dw 0                ; t40_present: dirty pixels, columns
 t40_px1     dw 0
 t40_py0     dw 0                ; and rows (end exclusive)
