@@ -1468,14 +1468,14 @@ tpr_ocol:
     shl ax,1
     mov di,ax
     pop ax
-  if T40_PAN
+  if T40_PANNED
     mov si,T40_LSEG             ; the logical text of every row
     mov es,si
     mov es:[di],ax
     mov si,t40_cy               ; and the screen, if the row is shown
     sub si,t40_vtop
     jb tpr_hidden
-    cmp si,T40_VROWS
+    cmp si,T40_VISROWS
     jae tpr_hidden
     sub di,t40_voff
     mov si,T40_VSEG
@@ -1500,9 +1500,9 @@ tpr_hidden:
 t40_present endp
 
 ; ---- t40_pan: AX = first logical text row to show (clamped to
-; 0..T40_NROWS-T40_VROWS): the screen becomes a copy of those logical rows;
+; 0..T40_NROWS-T40_VISROWS): the screen becomes a copy of those logical rows;
 ; no cell is converted. Preserves all but flags. (Panned builds only.)
-  if T40_PAN
+  if T40_PANNED
 t40_pan proc near
     push ax
     push cx
@@ -1517,9 +1517,9 @@ t40_pan proc near
     jns tpn_lo
     xor ax,ax
 tpn_lo:
-    cmp ax,T40_NROWS-T40_VROWS
+    cmp ax,T40_NROWS-T40_VISROWS
     jle tpn_hi
-    mov ax,T40_NROWS-T40_VROWS
+    mov ax,T40_NROWS-T40_VISROWS
 tpn_hi:
     mov t40_vtop,ax
     t40_x40
@@ -1531,7 +1531,7 @@ tpn_hi:
     mov es,ax
     mov ax,T40_LSEG
     mov ds,ax
-    mov cx,T40_VROWS*T40_COLS
+    mov cx,T40_VISROWS*T40_COLS
     cld
     rep movsw
     pop es
@@ -1589,9 +1589,13 @@ tsn_left:
     mov dx,T40_COLS
 tsn_right:
     cmp ax,bx
-    jge tsn_done
+    jl tsn_rows
+    jmp tsn_done
+tsn_rows:
     cmp cx,dx
-    jge tsn_done
+    jl tsn_cols
+    jmp tsn_done
+tsn_cols:
     mov t40_sy0,ax
     mov t40_sy1,bx
     mov t40_sx0,cx

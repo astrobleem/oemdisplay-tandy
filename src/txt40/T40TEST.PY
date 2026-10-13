@@ -39,12 +39,17 @@ W, H, COLS, ROWS, NCELL, ROWB = 320, 200, 40, 25, 1000, 160
 GLIMIT = 896
 
 
-def geometry(cols, glimit=896):
-    """40x25 (TXT40) or 80x25 (TEXT80) for the model, the scenes and the
-    harness; glimit = glyphs the dictionary keeps before it resets every
-    hint (896 in the drivers; small values make the scenes overflow it)."""
+VEXP = []           # expected screen (video buffer) after every VIDEO.BIN dump
+
+
+def geometry(cols, glimit=896, rows=25, vrows=None):
+    """40x25 (TXT40), 80x25 (TEXT80) or 80x50 (640x400 shadow in two
+    bands; vrows=25 pans a 25-row screen over it) for the model, the scenes
+    and the harness; glimit = glyphs the dictionary keeps before it resets
+    every hint (896 in the drivers; small values make the scenes overflow
+    it)."""
     global W, H, COLS, ROWS, NCELL, ROWB, GLIMIT
-    M.geometry(cols)
+    M.geometry(cols, rows, vrows)
     M.Presenter.GLIMIT = glimit
     W, H, COLS, ROWS, NCELL, ROWB, GLIMIT = M.W, M.H, M.COLS, M.ROWS, M.NCELL, M.ROWB, glimit
 
@@ -144,6 +149,18 @@ s3: mov h_time,ax
     jmp fail
 s4: mov h_vid,ax
 @@INITSH@@
+    mov ax,vbuf
+    mov es,ax
+    xor di,di
+    xor ax,ax
+    mov cx,@@VIDBYTES@@/2
+    cld
+    rep stosw
+    mov ax,T40_LSEG
+    mov es,ax
+    xor di,di
+    mov cx,@@TXTBYTES@@/2
+    rep stosw
     call t40_reset
 next_op:
     mov ax,hd
@@ -254,8 +271,11 @@ op4ok:
     jmp next_op
 op5:
     cmp al,5
-    jne op6
+    je op5go
+    jmp op6
+op5go:
     call t40_reset
+@@PANZERO@@
     jmp next_op
 op6:
     ; timed flush: ay, by, cx, dx, repeat count; BIOS ticks to TIME.BIN
@@ -426,6 +446,9 @@ finish:
     mov bx,h_out
     mov ah,3eh
     int 21h
+    mov bx,h_vid
+    mov ah,3eh
+    int 21h
     mov bx,h_in
     mov ah,3eh
     int 21h
@@ -452,7 +475,7 @@ def fragment(name):
 
 def harness_text():
     pan, bands = M.VROWS < ROWS, (H + 199) // 200
-    geom = (f"T40_COLS equ {COLS}\r\nT40_NROWS equ {ROWS}\r\nT40_VROWS equ {M.VROWS}\r\n"
+    geom = (f"T40_COLS equ {COLS}\r\nT40_NROWS equ {ROWS}\r\nT40_VISROWS equ {M.VROWS}\r\n"
             f"T40_NGLYPH equ 1024\r\nT40_GLIMIT equ {GLIMIT}\r\nT40_SNAPB equ 8192\r\n")
     if bands == 1:
         shad = f"shad segment para public 'SHAD'\r\n    db {ROWB * H} dup(?)\r\nshad ends\r\n"
@@ -471,6 +494,7 @@ def harness_text():
     t = t.replace("@@GEOM@@\r\n", geom).replace("@@SHADSEGS@@\r\n", shad).replace("@@LBUFSEG@@\r\n", lbuf)
     t = t.replace("@@INITSH@@\r\n", initsh).replace("@@LOADSH@@\r\n", load)
     t = t.replace("@@PANCALL@@\r\n", "    call t40_pan\r\n" if pan else "")
+    t = t.replace("@@PANZERO@@\r\n", "    xor ax,ax\r\n    call t40_pan\r\n" if pan else "")
     t = t.replace("@@SHSEG@@", "shad" if bands == 1 else "0").replace("@@LSEG@@", "lbuf" if pan else "vbuf")
     t = t.replace("@@TXTBYTES@@", str(2 * NCELL)).replace("@@VIDBYTES@@", str(2 * M.VROWS * COLS))
     return t.replace("@@DATA@@\r\n", fragment("T40DATA.ASM")).replace("@@PRES@@\r\n", fragment("T40PRES.ASM"))
@@ -528,9 +552,16 @@ class Scene:
         self.ops.append(bytes([4]) + bytes(self.shadow))
 
     def present(self, ay, by, cx, dx):
+        # the driver's FlushColumns clamps before it calls the presenter, and
+        # skips empty rectangles; the presenter's contract is a clamped,
+        # non-empty rectangle
+        ay, by, cx, dx = self.clamp(ay, by, cx, dx)
+        if not (ay < by and cx < dx):
+            return
         self.ops.append(struct.pack("<Bhhhh", 3, ay, by, cx, dx))
         self.model.present(self.shadow, ay, by, cx, dx)
         self.expect.append(list(self.model.text))
+        VEXP.append(list(self.model.video()))
         for y in range(max(ay, 0), min(by, H)):
             for p in range(4):
                 o = y * ROWB + p * COLS
@@ -557,10 +588,18 @@ class Scene:
         self.model.written = set()
         self.model.present_diff(self.shadow, ay, by, cx, dx)
         self.expect.append([w if k in self.model.written else 0xFFFF for k, w in enumerate(self.model.text)])
+        # the probe poisons the logical text; unpanned, that is the screen
+        VEXP.append(list(self.model.video()) if M.VROWS < ROWS else list(self.expect[-1]))
         for y in range(ay, by):
             for p in range(4):
                 o = y * ROWB + p * COLS
                 self.flushed[o + cx:o + dx] = self.shadow[o + cx:o + dx]
+
+    def pan(self, top):
+        """Show logical text rows top.. (clamped); the screen is dumped."""
+        self.ops.append(struct.pack("<Bh", 12, top))
+        self.model.pan(top)
+        VEXP.append(list(self.model.video()))
 
     def move(self, sx, sy, w, h, ddx, ddy):
         old = bytes(self.frame)
@@ -663,6 +702,8 @@ def synthetic(rnd, font, ops, model, n):
             s.frame[y * W + rnd.randrange(W)] = rnd.randrange(16)
             s.load()
             s.present(y, y + 1, 0, COLS)
+        if M.VROWS < ROWS and rnd.random() < 0.6:
+            s.pan(rnd.randrange(-3, ROWS - M.VROWS + 4))
     # nick one pixel of a shown glyph that lies in a neighbouring cell row or
     # column, flushing only that pixel: the hint's own cell must change
     shown = [k for k in range(NCELL) if model.shown(s.shadow, k)]
@@ -717,6 +758,9 @@ def synthetic(rnd, font, ops, model, n):
     s.disciplined()
     s.present(0, H, 0, COLS)
     expect_ideal.append((len(s.expect) - 1, model.ideal(s.shadow)))
+    if M.VROWS < ROWS:
+        for top in (ROWS - M.VROWS, 0, 7, 99, -5):
+            s.pan(top)
     return s.expect, expect_ideal
 
 
@@ -929,6 +973,41 @@ def regression_blit_overlap(font, ops, model):
     return s.expect, [(k, model.ideal(s.shadow))], checks
 
 
+VCHECKS = []        # (VIDEO.BIN dump index, screen cell, code shown there)
+
+
+def regression_pan(font, ops, model):
+    """Panned screen (VROWS < ROWS): words on logical rows 0, 30 and 49; a
+    pan past the end clamps to the last screen; a word drawn on a hidden
+    row is kept in the logical text and appears, without being converted
+    again, when the screen pans to it; a word drawn on a shown row appears
+    at its screen row while panned."""
+    s = Scene(ops, model)
+    _blank(s)
+    put = lambda col, row, word: s.text(8 * col, 8 * row, [ord(c) for c in word], font, 15, 1)
+    put(3, 0, "TOP")
+    put(3, 30, "MID")
+    put(3, ROWS - 1, "END")
+    s.load()
+    s.present(0, H, 0, COLS)
+    last = ROWS - M.VROWS
+    s.pan(last + 5)
+    VCHECKS.append((len(VEXP) - 1, (30 - last) * COLS + 3, ord("M")))
+    VCHECKS.append((len(VEXP) - 1, (M.VROWS - 1) * COLS + 3, ord("E")))
+    put(10, 2, "NEW")                           # hidden row
+    put(10, last + 1, "VIS")                    # shown row 1
+    s.load()
+    s.present(16, 24, 10, 13)
+    VCHECKS.append((len(VEXP) - 1, 1 * COLS + 10, 0x20))     # nothing from the hidden row
+    s.present(8 * (last + 1), 8 * (last + 2), 10, 13)
+    VCHECKS.append((len(VEXP) - 1, 1 * COLS + 10, ord("V")))
+    s.pan(0)
+    VCHECKS.append((len(VEXP) - 1, 2 * COLS + 10, ord("N")))
+    VCHECKS.append((len(VEXP) - 1, 0 * COLS + 3, ord("T")))
+    checks = [(len(s.expect) - 1, 2 * COLS + 10, "is", ord("N"))]
+    return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
+
+
 REGRESSIONS = (regression_same_position, regression_two_positions, regression_partial_overpaint,
                regression_diff_flush, regression_blit_overlap)
 
@@ -996,12 +1075,17 @@ def main():
     ap.add_argument("--pres", type=Path, help="alternative T40PRES.ASM (mutation runs)")
     ap.add_argument("--cols", type=int, default=40, choices=(40, 80),
                     help="text columns: 40 (TXT40, 320x200 shadow) or 80 (TEXT80, 640x200)")
+    ap.add_argument("--rows", type=int, default=25, choices=(25, 50),
+                    help="logical text rows: 50 = 640x400 shadow in two 64000-byte bands")
+    ap.add_argument("--vrows", type=int, help="text rows on screen (25 with --rows 50 pans)")
     ap.add_argument("--glimit", type=int, default=896,
                     help="glyph dictionary limit (896 as in the drivers; e.g. 48 to overflow it)")
     ap.add_argument("--bench", action="store_true",
                     help="only the timed desktop scene; T40TEST.EXE + OPS.BIN also run on an XT")
     a = ap.parse_args()
-    geometry(a.cols, a.glimit)
+    geometry(a.cols, a.glimit, a.rows, a.vrows)
+    if a.bench and H != 200:
+        fail(EXIT_HARNESS, "T40TEST: --bench is for 200-line shadows")
     if a.pres:
         SOURCES["T40PRES.ASM"] = a.pres
     out = a.out.resolve()
@@ -1020,7 +1104,8 @@ def main():
         ideal_checks += [(base + k, t) for k, t in ideal]
         names += [f"synthetic{i}"] * len(e)
     explicit = []
-    for fn in ([] if a.bench else REGRESSIONS):
+    regs = REGRESSIONS + ((regression_pan,) if M.VROWS < ROWS else ())
+    for fn in ([] if a.bench else regs):
         model = M.Presenter()
         ops.append(bytes([5]))
         base = len(expect)
@@ -1095,18 +1180,36 @@ def main():
             k = diff[0]
             bad.append({"flush": i, "scene": names[i], "cells": len(diff), "first": k,
                         "got": hex(dumps[i][k]), "want": hex(want[k])})
+    vb = 2 * M.VROWS * COLS
+    vgot = (out / "VIDEO.BIN").read_bytes() if (out / "VIDEO.BIN").exists() else b""
+    vdumps = [list(struct.unpack(f"<{vb // 2}H", vgot[i:i + vb])) for i in range(0, len(vgot) - vb + 1, vb)]
+    vbad = []
+    for i, want in enumerate(VEXP):
+        if i >= len(vdumps):
+            vbad.append({"dump": i, "problem": "missing"})
+        elif vdumps[i] != want:
+            k = next(k for k in range(len(want)) if vdumps[i][k] != want[k])
+            vbad.append({"dump": i, "first": k, "got": hex(vdumps[i][k]), "want": hex(want[k])})
+    for i, c, code in VCHECKS:
+        if (VEXP[i][c] & 0xFF) != code:
+            fail(EXIT_BUILD, f"T40TEST: specification fails regression_pan: dump {i} cell {c} {code:#x}")
+    vcheck_bad = [{"dump": i, "cell": c, "code": code} for i, c, code in VCHECKS
+                  if i >= len(vdumps) or (vdumps[i][c] & 0xFF) != code]
     ideal_bad = sum(1 for i, t in ideal_checks if i >= len(dumps) or dumps[i] != t)
     explicit_bad = [{"regression": n, "flush": i, "cell": c, "kind": k, "code": code,
                      "shown": dumps[i][c] if i < len(dumps) else None}
                     for n, i, c, k, code in explicit if i >= len(dumps) or not explicit_ok(dumps[i], c, k, code)]
     ticks = (out / "TIME.BIN").read_bytes() if (out / "TIME.BIN").exists() else b""
     result = {"run": run_log or "missing", "flushes": len(expect), "dumps": len(dumps),
-              "geometry": f"{COLS}x{ROWS}, glyph dictionary limit {GLIMIT}",
+              "geometry": f"{COLS}x{ROWS} ({M.VROWS} rows shown), glyph dictionary limit {GLIMIT}",
               "cells_compared": NCELL * len(expect), "mismatched_flushes": bad[:20],
               "full_flush_vs_ideal_failures": ideal_bad,
               "explicit_regression_checks": len(explicit), "explicit_failures": explicit_bad,
+              "screen_dumps_compared": len(VEXP), "screen_dumps": len(vdumps),
+              "mismatched_screens": vbad[:20], "screen_checks": len(VCHECKS), "screen_check_failures": vcheck_bad,
               "timed_flushes_here": len(ticks) // 2,
               "verdict": "PASS" if (run_log == "RUN=PASS" and not bad and not ideal_bad and not explicit_bad
+                                    and not vbad and not vcheck_bad and len(vdumps) == len(VEXP)
                                     and len(dumps) == len(expect)) else "FAIL"}
     (out / "RESULT.JSN").write_text(json.dumps(result, indent=1) + "\n")
     print(json.dumps(result, indent=1))

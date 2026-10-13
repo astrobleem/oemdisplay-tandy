@@ -37,7 +37,7 @@ T40 = importlib.machinery.SourceFileLoader("t40patch_t80", str(HERE.parent / "tx
 crlf, replace_n = T40.crlf, T40.replace_n
 
 COLS = 80
-GEOMETRY = {"T40_COLS": 80, "T40_NROWS": 25, "T40_VROWS": 25, "T40_NGLYPH": 1024, "T40_GLIMIT": 896,
+GEOMETRY = {"T40_COLS": 80, "T40_NROWS": 25, "T40_VISROWS": 25, "T40_NGLYPH": 1024, "T40_GLIMIT": 896,
             "T40_SNAPB": 8192}
 
 # (old, new) on the final staged TSOFT.ASM, each exactly once; from the

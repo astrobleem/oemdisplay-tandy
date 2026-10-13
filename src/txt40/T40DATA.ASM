@@ -10,12 +10,12 @@ endif
 if T40_GLIMIT ge T40_NGLYPH
 .err T40_GLIMIT must be below T40_NGLYPH
 endif
-; T40_VROWS (text rows shown: T40_NROWS, or 25 of 50 when panning) and the
+; T40_VISROWS (text rows shown: T40_NROWS, or 25 of 50 when panning) and the
 ; segment equates T40_SHSEG (shadow; 0 when the includer sets t40_sh0 and
 ; t40_sh1 at run time), T40_VSEG (video text buffer) and T40_LSEG (logical
 ; text buffer: T40_VSEG itself when nothing pans) come from the includer too.
 T40_NCELL equ T40_COLS*T40_NROWS
-T40_PAN equ T40_VROWS lt T40_NROWS      ; -1 (true) when the screen pans
+T40_PANNED equ T40_VISROWS lt T40_NROWS      ; -1 (true) when the screen pans
 T40_BANDS equ (T40_NROWS+24)/25         ; 200-row shadow segments (1 or 2)
 T40_W equ 8*T40_COLS                ; pixels
 T40_H equ 8*T40_NROWS

@@ -113,7 +113,7 @@ t40_tch db 0
 SEG_ANCHOR = "sEnd ShadowSeg\r\n"
 
 
-GEOMETRY = {"T40_COLS": 40, "T40_NROWS": 25, "T40_VROWS": 25, "T40_NGLYPH": 1024, "T40_GLIMIT": 896,
+GEOMETRY = {"T40_COLS": 40, "T40_NROWS": 25, "T40_VISROWS": 25, "T40_NGLYPH": 1024, "T40_GLIMIT": 896,
             "T40_SNAPB": 8192}
 SEGMENTS = {"T40_SHSEG": "seg shadow_bits", "T40_VSEG": "0b800h", "T40_LSEG": "0b800h",
             "T40_SNSEG": "seg t40_snapbuf"}
