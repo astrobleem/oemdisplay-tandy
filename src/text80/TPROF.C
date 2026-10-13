@@ -22,7 +22,7 @@
 
 #define PROF_ESC 0x5450
 #define QUERYESC 8
-#define NSLOT 16
+#define NSLOT 20
 #define NRING 256
 
 typedef struct {

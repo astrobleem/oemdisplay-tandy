@@ -29,7 +29,7 @@ TICK_MS = 54.9254
 UNIT_MS = TICK_MS / 65536
 SLOTS = {0: "flush", 1: "present", 2: "verify", 3: "outpass", 4: "cell", 5: "BitBlt", 6: "Output",
          7: "Pixel", 8: "ScanLR", 9: "StrBlt", 10: "ExtTextOut", 11: "hints", 12: "hintmove",
-         13: "verified", 14: "writes"}
+         13: "verified", 14: "writes", 15: "snapshot", 16: "compares", 17: "diffflush"}
 WRAP = (5, 6, 7, 8, 9, 10)
 
 
@@ -79,6 +79,8 @@ def breakdown(r):
         "cursor_etc_ms": ms(t(0) - t(1)),
         "verified": c(13),
         "hints_ms": ms(t(11)), "hint_calls": c(11), "hintmove_ms": ms(t(12)),
+        "snapshot_ms": ms(t(15)), "snapshots": c(15), "compare_ms": ms(t(16)), "compares": c(16),
+        "diffflush_ms": ms(t(17)), "diffflushes": c(17),
         "calls": {SLOTS[i]: [c(i), ms(t(i))] for i in WRAP if c(i)},
         "flush_rects": [{"rows": [f[0], f[1]], "bytes": [f[2], f[3]], "ms": ms(f[4]),
                          "from": SLOTS.get(f[5], "none")} for f in r["F"]],

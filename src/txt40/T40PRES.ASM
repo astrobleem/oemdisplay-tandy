@@ -10,7 +10,7 @@
 ; Entry points (near; all preserve CS/SS/SP and BP):
 ;   t40_present AX=first row, BX=end row, CX=first byte, DX=end byte;
 ;               clamped and non-empty. Clobbers AX-DI, DS, ES.
-;   t40_snap    AX..DX as t40_present, raw: keep the shadow bytes of that
+; t40_save      AX..DX as t40_present, raw: keep the shadow bytes of that
 ;               rectangle (clamped) for the next t40_pdiff, if they fit in
 ;               T40_SNAPB bytes. Preserves all.
 ;   t40_pdiff   AX..DX as t40_present: present only what can differ from
@@ -23,7 +23,7 @@
 ;   t40_blit    AX=src x, BX=src y, CX=width, DX=height, SI=dx, DI=dy.
 ;               Preserves all.
 ;   t40_reset   forget every hint. Preserves all.
-; Geometry equates (T40_COLS, T40_ROWS, T40_SLOTB and those derived from
+; Geometry equates (T40_COLS, T40_NROWS, T40_SLOTB and those derived from
 ; them) come from T40DATA.ASM; with none given, 40x25 as TXT40 has always
 ; been, assembling to the same bytes.
 ; Slot (T40_SLOTB = 16 or 14 bytes): +0 x, +2 y, +4 glyph rows 0-7, +12
@@ -884,7 +884,7 @@ tc_approx:
     je tc_nb_top
     or al,1
 tc_nb_top:
-    cmp t40_cy,T40_ROWS-1
+    cmp t40_cy,T40_NROWS-1
     je tc_nb_bottom
     or al,2
 tc_nb_bottom:
@@ -1226,9 +1226,9 @@ tpr_r0:
     dec bx
     shr bx,cl
     add bx,1
-    cmp bx,T40_ROWS-1
+    cmp bx,T40_NROWS-1
     jle tpr_r1
-    mov bx,T40_ROWS-1
+    mov bx,T40_NROWS-1
 tpr_r1:
     mov t40_r1,bx
     sub si,1
@@ -1304,8 +1304,8 @@ tpr_ocol:
     ret
 t40_present endp
 
-; ---- t40_snap --------------------------------------------------------------
-t40_snap proc near
+; ---- t40_save --------------------------------------------------------------
+t40_save proc near
     push ax
     push bx
     push cx
@@ -1400,7 +1400,7 @@ tsn_done:
     pop bx
     pop ax
     ret
-t40_snap endp
+t40_save endp
 
 ; ---- t40_changed: CF=1 if cell t40_dcy/t40_dcx lies in the snapshot's
 ; columns and one of its bytes within the snapshot's rows differs from it.
@@ -1408,9 +1408,13 @@ t40_snap endp
 t40_changed proc near
     mov ax,t40_dcx
     cmp ax,t40_sx0
-    jl tch2_same
+    jge tch2_in0
+    jmp tch2_same
+tch2_in0:
     cmp ax,t40_sx1
-    jge tch2_same
+    jl tch2_in1
+    jmp tch2_same
+tch2_in1:
     mov ax,t40_dcy              ; rows max(sy0, 8cy) .. min(sy1, 8cy+8)
     mov cl,3
     shl ax,cl
@@ -1425,7 +1429,9 @@ tch2_ya:
     mov bx,t40_sy1
 tch2_yb:
     sub bx,ax
-    jle tch2_same
+    jg tch2_rows
+    jmp tch2_same
+tch2_rows:
     push bx                     ; rows
     push ax                     ; first row
     mov cx,T40_ROWB             ; DI = first row * ROWB + column (shadow)
@@ -1506,9 +1512,9 @@ tpd_r0:
     dec bx
     shr bx,cl
     add bx,1
-    cmp bx,T40_ROWS-1
+    cmp bx,T40_NROWS-1
     jle tpd_r1
-    mov bx,T40_ROWS-1
+    mov bx,T40_NROWS-1
 tpd_r1:
     mov t40_dr1,bx
     sub si,1
@@ -1699,7 +1705,7 @@ tb_moves:
     mov bx,1
     cmp di,0
     jle tb_rdir
-    mov ax,T40_ROWS-1
+    mov ax,T40_NROWS-1
     mov bx,-1
 tb_rdir:
     mov t40_cy,ax
@@ -1744,8 +1750,13 @@ tb_row_done:
     mov ax,t40_cy
     cmp ax,0
     jl tb_done
-    cmp ax,T40_ROWS-1
+    cmp ax,T40_NROWS-1
+  if (T40_COLS eq 40) and (T40_SLOTB eq 16)
     jle tb_row
+  else
+    jg tb_done
+    jmp tb_row
+  endif
 tb_done:
     pop es
     pop ds

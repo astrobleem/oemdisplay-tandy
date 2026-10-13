@@ -31,7 +31,7 @@ MUTANTS = [
     ("half-block-count", "    cmp di,36", "    cmp di,27"),
     ("box-junction-table", "    db 0C4h,0BFh,0D9h,0B4h,0C4h,0C2h,0C1h,0C5h",
      "    db 0C4h,0BFh,0D9h,0C3h,0C4h,0C2h,0C1h,0C5h"),
-    ("right-edge-mask", "    sub ax,312", "    sub ax,311"),
+    ("right-edge-mask", "    sub ax,T40_W-8", "    sub ax,T40_W-9"),
     ("claim-window-rows", "    cmp ax,8\r\n    jae tcf_skip", "    cmp ax,7\r\n    jae tcf_skip"),
     ("background-tie-order", "    jbe tc_bg_next", "    jb tc_bg_next"),
     ("foreground-tie-order", "    jbe tc_fg_next", "    jb tc_fg_next"),
@@ -40,7 +40,7 @@ MUTANTS = [
     ("box-down-edge", "    cmp t40_rl,7", "    cmp t40_rl,6"),
     ("thin-line-stray", "    jle tp_thin", "    jl tp_thin"),
     ("half-block-tolerance", "    ja tp_density", "    jae tp_density"),
-    ("hint-bottom-edge", "    cmp bx,196", "    cmp bx,195"),
+    ("hint-bottom-edge", "    cmp bx,T40_H-4", "    cmp bx,T40_H-5"),
     ("blit-row-order", "    jle tb_rdir", "    jmp tb_rdir"),
     ("blit-inside-test", "    jg tbo_done\r\n    mov bx,word ptr t40_snap[di+2]",
      "    jge tbo_done\r\n    mov bx,word ptr t40_snap[di+2]"),
@@ -53,14 +53,24 @@ MUTANTS = [
     ("touch-short-window", "    cmp ax,t40_py1\r\n    jge tch_no\r\n    add ax,8", "    cmp ax,t40_py1\r\n    jge tch_no\r\n    add ax,7"),
     ("underline-row", "    cmp byte ptr [si+11],0\r\n    jne tv_normal",
      "    cmp byte ptr [si+11],1\r\n    jne tv_normal"),
-    ("second-slot", "    add si,16\r\n    cmp byte ptr [si+13],0", "    add si,32\r\n    cmp byte ptr [si+13],0"),
+    ("second-slot", "    add si,T40_SLOTB\r\n    cmp byte ptr [si+13],0", "    add si,2*T40_SLOTB\r\n    cmp byte ptr [si+13],0"),
     ("output-margin-top", "    sub ax,1\r\n    jge tpr_r0", "    sub ax,0\r\n    jge tpr_r0"),
     ("output-margin-left", "    sub si,1\r\n    jge tpr_c0", "    sub si,0\r\n    jge tpr_c0"),
-    ("output-margin-bottom", "    add bx,1\r\n    cmp bx,24", "    add bx,0\r\n    cmp bx,24"),
+    ("output-margin-bottom", "    add bx,1\r\n    cmp bx,T40_NROWS-1\r\n    jle tpr_r1",
+     "    add bx,0\r\n    cmp bx,T40_NROWS-1\r\n    jle tpr_r1"),
+    # snapshot-diff flushes (TEXT80)
+    ("diff-ignores-stale", "    test t40_vst[bx],80h\r\n    jnz tpd_yes", "    test t40_vst[bx],00h\r\n    jnz tpd_yes"),
+    ("diff-never-changed", "    jc tpd_yes", "    clc"),
+    ("diff-skips-plane-3", "    cmp al,es:[di+3*T40_COLS]", "    cmp al,al"),
+    ("diff-first-row-only", "    loop tch2_row", "    nop"),
+    ("diff-run-half-rows", "    add bx,8\r\n    mov cx,t40_drun", "    add bx,4\r\n    mov cx,t40_drun"),
+    ("diff-no-left-margin", "    sub si,1\r\n    jge tpd_c0", "    sub si,0\r\n    jge tpd_c0"),
+    ("diff-any-rectangle", "    je tpd_go", "    jmp short tpd_go"),
+    ("diff-snapshot-columns", "    sub dx,cx\r\n    mov t40_snc,dx", "    sub dx,cx\r\n    mov t40_snc,cx"),
 ]
 
 
-CONTROL_BROKEN = ("control-unassemblable", "    cmp ax,2", "    cmp ax,2,,")
+CONTROL_BROKEN = ("control-unassemblable", "    cmp ax,2", "    cmp ax,t40_no_such_symbol")
 
 
 def classify(rc, out):
@@ -74,7 +84,7 @@ def classify(rc, out):
 
 def run_test(a, out, name, asm=None):
     cmd = [sys.executable, str(HERE / "T40TEST.PY"), "--deps", str(a.deps), "--dosbox", str(a.dosbox),
-           "--out", str(out / name), "--scenes", str(a.scenes)]
+           "--out", str(out / name), "--scenes", str(a.scenes), "--cols", str(a.cols)]
     if asm:
         cmd += ["--pres", str(asm)]
     rc = subprocess.run(cmd, capture_output=True, text=True).returncode
@@ -87,6 +97,7 @@ def main():
     ap.add_argument("--dosbox", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--scenes", type=int, default=12)
+    ap.add_argument("--cols", type=int, default=40, choices=(40, 80))
     a = ap.parse_args()
     out = a.out.resolve()
     out.mkdir(parents=True, exist_ok=False)

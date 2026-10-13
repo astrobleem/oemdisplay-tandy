@@ -113,12 +113,20 @@ t40_tch db 0
 SEG_ANCHOR = "sEnd ShadowSeg\r\n"
 
 
+GEOMETRY = {"T40_COLS": 40, "T40_NROWS": 25, "T40_SLOTB": 16, "T40_SNAPB": 8192}
+
+
+def geometry_text():
+    return crlf("; T40PATCH: presenter geometry (T40DATA.ASM).\n" +
+                "".join(f"{k} equ {v}\n" for k, v in GEOMETRY.items()))
+
+
 def seg_text():
-    return (crlf("; T40PATCH: hints and presenter state.\n"
+    return (geometry_text() + crlf("; T40PATCH: hints and presenter state.\n"
                  "createSeg _T40,T40Seg,word,public,DATA\n"
                  "sBegin T40Seg\n") + fragment("T40DATA.ASM") + crlf(
                  "sEnd T40Seg\n"
-                 "; T40PATCH: snapshot of a text call's flush rectangle (t40_snap).\n"
+                 "; T40PATCH: snapshot of a text call's flush rectangle (t40_save).\n"
                  "createSeg _T40N,T40NSeg,word,public,DATA\n"
                  "sBegin T40NSeg\n"
                  "t40_snapbuf db T40_SNAPB dup (0)\n"
@@ -631,7 +639,7 @@ t40_unclamp macro extended
 endm
 
 ; T40PATCH: before the renderer draws, keep the pixels of the proven flush
-; rectangle (t40_snap); the flush then presents only cells that changed or
+; rectangle (t40_save); the flush then presents only cells that changed or
 ; whose hints did (t40_pdiff). Not proven: no snapshot (ordinary flush).
 t40_takesnap macro
 local skip
@@ -645,7 +653,7 @@ local skip
     mov bx,rowlast
     mov cx,colfirst
     mov dx,collast
-    call t40_snap
+    call t40_save
     pop dx
     pop cx
     pop bx

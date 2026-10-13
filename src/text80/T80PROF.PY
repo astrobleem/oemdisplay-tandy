@@ -17,7 +17,8 @@ Windows program through Control escape 5450h ('TP'):
   3 presenter output pass, 4 one cell (t40_cell), 5 TBitBlt, 6 TOutput,
   7 TPixel, 8 TScanLR, 9 TStrBlt, 10 TExtTextOut, 11 hint recording
   (t40_text), 12 hint moves (t40_blit), 13 cells re-verified (count only),
-  14 video writes (count only).
+  14 video writes (count only), 15 snapshot (t40_save), 16 cell
+  compares of a diff flush (t40_changed), 17 diff flushes (t40_pdiff).
 - A ring of the last 256 flushes: clamped rows and byte columns, the
   duration and the drawing call (5..10, 0 none) it came from.
 
@@ -39,7 +40,7 @@ def rep(t, old, new, want, what):
     return t.replace(old, new)
 
 
-NSLOT = 16
+NSLOT = 20
 RING = 256
 # header 4 + stamp 4 + counts 64 + totals 64 + ring index 2 + pad 2 + ring 16*256
 T80PROF_BYTES = 4 + 4 + 4 * NSLOT * 2 + 4 + 16 * RING
@@ -306,6 +307,18 @@ def patch(t):
             "    mov es:[di],ax\r\n    t80_cnt 14\r\n    mov si,T40_SHSEG\r\n", 1, "video write count")
     # hints
     t = rep(t, "t40_text proc near\r\n", "t40_text proc near\r\n    t80_tbeg 11\r\n", 1, "text begin")
+    i, j = t.index("t40_save proc near\r\n"), t.index("t40_save endp")
+    if t[i:j].count("    ret\r\n") != 1:
+        raise SystemExit("T80PROF: t40_save has more than one ret")
+    t = rep(t, "t40_save proc near\r\n", "t40_save proc near\r\n    t80_tbeg 15\r\n", 1, "save begin")
+    t = rep(t, "tsn_done:\r\n", "tsn_done:\r\n    t80_tend 15\r\n", 1, "save end")
+    t = rep(t, "    call t40_changed\r\n", "    t80_tbeg 16\r\n    call t40_changed\r\n    t80_tend 16\r\n", 1,
+            "compare")
+    t = rep(t, "t40_pdiff proc near\r\n", "t40_pdiff proc near\r\n    t80_tbeg 17\r\n", 1, "pdiff begin")
+    t = rep(t, "tpd_full:\r\n    jmp t40_present\r\n", "tpd_full:\r\n    t80_tend 17\r\n    jmp t40_present\r\n", 1,
+            "pdiff full")
+    t = rep(t, "tpd_done:\r\n    ret\r\nt40_pdiff endp", "tpd_done:\r\n    t80_tend 17\r\n    ret\r\nt40_pdiff endp", 1,
+            "pdiff end")
     t = rep(t, "tt_ret:\r\n    ret\r\nt40_text endp", "tt_ret:\r\n    t80_tend 11\r\n    ret\r\nt40_text endp", 1,
             "text end")
     i, j = t.index("t40_blit proc near\r\n"), t.index("t40_blit endp")

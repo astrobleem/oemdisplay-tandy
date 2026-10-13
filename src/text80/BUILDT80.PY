@@ -7,8 +7,11 @@
 Variants (each is BUILD88's own build of a profile, with staged edits applied
 after every port step and before the first assembly; BUILD88's instruction,
 REP-prefix and link audits then run on the edited listings):
-  t40        TXT40 exactly as on ai/txt40-tv (T40PATCH; 320x200x16)
+  t40        TXT40 with this branch's presenter fixes (T40PATCH; 320x200x16)
   t40prof    t40 + T80PROF timers/counters (measurement build)
+  t80        TEXT80 80x25 colour text (T80PATCH over the same pipeline; the
+             640x200 resources of the 640x200 profiles, hash-checked)
+  t80prof    t80 + T80PROF
 Further variants are added by the TEXT80 work as it lands.
 The driver is copied to <out>/<OUTNAME> and summarized in <out>/T80RES.JSON.
 A successful build is not runtime acceptance; no package or pin changes.
@@ -29,12 +32,29 @@ def load(name, path):
     return importlib.machinery.SourceFileLoader(name, str(path)).load_module()
 
 
+RES640_SHA = "4bdf9197db27b33dd5859c4198534aa7db6cb2066fe8075caff1899ff25cb312"
+
+
+def res640(repo, resources):
+    """The CGA-resolution resources of MODEPROF's 640x200 profiles: the
+    DDK's RC_LOW font resources and 2-pixel vertical borders."""
+    mp = load("modeprof_t80", repo / "src" / "tandysw" / "MODEPROF.PY")
+    low = repo / "DDK/286/DISPLAY/1PLANE/RC_LOW"
+    mp.write(resources / "FONTS.ASM", mp.read(low / "FONTS.ASM").replace(chr(26), ""))
+    cfg = mp.read(resources / "CONFIG.ASM")
+    mp.write(resources / "CONFIG.ASM", mp.replace(cfg, "\tdw\t1\t\t\t;cxBorder", "\tdw\t2\t\t\t;cxBorder"))
+
+
 def variants():
-    t40 = load("t40patch", ROOT / "txt40" / "T40PATCH.PY")
     prof = load("t80prof", HERE / "T80PROF.PY")
+    t40 = lambda e: load("t40patch", ROOT / "txt40" / "T40PATCH.PY").patch_staged(e)
+    t80 = lambda e: load("t80patch", HERE / "T80PATCH.PY").patch_staged(e)
     return {
-        "t40": dict(mode="320x200x16", out="TXT40.DRV", edits=[t40.patch_staged]),
-        "t40prof": dict(mode="320x200x16", out="T40PROF.DRV", edits=[t40.patch_staged, prof.patch_staged]),
+        "t40": dict(mode="320x200x16", out="TXT40.DRV", edits=[t40]),
+        "t40prof": dict(mode="320x200x16", out="T40PROF.DRV", edits=[t40, prof.patch_staged]),
+        "t80": dict(mode="320x200x16", out="TEXT80.DRV", edits=[t80], res=res640, res_sha=RES640_SHA),
+        "t80prof": dict(mode="320x200x16", out="T80PROF.DRV", edits=[t80, prof.patch_staged], res=res640,
+                        res_sha=RES640_SHA),
     }
 
 
@@ -57,6 +77,9 @@ def main():
     def prepare(r, o):
         renderer, resources = real_prepare(r, o)
         state["renderer"] = renderer
+        if "res" in v:
+            v["res"](repo, Path(resources))
+            b88.baseline.RESOURCE_SHA = v["res_sha"]     # BUILD88 then asserts it
         return renderer, resources
 
     def run(command, env, path, timeout=180):
@@ -85,6 +108,7 @@ def main():
     shutil.copyfile(drvs[0], target)
     data = target.read_bytes()
     summary = {"variant": a.variant, "driver": v["out"], "built_as": drvs[0].name, "mode": v["mode"],
+               "resource_sha256": result.get("resource_sha256"),
                "driver_bytes": len(data), "driver_sha256": hashlib.sha256(data).hexdigest(),
                "edits_staged_sha256": state["patched"],
                "build88_audits": "see RESULT.json (instruction, REP-prefix, link)", "runtime": "NOT_TESTED"}

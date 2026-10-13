@@ -1,29 +1,18 @@
 ; T40DATA.ASM - TXT40/TEXT80 presenter state (fragment for segment _T40).
-; Geometry: the includer may define T40_COLS (40 or 80), T40_ROWS (25) and
-; T40_SLOTB (hint slot bytes: 16, or 14 to fit 80x25 in one segment);
-; without them this is TXT40's 40x25 with 16-byte slots.
-ifndef T40_COLS
-T40_COLS equ 40
-endif
-ifndef T40_ROWS
-T40_ROWS equ 25
-endif
-ifndef T40_SLOTB
-T40_SLOTB equ 16
-endif
+; Geometry: the includer defines T40_COLS (40 or 80), T40_NROWS (25),
+; T40_SLOTB (hint slot bytes: 16, or 14 to fit 80x25 in one segment) and
+; T40_SNAPB (snapshot buffer bytes) before this fragment. TXT40 is 40, 25,
+; 16. (MASM 5.1 rejects IFNDEF defaults here as forward references.)
 if (T40_COLS ne 40) and (T40_COLS ne 80)
 .err T40_COLS must be 40 or 80
 endif
 if (T40_SLOTB ne 16) and (T40_SLOTB ne 14)
 .err T40_SLOTB must be 16 or 14
 endif
-ifndef T40_SNAPB
-T40_SNAPB equ 8192                  ; snapshot buffer bytes (segment T40_SNSEG)
-endif
-T40_NCELL equ T40_COLS*T40_ROWS
+T40_NCELL equ T40_COLS*T40_NROWS
 T40_CELLB equ 2*T40_SLOTB           ; two slots per cell
 T40_W equ 8*T40_COLS                ; pixels
-T40_H equ 8*T40_ROWS
+T40_H equ 8*T40_NROWS
 T40_ROWB equ 4*T40_COLS             ; shadow bytes per pixel row (4 planes)
 if T40_COLS eq 40
 T40_ROWSH equ 5                     ; T40_ROWB = 5 shl T40_ROWSH

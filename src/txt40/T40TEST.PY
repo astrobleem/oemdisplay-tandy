@@ -284,7 +284,7 @@ op7r:
     mov bx,word ptr buf+2
     mov cx,word ptr buf+4
     mov dx,word ptr buf+6
-    call t40_snap
+    call t40_save
     jmp next_op
 op8:
     ; diff flush: ay, by, cx, dx (clamped, non-empty); text buffer out
@@ -339,8 +339,7 @@ def fragment(name):
 
 
 def harness_text():
-    geom = (f"T40_COLS equ {COLS}\r\nT40_ROWS equ {ROWS}\r\nT40_SLOTB equ {SLOTB}\r\n"
-            if (COLS, SLOTB) != (40, 16) else "")
+    geom = f"T40_COLS equ {COLS}\r\nT40_NROWS equ {ROWS}\r\nT40_SLOTB equ {SLOTB}\r\nT40_SNAPB equ 8192\r\n"
     t = HARNESS.replace("\r\n", "\n").replace("\n", "\r\n")
     t = t.replace("@@GEOM@@\r\n", geom).replace("@@SHBYTES@@", str(ROWB * H)).replace("@@TXTBYTES@@", str(2 * NCELL))
     return t.replace("@@DATA@@\r\n", fragment("T40DATA.ASM")).replace("@@PRES@@\r\n", fragment("T40PRES.ASM"))
@@ -743,8 +742,34 @@ def regression_diff_flush(font, ops, model):
     return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
 
 
+def regression_blit_overlap(font, ops, model):
+    """Screen-to-screen copies that overlap their source (scrolling, window
+    moves by less than their size): three rows of text moved down by one
+    text row and right by one cell must show the same three rows at the new
+    place, each hint moved once (the copy order matters: down/right copies
+    must take the bottom/right cells first)."""
+    s = Scene(ops, model)
+    _blank(s)
+    rows = ["ABC", "DEF", "GHI"]
+    x0, y0 = 16, 40
+    for r, word in enumerate(rows):
+        s.text(x0, y0 + 8 * r, [ord(c) for c in word], font, 15, 1)
+    s.load()
+    s.present(y0, y0 + 24, x0 >> 3, (x0 >> 3) + 3)
+    s.move(x0, y0, 24, 24, 8, 8)
+    s.load()
+    s.present(y0, y0 + 32, x0 >> 3, (x0 >> 3) + 4)
+    k = len(s.expect) - 1
+    checks = []
+    for r, word in enumerate(rows):
+        for c, ch in enumerate(word):
+            cell = ((y0 >> 3) + 1 + r) * COLS + (x0 >> 3) + 1 + c
+            checks.append((k, cell, "is", ord(ch)))
+    return s.expect, [(k, model.ideal(s.shadow))], checks
+
+
 REGRESSIONS = (regression_same_position, regression_two_positions, regression_partial_overpaint,
-               regression_diff_flush)
+               regression_diff_flush, regression_blit_overlap)
 
 
 def explicit_ok(text, cell, kind, code):
