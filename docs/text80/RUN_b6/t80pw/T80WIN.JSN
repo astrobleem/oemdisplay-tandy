@@ -1,0 +1,101 @@
+{
+ "checks": [
+  {
+   "check": "T80ON PAN: display.drv=T80PAN.DRV, originals saved, load= keeps T80SNAP and gains XTPAN.EXE",
+   "result": "PASS",
+   "load": [
+    "load=C:\\T80\\T80SNAP.EXE XTPAN.EXE"
+   ]
+  },
+  {
+   "check": "Windows runs in 80x25 text over the 640x400 desktop, top 0",
+   "result": "PASS",
+   "top": 0
+  },
+  {
+   "check": "desktop: shows 'Program Manager'",
+   "result": "PASS",
+   "at": [
+    [
+     5,
+     31
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'File'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     10
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'Options'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     16
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'Window'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     25
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'Help'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     33
+    ]
+   ]
+  },
+  {
+   "check": "Alt+PgDn: top 56 (whole text rows); screen rows 0-17 are exactly rows 7-24 seen before",
+   "result": "PASS",
+   "top": 56
+  },
+  {
+   "check": "Alt+PgUp: top 0 and every cell as before the pan",
+   "result": "PASS",
+   "top": 0
+  },
+  {
+   "check": "repeated Alt+PgDn: whole text rows, each screen continues the previous one exactly, stops at the last row (top 200)",
+   "result": "PASS",
+   "tops": [
+    56,
+    112,
+    168,
+    200,
+    200
+   ]
+  }
+ ],
+ "timing_s": {
+  "desktop": 12.3,
+  "desk0": 12.3,
+  "pan_down1": 12.3,
+  "pan_down1_settled": 22.3,
+  "pan_up1": 12.3,
+  "pan_rep0": 12.3,
+  "pan_rep1": 12.3,
+  "pan_rep2": 12.3,
+  "pan_rep3": 12.3,
+  "pan_rep4": 12.3
+ },
+ "passed": 10,
+ "failed": 0
+}

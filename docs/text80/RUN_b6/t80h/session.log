@@ -1,0 +1,3 @@
+shot t80on
+FAIL T80ON: display.drv=TEXT80.DRV and the 8x8 fonts set; originals saved
+FAIL T80ON: load= keeps its entry (T80SNAP); [fonts] gained the two 8x8 faces

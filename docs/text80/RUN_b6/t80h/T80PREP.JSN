@@ -1,0 +1,59 @@
+{
+ "machine": "tandyhx",
+ "harness_target": "xtbase",
+ "base_driver": "TR53216.DRV",
+ "base_driver_sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61",
+ "files": {
+  "T80/TEXT80.DRV": "cf1b843ef4255341eb899c615cd192f4bb61b8342dae052413df4cf9454c9937",
+  "T80/T80HELV.FON": "9bd5153d11f26e340b0385d9adba756351c0f41e8915a4d16c333d342b4057fd",
+  "T80/T80COUR.FON": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6",
+  "T80/T80SET.EXE": "5b043803bb18a7a5df6a00818c990ad6c4cc54b0376f52920e62823f311b9fa2",
+  "T80/T80ON.BAT": "c4c0270a6f4c1b0ec22d4fc8a1d7d797d920d9a58a235a71c497bf83e427d606",
+  "T80/T80OFF.BAT": "cd5799e8979a4fed83654aa0612fe73e46d31dbc387297d73cff7a7b4b0b06fc",
+  "T80/T80PAN.DRV": "8d0eb05d045f8bcdfa6e4786a7c2520a22b6b0792a07743a1a1d72f97b799d24",
+  "T80/T80VGA.DRV": "94357bbd19980ada0ed1d337776043168c33de931f9616cea399a4672d778042",
+  "T80/XTPAN.EXE": "97abd7664cc58e97c0093aa2246dd14ea95675ed8645ee71080a7e2dd50eed99",
+  "T80/XTTSYS.FON": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa",
+  "T80/XTCFIX.FON": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+  "T80/XTCOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+  "T80/T80SNAP.EXE": "c12088889d42c948065e2203866f54e260273c115b1861b7936b8ef12a8db818",
+  "T80/TPROF.EXE": "95bfb4c7bf7e29152cee159014e176254628550eba0aa2b3b21f6b77ae4fa522"
+ },
+ "win_ini_load_before": "load=C:\\XTPAN\\XTPAN.EXE",
+ "win_ini_load_after": "load=C:\\XTPAN\\XTPAN.EXE C:\\T80\\T80SNAP.EXE",
+ "fonts_list": "WIN.INI [fonts] untouched (no --only-8x8)",
+ "harness_prep": {
+  "target": "xtbase",
+  "pristine_sha256": "f55fe24baf83d9557e6c16612fbf8b4af5b175bf6b9b6d876e5784222e117561",
+  "driver": "TR53216.DRV",
+  "driver_sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61",
+  "tools": {
+   "RESERVE.COM": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+   "MSTEST.COM": "51dd0966a76cbc6349f1685ef65bbdeb4883897679d5426168d8f9c5a9f462bc",
+   "XTPAN.EXE": "97abd7664cc58e97c0093aa2246dd14ea95675ed8645ee71080a7e2dd50eed99",
+   "PANTEST.EXE": "a81ed260dc4a106fc96109b2c6b0442e649a3b4e1468ff7d56fc2ec42fb37e86"
+  },
+  "control_ega": false,
+  "mouse": "pty",
+  "fonts": {
+   "XTTSYS.FON": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa",
+   "XTCFIX.FON": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+   "XTCOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+  },
+  "grid": 1,
+  "tv": false,
+  "only_8x8": false,
+  "changes": [
+   "CONFIG.SYS: only files=30, buffers=30 (removed HIMEM, SMARTDRV, EGA.SYS: an XT has no XMS and no EGA)",
+   "AUTOEXEC.BAT: PATH/TEMP as before, run C:\\XTPAN\\RESERVE, stay at the DOS prompt (no automatic WIN)",
+   "8x8 fonts: fonts.fon=XTTSYS.FON, fixedfon.fon=XTCFIX.FON, oemfonts.fon=XTCOEM.FON (first-party XT fonts, hashes checked)",
+   "SYSTEM.INI: display.drv=TR53216.DRV; [keyboard] type=1 (PC/XT 83-key instead of AT)",
+   "WIN.INI: load=C:\\XTPAN\\XTPAN.EXE; [XTPan] LogFile=C:\\XTPAN\\XTPAN.LOG (defaults for Step, Dwell, Edge, keys and FollowActive)",
+   "WIN.INI: GridGranularity=1 (windows snap to 8-pixel steps)",
+   "WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); Wallpaper=BARS16.BMP (a full-screen 16-colour bar test image, centred)",
+   "added WINDOWS/BARS16.BMP: 320x200 4-bit, 16 bars of 20 pixels, palette = the driver's colour table (generated, sha256 42c3959625954073173f743ed2b432c68a75385135dafa1d643c70f93ce38fbe)",
+   "added WINDOWS/SYSTEM/TR53216.DRV and XTPAN/RESERVE.COM, MSTEST.COM, XTPAN.EXE, PANTEST.EXE"
+  ],
+  "86box_cfg": "[General]\nconfirm_exit = 0\nconfirm_reset = 0\nconfirm_save = 0\nvid_renderer = qt_software\nvideo_filter_method = 0\nscale = 3\n\n[Machine]\nmachine = tandy1000hx\ncpu_family = 8088\ncpu_speed = 7159092\ncpu_multi = 1\ncpu_use_dynarec = 0\nmem_size = 640\ntime_sync = disabled\n\n[Video]\ngfxcard = internal\n\n[Input devices]\nmouse_type = none\n\n[Storage controllers]\nhdc_1 = xtide\n\n[PC/XT XTIDE #1]\nbios = xt\n\n[Hard disks]\nhdd_01_fn = pcp.img\nhdd_01_ide_channel = 0:0\nhdd_01_parameters = 17, 4, 615, 0, ide\n\n[Ports (COM & LPT)]\nserial1_enabled = 1\nserial1_device = serial_passthrough\n\n[Serial Passthrough (COM) #1]\npath = @PTY@\nreconnect = 1\n"
+ }
+}

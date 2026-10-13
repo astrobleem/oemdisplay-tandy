@@ -1,0 +1,42 @@
+{
+ "events": [
+  {
+   "run": "C:\\T80\\TPROF TYPE 30",
+   "attempt": 1
+  },
+  {
+   "line": "TYPE n=30 ms=54871",
+   "after_s": 85.1
+  },
+  {
+   "type_wall_s": 176.5
+  },
+  {
+   "run": "C:\\T80\\TPROF LINES 30",
+   "attempt": 1
+  },
+  {
+   "line": "LINES n=30 ms=279348",
+   "after_s": 310.2
+  },
+  {
+   "lines_wall_s": 388.5
+  },
+  {
+   "run": "C:\\T80\\TPROF NOTE 60 120",
+   "attempt": 1
+  },
+  {
+   "line": "READY",
+   "after_s": 110.1
+  },
+  {
+   "typed": "Hello from 80x25 text mode!",
+   "typing_s": 3.9
+  },
+  {
+   "line": "NOTE ms=148572",
+   "after_s": 145.1
+  }
+ ]
+}

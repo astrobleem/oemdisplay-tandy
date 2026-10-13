@@ -1,0 +1,24 @@
+{
+ "purpose": "text80-t80v",
+ "command": [
+  "env",
+  "DISPLAY=:79",
+  "sh",
+  "-c",
+  "python3 src/text80/T80WIN.PY --vm /home/claude/work/86box/t80v --profile vga --emulator dosbox > /home/claude/work/86box/t80v/session.log 2>&1"
+ ],
+ "bound_seconds": 7200,
+ "lock": "/home/claude/work/EMU.LOCK",
+ "acquired_utc": "2026-10-13T16:04:22.072135+00:00",
+ "conflicts_before": [],
+ "pid": 20971,
+ "exit_code": 0,
+ "conflicts_after": [
+  {
+   "pid": 20973,
+   "comm": "dosbox-x"
+  }
+ ],
+ "released_utc": "2026-10-13T16:30:54.307599+00:00",
+ "seconds": 1592.2
+}

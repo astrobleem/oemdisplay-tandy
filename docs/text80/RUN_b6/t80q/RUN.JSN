@@ -1,0 +1,23 @@
+[
+ {
+  "frame": "t80on",
+  "decoded": false,
+  "source": "Monitor_1_20261013-135029-602.png",
+  "step": "shot t80on",
+  "t": 1791899430.4
+ },
+ {
+  "frame": "aftertype",
+  "decoded": false,
+  "source": "Monitor_1_20261013-135737-999.png",
+  "step": "shot aftertype",
+  "t": 1791899858.8
+ },
+ {
+  "frame": "notepad",
+  "decoded": false,
+  "source": "Monitor_1_20261013-141059-454.png",
+  "step": "shot notepad",
+  "t": 1791900660.2
+ }
+]
