@@ -19,6 +19,15 @@ identical and the wanted text is there):
   Manager) brought to front in turn; exit to DOS and relaunch = the same
   desktop; T80OFF and Windows again with the previous driver (40 columns).
 --prof: the driver is a T80PROF build; TPROF NOTE records typing time.
+--profile pan: T80ON ... PAN (T80PAN.DRV, 640x400 desktop, 25 of 50 rows
+shown, XTPAN.EXE helper) and the panning steps instead of 4-10: Alt+PgDn
+pans in whole text rows and the screen rows are exactly the logical rows
+seen before (overlap compared cell for cell), Alt+PgUp restores the desktop
+identically, repeated pans, the Run dialog (centred on the 400-row desktop)
+brought wholly into view by the helper, the pointer footprint while panned,
+Notepad moved below the viewport, typed into while not shown (offscreen
+drawing) and revealed by a pan with no repaint; pan times from the helper
+log (C:\\T80\\XTPAN.LOG).
 Results: <vm>/T80WIN.JSN.
 """
 import argparse
@@ -155,6 +164,154 @@ class Session:
         return self.settle(tag, want, timeout=1800)
 
     # -- the session ---------------------------------------------------------
+    def pan(self, key, name, want=()):
+        """A pan key held 150 ms like a person presses it (the helper polls
+        every 55 ms; XPWIN.PY pankey)."""
+        PCPWIN.P.focus()
+        subprocess.run(["xdotool", "keydown", key], check=False, env=dict(__import__("os").environ, DISPLAY=":79"))
+        time.sleep(0.15)
+        subprocess.run(["xdotool", "keyup", key], check=False, env=dict(__import__("os").environ, DISPLAY=":79"))
+        time.sleep(8)
+        return self.settle(name, want)
+
+    def run_pan(self, rollback=True):
+        r = self.r
+        self.text("C:", 1)
+        self.key("Return", 2)
+        self.text("CD \\T80", 1)
+        self.key("Return", 2)
+        self.text("T80ON C:\\WINDOWS PAN", 1)
+        self.key("Return", 25)
+        r.shot("t80on", settle=1, decode=False)
+        sysini = self.read("::/WINDOWS/SYSTEM.INI").decode("latin1")
+        winini = self.read("::/WINDOWS/WIN.INI").decode("latin1")
+        load = [ln for ln in winini.split("\r\n") if ln.lower().startswith("load=")]
+        self.check("T80ON PAN: display.drv=T80PAN.DRV, originals saved, load= keeps T80SNAP and gains XTPAN.EXE",
+                   "display.drv=T80PAN.DRV" in sysini and bool(self.read("::/WINDOWS/SYSTEM.T80")) and
+                   len(load) == 1 and "T80SNAP.EXE" in load[0].upper() and "XTPAN.EXE" in load[0].upper(),
+                   load=load)
+        desk = ("Program Manager", "File", "Options", "Window", "Help")
+        rec = self.start_windows("desktop", desk)
+        self.check("Windows runs in 80x25 text over the 640x400 desktop, top 0",
+                   bool(rec) and rec["cols"] == 80 and rec["rows"] == 25 and rec["top"] == 0,
+                   top=rec and rec["top"])
+        self.expect("desktop", *desk)
+        r.home()
+        self.settle("desk0")
+        # pan down: Step 50 from 0 rounds up to 56 (7 text rows)
+        t0 = time.time()
+        d1 = self.pan("alt+Next", "pan_down1")
+        self.timing["pan_down1_settled"] = round(time.time() - t0, 1)
+        d0 = self.recs.get("desk0")
+        ok = bool(d1 and d0) and d1["top"] == 56
+        if ok:
+            ok = d1["hidden"][:18 * 80] == d0["hidden"][7 * 80:25 * 80]
+        self.check("Alt+PgDn: top 56 (whole text rows); screen rows 0-17 are exactly rows 7-24 seen before",
+                   ok, top=d1 and d1["top"])
+        u1 = self.pan("alt+Prior", "pan_up1")
+        self.check("Alt+PgUp: top 0 and every cell as before the pan",
+                   bool(u1 and d0) and u1["top"] == 0 and u1["hidden"] == d0["hidden"], top=u1 and u1["top"])
+        # repeated pans: down to the bottom and back, every screen consistent
+        tops, ok = [], True
+        prev = d0
+        for i in range(5):
+            rec = self.pan("alt+Next", f"pan_rep{i}")
+            if not rec:
+                ok = False
+                break
+            tops.append(rec["top"])
+            dy = (rec["top"] - prev["top"]) // 8
+            if rec["top"] % 8 or not 0 <= dy <= 25:
+                ok = False
+            elif dy < 25 and rec["hidden"][:(25 - dy) * 80] != prev["hidden"][dy * 80:]:
+                ok = False
+            prev = rec
+        self.check("repeated Alt+PgDn: whole text rows, each screen continues the previous one exactly, "
+                   "stops at the last row (top 200)", ok and tops[-1:] == [200], tops=tops)
+        self.cursor_at("panned_pointer", 300, 330)
+        rec = self.pan("alt+F9", "pan_top")
+        self.check("Alt+F9: back to top 0, every cell as on the desktop",
+                   bool(rec) and rec["top"] == 0 and rec["hidden"] == d0["hidden"])
+        # the Run dialog is centred on the 400-row desktop: the helper brings
+        # it wholly into view
+        self.key("alt+f", 8)
+        self.key("r", 8)
+        run = ("Command Line:", "Run Minimized", "OK", "Cancel")
+        rd = self.settle("rundlg", run, timeout=600)
+        self.check("Run dialog: shown whole after the helper's follow pan (top a multiple of 8)",
+                   bool(rd) and rd["top"] % 8 == 0 and all(CHK.find(rd["hidden"], 80, s) for s in run),
+                   top=rd and rd["top"])
+        self.key("Escape", 6)
+        self.pan("alt+F9", "after_run")
+        # Notepad below the viewport, typed into while not shown
+        self.runcmd("NOTEPAD")
+        self.settle("notepad0", ("Notepad - (untitled)",), timeout=1200)
+        self.key("alt+space", 4)
+        self.key("m", 4)
+        for _ in range(28):
+            self.key("Down", 0.5)
+        self.key("Return", 8)
+        self.pan("alt+F9", "np_moved_top0")
+        line = "typed while not shown"
+        t0 = time.time()
+        self.text(line, 2)
+        self.timing["offscreen_typing_s"] = round(time.time() - t0, 1)
+        hid = self.settle("offscreen_typed")
+        self.check("offscreen typing: the screen (top 0) does not show the typed line",
+                   bool(hid) and hid["top"] == 0 and not CHK.find(hid["hidden"], 80, line))
+        for i in range(5):
+            rec = self.pan("alt+Next", f"reveal{i}", ())
+            if rec and CHK.find(rec["hidden"], 80, line):
+                break
+        self.check("pan reveals the line typed while it was not shown (drawn offscreen, no repaint)",
+                   bool(rec) and bool(CHK.find(rec["hidden"], 80, line)), top=rec and rec["top"])
+        if rec:
+            hits = CHK.find(rec["hidden"], 80, line)
+            if hits:
+                rr, cc = hits[0]
+                attrs = {w >> 8 for w in CHK.cells_at(rec["hidden"], 80, rr, cc, len(line))}
+                self.check("revealed line: one colour pair, black on white (F0h)", attrs == {0xF0},
+                           attrs=sorted(hex(a) for a in attrs))
+        log = self.read("::/T80/XTPAN.LOG").decode("latin1")
+        (self.vm / "XTPAN.LOG").write_text(log)
+        pans = [ln for ln in log.splitlines() if ln.startswith("PAN ")]
+        self.timing["helper_pans"] = pans
+        self.check("helper log: pans recorded with their times", bool(pans), pans=len(pans))
+        # exit, relaunch, rollback
+        self.key("alt+F4", 8)
+        self.settle("savequery", ("No",), timeout=600)
+        self.key("n", 10)
+        self.pan("alt+F9", "before_exit")
+        self.key("alt+F4", 8)
+        self.settle("exitdlg", ("This will end your Windows", "OK"), timeout=600)
+        self.key("Return", 60)
+        self.start_windows("desktop2", desk)
+        r.home()
+        self.settle("desk2")
+        self.identical("desk0", "desk2", "relaunch: the desktop is identical to the first launch")
+        if not rollback:
+            return
+        self.key("alt+F4", 8)
+        self.settle("exitdlg2", ("This will end your Windows",), timeout=600)
+        self.key("Return", 60)
+        self.text("CD \\T80", 1)
+        self.key("Return", 2)
+        self.text("T80OFF", 1)
+        self.key("Return", 25)
+        sysini = self.read("::/WINDOWS/SYSTEM.INI").decode("latin1")
+        winini = self.read("::/WINDOWS/WIN.INI").decode("latin1")
+        self.check("T80OFF: SYSTEM.INI and WIN.INI restored (no T80PAN.DRV, no XTPAN.EXE on load=)",
+                   "T80PAN" not in sysini.upper() and "XTPAN.EXE" not in winini.upper() and
+                   not self.read("::/WINDOWS/SYSTEM.T80"))
+        rec = self.start_windows("rolledback", ("Program Manager",))
+        self.check("rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
+                   bool(rec) and rec["cols"] != 80, cols=rec and rec["cols"])
+
+    def cursor_at(self, name, x, y):
+        self.to(x, y, 4)
+        self.settle(name)
+        self.cursor(name)
+
     def run(self, rollback=True):
         r = self.r
         # 1. set up from the DOS prompt
@@ -323,10 +480,11 @@ def main():
     ap.add_argument("--vm", required=True)
     ap.add_argument("--prof", action="store_true")
     ap.add_argument("--skip-rollback", action="store_true")
+    ap.add_argument("--profile", choices=("25", "pan"), default="25")
     a = ap.parse_args()
     s = Session(a.vm, a.prof)
     try:
-        s.run(rollback=not a.skip_rollback)
+        (s.run_pan if a.profile == "pan" else s.run)(rollback=not a.skip_rollback)
     finally:
         (s.vm / "T80WIN.JSN").write_text(json.dumps(s.result(), indent=1) + "\n")
         (s.vm / "SNAPS.BIN").write_bytes(s.read("::/T80/SNAPS.BIN"))

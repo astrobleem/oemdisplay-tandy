@@ -943,6 +943,31 @@ def regression_diff_flush(font, ops, model):
     s.load()
     s.present_diff(P[1], P[1] + 8, 0, COLS)
     checks.append((len(s.expect) - 1, cell10() + 3, "is", ord("T")))
+    # (8) a glyph half a cell row down (window rows 100..107, cell row 13)
+    # whose top half is overpainted inside a diff flush of cell row 12 only:
+    # the run must present its cells' full pixel rows, so the flush touches
+    # the window and the stale glyph goes
+    xg, yg = 8 * 30, 8 * 12 + 4
+    s.fill(xg - 8, yg - 8, xg + 16, yg + 16, 1)
+    s.glyph(xg, yg, font[ord("G")], 15, 1)
+    s.add(xg, yg, font[ord("G")], ord("G"))
+    s.load()
+    s.present(yg - 8, yg + 16, (xg >> 3) - 1, (xg >> 3) + 2)
+    checks.append((len(s.expect) - 1, 13 * COLS + 30, "is", ord("G")))
+    s.snap(8 * 12, 8 * 13, 0, COLS)
+    s.fill(xg, yg, xg + 8, yg + 4, 4)
+    s.load()
+    s.present_diff(8 * 12, 8 * 13, 0, COLS)
+    checks.append((len(s.expect) - 1, 13 * COLS + 30, "not", ord("G")))
+    # (9) a snapshot whose rows start above the flush's (same columns, same
+    # bottom): an ordinary flush. Pixels of cell (8, 5) changed before the
+    # snapshot (so the snapshot cannot show the change); the flush's output
+    # range holds that cell row, and an ordinary flush recomputes it
+    s.fill(40, 64, 48, 68, 6)
+    s.load()
+    s.snap(64, 112, 0, COLS)
+    s.present_diff(72, 112, 0, COLS)
+    checks.append((len(s.expect) - 1, 8 * COLS + 5, "not", 0x20))
     s.present(0, H, 0, COLS)                     # probe buffers hold 0FFFFh: compare a full one
     return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
 

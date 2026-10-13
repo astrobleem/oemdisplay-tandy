@@ -397,8 +397,8 @@ def patch(t):
     t = rep(t, "    call t40_cell\r\n", "    t80_tbeg 4\r\n    call t40_cell\r\n    t80_tend 4\r\n", 1, "cell")
     t = rep(t, "tpr_verify:\r\n    call t40_shown\r\n", "tpr_verify:\r\n    t80_cnt 13\r\n    call t40_shown\r\n",
             1, "verify count")
-    t = rep(t, "    mov es:[di],ax\r\n    mov si,T40_SHSEG\r\n",
-            "    mov es:[di],ax\r\n    t80_cnt 14\r\n    mov si,T40_SHSEG\r\n", 1, "video write count")
+    t = rep(t, "    pop ax\r\n  if T40_PANNED\r\n    mov si,T40_LSEG",
+            "    pop ax\r\n    t80_cnt 14\r\n  if T40_PANNED\r\n    mov si,T40_LSEG", 1, "cell write count")
     # hints
     t = rep(t, "t40_text proc near\r\n", "t40_text proc near\r\n    t80_tbeg 11\r\n", 1, "text begin")
     i, j = t.index("t40_save proc near\r\n"), t.index("t40_save endp")

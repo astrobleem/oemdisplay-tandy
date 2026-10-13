@@ -288,8 +288,14 @@ t80_panset endp
 """)
 
 QUERY_OLD = "    mov bx,es:[di]\r\n    cmp bx,QUERYESCSUPPORT\r\n    je control_ok\r\n"
-QUERY_NEW = QUERY_OLD + crlf("""    cmp bx,PAN_ESC            ; T80TALL
-    je control_ok
+QUERY_NEW = crlf("""    mov bx,es:[di]
+    cmp bx,QUERYESCSUPPORT
+    je t80q_ok
+    cmp bx,PAN_ESC            ; T80TALL
+    jne t80q_no
+t80q_ok:
+    jmp control_ok
+t80q_no:
 """)
 HANDLER_OLD = "control_color:\r\n    cmp bx,GETCOLORTABLE\r\n    jne control_done\r\n"
 HANDLER_NEW = crlf("""control_color:

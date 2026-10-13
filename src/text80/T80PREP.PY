@@ -12,7 +12,7 @@ machine tandyhx: Tandy 1000 HX 7.16 MHz, its own video (target xtbase),
 Both: the first-party 8x8 system/fixed/OEM fonts (as Windows XT installs
 them), WIN.INI's [fonts] list untouched, a serial mouse on a host pty.
 --pkg: TEXT80.DRV, T80HELV.FON, T80COUR.FON, T80SET.EXE, T80ON.BAT,
-T80OFF.BAT (+ XTTSYS.FON, XTCFIX.FON, XTCOEM.FON from distributions/WINXT).
+T80OFF.BAT; T80PAN.DRV, T80VGA.DRV and XTPAN.EXE when present (+ XTTSYS.FON, XTCFIX.FON, XTCOEM.FON from distributions/WINXT).
 --tools: T80SNAP.EXE (added to load= as C:\\T80\\T80SNAP.EXE, so the
 installer must keep an existing load= entry), TPROF.EXE, T40ID.COM,
 MSTEST.COM. Writes <vm>/T80PREP.JSN (every file's SHA-256).
@@ -29,6 +29,7 @@ ROOT = HERE.parents[1]
 PCP86 = importlib.machinery.SourceFileLoader("pcp86x", str(ROOT / "src" / "xtpan" / "PCP86.PY")).load_module()
 PART = "@@8704"
 PKG = ["TEXT80.DRV", "T80HELV.FON", "T80COUR.FON", "T80SET.EXE", "T80ON.BAT", "T80OFF.BAT"]
+OPTIONAL = ["T80PAN.DRV", "T80VGA.DRV", "XTPAN.EXE"]       # copied when the package has them
 FONTS = ["XTTSYS.FON", "XTCFIX.FON", "XTCOEM.FON"]
 TOOLS = ["T80SNAP.EXE", "TPROF.EXE"]
 
@@ -52,7 +53,7 @@ def main():
     i = f"{a.vm / 'pcp.img'}{PART}"
     PCP86.mt("mmd", "-i", i, "::/T80")
     files = {}
-    for n in PKG:
+    for n in PKG + [n for n in OPTIONAL if (a.pkg / n).is_file()]:
         PCP86.mt("mcopy", "-o", "-i", i, str(a.pkg / n), "::/T80/" + n)
         files["T80/" + n] = sha(a.pkg / n)
     for n in FONTS:
@@ -69,6 +70,11 @@ def main():
         raise SystemExit("T80PREP: WIN.INI has no single load= line")
     old = lines[k[0]]
     lines[k[0]] = old + ("" if old.endswith("=") else " ") + "C:\\T80\\T80SNAP.EXE"
+    if (a.pkg / "XTPAN.EXE").is_file():
+        # test harness only: the pan helper logs every pan with its time
+        while lines and lines[-1] == "":
+            lines.pop()
+        lines += ["", "[XTPan]", "LogFile=C:\\T80\\XTPAN.LOG", ""]
     tmp = a.vm / "prep" / "WIN.INI"
     tmp.write_bytes("\r\n".join(lines).encode("latin1"))
     PCP86.mt("mcopy", "-o", "-i", i, str(tmp), "::/WINDOWS/WIN.INI")
