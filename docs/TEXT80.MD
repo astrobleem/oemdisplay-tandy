@@ -127,9 +127,9 @@ about twenty fully clipped lines; each costs under 1 ms.
 |---|---|---|---|
 | Stock TXT40 | `_T40` 18,621 | 32,000 static | 263,264 |
 | TXT40 fixed | as above | 32,000 static | 268,224 |
-| TEXT80 25 | `_T40` 28,621 | 64,000 static | 207,872 |
-| TEXT80 PAN | `_T40` 48,621 + `_T80L` 8,000 | 129,536 GlobalAlloc | 122,240 |
-| TEXT80 VGA (DOSBox-X) | as PAN, without `_T80L` | 129,536 GlobalAlloc | 122,496 |
+| TEXT80 25 | `_T40` 28,621 | 64,000 static | 207,776 |
+| TEXT80 PAN | `_T40` 48,621 + `_T80L` 8,000 | 129,536 GlobalAlloc | 105,440 (b7 session, with `XTPAN.EXE` running; 122,240 in b6) |
+| TEXT80 VGA (DOSBox-X) | as PAN, without `_T80L` | 129,536 GlobalAlloc | 121,792 |
 
 The 640x400 shadow is 4 bits per pixel, 128,000 bytes: more than a
 segment. T80TALL makes it a huge block of two 200-row bands of 64,000
@@ -202,7 +202,12 @@ so VGA ran only in DOSBox-X 2024.03.01 (`machine=vgaonly`, `cputype=8086`,
 not time an 8088, so the VGA results are functional only; expect the
 same per-cell costs as TEXT80 PAN on real hardware. The mode-set and
 detection code is the same INT 10h path a real VGA BIOS answers.
-@@B7VGA@@
+Final VGA session (b7, 34/34): the BIOS reports 80 columns and 50 rows;
+desktop, File menu (every cell restored on close), Run dialog, the
+pointer as one exact cell, Notepad typing and its colours, selection,
+scrolling, overlapping windows, relaunch identical, T80OFF and the
+previous driver starting again. The TYPE/LINES times it records (2 and
+18 ms) are DOSBox-X at full host speed and mean nothing for an 8088.
 
 ## 6. Tests and evidence
 
@@ -257,7 +262,7 @@ Results (b6 builds unless stated):
 |---|---|---|
 | TEXT80 25 | 86Box XT/CGA | **b7: 50/50**. b6: 49/1 (the overlap check looked for the wrong title; fixed) |
 | TEXT80 PAN | 86Box XT/CGA | **b7: 23/23**. b6 stopped after 10 passes on a harness limit (pointer moves past row 199; fixed) |
-| TEXT80 VGA | DOSBox-X vgaonly | @@B7SVGA@@ |
+| TEXT80 VGA | DOSBox-X vgaonly | **b7: 34/34**. b4: 31/4 (all four were wrong expectations in the checks; fixed) |
 | Allocation failure (`t80panfail`) | 86Box XT/CGA | Windows does not start; DOS prompt works; T80OFF rollback; Windows starts with the previous driver |
 | TEXT80 25 on Tandy 1000 HX | 86Box `tandy1000hx` 7.16 MHz | @@B7SHX@@ |
 
@@ -353,7 +358,7 @@ packages, release workflows, pins and hashes are untouched.
 - IBM CGA snows in 80 columns; nothing waits for retrace.
 - PAN: windows taller than 193 rows can lose up to 7 rows at some
   positions (cell rounding); pans are whole text rows.
-- PAN/VGA use 130 KB more Windows memory than 80x25 (122 KB free in a
+- PAN/VGA use 130 KB more Windows memory than 80x25 (105-122 KB free in a
   640 KB machine before Notepad).
 - VGA 80x50 is functional evidence only (DOSBox-X); no speed figure.
 - The Tandy 1000 BIOS reads the backslash key's scan code from 86Box as
