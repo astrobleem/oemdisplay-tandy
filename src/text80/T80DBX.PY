@@ -82,6 +82,7 @@ class DBX:
                 self.proc.wait(20)
             except subprocess.TimeoutExpired:
                 self.proc.kill()
+                self.proc.wait(20)                       # reaped: no dosbox-x left for EMULOCK to see
 
     def window(self):
         out = xdo("search", "--name", "DOSBox-X", check=False).stdout.split()
