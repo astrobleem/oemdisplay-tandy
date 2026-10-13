@@ -42,6 +42,8 @@ MUTANTS = [
     ("half-block-tolerance", "    ja tp_density", "    jae tp_density"),
     ("hint-bottom-edge", "    cmp bx,T40_H-4", "    cmp bx,T40_H-5"),
     ("blit-row-order", "    jle tb_rdir", "    jmp tb_rdir"),
+    ("blit-range-last-row", "    sub ax,4\r\n    sar ax,cl\r\n    cmp ax,T40_NROWS-1", "    sub ax,12\r\n    sar ax,cl\r\n    cmp ax,T40_NROWS-1"),
+    ("blit-range-first-col", "    mov ax,t40_sx\r\n    add ax,4", "    mov ax,t40_sx\r\n    add ax,12"),
     ("blit-inside-test", "    jg tbo_done\r\n    mov bx,word ptr t40_snap[di+2]",
      "    jge tbo_done\r\n    mov bx,word ptr t40_snap[di+2]"),
     ("same-place-replace", "    je ta_write                 ; same place: the newer replaces", "    jmp short ta_push"),

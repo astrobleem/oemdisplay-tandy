@@ -128,6 +128,10 @@ t40_cir0    dw 0                ; its interior in cells (exclusive ends)
 t40_cir1    dw 0
 t40_cic0    dw 0
 t40_cic1    dw 0
+t40_br0     dw 0                ; t40_blit: the cells it visits (inclusive)
+t40_br1     dw 0
+t40_bc0     dw 0
+t40_bc1     dw 0
 t40_cdr     dw 0                ; and its offset in cells
 t40_cdc     dw 0
 t40_qr0     dw 0                ; t40_present: dirty cells (rows, columns,

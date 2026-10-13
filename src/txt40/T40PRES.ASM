@@ -2363,22 +2363,66 @@ t40_blit proc near
     jmp tb_done                 ; identity copy: nothing moves
 tb_moves:
     call t40_aligned            ; TEXT80: whole-cell copy? (t40_cpv)
-    ; rows bottom-up when moving down, columns right-to-left when moving right
+    ; only cells whose hints can lie wholly inside the source: a hint at
+    ; x..x+7 is in cell (x+4)>>3, so rows (sy+4)>>3..(ey-4)>>3, columns
+    ; likewise (no other cell moves a hint or is the source of a copy)
+    mov cl,3
+    mov ax,t40_sy
+    add ax,4
+    sar ax,cl
+    jns tb_br0
     xor ax,ax
+tb_br0:
+    mov t40_br0,ax
+    mov ax,t40_ey
+    sub ax,4
+    sar ax,cl
+    cmp ax,T40_NROWS-1
+    jle tb_br1
+    mov ax,T40_NROWS-1
+tb_br1:
+    mov t40_br1,ax
+    mov ax,t40_sx
+    add ax,4
+    sar ax,cl
+    jns tb_bc0
+    xor ax,ax
+tb_bc0:
+    mov t40_bc0,ax
+    mov ax,t40_ex
+    sub ax,4
+    sar ax,cl
+    cmp ax,T40_COLS-1
+    jle tb_bc1
+    mov ax,T40_COLS-1
+tb_bc1:
+    mov t40_bc1,ax
+    mov ax,t40_br0
+    cmp ax,t40_br1
+    jle tb_rows_ok
+    jmp tb_done
+tb_rows_ok:
+    mov ax,t40_bc0
+    cmp ax,t40_bc1
+    jle tb_cols_ok
+    jmp tb_done
+tb_cols_ok:
+    ; rows bottom-up when moving down, columns right-to-left when moving right
+    mov ax,t40_br0
     mov bx,1
     cmp di,0
     jle tb_rdir
-    mov ax,T40_NROWS-1
+    mov ax,t40_br1
     mov bx,-1
 tb_rdir:
     mov t40_cy,ax
     mov t40_ny,bx
 tb_row:
-    xor ax,ax
+    mov ax,t40_bc0
     mov bx,1
     cmp t40_ddx,0
     jle tb_cdir
-    mov ax,T40_COLS-1
+    mov ax,t40_bc1
     mov bx,-1
 tb_cdir:
     mov t40_cx,ax
@@ -2421,17 +2465,18 @@ tb_next:
     mov ax,t40_nx
     add t40_cx,ax
     mov ax,t40_cx
-    cmp ax,0
+    cmp ax,t40_bc0
     jl tb_row_done
-    cmp ax,T40_COLS-1
-    jle tb_col
+    cmp ax,t40_bc1
+    jg tb_row_done
+    jmp tb_col
 tb_row_done:
     mov ax,t40_ny
     add t40_cy,ax
     mov ax,t40_cy
-    cmp ax,0
+    cmp ax,t40_br0
     jl tb_done
-    cmp ax,T40_NROWS-1
+    cmp ax,t40_br1
     jg tb_done
     jmp tb_row
 tb_done:
