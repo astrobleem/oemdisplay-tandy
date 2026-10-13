@@ -1039,6 +1039,88 @@ def regression_touch_edges(font, ops, model):
     return out_expect, out_ideal, checks
 
 
+def regression_aligned_attr(font, ops, model):
+    """An aligned copy (seven coloured lines, rows 5..10 scrolled up by one
+    line) gives interior cells the source cell's kept state, attribute
+    included. Then a new glyph next to a copied cell whose glyph sits
+    exactly on its own cell (so the new pixels do not touch its window):
+    the copied cell is output again as the neighbour of a changed cell
+    without being re-verified, so it must show its own (copied) colours,
+    not the destination's old ones."""
+    s = Scene(ops, model)
+    _blank(s)
+    word = [ord(c) for c in "ABCDEF"]
+    for i in range(7):                                     # cell rows 4..10, columns 4..9
+        s.text(32, 32 + 8 * i, word, font, (9 + i) & 15, i + 1)
+    s.load()
+    s.present(32, 88, 4, 10)
+    s.move(32, 40, 48, 48, 0, -8)                          # rows 5..10 up to 4..9
+    s.load()
+    s.present(32, 80, 4, 10)
+    k = len(s.expect) - 1
+    checks = [(k, 6 * COLS + 6, "is", ord("C"))]
+    s.glyph(40, 48, font[ord("Z")], 0, 7)                  # cell (6, 5)
+    s.add(40, 48, font[ord("Z")], ord("Z"))
+    s.load()
+    s.present(48, 56, 5, 6)
+    checks.append((len(s.expect) - 1, 6 * COLS + 5, "is", ord("Z")))
+    s.present(0, H, 0, COLS)
+    return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
+
+
+def regression_aligned_wider_flush(font, ops, model):
+    """An aligned copy whose following flush is wider than its destination
+    (here one more column, with a glyph drawn there earlier and not yet
+    flushed): an ordinary flush, which must show that glyph."""
+    s = Scene(ops, model)
+    _blank(s)
+    for i in range(5):
+        s.text(32, 32 + 8 * i, [ord(c) for c in "abcde"], font, 15, 1)
+    s.load()
+    s.present(32, 72, 4, 9)
+    s.glyph(72, 40, font[ord("W")], 14, 1)                 # column 9, not flushed yet
+    s.add(72, 40, font[ord("W")], ord("W"))
+    s.move(32, 40, 40, 32, 0, -8)
+    s.load()
+    s.present(32, 64, 4, 10)                               # destination is columns 4..8
+    k = len(s.expect) - 1
+    s.present(0, H, 0, COLS)
+    return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], [(k, 5 * COLS + 9, "is", ord("W"))]
+
+
+def scroll_scene(rnd, font, ops, model):
+    """Glyphs drawn over each other at any alignment, with hints, then
+    screen-to-screen copies of random rectangles by whole cells (scrolling
+    client areas, which are not on cell boundaries) and grid moves, each
+    flushed over its destination."""
+    s = Scene(ops, model)
+    s.fill(0, 0, W, H, rnd.randrange(16))
+    s.load()
+    s.present(0, H, 0, COLS)
+    chars = [c for c in font if 33 <= c < 127]
+    for i in range(40):
+        x, y = rnd.randrange(-4, W - 4), rnd.randrange(-4, H - 4)
+        ch = rnd.choice(chars)
+        fg, bg = rnd.sample(range(16), 2)
+        s.glyph(x, y, font[ch], fg, bg)
+        if rnd.random() < 0.85:
+            s.add(x, y, font[ch], M.ansi_to_cp437(ch))
+        s.load()
+        s.present(y, y + 8, x >> 3, (x + 15) >> 3)
+    for i in range(14):
+        w, h = rnd.randrange(24, min(W, 240)), rnd.randrange(24, min(H, 160))
+        sx, sy = rnd.randrange(W - w + 1), rnd.randrange(H - h + 1)
+        dx = 8 * rnd.randrange(-(sx // 8), (W - w - sx) // 8 + 1) if rnd.random() < 0.4 else 0
+        dy = 8 * rnd.randrange(-(sy // 8), (H - h - sy) // 8 + 1)
+        if rnd.random() < 0.5 and 8 <= sy and sy + h + 8 <= H:
+            dy = rnd.choice((-8, 8))
+        s.move(sx, sy, w, h, dx, dy)
+        s.load()
+        s.present(sy + dy, sy + dy + h, (sx + dx) >> 3, (sx + dx + w + 7) >> 3)
+    s.present(0, H, 0, COLS)
+    return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))]
+
+
 VCHECKS = []        # (VIDEO.BIN dump index, screen cell, code shown there)
 
 
@@ -1075,7 +1157,7 @@ def regression_pan(font, ops, model):
 
 
 REGRESSIONS = (regression_same_position, regression_two_positions, regression_partial_overpaint,
-               regression_touch_edges,
+               regression_touch_edges, regression_aligned_attr, regression_aligned_wider_flush,
                regression_diff_flush, regression_blit_overlap)
 
 
@@ -1170,6 +1252,14 @@ def main():
         expect += e
         ideal_checks += [(base + k, t) for k, t in ideal]
         names += [f"synthetic{i}"] * len(e)
+    for i in range(0 if a.bench else 2):
+        model = M.Presenter()
+        ops.append(bytes([5]))
+        base = len(expect)
+        e, ideal = scroll_scene(rnd, font, ops, model)
+        expect += e
+        ideal_checks += [(base + k, t) for k, t in ideal]
+        names += [f"scroll{i}"] * len(e)
     explicit = []
     regs = REGRESSIONS + ((regression_pan,) if M.VROWS < ROWS else ())
     for fn in ([] if a.bench else regs):

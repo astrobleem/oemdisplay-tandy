@@ -79,7 +79,10 @@ MUTANTS = [
     # tight output range
     ("tight-no-change-mark", "    or t40_vst[bx],40h", "    or t40_vst[bx],00h"),
     ("tight-stale-not-changed", "    test al,80h\r\n    jnz tpr_chg", "    test al,00h\r\n    jnz tpr_chg"),
-    ("tight-attr-ignored", "    cmp ah,t40_vat[bx]\r\n    je tpr_kept", "    cmp ah,ah\r\n    je tpr_kept"),
+    # (not "attribute change ignored": a shown hint keeps its slot but changes
+    # colour only if its whole window is recoloured, which includes its own
+    # cell, so the cell is dirty and output anyway, and a neighbour's claim
+    # never uses the attribute: an equivalent mutant, left out)
     ("tight-left-neighbour", "    test t40_vst[bx-1],40h", "    test t40_vst[bx-1],00h"),
     ("tight-right-neighbour", "    test t40_vst[bx+1],40h", "    test t40_vst[bx+1],00h"),
     ("tight-dirty-cols-short", "    shr ax,cl\r\n    dec ax\r\n    mov t40_qc1,ax", "    shr ax,cl\r\n    dec ax\r\n    dec ax\r\n    mov t40_qc1,ax"),
