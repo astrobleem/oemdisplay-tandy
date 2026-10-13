@@ -14,8 +14,9 @@ free memory (32,320 driver, 8,096 helper; 15% of the 268,448 bytes the
 unchanged driver leaves), **about 1.05 s per pan** on the emulated
 7.16 MHz 8088. Ordinary drawing costs at most 0.7% more with the
 helper off (+0.7% for fills, none for text or scrolling) and 0.6-1.3%
-more with it running (fills +1.3%). Not tried on
-real hardware. Recommendation in section 8.
+more with it running (fills +1.3%). **Real hardware (2026-10-13): Chad
+reports that panning works on his Tandy 1000 EX** (details in section 8).
+Recommendation in section 8.
 
 Branch `ai/xt-pan`, separate from every release line. Target: Tandy 1000
 EX (8088, 640KB, Windows 3.0 real mode), driver profile 320x200x16
@@ -355,8 +356,14 @@ escape. Nothing needed a kernel or USER change.
   its own qualification.
 - **Do not** add hardware page flipping (another 32 KB of system RAM,
   200-row steps only) or VGA-style assumptions.
-- Before any wider use: a real Tandy 1000 EX or HX, the WINXT keyboard
-  setup, and a check that 1 s pans feel acceptable on real hardware.
+- Real hardware: on 2026-10-13 Chad (the maintainer) reported that the
+  panning test worked on his real Tandy 1000 EX. That is the first run
+  outside 86Box, and on the machine the work targets (86Box has no EX
+  model). It is his report, not a scripted capture: no pan times,
+  free-memory figures or screenshots from the EX are recorded here yet.
+  Still to record from real hardware: pan time per step, the WINXT
+  keyboard keys (Alt+PgDn / Alt+PgUp / Alt+F9) on the EX keyboard, and an
+  HX run.
 
 ## 9. Reproducing
 
