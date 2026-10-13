@@ -190,6 +190,7 @@ def hint_cell(x, y):
 
 class Presenter:
     def __init__(self):
+        self.written = set()                         # cells rewritten (T40TEST probes)
         self.slots = [[] for _ in range(NCELL)]     # newest first, at most 2
         self.text = [0] * NCELL                      # attr<<8 | code
         self.kept = [None] * NCELL                   # (slot index, attr) shown
@@ -307,6 +308,7 @@ class Presenter:
         for cy in range(r0, r1 + 1):
             for x in range(c0, c1 + 1):
                 self.text[cy * COLS + x] = self.cell(shadow, cy, x, shown)
+                self.written.add(cy * COLS + x)
 
     # ---- snapshot diff (TEXT80 speed-up; used by TXT40 too) ----------------
     # A drawing call snapshots the shadow bytes of the rectangle it is about

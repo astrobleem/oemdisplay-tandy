@@ -6,6 +6,8 @@ pinned DOS toolchain (CL /G0 /Gw /AS /W3 /Od, LINK4), under DOSBox-X.
       --dosbox <dosbox-x> --out <fresh dir> --app TPROF [--app T80HELP ...]
 
 Each NAME needs NAME.C, NAME.DEF and NAME.RSP in src/text80 (or src/xtpan).
+--dos-app NAME builds a DOS program from NAME.C alone (CL /AS, default
+DOS small-model library SLIBCE.LIB, the pinned LINK).
 Results: <out>/NAME.EXE and <out>/RESULT.JSON (bytes and SHA-256 of each).
 """
 import argparse
@@ -54,7 +56,8 @@ def main():
     ap.add_argument("--dosbox", type=Path, required=True)
     ap.add_argument("--repo", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
-    ap.add_argument("--app", action="append", required=True)
+    ap.add_argument("--app", action="append", default=[])
+    ap.add_argument("--dos-app", action="append", default=[])
     a = ap.parse_args()
     repo, out = a.repo.resolve(), a.out.resolve()
     if out.exists():
@@ -62,6 +65,8 @@ def main():
     for n in ("BIN/CL.EXE", "BIN/LINK4.EXE", "LIB/SLIBCEW.LIB", "LIB/LIBW.LIB"):
         if not (repo / n).is_file():
             ap.error("missing toolchain input: " + n)
+    if not a.app and not a.dos_app:
+        ap.error("nothing to build")
     out.mkdir(parents=True)
     bat = ["@ECHO OFF", "PATH=C:\\BIN", "SET INCLUDE=C:\\DDK\\286\\INC;C:\\INCLUDE", "SET LIB=C:\\LIB",
            "ECHO START > BUILD.LOG"]
@@ -71,6 +76,10 @@ def main():
             (out / (app + ext)).write_bytes(data)
         bat += [f"CL {FLAGS} {app}.C >> BUILD.LOG", "IF ERRORLEVEL 1 GOTO FAIL",
                 f"LINK4 /NOE /NOD @{app}.RSP >> BUILD.LOG", "IF ERRORLEVEL 1 GOTO FAIL"]
+    for app in a.dos_app:
+        data = find(app + ".C").read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
+        (out / (app + ".C")).write_bytes(data)
+        bat += [f"CL /nologo /AS /W3 /Od {app}.C >> BUILD.LOG", "IF ERRORLEVEL 1 GOTO FAIL"]
     bat += ["ECHO PASS >> BUILD.LOG", "GOTO END", ":FAIL", "ECHO FAIL >> BUILD.LOG", ":END", "EXIT"]
     (out / "BUILD.BAT").write_bytes(("\r\n".join(bat) + "\r\n").encode())
     (out / "BUILD.CNF").write_text(CONF.format(repo=repo, out=out))
@@ -99,7 +108,7 @@ def main():
         raise SystemExit("BUILDAPP: build failed; inspect BUILD.LOG and HOST.LOG")
     res = {"compiler_flags": FLAGS, "target": "Windows 3.0 real mode, 8086",
            "warnings": [ln.strip() for ln in log.splitlines() if "warning" in ln.lower()]}
-    for app in a.app:
+    for app in a.app + a.dos_app:
         b = (out / (app + ".EXE")).read_bytes()
         res[app + ".EXE"] = {"bytes": len(b), "sha256": hashlib.sha256(b).hexdigest()}
     (out / "RESULT.JSON").write_text(json.dumps(res, indent=2) + "\n")

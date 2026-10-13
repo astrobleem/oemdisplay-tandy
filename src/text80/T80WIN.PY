@@ -1,0 +1,339 @@
+#!/usr/bin/env python3
+"""Scripted 86Box qualification of TEXT80 (80x25 colour text, no panning).
+
+  python3 src/text80/T80WIN.PY --vm <VM from T80PREP.PY, started, at the DOS prompt>
+      [--prof] [--skip-rollback]
+
+Everything is checked on exact text cells: T80SNAP.EXE (on load=) appends
+the text buffer to C:\\T80\\SNAPS.BIN whenever Scroll Lock is pressed, once
+with the pointer hidden and once shown (T80CHK.PY). 86Box captures are kept
+as pictures. Steps (each check waits until two snapshots in a row are
+identical and the wanted text is there):
+  T80ON at the DOS prompt; Windows starts in 80x25 (BIOS columns 80);
+  desktop text; pointer = exactly the hot spot cell XOR 77h, at two places;
+  File menu, closed = desktop again (identical cells); Run dialog;
+  Notepad: a typed line in exact cells and colours; text selection
+  (selected cells change colour, characters stay); Edit menu, closed =
+  Notepad again; 30 lines typed so the window scrolls; Notepad dragged by
+  its title with the mouse; two overlapping windows (Notepad and Program
+  Manager) brought to front in turn; exit to DOS and relaunch = the same
+  desktop; T80OFF and Windows again with the previous driver (40 columns).
+--prof: the driver is a T80PROF build; TPROF NOTE records typing time.
+Results: <vm>/T80WIN.JSN.
+"""
+import argparse
+import importlib.machinery
+import json
+import subprocess
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+PCPWIN = importlib.machinery.SourceFileLoader("pcpwin", str(HERE.parent / "pcp" / "PCPWIN.PY")).load_module()
+CHK = importlib.machinery.SourceFileLoader("t80chk", str(HERE / "T80CHK.PY")).load_module()
+PART = "@@8704"
+
+
+class Session:
+    def __init__(self, vm, prof):
+        self.vm = Path(vm)
+        self.prof = prof
+        self.r = PCPWIN.Run(vm, None, None, width=640, target="pcp")
+        self.r.tdir, self.r.tid = "T80", "T40ID"
+        self.checks, self.recs, self.timing = [], {}, {}
+        self.width = 640
+
+    # -- guest files ---------------------------------------------------------
+    def read(self, name):
+        p = subprocess.run(["mtype", "-i", f"{self.vm / 'pcp.img'}{PART}", name], capture_output=True)
+        return p.stdout if p.returncode == 0 else b""
+
+    def snaps(self):
+        try:
+            return CHK.parse(self.read("::/T80/SNAPS.BIN"))
+        except ValueError:
+            return []
+
+    def check(self, what, ok, **kw):
+        self.checks.append(dict(check=what, result="PASS" if ok else "FAIL", **kw))
+        print(("PASS " if ok else "FAIL ") + what, flush=True)
+        (self.vm / "T80WIN.JSN").write_text(json.dumps(self.result(), indent=1) + "\n")
+
+    def result(self):
+        return {"checks": self.checks, "timing_s": self.timing,
+                "passed": sum(c["result"] == "PASS" for c in self.checks),
+                "failed": sum(c["result"] == "FAIL" for c in self.checks)}
+
+    # -- snapshots -----------------------------------------------------------
+    def snap(self, timeout=120):
+        n = len(self.snaps())
+        subprocess.run(["xdotool", "key", "--delay", "150", "Scroll_Lock"], check=False,
+                       env=dict(__import__("os").environ, DISPLAY=":79"))
+        t0 = time.time()
+        while time.time() - t0 < timeout:
+            s = self.snaps()
+            if len(s) > n:
+                return s[-1]
+            time.sleep(3)
+        return None
+
+    def settle(self, name, want=(), timeout=900, every=6):
+        """Snapshot until two in a row have identical cells (pointer hidden)
+        and every wanted string is on screen."""
+        t0, prev = time.time(), None
+        while time.time() - t0 < timeout:
+            rec = self.snap()
+            if rec is not None:
+                shown = all(CHK.find(rec["hidden"], rec["cols"], w) for w in want)
+                if prev is not None and prev["hidden"] == rec["hidden"] and shown:
+                    self.recs[name] = rec
+                    self.timing[name] = round(time.time() - t0, 1)
+                    self.r.shot(name, settle=0.5, decode=False)
+                    (self.vm / (name + ".txt")).write_text("\n".join(CHK.rows(rec["hidden"], rec["cols"])) + "\n")
+                    return rec
+                prev = rec
+            time.sleep(every)
+        self.check(f"{name}: screen settles with {list(want)} within {timeout} s", False,
+                   last=CHK.rows(prev["hidden"], prev["cols"]) if prev else None)
+        self.recs[name] = prev
+        return prev
+
+    def expect(self, name, *strings):
+        rec = self.recs.get(name)
+        for s in strings:
+            hits = CHK.find(rec["hidden"], rec["cols"], s) if rec else []
+            self.check(f"{name}: shows '{s}'", bool(hits), at=hits[:3])
+
+    def identical(self, a, b, what, allow=()):
+        ra, rb = self.recs.get(a), self.recs.get(b)
+        diff = CHK.same(ra["hidden"], rb["hidden"], allow) if ra and rb else ["missing"]
+        self.check(what, diff == [], differing_cells=diff[:20])
+
+    def cursor(self, name):
+        rec = self.recs.get(name)
+        ok, det = CHK.cursor(rec) if rec else (False, {})
+        self.check(f"{name}: the pointer is exactly the hot spot's cell, attribute XOR 77h "
+                   f"(pointer {rec and (rec['x'], rec['y'])})", ok, **det)
+
+    # -- input ---------------------------------------------------------------
+    def key(self, k, wait=4):
+        self.r.key(k, wait=wait)
+
+    def text(self, s, wait=2):
+        self.r.text(s, wait=wait)
+
+    def to(self, x, y, wait=3):
+        self.r.rehome(x, y, wait=wait)
+
+    def runcmd(self, cmd):
+        for attempt in range(5):
+            self.key("alt+f", 8)
+            if not self.settle(f"runmenu{attempt}", ("Run...",), timeout=240):
+                self.key("Escape", 4)
+                self.key("Escape", 4)
+                continue
+            self.key("r", 8)
+            if self.settle(f"rundlg{attempt}", ("Command Line:",), timeout=300):
+                self.text(cmd, 3)
+                self.key("Return", 5)
+                return True
+            self.key("Escape", 4)
+        return False
+
+    def start_windows(self, tag, want):
+        self.text("C:", 1)
+        self.key("Return", 2)
+        self.text("CD \\WINDOWS", 1)
+        self.key("Return", 2)
+        self.r.m("ident", "on")
+        self.text("WIN /R", 1)
+        self.key("Return", 150)
+        self.r.m("ident", "off")
+        for _ in range(6):
+            self.key("Escape", 10)
+        self.r.home()
+        return self.settle(tag, want, timeout=1800)
+
+    # -- the session ---------------------------------------------------------
+    def run(self, rollback=True):
+        r = self.r
+        # 1. set up from the DOS prompt
+        self.text("C:", 1)
+        self.key("Return", 2)
+        self.text("CD \\T80", 1)
+        self.key("Return", 2)
+        self.text("T80ON", 1)
+        self.key("Return", 25)
+        r.shot("t80on", settle=1, decode=False)
+        sysini = self.read("::/WINDOWS/SYSTEM.INI").decode("latin1")
+        winini = self.read("::/WINDOWS/WIN.INI").decode("latin1")
+        self.check("T80ON: display.drv=TEXT80.DRV and the 8x8 fonts set; originals saved",
+                   "display.drv=TEXT80.DRV" in sysini and "fonts.fon=XTTSYS.FON" in sysini and
+                   bool(self.read("::/WINDOWS/SYSTEM.T80")) and bool(self.read("::/WINDOWS/WIN.T80")))
+        load = [ln for ln in winini.split("\r\n") if ln.lower().startswith("load=")]
+        self.check("T80ON: load= keeps its entry (T80SNAP); [fonts] gained the two 8x8 faces",
+                   len(load) == 1 and "T80SNAP.EXE" in load[0].upper() and
+                   winini.count("(TEXT80)=") == 2, load=load)
+        # 2. Windows in 80x25
+        desk = ("Program Manager", "File", "Options", "Window", "Help")
+        rec = self.start_windows("desktop", desk)
+        self.check("Windows runs in 80x25 text (BIOS columns 80, rows 25)",
+                   bool(rec) and rec["cols"] == 80 and rec["rows"] == 25)
+        self.expect("desktop", *desk)
+        # 3. pointer footprint, two places
+        for name, (x, y) in (("pointer_a", (300, 150)), ("pointer_b", (37, 77))):
+            self.to(x, y, 4)
+            self.settle(name)
+            self.cursor(name)
+        r.home()
+        # 4. File menu
+        self.key("alt+f", 8)
+        menu = ("New...", "Open", "Move...", "Copy...", "Delete", "Properties...", "Run...", "Exit Windows...")
+        self.settle("filemenu", menu)
+        self.expect("filemenu", *menu)
+        self.key("Escape", 4)
+        self.key("Escape", 4)
+        self.settle("menuclosed")
+        self.identical("desktop", "menuclosed", "File menu closed: every cell as on the desktop before")
+        # 5. Run dialog, Notepad, typing
+        self.key("alt+f", 8)
+        self.key("r", 8)
+        run = ("Run", "Command Line:", "Run Minimized", "OK", "Cancel")
+        self.settle("rundlg", run)
+        self.expect("rundlg", *run)
+        self.key("Escape", 6)
+        line = "Hello from 80x25 text mode!"
+        if self.prof:
+            self.runcmd("C:\\T80\\TPROF NOTE 90 240")
+        else:
+            self.runcmd("NOTEPAD")
+        self.settle("notepad0", ("Notepad - (untitled)",), timeout=1200)
+        if self.prof:
+            t0 = time.time()
+            while time.time() - t0 < 600 and b"READY" not in self.read("::/T80/TPROF.LOG"):
+                time.sleep(5)
+        t0 = time.time()
+        self.text(line, 2)
+        rec = self.settle("notepad", ("Notepad - (untitled)", line), timeout=1200)
+        self.timing["typed_line_until_settled"] = round(time.time() - t0, 1)
+        self.expect("notepad", "Notepad - (untitled)", "File", "Edit", "Search", "Help", line)
+        if rec:
+            hits = CHK.find(rec["hidden"], 80, line)
+            if hits:
+                rr, cc = hits[0]
+                attrs = {w >> 8 for w in CHK.cells_at(rec["hidden"], 80, rr, cc, len(line))}
+                self.check("notepad: the typed line is one colour pair, black on white (F0h)",
+                           attrs == {0xF0}, attrs=sorted(hex(a) for a in attrs), at=[rr, cc])
+        # 6. selection
+        self.key("shift+Home", 6)
+        sel = self.settle("selected", (line,))
+        if rec and sel:
+            hits = CHK.find(rec["hidden"], 80, line)
+            if hits:
+                rr, cc = hits[0]
+                before = CHK.cells_at(rec["hidden"], 80, rr, cc, len(line))
+                after = CHK.cells_at(sel["hidden"], 80, rr, cc, len(line))
+                self.check("selection: the selected cells keep their characters and all change colour",
+                           all((a & 0xFF) == (b & 0xFF) and (a >> 8) != (b >> 8) for a, b in zip(before, after)),
+                           before=hex(before[0]), after=hex(after[0]))
+        self.key("End", 6)
+        self.settle("unselected", (line,))
+        # 7. Edit menu
+        self.key("alt+e", 8)
+        edit = ("Undo", "Cut", "Copy", "Paste", "Delete", "Select All", "Time/Date", "Word Wrap")
+        self.settle("editmenu", edit)
+        self.expect("editmenu", *edit)
+        self.key("Escape", 4)
+        self.key("Escape", 4)
+        self.settle("editclosed", (line,))
+        caret = set()
+        if rec:
+            hits = CHK.find(rec["hidden"], 80, line)
+            if hits:
+                rr, cc = hits[0]
+                caret = {(rr + d, cc + len(line)) for d in (-1, 0, 1)}
+        self.identical("unselected", "editclosed", "Edit menu closed: every cell as before (caret cells apart)",
+                       allow=caret)
+        # 8. scrolling: 30 numbered lines
+        for i in range(1, 31):
+            self.key("Return", 1)
+            self.text(f"line {i:02d}", 1)
+        sc = self.settle("scrolled", ("line 30",), timeout=2400)
+        rows = CHK.rows(sc["hidden"], 80) if sc else []
+        self.check("scrolling: the last line is visible and the first typed line has scrolled away",
+                   bool(sc) and any("line 30" in rw for rw in rows) and not any(line in rw for rw in rows))
+        # 9. drag Notepad by its title bar with the mouse
+        if sc:
+            t = CHK.find(sc["hidden"], 80, "Notepad - (untitled)")
+            if t:
+                tr, tc = t[0]
+                x, y = 8 * (tc + 2) + 3, 8 * tr + 3
+                r.rehome(x, y, 2)
+                r.m("down")
+                time.sleep(2)
+                r.m("move", 0, 24)
+                time.sleep(3)
+                r.m("move", -40, 0)
+                time.sleep(3)
+                r.m("up")
+                time.sleep(5)
+                mv = self.settle("dragged", ("Notepad - (untitled)",), timeout=1200)
+                t2 = CHK.find(mv["hidden"], 80, "Notepad - (untitled)") if mv else []
+                self.check("drag: the title moved 3 cell rows down and 5 cell columns left",
+                           bool(t2) and t2[0] == (tr + 3, tc - 5), before=[tr, tc], after=t2[:1])
+        # 10. overlapping windows: Program Manager to the front, then Notepad
+        self.key("alt+Escape", 8)
+        pm = self.settle("pmfront", ("Program Manager",))
+        self.key("alt+Escape", 8)
+        np = self.settle("npfront", ("Notepad - (untitled)",))
+        self.check("overlap: switching windows changes which one is on top (cells differ), and back",
+                   bool(pm and np) and pm["hidden"] != np["hidden"] and
+                   bool(CHK.find(np["hidden"], 80, "line 30")))
+        # 11. exit and relaunch
+        self.key("alt+F4", 8)
+        self.settle("savequery", ("No",), timeout=600)
+        self.key("n", 10)
+        self.key("alt+F4", 8)
+        self.settle("exitdlg", ("This will end your Windows", "OK"), timeout=600)
+        self.key("Return", 60)
+        r.shot("dos_after", settle=1, decode=False)
+        self.start_windows("desktop2", desk)
+        self.identical("desktop", "desktop2", "relaunch: the desktop is identical to the first launch")
+        if not rollback:
+            return
+        # 12. rollback from DOS: T80OFF, then Windows with the previous driver
+        self.key("alt+F4", 8)
+        self.settle("exitdlg2", ("This will end your Windows",), timeout=600)
+        self.key("Return", 60)
+        self.text("CD \\T80", 1)
+        self.key("Return", 2)
+        self.text("T80OFF", 1)
+        self.key("Return", 25)
+        r.shot("t80off", settle=1, decode=False)
+        sysini = self.read("::/WINDOWS/SYSTEM.INI").decode("latin1")
+        self.check("T80OFF: SYSTEM.INI no longer names TEXT80.DRV and the backups are gone",
+                   "TEXT80" not in sysini.upper() and not self.read("::/WINDOWS/SYSTEM.T80"))
+        rec = self.start_windows("rolledback", ("Program Manager",))
+        self.check("rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
+                   bool(rec) and rec["cols"] != 80, cols=rec and rec["cols"])
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--vm", required=True)
+    ap.add_argument("--prof", action="store_true")
+    ap.add_argument("--skip-rollback", action="store_true")
+    a = ap.parse_args()
+    s = Session(a.vm, a.prof)
+    try:
+        s.run(rollback=not a.skip_rollback)
+    finally:
+        (s.vm / "T80WIN.JSN").write_text(json.dumps(s.result(), indent=1) + "\n")
+        (s.vm / "SNAPS.BIN").write_bytes(s.read("::/T80/SNAPS.BIN"))
+        if a.prof:
+            (s.vm / "TPROF.LOG").write_bytes(s.read("::/T80/TPROF.LOG"))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

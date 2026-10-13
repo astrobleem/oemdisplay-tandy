@@ -151,19 +151,26 @@ static LPSTR Skip(LPSTR s)
     return s;
 }
 
+/* Sleep in GetMessage; SetTimer takes at most 65535 ms, so long waits are
+ * made of 30 s steps. */
 static void Sleep(int seconds)
 {
     MSG msg;
-    WORD id = SetTimer(NULL, 0, (WORD)seconds * 1000, NULL);
-    if (!id)
-        return;
-    while (GetMessage(&msg, NULL, 0, 0)) {
-        if (msg.message == WM_TIMER && msg.hwnd == NULL)
-            break;
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
+    WORD id;
+    while (seconds > 0) {
+        int step = seconds > 30 ? 30 : seconds;
+        seconds -= step;
+        id = SetTimer(NULL, 0, (WORD)step * 1000, NULL);
+        if (!id)
+            return;
+        while (GetMessage(&msg, NULL, 0, 0)) {
+            if (msg.message == WM_TIMER && msg.hwnd == NULL)
+                break;
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+        KillTimer(NULL, id);
     }
-    KillTimer(NULL, id);
 }
 
 static int Is(LPSTR cmd, LPSTR word)

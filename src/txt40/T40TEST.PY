@@ -67,6 +67,9 @@ _T40 ends
 snb segment para public 'SNB'
     db T40_SNAPB dup(?)
 snb ends
+sav segment para public 'SAV'
+    db @@TXTBYTES@@ dup(?)
+sav ends
 hd segment para public 'HD'
 fn_in   db 'OPS.BIN',0
 fn_out  db 'TEXT.BIN',0
@@ -289,7 +292,9 @@ op7r:
 op8:
     ; diff flush: ay, by, cx, dx (clamped, non-empty); text buffer out
     cmp al,8
-    jne bad_op
+    je op8go
+    jmp op10
+op8go:
     mov dx,offset buf
     mov cx,8
     call rd
@@ -303,6 +308,69 @@ op8r:
     cld
     call t40_pdiff
     jmp op3_dump
+op10:
+    ; probe diff flush: every text cell set to 0FFFFh first, so the buffer
+    ; written out shows exactly which cells the flush rewrote; then the
+    ; cells it left alone get their previous words back
+    cmp al,10
+    je op10go
+    jmp bad_op
+op10go:
+    mov dx,offset buf
+    mov cx,8
+    call rd
+    jnc op10r
+    jmp fail
+op10r:
+    push ds
+    mov ax,vbuf
+    mov ds,ax
+    mov ax,sav
+    mov es,ax
+    xor si,si
+    xor di,di
+    mov cx,@@TXTBYTES@@/2
+    cld
+    rep movsw
+    push ds
+    pop es
+    xor di,di
+    mov ax,0FFFFh
+    mov cx,@@TXTBYTES@@/2
+    rep stosw
+    pop ds
+    mov ax,word ptr buf
+    mov bx,word ptr buf+2
+    mov cx,word ptr buf+4
+    mov dx,word ptr buf+6
+    cld
+    call t40_pdiff
+    mov ax,hd
+    mov ds,ax
+    mov bx,h_out
+    mov ax,vbuf
+    mov ds,ax
+    xor dx,dx
+    mov cx,@@TXTBYTES@@
+    mov ah,40h
+    int 21h
+    jnc op10w
+    jmp fail
+op10w:
+    mov ax,vbuf
+    mov es,ax
+    mov ax,sav
+    mov ds,ax
+    xor si,si
+    mov cx,@@TXTBYTES@@/2
+op10m:
+    lodsw
+    cmp word ptr es:[si-2],0FFFFh
+    jne op10k
+    mov es:[si-2],ax
+op10k:
+    loop op10m
+    jmp next_op
 bad_op:
     jmp fail
 finish:
@@ -419,9 +487,13 @@ class Scene:
         ay, by, cx, dx = self.clamp(ay, by, cx, dx)
         if not (ay < by and cx < dx):
             return
-        self.ops.append(struct.pack("<Bhhhh", 8, ay, by, cx, dx))
+        # probe: the expected buffer is 0FFFFh except the cells the diff
+        # flush rewrites, so presenting more or fewer cells than the
+        # specification is a mismatch even when the text would be the same
+        self.ops.append(struct.pack("<Bhhhh", 10, ay, by, cx, dx))
+        self.model.written = set()
         self.model.present_diff(self.shadow, ay, by, cx, dx)
-        self.expect.append(list(self.model.text))
+        self.expect.append([w if k in self.model.written else 0xFFFF for k, w in enumerate(self.model.text)])
         for y in range(ay, by):
             for p in range(4):
                 o = y * ROWB + p * COLS
@@ -732,13 +804,32 @@ def regression_diff_flush(font, ops, model):
     s.add(x3, P[1], font[ord("S")], ord("S"))
     s.present_diff(P[1], P[1] + 8, 0, COLS)
     checks.append((len(s.expect) - 1, cell10() + 2, "is", ord("S")))
-    # (4) mismatched rectangles
+    # (4) a hint made stale just left of and above the flushed rectangle,
+    # for pixels already on screen: the cell is in the output range and
+    # must show the glyph although none of the rectangle's pixels change
+    xl, yl = 8 * 20 + 2, 8 * 15 + 1
+    s.glyph(xl, yl, font[ord("L")], 15, 1)
+    s.load()
+    s.present(yl, yl + 8, xl >> 3, (xl >> 3) + 2)
+    s.snap(8 * 16, 8 * 18, 21, 30)
+    s.add(xl, yl, font[ord("L")], ord("L"))
+    s.present_diff(8 * 16, 8 * 18, 21, 30)
+    checks.append((len(s.expect) - 1, 15 * COLS + 20, "is", ord("L")))
+    # (5) a snapshot of another rectangle, then pixels changed (no hint)
+    # inside the flushed one: an ordinary flush; the stale Q must go
+    s.snap(0, 8, 0, 4)
+    s.fill(P[0], P[1], P[0] + 8, P[1] + 8, 4)
+    s.load()
+    s.present_diff(64, 112, 0, COLS)
+    checks.append((len(s.expect) - 1, cell10(), "not", ord("Q")))
+    # (6) mismatched rectangles
     s.snap(0, 8, 0, 4)
     s.glyph(x3 + 8, P[1], font[ord("T")], 15, 1)
     s.add(x3 + 8, P[1], font[ord("T")], ord("T"))
     s.load()
     s.present_diff(P[1], P[1] + 8, 0, COLS)
     checks.append((len(s.expect) - 1, cell10() + 3, "is", ord("T")))
+    s.present(0, H, 0, COLS)                     # probe buffers hold 0FFFFh: compare a full one
     return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
 
 
