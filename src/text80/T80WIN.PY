@@ -498,7 +498,12 @@ class Session:
         return None
 
     def cursor_at(self, name, x, y):
-        self.to(x, y, 4)
+        """Pointer to logical (x, y) on the 640x400 desktop: pinned at (0, 0)
+        first (PCPWIN's own moves are limited to 200 rows)."""
+        self.r.m("move", -(self.width + 80), -480)
+        time.sleep(3)
+        self.r.m("move", x, y)
+        time.sleep(5)
         self.settle(name)
         self.cursor(name)
 
