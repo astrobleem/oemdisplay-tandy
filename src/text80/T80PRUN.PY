@@ -10,6 +10,8 @@ and retried if a key was lost while Windows was busy redrawing.
 Starts Windows 3.0, then through Program Manager's Run dialog:
   1. TPROF TYPE <chars>: per-character driver counters (or wall time only on
      a driver without escape 5450h);
+  1b. TPROF LINES <chars>: the same, a letter and Return each time, so the
+     edit control scrolls once it is full (per-line counters);
   2. TPROF NOTE 60 <secs>: Notepad started by TPROF; once TPROF logs READY,
      the note text is typed with real keys (xdotool, the emulated keyboard);
      TPROF reads the counters after <secs>.
@@ -146,6 +148,12 @@ class Run:
         self.wait("TYPE n=", n, 3600)
         self.events.append({"type_wall_s": round(time.time() - t0, 1)})
         r.shot("aftertype", settle=1, decode=False)
+        time.sleep(30)
+        n = len(self.log())
+        t0 = time.time()
+        self.runcmd(f"C:\\{self.tdir}\\TPROF LINES {chars}")
+        self.wait("LINES n=", n, 3600)
+        self.events.append({"lines_wall_s": round(time.time() - t0, 1)})
         time.sleep(30)
         n = len(self.log())
         self.runcmd(f"C:\\{self.tdir}\\TPROF NOTE 60 {secs}")

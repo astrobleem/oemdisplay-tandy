@@ -247,6 +247,7 @@ class Session:
         # Notepad below the viewport, typed into while not shown
         self.free_memory("before_notepad")
         self.type_speed("edit")
+        self.type_speed("edit", mode="LINES")
         self.runcmd("NOTEPAD")
         self.settle("notepad0", ("Notepad - (untitled)",), timeout=1200)
         self.key("alt+space", 4)
@@ -388,6 +389,7 @@ class Session:
         self.key("Escape", 6)
         self.free_memory("before_notepad")
         self.type_speed("edit")
+        self.type_speed("edit", mode="LINES")
         self.runcmd("NOTEPAD")
         self.settle("notepad0", ("Notepad - (untitled)",), timeout=1200)
         line = "Hello from VGA 80x50 text mode!"
@@ -450,25 +452,25 @@ class Session:
         self.check("rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
                    bool(rec) and rec["cols"] != 80, cols=rec and rec["cols"])
 
-    def type_speed(self, tag, n=30):
+    def type_speed(self, tag, n=30, mode="TYPE"):
         """TPROF TYPE n: n characters into a visible edit control, one
         WM_CHAR at a time, every resulting message processed; wall time
         from GetCurrentTime (no per-character logging without the
         profiling escape)."""
         before = self.read("::/T80/TPROF.LOG").decode("latin1")
-        self.runcmd(f"C:\\T80\\TPROF TYPE {n}")
+        self.runcmd(f"C:\\T80\\TPROF {mode} {n}")
         t0 = time.time()
         while time.time() - t0 < 1800:
             new = self.read("::/T80/TPROF.LOG").decode("latin1")[len(before):]
-            m = re.search(r"TYPE n=(\d+) ms=(\d+)", new)
+            m = re.search(mode + r" n=(\d+) ms=(\d+)", new)
             if m:
                 ms = int(m.group(2))
-                self.timing["type_ms_per_char_" + tag] = round(ms / int(m.group(1)), 1)
-                self.check(f"TPROF TYPE {n} ({tag}): {ms} ms, {ms / int(m.group(1)):.0f} ms per character", True)
+                self.timing[f"{mode.lower()}_ms_each_{tag}"] = round(ms / int(m.group(1)), 1)
+                self.check(f"TPROF {mode} {n} ({tag}): {ms} ms, {ms / int(m.group(1)):.0f} ms each", True)
                 time.sleep(10)
                 return ms
             time.sleep(5)
-        self.check(f"TPROF TYPE {n} ({tag}) finished", False)
+        self.check(f"TPROF {mode} {n} ({tag}) finished", False)
         return None
 
     def wait_shot(self, name, secs):
@@ -553,6 +555,7 @@ class Session:
         else:
             self.free_memory("before_notepad")
             self.type_speed("edit")
+            self.type_speed("edit", mode="LINES")
             self.runcmd("NOTEPAD")
         self.settle("notepad0", ("Notepad - (untitled)",), timeout=1200)
         if self.prof:

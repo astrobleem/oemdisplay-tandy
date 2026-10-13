@@ -6,6 +6,8 @@
  *                    n characters are sent one at a time as WM_CHAR, all
  *                    resulting messages are processed, and the driver's
  *                    counters are read and reset around each character.
+ *   TPROF LINES <n>  the same window; n times a letter and Return, so once
+ *                    the edit control is full each Return scrolls it.
  *   TPROF SNAP       read and reset the counters once (around typing into
  *                    another program, e.g. Notepad) and exit.
  *   TPROF IDLE <s>   process messages for s seconds, then SNAP.
@@ -201,7 +203,7 @@ static int Is(LPSTR cmd, LPSTR word)
     return *cmd == 0 || *cmd == ' ';
 }
 
-static void TypeTest(int n)
+static void TypeTest(int n, int lines)
 {
     static char text[] = "The quick brown fox jumps over the lazy dog 0123456789 ";
     int i;
@@ -240,11 +242,17 @@ static void TypeTest(int n)
     }
     w0 = GetCurrentTime();
     for (i = 0; i < n; i++) {
-        SendMessage(hEdit, WM_CHAR, text[i % (sizeof(text) - 1)], 1L);
+        if (lines) {
+            /* a short line and Return: once the edit control is full, every
+               Return scrolls it up one line (a screen-to-screen copy) */
+            SendMessage(hEdit, WM_CHAR, 'a' + i % 26, 1L);
+            SendMessage(hEdit, WM_CHAR, '\r', 1L);
+        } else
+            SendMessage(hEdit, WM_CHAR, text[i % (sizeof(text) - 1)], 1L);
         Pump();
         if (bProf) {
             Read(1);
-            wsprintf(label, "CHAR %d", i);
+            wsprintf(label, lines ? "LINE %d" : "CHAR %d", i);
             Dump(label, t0);
             /* logging is disk I/O: restart the clock and counters after it */
             Read(1);
@@ -252,7 +260,7 @@ static void TypeTest(int n)
         }
     }
     w1 = GetCurrentTime();
-    wsprintf(line, "TYPE n=%d ms=%lu", n, w1 - w0);
+    wsprintf(line, lines ? "LINES n=%d ms=%lu" : "TYPE n=%d ms=%lu", n, w1 - w0);
     LogLine(line);
     DestroyWindow(hMain);
 }
@@ -275,7 +283,9 @@ int PASCAL WinMain(HANDLE hI, HANDLE hPrev, LPSTR lpCmd, int nShow)
     wsprintf(line, "START cmd=%s prof=%d free=%lu size=%d", lpCmd, bProf, GetFreeSpace(0), (int)sizeof(PROF));
     LogLine(line);
     if (Is(lpCmd, "TYPE")) {
-        TypeTest(Num(lpCmd + 4));
+        TypeTest(Num(lpCmd + 4), 0);
+    } else if (Is(lpCmd, "LINES")) {
+        TypeTest(Num(lpCmd + 5), 1);
     } else if (Is(lpCmd, "IDLE")) {
         if (bProf)
             Read(1);

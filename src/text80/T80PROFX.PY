@@ -37,7 +37,7 @@ def parse(path):
     readings, cur, extra = [], None, []
     for ln in open(path, encoding="latin-1"):
         ln = ln.rstrip("\r\n")
-        m = re.match(r"(CHAR \d+|SNAP|IDLE|NOTE) stamp=(\d+) wall=(\d+)", ln)
+        m = re.match(r"(CHAR \d+|LINE \d+|SNAP|IDLE|NOTE) stamp=(\d+) wall=(\d+)", ln)
         if m:
             cur = {"label": m.group(1), "wall": int(m.group(3)), "S": {}, "F": [], "X": []}
             readings.append(cur)
@@ -106,26 +106,35 @@ def main():
     a = ap.parse_args()
     readings, extra = parse(a.log)
     rep = {"readings": [], "lines": [l for l in extra if l and not l.startswith(" ")]}
-    chars = []
+    chars, lines = [], []
     for r in readings:
         b = breakdown(r)
         b["label"] = r["label"]
         rep["readings"].append(b)
         if r["label"].startswith("CHAR"):
             chars.append(b)
-    if chars:
-        keys = ("wall_ms", "app_gdi_ms", "render_ms", "flush_ms", "verify_ms", "convert_ms", "write_loop_ms",
-                "cursor_etc_ms", "hints_ms")
-        avg = {k: round(sum(c[k] or 0 for c in chars) / len(chars), 1) for k in keys}
-        avg.update({k: round(sum(c[k] for c in chars) / len(chars), 1)
+        if r["label"].startswith("LINE"):
+            lines.append(b)
+    keys = ("wall_ms", "app_gdi_ms", "render_ms", "flush_ms", "verify_ms", "convert_ms", "write_loop_ms",
+            "cursor_etc_ms", "hints_ms", "compare_ms")
+
+    def average(group, name, title):
+        avg = {k: round(sum(c[k] or 0 for c in group) / len(group), 1) for k in keys}
+        avg.update({k: round(sum(c[k] for c in group) / len(group), 1)
                     for k in ("flushes", "cells", "writes", "verified")})
-        rep["type_average_per_char"] = avg
-        print("TYPE: average per character over", len(chars), "characters")
+        rep[name] = avg
+        print(title, len(group))
         for k, v in avg.items():
             print(f"  {k:14s} {v}")
+    if chars:
+        average(chars, "type_average_per_char", "TYPE: average per character over")
+    if lines:
+        # the TPROF window shows about 12 lines: later Returns scroll
+        average(lines[16:] or lines, "lines_average_per_scrolling_line",
+                "LINES: average per line once the edit control scrolls, over")
     for b in rep["readings"]:
-        if not b["label"].startswith("CHAR"):
-            print(b["label"], {k: v for k, v in b.items() if k not in ("flush_rects",)})
+        if not b["label"].startswith(("CHAR", "LINE")):
+            print(b["label"], {k: v for k, v in b.items() if k not in ("flush_rects", "text_calls")})
     for l in rep["lines"]:
         print(l)
     if a.json:
