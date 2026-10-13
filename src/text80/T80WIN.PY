@@ -654,7 +654,8 @@ class Session:
         np = self.settle("npfront", ("Notepad - (untitled)",))
         self.check("overlap: switching windows changes which one is on top (cells differ), and back",
                    bool(pm and np) and pm["hidden"] != np["hidden"] and
-                   bool(CHK.find(np["hidden"], 80, "line 30")))
+                   bool(CHK.find(pm["hidden"], 80, "Program Manager")) and
+                   bool(CHK.find(np["hidden"], 80, "Notepad - (untitled)")))
         # 11. exit and relaunch
         self.key("alt+F4", 8)
         self.settle("savequery", ("No",), timeout=600)
