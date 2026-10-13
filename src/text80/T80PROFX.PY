@@ -50,11 +50,14 @@ def parse(path):
         if m and cur:
             cur["F"].append(tuple(int(v) for v in m.groups()))
             continue
-        m = re.match(r" X ((?:\s*-?\d+){15})$", ln)
+        m = re.match(r" X ((?:\s*-?\d+){15,18})$", ln)
         if m and cur:
             v = [int(x) for x in m.group(1).split()]
-            cur["X"].append({"clip": v[0:4], "opaque": v[4:8], "options": v[8], "count": v[9],
-                             "bounds_rows": v[10:12], "bounds_cols": v[12:14], "dirty": v[14]})
+            x = {"clip": v[0:4], "opaque": v[4:8], "options": v[8], "count": v[9],
+                 "bounds_rows": v[10:12], "bounds_cols": v[12:14], "dirty": v[14]}
+            if len(v) == 18:
+                x.update(font_version=v[15], font_height=v[16], font_fixed_width=v[17])
+            cur["X"].append(x)
             continue
         extra.append(ln)
     return readings, extra

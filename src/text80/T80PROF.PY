@@ -25,7 +25,8 @@ Windows program through Control escape 5450h ('TP'):
   and opaque rectangles (left, top, right, bottom; -32768 when the
   pointer is NULL), options, count, then the flush bounds the driver
   derived (rowfirst, rowlast, colfirst, collast) and dirty (0 not the
-  screen, 1 whole flush, 2 these bounds).
+  screen, 1 whole flush, 2 these bounds), the realized font's version
+  (high byte), pixel height and fixed pixel width (0: variable pitch).
 
 Escape 5450h: input word 1 = copy and reset, 0 = copy; output = the block
 (T80PROF_BYTES), whose first dword after the header is the current time.
@@ -135,6 +136,7 @@ t80_xslot macro
 endm
 
 t80_xin macro
+local t80x_nofont
     pushf
     push ax
     push cx
@@ -151,6 +153,18 @@ t80_xin macro
     mov ds:[si+16],ax
     mov ax,count
     mov ds:[si+18],ax
+    mov word ptr ds:[si+30],0
+    mov byte ptr ds:[si+29],0
+    les di,font               ; the realized font: height, fixed width, version
+    mov ax,es
+    or ax,ax
+    jz t80x_nofont
+    mov al,byte ptr es:fsPixHeight
+    mov ah,byte ptr es:fsPixWidth
+    mov ds:[si+30],ax
+    mov al,byte ptr es:fsVersion+1
+    mov ds:[si+29],al
+t80x_nofont:
     pop es
     pop ds
     pop di
@@ -178,7 +192,7 @@ t80_xout macro
     mov ax,collast
     mov ds:[si+26],ax
     mov ax,dirty
-    mov ds:[si+28],ax
+    mov ds:[si+28],al
     mov ax,ds:t80_xi
     inc ax
     and ax,{XRING - 1}

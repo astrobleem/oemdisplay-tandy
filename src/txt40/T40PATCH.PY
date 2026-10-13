@@ -108,6 +108,7 @@ t40_tfirst db 0
 t40_tlast db 0
 t40_toem db 0
 t40_tch db 0
+t40_tdone db 0                  ; t40_text walked every character: t40_tx = end
 """)
 
 SEG_ANCHOR = "sEnd ShadowSeg\r\n"
@@ -233,6 +234,7 @@ FlushColumns endp
 ; T40PATCH: record hints for one StrBlt/ExtTextOut on the screen.
 ; DS = Data; parameters in t40_t*. Clobbers AX-DI, ES.
 t40_text proc near
+    mov t40_tdone,0
     cmp t40_tcount,0
     jg tt_mode
     jmp tt_ret
@@ -279,6 +281,7 @@ tt_font_8:
 tt_char:
     cmp cx,t40_tcount
     jl tt_more
+    mov t40_tdone,1             ; every advance known: t40_tx is the end
     jmp tt_ret
 tt_more:
     les si,t40_tstr
@@ -504,11 +507,18 @@ endm
 ; dirty=1 (rows not proven): with characters, the clip rectangle; with no
 ; characters (an opaque-only ExtTextOut, e.g. an edit control erasing the
 ; rest of a line), the opaque rectangle if ETO_OPAQUE fills, else nothing
-; is drawn. TEXT80: TXT40 flushed the union of the clip and opaque
+; is drawn. Proven rows with every character walked by t40_text (8-pixel
+; fonts, no justification): the columns of the text itself, from x to its
+; end plus one pixel (simulated bold), widened by a filled opaque
+; rectangle, then intersected with the clip. Otherwise the clip columns.
+; (An edit control's one-character ExtTextOut otherwise flushed and
+; compared the whole width of the edit control on every keystroke.)
+; TEXT80: TXT40 flushed the union of the clip and opaque
 ; rectangles here, which for Notepad was the whole client area on every
 ; keystroke (2.6 s of a 3.1 s keystroke on an XT, docs/TEXT80.MD).
 t40_bounds macro extended
 local proven,unproven,full,done,t40b_chars,t40b_none,t40b_np,t40b_up,t40b_nochars,t40b_fill
+local t40b_ord,t40b_clipcols,t40b_colsdone,t40b_textcols
     push ax
     push bx
     push cx
@@ -527,7 +537,37 @@ t40b_np:
 t40b_up:
     jmp unproven
 proven:
+    cmp t40_tdone,0
+    jne t40b_textcols
+    jmp t40b_clipcols
+t40b_textcols:
+    mov ax,x
+    mov bx,t40_tx
+    cmp ax,bx
+    jle t40b_ord
+    xchg ax,bx
+t40b_ord:
+    inc bx
+    add bx,7
+    mov cl,3
+    sar ax,cl
+    sar bx,cl
+    mov colfirst,ax
+    mov collast,bx
+    if extended
+    test options,ETO_OPAQUE_FILL
+    jz t40b_colsdone
+    mov ax,word ptr opaquerect+2
+    or ax,ax
+    jz t40b_clipcols            ; filled but no rectangle: be safe
+    t40_rect_cols opaquerect
+    endif
+    jmp short t40b_colsdone
+t40b_clipcols:
+    mov colfirst,SCREEN_W_BYTES
+    mov collast,0
     t40_rect_cols clip
+t40b_colsdone:
     t40_rect_isect clip
     jmp done
 unproven:

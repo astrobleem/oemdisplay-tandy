@@ -27,7 +27,19 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-FACES = {"T80HELV.FON": ("Helv", 0x20, "T80HELV"), "T80COUR.FON": ("Courier", 0x30, "T80COUR")}
+# face, family, module name, variable pitch. Dialogs ask for "Helv" with
+# VARIABLE_PITCH: a fixed-pitch Helv loses to the installed EGA-resolution
+# HELVB.FON on the pitch penalty (seen in 86Box: the Run dialog's labels in
+# HELVB's 10-pixel strike, two text rows tall, unreadable). So the Helv
+# face is marked variable pitch (dfPixWidth 0); every glyph is still 8
+# pixels wide, so it lays out exactly like the fixed strike. It is also
+# marked bold (dfWeight 700): Windows 3.0 dialogs ask for bold Helv, and
+# for a normal-weight face GDI simulates bold by drawing every string twice,
+# one pixel apart (seen in 86Box with the ExtTextOut trace: each dialog
+# label drawn twice, the glyphs smeared, so no cell matched its hint). The
+# strike's pixels are unchanged; only the weight it is offered at.
+FACES = {"T80HELV.FON": ("Helv", 0x20, "T80HELV", True, 700),
+         "T80COUR.FON": ("Courier", 0x30, "T80COUR", False, 400)}
 XTTSYS_SHA = "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa"
 
 
@@ -49,11 +61,15 @@ def strike(fon):
                 return f[:struct.unpack_from("<I", f, 2)[0]], rid & 0x7FFF
 
 
-def renamed(fnt, face, family):
+def renamed(fnt, face, family, variable=False, weight=400):
     fo = struct.unpack_from("<I", fnt, 105)[0]
     body = bytearray(fnt[:fo]) + face.encode("ascii") + b"\0"
     struct.pack_into("<I", body, 2, len(body))
     body[90] = (fnt[90] & 0x0F) | family          # keep pitch bits, set family
+    struct.pack_into("<H", body, 83, weight)       # dfWeight
+    if variable:
+        body[90] |= 1                             # variable pitch
+        struct.pack_into("<H", body, 86, 0)       # dfPixWidth 0: widths from the table
     return bytes(body)
 
 
@@ -73,11 +89,13 @@ def main():
             raise SystemExit(f"T80FONT: XTTSYS header field at {v} is not {want}")
     a.out.mkdir(parents=True, exist_ok=True)
     rec = {"source": "distributions/WINXT/XTTSYS.FON", "source_sha256": XTTSYS_SHA, "fonts": {}}
-    for name, (face, family, module) in FACES.items():
-        data = build.fon(renamed(fnt, face, family), module, rid,
+    for name, (face, family, module, variable, weight) in FACES.items():
+        data = build.fon(renamed(fnt, face, family, variable, weight), module, rid,
                          f"TEXT80 {face} 8x8 (XT Pixels strike), 96x48")
+        rec_pitch = "variable (all glyphs 8 wide)" if variable else "fixed"
         (a.out / name).write_bytes(data)
-        rec["fonts"][name] = {"face": face, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+        rec["fonts"][name] = {"face": face, "pitch": rec_pitch, "weight": weight, "bytes": len(data),
+                              "sha256": hashlib.sha256(data).hexdigest()}
     (a.out / "T80FONT.JSN").write_text(json.dumps(rec, indent=1) + "\n")
     print(json.dumps(rec, indent=1))
     return 0

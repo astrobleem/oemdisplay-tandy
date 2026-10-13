@@ -104,14 +104,16 @@ static void Dump(LPSTR label, DWORD t0)
         LogLine(line);
     }
     /* ExtTextOut trace: clip l t r b, opaque l t r b, options, count,
-       bounds rowfirst rowlast colfirst collast, dirty */
+       bounds rowfirst rowlast colfirst collast, dirty, font version,
+       font pixel height, fixed width (0 = variable pitch) */
     if (pb->version >= 2) {
         n = pb->count[10] < (DWORD)NXRING ? (int)pb->count[10] : NXRING;
         for (i = 0; i < n; i++) {
             int FAR *x = pb->xring[(pb->xi - n + i) & (NXRING - 1)];
-            wsprintf(line, " X %d %d %d %d  %d %d %d %d  %d %d  %d %d %d %d  %d",
+            wsprintf(line, " X %d %d %d %d  %d %d %d %d  %d %d  %d %d %d %d  %d  %d %d %d",
                      x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9],
-                     x[10], x[11], x[12], x[13], x[14]);
+                     x[10], x[11], x[12], x[13], x[14] & 0xFF, (x[14] >> 8) & 0xFF,
+                     x[15] & 0xFF, (x[15] >> 8) & 0xFF);
             LogLine(line);
         }
     }
@@ -218,8 +220,12 @@ static void TypeTest(int n)
     wc.lpszClassName = "TProf";
     if (!RegisterClass(&wc))
         return;
+    /* An explicit place inside a 320x200 screen. (CW_USEDEFAULT with y = 0
+       made Windows 3.0 show the window with nCmdShow 0, SW_HIDE: every
+       earlier TYPE reading measured an invisible edit control, its text
+       clipped to an empty rectangle; seen with the ExtTextOut trace.) */
     hMain = CreateWindow("TProf", "TPROF - typing", WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-                         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInst, NULL);
+                         8, 48, 296, 120, NULL, NULL, hInst, NULL);
     if (!hMain)
         return;
     hEdit = CreateWindow("edit", NULL, WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | ES_MULTILINE |
