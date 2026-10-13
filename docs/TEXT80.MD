@@ -91,6 +91,7 @@ Typing, `TPROF TYPE 30`, ms per character, visible edit control:
 | TXT40 with this branch's fixes | release-style | **286** | 11x faster |
 | TEXT80 25 | release-style | **245** | |
 | TEXT80 PAN | release-style | 265 | |
+| TEXT80 25 on a Tandy 1000 HX (7.16 MHz) | release-style | 152 | |
 | TXT40 fixed | profiling | 370 | |
 | TEXT80 25 | profiling | 328 | |
 
@@ -110,6 +111,7 @@ by one line; ms per line once it scrolls):
 | TEXT80 25 with whole-cell copies (b6) | release-style / profiling | 3,466 / 5,284 |
 | TEXT80 25, hint moves bounded (b7, final) | release-style / profiling | **2,686** / 4,115 |
 | TEXT80 PAN (b7, final) | release-style | 2,792 |
+| TEXT80 25 on a Tandy 1000 HX, 7.16 MHz (b7) | release-style | 1,657 |
 
 A scroll still costs about 2.7 s per line on a 4.77 MHz 8088. Per
 scrolled line (profiling build b7): Notepad and GDI 0.44 s, drawing and
@@ -264,7 +266,7 @@ Results (b6 builds unless stated):
 | TEXT80 PAN | 86Box XT/CGA | **b7: 23/23**. b6 stopped after 10 passes on a harness limit (pointer moves past row 199; fixed) |
 | TEXT80 VGA | DOSBox-X vgaonly | **b7: 34/34**. b4: 31/4 (all four were wrong expectations in the checks; fixed) |
 | Allocation failure (`t80panfail`) | 86Box XT/CGA | Windows does not start; DOS prompt works; T80OFF rollback; Windows starts with the previous driver |
-| TEXT80 25 on Tandy 1000 HX | 86Box `tandy1000hx` 7.16 MHz | @@B7SHX@@ |
+| TEXT80 25 on Tandy 1000 HX | 86Box `tandy1000hx`, 8088 7.16 MHz, internal video, 640 KB | **b7: 49 pass, 1 fail**: after T80OFF, Windows starts with the HX's previous driver (TR53216, a 320x200 graphics mode; the BIOS check passes), but the text-buffer reader cannot see a graphics desktop, so the 'Program Manager' wait fails: a harness limit. 80x25 typing 152 ms/character, scrolling 1,657 ms/line, 173,120 bytes free. b6: never started (the backslash key, section 9) |
 
 Evidence: `docs/text80/<run>/<vm>/` holds each session's `T80WIN.JSN`,
 `session.log`, `SNAPS.BIN`, the decoded text of every screen (`*.txt`),
@@ -364,6 +366,9 @@ packages, release workflows, pins and hashes are untouched.
 - The Tandy 1000 BIOS reads the backslash key's scan code from 86Box as
   Left arrow at the DOS prompt, so the HX session types batch names
   (`GOT80`, `ONPAN`); a real Tandy keyboard does not have this problem.
+- `T80ON.BAT`/`T80OFF.BAT` start with `@ECHO OFF`, which PC DOS before
+  3.3 does not know: there they print their lines as they run (harmless,
+  seen on the PC DOS 3.20 test disk).
 - Not tried: Write, Cardfile, Help, Paintbrush, Terminal, EGA cards, real
   PCjr.
 
