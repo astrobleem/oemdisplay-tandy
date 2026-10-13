@@ -1055,6 +1055,37 @@ def regression_touch_edges(font, ops, model):
     return out_expect, out_ideal, checks
 
 
+def regression_row7(font, ops, model):
+    """Glyphs whose ink is only in row 0 or only in row 7 (no rows-1..6
+    second check for them). (1) Ink in row 0 only, drawn with an underline:
+    a blank row 7 may be any one colour, so the hint is shown. (2) Ink in
+    row 7 only, half a cell row down, so that row 7 lies in the next cell
+    row: one pixel of it changes and only that pixel row is flushed. The
+    hint's window touches the flush by its last row, so it is re-verified
+    and no longer shown."""
+    s = Scene(ops, model)
+    _blank(s)
+    top = [0xFF, 0, 0, 0, 0, 0, 0, 0]
+    s.glyph(80, 80, top, 14, 1, underline=True)            # cell (10, 10)
+    s.add(80, 80, top, 0x54)                               # codes no pattern match gives
+    s.load()
+    s.present(80, 88, 9, 12)
+    checks = [(len(s.expect) - 1, 10 * COLS + 10, "is", 0x54)]
+    bottom = [0, 0, 0, 0, 0, 0, 0, 0xFF]
+    x, y = 8 * 20, 8 * 12 + 2                               # window rows 98..105, cell (12, 20)
+    s.glyph(x, y, bottom, 14, 1)
+    s.add(x, y, bottom, 0x55)
+    s.load()
+    s.present(y, y + 8, 19, 22)
+    checks.append((len(s.expect) - 1, 12 * COLS + 20, "is", 0x55))
+    s.frame[(y + 7) * W + x + 3] = 4                        # row 7 (pixel row 105, cell row 13)
+    s.load()
+    s.present(y + 7, y + 8, 20, 21)
+    checks.append((len(s.expect) - 1, 12 * COLS + 20, "not", 0x55))
+    s.present(0, H, 0, COLS)
+    return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
+
+
 def regression_aligned_attr(font, ops, model):
     """An aligned copy (seven coloured lines, rows 5..10 scrolled up by one
     line) gives interior cells the source cell's kept state, attribute
@@ -1200,7 +1231,7 @@ def regression_pan(font, ops, model):
 
 REGRESSIONS = (regression_same_position, regression_two_positions, regression_partial_overpaint,
                regression_touch_edges, regression_aligned_attr, regression_aligned_wider_flush,
-               regression_aligned_ring_claim,
+               regression_aligned_ring_claim, regression_row7,
                regression_diff_flush, regression_blit_overlap)
 
 
