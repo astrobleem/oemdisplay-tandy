@@ -12,6 +12,10 @@ REP-prefix and link audits then run on the edited listings):
   t80        TEXT80 80x25 colour text (T80PATCH over the same pipeline; the
              640x200 resources of the 640x200 profiles, hash-checked)
   t80prof    t80 + T80PROF
+  t80pan     TEXT80 80x25 over a 640x400 desktop, panned (T80TALL pan)
+  t80panprof t80pan + T80PROF
+  t80vga     TEXT80 VGA 80x50, 640x400 (T80TALL vga)
+  t80vgaprof t80vga + T80PROF
 Further variants are added by the TEXT80 work as it lands.
 The driver is copied to <out>/<OUTNAME> and summarized in <out>/T80RES.JSON.
 A successful build is not runtime acceptance; no package or pin changes.
@@ -49,12 +53,19 @@ def variants():
     prof = load("t80prof", HERE / "T80PROF.PY")
     t40 = lambda e: load("t40patch", ROOT / "txt40" / "T40PATCH.PY").patch_staged(e)
     t80 = lambda e: load("t80patch", HERE / "T80PATCH.PY").patch_staged(e)
+    tall = lambda kind: (lambda e: load("t80tall", HERE / "T80TALL.PY").patch_staged(e, kind))
     return {
         "t40": dict(mode="320x200x16", out="TXT40.DRV", edits=[t40]),
         "t40prof": dict(mode="320x200x16", out="T40PROF.DRV", edits=[t40, prof.patch_staged]),
         "t80": dict(mode="320x200x16", out="TEXT80.DRV", edits=[t80], res=res640, res_sha=RES640_SHA),
         "t80prof": dict(mode="320x200x16", out="T80PROF.DRV", edits=[t80, prof.patch_staged], res=res640,
                         res_sha=RES640_SHA),
+        "t80pan": dict(mode="320x200x16", out="T80PAN.DRV", edits=[tall("pan")], res=res640, res_sha=RES640_SHA),
+        "t80panprof": dict(mode="320x200x16", out="T80PANP.DRV", edits=[tall("pan"), prof.patch_staged],
+                           res=res640, res_sha=RES640_SHA),
+        "t80vga": dict(mode="320x200x16", out="T80VGA.DRV", edits=[tall("vga")], res=res640, res_sha=RES640_SHA),
+        "t80vgaprof": dict(mode="320x200x16", out="T80VGAP.DRV", edits=[tall("vga"), prof.patch_staged],
+                           res=res640, res_sha=RES640_SHA),
     }
 
 

@@ -21,6 +21,11 @@ Windows program through Control escape 5450h ('TP'):
   compares of a diff flush (t40_changed), 17 diff flushes (t40_pdiff).
 - A ring of the last 256 flushes: clamped rows and byte columns, the
   duration and the drawing call (5..10, 0 none) it came from.
+- A ring of the last 64 ExtTextOut calls (version 2): the caller's clip
+  and opaque rectangles (left, top, right, bottom; -32768 when the
+  pointer is NULL), options, count, then the flush bounds the driver
+  derived (rowfirst, rowlast, colfirst, collast) and dirty (0 not the
+  screen, 1 whole flush, 2 these bounds).
 
 Escape 5450h: input word 1 = copy and reset, 0 = copy; output = the block
 (T80PROF_BYTES), whose first dword after the header is the current time.
@@ -42,8 +47,10 @@ def rep(t, old, new, want, what):
 
 NSLOT = 20
 RING = 256
-# header 4 + stamp 4 + counts 64 + totals 64 + ring index 2 + pad 2 + ring 16*256
-T80PROF_BYTES = 4 + 4 + 4 * NSLOT * 2 + 4 + 16 * RING
+XRING = 64
+# header 4 + stamp 4 + counts + totals + ring index 2 + pad 2 + ring 16*256
+# + text-call ring index 2 + pad 2 + text-call ring 32*64
+T80PROF_BYTES = 4 + 4 + 4 * NSLOT * 2 + 4 + 16 * RING + 4 + 32 * XRING
 WRAPPERS = {"TBitBlt": 5, "TOutput": 6, "TPixel": 7, "TScanLR": 8, "TStrBlt": 9, "TExtTextOut": 10}
 
 DATA = crlf(f"""; T80PROF: profiling block (measurement builds only).
@@ -52,7 +59,7 @@ sBegin T80PSeg
 public t80_block
 t80_block label byte
 t80_magic dw 5450h
-t80_version dw 1
+t80_version dw 2
 t80_stamp dd 0
 t80_count dd {NSLOT} dup (0)
 t80_total dd {NSLOT} dup (0)
@@ -60,6 +67,9 @@ t80_ri dw 0
 t80_cur db 0
 t80_pad db 0
 t80_ring db {16 * RING} dup (0)
+t80_xi dw 0
+t80_xpad dw 0
+t80_xring db {32 * XRING} dup (0)
 t80_block_end label byte
 t80_start dd {NSLOT} dup (0)
 t80_rect dw 4 dup (0)
@@ -94,6 +104,90 @@ local nok
     jnz nok
     inc dx
 nok:
+endm
+
+; ExtTextOut trace: caller's rectangles, options and count (before clamping)
+t80_xrect macro rp,off
+local null,done
+    les di,rp
+    mov ax,es
+    or ax,ax
+    jz null
+    mov ax,es:[di]
+    mov ds:[si+off],ax
+    mov ax,es:[di+2]
+    mov ds:[si+off+2],ax
+    mov ax,es:[di+4]
+    mov ds:[si+off+4],ax
+    mov ax,es:[di+6]
+    mov ds:[si+off+6],ax
+    jmp short done
+null:
+    mov word ptr ds:[si+off],8000h
+done:
+endm
+
+t80_xslot macro
+    mov si,ds:t80_xi
+    mov cl,5
+    shl si,cl
+    add si,offset t80_xring
+endm
+
+t80_xin macro
+    pushf
+    push ax
+    push cx
+    push si
+    push di
+    push ds
+    push es
+    mov ax,seg t80_block
+    mov ds,ax
+    t80_xslot
+    t80_xrect clip,0
+    t80_xrect opaquerect,8
+    mov ax,options
+    mov ds:[si+16],ax
+    mov ax,count
+    mov ds:[si+18],ax
+    pop es
+    pop ds
+    pop di
+    pop si
+    pop cx
+    pop ax
+    popf
+endm
+
+t80_xout macro
+    pushf
+    push ax
+    push cx
+    push si
+    push ds
+    mov ax,seg t80_block
+    mov ds,ax
+    t80_xslot
+    mov ax,rowfirst
+    mov ds:[si+20],ax
+    mov ax,rowlast
+    mov ds:[si+22],ax
+    mov ax,colfirst
+    mov ds:[si+24],ax
+    mov ax,collast
+    mov ds:[si+26],ax
+    mov ax,dirty
+    mov ds:[si+28],ax
+    mov ax,ds:t80_xi
+    inc ax
+    and ax,{XRING - 1}
+    mov ds:t80_xi,ax
+    pop ds
+    pop si
+    pop cx
+    pop ax
+    popf
 endm
 
 t80_tbeg macro idx
@@ -326,6 +420,10 @@ def patch(t):
         raise SystemExit("T80PROF: t40_blit has more than one ret")
     t = rep(t, "t40_blit proc near\r\n", "t40_blit proc near\r\n    t80_tbeg 12\r\n", 1, "blit begin")
     t = rep(t, "tb_done:\r\n", "tb_done:\r\n    t80_tend 12\r\n", 1, "blit end")
+    # ExtTextOut trace
+    t = rep(t, "    t40_record 1\r\n    t40_clamp 1\r\n", "    t40_record 1\r\n    t80_xin\r\n    t40_clamp 1\r\n", 1,
+            "text trace in")
+    t = rep(t, "    t40_bounds 1\r\n", "    t40_bounds 1\r\n    t80_xout\r\n", 1, "text trace out")
     # drawing entry points: whole call (render into the shadow + flushes)
     for name, idx in WRAPPERS.items():
         i = t.index(f"cProc {name},")

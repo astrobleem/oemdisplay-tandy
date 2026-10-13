@@ -79,6 +79,21 @@ MUTANTS = [
 ]
 
 
+# Only meaningful when the geometry has two shadow bands (--rows 50) or a
+# panned screen (--vrows 25): elsewhere the code is not assembled.
+BAND_MUTANTS = [
+    ("band-boundary", "    cmp ax,200\r\n    jb tre_b0", "    cmp ax,201\r\n    jb tre_b0"),
+    ("band-second-segment", "    mov es,t40_sh1", "    mov es,t40_sh0"),
+]
+PAN_MUTANTS = [
+    ("pan-no-low-clamp", "    jns tpn_lo", "    jmp short tpn_lo"),
+    ("pan-high-clamp", "    mov ax,T40_NROWS-T40_VISROWS\r\ntpn_hi:", "    mov ax,T40_NROWS-T40_VISROWS-1\r\ntpn_hi:"),
+    ("pan-copy-short", "    mov cx,T40_VISROWS*T40_COLS", "    mov cx,T40_VISROWS*T40_COLS-T40_COLS"),
+    ("output-ignores-viewport", "    sub di,t40_voff", "    sub di,0"),
+    ("output-row-below-screen", "    cmp si,T40_VISROWS\r\n    jae tpr_hidden", "    cmp si,T40_VISROWS+1\r\n    jae tpr_hidden"),
+]
+
+
 CONTROL_BROKEN = ("control-unassemblable", "    cmp ax,2", "    cmp ax,t40_no_such_symbol")
 
 
@@ -94,7 +109,7 @@ def classify(rc, out):
 def run_test(a, out, name, asm=None):
     cmd = [sys.executable, str(HERE / "T40TEST.PY"), "--deps", str(a.deps), "--dosbox", str(a.dosbox),
            "--out", str(out / name), "--scenes", str(a.scenes), "--cols", str(a.cols),
-           "--glimit", str(a.glimit)]
+           "--glimit", str(a.glimit), "--rows", str(a.rows)] + (["--vrows", str(a.vrows)] if a.vrows else [])
     if asm:
         cmd += ["--pres", str(asm)]
     rc = subprocess.run(cmd, capture_output=True, text=True).returncode
@@ -110,6 +125,8 @@ def main():
     ap.add_argument("--cols", type=int, default=40, choices=(40, 80))
     ap.add_argument("--glimit", type=int, default=64,
                     help="glyph dictionary limit for the tests (64: the scenes overflow it)")
+    ap.add_argument("--rows", type=int, default=25, choices=(25, 50))
+    ap.add_argument("--vrows", type=int)
     a = ap.parse_args()
     out = a.out.resolve()
     out.mkdir(parents=True, exist_ok=False)
@@ -124,7 +141,9 @@ def main():
     print(name, cls)
     controls[name] = {"test_exit": rc, "class": cls, "want": "invalid"}
     results = []
-    for name, old, new in MUTANTS:
+    mutants = (MUTANTS + (BAND_MUTANTS if a.rows == 50 else [])
+               + (PAN_MUTANTS if a.vrows and a.vrows < a.rows else []))
+    for name, old, new in mutants:
         old_t, new_t = old + "\r\n", new + "\r\n"
         if old_t not in src:
             raise SystemExit(f"T40MUT: {name}: original text not found")

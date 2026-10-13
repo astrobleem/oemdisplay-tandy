@@ -39,7 +39,7 @@ def parse(path):
         ln = ln.rstrip("\r\n")
         m = re.match(r"(CHAR \d+|SNAP|IDLE|NOTE) stamp=(\d+) wall=(\d+)", ln)
         if m:
-            cur = {"label": m.group(1), "wall": int(m.group(3)), "S": {}, "F": []}
+            cur = {"label": m.group(1), "wall": int(m.group(3)), "S": {}, "F": [], "X": []}
             readings.append(cur)
             continue
         m = re.match(r" S (\d+) (\d+) (\d+)", ln)
@@ -49,6 +49,12 @@ def parse(path):
         m = re.match(r" F (-?\d+) (-?\d+) (-?\d+) (-?\d+) (\d+) (\d+)", ln)
         if m and cur:
             cur["F"].append(tuple(int(v) for v in m.groups()))
+            continue
+        m = re.match(r" X ((?:\s*-?\d+){15})$", ln)
+        if m and cur:
+            v = [int(x) for x in m.group(1).split()]
+            cur["X"].append({"clip": v[0:4], "opaque": v[4:8], "options": v[8], "count": v[9],
+                             "bounds_rows": v[10:12], "bounds_cols": v[12:14], "dirty": v[14]})
             continue
         extra.append(ln)
     return readings, extra
@@ -85,6 +91,7 @@ def breakdown(r):
         "flush_rects": [{"rows": [f[0], f[1]], "bytes": [f[2], f[3]], "ms": ms(f[4]),
                          "from": SLOTS.get(f[5], "none")} for f in r["F"]],
         "ring_complete": ring_complete,
+        "text_calls": r.get("X", []),
     }
     return out
 

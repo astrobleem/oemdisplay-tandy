@@ -24,6 +24,7 @@
 #define QUERYESC 8
 #define NSLOT 20
 #define NRING 256
+#define NXRING 64
 
 typedef struct {
     WORD magic, version;
@@ -33,6 +34,8 @@ typedef struct {
     WORD ri;
     BYTE cur, pad;
     BYTE ring[NRING][16];
+    WORD xi, xpad;
+    int xring[NXRING][16];   /* version 2: ExtTextOut trace */
 } PROF;
 
 static HANDLE hInst;
@@ -99,6 +102,18 @@ static void Dump(LPSTR label, DWORD t0)
         wsprintf(line, " F %d %d %d %d %lu %d", *(int FAR *)(e + 0), *(int FAR *)(e + 2),
                  *(int FAR *)(e + 4), *(int FAR *)(e + 6), *(DWORD FAR *)(e + 8), (int)e[12]);
         LogLine(line);
+    }
+    /* ExtTextOut trace: clip l t r b, opaque l t r b, options, count,
+       bounds rowfirst rowlast colfirst collast, dirty */
+    if (pb->version >= 2) {
+        n = pb->count[10] < (DWORD)NXRING ? (int)pb->count[10] : NXRING;
+        for (i = 0; i < n; i++) {
+            int FAR *x = pb->xring[(pb->xi - n + i) & (NXRING - 1)];
+            wsprintf(line, " X %d %d %d %d  %d %d %d %d  %d %d  %d %d %d %d  %d",
+                     x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9],
+                     x[10], x[11], x[12], x[13], x[14]);
+            LogLine(line);
+        }
     }
 }
 
