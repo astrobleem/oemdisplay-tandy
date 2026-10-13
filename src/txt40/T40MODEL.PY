@@ -233,29 +233,33 @@ class Presenter:
             del s[2:]
         self.stale[k] = True
 
-    # TEXT80 aligned copies: a screen-to-screen copy whose source rectangle
-    # and offset are whole cells (scrolling text by lines, moving a window by
-    # the 8-pixel grid) moves every cell of the destination's interior (the
-    # destination less its outer ring of cells) exactly: its pixels, the
-    # pixels of all its neighbours, and its hints (every hint of such a
-    # cell lies wholly inside the source) all come from one source cell. So
-    # those cells take the source cell's slots, kept state, stale flag and
-    # text as they are, and the flush of the destination that follows
-    # presents only the outer ring (as four strips). Any other flush is an
-    # ordinary present, which would produce the same text for those cells.
+    # TEXT80 aligned copies: a screen-to-screen copy by a whole number of
+    # cells (scrolling text by lines, moving a window on the 8-pixel grid;
+    # the rectangle itself need not be on cell boundaries) moves exactly
+    # every destination cell whose 3x3 neighbourhood lies wholly inside the
+    # destination (the interior): its pixels, its neighbours' pixels and
+    # its hints (a hint window lies inside its cell's neighbourhood) all
+    # come from one source cell. Those cells take the source cell's slots,
+    # kept state, stale flag and text as they are. Their text also depends on
+    # their neighbours' shown hints, and a neighbour outside the interior may
+    # show something else than the source's neighbour did (its own older
+    # hints), so the flush of the destination that follows presents the
+    # destination less the interior shrunk by one more cell (four strips).
+    # Any other flush is an ordinary present, which would produce the same
+    # text for those cells.
     def blit(self, sx, sy, w, h, ddx, ddy):
         self.copied = None
         if ddx == 0 and ddy == 0:
             return                                       # identity copy
-        aligned = (all(v % 8 == 0 for v in (sx, sy, w, h, ddx, ddy)) and w > 0 and h > 0
+        aligned = (ddx % 8 == 0 and ddy % 8 == 0 and w > 0 and h > 0
                    and 0 <= sx and sx + w <= W and 0 <= sy and sy + h <= H
                    and 0 <= sx + ddx and sx + ddx + w <= W and 0 <= sy + ddy and sy + ddy + h <= H)
         if aligned:
-            dr0, dr1 = (sy + ddy) >> 3, (sy + ddy + h) >> 3
-            dc0, dc1 = (sx + ddx) >> 3, (sx + ddx + w) >> 3
-            ir0, ir1, ic0, ic1 = dr0 + 1, dr1 - 1, dc0 + 1, dc1 - 1      # interior, exclusive ends
-            if ir0 < ir1 and ic0 < ic1:
-                self.copied = (dr0, dr1, dc0, dc1)
+            y0, y1, x0, x1 = sy + ddy, sy + ddy + h, sx + ddx, sx + ddx + w   # destination pixels
+            ir0, ir1 = ((y0 + 7) >> 3) + 1, (y1 >> 3) - 1                    # interior cells,
+            ic0, ic1 = ((x0 + 7) >> 3) + 1, (x1 >> 3) - 1                    # exclusive ends
+            if ir0 + 1 < ir1 - 1 and ic0 + 1 < ic1 - 1:                       # (and it, shrunk)
+                self.copied = (y0, y1, x0 >> 3, (x1 + 7) >> 3, ir0 + 1, ir1 - 1, ic0 + 1, ic1 - 1)
             else:
                 aligned = False
         rows = range(ROWS - 1, -1, -1) if ddy > 0 else range(ROWS)
@@ -349,12 +353,12 @@ class Presenter:
         ay, by = max(ay, 0), min(by, H)
         cx, dx = max(cx, 0), min(dx, COLS)
         copied, self.copied = getattr(self, "copied", None), None
-        if copied and (ay, by, cx, dx) == (8 * copied[0], 8 * copied[1], copied[2], copied[3]):
-            r0, r1, c0, c1 = copied                      # the ring: four strips
-            self.present(shadow, 8 * r0, 8 * r0 + 8, c0, c1)
-            self.present(shadow, 8 * r1 - 8, 8 * r1, c0, c1)
-            self.present(shadow, 8 * r0 + 8, 8 * r1 - 8, c0, c0 + 1)
-            self.present(shadow, 8 * r0 + 8, 8 * r1 - 8, c1 - 1, c1)
+        if copied and (ay, by, cx, dx) == copied[:4]:
+            y0, y1, c0, c1, ir0, ir1, ic0, ic1 = copied  # around the shrunk interior: four strips
+            self.present(shadow, y0, 8 * ir0, c0, c1)
+            self.present(shadow, 8 * ir1, y1, c0, c1)
+            self.present(shadow, 8 * ir0, 8 * ir1, c0, ic0)
+            self.present(shadow, 8 * ir0, 8 * ir1, ic1, c1)
             return
         if ay >= by or cx >= dx:
             return
@@ -625,6 +629,32 @@ def check_one():
     # Aligned screen-to-screen copies (scrolling, grid moves), overlapping
     # or not, each flushed over its destination: interior cells are copied,
     # the ring presented; every cell must still be exact.
+    def copy_pixels(sx, sy, w, h, ddx, ddy):
+        old = bytes(sh)
+        for yy in range(h):
+            for xx in range(w):
+                x, y = sx + xx, sy + yy
+                b = 0x80 >> (x & 7)
+                tb = 0x80 >> ((x + ddx) & 7)
+                for pl in range(4):
+                    s = y * ROWB + pl * COLS + (x >> 3)
+                    d = (y + ddy) * ROWB + pl * COLS + ((x + ddx) >> 3)
+                    if old[s] & b:
+                        sh[d] |= tb
+                    else:
+                        sh[d] &= ~tb & 0xFF
+    for i in range(60):
+        w, h = rnd.randrange(8, min(W, 200)), rnd.randrange(8, min(H, 120))
+        sx, sy = rnd.randrange(W - w + 1), rnd.randrange(H - h + 1)
+        ddx = 8 * rnd.randrange(-(sx // 8), (W - w - sx) // 8 + 1)
+        ddy = 8 * rnd.randrange(-(sy // 8), (H - h - sy) // 8 + 1)
+        if rnd.random() < 0.5:
+            ddx = 0
+        copy_pixels(sx, sy, w, h, ddx, ddy)
+        p.blit(sx, sy, w, h, ddx, ddy)
+        x0 = sx + ddx
+        p.present(sh, sy + ddy, sy + ddy + h, x0 >> 3, (x0 + w + 7) >> 3)
+        assert p.text == p.ideal(sh), ("unaligned rectangle", i)
     for i in range(120):
         cw, ch = rnd.randrange(1, min(COLS, 30)), rnd.randrange(1, min(ROWS, 16))
         c0, r0 = rnd.randrange(COLS - cw + 1), rnd.randrange(ROWS - ch + 1)

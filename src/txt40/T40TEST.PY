@@ -694,8 +694,13 @@ def synthetic(rnd, font, ops, model, n):
             w, h = rnd.randrange(16, 200), rnd.randrange(16, 120)
             sx, sy = rnd.randrange(0, W - w + 1), rnd.randrange(0, H - h + 1)
             dx, dy = rnd.randrange(-sx, W - w - sx + 1), rnd.randrange(-sy, H - h - sy + 1)
-            if rnd.random() < 0.5:              # whole cells: text scrolled by lines, grid moves
+            kind = rnd.random()
+            if kind < 0.35:                     # whole cells: text scrolled by lines, grid moves
                 w, h, sx, sy, dx, dy = (v & ~7 for v in (w, h, sx, sy, dx, dy))
+                if rnd.random() < 0.5:
+                    dx, dy = 0, rnd.choice((-8, 8)) if 8 <= sy and sy + h + 8 <= H else 0
+            elif kind < 0.7:                    # any rectangle moved by whole cells (a window's
+                dx, dy = dx & ~7, dy & ~7       # client area scrolled by one 8-pixel line)
                 if rnd.random() < 0.5:
                     dx, dy = 0, rnd.choice((-8, 8)) if 8 <= sy and sy + h + 8 <= H else 0
             s.move(sx, sy, w, h, dx, dy)
