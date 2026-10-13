@@ -118,6 +118,14 @@ t40_px0     dw 0                ; t40_present: dirty pixels, columns
 t40_px1     dw 0
 t40_py0     dw 0                ; and rows (end exclusive)
 t40_py1     dw 0
+t40_cpv     db 0                ; an aligned copy's ring is pending (t40_blit)
+            db 0
+t40_cpr0    dw 0                ; its destination in cells (exclusive ends)
+t40_cpr1    dw 0
+t40_cpc0    dw 0
+t40_cpc1    dw 0
+t40_cdr     dw 0                ; and its offset in cells
+t40_cdc     dw 0
 t40_qr0     dw 0                ; t40_present: dirty cells (rows, columns,
 t40_qr1     dw 0                ; inclusive)
 t40_qc0     dw 0

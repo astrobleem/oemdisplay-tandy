@@ -1380,6 +1380,10 @@ t40_touch endp
 t40_present proc near
     mov si,seg t40_slot
     mov ds,si
+    cmp t40_cpv,0
+    je tpr_go
+    jmp t40_ring
+tpr_go:
     mov es,t40_sh0
     mov t40_py0,ax
     mov t40_py1,bx
@@ -1701,10 +1705,254 @@ t40_drop proc near
     mov ax,seg t40_slot
     mov ds,ax
     mov t40_snv,0
+    mov t40_cpv,0
     pop ax
     pop ds
     ret
 t40_drop endp
+
+; ---- TEXT80 aligned copies (specification: T40MODEL.Presenter.blit) ------
+; t40_aligned: in t40_blit (DS = _T40, t40_sx..t40_ddy set). When the source
+; rectangle and the offset are whole cells and source and destination lie on
+; the screen, and the destination has interior cells (it less its outer
+; ring), sets t40_cpv = 1 and the destination in cells (t40_cpr0..cpr1,
+; t40_cpc0..cpc1, exclusive ends) and the offset (t40_cdr, t40_cdc).
+; Clobbers AX, CX.
+t40_aligned proc near
+    mov ax,t40_sx
+    or ax,t40_sy
+    or ax,t40_ex
+    or ax,t40_ey
+    or ax,t40_ddx
+    or ax,t40_ddy
+    test ax,7
+    jz tal_cells
+    ret
+tal_cells:
+    cmp t40_sx,0
+    jge tlj1
+    jmp tal_no
+tlj1:
+    cmp t40_sy,0
+    jge tlj2
+    jmp tal_no
+tlj2:
+    cmp t40_ex,T40_W
+    jle tlj3
+    jmp tal_no
+tlj3:
+    cmp t40_ey,T40_H
+    jle tlj4
+    jmp tal_no
+tlj4:
+    mov cl,3
+    mov ax,t40_ddy
+    sar ax,cl
+    mov t40_cdr,ax
+    mov ax,t40_ddx
+    sar ax,cl
+    mov t40_cdc,ax
+    mov ax,t40_sy
+    add ax,t40_ddy
+    jge tlj5
+    jmp tal_no
+tlj5:
+    sar ax,cl
+    mov t40_cpr0,ax
+    mov ax,t40_ey
+    add ax,t40_ddy
+    cmp ax,T40_H
+    jle tlj6
+    jmp tal_no
+tlj6:
+    sar ax,cl
+    mov t40_cpr1,ax
+    mov ax,t40_sx
+    add ax,t40_ddx
+    jge tlj7
+    jmp tal_no
+tlj7:
+    sar ax,cl
+    mov t40_cpc0,ax
+    mov ax,t40_ex
+    add ax,t40_ddx
+    cmp ax,T40_W
+    jle tlj8
+    jmp tal_no
+tlj8:
+    sar ax,cl
+    mov t40_cpc1,ax
+    mov ax,t40_cpr0             ; interior rows cpr0+1 .. cpr1-2
+    add ax,2
+    cmp ax,t40_cpr1
+    jl tlj9
+    jmp tal_no
+tlj9:
+    mov ax,t40_cpc0
+    add ax,2
+    cmp ax,t40_cpc1
+    jl tlj10
+    jmp tal_no
+tlj10:
+    mov t40_cpv,1
+tal_no:
+    ret
+t40_aligned endp
+
+; t40_cpcell: BX = source cell (t40_cy, t40_cx). If its destination is an
+; interior cell, the destination takes its two slots, kept state and text
+; (logical and, if shown, video) and CF=1; else CF=0. DS = ES = _T40.
+; Preserves BX. Clobbers AX, CX, DX, SI, DI.
+t40_cpcell proc near
+    mov ax,t40_cy
+    add ax,t40_cdr
+    mov dx,t40_cpr0
+    inc dx
+    cmp ax,dx
+    jge tlj11
+    jmp tcp_no
+tlj11:
+    mov dx,t40_cpr1
+    dec dx
+    cmp ax,dx
+    jl tlj12
+    jmp tcp_no
+tlj12:
+    mov dx,ax                   ; DX = destination row
+    mov ax,t40_cx
+    add ax,t40_cdc
+    mov cx,t40_cpc0
+    inc cx
+    cmp ax,cx
+    jge tlj13
+    jmp tcp_no
+tlj13:
+    mov cx,t40_cpc1
+    dec cx
+    cmp ax,cx
+    jl tlj14
+    jmp tcp_no
+tlj14:
+    push dx
+    mov cx,ax                   ; CX = destination column
+    mov ax,dx
+    t40_x40
+    add ax,cx
+    mov di,ax                   ; DI = destination cell
+    pop dx
+    mov al,t40_vst[bx]
+    mov t40_vst[di],al
+    mov al,t40_vat[bx]
+    mov t40_vat[di],al
+    push di
+    push bx
+    mov si,bx
+    t40_slotof si
+    t40_slotof di
+    mov ax,[si]
+    mov [di],ax
+    mov ax,[si+2]
+    mov [di+2],ax
+    mov ax,[si+4]
+    mov [di+4],ax
+    mov ax,[si+6]
+    mov [di+6],ax
+    pop bx
+    pop di
+    push es
+    mov si,bx
+    shl si,1
+    shl di,1
+    mov ax,T40_LSEG
+    mov es,ax
+    mov ax,es:[si]              ; the source cell's text
+    mov es:[di],ax
+  if T40_PANNED
+    sub dx,t40_vtop             ; and the screen, if the row is shown
+    jb tcp_hidden
+    cmp dx,T40_VISROWS
+    jae tcp_hidden
+    sub di,t40_voff
+    mov si,T40_VSEG
+    mov es,si
+    mov es:[di],ax
+tcp_hidden:
+  endif
+    pop es
+    stc
+    ret
+tcp_no:
+    clc
+    ret
+t40_cpcell endp
+
+; t40_ring: the flush that follows an aligned copy (t40_cpv = 1, from
+; t40_present; DS = _T40). If it is the destination rectangle exactly, only
+; its outer ring of cells is presented, as four strips; otherwise an
+; ordinary present. Either way the copy is consumed.
+t40_ring proc near
+    mov t40_cpv,0
+    mov si,t40_cpr0             ; SI: free here (t40_present set DS with it)
+    shl si,1
+    shl si,1
+    shl si,1
+    cmp ax,si
+    jne trg_plain
+    mov si,t40_cpr1
+    shl si,1
+    shl si,1
+    shl si,1
+    cmp bx,si
+    jne trg_plain
+    cmp cx,t40_cpc0
+    jne trg_plain
+    cmp dx,t40_cpc1
+    jne trg_plain
+    mov ax,t40_cpr0             ; top strip
+    shl ax,1
+    shl ax,1
+    shl ax,1
+    mov bx,ax
+    add bx,8
+    mov cx,t40_cpc0
+    mov dx,t40_cpc1
+    call t40_present
+    mov ax,t40_cpr1             ; bottom strip
+    shl ax,1
+    shl ax,1
+    shl ax,1
+    mov bx,ax
+    sub ax,8
+    mov cx,t40_cpc0
+    mov dx,t40_cpc1
+    call t40_present
+    call trg_rows               ; left strip
+    mov cx,t40_cpc0
+    mov dx,cx
+    inc dx
+    call t40_present
+    call trg_rows               ; right strip
+    mov dx,t40_cpc1
+    mov cx,dx
+    dec cx
+    call t40_present
+    ret
+trg_plain:
+    jmp tpr_go
+; AX..BX = the rows between the top and bottom strips
+trg_rows:
+    mov ax,t40_cpr0
+    inc ax
+    shl ax,1
+    shl ax,1
+    shl ax,1
+    mov bx,t40_cpr1
+    dec bx
+    shl bx,1
+    shl bx,1
+    shl bx,1
+    ret
+t40_ring endp
 
 ; ---- t40_save --------------------------------------------------------------
 t40_save proc near
@@ -1903,6 +2151,7 @@ t40_pdiff proc near
 tpd_full:
     jmp t40_present
 tpd_go:
+    mov t40_cpv,0
     ; output range: as t40_present
     mov si,cx
     mov cl,3
@@ -2094,11 +2343,13 @@ t40_blit proc near
     mov t40_ey,bx
     mov t40_ddx,si
     mov t40_ddy,di
+    mov t40_cpv,0
     mov ax,si
     or ax,di
     jnz tb_moves
     jmp tb_done                 ; identity copy: nothing moves
 tb_moves:
+    call t40_aligned            ; TEXT80: whole-cell copy? (t40_cpv)
     ; rows bottom-up when moving down, columns right-to-left when moving right
     xor ax,ax
     mov bx,1
@@ -2124,7 +2375,13 @@ tb_col:
     t40_x40
     add ax,t40_cx
     mov bx,ax
-    mov di,ax
+    cmp t40_cpv,0
+    je tb_hints
+    call t40_cpcell             ; CF=1: an interior destination, copied
+    jnc tb_hints
+    jmp tb_next
+tb_hints:
+    mov di,bx
     t40_slotof di
     call t40_unpack             ; both slots, unpacked, newest first
     xor si,si
@@ -2147,6 +2404,7 @@ tb_snap1:
     call t40_blit_one
     xor di,di
     call t40_blit_one
+tb_next:
     mov ax,t40_nx
     add t40_cx,ax
     mov ax,t40_cx
@@ -2215,6 +2473,7 @@ t40_reset proc near
     mov cx,T40_CLRB/2           ; slots, t40_vst, t40_vat, dictionary use
     cld
     rep stosw
+    mov es:t40_cpv,0            ; no aligned copy pending
     pop es
     pop di
     pop cx

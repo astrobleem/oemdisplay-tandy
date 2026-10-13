@@ -616,6 +616,8 @@ class Session:
         for i in range(1, 31):
             self.key("Return", 1)
             self.text(f"line {i:02d}", 1)
+            if i % 5 == 0:                       # keep the keyboard queue short
+                self.settle(f"lines{i}", (f"line {i:02d}",), timeout=900)
         sc = self.settle("scrolled", ("line 30",), timeout=2400)
         rows = CHK.rows(sc["hidden"], 80) if sc else []
         self.check("scrolling: the last line is visible and the first typed line has scrolled away",
@@ -637,8 +639,11 @@ class Session:
                 time.sleep(5)
                 mv = self.settle("dragged", ("Notepad - (untitled)",), timeout=1200)
                 t2 = CHK.find(mv["hidden"], 80, "Notepad - (untitled)") if mv else []
-                self.check("drag: the title moved 3 cell rows down and 5 cell columns left",
-                           bool(t2) and t2[0] == (tr + 3, tc - 5), before=[tr, tc], after=t2[:1])
+                # GridGranularity=1 snaps the window's left edge to 8 pixels,
+                # so a 40-pixel drag moves it 4 or 5 cells
+                self.check("drag: the title moved 3 cell rows down and 4-5 cell columns left (8-pixel grid)",
+                           bool(t2) and t2[0][0] == tr + 3 and tc - 5 <= t2[0][1] <= tc - 4,
+                           before=[tr, tc], after=t2[:1])
         # 10. overlapping windows: Program Manager to the front, then Notepad
         self.key("alt+Escape", 8)
         pm = self.settle("pmfront", ("Program Manager",))

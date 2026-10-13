@@ -86,6 +86,15 @@ MUTANTS = [
     ("tight-dirty-rows-short", "    dec ax\r\n    shr ax,cl\r\n    mov t40_qr1,ax", "    dec ax\r\n    shr ax,cl\r\n    dec ax\r\n    mov t40_qr1,ax"),
     ("tight-scan-no-ring-below", "    mov ax,t40_r1\r\n    inc ax\r\n    cmp ax,T40_NROWS-1", "    mov ax,t40_r1\r\n    nop\r\n    cmp ax,T40_NROWS-1"),
     ("tight-unmark-skipped", "    call t40_unmark\r\n    ret\r\nt40_present endp", "    nop\r\n    nop\r\n    nop\r\n    ret\r\nt40_present endp"),
+    # aligned copies
+    ("aligned-any-offset", "    test ax,7\r\n    jz tal_cells", "    test ax,0\r\n    jz tal_cells"),
+    ("aligned-interior-top-row", "    mov dx,t40_cpr0\r\n    inc dx", "    mov dx,t40_cpr0\r\n    nop"),
+    ("aligned-text-not-copied", "    mov ax,es:[si]              ; the source cell's text",
+     "    mov ax,0720h                ; the source cell's text"),
+    ("aligned-attr-not-copied", "    mov t40_vat[di],al", "    nop"),
+    ("aligned-no-right-strip", "    dec cx\r\n    call t40_present\r\n    ret\r\ntrg_plain:",
+     "    dec cx\r\n    nop\r\n    nop\r\n    nop\r\n    ret\r\ntrg_plain:"),
+    ("aligned-ring-any-flush", "    cmp dx,t40_cpc1\r\n    jne trg_plain", "    cmp dx,dx\r\n    jne trg_plain"),
     ("cell-ignores-marks", "    and al,3                    ; the kept slot (not the stale/changed marks)",
      "    or al,al                    ; the kept slot (not the stale/changed marks)"),
 ]
