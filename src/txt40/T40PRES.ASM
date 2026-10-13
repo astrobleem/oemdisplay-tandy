@@ -1463,7 +1463,9 @@ tpr_kept:
     inc t40_cx
     mov ax,t40_cx
     cmp ax,t40_c1
-    jle tpr_vcol
+    jg tpr_vcdone
+    jmp tpr_vcol
+tpr_vcdone:
     inc t40_cy
     mov ax,t40_cy
     cmp ax,t40_r1
