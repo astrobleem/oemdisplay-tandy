@@ -1031,7 +1031,7 @@ t40_cell proc near
     add ax,t40_cx
     mov bx,ax
     mov al,t40_vst[bx]
-    or al,al
+    and al,3                    ; the kept slot (not the stale/changed marks)
     jz tc_approx
     mov di,bx
     t40_slotof di
@@ -1443,7 +1443,22 @@ tpr_vcol:
     call t40_touch
     jnc tpr_kept
 tpr_verify:
+    mov al,t40_vst[bx]          ; TEXT80: was it stale, or does its kept
+    mov ah,t40_vat[bx]          ; state change? Then mark it changed (40h):
+    push ax                     ; it and its neighbours are output
     call t40_shown
+    pop ax
+    test al,80h
+    jnz tpr_chg
+    and al,3
+    cmp al,t40_vst[bx]
+    jne tpr_chg
+    or al,al
+    jz tpr_kept
+    cmp ah,t40_vat[bx]
+    je tpr_kept
+tpr_chg:
+    or t40_vst[bx],40h
 tpr_kept:
     inc t40_cx
     mov ax,t40_cx
@@ -1452,14 +1467,62 @@ tpr_kept:
     inc t40_cy
     mov ax,t40_cy
     cmp ax,t40_r1
-    jle tpr_vrow
-    ; output range
+    jg tpr_vdone
+    jmp tpr_vrow
+tpr_vdone:
+    ; output (TEXT80 tight range): the dirty cells, the changed cells and
+    ; their neighbours, scanned over the verify range and one around it
+    mov ax,t40_py0
+    mov cl,3
+    shr ax,cl
+    mov t40_qr0,ax
+    mov ax,t40_py1
+    dec ax
+    shr ax,cl
+    mov t40_qr1,ax
+    mov ax,t40_px0
+    shr ax,cl
+    mov t40_qc0,ax
+    mov ax,t40_px1
+    shr ax,cl
+    dec ax
+    mov t40_qc1,ax
     mov ax,t40_r0
+    dec ax
+    jns tpr_or0
+    xor ax,ax
+tpr_or0:
+    mov t40_or0,ax
+    mov ax,t40_r1
+    inc ax
+    cmp ax,T40_NROWS-1
+    jle tpr_or1
+    mov ax,T40_NROWS-1
+tpr_or1:
+    mov t40_or1,ax
+    mov ax,t40_c0
+    dec ax
+    jns tpr_oc0
+    xor ax,ax
+tpr_oc0:
+    mov t40_oc0,ax
+    mov ax,t40_c1
+    inc ax
+    cmp ax,T40_COLS-1
+    jle tpr_oc1
+    mov ax,T40_COLS-1
+tpr_oc1:
+    mov t40_oc1,ax
+    mov ax,t40_or0
     mov t40_cy,ax
 tpr_orow:
-    mov ax,t40_c0
+    mov ax,t40_oc0
     mov t40_cx,ax
 tpr_ocol:
+    call t40_need
+    jc tpr_doit
+    jmp tpr_onext
+tpr_doit:
     call t40_cell
     push ax
     mov ax,t40_cy
@@ -1488,16 +1551,100 @@ tpr_hidden:
     mov es:[di],ax
   endif
     mov es,t40_sh0
+tpr_onext:
     inc t40_cx
     mov ax,t40_cx
-    cmp ax,t40_c1
+    cmp ax,t40_oc1
     jle tpr_ocol
     inc t40_cy
     mov ax,t40_cy
-    cmp ax,t40_r1
+    cmp ax,t40_or1
     jle tpr_orow
+    call t40_unmark
     ret
 t40_present endp
+
+; ---- t40_need: CF=1 when cell t40_cy/t40_cx is dirty (t40_qr0..qr1,
+; t40_qc0..qc1) or it or a neighbour was marked changed (vst 40h).
+; DS = _T40. Clobbers AX, DX.
+t40_need proc near
+    mov ax,t40_cy
+    cmp ax,t40_qr0
+    jl tn_nb
+    cmp ax,t40_qr1
+    jg tn_nb
+    mov ax,t40_cx
+    cmp ax,t40_qc0
+    jl tn_nb
+    cmp ax,t40_qc1
+    jg tn_nb
+    stc
+    ret
+tn_nb:
+    push bx
+    push cx
+    mov cx,t40_cy
+    dec cx                      ; neighbour row
+tn_row:
+    cmp cx,0
+    jl tn_nextrow
+    cmp cx,T40_NROWS-1
+    jg tn_nextrow
+    mov ax,cx
+    t40_x40
+    add ax,t40_cx
+    mov bx,ax                   ; the row's cell in this column
+    test t40_vst[bx],40h
+    jnz tn_yes
+    cmp t40_cx,0
+    je tn_noleft
+    test t40_vst[bx-1],40h
+    jnz tn_yes
+tn_noleft:
+    cmp t40_cx,T40_COLS-1
+    je tn_nextrow
+    test t40_vst[bx+1],40h
+    jnz tn_yes
+tn_nextrow:
+    inc cx
+    mov ax,t40_cy
+    inc ax
+    cmp cx,ax
+    jle tn_row
+    pop cx
+    pop bx
+    clc
+    ret
+tn_yes:
+    pop cx
+    pop bx
+    stc
+    ret
+t40_need endp
+
+; ---- t40_unmark: clear the changed marks (vst 40h) of the verify range.
+; DS = _T40. Clobbers AX, BX, DX.
+t40_unmark proc near
+    mov ax,t40_r0
+    mov t40_cy,ax
+tu_row:
+    mov ax,t40_cy
+    t40_x40
+    add ax,t40_c0
+    mov bx,ax
+    mov dx,t40_c1
+    sub dx,t40_c0
+tu_col:
+    and t40_vst[bx],0BFh
+    inc bx
+    dec dx
+    jns tu_col
+    inc t40_cy
+    mov ax,t40_cy
+    cmp ax,t40_r1
+    jle tu_row
+    ret
+t40_unmark endp
 
 ; ---- t40_pan: AX = first logical text row to show (clamped to
 ; 0..T40_NROWS-T40_VISROWS): the screen becomes a copy of those logical rows;

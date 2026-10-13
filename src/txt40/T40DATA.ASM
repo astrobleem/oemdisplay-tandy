@@ -31,7 +31,8 @@ endif
 ; index; byte 3 = CP437 code. The 8 glyph rows live once in t40_gly.
 t40_slot    db T40_NCELL*8 dup (0)  ; t40_slot must stay first
 t40_vst     db T40_NCELL dup (0)    ; per cell: 0 nothing shown, 1/2 slot shown;
-                                    ; bit 7: slots changed since (stale)
+                                    ; bit 7: slots changed since (stale);
+                                    ; bit 6: changed in this flush (t40_present)
 t40_vat     db T40_NCELL dup (0)    ; per cell: attribute of the shown hint
 t40_guse    db T40_NGLYPH/8 dup (0) ; dictionary entries in use (bitmap)
 t40_gcnt    dw 0                    ; entries in use
@@ -117,3 +118,11 @@ t40_px0     dw 0                ; t40_present: dirty pixels, columns
 t40_px1     dw 0
 t40_py0     dw 0                ; and rows (end exclusive)
 t40_py1     dw 0
+t40_qr0     dw 0                ; t40_present: dirty cells (rows, columns,
+t40_qr1     dw 0                ; inclusive)
+t40_qc0     dw 0
+t40_qc1     dw 0
+t40_or0     dw 0                ; and the output scan range
+t40_or1     dw 0
+t40_oc0     dw 0
+t40_oc1     dw 0

@@ -319,19 +319,41 @@ class Presenter:
             return
         r0, r1 = max((ay >> 3) - 1, 0), min(((by - 1) >> 3) + 1, ROWS - 1)
         c0, c1 = max(cx - 1, 0), min(dx - 1 + 1, COLS - 1)
+        # verify range: the dirty cells and one around (a hint window reaches
+        # one cell beyond its own). A re-verified cell "changed" if it was
+        # stale (its slots changed, so what a kept slot index means may have
+        # changed) or its kept state differs.
+        changed = set()
         for cy in range(r0, r1 + 1):
             for x in range(c0, c1 + 1):
                 k = cy * COLS + x
                 touched = any(h[0] < 8 * dx and h[0] + 8 > 8 * cx and h[1] < by and h[1] + 8 > ay
                               for h in self.slots[k])
                 if self.stale[k] or touched:
-                    self.kept[k] = self.shown_slot(shadow, k)
+                    new = self.shown_slot(shadow, k)
+                    if self.stale[k] or new != self.kept[k]:
+                        changed.add(k)
+                    self.kept[k] = new
                     self.stale[k] = False
         shown = [None if s is None else (self.slots[k][s[0]], s[1]) for k, s in enumerate(self.kept)]
-        for cy in range(r0, r1 + 1):
-            for x in range(c0, c1 + 1):
-                self.text[cy * COLS + x] = self.cell(shadow, cy, x, shown)
-                self.written.add(cy * COLS + x)
+        # output (TEXT80 tight range): a cell's text depends only on its own
+        # pixels, its own shown hint and its neighbours' shown hints (their
+        # claims). So the cells that can change are the dirty cells, the
+        # changed cells and their neighbours; every other cell keeps text
+        # that is already exact (by induction from the first full flush).
+        out = set()
+        for cy in range(ay >> 3, ((by - 1) >> 3) + 1):
+            for x in range(cx, dx):
+                out.add(cy * COLS + x)
+        for k in changed:
+            ky, kx = divmod(k, COLS)
+            for ny in (ky - 1, ky, ky + 1):
+                for nx in (kx - 1, kx, kx + 1):
+                    if 0 <= ny < ROWS and 0 <= nx < COLS:
+                        out.add(ny * COLS + nx)
+        for k in sorted(out):
+            self.text[k] = self.cell(shadow, k // COLS, k % COLS, shown)
+            self.written.add(k)
 
     # ---- viewport (panned 80x25 over 80x50) -----------------------------------
     # Every flush keeps the logical text of all ROWS rows; the screen shows
@@ -532,6 +554,32 @@ def check_one():
             p.add(8 * (k % COLS) + rnd.randrange(-3, 4), 8 * (k // COLS) + rnd.randrange(-3, 4), g, ord("A"))
         p.present_diff(sh, y0, y1, x0, x1)
         assert p.text == p.ideal(sh)
+    # Glyphs drawn over each other at any alignment, each flushed over its
+    # own window only, with hints: the tight output range must still leave
+    # every cell exact (neighbours' claims change when a hint is replaced).
+    def draw(x0, y0, glyph, fg, bg):
+        for r in range(8):
+            for c in range(8):
+                x, yy = x0 + c, y0 + r
+                if 0 <= x < W and 0 <= yy < H:
+                    v = fg if (glyph[r] >> (7 - c)) & 1 else bg
+                    for i, pl in enumerate((0, COLS, 2 * COLS, 3 * COLS)):
+                        bit = (4, 2, 1, 8)[i]
+                        o = yy * ROWB + pl + (x >> 3)
+                        if v & bit:
+                            sh[o] |= 0x80 >> (x & 7)
+                        else:
+                            sh[o] &= ~(0x80 >> (x & 7)) & 0xFF
+    glyphs = [[rnd.randrange(256) for _ in range(8)] for _ in range(12)]
+    for i in range(300):
+        x0, y0 = rnd.randrange(-4, W - 4), rnd.randrange(-4, H - 4)
+        gl = rnd.choice(glyphs)
+        fg, bg = rnd.sample(range(16), 2)
+        draw(x0, y0, gl, fg, bg)
+        if rnd.random() < 0.8:
+            p.add(x0, y0, gl, 65 + i % 26)
+        p.present(sh, y0, y0 + 8, x0 >> 3, (x0 + 15) >> 3)
+        assert p.text == p.ideal(sh), i
 
 
 def main(argv):

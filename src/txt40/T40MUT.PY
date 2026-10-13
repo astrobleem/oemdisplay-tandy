@@ -76,6 +76,18 @@ MUTANTS = [
     ("diff-any-rectangle", "    je tpd_go", "    jmp short tpd_go"),
     ("diff-ignores-rect-rows", "    cmp ax,t40_sy0\r\n    jne tpd_full", "    cmp ax,ax\r\n    jne tpd_full"),
     ("diff-snapshot-columns", "    sub dx,cx\r\n    mov t40_snc,dx", "    sub dx,cx\r\n    mov t40_snc,cx"),
+    # tight output range
+    ("tight-no-change-mark", "    or t40_vst[bx],40h", "    or t40_vst[bx],00h"),
+    ("tight-stale-not-changed", "    test al,80h\r\n    jnz tpr_chg", "    test al,00h\r\n    jnz tpr_chg"),
+    ("tight-attr-ignored", "    cmp ah,t40_vat[bx]\r\n    je tpr_kept", "    cmp ah,ah\r\n    je tpr_kept"),
+    ("tight-left-neighbour", "    test t40_vst[bx-1],40h", "    test t40_vst[bx-1],00h"),
+    ("tight-right-neighbour", "    test t40_vst[bx+1],40h", "    test t40_vst[bx+1],00h"),
+    ("tight-dirty-cols-short", "    shr ax,cl\r\n    dec ax\r\n    mov t40_qc1,ax", "    shr ax,cl\r\n    dec ax\r\n    dec ax\r\n    mov t40_qc1,ax"),
+    ("tight-dirty-rows-short", "    dec ax\r\n    shr ax,cl\r\n    mov t40_qr1,ax", "    dec ax\r\n    shr ax,cl\r\n    dec ax\r\n    mov t40_qr1,ax"),
+    ("tight-scan-no-ring-below", "    mov ax,t40_r1\r\n    inc ax\r\n    cmp ax,T40_NROWS-1", "    mov ax,t40_r1\r\n    nop\r\n    cmp ax,T40_NROWS-1"),
+    ("tight-unmark-skipped", "    call t40_unmark\r\n    ret\r\nt40_present endp", "    nop\r\n    nop\r\n    nop\r\n    ret\r\nt40_present endp"),
+    ("cell-ignores-marks", "    and al,3                    ; the kept slot (not the stale/changed marks)",
+     "    or al,al                    ; the kept slot (not the stale/changed marks)"),
 ]
 
 

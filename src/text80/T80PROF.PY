@@ -403,14 +403,14 @@ def patch(t):
     # presenter
     t = rep(t, "t40_present proc near\r\n", "t40_present proc near\r\n    t80_tbeg 1\r\n    t80_tbeg 2\r\n", 1,
             "present begin")
-    t = rep(t, "    ; output range\r\n", "    t80_tend 2\r\n    t80_tbeg 3\r\n    ; output range\r\n", 1, "verify end")
-    t = rep(t, "    jle tpr_orow\r\n    ret\r\nt40_present endp",
-            "    jg t80_po\r\n    jmp tpr_orow\r\nt80_po:\r\n    t80_tend 3\r\n    t80_tend 1\r\n    ret\r\n"
-            "t40_present endp", 1, "present end")
+    t = rep(t, "    ; output (TEXT80 tight range)", "    t80_tend 2\r\n    t80_tbeg 3\r\n    ; output (TEXT80 tight range)", 1,
+            "verify end")
+    t = rep(t, "    jle tpr_orow\r\n    call t40_unmark\r\n    ret\r\nt40_present endp",
+            "    jg t80_po\r\n    jmp tpr_orow\r\nt80_po:\r\n    call t40_unmark\r\n    t80_tend 3\r\n    t80_tend 1\r\n"
+            "    ret\r\nt40_present endp", 1, "present end")
     t = rep(t, "    jle tpr_ocol\r\n", "    jg t80_pc\r\n    jmp tpr_ocol\r\nt80_pc:\r\n", 1, "cell loop (long jump)")
     t = rep(t, "    call t40_cell\r\n", "    t80_tbeg 4\r\n    call t40_cell\r\n    t80_tend 4\r\n", 1, "cell")
-    t = rep(t, "tpr_verify:\r\n    call t40_shown\r\n", "tpr_verify:\r\n    t80_cnt 13\r\n    call t40_shown\r\n",
-            1, "verify count")
+    t = rep(t, "tpr_verify:\r\n", "tpr_verify:\r\n    t80_cnt 13\r\n", 1, "verify count")
     t = rep(t, "    pop ax\r\n  if T40_PANNED\r\n    mov si,T40_LSEG",
             "    pop ax\r\n    t80_cnt 14\r\n  if T40_PANNED\r\n    mov si,T40_LSEG", 1, "cell write count")
     # hints
