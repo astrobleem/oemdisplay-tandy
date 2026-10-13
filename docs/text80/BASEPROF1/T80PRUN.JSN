@@ -1,0 +1,31 @@
+{
+ "events": [
+  {
+   "run": "C:\\T40\\TPROF TYPE 30",
+   "attempt": 1
+  },
+  {
+   "line": "TYPE n=30 ms=145387",
+   "after_s": 185.1
+  },
+  {
+   "type_wall_s": 266.1
+  },
+  {
+   "run": "C:\\T40\\TPROF NOTE 60 120",
+   "attempt": 1
+  },
+  {
+   "line": "READY",
+   "after_s": 115.1
+  },
+  {
+   "typed": "Hello TV owners 40x25",
+   "typing_s": 3.5
+  },
+  {
+   "line": "NOTE ms=186635",
+   "after_s": 180.3
+  }
+ ]
+}

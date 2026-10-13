@@ -1,0 +1,25 @@
+{
+ "purpose": "text80-tb0s",
+ "command": [
+  "bash",
+  "/tmp/claude-0/-home-claude-oemdisplay-tandy/ce43402d-a3a1-5fd0-9e53-eb877bbd30e0/scratchpad/t80prun.sh",
+  "/home/claude/work/86box/tb0s",
+  "--font",
+  "/home/claude/work/CGA8.BIN",
+  "--dir",
+  "T40",
+  "--secs",
+  "120",
+  "--note",
+  "Hello TV owners 40x25"
+ ],
+ "bound_seconds": 5400,
+ "lock": "/home/claude/work/EMU.LOCK",
+ "acquired_utc": "2026-10-13T09:23:53.221536+00:00",
+ "conflicts_before": [],
+ "pid": 7901,
+ "exit_code": 0,
+ "conflicts_after": [],
+ "released_utc": "2026-10-13T09:39:38.658565+00:00",
+ "seconds": 945.4
+}

@@ -1,0 +1,100 @@
+[
+ {
+  "frame": "desktop_1",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094455-229.png",
+  "step": "shot desktop_1",
+  "t": 1791884696.0
+ },
+ {
+  "frame": "desktop_2",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094507-028.png",
+  "step": "shot desktop_2",
+  "t": 1791884707.8
+ },
+ {
+  "frame": "menu_3",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094519-113.png",
+  "step": "shot menu_3",
+  "t": 1791884719.9
+ },
+ {
+  "frame": "menu_4",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094530-831.png",
+  "step": "shot menu_4",
+  "t": 1791884731.6
+ },
+ {
+  "frame": "run_5",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094543-015.png",
+  "step": "shot run_5",
+  "t": 1791884743.8
+ },
+ {
+  "frame": "run_6",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094554-783.png",
+  "step": "shot run_6",
+  "t": 1791884755.6
+ },
+ {
+  "frame": "run_7",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094606-549.png",
+  "step": "shot run_7",
+  "t": 1791884767.3
+ },
+ {
+  "frame": "aftertype",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094733-665.png",
+  "step": "shot aftertype",
+  "t": 1791884854.4
+ },
+ {
+  "frame": "menu_8",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094815-542.png",
+  "step": "shot menu_8",
+  "t": 1791884896.3
+ },
+ {
+  "frame": "menu_9",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094827-259.png",
+  "step": "shot menu_9",
+  "t": 1791884908.0
+ },
+ {
+  "frame": "run_10",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094839-362.png",
+  "step": "shot run_10",
+  "t": 1791884920.1
+ },
+ {
+  "frame": "run_11",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094851-045.png",
+  "step": "shot run_11",
+  "t": 1791884931.8
+ },
+ {
+  "frame": "run_12",
+  "decoded": false,
+  "source": "Monitor_1_20261013-094902-832.png",
+  "step": "shot run_12",
+  "t": 1791884943.6
+ },
+ {
+  "frame": "notepad",
+  "decoded": false,
+  "source": "Monitor_1_20261013-095308-819.png",
+  "step": "shot notepad",
+  "t": 1791885189.6
+ }
+]

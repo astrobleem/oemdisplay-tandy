@@ -1,0 +1,7 @@
+PASS T80ON PAN (fault-injected driver): display.drv=T80PAN.DRV
+shot allocfail_after_win
+shot allocfail_keys
+PASS allocation failure: Windows does not start and the DOS prompt is usable (a command ran)
+PASS T80OFF after the failure: SYSTEM.INI restored
+shot rolledback
+PASS rollback: Windows starts with the previous driver (BIOS columns no longer 80)
