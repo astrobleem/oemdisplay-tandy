@@ -1,0 +1,233 @@
+{
+ "tv": false,
+ "checks": [
+  {
+   "check": "groupmsg: shows 'Program group file'",
+   "result": "PASS"
+  },
+  {
+   "check": "groupmsg: shows 'is invalid or damaged'",
+   "result": "PASS"
+  },
+  {
+   "check": "groupmsg: shows 'OK'",
+   "result": "PASS"
+  },
+  {
+   "check": "desktop: shows 'Program Manager'",
+   "result": "PASS"
+  },
+  {
+   "check": "desktop: shows 'File'",
+   "result": "PASS"
+  },
+  {
+   "check": "desktop: shows 'Options'",
+   "result": "PASS"
+  },
+  {
+   "check": "desktop: shows 'Window'",
+   "result": "PASS"
+  },
+  {
+   "check": "desktop: shows 'Help'",
+   "result": "PASS"
+  },
+  {
+   "check": "filemenu: shows 'New...'",
+   "result": "PASS"
+  },
+  {
+   "check": "filemenu: shows 'Open'",
+   "result": "PASS"
+  },
+  {
+   "check": "filemenu: shows 'Move...'",
+   "result": "PASS"
+  },
+  {
+   "check": "filemenu: shows 'Copy...'",
+   "result": "PASS"
+  },
+  {
+   "check": "filemenu: shows 'Delete'",
+   "result": "PASS"
+  },
+  {
+   "check": "filemenu: shows 'Properties...'",
+   "result": "PASS"
+  },
+  {
+   "check": "filemenu: shows 'Run...'",
+   "result": "PASS"
+  },
+  {
+   "check": "filemenu: shows 'Exit Windows...'",
+   "result": "PASS"
+  },
+  {
+   "check": "File menu closed: screen identical to the desktop before",
+   "result": "PASS",
+   "differing_cells": [],
+   "caret_cells": []
+  },
+  {
+   "check": "mouse cursor: only cells (22, 0) and (22, 5) change, each by attribute XOR 77h",
+   "result": "PASS",
+   "changed_cells": [
+    [
+     22,
+     0
+    ],
+    [
+     22,
+     5
+    ]
+   ]
+  },
+  {
+   "check": "rundlg: shows 'Run'",
+   "result": "PASS"
+  },
+  {
+   "check": "rundlg: shows 'Command Line:'",
+   "result": "PASS"
+  },
+  {
+   "check": "rundlg: shows 'Run Minimized'",
+   "result": "PASS"
+  },
+  {
+   "check": "rundlg: shows 'OK'",
+   "result": "PASS"
+  },
+  {
+   "check": "rundlg: shows 'Cancel'",
+   "result": "PASS"
+  },
+  {
+   "check": "notepad: shows 'Notepad - (untitled)'",
+   "result": "PASS"
+  },
+  {
+   "check": "notepad: shows 'File'",
+   "result": "PASS"
+  },
+  {
+   "check": "notepad: shows 'Edit'",
+   "result": "PASS"
+  },
+  {
+   "check": "notepad: shows 'Search'",
+   "result": "PASS"
+  },
+  {
+   "check": "notepad: shows 'Help'",
+   "result": "PASS"
+  },
+  {
+   "check": "notepad: shows 'Hello TV owners! 40x25'",
+   "result": "PASS"
+  },
+  {
+   "check": "editmenu: shows 'Undo'",
+   "result": "PASS"
+  },
+  {
+   "check": "editmenu: shows 'Cut'",
+   "result": "PASS"
+  },
+  {
+   "check": "editmenu: shows 'Copy'",
+   "result": "PASS"
+  },
+  {
+   "check": "editmenu: shows 'Paste'",
+   "result": "PASS"
+  },
+  {
+   "check": "editmenu: shows 'Delete'",
+   "result": "PASS"
+  },
+  {
+   "check": "editmenu: shows 'Select All'",
+   "result": "PASS"
+  },
+  {
+   "check": "editmenu: shows 'Time/Date'",
+   "result": "PASS"
+  },
+  {
+   "check": "editmenu: shows 'Word Wrap'",
+   "result": "PASS"
+  },
+  {
+   "check": "Edit menu closed: screen identical to Notepad before (except the blinking caret's cells after the typed line)",
+   "result": "PASS",
+   "differing_cells": [],
+   "caret_cells": [
+    [
+     4,
+     24
+    ],
+    [
+     5,
+     24
+    ],
+    [
+     6,
+     24
+    ]
+   ]
+  },
+  {
+   "check": "moved: shows 'Notepad - (untitled)'",
+   "result": "PASS"
+  },
+  {
+   "check": "moved: shows 'Hello TV owners! 40x25'",
+   "result": "PASS"
+  },
+  {
+   "check": "moved: Notepad is somewhere else",
+   "result": "PASS"
+  },
+  {
+   "check": "exitdlg: shows 'This will end your Windows'",
+   "result": "PASS"
+  },
+  {
+   "check": "exitdlg: shows 'OK'",
+   "result": "PASS"
+  },
+  {
+   "check": "exitdlg: shows 'Cancel'",
+   "result": "PASS"
+  },
+  {
+   "check": "second launch: desktop identical to the first",
+   "result": "PASS",
+   "differing_cells": [],
+   "caret_cells": []
+  }
+ ],
+ "settle_seconds": {
+  "groupmsg": 11.5,
+  "desktop": 11.5,
+  "filemenu": 21.2,
+  "menuclosed": 11.4,
+  "cursor_a": 11.4,
+  "cursor_b": 11.4,
+  "rundlg": 60.1,
+  "notepad0": 11.4,
+  "notepad": 79.5,
+  "editmenu": 21.1,
+  "editclosed": 21.1,
+  "moved": 40.6,
+  "closed": 21.1,
+  "exitdlg": 40.7,
+  "desktop2": 11.4
+ },
+ "passed": 45,
+ "failed": 0
+}

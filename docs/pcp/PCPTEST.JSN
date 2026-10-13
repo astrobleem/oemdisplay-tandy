@@ -1,0 +1,8 @@
+{
+ "run": "RUN=PASS",
+ "vram_bytes": 32768,
+ "byte_mismatches_vs_model": 0,
+ "pixels_checked": 64000,
+ "pixel_mismatches_vs_tr5_colors": 0,
+ "verdict": "PASS"
+}

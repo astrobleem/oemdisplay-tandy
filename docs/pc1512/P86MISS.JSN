@@ -1,0 +1,35 @@
+{
+ "note": "Host-derived description of retained frames; original P86LAND.JSN is unchanged. Bounding boxes alone do not identify a cursor. The recorded shape was independently matched to a translated XOR footprint.",
+ "palette_cases": 16,
+ "first_try": 15,
+ "recovered_by_retry": 1,
+ "misses": [
+  {
+   "frame": "arrow_12_t1",
+   "hotspot": [
+    222,
+    186
+   ],
+   "changed_pixels": 46,
+   "changed_box": [
+    206,
+    178,
+    237,
+    193
+   ],
+   "classified": "changes surround requested hotspot; shape/origin unverified",
+   "matched_recorded_footprint": {
+    "shape": "Paintbrush crosshair",
+    "reference_frame": "cross_12",
+    "reference_background": "cross_parked",
+    "operation": "XOR 15",
+    "translated_pixels": 46,
+    "scope": "Exact translated pixel composite; cursor-state cause unresolved.",
+    "reference_hotspot": [
+     363,
+     133
+    ]
+   }
+  }
+ ]
+}

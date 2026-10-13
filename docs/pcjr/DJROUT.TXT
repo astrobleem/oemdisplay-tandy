@@ -1,0 +1,4 @@
+JRPROBE: report in JRPROBE.TXT
+JRPROBE EXIT=0
+JRGUARD: OK, video page is held by a DOS system block.
+JRGUARD EXIT=0

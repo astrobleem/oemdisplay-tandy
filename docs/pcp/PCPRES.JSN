@@ -1,0 +1,13 @@
+{
+  "driver": "PCP3216.DRV",
+  "built_as": "TANDY88.DRV",
+  "driver_bytes": 54832,
+  "driver_sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406",
+  "base": "BUILD88 320x200x16 (TR5) from the supplied view",
+  "plantronics_edits_staged_sha256": {
+    "TSOFT.ASM": "340008a6a33951e89d423ca260ab2b540baff7dc8fd68ed2d3ab6994e5634acc",
+    "TCURSOR.ASM": "314173b064683b522f8682d0832b17e9fc31ef52f1f011fc417539cee4b14aff"
+  },
+  "build88_audits": "see RESULT.json (instruction, REP-prefix, link)",
+  "runtime": "NOT_TESTED"
+}

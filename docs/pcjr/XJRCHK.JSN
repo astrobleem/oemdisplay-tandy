@@ -1,0 +1,32 @@
+{
+ "b800_equals_written_page": false,
+ "b800_low_16k_distinct_bytes": 17,
+ "b800_low_16k_equals_a_page_half": true,
+ "b800_low_equals_high_16k": true,
+ "first_mismatch": null,
+ "interpretation": "PCjr: physical-segment write correct; B800 shows one 16KB CPU page aliased at BC00 (documented PCjr behavior)",
+ "pattern_bytes": 32000,
+ "pattern_mismatches": 0,
+ "report": {
+  "ARENA_END": "A000",
+  "ARENA_FIRST": "017C",
+  "ARENA_OK": "01",
+  "BIOSKB": "0280",
+  "COMPLETE": "1",
+  "CONTROL": "00",
+  "MODEL": "FD",
+  "MODE_AFTER": "09",
+  "MODE_BEFORE": "03",
+  "PAGE8A_AFTER": "F6",
+  "PAGE8A_BEFORE": "3F",
+  "PAGE_OK": "01",
+  "TANDYTAG": "00",
+  "TARGET_SEG": "1800",
+  "VIDEO_IN_ARENA": "01",
+  "VIDEO_MCB": "17FF",
+  "VIDEO_MCB_PARAS": "0800",
+  "VIDEO_OWNER": "0008",
+  "WROTE": "01"
+ },
+ "verdict": "PASS"
+}

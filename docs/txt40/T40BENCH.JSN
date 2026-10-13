@@ -1,0 +1,31 @@
+{
+ "machine": "86Box 6.0 ibmxt86, 8088 4.77 MHz",
+ "note": "presenter before the rows 1-6 second check; BIOS ticks at 18.2065 Hz",
+ "flushes": [
+  {
+   "flush": "full screen",
+   "repeats": 4,
+   "ticks": 173,
+   "ms_each": 2376
+  },
+  {
+   "flush": "one text line (8 rows, full width)",
+   "repeats": 16,
+   "ticks": 85,
+   "ms_each": 292
+  },
+  {
+   "flush": "menu item (10 rows, 12 columns)",
+   "repeats": 16,
+   "ticks": 15,
+   "ms_each": 51
+  },
+  {
+   "flush": "caret (1 column, 10 rows)",
+   "repeats": 64,
+   "ticks": 15,
+   "ms_each": 13
+  }
+ ],
+ "text_equal_to_dosbox_run": true
+}

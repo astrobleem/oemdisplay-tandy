@@ -1,0 +1,13 @@
+{
+  "driver": "TNDYJR.DRV",
+  "built_as": "TANDY88.DRV",
+  "driver_bytes": 54976,
+  "driver_sha256": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4",
+  "base": "BUILD88 320x200x16 (TR5) from the supplied view",
+  "pcjr_edits_staged_sha256": {
+    "TSOFT.ASM": "74c5ce9b9b2265a19dd195e67b7601790b9a6a601de1a31ab745f372b4a83b0e",
+    "TCURSOR.ASM": "17ce8f16445cb010e97720d85b4e6d3a86c0e8a78273b8802bf665e1d51d9524"
+  },
+  "build88_audits": "see RESULT.json (instruction, REP-prefix, link)",
+  "runtime": "NOT_TESTED"
+}

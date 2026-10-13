@@ -1,0 +1,53 @@
+{
+ "tool": "src/pc1512/P15ID.ASM (P15ID.COM sha256 fe9441a4acf6c560ecb0dcb8e499e74ab18c82fc2ee8fb3d879b86bef34b7b8e)",
+ "rule": "PC1512=01 only if each single-plane write mask (3DDh=1,2,4,8) lands in exactly its own plane read back through 3DEh (11,22,44,88) and mask 0Fh writes all four (5A x4)",
+ "runs": [
+  {
+   "emulator": "dosbox-x",
+   "machine": "cga",
+   "p15id": "MODE_BEFORE=03 COLS=0050 PLANES=88,88,88,88 ALL=5A,5A,5A,5A PC1512=00 COMPLETE=1",
+   "expected_exit": "P15ID=1",
+   "jrrun": {
+    "emulator_exit": 0,
+    "verdict": "PASS"
+   }
+  },
+  {
+   "emulator": "dosbox-x",
+   "machine": "tandy",
+   "p15id": "MODE_BEFORE=03 COLS=0050 PLANES=88,88,88,88 ALL=5A,5A,5A,5A PC1512=00 COMPLETE=1",
+   "expected_exit": "P15ID=1",
+   "jrrun": {
+    "emulator_exit": 0,
+    "verdict": "PASS"
+   }
+  },
+  {
+   "emulator": "dosbox",
+   "machine": "cga",
+   "p15id": "MODE_BEFORE=03 COLS=0050 PLANES=88,88,88,88 ALL=5A,5A,5A,5A PC1512=00 COMPLETE=1",
+   "expected_exit": "P15ID=1",
+   "jrrun": {
+    "emulator_exit": 0,
+    "verdict": "PASS"
+   }
+  },
+  {
+   "emulator": "dosbox",
+   "machine": "tandy",
+   "p15id": "MODE_BEFORE=03 COLS=0050 PLANES=88,88,88,88 ALL=5A,5A,5A,5A PC1512=00 COMPLETE=1",
+   "expected_exit": "P15ID=1",
+   "jrrun": {
+    "emulator_exit": 0,
+    "verdict": "PASS"
+   }
+  },
+  {
+   "emulator": "86Box 6.0 b9001",
+   "machine": "pc1512 (Amstrad PC1512, built-in video)",
+   "p15id": "MODE_BEFORE=03 COLS=0050 PLANES=11,22,44,88 ALL=5A,5A,5A,5A PC1512=01 COMPLETE=1",
+   "expected": "PC1512=01",
+   "when": "at boot"
+  }
+ ]
+}
