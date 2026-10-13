@@ -63,6 +63,19 @@ def main():
     for n in TOOLS:
         PCP86.mt("mcopy", "-o", "-i", i, str(a.tools / n), "::/T80/" + n)
         files["T80/" + n] = sha(a.tools / n)
+    if a.machine == "tandyhx":
+        # Test harness only. At the Tandy 1000 DOS prompt the BIOS reads
+        # scan code 2Bh (where 86Box puts the PC backslash key) as Left
+        # arrow, which deletes the previous character: "CD \T80" arrived as
+        # "CDT80". T80WIN.PY types these batch names there instead (Windows'
+        # own keyboard driver is unaffected).
+        bats = {"GOT80.BAT": "CD \\T80", "GOWIN.BAT": "CD \\WINDOWS",
+                "T80/ONPAN.BAT": "T80ON C:\\WINDOWS PAN", "T80/ONVGA.BAT": "T80ON C:\\WINDOWS VGA"}
+        for n, body in bats.items():
+            tmp = a.vm / "prep" / n.split("/")[-1]
+            tmp.write_bytes(("ECHO OFF\r\n" + body + "\r\n").encode("latin1"))
+            PCP86.mt("mcopy", "-o", "-i", i, str(tmp), "::/" + n)
+            files[n] = sha(tmp)
     win = PCP86.mt("mtype", "-i", i, "::/WINDOWS/WIN.INI").decode("latin1")
     lines = win.split("\r\n")
     k = [j for j, ln in enumerate(lines) if ln.lower().startswith("load=")]

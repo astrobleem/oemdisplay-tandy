@@ -52,6 +52,8 @@ class Session:
         self.r.tdir, self.r.tid = "T80", "T40ID"
         self.checks, self.recs, self.timing = [], {}, {}
         self.width = 640
+        cfg = self.vm / "86box.cfg"
+        self.tandy = cfg.is_file() and "tandy1000" in cfg.read_text(errors="replace")
 
     # -- guest files ---------------------------------------------------------
     def read(self, name):
@@ -129,7 +131,14 @@ class Session:
     def key(self, k, wait=4):
         self.r.key(k, wait=wait)
 
+    # Tandy 1000 DOS prompt: the BIOS takes the backslash key's scan code
+    # for Left arrow (T80PREP.PY writes these batch files for tandyhx)
+    TANDY_DOS = {"CD \\T80": "GOT80", "CD \\WINDOWS": "GOWIN",
+                 "T80ON C:\\WINDOWS PAN": "ONPAN", "T80ON C:\\WINDOWS VGA": "ONVGA"}
+
     def text(self, s, wait=2):
+        if self.tandy:
+            s = self.TANDY_DOS.get(s, s)
         self.r.text(s, wait=wait)
 
     def to(self, x, y, wait=3):
