@@ -4,6 +4,7 @@
   python3 src/pcp/PCPMUT.PY --vm <run dir>            (frames in <vm>/dec)
   python3 src/pcp/PCPMUT.PY --evidence docs/pcp       (committed frames)
   add --width 640 --target pc1512 for the PC1512 session (docs/pc1512)
+  add --width 640 --target tga2 for the Tandy Video II session (docs/tga2)
 
 Builds a frames-only copy of a passing PCPWIN session, checks that PCPCHK
 --no-disk passes it, then applies one fault at a time and requires the
@@ -130,7 +131,7 @@ def main():
     g.add_argument("--vm")
     g.add_argument("--evidence")
     ap.add_argument("--width", type=int, default=320, choices=sorted(W.LAYOUTS))
-    ap.add_argument("--target", default="pcp", choices=["pcp", "pc1512"])
+    ap.add_argument("--target", default="pcp", choices=["pcp", "pc1512", "tga2"])
     a = ap.parse_args()
     global WD, TARGET
     WD, TARGET = a.width, a.target

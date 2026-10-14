@@ -83,7 +83,11 @@ class Box:
             win = focus()
             # Take screenshot: the camera button of 86Box's toolbar, measured
             # from the window origin; the host pointer goes back afterwards.
-            xdo("mousemove", "--window", win, *TOOLBAR_SHOT, "click", "1", "mousemove", "restore")
+            loc = dict(l.split("=", 1) for l in subprocess.run(
+                ["xdotool", "getmouselocation", "--shell"], capture_output=True, text=True,
+                check=True).stdout.split())
+            xdo("mousemove", "--window", win, *TOOLBAR_SHOT, "click", "1")
+            xdo("mousemove", loc["X"], loc["Y"])
         else:
             focus()
             xdo("key", "ctrl+F11")
