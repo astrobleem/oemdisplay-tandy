@@ -54,7 +54,7 @@ def res640(repo, resources):
 
 
 # t80c (compact UI profile): res640 plus T80UI's one-cell window controls
-RESC_SHA = "d5448c2ce520ea6f992e76bb862ea39635de4cd415e13eb2659a109f64e8376a"
+RESC_SHA = "d37e6c7931c974e12e533e8fc9fb70dab4671d2d13f6ca45cf2da24bfda193f2"
 
 
 def res_compact(repo, resources):

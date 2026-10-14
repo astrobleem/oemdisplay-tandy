@@ -1089,8 +1089,9 @@ def regression_row7(font, ops, model):
 def regression_ui_glyphs(font, ops, model):
     """Compact UI profile: window-control glyphs drawn without a hint.
     (1) Each, cell-aligned in black on grey: the cell shows that character.
-    (2) An up triangle one pixel off the grid, and one with a different
-    last row: not the triangle. (3) A down
+    (2) An up triangle with ink in its last row (a caption's bottom line
+    there): the triangle. One pixel off the grid, or with a different row 6:
+    not the triangle. (3) A down
     triangle in a cell whose top rows a neighbour's shown hint claims: the
     exact-glyph rule is only for wholly unclaimed cells, so not the
     triangle although its foreground in the unclaimed rows matches."""
@@ -1103,13 +1104,15 @@ def regression_ui_glyphs(font, ops, model):
         s.glyph(16 + 16 * i, 24, rows, 0, 7)               # cell (3, 2 + 2i)
     s.glyph(17, 40, M.UIGLYPHS[0][1], 0, 7)                # cells (5, 2) and (5, 3)
     s.glyph(48, 40, M.UIGLYPHS[0][1][:7] + [0xFF], 0, 7)   # cell (5, 6): differs in row 7 only
+    s.glyph(64, 40, M.UIGLYPHS[0][1][:6] + [0x10, 0], 0, 7)  # cell (5, 8): differs in row 6
     s.load()
     s.present(24, 48, 0, COLS)
     k = len(s.expect) - 1
     for i, (code, rows) in enumerate(M.UIGLYPHS):
         checks.append((k, 3 * COLS + 2 + 2 * i, "is", code))
     checks.append((k, 5 * COLS + 2, "not", M.UIGLYPHS[0][0]))
-    checks.append((k, 5 * COLS + 6, "not", M.UIGLYPHS[0][0]))
+    checks.append((k, 5 * COLS + 6, "is", M.UIGLYPHS[0][0]))        # row 7 not compared
+    checks.append((k, 5 * COLS + 8, "not", M.UIGLYPHS[0][0]))
     s.glyph(160, 51, font[ord("A")], 0, 7)                  # hint cell (6, 20); claims rows 0-2 of (7, 20)
     s.add(160, 51, font[ord("A")], ord("A"))
     s.glyph(160, 56, M.UIGLYPHS[1][1], 0, 7, opaque=False)

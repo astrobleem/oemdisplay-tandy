@@ -61,21 +61,24 @@ def side_by_side(a, b):
     return [(x << 8) | y for x, y in zip(a, b)]
 
 
-# Caption buttons are CAPTION_H rows: the glyph in the top 8, then blank.
-# USER makes SM_CYSIZE their height, the caption SM_CYSIZE + 2 and draws the
-# buttons one pixel below the caption's top line. Measured in 86Box (TPROF
-# METRICS): with WIN.INI BorderWidth=7 (frame 8 pixels) a window whose top
-# is on the grid has its buttons on a cell row; so does a maximized window
-# (its frame is off screen). The menu bar is 10 rows (system font 8 + 2),
-# so a client area starts at top + 8 + 12 + 10 = top + 30 (maximized: 22),
-# and Notepad's edit text 2 rows lower: on the grid in both cases.
-CAPTION_H = 10
+# Caption buttons are CAPTION_H rows (the glyph's rows 0-6; every glyph
+# here is blank in row 7). USER makes SM_CYSIZE their height, the caption
+# SM_CYSIZE + 2, and draws them one pixel below the caption's top line, so
+# the caption's bottom line runs through the buttons' cell's row 7, which
+# the presenter does not compare. Measured in 86Box (TPROF METRICS): with
+# WIN.INI BorderWidth=7 (frame 8 pixels) a window whose top is on the grid
+# has its caption on one cell row (buttons, title), its 10-row menu bar's
+# text on the next, then the menu's bottom line; a maximized window the
+# same from row 0. (A 10-row button put Notepad's text exactly on the grid,
+# 6% faster scrolling, but split the caption and menu bar across a row of
+# block approximations; the clean layout was preferred.)
+CAPTION_H = 7
 
 
 def bitmaps():
     """{file name in the resources folder: BMP bytes} (RC_LOW.RC names)."""
     one = lambda code, inv=False: bmp(UI[code], 8, inv)
-    cap = lambda rows, w, inv=False: bmp(rows + [0] * (CAPTION_H - 8), w, inv)
+    cap = lambda rows, w, inv=False: bmp((rows + [0] * 8)[:CAPTION_H], w, inv)
     return {
         "MIN.BMP": cap(UI[0x1F], 8), "MIND.BMP": cap(UI[0x1F], 8, True),
         "MAX.BMP": cap(UI[0x1E], 8), "MAXD.BMP": cap(UI[0x1E], 8, True),

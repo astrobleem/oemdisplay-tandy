@@ -83,8 +83,10 @@ BOX16 = [0xC5, 0xB3, 0xB3, 0xB3, 0xC4, 0xDA, 0xC0, 0xC3,
 
 # Compact UI profile (TEXT80): the driver's own window-control bitmaps are
 # drawn cell-sized and cell-aligned from these first-party 8x8 OEM glyphs
-# (XTCOEM.FON), so an unclaimed cell whose foreground is exactly one of them
-# shows that character instead of a block approximation.
+# (XTCOEM.FON), so an unclaimed cell whose foreground is one of them in rows
+# 0-6 shows that character instead of a block approximation. Row 7 is not
+# compared (every glyph here is blank there): a caption button is 7 rows
+# tall and the caption's bottom line runs through its cell's last row.
 UIGLYPHS = [
     (0x1E, [0x00, 0x10, 0x38, 0x7C, 0x00, 0x00, 0x00, 0x00]),    # up triangle
     (0x1F, [0x00, 0x00, 0x00, 0x7C, 0x38, 0x10, 0x00, 0x00]),    # down triangle
@@ -94,7 +96,7 @@ UIGLYPHS = [
     (0xF0, [0x00, 0x7C, 0x00, 0x7C, 0x00, 0x7C, 0x00, 0x00]),    # three bars
     (0xFB, [0x04, 0x08, 0x08, 0x08, 0x50, 0x30, 0x10, 0x00]),    # check mark
 ]
-UIMAP = {tuple(rows): code for code, rows in UIGLYPHS}
+UIMAP = {tuple(rows[:7]): code for code, rows in UIGLYPHS}
 
 
 def pick_char(mask, live):
@@ -103,8 +105,8 @@ def pick_char(mask, live):
     on = sum(POP[m] for m in mask)
     if on == 0:
         return 0x20
-    if n == 64 and tuple(mask) in UIMAP:
-        return UIMAP[tuple(mask)]
+    if n == 64 and tuple(mask[:7]) in UIMAP:
+        return UIMAP[tuple(mask[:7])]
     rows = [i for i in range(8) if live[i] == 0xFF and mask[i] == 0xFF]
     nr = len(rows)
     colmask = 0xFF

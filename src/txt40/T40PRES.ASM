@@ -48,8 +48,9 @@ t40_box label byte
     db 0C4h,0BFh,0D9h,0B4h,0C4h,0C2h,0C1h,0C5h
 
 ; Compact UI profile: window-control glyphs (code, then 8 rows; first-party
-; XTCOEM.FON shapes). An unclaimed cell whose foreground is exactly one of
-; them shows that character (T40MODEL UIGLYPHS).
+; XTCOEM.FON shapes). An unclaimed cell whose foreground is one of them in
+; rows 0-6 shows that character (row 7: a caption's bottom line; T40MODEL
+; UIGLYPHS).
 T40_NUI equ 7
 t40_ui label byte
     db 01Eh,000h,010h,038h,07Ch,000h,000h,000h,000h
@@ -685,7 +686,7 @@ tp_uirow:
     cmp al,cs:t40_ui[bx+si+1]
     jne tp_uinext
     inc si
-    cmp si,8
+    cmp si,7
     jb tp_uirow
     mov al,cs:t40_ui[bx]
     ret
