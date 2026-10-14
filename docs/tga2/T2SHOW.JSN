@@ -1,0 +1,14 @@
+{
+ "capture": "docs/tga2/T2SHOW.PNG (86Box screenshot, unmodified)",
+ "size": [
+  1335,
+  834
+ ],
+ "geometry": "640x400+0+0 x2.0859",
+ "worst_colour_distance": 0,
+ "undecodable": 0,
+ "pixels": 128000,
+ "wrong": 0,
+ "first_wrong": [],
+ "verdict": "PASS"
+}

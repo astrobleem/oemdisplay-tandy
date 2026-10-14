@@ -1,0 +1,194 @@
+[
+ {
+  "frame": "arrow_00",
+  "hotspot": [
+   152,
+   193
+  ],
+  "accepted_from": "arrow_00_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_01",
+  "hotspot": [
+   362,
+   193
+  ],
+  "accepted_from": "arrow_01_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_02",
+  "hotspot": [
+   292,
+   193
+  ],
+  "accepted_from": "arrow_02_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_03",
+  "hotspot": [
+   327,
+   193
+  ],
+  "accepted_from": "arrow_03_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_04",
+  "hotspot": [
+   222,
+   193
+  ],
+  "accepted_from": "arrow_04_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_05",
+  "hotspot": [
+   397,
+   193
+  ],
+  "accepted_from": "arrow_05_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_06",
+  "hotspot": [
+   257,
+   193
+  ],
+  "accepted_from": "arrow_06_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_07",
+  "hotspot": [
+   187,
+   193
+  ],
+  "accepted_from": "arrow_07_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_08",
+  "hotspot": [
+   467,
+   193
+  ],
+  "accepted_from": "arrow_08_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_09",
+  "hotspot": [
+   362,
+   186
+  ],
+  "accepted_from": "arrow_09_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_10",
+  "hotspot": [
+   292,
+   186
+  ],
+  "accepted_from": "arrow_10_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_11",
+  "hotspot": [
+   327,
+   186
+  ],
+  "accepted_from": "arrow_11_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_12",
+  "hotspot": [
+   222,
+   186
+  ],
+  "accepted_from": "arrow_12_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_13",
+  "hotspot": [
+   397,
+   186
+  ],
+  "accepted_from": "arrow_13_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_14",
+  "hotspot": [
+   257,
+   186
+  ],
+  "accepted_from": "arrow_14_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ },
+ {
+  "frame": "arrow_15",
+  "hotspot": [
+   152,
+   186
+  ],
+  "accepted_from": "arrow_15_t1",
+  "attempts": 1,
+  "attempt_count": 1,
+  "first_try": true,
+  "misses": []
+ }
+]

@@ -1,0 +1,25 @@
+{
+ "target": "tga2",
+ "pristine_sha256": "f55fe24baf83d9557e6c16612fbf8b4af5b175bf6b9b6d876e5784222e117561",
+ "driver": "TNDYV2.DRV",
+ "driver_sha256": "6a8d97b022e0a70e2e508ce48031d62ab35e68abebed3ac72a75d32f754c4a43",
+ "tools": {
+  "T2RESV.COM": "ff478b9562bc7b392f124ef3263d23a285ae5596fcebf46803ad856de7b40360",
+  "T2SHOW.COM": "09cdb59e15be1b0a55d151b68b2c7e205debdc5e2253033733296027e9727809",
+  "MSTEST.COM": "51dd0966a76cbc6349f1685ef65bbdeb4883897679d5426168d8f9c5a9f462bc"
+ },
+ "control_ega": false,
+ "mouse": "pty",
+ "fonts": null,
+ "grid": 0,
+ "tv": false,
+ "only_8x8": false,
+ "changes": [
+  "CONFIG.SYS: only files=30, buffers=30 (removed HIMEM, SMARTDRV, EGA.SYS: an XT has no XMS and no EGA)",
+  "AUTOEXEC.BAT: PATH/TEMP as before, run C:\\TV2\\T2RESV >> T2RESV.TXT, stay at the DOS prompt (no automatic WIN)",
+  "SYSTEM.INI: display.drv=TNDYV2.DRV; [keyboard] type=1 (PC/XT 83-key instead of AT)",
+  "WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); Wallpaper=BARS16.BMP (a full-screen 16-colour bar test image, centred)",
+  "added WINDOWS/BARS16.BMP: 640x200 4-bit, 16 bars of 40 pixels, palette = the driver's colour table (generated, sha256 52021aadc6f0353219d94a5ddb750ba801cb6012eb7237f5767b12d4876c756d)",
+  "added WINDOWS/SYSTEM/TNDYV2.DRV and TV2/T2RESV.COM, T2SHOW.COM, MSTEST.COM"
+ ]
+}

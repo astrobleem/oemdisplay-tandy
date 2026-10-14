@@ -1,0 +1,62 @@
+[
+ {
+  "trial": "1200-baud bytes, 20 ms between packets",
+  "byte_ms": 7.5,
+  "gap_ms": 20,
+  "packets": 40,
+  "each": [
+   5,
+   3
+  ],
+  "expected_hotspot": [
+   200,
+   120
+  ],
+  "frame": "drift_0"
+ },
+ {
+  "trial": "1200-baud bytes, 20 ms between packets (repeat)",
+  "byte_ms": 7.5,
+  "gap_ms": 20,
+  "packets": 40,
+  "each": [
+   5,
+   3
+  ],
+  "expected_hotspot": [
+   200,
+   120
+  ],
+  "frame": "drift_1"
+ },
+ {
+  "trial": "30 ms between bytes, 20 ms between packets",
+  "byte_ms": 30,
+  "gap_ms": 20,
+  "packets": 40,
+  "each": [
+   5,
+   3
+  ],
+  "expected_hotspot": [
+   200,
+   120
+  ],
+  "frame": "drift_2"
+ },
+ {
+  "trial": "1200-baud bytes, 300 ms between packets",
+  "byte_ms": 7.5,
+  "gap_ms": 300,
+  "packets": 40,
+  "each": [
+   5,
+   3
+  ],
+  "expected_hotspot": [
+   200,
+   120
+  ],
+  "frame": "drift_3"
+ }
+]

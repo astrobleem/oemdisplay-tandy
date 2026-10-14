@@ -1,0 +1,16 @@
+{
+ "capture": "T2SHOW2.PNG",
+ "size": [
+  1335,
+  834
+ ],
+ "geometry": "640x400+0+0 x2.0859",
+ "worst_colour_distance": 0,
+ "undecodable": 0,
+ "pixels": 128000,
+ "wrong": 0,
+ "first_wrong": [],
+ "verdict": "PASS",
+ "t2show_sha256": "155a5ea261f38c22912ad3626fe9c7ca8445cfc2478d28106f6f9ac24446570d",
+ "setup": "86Box SL/2, AUTOEXEC ran T2RESV; T2SHOW with the reservation gate"
+}

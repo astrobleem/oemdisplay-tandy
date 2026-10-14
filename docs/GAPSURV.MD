@@ -15,7 +15,7 @@ driver, not that one never existed; corrections are welcome.
 | --- | --- | --- | --- | --- |
 | 1 | IBM PCjr | 320x200x16, 640x200x4 | CGA-class | Very high: same modes and banks; see [PCJR.MD](PCJR.MD) |
 | 2 | Plantronics ColorPlus family (ATI Graphics Solution/"Small Wonder", Paradise EGA 480 in CGA mode as in the Amstrad PC1640, some Tandy cards) | 320x200x16, 640x200x4 | CGA. A community Windows 3.0/3.1 driver for 640x200x4, [WINPCP](https://github.com/cluehawk/WINPCP), is in early development; GEM had 640x200x4 | High, and started: see [PCP.MD](PCP.MD). Same color depths as TR5 profiles; only the flush layout (two 16KB planes at B800h/BC00h via port 3DDh) changes, and video RAM is on the card, so no shared-RAM reservation |
-| 3 | Tandy 1000 SL/TL/RL Video II | 640x200x16 | EX/HX-class modes at best | Medium: new 64KB linear target; see [TGA2.MD](TGA2.MD) |
+| 3 | Tandy 1000 SL/TL/RL Video II | 640x200x16 | EX/HX-class modes at best | Medium: new 64KB linear target; emulator-tested build, see [TGA2.MD](TGA2.MD) |
 | 4 | Amstrad PC1512 | 640x200x16 (four color planes on a CGA base) | Windows up to 3.0 runs; no dedicated driver found. GEM supported the mode | Medium, and started: see [PC1512.MD](PC1512.MD). The four-plane DDK shadow already matches its plane model; 640-wide shadow is 64,000 bytes |
 | 5 | Olivetti M24 / AT&T 6300 with the graphics memory expansion | 640x400 with up to 16 colors | 640x400 treated as monochrome | Low-medium: a 640x400 four-plane shadow (128,000 bytes) does not fit one real-mode segment; needs direct rendering |
 | 6 | IBM PS/2 Model 25/30 (8086) MCGA | 320x200x256 | Windows 3.0 drove MCGA as "VGA mono" 640x480x2 | Low: needs a packed 8-bit driver family, not the four-plane one |
