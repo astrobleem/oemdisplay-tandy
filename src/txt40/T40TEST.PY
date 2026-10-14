@@ -1086,6 +1086,41 @@ def regression_row7(font, ops, model):
     return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
 
 
+def regression_ui_glyphs(font, ops, model):
+    """Compact UI profile: window-control glyphs drawn without a hint.
+    (1) Each, cell-aligned in black on grey: the cell shows that character.
+    (2) An up triangle one pixel off the grid, and one with a different
+    last row: not the triangle. (3) A down
+    triangle in a cell whose top rows a neighbour's shown hint claims: the
+    exact-glyph rule is only for wholly unclaimed cells, so not the
+    triangle although its foreground in the unclaimed rows matches."""
+    s = Scene(ops, model)
+    s.fill(0, 0, W, H, 7)
+    s.load()
+    s.present(0, H, 0, COLS)
+    checks = []
+    for i, (code, rows) in enumerate(M.UIGLYPHS):
+        s.glyph(16 + 16 * i, 24, rows, 0, 7)               # cell (3, 2 + 2i)
+    s.glyph(17, 40, M.UIGLYPHS[0][1], 0, 7)                # cells (5, 2) and (5, 3)
+    s.glyph(48, 40, M.UIGLYPHS[0][1][:7] + [0xFF], 0, 7)   # cell (5, 6): differs in row 7 only
+    s.load()
+    s.present(24, 48, 0, COLS)
+    k = len(s.expect) - 1
+    for i, (code, rows) in enumerate(M.UIGLYPHS):
+        checks.append((k, 3 * COLS + 2 + 2 * i, "is", code))
+    checks.append((k, 5 * COLS + 2, "not", M.UIGLYPHS[0][0]))
+    checks.append((k, 5 * COLS + 6, "not", M.UIGLYPHS[0][0]))
+    s.glyph(160, 51, font[ord("A")], 0, 7)                  # hint cell (6, 20); claims rows 0-2 of (7, 20)
+    s.add(160, 51, font[ord("A")], ord("A"))
+    s.glyph(160, 56, M.UIGLYPHS[1][1], 0, 7, opaque=False)
+    s.load()
+    s.present(48, 64, 19, 22)
+    checks.append((len(s.expect) - 1, 6 * COLS + 20, "is", ord("A")))
+    checks.append((len(s.expect) - 1, 7 * COLS + 20, "not", M.UIGLYPHS[1][0]))
+    s.present(0, H, 0, COLS)
+    return s.expect, [(len(s.expect) - 1, model.ideal(s.shadow))], checks
+
+
 def regression_aligned_attr(font, ops, model):
     """An aligned copy (seven coloured lines, rows 5..10 scrolled up by one
     line) gives interior cells the source cell's kept state, attribute
@@ -1231,7 +1266,7 @@ def regression_pan(font, ops, model):
 
 REGRESSIONS = (regression_same_position, regression_two_positions, regression_partial_overpaint,
                regression_touch_edges, regression_aligned_attr, regression_aligned_wider_flush,
-               regression_aligned_ring_claim, regression_row7,
+               regression_aligned_ring_claim, regression_row7, regression_ui_glyphs,
                regression_diff_flush, regression_blit_overlap)
 
 

@@ -122,7 +122,7 @@ class Run:
         self.events.append({"run_failed": cmd})
         return False
 
-    def session(self, chars, note, secs, t80on=False):
+    def session(self, chars, note, secs, t80on=False, steps=("type", "lines", "note")):
         r = self.r
         if t80on:
             r.text("C:", wait=1)
@@ -142,6 +142,18 @@ class Run:
             r.key("Escape", wait=12)
         r.home()
         self.until(("Program Manager", "File", "Options"), timeout=900, name="desktop")
+        if "metrics" in steps:
+            n = len(self.log())
+            self.runcmd(f"C:\\{self.tdir}\\TPROF METRICS 90")
+            self.wait("WIN progman", n, 1200)
+            time.sleep(20)
+            rows = self.rows("metrics")
+            (self.vm / "METRICS.TXT").write_text("\n".join(rows) + "\n")
+            r.shot("metrics", settle=1, decode=False)
+        if "type" not in steps:
+            (self.vm / "TPROF.LOG").write_text("\n".join(self.log()) + "\n")
+            (self.vm / "T80PRUN.JSN").write_text(json.dumps({"events": self.events}, indent=1) + "\n")
+            return
         n = len(self.log())
         t0 = time.time()
         self.runcmd(f"C:\\{self.tdir}\\TPROF TYPE {chars}")
@@ -177,8 +189,11 @@ def main():
     ap.add_argument("--chars", type=int, default=30)
     ap.add_argument("--note", default="Hello TV owners 40x25")
     ap.add_argument("--secs", type=int, default=300)
+    ap.add_argument("--metrics-only", action="store_true",
+                    help="only TPROF METRICS: system metrics and window/client rectangles, a screen")
     a = ap.parse_args()
-    Run(a.vm, a.dir, a.font, a.snap).session(a.chars, a.note, a.secs, a.t80on)
+    steps = ("metrics",) if a.metrics_only else ("type", "lines", "note")
+    Run(a.vm, a.dir, a.font, a.snap).session(a.chars, a.note, a.secs, a.t80on, steps)
     return 0
 
 

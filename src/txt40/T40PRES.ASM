@@ -47,6 +47,19 @@ t40_box label byte
     db 0C5h,0B3h,0B3h,0B3h,0C4h,0DAh,0C0h,0C3h
     db 0C4h,0BFh,0D9h,0B4h,0C4h,0C2h,0C1h,0C5h
 
+; Compact UI profile: window-control glyphs (code, then 8 rows; first-party
+; XTCOEM.FON shapes). An unclaimed cell whose foreground is exactly one of
+; them shows that character (T40MODEL UIGLYPHS).
+T40_NUI equ 7
+t40_ui label byte
+    db 01Eh,000h,010h,038h,07Ch,000h,000h,000h,000h
+    db 01Fh,000h,000h,000h,07Ch,038h,010h,000h,000h
+    db 010h,000h,040h,060h,070h,060h,040h,000h,000h
+    db 011h,000h,004h,00Ch,01Ch,00Ch,004h,000h,000h
+    db 012h,010h,038h,054h,010h,054h,038h,010h,000h
+    db 0F0h,000h,07Ch,000h,07Ch,000h,07Ch,000h,000h
+    db 0FBh,004h,008h,008h,008h,050h,030h,010h,000h
+
 ; Half blocks in trial order: code, then 8 rows. The foreground is never
 ; the majority colour, so no full block or dark shade is ever chosen.
 t40_shapes label byte
@@ -660,6 +673,26 @@ tp_count:
     ret
 tp_mixed:
     mov t40_on,dx
+    ; every pixel unclaimed: one of the compact UI glyphs exactly?
+    cmp t40_n,64
+    jne tp_noui
+    xor bx,bx
+    mov cx,T40_NUI
+tp_ui:
+    xor si,si
+tp_uirow:
+    mov al,t40_mask[si]
+    cmp al,cs:t40_ui[bx+si+1]
+    jne tp_uinext
+    inc si
+    cmp si,8
+    jb tp_uirow
+    mov al,cs:t40_ui[bx]
+    ret
+tp_uinext:
+    add bx,9
+    loop tp_ui
+tp_noui:
     ; full foreground rows and columns
     xor cx,cx
     mov t40_rf,0FFh

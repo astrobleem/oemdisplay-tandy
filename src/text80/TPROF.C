@@ -16,6 +16,11 @@
  *                    with real keys); b seconds later read them and exit.
  *                    TPROF has no window and sleeps in GetMessage on a
  *                    timer, so it takes no CPU time from Notepad.
+ *   TPROF METRICS <s>  log GetSystemMetrics 0..36 and the system font's
+ *                    metrics, start Notepad, wait s seconds, and log the
+ *                    window and client rectangles (screen coordinates) of
+ *                    Notepad, its edit control and Program Manager
+ *                    (compact UI profile work: are client areas on cells?).
  * Every reading is logged raw to TPROF.LOG beside TPROF.EXE (times in 1/65536 BIOS
  * tick = 0.838 us; the host converts them). Without escape 5450h only the
  * wall time from GetCurrentTime is logged.
@@ -265,6 +270,50 @@ static void TypeTest(int n, int lines)
     DestroyWindow(hMain);
 }
 
+static void LogRects(LPSTR name, HWND h)
+{
+    RECT w, c;
+    POINT o;
+    if (!h) {
+        wsprintf(line, "WIN %s none", name);
+        LogLine(line);
+        return;
+    }
+    GetWindowRect(h, &w);
+    GetClientRect(h, &c);
+    o.x = 0;
+    o.y = 0;
+    ClientToScreen(h, &o);
+    wsprintf(line, "WIN %s window %d %d %d %d client %d %d %d %d", name, w.left, w.top, w.right,
+             w.bottom, o.x, o.y, o.x + c.right, o.y + c.bottom);
+    LogLine(line);
+}
+
+static void Metrics(int s)
+{
+    int i;
+    HDC hdc;
+    TEXTMETRIC tm;
+    HWND hn;
+    for (i = 0; i <= 36; i++) {
+        wsprintf(line, "SM %d %d", i, GetSystemMetrics(i));
+        LogLine(line);
+    }
+    hdc = GetDC(NULL);
+    SelectObject(hdc, GetStockObject(SYSTEM_FONT));
+    GetTextMetrics(hdc, &tm);
+    ReleaseDC(NULL, hdc);
+    wsprintf(line, "TM height %d ascent %d intleading %d extleading %d avewidth %d",
+             tm.tmHeight, tm.tmAscent, tm.tmInternalLeading, tm.tmExternalLeading, tm.tmAveCharWidth);
+    LogLine(line);
+    WinExec("NOTEPAD.EXE", SW_SHOWNORMAL);
+    Sleep(s);
+    hn = FindWindow("Notepad", NULL);
+    LogRects("notepad", hn);
+    LogRects("notepad-edit", hn ? GetWindow(hn, GW_CHILD) : NULL);
+    LogRects("progman", FindWindow("Progman", NULL));
+}
+
 int PASCAL WinMain(HANDLE hI, HANDLE hPrev, LPSTR lpCmd, int nShow)
 {
     DWORD t0, w0;
@@ -286,6 +335,8 @@ int PASCAL WinMain(HANDLE hI, HANDLE hPrev, LPSTR lpCmd, int nShow)
         TypeTest(Num(lpCmd + 4), 0);
     } else if (Is(lpCmd, "LINES")) {
         TypeTest(Num(lpCmd + 5), 1);
+    } else if (Is(lpCmd, "METRICS")) {
+        Metrics(Num(lpCmd + 7));
     } else if (Is(lpCmd, "IDLE")) {
         if (bProf)
             Read(1);
