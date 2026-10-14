@@ -28,6 +28,9 @@ in the repository). Requires:
   (END 0) is accepted;
 - the helper is a whole load= entry: MYXTPAN.EXE or XTPAN.EXEC are not
   XTPAN.EXE, on ON or on OFF;
+- ON ... /C (compact UI profile) sets BorderWidth=7 and GridGranularity=1
+  in [windows] (replacing an existing BorderWidth), OFF undoes them (one
+  changed since stays);
 - ON with no [fonts] section fails and leaves both files unchanged.
 Exit status 1 if any check fails.
 """
@@ -298,6 +301,31 @@ def main():
         run(exe, "OFF", b.w)
         expect("MYXTPAN.EXE added before XTPAN.EXE since ON: OFF removes only XTPAN.EXE",
                b"load=MYXTPAN.EXE CLOCK.EXE\r\n" in b.read("WIN.INI"))
+
+        # compact UI profile (/C): BorderWidth=7 and GridGranularity=1 set, undone by OFF
+        for name, extra, args in (("compact", "BorderWidth=3\r\n", ["/C"]),
+                                  ("compact with helper", "", ["T80HELP.EXE", "/C"])):
+            b = Box(t, name.replace(" ", "_"), ini(extra + "load=CLOCK.EXE\r\n"))
+            s0, w0 = b.read("SYSTEM.INI"), b.read("WIN.INI")
+            rc = run(exe, "ON", b.w, "T80CMP.DRV", *args).returncode
+            sec = b.read("WIN.INI").decode().split("[fonts]")[0].split("\r\n")    # [windows]
+            expect(f"{name}: ON succeeds", rc == 0)
+            expect(f"{name}: [windows] has BorderWidth=7 and GridGranularity=1 once each, no other BorderWidth",
+                   sec.count("BorderWidth=7") == 1 and sec.count("GridGranularity=1") == 1 and
+                   sum(ln.lower().startswith("borderwidth=") for ln in sec) == 1)
+            loads = [ln for ln in sec if ln.lower().startswith("load=")]
+            expect(f"{name}: load= {'gains the helper' if len(args) == 2 else 'unchanged'}",
+                   loads == (["load=CLOCK.EXE T80HELP.EXE"] if len(args) == 2 else ["load=CLOCK.EXE"]))
+            rc3 = run(exe, "OFF", b.w).returncode
+            expect(f"{name}: OFF gives both files back byte for byte",
+                   rc3 == 0 and b.read("SYSTEM.INI") == s0 and b.read("WIN.INI") == w0)
+        b = Box(t, "compact_changed", ini("BorderWidth=3\r\nload=\r\n"))
+        run(exe, "ON", b.w, "T80CMP.DRV", "/C")
+        (b.w / "WIN.INI").write_bytes(b.read("WIN.INI").replace(b"BorderWidth=7", b"BorderWidth=5"))
+        r = run(exe, "OFF", b.w)
+        w = b.read("WIN.INI").decode()
+        expect("compact: BorderWidth changed since ON stays, GridGranularity goes",
+               r.returncode == 0 and "BorderWidth=5" in w and "GridGranularity" not in w)
 
         b = Box(t, "nofonts", "[windows]\r\nload=\r\n")
         rc = run(exe, "ON", b.w, "TEXT80.DRV").returncode

@@ -1,0 +1,19 @@
+ok   the batch ran to the end
+ok   W1: ON then OFF exit 0; both files back byte for byte; nothing else left
+ok   W2: MYXTPAN.EXE is not XTPAN.EXE: ON appends it, OFF removes only it
+ok   W3: T80SET.STA cut to its header: OFF exits 1, changes nothing, keeps the copies
+ok   W4: no T80SET.STA: OFF exits 1 and changes nothing; RESTORE then puts the saved files back whole
+ok   W5: ON /C sets BorderWidth=7 and GridGranularity=1; OFF gives WIN.INI back byte for byte
+--- R1OFF.TXT: T80SET: TEXT80's changes to SYSTEM.INI and WIN.INI undone
+--- R1ON.TXT: T80SET: display.drv=TEXT80.DRV, 8x8 system/fixed/OEM fonts, load= +XTPAN.EXE; [fonts] +2 lines | T80SET: undo with T80SET OFF W1
+--- R2OFF.TXT: T80SET: TEXT80's changes to SYSTEM.INI and WIN.INI undone
+--- R2ON.TXT: T80SET: display.drv=T80PAN.DRV, 8x8 system/fixed/OEM fonts, load= +XTPAN.EXE; [fonts] +2 lines | T80SET: undo with T80SET OFF W2
+--- R3OFF.TXT: T80SET: T80SET.STA is incomplete or damaged: nothing was changed, the copies are kept |          (T80SET RESTORE puts back SYSTEM.T80 and WIN.T80 whole)
+--- R3ON.TXT: T80SET: display.drv=TEXT80.DRV, 8x8 system/fixed/OEM fonts, load= unchanged; [fonts] +2 lines | T80SET: undo with T80SET OFF W3
+--- R4OFF.TXT: T80SET: no T80SET.STA, so no record of what ON changed: nothing was changed. |          T80SET RESTORE puts back SYSTEM.T80 and WIN.T80 whole |          (losing every change made since they were saved)
+--- R4ON.TXT: T80SET: display.drv=TEXT80.DRV, 8x8 system/fixed/OEM fonts, load= unchanged; [fonts] +2 lines | T80SET: undo with T80SET OFF W4
+--- R4RES.TXT: T80SET: SYSTEM.INI and WIN.INI restored whole from SYSTEM.T80 and WIN.T80
+--- R5OFF.TXT: T80SET: TEXT80's changes to SYSTEM.INI and WIN.INI undone
+--- R5ON.TXT: T80SET: display.drv=T80CMP.DRV, 8x8 system/fixed/OEM fonts, load= unchanged; [fonts] +2 lines; BorderWidth=7, GridGranularity=1 | T80SET: undo with T80SET OFF W5
+all passed
+{"purpose": "t80setd-c", "exit_code": 0, "seconds": 1.2, "refused": null}

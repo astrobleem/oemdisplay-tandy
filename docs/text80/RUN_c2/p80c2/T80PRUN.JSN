@@ -1,0 +1,16 @@
+{
+ "events": [
+  {
+   "run": "NOTEPAD",
+   "attempt": 1
+  },
+  {
+   "run": "C:\\T80\\TPROF NLINES 20",
+   "attempt": 1
+  },
+  {
+   "line": "NLINES n=20 ms=234914",
+   "after_s": 260.2
+  }
+ ]
+}

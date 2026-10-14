@@ -1,0 +1,18 @@
+{
+ "run": "RUN=PASS",
+ "flushes": 315,
+ "dumps": 315,
+ "geometry": "80x50 (25 rows shown), glyph dictionary limit 896",
+ "cells_compared": 1260000,
+ "mismatched_flushes": [],
+ "full_flush_vs_ideal_failures": 0,
+ "explicit_regression_checks": 64,
+ "explicit_failures": [],
+ "screen_dumps_compared": 374,
+ "screen_dumps": 374,
+ "mismatched_screens": [],
+ "screen_checks": 6,
+ "screen_check_failures": [],
+ "timed_flushes_here": 0,
+ "verdict": "PASS"
+}

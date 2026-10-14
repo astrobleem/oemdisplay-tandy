@@ -1,0 +1,22 @@
+{
+ "purpose": "compact-metrics-b7",
+ "command": [
+  "bash",
+  "/tmp/claude-0/-home-claude-oemdisplay-tandy/ce43402d-a3a1-5fd0-9e53-eb877bbd30e0/scratchpad/t80prun_c.sh",
+  "/home/claude/work/86box/c80m",
+  "--snap",
+  "--t80on",
+  "--dir",
+  "T80",
+  "--metrics-only"
+ ],
+ "bound_seconds": 3600,
+ "lock": "/home/claude/work/EMU.LOCK",
+ "acquired_utc": "2026-10-14T01:44:49.275019+00:00",
+ "conflicts_before": [],
+ "pid": 5110,
+ "exit_code": 0,
+ "conflicts_after": [],
+ "released_utc": "2026-10-14T01:55:35.958548+00:00",
+ "seconds": 646.7
+}

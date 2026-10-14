@@ -29,7 +29,7 @@ ROOT = HERE.parents[1]
 PCP86 = importlib.machinery.SourceFileLoader("pcp86x", str(ROOT / "src" / "xtpan" / "PCP86.PY")).load_module()
 PART = "@@8704"
 PKG = ["TEXT80.DRV", "T80HELV.FON", "T80COUR.FON", "T80SET.EXE", "T80ON.BAT", "T80OFF.BAT"]
-OPTIONAL = ["T80PAN.DRV", "T80VGA.DRV", "XTPAN.EXE"]       # copied when the package has them
+OPTIONAL = ["T80PAN.DRV", "T80VGA.DRV", "T80CMP.DRV", "XTPAN.EXE"]       # copied when the package has them
 FONTS = ["XTTSYS.FON", "XTCFIX.FON", "XTCOEM.FON"]
 TOOLS = ["T80SNAP.EXE", "TPROF.EXE"]
 

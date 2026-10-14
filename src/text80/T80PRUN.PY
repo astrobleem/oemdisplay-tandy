@@ -122,14 +122,14 @@ class Run:
         self.events.append({"run_failed": cmd})
         return False
 
-    def session(self, chars, note, secs, t80on=False):
+    def session(self, chars, note, secs, t80on=False, steps=("type", "lines", "note"), profile=""):
         r = self.r
         if t80on:
             r.text("C:", wait=1)
             r.key("Return", wait=2)
             r.text("CD \\T80", wait=1)
             r.key("Return", wait=2)
-            r.text("T80ON", wait=1)
+            r.text(f"T80ON C:\\WINDOWS {profile}" if profile else "T80ON", wait=1)
             r.key("Return", wait=25)
             r.shot("t80on", settle=1, decode=False)
         r.text("CD \\WINDOWS")
@@ -142,6 +142,35 @@ class Run:
             r.key("Escape", wait=12)
         r.home()
         self.until(("Program Manager", "File", "Options"), timeout=900, name="desktop")
+        if "metrics" in steps:
+            n = len(self.log())
+            self.runcmd(f"C:\\{self.tdir}\\TPROF METRICS 90")
+            self.wait("WIN progman", n, 1200)
+            time.sleep(20)
+            rows = self.rows("metrics")
+            (self.vm / "METRICS.TXT").write_text("\n".join(rows) + "\n")
+            r.shot("metrics", settle=1, decode=False)
+        if "nlines" in steps:
+            # Notepad maximized, 25 lines typed (so every new line scrolls),
+            # then TPROF NLINES 20 from Program Manager
+            self.runcmd("NOTEPAD")
+            self.until(("Notepad - (untitled)",), timeout=900, name="np")
+            for i in range(25):
+                r.text("x", wait=1)
+                r.key("Return", wait=3)
+            r.key("alt+space", wait=8)
+            r.key("x", wait=20)
+            self.until(("Notepad - (untitled)",), timeout=900, name="max")
+            r.key("alt+Escape", wait=10)
+            n = len(self.log())
+            self.runcmd(f"C:\\{self.tdir}\\TPROF NLINES 20")
+            self.wait("NLINES n=", n, 3600)
+            rows = self.rows("nlines")
+            (self.vm / "NLINES.TXT").write_text("\n".join(rows) + "\n")
+        if "type" not in steps:
+            (self.vm / "TPROF.LOG").write_text("\n".join(self.log()) + "\n")
+            (self.vm / "T80PRUN.JSN").write_text(json.dumps({"events": self.events}, indent=1) + "\n")
+            return
         n = len(self.log())
         t0 = time.time()
         self.runcmd(f"C:\\{self.tdir}\\TPROF TYPE {chars}")
@@ -177,9 +206,15 @@ def main():
     ap.add_argument("--chars", type=int, default=30)
     ap.add_argument("--note", default="Hello TV owners 40x25")
     ap.add_argument("--secs", type=int, default=300)
+    ap.add_argument("--metrics-only", action="store_true",
+                    help="only TPROF METRICS: system metrics and window/client rectangles, a screen")
+    ap.add_argument("--nlines-only", action="store_true",
+                    help="only TPROF NLINES 20 into a maximized Notepad holding 25 lines")
+    ap.add_argument("--profile", default="", help="T80ON profile argument (e.g. C25)")
     a = ap.parse_args()
+    steps = ("metrics",) if a.metrics_only else ("nlines",) if a.nlines_only else ("type", "lines", "note")
     r = Run(a.vm, a.dir, a.font, a.snap)
-    r.session(a.chars, a.note, a.secs, a.t80on)
+    r.session(a.chars, a.note, a.secs, a.t80on, steps, a.profile)
     # no pass/fail checks here, but a step that never happened is a failed run
     bad = [e for e in r.events if any(k in e for k in ("timeout", "run_failed", "not_seen"))]
     print(f"T80PRUN: {len(bad)} steps not completed" + (f": {bad}" if bad else ""), flush=True)

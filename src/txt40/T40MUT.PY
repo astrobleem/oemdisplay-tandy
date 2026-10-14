@@ -102,6 +102,10 @@ MUTANTS = [
     ("aligned-no-right-strip", "    mov dx,t40_cpx1\r\n    call t40_present\r\n    ret\r\ntrg_plain:",
      "    mov dx,t40_cpx1\r\n    nop\r\n    nop\r\n    nop\r\n    ret\r\ntrg_plain:"),
     ("aligned-ring-any-flush", "    cmp dx,t40_cpx1\r\n    jne trg_plain", "    cmp dx,dx\r\n    jne trg_plain"),
+    ("ui-table-off", "    cmp t40_n,64\r\n    jne tp_noui", "    cmp t40_n,64\r\n    jmp tp_noui"),
+    ("ui-any-live", "    cmp t40_n,64\r\n    jne tp_noui", "    cmp ax,ax\r\n    jne tp_noui"),
+    ("ui-six-rows", "    inc si\r\n    cmp si,7\r\n    jb tp_uirow", "    inc si\r\n    cmp si,6\r\n    jb tp_uirow"),
+    ("ui-first-only", "    jne tp_uinext\r\n    inc si", "    jne tp_uinext\r\n    mov si,8"),
     ("cell-ignores-marks", "    and al,3                    ; the kept slot (not the stale/changed marks)",
      "    or al,al                    ; the kept slot (not the stale/changed marks)"),
 ]

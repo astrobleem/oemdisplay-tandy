@@ -1,0 +1,296 @@
+[
+ {
+  "frame": "t80on",
+  "decoded": false,
+  "source": "Monitor_1_20261014-032518-478.png",
+  "step": "shot t80on",
+  "t": 1791948319.2
+ },
+ {
+  "frame": "desktop",
+  "decoded": false,
+  "source": "Monitor_1_20261014-032917-606.png",
+  "step": "shot desktop",
+  "t": 1791948558.4
+ },
+ {
+  "frame": "pointer_a",
+  "decoded": false,
+  "source": "Monitor_1_20261014-032938-503.png",
+  "step": "shot pointer_a",
+  "t": 1791948579.3
+ },
+ {
+  "frame": "pointer_b",
+  "decoded": false,
+  "source": "Monitor_1_20261014-032959-384.png",
+  "step": "shot pointer_b",
+  "t": 1791948600.1
+ },
+ {
+  "frame": "filemenu",
+  "decoded": false,
+  "source": "Monitor_1_20261014-033024-637.png",
+  "step": "shot filemenu",
+  "t": 1791948625.4
+ },
+ {
+  "frame": "menuclosed",
+  "decoded": false,
+  "source": "Monitor_1_20261014-033047-219.png",
+  "step": "shot menuclosed",
+  "t": 1791948648.0
+ },
+ {
+  "frame": "rundlg",
+  "decoded": false,
+  "source": "Monitor_1_20261014-033132-818.png",
+  "step": "shot rundlg",
+  "t": 1791948693.6
+ },
+ {
+  "frame": "runmenu0",
+  "decoded": false,
+  "source": "Monitor_1_20261014-033201-426.png",
+  "step": "shot runmenu0",
+  "t": 1791948722.2
+ },
+ {
+  "frame": "rundlg0",
+  "decoded": false,
+  "source": "Monitor_1_20261014-033306-152.png",
+  "step": "shot rundlg0",
+  "t": 1791948786.9
+ },
+ {
+  "frame": "runmenu0",
+  "decoded": false,
+  "source": "Monitor_1_20261014-033358-161.png",
+  "step": "shot runmenu0",
+  "t": 1791948838.9
+ },
+ {
+  "frame": "rundlg0",
+  "decoded": false,
+  "source": "Monitor_1_20261014-033435-385.png",
+  "step": "shot rundlg0",
+  "t": 1791948876.2
+ },
+ {
+  "frame": "runmenu0",
+  "decoded": false,
+  "source": "Monitor_1_20261014-033552-440.png",
+  "step": "shot runmenu0",
+  "t": 1791948953.2
+ },
+ {
+  "frame": "rundlg0",
+  "decoded": false,
+  "source": "Monitor_1_20261014-033651-026.png",
+  "step": "shot rundlg0",
+  "t": 1791949011.8
+ },
+ {
+  "frame": "runmenu0",
+  "decoded": false,
+  "source": "Monitor_1_20261014-033923-193.png",
+  "step": "shot runmenu0",
+  "t": 1791949164.0
+ },
+ {
+  "frame": "rundlg0",
+  "decoded": false,
+  "source": "Monitor_1_20261014-034030-942.png",
+  "step": "shot rundlg0",
+  "t": 1791949231.7
+ },
+ {
+  "frame": "notepad0",
+  "decoded": false,
+  "source": "Monitor_1_20261014-034145-217.png",
+  "step": "shot notepad0",
+  "t": 1791949306.0
+ },
+ {
+  "frame": "notepad",
+  "decoded": false,
+  "source": "Monitor_1_20261014-034215-169.png",
+  "step": "shot notepad",
+  "t": 1791949335.9
+ },
+ {
+  "frame": "selected",
+  "decoded": false,
+  "source": "Monitor_1_20261014-034246-198.png",
+  "step": "shot selected",
+  "t": 1791949367.0
+ },
+ {
+  "frame": "unselected",
+  "decoded": false,
+  "source": "Monitor_1_20261014-034324-787.png",
+  "step": "shot unselected",
+  "t": 1791949405.5
+ },
+ {
+  "frame": "editmenu",
+  "decoded": false,
+  "source": "Monitor_1_20261014-034347-017.png",
+  "step": "shot editmenu",
+  "t": 1791949427.8
+ },
+ {
+  "frame": "editclosed",
+  "decoded": false,
+  "source": "Monitor_1_20261014-034437-170.png",
+  "step": "shot editclosed",
+  "t": 1791949477.9
+ },
+ {
+  "frame": "lines5",
+  "decoded": false,
+  "source": "Monitor_1_20261014-034533-685.png",
+  "step": "shot lines5",
+  "t": 1791949534.4
+ },
+ {
+  "frame": "lines10",
+  "decoded": false,
+  "source": "Monitor_1_20261014-034630-196.png",
+  "step": "shot lines10",
+  "t": 1791949591.0
+ },
+ {
+  "frame": "lines15",
+  "decoded": false,
+  "source": "Monitor_1_20261014-034729-563.png",
+  "step": "shot lines15",
+  "t": 1791949650.3
+ },
+ {
+  "frame": "lines20",
+  "decoded": false,
+  "source": "Monitor_1_20261014-034847-158.png",
+  "step": "shot lines20",
+  "t": 1791949727.9
+ },
+ {
+  "frame": "lines25",
+  "decoded": false,
+  "source": "Monitor_1_20261014-035004-771.png",
+  "step": "shot lines25",
+  "t": 1791949805.5
+ },
+ {
+  "frame": "lines30",
+  "decoded": false,
+  "source": "Monitor_1_20261014-035122-382.png",
+  "step": "shot lines30",
+  "t": 1791949883.2
+ },
+ {
+  "frame": "scrolled",
+  "decoded": false,
+  "source": "Monitor_1_20261014-035154-645.png",
+  "step": "shot scrolled",
+  "t": 1791949915.4
+ },
+ {
+  "frame": "dragged",
+  "decoded": false,
+  "source": "Monitor_1_20261014-035306-226.png",
+  "step": "shot dragged",
+  "t": 1791949987.0
+ },
+ {
+  "frame": "pmfront",
+  "decoded": false,
+  "source": "Monitor_1_20261014-035349-570.png",
+  "step": "shot pmfront",
+  "t": 1791950030.3
+ },
+ {
+  "frame": "npfront",
+  "decoded": false,
+  "source": "Monitor_1_20261014-035442-122.png",
+  "step": "shot npfront",
+  "t": 1791950082.9
+ },
+ {
+  "frame": "maximized",
+  "decoded": false,
+  "source": "Monitor_1_20261014-035544-894.png",
+  "step": "shot maximized",
+  "t": 1791950145.7
+ },
+ {
+  "frame": "runmenu0",
+  "decoded": false,
+  "source": "Monitor_1_20261014-035630-794.png",
+  "step": "shot runmenu0",
+  "t": 1791950191.6
+ },
+ {
+  "frame": "rundlg0",
+  "decoded": false,
+  "source": "Monitor_1_20261014-035720-165.png",
+  "step": "shot rundlg0",
+  "t": 1791950240.9
+ },
+ {
+  "frame": "nlines",
+  "decoded": false,
+  "source": "Monitor_1_20261014-035942-420.png",
+  "step": "shot nlines",
+  "t": 1791950383.2
+ },
+ {
+  "frame": "savequery",
+  "decoded": false,
+  "source": "Monitor_1_20261014-040010-728.png",
+  "step": "shot savequery",
+  "t": 1791950411.5
+ },
+ {
+  "frame": "exitdlg",
+  "decoded": false,
+  "source": "Monitor_1_20261014-040201-487.png",
+  "step": "shot exitdlg",
+  "t": 1791950522.3
+ },
+ {
+  "frame": "dos_after",
+  "decoded": false,
+  "source": "Monitor_1_20261014-040303-860.png",
+  "step": "shot dos_after",
+  "t": 1791950584.6
+ },
+ {
+  "frame": "desktop2",
+  "decoded": false,
+  "source": "Monitor_1_20261014-040703-070.png",
+  "step": "shot desktop2",
+  "t": 1791950823.8
+ },
+ {
+  "frame": "exitdlg2",
+  "decoded": false,
+  "source": "Monitor_1_20261014-040843-465.png",
+  "step": "shot exitdlg2",
+  "t": 1791950924.2
+ },
+ {
+  "frame": "t80off",
+  "decoded": false,
+  "source": "Monitor_1_20261014-041016-821.png",
+  "step": "shot t80off",
+  "t": 1791951017.6
+ },
+ {
+  "frame": "rolledback",
+  "decoded": false,
+  "source": "Monitor_1_20261014-041416-047.png",
+  "step": "shot rolledback",
+  "t": 1791951256.8
+ }
+]

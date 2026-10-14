@@ -1,0 +1,22 @@
+{
+ "purpose": "compact-nlines-p80s",
+ "command": [
+  "bash",
+  "/tmp/claude-0/-home-claude-oemdisplay-tandy/ce43402d-a3a1-5fd0-9e53-eb877bbd30e0/scratchpad/t80prun_c.sh",
+  "/home/claude/work/86box/p80s",
+  "--snap",
+  "--t80on",
+  "--dir",
+  "T80",
+  "--nlines-only"
+ ],
+ "bound_seconds": 5400,
+ "lock": "/home/claude/work/EMU.LOCK",
+ "acquired_utc": "2026-10-14T04:15:09.056086+00:00",
+ "conflicts_before": [],
+ "pid": 9963,
+ "exit_code": 0,
+ "conflicts_after": [],
+ "released_utc": "2026-10-14T04:33:09.594057+00:00",
+ "seconds": 1080.5
+}

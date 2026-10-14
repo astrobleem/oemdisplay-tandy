@@ -1,0 +1,96 @@
+shot t80on
+PASS T80ON: display.drv=T80CMP.DRV and the 8x8 fonts set; originals saved
+PASS T80ON C25: WIN.INI [windows] BorderWidth=7 and GridGranularity=1
+PASS T80ON: load= keeps its entry (T80SNAP); [fonts] gained the two 8x8 faces
+shot desktop
+PASS Windows runs in 80x25 text (BIOS columns 80, rows 25)
+PASS desktop: shows 'Program Manager'
+PASS desktop: shows 'File'
+PASS desktop: shows 'Options'
+PASS desktop: shows 'Window'
+PASS desktop: shows 'Help'
+shot pointer_a
+PASS pointer_a: the pointer is exactly the hot spot's cell, attribute XOR 77h (pointer (300, 150))
+shot pointer_b
+PASS pointer_b: the pointer is exactly the hot spot's cell, attribute XOR 77h (pointer (37, 77))
+shot filemenu
+PASS filemenu: shows 'New...'
+PASS filemenu: shows 'Open'
+PASS filemenu: shows 'Move...'
+PASS filemenu: shows 'Copy...'
+PASS filemenu: shows 'Delete'
+PASS filemenu: shows 'Properties...'
+PASS filemenu: shows 'Run...'
+PASS filemenu: shows 'Exit Windows...'
+shot menuclosed
+PASS File menu closed: every cell as on the desktop before
+shot rundlg
+PASS rundlg: shows 'Run'
+PASS rundlg: shows 'Command Line:'
+PASS rundlg: shows 'Run Minimized'
+PASS rundlg: shows 'OK'
+PASS rundlg: shows 'Cancel'
+shot runmenu0
+shot rundlg0
+PASS free memory recorded (before_notepad): 209504 bytes
+shot runmenu0
+shot rundlg0
+PASS TPROF TYPE 30 (edit): 7415 ms, 247 ms each
+shot runmenu0
+shot rundlg0
+PASS TPROF LINES 30 (edit): 73764 ms, 2459 ms each
+shot runmenu0
+shot rundlg0
+shot notepad0
+shot notepad
+PASS notepad: shows 'Notepad - (untitled)'
+PASS notepad: shows 'File'
+PASS notepad: shows 'Edit'
+PASS notepad: shows 'Search'
+PASS notepad: shows 'Help'
+PASS notepad: shows 'Hello from 80x25 text mode!'
+PASS notepad: the typed line is one colour pair, black on white (F0h)
+shot selected
+PASS selection: the selected cells keep their characters and all change colour
+shot unselected
+shot editmenu
+PASS editmenu: shows 'Undo'
+PASS editmenu: shows 'Cut'
+PASS editmenu: shows 'Copy'
+PASS editmenu: shows 'Paste'
+PASS editmenu: shows 'Delete'
+PASS editmenu: shows 'Select All'
+PASS editmenu: shows 'Time/Date'
+PASS editmenu: shows 'Word Wrap'
+shot editclosed
+PASS Edit menu closed: every cell as before (caret cells apart)
+shot lines5
+shot lines10
+shot lines15
+shot lines20
+shot lines25
+shot lines30
+shot scrolled
+PASS scrolling: the last line is visible and the first typed line has scrolled away
+shot dragged
+PASS drag: the title moved 3 cell rows down and 4-5 cell columns left (8-pixel grid)
+shot pmfront
+shot npfront
+PASS overlap: switching windows changes which one is on top (cells differ), and back
+shot maximized
+PASS maximized: row 0 starts with the system-menu glyph (F0h) and ends with minimize (1Fh) and restore (12h), one cell each
+shot runmenu0
+shot rundlg0
+PASS TPROF NLINES 20 (maximized Notepad)
+shot nlines
+shot savequery
+shot exitdlg
+shot dos_after
+shot desktop2
+PASS relaunch: the desktop is identical to the first launch
+shot exitdlg2
+shot t80off
+PASS T80OFF: SYSTEM.INI no longer names TEXT80.DRV and the backups are gone
+PASS T80OFF: WIN.INI is byte for byte as before T80ON
+shot rolledback
+PASS rollback: Windows starts with the previous driver (BIOS columns no longer 80)
