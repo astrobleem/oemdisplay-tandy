@@ -72,7 +72,7 @@ def variants():
         "t40": dict(mode="320x200x16", out="TXT40.DRV", edits=[t40]),
         "t40prof": dict(mode="320x200x16", out="T40PROF.DRV", edits=[t40, prof.patch_staged]),
         "t80": dict(mode="320x200x16", out="TEXT80.DRV", edits=[t80], res=res640, res_sha=RES640_SHA),
-        "t80c": dict(mode="320x200x16", out="TEXT80.DRV", edits=[t80], res=res_compact, res_sha=RESC_SHA),
+        "t80c": dict(mode="320x200x16", out="T80CMP.DRV", edits=[t80], res=res_compact, res_sha=RESC_SHA),
         "t80cprof": dict(mode="320x200x16", out="T80PROF.DRV", edits=[t80, prof.patch_staged], res=res_compact,
                          res_sha=RESC_SHA),
         "t80prof": dict(mode="320x200x16", out="T80PROF.DRV", edits=[t80, prof.patch_staged], res=res640,

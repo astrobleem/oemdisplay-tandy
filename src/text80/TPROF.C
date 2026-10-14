@@ -16,6 +16,7 @@
  *                    with real keys); b seconds later read them and exit.
  *                    TPROF has no window and sleeps in GetMessage on a
  *                    timer, so it takes no CPU time from Notepad.
+ *   TPROF NLINES <n> as LINES, into a running Notepad's edit control.
  *   TPROF METRICS <s>  log GetSystemMetrics 0..36 and the system font's
  *                    metrics, start Notepad, wait s seconds, and log the
  *                    window and client rectangles (screen coordinates) of
@@ -270,6 +271,33 @@ static void TypeTest(int n, int lines)
     DestroyWindow(hMain);
 }
 
+/* NLINES: the same as LINES, sent to a running Notepad's edit control
+   (whatever its size and place, e.g. maximized); each line is painted
+   (UpdateWindow sends WM_PAINT to Notepad at once) before the next. */
+static void NoteLines(int n)
+{
+    HWND hn = FindWindow("Notepad", NULL), he;
+    DWORD w0;
+    int i;
+    if (!hn || !(he = GetWindow(hn, GW_CHILD))) {
+        LogLine("NLINES no Notepad");
+        return;
+    }
+    BringWindowToTop(hn);
+    UpdateWindow(hn);
+    Pump();
+    w0 = GetCurrentTime();
+    for (i = 0; i < n; i++) {
+        SendMessage(he, WM_CHAR, 'a' + i % 26, 1L);
+        SendMessage(he, WM_CHAR, '\r', 1L);
+        UpdateWindow(he);
+        UpdateWindow(hn);
+        Pump();
+    }
+    wsprintf(line, "NLINES n=%d ms=%lu", n, GetCurrentTime() - w0);
+    LogLine(line);
+}
+
 static void LogRects(LPSTR name, HWND h)
 {
     RECT w, c;
@@ -335,6 +363,8 @@ int PASCAL WinMain(HANDLE hI, HANDLE hPrev, LPSTR lpCmd, int nShow)
         TypeTest(Num(lpCmd + 4), 0);
     } else if (Is(lpCmd, "LINES")) {
         TypeTest(Num(lpCmd + 5), 1);
+    } else if (Is(lpCmd, "NLINES")) {
+        NoteLines(Num(lpCmd + 6));
     } else if (Is(lpCmd, "METRICS")) {
         Metrics(Num(lpCmd + 7));
     } else if (Is(lpCmd, "IDLE")) {

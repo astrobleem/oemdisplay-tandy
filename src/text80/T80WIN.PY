@@ -52,6 +52,7 @@ class Session:
         self.r.tdir, self.r.tid = "T80", "T40ID"
         self.checks, self.recs, self.timing = [], {}, {}
         self.width = 640
+        self.compact = False
         cfg = self.vm / "86box.cfg"
         self.tandy = cfg.is_file() and "tandy1000" in cfg.read_text(errors="replace")
 
@@ -523,14 +524,20 @@ class Session:
         self.key("Return", 2)
         self.text("CD \\T80", 1)
         self.key("Return", 2)
-        self.text("T80ON", 1)
+        self.win0 = self.read("::/WINDOWS/WIN.INI")
+        self.text("T80ON C:\\WINDOWS C25" if self.compact else "T80ON", 1)
         self.key("Return", 25)
         r.shot("t80on", settle=1, decode=False)
         sysini = self.read("::/WINDOWS/SYSTEM.INI").decode("latin1")
         winini = self.read("::/WINDOWS/WIN.INI").decode("latin1")
-        self.check("T80ON: display.drv=TEXT80.DRV and the 8x8 fonts set; originals saved",
-                   "display.drv=TEXT80.DRV" in sysini and "fonts.fon=XTTSYS.FON" in sysini and
+        drv = "T80CMP.DRV" if self.compact else "TEXT80.DRV"
+        self.check(f"T80ON: display.drv={drv} and the 8x8 fonts set; originals saved",
+                   f"display.drv={drv}" in sysini and "fonts.fon=XTTSYS.FON" in sysini and
                    bool(self.read("::/WINDOWS/SYSTEM.T80")) and bool(self.read("::/WINDOWS/WIN.T80")))
+        if self.compact:
+            wl = winini.split("\r\n")
+            self.check("T80ON C25: WIN.INI [windows] BorderWidth=7 and GridGranularity=1",
+                       "BorderWidth=7" in wl and "GridGranularity=1" in wl)
         load = [ln for ln in winini.split("\r\n") if ln.lower().startswith("load=")]
         self.check("T80ON: load= keeps its entry (T80SNAP); [fonts] gained the two 8x8 faces",
                    len(load) == 1 and "T80SNAP.EXE" in load[0].upper() and
@@ -670,6 +677,39 @@ class Session:
                    bool(pm and np) and pm["hidden"] != np["hidden"] and
                    bool(CHK.find(pm["hidden"], 80, "Program Manager")) and
                    bool(CHK.find(np["hidden"], 80, "Notepad - (untitled)")))
+        # 10b. Notepad maximized: its window controls on row 0 (compact UI:
+        # one cell each, exact glyphs), and scrolling in it (TPROF NLINES)
+        self.key("alt+space", 8)
+        self.key("x", 10)
+        mx = self.settle("maximized", ("Notepad - (untitled)",), timeout=1200)
+        if mx and self.compact:
+            row0 = CHK.cells_at(mx["hidden"], 80, 0, 0, 80)
+            codes = [w & 0xFF for w in row0]
+            self.check("maximized: row 0 starts with the system-menu glyph (F0h) and ends with "
+                       "minimize (1Fh) and restore (12h), one cell each",
+                       codes[0] == 0xF0 and codes[78] == 0x1F and codes[79] == 0x12,
+                       row0=[hex(c) for c in codes[:2] + codes[76:]])
+        self.key("alt+Escape", 8)
+        n0 = len(self.read("::/T80/TPROF.LOG").split(b"\n"))
+        if self.runcmd("C:\\T80\\TPROF NLINES 20"):
+            t0 = time.time()
+            got = None
+            while time.time() - t0 < 1800 and not got:
+                time.sleep(10)
+                for ln in self.read("::/T80/TPROF.LOG").decode("latin1").split("\r\n")[n0 - 1:]:
+                    if ln.startswith("NLINES n="):
+                        got = ln
+            m = re.match(r"NLINES n=(\d+) ms=(\d+)", got or "")
+            if m:
+                self.timing["nlines_ms_each_maximized"] = round(int(m.group(2)) / int(m.group(1)), 1)
+            self.check("TPROF NLINES 20 (maximized Notepad)", bool(m), line=got,
+                       ms_each=self.timing.get("nlines_ms_each_maximized"))
+        nl = self.settle("nlines", ("Notepad - (untitled)",), timeout=1200)
+        for _ in range(3):                        # Notepad to the front again for step 11
+            if not nl or not CHK.find(nl["hidden"], 80, "Program Manager"):
+                break
+            self.key("alt+Escape", 8)
+            nl = self.settle("nlines", ("Notepad - (untitled)",), timeout=600)
         # 11. exit and relaunch
         self.key("alt+F4", 8)
         self.settle("savequery", ("No",), timeout=600)
@@ -693,7 +733,10 @@ class Session:
         r.shot("t80off", settle=1, decode=False)
         sysini = self.read("::/WINDOWS/SYSTEM.INI").decode("latin1")
         self.check("T80OFF: SYSTEM.INI no longer names TEXT80.DRV and the backups are gone",
-                   "TEXT80" not in sysini.upper() and not self.read("::/WINDOWS/SYSTEM.T80"))
+                   "TEXT80" not in sysini.upper() and "T80CMP" not in sysini.upper() and
+                   not self.read("::/WINDOWS/SYSTEM.T80"))
+        self.check("T80OFF: WIN.INI is byte for byte as before T80ON",
+                   self.read("::/WINDOWS/WIN.INI") == self.win0)
         rec = self.start_windows("rolledback", ("Program Manager",))
         self.check("rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
                    bool(rec) and rec["cols"] != 80, cols=rec and rec["cols"])
@@ -704,12 +747,14 @@ def main():
     ap.add_argument("--vm", required=True)
     ap.add_argument("--prof", action="store_true")
     ap.add_argument("--skip-rollback", action="store_true")
-    ap.add_argument("--profile", choices=("25", "pan", "allocfail", "vga"), default="25")
+    ap.add_argument("--profile", choices=("25", "c25", "pan", "allocfail", "vga"), default="25",
+                    help="c25: the 80x25 session with the compact UI profile (T80ON ... C25)")
     ap.add_argument("--emulator", choices=("86box", "dosbox"), default="86box",
                     help="dosbox: DOSBox-X machine=vgaonly (T80DBX.PY), started and stopped here")
     ap.add_argument("--dosbox", default="/usr/bin/dosbox-x")
     a = ap.parse_args()
     s = Session(a.vm, a.prof)
+    s.compact = a.profile == "c25"
     dbx = None
     if a.emulator == "dosbox":
         DBXM = importlib.machinery.SourceFileLoader("t80dbx", str(HERE / "T80DBX.PY")).load_module()
