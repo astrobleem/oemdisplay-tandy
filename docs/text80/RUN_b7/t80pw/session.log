@@ -1,0 +1,57 @@
+shot t80on
+PASS T80ON PAN: display.drv=T80PAN.DRV, originals saved, load= keeps T80SNAP and gains XTPAN.EXE
+shot desktop
+PASS Windows runs in 80x25 text over the 640x400 desktop, top 0
+PASS desktop: shows 'Program Manager'
+PASS desktop: shows 'File'
+PASS desktop: shows 'Options'
+PASS desktop: shows 'Window'
+PASS desktop: shows 'Help'
+shot desk0
+shot pan_down1
+PASS Alt+PgDn: top 56 (whole text rows); screen rows 0-17 are exactly rows 7-24 seen before
+shot pan_up1
+PASS Alt+PgUp: top 0 and every cell as before the pan
+shot pan_rep0
+shot pan_rep1
+shot pan_rep2
+shot pan_rep3
+shot pan_rep4
+PASS repeated Alt+PgDn: whole text rows, each screen continues the previous one exactly, stops at the last row (top 200)
+shot panned_pointer
+PASS panned_pointer: the pointer is exactly the hot spot's cell, attribute XOR 77h (pointer (300, 330))
+shot pan_top
+PASS Alt+F9: back to top 0, every cell as on the desktop
+shot rundlg
+PASS Run dialog: shown whole after the helper's follow pan (top a multiple of 8)
+shot after_run
+shot runmenu0
+shot rundlg0
+PASS free memory recorded (before_notepad): 105440 bytes
+shot runmenu0
+shot rundlg0
+PASS TPROF TYPE 30 (edit): 7964 ms, 265 ms each
+shot runmenu0
+shot rundlg0
+PASS TPROF LINES 30 (edit): 83760 ms, 2792 ms each
+shot runmenu0
+shot rundlg0
+shot notepad0
+shot np_moved_top0
+shot offscreen_typed
+PASS offscreen typing: the screen (top 0) does not show the typed line
+shot reveal0
+shot reveal1
+PASS pan reveals the line typed while it was not shown (drawn offscreen, no repaint)
+PASS revealed line: one colour pair, black on white (F0h)
+PASS helper log: pans recorded with their times
+shot savequery
+shot before_exit
+shot exitdlg
+shot desktop2
+shot desk2
+PASS relaunch: the desktop is identical to the first launch
+shot exitdlg2
+PASS T80OFF: SYSTEM.INI and WIN.INI restored (no T80PAN.DRV, no XTPAN.EXE on load=)
+shot rolledback
+PASS rollback: Windows starts with the previous driver (BIOS columns no longer 80)

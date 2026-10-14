@@ -1,0 +1,35 @@
+PASS T80ON VGA: display.drv=T80VGA.DRV, originals saved
+PASS Windows runs in VGA 80x50 text (BIOS columns 80, rows 50)
+PASS desktop: shows 'Program Manager'
+PASS desktop: shows 'File'
+PASS desktop: shows 'Options'
+PASS desktop: shows 'Window'
+PASS desktop: shows 'Help'
+PASS desktop: the pointer is exactly the hot spot's cell, attribute XOR 77h (pointer (320, 200))
+PASS filemenu: shows 'New...'
+PASS filemenu: shows 'Open'
+PASS filemenu: shows 'Move...'
+PASS filemenu: shows 'Copy...'
+PASS filemenu: shows 'Delete'
+PASS filemenu: shows 'Properties...'
+PASS filemenu: shows 'Run...'
+PASS filemenu: shows 'Exit Windows...'
+PASS File menu closed: every cell as on the desktop before
+PASS rundlg: shows 'Run'
+PASS rundlg: shows 'Command Line:'
+PASS rundlg: shows 'Run Minimized'
+PASS rundlg: shows 'OK'
+PASS rundlg: shows 'Cancel'
+FAIL Run dialog (centred on the 400-row desktop) lies below text row 25
+PASS free memory recorded (before_notepad): 122496 bytes
+PASS notepad: shows 'Notepad - (untitled)'
+PASS notepad: shows 'Hello from VGA 80x50 text mode!'
+FAIL notepad: the typed line is one colour pair, black on white (F0h)
+PASS selection: the selected cells keep their characters and all change colour
+PASS scrolling: the last line is visible and the first typed line has scrolled away
+PASS overlap: switching windows changes which one is on top (cells differ), and back
+FAIL exitdlg: screen settles with ['This will end your Windows', 'OK'] within 600 s
+PASS relaunch: the desktop is identical to the first launch
+FAIL exitdlg2: screen settles with ['This will end your Windows'] within 600 s
+PASS T80OFF: SYSTEM.INI no longer names T80VGA.DRV and the backups are gone
+PASS rollback: Windows starts with the previous driver (BIOS columns no longer 80)

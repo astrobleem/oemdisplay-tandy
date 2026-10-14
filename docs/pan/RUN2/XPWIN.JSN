@@ -1,0 +1,73 @@
+{
+ "driver": "XTPAN.DRV",
+ "checks": [
+  {
+   "check": "helper started with the XTPAN driver",
+   "result": "PASS",
+   "log": [
+    "START top=0 view=200 logical=400 step=50 dwell=400 edge=3 free=239872",
+    "PAN 0 100 follow t=23398 ms=1043"
+   ]
+  },
+  {
+   "check": "pat_top0: all video rows equal logical rows 0..199 of the pattern (off 0), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    60
+   ],
+   "top": 0
+  },
+  {
+   "check": "pat_top0: pointer drawn at its logical position, video row 60 (72 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "keyboard: four Ctrl+Alt+PgDn give four pans of 50 rows",
+   "result": "FAIL",
+   "log": [
+    "PAN 0 50 key-down t=268583 ms=1043",
+    "PAN 50 100 key-down t=274954 ms=1044",
+    "PAN 100 150 key-down t=281380 ms=989"
+   ]
+  },
+  {
+   "check": "pat_key200: all video rows equal logical rows 150..349 of the pattern (off 0), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    153
+   ],
+   "top": 150
+  },
+  {
+   "check": "pat_key200: pointer drawn at its logical position, video row 3 (72 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  }
+ ],
+ "measurements": {
+  "xtpan_log": [
+   "START top=0 view=200 logical=400 step=50 dwell=400 edge=3 free=239872",
+   "PAN 0 100 follow t=23398 ms=1043",
+   "PAN 100 0 follow t=113859 ms=1044",
+   "PAN 0 50 key-down t=268583 ms=1043",
+   "PAN 50 100 key-down t=274954 ms=1044",
+   "PAN 100 150 key-down t=281380 ms=989"
+  ],
+  "pantest_log": [
+   "START cmd=PATTERN free=228160 top=0",
+   "METRICS screen=320x400 cycaption=16 cymenu=14 cyframe=4 tmheight=10 tmextlead=0",
+   "CURSOR x=40 y=60 top=0 off=0",
+   "CURSOR x=40 y=153 top=150 off=0",
+   "CURSOR x=40 y=153 top=150 off=0"
+  ]
+ },
+ "passed": 5,
+ "failed": 1
+}

@@ -1,0 +1,17 @@
+{
+ "emulator_exit": 0,
+ "expected": {
+  "JRPROBE": "0",
+  "JRGUARD": "0"
+ },
+ "observed": {
+  "JRPROBE": [
+   "0"
+  ],
+  "JRGUARD": [
+   "0"
+  ]
+ },
+ "verdict": "PASS",
+ "problems": []
+}

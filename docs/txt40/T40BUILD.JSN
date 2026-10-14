@@ -1,0 +1,14 @@
+{
+  "driver": "TXT40.DRV",
+  "built_as": "TANDY88.DRV",
+  "driver_bytes": 58784,
+  "driver_sha256": "fb9622abc72c3c0035e484153f001fd12287a12604def1a8c875ef3b7ca6e958",
+  "base": "BUILD88 320x200x16 (TR5) from the supplied view",
+  "txt40_edits_staged_sha256": {
+    "TSOFT.ASM": "b8ae61acd7a47977eb8dcc24989121ac22e39919204f8d711040702e957f2f46",
+    "TCURSOR.ASM": "e0a2bb7c48e090e8da2b24c380f6e7b657166fe1eec773700c21dab9885f182a",
+    "TSOFT.DEF": "4c1879e7824c22a800ca22f6bfce05610dd3f0648157c5d8b5efe9b848df1911"
+  },
+  "build88_audits": "see RESULT.json (instruction, REP-prefix, link)",
+  "runtime": "NOT_TESTED"
+}

@@ -1,0 +1,955 @@
+{
+ "vm": "/tmp/claude-0/86box/vm12",
+ "checks": [
+  {
+   "check": "pcpshow_16_bars",
+   "result": "PASS",
+   "mismatches": 0,
+   "first": null
+  },
+  {
+   "check": "menu_file_kbd_restores",
+   "result": "PASS",
+   "opened_changed": 5199,
+   "opened_box": [
+    68,
+    54,
+    250,
+    188
+   ],
+   "left_after_close": 0,
+   "where": null
+  },
+  {
+   "check": "about_restores",
+   "result": "PASS",
+   "opened_changed": 28216,
+   "opened_box": [
+    1,
+    6,
+    319,
+    199
+   ],
+   "left_after_close": 0,
+   "where": null
+  },
+  {
+   "check": "menu_file_mouse_restores",
+   "result": "PASS",
+   "opened_changed": 5172,
+   "opened_box": [
+    68,
+    54,
+    250,
+    188
+   ],
+   "left_after_close": 0,
+   "where": null
+  },
+  {
+   "check": "wallpaper_bars_exact",
+   "result": "PASS",
+   "differing_outside_icon": 0,
+   "where": null,
+   "icon_area_changed": 1301
+  },
+  {
+   "check": "arrow_full_glyph_over_bars",
+   "result": "PASS",
+   "glyph_pixels": 72,
+   "black": 43,
+   "white": 29,
+   "span": [
+    0,
+    0,
+    11,
+    9
+   ],
+   "conflicts": 0,
+   "fewest_changed_in_a_frame": 34
+  },
+  {
+   "check": "arrow_equals_driver_cursor_resource",
+   "result": "PASS",
+   "resource_sha256": "09954aac641a28e50680d584193cbb2552ed001234f1af38f5faa049ed287fe4",
+   "expected_pixels": 72,
+   "drawn_pixels": 72,
+   "missing_or_wrong": 0,
+   "extra": 0
+  },
+  {
+   "check": "arrow_over_bar_00",
+   "result": "PASS",
+   "hotspot": [
+    10,
+    100
+   ],
+   "changed": 34,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_01",
+   "result": "PASS",
+   "hotspot": [
+    30,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_02",
+   "result": "PASS",
+   "hotspot": [
+    50,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_03",
+   "result": "PASS",
+   "hotspot": [
+    70,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_04",
+   "result": "PASS",
+   "hotspot": [
+    90,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_05",
+   "result": "PASS",
+   "hotspot": [
+    110,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_06",
+   "result": "PASS",
+   "hotspot": [
+    130,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_07",
+   "result": "PASS",
+   "hotspot": [
+    150,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_08",
+   "result": "PASS",
+   "hotspot": [
+    170,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_09",
+   "result": "PASS",
+   "hotspot": [
+    190,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_10",
+   "result": "PASS",
+   "hotspot": [
+    210,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_11",
+   "result": "PASS",
+   "hotspot": [
+    230,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_12",
+   "result": "PASS",
+   "hotspot": [
+    250,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_13",
+   "result": "PASS",
+   "hotspot": [
+    270,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_14",
+   "result": "PASS",
+   "hotspot": [
+    290,
+    100
+   ],
+   "changed": 72,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_bar_15",
+   "result": "PASS",
+   "hotspot": [
+    310,
+    100
+   ],
+   "changed": 38,
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "mouse_drift_drift_0",
+   "result": "PASS",
+   "trial": "1200-baud bytes, 20 ms between packets",
+   "expected_hotspot": [
+    200,
+    120
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "mouse_drift_drift_1",
+   "result": "PASS",
+   "trial": "1200-baud bytes, 20 ms between packets (repeat)",
+   "expected_hotspot": [
+    200,
+    120
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "mouse_drift_drift_2",
+   "result": "PASS",
+   "trial": "30 ms between bytes, 20 ms between packets",
+   "expected_hotspot": [
+    200,
+    120
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "mouse_drift_drift_3",
+   "result": "PASS",
+   "trial": "1200-baud bytes, 300 ms between packets",
+   "expected_hotspot": [
+    200,
+    120
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "program_manager_restored_exactly",
+   "result": "PASS",
+   "differing": 0,
+   "where": null
+  },
+  {
+   "check": "calc_dragged_by_mouse",
+   "result": "PASS",
+   "title_pixels": 1521,
+   "compared_at_new": 1506,
+   "pointer_pixels_excluded": 15,
+   "mismatches_at_new_position": 0,
+   "mismatches_at_old_position": 1118
+  },
+  {
+   "check": "overlap_closed_restores",
+   "result": "PASS",
+   "left_after_close": 0,
+   "where": null
+  },
+  {
+   "check": "box_00_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_01_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_02_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_03_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_04_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_05_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_06_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_07_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_08_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_09_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_10_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_11_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_12_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_13_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_14_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "box_15_colour",
+   "result": "PASS",
+   "pixels": 1431,
+   "wrong": 0
+  },
+  {
+   "check": "canvas_outside_boxes_untouched",
+   "result": "PASS",
+   "changed": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_glyph_consistent",
+   "result": "PASS",
+   "glyph_pixels": 59,
+   "colours": [
+    0,
+    15
+   ],
+   "offsets_span": [
+    0,
+    0,
+    11,
+    8
+   ],
+   "conflicts": 0
+  },
+  {
+   "check": "arrow_over_colour_00",
+   "result": "PASS",
+   "hotspot": [
+    78,
+    195
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_01",
+   "result": "PASS",
+   "hotspot": [
+    180,
+    195
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_02",
+   "result": "PASS",
+   "hotspot": [
+    146,
+    195
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_03",
+   "result": "PASS",
+   "hotspot": [
+    163,
+    195
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_04",
+   "result": "PASS",
+   "hotspot": [
+    112,
+    195
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_05",
+   "result": "PASS",
+   "hotspot": [
+    197,
+    195
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_06",
+   "result": "PASS",
+   "hotspot": [
+    129,
+    195
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_07",
+   "result": "PASS",
+   "hotspot": [
+    95,
+    195
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_08",
+   "result": "PASS",
+   "hotspot": [
+    231,
+    195
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_09",
+   "result": "PASS",
+   "hotspot": [
+    180,
+    189
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_10",
+   "result": "PASS",
+   "hotspot": [
+    146,
+    189
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_11",
+   "result": "PASS",
+   "hotspot": [
+    163,
+    189
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_12",
+   "result": "PASS",
+   "hotspot": [
+    112,
+    189
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_13",
+   "result": "PASS",
+   "hotspot": [
+    197,
+    189
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_14",
+   "result": "PASS",
+   "hotspot": [
+    129,
+    189
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_over_colour_15",
+   "result": "PASS",
+   "hotspot": [
+    78,
+    189
+   ],
+   "wrong": 0,
+   "where": null
+  },
+  {
+   "check": "arrow_moves_restore_exactly",
+   "result": "PASS",
+   "left": 0,
+   "where": null
+  },
+  {
+   "check": "cursor_xor_over_colour_00",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    37,
+    70,
+    68,
+    85
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_01",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    68,
+    70,
+    99,
+    85
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_02",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    99,
+    70,
+    130,
+    85
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_03",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    130,
+    70,
+    161,
+    85
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_04",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    161,
+    70,
+    192,
+    85
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_05",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    192,
+    70,
+    223,
+    85
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_06",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    223,
+    70,
+    254,
+    85
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_07",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    254,
+    70,
+    285,
+    85
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_08",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    37,
+    130,
+    68,
+    145
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_09",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    68,
+    130,
+    99,
+    145
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_10",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    99,
+    130,
+    130,
+    145
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_11",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    130,
+    130,
+    161,
+    145
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_12",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    161,
+    130,
+    192,
+    145
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_13",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    192,
+    130,
+    223,
+    145
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_14",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    223,
+    130,
+    254,
+    145
+   ]
+  },
+  {
+   "check": "cursor_xor_over_colour_15",
+   "result": "PASS",
+   "changed": 46,
+   "not_inverted": 0,
+   "outside_cursor": 0,
+   "box": [
+    254,
+    130,
+    285,
+    145
+   ]
+  },
+  {
+   "check": "cursor_xor_same_footprint_all_colours",
+   "result": "PASS",
+   "distinct_footprints": 1,
+   "pixels": 46
+  },
+  {
+   "check": "cross_moves_restore_exactly",
+   "result": "PASS",
+   "left": 0,
+   "where": null
+  },
+  {
+   "check": "reopened_canvas_identical",
+   "result": "PASS",
+   "differing": 0,
+   "first": []
+  },
+  {
+   "check": "saved_bmp_matches_screen",
+   "result": "PASS",
+   "bmp_size": [
+    320,
+    170
+   ],
+   "bmp_mode": "P",
+   "image_origin_on_screen": [
+    36,
+    48
+   ],
+   "canvas_pixels_compared": 30988,
+   "mismatches": 0,
+   "palette": [
+    [
+     0,
+     0,
+     0
+    ],
+    [
+     128,
+     0,
+     0
+    ],
+    [
+     0,
+     128,
+     0
+    ],
+    [
+     128,
+     128,
+     0
+    ],
+    [
+     0,
+     0,
+     128
+    ],
+    [
+     128,
+     0,
+     128
+    ],
+    [
+     0,
+     128,
+     128
+    ],
+    [
+     128,
+     128,
+     128
+    ],
+    [
+     64,
+     64,
+     64
+    ],
+    [
+     255,
+     0,
+     0
+    ],
+    [
+     0,
+     255,
+     0
+    ],
+    [
+     255,
+     255,
+     0
+    ],
+    [
+     0,
+     0,
+     255
+    ],
+    [
+     255,
+     0,
+     255
+    ],
+    [
+     0,
+     255,
+     255
+    ],
+    [
+     255,
+     255,
+     255
+    ]
+   ]
+  },
+  {
+   "check": "pcpid_after_each_exit",
+   "result": "PASS",
+   "lines": [
+    "MODE_BEFORE=03 COLS=0050 SPLIT=5A,33,A5,CC OFF_ALIAS=01 COLORPLUS=01 COMPLETE=1",
+    "MODE_BEFORE=03 COLS=0050 SPLIT=5A,33,A5,CC OFF_ALIAS=01 COLORPLUS=01 COMPLETE=1"
+   ]
+  },
+  {
+   "check": "pcpid_at_boot_sees_card",
+   "result": "PASS",
+   "lines": [
+    "MODE_BEFORE=03 COLS=0050 SPLIT=5A,33,A5,CC OFF_ALIAS=01 COLORPLUS=01 COMPLETE=1"
+   ]
+  },
+  {
+   "check": "second_launch_desktop_identical",
+   "result": "PASS",
+   "differing": 0,
+   "where": null
+  }
+ ],
+ "passed": 88,
+ "failed": 0,
+ "skipped": 0,
+ "total": 88,
+ "verdict": "PASS"
+}

@@ -1,0 +1,17 @@
+{
+ "purpose": "text80-t80w",
+ "command": [
+  "bash",
+  "/tmp/claude-0/-home-claude-oemdisplay-tandy/ce43402d-a3a1-5fd0-9e53-eb877bbd30e0/scratchpad/t80win.sh",
+  "/home/claude/work/86box/t80w"
+ ],
+ "bound_seconds": 7200,
+ "lock": "/home/claude/work/EMU.LOCK",
+ "acquired_utc": "2026-10-13T11:07:36.811959+00:00",
+ "conflicts_before": [],
+ "pid": 11009,
+ "exit_code": 0,
+ "conflicts_after": [],
+ "released_utc": "2026-10-13T12:24:02.918183+00:00",
+ "seconds": 4586.1
+}

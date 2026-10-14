@@ -1,0 +1,17 @@
+{
+ "purpose": "xtpan-session",
+ "command": [
+  "bash",
+  "/tmp/claude-0/-home-claude-oemdisplay-tandy/ce43402d-a3a1-5fd0-9e53-eb877bbd30e0/scratchpad/sess.sh",
+  "/home/claude/work/86box/xp1"
+ ],
+ "bound_seconds": 7000,
+ "lock": "/home/claude/work/EMU.LOCK",
+ "acquired_utc": "2026-10-12T20:12:22.313011+00:00",
+ "conflicts_before": [],
+ "pid": 1978,
+ "exit_code": 143,
+ "conflicts_after": [],
+ "released_utc": "2026-10-12T20:21:37.679852+00:00",
+ "seconds": 555.4
+}

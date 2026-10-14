@@ -1,0 +1,11 @@
+{
+ "toolchain": "pinned MASM 5.10 / LINK / DDK EXE2BIN in DOSBox-X",
+ "built": {
+  "MSTEST.COM": {
+   "bytes": 396,
+   "sha256": "51dd0966a76cbc6349f1685ef65bbdeb4883897679d5426168d8f9c5a9f462bc"
+  }
+ },
+ "verdict": "PASS",
+ "problems": []
+}

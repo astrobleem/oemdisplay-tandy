@@ -1,0 +1,12 @@
+86Box 6.0 build 9001, official release asset
+  https://github.com/86Box/86Box/releases/tag/v6.0  86Box-Linux-x86_64-b9001.AppImage
+  sha256 535d3c329f8c32b601103970c86d80aa80298f345452c3524ea2f433624727a4 (matches the release page digest)
+  run unpacked (unsquashfs -o 944632) under Xvfb 1600x1200x24; Qt software renderer
+86Box ROM set: https://github.com/86Box/roms tag v6.0, commit 26761b5ab25786b4405c6829236fa745436e5399
+  (git sparse checkout; release archives were not reachable from the sandbox)
+ROM files 86Box loads for this configuration (kept private, not in this repository):
+  f6ab06bb1159877b8fc8e10d680b58ba519d4b50064cc49f8755fdd5931dccc9  machines/pc1512/40043
+  b8b8b9d9ca82959f341dc9bb6e3c73f24576f60b8bd207f8b18c47af47973ea3  machines/pc1512/40044
+  2e5988193cb6e299c155ef672627f14e2d76c31f4a073376c45f45124c1d3cbc  machines/pc1512/40078
+  fd8be2d46b0d46913dd96c37d8872287cbe0a3982592161f4958bc8eb0c62922  hdd/xtide/ide_xt.bin
+PC1512 emulation source read for this work: 86Box src/machine/m_amstrad.c (v6.0)

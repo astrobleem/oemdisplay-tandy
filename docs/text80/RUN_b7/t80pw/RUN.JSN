@@ -1,0 +1,240 @@
+[
+ {
+  "frame": "t80on",
+  "decoded": false,
+  "source": "Monitor_1_20261013-172615-348.png",
+  "step": "shot t80on",
+  "t": 1791912376.1
+ },
+ {
+  "frame": "desktop",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173014-478.png",
+  "step": "shot desktop",
+  "t": 1791912615.2
+ },
+ {
+  "frame": "desk0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173031-350.png",
+  "step": "shot desk0",
+  "t": 1791912632.1
+ },
+ {
+  "frame": "pan_down1",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173053-598.png",
+  "step": "shot pan_down1",
+  "t": 1791912654.4
+ },
+ {
+  "frame": "pan_up1",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173115-848.png",
+  "step": "shot pan_up1",
+  "t": 1791912676.6
+ },
+ {
+  "frame": "pan_rep0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173138-081.png",
+  "step": "shot pan_rep0",
+  "t": 1791912698.9
+ },
+ {
+  "frame": "pan_rep1",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173200-346.png",
+  "step": "shot pan_rep1",
+  "t": 1791912721.1
+ },
+ {
+  "frame": "pan_rep2",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173222-578.png",
+  "step": "shot pan_rep2",
+  "t": 1791912743.3
+ },
+ {
+  "frame": "pan_rep3",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173244-826.png",
+  "step": "shot pan_rep3",
+  "t": 1791912765.6
+ },
+ {
+  "frame": "pan_rep4",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173307-075.png",
+  "step": "shot pan_rep4",
+  "t": 1791912787.8
+ },
+ {
+  "frame": "panned_pointer",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173328-979.png",
+  "step": "shot panned_pointer",
+  "t": 1791912809.7
+ },
+ {
+  "frame": "pan_top",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173351-244.png",
+  "step": "shot pan_top",
+  "t": 1791912832.0
+ },
+ {
+  "frame": "rundlg",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173455-049.png",
+  "step": "shot rundlg",
+  "t": 1791912895.8
+ },
+ {
+  "frame": "after_run",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173532-876.png",
+  "step": "shot after_run",
+  "t": 1791912933.7
+ },
+ {
+  "frame": "runmenu0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173555-126.png",
+  "step": "shot runmenu0",
+  "t": 1791912955.9
+ },
+ {
+  "frame": "rundlg0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173641-560.png",
+  "step": "shot rundlg0",
+  "t": 1791913002.3
+ },
+ {
+  "frame": "runmenu0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173738-654.png",
+  "step": "shot runmenu0",
+  "t": 1791913059.4
+ },
+ {
+  "frame": "rundlg0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-173827-926.png",
+  "step": "shot rundlg0",
+  "t": 1791913108.7
+ },
+ {
+  "frame": "runmenu0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-174009-042.png",
+  "step": "shot runmenu0",
+  "t": 1791913209.8
+ },
+ {
+  "frame": "rundlg0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-174058-313.png",
+  "step": "shot rundlg0",
+  "t": 1791913259.1
+ },
+ {
+  "frame": "runmenu0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-174356-552.png",
+  "step": "shot runmenu0",
+  "t": 1791913437.3
+ },
+ {
+  "frame": "rundlg0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-174448-861.png",
+  "step": "shot rundlg0",
+  "t": 1791913489.6
+ },
+ {
+  "frame": "notepad0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-174630-079.png",
+  "step": "shot notepad0",
+  "t": 1791913590.8
+ },
+ {
+  "frame": "np_moved_top0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-174837-261.png",
+  "step": "shot np_moved_top0",
+  "t": 1791913718.0
+ },
+ {
+  "frame": "offscreen_typed",
+  "decoded": false,
+  "source": "Monitor_1_20261013-174854-617.png",
+  "step": "shot offscreen_typed",
+  "t": 1791913735.4
+ },
+ {
+  "frame": "reveal0",
+  "decoded": false,
+  "source": "Monitor_1_20261013-174916-900.png",
+  "step": "shot reveal0",
+  "t": 1791913757.7
+ },
+ {
+  "frame": "reveal1",
+  "decoded": false,
+  "source": "Monitor_1_20261013-174957-541.png",
+  "step": "shot reveal1",
+  "t": 1791913798.3
+ },
+ {
+  "frame": "savequery",
+  "decoded": false,
+  "source": "Monitor_1_20261013-175041-004.png",
+  "step": "shot savequery",
+  "t": 1791913841.8
+ },
+ {
+  "frame": "before_exit",
+  "decoded": false,
+  "source": "Monitor_1_20261013-175143-911.png",
+  "step": "shot before_exit",
+  "t": 1791913904.7
+ },
+ {
+  "frame": "exitdlg",
+  "decoded": false,
+  "source": "Monitor_1_20261013-175324-306.png",
+  "step": "shot exitdlg",
+  "t": 1791914005.1
+ },
+ {
+  "frame": "desktop2",
+  "decoded": false,
+  "source": "Monitor_1_20261013-175823-871.png",
+  "step": "shot desktop2",
+  "t": 1791914304.6
+ },
+ {
+  "frame": "desk2",
+  "decoded": false,
+  "source": "Monitor_1_20261013-175840-778.png",
+  "step": "shot desk2",
+  "t": 1791914321.5
+ },
+ {
+  "frame": "exitdlg2",
+  "decoded": false,
+  "source": "Monitor_1_20261013-180021-173.png",
+  "step": "shot exitdlg2",
+  "t": 1791914421.9
+ },
+ {
+  "frame": "rolledback",
+  "decoded": false,
+  "source": "Monitor_1_20261013-180758-308.png",
+  "step": "shot rolledback",
+  "t": 1791914879.1
+ }
+]

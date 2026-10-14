@@ -1,0 +1,8 @@
+{
+ "check": "TXT40.DRV rebuilt from the parametrized presenter (T40_COLS=40, T40_ROWS=25, T40_SLOTB=16) equals the TXT40 of ai/txt40-tv byte for byte",
+ "expected_sha256": "fb9622abc72c3c0035e484153f001fd12287a12604def1a8c875ef3b7ca6e958",
+ "built_sha256": "fb9622abc72c3c0035e484153f001fd12287a12604def1a8c875ef3b7ca6e958",
+ "result": "PASS",
+ "source": "commit 05d4453 with the IFNDEF defaults replaced by includer equates (diff below), the form now on the branch",
+ "diff": "diff --git a/src/txt40/T40DATA.ASM b/src/txt40/T40DATA.ASM\nindex 0e6905f..e960ddf 100644\n--- a/src/txt40/T40DATA.ASM\n+++ b/src/txt40/T40DATA.ASM\n@@ -2,15 +2,6 @@\n ; Geometry: the includer may define T40_COLS (40 or 80), T40_ROWS (25) and\n ; T40_SLOTB (hint slot bytes: 16, or 14 to fit 80x25 in one segment);\n ; without them this is TXT40's 40x25 with 16-byte slots.\n-ifndef T40_COLS\n-T40_COLS equ 40\n-endif\n-ifndef T40_ROWS\n-T40_ROWS equ 25\n-endif\n-ifndef T40_SLOTB\n-T40_SLOTB equ 16\n-endif\n if (T40_COLS ne 40) and (T40_COLS ne 80)\n .err T40_COLS must be 40 or 80\n endif\ndiff --git a/src/txt40/T40PATCH.PY b/src/txt40/T40PATCH.PY\nindex ac401f0..fa9ddcd 100644\n--- a/src/txt40/T40PATCH.PY\n+++ b/src/txt40/T40PATCH.PY\n@@ -113,7 +113,7 @@ SEG_ANCHOR = \"sEnd ShadowSeg\\r\\n\"\n \n \n def seg_text():\n-    return (crlf(\"; T40PATCH: hints and presenter state.\\n\"\n+    return (crlf(\"T40_COLS equ 40\\nT40_ROWS equ 25\\nT40_SLOTB equ 16\\n\") + crlf(\"; T40PATCH: hints and presenter state.\\n\"\n                  \"createSeg _T40,T40Seg,word,public,DATA\\n\"\n                  \"sBegin T40Seg\\n\") + fragment(\"T40DATA.ASM\") + crlf(\"sEnd T40Seg\\n\"))\n \n"
+}

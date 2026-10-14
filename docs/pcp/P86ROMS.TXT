@@ -1,0 +1,12 @@
+86Box 6.0 build 9001, official release asset
+  https://github.com/86Box/86Box/releases/tag/v6.0  86Box-Linux-x86_64-b9001.AppImage
+  sha256 535d3c329f8c32b601103970c86d80aa80298f345452c3524ea2f433624727a4 (matches the release page digest)
+  run unpacked (unsquashfs -o 944632) under Xvfb 1600x1200x24; Qt software renderer
+86Box ROM set: https://github.com/86Box/roms tag v6.0, commit 26761b5ab25786b4405c6829236fa745436e5399
+  (git sparse checkout; release archives were not reachable from the sandbox)
+ROM files 86Box loads for this configuration (kept private, not in this repository):
+  f96a33e42173a87336a96ea97fad2df0e8b55bc7962f84be1d5a3d85b2690799  machines/ibmxt86/BIOS_5160_09MAY86_U18_59X7268_62X0890_27256_F800.BIN
+  db7105778118441bd39bb5554335b4b90a87fefe1ef1171afc370822e271ae91  machines/ibmxt86/BIOS_5160_09MAY86_U19_62X0819_68X4370_27256_F000.BIN
+  fd8be2d46b0d46913dd96c37d8872287cbe0a3982592161f4958bc8eb0c62922  hdd/xtide/ide_xt.bin
+  37527f661580e5a09710051cec67422abfadf31c61b841537a91e7f27be19304  video/mda/mda.rom
+ColorPlus emulation source read for this work: 86Box src/video/vid_cga_colorplus.c (v6.0)

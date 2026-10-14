@@ -1,0 +1,58 @@
+{
+ "tool": "src/pcp/PCPID.ASM (PCPID.COM sha256 ecc75e483648759643884c41472977d7e15627a16669ae99af47eb5af9129b49)",
+ "runs": [
+  {
+   "emulator": "dosbox-x",
+   "machine": "cga",
+   "pcpid": "MODE_BEFORE=03 COLS=0050 SPLIT=A5,CC,A5,CC OFF_ALIAS=01 COLORPLUS=00 COMPLETE=1",
+   "expected_exit": "PCPID=1",
+   "jrrun": {
+    "emulator_exit": 0,
+    "verdict": "PASS"
+   }
+  },
+  {
+   "emulator": "dosbox-x",
+   "machine": "tandy",
+   "pcpid": "MODE_BEFORE=03 COLS=0050 SPLIT=A5,CC,A5,CC OFF_ALIAS=01 COLORPLUS=00 COMPLETE=1",
+   "expected_exit": "PCPID=1",
+   "jrrun": {
+    "emulator_exit": 0,
+    "verdict": "PASS"
+   }
+  },
+  {
+   "emulator": "dosbox",
+   "machine": "cga",
+   "pcpid": "MODE_BEFORE=03 COLS=0050 SPLIT=5A,33,A5,CC OFF_ALIAS=00 COLORPLUS=00 COMPLETE=1",
+   "expected_exit": "PCPID=1",
+   "jrrun": {
+    "emulator_exit": 0,
+    "verdict": "PASS"
+   }
+  },
+  {
+   "emulator": "dosbox",
+   "machine": "tandy",
+   "pcpid": "MODE_BEFORE=03 COLS=0050 SPLIT=A5,CC,A5,CC OFF_ALIAS=01 COLORPLUS=00 COMPLETE=1",
+   "expected_exit": "PCPID=1",
+   "jrrun": {
+    "emulator_exit": 0,
+    "verdict": "PASS"
+   }
+  },
+  {
+   "emulator": "86Box 6.0 b9001",
+   "machine": "ibmxt86 + IBM EGA (gfxcard=ega)",
+   "pcpid": "MODE_BEFORE=03 COLS=0050 SPLIT=5A,33,A5,CC OFF_ALIAS=00 COLORPLUS=00 COMPLETE=1",
+   "expected": "COLORPLUS=00"
+  },
+  {
+   "emulator": "86Box 6.0 b9001",
+   "machine": "ibmxt86 + Plantronics Colorplus (gfxcard=plantronics)",
+   "pcpid": "MODE_BEFORE=03 COLS=0050 SPLIT=5A,33,A5,CC OFF_ALIAS=01 COLORPLUS=01 COMPLETE=1",
+   "expected": "COLORPLUS=01"
+  }
+ ],
+ "verdict": "PASS"
+}

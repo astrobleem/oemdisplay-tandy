@@ -1,0 +1,23 @@
+{
+ "target": "pcp",
+ "pristine_sha256": "f55fe24baf83d9557e6c16612fbf8b4af5b175bf6b9b6d876e5784222e117561",
+ "driver": "PCP3216.DRV",
+ "driver_sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406",
+ "tools": {
+  "PCPID.COM": "ecc75e483648759643884c41472977d7e15627a16669ae99af47eb5af9129b49",
+  "PCPSHOW.EXE": "45818f983c1875713333e6e9ecaaee4a6a89f88b84e69752c53ad493fe360d2f",
+  "SHADOW.BIN": "6117300cb0903ac38f5abe298d4f2f503d5ff3b9afb3da60c3ec5c650add53a2",
+  "MSTEST.COM": "51dd0966a76cbc6349f1685ef65bbdeb4883897679d5426168d8f9c5a9f462bc"
+ },
+ "control_ega": false,
+ "mouse": "pty",
+ "changes": [
+  "CONFIG.SYS: only files=30, buffers=30 (removed HIMEM, SMARTDRV, EGA.SYS: an XT has no XMS and no EGA)",
+  "AUTOEXEC.BAT: PATH/TEMP as before, run C:\\PCP\\PCPID, stay at the DOS prompt (no automatic WIN)",
+  "SYSTEM.INI: display.drv=PCP3216.DRV; [keyboard] type=1 (PC/XT 83-key instead of AT)",
+  "WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); Wallpaper=BARS16.BMP (a full-screen 16-colour bar test image, centred)",
+  "added WINDOWS/BARS16.BMP: 320x200 4-bit, 16 bars of 20 pixels, palette = the driver's colour table (generated, sha256 42c3959625954073173f743ed2b432c68a75385135dafa1d643c70f93ce38fbe)",
+  "added WINDOWS/SYSTEM/PCP3216.DRV and PCP/PCPID.COM, PCPSHOW.EXE, SHADOW.BIN, MSTEST.COM"
+ ],
+ "86box_cfg": "[General]\nconfirm_exit = 0\nconfirm_reset = 0\nconfirm_save = 0\nvid_renderer = qt_software\nvideo_filter_method = 0\nscale = 3\n\n[Machine]\nmachine = ibmxt86\ncpu_family = 8088\ncpu_speed = 4772728\ncpu_multi = 1\ncpu_use_dynarec = 0\nmem_size = 640\ntime_sync = disabled\n\n[Video]\ngfxcard = plantronics\n\n[Input devices]\nkeyboard_type = keyboard_pc_xt\nmouse_type = none\n\n[Storage controllers]\nhdc_1 = xtide\n\n[PC/XT XTIDE #1]\nbios = xt\n\n[Hard disks]\nhdd_01_fn = pcp.img\nhdd_01_ide_channel = 0:0\nhdd_01_parameters = 17, 4, 615, 0, ide\n\n[Ports (COM & LPT)]\nserial1_enabled = 1\nserial1_device = serial_passthrough\n\n[Serial Passthrough (COM) #1]\npath = @PTY@\nreconnect = 1\n"
+}

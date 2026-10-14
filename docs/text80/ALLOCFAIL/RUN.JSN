@@ -1,0 +1,23 @@
+[
+ {
+  "frame": "allocfail_after_win",
+  "decoded": false,
+  "source": "Monitor_1_20261013-101525-495.png",
+  "step": "shot allocfail_after_win",
+  "t": 1791886526.3
+ },
+ {
+  "frame": "allocfail_keys",
+  "decoded": false,
+  "source": "Monitor_1_20261013-101614-766.png",
+  "step": "shot allocfail_keys",
+  "t": 1791886575.5
+ },
+ {
+  "frame": "rolledback",
+  "decoded": false,
+  "source": "Monitor_1_20261013-102103-220.png",
+  "step": "shot rolledback",
+  "t": 1791886864.0
+ }
+]

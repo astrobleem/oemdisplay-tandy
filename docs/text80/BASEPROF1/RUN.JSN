@@ -1,0 +1,114 @@
+[
+ {
+  "frame": "desktop_1",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085343-093.png",
+  "step": "shot desktop_1",
+  "t": 1791881623.9
+ },
+ {
+  "frame": "desktop_2",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085354-810.png",
+  "step": "shot desktop_2",
+  "t": 1791881635.6
+ },
+ {
+  "frame": "menu_3",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085406-943.png",
+  "step": "shot menu_3",
+  "t": 1791881647.7
+ },
+ {
+  "frame": "menu_4",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085418-661.png",
+  "step": "shot menu_4",
+  "t": 1791881659.4
+ },
+ {
+  "frame": "run_5",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085430-778.png",
+  "step": "shot run_5",
+  "t": 1791881671.6
+ },
+ {
+  "frame": "run_6",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085442-495.png",
+  "step": "shot run_6",
+  "t": 1791881683.3
+ },
+ {
+  "frame": "run_7",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085454-212.png",
+  "step": "shot run_7",
+  "t": 1791881695.0
+ },
+ {
+  "frame": "run_8",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085505-948.png",
+  "step": "shot run_8",
+  "t": 1791881706.7
+ },
+ {
+  "frame": "aftertype",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085823-158.png",
+  "step": "shot aftertype",
+  "t": 1791881903.9
+ },
+ {
+  "frame": "menu_9",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085905-035.png",
+  "step": "shot menu_9",
+  "t": 1791881945.8
+ },
+ {
+  "frame": "menu_10",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085916-735.png",
+  "step": "shot menu_10",
+  "t": 1791881957.5
+ },
+ {
+  "frame": "run_11",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085928-829.png",
+  "step": "shot run_11",
+  "t": 1791881969.6
+ },
+ {
+  "frame": "run_12",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085940-564.png",
+  "step": "shot run_12",
+  "t": 1791881981.3
+ },
+ {
+  "frame": "run_13",
+  "decoded": false,
+  "source": "Monitor_1_20261013-085952-281.png",
+  "step": "shot run_13",
+  "t": 1791881993.0
+ },
+ {
+  "frame": "run_14",
+  "decoded": false,
+  "source": "Monitor_1_20261013-090003-980.png",
+  "step": "shot run_14",
+  "t": 1791882004.7
+ },
+ {
+  "frame": "notepad",
+  "decoded": false,
+  "source": "Monitor_1_20261013-090515-113.png",
+  "step": "shot notepad",
+  "t": 1791882315.9
+ }
+]

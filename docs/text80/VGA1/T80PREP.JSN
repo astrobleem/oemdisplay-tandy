@@ -1,0 +1,56 @@
+{
+ "machine": "xtcga",
+ "harness_target": "txt40",
+ "base_driver": "TXT40.DRV",
+ "base_driver_sha256": "a3e981d8100cf0480389f84d68db19709c3c66da4d86c2692426182edc278f3b",
+ "files": {
+  "T80/TEXT80.DRV": "06f4abedd8f227cebd4d3c69947545810e2cd40a2873acd77e9f68123b74ba1d",
+  "T80/T80HELV.FON": "9bd5153d11f26e340b0385d9adba756351c0f41e8915a4d16c333d342b4057fd",
+  "T80/T80COUR.FON": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6",
+  "T80/T80SET.EXE": "5b043803bb18a7a5df6a00818c990ad6c4cc54b0376f52920e62823f311b9fa2",
+  "T80/T80ON.BAT": "c4c0270a6f4c1b0ec22d4fc8a1d7d797d920d9a58a235a71c497bf83e427d606",
+  "T80/T80OFF.BAT": "cd5799e8979a4fed83654aa0612fe73e46d31dbc387297d73cff7a7b4b0b06fc",
+  "T80/T80PAN.DRV": "5db96d5e6f5127691a9ae69a670c88eee5802f13d19c87f6ac187f45ea5f151f",
+  "T80/T80VGA.DRV": "169cddef1370a0b4015a45b9032292dc6d1eb7118524cc48a548179276f1e9dc",
+  "T80/XTPAN.EXE": "97abd7664cc58e97c0093aa2246dd14ea95675ed8645ee71080a7e2dd50eed99",
+  "T80/XTTSYS.FON": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa",
+  "T80/XTCFIX.FON": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+  "T80/XTCOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+  "T80/T80SNAP.EXE": "c12088889d42c948065e2203866f54e260273c115b1861b7936b8ef12a8db818",
+  "T80/TPROF.EXE": "fc22c33a054045df6af7566ad329a98bcb938d2181cf3d0638d6477cbc25b407"
+ },
+ "win_ini_load_before": "load=",
+ "win_ini_load_after": "load=C:\\T80\\T80SNAP.EXE",
+ "fonts_list": "WIN.INI [fonts] untouched (no --only-8x8)",
+ "harness_prep": {
+  "target": "txt40",
+  "pristine_sha256": "f55fe24baf83d9557e6c16612fbf8b4af5b175bf6b9b6d876e5784222e117561",
+  "driver": "TXT40.DRV",
+  "driver_sha256": "a3e981d8100cf0480389f84d68db19709c3c66da4d86c2692426182edc278f3b",
+  "tools": {
+   "T40ID.COM": "75d8e076f14defc240aa96a34a5f366a2012c4173cd258d0c376d310074c3174",
+   "MSTEST.COM": "51dd0966a76cbc6349f1685ef65bbdeb4883897679d5426168d8f9c5a9f462bc"
+  },
+  "control_ega": false,
+  "mouse": "pty",
+  "fonts": {
+   "XTTSYS.FON": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa",
+   "XTCFIX.FON": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+   "XTCOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+  },
+  "grid": 1,
+  "tv": false,
+  "only_8x8": false,
+  "changes": [
+   "CONFIG.SYS: only files=30, buffers=30 (removed HIMEM, SMARTDRV, EGA.SYS: an XT has no XMS and no EGA)",
+   "AUTOEXEC.BAT: PATH/TEMP as before, run C:\\T40\\T40ID, stay at the DOS prompt (no automatic WIN)",
+   "8x8 fonts: fonts.fon=XTTSYS.FON, fixedfon.fon=XTCFIX.FON, oemfonts.fon=XTCOEM.FON (first-party XT fonts, hashes checked)",
+   "SYSTEM.INI: display.drv=TXT40.DRV; [keyboard] type=1 (PC/XT 83-key instead of AT)",
+   "WIN.INI: GridGranularity=1 (windows snap to 8-pixel steps)",
+   "WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); Wallpaper=BARS16.BMP (a full-screen 16-colour bar test image, centred)",
+   "added WINDOWS/BARS16.BMP: 320x200 4-bit, 16 bars of 20 pixels, palette = the driver's colour table (generated, sha256 42c3959625954073173f743ed2b432c68a75385135dafa1d643c70f93ce38fbe)",
+   "added WINDOWS/SYSTEM/TXT40.DRV and T40/T40ID.COM, MSTEST.COM"
+  ],
+  "86box_cfg": "[General]\nconfirm_exit = 0\nconfirm_reset = 0\nconfirm_save = 0\nvid_renderer = qt_software\nvideo_filter_method = 0\nscale = 3\n\n[Machine]\nmachine = ibmxt86\ncpu_family = 8088\ncpu_speed = 4772728\ncpu_multi = 1\ncpu_use_dynarec = 0\nmem_size = 640\ntime_sync = disabled\n\n[Video]\ngfxcard = cga\n\n[IBM CGA]\ndisplay_type = 0\ncomposite_type = 1\nrgb_type = 0\nsnow_enabled = 1\ndouble_type = 0\n\n[Input devices]\nkeyboard_type = keyboard_pc_xt\nmouse_type = none\n\n[Storage controllers]\nhdc_1 = xtide\n\n[PC/XT XTIDE #1]\nbios = xt\n\n[Hard disks]\nhdd_01_fn = pcp.img\nhdd_01_ide_channel = 0:0\nhdd_01_parameters = 17, 4, 615, 0, ide\n\n[Ports (COM & LPT)]\nserial1_enabled = 1\nserial1_device = serial_passthrough\n\n[Serial Passthrough (COM) #1]\npath = @PTY@\nreconnect = 1\n"
+ }
+}

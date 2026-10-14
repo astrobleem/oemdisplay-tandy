@@ -1,0 +1,27 @@
+{
+ "checks": [
+  {
+   "check": "T80ON PAN (fault-injected driver): display.drv=T80PAN.DRV",
+   "result": "PASS"
+  },
+  {
+   "check": "allocation failure: Windows does not start and the DOS prompt is usable (a command ran)",
+   "result": "PASS",
+   "got": "ALIVE\r\n"
+  },
+  {
+   "check": "T80OFF after the failure: SYSTEM.INI restored",
+   "result": "PASS"
+  },
+  {
+   "check": "rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
+   "result": "PASS",
+   "cols": 40
+  }
+ ],
+ "timing_s": {
+  "rolledback": 12.3
+ },
+ "passed": 4,
+ "failed": 0
+}

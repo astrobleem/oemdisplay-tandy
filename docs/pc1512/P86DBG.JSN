@@ -1,0 +1,481 @@
+{
+ "question": "In the first full run the arrow did not appear at the sent hotspot over 5 of 16 palette cells. Does the driver draw the cursor where Windows puts it?",
+ "tool": "src/pc1512/P15DBG.PY (diagnostic build; never a display driver)",
+ "first_full_run": {
+  "vm": "p15b",
+  "driver_sha256": "31aca63699f05ef57094443de0b3f6926de2c516657aaabc5ee580ac4f65d9f7",
+  "verdict": "FAIL",
+  "failed": [
+   "arrow_glyph_consistent",
+   "arrow_over_colour_00",
+   "arrow_over_colour_01",
+   "arrow_over_colour_02",
+   "arrow_over_colour_03",
+   "arrow_over_colour_04",
+   "arrow_over_colour_05",
+   "arrow_over_colour_06",
+   "arrow_over_colour_07",
+   "arrow_over_colour_08",
+   "arrow_over_colour_09",
+   "arrow_over_colour_10",
+   "arrow_over_colour_11",
+   "arrow_over_colour_12",
+   "arrow_over_colour_13",
+   "arrow_over_colour_14",
+   "arrow_over_colour_15"
+  ]
+ },
+ "diagnostic_runs": [
+  {
+   "vm": "p15f",
+   "driver": "e8114e7b63a48d7792c199dc8d5f5f3c04f8980c641c16339b28a5c283320829",
+   "build": "P15DBG build (MoveCursor draws at interrupt time, as PC1512.DRV)",
+   "moves": [
+    {
+     "sent": "home to (0,0), then +(152,193) mickeys in packets of <=127",
+     "expected": [
+      152,
+      193
+     ],
+     "driver_told": [
+      78,
+      195
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       78,
+       127
+      ],
+      [
+       78,
+       195
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(362,193) mickeys in packets of <=127",
+     "expected": [
+      362,
+      193
+     ],
+     "driver_told": [
+      180,
+      195
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       127,
+       127
+      ],
+      [
+       180,
+       195
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(362,186) mickeys in packets of <=127",
+     "expected": [
+      362,
+      186
+     ],
+     "driver_told": [
+      180,
+      189
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       127,
+       127
+      ],
+      [
+       180,
+       189
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(222,186) mickeys in packets of <=127",
+     "expected": [
+      222,
+      186
+     ],
+     "driver_told": [
+      112,
+      189
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       112,
+       127
+      ],
+      [
+       112,
+       189
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(257,186) mickeys in packets of <=127",
+     "expected": [
+      257,
+      186
+     ],
+     "driver_told": [
+      129,
+      189
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       127,
+       127
+      ],
+      [
+       129,
+       189
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(222,193) mickeys in packets of <=127",
+     "expected": [
+      222,
+      193
+     ],
+     "driver_told": [
+      112,
+      195
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       112,
+       127
+      ],
+      [
+       112,
+       195
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(292,193) mickeys in packets of <=127",
+     "expected": [
+      292,
+      193
+     ],
+     "driver_told": [
+      146,
+      195
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       127,
+       127
+      ],
+      [
+       146,
+       195
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(327,193) mickeys in packets of <=127",
+     "expected": [
+      327,
+      193
+     ],
+     "driver_told": [
+      163,
+      195
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       127,
+       127
+      ],
+      [
+       163,
+       195
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    }
+   ]
+  },
+  {
+   "vm": "p15g",
+   "driver": "58679a59a1690f6163caa3d3dbbd46bdc310136377d219facdfa90eb4121b15e",
+   "build": "P15DBG build --defer (MoveCursor never draws at interrupt time)",
+   "moves": [
+    {
+     "sent": "home to (0,0), then +(152,193) mickeys in packets of <=127",
+     "expected": [
+      152,
+      193
+     ],
+     "driver_told": [
+      78,
+      195
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       78,
+       127
+      ],
+      [
+       78,
+       195
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(362,193) mickeys in packets of <=127",
+     "expected": [
+      362,
+      193
+     ],
+     "driver_told": [
+      180,
+      195
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       127,
+       127
+      ],
+      [
+       180,
+       195
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(362,186) mickeys in packets of <=127",
+     "expected": [
+      362,
+      186
+     ],
+     "driver_told": [
+      180,
+      189
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       127,
+       127
+      ],
+      [
+       180,
+       189
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(222,186) mickeys in packets of <=127",
+     "expected": [
+      222,
+      186
+     ],
+     "driver_told": [
+      112,
+      189
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       112,
+       127
+      ],
+      [
+       112,
+       189
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(257,186) mickeys in packets of <=127",
+     "expected": [
+      257,
+      186
+     ],
+     "driver_told": [
+      129,
+      189
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       127,
+       127
+      ],
+      [
+       129,
+       189
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(222,193) mickeys in packets of <=127",
+     "expected": [
+      222,
+      193
+     ],
+     "driver_told": [
+      112,
+      195
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       112,
+       127
+      ],
+      [
+       112,
+       195
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(292,193) mickeys in packets of <=127",
+     "expected": [
+      292,
+      193
+     ],
+     "driver_told": [
+      146,
+      195
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       127,
+       127
+      ],
+      [
+       146,
+       195
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    },
+    {
+     "sent": "home to (0,0), then +(327,193) mickeys in packets of <=127",
+     "expected": [
+      327,
+      193
+     ],
+     "driver_told": [
+      163,
+      195
+     ],
+     "last_movecursor_calls": [
+      [
+       0,
+       0
+      ],
+      [
+       127,
+       127
+      ],
+      [
+       163,
+       195
+      ]
+     ],
+     "set_refused_busy": 0,
+     "set_refused_invalid": 0
+    }
+   ]
+  }
+ ],
+ "script": "fresh VM; WIN /R; PBRUSH maximized; pointer parked at (639,199); then for each palette cell: home, move to the cell, capture (PCPWIN rehome)",
+ "frames": {
+  "DBG1.PNG": "p15f e_01_a (decoded 640x200; P15DBG.PY read DBG1.PNG)",
+  "DBG2.PNG": "p15g e_01_a"
+ }
+}

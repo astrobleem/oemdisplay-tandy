@@ -1,0 +1,31 @@
+{
+  "driver": "XTPAN300.DRV",
+  "logical_rows": 300,
+  "built_as": "TANDY88.DRV",
+  "driver_bytes": 55232,
+  "driver_sha256": "26d20c4ac1f2c1a27d70eeb082363d0c6b535bb63416fd59fe5045d085dff7c1",
+  "base": "BUILD88 320x200x16 (TR5) from the supplied view",
+  "xtpan_edits_staged_sha256": {
+    "TSOFT.ASM": "b261307011c7a9a642cda7192010b95f09e77e428aef5e1f2802d8513fc47312",
+    "TCURSOR.ASM": "e51beebe1ce83a9782593e2aac2feb2588162c566cf2957a1713481551331813",
+    "SDIB88.ASM": "50406028598961cb82de2285d572e2ef55e5b318b4545882f71ad82d108d943f",
+    "TSOFT.DEF": "9facc9a2707f260a8d4879698aa7fe561557353eafe68aa82ed86e417ad21457"
+  },
+  "build88_audits": "see RESULT.json (instruction, REP-prefix, link)",
+  "runtime": "NOT_TESTED",
+  "segments": [
+    "0001:0000 0402CH     _TEXT                  CODE",
+    "0002:0000 024BEH     _REAL                  CODE",
+    "0003:0000 00163H     _INIT                  CODE",
+    "0004:0000 01178H     _LINES                 CODE",
+    "0005:0000 00274H     _PIXEL                 CODE",
+    "0006:0000 005E0H     _SCANLINE              CODE",
+    "0007:0000 003F2H     _BLUEMOON              CODE",
+    "0008:0000 00000H     _SHADOW                CODE",
+    "0008:0000 00DCEH     _DIMAPS                CODE",
+    "0009:0000 0002EH     _PROTECT               CODE",
+    "000A:0000 00384H     _DATA                  DATA",
+    "000B:0000 0BB80H     _SHADOW                DATA"
+  ],
+  "emulator_run": false
+}

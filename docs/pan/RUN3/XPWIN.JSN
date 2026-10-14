@@ -1,0 +1,481 @@
+{
+ "driver": "XTPAN.DRV",
+ "checks": [
+  {
+   "check": "helper started with the XTPAN driver",
+   "result": "PASS",
+   "log": [
+    "START top=0 view=200 logical=400 step=50 dwell=400 edge=3 free=239872",
+    "PAN 0 100 follow t=23398 ms=1098"
+   ]
+  },
+  {
+   "check": "pat_top0: all video rows equal logical rows 0..199 of the pattern (off 0), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    60
+   ],
+   "top": 0
+  },
+  {
+   "check": "pat_top0: pointer drawn at its logical position, video row 60 (72 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "keyboard: four Alt+Shift+PgDn give four pans of 50 rows",
+   "result": "PASS",
+   "log": [
+    "PAN 0 50 key-down t=268857 ms=1044",
+    "PAN 50 100 key-down t=275174 ms=1043",
+    "PAN 100 150 key-down t=281545 ms=1044",
+    "PAN 150 200 key-down t=287971 ms=1044"
+   ]
+  },
+  {
+   "check": "pat_key200: all video rows equal logical rows 200..399 of the pattern (off 0), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    203
+   ],
+   "top": 200
+  },
+  {
+   "check": "pat_key200: pointer drawn at its logical position, video row 3 (72 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "pat_key150: all video rows equal logical rows 150..349 of the pattern (off 0), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    203
+   ],
+   "top": 150
+  },
+  {
+   "check": "pat_key150: pointer drawn at its logical position, video row 53 (72 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "pat_keytop: all video rows equal logical rows 150..349 of the pattern (off 0), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    203
+   ],
+   "top": 150
+  },
+  {
+   "check": "pat_keytop: pointer drawn at its logical position, video row 53 (72 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "keyboard: Alt+Shift+PgUp then Alt+Shift+Home go to 150 then 0",
+   "result": "FAIL",
+   "log": [
+    "PAN 200 150 key-up t=300769 ms=1043"
+   ]
+  },
+  {
+   "check": "dwell: touching the bottom edge briefly does not pan",
+   "result": "PASS",
+   "log": []
+  },
+  {
+   "check": "dwell: resting in the bottom edge band pans one step (0 -> 50)",
+   "result": "PASS",
+   "log": [
+    "PAN 0 50 dwell-down t=337184 ms=1044"
+   ]
+  },
+  {
+   "check": "pat_dwell50: all video rows equal logical rows 50..249 of the pattern (off 0), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    100,
+    150
+   ],
+   "top": 50
+  },
+  {
+   "check": "pat_dwell50: pointer drawn at its logical position, video row 100 (72 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "outside: pointer moved to row 330 is shown at once (50 -> 150)",
+   "result": "FAIL",
+   "log": [
+    "PAN 50 100 outside t=350146 ms=989",
+    "PAN 100 150 outside t=351245 ms=1043"
+   ]
+  },
+  {
+   "check": "pat_out150: all video rows equal logical rows 150..349 of the pattern (off 0), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    100,
+    330
+   ],
+   "top": 150
+  },
+  {
+   "check": "pat_out150: pointer drawn at its logical position, video row 180 (72 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "click at logical (20,160) is reported there, inside the viewport",
+   "result": "PASS",
+   "got": [
+    20,
+    160,
+    20,
+    160,
+    150
+   ]
+  },
+  {
+   "check": "click at logical (300,345) is reported there, inside the viewport",
+   "result": "PASS",
+   "got": [
+    300,
+    345,
+    300,
+    345,
+    150
+   ]
+  },
+  {
+   "check": "click at logical (150,300) is reported there, inside the viewport",
+   "result": "PASS",
+   "got": [
+    150,
+    300,
+    150,
+    300,
+    150
+   ]
+  },
+  {
+   "check": "pat_scroll_top0: all video rows equal logical rows 0..199 of the pattern (off 168), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    60
+   ],
+   "top": 0
+  },
+  {
+   "check": "pat_scroll_top0: pointer drawn at its logical position, video row 60 (72 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "pat_scroll_top200: all video rows equal logical rows 200..399 of the pattern (off 168), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    203
+   ],
+   "top": 200
+  },
+  {
+   "check": "pat_scroll_top200: pointer drawn at its logical position, video row 3 (24 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "repeated: ten alternating pans all happen",
+   "result": "PASS",
+   "log": [
+    "PAN 200 150 key-up t=449011 ms=1044",
+    "PAN 150 200 key-down t=454394 ms=1099",
+    "PAN 200 150 key-up t=459832 ms=1043",
+    "PAN 150 200 key-down t=465214 ms=1044",
+    "PAN 200 150 key-up t=470597 ms=1098",
+    "PAN 150 200 key-down t=476089 ms=1044",
+    "PAN 200 150 key-up t=481417 ms=1044",
+    "PAN 150 200 key-down t=486800 ms=1043",
+    "PAN 200 150 key-up t=492237 ms=1044",
+    "PAN 150 200 key-down t=497620 ms=1099"
+   ]
+  },
+  {
+   "check": "pat_repeat: all video rows equal logical rows 200..399 of the pattern (off 168), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    203
+   ],
+   "top": 200
+  },
+  {
+   "check": "pat_repeat: pointer drawn at its logical position, video row 3 (24 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "pat_repeat_top: all video rows equal logical rows 200..399 of the pattern (off 168), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    203
+   ],
+   "top": 200
+  },
+  {
+   "check": "pat_repeat_top: pointer drawn at its logical position, video row 3 (24 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "tall dialog is taller than the screen (275 rows)",
+   "result": "PASS",
+   "rect": [
+    0,
+    21,
+    290,
+    296
+   ]
+  },
+  {
+   "check": "tall dialog: its Bottom button at rows 259..277 is clicked after panning",
+   "result": "FAIL",
+   "button": [
+    25,
+    259,
+    125,
+    277
+   ],
+   "line": null
+  },
+  {
+   "check": "overlap: click at (40,260) reaches window A",
+   "result": "FAIL",
+   "line": null
+  },
+  {
+   "check": "overlap: click at (260,310) reaches window B",
+   "result": "FAIL",
+   "line": null
+  },
+  {
+   "check": "overlap: click at (60,150) reaches window A",
+   "result": "FAIL",
+   "line": "CLICK A x=60 y=239"
+  },
+  {
+   "check": "drag: window caption dragged from row 146 to row 296 ends 150 rows lower",
+   "result": "PASS",
+   "moves": [
+    "MOVE window=40,140,240,240 top=0",
+    "MOVE window=40,290,240,390 top=0"
+   ]
+  },
+  {
+   "check": "drag: the viewport followed during the drag",
+   "result": "PASS",
+   "log": [
+    "PAN 50 0 outside t=901484 ms=1043",
+    "PAN 0 100 outside t=928891 ms=1044"
+   ]
+  },
+  {
+   "check": "menu below 200: clicking its fourth item (Delta) gives command 204",
+   "result": "PASS",
+   "line": "COMMAND 204 top=150"
+  },
+  {
+   "check": "selection: dragging from line 2 (row 131) to line 18 (row 291) selects lines 2-18",
+   "result": "FAIL",
+   "selects": [
+    "SELECT 9 9 top=0"
+   ]
+  },
+  {
+   "check": "relaunch_top0: all video rows equal logical rows 0..199 of the pattern (off 0), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    60
+   ],
+   "top": 0
+  },
+  {
+   "check": "relaunch_top0: pointer drawn at its logical position, video row 60 (72 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  },
+  {
+   "check": "relaunch_top100: all video rows equal logical rows 100..299 of the pattern (off 0), pointer box apart",
+   "result": "PASS",
+   "pixels": 63680,
+   "mismatches": 0,
+   "first": null,
+   "pointer": [
+    40,
+    103
+   ],
+   "top": 100
+  },
+  {
+   "check": "relaunch_top100: pointer drawn at its logical position, video row 3 (72 pointer pixels, none elsewhere)",
+   "result": "PASS"
+  }
+ ],
+ "measurements": {
+  "panbench": [
+   "PANBENCH pans=40 alternating 0/200 ms=42182",
+   "PANBENCH pans=40 alternating 0/50 ms=42896"
+  ],
+  "bench": [
+   "BENCH fills400 ms=9447 text200 ms=17136"
+  ],
+  "free": [
+   "START cmd=BENCH free=226176 top=0"
+  ],
+  "xtpan_log": [
+   "START top=0 view=200 logical=400 step=50 dwell=400 edge=3 free=239872",
+   "PAN 0 100 follow t=23398 ms=1098",
+   "PAN 100 0 follow t=114353 ms=1044",
+   "PAN 0 50 key-down t=268857 ms=1044",
+   "PAN 50 100 key-down t=275174 ms=1043",
+   "PAN 100 150 key-down t=281545 ms=1044",
+   "PAN 150 200 key-down t=287971 ms=1044",
+   "PAN 200 150 key-up t=300769 ms=1043",
+   "PAN 150 50 outside t=326089 ms=989",
+   "PAN 50 0 outside t=327188 ms=1043",
+   "PAN 0 50 dwell-down t=337184 ms=1044",
+   "PAN 50 100 outside t=350146 ms=989",
+   "PAN 100 150 outside t=351245 ms=1043",
+   "PAN 150 0 outside t=378762 ms=1044",
+   "PAN 0 50 key-down t=416990 ms=1044",
+   "PAN 50 100 key-down t=423361 ms=1044",
+   "PAN 100 150 key-down t=429788 ms=1043",
+   "PAN 150 200 key-down t=436159 ms=1044",
+   "PAN 200 150 key-up t=449011 ms=1044",
+   "PAN 150 200 key-down t=454394 ms=1099",
+   "PAN 200 150 key-up t=459832 ms=1043",
+   "PAN 150 200 key-down t=465214 ms=1044",
+   "PAN 200 150 key-up t=470597 ms=1098",
+   "PAN 150 200 key-down t=476089 ms=1044",
+   "PAN 200 150 key-up t=481417 ms=1044",
+   "PAN 150 200 key-down t=486800 ms=1043",
+   "PAN 200 150 key-up t=492237 ms=1044",
+   "PAN 150 200 key-down t=497620 ms=1099",
+   "PAN 200 0 follow t=527444 ms=1044",
+   "PAN 0 100 outside t=609283 ms=1043",
+   "PAN 100 0 follow t=622300 ms=1043",
+   "PAN 0 150 follow t=680246 ms=988",
+   "PAN 150 200 outside t=724131 ms=1043",
+   "PAN 200 100 follow t=813878 ms=1099",
+   "PAN 100 0 follow t=825742 ms=1044",
+   "PAN 0 50 follow t=855841 ms=1043",
+   "PAN 50 0 outside t=901484 ms=1043",
+   "PAN 0 100 outside t=928891 ms=1044",
+   "PAN 100 0 follow t=938942 ms=1044",
+   "PAN 0 150 follow t=973161 ms=1043",
+   "PAN 150 0 outside t=1018858 ms=1044",
+   "PAN 0 100 outside t=1022868 ms=1098",
+   "PAN 100 150 outside t=1034951 ms=1044",
+   "PAN 150 0 follow t=1047859 ms=1043",
+   "PAN 0 100 follow t=1132278 ms=1044",
+   "PAN 100 0 outside t=1136068 ms=1099",
+   "PAN 0 100 outside t=1168364 ms=1099",
+   "PAN 100 0 follow t=1192037 ms=1043",
+   "START top=0 view=200 logical=400 step=50 dwell=400 edge=3 free=239872",
+   "PAN 0 100 follow t=22903 ms=1044",
+   "PAN 100 0 follow t=114353 ms=1044",
+   "PAN 0 50 key-down t=268693 ms=1098",
+   "PAN 50 100 key-down t=275119 ms=988"
+  ],
+  "pantest_log": [
+   "START cmd=PATTERN free=228160 top=0",
+   "METRICS screen=320x400 cycaption=16 cymenu=14 cyframe=4 tmheight=10 tmextlead=0",
+   "CURSOR x=40 y=60 top=0 off=0",
+   "CURSOR x=40 y=203 top=200 off=0",
+   "CURSOR x=40 y=203 top=150 off=0",
+   "CURSOR x=40 y=203 top=150 off=0",
+   "CURSOR x=100 y=150 top=50 off=0",
+   "CURSOR x=100 y=330 top=150 off=0",
+   "CLICK x=20 y=160 cursor=20,160 top=150",
+   "CLICK x=300 y=345 cursor=300,345 top=150",
+   "CLICK x=150 y=300 cursor=150,300 top=150",
+   "SCROLL off=56 top=0",
+   "SCROLL off=112 top=0",
+   "SCROLL off=168 top=0",
+   "CURSOR x=40 y=60 top=0 off=168",
+   "CURSOR x=40 y=203 top=200 off=168",
+   "CURSOR x=40 y=203 top=200 off=168",
+   "CURSOR x=40 y=203 top=200 off=168",
+   "START cmd=DIALOG free=228160 top=0",
+   "METRICS screen=320x400 cycaption=16 cymenu=14 cyframe=4 tmheight=10 tmextlead=0",
+   "DIALOG rect=0,21,290,296",
+   "DLGITEM Top rect=25,49,125,67",
+   "DLGITEM Bottom rect=25,259,125,277",
+   "BUTTON \u0003g\u0002\u0004\u0011\u0004\u0011g\u0002 rect=259,125,277,100 top=5536",
+   "START cmd=OVERLAP free=228160 top=0",
+   "METRICS screen=320x400 cycaption=16 cymenu=14 cyframe=4 tmheight=10 tmextlead=0",
+   "ACTIVATE \u00cd?[\u0007t\u00d3\u0090\u000e\u00e80\u0001&9W\u0004t\u00bf\u00f7\u00c6\u0001\u00e0u\u00b9\u00d1\u00ee\u0006SP9\u001e\u00e6Gt0\u008b\u00c1&\u0087O\u0002&\u0089O\u00fe%\u00f0\u00ff\u00b1\u0004\u00d3\u00e8+\u00c6\u0003\u00d0\u00b8\u000f",
+   "ACTIVATE \u001e3\u00c0Q\u00d1\u00e2\u00d1\u00d0\u00e2\u00fa\u008b\u00c8\u00b8",
+   "ACTIVATE \u00cd?[\u0007t\u00d3\u0090\u000e\u00e80\u0001&9W\u0004t\u00bf\u00f7\u00c6\u0001\u00e0u\u00b9\u00d1\u00ee\u0006SP9\u001e\u00e6Gt0\u008b\u00c1&\u0087O\u0002&\u0089O\u00fe%\u00f0\u00ff\u00b1\u0004\u00d3\u00e8+\u00c6\u0003\u00d0\u00b8\u000f",
+   "CLICK A x=60 y=239 cursor=60,239 top=200",
+   "ACTIVATE \u00ff\u00eb\u001e3\u00c0Q\u00d1\u00e2\u00d1\u00d0\u00e2\u00fa\u008b\u00c8\u00b8",
+   "START cmd=MOVE free=228160 top=0",
+   "METRICS screen=320x400 cycaption=16 cymenu=14 cyframe=4 tmheight=10 tmextlead=0",
+   "MOVE window=40,140,240,240 top=0",
+   "MOVE window=40,290,240,390 top=0",
+   "START cmd=MENU free=228160 top=0",
+   "METRICS screen=320x400 cycaption=16 cymenu=14 cyframe=4 tmheight=10 tmextlead=0",
+   "MENUWIN rect=0,230,240,330 client=1,261",
+   "COMMAND 204 top=150",
+   "START cmd=EDIT free=228160 top=0",
+   "METRICS screen=320x400 cycaption=16 cymenu=14 cyframe=4 tmheight=10 tmextlead=0",
+   "EDITORG x=1 y=116",
+   "SELECT 9 9 top=0",
+   "SELECT 9 158 top=0",
+   "START cmd=PANBENCH free=225632 top=0",
+   "METRICS screen=320x400 cycaption=16 cymenu=14 cyframe=4 tmheight=10 tmextlead=0",
+   "PANBENCH pans=40 alternating 0/200 ms=42182",
+   "PANBENCH pans=40 alternating 0/50 ms=42896",
+   "START cmd=BENCH free=226176 top=0",
+   "METRICS screen=320x400 cycaption=16 cymenu=14 cyframe=4 tmheight=10 tmextlead=0",
+   "BENCH fills400 ms=9447 text200 ms=17136",
+   "START cmd=PATTERN free=228160 top=0",
+   "METRICS screen=320x400 cycaption=16 cymenu=14 cyframe=4 tmheight=10 tmextlead=0",
+   "CURSOR x=40 y=60 top=0 off=0",
+   "CURSOR x=40 y=103 top=100 off=0"
+  ]
+ },
+ "passed": 36,
+ "failed": 7
+}
