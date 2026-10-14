@@ -2,9 +2,19 @@
 
 Status: **Windows 3.0 runs TNDYV2.DRV in 640x200 with 16 colours on 86Box's
 Tandy 1000 SL/2, and the scripted session passes 88 of 88 checks
-(2026-10-14).** Nothing here is shipped, and nothing has run on a real SL, TL
-or RL yet. EX/HX have no Video II; this driver must not be used there (see
-"Limits" below). The README's "in development" line stays accurate.
+(2026-10-14).** The experimental driver-only prerelease is available; nothing
+has run on a physical machine. The intended selector is restricted to the
+SL/2 family, and the rendering evidence covers the emulated SL/2 only. EX/HX
+have no Video II; this driver must not be used there (see "Limits" below).
+
+The original `experimental-video-ii-2026-10-14` ZIP has no OEMSETUP.INF or
+Video II Setup selector. The separate selector source `src/tga2/OEMSETUP.INF`
+uses **EXPERIMENTAL TANDY SL/2 FAMILY ONLY 640x200x16**: 46 characters, within
+the pinned Windows 3.0 OEM sample's 47-character description limit. It does
+not add other models or Windows 3.1 support. The revised packet must contain
+this exact INF and matching qualification/checksums; the published original
+ZIP is retained. See [Setup, owned-file staging and recovery](tga2/INSTALL.TXT).
+The existing EX/HX rc.6 OEM disk and its bound documentation are unchanged.
 
 The 86Box machine needs the owner's own SL/2 BIOS ROM images. They are kept
 private and are not in this repository; only their SHA-256 values are
@@ -174,9 +184,12 @@ With both, the next complete run is the one above.
   BIOS reports 624K and the arena ends at 9C00h.
 - Windows 3.0 real mode only, like the other 8088-class drivers.
 
-## What to test on a real SL, TL or RL
+## What to test on a real SL/2
 
 In this order, from a fresh boot, with nothing else loaded:
+
+Physical SL/2 testing is still needed. Other SL/TL/RL models are not qualified
+by the SL/2 selector or the emulator results.
 
 1. `T2PROBE /W`: send `T2PROBE.TXT`, the exit code, and a photo if it drew.
    This confirms or refutes the page location.

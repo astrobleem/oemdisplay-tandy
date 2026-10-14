@@ -1,0 +1,107 @@
+EXPERIMENTAL TANDY SL/2 FAMILY ONLY - VIDEO II 640x200x16
+Windows 3.0 real mode, normal 640 KB RAM. Not Windows or a full Setup disk.
+
+SCOPE
+The Windows rendering evidence covers 86Box's emulated Tandy 1000 SL/2,
+8086 at 8 MHz, internal Video II and 640 KB. "SL/2 FAMILY ONLY" identifies
+the intended selector; it does not qualify other SL/TL/RL models. Physical
+hardware and Windows 3.1 are unqualified. EX/HX must not use this driver.
+T2RESV cannot identify Video II; the driver has no automatic hardware check.
+Keep a bootable backup and a plain-DOS recovery route. Community hardware
+reports are welcome; provide the exact model, RAM, diagnostics and symptoms.
+
+SELECTOR
+The Windows 3.0 Setup / Other selector reads exactly:
+  EXPERIMENTAL TANDY SL/2 FAMILY ONLY 640x200x16
+It is 46 characters, within the 47-character limit documented by the pinned
+Windows 3.0 OEM sample. No warning is abbreviated. The old 2026-10-14 packet
+was driver-only and contained no OEMSETUP.INF or Video II Setup selector.
+
+VERIFY AND PREPARE A CLONE
+1. Verify SHA256SUMS and the ZIP's SHA256.SUM on a modern host. Extract to
+   a new C:\T2EXP directory. Stop if that directory or backup names exist.
+2. Back up the complete Windows installation/image before changes. At DOS:
+     COPY C:\WINDOWS\SYSTEM.INI C:\T2EXP\SYSBACK.INI
+     COPY C:\WINDOWS\WIN.COM C:\T2EXP\WINBACK.COM
+   Stop if either backup already exists. Keep the complete image backup too.
+3. The packet supplies no Windows fonts, grabber or logo files. Copy exactly
+   these six files from your owned, working Windows 3.0 install into T2EXP:
+     CGA.GR2  CGALOGO.LGO  CGALOGO.RLE
+     CGASYS.FON  CGAFIX.FON  CGAOEM.FON
+   They may be in C:\WINDOWS or C:\WINDOWS\SYSTEM. Preserve their provenance.
+   If a file is missing, obtain it from your authorized Windows 3.0 media.
+   Stop rather than substitute a font or a Windows 3.1 file. Do not share
+   this completed private staging directory: it now contains Windows files.
+   To stage these six files automatically, from the fresh T2EXP directory:
+     PREPINF C:\WINDOWS
+   PREPINF checks every input and refuses any existing target before copying.
+   It searches SYSTEM first, then the Windows root. It stages files only;
+   it does not install a driver, edit Windows, launch Setup, verify ownership
+   or identify the Windows version. Use only your owned Windows 3.0 source.
+   A copy error may leave partial files; preserve them and retry in a new
+   directory. For missing files, use authorized 3.0 media and the manual copy.
+4. OEMSETUP.INF's disk source is the absolute C:\T2EXP path because Setup
+   runs from the existing Windows directory. For a different staging path,
+   change only the [disks] a= path and use it consistently. These instructions
+   assume C:\WINDOWS; substitute your Windows path consistently if needed.
+
+DIAGNOSTICS BEFORE SELECTING THE DRIVER
+From a fresh DOS boot, run T2PROBE /W and keep T2PROBE.TXT and its exit code.
+The recorded SL/2 probe was report-only; no positive probe-write run is
+claimed. Its mapping must agree with docs/TGA2.MD before proceeding.
+Run T2MODES and keep T2MODES.TXT. BIOS 0Ah alone is not 640x200x16.
+Reboot to DOS text mode 3. Run T2RESV; stop on failure. Run T2SHOW only after
+T2RESV succeeds. Expect 16 bars, black at left through white at right. Press
+a key to return to text mode. Stop on unexpected mapping or display behavior.
+Do not bypass T2RESV's reservation or treat its success as hardware detection.
+
+WINDOWS 3.0 SETUP IN AN EXISTING CLONE
+1. Exit Windows completely. At DOS text mode 3, run C:\T2EXP\T2RESV.
+   Stop on failure. Do not run Setup or Windows from a Windows DOS box.
+2. CD \WINDOWS, then SETUP. Choose Display and Other (disk supplied by a
+   hardware manufacturer). Give C:\T2EXP as the OEM disk path.
+3. Select exactly:
+     EXPERIMENTAL TANDY SL/2 FAMILY ONLY 640x200x16
+   Then Complete Changes. Keep the existing keyboard and mouse choices.
+   If Setup asks for a missing support file, stop and restore your clone;
+   inspect the owned-file staging instead of selecting an unrelated driver.
+4. Before every subsequent Windows start, run C:\T2EXP\T2RESV from DOS text
+   mode 3, stop on failure, then CD \WINDOWS and WIN /R. Reinstall the
+   reservation after every reboot. Do not add automatic boot startup yet.
+
+RECOVERY FROM PLAIN DOS
+Exit Windows completely, or reboot to plain DOS if Windows will not start.
+Restore the complete installation/image backup for a full Setup rollback.
+For immediate recovery to the old display configuration:
+  COPY C:\T2EXP\SYSBACK.INI C:\WINDOWS\SYSTEM.INI
+  COPY C:\T2EXP\WINBACK.COM C:\WINDOWS\WIN.COM
+Restore any files you replaced, using the complete backup. Reboot to remove
+T2RESV's resident reservation before returning to the old configuration.
+A newly added TNDYV2.DRV remains inactive after restoring display.drv.
+
+QUALIFICATION
+The driver and DOS binaries remain byte-identical to the original prerelease.
+Its saved SL/2 Windows session passes 88/88 checks; all eight checker faults
+are caught. Saved reservation/gate tests pass 23/23. The Windows session used
+an older T2SHOW after T2RESV; the gated T2SHOW has separate recorded evidence
+of all 128000 bar pixels. A Setup selector test does not add hardware or
+the full 88-check rendering qualification. The new maintenance-Setup test
+completed, selected the exact full description and returned to DOS. The
+installed clone then started Windows 3.0 /R twice on 86Box's SL/2 at 8 MHz
+with 640 KB; both starts reported 640x200 with 16 colors, matched a 128-byte
+GDI red patch in Video II VRAM and exited normally. The reservation remained
+intact after both exits. See QUALIFY.JSON for the native test and its limits.
+Fresh OS installation, DOS boxes, other
+models, real timing and Windows 3.1 remain unqualified.
+
+MANUAL ROUTE RETAINED
+If using the original driver-only route, keep the complete backup first,
+preserve any pre-existing TNDYV2.DRV, copy the packet's driver to the Windows
+SYSTEM directory and change only [boot] display.drv=TNDYV2.DRV in SYSTEM.INI
+with a DOS editor. Keep the existing compatible font/grabber configuration.
+Always run T2RESV successfully before WIN /R. Restore SYSBACK.INI and the
+complete backup to recover. The Setup route above is separate and can also
+change WIN.COM/support files, so its rollback uses WINBACK.COM/full backup.
+
+No automated CF/media writes, Windows payloads, compiler or ROMs are supplied.
+Existing Microsoft renderer/resource notices remain applicable; see NOTICE.TXT.

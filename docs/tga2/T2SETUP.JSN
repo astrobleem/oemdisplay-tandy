@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "selector": "EXPERIMENTAL TANDY SL/2 FAMILY ONLY 640x200x16",
+  "description_chars": 46,
+  "description_limit": 47,
+  "Setup": {
+    "label": "EXPERIMENTAL TANDY SL/2 FAMILY ONLY 640x200x16",
+    "label_chars": 46,
+    "description_limit": 47,
+    "intended_complete_changes": true,
+    "original_setup_sha256": "dc370d5611f4e5a275fa3a86ff514ea0c5e8749906e34a25f1c3af7ae6b73421",
+    "INF_sha256": "53f50320a3b609d98e6d3b7b15505d904f8a96b6ddc4b6ce550a6f281057ae4d",
+    "preimages": {
+      "SYSTEM.INI": "499be12162aa2145215c0aeccbc4d3649e235e14e3878be51f289be065f4ea0c",
+      "WIN.COM": "6f07b5a9fc764c74f9b3c5a0e0c521f87cdd1b3507863f1772dee4da814b1907",
+      "SYSTEM/SETUP.INF": "4f4b65bdc0ce2d4a23859494f8936376296e857872a554b0037ceb068f2202f2",
+      "SETUP.EXE": "dc370d5611f4e5a275fa3a86ff514ea0c5e8749906e34a25f1c3af7ae6b73421"
+    },
+    "owned_support_sha256": {
+      "CGA.GR2": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+      "CGALOGO.LGO": "d9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807",
+      "CGALOGO.RLE": "f31392cac25d3433f22a4500e5f42aaa29fc1ac188a1e2525441b759bef21735",
+      "CGASYS.FON": "baf8fa607806d949dfb6992113ce93494678abdef07783b22222b62e5de28ef4",
+      "CGAFIX.FON": "b0c043a65e2b551bce3c77d25921394dfd2533f50633bc129abd240c7aeb5f89",
+      "CGAOEM.FON": "1a86d9e42c73ccefcbc82c822abe8dbcd61cf0116454f213c3a95f4d7436cd0d"
+    },
+    "original_fixture_unchanged": true,
+    "driver_execution_or_new_Windows_rendering_qualification": false,
+    "emulator": "DOSBox-X 2025.12.01, 640 KB Tandy, 8086-prefetch; Setup metadata only",
+    "lease_acquired_utc": "2026-10-14T22:42:25.933858+00:00",
+    "exit_code": 0,
+    "bounded_stop": false,
+    "lease_released_utc": "2026-10-14T22:43:22.383410+00:00",
+    "returned_to_DOS": true,
+    "reservation_failed": false,
+    "postimages": {
+      "SYSTEM.INI": "4a2a5e1ba0de5ba4e8a25a6a5e99a6775f3614a5c559fe0f9bafe22bf3328084",
+      "WIN.COM": "5551ebcd3f32df26f759c5423f806733e006c3cae640a8336e5c618f8d899659",
+      "SYSTEM/SETUP.INF": "4f4b65bdc0ce2d4a23859494f8936376296e857872a554b0037ceb068f2202f2",
+      "SETUP.EXE": "dc370d5611f4e5a275fa3a86ff514ea0c5e8749906e34a25f1c3af7ae6b73421"
+    },
+    "selected_driver_written": true,
+    "exact_full_label_written": true,
+    "captures": [
+      {
+        "name": "setup_000.avi",
+        "bytes": 3842158,
+        "sha256": "bf61555c0750190e8c1b1cefbb20cc9a20e9eb09bc84c520c516d68579954ad6"
+      }
+    ]
+  },
+  "post_Setup_SL2": {
+    "machine": "tandy1000sl2",
+    "memory_KB": 640,
+    "CPU": "8086 8 MHz",
+    "emulator_version": "86Box 4.2.1",
+    "emulator_sha256": "4f9c56a0d8d6f927870a69a19df1c62c63395390db6ed72cf338e0e2a037ab6c",
+    "probe_sha256": "74e1515be230f5249eb5ada2979c3fb78f3006ba74b3a698f6826a63ccf2db44",
+    "source_config_sha256": "895abdcc58402846946c50f03a77a6bfc1bee6847f34ce5fb625289a36da6e9f",
+    "ROM_sha256": {
+      "8079047.hu1": "7fe228566de37a2f06ca6703a9f1280fd75db2f2d0e0e635b7c3b1e214680866",
+      "8079048.hu2": "160116f3ad6788af7faa7a5f12de636de58ea18e2021ddba242ac1e801a927af"
+    },
+    "scope": "Post-Setup two Win3.0 /R starts, caps and 128-byte GDI/Video II VRAM match; no full 88-check rerun or hardware qualification",
+    "lease_acquired_utc": "2026-10-14T23:05:09.343972+00:00",
+    "owned_PID": 27600,
+    "guest_results": {
+      "T2PRE.TXT": "T2RESV: 48K Video II page reserved. Start Windows with WIN /R.\r\n",
+      "T2MID.TXT": "T2RESV: Video II reservation already installed.\r\n",
+      "T2POST.TXT": "T2RESV: Video II reservation already installed.\r\n",
+      "T2RET1.TXT": "RETURNED \r\n",
+      "T2RET2.TXT": "RETURNED \r\n",
+      "T2FIRST.LOG": "HORZRES=640\r\nVERTRES=200\r\nNUMCOLORS=16\r\nSM_CXSCREEN=640\r\nSM_CYSCREEN=200\r\nGETPIX_RED_MATCH=1\r\nVRAM_RED_PATTERN_128_BYTES=1\r\nPASS=1\r\nCOMPLETE=1\r\n",
+      "T2SECOND.LOG": "HORZRES=640\r\nVERTRES=200\r\nNUMCOLORS=16\r\nSM_CXSCREEN=640\r\nSM_CYSCREEN=200\r\nGETPIX_RED_MATCH=1\r\nVRAM_RED_PATTERN_128_BYTES=1\r\nPASS=1\r\nCOMPLETE=1\r\n",
+      "T2BOOT.LOG": "HORZRES=640\r\nVERTRES=200\r\nNUMCOLORS=16\r\nSM_CXSCREEN=640\r\nSM_CYSCREEN=200\r\nGETPIX_RED_MATCH=1\r\nVRAM_RED_PATTERN_128_BYTES=1\r\nPASS=1\r\nCOMPLETE=1\r\n"
+    },
+    "bounded_stop": false,
+    "owned_VM_closed": true,
+    "lease_released_utc": "2026-10-14T23:06:43.666116+00:00",
+    "owned_process_remaining": false,
+    "PASS": true
+  },
+  "physical_hardware_qualified": false,
+  "Windows31_qualified": false,
+  "scope": "One Windows 3.0 maintenance Setup selector, two subsequent SL2 real-mode starts/exits and a 128-byte GDI/VRAM check per start; historical 88-check session not rerun."
+}
