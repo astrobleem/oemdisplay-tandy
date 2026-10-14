@@ -1,0 +1,19 @@
+{
+ "mutants": 59,
+ "killed": 59,
+ "survived": [],
+ "invalid": [],
+ "controls": {
+  "unmutated": {
+   "test_exit": 0,
+   "class": "survived",
+   "want": "survived"
+  },
+  "control-unassemblable": {
+   "test_exit": 3,
+   "class": "invalid",
+   "want": "invalid"
+  }
+ },
+ "verdict": "PASS"
+}
