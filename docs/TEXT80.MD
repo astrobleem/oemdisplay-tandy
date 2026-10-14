@@ -39,6 +39,7 @@ Text typed while out of view is correct when panned to. It costs about
 | **TEXT80 25** | `TEXT80.DRV` | 80x25 | 8x8 (BIOS font of the card: 8x8 CGA, 8x9 Tandy, 8x14 EGA, 8x16 VGA) | 640x200 | 96x48 (the CGA resolution resources) | CGA, Tandy 1000/PCjr-class, EGA, VGA in their colour 80x25 mode | 8088, any of those, 640 KB |
 | **TEXT80 PAN** | `T80PAN.DRV` + `XTPAN.EXE` | 80x25 window over 80x50 logical rows | as above | 640x400 | 96x48 | as above | 8088, 640 KB (130 KB more Windows memory than 25) |
 | **TEXT80 VGA** | `T80VGA.DRV` | 80x50 | 8x8 (INT 10h AX=1112h ROM font, 400 scan lines) | 640x400 | 96x48 | VGA only (checked) | 8088 with an 8-bit VGA card, 640 KB |
+| **TEXT80 C25** (compact UI, section 11) | `T80CMP.DRV` | 80x25 | as 25 | 640x200 | 96x48 | as 25 | as 25 |
 
 Physical text cells versus logical pixels: Windows always draws 8x8
 logical pixels per text cell. How tall a cell looks is the adapter's
@@ -315,7 +316,7 @@ ROMs or Windows files are included.
 From the folder holding the TEXT80 files, at the DOS prompt (never inside
 Windows):
 
-    T80ON [windows folder] [25 | PAN | VGA]      (defaults C:\WINDOWS and 25)
+    T80ON [windows folder] [25 | PAN | VGA | C25]      (defaults C:\WINDOWS and 25)
     T80OFF [windows folder]
 
 `T80ON` copies the driver and the 8x8 fonts into the Windows SYSTEM
@@ -429,7 +430,11 @@ have), from the DOS prompt in the TEXT80 folder:
    compare with the XTPAN graphics desktop you already tried.
 6. VGA machine only: `T80ON C:\WINDOWS VGA`: 80x50 small text; on a
    non-VGA card Windows must simply return to DOS (then `T80OFF`).
-7. Tell me: snow on a real CGA, how the 8x9 Tandy font looks, timings
+7. Compact UI: `T80OFF`, then `T80ON C:\WINDOWS C25`, `WIN`. Maximize Notepad
+   (Alt+Space, X): row 0 should read ≡ title ▼ ↕, row 1 the menu bar. Move
+   Program Manager once (it snaps to the grid) and its ▼ ▲ should appear.
+   `T80OFF` must leave WIN.INI as it was (BorderWidth, GridGranularity).
+8. Tell me: snow on a real CGA, how the 8x9 Tandy font looks, timings
    from 2, and anything that stays garbled.
 
 ## 11. Compact UI profile (C25, branch `ai/text80-compact`)
@@ -510,6 +515,11 @@ whichever profile, the presenter matches the two cell rows at the top and
 bottom of the copy (the partly copied row and one more) across the whole
 80 columns. That, not the window controls, is where scrolling time goes
 next (section 9).
+
+Presenter checks with the exact-glyph rule (`docs/text80/PRESENTER_C25`):
+T40TEST passes at 80x25, 40x25 and panned 80x50; mutation at 80x25 63/63
+killed (the 59 before plus four for the new rule: table off, any claimed
+cell, six rows compared, first row only).
 
 Limits: only windows on the grid get exact controls; Program Manager
 opens where PROGMAN.INI last put it (on this disk 35 pixels down, so its
