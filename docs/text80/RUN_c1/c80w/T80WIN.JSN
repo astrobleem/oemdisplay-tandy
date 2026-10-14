@@ -1,0 +1,512 @@
+{
+ "checks": [
+  {
+   "check": "T80ON: display.drv=T80CMP.DRV and the 8x8 fonts set; originals saved",
+   "result": "PASS"
+  },
+  {
+   "check": "T80ON C25: WIN.INI [windows] BorderWidth=7 and GridGranularity=1",
+   "result": "PASS"
+  },
+  {
+   "check": "T80ON: load= keeps its entry (T80SNAP); [fonts] gained the two 8x8 faces",
+   "result": "PASS",
+   "load": [
+    "load=C:\\T80\\T80SNAP.EXE"
+   ]
+  },
+  {
+   "check": "Windows runs in 80x25 text (BIOS columns 80, rows 25)",
+   "result": "PASS"
+  },
+  {
+   "check": "desktop: shows 'Program Manager'",
+   "result": "PASS",
+   "at": [
+    [
+     6,
+     32
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'File'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     10
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'Options'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     16
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'Window'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     25
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'Help'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     33
+    ]
+   ]
+  },
+  {
+   "check": "pointer_a: the pointer is exactly the hot spot's cell, attribute XOR 77h (pointer (300, 150))",
+   "result": "PASS",
+   "expected_cell": [
+    18,
+    37
+   ],
+   "differs": [
+    [
+     18,
+     37
+    ]
+   ],
+   "xor": "0x7700"
+  },
+  {
+   "check": "pointer_b: the pointer is exactly the hot spot's cell, attribute XOR 77h (pointer (37, 77))",
+   "result": "PASS",
+   "expected_cell": [
+    9,
+    4
+   ],
+   "differs": [
+    [
+     9,
+     4
+    ]
+   ],
+   "xor": "0x7700"
+  },
+  {
+   "check": "filemenu: shows 'New...'",
+   "result": "PASS",
+   "at": [
+    [
+     8,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Open'",
+   "result": "PASS",
+   "at": [
+    [
+     10,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Move...'",
+   "result": "PASS",
+   "at": [
+    [
+     11,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Copy...'",
+   "result": "PASS",
+   "at": [
+    [
+     12,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Delete'",
+   "result": "PASS",
+   "at": [
+    [
+     13,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Properties...'",
+   "result": "PASS",
+   "at": [
+    [
+     15,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Run...'",
+   "result": "PASS",
+   "at": [
+    [
+     16,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Exit Windows...'",
+   "result": "PASS",
+   "at": [
+    [
+     18,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "File menu closed: every cell as on the desktop before",
+   "result": "PASS",
+   "differing_cells": []
+  },
+  {
+   "check": "rundlg: shows 'Run'",
+   "result": "PASS",
+   "at": [
+    [
+     9,
+     39
+    ],
+    [
+     13,
+     31
+    ]
+   ]
+  },
+  {
+   "check": "rundlg: shows 'Command Line:'",
+   "result": "PASS",
+   "at": [
+    [
+     11,
+     15
+    ]
+   ]
+  },
+  {
+   "check": "rundlg: shows 'Run Minimized'",
+   "result": "PASS",
+   "at": [
+    [
+     13,
+     31
+    ]
+   ]
+  },
+  {
+   "check": "rundlg: shows 'OK'",
+   "result": "PASS",
+   "at": [
+    [
+     15,
+     31
+    ]
+   ]
+  },
+  {
+   "check": "rundlg: shows 'Cancel'",
+   "result": "PASS",
+   "at": [
+    [
+     15,
+     44
+    ]
+   ]
+  },
+  {
+   "check": "free memory recorded (before_notepad): 209504 bytes",
+   "result": "PASS"
+  },
+  {
+   "check": "TPROF TYPE 30 (edit): 7415 ms, 247 ms each",
+   "result": "PASS"
+  },
+  {
+   "check": "TPROF LINES 30 (edit): 73764 ms, 2459 ms each",
+   "result": "PASS"
+  },
+  {
+   "check": "notepad: shows 'Notepad - (untitled)'",
+   "result": "PASS",
+   "at": [
+    [
+     1,
+     31
+    ]
+   ]
+  },
+  {
+   "check": "notepad: shows 'File'",
+   "result": "PASS",
+   "at": [
+    [
+     3,
+     3
+    ]
+   ]
+  },
+  {
+   "check": "notepad: shows 'Edit'",
+   "result": "PASS",
+   "at": [
+    [
+     3,
+     9
+    ]
+   ]
+  },
+  {
+   "check": "notepad: shows 'Search'",
+   "result": "PASS",
+   "at": [
+    [
+     3,
+     15
+    ]
+   ]
+  },
+  {
+   "check": "notepad: shows 'Help'",
+   "result": "PASS",
+   "at": [
+    [
+     3,
+     23
+    ]
+   ]
+  },
+  {
+   "check": "notepad: shows 'Hello from 80x25 text mode!'",
+   "result": "PASS",
+   "at": [
+    [
+     4,
+     3
+    ]
+   ]
+  },
+  {
+   "check": "notepad: the typed line is one colour pair, black on white (F0h)",
+   "result": "PASS",
+   "attrs": [
+    "0xf0"
+   ],
+   "at": [
+    4,
+    3
+   ]
+  },
+  {
+   "check": "selection: the selected cells keep their characters and all change colour",
+   "result": "PASS",
+   "before": "0xf048",
+   "after": "0x1f48"
+  },
+  {
+   "check": "editmenu: shows 'Undo'",
+   "result": "PASS",
+   "at": [
+    [
+     4,
+     10
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Cut'",
+   "result": "PASS",
+   "at": [
+    [
+     6,
+     10
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Copy'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     10
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Paste'",
+   "result": "PASS",
+   "at": [
+    [
+     8,
+     10
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Delete'",
+   "result": "PASS",
+   "at": [
+    [
+     10,
+     10
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Select All'",
+   "result": "PASS",
+   "at": [
+    [
+     11,
+     10
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Time/Date'",
+   "result": "PASS",
+   "at": [
+    [
+     13,
+     10
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Word Wrap'",
+   "result": "PASS",
+   "at": [
+    [
+     15,
+     10
+    ]
+   ]
+  },
+  {
+   "check": "Edit menu closed: every cell as before (caret cells apart)",
+   "result": "PASS",
+   "differing_cells": []
+  },
+  {
+   "check": "scrolling: the last line is visible and the first typed line has scrolled away",
+   "result": "PASS"
+  },
+  {
+   "check": "drag: the title moved 3 cell rows down and 4-5 cell columns left (8-pixel grid)",
+   "result": "PASS",
+   "before": [
+    1,
+    31
+   ],
+   "after": [
+    [
+     4,
+     27
+    ]
+   ]
+  },
+  {
+   "check": "overlap: switching windows changes which one is on top (cells differ), and back",
+   "result": "PASS"
+  },
+  {
+   "check": "maximized: row 0 starts with the system-menu glyph (F0h) and ends with minimize (1Fh) and restore (12h), one cell each",
+   "result": "PASS",
+   "row0": [
+    "0xf0",
+    "0xb3",
+    "0x20",
+    "0x20",
+    "0x1f",
+    "0x12"
+   ]
+  },
+  {
+   "check": "TPROF NLINES 20 (maximized Notepad)",
+   "result": "PASS",
+   "line": "NLINES n=20 ms=63439",
+   "ms_each": 3171.9
+  },
+  {
+   "check": "relaunch: the desktop is identical to the first launch",
+   "result": "PASS",
+   "differing_cells": []
+  },
+  {
+   "check": "T80OFF: SYSTEM.INI no longer names TEXT80.DRV and the backups are gone",
+   "result": "PASS"
+  },
+  {
+   "check": "T80OFF: WIN.INI is byte for byte as before T80ON",
+   "result": "PASS"
+  },
+  {
+   "check": "rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
+   "result": "PASS",
+   "cols": 40
+  }
+ ],
+ "timing_s": {
+  "desktop": 12.3,
+  "pointer_a": 12.3,
+  "pointer_b": 12.3,
+  "filemenu": 12.3,
+  "menuclosed": 12.3,
+  "rundlg": 27.4,
+  "runmenu0": 21.4,
+  "rundlg0": 33.4,
+  "free_bytes_before_notepad": 209504,
+  "type_ms_each_edit": 247.2,
+  "lines_ms_each_edit": 2458.8,
+  "notepad0": 48.6,
+  "notepad": 15.4,
+  "typed_line_until_settled": 20.7,
+  "selected": 30.7,
+  "unselected": 12.3,
+  "editmenu": 12.4,
+  "editclosed": 30.7,
+  "lines5": 12.4,
+  "lines10": 12.4,
+  "lines15": 30.6,
+  "lines20": 54.9,
+  "lines25": 45.8,
+  "lines30": 45.8,
+  "scrolled": 12.4,
+  "dragged": 27.4,
+  "pmfront": 30.4,
+  "npfront": 27.4,
+  "maximized": 45.6,
+  "nlines_ms_each_maximized": 3171.9,
+  "nlines": 12.4,
+  "savequery": 15.4,
+  "desktop2": 12.4,
+  "rolledback": 12.4
+ },
+ "passed": 54,
+ "failed": 0
+}

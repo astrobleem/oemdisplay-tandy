@@ -1,0 +1,16 @@
+[
+ {
+  "frame": "t80on",
+  "decoded": false,
+  "source": "Monitor_1_20261014-014647-276.png",
+  "step": "shot t80on",
+  "t": 1791942408.0
+ },
+ {
+  "frame": "metrics",
+  "decoded": false,
+  "source": "Monitor_1_20261014-015519-031.png",
+  "step": "shot metrics",
+  "t": 1791942919.8
+ }
+]

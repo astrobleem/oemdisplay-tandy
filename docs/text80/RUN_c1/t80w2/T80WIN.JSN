@@ -1,0 +1,496 @@
+{
+ "checks": [
+  {
+   "check": "T80ON: display.drv=TEXT80.DRV and the 8x8 fonts set; originals saved",
+   "result": "PASS"
+  },
+  {
+   "check": "T80ON: load= keeps its entry (T80SNAP); [fonts] gained the two 8x8 faces",
+   "result": "PASS",
+   "load": [
+    "load=C:\\T80\\T80SNAP.EXE"
+   ]
+  },
+  {
+   "check": "Windows runs in 80x25 text (BIOS columns 80, rows 25)",
+   "result": "PASS"
+  },
+  {
+   "check": "desktop: shows 'Program Manager'",
+   "result": "PASS",
+   "at": [
+    [
+     5,
+     31
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'File'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     10
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'Options'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     16
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'Window'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     25
+    ]
+   ]
+  },
+  {
+   "check": "desktop: shows 'Help'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     33
+    ]
+   ]
+  },
+  {
+   "check": "pointer_a: the pointer is exactly the hot spot's cell, attribute XOR 77h (pointer (300, 150))",
+   "result": "PASS",
+   "expected_cell": [
+    18,
+    37
+   ],
+   "differs": [
+    [
+     18,
+     37
+    ]
+   ],
+   "xor": "0x7700"
+  },
+  {
+   "check": "pointer_b: the pointer is exactly the hot spot's cell, attribute XOR 77h (pointer (37, 77))",
+   "result": "PASS",
+   "expected_cell": [
+    9,
+    4
+   ],
+   "differs": [
+    [
+     9,
+     4
+    ]
+   ],
+   "xor": "0x7700"
+  },
+  {
+   "check": "filemenu: shows 'New...'",
+   "result": "PASS",
+   "at": [
+    [
+     9,
+     12
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Open'",
+   "result": "PASS",
+   "at": [
+    [
+     10,
+     12
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Move...'",
+   "result": "PASS",
+   "at": [
+    [
+     11,
+     12
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Copy...'",
+   "result": "PASS",
+   "at": [
+    [
+     13,
+     12
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Delete'",
+   "result": "PASS",
+   "at": [
+    [
+     14,
+     12
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Properties...'",
+   "result": "PASS",
+   "at": [
+    [
+     15,
+     12
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Run...'",
+   "result": "PASS",
+   "at": [
+    [
+     17,
+     12
+    ]
+   ]
+  },
+  {
+   "check": "filemenu: shows 'Exit Windows...'",
+   "result": "PASS",
+   "at": [
+    [
+     19,
+     12
+    ]
+   ]
+  },
+  {
+   "check": "File menu closed: every cell as on the desktop before",
+   "result": "PASS",
+   "differing_cells": []
+  },
+  {
+   "check": "rundlg: shows 'Run'",
+   "result": "PASS",
+   "at": [
+    [
+     10,
+     41
+    ],
+    [
+     14,
+     32
+    ]
+   ]
+  },
+  {
+   "check": "rundlg: shows 'Command Line:'",
+   "result": "PASS",
+   "at": [
+    [
+     12,
+     16
+    ]
+   ]
+  },
+  {
+   "check": "rundlg: shows 'Run Minimized'",
+   "result": "PASS",
+   "at": [
+    [
+     14,
+     32
+    ]
+   ]
+  },
+  {
+   "check": "rundlg: shows 'OK'",
+   "result": "PASS",
+   "at": [
+    [
+     16,
+     32
+    ]
+   ]
+  },
+  {
+   "check": "rundlg: shows 'Cancel'",
+   "result": "PASS",
+   "at": [
+    [
+     16,
+     45
+    ]
+   ]
+  },
+  {
+   "check": "free memory recorded (before_notepad): 207520 bytes",
+   "result": "PASS"
+  },
+  {
+   "check": "TPROF TYPE 30 (edit): 7415 ms, 247 ms each",
+   "result": "PASS"
+  },
+  {
+   "check": "TPROF LINES 30 (edit): 80575 ms, 2686 ms each",
+   "result": "PASS"
+  },
+  {
+   "check": "notepad: shows 'Notepad - (untitled)'",
+   "result": "PASS",
+   "at": [
+    [
+     1,
+     29
+    ]
+   ]
+  },
+  {
+   "check": "notepad: shows 'File'",
+   "result": "PASS",
+   "at": [
+    [
+     3,
+     3
+    ]
+   ]
+  },
+  {
+   "check": "notepad: shows 'Edit'",
+   "result": "PASS",
+   "at": [
+    [
+     3,
+     9
+    ]
+   ]
+  },
+  {
+   "check": "notepad: shows 'Search'",
+   "result": "PASS",
+   "at": [
+    [
+     3,
+     15
+    ]
+   ]
+  },
+  {
+   "check": "notepad: shows 'Help'",
+   "result": "PASS",
+   "at": [
+    [
+     3,
+     23
+    ]
+   ]
+  },
+  {
+   "check": "notepad: shows 'Hello from 80x25 text mode!'",
+   "result": "PASS",
+   "at": [
+    [
+     5,
+     3
+    ]
+   ]
+  },
+  {
+   "check": "notepad: the typed line is one colour pair, black on white (F0h)",
+   "result": "PASS",
+   "attrs": [
+    "0xf0"
+   ],
+   "at": [
+    5,
+    3
+   ]
+  },
+  {
+   "check": "selection: the selected cells keep their characters and all change colour",
+   "result": "PASS",
+   "before": "0xf048",
+   "after": "0x1f48"
+  },
+  {
+   "check": "editmenu: shows 'Undo'",
+   "result": "PASS",
+   "at": [
+    [
+     4,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Cut'",
+   "result": "PASS",
+   "at": [
+    [
+     7,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Copy'",
+   "result": "PASS",
+   "at": [
+    [
+     8,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Paste'",
+   "result": "PASS",
+   "at": [
+    [
+     9,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Delete'",
+   "result": "PASS",
+   "at": [
+    [
+     10,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Select All'",
+   "result": "PASS",
+   "at": [
+    [
+     12,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Time/Date'",
+   "result": "PASS",
+   "at": [
+    [
+     14,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "editmenu: shows 'Word Wrap'",
+   "result": "PASS",
+   "at": [
+    [
+     16,
+     11
+    ]
+   ]
+  },
+  {
+   "check": "Edit menu closed: every cell as before (caret cells apart)",
+   "result": "PASS",
+   "differing_cells": []
+  },
+  {
+   "check": "scrolling: the last line is visible and the first typed line has scrolled away",
+   "result": "PASS"
+  },
+  {
+   "check": "drag: the title moved 3 cell rows down and 4-5 cell columns left (8-pixel grid)",
+   "result": "PASS",
+   "before": [
+    1,
+    29
+   ],
+   "after": [
+    [
+     4,
+     25
+    ]
+   ]
+  },
+  {
+   "check": "overlap: switching windows changes which one is on top (cells differ), and back",
+   "result": "PASS"
+  },
+  {
+   "check": "TPROF NLINES 20 (maximized Notepad)",
+   "result": "PASS",
+   "line": "NLINES n=20 ms=69206",
+   "ms_each": 3460.3
+  },
+  {
+   "check": "relaunch: the desktop is identical to the first launch",
+   "result": "PASS",
+   "differing_cells": []
+  },
+  {
+   "check": "T80OFF: SYSTEM.INI no longer names TEXT80.DRV and the backups are gone",
+   "result": "PASS"
+  },
+  {
+   "check": "T80OFF: WIN.INI is byte for byte as before T80ON",
+   "result": "PASS"
+  },
+  {
+   "check": "rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
+   "result": "PASS",
+   "cols": 40
+  }
+ ],
+ "timing_s": {
+  "desktop": 12.3,
+  "pointer_a": 12.3,
+  "pointer_b": 12.3,
+  "filemenu": 12.3,
+  "menuclosed": 12.3,
+  "rundlg": 27.4,
+  "runmenu0": 27.6,
+  "rundlg0": 39.5,
+  "free_bytes_before_notepad": 207520,
+  "type_ms_each_edit": 247.2,
+  "lines_ms_each_edit": 2685.8,
+  "notepad0": 63.8,
+  "notepad": 24.6,
+  "typed_line_until_settled": 29.9,
+  "selected": 12.4,
+  "unselected": 30.7,
+  "editmenu": 12.4,
+  "editclosed": 39.9,
+  "lines5": 39.9,
+  "lines10": 39.9,
+  "lines15": 42.8,
+  "lines20": 61.0,
+  "lines25": 61.0,
+  "lines30": 61.0,
+  "scrolled": 30.8,
+  "dragged": 51.9,
+  "pmfront": 33.5,
+  "npfront": 42.7,
+  "maximized": 42.5,
+  "nlines_ms_each_maximized": 3460.3,
+  "nlines": 30.8,
+  "savequery": 18.4,
+  "desktop2": 12.4,
+  "rolledback": 12.4
+ },
+ "passed": 52,
+ "failed": 0
+}

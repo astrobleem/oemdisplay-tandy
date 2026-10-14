@@ -1,0 +1,19 @@
+{
+ "purpose": "compact-c25-session",
+ "command": [
+  "bash",
+  "/tmp/claude-0/-home-claude-oemdisplay-tandy/ce43402d-a3a1-5fd0-9e53-eb877bbd30e0/scratchpad/t80win_c.sh",
+  "/home/claude/work/86box/c80w",
+  "--profile",
+  "c25"
+ ],
+ "bound_seconds": 7200,
+ "lock": "/home/claude/work/EMU.LOCK",
+ "acquired_utc": "2026-10-14T02:37:17.561137+00:00",
+ "conflicts_before": [],
+ "pid": 6617,
+ "exit_code": 0,
+ "conflicts_after": [],
+ "released_utc": "2026-10-14T03:23:10.398949+00:00",
+ "seconds": 2752.8
+}

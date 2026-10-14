@@ -418,3 +418,89 @@ have), from the DOS prompt in the TEXT80 folder:
    non-VGA card Windows must simply return to DOS (then `T80OFF`).
 7. Tell me: snow on a real CGA, how the 8x9 Tandy font looks, timings
    from 2, and anything that stays garbled.
+
+## 11. Compact UI profile (C25, branch `ai/text80-compact`)
+
+Chad and Astra's idea: instead of approximating window controls drawn for
+pixels, design the controls around the characters a text screen has.
+`T80ON C:\WINDOWS C25` installs `T80CMP.DRV`: TEXT80 80x25 with
+- every window control one text cell, drawn from the first-party 8x8 OEM
+  font's own glyphs (`T80UI.PY`): system menu ≡ (F0h), minimize ▼ (1Fh),
+  maximize ▲ (1Eh), restore ↕ (12h), scroll arrows ▲▼◄► (1Eh 1Fh 11h 10h),
+  menu check √ (FBh), submenu ► and combo box ▼; pressed buttons are the
+  same glyph inverted; 8-pixel scroll thumbs;
+- a presenter rule: a wholly unclaimed cell whose foreground is one of
+  these glyphs in rows 0-6 shows that character (`T40MODEL.UIGLYPHS`;
+  model, assembly, an explicit regression and four mutants);
+- 1-pixel vertical lines and, in WIN.INI `[windows]`, `BorderWidth=7`
+  (sizing frames exactly one cell) and `GridGranularity=1` (windows move
+  and size on the 8-pixel grid), set by `T80SET ON ... /C` and restored
+  byte for byte by `T80OFF` (host test `T80SETT.PY`; checked in 86Box).
+
+What Windows 3.0 does with them was measured, not assumed (`TPROF
+METRICS`, `docs/text80/RUN_c1/c80m`, `c80c`, `c80d`):
+
+| | stock CGA resources | compact |
+|---|---|---|
+| minimize/maximize button | 27x14 | 8x7 |
+| caption height (SM_CYCAPTION) | 16 | 9 |
+| menu bar (SM_CYMENU) | 14 | 10 (from the system font) |
+| vertical scroll bar width, arrow | 18, 18x11 | 8, 8x8 |
+| sizing frame (BorderWidth 3 / 7) | 8 x 4 | 8 x 8 |
+
+With the frame one cell thick, a window whose top is on the grid (every
+window moved or sized with GridGranularity=1, and Notepad's default
+place) has its caption on one cell row (≡, title, ▼ ▲ or ↕ exact), its menu
+bar text on the next and the menu's bottom line on the third; a maximized
+window the same from row 0. Before and after, Notepad maximized: the
+first five rows exactly as read from the text buffer (`.` = a control
+character: ▼ 1Fh, ↕ 12h):
+
+    TEXT80 25 (stock resources):
+    ░─░▌                        Notepad - (untitled)                         │░░│ ░ 
+    ───░──────────────────────────────── ░───────────────────────────────────░──░─▒─
+     File  Edit  Search  Help                                                       
+    ──────────────────────────────────────────────────────────────────────────────░─
+     line 18                                                                      ▒▒
+
+    C25 (compact):
+    ≡└───────────────────────────▐Notepad - (untitled)────────────────────────────..
+     File  Edit  Search  Help                                                       
+    ───────────────────────────────────────────────────────────────────────────────░
+     line 17                                                                       ░
+     line 18                                                                       │
+
+An 8x10 button was tried first: it put Notepad's text exactly on the grid
+(whole-cell scroll copies, 8% faster scrolling in a maximized Notepad)
+but split the caption and the menu bar across a row of block shapes. The
+clean 7-row layout was kept.
+
+Sessions (86Box XT/CGA 4.77 MHz, same disk, same harness, `RUN_c1`):
+
+| | TEXT80 25 (b7) | C25 8x10 buttons | **C25 final (8x7)** |
+|---|---|---|---|
+| checks | 52/52 | 54/54 | **54/54** |
+| typing, TPROF window, ms/char | 247 | 247 | **198** |
+| scrolling, TPROF window, ms/line | 2,686 | 2,459 | **2,157** |
+| scrolling, maximized Notepad, ms/line | 3,460 | 3,172 | 3,740 |
+| free memory before Notepad | 207,520 | 209,504 | 209,664 |
+
+The TPROF window's numbers depend on where its edit text falls against
+the grid, so they move with any change of metrics; the honest summary is
+that the compact profile is about as fast as TEXT80 25 (faster in small
+windows, 8% slower in a maximized Notepad, whose text now sits 4 pixels
+off the grid) and looks much better. Profiling builds, 20 lines scrolled in a maximized
+Notepad (`RUN_c1/p80s`, `p80c`, and `p80c2` in `RUN_c2`): per line
+TEXT80 25 3.69 s with 443 cells matched; 8x10 buttons 3.46 s, 400 cells;
+final 4.07 s, 545 cells. Most of it is the scrolled area's own flush:
+whichever profile, the presenter matches the two cell rows at the top and
+bottom of the copy (the partly copied row and one more) across the whole
+80 columns. That, not the window controls, is where scrolling time goes
+next (section 9).
+
+Limits: only windows on the grid get exact controls; Program Manager
+opens where PROGMAN.INI last put it (on this disk 35 pixels down, so its
+buttons are blocks until it is moved). Scroll arrows are exact only when
+the client area is on the grid. Dialog frames (4 pixels) and check boxes
+are unchanged. `T80OFF` removes the two WIN.INI lines with everything
+else.
