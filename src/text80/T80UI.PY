@@ -20,8 +20,10 @@ presenter's exact-glyph rule shows that character.
   size box   blank
 
 CONFIG.ASM (the OEM machine-dependent parameters) gets 8-pixel scroll
-thumbs. Everything else (borders, colours, fonts) is the CGA-resolution
-set TEXT80 already uses.
+thumbs and 1-pixel vertical lines (cxBorder), so that a sizing frame is
+(BorderWidth + 1) pixels both ways: with WIN.INI BorderWidth=7, one cell.
+Everything else (colours, fonts) is the CGA-resolution set TEXT80 uses.
+(Experimental: the metrics this gives are measured with TPROF METRICS.)
 """
 import argparse
 import importlib.machinery
@@ -79,6 +81,7 @@ def bitmaps():
 
 
 CONFIG_EDITS = [
+    ("\tdw\t2\t\t\t;cxBorder", "\tdw\t1\t\t\t;cxBorder (T80UI: frames of whole cells with BorderWidth=7)"),
     ("        dw      11                      ;Height of vertical thumb",
      "        dw      8                       ;Height of vertical thumb (T80UI: one cell)"),
     ("        dw      23                      ;Width of horizontal thumb",
