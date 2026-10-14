@@ -11,7 +11,9 @@ appends the helper to load= keeping every existing entry (also when load=
 is missing or empty, and not twice), only adds the two [fonts] lines;
 a second ON is refused; OFF restores both files byte for byte and removes
 the backups; ON with no [fonts] section fails and leaves both files
-unchanged.
+unchanged; ON ... /C (compact UI profile) sets BorderWidth=7 and
+GridGranularity=1 in [windows] (replacing an existing BorderWidth) and OFF
+restores everything.
 """
 import argparse
 import shutil
@@ -91,6 +93,27 @@ def main():
             expect(f"{name}: OFF restores both files byte for byte",
                    rc3 == 0 and (w / "SYSTEM.INI").read_bytes() == s0 and (w / "WIN.INI").read_bytes() == w0)
             expect(f"{name}: OFF removes the backups", not (w / "SYSTEM.T80").exists() and not (w / "WIN.T80").exists())
+        for name, extra, args in (("compact", "BorderWidth=3\r\n", ["/C"]),
+                                  ("compact with helper", "", ["T80HELP.EXE", "/C"])):
+            w = t / name.replace(" ", "_")
+            w.mkdir()
+            (w / "SYSTEM.INI").write_bytes(SYSTEM.encode())
+            (w / "WIN.INI").write_bytes(ini(extra + "load=CLOCK.EXE\r\n").encode())
+            s0, w0 = (w / "SYSTEM.INI").read_bytes(), (w / "WIN.INI").read_bytes()
+            rc = subprocess.run([exe, "ON", str(w), "T80CMP.DRV"] + args, capture_output=True).returncode
+            wini = (w / "WIN.INI").read_bytes().decode()
+            sec = wini.split("[fonts]")[0].split("\r\n")          # the [windows] section
+            expect(f"{name}: ON succeeds", rc == 0)
+            expect(f"{name}: [windows] has BorderWidth=7 and GridGranularity=1 once each, no other BorderWidth",
+                   sec.count("BorderWidth=7") == 1 and sec.count("GridGranularity=1") == 1 and
+                   sum(ln.lower().startswith("borderwidth=") for ln in sec) == 1)
+            loads = [ln for ln in sec if ln.lower().startswith("load=")]
+            expect(f"{name}: load= {'gains the helper' if len(args) == 2 else 'unchanged'}",
+                   loads == (["load=CLOCK.EXE T80HELP.EXE"] if len(args) == 2 else ["load=CLOCK.EXE"]))
+            expect(f"{name}: [fonts] gained two lines", wini.count("(TEXT80)=") == 2)
+            rc3 = subprocess.run([exe, "OFF", str(w)], capture_output=True).returncode
+            expect(f"{name}: OFF restores both files byte for byte",
+                   rc3 == 0 and (w / "SYSTEM.INI").read_bytes() == s0 and (w / "WIN.INI").read_bytes() == w0)
         w = t / "nofonts"
         w.mkdir()
         (w / "SYSTEM.INI").write_bytes(SYSTEM.encode())

@@ -1,7 +1,7 @@
 /* T80SET.C - reversible TEXT80 setup for Windows 3.0 (DOS program; C89,
  * Microsoft C small model). Run at the DOS prompt, never inside Windows.
  *
- *   T80SET ON  <windows dir> <driver.drv> [<helper.exe>]
+ *   T80SET ON  <windows dir> <driver.drv> [<helper.exe>] [/C]
  *   T80SET OFF <windows dir>
  *   T80SET SHOW <windows dir>
  *
@@ -14,6 +14,9 @@
  *     kept; nothing if already listed or no helper given);
  *   WIN.INI [fonts]: two lines ADDED, none removed:
  *     Helv 8x8 (TEXT80)=T80HELV.FON and Courier 8x8 (TEXT80)=T80COUR.FON.
+ *   /C (compact UI profile): WIN.INI [windows] BorderWidth=7 (sizing frames
+ *     one text cell thick) and GridGranularity=1 (windows move and size on
+ *     the 8-pixel grid), set or replaced; restored by OFF like the rest.
  * OFF copies SYSTEM.T80 and WIN.T80 back over the live files and deletes
  * them: Windows starts exactly as before ON. SHOW prints the lines ON sets.
  * Exit code 0 on success, 1 on any error (files then left unchanged).
@@ -223,7 +226,14 @@ static int fail(const char *what)
 int main(int argc, char **argv)
 {
     char drv[40], sysset[4][60], helper[40];
-    const char *sset[4], *fadd[2];
+    const char *sset[4], *fadd[2], *wset[2];
+    int compact = 0, nargs = argc;
+    if (argc >= 5 && stricmp(argv[argc - 1], "/C") == 0) {
+        compact = 1;
+        nargs = argc - 1;
+    }
+    wset[0] = "BorderWidth=7";
+    wset[1] = "GridGranularity=1";
     if (argc >= 3 && stricmp(argv[1], "OFF") == 0) {
         join(path, argv[2], "SYSTEM.T80");
         join(path2, argv[2], "WIN.T80");
@@ -245,7 +255,7 @@ int main(int argc, char **argv)
         drv[sizeof(drv) - 1] = 0;
         strupr(drv);
         helper[0] = 0;
-        if (argc >= 5) {
+        if (nargs >= 5) {
             strncpy(helper, argv[4], sizeof(helper) - 1);
             helper[sizeof(helper) - 1] = 0;
             strupr(helper);
@@ -282,7 +292,7 @@ int main(int argc, char **argv)
         }
         fadd[0] = "Helv 8x8 (TEXT80)=T80HELV.FON";
         fadd[1] = "Courier 8x8 (TEXT80)=T80COUR.FON";
-        if (!edit("[windows]", NULL, 0, NULL, 0, helper[0] ? helper : NULL) ||
+        if (!edit("[windows]", compact ? wset : NULL, compact ? 2 : 0, NULL, 0, helper[0] ? helper : NULL) ||
             !edit("[fonts]", NULL, 0, fadd, 2, NULL) || !copyfile(tmp, path2) ||
             !writefile(tmp, inbuf)) {
             join(tmp, argv[2], "SYSTEM.INI");
@@ -291,8 +301,9 @@ int main(int argc, char **argv)
             remove(path2);
             return fail("cannot update WIN.INI; SYSTEM.INI restored");
         }
-        printf("T80SET: display.drv=%s, 8x8 system/fixed/OEM fonts, %s%s; [fonts] +2 lines\n", drv,
-               helper[0] ? "load= +" : "load= unchanged", helper);
+        printf("T80SET: display.drv=%s, 8x8 system/fixed/OEM fonts, %s%s; [fonts] +2 lines%s\n", drv,
+               helper[0] ? "load= +" : "load= unchanged", helper,
+               compact ? "; BorderWidth=7, GridGranularity=1" : "");
         printf("T80SET: undo with T80SET OFF %s (restores SYSTEM.T80, WIN.T80)\n", argv[2]);
         return 0;
     }

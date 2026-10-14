@@ -61,14 +61,26 @@ def side_by_side(a, b):
     return [(x << 8) | y for x, y in zip(a, b)]
 
 
+# Caption buttons are CAPTION_H rows: the glyph in the top 8, then blank.
+# USER makes SM_CYSIZE their height, the caption SM_CYSIZE + 2 and draws the
+# buttons one pixel below the caption's top line. Measured in 86Box (TPROF
+# METRICS): with WIN.INI BorderWidth=7 (frame 8 pixels) a window whose top
+# is on the grid has its buttons on a cell row; so does a maximized window
+# (its frame is off screen). The menu bar is 10 rows (system font 8 + 2),
+# so a client area starts at top + 8 + 12 + 10 = top + 30 (maximized: 22),
+# and Notepad's edit text 2 rows lower: on the grid in both cases.
+CAPTION_H = 10
+
+
 def bitmaps():
     """{file name in the resources folder: BMP bytes} (RC_LOW.RC names)."""
     one = lambda code, inv=False: bmp(UI[code], 8, inv)
+    cap = lambda rows, w, inv=False: bmp(rows + [0] * (CAPTION_H - 8), w, inv)
     return {
-        "MIN.BMP": one(0x1F), "MIND.BMP": one(0x1F, True),
-        "MAX.BMP": one(0x1E), "MAXD.BMP": one(0x1E, True),
-        "RESTORE.BMP": one(0x12), "RESTORED.BMP": one(0x12, True),
-        "SYSMENU.BMP": bmp(side_by_side(UI[0xF0], UI[0xF0]), 16),
+        "MIN.BMP": cap(UI[0x1F], 8), "MIND.BMP": cap(UI[0x1F], 8, True),
+        "MAX.BMP": cap(UI[0x1E], 8), "MAXD.BMP": cap(UI[0x1E], 8, True),
+        "RESTORE.BMP": cap(UI[0x12], 8), "RESTORED.BMP": cap(UI[0x12], 8, True),
+        "SYSMENU.BMP": cap(side_by_side(UI[0xF0], UI[0xF0]), 16),
         "UP.BMP": one(0x1E), "UPD.BMP": one(0x1E, True),
         "DOWN.BMP": one(0x1F), "DOWND.BMP": one(0x1F, True),
         "LEFT.BMP": one(0x11), "LEFTD.BMP": one(0x11, True),
