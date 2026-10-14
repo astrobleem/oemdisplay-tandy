@@ -87,7 +87,7 @@ def rect(i):
 
 class Run:
     TARGETS = {"pcp": ("PCP", "PCPID", "PCPSHOW"), "pc1512": ("P15", "P15ID", "P15SHOW"),
-               "tga2": ("TV2", "T2RESV", "T2SHOW")}
+               "tga2": ("TV2", "T2RESV >> T2RESV.TXT", "T2SHOW")}
 
     def __init__(self, vm, box, roms, width=320, display=":79", target="pcp"):
         use_width(width)
@@ -95,7 +95,11 @@ class Run:
         self.vm = Path(vm)
         self.width = width
         self.box, self.roms = box, roms
-        self.b = P.Box(self.vm, display=display, width=width)
+        # Tandy SL/2: capture without sending the guest a key, and settle
+        # the pointer with a one-pixel jiggle before judging its shape.
+        self.settle = target == "tga2"
+        self.b = P.Box(self.vm, display=display, width=width,
+                       capture="toolbar" if self.settle else "hotkey")
         self.steps = []
         self.cx = self.cy = None
 
@@ -138,6 +142,18 @@ class Run:
         every click or drag first pins the cursor at (0,0) again."""
         self.home()
         self.to(x, y, wait=wait)
+
+    def settle_pointer(self):
+        """tga2 only: move one pixel right and back. Paintbrush sets the
+        pointer shape for the window under it only when it handles a mouse
+        message there; after the long move from (0,0) it can keep the
+        canvas crosshair over the left palette cells. The hotkey captures
+        used for the other targets gave it a key message at every capture;
+        this gives it a mouse message at the same position instead."""
+        if self.settle:
+            self.m("move", 1, 0)
+            self.m("move", -1, 0)
+            time.sleep(3)
 
     def click(self, x, y, wait=4):
         self.rehome(x, y)
@@ -235,6 +251,7 @@ class Run:
         for attempt in range(1, LANDING_TRIES + 1):
             tryname = f"{name}_t{attempt}"
             self.rehome(hx, hy, wait=4)
+            self.settle_pointer()
             self.shot(tryname, settle=1)
             if self.landed(tryname, ref, glyph, hx, hy):
                 shutil.copyfile(self.b.out / (tryname + ".png"), self.b.out / (name + ".png"))
@@ -431,6 +448,7 @@ class Run:
         for c in range(16):
             x0, y0, x1, y1 = rect(c)
             self.rehome((x0 + x1) // 2, (y0 + y1) // 2, wait=4)
+            self.settle_pointer()
             self.shot(f"cross_{c:02d}", settle=1)
         self.to(*PARK, wait=4)
         self.shot("cross_parked")

@@ -240,11 +240,38 @@ TC_PIXEL_END = "    mov es:[di],ax\r\n"
 TC_PIXEL_NEW = (
     "    ; T2PATCH: BL is the cursor-mask bit; BH the pixel's nibble (F0h for\r\n"
     "    ; even x, 0Fh for odd). AND forces colour 0, XOR flips all four bits.\r\n"
+    "    ; Composite in tc_work; tcd_finished writes whole rows to VRAM.\r\n"
     "    mov ax,tc_work_x\r\n    mov bh,0f0h\r\n    test al,1\r\n    jz tcd_even_px\r\n    mov bh,0fh\r\n"
-    "tcd_even_px:\r\n    shr ax,1\r\n    mov di,tc_row_offset\r\n    add di,ax\r\n    mov al,es:[di]\r\n"
+    "tcd_even_px:\r\n    shr ax,1\r\n    sub ax,tc_save_xbyte\r\n    add ax,tc_row_offset\r\n"
+    "    mov di,ax\r\n    mov al,tc_work[di]\r\n"
     "    test tc_and[si],bl\r\n    jnz tcd_and_done\r\n    mov dl,bh\r\n    not dl\r\n    and al,dl\r\n"
     "tcd_and_done:\r\n    test tc_xor[si],bl\r\n    jz tcd_xor_done\r\n    xor al,bh\r\n"
-    "tcd_xor_done:\r\n    mov es:[di],al\r\n")
+    "tcd_xor_done:\r\n    mov tc_work[di],al\r\n")
+# The pointer is composited off-screen (as P15PATCH does) and written back one
+# row at a time with REP MOVSB, so VRAM never shows a half-drawn pointer for
+# longer than one short row copy. A per-pixel read-modify-write in VRAM was
+# visibly caught part-drawn in 86Box captures.
+TC_DATA_OLD = "    tc_saved        db 544 dup (0)\r\n"
+TC_DATA_NEW = ("    tc_saved        db 544 dup (0)\r\n"
+               "    tc_work         db 544 dup (0)    ; T2PATCH: composite before write-back\r\n")
+TC_SAVED_OLD = "    mov tc_drawn,1\r\n"
+TC_SAVED_NEW = ("    mov tc_drawn,1\r\n"
+                "    ; T2PATCH: tc_work starts as a copy of the saved bytes.\r\n"
+                "    push es\r\n    push ds\r\n    pop es\r\n"
+                "    mov si,offset tc_saved\r\n    mov di,offset tc_work\r\n"
+                "    mov ax,tc_save_rows\r\n    mul tc_save_bytes\r\n    mov cx,ax\r\n"
+                "    cld\r\n    rep movsb\r\n    pop es\r\n")
+TC_ROW_OLD = "    mov ax,tc_work_y\r\n    call tc_scan\r\n    mov tc_row_offset,di\r\n"
+TC_ROW_NEW = ("    mov ax,tc_work_y          ; T2PATCH: row start in tc_work\r\n"
+              "    sub ax,tc_save_y\r\n    mul tc_save_bytes\r\n    mov tc_row_offset,ax\r\n")
+TC_FINISH_OLD = "tcd_finished:\r\n    ret\r\ntc_draw endp\r\n"
+TC_FINISH_NEW = ("tcd_finished:\r\n"
+                 "    mov si,offset tc_work     ; T2PATCH: write the composite\r\n"
+                 "    mov bx,tc_save_y\r\n    mov bp,tc_save_rows\r\n"
+                 "tcd_put_row:\r\n    mov ax,bx\r\n    call tc_scan\r\n    add di,tc_save_xbyte\r\n"
+                 "    mov cx,tc_save_bytes\r\n    cld\r\n    rep movsb\r\n"
+                 "    inc bx\r\n    dec bp\r\n    jnz tcd_put_row\r\n"
+                 "    ret\r\ntc_draw endp\r\n")
 
 
 def patch_tcursor(t):
@@ -258,6 +285,12 @@ def patch_tcursor(t):
     a = t.index(TC_PIXEL_START)
     b = t.index(TC_PIXEL_END, a) + len(TC_PIXEL_END)
     t = t[:a] + TC_PIXEL_NEW + t[b:]
+    t = replace_n(t, TC_DATA_OLD, TC_DATA_NEW, 1, "composite buffer")
+    t = replace_n(t, TC_SAVED_OLD, TC_SAVED_NEW, 1, "composite copy")
+    t = replace_n(t, TC_ROW_OLD, TC_ROW_NEW, 1, "composite row offset")
+    t = replace_n(t, TC_FINISH_OLD, TC_FINISH_NEW, 1, "composite write-back")
+    if "es:[di],a" in t.split("tc_draw proc")[1].split("tc_draw endp")[0].replace("mov al,es:[di]", ""):
+        raise SystemExit("T2PATCH: a direct VRAM pixel write is left in tc_draw")
     # Retain lease checks: a VRAM row is 320 bytes; the 544-byte save buffer
     # holds 32 rows of up to 17 bytes, as before.
     t = replace_n(t, "    cmp dx,160\r\n    ck_require jbe,ckb_legacy\r\n",

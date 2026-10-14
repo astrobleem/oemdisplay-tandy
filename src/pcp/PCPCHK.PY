@@ -31,7 +31,13 @@ PAL = [(0, 0, 0), (0, 0, 170), (0, 170, 0), (0, 170, 170),
        (255, 85, 85), (255, 85, 255), (255, 255, 85), (255, 255, 255)]
 WD = 320                        # frame width; main() sets it (320 or 640)
 PARKED = lambda x, y: x >= WD - 4 and y >= 196   # where the parked cursor can show
-TARGETS = {"pcp": ("PCP", "PCPID", "COLORPLUS=01"), "pc1512": ("P15", "P15ID", "PC1512=01")}
+TARGETS = {"pcp": ("PCP", "PCPID", "COLORPLUS=01"), "pc1512": ("P15", "P15ID", "PC1512=01"),
+           "tga2": ("TV2", "T2RESV", None)}
+# Tandy Video II: T2RESV's own reports. It checks the Tandy BIOS, 624K, text
+# mode 3 and the arena before it reports, so "already installed" after each
+# Windows exit means DOS is back in mode 3 with the page still kept from DOS.
+T2RESV_BOOT = "T2RESV: 48K Video II page reserved. Start Windows with WIN /R."
+T2RESV_AGAIN = "T2RESV: Video II reservation already installed."
 
 
 def cursor_oracle(path):
@@ -340,6 +346,13 @@ def main():
     if args.no_disk:
         skipped("pcpid_after_each_exit")
         skipped("pcpid_at_boot_sees_card")
+    elif args.target == "tga2":
+        lines = [t.strip() for t in mt(vm / "pcp.img", "::/WINDOWS/T2RESV.TXT").decode(errors="replace").splitlines()
+                 if t.strip()]
+        check("pcpid_after_each_exit", lines == [T2RESV_AGAIN] * 2, lines=lines)
+        boot = [t.strip() for t in mt(vm / "pcp.img", "::/TV2/T2RESV.TXT").decode(errors="replace").splitlines()
+                if t.strip()]
+        check("pcpid_at_boot_sees_card", boot == [T2RESV_BOOT], lines=boot)
     else:
         lines = [t for t in mt(vm / "pcp.img", f"::/WINDOWS/{tid}.TXT").decode(errors="replace").splitlines() if t.strip()]
         check("pcpid_after_each_exit", len(lines) == 2 and all(
@@ -373,8 +386,8 @@ def main():
             evidence_errors.extend(out["palette_arrow_landing"]["errors"])
         except (OSError, ValueError) as exc:
             evidence_errors.append("invalid LANDING.JSN: " + str(exc))
-    elif args.target == "pc1512":
-        evidence_errors.append("missing LANDING.JSN for PC1512")
+    elif args.target in ("pc1512", "tga2"):
+        evidence_errors.append("missing LANDING.JSN for " + args.target)
     out["evidence_errors"] = evidence_errors
     failed = bool(out["failed"] or evidence_errors)
     out["verdict"] = "FAIL" if failed else ("FRAMES-ONLY PASS" if out["skipped"] else "PASS")
