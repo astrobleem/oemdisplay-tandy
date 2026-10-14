@@ -116,9 +116,14 @@ def main():
         (t / "shim.h").write_text(SHIM)
         src = (HERE / "T80SET.C").read_text(errors="replace").replace("#include <io.h>", '#include "shim.h"')
         (t / "t80set.c").write_text(src)
-        r = subprocess.run(["cc", "-std=c89", "-pedantic", '-DSEP="/"', "-Wall", "-Wno-long-long", "-o",
-                            str(t / "t80set"), str(t / "t80set.c")], capture_output=True, text=True)
+        r = subprocess.run(["cc", "-std=c89", "-pedantic", '-DSEP="/"', "-Wall", "-Wno-long-long",
+                            "-Wframe-larger-than=400", "-o", str(t / "t80set"), str(t / "t80set.c")],
+                           capture_output=True, text=True)
         expect("T80SET.C compiles on the host as C89", r.returncode == 0)
+        # the DOS build has a 2 KB stack (a 300-byte local in a nested call
+        # overflowed it in 86Box: run-time error R6000): no function may keep
+        # more than 400 bytes on the stack
+        expect("no function's stack frame is over 400 bytes", "frame size" not in r.stderr)
         if r.returncode:
             print(r.stderr)
             return 1
