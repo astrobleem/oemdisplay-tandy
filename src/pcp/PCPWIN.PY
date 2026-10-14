@@ -86,7 +86,8 @@ def rect(i):
 
 
 class Run:
-    TARGETS = {"pcp": ("PCP", "PCPID", "PCPSHOW"), "pc1512": ("P15", "P15ID", "P15SHOW")}
+    TARGETS = {"pcp": ("PCP", "PCPID", "PCPSHOW"), "pc1512": ("P15", "P15ID", "P15SHOW"),
+               "tga2": ("TV2", "T2RESV", "T2SHOW")}
 
     def __init__(self, vm, box, roms, width=320, display=":79", target="pcp"):
         use_width(width)
@@ -467,7 +468,7 @@ def main():
     ap.add_argument("--roms", required=True)
     ap.add_argument("--width", type=int, default=320, choices=sorted(LAYOUTS))
     ap.add_argument("--display", default=":79")
-    ap.add_argument("--target", default="pcp", choices=["pcp", "pc1512"])
+    ap.add_argument("--target", default="pcp", choices=["pcp", "pc1512", "tga2"])
     ap.add_argument("--menu-file", help="x,y of Program Manager's File menu (default: layout)")
     ap.add_argument("--calc-title", help="x,y on Calculator's title bar (default: layout)")
     a = ap.parse_args()

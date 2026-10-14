@@ -215,6 +215,11 @@ TARGETS = {
     # IBM CGA card; --tv switches the CGA output to composite (a TV set).
     "txt40": {"drv": "TXT40.DRV", "sha": None, "dir": "T40", "id": "T40ID",
               "tools": ("T40ID.COM", "MSTEST.COM")},
+    # Experimental Tandy Video II 640x200x16 driver (src/tga2) on 86Box's
+    # Tandy 1000 SL/2 with owner-supplied BIOS ROMs. Its "id" step is
+    # T2RESV, which must run before Windows (it keeps the page from DOS).
+    "tga2": {"drv": "TNDYV2.DRV", "sha": None, "dir": "TV2", "id": "T2RESV",
+             "tools": ("T2RESV.COM", "T2SHOW.COM", "MSTEST.COM")},
 }
 # First-party 8x8 fonts (tools/XTFONTS; distributions/WINXT XT*.FON): the
 # fixed-cell system font plus the CGA fixed and OEM fonts.
@@ -242,6 +247,20 @@ cpu_multi = 1
 cpu_use_dynarec = 0
 mem_size = 640
 time_sync = disabled
+"""
+# Tandy 1000 SL/2: 8086 at 8 MHz, its built-in Video II, 640KB (the BIOS
+# reports 624KB). Needs the owner's 8079047.hu1/8079048.hu2 ROMs.
+SL2_MACHINE = """[Machine]
+machine = tandy1000sl2
+cpu_family = 8086
+cpu_speed = 8000000
+cpu_multi = 1
+cpu_use_dynarec = 0
+mem_size = 640
+time_sync = disabled
+
+[Video]
+gfxcard = internal
 """
 
 
@@ -323,7 +342,7 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", targe
     mt("mcopy", "-o", "-i", i, str(tmp / "WIN.INI"), "::/WINDOWS/WIN.INI")
     changes.append("WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); "
                    "Wallpaper=BARS16.BMP (a full-screen 16-colour bar test image, centred)")
-    width = 640 if target == "pc1512" else 320
+    width = 640 if target in ("pc1512", "tga2") else 320
     (tmp / "BARS16.BMP").write_bytes(bars_bmp(width))
     mt("mcopy", "-o", "-i", i, str(tmp / "BARS16.BMP"), "::/WINDOWS/BARS16.BMP")
     changes.append(f"added WINDOWS/BARS16.BMP: {width}x200 4-bit, 16 bars of {width // 16} pixels, "
@@ -343,6 +362,10 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", targe
         a = cfg.index("[Machine]")
         b = cfg.index("[Input devices]")
         cfg = cfg[:a] + PC1512_MACHINE + "\n" + cfg[b:]
+    if target == "tga2":
+        a = cfg.index("[Machine]")
+        b = cfg.index("[Input devices]")
+        cfg = cfg[:a] + SL2_MACHINE + "\n" + cfg[b:]
     if mouse == "pty":
         # COM1 -> host pty served by PCPMOUSE.PY; start() fills in the path.
         cfg = cfg.replace("mouse_type = msserial", "mouse_type = none")

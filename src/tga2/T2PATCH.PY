@@ -154,6 +154,137 @@ DISABLE_TEXT = (
     "    out dx,al\r\n"
 )
 
+# --- staged-source edits (BUILD on the 640x200x4 pipeline, like PC1512) ------
+
+P15 = None
+
+
+def _p15():
+    global P15
+    if P15 is None:
+        import importlib.machinery
+        from pathlib import Path
+        P15 = importlib.machinery.SourceFileLoader(
+            "p15patch_t2", str(Path(__file__).resolve().parents[1] / "pc1512" / "P15PATCH.PY")).load_module()
+    return P15
+
+
+def replace_n(text, old, new, want, name):
+    n = text.count(old)
+    if n != want:
+        raise SystemExit(f"T2PATCH: '{name}' matched {n} times, expected {want}")
+    return text.replace(old, new)
+
+
+def linear_row(row):
+    return ("    mov ax,%s                 ; T2PATCH: linear rows of 320 bytes\r\n"
+            "    mov cx,320\r\n    mul cx\r\n    mov di,ax\r\n") % row
+
+
+FLUSH_END = "FlushColumns endp\r\n"
+
+
+def patch_tsoft(t):
+    p = _p15()
+    t = replace_n(t, p.MACRO_ANCHOR, ROW_MACRO + p.MACRO_ANCHOR, 1, "row macro")
+    t = replace_n(t, FLUSH_END, FLUSH_END + "\r\n" + table_text(), 1, "table after FlushColumns")
+    t = replace_n(t, "    dw -1,20,0,0,4,size BITMAP", "    dw -1,80,0,0,16,size BITMAP", 1, "GDI 16 colours")
+    t = replace_n(t, p.tandy_row("bp"), linear_row("bp"), 2, "row address (bp)")
+    t = replace_n(t, p.tandy_row("ss:[bp-2]"), linear_row("ss:[bp-2]"), 2, "row address (local)")
+    t = replace_n(t, "    mov ax,ss:[bp-6]\r\n    shl ax,1\r\n    add di,ax\r\n",
+                  "    mov ax,ss:[bp-6]          ; T2PATCH: four VRAM bytes per shadow byte\r\n"
+                  "    shl ax,1\r\n    shl ax,1\r\n    add di,ax\r\n", 2, "column offset")
+    t = replace_n(t, p.FOURCOL_NOTE, "    ; T2PATCH: the four shadow planes become each pixel's nibble.\r\n",
+                  4, "four-colour note")
+    n = len(p.BYTE_LOOP.findall(t))
+    if n != 4:
+        raise SystemExit(f"T2PATCH: byte loops matched {n} times, expected 4")
+    t = p.BYTE_LOOP.sub(lambda m: "    mov bx,%s\r\n    t2_row\r\n" % m.group(1), t)
+    t = replace_n(t, "    mov ax,0b800h\r\n", "    mov ax,0a000h             ; T2PATCH: the Video II page\r\n",
+                  4, "VRAM segment")
+    t = replace_n(t, "    xor cx,cx\r\n    mov dx,160\r\n    call cursor_begin_retain\r\n",
+                  "    xor cx,cx\r\n    mov dx,320                ; T2PATCH: VRAM row bytes\r\n"
+                  "    call cursor_begin_retain\r\n", 1, "retain rows width")
+    t = replace_n(t, "    push cx\r\n    push dx\r\n    shl cx,1\r\n    shl dx,1\r\n    lea si,[bp-12]\r\n",
+                  "    push cx\r\n    push dx\r\n    shl cx,1                  ; T2PATCH: x4\r\n"
+                  "    shl cx,1\r\n    shl dx,1\r\n    shl dx,1\r\n    lea si,[bp-12]\r\n",
+                  1, "retain columns scale")
+    t = replace_n(t, p.TANDY_MODE, MODE_TEXT, 1, "enable mode")
+    # the longer enable text puts enable_ok out of short range
+    t = replace_n(t, "    cmp enabled_flag,0\r\n    jne enable_ok\r\n",
+                  "    cmp enabled_flag,0\r\n    je enable_first           ; T2PATCH: long enable text\r\n"
+                  "    jmp enable_ok\r\nenable_first:\r\n", 1, "enable_ok range")
+    t = replace_n(t, p.DISABLE_OLD, DISABLE_TEXT + p.DISABLE_OLD, 1, "disable mode")
+    import re
+    if re.search(r"(?m)^\s+mov (cx|dx),160\r$", t) or "0b800h" in t.lower():
+        raise SystemExit("T2PATCH: a Tandy 160-byte stride or B800h segment left in TSOFT")
+    return t
+
+
+TC_SCAN_OLD = ("    mov bx,ax\r\n    and bx,3\r\n    mov cl,13\r\n    shl bx,cl\r\n"
+               "    shr ax,1\r\n    shr ax,1\r\n    mov dx,160\r\n    mul dx\r\n    mov di,ax\r\n    add di,bx\r\n")
+TC_SCAN_NEW = ("    mov dx,320                ; T2PATCH: linear 320-byte rows\r\n"
+               "    mul dx\r\n    mov di,ax\r\n")
+TC_GEOM_OLD = ("    ; Cover complete adjacent plane-byte pairs for the clipped cursor.\r\n"
+               "    mov ax,tc_left\r\n    shr ax,1\r\n    shr ax,1\r\n    shr ax,1\r\n    shl ax,1\r\n"
+               "    mov tc_save_xbyte,ax\r\n"
+               "    mov bx,tc_right\r\n    dec bx\r\n    shr bx,1\r\n    shr bx,1\r\n    shr bx,1\r\n    shl bx,1\r\n"
+               "    sub bx,ax\r\n    add bx,2\r\n    mov tc_save_bytes,bx\r\n")
+TC_GEOM_NEW = ("    ; T2PATCH: two pixels per byte; cover every touched byte.\r\n"
+               "    mov ax,tc_left\r\n    shr ax,1\r\n"
+               "    mov tc_save_xbyte,ax\r\n"
+               "    mov bx,tc_right\r\n    dec bx\r\n    shr bx,1\r\n"
+               "    sub bx,ax\r\n    inc bx\r\n    mov tc_save_bytes,bx\r\n")
+TC_PIXEL_START = "    ; BL is the cursor-mask bit. BH is the physical screen-pixel bit.\r\n"
+TC_PIXEL_END = "    mov es:[di],ax\r\n"
+TC_PIXEL_NEW = (
+    "    ; T2PATCH: BL is the cursor-mask bit; BH the pixel's nibble (F0h for\r\n"
+    "    ; even x, 0Fh for odd). AND forces colour 0, XOR flips all four bits.\r\n"
+    "    mov ax,tc_work_x\r\n    mov bh,0f0h\r\n    test al,1\r\n    jz tcd_even_px\r\n    mov bh,0fh\r\n"
+    "tcd_even_px:\r\n    shr ax,1\r\n    mov di,tc_row_offset\r\n    add di,ax\r\n    mov al,es:[di]\r\n"
+    "    test tc_and[si],bl\r\n    jnz tcd_and_done\r\n    mov dl,bh\r\n    not dl\r\n    and al,dl\r\n"
+    "tcd_and_done:\r\n    test tc_xor[si],bl\r\n    jz tcd_xor_done\r\n    xor al,bh\r\n"
+    "tcd_xor_done:\r\n    mov es:[di],al\r\n")
+
+
+def patch_tcursor(t):
+    t = t.replace("Tandy 640x200 four-color", "Tandy Video II 640x200 sixteen-colour")
+    t = replace_n(t, TC_SCAN_OLD, TC_SCAN_NEW, 1, "tc_scan")
+    t = replace_n(t, "    mov ax,0B800h\r\n", "    mov ax,0A000h             ; T2PATCH: the Video II page\r\n",
+                  2, "VRAM segment")
+    t = replace_n(t, TC_GEOM_OLD, TC_GEOM_NEW, 1, "save geometry")
+    if t.count(TC_PIXEL_START) != 1 or t.count(TC_PIXEL_END) != 1:
+        raise SystemExit("T2PATCH: pixel block anchors not unique")
+    a = t.index(TC_PIXEL_START)
+    b = t.index(TC_PIXEL_END, a) + len(TC_PIXEL_END)
+    t = t[:a] + TC_PIXEL_NEW + t[b:]
+    # Retain lease checks: a VRAM row is 320 bytes; the 544-byte save buffer
+    # holds 32 rows of up to 17 bytes, as before.
+    t = replace_n(t, "    cmp dx,160\r\n    ck_require jbe,ckb_legacy\r\n",
+                  "    cmp dx,320                ; T2PATCH\r\n    ck_require jbe,ckb_legacy\r\n",
+                  2, "retain column limits")
+    t = replace_n(t, "    cmp cx,160\r\n    ck_require jb,ckb_legacy\r\n",
+                  "    cmp cx,320                ; T2PATCH\r\n    ck_require jb,ckb_legacy\r\n",
+                  1, "retain column origin")
+    import re
+    if re.search(r"(?m)^\s+(mov dx,160|cmp dx,160|cmp cx,160)\r$", t) or "0b800h" in t.lower():
+        raise SystemExit("T2PATCH: a Tandy constant left in TCURSOR")
+    return t
+
+
+def patch_staged(ega_dir):
+    from pathlib import Path
+    ega = Path(ega_dir)
+    done = {}
+    for name, fn in (("TSOFT.ASM", patch_tsoft), ("TCURSOR.ASM", patch_tcursor)):
+        p = ega / name
+        new = fn(p.read_bytes().decode("latin-1"))
+        assert "\n" not in new.replace("\r\n", ""), "bare LF"
+        p.write_bytes(new.encode("latin-1"))
+        done[name] = new
+    return done
+
+
 # --- host model -------------------------------------------------------------
 
 
