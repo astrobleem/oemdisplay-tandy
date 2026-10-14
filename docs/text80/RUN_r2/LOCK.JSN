@@ -1,0 +1,22 @@
+{
+ "purpose": "t80setd",
+ "command": [
+  "python3",
+  "src/text80/T80SETD.PY",
+  "--exe",
+  "/tmp/claude-0/-home-claude-oemdisplay-tandy/ce43402d-a3a1-5fd0-9e53-eb877bbd30e0/scratchpad/r5_apps/T80SET.EXE",
+  "--dosbox",
+  "/usr/bin/dosbox-x",
+  "--out",
+  "/tmp/claude-0/-home-claude-oemdisplay-tandy/ce43402d-a3a1-5fd0-9e53-eb877bbd30e0/scratchpad/r5_dos2"
+ ],
+ "bound_seconds": 200,
+ "lock": "/home/claude/work/EMU.LOCK",
+ "acquired_utc": "2026-10-14T14:41:15.105384+00:00",
+ "conflicts_before": [],
+ "pid": 1113,
+ "exit_code": 0,
+ "conflicts_after": [],
+ "released_utc": "2026-10-14T14:41:16.327979+00:00",
+ "seconds": 1.2
+}
