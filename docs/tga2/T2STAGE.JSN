@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "successful_stage_files": 6,
+  "refusal_cases": [
+    "missing source",
+    "pre-existing target"
+  ],
+  "missing_source_copies": 0,
+  "pre_existing_target_unchanged": true,
+  "T2MODES_CRLF_lines": 122,
+  "T2MODES_bytes": 245,
+  "T2MODES_sha256": "f875b99be4df98097668b7b5b76d5521f47c22f50db91a402a9b4d589c81157a",
+  "T2MODES_binary_unchanged": true,
+  "original_Windows_payload_redistributed": false,
+  "PREPINF_sha256": "df7b37418ebe49592fe55abcc457903058d9d27227d5b6ed52815439a8b06c8f",
+  "lease_released": true,
+  "verification_basis": "Actual guest-created file bytes and refusal preimages; nested CALL redirect did not retain console messages."
+}
