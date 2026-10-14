@@ -11,6 +11,8 @@ REP-prefix and link audits then run on the edited listings):
   t40prof    t40 + T80PROF timers/counters (measurement build)
   t80        TEXT80 80x25 colour text (T80PATCH over the same pipeline; the
              640x200 resources of the 640x200 profiles, hash-checked)
+  t80c       t80 with the compact UI profile (T80UI: one-cell window controls)
+  t80cprof   t80c + T80PROF
   t80prof    t80 + T80PROF
   t80pan     TEXT80 80x25 over a 640x400 desktop, panned (T80TALL pan)
   t80panprof t80pan + T80PROF
@@ -51,6 +53,16 @@ def res640(repo, resources):
     mp.write(resources / "CONFIG.ASM", mp.replace(cfg, "\tdw\t1\t\t\t;cxBorder", "\tdw\t2\t\t\t;cxBorder"))
 
 
+# t80c (compact UI profile): res640 plus T80UI's one-cell window controls
+RESC_SHA = "0" * 64
+
+
+def res_compact(repo, resources):
+    res640(repo, resources)
+    mp = load("modeprof_t80c", repo / "src" / "tandysw" / "MODEPROF.PY")
+    load("t80ui", HERE / "T80UI.PY").stage(resources, mp)
+
+
 def variants():
     prof = load("t80prof", HERE / "T80PROF.PY")
     t40 = lambda e: load("t40patch", ROOT / "txt40" / "T40PATCH.PY").patch_staged(e)
@@ -60,6 +72,9 @@ def variants():
         "t40": dict(mode="320x200x16", out="TXT40.DRV", edits=[t40]),
         "t40prof": dict(mode="320x200x16", out="T40PROF.DRV", edits=[t40, prof.patch_staged]),
         "t80": dict(mode="320x200x16", out="TEXT80.DRV", edits=[t80], res=res640, res_sha=RES640_SHA),
+        "t80c": dict(mode="320x200x16", out="TEXT80.DRV", edits=[t80], res=res_compact, res_sha=RESC_SHA),
+        "t80cprof": dict(mode="320x200x16", out="T80PROF.DRV", edits=[t80, prof.patch_staged], res=res_compact,
+                         res_sha=RESC_SHA),
         "t80prof": dict(mode="320x200x16", out="T80PROF.DRV", edits=[t80, prof.patch_staged], res=res640,
                         res_sha=RES640_SHA),
         "t80pan": dict(mode="320x200x16", out="T80PAN.DRV", edits=[tall("pan")], res=res640, res_sha=RES640_SHA),
