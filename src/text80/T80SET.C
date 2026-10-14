@@ -27,9 +27,12 @@
  * set is put back as it was (or removed, if ON added it) only while it still
  * has the value ON gave it; added lines and the helper are removed. Every
  * other setting, including ones changed since ON, stays. Then T80SET.STA and
- * the copies are deleted. RESTORE copies SYSTEM.T80 and WIN.T80 back whole
- * (the files exactly as before ON, losing changes made since) and deletes
- * them; OFF does that too after an ON from a T80SET without T80SET.STA.
+ * the copies are deleted. If T80SET.STA is missing, incomplete (it ends
+ * with an END line giving the number of changes) or damaged, OFF changes
+ * nothing and keeps every file. RESTORE, asked for explicitly, copies
+ * SYSTEM.T80 and WIN.T80 back whole (the files exactly as before ON,
+ * losing changes made since) and deletes them. The helper is matched as a
+ * whole load= entry (XTPAN.EXE, not the end of MYXTPAN.EXE).
  *
  * Files are never edited in place. New contents go to SYSTEM.T8N/WIN.T8N;
  * then for each file the live one is renamed .T8O and the new one renamed
@@ -308,6 +311,28 @@ static ENT *add(char kind, char file, const char *sec, const char *key, const ch
     return e;
 }
 
+/* the load= entry equal to helper (case-insensitive, a whole entry between
+ * spaces or tabs, not part of a longer name such as MYXTPAN.EXE): its offset
+ * in line, or -1 */
+static int entry(const char *line, const char *helper)
+{
+    const char *p = strchr(line, '='), *s;
+    int n = strlen(helper);
+    if (!p)
+        return -1;
+    for (p++;;) {
+        while (*p == ' ' || *p == '\t')
+            p++;
+        if (!*p || *p == '\r' || *p == '\n')
+            return -1;
+        s = p;
+        while (*p && *p != ' ' && *p != '\t' && *p != '\r' && *p != '\n')
+            p++;
+        if (p - s == n && strnicmp(s, helper, n) == 0)
+            return s - line;
+    }
+}
+
 /* ON: edit one section of inbuf into outbuf (then back into inbuf).
  * set[i] = "key=value" (replaced where the key is, inserted at the section's
  * end if missing; left alone if it already has the value); addl[i] = lines
@@ -388,9 +413,7 @@ static int edit(char f, const char *section, const char **set, int nset, const c
                 static char upper[300];
                 char *e;
                 loaddone = 1;
-                strcpy(upper, line);
-                strupr(upper);
-                if (strstr(upper, helper))
+                if (entry(line, helper) >= 0)
                     goto keep;
                 strcpy(upper, line);
                 chomp(upper);
@@ -464,21 +487,18 @@ static int undo(char f)
                     goto dropped;
                 }
                 if (e->kind == 'L' && keyis(line, "load")) {
-                    static char cur[300], up[300];
-                    char *h;
-                    int hl = strlen(e->val);
+                    static char cur[300];
+                    int hl = strlen(e->val), at;
                     done[i] = 1;
                     strcpy(cur, line);
                     chomp(cur);
-                    strcpy(up, cur);
-                    strupr(up);
-                    h = strstr(up, e->val);
-                    if (!h)
+                    at = entry(cur, e->val);
+                    if (at < 0)
                         break;                      /* already gone */
                     if (strcmp(e->orig, "-") == 0 && stricmp(strchr(cur, '=') + 1, e->val) == 0)
                         goto dropped;               /* ON made this line: remove it */
                     {
-                        int at = h - up, from = at, to = at + hl;
+                        int from = at, to = at + hl;
                         char *end = line;
                         if (from > 0 && cur[from - 1] == ' ')
                             from--;                 /* the space ON put before it */
@@ -517,13 +537,17 @@ static int savestate(const char *p)
     for (i = 0; i < nent; i++)
         o += sprintf(o, "%c\t%c\t%s\t%s\t%s\t%s\r\n", ent[i].kind, ent[i].file, ent[i].sec, ent[i].key,
                      ent[i].val, ent[i].orig);
+    o += sprintf(o, "END %d\r\n", nent);       /* a complete record ends so */
     return writenew(p, outbuf);
 }
 
+/* 1 only for a complete record: the header, whole change lines, and the
+ * END line with their number (a truncated file is refused, so OFF never
+ * deletes the copies on the strength of it) */
 static int loadstate(const char *p)
 {
     char *s, *f[6], *eol;
-    int i;
+    int i, ended = 0;
     nent = 0;
     if (readfile(p) < 0 || strncmp(inbuf, "T80SET 2", 8) != 0)
         return 0;
@@ -533,7 +557,13 @@ static int loadstate(const char *p)
         if (eol)
             *eol = 0;
         chomp(s);
-        if (*s) {
+        if (ended && *s)
+            return 0;                       /* anything after END */
+        if (strncmp(s, "END ", 4) == 0) {
+            if (atoi(s + 4) != nent || !eol)
+                return 0;
+            ended = 1;
+        } else if (*s) {
             f[0] = s;
             for (i = 1; i < 6; i++) {
                 f[i] = strchr(f[i - 1], '\t');
@@ -541,14 +571,15 @@ static int loadstate(const char *p)
                     return 0;
                 *f[i]++ = 0;
             }
-            if (!add(f[0][0], f[1][0], f[2], f[3], f[4], f[5]))
+            if (!strchr("KAL", f[0][0]) || f[0][1] || !strchr("SW", f[1][0]) || f[1][1] ||
+                !add(f[0][0], f[1][0], f[2], f[3], f[4], f[5]))
                 return 0;
         }
         if (!eol)
             break;
         s = eol;
     }
-    return 1;
+    return ended;
 }
 
 static int fail(const char *what)
@@ -598,16 +629,17 @@ int main(int argc, char **argv)
         return restore_whole();
     if (argc >= 3 && stricmp(argv[1], "OFF") == 0) {
         if (!exists(in("T80SET.STA"))) {
-            if (exists(in("SYSTEM.T80")) && exists(in("WIN.T80"))) {
-                printf("T80SET: no T80SET.STA (set up by an earlier T80SET): restoring the saved files whole\n");
-                return restore_whole();
-            }
+            if (exists(in("SYSTEM.T80")) || exists(in("WIN.T80")))
+                return fail("no T80SET.STA, so no record of what ON changed: nothing was changed.\n"
+                            "         T80SET RESTORE puts back SYSTEM.T80 and WIN.T80 whole\n"
+                            "         (losing every change made since they were saved)");
             return fail("not set up (no T80SET.STA): nothing to undo");
         }
         if (stale())
             return 1;
         if (!loadstate(in("T80SET.STA")))
-            return fail("T80SET.STA is damaged: nothing was changed (T80SET RESTORE puts back the saved files)");
+            return fail("T80SET.STA is incomplete or damaged: nothing was changed, the copies are kept\n"
+                        "         (T80SET RESTORE puts back SYSTEM.T80 and WIN.T80 whole)");
         if (readfile(in("SYSTEM.INI")) < 0)
             return fail("cannot read SYSTEM.INI (or larger than 24000 bytes)");
         kept = undo('S');

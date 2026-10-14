@@ -22,8 +22,12 @@ in the repository). Requires:
   T8N/T8O, copies or T80SET.STA left (for ON); when putting things back
   fails too, no file is lost: every live file is there or its .T8O is, and
   the copies are kept;
-- RESTORE (and OFF after a set-up with no T80SET.STA) puts the saved copies
-  back whole;
+- RESTORE puts the saved copies back whole; OFF with T80SET.STA missing,
+  truncated (only its header, no END line, a change line cut short) exits 1
+  and changes nothing, keeping the copies; a complete record of no changes
+  (END 0) is accepted;
+- the helper is a whole load= entry: MYXTPAN.EXE or XTPAN.EXEC are not
+  XTPAN.EXE, on ON or on OFF;
 - ON ... /C (compact UI profile) sets BorderWidth=7 and GridGranularity=1
   in [windows] (replacing an existing BorderWidth), OFF undoes them (one
   changed since stays);
@@ -249,14 +253,54 @@ def main():
         expect("RESTORE: both files back whole, copies and T80SET.STA removed",
                run(exe, "RESTORE", b.w).returncode == 0 and b.read("SYSTEM.INI") == s0 and
                b.read("WIN.INI") == w0 and b.files() == ["SYSTEM.INI", "WIN.INI"])
-        b = Box(t, "legacy", ini("load=CLOCK.EXE\r\n"))
-        s0, w0 = b.read("SYSTEM.INI"), b.read("WIN.INI")
+        b = Box(t, "nosta", ini("load=CLOCK.EXE\r\n"))
         run(exe, "ON", b.w, "TEXT80.DRV")
-        (b.w / "T80SET.STA").unlink(missing_ok=True)
+        (b.w / "T80SET.STA").unlink()
+        before = b.snap()
         r = run(exe, "OFF", b.w)
-        expect("OFF without T80SET.STA: restores the copies whole, says so",
-               r.returncode == 0 and b.read("SYSTEM.INI") == s0 and b.read("WIN.INI") == w0 and
-               "earlier T80SET" in r.stdout and b.files() == ["SYSTEM.INI", "WIN.INI"])
+        expect("OFF without T80SET.STA: exit 1, nothing changed, the copies kept, points to RESTORE",
+               r.returncode == 1 and b.snap() == before and "RESTORE" in r.stdout)
+        for name, cut in (("only its header", lambda s: s.split(b"\r\n")[0] + b"\r\n"),
+                          ("without its END line", lambda s: s[:s.rindex(b"END ")] if b"END " in s else s),
+                          ("a change line cut short", lambda s: s[:s.index(b"\t", s.index(b"\r\n") + 2) + 1])):
+            b = Box(t, "sta_" + name.replace(" ", "_"), ini("load=CLOCK.EXE\r\n"))
+            run(exe, "ON", b.w, "TEXT80.DRV", "T80HELP.EXE")
+            (b.w / "T80SET.STA").write_bytes(cut(b.read("T80SET.STA")))
+            before = b.snap()
+            r = run(exe, "OFF", b.w)
+            expect(f"T80SET.STA truncated to {name}: OFF exits 1, nothing changed, the copies and the record kept",
+                   r.returncode == 1 and b.snap() == before)
+        b = Box(t, "nochange", ini("load=CLOCK.EXE\r\n"), SYSTEM.replace("display.drv=ega.drv", "display.drv=TEXT80.DRV")
+                .replace("egasys", "XTTSYS").replace("egafix", "XTCFIX").replace("egaoem", "XTCOEM"))
+        (b.w / "WIN.INI").write_bytes(b.read("WIN.INI").replace(b"Modern=MODERN.FON", b"Modern=MODERN.FON\r\n"
+                                      b"Helv 8x8 (TEXT80)=T80HELV.FON\r\nCourier 8x8 (TEXT80)=T80COUR.FON"))
+        s0, w0 = b.read("SYSTEM.INI"), b.read("WIN.INI")
+        rc = run(exe, "ON", b.w, "TEXT80.DRV").returncode
+        expect("ON with everything already set: a complete record of no changes (END 0)",
+               rc == 0 and b.read("T80SET.STA").endswith(b"END 0\r\n"))
+        expect("... and OFF accepts it and leaves both files as they were",
+               run(exe, "OFF", b.w).returncode == 0 and b.read("SYSTEM.INI") == s0 and b.read("WIN.INI") == w0)
+
+        # the helper is a whole load= entry, not a substring
+        for name, load, want in (("MYXTPAN.EXE listed", "load=MYXTPAN.EXE\r\n", "load=MYXTPAN.EXE XTPAN.EXE"),
+                                 ("XTPAN.EXEC listed", "load=XTPAN.EXEC CLOCK.EXE\r\n",
+                                  "load=XTPAN.EXEC CLOCK.EXE XTPAN.EXE"),
+                                 ("XTPAN.EXE listed, other case", "load=CLOCK.EXE xtpan.exe\r\n",
+                                  "load=CLOCK.EXE xtpan.exe")):
+            b = Box(t, "helper_" + name.replace(" ", "_").replace(",", ""), ini(load))
+            w0 = b.read("WIN.INI")
+            run(exe, "ON", b.w, "T80PAN.DRV", "XTPAN.EXE")
+            loads = [ln for ln in b.read("WIN.INI").decode().split("\r\n") if ln.lower().startswith("load=")]
+            expect(f"{name}: ON gives '{want}'", loads == [want])
+            rc = run(exe, "OFF", b.w).returncode
+            expect(f"{name}: OFF gives WIN.INI back byte for byte", rc == 0 and b.read("WIN.INI") == w0)
+        b = Box(t, "helper_since", ini("load=CLOCK.EXE\r\n"))
+        run(exe, "ON", b.w, "T80PAN.DRV", "XTPAN.EXE")
+        (b.w / "WIN.INI").write_bytes(b.read("WIN.INI").replace(b"load=CLOCK.EXE XTPAN.EXE",
+                                                                b"load=MYXTPAN.EXE CLOCK.EXE XTPAN.EXE"))
+        run(exe, "OFF", b.w)
+        expect("MYXTPAN.EXE added before XTPAN.EXE since ON: OFF removes only XTPAN.EXE",
+               b"load=MYXTPAN.EXE CLOCK.EXE\r\n" in b.read("WIN.INI"))
 
         # compact UI profile (/C): BorderWidth=7 and GridGranularity=1 set, undone by OFF
         for name, extra, args in (("compact", "BorderWidth=3\r\n", ["/C"]),
