@@ -277,8 +277,9 @@ static void TypeTest(int n, int lines)
 static void NoteLines(int n)
 {
     HWND hn = FindWindow("Notepad", NULL), he;
-    DWORD w0;
+    DWORD w0, t0 = 0;
     int i;
+    char label[40];
     if (!hn || !(he = GetWindow(hn, GW_CHILD))) {
         LogLine("NLINES no Notepad");
         return;
@@ -286,6 +287,10 @@ static void NoteLines(int n)
     BringWindowToTop(hn);
     UpdateWindow(hn);
     Pump();
+    if (bProf) {
+        Read(1);
+        t0 = pb->stamp;
+    }
     w0 = GetCurrentTime();
     for (i = 0; i < n; i++) {
         SendMessage(he, WM_CHAR, 'a' + i % 26, 1L);
@@ -293,6 +298,13 @@ static void NoteLines(int n)
         UpdateWindow(he);
         UpdateWindow(hn);
         Pump();
+        if (bProf) {
+            Read(1);
+            wsprintf(label, "NLINE %d", i);
+            Dump(label, t0);
+            Read(1);
+            t0 = pb->stamp;
+        }
     }
     wsprintf(line, "NLINES n=%d ms=%lu", n, GetCurrentTime() - w0);
     LogLine(line);
