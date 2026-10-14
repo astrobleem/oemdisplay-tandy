@@ -278,7 +278,7 @@ static void valueof(const char *line, char *out, int size)
 
 static int sameline(const char *a, const char *b)
 {
-    char x[300], y[300];
+    static char x[300], y[300];         /* static: a 2 KB DOS stack */
     strncpy(x, a, sizeof(x) - 1);
     x[sizeof(x) - 1] = 0;
     strncpy(y, b, sizeof(y) - 1);
@@ -318,7 +318,7 @@ static int edit(char f, const char *section, const char **set, int nset, const c
                 const char *helper)
 {
     char *p = inbuf, *o = outbuf, *eol;
-    char line[300], v[64], k[40];
+    static char line[300], v[64], k[40];
     int insec = 0, found = 0, i, seen[8], have[8], loaddone = 0;
     for (i = 0; i < 8; i++)
         seen[i] = have[i] = 0;
@@ -385,7 +385,8 @@ static int edit(char f, const char *section, const char **set, int nset, const c
                 if (sameline(line, addl[i]))
                     have[i] = 1;
             if (helper && !loaddone && keyis(line, "load")) {
-                char upper[300], *e;
+                static char upper[300];
+                char *e;
                 loaddone = 1;
                 strcpy(upper, line);
                 strupr(upper);
@@ -420,7 +421,7 @@ static int edit(char f, const char *section, const char **set, int nset, const c
 static int undo(char f)
 {
     char *p = inbuf, *o = outbuf, *eol;
-    char line[300], v[64], sec[24];
+    static char line[300], v[64], sec[24];
     int i, len, kept = 0, done[MAXE];
     sec[0] = 0;
     for (i = 0; i < nent; i++)
@@ -463,7 +464,8 @@ static int undo(char f)
                     goto dropped;
                 }
                 if (e->kind == 'L' && keyis(line, "load")) {
-                    char cur[300], up[300], *h;
+                    static char cur[300], up[300];
+                    char *h;
                     int hl = strlen(e->val);
                     done[i] = 1;
                     strcpy(cur, line);
@@ -581,7 +583,7 @@ static int restore_whole(void)
 
 int main(int argc, char **argv)
 {
-    char drv[40], sysset[4][60], helper[40];
+    static char drv[40], sysset[4][60], helper[40];
     const char *sset[4], *fadd[2], *wset[2];
     int r, kept, compact = 0, nargs = argc;
     if (argc >= 5 && stricmp(argv[argc - 1], "/C") == 0) {
