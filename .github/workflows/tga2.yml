@@ -1,0 +1,44 @@
+name: Verify Video II host checks
+
+on:
+  pull_request:
+    paths:
+      - 'src/tga2/**'
+      - 'src/tandysw/RESERVE.PY'
+      - 'docs/tga2/T2RMUT.JSN'
+      - '.github/workflows/tga2.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/tga2/**'
+      - 'src/tandysw/RESERVE.PY'
+      - 'docs/tga2/T2RMUT.JSN'
+      - '.github/workflows/tga2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  host:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Check out exact public source without credentials
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git sparse-checkout init --no-cone
+          printf '/src/tga2/\n/src/tandysw/RESERVE.PY\n/docs/tga2/T2RMUT.JSN\n' | git sparse-checkout set --no-cone --stdin
+          git checkout --detach --force FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Verify exact mutation acceptance and recorded DOS failures
+        run: python3 -B src/tga2/T2RTEST.PY
+      - name: Verify Video II pixel conversion model
+        run: python3 -B src/tga2/T2PATCH.PY --check

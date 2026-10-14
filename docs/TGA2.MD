@@ -59,15 +59,22 @@ requires the last DOS block to be MCB 8FFFh, 0C00h paragraphs, owned by a PSP
 whose resident record at 103h is T2RESV's (`TNDYV2R1`, 9000h, 0C00h);
 otherwise it exits 3 and draws nothing (`/G` stops after the check, for the
 DOS tests). The harness checks the record offset in T2RESV's listing, and
-T2TEST refuses to generate T2SHOW if anything that touches video comes
-before the gate. Gate cases: no reservation, a foreign block at exactly
-9000h/0C00h, RESERVE's 16K block, a short arena (all exit 3, arena
-unchanged), and behind T2RESV (exit 0).
+T2TEST refuses to generate T2SHOW if any of four markers (`@MODE@`,
+`fill_row:`, `int 10h`, `0a000h`) comes before the gate. Gate cases: no
+reservation, a foreign block at exactly 9000h/0C00h, RESERVE's 16K block,
+a short arena (all exit 3), and behind T2RESV (exit 0). These tests compare
+five arena metadata fields before and after: `last_mcb`, `last_owner`,
+`last_size`, `arena_end`, and `bda_kb`. They do not trace all RAM or video
+register writes.
 
 Both fixes have failure tests (`T2RESV.PY --mutate`, `tga2/T2RMUT.JSN`):
 `stale_handles` puts the old 97FFh/400h comparison back and `no_gate`
 removes the gate; each run passes only if exactly the targeted checks fail,
-and both are caught. On the 86Box SL/2 the gated T2SHOW (SHA-256
+and both are caught. The host acceptance now compares the exact failure set
+and rejects duplicate reports. `T2RTEST.PY` covers expected-only, missing,
+extra, empty, duplicate and reordered failure lists, and checks the saved
+DOS failure lists under the corrected rule; it does not rerun the guest.
+On the 86Box SL/2 the gated T2SHOW (SHA-256
 `155a5ea2...570d`) still draws all 128,000 pixels exactly behind T2RESV
 (`tga2/T2SHOW2.JSN`, `tga2/T2SHOW2.PNG`). The Windows session below ran
 before the gate existed, with T2SHOW `09cdb59e...7809`, after T2RESV.
@@ -185,6 +192,7 @@ In this order, from a fresh boot, with nothing else loaded:
     # the pinned DOS toolchain and display view (tools/BUILDDEPS); DOSBox-X
     python3 src/tga2/T2BUILD.PY --repo <display view> --dosbox <dosbox-x> --out <dir>
     python3 src/tga2/T2PATCH.PY --check
+    python3 -B src/tga2/T2RTEST.PY           # host acceptance regression
     python3 src/tga2/T2RESV.PY --repo <display view> --dosbox <dosbox-x> --out <new dir>
     python3 src/tga2/T2RESV.PY ... --out <new dir> --mutate stale_handles   # must be CAUGHT
     python3 src/tga2/T2RESV.PY ... --out <new dir> --mutate no_gate         # must be CAUGHT

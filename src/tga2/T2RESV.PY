@@ -128,6 +128,12 @@ def write_sources(out, show=False, mutate=None):
     (out / "T2SHOW.ASM").write_bytes(T.generate(gate).encode("ascii"))
 
 
+def mutation_caught(mutation, failed):
+    """Accept exactly the targeted failures, each reported once."""
+    expected = set(MUTATIONS[mutation])
+    return bool(expected) and set(failed) == expected and len(failed) == len(expected)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--gen", action="store_true", help="write T2RESV.ASM and T2RESVT.ASM beside this script")
@@ -261,9 +267,8 @@ def main():
                t2show_bytes=(out / "T2SHOW.COM").stat().st_size,
                t2show_sha256=hashlib.sha256((out / "T2SHOW.COM").read_bytes()).hexdigest())
     if a.mutate:
-        want = MUTATIONS[a.mutate]
         res["mutation"] = a.mutate
-        res["caught"] = all(w in fails for w in want)
+        res["caught"] = mutation_caught(a.mutate, fails)
         res["status"] = "CAUGHT" if res["caught"] else "MISSED"
         print(f"T2RESV: mutation {a.mutate} " + res["status"])
     (out / "RESULT.JSON").write_text(json.dumps(res, indent=2) + "\n")
