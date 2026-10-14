@@ -350,10 +350,13 @@ T80ON added it, while it still has T80ON's value (one changed since is
 left as it is, with a message); the added lines and the helper are
 removed. Every other setting, including ones changed while TEXT80 was on,
 stays. With nothing changed since, both files come back byte for byte.
-Then `T80SET.STA` and the copies are deleted. `T80SET RESTORE` instead
-copies the saved files back whole (everything changed since is lost);
-`T80OFF` does that for a set-up made by the earlier T80SET, which kept no
-`T80SET.STA`.
+Then `T80SET.STA` and the copies are deleted. The helper is matched as a
+whole `load=` entry (`XTPAN.EXE`, never the end of `MYXTPAN.EXE`).
+`T80SET.STA` ends with an `END` line giving the number of changes; if it
+is missing, incomplete or damaged (for instance a set-up made by the
+earlier T80SET, which kept none), `T80OFF` stops, changes nothing and
+keeps every file. Only `T80SET RESTORE`, asked for explicitly, copies the
+saved files back whole (everything changed since is lost).
 
 The INI files are never edited in place. New contents are written to
 `SYSTEM.T8N`/`WIN.T8N` and read back; then each live file is renamed
@@ -363,8 +366,10 @@ are renamed back and the folder is as before (the copies and
 in place are the `.T8O` files deleted, and only after that the copies. If
 putting back fails as well, nothing more is deleted and the message names
 the files to rename by hand. `T80SETT.PY` checks all of this on the host,
-with every rename and every file write made to fail in turn (68 checks;
-the earlier T80SET fails 27 of them, every injected failure among them). The 86Box sessions check `T80OFF`
+with every rename and every file write made to fail in turn, truncated
+records and look-alike helper names (81 checks; the first T80SET fails 27
+of the 68 that existed then, every injected failure among them, and the
+second the 7 added for the last review). The 86Box sessions check `T80OFF`
 in the guest, including a WIN.INI section added at the DOS prompt while
 TEXT80 was on, which must survive it.
 
