@@ -300,6 +300,7 @@ Results (b6 builds unless stated):
 | Session | Machine | Result |
 |---|---|---|
 | TEXT80 25 | 86Box XT/CGA | **b7: 50/50**. b6: 49/1 (the overlap check looked for the wrong title; fixed) |
+| TEXT80 25, reviewed T80SET (`RUN_r1`) | 86Box XT/CGA | **51/51**, exit status 0: the b7 driver with the new T80SET.EXE; T80OFF keeps a WIN.INI section added at the DOS prompt while TEXT80 was on, the rest of WIN.INI byte for byte as before T80ON; no T80SET.STA or copies left. (The first attempt stopped in T80SET ON with run-time error R6000, a stack overflow, before anything was written: T80ON said nothing was changed and nothing was. Fixed by keeping the buffers off the 2 KB stack; the host test now fails any frame over 400 bytes.) |
 | TEXT80 PAN | 86Box XT/CGA | **b7: 23/23**. b6 stopped after 10 passes on a harness limit (pointer moves past row 199; fixed) |
 | TEXT80 VGA | DOSBox-X vgaonly | **b7: 34/34**. b4: 31/4 (all four were wrong expectations in the checks; fixed) |
 | Allocation failure (`t80panfail`) | 86Box XT/CGA | Windows does not start; DOS prompt works; T80OFF rollback; Windows starts with the previous driver |
