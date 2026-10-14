@@ -13,8 +13,9 @@ REM           C25 = T80CMP.DRV, 80x25 with the compact UI profile: window
 REM                 controls one text cell each; WIN.INI BorderWidth=7 and
 REM                 GridGranularity=1 (restored by T80OFF)
 REM Copies the driver and the 8x8 fonts into the Windows SYSTEM folder,
-REM then T80SET saves SYSTEM.INI and WIN.INI as SYSTEM.T80 and WIN.T80
-REM and switches the display. Nothing is deleted. Undo: T80OFF.
+REM then T80SET switches the display, recording each line it changes in
+REM T80SET.STA (and copies of the files as SYSTEM.T80 and WIN.T80). Nothing
+REM is deleted. Undo: T80OFF.
 SET T80W=%1
 SET T80P=%2
 IF "%T80W%"=="" SET T80W=C:\WINDOWS

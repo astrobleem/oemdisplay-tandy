@@ -28,7 +28,8 @@ brought wholly into view by the helper, the pointer footprint while panned,
 Notepad moved below the viewport, typed into while not shown (offscreen
 drawing) and revealed by a pan with no repaint; pan times from the helper
 log (C:\\T80\\XTPAN.LOG).
-Results: <vm>/T80WIN.JSN.
+Results: <vm>/T80WIN.JSN. Exit status 0 only if checks ran and all passed,
+1 if any failed or none ran (an exception also ends it non-zero).
 """
 import argparse
 import importlib.machinery
@@ -726,6 +727,13 @@ class Session:
         self.key("alt+F4", 8)
         self.wait_shot("exitdlg2", 90)
         self.key("Return", 60)
+        # a setting changed while TEXT80 was on (a new WIN.INI section,
+        # appended at the DOS prompt): T80OFF must keep it
+        if not self.tandy:
+            self.text("ECHO [T80KEEP]>>C:\\WINDOWS\\WIN.INI", 1)
+            self.key("Return", 4)
+            self.text("ECHO kept=1>>C:\\WINDOWS\\WIN.INI", 1)
+            self.key("Return", 4)
         self.text("CD \\T80", 1)
         self.key("Return", 2)
         self.text("T80OFF", 1)
@@ -734,9 +742,12 @@ class Session:
         sysini = self.read("::/WINDOWS/SYSTEM.INI").decode("latin1")
         self.check("T80OFF: SYSTEM.INI no longer names TEXT80.DRV and the backups are gone",
                    "TEXT80" not in sysini.upper() and "T80CMP" not in sysini.upper() and
-                   not self.read("::/WINDOWS/SYSTEM.T80"))
-        self.check("T80OFF: WIN.INI is byte for byte as before T80ON",
-                   self.read("::/WINDOWS/WIN.INI") == self.win0)
+                   not self.read("::/WINDOWS/SYSTEM.T80") and not self.read("::/WINDOWS/T80SET.STA"))
+        if not self.tandy:
+            w1 = self.read("::/WINDOWS/WIN.INI")
+            self.check("T80OFF: WIN.INI is as before T80ON plus the section added since (kept)",
+                       w1 == self.win0 + b"[T80KEEP]\r\nkept=1\r\n", size_before=len(self.win0), size_after=len(w1),
+                       tail=w1[-40:].decode("latin1"))
         rec = self.start_windows("rolledback", ("Program Manager",))
         self.check("rollback: Windows starts with the previous driver (BIOS columns no longer 80)",
                    bool(rec) and rec["cols"] != 80, cols=rec and rec["cols"])
@@ -771,7 +782,11 @@ def main():
         (s.vm / "SNAPS.BIN").write_bytes(s.read("::/T80/SNAPS.BIN"))
         if a.prof:
             (s.vm / "TPROF.LOG").write_bytes(s.read("::/T80/TPROF.LOG"))
-    return 0
+    res = s.result()
+    # exit status: 0 only if checks ran and every one passed
+    status = 0 if res["passed"] > 0 and res["failed"] == 0 else 1
+    print(f"T80WIN: {res['passed']} passed, {res['failed']} failed: exit {status}", flush=True)
+    return status
 
 
 if __name__ == "__main__":

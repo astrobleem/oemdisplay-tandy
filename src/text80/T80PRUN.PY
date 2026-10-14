@@ -213,8 +213,12 @@ def main():
     ap.add_argument("--profile", default="", help="T80ON profile argument (e.g. C25)")
     a = ap.parse_args()
     steps = ("metrics",) if a.metrics_only else ("nlines",) if a.nlines_only else ("type", "lines", "note")
-    Run(a.vm, a.dir, a.font, a.snap).session(a.chars, a.note, a.secs, a.t80on, steps, a.profile)
-    return 0
+    r = Run(a.vm, a.dir, a.font, a.snap)
+    r.session(a.chars, a.note, a.secs, a.t80on, steps, a.profile)
+    # no pass/fail checks here, but a step that never happened is a failed run
+    bad = [e for e in r.events if any(k in e for k in ("timeout", "run_failed", "not_seen"))]
+    print(f"T80PRUN: {len(bad)} steps not completed" + (f": {bad}" if bad else ""), flush=True)
+    return 1 if bad else 0
 
 
 if __name__ == "__main__":

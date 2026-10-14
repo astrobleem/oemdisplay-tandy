@@ -306,6 +306,12 @@ Results (b6 builds unless stated):
 | Allocation failure (`t80panfail`) | 86Box XT/CGA | Windows does not start; DOS prompt works; T80OFF rollback; Windows starts with the previous driver |
 | TEXT80 25 on Tandy 1000 HX | 86Box `tandy1000hx`, 8088 7.16 MHz, internal video, 640 KB | **b7: 49 pass, 1 fail**: after T80OFF, Windows starts with the HX's previous driver (TR53216, a 320x200 graphics mode; the BIOS check passes), but the text-buffer reader cannot see a graphics desktop, so the 'Program Manager' wait fails: a harness limit. 80x25 typing 152 ms/character, scrolling 1,657 ms/line, 173,120 bytes free. b6: never started (the backslash key, section 9) |
 
+Exit status: until the review fix, `T80WIN.PY` exited 0 whatever its
+checks said, so a run's verdict is its `T80WIN.JSN` (passed/failed
+counts), not the exit code recorded in `LOCK.JSN` (the HX run above says
+exit 0 with one failed check). It now exits 1 when any check fails or none
+ran; `T80PRUN.PY` exits 1 when a step never completed.
+
 Evidence: `docs/text80/<run>/<vm>/` holds each session's `T80WIN.JSN`,
 `session.log`, `SNAPS.BIN`, the decoded text of every screen (`*.txt`),
 86Box/DOSBox-X configuration, lock records and captures. No disk images,
@@ -321,11 +327,11 @@ Windows):
 
 `T80ON` copies the driver and the 8x8 fonts into the Windows SYSTEM
 folder (and, for PAN, `XTPAN.EXE` into the Windows folder), then
-`T80SET ON` saves `SYSTEM.INI` and `WIN.INI` byte for byte as
-`SYSTEM.T80` and `WIN.T80` and edits the live files:
+`T80SET ON` changes only these lines:
 - `SYSTEM.INI [boot]`: `display.drv=` the chosen driver;
   `fonts.fon=XTTSYS.FON`, `fixedfon.fon=XTCFIX.FON`,
-  `oemfonts.fon=XTCOEM.FON` (the first-party 8x8 fonts);
+  `oemfonts.fon=XTCOEM.FON` (the first-party 8x8 fonts); a line that
+  already has the value is left as it is;
 - `WIN.INI [windows] load=`: for PAN, `XTPAN.EXE` is appended; every
   existing entry stays (checked in 86Box with `T80SNAP.EXE` and, on the
   Tandy HX disk, `XTPAN.EXE` already on the line);
@@ -333,12 +339,38 @@ folder (and, for PAN, `XTPAN.EXE` into the Windows folder), then
   out: `Helv 8x8 (TEXT80)=T80HELV.FON` and
   `Courier 8x8 (TEXT80)=T80COUR.FON`.
 
-`T80ON` refuses if `SYSTEM.T80` already exists. `T80OFF` copies both
-backups back over the live files and deletes them, so Windows starts
-exactly as before (checked in every 86Box session, including after the
-forced allocation failure). The copied driver and fonts stay in SYSTEM,
-unused. Everything works from the DOS prompt, so a display driver that
-cannot start Windows cannot lock you out.
+Each change is recorded in `T80SET.STA` in the Windows folder (the line
+written and the line it replaced), and the two files as they were are
+copied to `SYSTEM.T80` and `WIN.T80` as a safety net. `T80ON` refuses if
+any of the three exists.
+
+`T80OFF` (`T80SET OFF`) undoes exactly the recorded changes in the files
+as they are now: a line T80ON set is put back as it was, or removed if
+T80ON added it, while it still has T80ON's value (one changed since is
+left as it is, with a message); the added lines and the helper are
+removed. Every other setting, including ones changed while TEXT80 was on,
+stays. With nothing changed since, both files come back byte for byte.
+Then `T80SET.STA` and the copies are deleted. `T80SET RESTORE` instead
+copies the saved files back whole (everything changed since is lost);
+`T80OFF` does that for a set-up made by the earlier T80SET, which kept no
+`T80SET.STA`.
+
+The INI files are never edited in place. New contents are written to
+`SYSTEM.T8N`/`WIN.T8N` and read back; then each live file is renamed
+`.T8O` and the new one renamed live; if any rename fails, the ones done
+are renamed back and the folder is as before (the copies and
+`T80SET.STA` of a failed `T80ON` are removed again). Only after both are
+in place are the `.T8O` files deleted, and only after that the copies. If
+putting back fails as well, nothing more is deleted and the message names
+the files to rename by hand. `T80SETT.PY` checks all of this on the host,
+with every rename and every file write made to fail in turn (77 checks with the compact profile's;
+the earlier T80SET fails 27 of them, every injected failure among them). The 86Box sessions check `T80OFF`
+in the guest, including a WIN.INI section added at the DOS prompt while
+TEXT80 was on, which must survive it.
+
+The copied driver and fonts stay in SYSTEM, unused. Everything works
+from the DOS prompt, so a display driver that cannot start Windows
+cannot lock you out.
 
 Why the two added faces: Windows 3.0 dialogs ask for bold "Helv 8"; the
 installed `HELVB.FON` strikes are 10 pixels tall and proportional, which
@@ -452,8 +484,9 @@ pixels, design the controls around the characters a text screen has.
   model, assembly, an explicit regression and four mutants);
 - 1-pixel vertical lines and, in WIN.INI `[windows]`, `BorderWidth=7`
   (sizing frames exactly one cell) and `GridGranularity=1` (windows move
-  and size on the 8-pixel grid), set by `T80SET ON ... /C` and restored
-  byte for byte by `T80OFF` (host test `T80SETT.PY`; checked in 86Box).
+  and size on the 8-pixel grid), set by `T80SET ON ... /C`, recorded in
+  `T80SET.STA` and undone by `T80OFF` like the [boot] lines (section 7;
+  host test `T80SETT.PY`; checked in 86Box).
 
 What Windows 3.0 does with them was measured, not assumed (`TPROF
 METRICS`, `docs/text80/RUN_c1/c80m`, `c80c`, `c80d`):
@@ -525,5 +558,5 @@ Limits: only windows on the grid get exact controls; Program Manager
 opens where PROGMAN.INI last put it (on this disk 35 pixels down, so its
 buttons are blocks until it is moved). Scroll arrows are exact only when
 the client area is on the grid. Dialog frames (4 pixels) and check boxes
-are unchanged. `T80OFF` removes the two WIN.INI lines with everything
-else.
+are unchanged. `T80OFF` undoes the two WIN.INI lines with the rest of
+T80ON's changes; a BorderWidth changed since is left as it is.
