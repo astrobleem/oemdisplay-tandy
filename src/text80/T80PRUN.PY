@@ -178,8 +178,12 @@ def main():
     ap.add_argument("--note", default="Hello TV owners 40x25")
     ap.add_argument("--secs", type=int, default=300)
     a = ap.parse_args()
-    Run(a.vm, a.dir, a.font, a.snap).session(a.chars, a.note, a.secs, a.t80on)
-    return 0
+    r = Run(a.vm, a.dir, a.font, a.snap)
+    r.session(a.chars, a.note, a.secs, a.t80on)
+    # no pass/fail checks here, but a step that never happened is a failed run
+    bad = [e for e in r.events if any(k in e for k in ("timeout", "run_failed", "not_seen"))]
+    print(f"T80PRUN: {len(bad)} steps not completed" + (f": {bad}" if bad else ""), flush=True)
+    return 1 if bad else 0
 
 
 if __name__ == "__main__":

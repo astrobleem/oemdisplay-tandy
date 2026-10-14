@@ -10,8 +10,9 @@ REM                 load=) pans it: Alt+PgDn / Alt+PgUp, pointer at the edge
 REM           VGA = T80VGA.DRV, VGA 80x50 text, 640x400 desktop (VGA only;
 REM                 Windows will not start on another adapter: run T80OFF)
 REM Copies the driver and the 8x8 fonts into the Windows SYSTEM folder,
-REM then T80SET saves SYSTEM.INI and WIN.INI as SYSTEM.T80 and WIN.T80
-REM and switches the display. Nothing is deleted. Undo: T80OFF.
+REM then T80SET switches the display, recording each line it changes in
+REM T80SET.STA (and copies of the files as SYSTEM.T80 and WIN.T80). Nothing
+REM is deleted. Undo: T80OFF.
 SET T80W=%1
 SET T80P=%2
 IF "%T80W%"=="" SET T80W=C:\WINDOWS
