@@ -35,11 +35,42 @@ counted substitutions (`src/tga2/T2RESV.PY`): it keeps 0C00h paragraphs at
 9000h (MCB 8FFFh) as one owned DOS block. Every RESERVE check stays: Tandy
 signature, BIOS 624K, text mode 3, DOS 3+, the real arena ending at 9C00h,
 last-fit allocation verified to the paragraph, no MCB edits, fail closed.
-17 of 17 DOS cases pass in DOSBox-X (`tga2/T2RESV.JSN`; normal, repeat,
+23 of 23 checks pass in DOSBox-X (`tga2/T2RESV.JSN`; normal, repeat,
 three allocation strategies, occupied top, occupied exact range, RESERVE's
 own 16K block already present, short arena, wrong BIOS size, wrong mode,
-expanded memory, CGA, DOS 2.11). T2RESV.COM is 1,502 bytes, SHA-256
-`ff478b95...0360`.
+expanded memory, CGA, DOS 2.11, and the T2SHOW gate cases below).
+T2RESV.COM is 1,502 bytes, SHA-256 `ff478b95...0360`.
+
+The test probe `T2RESVT.ASM` is generated from `RESERVET.ASM` the same way.
+Review fix (2026-10-14): its count of the resident's open handles still
+looked for RESERVE's block (97FFh, 400h paragraphs), so for T2RESV the count
+was never taken and "resident closes inherited handles" passed without
+checking anything. It now looks at 8FFFh/0C00h, and RESERVE's mode-09 alias
+probe (`P`), which is about physical 9800h only, is removed from T2RESVT
+and fails if called; the generator rejects any leftover 97FFh, 9800h or
+400h. A liveness check keeps it honest: a foreign resident at exactly
+9000h/0C00h (T2RESVT `T`, a TSR that keeps its handles) must be seen with
+open handles.
+
+**T2SHOW's reservation gate.** T2SHOW's enable text clears 64,000 bytes at
+physical 90000h, which without T2RESV can belong to DOS or another program.
+Review fix (2026-10-14): before touching any video register or memory it now
+requires the last DOS block to be MCB 8FFFh, 0C00h paragraphs, owned by a PSP
+whose resident record at 103h is T2RESV's (`TNDYV2R1`, 9000h, 0C00h);
+otherwise it exits 3 and draws nothing (`/G` stops after the check, for the
+DOS tests). The harness checks the record offset in T2RESV's listing, and
+T2TEST refuses to generate T2SHOW if anything that touches video comes
+before the gate. Gate cases: no reservation, a foreign block at exactly
+9000h/0C00h, RESERVE's 16K block, a short arena (all exit 3, arena
+unchanged), and behind T2RESV (exit 0).
+
+Both fixes have failure tests (`T2RESV.PY --mutate`, `tga2/T2RMUT.JSN`):
+`stale_handles` puts the old 97FFh/400h comparison back and `no_gate`
+removes the gate; each run passes only if exactly the targeted checks fail,
+and both are caught. On the 86Box SL/2 the gated T2SHOW (SHA-256
+`155a5ea2...570d`) still draws all 128,000 pixels exactly behind T2RESV
+(`tga2/T2SHOW2.JSN`, `tga2/T2SHOW2.PNG`). The Windows session below ran
+before the gate existed, with T2SHOW `09cdb59e...7809`, after T2RESV.
 
 The cost is memory: Windows 3.0 reports 176K free in real mode, against
 242K on the PC1512 run.
@@ -143,7 +174,7 @@ In this order, from a fresh boot, with nothing else loaded:
 1. `T2PROBE /W`: send `T2PROBE.TXT`, the exit code, and a photo if it drew.
    This confirms or refutes the page location.
 2. `T2MODES`: send `T2MODES.TXT`.
-3. `T2RESV` then `T2SHOW`: a photo of the screen. Sixteen vertical bars, black
+3. `T2RESV` then `T2SHOW` (it refuses to draw without T2RESV): a photo of the screen. Sixteen vertical bars, black
    on the left to white on the right, are the expected result.
 4. Only if 3 looks right: `display.drv=TNDYV2.DRV` in SYSTEM.INI (keep a copy
    of the old line), `T2RESV`, `WIN /R`.
@@ -155,6 +186,8 @@ In this order, from a fresh boot, with nothing else loaded:
     python3 src/tga2/T2BUILD.PY --repo <display view> --dosbox <dosbox-x> --out <dir>
     python3 src/tga2/T2PATCH.PY --check
     python3 src/tga2/T2RESV.PY --repo <display view> --dosbox <dosbox-x> --out <new dir>
+    python3 src/tga2/T2RESV.PY ... --out <new dir> --mutate stale_handles   # must be CAUGHT
+    python3 src/tga2/T2RESV.PY ... --out <new dir> --mutate no_gate         # must be CAUGHT
     python3 src/tga2/T2TEST.PY --out <gen>          # T2SHOW.ASM
     python3 src/pcjr/BUILDCOM.PY --deps <inputs> --dosbox <dosbox-x> --out <bin> \
         --src <gen>/T2SHOW.ASM --src src/pcp/MSTEST.ASM

@@ -1,0 +1,19 @@
+{
+ "stale_handles": {
+  "status": "CAUGHT",
+  "caught": true,
+  "failed": [
+   "handle count is taken on a block at 8FFFh/0C00h (foreign resident: open handles seen)"
+  ]
+ },
+ "no_gate": {
+  "status": "CAUGHT",
+  "caught": true,
+  "failed": [
+   "T2SHOW gate show_unreserved: exit 3, nothing touched",
+   "T2SHOW gate show_foreign_exact: exit 3, nothing touched",
+   "T2SHOW gate show_reserve16: exit 3, nothing touched",
+   "T2SHOW gate show_short_arena: exit 3, nothing touched"
+  ]
+ }
+}

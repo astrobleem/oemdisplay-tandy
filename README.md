@@ -90,8 +90,6 @@ or TGA-II driver and no Windows, DOS, font/grabber, ROM or compiler files.
 
 **Tandy Graphics II / ETGA 640x200x16: in development** for supported later
 SL/TL/RL models. It is not shipped and cannot be used on EX/HX.
-An emulator-tested first build runs Windows 3.0 on 86Box's SL/2; see
-[TGA2.MD](docs/TGA2.MD).
 
 For mode details, the text-mode experiment, app guides, long filename
 requirements and recovery, see the [user manual](docs/USERMAN.MD).
