@@ -537,6 +537,11 @@ Sessions (86Box XT/CGA 4.77 MHz, same disk, same harness, `RUN_c1`):
 | scrolling, maximized Notepad, ms/line | 3,460 | 3,172 | 3,740 |
 | free memory before Notepad | 207,520 | 209,504 | 209,664 |
 
+After the review fixes (the new T80SET with /C, `RUN_c3`): the C25
+session again 54/54, exit status 0, including row 0 of a maximized
+Notepad and T80OFF keeping a WIN.INI section added since while undoing
+BorderWidth, GridGranularity and the rest.
+
 The TPROF window's numbers depend on where its edit text falls against
 the grid, so they move with any change of metrics; the honest summary is
 that the compact profile is about as fast as TEXT80 25 (faster in small
