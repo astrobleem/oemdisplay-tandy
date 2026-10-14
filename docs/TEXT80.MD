@@ -371,7 +371,11 @@ records and look-alike helper names (81 checks; the first T80SET fails 27
 of the 68 that existed then, every injected failure among them, and the
 second the 7 added for the last review). The 86Box sessions check `T80OFF`
 in the guest, including a WIN.INI section added at the DOS prompt while
-TEXT80 was on, which must survive it.
+TEXT80 was on, which must survive it. `T80SETD.PY` runs the DOS build itself in DOSBox-X on synthetic INI
+files: ON/OFF byte for byte, MYXTPAN.EXE untouched, a record cut to its
+header and a missing record both refused with nothing changed, then
+RESTORE (`docs/text80/RUN_r2`: all passed; the previous build fails
+those three).
 
 The copied driver and fonts stay in SYSTEM, unused. Everything works
 from the DOS prompt, so a display driver that cannot start Windows
