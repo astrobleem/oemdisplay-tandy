@@ -262,7 +262,20 @@ real assembled presenter in a DOS harness, no Windows):
   that fails to assemble or run is "invalid" and fails the whole check;
   the unmutated presenter must pass and an unassemblable control must
   come back invalid. One mutant was removed as equivalent (attribute
-  change on a kept hint; reasoning in the file). @@B7MUT@@
+  change on a kept hint; reasoning in the file).
+
+  Final results (`docs/text80/PRESENTER`): T40TEST passes at 40x25,
+  80x25, 80x50 and 80x25 panned over 80x50 (306-311 flushes each, every
+  cell of every flush and every screen dump compared, 51-52 explicit
+  regression checks). Mutation: 40x25 59/59 killed, 80x25 59/59, panned
+  80x50 66/66 (pan and band mutants included); every control as required.
+  Getting there, the runs found real gaps, each closed with a regression
+  checked against the model with the rule broken: the aligned-copy ring
+  rules (40x25); diff flushes never taken in 80 columns because the
+  regression's snapshots exceeded the 8 KB buffer, and a change in the
+  intensity plane only (80x25); glyphs inked only in row 0 or row 7
+  (panned). (The 40x25 run predates the last two additions, which only
+  add checks; T40TEST with them passes at every geometry.)
 
 **Pan rule**: `T80PANT.PY` (section 4).
 
