@@ -1,0 +1,177 @@
+{
+  "kind": "root_README_documentation_source_refresh",
+  "host_only": true,
+  "baseline_main_commit": "212842cdd9c6877d8a01b00d8d6bc7e8e65f401a",
+  "readme_proposal_commit": "4128f84cb224628ee5d08e47c4844dab3b531e05",
+  "precedent_commit": "5d2ba709db5bf822515a08549059965a6762fce9",
+  "baseline_qualification_sha256": "4907a629b5bb03b002aaa732ff59313db7aa8590cb6ee2967cf6b190a535bbda",
+  "refreshed_qualification_sha256": "f87377586f745d1e7524822d60d1dd728f707679c5ace1afdc3642917e61a9e1",
+  "source_pin_updates": {
+    "README.md": {
+      "expected": "da0d73209c3eb000bc458c9122bc78367b6f3ce9f7037da487507cc99a589d1b",
+      "actual": "50f4d42e266504c3f642e9760c6469babce71ab28013f015a0bb62931cba20cf"
+    }
+  },
+  "all_other_qualification_fields_unchanged": true,
+  "all_other_source_pins_verified": 642,
+  "package_sha256_unchanged": {
+    "BUILD.JSON": "eff3af0aebe254b3e24a16f9d88fca81ceb010d8a8bd307cc1d2eb2f6bb88361",
+    "README.TXT": "e0d86d74f7d362aa484c5e5d1fe436b8ad7b839997e7897adf27179dd820f7ac",
+    "SHA256SUMS": "43b29669ff615f955555a676f4076f366e9d609b88ab49e4429d688741cfc956",
+    "WINXT720.IMG": "7b3e47f01feb7de8ba747355bc6e917f03197119fd0129f27e7f5f514a2d1817",
+    "WINXT720.ZIP": "9cb1f5ed42d93940cfd1e70a75a9b99cb0e6bf4b8b854b5249a3bd752fca117f",
+    "WXTTOOLS.ZIP": "71ab4cfe76183ea997e372707fe6e89c2cc59930326b002cad2e0e25c16ca9b1"
+  },
+  "runtime_helper_and_compiled_source_pins_unchanged": true,
+  "preserved_native_evidence_unchanged": true,
+  "no_guest_or_new_runtime_qualification": true,
+  "no_release_publication_or_asset_changes": true,
+  "all_commands_passed": true,
+  "commands": [
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/BUILDDEPS/TESTDEPS.PY",
+      "exit_code": 0,
+      "log_sha256": "2b76a1ff62ee053411ae52947b6b57a488ada79958fe6e6210f77571aa8243eb",
+      "seconds": 1.017
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B examples/TSHELL/TESTS/BNDTEST.PY",
+      "exit_code": 0,
+      "log_sha256": "3f894e3e0b30b15dfb57a093f637c035c3ecea8e4d57365de841744bce50185a",
+      "seconds": 0.421
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B examples/TSHELL/TESTS/GRPTEST.PY",
+      "exit_code": 0,
+      "log_sha256": "684fdd320cfb3416e2000f4e9710c32b3f58635342b2d7a44ae6302a62ea954a",
+      "seconds": 0.363
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B examples/TSHELL/TESTS/RUNHOST.PY",
+      "exit_code": 0,
+      "log_sha256": "12ff542d250e176660e41ef269e6c929d2d15005a6ac1937901153522c8827ce",
+      "seconds": 1.709
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B examples/TSHELL/DOS/TESTSEL.PY",
+      "exit_code": 0,
+      "log_sha256": "5dbce6eed5add4f875d3b5071ce6d2fee8306ca6eeabc566f37caf9f1ff022f5",
+      "seconds": 0.566
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B examples/TSHELL/DOS/TESTNITE.PY",
+      "exit_code": 0,
+      "log_sha256": "ee6ed037b7bb8fb9122a74e080d2711f8f7e00ffb0fdb43bd1597b0cf0896578",
+      "seconds": 0.127
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B docs/PROMO/VERIFY.PY",
+      "exit_code": 0,
+      "log_sha256": "ce32a71b0a442c86b38ea072776e7b67017e1384e81ad374944056f169e5a2de",
+      "seconds": 0.027
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/FLASHDISK/TESTFAT.PY",
+      "exit_code": 0,
+      "log_sha256": "432dbfdc46b59b319ad43fd673e488d78fe58649030e5d6790aa4e9370313436",
+      "seconds": 0.625
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/FLASHDISK/TESTWAVE.PY",
+      "exit_code": 0,
+      "log_sha256": "199ba496f288116d36c62f29346d4fbf0bd75745a1c893abfcbdaa4c6d5b1033",
+      "seconds": 0.101
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/FLASHDISK/TESTPKG.PY",
+      "exit_code": 0,
+      "log_sha256": "5afd32c580e76bcb3a78dfb11d97caa8f436ddaea70f0a882ffc9cb54cc74904",
+      "seconds": 17.56
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/XTFONTS/HOST.PY BUILD.PY --out /workspace/frontdoors/qualification-run/fonts",
+      "exit_code": 0,
+      "log_sha256": "1cdd5781bb667ed60e48655b6197d03ffbb7af4fd95eb397d5df156bdf5467a7",
+      "seconds": 0.388
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/XTFONTS/HOST.PY TEST.PY --out /workspace/frontdoors/qualification-run/fonts",
+      "exit_code": 0,
+      "log_sha256": "548cae77fe11355b78aa9bb360e3899777ba49b471167395e84da4b2f29840c0",
+      "seconds": 0.588
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/XTFONTS/HOST.PY NATIVEQA.PY --native /workspace/frontdoors/qualification-run/native-font-checks/FIVE-MODES --fonts /workspace/frontdoors/qualification-run/fonts",
+      "exit_code": 0,
+      "log_sha256": "651ddb4930f2c41cf32354337a5691c47210d8019bfdd271a82f0f525485fb8c",
+      "seconds": 0.182
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/XTFONTS/HOST.PY ENCQA.PY --guest /workspace/frontdoors/qualification-run/native-font-checks/ALL-BYTES/CGA --fonts /workspace/frontdoors/qualification-run/fonts --family CGA",
+      "exit_code": 0,
+      "log_sha256": "0a5a552290d185500dd7e613d6855ab1160fb64c38210a2e17ab20333b90ee9e",
+      "seconds": 1.042
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/XTFONTS/HOST.PY ENCQA.PY --guest /workspace/frontdoors/qualification-run/native-font-checks/ALL-BYTES/EGA --fonts /workspace/frontdoors/qualification-run/fonts --family EGA",
+      "exit_code": 0,
+      "log_sha256": "c49b9deebf21650bff017a1b180d959451b4138adf1a655805d2f8467db94320",
+      "seconds": 0.457
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/XTFONTS/HOST.PY ENCQA.PY --guest /workspace/frontdoors/qualification-run/native-font-checks/ALL-BYTES/TXFONT --fonts /workspace/frontdoors/qualification-run/fonts --family TXT",
+      "exit_code": 0,
+      "log_sha256": "1f5642aa146bac77b1b7468a9eefb6448679585b85818e817850aac7687c34af",
+      "seconds": 0.955
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/FLASHDISK/MAKEIMG.PY --out /workspace/frontdoors/qualification-run/package",
+      "exit_code": 0,
+      "log_sha256": "eff3af0aebe254b3e24a16f9d88fca81ceb010d8a8bd307cc1d2eb2f6bb88361",
+      "seconds": 1.964
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/FLASHDISK/TESTWAVE.PY",
+      "exit_code": 0,
+      "log_sha256": "edb4e2159c923ea45a32656078835cdf531c3d7b414c670dd786978875cb0678",
+      "seconds": 0.112
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/FLASHDISK/TESTPKG.PY --verify /workspace/frontdoors/qualification-run/package",
+      "exit_code": 0,
+      "log_sha256": "97b75b2a58a3c7aace60c34d64bc5c4203b29946d1582e27ac2daf468c4592fa",
+      "seconds": 3.001
+    },
+    {
+      "command": "sha256sum --check SHA256SUMS",
+      "exit_code": 0,
+      "log_sha256": "81c530b96b843582f5c5103a92e85ce8d076a0f9ba9abb76d8eb2ceeb2de6951",
+      "seconds": 0.011
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/FLASHDISK/PUBLISH.PY --package /workspace/frontdoors/qualification-run/package --out /workspace/frontdoors/qualification-run/release --commit working-tree",
+      "exit_code": 0,
+      "log_sha256": "2a7c745f6da91ca42f18301165a0df53b753f964b95c0bd7bfbf48e7c3ab8761",
+      "seconds": 7.368
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/FLASHDISK/PUBLISH.PY --verify /workspace/frontdoors/qualification-run/release --commit working-tree",
+      "exit_code": 0,
+      "log_sha256": "2a7c745f6da91ca42f18301165a0df53b753f964b95c0bd7bfbf48e7c3ab8761",
+      "seconds": 3.034
+    },
+    {
+      "command": "/workspace/.venvs/oemdisplay-tandy/bin/python -B tools/FLASHDISK/TESTPUB.PY --release /workspace/frontdoors/qualification-run/release",
+      "exit_code": 0,
+      "log_sha256": "9fb7b23c2a85e0df971091a8c945f187fe28df166f1a0e63cbc52348b29d8de3",
+      "seconds": 4.742
+    },
+    {
+      "command": "sha256sum --check SHA256SUMS",
+      "exit_code": 0,
+      "log_sha256": "6596a83153d92d3477428ff9f7cc544e204402148c8f67e983a3d0aa0a4c44a5",
+      "seconds": 0.015
+    }
+  ],
+  "scope": "Root README availability and navigation correction only. Source-archive README binding refreshed after complete portable host validation. All runtime, helper, package, compiled-source and preserved native evidence pins retain their prior values. No new binary or native run is claimed; no release is published."
+}
