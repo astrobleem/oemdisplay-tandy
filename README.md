@@ -63,15 +63,15 @@ have their own installation guides.
 
 ## Other video hardware: experimental drivers
 
-These are separate driver-only experiments for cloned Windows 3.0 installs.
+These are separate experimental driver packets for cloned Windows 3.0 installs.
 Back up the complete installation and follow the machine's recovery guide.
 Physical hardware and fresh Windows Setup integration remain unqualified.
 
 | Machine/card | Mode and download | Status and guide |
 | --- | --- | --- |
-| Amstrad PC1512 | [PC1512.DRV, 640x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) | Emulator rendering evidence; one cursor-state case remains unresolved. [Install/recover](experiments/DISPLAY3/PC1512.TXT) |
-| IBM PCjr | [TNDYJR.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCJR.ZIP) | Guard required before every start; expanded-memory reservation on real PCjr is unqualified. [Install/recover](experiments/DISPLAY3/PCJR.TXT) |
-| IBM XT + Plantronics ColorPlus | [PCP3216.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP) | Emulator rendering evidence; requires the ColorPlus card and its dedicated VRAM. [Install/recover](experiments/DISPLAY3/PCP3216.TXT) |
+| [Amstrad PC1512](https://github.com/astrobleem/windows-3-amstrad-pc1512) | [PC1512.DRV, 640x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) | Emulator rendering evidence; one cursor-state case remains unresolved. [Install/recover](experiments/DISPLAY3/PC1512.TXT) |
+| [IBM PCjr](https://github.com/astrobleem/windows-3-pcjr) | [TNDYJR.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCJR.ZIP) | Guard required before every start; expanded-memory reservation on real PCjr is unqualified. [Install/recover](experiments/DISPLAY3/PCJR.TXT) |
+| [IBM XT + Plantronics ColorPlus](https://github.com/astrobleem/windows-3-plantronics) | [PCP3216.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP) | Emulator rendering evidence; requires the ColorPlus card and its dedicated VRAM. [Install/recover](experiments/DISPLAY3/PCP3216.TXT) |
 
 [Experimental release, source and checksums](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experimental-displays-2026-10-12)
 and [qualification scope](experiments/DISPLAY3/README.MD). Tandy EX/HX users
@@ -88,8 +88,19 @@ or TGA-II driver and no Windows, DOS, font/grabber, ROM or compiler files.
 | 320x200 | 4 |
 | 160x200 | 16 |
 
-**Tandy Graphics II / ETGA 640x200x16: in development** for supported later
-SL/TL/RL models. It is not shipped and cannot be used on EX/HX.
+**Tandy Video II 640x200x16: experimental SL/2 family only.**
+[Download TNDYV2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-video-ii-2026-10-14-r2/TNDYV2.ZIP)
+and read the [release notes and qualification](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experimental-video-ii-2026-10-14-r2)
+and [Setup, owned-file staging and recovery guide](docs/tga2/INSTALL.TXT).
+Windows rendering evidence covers the emulated SL/2 only. Physical hardware,
+other SL/TL/RL models and Windows 3.1 remain unqualified; EX/HX must not use
+this driver. Run T2RESV successfully before Setup and every Windows start.
+
+[TEXT80 and compact C25](docs/TEXT80.MD) are merged experimental text-mode
+driver profiles with emulator evidence. No current TEXT80/C25 binary package
+has been released; the older rc.6 TXTMODE feasibility driver is historical.
+Olivetti PC1 Yamaha candidates remain private and emulator-tested only;
+no public download is available yet.
 
 For mode details, the text-mode experiment, app guides, long filename
 requirements and recovery, see the [user manual](docs/USERMAN.MD).
