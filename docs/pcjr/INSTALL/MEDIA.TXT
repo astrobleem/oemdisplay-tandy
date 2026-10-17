@@ -34,7 +34,8 @@ Correction (2026-10-17): the first private copy came from the same PCjs
 set through a faulty conversion that changed sector data in 46 files,
 including SETUP.EXE and SETUP.INF (its raw images did not match the PCjs
 MD5). All evidence in docs/pcjr/INSTALL was rerun on the verified images
-above, from commit c7144d1ec808eff012d0e5ac2b44e24489e7442d: 282 pooled
+above (session: commit 9ae44084127f; the others:
+commit c7144d1ec808; see docs/PCJR.MD): 282 pooled
 files, manifest SHA-256 342d34b07e8bc039c0bf22eb0c8442ec
 ce656cbb720a88c05c8ffc9d23fbfbed
 (sha256sum lines of the files, sorted by name). CGA.GR2 was not affected.

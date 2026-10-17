@@ -55,10 +55,13 @@ User instructions: [`src/pcjr/INSTALL/INSTALL.TXT`](../src/pcjr/INSTALL/INSTALL.
 
 ### What the final evidence used
 
-The emulator results in `docs/pcjr/INSTALL` come from one run of the
-committed scripts at **commit `c7144d1ec808eff012d0e5ac2b44e24489e7442d`** with a clean tree:
-`SESSION.JSN`, `CONVERT.JSN`, `MODET.JSN` and the three `GR*.JSN` each record
-`source_commit` and `source_tree_dirty: false`. `TOOLS.JSN` is
+The emulator results in `docs/pcjr/INSTALL` come from committed scripts on
+a clean tree; each of `SESSION.JSN`, `CONVERT.JSN`, `MODET.JSN` and the three
+`GR*.JSN` records its `source_commit` and `source_tree_dirty: false`.
+`SESSION.JSN` is from **commit `9ae44084127fe5d2f0c57ee1e1842d1ee1885573`**; the others are from **commit
+`c7144d1ec808eff012d0e5ac2b44e24489e7442d`**. The only change between the two adds the JRHOLDT exit-code
+requirement to the session's held-page check (`JRCHK.PY`, `JRSESS.PY`,
+`TESTPACK.PY`); the grabber, conversion and self-test runs do not use it. `TOOLS.JSN` is
 `src/pcjr/BUILDCOM.PY`'s build record of the test tools (sizes and SHA-256;
 it has no commit field); the `JRMODE.COM` and `JRHOLDT.COM` hashes recorded
 in the result files match it. The guest files `JRLOG.TXT`, `GUARD0.TXT` and
@@ -174,8 +177,8 @@ builds gave the same hash. No DDK file is committed.
 | As installed | SYSTEM.INI `display.drv=TNDYJR.DRV`, `286grabber=JRGRAB.GR2`, the three XTE fonts, keyboard `type=1`; installed files equal the packet's; no CGA/EGA display files; **WIN.COM is byte for byte the media's `WIN.CNF` (expanded on the host) + `XTSTATIC.LGO` + `WXTSPL01.RLE`**; fresh Main/Accessories/Games groups; Program Manager's saved window (`32 20 288 160`) and every group window inside 320x200; no CONFIG.SYS/AUTOEXEC.BAT written |
 | Session 1 (`JRWIN`) | exact 320x200 desktop; File menu from the keyboard and exact restore; serial mouse to an exact pixel and a click opening the same menu; Notepad text saved byte-exact; Paintbrush box drawn with the mouse, saved, reopened through File > Open with an identical canvas, BMP equal to the screen; COMMAND.COM wrote a file, Alt+Tab away and back restored the text screen exactly, EXIT returned to an identical desktop; Exit Windows |
 | Session 2 (`JRWIN`) | desktop identical to session 1's |
-| Refusal | `JRHOLDT` keeps the page as an ordinary resident program; `JRWIN > C:\HELD.TXT` must contain exactly JRGUARD's "not reserved by DOS" refusal followed by JRWIN's "guard refused/failed. Windows not started.", with exit code exactly 1 |
-| Exit codes | `GUARD 0`, `WIN1 0`, `WIN2 0`, `HELD 1`, each logged exactly (0-4, 5+) by the harness `C:\JRRC.BAT` |
+| Refusal | `JRHOLDT` keeps the page as an ordinary resident program and must exit 0 (it stays resident only with its block at exactly 1800h; exit 2 would leave the page free and give the same refusal text); `JRWIN > C:\HELD.TXT` must contain exactly JRGUARD's "not reserved by DOS" refusal followed by JRWIN's "guard refused/failed. Windows not started.", with exit code exactly 1 |
+| Exit codes | `GUARD 0`, `WIN1 0`, `WIN2 0`, `HOLDT 0`, `HELD 1`, each logged exactly (0-4, 5+) by the harness `C:\JRRC.BAT` |
 
 The guest's own files are kept: `JRLOG.TXT`, `GUARD0.TXT`, `HELD.TXT`.
 
@@ -223,9 +226,11 @@ the bad cases (no emulator; the CI workflow `pcjrinst.yml` runs them):
 
 - **Refused launch.** Previously any capture that was not a 320x200
   frame passed. Now only JRGUARD's exact refusal text + JRWIN's refusal
-  line + exit code 1 passes. Rejected in tests: JRWIN's missing-WIN.COM and
+  line + exit code 1 passes, and only after JRHOLDT exited 0 (resident at
+  exactly 1800h). Rejected in tests: JRWIN's missing-WIN.COM and
   abnormal-exit messages, JRGUARD's "not a PCjr" and "chain not valid"
-  refusals, silence, JRWIN's line alone, and codes 0, 2, 5+ or none.
+  refusals, silence, JRWIN's line alone, codes 0, 2, 5+ or none, and
+  JRHOLDT codes 1, 2, 5+ or none.
 - **OEMSETUP.INF.** Previously only lines starting `TNDYJR` were counted.
   Now every `[display]` entry counts; a second entry with another key, or a
   sole entry with another key, is refused.

@@ -1,5 +1,5 @@
 {
- "source_commit": "c7144d1ec808eff012d0e5ac2b44e24489e7442d",
+ "source_commit": "9ae44084127fe5d2f0c57ee1e1842d1ee1885573",
  "source_tree_dirty": false,
  "packet_sha256": {
   "FONTLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
@@ -276,6 +276,7 @@
     "GUARD": "0",
     "WIN1": "0",
     "WIN2": "0",
+    "HOLDT": "0",
     "HELD": "1"
    }
   },
@@ -288,6 +289,7 @@
   {
    "check": "held_page_refused_by_jrguard",
    "result": "PASS",
+   "jrholdt_rc": "0",
    "output": "JRGUARD: video page 18000h-1FFFFh is not reserved by DOS.\r\n         Load a PCjr memory driver that reserves it, see PCJR.MD.\r\nJRWIN: guard refused/failed. Windows not started.\r\n",
    "rc": "1"
   }
