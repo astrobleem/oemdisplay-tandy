@@ -9,7 +9,8 @@ Emulator evidence only (JRDBX.PY). Everything is typed into the guest:
  2. A user change made from DOS: a [PCjrTest] section appended to WIN.INI.
     The INI files and group files are then snapshotted from the host.
  3. C:\\PCJREXP\\JRGUARD; CD \\WINDOWS; SETUP; Display = Other, C:\\PCJREXP,
-    the PCjr selector; ENTER.
+    the PCjr selector; ENTER; at the CONFIG.SYS question the default
+    "Setup can make NO changes for you"; ENTER.
  4. Checks: in SYSTEM.INI only Setup's display, grabber and font entries
     (and [boot.description] display.drv) changed; WIN.INI, CONTROL.INI,
     PROGMAN.INI and every .GRP file are byte-identical, including the user's
@@ -117,14 +118,16 @@ def main(argv):
         J.key("Return", wait=4)
         J.key("Return", wait=5)                      # the PCjr selector
         r.shot("c04_maint_selected")
-        J.key("Return", wait=40)                     # accept: copy, rebuild WIN.COM
-        r.shot("c05_maint_done")
+        J.key("Return", wait=40)                     # accept: copy the PCjr files
+        r.shot("c05_maint_config")
+        J.key("Return", wait=30)                     # CONFIG.SYS: 3.) make NO changes (default)
+        r.shot("c06_maint_done")
         after = snapshot(r.c)
         r.start_windows()
-        d = r.shot("c06_desktop")
+        d = r.shot("c07_desktop")
         r.check("converted_desktop_exact_frame", d is not None)
         r.exit_windows("WIN1")
-        r.shot("c07_exit")
+        r.shot("c08_exit")
     finally:
         J.stop(out)
     sb, sa = ini_text(before["SYSTEM.INI"]), ini_text(after["SYSTEM.INI"])
