@@ -18,6 +18,7 @@ Exit 0 on success, 1 on any refusal.
 """
 import argparse
 import hashlib
+import importlib.machinery
 import json
 import re
 import sys
@@ -27,6 +28,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 WINXT = ROOT / "distributions" / "WINXT"
 RELEASE_PINS = ROOT / "experiments" / "DISPLAY3" / "PINS.JSN"
+K = importlib.machinery.SourceFileLoader("jrchk", str(HERE / "JRCHK.PY")).load_module()
 
 # First-party payloads taken from distributions/WINXT, by SHA-256.
 FIRST_PARTY = {
@@ -63,9 +65,9 @@ def check_inf(text, present):
     raw = text.encode("ascii")
     if b"\n" in raw.replace(b"\r\n", b""):
         raise Refused("OEMSETUP.INF must use CRLF only")
-    rows = [l for l in text.split("\r\n") if l.startswith("TNDYJR")]
-    if len(rows) != 1:
-        raise Refused("OEMSETUP.INF must have exactly one TNDYJR row")
+    rows = K.inf_display_entries(text)          # every [display] entry, any key
+    if len(rows) != 1 or not rows[0].startswith("TNDYJR"):
+        raise Refused("OEMSETUP.INF [display] must have exactly one entry, TNDYJR (found %d)" % len(rows))
     fields = [f.strip() for f in rows[0].split("=", 1)[1].split(",")]
     desc = fields[1].strip('"')
     if not desc.startswith("EXPERIMENTAL") or "PCjr" not in desc or len(desc) > SELECTOR_MAX:

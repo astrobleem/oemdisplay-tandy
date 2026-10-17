@@ -13,6 +13,8 @@ from unittest.mock import patch
 HERE = Path(__file__).resolve().parent
 P = importlib.machinery.SourceFileLoader("jrpack", str(HERE / "JRPACK.PY")).load_module()
 F = importlib.machinery.SourceFileLoader("pcjsflp", str(HERE / "PCJSFLP.PY")).load_module()
+K = importlib.machinery.SourceFileLoader("jrchk", str(HERE / "JRCHK.PY")).load_module()
+G = importlib.machinery.SourceFileLoader("jrgrtest", str(HERE / "JRGRTEST.PY")).load_module()
 INF = (HERE / "OEMSETUP.INF").read_bytes().decode("ascii")
 
 
@@ -176,6 +178,107 @@ class Diskette(unittest.TestCase):
         d["imageInfo"]["type"] = "RAW"
         with self.assertRaises(F.Refused):
             F.convert(d)
+
+
+class Checkers(unittest.TestCase):
+    """The emulator checks accept only the intended evidence."""
+    REFUSED = K.GUARD_REFUSED + K.JRWIN_REFUSED
+
+    def test_refusal_accepted_only_for_jrguard_refusal(self):
+        self.assertTrue(K.guard_refused_launch(self.REFUSED, "1")[0])
+
+    def test_refusal_other_jrwin_failures_rejected(self):
+        for text in (b"JRWIN: missing C:\\WINDOWS\\WIN.COM. Windows not started.\r\n",
+                     b"JRWIN: Windows failed or terminated abnormally.\r\n",
+                     b"JRGUARD: not an IBM PCjr (F000:FFFE is not FDh).\r\n" + K.JRWIN_REFUSED,
+                     b"JRGUARD: DOS memory chain is not valid. Not starting.\r\n" + K.JRWIN_REFUSED,
+                     b"", K.JRWIN_REFUSED):
+            self.assertFalse(K.guard_refused_launch(text, "1")[0], text)
+
+    def test_refusal_wrong_exit_code_rejected(self):
+        for rc in ("0", "2", "5+", None):
+            self.assertFalse(K.guard_refused_launch(self.REFUSED, rc)[0], rc)
+
+    def test_guard_pass_needs_its_own_text_and_zero(self):
+        self.assertTrue(K.guard_passed(K.GUARD_OK_OWNED, "0")[0])
+        self.assertFalse(K.guard_passed(K.GUARD_OK_OWNED, "1")[0])
+        self.assertFalse(K.guard_passed(b"JRGUARD: OK, DOS memory ends below the video page.\r\n", "0")[0])
+        self.assertFalse(K.guard_passed(b"", "0")[0])
+
+    def test_rc_lines(self):
+        self.assertEqual(K.rc_lines("GUARD RC=0 \r\nHELD RC=1\r\n"), {"GUARD": "0", "HELD": "1"})
+        self.assertEqual(K.rc_lines("A RC=0\r\nA RC=0\r\n")["A"], "duplicate")
+
+    def test_every_display_entry_counted(self):
+        extra = INF.replace("[sysfonts]", 'VGA = a:VGA.DRV, "Another", "100,96,96", a:JRGRAB.GR2\r\n\r\n[sysfonts]')
+        self.assertEqual(len(K.inf_display_entries(extra)), 2)
+        with self.assertRaises(P.Refused):
+            P.check_inf(extra, Inf.present | {"VGA.DRV"})
+
+    def test_only_entry_must_be_tndyjr(self):
+        other = INF.replace("TNDYJR = a:TNDYJR.DRV", "PCJR = a:TNDYJR.DRV")
+        with self.assertRaises(P.Refused):
+            P.check_inf(other, Inf.present)
+
+    def szdd(self, payload):
+        # literal-only SZDD stream: one flag byte (all literals) per 8 bytes
+        import struct
+        body = bytearray()
+        for i in range(0, len(payload), 8):
+            chunk = payload[i:i + 8]
+            body.append((1 << len(chunk)) - 1)
+            body += chunk
+        return b"SZDD\x88\xf0\x27\x33A\0" + struct.pack("<I", len(payload)) + bytes(body)
+
+    def test_szdd_literals_and_backreference(self):
+        self.assertEqual(K.szdd_expand(self.szdd(b"WIN.CNF content")), b"WIN.CNF content")
+        # 'abc' then a 6-byte copy from window position 4080 (where 'abc' went)
+        data = b"SZDD\x88\xf0\x27\x33A\0" + (9).to_bytes(4, "little") + bytes([0b0111, 97, 98, 99, 0xF0, 0xF3])
+        self.assertEqual(K.szdd_expand(data), b"abcabcabc")
+        with self.assertRaises(ValueError):
+            K.szdd_expand(b"MZ" + bytes(20))
+
+    def test_win_com_must_be_cnf_plus_static_logo(self):
+        cnf, lgo, rle = b"C" * 30, b"L" * 7, b"R" * 9
+        media = self.szdd(cnf)
+        self.assertTrue(K.win_com_static_logo(cnf + lgo + rle, cnf, media, lgo, rle)[0])
+        self.assertFalse(K.win_com_static_logo(cnf + b"CGALOGO" + rle, cnf, media, lgo, rle)[0])
+        self.assertFalse(K.win_com_static_logo(cnf + lgo + rle[:-1] + b"X", cnf, media, lgo, rle)[0])
+        self.assertFalse(K.win_com_static_logo(cnf + lgo + rle, b"D" * 30, media, lgo, rle)[0])
+        # the old size-only check would have passed this one
+        same_size = cnf + rle[:7] + lgo + rle[7:]
+        self.assertEqual(len(same_size), len(cnf + lgo + rle))
+        self.assertFalse(K.win_com_static_logo(same_size, cnf, media, lgo, rle)[0])
+
+    def mode(self, **kw):
+        r = dict(program_screen_shown=True, desktop_after_equals_first=True, program_intact=True)
+        r.update(kw)
+        return r
+
+    def good_modes(self):
+        out = {}
+        for m in G.MODES:
+            if m in G.PCJR_ONLY:
+                out[m] = self.mode(switched_to_windows=False, screen_undisturbed=True)
+            else:
+                out[m] = self.mode(switched_to_windows=True, restored_exact=True)
+        return out
+
+    def test_grabber_design_accepts_intended_behaviour(self):
+        self.assertEqual(G.jrgrab_expected(self.good_modes()), {})
+
+    def test_grabber_design_rejects_each_bad_case(self):
+        cases = [("9", dict(switched_to_windows=True, restored_exact=True)),   # PCjr mode switched
+                 ("A", dict(screen_undisturbed=False)),                         # refused but screen changed
+                 ("3", dict(restored_exact=False)),                             # text not restored
+                 ("4", dict(switched_to_windows=False, screen_undisturbed=True)),  # CGA mode refused
+                 ("8", dict(program_intact=False)),                             # JRMODE read back BAD
+                 ("6", dict(desktop_after_equals_first=False)),
+                 ("1", dict(program_screen_shown=False))]
+        for m, change in cases:
+            modes = self.good_modes()
+            modes[m] = dict(modes[m], **change)
+            self.assertIn(m, G.jrgrab_expected(modes), (m, change))
 
 
 class Pins(unittest.TestCase):

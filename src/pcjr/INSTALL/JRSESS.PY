@@ -17,8 +17,8 @@ is edited from the host. Steps:
     C:\\PCJREXP, "EXPERIMENTAL IBM PCjr 320x200 16 colors"; Keyboard = PC/XT
     (84 keys); Network = none; the three optional procedures unticked;
     CONFIG.SYS/AUTOEXEC.BAT changes declined; Return to DOS.
- B. The install as Setup left it: drivers, grabber, fonts and WIN.COM
-    hashes; SYSTEM.INI [boot]; keyboard type 1; fresh groups; Program
+ B. The install as Setup left it: drivers, grabber, fonts, WIN.COM
+    composition; SYSTEM.INI [boot]; keyboard type 1; fresh groups; Program
     Manager's saved window and every group window on the 320x200 screen.
  C. Session 1 through C:\\PCJREXP\\JRWIN: desktop; keyboard menu open and
     exact restore; mouse to an exact point and a click opening the same
@@ -29,8 +29,16 @@ is edited from the host. Steps:
     exactly), EXIT back to an identical desktop; Exit Windows.
  D. Session 2 through JRWIN: desktop identical to session 1's; exit.
  E. Refusal: JRHOLDT keeps the page as an ordinary resident program, then
-    JRWIN must refuse and not start Windows.
-Each JRWIN return is logged to C:\\JRLOG.TXT with DOS IF ERRORLEVEL.
+    JRWIN runs with its output redirected to C:\\HELD.TXT. It passes only
+    if that output is exactly JRGUARD's "not reserved by DOS" refusal and
+    JRWIN's "guard refused" line, and the exit code is exactly 1 (JRCHK.PY);
+    any other JRWIN failure, silence or code fails the check.
+JRGUARD's own output before Setup goes to C:\\GUARD0.TXT and must be its
+"held by a DOS system block" OK. Every exit code is logged exactly (0-4,
+5+) to C:\\JRLOG.TXT by C:\\JRRC.BAT, a harness file written to C: by the
+host. WIN.COM must be exactly the media's WIN.CNF (expanded) followed by
+the packet's XTSTATIC.LGO and WXTSPL01.RLE. RESULT.JSN records the source
+commit, the install folder and a manifest hash of the Windows files.
 Results: <out>/RESULT.JSN; captures <out>/raw, exact frames <out>/dec.
 Exit 0 only if every check passes.
 """
@@ -46,6 +54,33 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 J = importlib.machinery.SourceFileLoader("jrdbx", str(HERE / "JRDBX.PY")).load_module()
+K = importlib.machinery.SourceFileLoader("jrchk", str(HERE / "JRCHK.PY")).load_module()
+
+# Test harness file put on C: (not a Windows file): logs the exact exit code.
+JRRC_BAT = ("@ECHO OFF\r\n"
+            "IF ERRORLEVEL 5 GOTO R5\r\nIF ERRORLEVEL 4 GOTO R4\r\nIF ERRORLEVEL 3 GOTO R3\r\n"
+            "IF ERRORLEVEL 2 GOTO R2\r\nIF ERRORLEVEL 1 GOTO R1\r\n"
+            "ECHO %1 RC=0 >>C:\\JRLOG.TXT\r\nGOTO END\r\n"
+            ":R1\r\nECHO %1 RC=1 >>C:\\JRLOG.TXT\r\nGOTO END\r\n"
+            ":R2\r\nECHO %1 RC=2 >>C:\\JRLOG.TXT\r\nGOTO END\r\n"
+            ":R3\r\nECHO %1 RC=3 >>C:\\JRLOG.TXT\r\nGOTO END\r\n"
+            ":R4\r\nECHO %1 RC=4 >>C:\\JRLOG.TXT\r\nGOTO END\r\n"
+            ":R5\r\nECHO %1 RC=5+ >>C:\\JRLOG.TXT\r\n:END\r\n")
+
+
+def provenance(packet, win30):
+    """What a run used: the exact source commit (and whether the tree had
+    uncommitted changes), the install folder and the Windows files."""
+    import subprocess
+    root = HERE.parents[2]
+    git = lambda *a: subprocess.run(["git", "-C", str(root), *a], capture_output=True, text=True).stdout.strip()
+    files = sorted(p for p in Path(win30).iterdir() if p.is_file())
+    manifest = "".join(f"{sha(p)}  {p.name}\n" for p in files)
+    return {"source_commit": git("rev-parse", "HEAD"),
+            "source_tree_dirty": bool(git("status", "--porcelain", "--untracked-files=no")),
+            "packet_sha256": {p.name: sha(p) for p in sorted(Path(packet).iterdir())},
+            "win30_files": len(files),
+            "win30_manifest_sha256": hashlib.sha256(manifest.encode()).hexdigest()}
 
 KBD_TEXT = "PCjr keyboard: ABC xyz 0123456789 ,./;'[]-= !@#$%&*()_+ C:\\WINDOWS"
 PM_FILE = (51, 45)                  # Program Manager's File menu (fresh install)
@@ -141,8 +176,7 @@ class Run:
         J.key("Return", wait=wait)
 
     def log_rc(self, label):
-        self.dos(f"IF ERRORLEVEL 1 ECHO {label} RC=NONZERO>>C:\\JRLOG.TXT")
-        self.dos(f"IF NOT ERRORLEVEL 1 ECHO {label} RC=0>>C:\\JRLOG.TXT")
+        self.dos(f"C:\\JRRC.BAT {label}")                 # exact exit code, 0-4 or 5+
 
     def start_windows(self):
         self.m("ident", "on")                          # mouse detection answers 'M'
@@ -194,9 +228,9 @@ def group_rect(path):
 
 
 def install(r):
-    J.text("C:\\PCJREXP\\JRGUARD")
-    J.key("Return", wait=3)
+    r.dos("C:\\PCJREXP\\JRGUARD > C:\\GUARD0.TXT", wait=3)
     r.log_rc("GUARD")
+    r.dos("TYPE C:\\GUARD0.TXT")
     r.shot("a00_guard")
     r.dos("CD \\WIN30SRC")
     r.dos("SETUP", wait=8)
@@ -240,7 +274,7 @@ def install(r):
     r.shot("a09_dos")
 
 
-def check_install(r, packet):
+def check_install(r, packet, win30):
     w = r.c / "WINDOWS"
     s = ini(w / "SYSTEM.INI")
     boot = s.get("boot", {})
@@ -258,8 +292,10 @@ def check_install(r, packet):
              "XTEFIX.FON": "SYSTEM", "XTEOEM.FON": "SYSTEM"}
     same = {n: (w / d / n).exists() and sha(w / d / n) == sha(packet / n) for n, d in files.items()}
     r.check("installed_files_equal_packet", all(same.values()), files=same)
-    winsize = (w / "WIN.COM").stat().st_size
-    r.check("win_com_built_with_static_logo", winsize == 7879, bytes=winsize, sha256=sha(w / "WIN.COM"))
+    ok, detail = K.win_com_static_logo((w / "WIN.COM").read_bytes(), (w / "SYSTEM" / "WIN.CNF").read_bytes(),
+                                       (win30 / "WIN.CNF").read_bytes(), (packet / "XTSTATIC.LGO").read_bytes(),
+                                       (packet / "WXTSPL01.RLE").read_bytes())
+    r.check("win_com_is_win_cnf_plus_static_logo", ok, **detail)
     no_msfiles = [n for n in ("CGA.GR2", "CGA.DRV", "CGASYS.FON", "EGA.DRV") if (w / "SYSTEM" / n).exists()]
     r.check("no_cga_ega_display_files_installed", not no_msfiles, found=no_msfiles)
     pm = ini(w / "PROGMAN.INI")
@@ -430,11 +466,13 @@ def main(argv):
     shutil.copytree(a.packet, r.c / "PCJREXP")
     shutil.copytree(a.win30, r.c / "WIN30SRC")
     shutil.copyfile(a.tools / "JRHOLDT.COM", r.c / "JRHOLDT.COM")
-    res = {"packet_sha256": {p.name: sha(p) for p in sorted(a.packet.iterdir())}}
+    (r.c / "JRRC.BAT").write_bytes(JRRC_BAT.encode("ascii"))
+    res = provenance(a.packet, a.win30)
+    res["jrholdt_sha256"] = sha(a.tools / "JRHOLDT.COM")
     J.start(out, 3600)
     try:
         install(r)
-        res["install"] = check_install(r, a.packet)
+        res["install"] = check_install(r, a.packet, a.win30)
         d1 = session1(r)
         r.start_windows()
         d2 = r.shot("s2_desktop")
@@ -443,24 +481,24 @@ def main(argv):
         r.exit_windows("WIN2")
         r.shot("s2_exit_dos")
         r.dos("C:\\JRHOLDT.COM", wait=3)
-        r.dos("C:\\PCJREXP\\JRWIN", wait=10)
+        r.dos("C:\\PCJREXP\\JRWIN > C:\\HELD.TXT", wait=10)
         r.log_rc("HELD")
+        r.dos("TYPE C:\\HELD.TXT")
         r.shot("e_refused")
     finally:
         J.stop(out)
-    log = (r.c / "JRLOG.TXT").read_text(errors="replace").split() if (r.c / "JRLOG.TXT").exists() else []
-    lines = [l for l in (r.c / "JRLOG.TXT").read_text(errors="replace").splitlines() if l.strip()] \
-        if (r.c / "JRLOG.TXT").exists() else []
-    r.check("jrlog_guard_and_launch_results",
-            lines == ["GUARD RC=0", "WIN1 RC=0", "WIN2 RC=0", "HELD RC=NONZERO"], lines=lines)
-    _, problems = J.decode(out / "raw" / "e_refused.png")
-    r.check("refused_launch_did_not_start_windows", bool(problems),
-            note="the capture is not a 320x200 graphics frame (DOS text screen)")
+    read = lambda n: (r.c / n).read_bytes() if (r.c / n).exists() else b""
+    rc = K.rc_lines(read("JRLOG.TXT").decode("latin-1"))
+    r.check("exit_codes_exact", rc == {"GUARD": "0", "WIN1": "0", "WIN2": "0", "HELD": "1"}, rc=rc)
+    ok, detail = K.guard_passed(read("GUARD0.TXT"), rc.get("GUARD"))
+    r.check("guard_passed_with_dos_owned_page", ok, **detail)
+    ok, detail = K.guard_refused_launch(read("HELD.TXT"), rc.get("HELD"))
+    r.check("held_page_refused_by_jrguard", ok, **detail)
     res["checks"] = r.checks
     res["passed"] = sum(c["result"] == "PASS" for c in r.checks)
     res["failed"] = sum(c["result"] == "FAIL" for c in r.checks)
     res["verdict"] = "PASS" if not res["failed"] else "FAIL"
-    for n in ("KBD.TXT", "DOSAPP.TXT", "JRLOG.TXT", "JRTEST.BMP"):
+    for n in ("KBD.TXT", "DOSAPP.TXT", "JRLOG.TXT", "JRTEST.BMP", "GUARD0.TXT", "HELD.TXT"):
         if (r.c / n).exists():
             shutil.copyfile(r.c / n, out / n)
     (out / "RESULT.JSN").write_text(json.dumps(res, indent=1) + "\n")

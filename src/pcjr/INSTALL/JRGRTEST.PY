@@ -1,25 +1,31 @@
 #!/usr/bin/env python3
 """Grabber switch test on the emulated PCjr (DOSBox-X; emulator evidence only).
 
-  python3 src/pcjr/INSTALL/JRGRTEST.PY --installed <C dir of a JRSESS install> \
-      --grabber <file.GR2> --tools <dir with JRMODE9.COM> --out <new dir>
+  python3 src/pcjr/INSTALL/JRGRTEST.PY --installed <C dir of a JRSESS install> \\
+      --grabber <file.GR2> --tools <dir with JRMODE.COM> --out <new dir> [--expect-jrgrab]
 
 Copies the installed drive C:, puts --grabber in C:\\WINDOWS\\SYSTEM and sets
 only SYSTEM.INI [boot] 286grabber= to its name (test configuration, not an
-install step), then starts Windows through C:\\PCJREXP\\JRWIN and runs:
+install step), starts Windows through C:\\PCJREXP\\JRWIN and, for every PCjr
+BIOS mode m in 0 1 2 3 4 5 6 8 9 A, runs C:\\JRMODE.COM m from File > Run:
 
-  text  COMMAND.COM from File > Run, a known line typed, Alt+Tab to Windows
-        (grabber SaveScreen), Alt+Tab back (RestoreScreen): the DOS screen
-        must come back pixel-identical; EXIT returns to Windows, whose
-        desktop must equal the one before the DOS program started.
-  mode9 JRMODE9.COM (BIOS mode 09h, PCjr 320x200x16) from File > Run, then
-        Alt+Tab. Recorded: whether Windows switched away or stayed in the
-        program, and whether the program's screen survived. A key ends it.
+  - JRMODE sets mode m, draws its pattern through the BIOS and waits;
+  - capture 'before'; Alt+Tab; capture 'after';
+  - switched = 'after' is a decodable 320x200 frame (the Windows desktop);
+    if it switched: Alt+Tab back and up to 8 captures must include one that
+    equals 'before' (restored; text modes blink a cursor);
+    if it did not: 'after' must equal 'before' (screen undisturbed);
+  - a key ends JRMODE, which reads its pattern back through the BIOS and
+    writes C:\\JRMODEm.TXT ('MODE m OK' only if every cell is intact);
+  - the Windows desktop after the program must equal the one before.
 
-Writes <out>/RESULT.JSN with the observations and the captures in
-<out>/raw and <out>/dec. Exit 0 when the run completed (the verdicts are
-data for docs/PCJR.MD; --expect-safe makes exit 0 require: text restore
-exact, desktop restored, and mode9 not switched with its screen intact).
+Mode 7 (monochrome) does not exist on the PCjr and is not tested.
+Writes <out>/RESULT.JSN (per-mode observations, the grabber and every input
+hash) and captures in <out>/raw. Exit 0 when the run completed; with
+--expect-jrgrab exit 0 also requires JRGRAB's intended behaviour:
+modes 0-6 switch and restore exactly, modes 8, 9 and A refuse the switch
+with the screen undisturbed, every JRMODE file says OK and every desktop
+after a program equals the first one.
 """
 import argparse
 import hashlib
@@ -32,23 +38,16 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 J = importlib.machinery.SourceFileLoader("jrdbx", str(HERE / "JRDBX.PY")).load_module()
+S = importlib.machinery.SourceFileLoader("jrsess", str(HERE / "JRSESS.PY")).load_module()
+
+MODES = ["0", "1", "2", "3", "4", "5", "6", "8", "9", "A"]
+PCJR_ONLY = {"8", "9", "A"}
 
 
-def same_raw(a, b):
+def raw_bytes(run, name):
     from PIL import Image
-    with Image.open(a) as x, Image.open(b) as y:
-        return x.convert("RGB").tobytes() == y.convert("RGB").tobytes()
-
-
-def same_text_screen(run, ref, name, tries=8):
-    """Capture <name> up to `tries` times about 0.4 s apart and report whether
-    any capture equals <ref>: the DOS cursor blinks, so one capture can catch
-    it in the other phase."""
-    for _ in range(tries):
-        J.shot(run, name, settle=0.3)
-        if same_raw(Path(run) / "raw" / (ref + ".png"), Path(run) / "raw" / (name + ".png")):
-            return True
-    return False
+    with Image.open(Path(run) / "raw" / (name + ".png")) as im:
+        return im.size, im.convert("RGB").tobytes()
 
 
 def frame(run, name):
@@ -57,6 +56,16 @@ def frame(run, name):
         J.save_frame(run, name, data)
         return data
     return None
+
+
+def capture_matching(run, ref, name, tries=8):
+    """Up to `tries` captures ~0.4 s apart; True if one equals <ref>."""
+    want = raw_bytes(run, ref)
+    for _ in range(tries):
+        J.shot(run, name, settle=0.3)
+        if raw_bytes(run, name) == want:
+            return True
+    return False
 
 
 def set_grabber(c, grabber):
@@ -78,13 +87,49 @@ def run_cmd(cmd, wait):
     J.key("Return", wait=wait)
 
 
+def one_mode(run, c, m, d0):
+    r = {}
+    run_cmd(f"C:\\JRMODE.COM {m}", wait=12)
+    J.shot(run, f"m{m}_before")
+    r["program_screen_shown"] = frame(run, f"m{m}_before") != d0
+    J.key("alt+Tab", wait=12)
+    J.shot(run, f"m{m}_after")
+    away = frame(run, f"m{m}_after")
+    r["switched_to_windows"] = away is not None and raw_bytes(run, f"m{m}_after") != raw_bytes(run, f"m{m}_before")
+    if r["switched_to_windows"]:
+        J.key("alt+Tab", wait=12)
+        r["restored_exact"] = capture_matching(run, f"m{m}_before", f"m{m}_back")
+    else:
+        r["screen_undisturbed"] = capture_matching(run, f"m{m}_before", f"m{m}_after2")
+    J.key("space", wait=14)
+    J.shot(run, f"m{m}_desk")
+    r["desktop_after_equals_first"] = frame(run, f"m{m}_desk") == d0
+    f = c / f"JRMODE{m}.TXT"
+    r["program_result"] = f.read_bytes().decode("latin-1").strip() if f.exists() else None
+    r["program_intact"] = r["program_result"] == f"MODE {m} OK"
+    return r
+
+
+def jrgrab_expected(modes):
+    bad = {}
+    for m, r in modes.items():
+        ok = r["program_intact"] and r["desktop_after_equals_first"] and r["program_screen_shown"]
+        if m in PCJR_ONLY:
+            ok = ok and not r["switched_to_windows"] and r.get("screen_undisturbed") is True
+        else:
+            ok = ok and r["switched_to_windows"] and r.get("restored_exact") is True
+        if not ok:
+            bad[m] = r
+    return bad
+
+
 def main(argv):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--installed", type=Path, required=True)
     ap.add_argument("--grabber", type=Path, required=True)
     ap.add_argument("--tools", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
-    ap.add_argument("--expect-safe", action="store_true")
+    ap.add_argument("--expect-jrgrab", action="store_true")
     a = ap.parse_args(argv)
     run = a.out.resolve()
     if run.exists():
@@ -92,10 +137,16 @@ def main(argv):
     run.mkdir(parents=True)
     c = run / "C"
     shutil.copytree(a.installed, c)
+    for f in c.glob("JRMODE*.TXT"):
+        f.unlink()
     set_grabber(c, a.grabber)
-    shutil.copyfile(a.tools / "JRMODE9.COM", c / "JRMODE9.COM")
-    res = {"grabber": a.grabber.name.upper(), "grabber_sha256": hashlib.sha256(a.grabber.read_bytes()).hexdigest()}
-    J.start(run, 1200)
+    shutil.copyfile(a.tools / "JRMODE.COM", c / "JRMODE.COM")
+    res = S.provenance(c / "PCJREXP", c / "WIN30SRC")
+    res.update(grabber=a.grabber.name.upper(), grabber_sha256=hashlib.sha256(a.grabber.read_bytes()).hexdigest(),
+               jrmode_sha256=hashlib.sha256((a.tools / "JRMODE.COM").read_bytes()).hexdigest(),
+               installed_win_com_sha256=S.sha(c / "WINDOWS" / "WIN.COM"),
+               untested=["7 (monochrome text: not a PCjr mode)"], modes={})
+    J.start(run, 3000)
     try:
         J.mouse(run, "ident", "on")
         J.text("C:\\PCJREXP\\JRWIN")
@@ -106,52 +157,21 @@ def main(argv):
         time.sleep(8)
         J.shot(run, "desk0")
         d0 = frame(run, "desk0")
-        # text: switch away from and back to a text-mode DOS program
-        run_cmd("COMMAND.COM", wait=12)
-        J.text("ECHO PCjr grabber test 0123456789")
-        J.key("Return", wait=3)
-        J.shot(run, "text1")
-        J.key("alt+Tab", wait=12)
-        J.shot(run, "away1")
-        away = frame(run, "away1")
-        J.key("alt+Tab", wait=12)
-        res["text_switched_to_windows"] = away is not None
-        res["text_restored_exact"] = same_text_screen(run, "text1", "text2")
-        J.text("EXIT")
-        J.key("Return", wait=12)
-        J.shot(run, "desk1")
-        d1 = frame(run, "desk1")
-        res["desktop_after_exit_equals_before"] = d0 is not None and d1 == d0
-        # mode9: switch attempt from a PCjr-only graphics mode
-        run_cmd("C:\\JRMODE9.COM", wait=10)
-        J.shot(run, "g1")
-        g1 = frame(run, "g1")
-        J.key("alt+Tab", wait=12)
-        J.shot(run, "g2")
-        g2 = frame(run, "g2")
-        res["mode9_shown"] = g1 is not None
-        res["mode9_stayed_in_program"] = g1 is not None and g2 == g1
-        res["mode9_switched_to_windows"] = g2 is not None and g2 != g1
-        if res["mode9_switched_to_windows"]:
-            J.key("alt+Tab", wait=12)
-            J.shot(run, "g3")
-            g3 = frame(run, "g3")
-            res["mode9_restored_exact"] = g3 == g1
-        J.key("space", wait=12)
-        J.shot(run, "desk2")
-        d2 = frame(run, "desk2")
-        res["desktop_after_mode9_equals_before"] = d2 == d0
+        res["first_desktop_exact_frame"] = d0 is not None
+        for m in MODES:
+            res["modes"][m] = one_mode(run, c, m, d0)
+            print(m, json.dumps(res["modes"][m]), flush=True)
         J.key("alt+F4", wait=4)
         J.key("Return", wait=12)
         J.shot(run, "dos")
     finally:
         J.stop(run)
-    safe = (res.get("text_restored_exact") and res.get("desktop_after_exit_equals_before") and
-            res.get("mode9_stayed_in_program") and res.get("desktop_after_mode9_equals_before"))
-    res["safe_on_this_emulator"] = bool(safe)
+    bad = jrgrab_expected(res["modes"]) if d0 is not None else {"desk0": "not an exact frame"}
+    res["matches_jrgrab_design"] = not bad
+    res["differs_from_jrgrab_design"] = sorted(bad)
     (run / "RESULT.JSN").write_text(json.dumps(res, indent=1) + "\n")
-    print(json.dumps(res, indent=1))
-    return 0 if (safe or not a.expect_safe) else 1
+    print(json.dumps({k: res[k] for k in ("grabber", "matches_jrgrab_design", "differs_from_jrgrab_design")}))
+    return 0 if (not bad or not a.expect_jrgrab) else 1
 
 
 if __name__ == "__main__":

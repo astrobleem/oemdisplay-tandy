@@ -30,6 +30,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 J = importlib.machinery.SourceFileLoader("jrdbx", str(HERE / "JRDBX.PY")).load_module()
 S = importlib.machinery.SourceFileLoader("jrsess", str(HERE / "JRSESS.PY")).load_module()
+K = S.K
 
 EXPECTED_CHANGES = {("boot", "display.drv"), ("boot", "286grabber"), ("boot", "fonts.fon"),
                     ("boot", "fixedfon.fon"), ("boot", "oemfonts.fon"), ("boot.description", "display.drv")}
@@ -95,7 +96,8 @@ def main(argv):
     (out / "C").mkdir(parents=True)
     shutil.copytree(a.packet, r.c / "PCJREXP")
     shutil.copytree(a.win30, r.c / "WIN30SRC")
-    res = {}
+    (r.c / "JRRC.BAT").write_bytes(S.JRRC_BAT.encode("ascii"))
+    res = S.provenance(a.packet, a.win30)
     J.start(out, 3600)
     try:
         stock_setup(r)
@@ -104,8 +106,9 @@ def main(argv):
         before = snapshot(r.c)
         stock = S.ini(r.c / "WINDOWS" / "SYSTEM.INI")
         res["stock_display"] = stock.get("boot", {}).get("display.drv")
-        r.dos("C:\\PCJREXP\\JRGUARD", wait=3)
+        r.dos("C:\\PCJREXP\\JRGUARD > C:\\GUARD0.TXT", wait=3)
         r.log_rc("GUARD")
+        r.dos("TYPE C:\\GUARD0.TXT")
         r.dos("CD \\WINDOWS")
         r.dos("SETUP", wait=8)
         r.shot("c03_maint_list")
@@ -143,9 +146,16 @@ def main(argv):
     inst = {n: (w / n).exists() and S.sha(w / n) == S.sha(a.packet / n)
             for n in ("TNDYJR.DRV", "JRGRAB.GR2", "XTESYS.FON", "XTEFIX.FON", "XTEOEM.FON")}
     r.check("pcjr_files_installed", all(inst.values()), files=inst)
-    lines = [l for l in (r.c / "JRLOG.TXT").read_text(errors="replace").splitlines() if l.strip()] \
-        if (r.c / "JRLOG.TXT").exists() else []
-    r.check("guard_and_launch_logged", lines == ["GUARD RC=0", "WIN1 RC=0"], lines=lines)
+    read = lambda n: (r.c / n).read_bytes() if (r.c / n).exists() else b""
+    rc = K.rc_lines(read("JRLOG.TXT").decode("latin-1"))
+    r.check("exit_codes_exact", rc == {"GUARD": "0", "WIN1": "0"}, rc=rc)
+    ok, detail = K.guard_passed(read("GUARD0.TXT"), rc.get("GUARD"))
+    r.check("guard_passed_with_dos_owned_page", ok, **detail)
+    wd = r.c / "WINDOWS"
+    ok, detail = K.win_com_static_logo((wd / "WIN.COM").read_bytes(), (wd / "SYSTEM" / "WIN.CNF").read_bytes(),
+                                       (a.win30 / "WIN.CNF").read_bytes(), (a.packet / "XTSTATIC.LGO").read_bytes(),
+                                       (a.packet / "WXTSPL01.RLE").read_bytes())
+    r.check("win_com_rebuilt_with_static_logo", ok, **detail)
     res["progman_window_after"] = S.ini(r.c / "WINDOWS" / "PROGMAN.INI").get("settings", {}).get("window")
     res["checks"] = r.checks
     res["passed"] = sum(c["result"] == "PASS" for c in r.checks)
