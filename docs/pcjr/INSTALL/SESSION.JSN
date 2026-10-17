@@ -1,0 +1,300 @@
+{
+ "source_commit": "9ae44084127fe5d2f0c57ee1e1842d1ee1885573",
+ "source_tree_dirty": false,
+ "packet_sha256": {
+  "FONTLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+  "INSTALL.TXT": "39e98bc60369db9cd43f89acf05842a52d8ea43e396bf6ac5a40ffec5da1a9d4",
+  "JRGRAB.GR2": "2453cd1eba68e580b68b2d232a5dfa5285fd703cd75b2b4edacc203c3d741dec",
+  "JRGUARD.COM": "10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756",
+  "JRWIN.COM": "18ccaa02759e5462b746af9e28ebd31af32c43f29e9d4eea400e6673cc764e96",
+  "LOGOLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+  "OEMSETUP.INF": "709e773779c3731ca43d79bf238f553c5d3b174d8280695b1697aa3b410fc285",
+  "SHA256.SUM": "d75f718721099ceda06d772f9d681e5f939cf3aa5ed8e59bf8cd349f11acaae1",
+  "TNDYJR.DRV": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4",
+  "WXTSPL01.RLE": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+  "XTEFIX.FON": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+  "XTEOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+  "XTESYS.FON": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
+  "XTSTATIC.LGO": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+ },
+ "win30_files": 282,
+ "win30_manifest_sha256": "342d34b07e8bc039c0bf22eb0c8442ecce656cbb720a88c05c8ffc9d23fbfbed",
+ "jrholdt_sha256": "23903985c4e96191564c7d46e8c1515b847b5194166bac3881e438ff98ea7109",
+ "install": {
+  "system_ini_boot": {
+   "286grabber": "JRGRAB.GR2",
+   "shell": "progman.exe",
+   "network.drv": "",
+   "language.dll": "",
+   "fixedfon.fon": "XTEFIX.FON",
+   "comm.drv": "comm.drv",
+   "sound.drv": "sound.drv",
+   "oemfonts.fon": "XTEOEM.FON",
+   "fonts.fon": "XTESYS.FON",
+   "mouse.drv": "mouse.drv",
+   "keyboard.drv": "keyboard.drv",
+   "display.drv": "TNDYJR.DRV",
+   "system.drv": "system.drv",
+   "386grabber": ""
+  },
+  "keyboard": {
+   "subtype": "",
+   "type": "1",
+   "oemansi.bin": "",
+   "keyboard.dll": ""
+  },
+  "progman": {
+   "settings": {
+    "window": "32 20 288 160 1",
+    "savesettings": "1",
+    "minonrun": "0",
+    "autoarrange": "0"
+   },
+   "groups": {
+    "group1": "C:\\WINDOWS\\ACCESSOR.GRP",
+    "group2": "C:\\WINDOWS\\GAMES.GRP",
+    "group3": "C:\\WINDOWS\\MAIN.GRP"
+   }
+  },
+  "groups": {
+   "ACCESSOR.GRP": [
+    31,
+    18,
+    248,
+    102
+   ],
+   "GAMES.GRP": [
+    0,
+    0,
+    217,
+    84
+   ],
+   "MAIN.GRP": [
+    0,
+    0,
+    217,
+    84
+   ]
+  },
+  "win_com_sha256": "7d00588992559e99f7f0690538425f2cf4c28e771e651327ad243c9d07e32fc7"
+ },
+ "checks": [
+  {
+   "check": "system_ini_display_grabber_fonts",
+   "result": "PASS",
+   "got": {
+    "display.drv": "TNDYJR.DRV",
+    "286grabber": "JRGRAB.GR2",
+    "fonts.fon": "XTESYS.FON",
+    "fixedfon.fon": "XTEFIX.FON",
+    "oemfonts.fon": "XTEOEM.FON",
+    "keyboard.drv": "keyboard.drv",
+    "mouse.drv": "mouse.drv"
+   }
+  },
+  {
+   "check": "system_ini_keyboard_type_1",
+   "result": "PASS",
+   "keyboard": {
+    "subtype": "",
+    "type": "1",
+    "oemansi.bin": "",
+    "keyboard.dll": ""
+   }
+  },
+  {
+   "check": "setup_description_names_pcjr",
+   "result": "PASS",
+   "got": "EXPERIMENTAL IBM PCjr 320x200 16 colors"
+  },
+  {
+   "check": "installed_files_equal_packet",
+   "result": "PASS",
+   "files": {
+    "TNDYJR.DRV": true,
+    "JRGRAB.GR2": true,
+    "XTESYS.FON": true,
+    "XTEFIX.FON": true,
+    "XTEOEM.FON": true
+   }
+  },
+  {
+   "check": "win_com_is_win_cnf_plus_static_logo",
+   "result": "PASS",
+   "win_com_bytes": 7879,
+   "cnf_bytes": 3456,
+   "lgo_bytes": 361,
+   "rle_bytes": 4062,
+   "installed_cnf_equals_media": true,
+   "win_com_equals_cnf_lgo_rle": true
+  },
+  {
+   "check": "no_cga_ega_display_files_installed",
+   "result": "PASS",
+   "found": []
+  },
+  {
+   "check": "progman_window_on_screen",
+   "result": "PASS",
+   "window": [
+    32,
+    20,
+    288,
+    160
+   ]
+  },
+  {
+   "check": "fresh_groups_inside_program_manager",
+   "result": "PASS",
+   "groups": {
+    "ACCESSOR.GRP": [
+     31,
+     18,
+     248,
+     102
+    ],
+    "GAMES.GRP": [
+     0,
+     0,
+     217,
+     84
+    ],
+    "MAIN.GRP": [
+     0,
+     0,
+     217,
+     84
+    ]
+   },
+   "progman_size": [
+    256,
+    140
+   ]
+  },
+  {
+   "check": "config_autoexec_untouched",
+   "result": "PASS"
+  },
+  {
+   "check": "s1_desktop_exact_frame",
+   "result": "PASS"
+  },
+  {
+   "check": "keyboard_menu_opens_and_restores",
+   "result": "PASS",
+   "opened_pixels": 8716,
+   "opened_box": [
+    36,
+    39,
+    218,
+    173
+   ]
+  },
+  {
+   "check": "mouse_reaches_point_and_click_opens_menu",
+   "result": "PASS",
+   "pointer_box": [
+    51,
+    45,
+    62,
+    53
+   ],
+   "menu_differs_from_keyboard_menu": 102,
+   "note": "the two menus may differ only by the pointer"
+  },
+  {
+   "check": "parked_desktop_exact_frame",
+   "result": "PASS"
+  },
+  {
+   "check": "keyboard_text_saved_exactly",
+   "result": "PASS",
+   "expected": "PCjr keyboard: ABC xyz 0123456789 ,./;'[]-= !@#$%&*()_+ C:\\WINDOWS",
+   "got": "PCjr keyboard: ABC xyz 0123456789 ,./;'[]-= !@#$%&*()_+ C:\\WINDOWS"
+  },
+  {
+   "check": "notepad_closed_desktop_exact",
+   "result": "PASS",
+   "differing": 0
+  },
+  {
+   "check": "reopened_canvas_identical",
+   "result": "PASS",
+   "differing": 0,
+   "first": []
+  },
+  {
+   "check": "saved_bmp_matches_screen",
+   "result": "PASS",
+   "bmp_size": [
+    320,
+    170
+   ],
+   "mismatches": 0,
+   "first": [],
+   "solid_light_red_box": [
+    102,
+    72,
+    157,
+    107
+   ],
+   "box_ok": true
+  },
+  {
+   "check": "paintbrush_closed_desktop_exact",
+   "result": "PASS",
+   "differing": 0
+  },
+  {
+   "check": "dos_switch_away_shows_windows",
+   "result": "PASS"
+  },
+  {
+   "check": "dos_screen_restored_exactly",
+   "result": "PASS",
+   "note": "one of up to 8 captures equals the screen before"
+  },
+  {
+   "check": "dos_exit_desktop_exact",
+   "result": "PASS",
+   "differing": 0
+  },
+  {
+   "check": "dos_program_wrote_file",
+   "result": "PASS",
+   "got": "PCjr DOS app\r\n"
+  },
+  {
+   "check": "second_guarded_launch_desktop_identical",
+   "result": "PASS",
+   "differing": 0
+  },
+  {
+   "check": "exit_codes_exact",
+   "result": "PASS",
+   "rc": {
+    "GUARD": "0",
+    "WIN1": "0",
+    "WIN2": "0",
+    "HOLDT": "0",
+    "HELD": "1"
+   }
+  },
+  {
+   "check": "guard_passed_with_dos_owned_page",
+   "result": "PASS",
+   "output": "JRGUARD: OK, video page is held by a DOS system block.\r\n",
+   "rc": "0"
+  },
+  {
+   "check": "held_page_refused_by_jrguard",
+   "result": "PASS",
+   "jrholdt_rc": "0",
+   "output": "JRGUARD: video page 18000h-1FFFFh is not reserved by DOS.\r\n         Load a PCjr memory driver that reserves it, see PCJR.MD.\r\nJRWIN: guard refused/failed. Windows not started.\r\n",
+   "rc": "1"
+  }
+ ],
+ "passed": 26,
+ "failed": 0,
+ "verdict": "PASS"
+}

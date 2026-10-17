@@ -1,0 +1,185 @@
+#!/usr/bin/env python3
+"""Pure checkers shared by the PCjr install tests (no emulator, no I/O).
+
+JRSESS.PY, JRCONV.PY and JRGRTEST.PY call these on what the guest wrote;
+TESTPACK.PY feeds them good and deliberately bad inputs. Each returns
+(ok, detail) so a failure says why.
+"""
+import struct
+
+GUARD_OK_OWNED = b"JRGUARD: OK, video page is held by a DOS system block.\r\n"
+GUARD_REFUSED = (b"JRGUARD: video page 18000h-1FFFFh is not reserved by DOS.\r\n"
+                 b"         Load a PCjr memory driver that reserves it, see PCJR.MD.\r\n")
+JRWIN_REFUSED = b"JRWIN: guard refused/failed. Windows not started.\r\n"
+
+
+def rc_lines(text):
+    """{label: rc} from C:\\JRLOG.TXT lines 'LABEL RC=n' (n 0-4, or '5+')."""
+    out = {}
+    for line in text.splitlines():
+        line = line.strip()
+        if " RC=" in line:
+            label, rc = line.split(" RC=", 1)
+            if label in out:
+                out[label] = "duplicate"
+            else:
+                out[label] = rc
+    return out
+
+
+def guard_passed(output, rc):
+    """JRGUARD's own OK text for a DOS-owned page, and exit code 0."""
+    ok = output == GUARD_OK_OWNED and rc == "0"
+    return ok, {"output": output.decode("latin-1"), "rc": rc}
+
+
+def guard_refused_launch(output, rc, holdt_rc):
+    """The 'page held by another program' case passes only when JRHOLDT
+    exited 0 (it stays resident only after DOS placed its allocation at
+    exactly 1800h; 1 = the free failed, 2 = the allocation landed
+    elsewhere, which leaves the page free and gives the same refusal text),
+    JRWIN's whole output is JRGUARD's 'not reserved' refusal followed by
+    JRWIN's 'guard refused' line, and JRWIN's exit code is exactly 1
+    (JRGUARD's refusal code, passed on by JRWIN). A missing WIN.COM, an
+    EXEC error, a different refusal reason, silence or any other code is
+    not this case."""
+    ok = holdt_rc == "0" and output == GUARD_REFUSED + JRWIN_REFUSED and rc == "1"
+    return ok, {"jrholdt_rc": holdt_rc, "output": output.decode("latin-1"), "rc": rc}
+
+
+def inf_display_entries(text):
+    """Every entry in OEMSETUP.INF's [display] section, whatever its key."""
+    entries, sec = [], None
+    for raw in text.split("\r\n"):
+        line = raw.split(";", 1)[0].strip()
+        if not line:
+            continue
+        if line.startswith("[") and line.endswith("]"):
+            sec = line[1:-1].strip().lower()
+            continue
+        if sec == "display":
+            entries.append(line)
+    return entries
+
+
+def szdd_expand(data):
+    """Microsoft COMPRESS 'SZDD' (LZSS, 4 KB window) expansion."""
+    if data[:8] != b"SZDD\x88\xf0\x27\x33" or data[8:9] != b"A":
+        raise ValueError("not an SZDD file")
+    size = struct.unpack_from("<I", data, 10)[0]
+    window = bytearray(b" " * 4096)
+    pos, i, out = 4096 - 16, 14, bytearray()
+    while i < len(data) and len(out) < size:
+        flags = data[i]
+        i += 1
+        for bit in range(8):
+            if i >= len(data) or len(out) >= size:
+                break
+            if flags & (1 << bit):
+                b = data[i]
+                i += 1
+                out.append(b)
+                window[pos] = b
+                pos = (pos + 1) & 4095
+            else:
+                if i + 1 >= len(data):
+                    break
+                lo, hi = data[i], data[i + 1]
+                i += 2
+                src, n = lo | ((hi & 0xF0) << 4), (hi & 0x0F) + 3
+                for k in range(n):
+                    b = window[(src + k) & 4095]
+                    out.append(b)
+                    window[pos] = b
+                    pos = (pos + 1) & 4095
+    if len(out) != size:
+        raise ValueError("SZDD data ends early")
+    return bytes(out)
+
+
+def win_com_static_logo(win_com, win_cnf_installed, win_cnf_media, lgo, rle):
+    """WIN.COM must be exactly the media's WIN.CNF (expanded) followed by
+    the packet's XTSTATIC.LGO and WXTSPL01.RLE, and the installed
+    SYSTEM\\WIN.CNF must be that same expanded file."""
+    try:
+        cnf = szdd_expand(win_cnf_media) if win_cnf_media[:4] == b"SZDD" else win_cnf_media
+    except ValueError as e:
+        return False, {"error": str(e)}
+    detail = {"win_com_bytes": len(win_com), "cnf_bytes": len(cnf), "lgo_bytes": len(lgo),
+              "rle_bytes": len(rle), "installed_cnf_equals_media": win_cnf_installed == cnf,
+              "win_com_equals_cnf_lgo_rle": win_com == cnf + lgo + rle}
+    return detail["installed_cnf_equals_media"] and detail["win_com_equals_cnf_lgo_rle"], detail
+
+
+# --- JRMODE screens -----------------------------------------------------------
+# DOSBox-X captures every mode as 640x400 (each scanline doubled). Colours as
+# DOSBox-X's PCjr shows them with JRMODE's BIOS defaults (measured; modes 4/5,
+# 0/1 and 2/3 differ only in colour burst, which DOSBox-X does not render).
+IRGB = [(0, 0, 0), (0, 0, 170), (0, 170, 0), (0, 170, 170), (170, 0, 0), (170, 0, 170), (170, 85, 0),
+        (170, 170, 170), (85, 85, 85), (85, 85, 255), (85, 255, 85), (85, 255, 255), (255, 85, 85),
+        (255, 85, 255), (255, 255, 85), (255, 255, 255)]
+CGA4 = [(0, 0, 0), (0, 170, 170), (170, 0, 170), (255, 255, 255)]
+JRMODE_SCREENS = {  # mode: ("text", columns) or ("graphics", width, palette)
+    "0": ("text", 40), "1": ("text", 40), "2": ("text", 80), "3": ("text", 80),
+    "4": ("graphics", 320, CGA4), "5": ("graphics", 320, CGA4),
+    "6": ("graphics", 640, [IRGB[0], IRGB[15]]),
+    "8": ("graphics", 160, IRGB), "9": ("graphics", 320, IRGB),
+    "A": ("graphics", 640, IRGB[:4]),
+}
+BLACK = (0, 0, 0)
+
+
+def jrmode_screen(m, capture):
+    """True only if capture = ((w, h), RGB bytes) is JRMODE's screen for mode m:
+    640x400; graphics: every logical pixel a uniform block of the mode's
+    size, rows 40-55 exactly the pattern colour(((x>>3)+y) AND (n-1)), rows
+    8-39 and 56-199 black, the 'JRMODE m' title in rows 0-7; text: row 5
+    cells 0-14 each black plus exactly the foreground of attribute i+1, the
+    rest of rows 1-24 black, the title in row 0. A missing, blank, desktop or
+    other-mode capture fails."""
+    if m not in JRMODE_SCREENS:
+        return False, {"error": "unknown mode"}
+    if capture is None:
+        return False, {"error": "no capture"}
+    size, rgb = capture
+    if tuple(size) != (640, 400) or len(rgb) != 640 * 400 * 3:
+        return False, {"error": f"capture size {tuple(size)}"}
+
+    def px(x, y):
+        i = (y * 640 + x) * 3
+        return (rgb[i], rgb[i + 1], rgb[i + 2])
+
+    spec = JRMODE_SCREENS[m]
+    if spec[0] == "graphics":
+        _, width, pal = spec
+        sx = 640 // width
+        blocks = pattern = background = 0
+        title = False
+        for y in range(200):
+            for x in range(width):
+                c = px(x * sx, 2 * y)
+                if any(px(x * sx + dx, 2 * y + dy) != c for dx in range(sx) for dy in range(2)):
+                    blocks += 1
+                if 40 <= y < 56:
+                    pattern += c != pal[((x >> 3) + y) & (len(pal) - 1)]
+                elif y < 8:
+                    title = title or c != BLACK
+                else:
+                    background += c != BLACK
+        detail = {"non_uniform_blocks": blocks, "pattern_mismatches": pattern,
+                  "background_not_black": background, "title_present": title}
+        return blocks == 0 and pattern == 0 and background == 0 and title, detail
+    cols = spec[1]
+    cw = 640 // cols
+    cells, background = [], 0
+    for i in range(15):
+        colours = {px(x, y) for x in range(i * cw, (i + 1) * cw) for y in range(80, 96)}
+        cells.append(colours == {BLACK, IRGB[i + 1]})
+    for y in range(16, 400):
+        for x in range(640):
+            if 80 <= y < 96 and x < 15 * cw:
+                continue
+            background += px(x, y) != BLACK
+    title = any(px(x, y) != BLACK for y in range(16) for x in range(640))
+    detail = {"cells_ok": sum(cells), "background_not_black": background, "title_present": title}
+    return all(cells) and background == 0 and title, detail

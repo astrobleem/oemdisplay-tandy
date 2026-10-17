@@ -1,0 +1,114 @@
+{
+ "source_commit": "c7144d1ec808eff012d0e5ac2b44e24489e7442d",
+ "source_tree_dirty": false,
+ "packet_sha256": {
+  "FONTLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+  "INSTALL.TXT": "39e98bc60369db9cd43f89acf05842a52d8ea43e396bf6ac5a40ffec5da1a9d4",
+  "JRGRAB.GR2": "2453cd1eba68e580b68b2d232a5dfa5285fd703cd75b2b4edacc203c3d741dec",
+  "JRGUARD.COM": "10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756",
+  "JRWIN.COM": "18ccaa02759e5462b746af9e28ebd31af32c43f29e9d4eea400e6673cc764e96",
+  "LOGOLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+  "OEMSETUP.INF": "709e773779c3731ca43d79bf238f553c5d3b174d8280695b1697aa3b410fc285",
+  "SHA256.SUM": "d75f718721099ceda06d772f9d681e5f939cf3aa5ed8e59bf8cd349f11acaae1",
+  "TNDYJR.DRV": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4",
+  "WXTSPL01.RLE": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+  "XTEFIX.FON": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+  "XTEOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+  "XTESYS.FON": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
+  "XTSTATIC.LGO": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+ },
+ "win30_files": 282,
+ "win30_manifest_sha256": "342d34b07e8bc039c0bf22eb0c8442ecce656cbb720a88c05c8ffc9d23fbfbed",
+ "stock_display": "cga.drv",
+ "progman_window_after": "64 20 392 160 1",
+ "checks": [
+  {
+   "check": "converted_desktop_exact_frame",
+   "result": "PASS"
+  },
+  {
+   "check": "system_ini_only_display_entries_changed",
+   "result": "PASS",
+   "changed": {
+    "[boot] 286grabber": [
+     "cga.gr2",
+     "JRGRAB.GR2"
+    ],
+    "[boot] display.drv": [
+     "cga.drv",
+     "TNDYJR.DRV"
+    ],
+    "[boot] fixedfon.fon": [
+     "cgafix.fon",
+     "XTEFIX.FON"
+    ],
+    "[boot] fonts.fon": [
+     "cgasys.fon",
+     "XTESYS.FON"
+    ],
+    "[boot] oemfonts.fon": [
+     "cgaoem.fon",
+     "XTEOEM.FON"
+    ],
+    "[boot.description] display.drv": [
+     "CGA",
+     "EXPERIMENTAL IBM PCjr 320x200 16 colors"
+    ]
+   }
+  },
+  {
+   "check": "other_ini_and_group_files_byte_identical",
+   "result": "PASS",
+   "files": {
+    "WIN.INI": true,
+    "CONTROL.INI": true,
+    "PROGMAN.INI": true,
+    "ACCESSOR.GRP": true,
+    "GAMES.GRP": true,
+    "MAIN.GRP": true
+   }
+  },
+  {
+   "check": "user_section_kept",
+   "result": "PASS"
+  },
+  {
+   "check": "pcjr_files_installed",
+   "result": "PASS",
+   "files": {
+    "TNDYJR.DRV": true,
+    "JRGRAB.GR2": true,
+    "XTESYS.FON": true,
+    "XTEFIX.FON": true,
+    "XTEOEM.FON": true
+   }
+  },
+  {
+   "check": "exit_codes_exact",
+   "result": "PASS",
+   "rc": {
+    "GUARD": "0",
+    "WIN1": "0"
+   }
+  },
+  {
+   "check": "guard_passed_with_dos_owned_page",
+   "result": "PASS",
+   "output": "JRGUARD: OK, video page is held by a DOS system block.\r\n",
+   "rc": "0"
+  },
+  {
+   "check": "win_com_rebuilt_with_static_logo",
+   "result": "PASS",
+   "win_com_bytes": 7879,
+   "cnf_bytes": 3456,
+   "lgo_bytes": 361,
+   "rle_bytes": 4062,
+   "installed_cnf_equals_media": true,
+   "win_com_equals_cnf_lgo_rle": true
+  }
+ ],
+ "passed": 8,
+ "failed": 0,
+ "verdict": "PASS"
+}
