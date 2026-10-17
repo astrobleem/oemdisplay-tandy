@@ -55,9 +55,14 @@ User instructions: [`src/pcjr/INSTALL/INSTALL.TXT`](../src/pcjr/INSTALL/INSTALL.
 
 ### What the final evidence used
 
-Every result in `docs/pcjr/INSTALL` comes from one run of the committed
-scripts at **commit `388e4a8c2eb696658b5b57482e53cedb0ea60a6e`** with a clean
-tree (`source_commit` and `source_tree_dirty: false` in each result file):
+The emulator results in `docs/pcjr/INSTALL` come from one run of the
+committed scripts at **commit `c7144d1ec808eff012d0e5ac2b44e24489e7442d`** with a clean tree:
+`SESSION.JSN`, `CONVERT.JSN`, `MODET.JSN` and the three `GR*.JSN` each record
+`source_commit` and `source_tree_dirty: false`. `TOOLS.JSN` is
+`src/pcjr/BUILDCOM.PY`'s build record of the test tools (sizes and SHA-256;
+it has no commit field); the `JRMODE.COM` and `JRHOLDT.COM` hashes recorded
+in the result files match it. The guest files `JRLOG.TXT`, `GUARD0.TXT` and
+`HELD.TXT` are copies from the session run.
 
 | Input | Identity |
 | --- | --- |
@@ -115,6 +120,14 @@ waits, then reads it again and writes `MODE m OK` only if nothing changed.
 | 9 (320x200x16, PCjr) | **switches; program's screen data changed (2,392 cells)** | refuses; undisturbed | refuses; undisturbed |
 | 0Ah (640x200x4, PCjr) | **switches; screen not restored** | refuses; undisturbed | refuses; undisturbed |
 
+"Program screen shown" is checked before every switch attempt
+(`JRCHK.jrmode_screen`): the 640x400 capture must show JRMODE's pattern for
+that mode, with the mode's pixel geometry (a 160-pixel row is 4x2 blocks in
+mode 8, 320 is 2x2 in modes 4, 5 and 9, 640 is 1x2 in modes 6 and 0Ah), the
+pattern colours, the title and a black background; text modes check all 15
+attribute cells. Modes 4/5, 0/1 and 2/3 differ only in colour burst, which
+DOSBox-X does not render, so their captures are indistinguishable.
+
 "Restored exactly": after Alt+Tab away and back, one of up to eight
 captures equals the screen before (text modes blink a cursor). "Refuses;
 undisturbed": Alt+Tab leaves the program on screen, the capture equals the
@@ -145,6 +158,8 @@ builds gave the same hash. No DDK file is committed.
 | `pcjr/INSTALL/GRMODE9.PNG` | `JRMODE.COM 9` in PCjr mode 9 before the switch attempt |
 | `pcjr/INSTALL/GRCGAM9.PNG` | Retail `CGA.GR2`: the mode 9 program after switching away and back |
 | `pcjr/INSTALL/GRJRM4.PNG` | JRGRAB: CGA mode 4 restored after switching away and back |
+| `pcjr/INSTALL/GRJRM8.PNG` | JRGRAB: `JRMODE 8` (160x200x16) as left on screen after the refused switch |
+| `pcjr/INSTALL/GRJRMA.PNG` | JRGRAB: `JRMODE A` (640x200x4) as left on screen after the refused switch |
 
 ### Scripted install and session
 
@@ -229,6 +244,12 @@ the bad cases (no emulator; the CI workflow `pcjrinst.yml` runs them):
   `jrgrab_expected` is tested against each wrong outcome (PCjr mode
   switched, refused but disturbed, text not restored, CGA mode refused,
   program data changed, desktop changed, program screen not shown).
+- **Program screen shown.** Previously any capture that was not the
+  desktop counted, including a capture that failed to decode. Now the
+  capture must be JRMODE's own screen for the mode (above). Rejected in
+  tests: blank, missing and wrong-size captures, single-pixel faults, every
+  distinguishable wrong-mode pairing, the desktop; the committed mode 4, 8,
+  9 and 0Ah captures pass only for their own mode (mode 4 also as 5).
 - **Media.** `PCJSFLP.PY` refuses an image whose MD5 differs from PCjs's;
   the test includes the original conversion defect.
 
