@@ -242,7 +242,8 @@
   },
   {
    "check": "dos_screen_restored_exactly",
-   "result": "PASS"
+   "result": "PASS",
+   "note": "one of up to 8 captures equals the screen before"
   },
   {
    "check": "dos_exit_desktop_exact",
