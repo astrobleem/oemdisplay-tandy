@@ -15,6 +15,7 @@ P = importlib.machinery.SourceFileLoader("jrpack", str(HERE / "JRPACK.PY")).load
 F = importlib.machinery.SourceFileLoader("pcjsflp", str(HERE / "PCJSFLP.PY")).load_module()
 K = importlib.machinery.SourceFileLoader("jrchk", str(HERE / "JRCHK.PY")).load_module()
 G = importlib.machinery.SourceFileLoader("jrgrtest", str(HERE / "JRGRTEST.PY")).load_module()
+T = importlib.machinery.SourceFileLoader("jrmodet", str(HERE / "JRMODET.PY")).load_module()
 INF = (HERE / "OEMSETUP.INF").read_bytes().decode("ascii")
 
 
@@ -279,6 +280,18 @@ class Checkers(unittest.TestCase):
             modes = self.good_modes()
             modes[m] = dict(modes[m], **change)
             self.assertIn(m, G.jrgrab_expected(modes), (m, change))
+
+    def test_jrmode_self_test_judge(self):
+        good = [("3", False, "MODE 3 OK"), ("A", False, "MODE A OK READ 1900"),
+                ("4", True, "MODE 4 BAD 0001"), ("A", True, "MODE A BAD 0001 READ 1900")]
+        bad = [("4", True, "MODE 4 OK"),            # injected fault not detected
+               ("4", False, "MODE 4 BAD 0002"),     # undisturbed run reported a change
+               ("4", True, "MODE 4 BAD 0002"),      # fault count wrong
+               ("4", False, None), ("4", False, "MODE 5 OK")]
+        for m, fault, text in good:
+            self.assertTrue(T.judge(m, fault, text), text)
+        for m, fault, text in bad:
+            self.assertFalse(T.judge(m, fault, text), text)
 
 
 class Pins(unittest.TestCase):

@@ -16,7 +16,9 @@ BIOS mode m in 0 1 2 3 4 5 6 8 9 A, runs C:\\JRMODE.COM m from File > Run:
     equals 'before' (restored; text modes blink a cursor);
     if it did not: 'after' must equal 'before' (screen undisturbed);
   - a key ends JRMODE, which reads its pattern back through the BIOS and
-    writes C:\\JRMODEm.TXT ('MODE m OK' only if every cell is intact);
+    compares it with its own readback taken right after drawing; it writes
+    C:\\JRMODEm.TXT, 'MODE m OK' only if no cell changed (a ' READ hhhh'
+    note means the BIOS readback already differed from the drawn pattern);
   - the Windows desktop after the program must equal the one before.
 
 Mode 7 (monochrome) does not exist on the PCjr and is not tested.
@@ -106,7 +108,9 @@ def one_mode(run, c, m, d0):
     r["desktop_after_equals_first"] = frame(run, f"m{m}_desk") == d0
     f = c / f"JRMODE{m}.TXT"
     r["program_result"] = f.read_bytes().decode("latin-1").strip() if f.exists() else None
-    r["program_intact"] = r["program_result"] == f"MODE {m} OK"
+    words = (r["program_result"] or "").split()
+    r["program_intact"] = words[:3] == ["MODE", m, "OK"] and (len(words) == 3 or words[3] == "READ")
+    r["bios_readback_differs_from_pattern"] = "READ" in words
     return r
 
 

@@ -1,13 +1,19 @@
 ; JRMODE.ASM - test-only DOS program for the grabber switch tests (MIT).
 ;   JRMODE m      m = 0 1 2 3 4 5 6 8 9 A (BIOS video mode, hex digit)
+;   JRMODE m X    fault self-test: after the snapshot, change one cell
+;                 itself; the result must then be 'BAD 0001'.
 ; Sets BIOS mode m, prints 'JRMODE m' through the BIOS teletype, draws a
 ; known pattern through the BIOS (graphics: rows 40-55, every pixel x,
 ; colour ((x>>3)+y) AND (colours-1); text: row 5, columns 0-14, 'A'+i with
-; attribute i+1), waits for a key, then reads the whole pattern back
-; through the BIOS (INT 10h 0Dh / 08h) and counts differences. It sets
-; mode 03h and writes C:\JRMODEm.TXT: 'MODE m OK' or 'MODE m BAD hhhh'
-; (hex count). Exit 0 = OK, 2 = differences, 3 = bad argument, 4 = file
-; error. Uses only INT 10h/16h/21h; writes no video memory directly.
+; attribute i+1), reads it straight back through the BIOS (INT 10h 0Dh /
+; 08h) into a snapshot, waits for a key, reads it again and counts cells
+; that differ from the snapshot: anything that changed the screen while
+; the program waited. It sets mode 03h and writes C:\JRMODEm.TXT:
+; 'MODE m OK' or 'MODE m BAD hhhh' (hex count), followed by ' READ hhhh'
+; when the first readback already differed from the drawn pattern (the
+; BIOS's own read path; DOSBox-X's PCjr BIOS does this in mode 0Ah).
+; Exit 0 = OK, 2 = changed, 3 = bad argument, 4 = file error.
+; Uses only INT 10h/16h/21h; writes no video memory directly.
 .8086
 code segment para public 'CODE'
 assume cs:code,ds:code,es:code,ss:code
@@ -26,6 +32,16 @@ skip:
  sub al,20h
 case_ok:
  mov mode_char,al
+ mov al,[si]
+ cmp al,' '
+ jne no_fault
+ mov al,[si+1]
+ and al,0dfh
+ cmp al,'X'
+ jne no_fault
+ mov fault,1
+no_fault:
+ mov al,mode_char
  mov di,offset modes
 find:
  mov ah,[di]
@@ -71,10 +87,15 @@ tty_col:
 tty_done:
  mov verify,0
  call pattern
+ mov verify,1
+ call pattern
+ cmp fault,0
+ je wait_key
+ call make_fault
+wait_key:
  xor ah,ah
  int 16h
- mov verify,1
- mov errs,0
+ mov verify,2
  call pattern
  mov ax,0003h
  int 10h
@@ -104,6 +125,25 @@ hex_loop:
  inc di
  loop hex_loop
 write_file:
+ cmp read_errs,0
+ je line_end
+ mov si,offset read_s
+ mov cx,6
+ rep movsb
+ mov ax,read_errs
+ mov cx,4
+hex_loop2:
+ push cx
+ mov cl,4
+ rol ax,cl
+ pop cx
+ mov bx,ax
+ and bx,0fh
+ mov dl,hexd[bx]
+ mov [di],dl
+ inc di
+ loop hex_loop2
+line_end:
  mov word ptr [di],0a0dh
  add di,2
  mov ah,3ch
@@ -137,8 +177,36 @@ bad_arg:
  mov ax,4c03h
  int 21h
 
-; Draw (verify = 0) or read back and count differences (verify = 1).
+; Fault self-test: change the first pattern cell (graphics: pixel 0,40
+; to colour 1 or 0; text: row 5 column 0 to '#').
+make_fault proc near
+ cmp kind,2
+ je mf_graphics
+ mov ah,2
+ xor bh,bh
+ mov dx,0500h
+ int 10h
+ mov ax,0923h
+ mov bx,0007h
+ mov cx,1
+ int 10h
+ ret
+mf_graphics:
+ mov al,buf
+ xor al,1
+ and al,cmask
+ mov ah,0ch
+ xor bh,bh
+ xor cx,cx
+ mov dx,40
+ int 10h
+ ret
+make_fault endp
+
+; verify = 0: draw. 1: read back into buf, count cells unlike the drawn
+; pattern in read_errs. 2: read back, count cells unlike buf in errs.
 pattern proc near
+ mov di,offset buf
  cmp kind,2
  je graphics
  xor si,si
@@ -162,16 +230,26 @@ text_read:
  mov ah,8
  xor bh,bh
  int 10h
+ cmp verify,1
+ jne text_cmp
+ mov [di],ax
  mov dx,si
  add dl,'A'
  cmp al,dl
- jne text_bad
+ jne text_rbad
  mov dx,si
  inc dl
  cmp ah,dl
- je text_next
-text_bad:
+ je text_adv
+text_rbad:
+ inc read_errs
+ jmp short text_adv
+text_cmp:
+ cmp ax,[di]
+ je text_adv
  inc errs
+text_adv:
+ add di,2
 text_next:
  inc si
  cmp si,15
@@ -210,9 +288,19 @@ g_read:
  pop dx
  pop cx
  pop bx
+ cmp verify,1
+ jne g_cmp
+ mov [di],al
  cmp al,bl
- je g_next
+ je g_adv
+ inc read_errs
+ jmp short g_adv
+g_cmp:
+ cmp al,[di]
+ je g_adv
  inc errs
+g_adv:
+ inc di
 g_next:
  inc cx
  cmp cx,xwidth
@@ -261,10 +349,13 @@ kind db 0
 xwidth dw 0
 cmask db 0
 verify db 0
+fault db 0
 errs dw 0
+read_errs dw 0
 hexd db '0123456789ABCDEF'
 ok_s db ' OK'
 bad_s db ' BAD '
+read_s db ' READ '
 title_s db 'JRMODE '
 title_m db '?'
  db 0
@@ -274,6 +365,7 @@ fname_m db '?'
 usage db 'JRMODE m: m = 0 1 2 3 4 5 6 8 9 A',13,10,'$'
 line_s db 'MODE '
 line_m db '?'
-line_r db 16 dup (0)
+line_r db 32 dup (0)
+buf label byte                    ; up to 10,240 bytes (640 x 16)
 code ends
 end entry
