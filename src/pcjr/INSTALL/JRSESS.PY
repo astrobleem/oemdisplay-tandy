@@ -28,11 +28,12 @@ is edited from the host. Steps:
     written to C:\\DOSAPP.TXT, Alt+Tab to Windows and back (screen restored
     exactly), EXIT back to an identical desktop; Exit Windows.
  D. Session 2 through JRWIN: desktop identical to session 1's; exit.
- E. Refusal: JRHOLDT keeps the page as an ordinary resident program, then
-    JRWIN runs with its output redirected to C:\\HELD.TXT. It passes only
-    if that output is exactly JRGUARD's "not reserved by DOS" refusal and
-    JRWIN's "guard refused" line, and the exit code is exactly 1 (JRCHK.PY);
-    any other JRWIN failure, silence or code fails the check.
+ E. Refusal: JRHOLDT keeps the page as an ordinary resident program (its
+    exit code must be 0: it stays resident only with its block at exactly
+    1800h), then JRWIN runs with its output redirected to C:\\HELD.TXT. It
+    passes only if that output is exactly JRGUARD's "not reserved by DOS"
+    refusal and JRWIN's "guard refused" line, and the exit code is exactly 1
+    (JRCHK.PY); any other JRWIN failure, silence or code fails the check.
 JRGUARD's own output before Setup goes to C:\\GUARD0.TXT and must be its
 "held by a DOS system block" OK. Every exit code is logged exactly (0-4,
 5+) to C:\\JRLOG.TXT by C:\\JRRC.BAT, a harness file written to C: by the
@@ -485,6 +486,7 @@ def main(argv):
         r.exit_windows("WIN2")
         r.shot("s2_exit_dos")
         r.dos("C:\\JRHOLDT.COM", wait=3)
+        r.log_rc("HOLDT")                            # 0 only if resident at exactly 1800h
         r.dos("C:\\PCJREXP\\JRWIN > C:\\HELD.TXT", wait=10)
         r.log_rc("HELD")
         r.dos("TYPE C:\\HELD.TXT")
@@ -493,10 +495,10 @@ def main(argv):
         J.stop(out)
     read = lambda n: (r.c / n).read_bytes() if (r.c / n).exists() else b""
     rc = K.rc_lines(read("JRLOG.TXT").decode("latin-1"))
-    r.check("exit_codes_exact", rc == {"GUARD": "0", "WIN1": "0", "WIN2": "0", "HELD": "1"}, rc=rc)
+    r.check("exit_codes_exact", rc == {"GUARD": "0", "WIN1": "0", "WIN2": "0", "HOLDT": "0", "HELD": "1"}, rc=rc)
     ok, detail = K.guard_passed(read("GUARD0.TXT"), rc.get("GUARD"))
     r.check("guard_passed_with_dos_owned_page", ok, **detail)
-    ok, detail = K.guard_refused_launch(read("HELD.TXT"), rc.get("HELD"))
+    ok, detail = K.guard_refused_launch(read("HELD.TXT"), rc.get("HELD"), rc.get("HOLDT"))
     r.check("held_page_refused_by_jrguard", ok, **detail)
     res["checks"] = r.checks
     res["passed"] = sum(c["result"] == "PASS" for c in r.checks)

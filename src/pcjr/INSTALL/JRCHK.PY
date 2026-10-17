@@ -33,14 +33,18 @@ def guard_passed(output, rc):
     return ok, {"output": output.decode("latin-1"), "rc": rc}
 
 
-def guard_refused_launch(output, rc):
-    """The refused-launch case passes only when JRWIN's whole output is
-    JRGUARD's 'not reserved' refusal followed by JRWIN's 'guard refused'
-    line, and the exit code is exactly 1 (JRGUARD's refusal code, passed
-    on by JRWIN). A missing WIN.COM, an EXEC error, a different refusal
-    reason, silence or any other code is not this case."""
-    ok = output == GUARD_REFUSED + JRWIN_REFUSED and rc == "1"
-    return ok, {"output": output.decode("latin-1"), "rc": rc}
+def guard_refused_launch(output, rc, holdt_rc):
+    """The 'page held by another program' case passes only when JRHOLDT
+    exited 0 (it stays resident only after DOS placed its allocation at
+    exactly 1800h; 1 = the free failed, 2 = the allocation landed
+    elsewhere, which leaves the page free and gives the same refusal text),
+    JRWIN's whole output is JRGUARD's 'not reserved' refusal followed by
+    JRWIN's 'guard refused' line, and JRWIN's exit code is exactly 1
+    (JRGUARD's refusal code, passed on by JRWIN). A missing WIN.COM, an
+    EXEC error, a different refusal reason, silence or any other code is
+    not this case."""
+    ok = holdt_rc == "0" and output == GUARD_REFUSED + JRWIN_REFUSED and rc == "1"
+    return ok, {"jrholdt_rc": holdt_rc, "output": output.decode("latin-1"), "rc": rc}
 
 
 def inf_display_entries(text):

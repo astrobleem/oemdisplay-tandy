@@ -186,7 +186,7 @@ class Checkers(unittest.TestCase):
     REFUSED = K.GUARD_REFUSED + K.JRWIN_REFUSED
 
     def test_refusal_accepted_only_for_jrguard_refusal(self):
-        self.assertTrue(K.guard_refused_launch(self.REFUSED, "1")[0])
+        self.assertTrue(K.guard_refused_launch(self.REFUSED, "1", "0")[0])
 
     def test_refusal_other_jrwin_failures_rejected(self):
         for text in (b"JRWIN: missing C:\\WINDOWS\\WIN.COM. Windows not started.\r\n",
@@ -194,11 +194,17 @@ class Checkers(unittest.TestCase):
                      b"JRGUARD: not an IBM PCjr (F000:FFFE is not FDh).\r\n" + K.JRWIN_REFUSED,
                      b"JRGUARD: DOS memory chain is not valid. Not starting.\r\n" + K.JRWIN_REFUSED,
                      b"", K.JRWIN_REFUSED):
-            self.assertFalse(K.guard_refused_launch(text, "1")[0], text)
+            self.assertFalse(K.guard_refused_launch(text, "1", "0")[0], text)
 
     def test_refusal_wrong_exit_code_rejected(self):
         for rc in ("0", "2", "5+", None):
-            self.assertFalse(K.guard_refused_launch(self.REFUSED, rc)[0], rc)
+            self.assertFalse(K.guard_refused_launch(self.REFUSED, rc, "0")[0], rc)
+
+    def test_refusal_needs_jrholdt_resident(self):
+        # JRHOLDT 1 (free failed) or 2 (allocation not at 1800h, page left
+        # free: same refusal text) or no record: the held-page case is unproven.
+        for holdt in ("1", "2", "5+", None):
+            self.assertFalse(K.guard_refused_launch(self.REFUSED, "1", holdt)[0], holdt)
 
     def test_guard_pass_needs_its_own_text_and_zero(self):
         self.assertTrue(K.guard_passed(K.GUARD_OK_OWNED, "0")[0])
