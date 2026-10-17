@@ -40,7 +40,8 @@ def main(argv):
         raise SystemExit(f"JRMODET: {run} exists")
     (run / "C").mkdir(parents=True)
     shutil.copyfile(a.tools / "JRMODE.COM", run / "C" / "JRMODE.COM")
-    res = {"jrmode_sha256": hashlib.sha256((a.tools / "JRMODE.COM").read_bytes()).hexdigest(), "results": {}}
+    res = {**G.S.source_state(),
+           "jrmode_sha256": hashlib.sha256((a.tools / "JRMODE.COM").read_bytes()).hexdigest(), "results": {}}
     J.start(run, 1200)
     try:
         for m in G.MODES:

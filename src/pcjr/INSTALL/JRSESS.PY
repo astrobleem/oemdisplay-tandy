@@ -68,16 +68,20 @@ JRRC_BAT = ("@ECHO OFF\r\n"
             ":R5\r\nECHO %1 RC=5+ >>C:\\JRLOG.TXT\r\n:END\r\n")
 
 
-def provenance(packet, win30):
-    """What a run used: the exact source commit (and whether the tree had
-    uncommitted changes), the install folder and the Windows files."""
+def source_state():
+    """The exact source commit and whether tracked files had uncommitted changes."""
     import subprocess
     root = HERE.parents[2]
     git = lambda *a: subprocess.run(["git", "-C", str(root), *a], capture_output=True, text=True).stdout.strip()
+    return {"source_commit": git("rev-parse", "HEAD"),
+            "source_tree_dirty": bool(git("status", "--porcelain", "--untracked-files=no"))}
+
+
+def provenance(packet, win30):
+    """What a run used: source_state(), the install folder and the Windows files."""
     files = sorted(p for p in Path(win30).iterdir() if p.is_file())
     manifest = "".join(f"{sha(p)}  {p.name}\n" for p in files)
-    return {"source_commit": git("rev-parse", "HEAD"),
-            "source_tree_dirty": bool(git("status", "--porcelain", "--untracked-files=no")),
+    return {**source_state(),
             "packet_sha256": {p.name: sha(p) for p in sorted(Path(packet).iterdir())},
             "win30_files": len(files),
             "win30_manifest_sha256": hashlib.sha256(manifest.encode()).hexdigest()}

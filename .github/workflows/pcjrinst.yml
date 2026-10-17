@@ -18,7 +18,7 @@ permissions:
 jobs:
   host:
     runs-on: ubuntu-24.04
-    timeout-minutes: 3
+    timeout-minutes: 6
     steps:
       - name: Check out exact public source without credentials
         env:
@@ -31,8 +31,13 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/src/pcjr/INSTALL/\n/.gitattributes\n' | git sparse-checkout set --no-cone --stdin
+          printf '/src/pcjr/INSTALL/\n/docs/pcjr/INSTALL/\n/.gitattributes\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
-      - name: Test OEMSETUP.INF, INSTALL.TXT and JRPACK refusals with synthetic fixtures
+      - name: Install the pinned image library for the committed-capture checks
+        run: |
+          python3 -m venv "$RUNNER_TEMP/pcjr-python"
+          "$RUNNER_TEMP/pcjr-python/bin/python" -m pip install --disable-pip-version-check Pillow==12.0.0
+          echo "$RUNNER_TEMP/pcjr-python/bin" >> "$GITHUB_PATH"
+      - name: Test OEMSETUP.INF, INSTALL.TXT and JRPACK refusals and the emulator checkers with synthetic and committed fixtures
         run: python3 -B src/pcjr/INSTALL/TESTPACK.PY

@@ -105,3 +105,77 @@ def win_com_static_logo(win_com, win_cnf_installed, win_cnf_media, lgo, rle):
               "rle_bytes": len(rle), "installed_cnf_equals_media": win_cnf_installed == cnf,
               "win_com_equals_cnf_lgo_rle": win_com == cnf + lgo + rle}
     return detail["installed_cnf_equals_media"] and detail["win_com_equals_cnf_lgo_rle"], detail
+
+
+# --- JRMODE screens -----------------------------------------------------------
+# DOSBox-X captures every mode as 640x400 (each scanline doubled). Colours as
+# DOSBox-X's PCjr shows them with JRMODE's BIOS defaults (measured; modes 4/5,
+# 0/1 and 2/3 differ only in colour burst, which DOSBox-X does not render).
+IRGB = [(0, 0, 0), (0, 0, 170), (0, 170, 0), (0, 170, 170), (170, 0, 0), (170, 0, 170), (170, 85, 0),
+        (170, 170, 170), (85, 85, 85), (85, 85, 255), (85, 255, 85), (85, 255, 255), (255, 85, 85),
+        (255, 85, 255), (255, 255, 85), (255, 255, 255)]
+CGA4 = [(0, 0, 0), (0, 170, 170), (170, 0, 170), (255, 255, 255)]
+JRMODE_SCREENS = {  # mode: ("text", columns) or ("graphics", width, palette)
+    "0": ("text", 40), "1": ("text", 40), "2": ("text", 80), "3": ("text", 80),
+    "4": ("graphics", 320, CGA4), "5": ("graphics", 320, CGA4),
+    "6": ("graphics", 640, [IRGB[0], IRGB[15]]),
+    "8": ("graphics", 160, IRGB), "9": ("graphics", 320, IRGB),
+    "A": ("graphics", 640, IRGB[:4]),
+}
+BLACK = (0, 0, 0)
+
+
+def jrmode_screen(m, capture):
+    """True only if capture = ((w, h), RGB bytes) is JRMODE's screen for mode m:
+    640x400; graphics: every logical pixel a uniform block of the mode's
+    size, rows 40-55 exactly the pattern colour(((x>>3)+y) AND (n-1)), rows
+    8-39 and 56-199 black, the 'JRMODE m' title in rows 0-7; text: row 5
+    cells 0-14 each black plus exactly the foreground of attribute i+1, the
+    rest of rows 1-24 black, the title in row 0. A missing, blank, desktop or
+    other-mode capture fails."""
+    if m not in JRMODE_SCREENS:
+        return False, {"error": "unknown mode"}
+    if capture is None:
+        return False, {"error": "no capture"}
+    size, rgb = capture
+    if tuple(size) != (640, 400) or len(rgb) != 640 * 400 * 3:
+        return False, {"error": f"capture size {tuple(size)}"}
+
+    def px(x, y):
+        i = (y * 640 + x) * 3
+        return (rgb[i], rgb[i + 1], rgb[i + 2])
+
+    spec = JRMODE_SCREENS[m]
+    if spec[0] == "graphics":
+        _, width, pal = spec
+        sx = 640 // width
+        blocks = pattern = background = 0
+        title = False
+        for y in range(200):
+            for x in range(width):
+                c = px(x * sx, 2 * y)
+                if any(px(x * sx + dx, 2 * y + dy) != c for dx in range(sx) for dy in range(2)):
+                    blocks += 1
+                if 40 <= y < 56:
+                    pattern += c != pal[((x >> 3) + y) & (len(pal) - 1)]
+                elif y < 8:
+                    title = title or c != BLACK
+                else:
+                    background += c != BLACK
+        detail = {"non_uniform_blocks": blocks, "pattern_mismatches": pattern,
+                  "background_not_black": background, "title_present": title}
+        return blocks == 0 and pattern == 0 and background == 0 and title, detail
+    cols = spec[1]
+    cw = 640 // cols
+    cells, background = [], 0
+    for i in range(15):
+        colours = {px(x, y) for x in range(i * cw, (i + 1) * cw) for y in range(80, 96)}
+        cells.append(colours == {BLACK, IRGB[i + 1]})
+    for y in range(16, 400):
+        for x in range(640):
+            if 80 <= y < 96 and x < 15 * cw:
+                continue
+            background += px(x, y) != BLACK
+    title = any(px(x, y) != BLACK for y in range(16) for x in range(640))
+    detail = {"cells_ok": sum(cells), "background_not_black": background, "title_present": title}
+    return all(cells) and background == 0 and title, detail

@@ -294,6 +294,87 @@ class Checkers(unittest.TestCase):
             self.assertFalse(T.judge(m, fault, text), text)
 
 
+class JrmodeScreens(unittest.TestCase):
+    """JRCHK.jrmode_screen: only JRMODE's own screen for the mode passes."""
+
+    @staticmethod
+    def synth(m):
+        spec = K.JRMODE_SCREENS[m]
+        img = bytearray(640 * 400 * 3)
+
+        def put(x, y, c):
+            i = (y * 640 + x) * 3
+            img[i:i + 3] = bytes(c)
+        if spec[0] == "graphics":
+            _, width, pal = spec
+            sx = 640 // width
+            for y in range(200):
+                for x in range(width):
+                    if 40 <= y < 56:
+                        c = pal[((x >> 3) + y) & (len(pal) - 1)]
+                    elif y < 8 and x < 8:
+                        c = pal[-1]                      # a title pixel
+                    else:
+                        continue
+                    for dx in range(sx):
+                        for dy in range(2):
+                            put(x * sx + dx, 2 * y + dy, c)
+        else:
+            cw = 640 // spec[1]
+            for i in range(15):
+                for y in range(84, 92):
+                    put(i * cw + 1, y, K.IRGB[i + 1])   # a stroke of the glyph
+            put(3, 3, K.IRGB[7])                         # the title
+        return (640, 400), bytes(img)
+
+    def test_each_mode_accepted(self):
+        for m in K.JRMODE_SCREENS:
+            ok, detail = K.jrmode_screen(m, self.synth(m))
+            self.assertTrue(ok, (m, detail))
+
+    def test_blank_missing_and_wrong_size_rejected(self):
+        for m in K.JRMODE_SCREENS:
+            self.assertFalse(K.jrmode_screen(m, ((640, 400), bytes(640 * 400 * 3)))[0], m)
+            self.assertFalse(K.jrmode_screen(m, None)[0], m)
+            self.assertFalse(K.jrmode_screen(m, ((320, 200), bytes(320 * 200 * 3)))[0], m)
+        self.assertFalse(K.jrmode_screen("7", self.synth("3"))[0])
+
+    def test_wrong_mode_rejected(self):
+        # Pairs that DOSBox-X renders identically (colour burst only) cannot differ.
+        same = {frozenset("45"), frozenset("01"), frozenset("23")}
+        for a in K.JRMODE_SCREENS:
+            for b in K.JRMODE_SCREENS:
+                if a != b and frozenset(a + b) not in same:
+                    self.assertFalse(K.jrmode_screen(b, self.synth(a))[0], f"mode {a} screen accepted as {b}")
+
+    def test_single_pixel_faults_rejected(self):
+        for m, (x, y) in (("8", (100, 90)), ("A", (5, 300)), ("9", (0, 98)), ("3", (600, 300))):
+            size, img = self.synth(m)
+            img = bytearray(img)
+            i = (y * 640 + x) * 3
+            img[i:i + 3] = b"\x55\x55\x55"
+            self.assertFalse(K.jrmode_screen(m, (size, bytes(img)))[0], (m, x, y))
+
+    def test_committed_captures(self):
+        docs = HERE.parents[2] / "docs" / "pcjr" / "INSTALL"
+        found = 0
+        for name, m in (("GRJRM8.PNG", "8"), ("GRMODE9.PNG", "9"), ("GRJRMA.PNG", "A"), ("GRJRM4.PNG", "4")):
+            if not (docs / name).exists():
+                continue
+            try:
+                from PIL import Image
+            except ImportError:
+                self.skipTest("Pillow not installed")
+            with Image.open(docs / name) as im:
+                cap = (im.size, im.convert("RGB").tobytes())
+            found += 1
+            for other in K.JRMODE_SCREENS:
+                want = other == m or frozenset(other + m) == frozenset("45")
+                self.assertEqual(K.jrmode_screen(other, cap)[0], want, (name, other))
+        if not found:
+            self.skipTest("docs/pcjr/INSTALL captures not checked out")
+
+
 class Pins(unittest.TestCase):
     def test_grabber_pin_shape(self):
         import json

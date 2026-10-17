@@ -41,14 +41,19 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 J = importlib.machinery.SourceFileLoader("jrdbx", str(HERE / "JRDBX.PY")).load_module()
 S = importlib.machinery.SourceFileLoader("jrsess", str(HERE / "JRSESS.PY")).load_module()
+K = S.K
 
 MODES = ["0", "1", "2", "3", "4", "5", "6", "8", "9", "A"]
 PCJR_ONLY = {"8", "9", "A"}
 
 
 def raw_bytes(run, name):
+    """((w, h), RGB bytes) of a capture, or None if it is missing."""
     from PIL import Image
-    with Image.open(Path(run) / "raw" / (name + ".png")) as im:
+    p = Path(run) / "raw" / (name + ".png")
+    if not p.exists():
+        return None
+    with Image.open(p) as im:
         return im.size, im.convert("RGB").tobytes()
 
 
@@ -63,6 +68,8 @@ def frame(run, name):
 def capture_matching(run, ref, name, tries=8):
     """Up to `tries` captures ~0.4 s apart; True if one equals <ref>."""
     want = raw_bytes(run, ref)
+    if want is None:
+        return False
     for _ in range(tries):
         J.shot(run, name, settle=0.3)
         if raw_bytes(run, name) == want:
@@ -93,7 +100,9 @@ def one_mode(run, c, m, d0):
     r = {}
     run_cmd(f"C:\\JRMODE.COM {m}", wait=12)
     J.shot(run, f"m{m}_before")
-    r["program_screen_shown"] = frame(run, f"m{m}_before") != d0
+    # JRMODE's own screen for this mode: size, block geometry, pattern colours
+    # and blank background (JRCHK.jrmode_screen), not merely 'not the desktop'.
+    r["program_screen_shown"], r["program_screen_detail"] = K.jrmode_screen(m, raw_bytes(run, f"m{m}_before"))
     J.key("alt+Tab", wait=12)
     J.shot(run, f"m{m}_after")
     away = frame(run, f"m{m}_after")
