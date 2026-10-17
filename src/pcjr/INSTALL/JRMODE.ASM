@@ -19,6 +19,9 @@ code segment para public 'CODE'
 assume cs:code,ds:code,es:code,ss:code
 org 100h
 entry:
+ cli
+ mov sp,offset stack_end         ; own stack inside the image: under Windows
+ sti                             ; real mode DOS may give a COM no spare memory
  cld
  mov si,81h
 skip:
@@ -366,6 +369,11 @@ usage db 'JRMODE m: m = 0 1 2 3 4 5 6 8 9 A',13,10,'$'
 line_s db 'MODE '
 line_m db '?'
 line_r db 32 dup (0)
-buf label byte                    ; up to 10,240 bytes (640 x 16)
+; Snapshot and stack are part of the image (DOS guarantees memory for the
+; image only): 10,240 bytes = 640 x 16 pixels, the largest pattern.
+buf db 10240 dup (0)
+ even
+stack_area db 512 dup (0)
+stack_end label word
 code ends
 end entry
