@@ -1,0 +1,11 @@
+Private test media for docs/PCJR.MD "Clean Windows 3.0 installation".
+Not in this repository. PCjs Windows 3.00 1.2 MB diskettes as raw
+sector images (boot sector OEM ID PCJS.ORG), SHA-256:
+f87bd65bbd0a6bdf7cadf68c96fb198118a2c81fb935496800b7a73cc46c58cc  DISK1.IMG
+27542edd25f2351d9593af45144360751c36baa1ff19e54bdfbfc88e15f5c797  DISK2.IMG
+cf3f298509a5870ed1d7596b569afe7776bd190c0fdfbb419df0dcfbef5de3bd  DISK3.IMG
+f031da89ea99626e22d872cdbbaef491d79c47ede6d3301d07d536b44cd86930  DISK4.IMG
+ff1615876a75e7643610c3542f68de4696dce07d530bc0c89377927ef3d814f3  DISK5.IMG
+The files of all five disks were pooled in one folder (C:\WIN30SRC).
+Retail CGA.GR2 (grabber comparison only), expanded from Disk 3:
+1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067  EXP/CGA.GR2
