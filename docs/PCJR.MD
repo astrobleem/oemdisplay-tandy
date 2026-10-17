@@ -1,8 +1,10 @@
 # IBM PCjr driver proposal (TNDYJR): first probe results
 
 Status: **TNDYJR.DRV builds through the pinned BUILD88 pipeline, passes its
-audits, and boots Windows 3.0 real mode on DOSBox-X's PCjr machine (see
-below). Not yet run on a real PCjr.** Nothing here changes the shipped TANDY88/TR5
+audits, and boots Windows 3.0 real mode on DOSBox-X's PCjr machine. A clean
+Windows 3.0 Setup with PCjr fonts, a PCjr-safe grabber and fresh groups
+passes a scripted session there (see "Clean Windows 3.0 installation").
+Not yet run on a real PCjr.** Nothing here changes the shipped TANDY88/TR5
 drivers, the WINXT disk, the accepted hashes or the Tandy RESERVE helper.
 Every result below is DOSBox / DOSBox-X emulation; no physical PCjr has run
 any of it.
@@ -38,6 +40,147 @@ expansion, that page sits under DOS unless a PCjr memory driver keeps it out
 of the allocator. The Tandy RESERVE helper deliberately refuses PCjrs.
 
 **3. Identity.** PCjr: F000:FFFE = FDh. Tandy: FFh plus FC00:0000 = 21h.
+
+## Clean Windows 3.0 installation (2026-10-17)
+
+The first boot below reused an AT/EGA Windows install with only
+`display.drv` changed. That gap is closed: stock Windows 3.0 Setup now
+installs a PCjr configuration from scratch, with PCjr-appropriate fonts, a
+grabber that handles PCjr video, a clearly labelled Setup choice and fresh
+Program Manager groups. **All of it is emulator evidence (DOSBox-X
+`machine=pcjr`). Nothing in this section has run on a real PCjr.**
+
+User instructions: [`src/pcjr/INSTALL/INSTALL.TXT`](../src/pcjr/INSTALL/INSTALL.TXT)
+(the same file ships in the install folder).
+
+### The install folder (`C:\PCJREXP`)
+
+`src/pcjr/INSTALL/JRPACK.PY --bin <dir> --out <new>` assembles it and
+refuses unless every input matches its pin. Every file is first-party; no
+Microsoft file is needed from the packet or committed here:
+
+| File | What | Pin |
+| --- | --- | --- |
+| `TNDYJR.DRV`, `JRGUARD.COM`, `JRWIN.COM` | the released driver, guard and launcher | `experiments/DISPLAY3/PINS.JSN` (experimental-displays-2026-10-12) |
+| `JRGRAB.GR2` | PCjr-safe 286 grabber, built from the DDK CGA grabber (below) | `src/pcjr/INSTALL/PINS.JSN`: 2,159 bytes, `2453cd1e...3d741dec` |
+| `XTESYS.FON`, `XTEFIX.FON`, `XTEOEM.FON` | XT Pixels EGA-aspect fonts (MIT), the same set the Tandy 320x200 install uses | hashes in `JRPACK.PY` |
+| `XTSTATIC.LGO`, `WXTSPL01.RLE` | static mode-6 startup logo (MIT); the animated splash programs Tandy palette ports and is not used | hashes in `JRPACK.PY` |
+| `OEMSETUP.INF` | one Setup entry: `EXPERIMENTAL IBM PCjr 320x200 16 colors` | checked by `JRPACK.PY` |
+| `INSTALL.TXT`, `FONTLIC.TXT`, `LOGOLIC.TXT`, `SHA256.SUM` | guide, licences, hashes | |
+
+`OEMSETUP.INF` names the absolute `C:\PCJREXP` disk path: a relative `.`
+made Windows 3.0 Setup ask again for each file. The font row uses the
+`133,96,72` aspect so Setup installs the EGA-aspect XT Pixels set, which is
+what a 320x200 screen with square-ish pixels needs; CGA fonts (`CGASYS`
+and friends) are for 640x200 and are not installed.
+`src/pcjr/INSTALL/TESTPACK.PY` (18 host tests, no emulator) covers the
+refusals: LF line endings, a stock `CGA.GR2` row, an unlabelled or overlong
+selector, a relative disk path, a second row, a missing file, a changed font
+and wrong or missing pinned binaries.
+
+### Why not the stock CGA grabber
+
+Measured with `JRGRTEST.PY` on the clean install, changing only
+`286grabber=` (`docs/pcjr/INSTALL/GR*.JSN`):
+
+| Grabber | Text-mode DOS program: Alt+Tab away and back | Mode 9 (PCjr 320x200x16) DOS program |
+| --- | --- | --- |
+| Retail Windows 3.0 `CGA.GR2` (`1fc24254...`) | **comes back in a 4-colour graphics mode** | **switches away; screen comes back corrupted** |
+| Unmodified DDK CGA grabber (control build, `310988d7...`) | exact | stays in the program, but only because a garbage table entry happens to fail |
+| `JRGRAB.GR2` | exact | refuses the switch by design (beep); program unaffected |
+
+Desktops after each DOS program exited were exact in all three cases.
+
+Causes, from the Windows 3.0 DDK grabber source: the CGA grabber finds the
+video mode by firing the 6845 light-pen latch (3DBh/3DCh) and matching the
+measured regen length; on the emulated PCjr that misidentifies text mode 3.
+Separately `GetMode` indexes a 7-entry table (modes 0-6) with the BIOS mode
+byte, so PCjr modes 8, 9 and 0Ah read past it and save/restore use a garbage
+far pointer.
+
+`BUILDGR.PY` builds the DDK grabber twice in DOSBox-X with the pinned MASM
+5.10/LINK/EXE2BIN: unmodified (control) and with ten anchored edits. On a
+PCjr (F000:FFFE = FDh) it takes the mode from the BIOS data area instead of
+the light pen; any mode above 6 uses the mode-6 entry (no pointer leaves the
+16 KB B800h window) and SaveScreen and GrabScreen refuse. On other machines
+the first edits change nothing and the rest only touch modes this grabber
+never supported. Two builds gave the same hash. No DDK file is committed.
+
+### Scripted install and session
+
+`JRSESS.PY` types everything a user would into the guest; nothing in
+`C:\WINDOWS` is edited from the host. Result
+`docs/pcjr/INSTALL/SESSION.JSN`: **verdict PASS, 25 of 25 checks** (guest log `docs/pcjr/INSTALL/JRLOG.TXT`).
+
+| Step | Checked |
+| --- | --- |
+| Install | JRGUARD; SETUP from `C:\WIN30SRC`; Display = Other, `C:\PCJREXP`, the PCjr entry; Keyboard = PC/XT (84 keys); no network; optional procedures off; CONFIG/AUTOEXEC changes declined; **Return to DOS** |
+| As installed | SYSTEM.INI `display.drv=TNDYJR.DRV`, `286grabber=JRGRAB.GR2`, the three XTE fonts, keyboard `type=1`; installed files equal the packet's; no CGA/EGA display files; WIN.COM built with the static logo; fresh Main/Accessories/Games groups; Program Manager's saved window (`32 20 288 160`) and every group window inside 320x200; no CONFIG.SYS/AUTOEXEC.BAT written |
+| Session 1 (`JRWIN`) | exact 320x200 desktop; File menu from the keyboard and exact restore; serial mouse to an exact pixel and a click opening the same menu; Notepad text saved byte-exact; Paintbrush box drawn with the mouse, saved, reopened through File > Open with an identical canvas, BMP equal to the screen; COMMAND.COM wrote a file, Alt+Tab away and back restored the text screen exactly, EXIT returned to an identical desktop; Exit Windows |
+| Session 2 (`JRWIN`) | desktop identical to session 1's |
+| Refusal | with `JRHOLDT` holding the page, `JRWIN` refuses and Windows does not start |
+| Log | `GUARD RC=0`, `WIN1 RC=0`, `WIN2 RC=0`, `HELD RC=NONZERO` |
+
+Screenshots (exact decoded 320x200 frames, 2x):
+
+| Capture | What it shows |
+| --- | --- |
+| `pcjr/INSTALL/SELECTOR.PNG` | Setup's OEM list after Display = Other, `C:\PCJREXP`: the one labelled PCjr entry |
+| `pcjr/INSTALL/LIST.PNG` | Setup's list with the PCjr display, PC/XT keyboard, no network |
+| `pcjr/INSTALL/DESKTOP.PNG` | First desktop of the clean install: fresh groups inside Program Manager |
+| `pcjr/INSTALL/MOUSE.PNG` | File menu opened by a serial-mouse click at (51,45) |
+| `pcjr/INSTALL/NOTEPAD.PNG` | Notepad with the typed keyboard line before saving |
+| `pcjr/INSTALL/PBRUSH.PNG` | `C:\JRTEST.BMP` reopened in Paintbrush |
+| `pcjr/INSTALL/DOSAWAY.PNG` | Windows while COMMAND.COM is switched away |
+| `pcjr/INSTALL/REFUSED.PNG` | `JRWIN` refusing with the page held by a resident program |
+
+### Changing an existing install
+
+`JRCONV.PY` makes a stock Windows 3.0 install (the CGA configuration Setup
+detects), adds a user section to WIN.INI from DOS, then runs JRGUARD and
+`SETUP` in `C:\WINDOWS` and picks the PCjr entry. Result
+`docs/pcjr/INSTALL/CONVERT.JSN`: CONVERT_RESULT. No backup or rollback
+machinery is added: going back is the same Setup step with the previous
+display.
+
+### Reproducing
+
+Private inputs, none committed: the PCjs Windows 3.00 1.2 MB diskette set
+(PCjs, the upstream of the browser workshop's Windows image; raw image
+hashes in `docs/pcjr/INSTALL/MEDIA.TXT`)
+with the files of all five disks pooled in one folder; the pinned DDK view
+from `tools/BUILDDEPS`; DOSBox-X 2024.03.01; an Xvfb display. Retail
+`CGA.GR2` for the comparison row comes from Disk 3.
+
+    python3 src/pcjr/INSTALL/BUILDGR.PY --repo <ddk view> --dosbox <dosbox-x> --out <gr>
+    python3 src/pcjr/INSTALL/JRPACK.PY --bin <PCJR.ZIP files + JRGRAB.GR2> --out <pk>
+    python3 src/pcjr/INSTALL/JRSESS.PY --packet <pk> --win30 <win30 files> \
+        --tools <BUILDCOM output with JRHOLDT.COM> --out <s>
+    python3 src/pcjr/INSTALL/JRGRTEST.PY --installed <s>/C --grabber <GR2> \
+        --tools <dir with JRMODE9.COM> --out <g>
+    python3 src/pcjr/INSTALL/JRCONV.PY --packet <pk> --win30 <win30 files> --out <c>
+    python3 -B src/pcjr/INSTALL/TESTPACK.PY
+
+`JRMODE9.ASM` (BIOS mode 9, a line of text, wait for a key) is built the
+same way as the other `src/pcjr` tools.
+
+### Remaining limits
+
+- Emulator only. DOSBox-X's own DOS keeps the video page in a DOS-owned
+  block; PC DOS on a real expanded PCjr may not, and JRGUARD will then
+  refuse (open item 1 below still applies).
+- A DOS program in PCjr modes 8, 9 or 0Ah cannot be switched away from; it
+  must be ended to return to Windows. Text and CGA modes switch normally.
+- Windows 3.0 Setup and some dialogs (File Save As) are wider than 320
+  pixels; they work from the keyboard.
+- Paintbrush 3.0 does not open a drive-qualified file name given on its
+  command line; File > Open works.
+- PCjr keyboard hardware, the serial port and timing are not modelled
+  faithfully by the emulator and are not claimed. Mouse input was a
+  byte-exact Microsoft serial mouse on COM1.
+- The install folder is not part of any release yet; the released
+  `PCJR.ZIP` still documents the display.drv-only change.
+- Windows 3.1 is not supported.
 
 ## First Windows 3.0 boot on an emulated PCjr
 
@@ -89,6 +232,8 @@ Not covered yet: the PCjr's own keyboard path (input came through DOSBox-X's
 keyboard emulation), PC DOS on a real expanded PCjr, Paintbrush save/reopen,
 the repository's MODETEST frame oracle (it reads VRAM through B800h and would
 need the same physical-page change), a CGA-grabber install, and real hardware.
+The install, grabber and Paintbrush items are now covered in emulation by
+"Clean Windows 3.0 installation" above.
 
 ## Review fixes (2026-10-10)
 
@@ -245,14 +390,15 @@ emulator negative tests only.
 2. Decide whether JRGUARD should grow into a reserving helper (RESERVE-style,
    last-fit allocation of exactly 1800h-1FFFh) or keep requiring an existing
    PCjr memory driver. That depends on what item 1 finds.
-3. Runtime beyond the first boot: a CGA-grabber install with CGA-class
-   fonts, MODETEST frame-by-frame checks (after teaching its VRAM reader the
-   physical page), cursor edges, ROPs, text and Paintbrush save/reopen.
+3. Runtime beyond the clean install (done in emulation: Setup, fonts,
+   grabber, Paintbrush save/reopen, DOS program switch): MODETEST
+   frame-by-frame checks (after teaching its VRAM reader the physical page),
+   cursor edges and ROPs.
 4. Keyboard, mouse and speed: the PCjr's keyboard reaches INT 9 through its
    BIOS translation, it has no DMA controller, and RAM in the low 128KB is
    slowed by video contention. Each needs its own Windows check.
-5. The animated splash programs the Tandy palette through 3DEh; a PCjr build
-   should use the static startup until that is ported.
+5. The animated splash programs the Tandy palette through 3DEh; the PCjr
+   install uses the static startup logo until that is ported.
 6. Expected support boundary: 320x200x16 only to start. 640x200x4 (mode 0Ah)
    is a later profile; 640x200x16 does not exist on a PCjr.
 
