@@ -64,9 +64,9 @@ XTSTATIC.LGO, WXTSPL01.RLE  static startup logo (MIT, LOGOLIC.TXT)
 OEMSETUP.INF, SHA256.SUM (check the files on a modern computer)
 
 KNOWN LIMITS
-- DOS programs: text and CGA modes switch away and back; a program using
-  PCjr modes 8, 9 or 0Ah cannot be switched away from (Windows beeps):
-  finish it to return to Windows.
+- DOS programs: text-mode programs switch away and back (tested); CGA
+  graphics programs were not tested. A program using PCjr modes 8, 9 or
+  0Ah cannot be switched away from (Windows beeps): finish it to return.
 - Dialogs wider than 320 pixels (Setup, File Save As) are partly off
   screen; the keyboard still works.
 - Paintbrush 3.0 does not open a file named with a drive on its command

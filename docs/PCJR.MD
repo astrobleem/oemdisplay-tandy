@@ -70,9 +70,9 @@ Microsoft file is needed from the packet or committed here:
 
 `OEMSETUP.INF` names the absolute `C:\PCJREXP` disk path: a relative `.`
 made Windows 3.0 Setup ask again for each file. The font row uses the
-`133,96,72` aspect so Setup installs the EGA-aspect XT Pixels set, which is
-what a 320x200 screen with square-ish pixels needs; CGA fonts (`CGASYS`
-and friends) are for 640x200 and are not installed.
+`133,96,72` aspect, as the Tandy 320x200 configuration does, so Setup
+installs the EGA-aspect XT Pixels set; Windows' CGA fonts (`CGASYS` and
+friends) target 640x200 and are not installed.
 `src/pcjr/INSTALL/TESTPACK.PY` (18 host tests, no emulator) covers the
 refusals: LF line endings, a stock `CGA.GR2` row, an unlabelled or overlong
 selector, a relative disk path, a second row, a missing file, a changed font
@@ -142,8 +142,8 @@ Screenshots (exact decoded 320x200 frames, 2x):
 | `pcjr/INSTALL/REFUSED.PNG` | `JRWIN` refusing with the page held by a resident program |
 
 The session and conversion runs used an install folder whose INSTALL.TXT
-was `2be68872...fd32cc`. The committed INSTALL.TXT (`cc60cfa7...aa9f52`) adds
-only the conversion advice below; every other file in the folder is the
+was `2be68872...fd32cc`. The committed INSTALL.TXT (`afba91d5...359f91`) adds
+the conversion advice below and narrows the DOS-program note; every other file in the folder is the
 same (`packet_sha256` in SESSION.JSN).
 
 ### Changing an existing install
@@ -173,9 +173,9 @@ display.
 ### Reproducing
 
 Private inputs, none committed: the PCjs Windows 3.00 1.2 MB diskette set
-(PCjs, the upstream of the browser workshop's Windows image; raw image
-hashes in `docs/pcjr/INSTALL/MEDIA.TXT`)
-with the files of all five disks pooled in one folder; the pinned DDK view
+(PCjs is the upstream of the browser workshop's Windows image; raw image
+hashes in `docs/pcjr/INSTALL/MEDIA.TXT`), with the files of all five disks
+pooled in one folder; the pinned DDK view
 from `tools/BUILDDEPS`; DOSBox-X 2024.03.01; an Xvfb display. Retail
 `CGA.GR2` for the comparison row comes from Disk 3.
 
@@ -188,8 +188,17 @@ from `tools/BUILDDEPS`; DOSBox-X 2024.03.01; an Xvfb display. Retail
     python3 src/pcjr/INSTALL/JRCONV.PY --packet <pk> --win30 <win30 files> --out <c>
     python3 -B src/pcjr/INSTALL/TESTPACK.PY
 
-`JRMODE9.ASM` (BIOS mode 9, a line of text, wait for a key) is built the
-same way as the other `src/pcjr` tools.
+The test tools (`JRMODE9.ASM`: BIOS mode 9, a line of text, wait for a key)
+are built with the pinned MASM 5.10/LINK/EXE2BIN:
+
+    python3 src/pcjr/BUILDCOM.PY --deps <inputs> --dosbox <dosbox-x> --out <t> \
+        --src src/pcjr/INSTALL/JRMODE9.ASM --src src/pcjr/JRGUARD.ASM \
+        --src src/pcjr/JRFREET.ASM --src src/pcjr/JRHOLDT.ASM
+
+    JRMODE9.COM 71 bytes 7920919ecd1d2784887d13e11585a605bac6cb29426906462535c54f8adfa20b
+
+JRGUARD, JRFREET and JRHOLDT rebuilt to the hashes listed under "Tools in
+src/pcjr".
 
 ### Remaining limits
 
@@ -197,7 +206,8 @@ same way as the other `src/pcjr` tools.
   block; PC DOS on a real expanded PCjr may not, and JRGUARD will then
   refuse (open item 1 below still applies).
 - A DOS program in PCjr modes 8, 9 or 0Ah cannot be switched away from; it
-  must be ended to return to Windows. Text and CGA modes switch normally.
+  must be ended to return to Windows. Text mode switches and restores
+  exactly; CGA graphics modes 4-6 in a DOS program were not tested.
 - Windows 3.0 Setup and some dialogs (File Save As) are wider than 320
   pixels; they work from the keyboard.
 - Paintbrush 3.0 does not open a drive-qualified file name given on its
