@@ -448,8 +448,9 @@ def main(argv):
         if (r.c / "JRLOG.TXT").exists() else []
     r.check("jrlog_guard_and_launch_results",
             lines == ["GUARD RC=0", "WIN1 RC=0", "WIN2 RC=0", "HELD RC=NONZERO"], lines=lines)
-    r.check("refused_launch_did_not_start_windows", J.decode(out / "raw" / "e_refused.png")[0] is None,
-            note="the capture is still a text screen")
+    _, problems = J.decode(out / "raw" / "e_refused.png")
+    r.check("refused_launch_did_not_start_windows", bool(problems),
+            note="the capture is not a 320x200 graphics frame (DOS text screen)")
     res["checks"] = r.checks
     res["passed"] = sum(c["result"] == "PASS" for c in r.checks)
     res["failed"] = sum(c["result"] == "FAIL" for c in r.checks)
