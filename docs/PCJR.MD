@@ -44,14 +44,36 @@ of the allocator. The Tandy RESERVE helper deliberately refuses PCjrs.
 ## Clean Windows 3.0 installation (2026-10-17)
 
 The first boot below reused an AT/EGA Windows install with only
-`display.drv` changed. That gap is closed: stock Windows 3.0 Setup now
-installs a PCjr configuration from scratch, with PCjr-appropriate fonts, a
-grabber that handles PCjr video, a clearly labelled Setup choice and fresh
-Program Manager groups. **All of it is emulator evidence (DOSBox-X
-`machine=pcjr`). Nothing in this section has run on a real PCjr.**
+`display.drv` changed. That gap is closed: stock Windows 3.0 Setup installs
+a PCjr configuration from scratch, with PCjr-appropriate fonts, a grabber
+that handles PCjr video, a clearly labelled Setup choice and fresh Program
+Manager groups. **All of it is emulator evidence (DOSBox-X `machine=pcjr`).
+Nothing in this section has run on a real PCjr.**
 
 User instructions: [`src/pcjr/INSTALL/INSTALL.TXT`](../src/pcjr/INSTALL/INSTALL.TXT)
 (the same file ships in the install folder).
+
+### What the final evidence used
+
+Every result in `docs/pcjr/INSTALL` comes from one run of the committed
+scripts at **commit `388e4a8c2eb696658b5b57482e53cedb0ea60a6e`** with a clean
+tree (`source_commit` and `source_tree_dirty: false` in each result file):
+
+| Input | Identity |
+| --- | --- |
+| Windows 3.00 media | PCjs 1.2 MB diskettes, verified against PCjs's own MD5 (`MEDIA.TXT`); 282 pooled files, manifest SHA-256 `342d34b0...` (`win30_manifest_sha256`) |
+| Install folder | built by `JRPACK.PY` from this commit; every file's SHA-256 in each result's `packet_sha256` |
+| `TNDYJR.DRV`, `JRGUARD.COM`, `JRWIN.COM` | `a29cabba...`, `10e6f01e...`, `18ccaa02...` (release pins) |
+| `JRGRAB.GR2` | `2453cd1e...`, 2,159 bytes (`src/pcjr/INSTALL/PINS.JSN`) |
+| Test tools | `JRMODE.COM` 11,552 bytes `476dc8d1...`; `JRHOLDT.COM` `23903985...` (`BUILDCOM.PY`, pinned MASM 5.10) |
+| Emulator | DOSBox-X 2024.03.01, `machine=pcjr`, 640 KB, `8086_prefetch`, `cycles=fixed 200000`, serial mouse |
+
+**Correction.** Earlier versions of this evidence used a private copy of the
+same PCjs diskettes produced by a faulty conversion: 46 files differed,
+including `SETUP.EXE` and `SETUP.INF`. `PCJSFLP.PY` now converts the PCjs
+JSON and refuses any image whose MD5 differs from the one PCjs records; all
+evidence was rerun on the verified images. The retail `CGA.GR2` used for
+comparison was not affected.
 
 ### The install folder (`C:\PCJREXP`)
 
@@ -62,8 +84,8 @@ Microsoft file is needed from the packet or committed here:
 | File | What | Pin |
 | --- | --- | --- |
 | `TNDYJR.DRV`, `JRGUARD.COM`, `JRWIN.COM` | the released driver, guard and launcher | `experiments/DISPLAY3/PINS.JSN` (experimental-displays-2026-10-12) |
-| `JRGRAB.GR2` | PCjr-safe 286 grabber, built from the DDK CGA grabber (below) | `src/pcjr/INSTALL/PINS.JSN`: 2,159 bytes, `2453cd1e...3d741dec` |
-| `XTESYS.FON`, `XTEFIX.FON`, `XTEOEM.FON` | XT Pixels EGA-aspect fonts (MIT), the same set the Tandy 320x200 install uses | hashes in `JRPACK.PY` |
+| `JRGRAB.GR2` | PCjr-safe 286 grabber, built from the DDK CGA grabber (below) | `src/pcjr/INSTALL/PINS.JSN` |
+| `XTESYS.FON`, `XTEFIX.FON`, `XTEOEM.FON` | XT Pixels EGA-aspect fonts (MIT), the set the Tandy 320x200 configuration uses | hashes in `JRPACK.PY` |
 | `XTSTATIC.LGO`, `WXTSPL01.RLE` | static mode-6 startup logo (MIT); the animated splash programs Tandy palette ports and is not used | hashes in `JRPACK.PY` |
 | `OEMSETUP.INF` | one Setup entry: `EXPERIMENTAL IBM PCjr 320x200 16 colors` | checked by `JRPACK.PY` |
 | `INSTALL.TXT`, `FONTLIC.TXT`, `LOGOLIC.TXT`, `SHA256.SUM` | guide, licences, hashes | |
@@ -71,64 +93,76 @@ Microsoft file is needed from the packet or committed here:
 `OEMSETUP.INF` names the absolute `C:\PCJREXP` disk path: a relative `.`
 made Windows 3.0 Setup ask again for each file. The font row uses the
 `133,96,72` aspect, as the Tandy 320x200 configuration does, so Setup
-installs the EGA-aspect XT Pixels set; Windows' CGA fonts (`CGASYS` and
-friends) target 640x200 and are not installed.
-`src/pcjr/INSTALL/TESTPACK.PY` (18 host tests, no emulator) covers the
-refusals: LF line endings, a stock `CGA.GR2` row, an unlabelled or overlong
-selector, a relative disk path, a second row, a missing file, a changed font
-and wrong or missing pinned binaries.
+installs the EGA-aspect XT Pixels set; Windows' CGA fonts target 640x200 and
+are not installed. `JRPACK.PY` counts **every** entry in the `[display]`
+section, whatever its key, and refuses unless there is exactly one, the PCjr
+entry.
 
-### Why not the stock CGA grabber
+### Grabbers and DOS programs, every PCjr BIOS mode
 
-Measured with `JRGRTEST.PY` on the clean install, changing only
-`286grabber=` (`docs/pcjr/INSTALL/GR*.JSN`):
+`JRGRTEST.PY` runs `JRMODE.COM m` from File > Run for each mode, with only
+`286grabber=` changed between runs (`docs/pcjr/INSTALL/GR*.JSN`). JRMODE sets
+the mode, draws a pattern through the BIOS, snapshots it by reading it back,
+waits, then reads it again and writes `MODE m OK` only if nothing changed.
 
-| Grabber | Text-mode DOS program: Alt+Tab away and back | Mode 9 (PCjr 320x200x16) DOS program |
-| --- | --- | --- |
-| Retail Windows 3.0 `CGA.GR2` (`1fc24254...`) | **comes back in a 4-colour graphics mode** | **switches away; screen comes back corrupted** |
-| Unmodified DDK CGA grabber (control build, `310988d7...`) | exact | stays in the program, but only because a garbage table entry happens to fail |
-| `JRGRAB.GR2` | exact | refuses the switch by design (beep); program unaffected |
+| Mode | Retail Windows 3.0 `CGA.GR2` (`1fc24254...`) | Unmodified DDK CGA grabber (`310988d7...`) | `JRGRAB.GR2` |
+| --- | --- | --- | --- |
+| 0, 1 (40x25 text) | switches; **screen not restored** (program data intact) | switches; restored exactly | switches; restored exactly |
+| 2, 3 (80x25 text) | switches; **screen not restored** (program data intact) | switches; restored exactly | switches; restored exactly |
+| 4, 5 (320x200x4) | switches; restored exactly | switches; restored exactly | switches; restored exactly |
+| 6 (640x200x2) | switches; restored exactly | switches; restored exactly | switches; restored exactly |
+| 8 (160x200x16, PCjr) | **switches; screen not restored** | refuses; undisturbed | refuses; undisturbed |
+| 9 (320x200x16, PCjr) | **switches; program's screen data changed (2,392 cells)** | refuses; undisturbed | refuses; undisturbed |
+| 0Ah (640x200x4, PCjr) | **switches; screen not restored** | refuses; undisturbed | refuses; undisturbed |
 
-Desktops after each DOS program exited were exact in all three cases.
+"Restored exactly": after Alt+Tab away and back, one of up to eight
+captures equals the screen before (text modes blink a cursor). "Refuses;
+undisturbed": Alt+Tab leaves the program on screen, the capture equals the
+one before, and the program's own readback finds no change. In every row the
+Windows desktop after the program equals the first desktop, and the program
+completed. Mode 7 (monochrome) does not exist on a PCjr and was not tested.
+
+**The unmodified DDK build behaves like JRGRAB on this emulator.** That is
+not evidence that it is safe: for modes 8, 9 and 0Ah its `GetMode` copies an
+`InfoContext` from the bytes that follow its 7-entry table (`IT0`-`IT6`), so
+its refusal comes from undesigned data that a rebuild could change. JRGRAB
+makes the refusal explicit (`fBadMode`, mode-6 bounds) and takes the mode
+from the BIOS on a PCjr instead of the 6845 light-pen measurement. The
+retail build, which differs from this DDK revision in seven instructions
+(a beep loop, and no Zenith fallback), restores text programs in the wrong
+mode here; the DDK revision does not. Which of the seven instructions
+accounts for that was not isolated. Whether either build misreads a real
+PCjr is untested.
+
+`BUILDGR.PY` builds the DDK grabber twice in DOSBox-X with the pinned MASM
+5.10/LINK/EXE2BIN: unmodified (control) and with ten anchored edits. Two
+builds gave the same hash. No DDK file is committed.
 
 | Capture | What it shows |
 | --- | --- |
-| `pcjr/INSTALL/GRJRTXT.PNG` | JRGRAB: COMMAND.COM after Alt+Tab away and back, identical to before |
-| `pcjr/INSTALL/GRCGATXT.PNG` | Retail `CGA.GR2`: the same text screen restored in a 4-colour graphics mode |
-| `pcjr/INSTALL/GRMODE9.PNG` | `JRMODE9.COM` in PCjr mode 9 before the switch attempt |
+| `pcjr/INSTALL/GRJRTXT.PNG` | JRGRAB: `JRMODE 3` text screen after Alt+Tab away and back, identical to before |
+| `pcjr/INSTALL/GRCGATXT.PNG` | Retail `CGA.GR2`: the same text screen after returning, shown as graphics |
+| `pcjr/INSTALL/GRMODE9.PNG` | `JRMODE.COM 9` in PCjr mode 9 before the switch attempt |
 | `pcjr/INSTALL/GRCGAM9.PNG` | Retail `CGA.GR2`: the mode 9 program after switching away and back |
-
-Causes, from the Windows 3.0 DDK grabber source: the CGA grabber finds the
-video mode by firing the 6845 light-pen latch (3DBh/3DCh) and matching the
-measured regen length; on the emulated PCjr that misidentifies text mode 3.
-Separately `GetMode` indexes a 7-entry table (modes 0-6) with the BIOS mode
-byte, so PCjr modes 8, 9 and 0Ah read past it and save/restore use a garbage
-far pointer.
-
-`BUILDGR.PY` builds the DDK grabber twice in DOSBox-X with the pinned MASM
-5.10/LINK/EXE2BIN: unmodified (control) and with ten anchored edits. On a
-PCjr (F000:FFFE = FDh) it takes the mode from the BIOS data area instead of
-the light pen; any mode above 6 uses the mode-6 entry (no pointer leaves the
-16 KB B800h window) and SaveScreen and GrabScreen refuse. On other machines
-the first edits change nothing and the rest only touch modes this grabber
-never supported. Two builds gave the same hash. No DDK file is committed.
+| `pcjr/INSTALL/GRJRM4.PNG` | JRGRAB: CGA mode 4 restored after switching away and back |
 
 ### Scripted install and session
 
 `JRSESS.PY` types everything a user would into the guest; nothing in
 `C:\WINDOWS` is edited from the host. Result
-`docs/pcjr/INSTALL/SESSION.JSN`: **verdict PASS, 25 of 25 checks** (guest log `docs/pcjr/INSTALL/JRLOG.TXT`).
+`docs/pcjr/INSTALL/SESSION.JSN`: **verdict PASS, 26 of 26 checks**.
 
 | Step | Checked |
 | --- | --- |
-| Install | JRGUARD; SETUP from `C:\WIN30SRC`; Display = Other, `C:\PCJREXP`, the PCjr entry; Keyboard = PC/XT (84 keys); no network; optional procedures off; CONFIG/AUTOEXEC changes declined; **Return to DOS** |
-| As installed | SYSTEM.INI `display.drv=TNDYJR.DRV`, `286grabber=JRGRAB.GR2`, the three XTE fonts, keyboard `type=1`; installed files equal the packet's; no CGA/EGA display files; WIN.COM built with the static logo; fresh Main/Accessories/Games groups; Program Manager's saved window (`32 20 288 160`) and every group window inside 320x200; no CONFIG.SYS/AUTOEXEC.BAT written |
+| Guard | `JRGUARD > C:\GUARD0.TXT` before Setup: its own text "OK, video page is held by a DOS system block." and exit code exactly 0 |
+| Install | SETUP from `C:\WIN30SRC`; Display = Other, `C:\PCJREXP`, the PCjr entry; Keyboard = PC/XT (84 keys); no network; optional procedures off; CONFIG/AUTOEXEC changes declined; **Return to DOS** |
+| As installed | SYSTEM.INI `display.drv=TNDYJR.DRV`, `286grabber=JRGRAB.GR2`, the three XTE fonts, keyboard `type=1`; installed files equal the packet's; no CGA/EGA display files; **WIN.COM is byte for byte the media's `WIN.CNF` (expanded on the host) + `XTSTATIC.LGO` + `WXTSPL01.RLE`**; fresh Main/Accessories/Games groups; Program Manager's saved window (`32 20 288 160`) and every group window inside 320x200; no CONFIG.SYS/AUTOEXEC.BAT written |
 | Session 1 (`JRWIN`) | exact 320x200 desktop; File menu from the keyboard and exact restore; serial mouse to an exact pixel and a click opening the same menu; Notepad text saved byte-exact; Paintbrush box drawn with the mouse, saved, reopened through File > Open with an identical canvas, BMP equal to the screen; COMMAND.COM wrote a file, Alt+Tab away and back restored the text screen exactly, EXIT returned to an identical desktop; Exit Windows |
 | Session 2 (`JRWIN`) | desktop identical to session 1's |
-| Refusal | with `JRHOLDT` holding the page, `JRWIN` refuses and Windows does not start |
-| Log | `GUARD RC=0`, `WIN1 RC=0`, `WIN2 RC=0`, `HELD RC=NONZERO` |
+| Refusal | `JRHOLDT` keeps the page as an ordinary resident program; `JRWIN > C:\HELD.TXT` must contain exactly JRGUARD's "not reserved by DOS" refusal followed by JRWIN's "guard refused/failed. Windows not started.", with exit code exactly 1 |
+| Exit codes | `GUARD 0`, `WIN1 0`, `WIN2 0`, `HELD 1`, each logged exactly (0-4, 5+) by the harness `C:\JRRC.BAT` |
 
-Screenshots (exact decoded 320x200 frames, 2x):
+The guest's own files are kept: `JRLOG.TXT`, `GUARD0.TXT`, `HELD.TXT`.
 
 | Capture | What it shows |
 | --- | --- |
@@ -139,29 +173,25 @@ Screenshots (exact decoded 320x200 frames, 2x):
 | `pcjr/INSTALL/NOTEPAD.PNG` | Notepad with the typed keyboard line before saving |
 | `pcjr/INSTALL/PBRUSH.PNG` | `C:\JRTEST.BMP` reopened in Paintbrush |
 | `pcjr/INSTALL/DOSAWAY.PNG` | Windows while COMMAND.COM is switched away |
-| `pcjr/INSTALL/REFUSED.PNG` | `JRWIN` refusing with the page held by a resident program |
-
-The session and conversion runs used an install folder whose INSTALL.TXT
-was `2be68872...fd32cc`. The committed INSTALL.TXT (`afba91d5...359f91`) adds
-the conversion advice below and narrows the DOS-program note; every other file in the folder is the
-same (`packet_sha256` in SESSION.JSN).
+| `pcjr/INSTALL/REFUSED.PNG` | `TYPE C:\HELD.TXT` after the refused launch |
 
 ### Changing an existing install
 
 `JRCONV.PY` makes a stock Windows 3.0 install (Setup detected CGA:
 `cga.drv`, `cga.gr2`, CGA fonts), appends a `[PCjrTest]` section to WIN.INI
-from DOS, then runs JRGUARD and `SETUP` in `C:\WINDOWS`, picks the PCjr
-entry and keeps Setup's default "make NO changes" at its CONFIG.SYS
-question (`pcjr/INSTALL/CONVCFG.PNG`). Result `docs/pcjr/INSTALL/CONVERT.JSN`:
-**verdict PASS, 6 of 6**.
+from DOS, then runs `JRGUARD > C:\GUARD0.TXT` and `SETUP` in `C:\WINDOWS`,
+picks the PCjr entry and keeps Setup's default "make NO changes" at its
+CONFIG.SYS question (`pcjr/INSTALL/CONVCFG.PNG`). Result
+`docs/pcjr/INSTALL/CONVERT.JSN`: **verdict PASS, 8 of 8**.
 
 - SYSTEM.INI: exactly six entries changed, all Setup's own:
   `display.drv`, `286grabber`, `fonts.fon`, `fixedfon.fon`,
   `oemfonts.fon` and `[boot.description] display.drv`.
 - WIN.INI (including the user's section), CONTROL.INI, PROGMAN.INI and the
   three group files are byte-identical.
-- The PCjr files are installed; `JRWIN` starts Windows (`GUARD RC=0`,
-  `WIN1 RC=0`) on an exact 320x200 desktop.
+- The PCjr files are installed; WIN.COM was rebuilt as the media's
+  `WIN.CNF` + the static logo; JRGUARD printed its OK (exit 0) and `JRWIN`
+  started Windows (exit 0) on an exact 320x200 desktop.
 
 Because PROGMAN.INI is kept, Program Manager comes up at its old CGA
 position (`64 20 392 160`), partly off the right edge
@@ -170,51 +200,82 @@ move it once; a clean install does not have this. No backup or rollback
 machinery is added: going back is the same Setup step with the previous
 display.
 
+### How the checks avoid false positives
+
+Review found checks that could pass for the wrong reason. Each is now a
+pure function in `src/pcjr/INSTALL/JRCHK.PY`, and `TESTPACK.PY` feeds it
+the bad cases (no emulator; the CI workflow `pcjrinst.yml` runs them):
+
+- **Refused launch.** Previously any capture that was not a 320x200
+  frame passed. Now only JRGUARD's exact refusal text + JRWIN's refusal
+  line + exit code 1 passes. Rejected in tests: JRWIN's missing-WIN.COM and
+  abnormal-exit messages, JRGUARD's "not a PCjr" and "chain not valid"
+  refusals, silence, JRWIN's line alone, and codes 0, 2, 5+ or none.
+- **OEMSETUP.INF.** Previously only lines starting `TNDYJR` were counted.
+  Now every `[display]` entry counts; a second entry with another key, or a
+  sole entry with another key, is refused.
+- **Static logo.** Previously WIN.COM's size (7,879 bytes) was checked. Now
+  its bytes must equal the expanded `WIN.CNF` + the packet's logo files, and
+  the installed `SYSTEM\WIN.CNF` must equal the media's. Rejected in tests:
+  another logo, a damaged logo, another `WIN.CNF`, and a same-size
+  rearrangement the old check accepted. The SZDD expander reproduces the
+  retail `CGA.GR2` expansion byte for byte.
+- **DOS programs.** `JRMODE` compares against its own first readback, not
+  against the BIOS's view of the drawn pattern: DOSBox-X's PCjr BIOS reads
+  pixels wrongly in mode 0Ah (the screen itself is exact), which JRMODE
+  reports separately as `READ hhhh`. `JRMODET.PY` proves the check works in
+  every mode: `JRMODE m X` changes one cell itself and must report
+  `BAD 0001` (`docs/pcjr/INSTALL/MODET.JSN`: 20 of 20 as required).
+  `jrgrab_expected` is tested against each wrong outcome (PCjr mode
+  switched, refused but disturbed, text not restored, CGA mode refused,
+  program data changed, desktop changed, program screen not shown).
+- **Media.** `PCJSFLP.PY` refuses an image whose MD5 differs from PCjs's;
+  the test includes the original conversion defect.
+
 ### Reproducing
 
-Private inputs, none committed: the PCjs Windows 3.00 1.2 MB diskette set
-(PCjs is the upstream of the browser workshop's Windows image; raw image
-hashes in `docs/pcjr/INSTALL/MEDIA.TXT`), with the files of all five disks
-pooled in one folder; the pinned DDK view
-from `tools/BUILDDEPS`; DOSBox-X 2024.03.01; an Xvfb display. Retail
-`CGA.GR2` for the comparison row comes from Disk 3.
+Private inputs, none committed: the PCjs Windows 3.00 1.2 MB diskette JSON
+(`MEDIA.TXT` has the repository commit and every hash); the pinned DDK view
+from `tools/BUILDDEPS`; DOSBox-X 2024.03.01; an Xvfb display; the
+experimental-displays-2026-10-12 `PCJR.ZIP` files.
 
+    python3 src/pcjr/INSTALL/PCJSFLP.PY <WIN300-1200K-DISK1..5.json> --out <img>
+    for n in 1 2 3 4 5; do mcopy -n -m -i <img>/WIN300-1200K-DISK$n.IMG ::/* <win30>/; done
     python3 src/pcjr/INSTALL/BUILDGR.PY --repo <ddk view> --dosbox <dosbox-x> --out <gr>
+    python3 src/pcjr/BUILDCOM.PY --deps <inputs> --dosbox <dosbox-x> --out <t> \
+        --src src/pcjr/INSTALL/JRMODE.ASM --src src/pcjr/JRGUARD.ASM \
+        --src src/pcjr/JRFREET.ASM --src src/pcjr/JRHOLDT.ASM
     python3 src/pcjr/INSTALL/JRPACK.PY --bin <PCJR.ZIP files + JRGRAB.GR2> --out <pk>
-    python3 src/pcjr/INSTALL/JRSESS.PY --packet <pk> --win30 <win30 files> \
-        --tools <BUILDCOM output with JRHOLDT.COM> --out <s>
+    python3 src/pcjr/INSTALL/JRMODET.PY --tools <t> --out <m>
+    python3 src/pcjr/INSTALL/JRSESS.PY --packet <pk> --win30 <win30> --tools <t> --out <s>
     python3 src/pcjr/INSTALL/JRGRTEST.PY --installed <s>/C --grabber <GR2> \
-        --tools <dir with JRMODE9.COM> --out <g>
-    python3 src/pcjr/INSTALL/JRCONV.PY --packet <pk> --win30 <win30 files> --out <c>
+        --tools <t> --out <g> [--expect-jrgrab]
+    python3 src/pcjr/INSTALL/JRCONV.PY --packet <pk> --win30 <win30> --out <c>
     python3 -B src/pcjr/INSTALL/TESTPACK.PY
 
-The test tools (`JRMODE9.ASM`: BIOS mode 9, a line of text, wait for a key)
-are built with the pinned MASM 5.10/LINK/EXE2BIN:
+`JRGUARD`, `JRFREET` and `JRHOLDT` rebuild to the hashes under "Tools in
+src/pcjr". Each emulator script runs under `src/xtpan/EMULOCK.PY`.
 
-    python3 src/pcjr/BUILDCOM.PY --deps <inputs> --dosbox <dosbox-x> --out <t> \
-        --src src/pcjr/INSTALL/JRMODE9.ASM --src src/pcjr/JRGUARD.ASM \
-        --src src/pcjr/JRFREET.ASM --src src/pcjr/JRHOLDT.ASM
-
-    JRMODE9.COM 71 bytes 7920919ecd1d2784887d13e11585a605bac6cb29426906462535c54f8adfa20b
-
-JRGUARD, JRFREET and JRHOLDT rebuilt to the hashes listed under "Tools in
-src/pcjr".
-
-### Remaining limits
+### Remaining limits and findings for review
 
 - Emulator only. DOSBox-X's own DOS keeps the video page in a DOS-owned
   block; PC DOS on a real expanded PCjr may not, and JRGUARD will then
   refuse (open item 1 below still applies).
 - A DOS program in PCjr modes 8, 9 or 0Ah cannot be switched away from; it
-  must be ended to return to Windows. Text mode switches and restores
-  exactly; CGA graphics modes 4-6 in a DOS program were not tested.
+  must be ended to return to Windows.
+- The unmodified DDK grabber passes the same emulator matrix as JRGRAB
+  (above); choosing JRGRAB rests on its explicit refusal and BIOS mode
+  source, which only real hardware can fully test.
+- DOSBox-X's PCjr BIOS returns wrong pixel values in mode 0Ah (INT 10h
+  0Dh); the displayed image is exact. Real-PCjr BIOS behaviour is unknown.
 - Windows 3.0 Setup and some dialogs (File Save As) are wider than 320
   pixels; they work from the keyboard.
 - Paintbrush 3.0 does not open a drive-qualified file name given on its
   command line; File > Open works.
 - PCjr keyboard hardware, the serial port and timing are not modelled
   faithfully by the emulator and are not claimed. Mouse input was a
-  byte-exact Microsoft serial mouse on COM1.
+  byte-exact Microsoft serial mouse on COM1. Sound was off, so no beep is
+  claimed for a refused switch.
 - The install folder is not part of any release yet; the released
   `PCJR.ZIP` still documents the display.drv-only change.
 - Windows 3.1 is not supported.

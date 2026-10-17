@@ -1,0 +1,23 @@
+{
+ "toolchain": "pinned MASM 5.10 / LINK / DDK EXE2BIN in DOSBox-X",
+ "built": {
+  "JRMODE.COM": {
+   "bytes": 11552,
+   "sha256": "476dc8d1db715c910194cad478a4d42d8ff2f95921960117acc0cb1ae47e2278"
+  },
+  "JRGUARD.COM": {
+   "bytes": 800,
+   "sha256": "10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756"
+  },
+  "JRFREET.COM": {
+   "bytes": 18,
+   "sha256": "d5924644eb5d383c2bb9d0b5291e8417788055bb682fca821f9041658adff676"
+  },
+  "JRHOLDT.COM": {
+   "bytes": 51,
+   "sha256": "23903985c4e96191564c7d46e8c1515b847b5194166bac3881e438ff98ea7109"
+  }
+ },
+ "verdict": "PASS",
+ "problems": []
+}

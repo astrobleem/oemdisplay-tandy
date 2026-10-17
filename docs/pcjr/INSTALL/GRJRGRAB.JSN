@@ -1,12 +1,124 @@
 {
+ "source_commit": "388e4a8c2eb696658b5b57482e53cedb0ea60a6e",
+ "source_tree_dirty": false,
+ "packet_sha256": {
+  "FONTLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+  "INSTALL.TXT": "39e98bc60369db9cd43f89acf05842a52d8ea43e396bf6ac5a40ffec5da1a9d4",
+  "JRGRAB.GR2": "2453cd1eba68e580b68b2d232a5dfa5285fd703cd75b2b4edacc203c3d741dec",
+  "JRGUARD.COM": "10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756",
+  "JRWIN.COM": "18ccaa02759e5462b746af9e28ebd31af32c43f29e9d4eea400e6673cc764e96",
+  "LOGOLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+  "OEMSETUP.INF": "709e773779c3731ca43d79bf238f553c5d3b174d8280695b1697aa3b410fc285",
+  "SHA256.SUM": "d75f718721099ceda06d772f9d681e5f939cf3aa5ed8e59bf8cd349f11acaae1",
+  "TNDYJR.DRV": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4",
+  "WXTSPL01.RLE": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+  "XTEFIX.FON": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+  "XTEOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+  "XTESYS.FON": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
+  "XTSTATIC.LGO": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+ },
+ "win30_files": 282,
+ "win30_manifest_sha256": "342d34b07e8bc039c0bf22eb0c8442ecce656cbb720a88c05c8ffc9d23fbfbed",
  "grabber": "JRGRAB.GR2",
  "grabber_sha256": "2453cd1eba68e580b68b2d232a5dfa5285fd703cd75b2b4edacc203c3d741dec",
- "text_switched_to_windows": true,
- "text_restored_exact": true,
- "desktop_after_exit_equals_before": true,
- "mode9_shown": true,
- "mode9_stayed_in_program": true,
- "mode9_switched_to_windows": false,
- "desktop_after_mode9_equals_before": true,
- "safe_on_this_emulator": true
+ "jrmode_sha256": "476dc8d1db715c910194cad478a4d42d8ff2f95921960117acc0cb1ae47e2278",
+ "installed_win_com_sha256": "7d00588992559e99f7f0690538425f2cf4c28e771e651327ad243c9d07e32fc7",
+ "untested": [
+  "7 (monochrome text: not a PCjr mode)"
+ ],
+ "modes": {
+  "0": {
+   "program_screen_shown": true,
+   "switched_to_windows": true,
+   "restored_exact": true,
+   "desktop_after_equals_first": true,
+   "program_result": "MODE 0 OK",
+   "program_intact": true,
+   "bios_readback_differs_from_pattern": false
+  },
+  "1": {
+   "program_screen_shown": true,
+   "switched_to_windows": true,
+   "restored_exact": true,
+   "desktop_after_equals_first": true,
+   "program_result": "MODE 1 OK",
+   "program_intact": true,
+   "bios_readback_differs_from_pattern": false
+  },
+  "2": {
+   "program_screen_shown": true,
+   "switched_to_windows": true,
+   "restored_exact": true,
+   "desktop_after_equals_first": true,
+   "program_result": "MODE 2 OK",
+   "program_intact": true,
+   "bios_readback_differs_from_pattern": false
+  },
+  "3": {
+   "program_screen_shown": true,
+   "switched_to_windows": true,
+   "restored_exact": true,
+   "desktop_after_equals_first": true,
+   "program_result": "MODE 3 OK",
+   "program_intact": true,
+   "bios_readback_differs_from_pattern": false
+  },
+  "4": {
+   "program_screen_shown": true,
+   "switched_to_windows": true,
+   "restored_exact": true,
+   "desktop_after_equals_first": true,
+   "program_result": "MODE 4 OK",
+   "program_intact": true,
+   "bios_readback_differs_from_pattern": false
+  },
+  "5": {
+   "program_screen_shown": true,
+   "switched_to_windows": true,
+   "restored_exact": true,
+   "desktop_after_equals_first": true,
+   "program_result": "MODE 5 OK",
+   "program_intact": true,
+   "bios_readback_differs_from_pattern": false
+  },
+  "6": {
+   "program_screen_shown": true,
+   "switched_to_windows": true,
+   "restored_exact": true,
+   "desktop_after_equals_first": true,
+   "program_result": "MODE 6 OK",
+   "program_intact": true,
+   "bios_readback_differs_from_pattern": false
+  },
+  "8": {
+   "program_screen_shown": true,
+   "switched_to_windows": false,
+   "screen_undisturbed": true,
+   "desktop_after_equals_first": true,
+   "program_result": "MODE 8 OK",
+   "program_intact": true,
+   "bios_readback_differs_from_pattern": false
+  },
+  "9": {
+   "program_screen_shown": true,
+   "switched_to_windows": false,
+   "screen_undisturbed": true,
+   "desktop_after_equals_first": true,
+   "program_result": "MODE 9 OK",
+   "program_intact": true,
+   "bios_readback_differs_from_pattern": false
+  },
+  "A": {
+   "program_screen_shown": true,
+   "switched_to_windows": false,
+   "screen_undisturbed": true,
+   "desktop_after_equals_first": true,
+   "program_result": "MODE A OK READ 1900",
+   "program_intact": true,
+   "bios_readback_differs_from_pattern": true
+  }
+ },
+ "first_desktop_exact_frame": true,
+ "matches_jrgrab_design": true,
+ "differs_from_jrgrab_design": []
 }

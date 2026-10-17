@@ -1,13 +1,15 @@
 {
+ "source_commit": "388e4a8c2eb696658b5b57482e53cedb0ea60a6e",
+ "source_tree_dirty": false,
  "packet_sha256": {
   "FONTLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
-  "INSTALL.TXT": "2be688721693a3135178407b6aa20c70f8595cca0b161a139100cb7f54fd32cc",
+  "INSTALL.TXT": "39e98bc60369db9cd43f89acf05842a52d8ea43e396bf6ac5a40ffec5da1a9d4",
   "JRGRAB.GR2": "2453cd1eba68e580b68b2d232a5dfa5285fd703cd75b2b4edacc203c3d741dec",
   "JRGUARD.COM": "10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756",
   "JRWIN.COM": "18ccaa02759e5462b746af9e28ebd31af32c43f29e9d4eea400e6673cc764e96",
   "LOGOLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
   "OEMSETUP.INF": "709e773779c3731ca43d79bf238f553c5d3b174d8280695b1697aa3b410fc285",
-  "SHA256.SUM": "1deba56ba0bf9e15443544b8022256437d9a3b3fed728eaa14bc43163f245e30",
+  "SHA256.SUM": "d75f718721099ceda06d772f9d681e5f939cf3aa5ed8e59bf8cd349f11acaae1",
   "TNDYJR.DRV": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4",
   "WXTSPL01.RLE": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
   "XTEFIX.FON": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
@@ -15,6 +17,9 @@
   "XTESYS.FON": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
   "XTSTATIC.LGO": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
  },
+ "win30_files": 282,
+ "win30_manifest_sha256": "342d34b07e8bc039c0bf22eb0c8442ecce656cbb720a88c05c8ffc9d23fbfbed",
+ "jrholdt_sha256": "23903985c4e96191564c7d46e8c1515b847b5194166bac3881e438ff98ea7109",
  "install": {
   "system_ini_boot": {
    "286grabber": "JRGRAB.GR2",
@@ -114,10 +119,14 @@
    }
   },
   {
-   "check": "win_com_built_with_static_logo",
+   "check": "win_com_is_win_cnf_plus_static_logo",
    "result": "PASS",
-   "bytes": 7879,
-   "sha256": "7d00588992559e99f7f0690538425f2cf4c28e771e651327ad243c9d07e32fc7"
+   "win_com_bytes": 7879,
+   "cnf_bytes": 3456,
+   "lgo_bytes": 361,
+   "rle_bytes": 4062,
+   "installed_cnf_equals_media": true,
+   "win_com_equals_cnf_lgo_rle": true
   },
   {
    "check": "no_cga_ega_display_files_installed",
@@ -261,22 +270,29 @@
    "differing": 0
   },
   {
-   "check": "jrlog_guard_and_launch_results",
+   "check": "exit_codes_exact",
    "result": "PASS",
-   "lines": [
-    "GUARD RC=0",
-    "WIN1 RC=0",
-    "WIN2 RC=0",
-    "HELD RC=NONZERO"
-   ]
+   "rc": {
+    "GUARD": "0",
+    "WIN1": "0",
+    "WIN2": "0",
+    "HELD": "1"
+   }
   },
   {
-   "check": "refused_launch_did_not_start_windows",
+   "check": "guard_passed_with_dos_owned_page",
    "result": "PASS",
-   "note": "the capture is not a 320x200 graphics frame (DOS text screen)"
+   "output": "JRGUARD: OK, video page is held by a DOS system block.\r\n",
+   "rc": "0"
+  },
+  {
+   "check": "held_page_refused_by_jrguard",
+   "result": "PASS",
+   "output": "JRGUARD: video page 18000h-1FFFFh is not reserved by DOS.\r\n         Load a PCjr memory driver that reserves it, see PCJR.MD.\r\nJRWIN: guard refused/failed. Windows not started.\r\n",
+   "rc": "1"
   }
  ],
- "passed": 25,
+ "passed": 26,
  "failed": 0,
  "verdict": "PASS"
 }
