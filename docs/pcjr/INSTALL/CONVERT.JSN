@@ -1,0 +1,78 @@
+{
+ "stock_display": "cga.drv",
+ "progman_window_after": "64 20 392 160 1",
+ "checks": [
+  {
+   "check": "converted_desktop_exact_frame",
+   "result": "PASS"
+  },
+  {
+   "check": "system_ini_only_display_entries_changed",
+   "result": "PASS",
+   "changed": {
+    "[boot] 286grabber": [
+     "cga.gr2",
+     "JRGRAB.GR2"
+    ],
+    "[boot] display.drv": [
+     "cga.drv",
+     "TNDYJR.DRV"
+    ],
+    "[boot] fixedfon.fon": [
+     "cgafix.fon",
+     "XTEFIX.FON"
+    ],
+    "[boot] fonts.fon": [
+     "cgasys.fon",
+     "XTESYS.FON"
+    ],
+    "[boot] oemfonts.fon": [
+     "cgaoem.fon",
+     "XTEOEM.FON"
+    ],
+    "[boot.description] display.drv": [
+     "CGA",
+     "EXPERIMENTAL IBM PCjr 320x200 16 colors"
+    ]
+   }
+  },
+  {
+   "check": "other_ini_and_group_files_byte_identical",
+   "result": "PASS",
+   "files": {
+    "WIN.INI": true,
+    "CONTROL.INI": true,
+    "PROGMAN.INI": true,
+    "ACCESSOR.GRP": true,
+    "GAMES.GRP": true,
+    "MAIN.GRP": true
+   }
+  },
+  {
+   "check": "user_section_kept",
+   "result": "PASS"
+  },
+  {
+   "check": "pcjr_files_installed",
+   "result": "PASS",
+   "files": {
+    "TNDYJR.DRV": true,
+    "JRGRAB.GR2": true,
+    "XTESYS.FON": true,
+    "XTEFIX.FON": true,
+    "XTEOEM.FON": true
+   }
+  },
+  {
+   "check": "guard_and_launch_logged",
+   "result": "PASS",
+   "lines": [
+    "GUARD RC=0",
+    "WIN1 RC=0"
+   ]
+  }
+ ],
+ "passed": 6,
+ "failed": 0,
+ "verdict": "PASS"
+}

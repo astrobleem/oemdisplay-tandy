@@ -141,12 +141,32 @@ Screenshots (exact decoded 320x200 frames, 2x):
 | `pcjr/INSTALL/DOSAWAY.PNG` | Windows while COMMAND.COM is switched away |
 | `pcjr/INSTALL/REFUSED.PNG` | `JRWIN` refusing with the page held by a resident program |
 
+The session and conversion runs used an install folder whose INSTALL.TXT
+was `2be68872...fd32cc`. The committed INSTALL.TXT (`cc60cfa7...aa9f52`) adds
+only the conversion advice below; every other file in the folder is the
+same (`packet_sha256` in SESSION.JSN).
+
 ### Changing an existing install
 
-`JRCONV.PY` makes a stock Windows 3.0 install (the CGA configuration Setup
-detects), adds a user section to WIN.INI from DOS, then runs JRGUARD and
-`SETUP` in `C:\WINDOWS` and picks the PCjr entry. Result
-`docs/pcjr/INSTALL/CONVERT.JSN`: CONVERT_RESULT. No backup or rollback
+`JRCONV.PY` makes a stock Windows 3.0 install (Setup detected CGA:
+`cga.drv`, `cga.gr2`, CGA fonts), appends a `[PCjrTest]` section to WIN.INI
+from DOS, then runs JRGUARD and `SETUP` in `C:\WINDOWS`, picks the PCjr
+entry and keeps Setup's default "make NO changes" at its CONFIG.SYS
+question (`pcjr/INSTALL/CONVCFG.PNG`). Result `docs/pcjr/INSTALL/CONVERT.JSN`:
+**verdict PASS, 6 of 6**.
+
+- SYSTEM.INI: exactly six entries changed, all Setup's own:
+  `display.drv`, `286grabber`, `fonts.fon`, `fixedfon.fon`,
+  `oemfonts.fon` and `[boot.description] display.drv`.
+- WIN.INI (including the user's section), CONTROL.INI, PROGMAN.INI and the
+  three group files are byte-identical.
+- The PCjr files are installed; `JRWIN` starts Windows (`GUARD RC=0`,
+  `WIN1 RC=0`) on an exact 320x200 desktop.
+
+Because PROGMAN.INI is kept, Program Manager comes up at its old CGA
+position (`64 20 392 160`), partly off the right edge
+(`pcjr/INSTALL/CONVDESK.PNG`). INSTALL.TXT tells the user to maximize or
+move it once; a clean install does not have this. No backup or rollback
 machinery is added: going back is the same Setup step with the previous
 display.
 

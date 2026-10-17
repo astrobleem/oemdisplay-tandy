@@ -40,9 +40,12 @@ NEW INSTALLATION
 CHANGING AN EXISTING WINDOWS 3.0 INSTALLATION
 Exit Windows. Run C:\PCJREXP\JRGUARD; stop unless it says OK. Then
 CD \WINDOWS and SETUP, and change only Display (and Keyboard if needed) as
-in step 3. Setup rewrites only its own display, font and grabber entries;
-your other settings and groups stay. To go back, run SETUP the same way
-and choose your previous display.
+in step 3. If Setup asks about CONFIG.SYS, keep "Setup can make NO
+changes for you". Setup rewrites only its own display, font and grabber
+entries; your other settings and groups stay. Windows keeps its old window
+positions, so Program Manager may start partly off the 320x200 screen:
+maximize it (ALT+SPACE, X) or move it once. To go back, run SETUP the same
+way and choose your previous display.
 
 STARTING WINDOWS - EVERY TIME
    C:\PCJREXP\JRWIN
