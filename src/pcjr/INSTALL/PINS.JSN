@@ -1,0 +1,11 @@
+{
+ "note": "IBM PCjr Windows 3.0 install folder (C:\\PCJREXP). TNDYJR.DRV, JRGUARD.COM and JRWIN.COM are the experimental-displays-2026-10-12 builds pinned in experiments/DISPLAY3/PINS.JSN. JRGRAB.GR2 is built by src/pcjr/INSTALL/BUILDGR.PY from the pinned DDK view (two builds, same hash).",
+ "JRGRAB.GR2": {
+  "bytes": 2159,
+  "sha256": "2453cd1eba68e580b68b2d232a5dfa5285fd703cd75b2b4edacc203c3d741dec",
+  "control_unmodified_ddk_cga_gr2": {
+   "bytes": 2106,
+   "sha256": "310988d7963017988300479aea0b504febb7e4eeb71caff61c5abdc2ab7afb0f"
+  }
+ }
+}
