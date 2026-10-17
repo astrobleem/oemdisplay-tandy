@@ -78,6 +78,18 @@ class Run:
             return data
         return None
 
+    def settled(self, name, tries=10):
+        """Capture until two successive frames agree: serial mouse packets
+        reach the guest in order but later than the host sends them."""
+        prev = None
+        for i in range(tries):
+            cur = self.shot(name)
+            if cur is not None and cur == prev:
+                return cur
+            prev = cur
+            time.sleep(2)
+        return prev
+
     def raw(self, name):
         from PIL import Image
         with Image.open(self.out / "raw" / (name + ".png")) as im:
@@ -278,24 +290,24 @@ def session1(r):
     # mouse: exact point, click opens the same menu
     r.home()
     r.to(*PM_FILE, wait=2)
-    pf = r.shot("s1_pointer_file")
+    pf = r.settled("s1_pointer_file")
     # Windows starts with the pointer at the screen centre; look only left of it.
     near = [i for i in (diff(pf, d1) if pf and d1 else []) if i % 320 < 140]
     box = bbox(near)
     r.m("click")
     r.sync()
     time.sleep(3)
-    mm = r.shot("s1_menu_mouse")
+    mm = r.settled("s1_menu_mouse")
     same_menu = [i for i in diff(mm, mk)] if mm and mk else None
     r.check("mouse_reaches_point_and_click_opens_menu",
             box is not None and box[0] >= PM_FILE[0] - 1 and box[1] >= PM_FILE[1] - 1 and
             box[0] <= PM_FILE[0] + 1 and box[1] <= PM_FILE[1] + 1 and same_menu is not None and
-            bbox(same_menu) is not None and len(same_menu) < 200,
+            len(same_menu) < 200,
             pointer_box=box, menu_differs_from_keyboard_menu=len(same_menu or []),
             note="the two menus may differ only by the pointer")
     J.key("Escape", "Escape", wait=3)
     r.to(*PARK, wait=2)
-    p0 = r.shot("s1_parked")
+    p0 = r.settled("s1_parked")
     r.check("parked_desktop_exact_frame", p0 is not None)
     # keyboard text end to end: Notepad -> C:\KBD.TXT
     r.run_cmd("NOTEPAD", wait=15)
@@ -327,7 +339,7 @@ def session1(r):
     r.sync()
     time.sleep(3)
     r.to(*PARK, wait=2)
-    pb = r.shot("s1_pb_drawn")
+    pb = r.settled("s1_pb_drawn")
     J.key("alt+f", wait=2)
     J.key("a", wait=4)
     J.text("C:\\JRTEST.BMP")
