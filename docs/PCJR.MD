@@ -91,6 +91,13 @@ Measured with `JRGRTEST.PY` on the clean install, changing only
 
 Desktops after each DOS program exited were exact in all three cases.
 
+| Capture | What it shows |
+| --- | --- |
+| `pcjr/INSTALL/GRJRTXT.PNG` | JRGRAB: COMMAND.COM after Alt+Tab away and back, identical to before |
+| `pcjr/INSTALL/GRCGATXT.PNG` | Retail `CGA.GR2`: the same text screen restored in a 4-colour graphics mode |
+| `pcjr/INSTALL/GRMODE9.PNG` | `JRMODE9.COM` in PCjr mode 9 before the switch attempt |
+| `pcjr/INSTALL/GRCGAM9.PNG` | Retail `CGA.GR2`: the mode 9 program after switching away and back |
+
 Causes, from the Windows 3.0 DDK grabber source: the CGA grabber finds the
 video mode by firing the 6845 light-pen latch (3DBh/3DCh) and matching the
 measured regen length; on the emulated PCjr that misidentifies text mode 3.

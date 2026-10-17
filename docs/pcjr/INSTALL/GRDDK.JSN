@@ -1,0 +1,12 @@
+{
+ "grabber": "DDKCGA.GR2",
+ "grabber_sha256": "310988d7963017988300479aea0b504febb7e4eeb71caff61c5abdc2ab7afb0f",
+ "text_switched_to_windows": true,
+ "text_restored_exact": true,
+ "desktop_after_exit_equals_before": true,
+ "mode9_shown": true,
+ "mode9_stayed_in_program": true,
+ "mode9_switched_to_windows": false,
+ "desktop_after_mode9_equals_before": true,
+ "safe_on_this_emulator": true
+}

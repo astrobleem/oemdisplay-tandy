@@ -1,0 +1,13 @@
+{
+ "grabber": "CGA.GR2",
+ "grabber_sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+ "text_switched_to_windows": true,
+ "text_restored_exact": false,
+ "desktop_after_exit_equals_before": true,
+ "mode9_shown": true,
+ "mode9_stayed_in_program": false,
+ "mode9_switched_to_windows": true,
+ "mode9_restored_exact": false,
+ "desktop_after_mode9_equals_before": true,
+ "safe_on_this_emulator": false
+}

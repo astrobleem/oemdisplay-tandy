@@ -1,0 +1,12 @@
+{
+ "grabber": "JRGRAB.GR2",
+ "grabber_sha256": "2453cd1eba68e580b68b2d232a5dfa5285fd703cd75b2b4edacc203c3d741dec",
+ "text_switched_to_windows": true,
+ "text_restored_exact": true,
+ "desktop_after_exit_equals_before": true,
+ "mode9_shown": true,
+ "mode9_stayed_in_program": true,
+ "mode9_switched_to_windows": false,
+ "desktop_after_mode9_equals_before": true,
+ "safe_on_this_emulator": true
+}
