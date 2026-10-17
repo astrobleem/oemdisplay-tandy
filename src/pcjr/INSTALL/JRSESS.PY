@@ -370,9 +370,14 @@ def session1(r):
     J.key("alt+Tab", wait=12)
     aw = r.shot("s1_dos_away")
     J.key("alt+Tab", wait=12)
-    r.shot("s1_dos_back")
+    back = False
+    for _ in range(8):                               # the DOS cursor blinks
+        r.shot("s1_dos_back", settle=0.3)
+        if r.raw("s1_dos_text") == r.raw("s1_dos_back"):
+            back = True
+            break
     r.check("dos_switch_away_shows_windows", aw is not None)
-    r.check("dos_screen_restored_exactly", r.raw("s1_dos_text") == r.raw("s1_dos_back"))
+    r.check("dos_screen_restored_exactly", back, note="one of up to 8 captures equals the screen before")
     r.dos("EXIT", wait=14)
     dr = r.shot("s1_dos_returned")
     r.check("dos_exit_desktop_exact", dr == p0, differing=len(diff(dr, p0)) if dr and p0 else None)

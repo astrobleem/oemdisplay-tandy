@@ -40,6 +40,17 @@ def same_raw(a, b):
         return x.convert("RGB").tobytes() == y.convert("RGB").tobytes()
 
 
+def same_text_screen(run, ref, name, tries=8):
+    """Capture <name> up to `tries` times about 0.4 s apart and report whether
+    any capture equals <ref>: the DOS cursor blinks, so one capture can catch
+    it in the other phase."""
+    for _ in range(tries):
+        J.shot(run, name, settle=0.3)
+        if same_raw(Path(run) / "raw" / (ref + ".png"), Path(run) / "raw" / (name + ".png")):
+            return True
+    return False
+
+
 def frame(run, name):
     data, bad = J.decode(Path(run) / "raw" / (name + ".png"))
     if data and not bad:
@@ -104,9 +115,8 @@ def main(argv):
         J.shot(run, "away1")
         away = frame(run, "away1")
         J.key("alt+Tab", wait=12)
-        J.shot(run, "text2")
         res["text_switched_to_windows"] = away is not None
-        res["text_restored_exact"] = same_raw(run / "raw" / "text1.png", run / "raw" / "text2.png")
+        res["text_restored_exact"] = same_text_screen(run, "text1", "text2")
         J.text("EXIT")
         J.key("Return", wait=12)
         J.shot(run, "desk1")
