@@ -12,6 +12,7 @@ from unittest.mock import patch
 
 HERE = Path(__file__).resolve().parent
 P = importlib.machinery.SourceFileLoader("jrpack", str(HERE / "JRPACK.PY")).load_module()
+F = importlib.machinery.SourceFileLoader("pcjsflp", str(HERE / "PCJSFLP.PY")).load_module()
 INF = (HERE / "OEMSETUP.INF").read_bytes().decode("ascii")
 
 
@@ -132,6 +133,49 @@ class Build(unittest.TestCase):
     def test_cli_exit_code(self):
         (self.bin / "JRWIN.COM").write_bytes(b"other")
         self.assertEqual(P.main(["--bin", str(self.bin), "--out", str(self.root / "o")]), 1)
+
+
+class Diskette(unittest.TestCase):
+    """PCJSFLP: PCjs diskette JSON -> raw image, refused unless PCjs's MD5 matches."""
+
+    def disk(self, mutate=None):
+        import hashlib as h
+        import struct
+        sectors, raw = [], bytearray()
+        for n in range(1, 3):
+            data = bytes([n]) * 16 + b"\x01\xf7\xff\x00" + b"\0" * 492
+            words = list(struct.unpack("<%di" % (len(data) // 4), data))
+            while len(words) > 1 and words[-1] == words[-2]:
+                words.pop()                          # PCjs: a short list repeats its last word
+            sectors.append({"c": 0, "h": 0, "s": n, "l": 512, "d": words})
+            raw += data
+        if mutate:
+            mutate(sectors)
+        return {"imageInfo": {"type": "CHS", "hash": h.md5(bytes(raw)).hexdigest(), "diskSize": len(raw)},
+                "diskData": [[sectors]]}
+
+    def test_exact_image(self):
+        d = self.disk()
+        self.assertEqual(len(F.convert(d)), 1024)
+
+    def test_altered_sector_refused(self):
+        # the defect that damaged the first private copy: sector data changed
+        def m(sectors):
+            sectors[1]["d"] = sectors[1]["d"][:5]     # drops the explicit zero words
+        with self.assertRaises(F.Refused):
+            F.convert(self.disk(m))
+
+    def test_wrong_hash_refused(self):
+        d = self.disk()
+        d["imageInfo"]["hash"] = "0" * 32
+        with self.assertRaises(F.Refused):
+            F.convert(d)
+
+    def test_not_chs_refused(self):
+        d = self.disk()
+        d["imageInfo"]["type"] = "RAW"
+        with self.assertRaises(F.Refused):
+            F.convert(d)
 
 
 class Pins(unittest.TestCase):

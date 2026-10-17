@@ -1,11 +1,37 @@
 Private test media for docs/PCJR.MD "Clean Windows 3.0 installation".
-Not in this repository. PCjs Windows 3.00 1.2 MB diskettes as raw
-sector images (boot sector OEM ID PCJS.ORG), SHA-256:
-f87bd65bbd0a6bdf7cadf68c96fb198118a2c81fb935496800b7a73cc46c58cc  DISK1.IMG
-27542edd25f2351d9593af45144360751c36baa1ff19e54bdfbfc88e15f5c797  DISK2.IMG
-cf3f298509a5870ed1d7596b569afe7776bd190c0fdfbb419df0dcfbef5de3bd  DISK3.IMG
-f031da89ea99626e22d872cdbbaef491d79c47ede6d3301d07d536b44cd86930  DISK4.IMG
-ff1615876a75e7643610c3542f68de4696dce07d530bc0c89377927ef3d814f3  DISK5.IMG
+Not in this repository.
+
+Source: PCjs Windows 3.00 1.2 MB diskettes, repository
+https://github.com/jeffpar/pcjs-diskettes at commit
+cd3433748b09837a4c60ca7066f3642772b2d711, pcx86/sys/windows/3.00/.
+These are the five 1.2 MB distribution diskettes (volumes WIN30DISK01-05)
+listed on https://www.pcjs.org/software/pcx86/sys/windows/3.00/, the PCjs
+page the browser workshop links. The workshop's own pinned upstream image
+is a different file (Foxlum pcjs-wiki PCDOS320-WIN300-EGA.json, an
+installed PC DOS 3.20 + Windows 3.0 hard disk); it has no Setup disks and
+was not used. Version: Windows 3.00 (files dated 1990-05-01).
+
+Source JSON, SHA-256:
+2a863e7e0d0c98dc8d8624afe506ba91f6499af7d06a4aad1cc8c4084211d494  WIN300-1200K-DISK1.json
+842b20f47b71a6e3e42affbb72e5829ca144f6be0a791caddaea8212ef8dda06  WIN300-1200K-DISK2.json
+146df06a9db584d226496828e2d37a5f89421dd84abe1c1d3ee2b2819c8941ba  WIN300-1200K-DISK3.json
+d3ac3c0cc1842290e4125526ef2e35a84c1e9f585f286a4f847c8c8d079818ef  WIN300-1200K-DISK4.json
+54dd259f81fafc5f6e19366319303f775779f61b4a8d1c5d89ca79ff32884d97  WIN300-1200K-DISK5.json
+
+Raw images made with src/pcjr/INSTALL/PCJSFLP.PY. Each image's MD5 equals
+the imageInfo.hash PCjs records in its JSON. SHA-256:
+679af88255b0cab232de51a25656b00bef14f8d531bae594998095f2abd95b52  WIN300-1200K-DISK1.IMG
+1508c8f472970293c9b49af16ad4b7a2fd6174bcf3a70ceb1273e71a18fb1f03  WIN300-1200K-DISK2.IMG
+560d1eeda9ffb4b543006311e931afde1b337a4b7edc9b567686b9417e6b149e  WIN300-1200K-DISK3.IMG
+199b66c8bb586d41c3c48b700d7b722376655789236e02f73542fa3aae1d5a10  WIN300-1200K-DISK4.IMG
+ab41bbdb9c3a104d3e355433ea12671fd4dab9af4b8ebb377256e1e6891f170c  WIN300-1200K-DISK5.IMG
+
 The files of all five disks were pooled in one folder (C:\WIN30SRC).
 Retail CGA.GR2 (grabber comparison only), expanded from Disk 3:
 1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067  EXP/CGA.GR2
+
+Correction (2026-10-17): the first private copy came from the same PCjs
+set through a faulty conversion that changed sector data in 46 files,
+including SETUP.EXE and SETUP.INF (its raw images did not match the PCjs
+MD5). All evidence in docs/pcjr/INSTALL was rerun on the verified images
+above. CGA.GR2 was not affected.
