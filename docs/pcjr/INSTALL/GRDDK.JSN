@@ -1,5 +1,5 @@
 {
- "source_commit": "388e4a8c2eb696658b5b57482e53cedb0ea60a6e",
+ "source_commit": "c7144d1ec808eff012d0e5ac2b44e24489e7442d",
  "source_tree_dirty": false,
  "packet_sha256": {
   "FONTLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
@@ -29,6 +29,11 @@
  "modes": {
   "0": {
    "program_screen_shown": true,
+   "program_screen_detail": {
+    "cells_ok": 15,
+    "background_not_black": 0,
+    "title_present": true
+   },
    "switched_to_windows": true,
    "restored_exact": true,
    "desktop_after_equals_first": true,
@@ -38,6 +43,11 @@
   },
   "1": {
    "program_screen_shown": true,
+   "program_screen_detail": {
+    "cells_ok": 15,
+    "background_not_black": 0,
+    "title_present": true
+   },
    "switched_to_windows": true,
    "restored_exact": true,
    "desktop_after_equals_first": true,
@@ -47,6 +57,11 @@
   },
   "2": {
    "program_screen_shown": true,
+   "program_screen_detail": {
+    "cells_ok": 15,
+    "background_not_black": 0,
+    "title_present": true
+   },
    "switched_to_windows": true,
    "restored_exact": true,
    "desktop_after_equals_first": true,
@@ -56,6 +71,11 @@
   },
   "3": {
    "program_screen_shown": true,
+   "program_screen_detail": {
+    "cells_ok": 15,
+    "background_not_black": 0,
+    "title_present": true
+   },
    "switched_to_windows": true,
    "restored_exact": true,
    "desktop_after_equals_first": true,
@@ -65,6 +85,12 @@
   },
   "4": {
    "program_screen_shown": true,
+   "program_screen_detail": {
+    "non_uniform_blocks": 0,
+    "pattern_mismatches": 0,
+    "background_not_black": 0,
+    "title_present": true
+   },
    "switched_to_windows": true,
    "restored_exact": true,
    "desktop_after_equals_first": true,
@@ -74,6 +100,12 @@
   },
   "5": {
    "program_screen_shown": true,
+   "program_screen_detail": {
+    "non_uniform_blocks": 0,
+    "pattern_mismatches": 0,
+    "background_not_black": 0,
+    "title_present": true
+   },
    "switched_to_windows": true,
    "restored_exact": true,
    "desktop_after_equals_first": true,
@@ -83,6 +115,12 @@
   },
   "6": {
    "program_screen_shown": true,
+   "program_screen_detail": {
+    "non_uniform_blocks": 0,
+    "pattern_mismatches": 0,
+    "background_not_black": 0,
+    "title_present": true
+   },
    "switched_to_windows": true,
    "restored_exact": true,
    "desktop_after_equals_first": true,
@@ -92,6 +130,12 @@
   },
   "8": {
    "program_screen_shown": true,
+   "program_screen_detail": {
+    "non_uniform_blocks": 0,
+    "pattern_mismatches": 0,
+    "background_not_black": 0,
+    "title_present": true
+   },
    "switched_to_windows": false,
    "screen_undisturbed": true,
    "desktop_after_equals_first": true,
@@ -101,6 +145,12 @@
   },
   "9": {
    "program_screen_shown": true,
+   "program_screen_detail": {
+    "non_uniform_blocks": 0,
+    "pattern_mismatches": 0,
+    "background_not_black": 0,
+    "title_present": true
+   },
    "switched_to_windows": false,
    "screen_undisturbed": true,
    "desktop_after_equals_first": true,
@@ -110,6 +160,12 @@
   },
   "A": {
    "program_screen_shown": true,
+   "program_screen_detail": {
+    "non_uniform_blocks": 0,
+    "pattern_mismatches": 0,
+    "background_not_black": 0,
+    "title_present": true
+   },
    "switched_to_windows": false,
    "screen_undisturbed": true,
    "desktop_after_equals_first": true,
