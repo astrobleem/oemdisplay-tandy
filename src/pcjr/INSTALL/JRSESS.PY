@@ -396,11 +396,15 @@ def check_bmp(r, screen):
         x0, y0, x1, y1 = PB_CANVAS
         bad = [(x, y) for y in range(y0, y1 + 1) for x in range(x0, x1 + 1)
                if not (0 <= x - ox < w and 0 <= y - oy < h) or irgb(idx[x - ox, y - oy]) != screen[y * 320 + x]]
+        # The light red pixels must form one solid rectangle inside the drag.
         (bx0, by0), (bx1, by1) = PB_DRAG
-        inner = [(x, y) for y in range(by0 + 2, by1) for x in range(bx0 + 2, bx1 - 2)]
-        box_ok = all(irgb(idx[x - ox, y - oy]) == 12 for x, y in inner)
+        red = [(x + ox, y + oy) for y in range(h) for x in range(w) if irgb(idx[x, y]) == 12]
+        box = bbox([y * 320 + x for x, y in red])
+        box_ok = bool(red) and box[0] >= bx0 - 3 and box[1] >= by0 - 3 and box[2] <= bx1 + 3 and \
+            box[3] <= by1 + 3 and (box[2] - box[0]) * (box[3] - box[1]) >= 1000 and \
+            len(red) == (box[2] - box[0] + 1) * (box[3] - box[1] + 1)
         return r.check("saved_bmp_matches_screen", not bad and box_ok, bmp_size=[w, h],
-                       mismatches=len(bad), first=bad[:3], box_interior_light_red=box_ok)
+                       mismatches=len(bad), first=bad[:3], solid_light_red_box=box, box_ok=box_ok)
 
 
 Run.check_bmp = check_bmp
