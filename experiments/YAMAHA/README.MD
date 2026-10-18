@@ -16,7 +16,7 @@ The 92-case Windows real-mode/API suite, 2,944,000 pixel comparisons and 160,000
 
 The source archive's `README.TXT`, `EVIDENCE/QUALIFY.JSN` and `EVIDENCE/TESTSUMMARY.TXT` retain an earlier summary that associates the 92-case suite with 86Box. The underlying `EVIDENCE/WINDOWS.JSN` identifies the suite as DOSBox-X, while `EVIDENCE/SCANOUT.JSN` records the separate 86Box screenshot. The corrected qualification summary linked above makes this distinction explicit.
 
-`PC1YAMA.DRV` targets segment B000h; `YAM160.DRV` targets B800h. These profiles are not interchangeable and have no hardware auto-detection. The PC1/B000 reports record build and host checks only; runtime, Setup and physical PC1 remain untested. The B800 screenshot is emulator evidence, not hardware qualification. Windows 3.1, physical RGB/SCART behavior and PC1 hardware are unqualified. Some 160-pixel dialogs can clip.
+`PC1YAMA.DRV` targets segment B000h; `YAM160.DRV` targets B800h. These profiles are not interchangeable and have no hardware auto-detection. The PC1/B000 reports record build and host checks only; runtime, Setup and physical PC1 remain untested. The B800 screenshot is emulator evidence, not hardware qualification. Physical RGB/SCART behavior and PC1 hardware are unqualified. Some 160-pixel dialogs can clip.
 
 ## Setup route and support files
 
