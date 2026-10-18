@@ -11,6 +11,14 @@ explicitly redirect the output yourself. Two short physical Tandy EX/Genius
 NetScroll captures produced valid directional wheel packets with zero UART
 or decoder errors. See TESTS.MD for bounded counts; broader testing remains.
 
+WINDOWS 3.0 WHEEL BRIDGE (SEPARATE PROGRAM)
+-------------------------------------------
+An optional experimental Win16 wheel bridge is available as a source-inclusive
+repository ZIP. It requires an already configured WHEEL.DRV API 1.0; it does not
+install or replace that driver. See the quick-start, limits and evidence guide:
+https://github.com/astrobleem/oemdisplay-tandy/blob/main/downloads/experimental/WINWHL/README.MD
+Direct download: https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/WINWHL/WHEELR1.ZIP
+
 FIRST: safe driver check
 -----------------------
 Exit Windows completely. At the plain DOS prompt in this folder, run:

@@ -30,7 +30,15 @@ RC6 includes the compact Tandy Start menu, Programs and Run/Browse controls, clo
 
 The XTPAN prototype makes lower windows and buttons reachable without changing the 320×200 display. Keyboard pans, edge dwell, cursor rendering and mouse hit-testing were checked; one 275-row dialog's bottom button was clicked after panning. This is software viewport panning, not CRTC hardware scrolling, and it is not in RC6. A Tandy 1000 EX owner reports XTPAN works on real hardware, but no scripted physical test of this software-panning prototype is recorded. The separate HPXY hardware-pan results below do not qualify XTPAN. See the [full investigation](docs/PAN.MD).
 
-A separate Windows Minesweeper demonstration used one owner-supplied executable adapted for Windows 3.0 real mode on an 8088; panning lets a board extend below the visible 200 rows. This is an app-specific conversion, not a general x86 emulator. The executable and a verified Minesweeper screenshot are not in this public repository, so no Minesweeper download or image is shown. The panning test above verifies the driver behavior, not that app binary.
+A converted Minesweeper demonstration shows one board extending below the 200-row viewport. The app conversion is specific to this application; the private executable and shim are not distributed.
+
+<img src="docs/pan/MINE/REVEAL.PNG" alt="Revealed Minesweeper board in Windows 3.0 real mode on the emulated Tandy 1000 HX" width="640">
+
+*Cropped emulator capture · 86Box native headless · emulated Tandy 1000 HX, 8088 at 7.159090 MHz, 640 KB · Windows 3.0 real mode · 320×200×16 viewport over 640×256 logical space. The MNSN2 emulator run passed four snapshots with zero viewport/display mismatches. It used the private combined HPXY XR1 PR151 + E1 runtime; that combination has no public tested commit or hardware qualification. [Capture/test provenance](docs/pan/MINE/CAPTURE.MD) · [public PR151 component commit fc7b09b](https://github.com/astrobleem/oemdisplay-tandy/commit/fc7b09bdbe7e37dc9d562bdb746cf435b0628ba0).*
+
+<img src="docs/pan/MINE/PAN16040.PNG" alt="Minesweeper viewport after a large jump to origin 160,40 in Windows 3.0 real mode" width="640">
+
+*Cropped emulator capture · same 86Box/Tandy 1000 HX setup · viewport origin (160,40). This large jump used a planned full viewport copy with hardware enabled and CRTC start 840; it is not an incremental staged pan or a retrace fault. The combined runtime remains physically untested. See the [separate HPXY R1 hardware acceptance](#panning-on-real-tandy-hardware) and [capture record](docs/pan/MINE/CAPTURE.MD).*
 
 ## Panning on real Tandy hardware
 
@@ -64,7 +72,7 @@ RC6 supplies original XT Pixels System, Fixed and OEM fonts with the inspected W
 
 The vertical-pan test keeps cursor shape and click targets aligned as the view moves; its keyboard shortcuts and edge-dwell controls are listed in [PAN.MD](docs/PAN.MD). Small Windows apps provide more examples: [Tandy Maze](examples/MAZE/GAME/README.MD), [Tandinator](examples/TANDINAT/README.MD), [Pinball](examples/PINBALL/README.MD), [Starfield](experiments/VISPART2/README.MD) and [Matrix](experiments/VISPART1/README.MD).
 
-Owner-reported input highlights: mouse-wheel scrolling in Program Manager, File Manager and Notepad, plus Hold opening Tandy Start. The Windows wheel extension used for that report is private and not a public download. The public [WHEEL.EXE DOS diagnostic](tools/WHEEL/WHEEL.EXE) and its [instructions](tools/WHEEL/README.TXT) check mouse/serial data; they do not add Windows scrolling. RC6 ships the shell-side `TSINPUT.DLL` and Hold guide/screenshots; the compatible [TNDYK3 keyboard test candidate](src/tandyk3/README.md) is separate. These are owner-reported demonstrations, not part of RC6 qualification.
+Owner-reported input highlights include mouse-wheel scrolling in Program Manager, File Manager and Notepad on a real Tandy 1000 EX, plus Hold opening Tandy Start. The Windows 3.0 bridge is now available as a [source-inclusive experimental package](downloads/experimental/WINWHL/README.MD) with a [direct ZIP download](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/WINWHL/WHEELR1.ZIP). It requires an already configured WHEEL.DRV API 1.0 and does not install or modify that driver. The owner's hardware report is separate from the package's synthetic-input emulator checks; this package is not part of RC6 and does not support Windows 3.1. The public [WHEEL.EXE DOS diagnostic](tools/WHEEL/WHEEL.EXE) and its [instructions](tools/WHEEL/README.TXT) check mouse/serial data; they do not add Windows scrolling. RC6 ships the shell-side `TSINPUT.DLL` and Hold guide/screenshots; the compatible [TNDYK3 keyboard test candidate](src/tandyk3/README.md) is separate.
 
 <img src="https://raw.githubusercontent.com/astrobleem/oemsound-tandy/824ae10e1d79d1bd2d09f4a37447f58dd9cc9476/docs/SHOTS/WAMPUI3.PNG" alt="Tandy Winamp UX3 showing a seven-entry scrolling playlist in a Windows 3.0 emulator capture" width="480">
 
