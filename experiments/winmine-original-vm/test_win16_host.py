@@ -19,7 +19,7 @@ class Win16HostTests(unittest.TestCase):
             loaded_bytes=0,
         )
 
-    def test_only_explicit_kernel_init_task_binding_is_accepted(self):
+    def test_unbound_gdi_import_fails_closed(self):
         loaded = self.make_loaded()
         host = Win16Host(loaded)
         with self.assertRaisesRegex(UnsupportedImport, "GDI ordinal 1"):
@@ -52,7 +52,21 @@ class Win16HostTests(unittest.TestCase):
         with self.assertRaisesRegex(CallbackError, "unsupported callback instruction"):
             GuestCallbackDispatcher(instruction_limit=2).invoke(cpu, selector, offset)
 
+    def test_pascal_callback_must_clean_its_stack_arguments(self):
+        memory = bytearray(1 << 20)
+        loaded = self.make_loaded(memory)
+        cpu = CPU(memory=memory)
+        cpu.CS, cpu.IP = 0xF000, 0x0123
+        cpu.SS, cpu.SP = 0x2000, 0x0100
+        selector, offset = 0x1000, 0x0200
+        start = cpu.linear(selector, offset)
+        memory[start:start + 4] = bytes.fromhex("B8 EF BE CB")  # RETF, no RETF n.
+
+        with self.assertRaisesRegex(CallbackError, "expected 0100"):
+            GuestCallbackDispatcher().invoke(
+                cpu, selector, offset, argument_words_push_order=(0x1234,)
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
-
