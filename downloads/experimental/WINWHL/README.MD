@@ -6,6 +6,16 @@ This source-inclusive repository ZIP is an optional Windows 3.0 real-mode
 wheel bridge for 8086/8088 systems. It is a repository download, not a GitHub
 Release asset, installer, or part of Windows XT RC6.
 
+## Required driver
+
+`WHEELR1.ZIP` supplies the bridge and paired TP client, not `WHEEL.DRV`. The
+active Windows `MOUSE` module must already use a working `WHEEL.DRV` that
+exports API 1.0. This repository has no verified redistributable download for
+that driver. A user without a compatible driver cannot enable wheel scrolling
+with this package alone; obtain a matching driver from a source you are
+authorized to use and follow that driver's installation instructions first.
+The steps below begin after the driver is already configured.
+
 ## Quick use
 
 The target system must already have a working `WHEEL.DRV` configured in the
