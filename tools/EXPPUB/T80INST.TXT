@@ -17,7 +17,13 @@ INSTALL - FROM PLAIN DOS, AFTER EXITING WINDOWS
 2. For normal 80x25 text, type: T80ON C:\WINDOWS 25
    For compact 80x25 controls, type: T80ON C:\WINDOWS C25
    Use your actual Windows folder if different.
-3. Read the result; start Windows only after setup succeeds: WIN /R
+3. Read the result; start Windows only after setup succeeds. For
+   C:\WINDOWS, select its drive and change to its folder first:
+   C:
+   CD \WINDOWS
+   WIN /R
+   If Windows is elsewhere, select that drive and CD to the selected
+   Windows installation folder before running WIN /R.
    On a machine with an existing required memory guard/launcher, continue
    to use that guard before every Windows start. This packet reserves no
    RAM and does not replace machine-specific safeguards.
