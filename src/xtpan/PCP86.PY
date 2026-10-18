@@ -223,6 +223,10 @@ TARGETS = {
     "xtbase": {"drv": "TR53216.DRV", "sha": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61",
                "dir": "XTPAN", "id": "RESERVE",
                "tools": ("RESERVE.COM", "MSTEST.COM", "XTPAN.EXE", "PANTEST.EXE")},
+    # RoundRect timing/raster probe (src/rrect) on the same Tandy 1000 HX with
+    # a TR5 driver variant given by --drv/--drv-sha; nothing auto-starts.
+    "rrect": {"drv": "TR53216.DRV", "sha": None, "dir": "RRECT", "id": "RESERVE",
+              "tools": ("RESERVE.COM", "MSTEST.COM", "RRBENCH.EXE")},
 }
 # Tandy 1000 HX: 8088 at 7.16 MHz, 640KB (its video RAM is the top 32KB of
 # that), built-in Tandy video and keyboard.
@@ -375,7 +379,7 @@ def prepare(vm, pristine, drv, tools, control_ega=False, mouse="msserial", targe
         a = cfg.index("[Machine]")
         b = cfg.index("[Input devices]")
         cfg = cfg[:a] + PC1512_MACHINE + "\n" + cfg[b:]
-    if target in ("xtpan", "xtbase"):
+    if target in ("xtpan", "xtbase", "rrect"):
         a = cfg.index("[Machine]")
         b = cfg.index("[Storage controllers]")
         cfg = cfg[:a] + HX_MACHINE + "\n" + cfg[b:]
