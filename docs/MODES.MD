@@ -251,8 +251,8 @@ runtime compatibility claim; the actual driver guests use normal 640 KB.
 ## Limits and preserved history
 
 - Physical EX/HX hardware and cycle-exact bus/CPU timing have not been tested
-- Windows 3.0 real mode is the target; Windows 3.1 and standard/enhanced modes
-  are outside acceptance
+- Windows 3.0 real mode is the target; standard/enhanced modes are outside
+  acceptance
 - `GetDIBits` with a NULL bits buffer is unsupported. Actual non-NULL exports
   and imports/readback are tested
 - Current Windows runtime probes cover solid brushes, SRCCOPY and SRCINVERT,

@@ -2,9 +2,9 @@ COMMDLG30 0.1 - bounded Win16 file dialogs for Windows 3.0 real mode
 ================================================================
 
 This is an ORIGINAL 8086 implementation of four historical COMMDLG APIs.
-It is a deliberately small compatibility subset, not the complete Windows
-3.1 common-dialog library and not COMDLG32. Do not replace a working
-Windows 3.1 COMMDLG.DLL with it.
+It is a deliberately small Windows 3.0 real-mode compatibility subset, not
+a complete system common-dialog library or COMDLG32. Do not replace a
+working system COMMDLG.DLL with it.
 
 APIs and ABI
 ------------

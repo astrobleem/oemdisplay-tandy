@@ -44,7 +44,7 @@ GetFreeSpace(0) supplies free Windows global-heap bytes. Displayed KiB are
 truncated to whole units of 1,024 bytes. This is neither installed RAM nor DOS
 free conventional memory, and it is not the largest contiguous allocation.
 The value varies with the active driver, Windows, loaded applications and
-allocations; Refresh updates it. No Windows 3.1 resource-percentage API is used.
+allocations; Refresh updates it. No resource-percentage API is used.
 
 ## Build
 

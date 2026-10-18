@@ -8,7 +8,7 @@ Press any key, click a mouse button, or move the pointer more than two
 pixels to leave. Alt-Tab, Close and Windows shutdown also dismiss it.
 There is no password lock. This is an ON-DEMAND fullscreen saver: it
 DOES NOT start automatically after idle time, install a resident helper,
-edit WIN.INI, or register a Windows 3.1 .SCR module. Automatic Windows 3.0
+edit WIN.INI, or register a .SCR module. Automatic Windows 3.0
 idle activation would need a separately tested input-hook DLL.
 
 DISPLAY

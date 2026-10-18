@@ -23,7 +23,7 @@ DEMO.WAV is a captured emulator rendition of PSGPLAY's C/E/G sequence.
 The application does NOT play WAV files. It writes notes to the PSG.
 
 IMPORTANT LIMITS
-- Windows 3.0 real mode and 8086/8088 target; no Win3.1/MME/MIDI support.
+- Windows 3.0 real mode and 8086/8088 target; no MME or MIDI support.
 - No physical EX/HX listening or hardware timing qualification has occurred.
 - TSOUND does not implement stock beep, noise, envelopes or SyncAllVoices.
 - Abrupt owner termination is not qualified. A killed owner may leave the

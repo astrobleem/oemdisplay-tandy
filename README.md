@@ -189,7 +189,7 @@ and [Setup, owned-file staging and recovery guide](docs/tga2/INSTALL.TXT).
 
 Windows rendering evidence covers the emulated SL/2 only. Physical hardware,
 
-other SL/TL/RL models and Windows 3.1 remain unqualified; EX/HX must not use
+other SL/TL/RL models remain unqualified; EX/HX must not use
 
 this driver. Run T2RESV successfully before Setup and every Windows start.
 

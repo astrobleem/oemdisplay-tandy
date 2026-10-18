@@ -29,8 +29,8 @@ CONTROLLER CONTRACT
   after WinExec. If it changed during loading, close the saver immediately.
 - MATRIX rechecks capture, modal state and the saved foreground owner before
   showing the popup, and checks ownership again immediately before capture.
-- The controller supplies the automatic timing. /S is not a Windows 3.1 SCR
-  interface; no .SCR registration is assumed.
+- The controller supplies the automatic timing for Windows 3.0. /S is this
+  program's command-line interface; no .SCR registration is assumed.
 
 WAKE INPUT AND RESTORATION
 /S responds to a new key, key release, character, button or actual cursor

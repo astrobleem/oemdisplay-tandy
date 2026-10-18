@@ -96,7 +96,7 @@ make no changes**. You can select your intended graphics mode directly here.
 
 The installer also adds an optional **Tandy 1000 EX/HX (WindowsXT)** Computer
 choice without selecting it or changing the active keyboard. Leave it alone
-unless you want that compatibility preset; read [CPSET.TXT](../distributions/WINXT/CPSET.TXT)
+unless you want that compatibility preset; read [Computer setup guide](CPSET.MD)
 before selecting it through `C:\WINXT\WINXT SETUP`. Reopen Setup afterwards
 to check the saved display and keyboard. This preset installs no sound driver.
 
@@ -401,9 +401,10 @@ menu. Install a panning candidate only through its own packet instructions.
 | Amstrad PC1512 | [PC1512 experimental packet](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) and [guide](../experiments/DISPLAY3/PC1512.TXT). One cursor-state case remains unresolved. |
 | IBM XT + Plantronics ColorPlus | [PCP3216 experimental packet](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP) and [guide](../experiments/DISPLAY3/PCP3216.TXT). Requires the card and its dedicated VRAM. |
 
-These have separate emulator evidence and hardware limits. Other Video II
-models and Windows 3.1 are unqualified. Olivetti PC1/Yamaha has no public
-machine-specific driver packet or qualification record.
+These have separate Windows 3.0 real-mode evidence and hardware limits. Other
+Video II models are unqualified. [Olivetti PC1/Yamaha candidates](../experiments/YAMAHA/README.MD)
+have separate experimental packets; standalone Yamaha emulator evidence does
+not qualify physical PC1 hardware.
 
 ## Restore your previous installation
 
@@ -436,8 +437,8 @@ experimental packets identify their own hashes and acceptance records.
 
 Emulator cycles and host elapsed times do not establish physical 8088 speed.
 Earlier hardware observations do not qualify every current driver, app or
-input path. Windows 3.1, standard/enhanced mode and an unexpanded 256 KB EX
-are outside this Windows XT acceptance scope.
+input path. Standard/enhanced mode and an unexpanded 256 KB EX are outside
+this Windows 3.0 real-mode acceptance scope.
 
 A useful issue report includes the machine and RAM, DOS/Windows versions,
 package and driver SHA-256, mode, exact steps, expected and actual behavior,

@@ -97,8 +97,8 @@ TARGET AND LIMITS
 - Normal 640 KB shared-memory layout: BIOS reports 624 KB and the DOS
   arena ends at 9C00h; BIOS text mode 3 before RESERVE
 - DOS 3.0 or later with the helper's required allocation functions
-- No expanded-base-memory, XMS/EMS/UMB, PCjr, Windows 3.1, or protected-
-  mode support is claimed by this installation package
+- No expanded-base-memory, XMS/EMS/UMB, PCjr or protected-mode support
+  is claimed by this installation package
 
 Emulator testing does not establish physical EX/HX hardware compatibility
 or cycle-accurate 8088 timing. Genuine MS-DOS variants remain a separate

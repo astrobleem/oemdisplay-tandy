@@ -165,8 +165,8 @@ driver observations. Historical documentation can correctly say that its
 older checkpoint lacked hardware testing; that does not describe every later
 trial. Reports without post-install hash readback do not certify exact binaries.
 
-Windows 3.0 real mode and normal 640 KB shared memory are the target. Windows
-3.1, standard/enhanced modes, PCjr, other memory layouts and an unexpanded
+Windows 3.0 real mode and normal 640 KB shared memory are the target.
+Standard/enhanced modes, PCjr, other memory layouts and an unexpanded
 256 KB EX are outside acceptance. Bitmap/ROP coverage is bounded; large redraws
 can remain slow. Emulator cycle settings do not establish physical 8088 speed.
 

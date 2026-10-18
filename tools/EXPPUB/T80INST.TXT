@@ -54,7 +54,7 @@ Text is exact only for supported 8-pixel-high glyphs. Larger text and
 all graphics are block/shade approximations. Scrolling is slow. Real CGA
 snow, machine timing and physical keyboard/mouse behavior are untested.
 C25 controls are exact only on the text-cell grid; dialogs can still use
-partial cells. Windows 3.1 is outside this packet's scope.
+partial cells. This packet targets Windows 3.0 real mode.
 
 The current drivers passed fresh 8086/REP-prefix/link audits and exact
 presenter tests in DOSBox-X. C25 matches the exact binary in the recorded
