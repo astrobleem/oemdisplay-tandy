@@ -17,5 +17,12 @@
     }
   },
   "log_absent_before_run": true,
-  "private_clone_only": true
+  "private_clone_only": true,
+  "fresh_guest_log": true,
+  "private_media_or_executable_included": false,
+  "physical_hardware_tested": false,
+  "display_driver_qualified": false,
+  "generic_ne_import_bridge_claimed": false,
+  "shared_lease_acquired_and_released": true,
+  "owned_emulator_stopped": true
 }
