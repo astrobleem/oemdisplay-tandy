@@ -9,9 +9,7 @@ utilities to Windows 3.0 on the Tandy 1000 EX/HX.
 
 
 | Startup | Desktop | Shutdown |
-
 | --- | --- | --- |
-
 | <img src="docs/PROMO/XTWAVE.GIF" alt="Windows XT slow flag wave startup" width="260"> | <img src="examples/HILLS/HILL320.PNG" alt="Windows XT green hill desktop" width="260"> | <img src="docs/PROMO/XTEXIT.PNG" alt="Windows XT moon and stars after shutdown" width="260"> |
 
 
@@ -25,9 +23,7 @@ utilities to Windows 3.0 on the Tandy 1000 EX/HX.
 
 
 | Before: Windows 3.0, four colors | Windows XT: sixteen colors |
-
 | --- | --- |
-
 | <img src="docs/PROMO/BF2030.PNG" alt="Program Manager from Chad's older four-color Windows 3.0 video" width="390"> | <img src="docs/PROMO/PBRUSH16.PNG" alt="Windows XT Paintbrush with a colorful hill canvas and all sixteen palette colors" width="390"> |
 
 
@@ -73,9 +69,7 @@ and a supported Tandy 1000 EX/HX with 640 KB RAM.
 
 
 | [Buddy Holly · Tandy sound](https://github.com/astrobleem/oemsound-tandy) | [Maze preview](examples/MAZE/GAME/README.MD) | [Tandinator](examples/TANDINAT/README.MD) |
-
 | --- | --- | --- |
-
 | <a href="https://github.com/astrobleem/oemsound-tandy"><img src="https://raw.githubusercontent.com/astrobleem/oemsound-tandy/5411fe5f9c2cccdbe09900a779ebda382a407a74/docs/SHOTS/BUDCAP04.GIF" alt="Genuine Buddy Holly animated capture from the Tandy sound companion" width="260"></a> | <img src="docs/PROMO/XTMAZE.PNG" alt="New Maze game in Windows XT" width="260"> | <img src="examples/TANDINAT/SHOTS/320x200x16.PNG" alt="Canonical Tandinator v0.2 character guessing game" width="260"> |
 
 
@@ -139,15 +133,10 @@ and changing an existing installation, both checked in DOSBox-X.
 
 
 | Machine/card | Mode and download | Status and guide |
-
 | --- | --- | --- |
-
 | [Amstrad PC1512](https://github.com/astrobleem/windows-3-amstrad-pc1512) | [PC1512.DRV, 640x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) | Emulator rendering evidence; one cursor-state case remains unresolved. [Install/recover](experiments/DISPLAY3/PC1512.TXT) |
-
 | [IBM PCjr](https://github.com/astrobleem/windows-3-pcjr) | [PCJRSET.ZIP: clean Setup packet, 320x200x16](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PCJR/PCJRSET.ZIP) | Original fonts, static logo and PCjr-safe grabber included; guard required before Setup and every start. [Install/recover](downloads/experimental/PCJR/README.MD) |
-
 | [IBM XT + Plantronics ColorPlus](https://github.com/astrobleem/windows-3-plantronics) | [PCP3216.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP) | Emulator rendering evidence; requires the ColorPlus card and its dedicated VRAM. [Install/recover](experiments/DISPLAY3/PCP3216.TXT) |
-
 | [Olivetti Prodest PC1 / Yamaha V6355D](https://github.com/astrobleem/windows-3-olivetti-pc1) | [PC1/B000 ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha-candidate03/PC1-B000-CANDIDATE03.ZIP) · [B800 ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha-candidate03/YAMAHA-B800-CANDIDATE03.ZIP) · [source/evidence](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha-candidate03/YAMAHA-CANDIDATE03-SOURCE-EVIDENCE.ZIP) | Experimental repository-file downloads, not release assets. PC1/B000 has build/host checks only; no emulator, Setup, or physical PC1 test. [Evidence](docs/yamaha/QUALIFICATION.MD) · [guide](experiments/YAMAHA/README.MD) |
 
 
@@ -181,17 +170,11 @@ PCjr [PR #138](https://github.com/astrobleem/oemdisplay-tandy/pull/138) merged a
 
 
 | Resolution | Colors |
-
 | --- | ---: |
-
 | **320x200** | **16 — default** |
-
 | 640x200 | 2 |
-
 | 640x200 | 4 |
-
 | 320x200 | 4 |
-
 | 160x200 | 16 |
 
 
@@ -273,8 +256,6 @@ requirements and recovery, see the [user manual](docs/USERMAN.MD).
 
 
 | [Starfield](experiments/VISPART2/README.MD) | [Matrix](experiments/VISPART1/README.MD) |
-
 | --- | --- |
-
 | <img src="docs/SHOTS/STARS10.PNG" alt="Native Starfield screen saver capture" width="390"> | <img src="docs/SHOTS/MATRIX.PNG" alt="Native Matrix screen saver with green trails" width="390"> |
 
