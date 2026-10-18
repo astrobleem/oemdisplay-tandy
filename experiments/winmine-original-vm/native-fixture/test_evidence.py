@@ -131,7 +131,7 @@ def validate_record(
         host_files = manifest.get("host_probe_files")
         expected_host_files = {"MNSN1-host-probe.json", "MNSN2-host-probe.json"}
         if not isinstance(host_files, dict) or set(host_files) != expected_host_files:
-            errors.append("manifest must hash both pinned original-image host probe records")
+            errors.append("manifest must hash both converted MNSN demo host probe records")
             host_files = host_files if isinstance(host_files, dict) else {}
         expected_inputs = {
             "MNSN1-host-probe.json": "a94b33e78c3e54dc99a42237d801a54258b729a42a957ebd0982665a40dc384f",
@@ -149,15 +149,17 @@ def validate_record(
             if not isinstance(record, dict) or record.get("bytes") != len(normalized_data) or record.get("sha256") != hashlib.sha256(normalized_data).hexdigest():
                 errors.append(f"host probe record hash mismatch for {name}")
             if result.get("input_sha256") != digest or result.get("input_bytes") != 30032:
-                errors.append(f"host probe did not use the pinned original input in {name}")
+                errors.append(f"host probe did not use the pinned MNSN demo input in {name}")
             if result.get("input_bytes_unchanged") is not True or result.get("input_file_unchanged") is not True:
                 errors.append(f"host probe did not confirm unchanged input bytes in {name}")
             if result.get("import") != {"module": "KERNEL", "kind": "ordinal", "ordinal": 91, "name": None}:
                 errors.append(f"host probe import record mismatch in {name}")
             if "C:\\" in data.decode("ascii") or "\\Users\\" in data.decode("ascii"):
                 errors.append(f"host probe record contains a local path in {name}")
-        if manifest.get("original_winmine_full_app_executed") is not False:
-            errors.append("manifest must explicitly state original WINMINE was not fully executed")
+        if manifest.get("pinned_original_winmine_full_app_executed_in_emulator") is not False:
+            errors.append("manifest must state that the pinned original was not run in the emulator")
+        if manifest.get("mnsn_demo_images_are_original_winmine") is not False:
+            errors.append("manifest must identify MNSN host-probe inputs as converted demo images")
 
     if directory.name.startswith("ne-loader-"):
         callback_rows = re.findall(

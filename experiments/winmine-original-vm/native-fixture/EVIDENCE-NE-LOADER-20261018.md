@@ -26,20 +26,23 @@ Raw sanitized evidence:
   SHA-256 `130182ef952a8e56ff9fd062f83560a0fe855afd1d649d4c16ff66577b8071a6`.
 - [`MANIFEST.json`](evidence/ne-loader-20261018/MANIFEST.json) records the
   exact source/build hashes, emulator profile, fixture hash, lease/exit state,
-  and original-input hashes before and after use.
+  and guest/demonstration-input hashes before and after use.
 - [`MNSN1-host-probe.json`](evidence/ne-loader-20261018/MNSN1-host-probe.json)
   and [`MNSN2-host-probe.json`](evidence/ne-loader-20261018/MNSN2-host-probe.json)
-  record separate host-only entry-slice probes against the pinned original
-  executables using probe source commit
-  `190016d9ff9cc34eceb10c4ef080a710abd7c964`. Each reports the pinned input
-  hash and unchanged input bytes.
+  record separate host-only entry-slice probes against the converted MNSN demo
+  images, not the pinned original, using probe source commit
+  `190016d9ff9cc34eceb10c4ef080a710abd7c964`. Each reports its demo input
+  hash and unchanged bytes.
 
-The private original disk image hash remained
-`ec32fab0f73818ff30d90ed0f6a0384627e33ea211fd926e3803382c5600549a`. MNSN1
-and MNSN2 `WINMINE.EXE` hashes also matched before and after the host probes.
-The original application was not run in the emulator. This evidence is an
-emulator-only compatibility result for a first-party test fixture; it does
-not qualify the display driver, Minesweeper, or physical hardware.
+The private guest disk image hash remained
+`ec32fab0f73818ff30d90ed0f6a0384627e33ea211fd926e3803382c5600549a`; both
+converted MNSN demo-image hashes also matched before and after their host
+probes. The pinned original was not run in the emulator. Its separate
+read-only host trace is recorded in
+[`ORIGINAL-WINMINE-READINESS-20261018.md`](../ORIGINAL-WINMINE-READINESS-20261018.md).
+This emulator result qualifies only the first-party test fixture; it does not
+qualify the display driver, the original Minesweeper application, or physical
+hardware.
 
 CI exercises the repository's Python NE parser and bytecode oracle, generated
 fixture relocations, fail-closed cases, and raw evidence hashes. It does not

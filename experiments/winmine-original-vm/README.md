@@ -21,29 +21,28 @@ PSP, local heap, task stack, instance data, or DLLs. The input is read-only
 and no executable is modified or emitted. It accepts both 8086 encodings of
 `OR AX,AX` (`09 C0` and `0B C0`) in that exact bounded continuation.
 
-## Pinned original-image inventory
+## Input identities
 
-The private MNSN1 and MNSN2 `WINMINE.EXE` inputs are each 30,032 bytes. Their
-SHA-256 values are `a94b33e78c3e54dc99a42237d801a54258b729a42a957ebd0982665a40dc384f`
+The MNSN1 and MNSN2 `WINMINE.EXE` files in the emulator evidence are converted
+demo images, not the pinned original. Each is 30,032 bytes. Their SHA-256
+values are `a94b33e78c3e54dc99a42237d801a54258b729a42a957ebd0982665a40dc384f`
 and `52be8bb486d3bad7809c19efc8a3202ef08a458e250634e392fbd127d4046c8a`,
-respectively. The checked NE parser reports the same structure for both:
-Windows 3.0, two segments, five imported modules, 99 ordinal imports (52
-USER, 25 KERNEL, 15 GDI, six SOUND, one WMABT), 107 relocations in segment 1,
-and an NE resource-table offset. Both read-only host probes now pass the
-three-instruction entry prefix, a symbolic `KERNEL` ordinal 91 return, and the
-two-instruction success continuation using the synthetic task context. The
-per-input host results and hashes are in
+respectively. Their separate host probes and hashes are in
 [`native-fixture/evidence/ne-loader-20261018`](native-fixture/evidence/ne-loader-20261018/).
 
-This is a host-only entry slice, not a Windows task launch or an original-app
-run. The native C loader in `native-fixture` runs a separate first-party NE
-test image and resolves only `KERNEL!GetVersion` and `USER!EnumWindows`.
-Remaining work for the original application includes real task/PSP/heap/stack
-and instance initialization, resource loading, all 99 ordinal export
-resolutions across five modules, the corresponding KERNEL/USER/GDI/SOUND/WMABT
-services, and full app startup, window/message handling, and drawing. Neither
-the full app nor physical hardware is qualified by these probes. The private
-Microsoft executables and guest image are not included.
+The private pinned original is a distinct 27,776-byte image with SHA-256
+`633c1328922b4092351e0019b1ba1c6d56c0f0fea83824cc8b7e2e731b15e80b`. Its
+read-only identity and bounded-entry results are documented in
+[`ORIGINAL-WINMINE-READINESS-20261018.md`](ORIGINAL-WINMINE-READINESS-20261018.md).
+That host trace does not launch a Windows task or run the full application.
+
+The native C loader in `native-fixture` runs a separate first-party NE test
+image and resolves only `KERNEL!GetVersion` and `USER!EnumWindows`. It does not
+load the pinned original's 16 resources or resolve its 99 ordinal imports
+across `KERNEL`, `GDI`, `USER`, `SOUND`, and `SHELL`, and it does not initialize
+the original's Windows task, PSP, heap, stack, or instance data. Neither the
+full app nor physical hardware is qualified by these probes. Private
+executables and guest images are not included.
 
 The ordinal mapping and register contract are based on Wine's Win16
 [ordinal table](https://github.com/wine-mirror/wine/blob/master/dlls/krnl386.exe16/krnl386.exe16.spec)

@@ -68,7 +68,7 @@ under Windows 3.0 real mode. The log records both imported APIs, three
 callbacks executed from the relocated second NE segment, restored far-call
 frames, malformed-NE and unsupported-opcode rejection, `RESULT=PASS`, and a
 clean `WINRET=0` return to DOS. The run completed in 62.2 seconds with a
-90-second watchdog. The original guest disk image and both pinned
+90-second watchdog. The private guest disk image and both converted MNSN demo
 `WINMINE.EXE` inputs retained their before-run SHA-256 values. See
 [`EVIDENCE-NE-LOADER-20261018.md`](EVIDENCE-NE-LOADER-20261018.md) for the
 sanitized raw records and hashes.
@@ -79,6 +79,11 @@ or physical hardware. The private fixture EXE, NE input, and guest image are
 not included. CI runs the Python parser/bytecode oracle and evidence checks;
 the production C behavior is tied to the exact build/source hashes and raw
 guest log above.
+
+The separate MNSN1/MNSN2 host-probe records are for converted demo images, not
+the pinned original. The original's read-only identity and bounded entry stop
+are recorded in
+[`ORIGINAL-WINMINE-READINESS-20261018.md`](../ORIGINAL-WINMINE-READINESS-20261018.md).
 
 ## Native emulator results
 
