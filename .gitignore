@@ -63,3 +63,4 @@ __pycache__/
 
 # RoundRect investigation: raw probe logs are evidence (docs/RRECT.MD).
 !docs/rrect/*/RRBENCH.LOG
+!docs/rrbatch/*/RRBENCH.LOG

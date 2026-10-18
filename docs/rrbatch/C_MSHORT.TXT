@@ -1,0 +1,24 @@
+ 1 roundrect_key      EQUAL 0 px   ref 4723  cand 4504
+ 2 rectangle_key      EQUAL 0 px   ref 2032  cand 2032
+ 3 roundrect_large    EQUAL 0 px   ref 2472  cand 2417
+ 4 roundrect_hollow   EQUAL 0 px   ref 2088  cand 2142
+ 5 roundrect_nopen    DIFFERS 420 px [6, 17, 266, 57]  ref 2527  cand 2362
+ 6 roundrect_xor      EQUAL 0 px   ref 4339  cand 4175
+ 7 roundrect_overlap  EQUAL 0 px   ref 4449  cand 4229
+ 8 roundrect_clipped  EQUAL 0 px   ref 1867  cand 1812
+ 9 ellipse_12         EQUAL 0 px   ref 714  cand 714
+10 cursor_overlap     EQUAL 0 px   ref 9557  cand 6866
+   step  2 DIFFERS 21 px [42, 23, 62, 23]
+   step  7 DIFFERS 25 px [1, 134, 25, 134]
+   step  8 DIFFERS 25 px [1, 134, 25, 134]
+   step  9 DIFFERS 25 px [1, 134, 25, 134]
+   step 10 DIFFERS 25 px [1, 134, 25, 134]
+   step 11 DIFFERS 25 px [1, 134, 25, 134]
+   step 12 DIFFERS 25 px [1, 134, 25, 134]
+   step 13 DIFFERS 46 px [1, 63, 72, 134]
+   6 of 14 per-call frames equal
+11 visible_steps      EQUAL 0 px   ref 9393  cand 9557
+12 calc               EQUAL 0 px   ref [10326, 10380, 10326]  cand [10491, 10491, 10490]
+13 reversi            EQUAL 0 px   ref [1428, 1428, 1428]  cand [1373, 1428, 1428]
+14 pbrush             EQUAL 0 px   ref [4559, 4504, 4504]  cand [5492, 4559, 4559]
+FRAMES DIFFER

@@ -298,5 +298,48 @@ class Evidence(unittest.TestCase):
         for run in ("CAND", "SHOTCAND"):
             self.assertIn(cand, json.dumps(json.loads((self.D / run / "RRRUN.JSN").read_text())["prep"]))
 
+class BatchEvidence(unittest.TestCase):
+    """docs/rrbatch: fill-row batching against PR #151's driver."""
+    D = HERE.parents[1] / "docs" / "rrbatch"
+
+    def load(self, tag):
+        return json.loads((self.D / f"C_{tag}.JSN").read_text())
+
+    def test_logs_complete_and_are_the_runs_own_bytes(self):
+        runs = [p for p in self.D.iterdir() if (p / "RRBENCH.LOG").exists()]
+        self.assertEqual(len(runs), 9)
+        for d in runs:
+            raw = (d / "RRBENCH.LOG").read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),
+                             json.loads((d / "RRRUN.JSN").read_text())["files"]["RRBENCH.LOG"], d.name)
+            self.assertEqual(C.validate(raw.decode("latin-1"))[1], [], d.name)
+
+    def test_batch_equals_151_and_tr5_including_every_call(self):
+        for tag, n in (("TR5C", 14), ("TR5B", 14), ("BATCH", 14), ("BTR", 14), ("SHOT", 3)):
+            r = self.load(tag)
+            self.assertTrue(r["runs_complete"] and r["all_frames_equal"], tag)
+            self.assertEqual(len(r["stages"]), n, tag)
+            steps = [s for s in r["stages"] if s.get("steps")]
+            if n == 14:
+                self.assertEqual(len(steps), 1)
+                self.assertEqual(len(steps[0]["steps"]), 14)
+                self.assertTrue(all(x["equal"] for x in steps[0]["steps"]))
+
+    def test_each_broken_batch_is_caught_between_calls(self):
+        for tag in ("MNOEND", "MSHORT", "MEARLY"):
+            r = self.load(tag)
+            self.assertTrue(r["runs_complete"], tag)
+            self.assertFalse(r["all_frames_equal"], tag)
+            steps = [s for s in r["stages"] if s.get("steps")][0]["steps"]
+            self.assertTrue(any(not x["equal"] for x in steps), tag)
+
+    def test_drivers_compared_are_the_built_ones(self):
+        for run, build in (("CAND", "CAND"), ("BATCH", "BATCH"), ("TR5", "TR5"), ("SHOTCAND", "CAND"),
+                           ("SHOTBAT", "BATCH")):
+            sha = json.loads((self.D / f"B_{build}.JSN").read_text())["sha256"]
+            self.assertIn(sha, json.dumps(json.loads((self.D / run / "RRRUN.JSN").read_text())["prep"]), run)
+        self.assertIn(json.loads((self.D / "B_TR5.JSN").read_text())["sha256"],
+                      (HERE.parents[1] / "docs" / "TRIAL5" / "BUILDS.JSN").read_text())
+
 if __name__ == "__main__":
     unittest.main()
