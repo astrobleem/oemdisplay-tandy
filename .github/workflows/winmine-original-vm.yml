@@ -1,0 +1,45 @@
+name: WinMine host-bridge tests
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/winmine-original-vm/**'
+      - '.github/workflows/winmine-original-vm.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/winmine-original-vm/**'
+      - '.github/workflows/winmine-original-vm.yml'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: winmine-host-bridge-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  synthetic-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact public source without credentials
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git sparse-checkout init --no-cone
+          printf '/experiments/winmine-original-vm/\n' | git sparse-checkout set --no-cone --stdin
+          git checkout --detach --force FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+
+      - name: Run WinMine bridge unit tests
+        run: >-
+          python3 -m unittest discover
+          -s experiments/winmine-original-vm -p 'test_*.py' -v
+

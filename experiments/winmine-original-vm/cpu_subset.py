@@ -54,6 +54,13 @@ class CPU:
         self.SP = (self.SP - 2) & MASK16; self.write16(self.SS, self.SP, value)
     def pop(self):
         v = self.read16(self.SS, self.SP); self.SP = (self.SP + 2) & MASK16; return v
+    def call_far(self, target_cs, target_ip):
+        return_cs, return_ip = self.CS, self.IP
+        self.push(return_cs); self.push(return_ip)
+        self.CS, self.IP = target_cs & MASK16, target_ip & MASK16
+    def far_return(self, argument_bytes=0):
+        self.IP = self.pop(); self.CS = self.pop()
+        self.SP = (self.SP + argument_bytes) & MASK16
 
     def _parity(self, value): return (value & 0xFF).bit_count() % 2 == 0
     def _logic_flags(self, result):
@@ -122,6 +129,15 @@ class CPU:
             if base != 0x38:
                 if direction: self.set_reg(reg, result)
                 else: self._setop(rm, result)
+        elif op in (0x09, 0x0B):                                                            # OR r/m16,r16; OR r16,r/m16
+            reg, rm = self._modrm()
+            if op == 0x09:
+                result = self._getop(rm) | self.reg(reg)
+                self._setop(rm, result)
+            else:
+                result = self.reg(reg) | self._getop(rm)
+                self.set_reg(reg, result)
+            self._logic_flags(result)
         elif op in (0x05, 0x2D, 0x3D):                                                       # ADD/SUB/CMP AX,imm16
             imm = self.fetch16()
             if op == 0x05: self.AX = self._add(self.AX, imm)
@@ -144,17 +160,26 @@ class CPU:
         elif op == 0x90: pass                                                               # NOP
         elif op == 0xEB:                                                                    # JMP short
             d = self.fetch8(); self.IP = (self.IP + (d - 256 if d & 0x80 else d)) & MASK16
+        elif op == 0x74:                                                                    # JE/JZ short
+            d = self.fetch8()
+            if self.flag("ZF"):
+                self.IP = (self.IP + (d - 256 if d & 0x80 else d)) & MASK16
         elif op == 0xE9:
             d = self.fetch16(); self.IP = (self.IP + (d - 65536 if d & 0x8000 else d)) & MASK16
         elif op == 0xE8:
             d = self.fetch16(); self.push(self.IP); self.IP = (self.IP + (d - 65536 if d & 0x8000 else d)) & MASK16
         elif op == 0x9A:                                                                    # CALL FAR ptr16:16
             target_ip = self.fetch16(); target_cs = self.fetch16()
-            return_ip = self.IP
-            self.push(self.CS); self.push(return_ip)
-            self.CS = target_cs; self.IP = target_ip
+            self.call_far(target_cs, target_ip)
             return ("far_call", target_cs, target_ip)
         elif op == 0xC3: self.IP = self.pop()
+        elif op == 0xCB:                                                                    # RETF
+            self.far_return()
+            return ("far_return", self.CS, self.IP)
+        elif op == 0xCA:                                                                    # RETF imm16
+            argument_bytes = self.fetch16()
+            self.far_return(argument_bytes)
+            return ("far_return", self.CS, self.IP)
         elif op == 0xCD:                                                                    # intercepted host interrupt
             vector = self.fetch8()
             if vector != 0xFF: raise UnsupportedOpcode(f"INT {vector:02X} at {start:04X}")
@@ -176,6 +201,6 @@ class CPU:
                 import_handler(self, target_cs, target_ip)
                 # The intercepted imported routine returns with RETF: pop IP,
                 # then CS, leaving the caller's stack exactly as before CALL.
-                self.IP = self.pop(); self.CS = self.pop()
+                self.far_return()
 
 

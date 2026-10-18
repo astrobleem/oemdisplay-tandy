@@ -75,6 +75,23 @@ class CpuSubsetTests(unittest.TestCase):
                          (0, 0xCAFE, 0x00FE, 0x1000, 0x0108))
         self.assertEqual(c.read16(c.SS, c.SP), 0)
 
+    def test_or_ax_and_je_cover_entry_success_continuation(self):
+        c = CPU(); c.AX = 1
+        load(c, bytes.fromhex("09 C0 74 02 B8 34 12"))
+        c.run(2)
+        self.assertFalse(c.flag("ZF"))
+        self.assertEqual(c.IP, 0x104)  # JE not taken; execution falls through to MOV.
+
+    def test_retf_pops_far_frame_and_retf_immediate_discards_arguments(self):
+        c = CPU(); c.SS = 0x2000; c.SP = 0x0100
+        c.CS = 0x3000; c.IP = 0x0200
+        c.push(0x0200)  # Callback's single Pascal argument.
+        c.call_far(0x1000, 0x0400)
+        start = c.linear(c.CS, c.IP)
+        c.memory[start:start + 3] = bytes.fromhex("CA 02 00")
+        c.step()
+        self.assertEqual((c.CS, c.IP, c.SP), (0x3000, 0x0200, 0x0100))
+
     def test_unknown_opcode_fails_closed_without_advancing_ip(self):
         c = CPU(); load(c, b"\x0f")
         before = (c.AX, c.BX, c.flags, c.SP)
