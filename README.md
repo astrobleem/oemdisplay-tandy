@@ -99,10 +99,13 @@ other SL/TL/RL models and Windows 3.1 remain unqualified; EX/HX must not use
 this driver. Run T2RESV successfully before Setup and every Windows start.
 
 [TEXT80 and compact C25](docs/TEXT80.MD) ([front door](https://github.com/astrobleem/text-mode-windows)) are merged experimental text-mode
-driver profiles with emulator evidence. No current TEXT80/C25 binary package
-has been released; the older rc.6 TXTMODE feasibility driver is historical.
-Olivetti PC1 Yamaha candidates remain private and emulator-tested only ([front door](https://github.com/astrobleem/windows-3-olivetti-pc1));
-no public download is available yet.
+driver profiles with emulator evidence. C25 passed 54/54 in 86Box 6.0 build
+9001 on an emulated IBM XT/CGA (8088, 4.77 MHz); see the [Notepad capture](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/1dc95619dde79663d0e1d9e1c7d251b00978b7ed/docs/text80/RUN_c3/c80w3/notepad.png)
+and [tested commit 1dc9561](https://github.com/astrobleem/oemdisplay-tandy/commit/1dc95619dde79663d0e1d9e1c7d251b00978b7ed). No current TEXT80/C25 binary
+package has been released; the older rc.6 TXTMODE feasibility driver is historical.
+Olivetti PC1/Yamaha has no public driver package, source packet, or machine-specific
+emulator capture/qualification record ([front door](https://github.com/astrobleem/windows-3-olivetti-pc1)); no download is available, and hardware
+support remains unqualified.
 
 The physical HPAN R3 run is accepted; no public package or evidence bundle
 is published. The combined HPXY candidate remains private and emulator-tested;
