@@ -1,0 +1,20 @@
+Native Win16 API fixture
+VM GetVersion import=PASS calls=1 steps=3 stack=8
+GetVersion DWORD=0x06160003
+Windows version major=3 minor=0
+VM wrong-cookie result=0 stack=1 steps=10
+VM unsupported opcode fail-closed=PASS
+EnumWindows all-pass begin
+ENUM callback hwnd=0x1090 lParam=0x13579BDF
+VM callback result=1 stack=1 steps=14
+ENUM callback hwnd=0x0FBC lParam=0x13579BDF
+VM callback result=1 stack=1 steps=14
+ENUM callback hwnd=0x0F78 lParam=0x13579BDF
+VM callback result=1 stack=1 steps=14
+EnumWindows all-pass result=1 callbacks=3 cookie_ok=1 probe_seen=1
+EnumWindows stop-on-first begin
+STOP callback hwnd=0x1090 lParam=0x13579BDF
+VM callback result=0 stack=1 steps=14
+EnumWindows stop result=0 callbacks=1
+VM callbacks=4 failures=0 getversion_calls=1
+RESULT=PASS

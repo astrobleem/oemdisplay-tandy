@@ -1,0 +1,15 @@
+{
+  "format": "winmine-synthetic-dos-launch-v1",
+  "notice": "Every value in this file is synthetic fixture data, not copied from a DOS host.",
+  "psp_segment": "3000",
+  "environment_segment": "3100",
+  "environment_entries": [],
+  "program_path": "C:\\FIXTURE\\WINMINE.EXE",
+  "command_tail": "",
+  "interrupt_vectors": {
+    "00": {
+      "segment": "F000",
+      "offset": "0040"
+    }
+  }
+}

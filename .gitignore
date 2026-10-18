@@ -63,3 +63,5 @@ __pycache__/
 
 # RoundRect investigation: raw probe logs are evidence (docs/RRECT.MD).
 !docs/rrect/*/RRBENCH.LOG
+!experiments/winmine-original-vm/native-fixture/evidence/*/W16API.LOG
+!experiments/winmine-original-vm/native-fixture/evidence/*/WINRET.TXT

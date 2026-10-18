@@ -1,0 +1,28 @@
+{
+  "run": "2026-10-18 baseline INT FF and HLT smoke",
+  "source_commit": "3a05a121d8816f8067439c5b1e995b9545c3f44d",
+  "private_exe_sha256": "404dc0bd992742f979d087123184530886cf80b7d41b9b57099f72e1b31639b9",
+  "guest": "Windows 3.0 real mode",
+  "emulator": "86Box v7.0 development, Tandy 1000 HX, emulated 8088 7.159092 MHz, 640 KB",
+  "result": "RESULT=PASS; WINRET=0; elapsed 43.19 seconds",
+  "private_media_or_binary_included": false,
+  "files": {
+    "W16API.LOG": {
+      "bytes": 785,
+      "sha256": "0b77b515c2816bbaf9384225b5c4936deb7443eebdbb8d6b13dcf76ff9240d3e"
+    },
+    "WINRET.TXT": {
+      "bytes": 11,
+      "sha256": "130182ef952a8e56ff9fd062f83560a0fe855afd1d649d4c16ff66577b8071a6"
+    }
+  },
+  "log_absent_before_run": true,
+  "private_clone_only": true,
+  "fresh_guest_log": true,
+  "private_media_or_executable_included": false,
+  "physical_hardware_tested": false,
+  "display_driver_qualified": false,
+  "generic_ne_import_bridge_claimed": false,
+  "shared_lease_acquired_and_released": true,
+  "owned_emulator_stopped": true
+}

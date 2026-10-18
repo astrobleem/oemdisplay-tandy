@@ -1,0 +1,61 @@
+{
+  "final": {
+    "AX": "0001",
+    "BP": "0000",
+    "BX": "0080",
+    "CS": "1000",
+    "CX": "2000",
+    "DI": "0001",
+    "DS": "0000",
+    "DX": "0001",
+    "ES": "3000",
+    "IP": "2B03",
+    "SI": "0000",
+    "SP": "FFFC",
+    "SS": "2000"
+  },
+  "guest_return": {
+    "CS": "1000",
+    "IP": "2B03",
+    "post_import_instructions": 2,
+    "success_branch_taken": false
+  },
+  "host_service": "KERNEL ordinal 91 InitTask register-return subset",
+  "import": {
+    "kind": "ordinal",
+    "module": "KERNEL",
+    "name": null,
+    "ordinal": 91
+  },
+  "initial": {
+    "CS": "1000",
+    "IP": "2AF7",
+    "SP": "0000",
+    "SS": "2000"
+  },
+  "input_bytes": 30032,
+  "input_bytes_unchanged": true,
+  "input_file_unchanged": true,
+  "input_sha256": "52be8bb486d3bad7809c19efc8a3202ef08a458e250634e392fbd127d4046c8a",
+  "loaded_segment_bytes": 15830,
+  "qualification": "host-only one-import bridge slice; InitTask register outputs use an explicit synthetic launch context; no Windows task/heap/PSP allocation, broader startup, full-app, release, or hardware qualification",
+  "reference_match": true,
+  "segment_selectors": {
+    "1": "1000",
+    "2": "2000"
+  },
+  "task_register_context": {
+    "AX": "0001",
+    "BX": "0080",
+    "CX": "2000",
+    "DI": "0001",
+    "DX": "0001",
+    "ES": "3000",
+    "SI": "0000"
+  },
+  "task_stack_sentinel": {
+    "SP": "FFFC",
+    "SS": "2000",
+    "word": "0000"
+  }
+}

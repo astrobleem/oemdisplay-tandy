@@ -1,0 +1,384 @@
+"""Small, strict host-side 8086/80186 interpreter subset for synthetic probes.
+
+This is not a general x86 emulator. Unsupported instruction bytes raise
+UnsupportedOpcode before any CPU state is changed by that instruction.
+"""
+
+from dataclasses import dataclass, field
+from typing import Callable
+
+MASK16 = 0xFFFF
+REGS = ("AX", "CX", "DX", "BX", "SP", "BP", "SI", "DI")
+SEGS = ("ES", "CS", "SS", "DS")
+FLAG_BITS = {"CF": 0, "PF": 2, "AF": 4, "ZF": 6, "SF": 7,
+             "TF": 8, "IF": 9, "DF": 10, "OF": 11}
+
+
+class UnsupportedOpcode(RuntimeError):
+    """Raised when this deliberately narrow interpreter sees unknown code."""
+
+
+@dataclass
+class CPU:
+    memory: bytearray = field(default_factory=lambda: bytearray(1 << 20))
+    memory_read_guard: Callable[[int, int, int], None] | None = field(
+        default=None, repr=False, compare=False
+    )
+    memory_write_observer: Callable[[int], None] | None = field(
+        default=None, repr=False, compare=False
+    )
+    AX: int = 0; BX: int = 0; CX: int = 0; DX: int = 0
+    SP: int = 0; BP: int = 0; SI: int = 0; DI: int = 0
+    CS: int = 0; DS: int = 0; ES: int = 0; SS: int = 0
+    IP: int = 0
+    flags: int = 0x0002
+
+    def __post_init__(self):
+        if len(self.memory) < 0x10000:
+            raise ValueError("flat memory must be at least 64 KiB")
+
+    def reg(self, n): return getattr(self, REGS[n])
+    def set_reg(self, n, value): setattr(self, REGS[n], value & MASK16)
+    def flag(self, name): return bool(self.flags & (1 << FLAG_BITS[name]))
+    def set_flag(self, name, value):
+        bit = 1 << FLAG_BITS[name]
+        self.flags = (self.flags | bit) if value else (self.flags & ~bit)
+        self.flags |= 2
+
+    def linear(self, seg, off): return ((seg << 4) + (off & MASK16)) % len(self.memory)
+    def read8(self, seg, off):
+        address = self.linear(seg, off)
+        if self.memory_read_guard is not None:
+            self.memory_read_guard(address, seg & MASK16, off & MASK16)
+        return self.memory[address]
+    def read16(self, seg, off):
+        return self.read8(seg, off) | (self.read8(seg, off + 1) << 8)
+    def write8(self, seg, off, value):
+        address = self.linear(seg, off)
+        self.memory[address] = value & 0xFF
+        if self.memory_write_observer is not None:
+            self.memory_write_observer(address)
+    def write16(self, seg, off, value):
+        self.write8(seg, off, value); self.write8(seg, off + 1, value >> 8)
+
+    def fetch8(self):
+        b = self.read8(self.CS, self.IP); self.IP = (self.IP + 1) & MASK16; return b
+    def fetch16(self):
+        lo = self.fetch8(); return lo | (self.fetch8() << 8)
+    def push(self, value):
+        self.SP = (self.SP - 2) & MASK16; self.write16(self.SS, self.SP, value)
+    def pop(self):
+        v = self.read16(self.SS, self.SP); self.SP = (self.SP + 2) & MASK16; return v
+    def call_far(self, target_cs, target_ip):
+        return_cs, return_ip = self.CS, self.IP
+        self.push(return_cs); self.push(return_ip)
+        self.CS, self.IP = target_cs & MASK16, target_ip & MASK16
+    def far_return(self, argument_bytes=0):
+        self.IP = self.pop(); self.CS = self.pop()
+        self.SP = (self.SP + argument_bytes) & MASK16
+
+    def _parity(self, value): return (value & 0xFF).bit_count() % 2 == 0
+    def _logic_flags(self, result):
+        r = result & MASK16
+        self.set_flag("CF", False); self.set_flag("OF", False); self.set_flag("AF", False)
+        self.set_flag("ZF", r == 0); self.set_flag("SF", bool(r & 0x8000)); self.set_flag("PF", self._parity(r))
+    def _add(self, a, b):
+        full = a + b; r = full & MASK16
+        self.set_flag("CF", full > MASK16); self.set_flag("AF", ((a ^ b ^ r) & 0x10) != 0)
+        self.set_flag("OF", ((~(a ^ b) & (a ^ r)) & 0x8000) != 0)
+        self.set_flag("ZF", r == 0); self.set_flag("SF", bool(r & 0x8000)); self.set_flag("PF", self._parity(r))
+        return r
+    def _sub(self, a, b):
+        r = (a - b) & MASK16
+        self.set_flag("CF", a < b); self.set_flag("AF", ((a ^ b ^ r) & 0x10) != 0)
+        self.set_flag("OF", (((a ^ b) & (a ^ r)) & 0x8000) != 0)
+        self.set_flag("ZF", r == 0); self.set_flag("SF", bool(r & 0x8000)); self.set_flag("PF", self._parity(r))
+        return r
+
+    def _sub8_flags(self, flags, left, right):
+        left &= 0xFF; right &= 0xFF
+        result = (left - right) & 0xFF
+        values = {
+            "CF": left < right,
+            "PF": self._parity(result),
+            "AF": ((left ^ right ^ result) & 0x10) != 0,
+            "ZF": result == 0,
+            "SF": bool(result & 0x80),
+            "OF": (((left ^ right) & (left ^ result)) & 0x80) != 0,
+        }
+        for name, value in values.items():
+            bit = 1 << FLAG_BITS[name]
+            flags = (flags | bit) if value else (flags & ~bit)
+        return flags | 2, values["ZF"]
+
+    def _scasb(self, repeat_ne):
+        """Execute one SCASB or REPNE SCASB without partial host-side mutation."""
+        if repeat_ne and self.CX == 0:
+            return
+
+        remaining = self.CX
+        offset = self.DI
+        flags = self.flags
+        iterations = remaining if repeat_ne else 1
+        for _ in range(iterations):
+            value = self.read8(self.ES, offset)
+            flags, matched = self._sub8_flags(flags, self.AX & 0xFF, value)
+            offset = (offset - 1 if flags & (1 << FLAG_BITS["DF"])
+                      else offset + 1) & MASK16
+            if repeat_ne:
+                remaining = (remaining - 1) & MASK16
+                if matched or remaining == 0:
+                    break
+            else:
+                break
+
+        self.DI = offset
+        if repeat_ne:
+            self.CX = remaining
+        self.flags = flags | 2
+
+    def _modrm(self, segment_override=None):
+        m = self.fetch8(); mod, reg, rm = m >> 6, (m >> 3) & 7, m & 7
+        if mod == 3: return reg, ("r", rm)
+        bases = ((self.BX + self.SI), (self.BX + self.DI), (self.BP + self.SI),
+                 (self.BP + self.DI), self.SI, self.DI, self.BP, self.BX)
+        uses_bp = rm in (2, 3, 6) and not (mod == 0 and rm == 6)
+        if mod == 0 and rm == 6: off = self.fetch16()
+        elif mod == 1:
+            d = self.fetch8(); off = bases[rm] + (d - 256 if d & 0x80 else d)
+        elif mod == 2:
+            d = self.fetch16(); off = bases[rm] + (d - 65536 if d & 0x8000 else d)
+        else: off = bases[rm]
+        default_segment = self.SS if uses_bp else self.DS
+        return reg, ("m", default_segment if segment_override is None else segment_override,
+                     off & MASK16)
+    def _getop(self, op):
+        return self.reg(op[1]) if op[0] == "r" else self.read16(op[1], op[2])
+    def _setop(self, op, value):
+        if op[0] == "r": self.set_reg(op[1], value)
+        else: self.write16(op[1], op[2], value)
+
+    def _store_segment_word(self, seg, off, value):
+        """Store a word through a real-mode address without hiding host OOBs."""
+        address = ((seg & MASK16) << 4) + (off & MASK16)
+        address &= 0xFFFFF  # 8086 20-bit physical address bus.
+        if address >= len(self.memory):
+            raise UnsupportedOpcode(
+                f"word destination out of bounds at {seg & MASK16:04X}:{off & MASK16:04X}"
+            )
+        next_address = (address + 1) & 0xFFFFF
+        if next_address >= len(self.memory):
+            raise UnsupportedOpcode(
+                f"word destination out of bounds at {seg & MASK16:04X}:{off & MASK16:04X}"
+            )
+        self.memory[address] = value & 0xFF
+        self.memory[next_address] = (value >> 8) & 0xFF
+        if self.memory_write_observer is not None:
+            self.memory_write_observer(address)
+            self.memory_write_observer(next_address)
+
+    def step(self):
+        start = self.IP
+        op = self.fetch8()
+        segment_override = None
+        prefix_segments = {0x26: "ES", 0x2E: "CS", 0x36: "SS", 0x3E: "DS"}
+        prefix_count = 0
+        repeat_ne = False
+        while op in prefix_segments or op == 0xF2:
+            if op in prefix_segments:
+                segment_override = getattr(self, prefix_segments[op])
+            elif repeat_ne:
+                self.IP = start
+                raise UnsupportedOpcode(f"duplicate REPNE prefix at {start:04X}")
+            else:
+                repeat_ne = True
+            prefix_count += 1
+            if prefix_count > 15:
+                self.IP = start
+                raise UnsupportedOpcode(f"too many segment prefixes at {start:04X}")
+            op = self.fetch8()
+        if repeat_ne and (op != 0xAE or segment_override is not None):
+            self.IP = start
+            raise UnsupportedOpcode(f"REPNE is only supported for unprefixed SCASB at {start:04X}")
+        if 0xB8 <= op <= 0xBF: self.set_reg(op - 0xB8, self.fetch16())                         # MOV r16,imm16
+        elif op == 0xB4: self.AX = (self.AX & 0x00FF) | (self.fetch8() << 8)                  # MOV AH,imm8
+        elif op == 0x0E: self.push(self.CS)                                                  # PUSH CS
+        elif op == 0x16: self.push(self.SS)                                                  # PUSH SS
+        elif op == 0x1F: self.DS = self.pop()                                                # POP DS
+        elif op == 0x99: self.DX = 0xFFFF if self.AX & 0x8000 else 0x0000                 # CWD
+        elif 0x50 <= op <= 0x57: self.push(self.reg(op - 0x50))                              # PUSH r16
+        elif 0x58 <= op <= 0x5F: self.set_reg(op - 0x58, self.pop())                         # POP r16
+        elif op == 0x68: self.push(self.fetch16())                                           # 80186 PUSH imm16
+        elif op == 0x6A:                                                                     # 80186 PUSH sign-extended imm8
+            v = self.fetch8(); self.push(v - 256 if v & 0x80 else v)
+        elif op == 0x6B:                                                                     # 80186 IMUL r16,r/m16,sign-extended imm8
+            reg, src = self._modrm(segment_override)
+            imm = self.fetch8(); imm = imm - 256 if imm & 0x80 else imm
+            a = self._getop(src); product = ((a if a < 0x8000 else a - 0x10000) * imm)
+            self.set_reg(reg, product); overflow = not (-32768 <= product <= 32767)
+            self.set_flag("CF", overflow); self.set_flag("OF", overflow)
+        elif op in (0x89, 0x8B):                                                             # MOV r/m16,r16; MOV r16,r/m16
+            reg, dst = self._modrm(segment_override)
+            if op == 0x89: self._setop(dst, self.reg(reg))
+            else: self.set_reg(reg, self._getop(dst))
+        elif op == 0x8C:                                                                    # MOV r/m16,Sreg
+            segment, dst = self._modrm(segment_override)
+            if segment >= len(SEGS):
+                self.IP = start
+                raise UnsupportedOpcode(f"opcode 8C /{segment} at {start:04X}")
+            value = getattr(self, SEGS[segment])
+            try:
+                if dst[0] == "r":
+                    self.set_reg(dst[1], value)
+                else:
+                    self._store_segment_word(dst[1], dst[2], value)
+            except UnsupportedOpcode:
+                self.IP = start
+                raise
+        elif op == 0x8E:                                                                    # bounded MOV ES,r/m16
+            segment, src = self._modrm(segment_override)
+            if segment != 0:
+                self.IP = start
+                raise UnsupportedOpcode(f"opcode 8E /{segment} at {start:04X}")
+            try:
+                self.ES = self._getop(src)
+            except UnsupportedOpcode:
+                self.IP = start
+                raise
+        elif op == 0x8F:                                                                    # bounded POP r/m16 (/0)
+            subop, dst = self._modrm(segment_override)
+            if subop != 0:
+                self.IP = start
+                raise UnsupportedOpcode(f"opcode 8F /{subop} at {start:04X}")
+            value = self.pop()
+            self._setop(dst, value)
+        elif op == 0xA3:                                                                    # bounded MOV moffs16,AX
+            offset = self.fetch16()
+            try:
+                self._store_segment_word(self.DS, offset, self.AX)
+            except UnsupportedOpcode:
+                self.IP = start
+                raise
+        elif op == 0x3C:                                                                    # CMP AL,imm8
+            imm = self.fetch8()
+            left = self.AX & 0xFF
+            result = (left - imm) & 0xFF
+            self.set_flag("CF", left < imm)
+            self.set_flag("AF", ((left ^ imm ^ result) & 0x10) != 0)
+            self.set_flag("OF", (((left ^ imm) & (left ^ result)) & 0x80) != 0)
+            self.set_flag("ZF", result == 0)
+            self.set_flag("SF", bool(result & 0x80))
+            self.set_flag("PF", self._parity(result))
+        elif op == 0xAE:                                                                    # SCASB / REPNE SCASB
+            try:
+                self._scasb(repeat_ne)
+            except UnsupportedOpcode:
+                self.IP = start
+                raise
+        elif op in (0x01, 0x03, 0x29, 0x2B, 0x31, 0x33, 0x39, 0x3B):                       # ADD/SUB/XOR/CMP
+            reg, rm = self._modrm(segment_override); direction = op in (0x03, 0x2B, 0x33, 0x3B)
+            dst, src = (self.reg(reg), self._getop(rm)) if direction else (self._getop(rm), self.reg(reg))
+            base = op & 0xFC
+            if base == 0x00: result = self._add(dst, src)
+            elif base == 0x28: result = self._sub(dst, src)
+            elif base == 0x30: result = dst ^ src; self._logic_flags(result)
+            else: self._sub(dst, src); result = dst
+            if base != 0x38:
+                if direction: self.set_reg(reg, result)
+                else: self._setop(rm, result)
+        elif op in (0x09, 0x0B):                                                            # OR r/m16,r16; OR r16,r/m16
+            reg, rm = self._modrm(segment_override)
+            if op == 0x09:
+                result = self._getop(rm) | self.reg(reg)
+                self._setop(rm, result)
+            else:
+                result = self.reg(reg) | self._getop(rm)
+                self.set_reg(reg, result)
+            self._logic_flags(result)
+        elif op in (0x05, 0x2D, 0x3D):                                                       # ADD/SUB/CMP AX,imm16
+            imm = self.fetch16()
+            if op == 0x05: self.AX = self._add(self.AX, imm)
+            else:
+                r = self._sub(self.AX, imm)
+                if op == 0x2D: self.AX = r
+        elif op == 0x81:                                                                    # supported group-1 word immediate: /0,/5,/7
+            subop, dst = self._modrm(segment_override); imm = self.fetch16(); value = self._getop(dst)
+            if subop == 0: self._setop(dst, self._add(value, imm))
+            elif subop in (5, 7):
+                result = self._sub(value, imm)
+                if subop == 5: self._setop(dst, result)
+            else:
+                self.IP = start
+                raise UnsupportedOpcode(f"opcode 81 /{subop} at {start:04X}")
+        elif op == 0xF7:                                                                    # supported group-3 TEST r/m16,imm16 (/0)
+            subop, src = self._modrm(segment_override)
+            if subop != 0:
+                self.IP = start
+                raise UnsupportedOpcode(f"opcode F7 /{subop} at {start:04X}")
+            self._logic_flags(self._getop(src) & self.fetch16())
+        elif 0x40 <= op <= 0x4F:                                                           # INC/DEC r16, preserve CF
+            n = op & 7; cf = self.flag("CF")
+            value = self._add(self.reg(n), 1) if op < 0x48 else self._sub(self.reg(n), 1)
+            self.set_reg(n, value); self.set_flag("CF", cf)
+        elif op == 0x90: pass                                                               # NOP
+        elif op == 0xEB:                                                                    # JMP short
+            d = self.fetch8(); self.IP = (self.IP + (d - 256 if d & 0x80 else d)) & MASK16
+        elif op == 0xE3:                                                                    # JCXZ short
+            d = self.fetch8()
+            if self.CX == 0:
+                self.IP = (self.IP + (d - 256 if d & 0x80 else d)) & MASK16
+        elif 0x70 <= op <= 0x7F:                                                           # 8086 short Jcc family
+            d = self.fetch8()
+            cf, pf = self.flag("CF"), self.flag("PF")
+            zf, sf, of = self.flag("ZF"), self.flag("SF"), self.flag("OF")
+            conditions = (
+                of, not of, cf, not cf, zf, not zf, cf or zf, not cf and not zf,
+                sf, not sf, pf, not pf, sf != of, sf == of, zf or sf != of,
+                not zf and sf == of,
+            )
+            if conditions[op - 0x70]:
+                self.IP = (self.IP + (d - 256 if d & 0x80 else d)) & MASK16
+        elif op == 0xE9:
+            d = self.fetch16(); self.IP = (self.IP + (d - 65536 if d & 0x8000 else d)) & MASK16
+        elif op == 0xE8:
+            d = self.fetch16(); self.push(self.IP); self.IP = (self.IP + (d - 65536 if d & 0x8000 else d)) & MASK16
+        elif op == 0x9A:                                                                    # CALL FAR ptr16:16
+            target_ip = self.fetch16(); target_cs = self.fetch16()
+            self.call_far(target_cs, target_ip)
+            return ("far_call", target_cs, target_ip)
+        elif op == 0xC3: self.IP = self.pop()
+        elif op == 0xCB:                                                                    # RETF
+            self.far_return()
+            return ("far_return", self.CS, self.IP)
+        elif op == 0xCA:                                                                    # RETF imm16
+            argument_bytes = self.fetch16()
+            self.far_return(argument_bytes)
+            return ("far_return", self.CS, self.IP)
+        elif op == 0xCD:                                                                    # intercepted host interrupt
+            vector = self.fetch8()
+            if vector != 0xFF:
+                self.IP = start
+                raise UnsupportedOpcode(f"INT {vector:02X} at {start:04X}")
+            return ("host_interrupt", vector)
+        else:
+            self.IP = start
+            raise UnsupportedOpcode(f"opcode {op:02X} at {start:04X}")
+        return ("instruction", op)
+
+    def run(self, count, interrupt_handler=None, import_handler=None):
+        for _ in range(count):
+            event = self.step()
+            if event[0] == "host_interrupt":
+                if interrupt_handler is None: raise UnsupportedOpcode("host interrupt has no handler")
+                interrupt_handler(self, event[1])
+            elif event[0] == "far_call":
+                if import_handler is None: raise UnsupportedOpcode("far call has no import handler")
+                _, target_cs, target_ip = event
+                service_returned = import_handler(self, target_cs, target_ip)
+                # Ordinary test handlers return None and receive a default
+                # far-return. Context-switching host services can unwind and
+                # reshape the guest stack themselves, then return True.
+                if service_returned is not True:
+                    self.far_return()
+
+

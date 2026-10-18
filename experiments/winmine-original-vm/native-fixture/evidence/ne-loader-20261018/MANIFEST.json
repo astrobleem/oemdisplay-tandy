@@ -1,0 +1,106 @@
+{
+  "run": "Native minimal NE load, named import, and interpreted callback fixture",
+  "run_id": "NELOAD20261018A",
+  "source_commit": "28a0ffa38fa0d28016b68ccc382fb0e8ef3ec260",
+  "source_file_sha256": "840062ed4cd590d2a9fa5206eabb4db97e4142bada471637d6d2ed6a206a1ac5",
+  "source_file_sha256_lf_normalized": "3927090bb9877e8b74e856d8822fb2b44118da28cb3247c276b0d1c4ef5c769c",
+  "private_exe_sha256": "1e64328a1f5fd52e938cfa36944c2ea989ccbd6accaed2497526a14a0a5c4c97",
+  "private_ne_fixture_bytes": 378,
+  "private_ne_fixture_sha256": "decec10f17d38158fa4eac75e9b8e4a75f2c5d2ae7375a0de1b9cfe5b7488726",
+  "ne_fixture_generator_sha256": "b12d2a0810813b55db9a43af35c69bcfb561cb17e7ecf76475023344a8ab547f",
+  "guest": "Windows 3.0 real mode",
+  "emulator": "86Box v7.0 development; Tandy 1000 HX; emulated 8088 at 7.159092 MHz; 640 KB",
+  "build": {
+    "compiler": "Microsoft C 6.0",
+    "linker": "LINK4 5.01.17",
+    "assembler": "Microsoft Macro Assembler 5.10",
+    "build_marker": "BUILD=PASS"
+  },
+  "watchdog_seconds": 90,
+  "elapsed_seconds": 62.2,
+  "snapshots": 2,
+  "log_absent_before_run": true,
+  "fresh_guest_log": true,
+  "shared_lease_acquired_and_released": true,
+  "owned_emulator_stopped": true,
+  "private_clone_only": true,
+  "guest_disk_image_sha256_before": "ec32fab0f73818ff30d90ed0f6a0384627e33ea211fd926e3803382c5600549a",
+  "guest_disk_image_sha256_after": "ec32fab0f73818ff30d90ed0f6a0384627e33ea211fd926e3803382c5600549a",
+  "mnsn1_demo_winmine_sha256_before": "a94b33e78c3e54dc99a42237d801a54258b729a42a957ebd0982665a40dc384f",
+  "mnsn1_demo_winmine_sha256_after": "a94b33e78c3e54dc99a42237d801a54258b729a42a957ebd0982665a40dc384f",
+  "mnsn2_demo_winmine_sha256_before": "52be8bb486d3bad7809c19efc8a3202ef08a458e250634e392fbd127d4046c8a",
+  "mnsn2_demo_winmine_sha256_after": "52be8bb486d3bad7809c19efc8a3202ef08a458e250634e392fbd127d4046c8a",
+  "mnsn_demo_images_are_original_winmine": false,
+  "pinned_original_winmine_full_app_executed_in_emulator": false,
+  "mnsn_demo_host_entry_probe": "Both converted MNSN demo inputs passed the host-only KERNEL ordinal 91 InitTask/register-return slice using an explicit synthetic launch context. Each JSON record hashes a demo input and confirms unchanged bytes; neither record is for the pinned original WINMINE.EXE.",
+  "result": "RESULT=PASS; WINRET=0; HPDONE=DONE",
+  "private_media_or_executable_included": false,
+  "physical_hardware_tested": false,
+  "display_driver_qualified": false,
+  "generic_ne_import_bridge_claimed": false,
+  "files": {
+    "W16API.LOG": {
+      "bytes": 1937,
+      "sha256": "f1a96d73395fd361fda20cbbe2ea2f779a4fe4cc1814dc96d683236ab471e7a0"
+    },
+    "WINRET.TXT": {
+      "bytes": 11,
+      "sha256": "130182ef952a8e56ff9fd062f83560a0fe855afd1d649d4c16ff66577b8071a6"
+    }
+  },
+  "host_probe_source_commit": "190016d9ff9cc34eceb10c4ef080a710abd7c964",
+  "host_probe_source_file_sha256": "155f42ddcb5eac12782f8c97a009428f0e5b18eb68e546cc1bbc196c611297f0",
+  "host_probe_source_file_sha256_lf_normalized": "511527b683ad1274e5826685b576e4d949e2fcc204b61db4a0c70e092ca7987b",
+  "host_probe_source_match_mode": "historical",
+  "host_probe_source_note": "The converted MNSN demo host-probe JSON records remain pinned to this historical probe source. The original-image trace runner has since been extended; these records were not regenerated.",
+  "host_probe_files": {
+    "MNSN1-host-probe.json": {
+      "bytes": 1416,
+      "sha256": "71f18f71946811004423c419cc0873542c3526debf7f307f9daaa5982030fc3c"
+    },
+    "MNSN2-host-probe.json": {
+      "bytes": 1416,
+      "sha256": "cb5b34715092fb2bd6ed0d2723fb97ed865fc061de9b5f2861b21bbe0438d7a3"
+    }
+  },
+  "host_probe_hash_normalization": "CRLF normalized to LF",
+  "mnsn_demo_ne_inventory": {
+    "target_os": "Windows",
+    "expected_windows_version": "3.0",
+    "segments": 2,
+    "module_references": [
+      "KERNEL",
+      "GDI",
+      "USER",
+      "SOUND",
+      "WMABT"
+    ],
+    "import_fixups": 99,
+    "import_fixup_kind": "ordinal-only",
+    "imports_by_module": {
+      "USER": 52,
+      "KERNEL": 25,
+      "GDI": 15,
+      "SOUND": 6,
+      "WMABT": 1
+    },
+    "segment_relocations": [
+      107,
+      0
+    ],
+    "resource_table_offset": 80,
+    "auto_data_segment": 2,
+    "heap_bytes": 4096,
+    "stack_bytes": 8192
+  },
+  "native_ne_fixture_scope": {
+    "segments": 2,
+    "module_imports": [
+      "KERNEL!GetVersion",
+      "USER!EnumWindows"
+    ],
+    "callback": "first-party 8088 bytes loaded from NE segment 2",
+    "relocations": "two imported far pointers and one internal far pointer",
+    "general_ne_loader": false
+  }
+}
