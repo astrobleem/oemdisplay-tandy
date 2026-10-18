@@ -2,9 +2,21 @@ import hashlib
 import unittest
 from unittest.mock import patch
 
+from dos_context import SyntheticDosLaunchContext
 from ne_loader import ImportTarget, LoadedNE, NELoader
 from probe_original import run_probe
 from win16_host import SyntheticDosVersion
+
+
+def explicit_dos_context(vector=(0x4321, 0x8765)):
+    return SyntheticDosLaunchContext(
+        psp_segment=0x3000,
+        environment_segment=0x3100,
+        environment_entries=(),
+        program_path=r"C:\FIXTURE\WINMINE.EXE",
+        command_tail="",
+        interrupt_vectors=((0, vector[0], vector[1]),),
+    )
 
 
 class ProbeOriginalTests(unittest.TestCase):
@@ -81,7 +93,7 @@ class ProbeOriginalTests(unittest.TestCase):
                 result = run_probe(
                     original,
                     hashlib.sha256(original).hexdigest(),
-                    dos_interrupt_vectors={0: (0x4321, 0x8765)},
+                    dos_launch_context=explicit_dos_context(),
                     dos_version=SyntheticDosVersion(
                         major=3, minor=30, oem_id=0x0C, serial24=0xABCDEF
                     ),
@@ -240,6 +252,38 @@ class ProbeOriginalTests(unittest.TestCase):
             "CS": "1000", "IP": "010C", "post_import_instructions": 2,
             "success_branch_taken": False,
         })
+
+    def test_unconfigured_dos_trace_stops_at_first_uninitialized_psp_field(self):
+        memory = bytearray(1 << 20)
+        selector, ss = 0x1000, 0x2000
+        start = (selector << 4) + 0x0100
+        code = bytes.fromhex(
+            "31 ED 55 9A 01 00 01 F0 09 C0 74 00 "
+            "8C 06 22 01 8E 06 22 01 26 8E 06 2C 00"
+        )
+        memory[start:start + len(code)] = code
+        image = LoadedNE(
+            memory=memory,
+            image=object(),
+            segment_selectors={1: selector, 2: ss},
+            import_targets={(0xF001, 1): ImportTarget("KERNEL", "ordinal", None, 91)},
+            initial_cs=selector,
+            initial_ip=0x0100,
+            initial_ss=ss,
+            initial_sp=0,
+            loaded_bytes=len(code),
+        )
+        original = b"synthetic code that reads an absent PSP field"
+        loader = NELoader(object())
+        with patch.object(NELoader, "from_bytes", return_value=loader):
+            with patch.object(loader, "load", return_value=image):
+                result = run_probe(original, hashlib.sha256(original).hexdigest())
+
+        trace = result["post_entry_trace"]
+        self.assertEqual(trace["status"], "unsupported_instruction")
+        self.assertEqual(trace["location"], "1000:0114")
+        self.assertIn("missing explicit synthetic DOS launch context for PSP read", trace["error"])
+        self.assertEqual(trace["state_at_stop"]["IP"], "0114")
 
 
 if __name__ == "__main__":

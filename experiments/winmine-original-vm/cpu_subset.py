@@ -5,6 +5,7 @@ UnsupportedOpcode before any CPU state is changed by that instruction.
 """
 
 from dataclasses import dataclass, field
+from typing import Callable
 
 MASK16 = 0xFFFF
 REGS = ("AX", "CX", "DX", "BX", "SP", "BP", "SI", "DI")
@@ -20,6 +21,12 @@ class UnsupportedOpcode(RuntimeError):
 @dataclass
 class CPU:
     memory: bytearray = field(default_factory=lambda: bytearray(1 << 20))
+    memory_read_guard: Callable[[int, int, int], None] | None = field(
+        default=None, repr=False, compare=False
+    )
+    memory_write_observer: Callable[[int], None] | None = field(
+        default=None, repr=False, compare=False
+    )
     AX: int = 0; BX: int = 0; CX: int = 0; DX: int = 0
     SP: int = 0; BP: int = 0; SI: int = 0; DI: int = 0
     CS: int = 0; DS: int = 0; ES: int = 0; SS: int = 0
@@ -39,10 +46,18 @@ class CPU:
         self.flags |= 2
 
     def linear(self, seg, off): return ((seg << 4) + (off & MASK16)) % len(self.memory)
-    def read8(self, seg, off): return self.memory[self.linear(seg, off)]
+    def read8(self, seg, off):
+        address = self.linear(seg, off)
+        if self.memory_read_guard is not None:
+            self.memory_read_guard(address, seg & MASK16, off & MASK16)
+        return self.memory[address]
     def read16(self, seg, off):
         return self.read8(seg, off) | (self.read8(seg, off + 1) << 8)
-    def write8(self, seg, off, value): self.memory[self.linear(seg, off)] = value & 0xFF
+    def write8(self, seg, off, value):
+        address = self.linear(seg, off)
+        self.memory[address] = value & 0xFF
+        if self.memory_write_observer is not None:
+            self.memory_write_observer(address)
     def write16(self, seg, off, value):
         self.write8(seg, off, value); self.write8(seg, off + 1, value >> 8)
 
@@ -80,6 +95,48 @@ class CPU:
         self.set_flag("ZF", r == 0); self.set_flag("SF", bool(r & 0x8000)); self.set_flag("PF", self._parity(r))
         return r
 
+    def _sub8_flags(self, flags, left, right):
+        left &= 0xFF; right &= 0xFF
+        result = (left - right) & 0xFF
+        values = {
+            "CF": left < right,
+            "PF": self._parity(result),
+            "AF": ((left ^ right ^ result) & 0x10) != 0,
+            "ZF": result == 0,
+            "SF": bool(result & 0x80),
+            "OF": (((left ^ right) & (left ^ result)) & 0x80) != 0,
+        }
+        for name, value in values.items():
+            bit = 1 << FLAG_BITS[name]
+            flags = (flags | bit) if value else (flags & ~bit)
+        return flags | 2, values["ZF"]
+
+    def _scasb(self, repeat_ne):
+        """Execute one SCASB or REPNE SCASB without partial host-side mutation."""
+        if repeat_ne and self.CX == 0:
+            return
+
+        remaining = self.CX
+        offset = self.DI
+        flags = self.flags
+        iterations = remaining if repeat_ne else 1
+        for _ in range(iterations):
+            value = self.read8(self.ES, offset)
+            flags, matched = self._sub8_flags(flags, self.AX & 0xFF, value)
+            offset = (offset - 1 if flags & (1 << FLAG_BITS["DF"])
+                      else offset + 1) & MASK16
+            if repeat_ne:
+                remaining = (remaining - 1) & MASK16
+                if matched or remaining == 0:
+                    break
+            else:
+                break
+
+        self.DI = offset
+        if repeat_ne:
+            self.CX = remaining
+        self.flags = flags | 2
+
     def _modrm(self, segment_override=None):
         m = self.fetch8(); mod, reg, rm = m >> 6, (m >> 3) & 7, m & 7
         if mod == 3: return reg, ("r", rm)
@@ -116,6 +173,9 @@ class CPU:
             )
         self.memory[address] = value & 0xFF
         self.memory[next_address] = (value >> 8) & 0xFF
+        if self.memory_write_observer is not None:
+            self.memory_write_observer(address)
+            self.memory_write_observer(next_address)
 
     def step(self):
         start = self.IP
@@ -123,13 +183,23 @@ class CPU:
         segment_override = None
         prefix_segments = {0x26: "ES", 0x2E: "CS", 0x36: "SS", 0x3E: "DS"}
         prefix_count = 0
-        while op in prefix_segments:
-            segment_override = getattr(self, prefix_segments[op])
+        repeat_ne = False
+        while op in prefix_segments or op == 0xF2:
+            if op in prefix_segments:
+                segment_override = getattr(self, prefix_segments[op])
+            elif repeat_ne:
+                self.IP = start
+                raise UnsupportedOpcode(f"duplicate REPNE prefix at {start:04X}")
+            else:
+                repeat_ne = True
             prefix_count += 1
             if prefix_count > 15:
                 self.IP = start
                 raise UnsupportedOpcode(f"too many segment prefixes at {start:04X}")
             op = self.fetch8()
+        if repeat_ne and (op != 0xAE or segment_override is not None):
+            self.IP = start
+            raise UnsupportedOpcode(f"REPNE is only supported for unprefixed SCASB at {start:04X}")
         if 0xB8 <= op <= 0xBF: self.set_reg(op - 0xB8, self.fetch16())                         # MOV r16,imm16
         elif op == 0xB4: self.AX = (self.AX & 0x00FF) | (self.fetch8() << 8)                  # MOV AH,imm8
         elif op == 0x0E: self.push(self.CS)                                                  # PUSH CS
@@ -170,7 +240,11 @@ class CPU:
             if segment != 0:
                 self.IP = start
                 raise UnsupportedOpcode(f"opcode 8E /{segment} at {start:04X}")
-            self.ES = self._getop(src)
+            try:
+                self.ES = self._getop(src)
+            except UnsupportedOpcode:
+                self.IP = start
+                raise
         elif op == 0x8F:                                                                    # bounded POP r/m16 (/0)
             subop, dst = self._modrm(segment_override)
             if subop != 0:
@@ -195,6 +269,12 @@ class CPU:
             self.set_flag("ZF", result == 0)
             self.set_flag("SF", bool(result & 0x80))
             self.set_flag("PF", self._parity(result))
+        elif op == 0xAE:                                                                    # SCASB / REPNE SCASB
+            try:
+                self._scasb(repeat_ne)
+            except UnsupportedOpcode:
+                self.IP = start
+                raise
         elif op in (0x01, 0x03, 0x29, 0x2B, 0x31, 0x33, 0x39, 0x3B):                       # ADD/SUB/XOR/CMP
             reg, rm = self._modrm(segment_override); direction = op in (0x03, 0x2B, 0x33, 0x3B)
             dst, src = (self.reg(reg), self._getop(rm)) if direction else (self._getop(rm), self.reg(reg))

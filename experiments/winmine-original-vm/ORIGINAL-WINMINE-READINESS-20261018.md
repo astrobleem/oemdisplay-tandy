@@ -97,18 +97,40 @@ For the original-image trace, the synthetic INT 00h vector started at
 `AX=2500h`. A separately supplied synthetic DOS 3.30 value produced
 `AX=1E03h`, `BX=0000h`, and `CX=0000h`. The guest then executed 64 more
 instructions and stopped before `REPNE SCASB` at `1000:27FB` (`F2 AE`), with
-`ES:DI=0000:0000` and `CX=8000h`. This is the next trace boundary, not an
-application failure result: the probe has no coherent guest IVT, PSP, DOS
-memory layout, or loaded DOS implementation. In particular, the synthetic
-vector map is host-side state and is not a real-mode IVT in guest memory, so
-continuing this scan would not be a faithful DOS startup environment.
+`ES:DI=0000:0000` and `CX=8000h`. This is the recorded stop from the earlier
+host-probe version, not an application failure result. That version had no
+explicit PSP/environment block and its vector map was host-side state rather
+than a real-mode IVT in guest memory.
 
 The task context, INT 00h vector, and DOS version used here are all synthetic.
-The trace does not launch Windows or establish a real Windows task, PSP, heap,
-stack, instance data, DLL environment, or DOS process. Resource loading and
-resolution of the original image's 99 ordinal imports also remain separate
+The prior trace did not launch Windows or establish a real Windows task, PSP,
+heap, stack, instance data, DLL environment, or DOS process. Resource loading
+and resolution of the original image's 99 ordinal imports also remain separate
 requirements for original-image startup. The expanded trace is not full-app,
 release, or hardware qualification.
+
+## Follow-up synthetic launch slice
+
+The host-only probe now accepts the explicit fixture
+[`fixtures/winmine-synthetic-dos-context.json`](fixtures/winmine-synthetic-dos-context.json).
+It declares PSP `3000h`, environment segment `3100h`, an empty environment,
+program path `C:\FIXTURE\WINMINE.EXE`, an empty command tail, and INT 00h
+`F000:0040`. These are synthetic values, not recovered DOS state. The context
+installs only the PSP environment pointer and command-tail bytes, the declared
+environment block, and declared IVT vectors. Reads of uninitialized bytes in
+protected PSP, IVT, environment, or low DOS memory ranges fail closed. DOS3Call
+vector get/set reads and updates the guest IVT bytes and checks them against
+the declared fixture state. The instruction subset includes `REPNE SCASB`/
+`SCASB` with tested byte flags, `CX`, match termination, and direction-flag
+behavior.
+
+The pinned original executable was not present in the current workspace or the
+known supplied-media directory checked for this follow-up. The new context and
+instruction behavior were validated with synthetic unit tests, but the pinned
+original was not rerun; the earlier `1000:27FB` stop remains the latest
+actual-original trace evidence. The partial fixture does not add a DOS process,
+Windows task, heap, file handles, termination vectors, release, or hardware
+qualification.
 
 ## Scope
 

@@ -12,6 +12,96 @@ def load(cpu, code, offset=0x100):
 
 
 class CpuSubsetTests(unittest.TestCase):
+    def test_repne_scasb_stops_after_match_and_sets_byte_compare_flags(self):
+        c = CPU(); c.AX = 0x1202; c.ES = 0x2000; c.DI = 0x0100; c.CX = 5
+        c.flags = 0x0202
+        c.memory[c.linear(c.ES, c.DI):c.linear(c.ES, c.DI) + 4] = bytes((1, 2, 3, 4))
+        load(c, bytes.fromhex("F2 AE"))
+
+        c.step()
+
+        self.assertEqual((c.CX, c.DI, c.IP, c.AX), (3, 0x0102, 0x0102, 0x1202))
+        self.assertEqual(c.flags, 0x0246)  # ZF=PF=IF=1, all other arithmetic flags clear.
+
+    def test_repne_scasb_exhausts_cx_and_uses_last_byte_flags(self):
+        c = CPU(); c.AX = 0x1204; c.ES = 0x2000; c.DI = 0x0100; c.CX = 3
+        c.flags = 0x0202
+        c.memory[c.linear(c.ES, c.DI):c.linear(c.ES, c.DI) + 3] = bytes((1, 2, 3))
+        load(c, bytes.fromhex("F2 AE"))
+
+        c.step()
+
+        self.assertEqual((c.CX, c.DI, c.IP), (0, 0x0103, 0x0102))
+        self.assertEqual(c.flags, 0x0202)
+
+    def test_repne_scasb_with_zero_cx_preserves_flags_and_does_not_read(self):
+        c = CPU(); c.AX = 0x1234; c.ES = 0x2000; c.DI = 0x0100; c.CX = 0
+        c.flags = 0x0ED7
+        data_address = c.linear(c.ES, c.DI)
+        c.memory_read_guard = lambda address, segment, offset: (
+            (_ for _ in ()).throw(AssertionError("zero-count REPNE SCASB read memory"))
+            if address == data_address else None
+        )
+        load(c, bytes.fromhex("F2 AE"))
+
+        c.step()
+
+        self.assertEqual((c.CX, c.DI, c.IP, c.flags), (0, 0x0100, 0x0102, 0x0ED7))
+
+    def test_repne_scasb_honors_direction_flag_and_stops_when_cx_reaches_zero(self):
+        c = CPU(); c.AX = 0x1201; c.ES = 0x2000; c.DI = 0x0102; c.CX = 4
+        c.flags = 0x0602  # IF and DF.
+        c.write8(c.ES, 0x0102, 2)
+        c.write8(c.ES, 0x0101, 1)
+        load(c, bytes.fromhex("F2 AE"))
+
+        c.step()
+
+        self.assertEqual((c.CX, c.DI, c.IP), (2, 0x0100, 0x0102))
+        self.assertEqual(c.flags, 0x0646)  # IF, DF, ZF and PF survive the final equal compare.
+
+    def test_unprefixed_scasb_compares_once_without_changing_cx(self):
+        c = CPU(); c.AX = 0x0002; c.ES = 0x2000; c.DI = 0x0100; c.CX = 9
+        c.write8(c.ES, c.DI, 3)
+        load(c, bytes.fromhex("AE"))
+
+        c.step()
+
+        self.assertEqual((c.CX, c.DI, c.IP), (9, 0x0101, 0x0101))
+        self.assertTrue(c.flag("CF")); self.assertTrue(c.flag("AF"))
+        self.assertTrue(c.flag("SF")); self.assertTrue(c.flag("PF"))
+        self.assertFalse(c.flag("ZF")); self.assertFalse(c.flag("OF"))
+
+    def test_repne_scasb_guard_failure_does_not_partially_change_instruction_state(self):
+        c = CPU(); c.AX = 0x1234; c.ES = 0x2000; c.DI = 0x0100; c.CX = 3
+        c.flags = 0x0202
+        c.write8(c.ES, c.DI, 1)
+        c.write8(c.ES, c.DI + 1, 2)
+
+        def guard(address, segment, offset):
+            if offset == 0x0102:
+                raise UnsupportedOpcode("fixture memory boundary")
+
+        c.memory_read_guard = guard
+        load(c, bytes.fromhex("F2 AE"))
+        before = (c.AX, c.CX, c.DI, c.IP, c.flags)
+
+        with self.assertRaisesRegex(UnsupportedOpcode, "fixture memory boundary"):
+            c.step()
+
+        self.assertEqual((c.AX, c.CX, c.DI, c.IP, c.flags), before)
+
+    def test_repne_prefix_rejects_other_operations_without_state_change(self):
+        for code in (bytes.fromhex("F2 A4"), bytes.fromhex("F2 26 AE"),
+                     bytes.fromhex("F2 F2 AE")):
+            with self.subTest(code=code.hex()):
+                c = CPU(); c.AX = 0x1234; c.CX = 2; c.DI = 0x0100; c.flags = 0x0ED7
+                load(c, code)
+                before = (c.AX, c.CX, c.DI, c.IP, c.flags)
+                with self.assertRaises(UnsupportedOpcode):
+                    c.step()
+                self.assertEqual((c.AX, c.CX, c.DI, c.IP, c.flags), before)
+
     def test_synthetic_8086_block_expected_register_stack_and_flags(self):
         c = CPU(); c.SS = 0x2000; c.SP = 0x0100
         # MOV AX,7; MOV BX,5; ADD AX,BX; PUSH AX; XOR AX,AX;
@@ -170,6 +260,20 @@ class CpuSubsetTests(unittest.TestCase):
         c.step()
         self.assertEqual((c.ES, c.IP), (0x3000, 0x0104))
         self.assertEqual(c.flags, 0x0ED7)
+
+    def test_mov_es_from_uninitialized_psp_read_restores_instruction_state(self):
+        c = CPU(); c.ES = 0x3000; c.flags = 0x0ED7
+
+        def guard(address, segment, offset):
+            if 0x30000 <= address < 0x30100:
+                raise UnsupportedOpcode("missing synthetic PSP field")
+
+        c.memory_read_guard = guard
+        load(c, bytes.fromhex("26 8E 06 2C 00"))
+        before = (c.AX, c.ES, c.flags, c.IP)
+        with self.assertRaisesRegex(UnsupportedOpcode, "missing synthetic PSP field"):
+            c.step()
+        self.assertEqual((c.AX, c.ES, c.flags, c.IP), before)
 
     def test_mov_segment_from_rm_rejects_non_es_selector_without_mutation(self):
         c = CPU(); c.DS = 0x2000; c.ES = 0xAAAA; c.flags = 0x0ED7

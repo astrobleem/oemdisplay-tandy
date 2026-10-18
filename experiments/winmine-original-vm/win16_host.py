@@ -12,6 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from cpu_subset import CPU, UnsupportedOpcode
+from dos_context import SyntheticDosLaunchContext
 from ne_loader import ImportTarget, LoadedNE
 
 
@@ -160,7 +161,7 @@ class Win16Host:
         windows: tuple[int, ...] = (),
         instance_data_segments: dict[int, int] | None = None,
         version_word: int = 0x0003,
-        dos_interrupt_vectors: dict[int, tuple[int, int]] | None = None,
+        dos_launch_context: SyntheticDosLaunchContext | None = None,
         dos_version: SyntheticDosVersion | None = None,
     ) -> None:
         self.loaded = loaded
@@ -178,15 +179,13 @@ class Win16Host:
         if dos_version is not None and not isinstance(dos_version, SyntheticDosVersion):
             raise ValueError("dos_version must be an explicit SyntheticDosVersion")
         self.dos_version = dos_version
-        self.dos_interrupt_vectors = dict(dos_interrupt_vectors or {})
-        for interrupt_number, pointer in self.dos_interrupt_vectors.items():
-            if not 0 <= interrupt_number <= 0xFF:
-                raise ValueError("synthetic interrupt numbers must be 8-bit unsigned values")
-            if (not isinstance(pointer, tuple) or len(pointer) != 2
-                    or any(not 0 <= value <= 0xFFFF for value in pointer)):
-                raise ValueError(
-                    "synthetic DOS vectors must be (segment, offset) 16-bit tuples"
-                )
+        if dos_launch_context is not None and not isinstance(
+                dos_launch_context, SyntheticDosLaunchContext):
+            raise ValueError("dos_launch_context must be an explicit SyntheticDosLaunchContext")
+        self.dos_launch_context = dos_launch_context
+        self.dos_interrupt_vectors = (
+            {} if dos_launch_context is None else dos_launch_context.dos_interrupt_vectors
+        )
         self.calls: list[ImportTarget] = []
         self.dos3call_records: list[Dos3CallRecord] = []
         self.dos_version_call_records: list[DosVersionCallRecord] = []
@@ -195,6 +194,36 @@ class Win16Host:
         self.callback_invocations: list[CallbackInvocation] = []
         self.callback_guest_instructions = 0
         self._next_proc_instance_offset = 1
+        self._dos_context_guest_memories: set[int] = set()
+
+    def install_dos_launch_context(self, cpu: CPU) -> None:
+        """Install explicit guest bytes, or guard an absent PSP/IVT context."""
+        if self.dos_launch_context is not None:
+            self.dos_launch_context.install(cpu, self.loaded, self.task_registers)
+            self._dos_context_guest_memories.add(id(cpu.memory))
+            return
+
+        psp_start = self.task_registers.psp_segment << 4
+        written_since_install: set[int] = set()
+        cpu.memory_write_observer = written_since_install.add
+
+        def guard(address: int, segment: int, offset: int) -> None:
+            if address in written_since_install:
+                return
+            if psp_start <= address < psp_start + 0x100:
+                raise UnsupportedOpcode(
+                    f"missing explicit synthetic DOS launch context for PSP read at {segment:04X}:{offset:04X}"
+                )
+            if address < 0x400:
+                raise UnsupportedOpcode(
+                    f"missing explicit synthetic DOS launch context for IVT read at physical {address:05X}"
+                )
+            if address < 0x10000:
+                raise UnsupportedOpcode(
+                    f"missing explicit synthetic DOS launch context for low DOS memory read at physical {address:05X}"
+                )
+
+        cpu.memory_read_guard = guard
 
     def dispatch_import(self, cpu: CPU, selector: int, offset: int) -> bool:
         target = self.loaded.resolve_import(selector, offset)
@@ -257,10 +286,24 @@ class Win16Host:
             )
 
         action = "get" if cpu.AX == 0x3500 else "set"
+        if self.dos_launch_context is None:
+            raise UnsupportedImport("DOS3Call has no explicit synthetic DOS launch context")
+        if id(cpu.memory) not in self._dos_context_guest_memories:
+            raise UnsupportedImport(
+                "explicit synthetic DOS launch context was not installed in this guest memory"
+            )
         vector_before = self.dos_interrupt_vectors.get(interrupt_number)
-        if action == "get" and vector_before is None:
+        if vector_before is None:
             raise UnsupportedImport(
                 "DOS3Call has no synthetic vector for interrupt 00h"
+            )
+        ivt_offset = interrupt_number * 4
+        guest_vector = (cpu.read16(0, ivt_offset + 2), cpu.read16(0, ivt_offset))
+        if guest_vector != vector_before:
+            raise UnsupportedImport(
+                f"guest IVT mismatch for interrupt {interrupt_number:02X}h: "
+                f"memory has {guest_vector[0]:04X}:{guest_vector[1]:04X}, "
+                f"fixture has {vector_before[0]:04X}:{vector_before[1]:04X}"
             )
         vector_after = vector_before if action == "get" else (cpu.DS, cpu.DX)
         assert vector_after is not None
@@ -273,6 +316,8 @@ class Win16Host:
         if action == "get":
             cpu.ES, cpu.BX = vector_after
         else:
+            cpu.write16(0, ivt_offset, vector_after[1])
+            cpu.write16(0, ivt_offset + 2, vector_after[0])
             self.dos_interrupt_vectors[interrupt_number] = vector_after
         return Dos3CallRecord(
             request_ax=request_ax,

@@ -22,6 +22,7 @@ if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
 from cpu_subset import CPU, UnsupportedOpcode
+from dos_context import DosContextError, SyntheticDosLaunchContext
 from ne_loader import ImportTarget, NELoadError, NELoader
 from win16_host import (
     InitTaskRegisters,
@@ -191,7 +192,7 @@ def _reference_entry_state(initial_ss: int, initial_sp: int, initial_cs: int,
 
 def run_probe(image_bytes: bytes, expected_sha256: str, *,
               task_registers: InitTaskRegisters | None = None,
-              dos_interrupt_vectors: dict[int, tuple[int, int]] | None = None,
+              dos_launch_context: SyntheticDosLaunchContext | None = None,
               dos_version: SyntheticDosVersion | None = None,
               continuation_limit: int = 256) -> dict[str, Any]:
     """Execute synthetic InitTask and bounded DOS3Call slices, then trace onward."""
@@ -207,9 +208,10 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
     host = Win16Host(
         loaded,
         task,
-        dos_interrupt_vectors=dos_interrupt_vectors,
+        dos_launch_context=dos_launch_context,
         dos_version=dos_version,
     )
+    host.install_dos_launch_context(cpu)
 
     # Stop exactly after the first imported call returns, then validate the
     # two guest instructions that consume InitTask's success result.
@@ -290,6 +292,9 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
             for interrupt_number, (segment, offset)
             in sorted(host.dos_interrupt_vectors.items())
         },
+        "synthetic_dos_launch_context": (
+            None if host.dos_launch_context is None else host.dos_launch_context.report()
+        ),
         "synthetic_dos_version": (
             None if host.dos_version is None else {
                 "major": host.dos_version.major,
@@ -347,8 +352,9 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
         "qualification": (
             "host-only bounded entry trace; KERNEL ordinal 91 uses an explicit synthetic "
             "InitTask context; KERNEL ordinal 102 uses only DOS3Call AX=3000h/3500h/2500h "
-            "when explicit synthetic DOS version/vector data is supplied; no Windows task/heap/PSP "
-            "allocation, broader startup, full-app, release, or hardware qualification"
+            "when explicit synthetic DOS version and launch-context data are supplied; the "
+            "PSP/environment/IVT are a guarded partial fixture, not DOS or Windows allocation; "
+            "no broader startup, full-app, release, or hardware qualification"
         ),
     }
 
@@ -358,9 +364,9 @@ def main() -> int:
     parser.add_argument("image", type=Path, help="read-only path to a caller-supplied NE executable")
     parser.add_argument("--sha256", required=True, help="pinned SHA-256 required before any probe runs")
     parser.add_argument(
-        "--synthetic-int00-vector",
-        metavar="SEGMENT:OFFSET",
-        help="explicit synthetic INT 00h handler returned by the bounded DOS3Call model",
+        "--synthetic-dos-context",
+        type=Path,
+        help="JSON file declaring every PSP/environment/IVT value used by this synthetic trace",
     )
     parser.add_argument(
         "--synthetic-dos-version",
@@ -373,16 +379,14 @@ def main() -> int:
     before = hashlib.sha256(args.image.read_bytes()).hexdigest()
     if before.lower() != args.sha256.lower():
         parser.error(f"input SHA-256 mismatch: got {before}")
-    dos_interrupt_vectors = None
-    if args.synthetic_int00_vector:
+    dos_launch_context = None
+    if args.synthetic_dos_context:
         try:
-            segment_text, offset_text = args.synthetic_int00_vector.split(":", 1)
-            vector = (int(segment_text, 16), int(offset_text, 16))
-            if any(not 0 <= part <= 0xFFFF for part in vector):
-                raise ValueError
-        except ValueError as exc:
-            parser.error("--synthetic-int00-vector must be SEGMENT:OFFSET with 16-bit hex values")
-        dos_interrupt_vectors = {0: vector}
+            dos_launch_context = SyntheticDosLaunchContext.from_json_file(
+                args.synthetic_dos_context
+            )
+        except DosContextError as exc:
+            parser.error(str(exc))
     dos_version = None
     if args.synthetic_dos_version:
         try:
@@ -394,7 +398,7 @@ def main() -> int:
     result = run_probe(
         args.image.read_bytes(),
         args.sha256,
-        dos_interrupt_vectors=dos_interrupt_vectors,
+        dos_launch_context=dos_launch_context,
         dos_version=dos_version,
     )
     after = hashlib.sha256(args.image.read_bytes()).hexdigest()
@@ -408,7 +412,7 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
-    except (NELoadError, ProbeError, UnsupportedOpcode, UnsupportedImport) as exc:
+    except (DosContextError, NELoadError, ProbeError, UnsupportedOpcode, UnsupportedImport) as exc:
         print(f"probe failed closed: {exc}", file=sys.stderr)
         raise SystemExit(2)
 

@@ -14,14 +14,17 @@ callbacks, or segmented-pointer lifetime rules.
 `probe_original.py` can read a caller-supplied NE executable after verifying a
 required SHA-256. It binds `KERNEL` ordinal 91 (`InitTask`) to an explicit
 synthetic register/stack context, executes the guest's `OR AX,AX` / `JE`
-continuation, then traces at most 256 instructions. It can model only three
+continuation, then traces at most 256 instructions. An optional JSON fixture
+declares a small PSP, DOS environment block, and guest IVT slice. Reads from
+uninitialized bytes there or in low DOS memory fail closed. The fixture is not
+a DOS process or Windows task. It can model only three
 `KERNEL` ordinal 102 (`DOS3Call`) requests: get INT 00h (`AX=3500h`), set INT
 00h (`AX=2500h`), and get DOS version (`AX=3000h`), when the caller supplies
-their synthetic values. It otherwise stops at an unsupported import or
-instruction. This host model is a narrow DOS bridge for trace exploration; it
-does not initialize a Windows task, PSP, DOS memory layout, local heap, task
-stack, instance data, or DLLs. The input is read-only and no executable is
-modified or emitted. The entry continuation accepts both 8086 encodings of
+their synthetic values. `REPNE SCASB` is implemented for this bounded entry
+trace. The probe otherwise stops at an unsupported import, instruction, or
+unprovided memory field. It does not initialize a Windows task, DOS memory
+allocator, local heap, instance data, or DLLs. The input is read-only and no
+executable is modified or emitted. The entry continuation accepts both 8086 encodings of
 `OR AX,AX` (`09 C0` and `0B C0`).
 
 ## Input identities
@@ -62,10 +65,14 @@ been verified against a direct export-table dump from the target Windows 3.0
 [Microsoft KB Q80783](https://jeffpar.github.io/kbarchive/kb/080/Q80783/);
 DOS register contracts come from the
 [MS-DOS Version 4.0 Programmer's Reference](https://www.pcjs.org/documents/books/mspl13/msdos/dosref40/).
-The original-image trace uses only explicit synthetic DOS inputs and stops at
-`1000:27FB` before `REPNE SCASB`, because no coherent IVT/PSP/DOS environment
-is present. This bridge-dispatch milestone is not proof that the original
-application has completed Windows startup.
+The recorded original-image trace used explicit synthetic DOS inputs and
+stopped at `1000:27FB` before `REPNE SCASB`. The host probe now has an optional,
+guarded synthetic PSP/environment/IVT fixture and supports `REPNE SCASB`, but
+the pinned original executable was not present in the current workspace or the
+known supplied-media directory for a rerun. The previous stop remains the
+latest actual-original trace result; the new context and instruction behavior
+are verified by synthetic tests only. This bridge-dispatch milestone is not
+proof that the original application completed Windows startup.
 
 `win16_host.py` binds `KERNEL` ordinals 91 and 102 plus the name imports `KERNEL!GetVersion`,
 `KERNEL!MakeProcInstance`, and `USER!EnumWindows`. Every other import fails
@@ -96,6 +103,20 @@ From the repository root, run a pinned local image like this:
 python experiments/winmine-original-vm/probe_original.py <read-only-ne-image> --sha256 <expected-sha256>
 ```
 
+To explore the next original-entry slice with the checked-in synthetic launch
+fixture, add these arguments:
+
+```console
+--synthetic-dos-context experiments/winmine-original-vm/fixtures/winmine-synthetic-dos-context.json --synthetic-dos-version 3.30
+```
+
+The fixture declares PSP `3000h`, environment segment `3100h`, an empty
+environment, the synthetic path `C:\FIXTURE\WINMINE.EXE`, an empty command
+tail, and INT 00h `F000:0040`. It imports no host environment variables or host
+IVT state. Its values are shown in the probe result. The fixture does not
+model a DOS allocator, process termination vectors, file handles, or a Windows
+task.
+
 This probe does not launch Windows or DOS, load a ROM, or use an emulator. It
 is not an app converter or Windows compatibility layer, and establishes no
 full-app, release, or hardware qualification.
@@ -119,7 +140,8 @@ The only 80186 instruction forms implemented are:
 * `PUSH imm8` (`6A ib`), sign extended to 16 bits
 * `IMUL r16, r/m16, imm8` (`6B /r ib`), with signed multiply and CF/OF
 
-`INT FF` is a synthetic host trap used by tests. Import dispatch binds
+`REPNE SCASB`/`SCASB` includes byte subtraction flags, count/termination, and
+direction-flag behavior. `INT FF` is a synthetic host trap used by tests. Import dispatch binds
 `KERNEL` ordinals 91 and 102 plus the three name imports documented above. The
 first-party callback fixture covers the `EnumWindows` far Pascal callback
 shape and instance `DS` binding; it does not implement general Win16 thunks or

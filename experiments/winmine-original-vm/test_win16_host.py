@@ -1,7 +1,8 @@
 import unittest
 
-from cpu_subset import CPU
+from cpu_subset import CPU, UnsupportedOpcode
 from ne_loader import ImportTarget, LoadedNE
+from dos_context import SyntheticDosLaunchContext
 from win16_host import (
     CallbackError,
     GuestCallbackDispatcher,
@@ -12,6 +13,17 @@ from win16_host import (
 
 
 class Win16HostTests(unittest.TestCase):
+    @staticmethod
+    def dos_context(vector=(0x4321, 0x8765)):
+        return SyntheticDosLaunchContext(
+            psp_segment=0x3000,
+            environment_segment=0x3100,
+            environment_entries=(),
+            program_path=r"C:\FIXTURE\WINMINE.EXE",
+            command_tail="",
+            interrupt_vectors=((0, vector[0], vector[1]),),
+        )
+
     def make_loaded(self, memory=None):
         return LoadedNE(
             memory=memory if memory is not None else bytearray(1 << 20),
@@ -32,6 +44,20 @@ class Win16HostTests(unittest.TestCase):
             host.dispatch_import(CPU(memory=loaded.memory), 0xF001, 1)
         self.assertEqual(host.calls, [])
 
+    def test_unconfigured_psp_reads_fail_but_guest_written_low_data_can_be_read(self):
+        memory = bytearray(1 << 20)
+        loaded = self.make_loaded(memory)
+        cpu = CPU(memory=memory)
+        host = Win16Host(loaded)
+        host.install_dos_launch_context(cpu)
+
+        cpu.write16(0, 0x0122, 0x3000)
+        self.assertEqual(cpu.read16(0, 0x0122), 0x3000)
+        with self.assertRaisesRegex(UnsupportedOpcode, "missing explicit synthetic DOS launch context"):
+            cpu.read8(0x3000, 0x2C)
+        with self.assertRaisesRegex(UnsupportedOpcode, "low DOS memory read"):
+            cpu.read8(0, 0x0500)
+
     def test_dos3call_get_interrupt_zero_returns_documented_es_bx_and_far_returns(self):
         memory = bytearray(1 << 20)
         loaded = self.make_loaded(memory)
@@ -46,7 +72,8 @@ class Win16HostTests(unittest.TestCase):
         cpu.call_far(0xF001, 0x0102)
         handler_sp = cpu.SP
 
-        host = Win16Host(loaded, dos_interrupt_vectors={0: (0x4321, 0x8765)})
+        host = Win16Host(loaded, dos_launch_context=self.dos_context())
+        host.install_dos_launch_context(cpu)
         self.assertIs(host.dispatch_import(cpu, 0xF001, 0x0102), True)
 
         self.assertEqual((cpu.CS, cpu.IP, cpu.SS, cpu.SP), (0x1000, 0x0123, 0x2000, 0x0100))
@@ -59,6 +86,26 @@ class Win16HostTests(unittest.TestCase):
         self.assertEqual(host.dos3call_records[0].interrupt_number, 0)
         self.assertEqual(host.dos3call_records[0].handler_sp, handler_sp)
         self.assertEqual(host.dos3call_records[0].returned_sp, 0x0100)
+
+    def test_dos3call_requires_explicit_context_installed_in_this_guest_memory(self):
+        memory = bytearray(1 << 20)
+        loaded = self.make_loaded(memory)
+        loaded.import_targets[(0xF001, 0x0102)] = ImportTarget(
+            "KERNEL", "ordinal", None, 102
+        )
+        cpu = CPU(memory=memory)
+        cpu.CS, cpu.IP = 0x1000, 0x0123
+        cpu.SS, cpu.SP = 0x2000, 0x0100
+        cpu.AX = 0x3500
+        cpu.call_far(0xF001, 0x0102)
+        host = Win16Host(loaded, dos_launch_context=self.dos_context())
+        before = (cpu.CS, cpu.IP, cpu.SP, cpu.AX, cpu.BX, cpu.ES)
+
+        with self.assertRaisesRegex(UnsupportedImport, "was not installed"):
+            host.dispatch_import(cpu, 0xF001, 0x0102)
+
+        self.assertEqual((cpu.CS, cpu.IP, cpu.SP, cpu.AX, cpu.BX, cpu.ES), before)
+        self.assertEqual(host.dos3call_records, [])
 
     def test_dos3call_rejects_other_dos_functions_without_mutating_cpu_or_stack(self):
         memory = bytearray(1 << 20)
@@ -74,7 +121,7 @@ class Win16HostTests(unittest.TestCase):
         before = (cpu.CS, cpu.IP, cpu.SS, cpu.SP, cpu.AX, cpu.BX, cpu.ES,
                   cpu.read16(cpu.SS, cpu.SP), cpu.read16(cpu.SS, cpu.SP + 2))
 
-        host = Win16Host(loaded, dos_interrupt_vectors={0: (0x4321, 0x8765)})
+        host = Win16Host(loaded)
         with self.assertRaisesRegex(
             UnsupportedImport, "supports AX=3000h, 3500h, or 2500h"
         ):
@@ -150,7 +197,8 @@ class Win16HostTests(unittest.TestCase):
         cpu.call_far(0xF001, 0x0102)
         handler_sp = cpu.SP
 
-        host = Win16Host(loaded, dos_interrupt_vectors={0: (0xF000, 0x0040)})
+        host = Win16Host(loaded, dos_launch_context=self.dos_context((0xF000, 0x0040)))
+        host.install_dos_launch_context(cpu)
         self.assertIs(host.dispatch_import(cpu, 0xF001, 0x0102), True)
 
         self.assertEqual((cpu.CS, cpu.IP, cpu.SS, cpu.SP), (0x1000, 0x0123, 0x2000, 0x0100))
@@ -165,6 +213,7 @@ class Win16HostTests(unittest.TestCase):
         self.assertEqual(record.handler_sp, handler_sp)
         self.assertEqual(record.returned_sp, 0x0100)
         self.assertEqual(cpu.read16(cpu.SS, 0x0100), 0xA55A)
+        self.assertEqual((cpu.read16(0, 0), cpu.read16(0, 2)), (0x2A18, 0x1000))
 
     def test_dos3call_missing_synthetic_vector_fails_before_returning(self):
         memory = bytearray(1 << 20)
@@ -180,24 +229,55 @@ class Win16HostTests(unittest.TestCase):
         before = (cpu.CS, cpu.IP, cpu.SP, cpu.AX, cpu.BX, cpu.ES)
 
         host = Win16Host(loaded)
-        with self.assertRaisesRegex(UnsupportedImport, "no synthetic vector"):
+        with self.assertRaisesRegex(UnsupportedImport, "no explicit synthetic DOS launch context"):
             host.dispatch_import(cpu, 0xF001, 0x0102)
 
         self.assertEqual((cpu.CS, cpu.IP, cpu.SP, cpu.AX, cpu.BX, cpu.ES), before)
         self.assertEqual(host.calls, [])
         self.assertEqual(host.dos3call_records, [])
 
-    def test_synthetic_dos_vector_context_requires_valid_16_bit_pairs(self):
-        loaded = self.make_loaded()
-        for vectors in (
-            {-1: (0x1234, 0x5678)},
-            {0: (0x10000, 0x0000)},
-            {0: (0x1234, 0x5678, 0x9ABC)},
-            {0: [0x1234, 0x5678]},
+    def test_synthetic_dos_vector_context_requires_valid_8_and_16_bit_values(self):
+        for rows in (
+            ((-1, 0x1234, 0x5678),),
+            ((0, 0x10000, 0x0000),),
+            ((0, 0x1234, 0x5678, 0x9ABC),),
+            ((0, 0x1234, 0x5678), (0, 0x4321, 0x8765)),
+            ([0, 0x1234, 0x5678],),
         ):
-            with self.subTest(vectors=vectors):
+            with self.subTest(rows=rows):
                 with self.assertRaises(ValueError):
-                    Win16Host(loaded, dos_interrupt_vectors=vectors)
+                    self.dos_context_for_rows(rows)
+
+    @classmethod
+    def dos_context_for_rows(cls, rows):
+        return SyntheticDosLaunchContext(
+            psp_segment=0x3000,
+            environment_segment=0x3100,
+            environment_entries=(),
+            program_path=r"C:\FIXTURE\WINMINE.EXE",
+            command_tail="",
+            interrupt_vectors=rows,
+        )
+
+    def test_dos3call_vector_read_rejects_incoherent_guest_ivt(self):
+        memory = bytearray(1 << 20)
+        loaded = self.make_loaded(memory)
+        loaded.import_targets[(0xF001, 0x0102)] = ImportTarget("KERNEL", "ordinal", None, 102)
+        cpu = CPU(memory=memory)
+        cpu.CS, cpu.IP = 0x1000, 0x0123
+        cpu.SS, cpu.SP = 0x2000, 0x0100
+        cpu.AX = 0x3500
+        cpu.call_far(0xF001, 0x0102)
+        host = Win16Host(loaded, dos_launch_context=self.dos_context())
+        host.install_dos_launch_context(cpu)
+        cpu.write16(0, 0, 0x9999)
+        before = (cpu.CS, cpu.IP, cpu.SP, cpu.AX, cpu.BX, cpu.ES)
+
+        with self.assertRaisesRegex(UnsupportedImport, "guest IVT mismatch"):
+            host.dispatch_import(cpu, 0xF001, 0x0102)
+
+        self.assertEqual((cpu.CS, cpu.IP, cpu.SP, cpu.AX, cpu.BX, cpu.ES), before)
+        self.assertEqual(host.dos3call_records, [])
 
     def test_first_party_far_callback_returns_to_host_frame(self):
         memory = bytearray(1 << 20)
