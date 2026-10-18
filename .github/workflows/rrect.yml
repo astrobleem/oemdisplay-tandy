@@ -1,0 +1,42 @@
+name: Verify RoundRect investigation host checks
+
+on:
+  pull_request:
+    paths:
+      - 'src/rrect/**'
+      - 'docs/rrect/**'
+      - 'docs/TRIAL5/BUILDS.JSN'
+      - '.github/workflows/rrect.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/rrect/**'
+      - 'docs/rrect/**'
+      - 'docs/TRIAL5/BUILDS.JSN'
+      - '.github/workflows/rrect.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  host:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Check out exact public source without credentials
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git sparse-checkout init --no-cone
+          printf '/src/rrect/\n/docs/rrect/\n/docs/TRIAL5/BUILDS.JSN\n' | git sparse-checkout set --no-cone --stdin
+          git checkout --detach --force FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Verify exact frame checker, patch anchors and recorded A/B evidence
+        run: python3 -B src/rrect/RRTEST.PY

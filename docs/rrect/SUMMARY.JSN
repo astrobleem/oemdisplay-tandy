@@ -1,0 +1,15 @@
+{
+ "rrcmp_exit_codes_vs_base": {
+  "candidate": 0,
+  "mut-lastrow": 1,
+  "mut-firstrow": 1,
+  "mut-scanskip": 1,
+  "candidate-trace": 0,
+  "v1 trace": 0
+ },
+ "final_screenshots_identical": {
+  "CALC_END": true,
+  "REVER_END": true,
+  "PBRUS_END": true
+ }
+}

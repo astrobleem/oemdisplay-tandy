@@ -10,6 +10,7 @@ patch texts are checked against a synthetic TOutput gate carrying the exact
 anchors the patches require (each anchor must match exactly once).
 """
 import importlib.machinery
+import json
 import struct
 import tempfile
 import unittest
@@ -123,6 +124,37 @@ class Patches(unittest.TestCase):
         with self.assertRaises(SystemExit):
             P.patch_candidate(GATE + GATE)
 
+
+class Evidence(unittest.TestCase):
+    """The committed comparison results say what the PR claims."""
+    D = HERE.parents[1] / "docs" / "rrect"
+
+    def load(self, tag):
+        return json.loads((self.D / f"C_{tag}.JSN").read_text())
+
+    def test_candidate_frames_equal_baseline(self):
+        for tag in ("CAND", "CANDTR"):
+            r = self.load(tag)
+            self.assertTrue(r["all_frames_equal"], tag)
+            self.assertEqual(len(r["stages"]), 13)
+            self.assertTrue(all(s["frame"]["equal"] and s["same_name_and_api_results"] for s in r["stages"]))
+
+    def test_every_mutant_is_caught(self):
+        for tag in ("MLAST", "MFIRST", "MSCAN"):
+            r = self.load(tag)
+            self.assertFalse(r["all_frames_equal"], tag)
+            self.assertTrue(any(s["frame"].get("differing_pixels", 0) > 0 for s in r["stages"]), tag)
+
+    def test_baseline_driver_is_the_accepted_tr5_driver(self):
+        base = json.loads((self.D / "B_BASE.JSN").read_text())["sha256"]
+        builds = (HERE.parents[1] / "docs" / "TRIAL5" / "BUILDS.JSN").read_text()
+        self.assertIn(base, builds)
+        for run in ("BASE", "SHOTBASE"):
+            prep = json.loads((self.D / run / "RRRUN.JSN").read_text())["prep"]
+            self.assertIn(base, json.dumps(prep))
+        cand = json.loads((self.D / "B_CAND.JSN").read_text())["sha256"]
+        for run in ("CAND", "SHOTCAND"):
+            self.assertIn(cand, json.dumps(json.loads((self.D / run / "RRRUN.JSN").read_text())["prep"]))
 
 if __name__ == "__main__":
     unittest.main()

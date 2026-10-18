@@ -1,0 +1,39 @@
+==  1 roundrect_key: 4833 ms, count 20
+   calls 340 (lost 0): {'80/memory': 20, '81/memory': 20, 'POLYLINE/bounded': 20, 'SCANLINES/bounded': 280}
+   counts: {'80:0': 20, '81:0': 20, 'POLYLINE:17': 20, 'SCANLINES:2': 280}
+==  2 rectangle_key: 2032 ms, count 20
+   calls 20 (lost 0): {'POLYLINE/bounded': 20}
+   counts: {'POLYLINE:5': 20}
+==  3 roundrect_large: 2581 ms, count 6
+   calls 192 (lost 0): {'80/memory': 6, '81/memory': 6, 'POLYLINE/bounded': 6, 'SCANLINES/bounded': 174}
+   counts: {'80:0': 6, '81:0': 6, 'POLYLINE:17': 6, 'SCANLINES:2': 174}
+==  4 roundrect_hollow: 2142 ms, count 20
+   calls 20 (lost 0): {'POLYLINE/bounded': 20}
+   counts: {'POLYLINE:17': 20}
+==  5 roundrect_nopen: 2636 ms, count 20
+   calls 320 (lost 0): {'80/memory': 20, '81/memory': 20, 'SCANLINES/bounded': 280}
+   counts: {'80:0': 20, '81:0': 20, 'SCANLINES:2': 280}
+==  6 roundrect_xor: 4504 ms, count 20
+   calls 340 (lost 0): {'80/memory': 20, '81/memory': 20, 'POLYLINE/bounded': 20, 'SCANLINES/bounded': 280}
+   counts: {'80:0': 20, '81:0': 20, 'POLYLINE:17': 20, 'SCANLINES:2': 280}
+==  7 roundrect_overlap: 4504 ms, count 20
+   calls 340 (lost 0): {'80/memory': 20, '81/memory': 20, 'POLYLINE/bounded': 20, 'SCANLINES/bounded': 280}
+   counts: {'80:0': 20, '81:0': 20, 'POLYLINE:17': 20, 'SCANLINES:2': 280}
+==  8 roundrect_clipped: 1922 ms, count 20
+   calls 127 (lost 0): {'80/memory': 20, '81/memory': 20, 'POLYLINE/bounded': 9, 'SCANLINES/bounded': 78}
+   counts: {'80:0': 20, '81:0': 20, 'POLYLINE:17': 9, 'SCANLINES:2': 78}
+==  9 ellipse_12: 769 ms, count 4
+   calls 56 (lost 0): {'80/memory': 4, '81/memory': 4, 'POLYLINE/bounded': 4, 'SCANLINES/bounded': 44}
+   counts: {'80:0': 4, '81:0': 4, 'POLYLINE:17': 4, 'SCANLINES:2': 44}
+== 10 cursor_overlap: 9557 ms, count 20
+   calls 340 (lost 0): {'80/memory': 20, '81/memory': 20, 'POLYLINE/bounded': 20, 'SCANLINES/bounded': 280}
+   counts: {'80:0': 20, '81:0': 20, 'POLYLINE:17': 20, 'SCANLINES:2': 280}
+== 11 calc: [10490, 10491, 10491] ms, count None
+   calls 526 (lost 0): {'80/memory': 27, '81/memory': 27, 'POLYLINE/bounded': 28, 'SCANLINES/bounded': 444}
+   counts: {'80:0': 27, '81:0': 27, 'POLYLINE:5': 1, 'POLYLINE:23': 15, 'POLYLINE:25': 12, 'SCANLINES:2': 444}
+== 12 reversi: [1428, 1428, 1428] ms, count None
+   calls 25 (lost 0): {'80/memory': 4, '81/memory': 4, 'POLYLINE/bounded': 9, 'SCANLINES/bounded': 8}
+   counts: {'80:0': 4, '81:0': 4, 'POLYLINE:2': 5, 'POLYLINE:9': 4, 'SCANLINES:2': 8}
+== 13 pbrush: [4998, 4559, 4559] ms, count None
+   calls 42 (lost 0): {'POLYLINE/bounded': 42}
+   counts: {'POLYLINE:2': 10, 'POLYLINE:5': 32}
