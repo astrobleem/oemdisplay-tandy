@@ -12,14 +12,17 @@ closed. The model does not reproduce Windows NE allocation, shared libraries,
 callbacks, or segmented-pointer lifetime rules.
 
 `probe_original.py` can read a caller-supplied NE executable after verifying a
-required SHA-256. It binds only `KERNEL` ordinal 91 (`InitTask`) to an explicit
+required SHA-256. It binds `KERNEL` ordinal 91 (`InitTask`) to an explicit
 synthetic register/stack context, executes the guest's `OR AX,AX` / `JE`
-continuation, then traces at most 256 instructions to the next imported call
-or unsupported instruction. It stops at the imported call without invoking
-that service. The context does not allocate or initialize a Windows task,
-PSP, local heap, task stack, instance data, or DLLs. The input is read-only
-and no executable is modified or emitted. It accepts both 8086 encodings of
-`OR AX,AX` (`09 C0` and `0B C0`) in that exact bounded continuation.
+continuation, then traces at most 256 instructions. It can model only three
+`KERNEL` ordinal 102 (`DOS3Call`) requests: get INT 00h (`AX=3500h`), set INT
+00h (`AX=2500h`), and get DOS version (`AX=3000h`), when the caller supplies
+their synthetic values. It otherwise stops at an unsupported import or
+instruction. This host model is a narrow DOS bridge for trace exploration; it
+does not initialize a Windows task, PSP, DOS memory layout, local heap, task
+stack, instance data, or DLLs. The input is read-only and no executable is
+modified or emitted. The entry continuation accepts both 8086 encodings of
+`OR AX,AX` (`09 C0` and `0B C0`).
 
 ## Input identities
 
@@ -35,7 +38,7 @@ reinterpret them.
 
 The private pinned original is a distinct 27,776-byte image with SHA-256
 `633c1328922b4092351e0019b1ba1c6d56c0f0fea83824cc8b7e2e731b15e80b`. Its
-read-only identity and bounded-entry results are documented in
+read-only identity and bounded trace results are documented in
 [`ORIGINAL-WINMINE-READINESS-20261018.md`](ORIGINAL-WINMINE-READINESS-20261018.md).
 That host trace does not launch a Windows task or run the full application.
 
@@ -47,14 +50,24 @@ the original's Windows task, PSP, heap, stack, or instance data. Neither the
 full app nor physical hardware is qualified by these probes. Private
 executables and guest images are not included.
 
-The ordinal mapping and register contract are based on Wine's Win16
-[ordinal table](https://github.com/wine-mirror/wine/blob/master/dlls/krnl386.exe16/krnl386.exe16.spec)
-and [task initialization code](https://github.com/wine-mirror/wine/blob/master/dlls/krnl386.exe16/task.c),
-not an independently verified Windows 3.0 export table. This is a
-bridge-dispatch milestone, not proof that the original application has
-completed Windows startup.
+The `KERNEL` ordinal 102 mapping is triangulated from the period
+reverse-engineering list in
+[*Undocumented Windows* (1992)](https://ftpmirror.your.org/pub/misc/bitsavers/pdf/microsoft/windows_3.1/Schulman_-_Undocumented_Windows_1992.pdf),
+Wine's Win16
+[ordinal table](https://github.com/wine-mirror/wine/blob/master/dlls/krnl386.exe16/krnl386.exe16.spec),
+and Microsoft's Windows SDK 3.0/3.1 documentation for
+[`DOS3Call`](https://jeffpar.github.io/kbarchive/kb/093/Q93343/). It has not
+been verified against a direct export-table dump from the target Windows 3.0
+`KERNEL.EXE`. The FAR PASCAL, no-stack-argument call shape comes from
+[Microsoft KB Q80783](https://jeffpar.github.io/kbarchive/kb/080/Q80783/);
+DOS register contracts come from the
+[MS-DOS Version 4.0 Programmer's Reference](https://www.pcjs.org/documents/books/mspl13/msdos/dosref40/).
+The original-image trace uses only explicit synthetic DOS inputs and stops at
+`1000:27FB` before `REPNE SCASB`, because no coherent IVT/PSP/DOS environment
+is present. This bridge-dispatch milestone is not proof that the original
+application has completed Windows startup.
 
-`win16_host.py` binds `KERNEL` ordinal 91 plus the name imports `KERNEL!GetVersion`,
+`win16_host.py` binds `KERNEL` ordinals 91 and 102 plus the name imports `KERNEL!GetVersion`,
 `KERNEL!MakeProcInstance`, and `USER!EnumWindows`. Every other import fails
 closed. `api_fixture.py` is first-party 8086 guest code loaded through a
 synthetic NE structure with name-import relocations. It calls these APIs,
@@ -92,11 +105,13 @@ full-app, release, or hardware qualification.
 The model has 16-bit general and segment registers, IP and arithmetic,
 direction, interrupt, and trap flags, plus flat byte-addressed memory. The
 implemented 8086 subset is immediate/register and register/memory word MOV,
-`MOV r/m16,Sreg`, register PUSH/POP, ADD/SUB/XOR/OR/CMP, `TEST r/m16,imm16`
-(`/0`), INC/DEC r16, NOP, short conditional branches and JMP, near CALL/RET,
-far CALL/RETF, and supported 81h word-immediate groups /0, /5, and /7.
-Segment override prefixes apply to supported ModRM memory operands. 16-bit
-ModRM effective addresses are supported for those word operations.
+`MOV r/m16,Sreg`, bounded `MOV ES,r/m16`, `MOV moffs16,AX`, `MOV AH,imm8`,
+register PUSH/POP and bounded `POP r/m16`, `PUSH CS`, `PUSH SS`, `POP DS`,
+`CWD`, `JCXZ`, `CMP AL,imm8`, register and memory ADD/SUB/XOR/OR/CMP, `TEST
+r/m16,imm16` (`/0`), INC/DEC r16, NOP, short conditional branches and JMP,
+near CALL/RET, far CALL/RETF, and supported 81h word-immediate groups /0, /5,
+and /7. Segment override prefixes apply to supported ModRM memory operands.
+16-bit ModRM effective addresses are supported for those word operations.
 
 The only 80186 instruction forms implemented are:
 
@@ -105,7 +120,7 @@ The only 80186 instruction forms implemented are:
 * `IMUL r16, r/m16, imm8` (`6B /r ib`), with signed multiply and CF/OF
 
 `INT FF` is a synthetic host trap used by tests. Import dispatch binds
-`KERNEL` ordinal 91 and the three name imports documented above. The
+`KERNEL` ordinals 91 and 102 plus the three name imports documented above. The
 first-party callback fixture covers the `EnumWindows` far Pascal callback
 shape and instance `DS` binding; it does not implement general Win16 thunks or
 the complete Win16 callback ABI. Unknown imports, instructions, and
@@ -119,8 +134,8 @@ Run the deterministic synthetic checks from the repository root with:
 python -m unittest discover -s experiments/winmine-original-vm -p "test_*.py" -v
 ```
 
-The tests compare registers, stack words, selected flags, NE fixups, and the
-bounded entry trace against explicit expected values. The API and callback
+The tests compare registers, stack words, selected flags, NE fixups, DOS bridge
+calls, and the bounded entry trace against explicit expected values. The API and callback
 fixture is first-party 8086 machine code; the suite contains no external guest
 executable. Run the standalone API/callback fixture with:
 

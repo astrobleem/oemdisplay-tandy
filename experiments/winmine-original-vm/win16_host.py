@@ -68,6 +68,46 @@ class InitTaskRegisters:
                 raise ValueError(f"{name} must be a 16-bit unsigned value")
 
 
+@dataclass(frozen=True)
+class Dos3CallRecord:
+    """One bounded DOS3Call invocation using a synthetic DOS vector table."""
+
+    request_ax: int
+    interrupt_number: int
+    action: str
+    vector_before: tuple[int, int] | None
+    vector_after: tuple[int, int]
+    handler_sp: int
+    returned_sp: int
+
+
+@dataclass(frozen=True)
+class SyntheticDosVersion:
+    """Explicit DOS 21h/AH=30h return values for host-only startup probes."""
+
+    major: int
+    minor: int
+    oem_id: int = 0
+    serial24: int = 0
+
+    def __post_init__(self) -> None:
+        if any(not 0 <= value <= 0xFF for value in (self.major, self.minor, self.oem_id)):
+            raise ValueError("synthetic DOS major/minor/OEM values must be 8-bit unsigned values")
+        if not 0 <= self.serial24 <= 0xFFFFFF:
+            raise ValueError("synthetic DOS serial number must be a 24-bit unsigned value")
+
+
+@dataclass(frozen=True)
+class DosVersionCallRecord:
+    request_ax: int
+    major: int
+    minor: int
+    oem_id: int
+    serial24: int
+    handler_sp: int
+    returned_sp: int
+
+
 class GuestCallbackDispatcher:
     """Synchronously invoke a far guest routine and require a matching RETF."""
 
@@ -120,6 +160,8 @@ class Win16Host:
         windows: tuple[int, ...] = (),
         instance_data_segments: dict[int, int] | None = None,
         version_word: int = 0x0003,
+        dos_interrupt_vectors: dict[int, tuple[int, int]] | None = None,
+        dos_version: SyntheticDosVersion | None = None,
     ) -> None:
         self.loaded = loaded
         self.task_registers = task_registers or InitTaskRegisters()
@@ -133,7 +175,21 @@ class Win16Host:
         if not 0 <= version_word <= 0xFFFF:
             raise ValueError("version_word must be a 16-bit unsigned value")
         self.version_word = version_word
+        if dos_version is not None and not isinstance(dos_version, SyntheticDosVersion):
+            raise ValueError("dos_version must be an explicit SyntheticDosVersion")
+        self.dos_version = dos_version
+        self.dos_interrupt_vectors = dict(dos_interrupt_vectors or {})
+        for interrupt_number, pointer in self.dos_interrupt_vectors.items():
+            if not 0 <= interrupt_number <= 0xFF:
+                raise ValueError("synthetic interrupt numbers must be 8-bit unsigned values")
+            if (not isinstance(pointer, tuple) or len(pointer) != 2
+                    or any(not 0 <= value <= 0xFFFF for value in pointer)):
+                raise ValueError(
+                    "synthetic DOS vectors must be (segment, offset) 16-bit tuples"
+                )
         self.calls: list[ImportTarget] = []
+        self.dos3call_records: list[Dos3CallRecord] = []
+        self.dos_version_call_records: list[DosVersionCallRecord] = []
         self.callbacks = GuestCallbackDispatcher()
         self.proc_instances: dict[tuple[int, int], ProcInstance] = {}
         self.callback_invocations: list[CallbackInvocation] = []
@@ -154,6 +210,19 @@ class Win16Host:
             self.init_task_register_return(cpu)
             cpu.push(0)
             return True
+        if module == "KERNEL" and target.kind == "ordinal" and target.ordinal == 102:
+            if cpu.AX == 0x3000:
+                self.dos_version_call_records.append(self._dos3call_get_version(cpu))
+            elif cpu.AX in (0x3500, 0x2500):
+                record = self._dos3call_vector(cpu)
+                self.dos3call_records.append(record)
+            else:
+                raise UnsupportedImport(
+                    "DOS3Call bounded host model supports AX=3000h, 3500h, or 2500h; "
+                    f"got {cpu.AX:04X}h"
+                )
+            self.calls.append(target)
+            return True
         if module == "KERNEL" and target.kind == "name" and name == "GETVERSION":
             self.calls.append(target)
             cpu.far_return()
@@ -172,6 +241,69 @@ class Win16Host:
                 f"no host binding for {target.module} {target.kind} "
                 f"{target.ordinal if target.kind == 'ordinal' else target.name}"
             )
+
+    def _dos3call_vector(self, cpu: CPU) -> Dos3CallRecord:
+        """Model DOS3Call get/set-vector calls for INT 00h only."""
+        if cpu.AX not in (0x3500, 0x2500):
+            raise UnsupportedImport(
+                "DOS3Call bounded host model supports AX=3500h or 2500h only; "
+                f"got {cpu.AX:04X}h"
+            )
+        interrupt_number = cpu.AX & 0xFF
+        if interrupt_number != 0:
+            raise UnsupportedImport(
+                "DOS3Call bounded host model supports interrupt 00h only; "
+                f"got {interrupt_number:02X}h"
+            )
+
+        action = "get" if cpu.AX == 0x3500 else "set"
+        vector_before = self.dos_interrupt_vectors.get(interrupt_number)
+        if action == "get" and vector_before is None:
+            raise UnsupportedImport(
+                "DOS3Call has no synthetic vector for interrupt 00h"
+            )
+        vector_after = vector_before if action == "get" else (cpu.DS, cpu.DX)
+        assert vector_after is not None
+
+        request_ax = cpu.AX
+        handler_sp = cpu.SP
+        # DOS3Call is FAR PASCAL with no stack parameters. The DOS request and
+        # its documented inputs/outputs are carried in CPU registers.
+        cpu.far_return()
+        if action == "get":
+            cpu.ES, cpu.BX = vector_after
+        else:
+            self.dos_interrupt_vectors[interrupt_number] = vector_after
+        return Dos3CallRecord(
+            request_ax=request_ax,
+            interrupt_number=interrupt_number,
+            action=action,
+            vector_before=vector_before,
+            vector_after=vector_after,
+            handler_sp=handler_sp,
+            returned_sp=cpu.SP,
+        )
+
+    def _dos3call_get_version(self, cpu: CPU) -> DosVersionCallRecord:
+        """Model only DOS3Call(INT 21h/AH=30h) from an explicit fixture value."""
+        if self.dos_version is None:
+            raise UnsupportedImport("DOS3Call has no explicit synthetic DOS version")
+
+        values = self.dos_version
+        handler_sp = cpu.SP
+        cpu.far_return()
+        cpu.AX = (values.minor << 8) | values.major
+        cpu.BX = (values.oem_id << 8) | ((values.serial24 >> 16) & 0xFF)
+        cpu.CX = values.serial24 & 0xFFFF
+        return DosVersionCallRecord(
+            request_ax=0x3000,
+            major=values.major,
+            minor=values.minor,
+            oem_id=values.oem_id,
+            serial24=values.serial24,
+            handler_sp=handler_sp,
+            returned_sp=cpu.SP,
+        )
 
     @staticmethod
     def _stack_word(cpu: CPU, byte_offset: int) -> int:

@@ -63,29 +63,57 @@ After the synthetic `InitTask` return, the continuation reaches `1000:2573`
 synthetic register values. It stores the synthetic startup registers, loads
 `AX=3500h`, tests a word through a CS override at `1000:2615`, and falls through
 the following `JZ`. At `1000:261E`, the guest makes a far call relocated to
-`KERNEL` ordinal 102 at `F001:0018`. The bounded trace stops at this next import
-without invoking it. `AX=3500h` at the boundary is recorded as machine state,
-not as evidence that a DOS service ran.
+`KERNEL` ordinal 102 at `F001:0018`, with `AX=3500h`. The ordinal mapping is
+supported by the period reverse-engineering list in
+[*Undocumented Windows* (1992)](https://ftpmirror.your.org/pub/misc/bitsavers/pdf/microsoft/windows_3.1/Schulman_-_Undocumented_Windows_1992.pdf),
+which lists `DOS3CALL (KERNEL.102)`, and is corroborated by Wine's current
+[`krnl386.exe16.spec`](https://github.com/wine-mirror/wine/blob/master/dlls/krnl386.exe16/krnl386.exe16.spec).
+This is not a direct export-table dump from the target Windows 3.0
+`KERNEL.EXE`; the mapping is triangulated rather than binary-verified against
+that exact system image.
 
-Wine's current [`krnl386.exe16.spec`](https://github.com/wine-mirror/wine/blob/master/dlls/krnl386.exe16/krnl386.exe16.spec)
-labels `KERNEL` ordinal 102 `DOS3Call`; that implementation table is a
-cross-reference, not an independently verified export table for the target
-system. No ordinal 102 service was bound or executed. The next blocker is to
-verify that ordinal's target export and register contract before deciding
-whether a narrow host model is appropriate. The trace remains host-only: the
-`InitTask` return values and task context are synthetic. Real task/PSP, stack,
-heap and instance setup, resource loading, and resolution of the 99 ordinal
-imports remain separate requirements for original-image startup.
+Microsoft's Windows SDK 3.0/3.1 knowledge-base articles describe `DOS3Call`
+as a register-based DOS interface with no stack parameters and a FAR PASCAL
+call shape ([Q80783](https://jeffpar.github.io/kbarchive/kb/080/Q80783/),
+[Q93343](https://jeffpar.github.io/kbarchive/kb/093/Q93343/)). The
+[MS-DOS Version 4.0 Programmer's Reference](https://www.pcjs.org/documents/books/mspl13/msdos/dosref40/)
+documents the DOS register contracts for
+[get/set interrupt vector](https://www.pcjs.org/documents/books/mspl13/msdos/dosref40/)
+and [get DOS version](https://www.pcjs.org/documents/books/mspl13/msdos/dosref40/).
+Based on those sources, the host probe implements only these bounded forms:
 
-The bounded continuation executed 15 guest instructions after the synthetic
-entry slice. Its stop record preserves the call site, relocated import target,
-registers, and the 256-instruction ceiling. It does not continue through the
-import stub or perform any DOS operation.
+- `AX=3500h` gets INT 00h and returns its synthetic handler in `ES:BX`.
+- `AX=2500h` sets INT 00h from `DS:DX`; no result registers are changed.
+- `AX=3000h` returns an explicitly supplied synthetic DOS version in
+  `AX`, `BX`, and `CX`.
+
+All three calls FAR-return without stack arguments. Other DOS functions,
+interrupt numbers, or missing synthetic inputs fail closed. Tests exercise
+the documented register inputs/results, stack return, vector state, and
+fail-closed cases.
+
+For the original-image trace, the synthetic INT 00h vector started at
+`F000:0040`, was read using `AX=3500h`, and was changed to `1000:2A18` using
+`AX=2500h`. A separately supplied synthetic DOS 3.30 value produced
+`AX=1E03h`, `BX=0000h`, and `CX=0000h`. The guest then executed 64 more
+instructions and stopped before `REPNE SCASB` at `1000:27FB` (`F2 AE`), with
+`ES:DI=0000:0000` and `CX=8000h`. This is the next trace boundary, not an
+application failure result: the probe has no coherent guest IVT, PSP, DOS
+memory layout, or loaded DOS implementation. In particular, the synthetic
+vector map is host-side state and is not a real-mode IVT in guest memory, so
+continuing this scan would not be a faithful DOS startup environment.
+
+The task context, INT 00h vector, and DOS version used here are all synthetic.
+The trace does not launch Windows or establish a real Windows task, PSP, heap,
+stack, instance data, DLL environment, or DOS process. Resource loading and
+resolution of the original image's 99 ordinal imports also remain separate
+requirements for original-image startup. The expanded trace is not full-app,
+release, or hardware qualification.
 
 ## Scope
 
 This report is a host-only identity, NE inventory, and bounded instruction
-trace to the next imported API. It makes no claim that the original application
-starts, displays a window, or supports gameplay. No Windows media, ROM,
-executable, or private candidate is included; no emulator or physical hardware
-was used for this audit.
+trace through three explicitly modeled `DOS3Call` forms. It makes no claim
+that the original application starts, displays a window, or supports gameplay.
+No Windows media, ROM, executable, or private candidate is included; no
+emulator or physical hardware was used for this audit.

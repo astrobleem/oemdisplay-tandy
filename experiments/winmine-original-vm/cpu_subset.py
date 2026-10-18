@@ -131,6 +131,11 @@ class CPU:
                 raise UnsupportedOpcode(f"too many segment prefixes at {start:04X}")
             op = self.fetch8()
         if 0xB8 <= op <= 0xBF: self.set_reg(op - 0xB8, self.fetch16())                         # MOV r16,imm16
+        elif op == 0xB4: self.AX = (self.AX & 0x00FF) | (self.fetch8() << 8)                  # MOV AH,imm8
+        elif op == 0x0E: self.push(self.CS)                                                  # PUSH CS
+        elif op == 0x16: self.push(self.SS)                                                  # PUSH SS
+        elif op == 0x1F: self.DS = self.pop()                                                # POP DS
+        elif op == 0x99: self.DX = 0xFFFF if self.AX & 0x8000 else 0x0000                 # CWD
         elif 0x50 <= op <= 0x57: self.push(self.reg(op - 0x50))                              # PUSH r16
         elif 0x58 <= op <= 0x5F: self.set_reg(op - 0x58, self.pop())                         # POP r16
         elif op == 0x68: self.push(self.fetch16())                                           # 80186 PUSH imm16
@@ -160,6 +165,36 @@ class CPU:
             except UnsupportedOpcode:
                 self.IP = start
                 raise
+        elif op == 0x8E:                                                                    # bounded MOV ES,r/m16
+            segment, src = self._modrm(segment_override)
+            if segment != 0:
+                self.IP = start
+                raise UnsupportedOpcode(f"opcode 8E /{segment} at {start:04X}")
+            self.ES = self._getop(src)
+        elif op == 0x8F:                                                                    # bounded POP r/m16 (/0)
+            subop, dst = self._modrm(segment_override)
+            if subop != 0:
+                self.IP = start
+                raise UnsupportedOpcode(f"opcode 8F /{subop} at {start:04X}")
+            value = self.pop()
+            self._setop(dst, value)
+        elif op == 0xA3:                                                                    # bounded MOV moffs16,AX
+            offset = self.fetch16()
+            try:
+                self._store_segment_word(self.DS, offset, self.AX)
+            except UnsupportedOpcode:
+                self.IP = start
+                raise
+        elif op == 0x3C:                                                                    # CMP AL,imm8
+            imm = self.fetch8()
+            left = self.AX & 0xFF
+            result = (left - imm) & 0xFF
+            self.set_flag("CF", left < imm)
+            self.set_flag("AF", ((left ^ imm ^ result) & 0x10) != 0)
+            self.set_flag("OF", (((left ^ imm) & (left ^ result)) & 0x80) != 0)
+            self.set_flag("ZF", result == 0)
+            self.set_flag("SF", bool(result & 0x80))
+            self.set_flag("PF", self._parity(result))
         elif op in (0x01, 0x03, 0x29, 0x2B, 0x31, 0x33, 0x39, 0x3B):                       # ADD/SUB/XOR/CMP
             reg, rm = self._modrm(segment_override); direction = op in (0x03, 0x2B, 0x33, 0x3B)
             dst, src = (self.reg(reg), self._getop(rm)) if direction else (self._getop(rm), self.reg(reg))
@@ -208,6 +243,10 @@ class CPU:
         elif op == 0x90: pass                                                               # NOP
         elif op == 0xEB:                                                                    # JMP short
             d = self.fetch8(); self.IP = (self.IP + (d - 256 if d & 0x80 else d)) & MASK16
+        elif op == 0xE3:                                                                    # JCXZ short
+            d = self.fetch8()
+            if self.CX == 0:
+                self.IP = (self.IP + (d - 256 if d & 0x80 else d)) & MASK16
         elif 0x70 <= op <= 0x7F:                                                           # 8086 short Jcc family
             d = self.fetch8()
             cf, pf = self.flag("CF"), self.flag("PF")

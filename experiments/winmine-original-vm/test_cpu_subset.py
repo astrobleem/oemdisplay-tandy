@@ -33,6 +33,71 @@ class CpuSubsetTests(unittest.TestCase):
         self.assertEqual(c.read16(c.SS, 0x00FC), 0x1234)
         self.assertEqual(c.flags, 0x0ED7)
 
+    def test_mov_ah_immediate_preserves_al_and_flags(self):
+        c = CPU(); c.AX = 0x12EF; c.flags = 0x0ED7
+        load(c, bytes.fromhex("B4 30"))
+        c.step()
+        self.assertEqual((c.AX, c.IP, c.flags), (0x30EF, 0x0102, 0x0ED7))
+
+    def test_cwd_sign_extends_ax_into_dx_without_changing_flags(self):
+        for ax, expected_dx in ((0x0000, 0x0000), (0x7FFF, 0x0000), (0x8000, 0xFFFF),
+                                (0xFFFF, 0xFFFF)):
+            with self.subTest(ax=ax):
+                c = CPU(); c.AX = ax; c.DX = 0x1234; c.flags = 0x0ED7
+                load(c, bytes.fromhex("99"))
+                c.step()
+                self.assertEqual((c.AX, c.DX, c.flags), (ax, expected_dx, 0x0ED7))
+
+    def test_cmp_al_immediate_sets_8_bit_subtract_flags_without_changing_ax(self):
+        for ax, immediate, expected_flags in (
+            (0x1203, 0x02, {"CF": 0, "AF": 0, "OF": 0, "ZF": 0, "SF": 0, "PF": 0}),
+            (0x1200, 0x01, {"CF": 1, "AF": 1, "OF": 0, "ZF": 0, "SF": 1, "PF": 1}),
+            (0x1280, 0x01, {"CF": 0, "AF": 1, "OF": 1, "ZF": 0, "SF": 0, "PF": 0}),
+        ):
+            with self.subTest(ax=ax, immediate=immediate):
+                c = CPU(); c.AX = ax; c.flags = 0x0ED7
+                load(c, bytes((0x3C, immediate)))
+                c.step()
+                self.assertEqual(c.AX, ax)
+                self.assertEqual({name: int(c.flag(name)) for name in expected_flags}, expected_flags)
+
+    def test_mov_moffs_ax_writes_ds_and_preserves_flags(self):
+        c = CPU(); c.AX = 0xABCD; c.DS = 0x2000; c.flags = 0x0ED7
+        load(c, bytes.fromhex("A3 22 01"))
+        c.step()
+        self.assertEqual(c.read16(c.DS, 0x0122), 0xABCD)
+        self.assertEqual((c.AX, c.IP, c.flags), (0xABCD, 0x0103, 0x0ED7))
+
+    def test_push_cs_pop_ds_preserve_flags_and_restore_stack(self):
+        c = CPU(); c.CS = 0x1234; c.DS = 0xAAAA; c.SS = 0x2000; c.SP = 0x0100
+        c.flags = 0x0ED7
+        code = bytes.fromhex("0E 1F")
+        load(c, code)
+        c.CS = 0x1234
+        start = c.linear(c.CS, 0x0100)
+        c.memory[start:start + len(code)] = code
+        c.run(2)
+        self.assertEqual((c.CS, c.DS, c.SP), (0x1234, 0x1234, 0x0100))
+        self.assertEqual(c.read16(c.SS, 0x00FE), 0x1234)
+        self.assertEqual(c.flags, 0x0ED7)
+
+    def test_push_ss_pop_ds_preserve_flags_and_restore_stack(self):
+        c = CPU(); c.DS = 0xAAAA; c.SS = 0x2000; c.SP = 0x0100; c.flags = 0x0ED7
+        load(c, bytes.fromhex("16 1F"))
+        c.run(2)
+        self.assertEqual((c.DS, c.SP), (0x2000, 0x0100))
+        self.assertEqual(c.read16(c.SS, 0x00FE), 0x2000)
+        self.assertEqual(c.flags, 0x0ED7)
+
+    def test_jcxz_short_taken_and_not_taken_preserves_flags(self):
+        for count, expected_ax, expected_ip in ((0, 0x2222, 0x0108), (1, 0x1111, 0x0105)):
+            with self.subTest(cx=count):
+                c = CPU(); c.CX = count; c.flags = 0x0ED7
+                load(c, bytes.fromhex("E3 03 B8 11 11 B8 22 22"))
+                c.run(2 if count == 0 else 2)
+                self.assertEqual((c.AX, c.IP), (expected_ax, expected_ip))
+                self.assertEqual(c.flags, 0x0ED7)
+
     def test_80186_imul_signed_immediate_flags_and_destination(self):
         c = CPU(); c.AX = 0xFFFF; c.flags = 0x0002
         load(c, bytes.fromhex("6B C8 FE"))  # IMUL CX,AX,-2 => +2
@@ -97,6 +162,40 @@ class CpuSubsetTests(unittest.TestCase):
         self.assertEqual(c.ES, 0xCAFE)
         self.assertEqual(c.IP, 0x102)
         self.assertEqual(c.flags, 0x0ED7)
+
+    def test_mov_es_from_memory_is_bounded_and_preserves_flags(self):
+        c = CPU(); c.DS = 0x2000; c.ES = 0xAAAA; c.flags = 0x0ED7
+        c.write16(c.DS, 0x0122, 0x3000)
+        load(c, bytes.fromhex("8E 06 22 01"))
+        c.step()
+        self.assertEqual((c.ES, c.IP), (0x3000, 0x0104))
+        self.assertEqual(c.flags, 0x0ED7)
+
+    def test_mov_segment_from_rm_rejects_non_es_selector_without_mutation(self):
+        c = CPU(); c.DS = 0x2000; c.ES = 0xAAAA; c.flags = 0x0ED7
+        c.write16(c.DS, 0x0122, 0x3000)
+        load(c, bytes.fromhex("8E 1E 22 01"))  # MOV DS,[0122h], outside this probe slice.
+        before = (c.IP, c.DS, c.ES, c.flags)
+        with self.assertRaisesRegex(UnsupportedOpcode, "opcode 8E /3 at 0100"):
+            c.step()
+        self.assertEqual((c.IP, c.DS, c.ES, c.flags), before)
+
+    def test_pop_word_to_direct_memory_uses_stack_and_preserves_flags(self):
+        c = CPU(); c.SS = 0x2000; c.DS = 0x3000; c.SP = 0x0100; c.flags = 0x0ED7
+        c.write16(c.SS, c.SP, 0xBEEF)
+        load(c, bytes.fromhex("8F 06 00 02"))
+        c.step()
+        self.assertEqual((c.SP, c.read16(c.DS, 0x0200), c.IP), (0x0102, 0xBEEF, 0x0104))
+        self.assertEqual(c.flags, 0x0ED7)
+
+    def test_pop_rm_rejects_nonzero_extension_before_changing_stack(self):
+        c = CPU(); c.SS = 0x2000; c.DS = 0x3000; c.SP = 0x0100
+        c.write16(c.SS, c.SP, 0xBEEF)
+        load(c, bytes.fromhex("8F 0E 00 02"))  # POP /1 is undefined.
+        before = (c.IP, c.SP, c.read16(c.SS, c.SP), c.read16(c.DS, 0x0200))
+        with self.assertRaisesRegex(UnsupportedOpcode, "opcode 8F /1 at 0100"):
+            c.step()
+        self.assertEqual((c.IP, c.SP, c.read16(c.SS, c.SP), c.read16(c.DS, 0x0200)), before)
 
     def test_mov_segment_register_uses_ss_for_bp_based_word_destination(self):
         c = CPU(); c.DS = 0xAAAA; c.SS = 0x2000; c.BP = 3; c.SI = 4

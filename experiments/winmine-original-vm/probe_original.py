@@ -2,9 +2,10 @@
 
 This command reads a caller-supplied NE file, loads only its NE segments and
 known fixups, models the first imported InitTask call, and follows the guest
-code until its next imported call or unsupported instruction. It does not
-write or patch the input image. The InitTask return context is synthetic; no
-Windows task or imported API is implemented.
+code through a narrow DOS3Call subset when explicit synthetic inputs are
+provided. It does not write or patch the input image. The InitTask and DOS
+contexts are synthetic; no Windows task or general DOS environment is
+implemented.
 """
 
 from __future__ import annotations
@@ -22,19 +23,31 @@ if str(_REPO_ROOT) not in sys.path:
 
 from cpu_subset import CPU, UnsupportedOpcode
 from ne_loader import ImportTarget, NELoadError, NELoader
-from win16_host import InitTaskRegisters, UnsupportedImport, Win16Host
+from win16_host import (
+    InitTaskRegisters,
+    SyntheticDosVersion,
+    UnsupportedImport,
+    Win16Host,
+)
 
 
 class ProbeError(RuntimeError):
     """The original entrypoint did not fit the explicitly bounded probe."""
 
 
-def _trace_to_dependency(cpu: CPU, loaded: Any, instruction_limit: int) -> dict[str, Any]:
-    """Continue guest code to the next imported call or fail-closed boundary."""
+def _trace_to_dependency(
+    cpu: CPU,
+    loaded: Any,
+    instruction_limit: int,
+    *,
+    import_handler=None,
+) -> dict[str, Any]:
+    """Continue through the bounded DOS3Call slice to the next dependency."""
     if instruction_limit <= 0:
         raise ValueError("instruction_limit must be positive")
     code_selectors = set(loaded.segment_selectors.values())
     history: list[dict[str, str]] = []
+    serviced_imports: list[dict[str, Any]] = []
 
     def state() -> dict[str, str]:
         return {name: f"{getattr(cpu, name):04X}" for name in (
@@ -52,6 +65,7 @@ def _trace_to_dependency(cpu: CPU, loaded: Any, instruction_limit: int) -> dict[
             "instructions_executed": steps,
             "last_instructions": history[-16:],
             "state_at_stop": state(),
+            "serviced_imports": serviced_imports,
             **details,
         }
 
@@ -81,6 +95,44 @@ def _trace_to_dependency(cpu: CPU, loaded: Any, instruction_limit: int) -> dict[
             target_cs, target_ip = event[1], event[2]
             target = loaded.import_targets.get((target_cs, target_ip))
             if target is not None:
+                if (import_handler is not None and target.module.upper() == "KERNEL"
+                        and target.kind == "ordinal" and target.ordinal == 102):
+                    service_input = {
+                        name: f"{getattr(cpu, name):04X}"
+                        for name in ("AX", "BX", "CX", "DX", "DS", "ES", "SS", "SP")
+                    }
+                    try:
+                        service_returned = import_handler(cpu, target_cs, target_ip)
+                    except UnsupportedImport as exc:
+                        return result(
+                            "unsupported_import_service",
+                            steps + 1,
+                            call_site=f"{cs:04X}:{ip:04X}",
+                            target_location=f"{target_cs:04X}:{target_ip:04X}",
+                            **{
+                                "import": {
+                                    "module": target.module,
+                                    "kind": target.kind,
+                                    "ordinal": target.ordinal,
+                                    "name": target.name,
+                                },
+                            },
+                            error=str(exc),
+                        )
+                    if service_returned is not True:
+                        cpu.far_return()
+                    serviced_imports.append({
+                        "module": target.module,
+                        "ordinal": target.ordinal,
+                        "call_site": f"{cs:04X}:{ip:04X}",
+                        "target_location": f"{target_cs:04X}:{target_ip:04X}",
+                        "input_registers": service_input,
+                        "return_registers": {
+                            name: f"{getattr(cpu, name):04X}"
+                            for name in ("AX", "BX", "CX", "DX", "DS", "ES", "SS", "SP")
+                        },
+                    })
+                    continue
                 return result(
                     "next_import",
                     steps + 1,
@@ -139,8 +191,10 @@ def _reference_entry_state(initial_ss: int, initial_sp: int, initial_cs: int,
 
 def run_probe(image_bytes: bytes, expected_sha256: str, *,
               task_registers: InitTaskRegisters | None = None,
+              dos_interrupt_vectors: dict[int, tuple[int, int]] | None = None,
+              dos_version: SyntheticDosVersion | None = None,
               continuation_limit: int = 256) -> dict[str, Any]:
-    """Execute the synthetic InitTask slice, then trace to the next dependency."""
+    """Execute synthetic InitTask and bounded DOS3Call slices, then trace onward."""
     before = hashlib.sha256(image_bytes).hexdigest()
     if before.lower() != expected_sha256.lower():
         raise ProbeError(f"input SHA-256 mismatch: got {before}")
@@ -150,7 +204,12 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
     cpu = CPU(memory=loaded.memory)
     cpu.CS, cpu.IP = loaded.initial_cs, loaded.initial_ip
     cpu.SS, cpu.SP = loaded.initial_ss, loaded.initial_sp
-    host = Win16Host(loaded, task)
+    host = Win16Host(
+        loaded,
+        task,
+        dos_interrupt_vectors=dos_interrupt_vectors,
+        dos_version=dos_version,
+    )
 
     # Stop exactly after the first imported call returns, then validate the
     # two guest instructions that consume InitTask's success result.
@@ -193,7 +252,12 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
         "success_branch_taken": False,
     }
     entry_stack_sentinel = {"SS": f"{cpu.SS:04X}", "SP": f"{cpu.SP:04X}", "word": "0000"}
-    post_entry_trace = _trace_to_dependency(cpu, loaded, continuation_limit)
+    post_entry_trace = _trace_to_dependency(
+        cpu,
+        loaded,
+        continuation_limit,
+        import_handler=host.dispatch_import,
+    )
 
     after = hashlib.sha256(image_bytes).hexdigest()
     if after != before:
@@ -209,6 +273,63 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
         "import": {"module": host.calls[0].module, "kind": host.calls[0].kind,
                    "ordinal": host.calls[0].ordinal, "name": host.calls[0].name},
         "host_service": "KERNEL ordinal 91 InitTask register-return subset",
+        "host_services_executed": [
+            {
+                "module": target.module,
+                "kind": target.kind,
+                "ordinal": target.ordinal,
+                "name": target.name,
+            }
+            for target in host.calls
+        ],
+        "synthetic_dos_vectors": {
+            f"{interrupt_number:02X}": {
+                "segment": f"{segment:04X}",
+                "offset": f"{offset:04X}",
+            }
+            for interrupt_number, (segment, offset)
+            in sorted(host.dos_interrupt_vectors.items())
+        },
+        "synthetic_dos_version": (
+            None if host.dos_version is None else {
+                "major": host.dos_version.major,
+                "minor": host.dos_version.minor,
+                "oem_id": host.dos_version.oem_id,
+                "serial24": f"{host.dos_version.serial24:06X}",
+            }
+        ),
+        "dos3call_records": [
+            {
+                "request_ax": f"{record.request_ax:04X}",
+                "interrupt_number": f"{record.interrupt_number:02X}",
+                "action": record.action,
+                "vector_before": (
+                    None if record.vector_before is None else {
+                        "segment": f"{record.vector_before[0]:04X}",
+                        "offset": f"{record.vector_before[1]:04X}",
+                    }
+                ),
+                "vector_after": {
+                    "segment": f"{record.vector_after[0]:04X}",
+                    "offset": f"{record.vector_after[1]:04X}",
+                },
+                "handler_sp": f"{record.handler_sp:04X}",
+                "returned_sp": f"{record.returned_sp:04X}",
+            }
+            for record in host.dos3call_records
+        ],
+        "dos_version_call_records": [
+            {
+                "request_ax": f"{record.request_ax:04X}",
+                "major": record.major,
+                "minor": record.minor,
+                "oem_id": record.oem_id,
+                "serial24": f"{record.serial24:06X}",
+                "handler_sp": f"{record.handler_sp:04X}",
+                "returned_sp": f"{record.returned_sp:04X}",
+            }
+            for record in host.dos_version_call_records
+        ],
         "guest_return": guest_return,
         "task_register_context": {
             "AX": "0001", "BX": f"{task.command_tail_offset & 0xFFFF:04X}",
@@ -225,7 +346,8 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
         "input_bytes_unchanged": True,
         "qualification": (
             "host-only bounded entry trace; KERNEL ordinal 91 uses an explicit synthetic "
-            "InitTask context and tracing stops at the next import; no Windows task/heap/PSP "
+            "InitTask context; KERNEL ordinal 102 uses only DOS3Call AX=3000h/3500h/2500h "
+            "when explicit synthetic DOS version/vector data is supplied; no Windows task/heap/PSP "
             "allocation, broader startup, full-app, release, or hardware qualification"
         ),
     }
@@ -235,13 +357,46 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("image", type=Path, help="read-only path to a caller-supplied NE executable")
     parser.add_argument("--sha256", required=True, help="pinned SHA-256 required before any probe runs")
+    parser.add_argument(
+        "--synthetic-int00-vector",
+        metavar="SEGMENT:OFFSET",
+        help="explicit synthetic INT 00h handler returned by the bounded DOS3Call model",
+    )
+    parser.add_argument(
+        "--synthetic-dos-version",
+        metavar="MAJOR.MINOR",
+        help="explicit synthetic DOS version returned by the bounded DOS3Call model",
+    )
     args = parser.parse_args()
     if not args.image.is_file():
         parser.error("image path is not a regular file")
     before = hashlib.sha256(args.image.read_bytes()).hexdigest()
     if before.lower() != args.sha256.lower():
         parser.error(f"input SHA-256 mismatch: got {before}")
-    result = run_probe(args.image.read_bytes(), args.sha256)
+    dos_interrupt_vectors = None
+    if args.synthetic_int00_vector:
+        try:
+            segment_text, offset_text = args.synthetic_int00_vector.split(":", 1)
+            vector = (int(segment_text, 16), int(offset_text, 16))
+            if any(not 0 <= part <= 0xFFFF for part in vector):
+                raise ValueError
+        except ValueError as exc:
+            parser.error("--synthetic-int00-vector must be SEGMENT:OFFSET with 16-bit hex values")
+        dos_interrupt_vectors = {0: vector}
+    dos_version = None
+    if args.synthetic_dos_version:
+        try:
+            major_text, minor_text = args.synthetic_dos_version.split(".", 1)
+            major, minor = int(major_text, 10), int(minor_text, 10)
+            dos_version = SyntheticDosVersion(major=major, minor=minor)
+        except (ValueError, TypeError):
+            parser.error("--synthetic-dos-version must be decimal MAJOR.MINOR byte values")
+    result = run_probe(
+        args.image.read_bytes(),
+        args.sha256,
+        dos_interrupt_vectors=dos_interrupt_vectors,
+        dos_version=dos_version,
+    )
     after = hashlib.sha256(args.image.read_bytes()).hexdigest()
     if after != before:
         raise ProbeError("input file changed while the probe was running")
