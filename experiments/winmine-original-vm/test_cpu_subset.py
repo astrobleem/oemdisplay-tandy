@@ -82,6 +82,15 @@ class CpuSubsetTests(unittest.TestCase):
         self.assertFalse(c.flag("ZF"))
         self.assertEqual(c.IP, 0x104)  # JE not taken; execution falls through to MOV.
 
+    def test_inc_dec_all_register_encodings_and_preserve_carry(self):
+        c = CPU(); c.BX = 0xFFFF; c.SI = 0; c.set_flag("CF", True)
+        load(c, bytes.fromhex("43 4E"))  # INC BX; DEC SI
+        c.run(2)
+        self.assertEqual((c.BX, c.SI), (0, 0xFFFF))
+        self.assertTrue(c.flag("CF"))
+        self.assertTrue(c.flag("SF"))
+        self.assertFalse(c.flag("ZF"))
+
     def test_retf_pops_far_frame_and_retf_immediate_discards_arguments(self):
         c = CPU(); c.SS = 0x2000; c.SP = 0x0100
         c.CS = 0x3000; c.IP = 0x0200
@@ -96,6 +105,15 @@ class CpuSubsetTests(unittest.TestCase):
         c = CPU(); load(c, b"\x0f")
         before = (c.AX, c.BX, c.flags, c.SP)
         with self.assertRaisesRegex(UnsupportedOpcode, "0F"):
+            c.step()
+        self.assertEqual(c.IP, 0x100)
+        self.assertEqual((c.AX, c.BX, c.flags, c.SP), before)
+
+    def test_unsupported_interrupt_vector_restores_instruction_state(self):
+        c = CPU(); c.AX = 0x1234; c.flags = 0x0ED7; c.SP = 0x0100
+        load(c, bytes.fromhex("CD 10"))
+        before = (c.AX, c.BX, c.flags, c.SP)
+        with self.assertRaisesRegex(UnsupportedOpcode, "INT 10"):
             c.step()
         self.assertEqual(c.IP, 0x100)
         self.assertEqual((c.AX, c.BX, c.flags, c.SP), before)

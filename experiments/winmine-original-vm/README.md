@@ -47,7 +47,7 @@ full-app, release, or hardware qualification.
 The model has 16-bit general and segment registers, IP and arithmetic,
 direction, interrupt, and trap flags, plus flat byte-addressed memory. The
 implemented 8086 subset is immediate/register and register/memory word MOV,
-register PUSH/POP, ADD/SUB/XOR/OR/CMP, INC/DEC, NOP, short JE/JMP, near
+register PUSH/POP, ADD/SUB/XOR/OR/CMP, INC/DEC r16, NOP, short JE/JMP, near
 CALL/RET, far CALL/RETF, and supported 81h word-immediate groups /0, /5, and
 /7. 16-bit ModRM effective addresses are supported for those word operations.
 

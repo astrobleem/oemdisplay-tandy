@@ -153,7 +153,7 @@ class CPU:
             else:
                 self.IP = start
                 raise UnsupportedOpcode(f"opcode 81 /{subop} at {start:04X}")
-        elif op in (0x40, 0x48):                                                           # INC/DEC r16, preserve CF
+        elif 0x40 <= op <= 0x4F:                                                           # INC/DEC r16, preserve CF
             n = op & 7; cf = self.flag("CF")
             value = self._add(self.reg(n), 1) if op < 0x48 else self._sub(self.reg(n), 1)
             self.set_reg(n, value); self.set_flag("CF", cf)
@@ -182,7 +182,9 @@ class CPU:
             return ("far_return", self.CS, self.IP)
         elif op == 0xCD:                                                                    # intercepted host interrupt
             vector = self.fetch8()
-            if vector != 0xFF: raise UnsupportedOpcode(f"INT {vector:02X} at {start:04X}")
+            if vector != 0xFF:
+                self.IP = start
+                raise UnsupportedOpcode(f"INT {vector:02X} at {start:04X}")
             return ("host_interrupt", vector)
         else:
             self.IP = start
