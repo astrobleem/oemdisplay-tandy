@@ -1,32 +1,39 @@
 # Experimental display driver packets
 
-These packages target three different video systems. They are separate from
-Windows XT rc.6, which remains the Tandy EX/HX release. No TXT40 or TGA-II
-driver is part of this packet.
+The 2026-10-12 release covers three different video systems. PCjr also has a separate clean-Setup repository-file packet, and Yamaha Candidate 03 has two separate experimental profiles. They remain separate from Windows XT rc.6, the Tandy EX/HX release. No TXT40 or TGA-II driver is part of the 2026-10-12 release.
 
 | Machine/card | Driver and mode | Installation/recovery guide |
 | --- | --- | --- |
 | Amstrad PC1512 | PC1512.DRV, 640x200x16 | [PC1512](PC1512.TXT) |
-| IBM PCjr | TNDYJR.DRV, 320x200x16; JRGUARD before every start | [PCjr](PCJR.TXT) |
+| IBM PCjr (2026-10-12 release packet) | TNDYJR.DRV, 320x200x16; JRGUARD before every start | [PCjr cloned-install guide](PCJR.TXT) |
+| IBM PCjr (clean-Setup repository file) | PCJRSET.ZIP: TNDYJR.DRV, guard/launcher, fonts and PCjr-safe grabber | [Package guide](../../downloads/experimental/PCJR/README.MD); [direct ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PCJR/PCJRSET.ZIP), not a release asset |
 | IBM XT + Plantronics ColorPlus | PCP3216.DRV, 320x200x16 | [ColorPlus](PCP3216.TXT) |
+| Olivetti Prodest PC1, B000h | PC1YAMA.DRV, 160x200x16 | No public binary download. Build/host checks only; no emulator, Setup or physical PC1 test. [Evidence](../../docs/yamaha/QUALIFICATION.MD) |
+| Standalone Yamaha V6355D emulator profile, B800h | YAM160.DRV, 160x200x16 | No public binary download. 86Box evidence only, not PC1 qualification. [Evidence](../../docs/yamaha/QUALIFICATION.MD) |
 
 Use a bootable backup/disposable clone of your own Windows 3.0 installation.
-Historical rendering tests reused cloned AT/EGA installations. The new PCjr
-launcher qualification uses an owned Windows 3.0 clone with EGA fonts and
-CGA.GR2. Fresh Setup/font/grabber integration, DOS boxes and physical hardware
-remain unqualified.
+The PC1512 and Plantronics rendering tests reused cloned AT/EGA installations.
+The older PCJR.ZIP release packet covers a cloned install. The separate
+PCJRSET.ZIP repository file passed a DOSBox-X clean-Setup run; its 26/26
+session and 40 host tests are documented in the canonical README. Physical
+PCjr hardware remains unqualified. Yamaha B800 has 86Box Windows 3.0 evidence
+on an IBM XT with a standalone V6355D card; PC1/B000 has build/host checks only.
+Physical PC1 hardware and PC1 Setup remain untested.
 The PC1512 cursor-state failure is unresolved. PCjr has narrower Windows
 application coverage and requires an already reserved DOS-owned video page.
-The PCjr guard does not reserve RAM. The other two cards have dedicated VRAM.
+The PCjr guard does not reserve RAM. The other video cards have dedicated VRAM.
 
-The packets supply no startup logo and do not run Setup or rebuild WIN.COM.
-PC1512/ColorPlus use the existing `WIN /R`; PCjr uses JRWIN's guarded call to
-the existing `WIN.COM /R`. Its prior static art or no-logo behavior is retained.
-The independent Tandy wave is not called, and there is no automatic fallback
-or logo selection. A stock compatible Windows loader can show Microsoft's
-static logo; a modified one may show other art. The new PCjr test clone used
-the original CGA logo code plus our static WXTSPL01.RLE artwork; logo pixels
-and stock-logo compatibility on all three adapters were not separately tested.
+The 2026-10-12 release packets do not supply a startup logo or run Windows
+Setup. PC1512/ColorPlus use the existing `WIN /R`; the released PCJR.ZIP uses
+JRWIN's guarded call to the existing `WIN.COM /R`. The later PCJRSET.ZIP
+repository file is a separate clean-Setup packet with first-party fonts,
+artwork and a PCjr-safe grabber; see its [package guide](../../downloads/experimental/PCJR/README.MD).
+It is not a new asset in the 2026-10-12 release. The independent Tandy wave is
+not called and there is no automatic fallback or logo selection. A compatible
+stock Windows loader may show Microsoft's static logo; a modified one may show
+other art. The PCjr test clone used original CGA logo code plus our static
+WXTSPL01.RLE; logo pixels and stock-logo compatibility were not separately
+tested.
 
 Runtime pins and historical evidence are from
 [ba980d4ccf9092c38ea22b006373f420d0f059e2](https://github.com/astrobleem/oemdisplay-tandy/commit/ba980d4ccf9092c38ea22b006373f420d0f059e2).
@@ -35,6 +42,8 @@ source matches, 14 control cases, actual guard acceptance/refusal and two
 guarded Windows 3.0 start/normal-exit cycles at 320x200x16. Unchanged driver
 bytes retain their historical rendering scope; this new run checks display
 caps and normal exit, not a fresh full rendering oracle.
+
+Yamaha Candidate 03 is separate from the five original Tandy profiles in [docs/MODES.MD](../../docs/MODES.MD). No Yamaha binary or source ZIP is published in this repository. See [Yamaha evidence and limits](../../docs/yamaha/QUALIFICATION.MD).
 
 ## Developer verification
 
