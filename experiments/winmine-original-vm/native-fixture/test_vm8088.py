@@ -126,6 +126,11 @@ def run_vm(
             if reg == SP:
                 raise UnsupportedInstruction("POP SP is outside subset")
             registers[reg] = pop()
+        elif 0x50 <= opcode <= 0x57:
+            reg = opcode - 0x50
+            if reg == SP:
+                raise UnsupportedInstruction("PUSH SP is outside subset")
+            push(registers[reg])
         elif 0xB8 <= opcode <= 0xBF:
             reg = opcode - 0xB8
             if reg == SP:
@@ -262,6 +267,13 @@ class VM8088FarCallTests(unittest.TestCase):
     def test_legacy_smoke_bytecode_remains_available(self) -> None:
         state = run_vm(bytecode_array("g_version_bytecode"))
         self.assertEqual(state["api_calls"], ["GetVersion"])
+        self.assertEqual(state["stack_pointer"], STACK_WORDS)
+
+    def test_push_register_support_restores_native_stack(self) -> None:
+        state = run_vm(bytecode_array("g_push_register_bytecode"))
+        registers = state["registers"]
+        self.assertEqual(registers[0], 0x1357)
+        self.assertEqual(registers[3], 0x1357)
         self.assertEqual(state["stack_pointer"], STACK_WORDS)
 
     def test_unsupported_instruction_still_fails_closed(self) -> None:

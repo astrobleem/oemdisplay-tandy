@@ -1,5 +1,6 @@
 #define WINVER 0x0300
 #include <windows.h>
+#include <string.h>
 
 #define LOG_PATH "C:\\W16API.LOG"
 #define CALLBACK_COOKIE 0x13579BDFL
@@ -8,8 +9,14 @@
 #define VM_STEP_LIMIT 64
 #define VM_IMPORT_GETVERSION 1
 #define VM_CODE_SELECTOR 0x1000
+#define VM_CALLBACK_SELECTOR 0x2000
 #define VM_IMPORT_SELECTOR 0xF001
+#define VM_ENUMWINDOWS_SELECTOR 0xF002
 #define VM_IMPORT_GETVERSION_OFFSET 0x0001
+#define VM_IMPORT_ENUMWINDOWS_OFFSET 0x0001
+#define NE_FILE_PATH "C:\\W16TEST.NE"
+#define NE_FILE_LIMIT 4096
+#define NE_SEGMENT_LIMIT 256
 
 #define VM_AX 0
 #define VM_CX 1
@@ -37,6 +44,11 @@ static const BYTE g_version_bytecode[] = {
 /* CALL FAR through the VM import table, then resume at HLT. */
 static const BYTE g_farcall_version_bytecode[] = {
     0x9A, 0x01, 0x00, 0x01, 0xF0, 0xF4
+};
+
+/* PUSH r16 is used to pass the far callback and LPARAM to the NE import. */
+static const BYTE g_push_register_bytecode[] = {
+    0xB8, 0x57, 0x13, 0x50, 0x5B, 0xF4
 };
 
 /*
@@ -118,7 +130,310 @@ static int g_stop_mode = 0;
 static unsigned g_vm_callback_invocations = 0;
 static unsigned g_vm_getversion_calls = 0;
 static unsigned g_vm_far_getversion_calls = 0;
+static unsigned g_vm_far_enumwindows_calls = 0;
 static unsigned g_vm_failures = 0;
+static FARPROC g_fixture_thunk = (FARPROC)0;
+static WORD g_fixture_getversion_calls = 0;
+static WORD g_fixture_enumwindows_calls = 0;
+static DWORD g_fixture_version = 0;
+static BOOL g_fixture_enum_result = FALSE;
+static int g_use_ne_callback = 0;
+static BYTE g_ne_file[NE_FILE_LIMIT];
+static DWORD g_ne_file_size = 0;
+static BYTE g_ne_entry[NE_SEGMENT_LIMIT];
+static BYTE g_ne_callback[NE_SEGMENT_LIMIT];
+static BYTE g_ne_scratch_entry[NE_SEGMENT_LIMIT];
+static BYTE g_ne_scratch_callback[NE_SEGMENT_LIMIT];
+static WORD g_ne_entry_length = 0;
+static WORD g_ne_callback_length = 0;
+static WORD g_ne_error = 0;
+
+static BOOL ne_parse_fixture(const BYTE *data, DWORD size, int install);
+static BOOL ne_load_fixture(void);
+static BOOL ne_malformed_selftest(void);
+static BOOL vm_loaded_ne_result(DWORD *version, WORD *steps, WORD *far_calls,
+                                WORD *far_returns, WORD *final_sp,
+                                BYTE *error, BYTE *bad_opcode, WORD *error_ip);
+
+static int ne_span(DWORD offset, DWORD length, DWORD size)
+{
+    return offset <= size && length <= size - offset;
+}
+
+static WORD ne_u16(const BYTE *data, DWORD offset)
+{
+    return (WORD)((WORD)data[offset] | ((WORD)data[offset + 1] << 8));
+}
+
+static DWORD ne_u32(const BYTE *data, DWORD offset)
+{
+    return (DWORD)data[offset] | ((DWORD)data[offset + 1] << 8) |
+           ((DWORD)data[offset + 2] << 16) | ((DWORD)data[offset + 3] << 24);
+}
+
+static int ne_name_is(const BYTE *data, DWORD size, DWORD table,
+                      WORD name_offset, const char FAR *expected)
+{
+    DWORD position = table + name_offset;
+    BYTE length;
+    UINT expected_length;
+    UINT i;
+
+    if (!ne_span(position, 1, size))
+        return 0;
+    length = data[position];
+    expected_length = (UINT)lstrlen(expected);
+    if (length != expected_length || !ne_span(position + 1, length, size))
+        return 0;
+    for (i = 0; i < expected_length; ++i) {
+        if (data[position + 1 + i] != (BYTE)expected[i])
+            return 0;
+    }
+    return 1;
+}
+
+/* Strict native loader for the generated two-segment, two-import NE fixture. */
+static BOOL ne_parse_fixture(const BYTE *data, DWORD size, int install)
+{
+    DWORD ne_offset;
+    DWORD segment_table;
+    DWORD module_table;
+    DWORD import_table;
+    DWORD import_names;
+    DWORD segment_file[2];
+    WORD segment_length[2];
+    WORD segment_flags[2];
+    WORD module_name_offset[2];
+    WORD entry_length;
+    WORD callback_length;
+    WORD relocation_count;
+    WORD source_type;
+    WORD target_flags;
+    WORD source_offset;
+    WORD target1;
+    WORD target2;
+    WORD module_ref;
+    WORD import_offset;
+    WORD import_selector;
+    WORD target_offset;
+    DWORD reloc_base;
+    DWORD record;
+    DWORD minimum_data_offset;
+    int i;
+
+    g_ne_error = 0;
+    if (!ne_span(0, 0x40, size) || data[0] != 'M' || data[1] != 'Z') {
+        g_ne_error = 1;
+        return FALSE;
+    }
+    ne_offset = ne_u32(data, 0x3C);
+    if (!ne_span(ne_offset, 0x40, size) ||
+        data[ne_offset] != 'N' || data[ne_offset + 1] != 'E') {
+        g_ne_error = 2;
+        return FALSE;
+    }
+    if (ne_u16(data, ne_offset + 6) != 0 ||
+        ne_u16(data, ne_offset + 0x1C) != 2 ||
+        ne_u16(data, ne_offset + 0x1E) != 2 ||
+        ne_u16(data, ne_offset + 0x14) != 0 ||
+        ne_u16(data, ne_offset + 0x16) != 1 ||
+        ne_u16(data, ne_offset + 0x1A) != 2 ||
+        ne_u16(data, ne_offset + 0x32) != 4 ||
+        data[ne_offset + 0x36] != 2 ||
+        ne_u16(data, ne_offset + 0x22) < 0x40) {
+        g_ne_error = 3;
+        return FALSE;
+    }
+    segment_table = ne_offset + ne_u16(data, ne_offset + 0x22);
+    module_table = ne_offset + ne_u16(data, ne_offset + 0x28);
+    import_table = ne_offset + ne_u16(data, ne_offset + 0x2A);
+    if (!ne_span(segment_table, 16, size) ||
+        !ne_span(module_table, 4, size) ||
+        import_table < module_table + 4 || !ne_span(import_table, 1, size)) {
+        g_ne_error = 4;
+        return FALSE;
+    }
+    import_names = import_table;
+    module_name_offset[0] = ne_u16(data, module_table);
+    module_name_offset[1] = ne_u16(data, module_table + 2);
+    if (!ne_name_is(data, size, import_names, module_name_offset[0], "KERNEL") ||
+        !ne_name_is(data, size, import_names, module_name_offset[1], "USER")) {
+        g_ne_error = 5;
+        return FALSE;
+    }
+    minimum_data_offset = import_table + 1;
+
+    for (i = 0; i < 2; ++i) {
+        DWORD row = segment_table + (DWORD)i * 8;
+        WORD sector = ne_u16(data, row);
+        WORD stored = ne_u16(data, row + 2);
+        WORD minimum = ne_u16(data, row + 6);
+        segment_flags[i] = ne_u16(data, row + 4);
+        if (sector == 0 || stored == 0 || stored > NE_SEGMENT_LIMIT ||
+            (minimum != 0 && minimum < stored) ||
+            !(segment_flags[i] & 0x0100)) {
+            g_ne_error = 6;
+            return FALSE;
+        }
+        segment_file[i] = (DWORD)sector << 4;
+        segment_length[i] = stored;
+        if (segment_file[i] < minimum_data_offset ||
+            !ne_span(segment_file[i], stored, size)) {
+            g_ne_error = 6;
+            return FALSE;
+        }
+    }
+    if (segment_file[0] + segment_length[0] + 18 > segment_file[1] ||
+        segment_file[0] + segment_length[0] + 18 > size ||
+        segment_file[1] + segment_length[1] + 10 > size) {
+        g_ne_error = 7;
+        return FALSE;
+    }
+    entry_length = segment_length[0];
+    callback_length = segment_length[1];
+    if (entry_length != 27 || callback_length != 48) {
+        g_ne_error = 8;
+        return FALSE;
+    }
+    memcpy(g_ne_scratch_entry, data + segment_file[0], entry_length);
+    memcpy(g_ne_scratch_callback, data + segment_file[1], callback_length);
+
+    /* Entry segment: two named imported far pointers, KERNEL then USER. */
+    reloc_base = segment_file[0] + entry_length;
+    relocation_count = ne_u16(data, reloc_base);
+    if (relocation_count != 2) {
+        g_ne_error = 9;
+        return FALSE;
+    }
+    for (i = 0; i < 2; ++i) {
+        record = reloc_base + 2 + (DWORD)i * 8;
+        source_type = data[record];
+        target_flags = data[record + 1];
+        source_offset = ne_u16(data, record + 2);
+        target1 = ne_u16(data, record + 4);
+        target2 = ne_u16(data, record + 6);
+        module_ref = (WORD)(i + 1);
+        import_offset = (WORD)1;
+        import_selector = (WORD)(0xF000 + module_ref);
+        if (source_type != 3 || target_flags != 6 ||
+            source_offset != (i == 0 ? 1 : 22) || target1 != module_ref ||
+            source_offset + 4 > entry_length ||
+            (i == 0 && !ne_name_is(data, size, import_names, target2, "GetVersion")) ||
+            (i == 1 && !ne_name_is(data, size, import_names, target2, "EnumWindows"))) {
+            g_ne_error = 10;
+            return FALSE;
+        }
+        target_offset = (WORD)(import_offset + ne_u16(g_ne_scratch_entry, source_offset));
+        g_ne_scratch_entry[source_offset] = (BYTE)(target_offset & 0xFF);
+        g_ne_scratch_entry[source_offset + 1] = (BYTE)(target_offset >> 8);
+        g_ne_scratch_entry[source_offset + 2] = (BYTE)(import_selector & 0xFF);
+        g_ne_scratch_entry[source_offset + 3] = (BYTE)(import_selector >> 8);
+    }
+    if (g_ne_scratch_entry[0] != 0x9A || g_ne_scratch_entry[21] != 0x9A ||
+        g_ne_scratch_entry[26] != 0xF4) {
+        g_ne_error = 11;
+        return FALSE;
+    }
+
+    /* Callback segment: one true internal far pointer to segment 2:0006. */
+    reloc_base = segment_file[1] + callback_length;
+    relocation_count = ne_u16(data, reloc_base);
+    if (relocation_count != 1 || data[reloc_base + 2] != 3 ||
+        data[reloc_base + 3] != 4 ||
+        ne_u16(data, reloc_base + 4) != 1 ||
+        ne_u16(data, reloc_base + 6) != 2 ||
+        ne_u16(data, reloc_base + 8) != 6) {
+        g_ne_error = 12;
+        return FALSE;
+    }
+    target_offset = (WORD)(6 + ne_u16(g_ne_scratch_callback, 1));
+    g_ne_scratch_callback[1] = (BYTE)(target_offset & 0xFF);
+    g_ne_scratch_callback[2] = (BYTE)(target_offset >> 8);
+    g_ne_scratch_callback[3] = (BYTE)(VM_CALLBACK_SELECTOR & 0xFF);
+    g_ne_scratch_callback[4] = (BYTE)(VM_CALLBACK_SELECTOR >> 8);
+    if (g_ne_scratch_callback[0] != 0x9A ||
+        g_ne_scratch_callback[5] != 0xF4) {
+        g_ne_error = 13;
+        return FALSE;
+    }
+    if (install) {
+        memcpy(g_ne_entry, g_ne_scratch_entry, entry_length);
+        memcpy(g_ne_callback, g_ne_scratch_callback, callback_length);
+        g_ne_entry_length = entry_length;
+        g_ne_callback_length = callback_length;
+    }
+    return TRUE;
+}
+
+static BOOL ne_load_fixture(void)
+{
+    HFILE file;
+    LONG file_size;
+    UINT bytes_read;
+
+    file = _lopen(NE_FILE_PATH, OF_READ);
+    if (file == (HFILE)-1) {
+        g_ne_error = 14;
+        return FALSE;
+    }
+    file_size = _llseek(file, 0L, 2);
+    if (file_size <= 0 || file_size > NE_FILE_LIMIT ||
+        _llseek(file, 0L, 0) != 0L) {
+        _lclose(file);
+        g_ne_error = 15;
+        return FALSE;
+    }
+    bytes_read = _lread(file, (LPSTR)g_ne_file, (UINT)file_size);
+    _lclose(file);
+    if (bytes_read != (UINT)file_size) {
+        g_ne_error = 16;
+        return FALSE;
+    }
+    g_ne_file_size = (DWORD)file_size;
+    if (!ne_parse_fixture(g_ne_file, g_ne_file_size, 1))
+        return FALSE;
+    return ne_malformed_selftest();
+}
+
+static BOOL ne_malformed_selftest(void)
+{
+    BYTE saved;
+    BYTE saved_low;
+    BYTE saved_high;
+    BOOL rejected;
+    DWORD ne_offset;
+    DWORD segment_table;
+    DWORD entry_file;
+    DWORD relocation_record;
+    DWORD source_offset;
+
+    saved = g_ne_file[0];
+    g_ne_file[0] = 'X';
+    rejected = !ne_parse_fixture(g_ne_file, g_ne_file_size, 0);
+    g_ne_file[0] = saved;
+    if (!rejected)
+        return FALSE;
+    saved = g_ne_file[0x40];
+    g_ne_file[0x40] = 'X';
+    rejected = !ne_parse_fixture(g_ne_file, g_ne_file_size, 0);
+    g_ne_file[0x40] = saved;
+    if (!rejected)
+        return FALSE;
+    ne_offset = ne_u32(g_ne_file, 0x3C);
+    segment_table = ne_offset + ne_u16(g_ne_file, ne_offset + 0x22);
+    entry_file = (DWORD)ne_u16(g_ne_file, segment_table) << 4;
+    relocation_record = entry_file + ne_u16(g_ne_file, segment_table + 2) + 2;
+    source_offset = relocation_record + 4;
+    saved_low = g_ne_file[source_offset];
+    saved_high = g_ne_file[source_offset + 1];
+    g_ne_file[source_offset] = 3;
+    g_ne_file[source_offset + 1] = 0;
+    rejected = !ne_parse_fixture(g_ne_file, g_ne_file_size, 0);
+    g_ne_file[source_offset] = saved_low;
+    g_ne_file[source_offset + 1] = saved_high;
+    g_ne_error = 0;
+    return rejected;
+}
 
 static void put_text(const char FAR *text)
 {
@@ -195,7 +510,8 @@ static void vm_init(VM8088 *vm)
 static int vm_fetch8(VM8088 *vm, const BYTE *program, unsigned program_size,
                      BYTE *value)
 {
-    if (vm->cs != VM_CODE_SELECTOR || vm->ip >= program_size) {
+    if ((vm->cs != VM_CODE_SELECTOR && vm->cs != VM_CALLBACK_SELECTOR) ||
+        vm->ip >= program_size) {
         vm->error = VM_ERR_BOUNDS;
         vm->error_ip = vm->ip;
         return 0;
@@ -318,17 +634,39 @@ static int vm_import_dispatch(VM8088 *vm)
 static int vm_far_import_dispatch(VM8088 *vm)
 {
     DWORD version;
+    DWORD cookie;
+    WORD sp;
 
-    if (vm->cs != VM_IMPORT_SELECTOR ||
-        vm->ip != VM_IMPORT_GETVERSION_OFFSET) {
-        vm->error = VM_ERR_IMPORT;
-        return 0;
+    if (vm->cs == VM_IMPORT_SELECTOR &&
+        vm->ip == VM_IMPORT_GETVERSION_OFFSET) {
+        version = GetVersion();
+        vm->reg[VM_AX] = (WORD)(version & 0xFFFFUL);
+        vm->reg[VM_DX] = (WORD)((version >> 16) & 0xFFFFUL);
+        ++g_vm_far_getversion_calls;
+        ++g_fixture_getversion_calls;
+        g_fixture_version = version;
+        return vm_retf(vm, 0);
     }
-    version = GetVersion();
-    vm->reg[VM_AX] = (WORD)(version & 0xFFFFUL);
-    vm->reg[VM_DX] = (WORD)((version >> 16) & 0xFFFFUL);
-    ++g_vm_far_getversion_calls;
-    return vm_retf(vm, 0);
+    if (vm->cs == VM_ENUMWINDOWS_SELECTOR &&
+        vm->ip == VM_IMPORT_ENUMWINDOWS_OFFSET) {
+        sp = vm->reg[VM_SP];
+        if (g_fixture_thunk == (FARPROC)0 ||
+            (unsigned)sp + 6 > VM_STACK_WORDS ||
+            vm->stack[sp + 2] != 0 ||
+            vm->stack[sp + 3] != VM_CALLBACK_SELECTOR) {
+            vm->error = VM_ERR_IMPORT;
+            return 0;
+        }
+        cookie = ((DWORD)vm->stack[sp + 5] << 16) | vm->stack[sp + 4];
+        g_fixture_enum_result = EnumWindows((WNDENUMPROC)g_fixture_thunk,
+                                             (LPARAM)cookie);
+        vm->reg[VM_AX] = (WORD)(g_fixture_enum_result ? 1 : 0);
+        ++g_vm_far_enumwindows_calls;
+        ++g_fixture_enumwindows_calls;
+        return vm_retf(vm, 8);
+    }
+    vm->error = VM_ERR_IMPORT;
+    return 0;
 }
 
 /*
@@ -356,12 +694,13 @@ static int vm_run(VM8088 *vm, const BYTE *program, unsigned program_size)
         vm->error_ip = vm->ip;
         vm->error_opcode = 0x9A;
         vm->steps = (WORD)(step + 1);
-        if (vm->cs == VM_IMPORT_SELECTOR) {
+        if (vm->cs == VM_IMPORT_SELECTOR ||
+            vm->cs == VM_ENUMWINDOWS_SELECTOR) {
             if (!vm_far_import_dispatch(vm))
                 return 0;
             continue;
         }
-        if (vm->cs != VM_CODE_SELECTOR) {
+        if (vm->cs != VM_CODE_SELECTOR && vm->cs != VM_CALLBACK_SELECTOR) {
             vm->error = VM_ERR_IMPORT;
             return 0;
         }
@@ -385,8 +724,13 @@ static int vm_run(VM8088 *vm, const BYTE *program, unsigned program_size)
             if (!vm_fetch16(vm, program, program_size, &immediate))
                 return 0;
             vm->reg[reg_index] = immediate;
-        } else if (opcode == 0x55) {
-            if (!vm_push16(vm, vm->reg[VM_BP]))
+        } else if (opcode >= 0x50 && opcode <= 0x57) {
+            reg_index = (unsigned)(opcode - 0x50);
+            if (reg_index == VM_SP) {
+                vm->error = VM_ERR_STACK;
+                return 0;
+            }
+            if (!vm_push16(vm, vm->reg[reg_index]))
                 return 0;
         } else if (opcode == 0x89 || opcode == 0x8B) {
             if (!vm_fetch8(vm, program, program_size, &modrm))
@@ -594,6 +938,8 @@ static BOOL vm_callback_result(HWND hwnd, LPARAM cookie, int stop_mode,
 }
 
 static BOOL vm_callback_far_result(HWND hwnd, LPARAM cookie, int stop_mode,
+                                   const BYTE *program, unsigned program_size,
+                                   WORD callback_selector,
                                    WORD *result, WORD *steps, WORD *final_sp,
                                    WORD *far_calls, WORD *far_returns,
                                    WORD *retf_bytes, WORD *return_cs,
@@ -604,13 +950,13 @@ static BOOL vm_callback_far_result(HWND hwnd, LPARAM cookie, int stop_mode,
     DWORD cookie_bits = (DWORD)cookie;
 
     vm_init(&vm);
+    vm.cs = callback_selector;
     vm.reg[VM_CX] = (WORD)stop_mode;
     /* Win16 Pascal order: HWND, then LPARAM high word, then LPARAM low word. */
     if (!vm_push16(&vm, (WORD)hwnd) ||
         !vm_push16(&vm, (WORD)((cookie_bits >> 16) & 0xFFFFUL)) ||
         !vm_push16(&vm, (WORD)(cookie_bits & 0xFFFFUL)) ||
-        !vm_run(&vm, g_far_callback_bytecode,
-                sizeof(g_far_callback_bytecode))) {
+        !vm_run(&vm, program, program_size)) {
         *error = vm.error;
         *bad_opcode = vm.error_opcode;
         *error_ip = vm.error_ip;
@@ -624,9 +970,9 @@ static BOOL vm_callback_far_result(HWND hwnd, LPARAM cookie, int stop_mode,
     *return_cs = vm.last_return_cs;
     *return_ip = vm.last_return_ip;
     *final_bp = vm.reg[VM_BP];
-    if (*final_sp != VM_STACK_WORDS || vm.cs != VM_CODE_SELECTOR ||
+    if (*final_sp != VM_STACK_WORDS || vm.cs != callback_selector ||
         vm.ip != 6 || *far_calls != 1 || *far_returns != 1 ||
-        *retf_bytes != 6 || *return_cs != VM_CODE_SELECTOR ||
+        *retf_bytes != 6 || *return_cs != callback_selector ||
         *return_ip != 5 || *final_bp != 0) {
         *error = VM_ERR_STACK;
         *bad_opcode = 0;
@@ -684,6 +1030,9 @@ static BOOL vm_far_cookie_selftest(WORD *steps, WORD *final_sp,
 
     if (!vm_callback_far_result((HWND)0x2468,
                                 (LPARAM)(CALLBACK_COOKIE ^ 1L), 0,
+                                g_far_callback_bytecode,
+                                sizeof(g_far_callback_bytecode),
+                                VM_CODE_SELECTOR,
                                 &result, steps, final_sp,
                                 &far_calls, &far_returns, retf_bytes,
                                 return_cs, return_ip, &final_bp,
@@ -714,6 +1063,68 @@ static BOOL vm_unknown_far_import_selftest(void)
     if (vm_run(&vm, unknown_import, sizeof(unknown_import)))
         return FALSE;
     return vm.error == VM_ERR_IMPORT && vm.error_opcode == 0x9A;
+}
+
+static BOOL vm_push_register_selftest(void)
+{
+    VM8088 vm;
+
+    vm_init(&vm);
+    if (!vm_run(&vm, g_push_register_bytecode,
+                sizeof(g_push_register_bytecode)))
+        return FALSE;
+    return vm.reg[VM_AX] == 0x1357 && vm.reg[VM_BX] == 0x1357 &&
+           vm.reg[VM_SP] == VM_STACK_WORDS;
+}
+
+static BOOL vm_loaded_ne_result(DWORD *version, WORD *steps, WORD *far_calls,
+                                WORD *far_returns, WORD *final_sp,
+                                BYTE *error, BYTE *bad_opcode, WORD *error_ip)
+{
+    VM8088 vm;
+    unsigned callbacks_before = g_vm_callback_invocations;
+
+    if (g_fixture_thunk == (FARPROC)0 || g_ne_entry_length == 0 ||
+        g_ne_callback_length == 0) {
+        *error = VM_ERR_IMPORT;
+        *bad_opcode = 0;
+        *error_ip = 0;
+        return FALSE;
+    }
+    g_fixture_getversion_calls = 0;
+    g_fixture_enumwindows_calls = 0;
+    g_fixture_version = 0;
+    g_fixture_enum_result = FALSE;
+    vm_init(&vm);
+    g_use_ne_callback = 1;
+    if (!vm_run(&vm, g_ne_entry, g_ne_entry_length)) {
+        g_use_ne_callback = 0;
+        *error = vm.error;
+        *bad_opcode = vm.error_opcode;
+        *error_ip = vm.error_ip;
+        *final_sp = vm.reg[VM_SP];
+        return FALSE;
+    }
+    g_use_ne_callback = 0;
+    *steps = vm.steps;
+    *far_calls = vm.far_calls;
+    *far_returns = vm.far_returns;
+    *final_sp = vm.reg[VM_SP];
+    if (vm.cs != VM_CODE_SELECTOR || vm.ip != g_ne_entry_length ||
+        *final_sp != VM_STACK_WORDS || *far_calls != 2 || *far_returns != 2 ||
+        g_fixture_getversion_calls != 1 || g_fixture_enumwindows_calls != 1 ||
+        g_fixture_version == 0 || !g_fixture_enum_result ||
+        g_vm_callback_invocations == callbacks_before || g_vm_failures != 0) {
+        *error = VM_ERR_STACK;
+        *bad_opcode = 0;
+        *error_ip = vm.ip;
+        return FALSE;
+    }
+    *version = g_fixture_version;
+    *error = VM_ERR_NONE;
+    *bad_opcode = 0;
+    *error_ip = 0;
+    return TRUE;
 }
 
 static void log_vm_result(WORD result, WORD steps, WORD final_sp)
@@ -764,9 +1175,17 @@ BOOL FAR PASCAL EnumProc(HWND hwnd, LPARAM cookie)
     BYTE error = VM_ERR_NONE;
     BYTE bad_opcode = 0;
     WORD error_ip = 0;
+    const BYTE *callback_program = g_use_ne_callback ?
+                                   g_ne_callback : g_far_callback_bytecode;
+    unsigned callback_size = g_use_ne_callback ?
+                             g_ne_callback_length : sizeof(g_far_callback_bytecode);
+    WORD callback_selector = g_use_ne_callback ?
+                             VM_CALLBACK_SELECTOR : VM_CODE_SELECTOR;
 
     ++g_vm_callback_invocations;
     if (!vm_callback_far_result(hwnd, cookie, g_stop_mode,
+                                callback_program, callback_size,
+                                callback_selector,
                                 &result, &steps, &final_sp,
                                 &far_calls, &far_returns, &retf_bytes,
                                 &return_cs, &return_ip, &final_bp,
@@ -821,6 +1240,9 @@ int PASCAL WinMain(HINSTANCE instance, HINSTANCE previous,
     WORD retf_bytes = 0;
     WORD return_cs = 0;
     WORD return_ip = 0;
+    WORD ne_far_calls = 0;
+    WORD ne_far_returns = 0;
+    WORD ne_final_sp = 0;
     BYTE vm_error = VM_ERR_NONE;
     BYTE vm_bad_opcode = 0;
     WORD vm_error_ip = 0;
@@ -837,6 +1259,14 @@ int PASCAL WinMain(HINSTANCE instance, HINSTANCE previous,
         return 2;
 
     put_text("Native Win16 API fixture\r\n");
+    if (!ne_load_fixture()) {
+        put_text("FAIL NE fixture load error=");
+        put_decimal(g_ne_error);
+        put_newline();
+        failures = 1;
+    } else {
+        put_text("NE loader=PASS segments=2 imports=KERNEL!GetVersion,USER!EnumWindows malformed=PASS\r\n");
+    }
     if (!vm_getversion(&smoke_version, &vm_steps,
                        &vm_error, &vm_bad_opcode, &vm_error_ip)) {
         put_text("FAIL VM smoke GetVersion error=");
@@ -947,6 +1377,12 @@ int PASCAL WinMain(HINSTANCE instance, HINSTANCE previous,
     } else {
         put_text("VM unsupported opcode fail-closed=PASS\r\n");
     }
+    if (!vm_push_register_selftest()) {
+        put_text("FAIL VM PUSH register selftest\r\n");
+        failures = 1;
+    } else {
+        put_text("VM PUSH register stack=PASS\r\n");
+    }
     if (!vm_unknown_far_import_selftest()) {
         put_text("FAIL VM unknown far import was not rejected\r\n");
         failures = 1;
@@ -968,6 +1404,43 @@ int PASCAL WinMain(HINSTANCE instance, HINSTANCE previous,
             put_text("FAIL MakeProcInstance\r\n");
             failures = 1;
         } else {
+            if (g_ne_entry_length != 0) {
+                DWORD ne_version = 0;
+                WORD ne_steps = 0;
+
+                g_fixture_thunk = thunk;
+                if (!vm_loaded_ne_result(&ne_version, &ne_steps,
+                                         &ne_far_calls, &ne_far_returns,
+                                         &ne_final_sp, &vm_error,
+                                         &vm_bad_opcode, &vm_error_ip)) {
+                    put_text("FAIL loaded NE VM error=");
+                    put_text(vm_error_name(vm_error));
+                    put_text(" opcode=0x");
+                    put_hex(vm_bad_opcode, 2);
+                    put_text(" ip=0x");
+                    put_hex(vm_error_ip, 4);
+                    put_newline();
+                    failures = 1;
+                } else {
+                    put_text("NE loaded file CALL=PASS GetVersion=0x");
+                    put_hex(ne_version, 8);
+                    put_text(" EnumWindows=");
+                    put_decimal((unsigned)g_fixture_enum_result);
+                    put_text(" callbacks=");
+                    put_decimal(g_all_count);
+                    put_text(" far_calls=");
+                    put_decimal(ne_far_calls);
+                    put_text(" retf=");
+                    put_decimal(ne_far_returns);
+                    put_text(" stack=");
+                    put_decimal(ne_final_sp == VM_STACK_WORDS ? 1 : 0);
+                    put_text(" steps=");
+                    put_decimal(ne_steps);
+                    put_newline();
+                }
+                g_fixture_thunk = (FARPROC)0;
+                g_use_ne_callback = 0;
+            }
             put_text("EnumWindows all-pass begin\r\n");
             enum_result = EnumWindows((WNDENUMPROC)thunk,
                                       (LPARAM)CALLBACK_COOKIE);

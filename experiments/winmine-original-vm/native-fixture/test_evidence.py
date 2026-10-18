@@ -29,7 +29,12 @@ FAR_PATTERNS = (
 )
 
 
-def validate_record(directory: Path, patterns: tuple[str, ...]) -> tuple[str, ...]:
+def validate_record(
+    directory: Path,
+    patterns: tuple[str, ...],
+    *,
+    tested_source: Path | None = None,
+) -> tuple[str, ...]:
     errors: list[str] = []
     manifest_path = directory / "MANIFEST.json"
     try:
@@ -62,8 +67,8 @@ def validate_record(directory: Path, patterns: tuple[str, ...]) -> tuple[str, ..
             errors.append(f"manifest must explicitly set {key}=false")
 
     normalized_source_hash = manifest.get("source_file_sha256_lf_normalized")
-    if normalized_source_hash is not None:
-        source = Path(__file__).with_name("W16APIN.C").read_bytes()
+    if normalized_source_hash is not None and tested_source is not None:
+        source = tested_source.read_bytes()
         source = source.replace(b"\r\n", b"\n")
         if normalized_source_hash != hashlib.sha256(source).hexdigest():
             errors.append("source file no longer matches the tested run record")
@@ -137,6 +142,20 @@ class NativeFixtureEvidenceTests(unittest.TestCase):
     def test_farcall_retf_evidence_is_hashed_and_complete(self) -> None:
         self.assertEqual(
             validate_record(EVIDENCE / "farcall-retf6-20261018", FAR_PATTERNS), ()
+        )
+
+    def test_farcall_record_keeps_its_historical_source_identity(self) -> None:
+        manifest = json.loads(
+            (EVIDENCE / "farcall-retf6-20261018" / "MANIFEST.json").read_text(
+                encoding="ascii"
+            )
+        )
+        self.assertEqual(
+            manifest["source_commit"], "2e4753f812211686a9e219527236a7782e13ca0e"
+        )
+        self.assertEqual(
+            manifest["source_file_sha256_lf_normalized"],
+            "d2745b2567b80c6beb0f5e8248b2d53d18449e43b211847d606da38b3f54dccd",
         )
 
     def test_missing_raw_log_cannot_pass(self) -> None:
