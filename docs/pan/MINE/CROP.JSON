@@ -1,0 +1,46 @@
+{
+  "label": "Cropped emulator captures",
+  "method": "Pillow lossless integer crop, no generation, no resampling, no retouching. Removes only the verified surrounding black area. Original captures retained separately.",
+  "items": [
+    {
+      "file": "Minesweeper-left-viewport-cropped.png",
+      "source": "Minesweeper-left-revealed-original.png",
+      "source_sha256": "841b42441c041fe29b85751d3d28ea300ef39067017581a9b9310e209464861c",
+      "sha256": "3248200ff78107928dde16280c47b2ec10a22a196ab44e2f1e44dc708ffc5852",
+      "bytes": 3254,
+      "crop_box_exclusive": [
+        8,
+        38,
+        648,
+        238
+      ],
+      "pixels": [
+        640,
+        200
+      ],
+      "scale_changed": false,
+      "pixel_values_changed": false,
+      "label": "Cropped emulator capture"
+    },
+    {
+      "file": "Minesweeper-right-viewport-cropped.png",
+      "source": "Minesweeper-panned-right-original.png",
+      "source_sha256": "eb51e00c661b17fd9869c23a3104d06921b5ed11a58bc5c29b56d3733ce3cb74",
+      "sha256": "8c084a1079f4c51abcd99e4c23496e8b4115cba7b5ea0fbd38f5c4e033a8c14a",
+      "bytes": 3507,
+      "crop_box_exclusive": [
+        8,
+        38,
+        648,
+        238
+      ],
+      "pixels": [
+        640,
+        200
+      ],
+      "scale_changed": false,
+      "pixel_values_changed": false,
+      "label": "Cropped emulator capture"
+    }
+  ]
+}

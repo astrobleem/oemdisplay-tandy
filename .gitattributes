@@ -67,3 +67,6 @@ experiments/DISPLAY3/** -text
 
 # RoundRect evidence keeps the probe's exact CRLF log bytes.
 docs/rrect/** -text
+tools/WHEEL/WIN16/** -text
+downloads/experimental/WINWHL/** -text
+docs/pan/MINE/** -text
