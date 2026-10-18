@@ -113,13 +113,20 @@ C25 matches its recorded Windows-tested binary (54/54 in 86Box XT/CGA).
 The other current rebuilds have fresh audits/presenter checks; their earlier
 Windows GUI sessions used different binary hashes. The older rc.6 TXTMODE
 feasibility driver is historical.
-Olivetti PC1/Yamaha has no public driver package, source packet, or machine-specific
-emulator capture/qualification record ([front door](https://github.com/astrobleem/windows-3-olivetti-pc1)); no download is available, and hardware
-support remains unqualified.
+Yamaha Candidate 03 has no public driver binary or source packet. Its published original
+B800 86Box capture and test summary describe a standalone Yamaha V6355D profile on an
+emulated IBM XT; this is not a PC1 screenshot or hardware qualification. PC1/B000 has
+build and host checks only, with no emulator, Setup, or physical PC1 test. See the
+[Olivetti front door](https://github.com/astrobleem/windows-3-olivetti-pc1) and
+[qualification record](docs/yamaha/QUALIFICATION.MD).
 
-The physical HPAN R3 run is accepted; no public package or evidence bundle
-is published. The combined HPXY candidate remains private and emulator-tested;
-physical XY qualification is pending and no public download is available.
+HPAN R3 and HPXY R1 are experimental repository-file downloads, not GitHub Release assets:
+[HPAN R3 ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/hpan-hpxy/HPAN-R3-PHYSICAL-ACCEPTANCE.zip) ·
+[HPXY R1 ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/hpan-hpxy/HPXY-R1-EXPERIMENTAL.zip) ·
+[package guide and original emulator captures](downloads/experimental/hpan-hpxy/README.md).
+HPAN R3 separates its 86Box run from a `USER_ACCEPTED_PARTIAL` physical run and marks hardware
+qualification false. HPXY R1 has emulator evidence only; physical XY operation is untested.
+The HPXY ZIP includes the nine first-party HPAN source files required by `XYPATCH.PY`.
 
 For mode details, the text-mode experiment, app guides, long filename
 requirements and recovery, see the [user manual](docs/USERMAN.MD).
