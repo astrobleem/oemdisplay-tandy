@@ -1,6 +1,8 @@
 {
  "reference": "out3_base",
  "candidate": "out3_candidate-trace",
+ "runs_complete": true,
+ "problems": {},
  "all_frames_equal": true,
  "stages": [
   {
@@ -12,6 +14,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 20,
    "ref_ms": 64317,
    "cand_ms": 4833
   },
@@ -24,6 +27,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 20,
    "ref_ms": 20816,
    "cand_ms": 2032
   },
@@ -36,6 +40,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 6,
    "ref_ms": 19938,
    "cand_ms": 2581
   },
@@ -48,6 +53,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 20,
    "ref_ms": 20926,
    "cand_ms": 2142
   },
@@ -60,6 +66,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 20,
    "ref_ms": 43281,
    "cand_ms": 2636
   },
@@ -72,6 +79,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 20,
    "ref_ms": 63877,
    "cand_ms": 4504
   },
@@ -84,6 +92,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 20,
    "ref_ms": 63988,
    "cand_ms": 4504
   },
@@ -96,6 +105,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 20,
    "ref_ms": 51080,
    "cand_ms": 1922
   },
@@ -108,6 +118,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 4,
    "ref_ms": 12688,
    "cand_ms": 769
   },
@@ -120,6 +131,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 20,
    "ref_ms": 71073,
    "cand_ms": 9557
   },
@@ -132,6 +144,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 1,
    "ref_ms": [
     92549,
     92548,
@@ -152,6 +165,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 1,
    "ref_ms": [
     13566,
     13622,
@@ -172,6 +186,7 @@
     "differing_bytes": 0
    },
    "same_name_and_api_results": true,
+   "api_successes": 1,
    "ref_ms": [
     36745,
     36140,

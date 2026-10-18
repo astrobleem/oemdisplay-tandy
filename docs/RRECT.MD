@@ -142,11 +142,26 @@ Each stage starts from a white screen with the cursor hidden. The probe
 times each batch with GetTickCount (about 55 ms resolution), then saves
 the 32 KB B800h frame.
 
-[RRCMP.PY](../src/rrect/RRCMP.PY) passes only frames that are
-byte-identical across all 32,768 bytes, including bank padding, and
-only when both runs have the same stage names and API success counts.
-Timings are reported but never compared
-([C_CAND.TXT](rrect/C_CAND.TXT)).
+[RRCMP.PY](../src/rrect/RRCMP.PY) first checks that each run's log is
+complete, and refuses to compare two equally incomplete runs. A complete
+log has:
+
+* `COMPLETE=1` as its last line, exactly once;
+* every stage the probe version runs, in order;
+* in every batch, `COUNT`, a timing and `API_SUCCESSES` equal to `COUNT`;
+* every application found and titled, with three repaint timings;
+* every frame dump written at 32,768 bytes;
+* every clear successful.
+
+It then passes only frames that are byte-identical across all 32,768
+bytes, including bank padding, and only when both runs have the same
+probe setup, stage names, API counts and window titles. Timings are
+reported but never compared ([C_CAND.TXT](rrect/C_CAND.TXT)).
+
+The raw probe logs are committed: `rrect/<run>/RRBENCH.LOG`. They hold
+every call count and timing sample, and each is the exact file whose
+SHA-256 the run recorded in its `RRRUN.JSN`. The screenshot runs'
+frames also compare equal ([C_SHOT.TXT](rrect/C_SHOT.TXT)).
 
 | Stage | What it draws | Unchanged | Candidate | Frame |
 | --- | --- | --- | --- | --- |
@@ -195,11 +210,27 @@ The stages that stay equal show what each stage can and cannot detect:
   the fill rows, so it hides a missing fill copy.
 
 The NULL_PEN stage exists to catch that second case. The host tests in
-[RRTEST.PY](../src/rrect/RRTEST.PY) cover the checker itself: one
-changed pixel, a padding byte, a missing dump, a missing stage or a
-different API result each fail, and a changed timing does not. They also
-check the patch anchors (missing or repeated anchors are refused) and
-that the committed comparisons say what this page says.
+[RRTEST.PY](../src/rrect/RRTEST.PY) cover the checker itself.
+
+Each of these makes RRCMP fail, even when both runs share the same fault:
+
+* a log truncated at any stage boundary or before its last line;
+* a missing, empty or short `API_SUCCESSES`, or a missing `COUNT`;
+* a missing stage or application, two repaints instead of three, or a short dump;
+* a failed clear, a missing title or version, or a misplaced or repeated `COMPLETE=1`.
+
+These also fail:
+
+* one changed pixel or padding byte;
+* a missing dump file;
+* a different API count or title, or a different probe setup.
+
+A changed timing does not fail. The tests also check that:
+
+* the patch anchors are refused when missing or repeated;
+* every committed log is complete, matches its recorded hash, and fails
+  once truncated;
+* the committed comparisons are complete and say what this page says.
 `.github/workflows/rrect.yml` runs them.
 
 ## 6. Reproducing
@@ -208,7 +239,8 @@ Commands and the pinned inputs they need are in each script's header.
 The external inputs follow [BUILDDEPS](../tools/BUILDDEPS/README.MD): a
 DDK/toolchain view, DOSBox-X, 86Box 6.0 with Tandy 1000 HX ROMs, and
 your own Windows 3.0 and PC DOS media. None of these are in this
-repository; nor are the drivers, frame dumps or disk images.
+repository; nor are the drivers, frame dumps or disk images. The raw
+probe logs are.
 `src/rrect/RREVID.PY` collected this folder. Each `RRRUN.JSN` records
 the SHA-256 of every frame dump and of the driver installed in that run.
 

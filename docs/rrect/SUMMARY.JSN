@@ -5,7 +5,8 @@
   "mut-firstrow": 1,
   "mut-scanskip": 1,
   "candidate-trace": 0,
-  "v1 trace": 0
+  "v1 trace": 0,
+  "screenshot runs": 0
  },
  "final_screenshots_identical": {
   "CALC_END": true,

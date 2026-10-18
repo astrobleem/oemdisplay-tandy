@@ -114,6 +114,11 @@ def main(argv):
         rc = C.main([str(w / "out_base"), str(w / "out_trace")])
     (docs / "C_TRACE.TXT").write_text(buf.getvalue())
     results["v1 trace"] = rc
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        rc = C.main([str(w / "out3_shots_base"), str(w / "out3_shots_candidate"), "--json", str(docs / "C_SHOT.JSN")])
+    (docs / "C_SHOT.TXT").write_text(buf.getvalue())
+    results["screenshot runs"] = rc
     for run, tag in (("out_trace", "TR_BASE"), ("out3_candidate-trace", "TR_CAND")):
         buf = io.StringIO()
         with redirect_stdout(buf):
@@ -134,6 +139,7 @@ def main(argv):
     (docs / "SUMMARY.JSN").write_text(json.dumps(summary, indent=1) + "\n")
     print(json.dumps(summary))
     ok = (results["candidate"] == 0 and results["candidate-trace"] == 0 and results["v1 trace"] == 0
+          and results["screenshot runs"] == 0
           and all(results[m] == 1 for m in results if m.startswith("mut")) and all(same.values()))
     return 0 if ok else 1
 

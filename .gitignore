@@ -60,3 +60,6 @@ __pycache__/
 # Generated public/private floppy artifacts stay out of source commits.
 /dist/
 *.IMG
+
+# RoundRect investigation: raw probe logs are evidence (docs/RRECT.MD).
+!docs/rrect/*/RRBENCH.LOG
