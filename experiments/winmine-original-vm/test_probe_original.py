@@ -41,7 +41,7 @@ class ProbeOriginalTests(unittest.TestCase):
             "success_branch_taken": False,
         })
         self.assertEqual(result["final"]["IP"], "010C")
-        self.assertEqual(result["final"]["SP"], "FFFE")
+        self.assertEqual(result["final"]["SP"], "FFFC")
         self.assertEqual(result["final"]["AX"], "0001")
         self.assertEqual(result["final"]["BX"], "0080")
         self.assertEqual(result["final"]["CX"], "2000")

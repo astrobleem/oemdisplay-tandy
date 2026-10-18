@@ -32,15 +32,15 @@ def _reference_entry_state(initial_ss: int, initial_sp: int, initial_cs: int,
                            initial_ip: int, task: InitTaskRegisters) -> dict[str, Any]:
     """Hand-calculated state for entry, modeled InitTask, and guest continuation."""
     pushed_bp_sp = (initial_sp - 2) & 0xFFFF
-    call_cs_slot = (pushed_bp_sp - 2) & 0xFFFF
-    call_ip_slot = (call_cs_slot - 2) & 0xFFFF
+    sentinel_sp = (pushed_bp_sp - 2) & 0xFFFF
+    call_ip_slot = (sentinel_sp - 2) & 0xFFFF
     return_ip = (initial_ip + 8) & 0xFFFF  # 2-byte XOR + 1-byte PUSH + 5-byte CALL FAR
     return {
         "AX": 1,
         "BX": task.command_tail_offset,
         "CX": task.stack_limit,
         "DX": task.show_command,
-        "SP": pushed_bp_sp,
+        "SP": sentinel_sp,
         "BP": 0,
         "SI": task.previous_instance,
         "DI": task.instance,
@@ -51,7 +51,7 @@ def _reference_entry_state(initial_ss: int, initial_sp: int, initial_cs: int,
         "IP": (return_ip + 4) & 0xFFFF,  # OR AX,AX; JE is not taken on success.
         "stack_words": {
             pushed_bp_sp: 0,
-            call_cs_slot: initial_cs,
+            sentinel_sp: 0,
             call_ip_slot: return_ip,
         },
         # OR AX,AX after InitTask returns AX=1. AF is undefined on 8086.
@@ -131,6 +131,7 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
             "DI": f"{task.instance & 0xFFFF:04X}",
             "ES": f"{task.psp_segment & 0xFFFF:04X}",
         },
+        "task_stack_sentinel": {"SS": f"{cpu.SS:04X}", "SP": f"{cpu.SP:04X}", "word": "0000"},
         "final": {key: f"{value:04X}" for key, value in state.items()},
         "reference_match": True,
         "input_bytes_unchanged": True,

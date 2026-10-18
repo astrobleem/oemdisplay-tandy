@@ -37,6 +37,11 @@ class InitTaskRegisters:
     psp_segment: int = 0x3000
     command_tail_offset: int = 0x0080
 
+    def __post_init__(self) -> None:
+        for name, value in vars(self).items():
+            if not 0 <= value <= 0xFFFF:
+                raise ValueError(f"{name} must be a 16-bit unsigned value")
+
 
 class GuestCallbackDispatcher:
     """Synchronously invoke a far guest routine and require a matching RETF."""
@@ -77,7 +82,7 @@ class Win16Host:
         self.calls: list[ImportTarget] = []
         self.callbacks = GuestCallbackDispatcher()
 
-    def dispatch_import(self, cpu: CPU, selector: int, offset: int) -> None:
+    def dispatch_import(self, cpu: CPU, selector: int, offset: int) -> bool:
         target = self.loaded.resolve_import(selector, offset)
         if not (target.module.upper() == "KERNEL" and target.kind == "ordinal" and target.ordinal == 91):
             raise UnsupportedImport(
@@ -85,14 +90,16 @@ class Win16Host:
                 f"{target.ordinal if target.kind == 'ordinal' else target.name}"
             )
         self.calls.append(target)
+        # InitTask uses a startup-context return, not a plain import stub RETF.
+        # Unwind the FAR CALL to its guest return IP, then push the zero word
+        # specified by the compatibility implementation before resuming.
+        cpu.far_return()
         self.init_task_register_return(cpu)
+        cpu.push(0)
+        return True
 
     def init_task_register_return(self, cpu: CPU) -> None:
-        """Apply only the modeled InitTask register outputs.
-
-        Far-call unwinding is performed by CPU.run after this handler returns.
-        This slice does not claim that the task has been allocated or started.
-        """
+        """Apply the modeled InitTask register outputs; allocation remains out of scope."""
         values = self.task_registers
         cpu.AX = 1
         cpu.CX = values.stack_limit

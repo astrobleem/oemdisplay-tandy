@@ -198,9 +198,11 @@ class CPU:
             elif event[0] == "far_call":
                 if import_handler is None: raise UnsupportedOpcode("far call has no import handler")
                 _, target_cs, target_ip = event
-                import_handler(self, target_cs, target_ip)
-                # The intercepted imported routine returns with RETF: pop IP,
-                # then CS, leaving the caller's stack exactly as before CALL.
-                self.far_return()
+                service_returned = import_handler(self, target_cs, target_ip)
+                # Ordinary test handlers return None and receive a default
+                # far-return. Context-switching host services can unwind and
+                # reshape the guest stack themselves, then return True.
+                if service_returned is not True:
+                    self.far_return()
 
 

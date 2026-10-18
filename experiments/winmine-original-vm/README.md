@@ -15,10 +15,10 @@ callbacks, or segmented-pointer lifetime rules.
 required SHA-256. It runs the bounded entry prefix through the first imported
 call, binds only `KERNEL` ordinal 91 (`InitTask`), and executes the guest's
 `OR AX,AX` / `JE` continuation after the host service returns. The service
-models a narrow register-return contract with an explicit synthetic launch
-context. It does not allocate or initialize a Windows task, PSP, local heap,
-stack, instance data, or DLLs. The input is read-only and no executable is
-modified or emitted.
+models its register-return values and pushed zero word with an explicit
+synthetic launch context. It does not allocate or initialize a Windows task,
+PSP, local heap, task stack, instance data, or DLLs. The input is read-only
+and no executable is modified or emitted.
 
 The ordinal mapping and register contract are based on Wine's Win16
 [ordinal table](https://github.com/wine-mirror/wine/blob/master/dlls/krnl386.exe16/krnl386.exe16.spec)
