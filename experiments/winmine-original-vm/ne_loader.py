@@ -84,9 +84,15 @@ class NELoader:
             base = selector << 4
             if selector > 0xE000 or base + SEGMENT_SIZE > MEMORY_SIZE:
                 raise NELoadError(f"segment {index} has no safe selector window")
-            if len(segment.data) > SEGMENT_SIZE or segment.minimum_allocation > SEGMENT_SIZE:
+            raw_minimum_allocation = segment.minimum_allocation
+            if not 0 <= raw_minimum_allocation <= SEGMENT_SIZE:
                 raise NELoadError(f"segment {index} exceeds the 16-bit segment model")
-            if len(segment.data) > segment.minimum_allocation:
+            # NE encodes a zero minimum-allocation word as 64 KiB. The shared
+            # parser intentionally preserves the raw header value.
+            minimum_allocation = raw_minimum_allocation or SEGMENT_SIZE
+            if len(segment.data) > SEGMENT_SIZE:
+                raise NELoadError(f"segment {index} exceeds the 16-bit segment model")
+            if len(segment.data) > minimum_allocation:
                 raise NELoadError(f"segment {index} file data exceeds minimum allocation")
             selectors[index] = selector
             window = bytearray(SEGMENT_SIZE)

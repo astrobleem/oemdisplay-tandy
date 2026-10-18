@@ -33,6 +33,19 @@ def image(code, code_relocations=(), modules=("KERNEL",), import_names=None):
 
 
 class NELoaderTests(unittest.TestCase):
+    def test_zero_minimum_allocation_encodes_64k_segment_boundary(self):
+        for data_length in (0xFFFF, 0x10000):
+            with self.subTest(data_length=data_length):
+                fake = image(b"\x90" * data_length)
+                fake.segments[0].minimum_allocation = 0
+                loaded = NELoader(fake).load()
+                self.assertEqual(loaded.loaded_bytes, data_length + len(b"data"))
+
+        too_large = image(b"\x90" * 0x10001)
+        too_large.segments[0].minimum_allocation = 0
+        with self.assertRaisesRegex(NELoadError, "16-bit segment model"):
+            NELoader(too_large).load()
+
     def test_import_far_pointer_and_internal_selector_are_relocated(self):
         code = bytearray(8)
         code[0] = 0x9A
