@@ -88,7 +88,7 @@ or TGA-II driver and no Windows, DOS, font/grabber, ROM or compiler files.
 | 320x200 | 4 |
 | 160x200 | 16 |
 
-**Tandy Video II 640x200x16: experimental SL/2 family only.**
+**Tandy Video II 640x200x16: experimental SL/2 family only ([front door](https://github.com/astrobleem/windows-3-tandy-video-ii)).**
 [Download TNDYV2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-video-ii-2026-10-14-r2/TNDYV2.ZIP)
 and read the [release notes and qualification](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experimental-video-ii-2026-10-14-r2)
 and [Setup, owned-file staging and recovery guide](docs/tga2/INSTALL.TXT).
@@ -96,10 +96,10 @@ Windows rendering evidence covers the emulated SL/2 only. Physical hardware,
 other SL/TL/RL models and Windows 3.1 remain unqualified; EX/HX must not use
 this driver. Run T2RESV successfully before Setup and every Windows start.
 
-[TEXT80 and compact C25](docs/TEXT80.MD) are merged experimental text-mode
+[TEXT80 and compact C25](docs/TEXT80.MD) ([front door](https://github.com/astrobleem/text-mode-windows)) are merged experimental text-mode
 driver profiles with emulator evidence. No current TEXT80/C25 binary package
 has been released; the older rc.6 TXTMODE feasibility driver is historical.
-Olivetti PC1 Yamaha candidates remain private and emulator-tested only;
+Olivetti PC1 Yamaha candidates remain private and emulator-tested only ([front door](https://github.com/astrobleem/windows-3-olivetti-pc1));
 no public download is available yet.
 
 For mode details, the text-mode experiment, app guides, long filename
