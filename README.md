@@ -70,13 +70,15 @@ Physical hardware and fresh Windows Setup integration remain unqualified.
 | Machine/card | Mode and download | Status and guide |
 | --- | --- | --- |
 | [Amstrad PC1512](https://github.com/astrobleem/windows-3-amstrad-pc1512) | [PC1512.DRV, 640x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) | Emulator rendering evidence; one cursor-state case remains unresolved. [Install/recover](experiments/DISPLAY3/PC1512.TXT) |
-| [IBM PCjr](https://github.com/astrobleem/windows-3-pcjr) | [TNDYJR.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCJR.ZIP) | Guard required before every start; expanded-memory reservation on real PCjr is unqualified. [Install/recover](experiments/DISPLAY3/PCJR.TXT) |
+| [IBM PCjr](https://github.com/astrobleem/windows-3-pcjr) | [TNDYJR.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCJR.ZIP) | Emulator-tested; guard required before every start. Real PCjr expanded-memory reservation remains unqualified. [Install/recover](experiments/DISPLAY3/PCJR.TXT) |
 | [IBM XT + Plantronics ColorPlus](https://github.com/astrobleem/windows-3-plantronics) | [PCP3216.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP) | Emulator rendering evidence; requires the ColorPlus card and its dedicated VRAM. [Install/recover](experiments/DISPLAY3/PCP3216.TXT) |
 
 [Experimental release, source and checksums](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experimental-displays-2026-10-12)
 and [qualification scope](experiments/DISPLAY3/README.MD). Tandy EX/HX users
 should continue with Windows XT rc.6 above. This release includes no TXT40
 or TGA-II driver and no Windows, DOS, font/grabber, ROM or compiler files.
+
+PCjr [PR #138](https://github.com/astrobleem/oemdisplay-tandy/pull/138) merged at [613137d](https://github.com/astrobleem/oemdisplay-tandy/commit/613137d0029817b42e141a11685182d867da911d) after 40 host tests. It adds a clean-install [screenshot](https://github.com/astrobleem/oemdisplay-tandy/blob/613137d0029817b42e141a11685182d867da911d/docs/pcjr/INSTALL/DESKTOP.PNG) and [26/26 session record](https://github.com/astrobleem/oemdisplay-tandy/blob/613137d0029817b42e141a11685182d867da911d/docs/pcjr/INSTALL/SESSION.JSN); both [post-merge install checks](https://github.com/astrobleem/oemdisplay-tandy/actions/runs/39078997906) and [disk build](https://github.com/astrobleem/oemdisplay-tandy/actions/runs/39078997999) passed. The merge did not publish a new PCJR.ZIP.
 
 ## Display modes
 
@@ -101,6 +103,10 @@ driver profiles with emulator evidence. No current TEXT80/C25 binary package
 has been released; the older rc.6 TXTMODE feasibility driver is historical.
 Olivetti PC1 Yamaha candidates remain private and emulator-tested only ([front door](https://github.com/astrobleem/windows-3-olivetti-pc1));
 no public download is available yet.
+
+The physical HPAN R3 run is accepted; no public package or evidence bundle
+is published. The combined HPXY candidate remains private and emulator-tested;
+physical XY qualification is pending and no public download is available.
 
 For mode details, the text-mode experiment, app guides, long filename
 requirements and recovery, see the [user manual](docs/USERMAN.MD).
