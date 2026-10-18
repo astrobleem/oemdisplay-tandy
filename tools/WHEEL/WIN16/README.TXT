@@ -9,7 +9,10 @@ REQUIREMENTS
 ------------
 - Windows 3.0 real mode.
 - An existing MOUSE module exposing WHEEL.DRV API 1.0, with the wheel driver
-  already configured and working. WHEEL.DRV is not included.
+  already configured and working. This package does not include that driver,
+  and the repository has no verified redistributable driver download. Without
+  an independently obtained compatible driver, this bridge alone cannot add
+  wheel scrolling.
 - The existing DOS/Windows mouse configuration. This bridge does not install
   or replace a driver, edit SYSTEM.INI, add startup entries, or change the
   pointer/button path.
@@ -57,8 +60,9 @@ BUILD AND SOURCE
 SOURCE contains the R1 bridge and paired TP client. HOST contains the mock
 test harness; run `python3 HOST/RUNHOST.PY` with a C89-compatible GCC on PATH.
 EVIDENCE\QUAL.TXT records the exact tested binary hashes and test scope.
-Rebuilding the Win16 binaries requires an external Microsoft C 6.0 / LINK4
-and Windows 3.0 SDK/DDK environment. No compiler, SDK/DDK, Windows files,
+Rebuilding the bridge and paired TP Win16 binaries requires an external
+Microsoft C 6.0 / LINK4 and Windows 3.0 SDK/DDK environment. Those build
+inputs do not build or supply WHEEL.DRV. No compiler, SDK/DDK, Windows files,
 ROMs, or driver are bundled.
 
 The ZIP and download are experimental repository files, not a Windows XT
