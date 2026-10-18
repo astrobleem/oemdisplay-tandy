@@ -52,8 +52,8 @@ Read `TEXT80/INSTALL.TXT` inside the ZIP before using recovery.
 
 ## Verification and source
 
-The ZIP is **389,699 bytes**, SHA-256
-`ed96bba2d247f8d203be61675968a4ba7cfb1a681dd5f0be794ce66af1577758`.
+The ZIP is **389,920 bytes**, SHA-256
+`db218562a8ec5c4427c7258743ceeee2267fcc6aef8e4a38ca5a38cf0b8ae567`.
 Each member is bound by `TEXT80/SHA256.SUM`; `BUILD.JSN` records exact source,
 compiler, emulator, payload and test identities. Two independent package
 runs produced identical ZIP bytes. All runtime filenames use DOS 8.3 names.
