@@ -5,7 +5,7 @@ SCOPE
 The Windows rendering evidence covers 86Box's emulated Tandy 1000 SL/2,
 8086 at 8 MHz, internal Video II and 640 KB. "SL/2 FAMILY ONLY" identifies
 the intended selector; it does not qualify other SL/TL/RL models. Physical
-hardware and Windows 3.1 are unqualified. EX/HX must not use this driver.
+hardware is unqualified. EX/HX must not use this driver.
 T2RESV cannot identify Video II; the driver has no automatic hardware check.
 Keep a bootable backup and a plain-DOS recovery route. Community hardware
 reports are welcome; provide the exact model, RAM, diagnostics and symptoms.
@@ -30,7 +30,7 @@ VERIFY AND PREPARE A CLONE
      CGASYS.FON  CGAFIX.FON  CGAOEM.FON
    They may be in C:\WINDOWS or C:\WINDOWS\SYSTEM. Preserve their provenance.
    If a file is missing, obtain it from your authorized Windows 3.0 media.
-   Stop rather than substitute a font or a Windows 3.1 file. Do not share
+   Use only the matching Windows 3.0 files; stop if unavailable. Do not share
    this completed private staging directory: it now contains Windows files.
    To stage these six files automatically, from the fresh T2EXP directory:
      PREPINF C:\WINDOWS
@@ -92,7 +92,7 @@ with 640 KB; both starts reported 640x200 with 16 colors, matched a 128-byte
 GDI red patch in Video II VRAM and exited normally. The reservation remained
 intact after both exits. See QUALIFY.JSON for the native test and its limits.
 Fresh OS installation, DOS boxes, other
-models, real timing and Windows 3.1 remain unqualified.
+models and real timing remain unqualified.
 
 MANUAL ROUTE RETAINED
 If using the original driver-only route, keep the complete backup first,

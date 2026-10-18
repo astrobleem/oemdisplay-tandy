@@ -64,7 +64,7 @@ EXPERIMENTAL: AFTER THE ABOVE, WITH NO UNSAVED WORK
   C:\TANDYLAB\EXPER\CDLG\CDSTART.EXE
     Use CDSTART to launch CDTEST with its private COMMDLG.DLL. Test Open/Cancel first. Save/read round-trip
     writes only a new scratch file you choose. Log: CDTEST.LOG beside EXE.
-    Do not use it to replace a system COMMDLG.DLL or Windows 3.1 library.
+    Do not use it to replace a system COMMDLG.DLL.
   C:\TANDYLAB\EXPER\MAZE\MAZE.EXE
     Windowed automatic walk. Space pause/resume; Esc/Close exits.
     VERY SLOW on approximate 8088 emulation: ~87 seconds first paint and

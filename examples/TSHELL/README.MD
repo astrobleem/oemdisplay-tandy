@@ -57,7 +57,7 @@ groups registered in PROGMAN.INI, Group1 through Group40, stopping at a gap.
 Group files are read-only. Program Manager remains the editor; save it and reopen
 Programs to refresh. Item arguments and executable working directories remain.
 The group reader bounds occupied items, slots and command lengths and refuses
-unsupported Windows 3.1 extension tags or ambiguous paths.
+extension tags outside the Windows 3.0 group format, or ambiguous paths.
 
 System offers About this Tandy and Screen saver settings. At 160 pixels it opens
 a separate small menu so mouse selection works; wider modes use native cascades.

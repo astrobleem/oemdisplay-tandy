@@ -315,7 +315,6 @@ src/pcjr". Each emulator script runs under `src/xtpan/EMULOCK.PY`.
   claimed for a refused switch.
 - The install folder is not part of any release yet; the released
   `PCJR.ZIP` still documents the display.drv-only change.
-- Windows 3.1 is not supported.
 
 ## First Windows 3.0 boot on an emulated PCjr
 

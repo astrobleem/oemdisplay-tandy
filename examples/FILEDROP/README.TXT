@@ -16,7 +16,7 @@ The demo deliberately uses fixed fixture paths, not a directory browser.
 Delete these demo files to uninstall. No SYSTEM.INI or stock files are changed.
 
 STATUS AND COMPATIBILITY
-This is an explicitly named Win3.0 extension, not transparent Windows 3.1
+This is an explicitly named Windows 3.0 extension, not transparent stock
 shell compatibility. Win3.0 retained extended-style bit 0x10 in our native
 probe. Retention alone does not supply the later shell APIs or file manager
 behavior. The owned stock Win3.0 installation contains no SHELL.DLL, and the

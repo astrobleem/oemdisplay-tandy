@@ -119,8 +119,9 @@ OEM Setup and GUI acceptance evidence is recorded separately after testing the
 complete disk with the exact accepted Windows support files.
 
 This work preserves the default candidate05 driver and reservation bytes while
-adding four separate display drivers. It does not claim Windows 3.1, protected mode, arbitrary Tandy configurations, PCjr, physical
-hardware compatibility, or cycle-accurate 8088 execution.
+adding four separate Windows 3.0 real-mode display drivers. It does not claim
+protected mode, arbitrary Tandy configurations, PCjr, physical hardware
+compatibility, or cycle-accurate 8088 execution.
 
 ## Five-mode package and native acceptance (2026-10-02)
 

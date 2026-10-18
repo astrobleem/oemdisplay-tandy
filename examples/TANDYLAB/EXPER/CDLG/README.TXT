@@ -26,7 +26,8 @@ Preserve existing files before testing; use a new name if it already exists.
 Do not copy the DLL into WINDOWS or overwrite an existing COMMDLG.DLL.
 This implements only GetOpenFileName, GetSaveFileName, GetFileTitle and
 CommDlgExtendedError within a bounded ASCII DOS 8.3 subset. It is not a
-full Windows 3.1/Win32 common-dialog library. Other apps may not load.
+full system common-dialog library or a Win32 implementation. Other apps
+may not load.
 
 The original DLL passed five native automated suites. This pack's launcher
 has separate relocated-folder checks; physical mouse/hardware remain

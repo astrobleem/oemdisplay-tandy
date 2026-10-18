@@ -48,8 +48,8 @@ modes 8, 9 and 0Ah cannot switch away with Alt+Tab; finish them to return.
 
 ## Verification and source
 
-The ZIP is **114,981 bytes**, SHA-256
-`c2964c856e2f8475ecff4e3b6e76f28344d63bac78a8b284bee748d29ac0d682`.
+The ZIP is **114,994 bytes**, SHA-256
+`a781614c5c8c5f6c498e6e9a82364b4c2c9c3c3f7e2b2be0c67b42b2f57c17d8`.
 `PCJREXP/SHA256.SUM` covers every member. `BUILD.JSN` records exact source,
 payloads, fresh builds and inherited emulator qualification. Two independent
 package runs produced identical ZIP bytes. The merged JRPACK builder's

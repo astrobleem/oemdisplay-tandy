@@ -11,9 +11,9 @@ The original `experimental-video-ii-2026-10-14` ZIP has no OEMSETUP.INF or
 Video II Setup selector. The separate selector source `src/tga2/OEMSETUP.INF`
 uses **EXPERIMENTAL TANDY SL/2 FAMILY ONLY 640x200x16**: 46 characters, within
 the pinned Windows 3.0 OEM sample's 47-character description limit. It does
-not add other models or Windows 3.1 support. The revised packet must contain
-this exact INF and matching qualification/checksums; the published original
-ZIP is retained. See [Setup, owned-file staging and recovery](tga2/INSTALL.TXT).
+not add other models; the target remains Windows 3.0 real mode. The revised
+packet must contain this exact INF and matching qualification/checksums;
+the published original ZIP is retained. See [Setup, owned-file staging and recovery](tga2/INSTALL.TXT).
 The existing EX/HX rc.6 OEM disk and its bound documentation are unchanged.
 
 The 86Box machine needs the owner's own SL/2 BIOS ROM images. They are kept
