@@ -43,3 +43,9 @@ jobs:
           python3 -m unittest discover
           -s experiments/winmine-original-vm -p 'test_*.py' -v
 
+      - name: Run native fixture VM and evidence tests
+        run: >-
+          python3 -m unittest discover
+          -s experiments/winmine-original-vm/native-fixture
+          -p 'test_*.py' -v
+

@@ -67,6 +67,10 @@ experiments/DISPLAY3/** -text
 
 # RoundRect evidence keeps the probe's exact CRLF log bytes.
 docs/rrect/** -text
+
+# Sanitized Win16 fixture logs and DOS return records preserve captured bytes.
+experiments/winmine-original-vm/native-fixture/evidence/*/W16API.LOG text eol=crlf
+experiments/winmine-original-vm/native-fixture/evidence/*/WINRET.TXT text eol=crlf whitespace=-blank-at-eol
 tools/WHEEL/WIN16/** -text
 downloads/experimental/WINWHL/** -text
 docs/pan/MINE/** -text
