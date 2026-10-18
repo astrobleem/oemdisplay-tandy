@@ -82,7 +82,7 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
     if (cpu.CS, cpu.IP) != (loaded.initial_cs, expected_guest_return):
         raise ProbeError("InitTask host service did not return to the guest call site")
     continuation = bytes(cpu.read8(cpu.CS, expected_guest_return + i) for i in range(4))
-    if continuation[:3] != bytes.fromhex("09 C0 74"):
+    if continuation[:2] not in (bytes.fromhex("09 C0"), bytes.fromhex("0B C0")) or continuation[2] != 0x74:
         raise ProbeError(
             "entry continuation is outside the bounded OR AX,AX / JE return slice"
         )
