@@ -1,0 +1,435 @@
+{
+  "build_environment": {
+    "emulator": "DOSBox-X 2024.03.01 Ubuntu package (isolated external executable)",
+    "emulator_sha256": "30a5fdf8fa95abaf7bae1a9e624ccfc9e26e5357a19cc567bf3a2ac659699258",
+    "emulator_slot": "exclusive EMULOCK; no overlapping emulators; bounded jobs",
+    "host": "Debian 13 amd64",
+    "target": "Windows 3.0 real mode, 8086/8088",
+    "toolchain": "pinned MASM 5.10/LINK/DDK; Microsoft C for helpers; not distributed"
+  },
+  "cross_emulator_reproduction": {
+    "TEXT80_25": "byte-identical under DOSBox-X 2024.03.01 and Debian 2025.02.01"
+  },
+  "dependency_commit": "96ce6971a1757f3c77094322ed82741791c79646",
+  "dependency_lock_sha256": "81962c79f111e0a69863d6a6761d837db476d4350236526cf0427ee0273e2a25",
+  "drivers": {
+    "C25": {
+      "audits": {
+        "emitted_instruction_rows_checked": 17444,
+        "explicit_objects": 27,
+        "extra_library_code_bytes": 0,
+        "link": "PASS",
+        "multi_prefix_rep": [],
+        "unsupported": []
+      },
+      "build": {
+        "build88_audits": "see RESULT.json (instruction, REP-prefix, link)",
+        "built_as": "TANDY88.DRV",
+        "driver": "T80CMP.DRV",
+        "driver_bytes": 89152,
+        "driver_sha256": "b61dd4d7280e0b7926312844531c684dfbb1c3121fffab015dfffdd139c81a7a",
+        "edits_staged_sha256": {
+          "SDIB88.ASM": "4cfe06266f792d5f3dfbbecbc07851c5f046ab6f38fb414cd0e2d2a9425fa18c",
+          "TCURSOR.ASM": "85880b23741354dc25a87e53bf803b33002d76bc01f8074c5d8446c935b778eb",
+          "TSOFT.ASM": "204d04d2910480d4793cc49f574456b5183d6b4034738933873cd8a6634fe0dc",
+          "TSOFT.DEF": "525b5da580240a18e3cd490ef882b77e140d5806b499562ad9e2d7f0fd294d04"
+        },
+        "mode": "320x200x16",
+        "resource_sha256": "d37e6c7931c974e12e533e8fc9fb70dab4671d2d13f6ca45cf2da24bfda193f2",
+        "runtime": "NOT_TESTED",
+        "variant": "t80c"
+      }
+    },
+    "PAN": {
+      "audits": {
+        "emitted_instruction_rows_checked": 17684,
+        "explicit_objects": 27,
+        "extra_library_code_bytes": 0,
+        "link": "PASS",
+        "multi_prefix_rep": [],
+        "unsupported": []
+      },
+      "build": {
+        "build88_audits": "see RESULT.json (instruction, REP-prefix, link)",
+        "built_as": "TANDY88.DRV",
+        "driver": "T80PAN.DRV",
+        "driver_bytes": 62112,
+        "driver_sha256": "d4cc00e8a4bb7e3542abe55c9b8d65018588a6c50f83979ed4a74a54c4f832cc",
+        "edits_staged_sha256": {
+          "SDIB88.ASM": "cbbd012f287ecf15a6d59dbb8a24f5c15531815d9bb847622c5477641dc99ebf",
+          "TCURSOR.ASM": "9c9d78c1bc25df30615f88cdcc61b363ed846eaff34e668f5f324668a37dbe91",
+          "TSOFT.ASM": "5a975ec791838bc75e9ba821d41c0bea42a8e5b756e3f699bd6bd0674666eb87",
+          "TSOFT.DEF": "86b58015568c6f0a91c41defd1ac544c93b35fadb972fe4481e49dde9898b7c7"
+        },
+        "mode": "320x200x16",
+        "resource_sha256": "4bdf9197db27b33dd5859c4198534aa7db6cb2066fe8075caff1899ff25cb312",
+        "runtime": "NOT_TESTED",
+        "variant": "t80pan"
+      }
+    },
+    "PCjr": {
+      "audits": {
+        "emitted_instruction_rows_checked": 15252,
+        "explicit_objects": 27,
+        "extra_library_code_bytes": 0,
+        "link": "PASS",
+        "multi_prefix_rep": [],
+        "unsupported": []
+      },
+      "build": {
+        "base": "BUILD88 320x200x16 (TR5) from the supplied view",
+        "build88_audits": "see RESULT.json (instruction, REP-prefix, link)",
+        "built_as": "TANDY88.DRV",
+        "driver": "TNDYJR.DRV",
+        "driver_bytes": 54976,
+        "driver_sha256": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4",
+        "pcjr_edits_staged_sha256": {
+          "TCURSOR.ASM": "17ce8f16445cb010e97720d85b4e6d3a86c0e8a78273b8802bf665e1d51d9524",
+          "TSOFT.ASM": "74c5ce9b9b2265a19dd195e67b7601790b9a6a601de1a31ab745f372b4a83b0e"
+        },
+        "runtime": "NOT_TESTED"
+      }
+    },
+    "TEXT80": {
+      "audits": {
+        "emitted_instruction_rows_checked": 17444,
+        "explicit_objects": 27,
+        "extra_library_code_bytes": 0,
+        "link": "PASS",
+        "multi_prefix_rep": [],
+        "unsupported": []
+      },
+      "build": {
+        "build88_audits": "see RESULT.json (instruction, REP-prefix, link)",
+        "built_as": "TANDY88.DRV",
+        "driver": "TEXT80.DRV",
+        "driver_bytes": 89744,
+        "driver_sha256": "f02346b008a95d6bc12ec0420573f2e98b499d2fe800c260fd6165935f8e8837",
+        "edits_staged_sha256": {
+          "SDIB88.ASM": "4cfe06266f792d5f3dfbbecbc07851c5f046ab6f38fb414cd0e2d2a9425fa18c",
+          "TCURSOR.ASM": "85880b23741354dc25a87e53bf803b33002d76bc01f8074c5d8446c935b778eb",
+          "TSOFT.ASM": "204d04d2910480d4793cc49f574456b5183d6b4034738933873cd8a6634fe0dc",
+          "TSOFT.DEF": "525b5da580240a18e3cd490ef882b77e140d5806b499562ad9e2d7f0fd294d04"
+        },
+        "mode": "320x200x16",
+        "resource_sha256": "4bdf9197db27b33dd5859c4198534aa7db6cb2066fe8075caff1899ff25cb312",
+        "runtime": "NOT_TESTED",
+        "variant": "t80"
+      }
+    },
+    "VGA": {
+      "audits": {
+        "emitted_instruction_rows_checked": 17581,
+        "explicit_objects": 27,
+        "extra_library_code_bytes": 0,
+        "link": "PASS",
+        "multi_prefix_rep": [],
+        "unsupported": []
+      },
+      "build": {
+        "build88_audits": "see RESULT.json (instruction, REP-prefix, link)",
+        "built_as": "TANDY88.DRV",
+        "driver": "T80VGA.DRV",
+        "driver_bytes": 61840,
+        "driver_sha256": "ad3f10c8eae107bcbb8739de68b5cdebf563a3d173aff4a3b562d01a719d59da",
+        "edits_staged_sha256": {
+          "SDIB88.ASM": "cbbd012f287ecf15a6d59dbb8a24f5c15531815d9bb847622c5477641dc99ebf",
+          "TCURSOR.ASM": "b94b52f2f55064640b96749cca7a52b84c43469024fb9a587a012aee8471efcd",
+          "TSOFT.ASM": "26655dafa153e059c10b034b31a56e7c10b529a475b0caa24c5164f8d77a6baf",
+          "TSOFT.DEF": "0d1d5e480f84b864680d4cdc056b3bb3d76154fec82c9e0bc82f1dee86dab496"
+        },
+        "mode": "320x200x16",
+        "resource_sha256": "4bdf9197db27b33dd5859c4198534aa7db6cb2066fe8075caff1899ff25cb312",
+        "runtime": "NOT_TESTED",
+        "variant": "t80vga"
+      }
+    }
+  },
+  "excluded": [
+    "Windows/DOS media or installations",
+    "Microsoft fonts and retail grabbers",
+    "ROMs",
+    "original DDK/compiler/library inputs",
+    "emulators",
+    "credentials"
+  ],
+  "fresh_tests": {
+    "dos_T80SET_compact": {
+      "checks": 6,
+      "helper_sha256": "e5a3d84b2b3f052317c216a3da554e7cc586ec0a0aeec4291a65e6b6a9efde47",
+      "verdict": "PASS"
+    },
+    "host_PCjr_install": "40 tests passed",
+    "host_T80SET": "90 source-level rollback/failure/compact checks passed",
+    "host_presenter_model": "T40MODEL.PY --check completed without assertion errors",
+    "presenter_80x25": {
+      "cells_compared": 620000,
+      "dumps": 310,
+      "explicit_failures": [],
+      "explicit_regression_checks": 63,
+      "flushes": 310,
+      "full_flush_vs_ideal_failures": 0,
+      "geometry": "80x25 (25 rows shown), glyph dictionary limit 896",
+      "mismatched_flushes": [],
+      "mismatched_screens": [],
+      "run": "RUN=PASS",
+      "screen_check_failures": [],
+      "screen_checks": 0,
+      "screen_dumps": 310,
+      "screen_dumps_compared": 310,
+      "timed_flushes_here": 0,
+      "verdict": "PASS"
+    },
+    "presenter_80x50_panned": {
+      "cells_compared": 1260000,
+      "dumps": 315,
+      "explicit_failures": [],
+      "explicit_regression_checks": 64,
+      "flushes": 315,
+      "full_flush_vs_ideal_failures": 0,
+      "geometry": "80x50 (25 rows shown), glyph dictionary limit 896",
+      "mismatched_flushes": [],
+      "mismatched_screens": [],
+      "run": "RUN=PASS",
+      "screen_check_failures": [],
+      "screen_checks": 6,
+      "screen_dumps": 374,
+      "screen_dumps_compared": 374,
+      "timed_flushes_here": 0,
+      "verdict": "PASS"
+    },
+    "presenter_80x50_vga": {
+      "cells_compared": 1240000,
+      "dumps": 310,
+      "explicit_failures": [],
+      "explicit_regression_checks": 63,
+      "flushes": 310,
+      "full_flush_vs_ideal_failures": 0,
+      "geometry": "80x50 (50 rows shown), glyph dictionary limit 896",
+      "mismatched_flushes": [],
+      "mismatched_screens": [],
+      "run": "RUN=PASS",
+      "screen_check_failures": [],
+      "screen_checks": 0,
+      "screen_dumps": 310,
+      "screen_dumps_compared": 310,
+      "timed_flushes_here": 0,
+      "verdict": "PASS"
+    }
+  },
+  "fresh_windows_boot": false,
+  "helpers": {
+    "T80SET.EXE": {
+      "bytes": 20761,
+      "sha256": "e5a3d84b2b3f052317c216a3da554e7cc586ec0a0aeec4291a65e6b6a9efde47"
+    },
+    "XTPAN.EXE": {
+      "bytes": 6415,
+      "sha256": "97abd7664cc58e97c0093aa2246dd14ea95675ed8645ee71080a7e2dd50eed99"
+    },
+    "compiler_flags": "/nologo /c /G0 /Gw /AS /W3 /Od",
+    "target": "Windows 3.0 real mode, 8086",
+    "warnings": []
+  },
+  "included_derivatives": "Microsoft DDK-derived display drivers and patched PCjr grabber retain third-party notices; original XT Pixels fonts/static logo have separate MIT notices",
+  "original_font_generation": {
+    "fonts": {
+      "T80COUR.FON": {
+        "bytes": 4224,
+        "face": "Courier",
+        "pitch": "fixed",
+        "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6",
+        "weight": 400
+      },
+      "T80HELV.FON": {
+        "bytes": 4208,
+        "face": "Helv",
+        "pitch": "variable (all glyphs 8 wide)",
+        "sha256": "9bd5153d11f26e340b0385d9adba756351c0f41e8915a4d16c333d342b4057fd",
+        "weight": 700
+      }
+    },
+    "source": "distributions/WINXT/XTTSYS.FON",
+    "source_sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa"
+  },
+  "payload_sha256": {
+    "PCJR": {
+      "FONTLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "JRGRAB.GR2": "2453cd1eba68e580b68b2d232a5dfa5285fd703cd75b2b4edacc203c3d741dec",
+      "JRGUARD.COM": "10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756",
+      "JRWIN.COM": "18ccaa02759e5462b746af9e28ebd31af32c43f29e9d4eea400e6673cc764e96",
+      "LOGOLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "OEMSETUP.INF": "709e773779c3731ca43d79bf238f553c5d3b174d8280695b1697aa3b410fc285",
+      "TNDYJR.DRV": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4",
+      "WXTSPL01.RLE": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+      "XTEFIX.FON": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+      "XTEOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "XTESYS.FON": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
+      "XTSTATIC.LGO": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "TEXT80": {
+      "FONTLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "T80CMP.DRV": "b61dd4d7280e0b7926312844531c684dfbb1c3121fffab015dfffdd139c81a7a",
+      "T80COUR.FON": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6",
+      "T80HELV.FON": "9bd5153d11f26e340b0385d9adba756351c0f41e8915a4d16c333d342b4057fd",
+      "T80OFF.BAT": "810352c7fe1ade619b03483e2558cdbe41247669efc3bbb77f1643e850343151",
+      "T80ON.BAT": "14c7595c7331292af7cb580c8e1c96cf50ae548b8f9322c75c06b43bb71b420c",
+      "T80PAN.DRV": "d4cc00e8a4bb7e3542abe55c9b8d65018588a6c50f83979ed4a74a54c4f832cc",
+      "T80SET.EXE": "e5a3d84b2b3f052317c216a3da554e7cc586ec0a0aeec4291a65e6b6a9efde47",
+      "T80VGA.DRV": "ad3f10c8eae107bcbb8739de68b5cdebf563a3d173aff4a3b562d01a719d59da",
+      "TEXT80.DRV": "f02346b008a95d6bc12ec0420573f2e98b499d2fe800c260fd6165935f8e8837",
+      "XTCFIX.FON": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+      "XTCOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "XTPAN.EXE": "97abd7664cc58e97c0093aa2246dd14ea95675ed8645ee71080a7e2dd50eed99",
+      "XTTSYS.FON": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa"
+    }
+  },
+  "pcjr_com": {
+    "built": {
+      "JRGUARD.COM": {
+        "bytes": 800,
+        "sha256": "10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756"
+      },
+      "JRWIN.COM": {
+        "bytes": 1182,
+        "sha256": "18ccaa02759e5462b746af9e28ebd31af32c43f29e9d4eea400e6673cc764e96"
+      }
+    },
+    "problems": [],
+    "toolchain": "pinned MASM 5.10 / LINK / DDK EXE2BIN in DOSBox-X",
+    "verdict": "PASS"
+  },
+  "pcjr_grabber": {
+    "control": {
+      "bytes": 2106,
+      "file": "CONTROL.GR2",
+      "sha256": "310988d7963017988300479aea0b504febb7e4eeb71caff61c5abdc2ab7afb0f",
+      "what": "unmodified DDK 286 CGA grabber, same build"
+    },
+    "edits": 10,
+    "jrgrab": {
+      "bytes": 2159,
+      "file": "JRGRAB.GR2",
+      "sha256": "2453cd1eba68e580b68b2d232a5dfa5285fd703cd75b2b4edacc203c3d741dec"
+    },
+    "patched_sources_sha256": {
+      "CGAHERC/CGA/CGA.ASM": "86c6c9a09bf3ff981a1a7a97a3e68f2f4089df65de14ed08df4c2bce18fc974c",
+      "CGAHERC/GSMODE.ASM": "38f3933135215edfbc849a0e148056f956a53928086230822879ac7d6fde9ddb",
+      "CGAHERC/SRSCR.ASM": "6d5baec6aae06d0c1e71f7e07a2d8874b85df44885fc57fb1e83ef48947c5e41",
+      "GRABSCR.ASM": "f203a5682184360450d92fb11090c6d4b70249977cba4a0284077f23b2072379"
+    }
+  },
+  "physical_hardware_qualified": false,
+  "prior_windows_evidence": {
+    "C25": {
+      "checks": "54/54 on 86Box IBM XT/CGA",
+      "driver_bytes_match": true,
+      "driver_sha256": "b61dd4d7280e0b7926312844531c684dfbb1c3121fffab015dfffdd139c81a7a",
+      "record": "docs/text80/RUN_c3/c80w3/T80WIN.JSN",
+      "setup_helper_note": "Current helper matches later DOS-tested RUN_c4; fresh DOS fixture tests passed. RUN_c3 used older setup-helper bytes."
+    },
+    "PCjr": {
+      "qualification": "clean Setup, existing-install conversion, guarded launch, DOS switching and refusal tests in DOSBox-X; exact driver/guard/launcher/grabber/font/logo bytes preserved",
+      "records": [
+        "docs/pcjr/INSTALL/SESSION.JSN",
+        "docs/pcjr/INSTALL/CONVERT.JSN",
+        "docs/pcjr/INSTALL/GRJRGRAB.JSN"
+      ],
+      "session_verdict": "PASS",
+      "source_session_commit": "9ae44084127fe5d2f0c57ee1e1842d1ee1885573"
+    },
+    "TEXT80_25_PAN_VGA": {
+      "driver_bytes_match": false,
+      "qualification": "historical GUI behavior only; new 25/PAN/VGA builds have fresh instruction/link/presenter qualification and have not been booted in Windows here",
+      "records": "docs/TEXT80.MD and docs/text80 sessions"
+    }
+  },
+  "runtime_source_commit": "997e7b910eb4623226b676c1c229aa0dd4e81661",
+  "source_files_sha256": {
+    "src/pcjr/BUILDCOM.PY": "2cc5f8e8da5811f903db0d52fd98c31a6168235d88da7c88e6adc660eacaadd1",
+    "src/pcjr/BUILDJR.PY": "bcae705bcb52b4140af22d4a916876561b51e3651bc741d427dafe59dad17649",
+    "src/pcjr/CHKTEST.PY": "485bdd51f549c6c090e873290893e3237512b4a5c737d91477019658ee30b4c8",
+    "src/pcjr/INSTALL/BUILDGR.PY": "6124537cc2856df43a99b56f586e80575066178c27c2c3a95ea132f729ec3cb2",
+    "src/pcjr/INSTALL/INSTALL.TXT": "39e98bc60369db9cd43f89acf05842a52d8ea43e396bf6ac5a40ffec5da1a9d4",
+    "src/pcjr/INSTALL/JRCHK.PY": "73bd04539c7226e04b22d1b1b299dd7ac8df8e95f51e3e66a0e315ad0ae10ea0",
+    "src/pcjr/INSTALL/JRCONV.PY": "be6b4952b49891065ba1630b60eac30247c058914bdb741109e2391c1ac70231",
+    "src/pcjr/INSTALL/JRDBX.PY": "f7aa25ec586a2a0654679275c41b089c09a594e047f637d36a1ceb5a7ab3d357",
+    "src/pcjr/INSTALL/JRGRTEST.PY": "ba3cdf928d3c92c0201112cf35a046d405c8d90bddbe7d8a0ea0f2849a056e51",
+    "src/pcjr/INSTALL/JRMODE.ASM": "6ae24d73a23fb05f8178bb26c50d3cdcceb6115a55450affb2c7882cd3b6ea40",
+    "src/pcjr/INSTALL/JRMODET.PY": "0be122b417411546361b01312323309f2b0000a23e756a715b9ad149c0fee5af",
+    "src/pcjr/INSTALL/JRPACK.PY": "5e3ddb5b1d93eeaf3621a05b3cfa1fffd3e22a0379785531e06957076d8aee7b",
+    "src/pcjr/INSTALL/JRSESS.PY": "a7a9f96166155d2a8daae10785dfb65d9c63c297ec7ab40ee672ccc1deac9acf",
+    "src/pcjr/INSTALL/OEMSETUP.INF": "709e773779c3731ca43d79bf238f553c5d3b174d8280695b1697aa3b410fc285",
+    "src/pcjr/INSTALL/PCJSFLP.PY": "19b727b27f34bc836eb82e17ae35fc0b0252df860c625f76b40aa8753ef05b9b",
+    "src/pcjr/INSTALL/PINS.JSN": "6351b6d383b839f033c2595258ec4e14ce370a3c42095201150d790dd392f63c",
+    "src/pcjr/INSTALL/TESTPACK.PY": "52392d03fbc352fd90de1bb5f03719851726a463fa9349ea6a693db3fac15536",
+    "src/pcjr/JRCHECK.PY": "bf8911455ba1ff9e7f007a032e618c060dbd4301f91be85056640ab3eeb82bef",
+    "src/pcjr/JRFREET.ASM": "d5535d9438875bb8d6cac3051d1c7daf15ff55ca541715643f0c744a1d550418",
+    "src/pcjr/JRGUARD.ASM": "bb21b0eaabfcf0f9abdcb66d8f6ed275db518ffc87e739d0815e1c0fef8b59f4",
+    "src/pcjr/JRHOLDT.ASM": "95bb5adc2497dd914eba87ff95488d21c6873e38a60f958c4e022f42067d7dd8",
+    "src/pcjr/JRPATCH.PY": "7b1723bb7117becc728b869032301ae76bf421c0ac5ac4eaa2ffab0100ecf322",
+    "src/pcjr/JRPROBE.ASM": "1084694f07b832a0e46b183c659b1bf6901208ba1587f1a156e735ebf17d5452",
+    "src/pcjr/JRRUN.PY": "b2c80cbe5d2e61ec7e391128dcf0a9f8654fa8284a745c6e100e73a14bc0d455",
+    "src/pcjr/PCJSIMG.PY": "bbbbbebff9489fd8ec1db6c6f5cfd357b527da53954bb5f893b871dd2cc23aa1",
+    "src/text80/BUILDAPP.PY": "c41aab58edf893e503c91fb77f9ae1d1dfd9b9b4bd3656558511250562aacb8a",
+    "src/text80/BUILDT80.PY": "c336b6a43088a4a2544276d2bd904f5de5a78c18c79a4dc7bc56fe753a95bdc2",
+    "src/text80/T80CHK.PY": "65c4d7fbae680f1125a18a571311778723c9e60ef5d262bfede5125bc071b66e",
+    "src/text80/T80DBX.PY": "60b6fc3813b45cf078ca8ead154c7f68e27c776e6849d95a7e566eaa304c22ce",
+    "src/text80/T80FONT.PY": "fe83c7410c8b0841c0ae36d9432fe6ca18a71ecec603a5e893402910fd4bcc1f",
+    "src/text80/T80OFF.BAT": "810352c7fe1ade619b03483e2558cdbe41247669efc3bbb77f1643e850343151",
+    "src/text80/T80ON.BAT": "14c7595c7331292af7cb580c8e1c96cf50ae548b8f9322c75c06b43bb71b420c",
+    "src/text80/T80PANT.PY": "32819cf4480862506d31c75fb30a3583e79bb8c9ced8b3a2ec6756bce8074da7",
+    "src/text80/T80PATCH.PY": "7332ad58bdf220e11b47a73e68c4f18c9b4a43d2e8bb53719a9f2faaa3a08780",
+    "src/text80/T80PREP.PY": "b82c7bf246272345c8741ec5819abb829214b5f1972f16865f04830ca71738a9",
+    "src/text80/T80PROF.PY": "93a37980a5726c858c7df945a9dd4f9c35916adbf4ebce7bdf35e243d4ed8017",
+    "src/text80/T80PROFX.PY": "98feb5d03fff7339800e21070d13b91421d90a378a078dd5a661ca032df0afff",
+    "src/text80/T80PRUN.PY": "50f60628b7fc151c10e20f37393bb159a7a8b9f8c8c026cfc36be6d9209b0c96",
+    "src/text80/T80SET.C": "d9108e8460b816a1be49886461dda80d77509d19ef9ef6a1e9dffccabdc35a3b",
+    "src/text80/T80SETD.PY": "b4102fd87647e8f2381cd0fcc690fdc767d0de8e15fc75d4f8b275a4e8fd6f44",
+    "src/text80/T80SETT.PY": "94d4e4d1e47baa2281d9b3df9bbdaee1c2bfbada422d9f78163751096cdd7561",
+    "src/text80/T80SNAP.C": "b1f3f4cdce99cc1d4c3b028beaad94794acc001793110afa3bfff4524a811c95",
+    "src/text80/T80SNAP.DEF": "adcf8e26e7bfb638cf902abbe6d3cdd4b3f9ccf6924081233813acf9bea978e2",
+    "src/text80/T80SNAP.RSP": "964b015b1cc2870b1ac1d70f21c212c09fdd51f0eadb4bb007a276e2f2f824ae",
+    "src/text80/T80TALL.PY": "0d5a9ecb6ebee6399a397eb057c1a00a65a0331a18e6955466b8c291795e8ea9",
+    "src/text80/T80UI.PY": "c4ae7df9e333efb2155acccbb1f4f8c9a511b1bffe2fafdef0b27e684c4ad2d9",
+    "src/text80/T80WIN.PY": "410195f82264489253956b1a3b042034e09bb553dd7ce92d8526efffad077e65",
+    "src/text80/TPROF.C": "d6ccce92abc6bdb9ee573eb22119e876cb2d461a44e39fed8a5b84d4b81146c2",
+    "src/text80/TPROF.DEF": "85d1f406457474aefd59d555664468cfa2474218a842db7a000a9eb6dc76fd0c",
+    "src/text80/TPROF.RSP": "a36f4d67f069993ca145589ff379d87909ab0e7f0d30c50721c67e8c06400e1e",
+    "src/txt40/BUILDT40.PY": "15cb186d71ea10759783792942b4a2f46654055a4538e13cb5e3dc9622b5daf5",
+    "src/txt40/FNTREAD.PY": "b23a7297d75e19bd09bf0afed6b4d3cac638828eb46b0ef2286d38711f07549c",
+    "src/txt40/T40DATA.ASM": "ba6851024dcaa1c10cb32df333c1e10f68185bceb2c2340ae31e8a2c4851921e",
+    "src/txt40/T40ID.ASM": "e39f4bc537ff570b7ce40362a0f3d604125a7fd5965aafc05894b22856550336",
+    "src/txt40/T40MODEL.PY": "47735d6d76df4106a3589725baa37c240a39503c7079623d2dd46ae46978e6e7",
+    "src/txt40/T40MUT.PY": "fadafed854715a29b1249e8bd2a6d56312bf326e594c4de503d51d2a0913d611",
+    "src/txt40/T40PATCH.PY": "20a3aa6a2952fbcc85534194475cafda476dfca241c892edd21f63dd71e1688e",
+    "src/txt40/T40PRES.ASM": "19503892adbc72ab2d8877ab6444892c6b20b301c8f88574237e5be0e9d41b86",
+    "src/txt40/T40SHOT.PY": "0075789d6981495120e74cf526379fa02921ee8a9032dc0766d962b2411aef91",
+    "src/txt40/T40TEST.PY": "dd65f2ebb3e3544f9fe0ad410974c24be5a5e7492efbe22c44ef159eb240cd57",
+    "src/txt40/T40WIN.PY": "369f2f3e3243879186a67b851daa22d82a356c0558c85c48e9a1a58ec9fedbe6",
+    "src/xtpan/BUILD.BAT": "aae2af86d304a615f48b334730d0545dfe0879c60491749b3529447dcb3403e6",
+    "src/xtpan/BUILDAPP.PY": "73e372b00d8ca18d01816fb5273ea51b57f4825c1203baee9840b90aca2cfae9",
+    "src/xtpan/BUILDPAN.PY": "0c1ad760f4c7b728cc4e72aa633f3c1bef10a32a3b77a62def7933d16da859b8",
+    "src/xtpan/CURCHK.PY": "e29fe53867829980aff13e8b39f4d9771e45b8bd86e83abd925429837e854eb9",
+    "src/xtpan/DEMO.PY": "7bff05a33877a5dd73fb316190d14bfbcaa09286e4a2f00a590b0ed331248ebe",
+    "src/xtpan/EMULOCK.PY": "5cda93c4092b2962579ebdc26d33e31f35efeb680d316423ec888d0a8f8e7462",
+    "src/xtpan/HOSTPAN.PY": "ffa61a0c523b67e633f89aa71ba35f94d6921871b743aa0eb7bfd8d829699e00",
+    "src/xtpan/HOSTTEST.PY": "75d5f46c621216a3d1d17340b0363f9346d366df1afe46900046bafb4cfee3b3",
+    "src/xtpan/MSTEST.ASM": "70c2869d9ce96e809f141fb348d54cafd8a998d2894a9313475058c1c6596257",
+    "src/xtpan/PANCHK.PY": "097602c3294410d4eaf11ddbfa11cac5ccfbb9d6f91adf4bbf12db62b43c6166",
+    "src/xtpan/PANPATCH.PY": "de05dc42a4feaf0a25749357b978149cb29e5e5ce0ff8b83063d96ba618e3cdd",
+    "src/xtpan/PANTEST.C": "d6ab530e988197f1091c968429260beb0a716ff2884c42ba1977f0fef5ad843b",
+    "src/xtpan/PANTEST.DEF": "c16a49d50eadd4cf5392f276a60514db4c8312ddd5f9427bbaa020fcbc033ed5",
+    "src/xtpan/PANTEST.RSP": "b8b33008d6fe4120cf17cf1bd018a48f92cad5cac012112b68ab46615a59e393",
+    "src/xtpan/PCP86.PY": "0f782ed4cf646598af5c073f97d8edc38d0dac7109e673a9987da26809b08162",
+    "src/xtpan/PCPMOUSE.PY": "22b7f9334b75ec920dd07f67de1bf703f16ba8f6ef726e234baef161c4dd1580",
+    "src/xtpan/PCPWIN.PY": "fbabd2ab1d7cf62afb9b5abf8543c7f8a30660c94b9a1d3b91356f1cccebe8f0",
+    "src/xtpan/PROVENANCE.TXT": "aa7b8fb640a8d51f6acc739568c89ef936b36b0fddaab7096a3bc411adc2389e",
+    "src/xtpan/SHOTDEC.PY": "6232d735b5b5ccdc97c4417ba3b73f5f30b038999d851d629f0deaa137c58a4b",
+    "src/xtpan/XPWIN.PY": "76c69c1d8259005ba6a86f524213547d33aa80189bb724071ee5bb8513cf38ab",
+    "src/xtpan/XTPAN.C": "062676656b1594acc501a7f0ada904cc106dfeddc59c52b8f5f05eb79d71248d",
+    "src/xtpan/XTPAN.DEF": "99c7701080c70473532593202bb49f436ee1386f1d88668b6504b52dc6ce92cc",
+    "src/xtpan/XTPAN.RSP": "24a6cb1f0b427a7b61b2e43051f06dedc3a34719f5b78b6b4f67c6292c2829d4"
+  },
+  "status": "EXPERIMENTAL; owner-authorized separate publication; no existing release or qualification pins changed"
+}

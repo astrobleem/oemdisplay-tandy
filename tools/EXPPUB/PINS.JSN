@@ -1,0 +1,70 @@
+{
+  "PCJR": {
+    "inputs": {
+      "JRGRAB.GR2": "jrgrab/JRGRAB.GR2",
+      "JRGUARD.COM": "jrcom/JRGUARD.COM",
+      "JRWIN.COM": "jrcom/JRWIN.COM",
+      "TNDYJR.DRV": "pcjr/TNDYJR.DRV"
+    },
+    "payload": {
+      "FONTLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "JRGRAB.GR2": "2453cd1eba68e580b68b2d232a5dfa5285fd703cd75b2b4edacc203c3d741dec",
+      "JRGUARD.COM": "10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756",
+      "JRWIN.COM": "18ccaa02759e5462b746af9e28ebd31af32c43f29e9d4eea400e6673cc764e96",
+      "LOGOLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "OEMSETUP.INF": "709e773779c3731ca43d79bf238f553c5d3b174d8280695b1697aa3b410fc285",
+      "TNDYJR.DRV": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4",
+      "WXTSPL01.RLE": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+      "XTEFIX.FON": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+      "XTEOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "XTESYS.FON": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
+      "XTSTATIC.LGO": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "source_files": {
+      "FONTLIC.TXT": "distributions/WINXT/FONTLIC.TXT",
+      "LOGOLIC.TXT": "distributions/WINXT/LOGOLIC.TXT",
+      "OEMSETUP.INF": "src/pcjr/INSTALL/OEMSETUP.INF",
+      "WXTSPL01.RLE": "distributions/WINXT/WXTSPL01.RLE",
+      "XTEFIX.FON": "distributions/WINXT/XTEFIX.FON",
+      "XTEOEM.FON": "distributions/WINXT/XTEOEM.FON",
+      "XTESYS.FON": "distributions/WINXT/XTESYS.FON",
+      "XTSTATIC.LGO": "distributions/WINXT/XTSTATIC.LGO"
+    }
+  },
+  "TEXT80": {
+    "inputs": {
+      "T80CMP.DRV": "t80c-2024/T80CMP.DRV",
+      "T80COUR.FON": "textfonts/T80COUR.FON",
+      "T80HELV.FON": "textfonts/T80HELV.FON",
+      "T80PAN.DRV": "t80pan-2024/T80PAN.DRV",
+      "T80SET.EXE": "textapps/T80SET.EXE",
+      "T80VGA.DRV": "t80vga-2024/T80VGA.DRV",
+      "TEXT80.DRV": "t80-2024/TEXT80.DRV",
+      "XTPAN.EXE": "textapps/XTPAN.EXE"
+    },
+    "payload": {
+      "FONTLIC.TXT": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "T80CMP.DRV": "b61dd4d7280e0b7926312844531c684dfbb1c3121fffab015dfffdd139c81a7a",
+      "T80COUR.FON": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6",
+      "T80HELV.FON": "9bd5153d11f26e340b0385d9adba756351c0f41e8915a4d16c333d342b4057fd",
+      "T80OFF.BAT": "810352c7fe1ade619b03483e2558cdbe41247669efc3bbb77f1643e850343151",
+      "T80ON.BAT": "14c7595c7331292af7cb580c8e1c96cf50ae548b8f9322c75c06b43bb71b420c",
+      "T80PAN.DRV": "d4cc00e8a4bb7e3542abe55c9b8d65018588a6c50f83979ed4a74a54c4f832cc",
+      "T80SET.EXE": "e5a3d84b2b3f052317c216a3da554e7cc586ec0a0aeec4291a65e6b6a9efde47",
+      "T80VGA.DRV": "ad3f10c8eae107bcbb8739de68b5cdebf563a3d173aff4a3b562d01a719d59da",
+      "TEXT80.DRV": "f02346b008a95d6bc12ec0420573f2e98b499d2fe800c260fd6165935f8e8837",
+      "XTCFIX.FON": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+      "XTCOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "XTPAN.EXE": "97abd7664cc58e97c0093aa2246dd14ea95675ed8645ee71080a7e2dd50eed99",
+      "XTTSYS.FON": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa"
+    },
+    "source_files": {
+      "FONTLIC.TXT": "distributions/WINXT/FONTLIC.TXT",
+      "T80OFF.BAT": "src/text80/T80OFF.BAT",
+      "T80ON.BAT": "src/text80/T80ON.BAT",
+      "XTCFIX.FON": "distributions/WINXT/XTCFIX.FON",
+      "XTCOEM.FON": "distributions/WINXT/XTCOEM.FON",
+      "XTTSYS.FON": "distributions/WINXT/XTTSYS.FON"
+    }
+  }
+}

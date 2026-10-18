@@ -9,6 +9,17 @@ drivers, the WINXT disk, the accepted hashes or the Tandy RESERVE helper.
 Every result below is DOSBox / DOSBox-X emulation; no physical PCjr has run
 any of it.
 
+## Download and install
+
+**[Download PCJRSET.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PCJR/PCJRSET.ZIP)**
+([checksums and packet details](../downloads/experimental/PCJR/README.MD)).
+Extract PCJREXP to `C:\PCJREXP`, then follow its `INSTALL.TXT` for native
+Windows 3.0 Setup and the guarded `JRWIN` launch. The packet includes the
+pinned driver/guard/launcher, PCjr-safe grabber, original XT Pixels fonts
+and static logo. Your own Windows/DOS media supplies the operating system.
+The new rebuilds match the clean-install emulator evidence byte for byte;
+physical hardware and real PCjr memory expansion remain unqualified.
+
 ## Why the PCjr is close
 
 The Tandy 1000 was built as a PCjr clone, and the current 320x200x16 driver
@@ -469,8 +480,8 @@ Two independent builds gave the same hash. As a control, the same pipeline
 and emulator (DOSBox-X 2024.03.01 Ubuntu package, not the 2026 nightly in
 other records) reproduced the accepted TR5 320x200x16 driver exactly:
 54,896 bytes, `33f681b0...6cef61`, matching `docs/TRIAL5/BUILDS.JSN`. The
-PCjr build is 80 bytes larger. The binary is not committed; rebuild it or
-take it from the session hand-off. The listing confirms the 8086 encodings
+PCjr build is 80 bytes larger. The original build did not commit the binary; the current Setup packet
+linked above supplies the same pinned driver. The listing confirms the 8086 encodings
 (`26: 8E 06` for the ES-override load, `D3 E0` for `shl ax,cl`).
 
 **BUILDCOM.PY** builds JRPROBE, JRGUARD, JRFREET, JRHOLDT and T2PROBE with

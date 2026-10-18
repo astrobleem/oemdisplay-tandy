@@ -63,22 +63,24 @@ have their own installation guides.
 
 ## Other video hardware: experimental drivers
 
-These are separate experimental driver packets for cloned Windows 3.0 installs.
-Back up the complete installation and follow the machine's recovery guide.
-Physical hardware and fresh Windows Setup integration remain unqualified.
+These are separate experimental Windows 3.0 drivers. Back up the complete
+installation and follow the machine's installation and recovery guide. Physical
+hardware remains unqualified. The new PCjr packet supports clean Windows Setup
+and changing an existing installation, both checked in DOSBox-X.
 
 | Machine/card | Mode and download | Status and guide |
 | --- | --- | --- |
 | [Amstrad PC1512](https://github.com/astrobleem/windows-3-amstrad-pc1512) | [PC1512.DRV, 640x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) | Emulator rendering evidence; one cursor-state case remains unresolved. [Install/recover](experiments/DISPLAY3/PC1512.TXT) |
-| [IBM PCjr](https://github.com/astrobleem/windows-3-pcjr) | [TNDYJR.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCJR.ZIP) | Emulator-tested; guard required before every start. Real PCjr expanded-memory reservation remains unqualified. [Install/recover](experiments/DISPLAY3/PCJR.TXT) |
+| [IBM PCjr](https://github.com/astrobleem/windows-3-pcjr) | [PCJRSET.ZIP: clean Setup packet, 320x200x16](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PCJR/PCJRSET.ZIP) | Original fonts, static logo and PCjr-safe grabber included; guard required before Setup and every start. [Install/recover](downloads/experimental/PCJR/README.MD) |
 | [IBM XT + Plantronics ColorPlus](https://github.com/astrobleem/windows-3-plantronics) | [PCP3216.DRV, 320x200x16](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP) | Emulator rendering evidence; requires the ColorPlus card and its dedicated VRAM. [Install/recover](experiments/DISPLAY3/PCP3216.TXT) |
 
 [Experimental release, source and checksums](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experimental-displays-2026-10-12)
 and [qualification scope](experiments/DISPLAY3/README.MD). Tandy EX/HX users
-should continue with Windows XT rc.6 above. This release includes no TXT40
-or TGA-II driver and no Windows, DOS, font/grabber, ROM or compiler files.
+should continue with Windows XT rc.6 above. The older 2026-10-12 release
+remains unchanged. The new PCjr Setup packet includes original XT Pixels fonts
+and a DDK-derived PCjr grabber; no Windows/DOS media or Microsoft fonts ship.
 
-PCjr [PR #138](https://github.com/astrobleem/oemdisplay-tandy/pull/138) merged at [613137d](https://github.com/astrobleem/oemdisplay-tandy/commit/613137d0029817b42e141a11685182d867da911d) after 40 host tests. It adds a clean-install [screenshot](https://github.com/astrobleem/oemdisplay-tandy/blob/613137d0029817b42e141a11685182d867da911d/docs/pcjr/INSTALL/DESKTOP.PNG) and [26/26 session record](https://github.com/astrobleem/oemdisplay-tandy/blob/613137d0029817b42e141a11685182d867da911d/docs/pcjr/INSTALL/SESSION.JSN); both [post-merge install checks](https://github.com/astrobleem/oemdisplay-tandy/actions/runs/39078997906) and [disk build](https://github.com/astrobleem/oemdisplay-tandy/actions/runs/39078997999) passed. The merge did not publish a new PCJR.ZIP.
+PCjr [PR #138](https://github.com/astrobleem/oemdisplay-tandy/pull/138) merged at [613137d](https://github.com/astrobleem/oemdisplay-tandy/commit/613137d0029817b42e141a11685182d867da911d) after 40 host tests. It adds a clean-install [screenshot](https://github.com/astrobleem/oemdisplay-tandy/blob/613137d0029817b42e141a11685182d867da911d/docs/pcjr/INSTALL/DESKTOP.PNG) and [26/26 session record](https://github.com/astrobleem/oemdisplay-tandy/blob/613137d0029817b42e141a11685182d867da911d/docs/pcjr/INSTALL/SESSION.JSN); both [post-merge install checks](https://github.com/astrobleem/oemdisplay-tandy/actions/runs/39078997906) and [disk build](https://github.com/astrobleem/oemdisplay-tandy/actions/runs/39078997999) passed. The new [PCJRSET.ZIP](downloads/experimental/PCJR/README.MD) publishes that clean-install folder separately; the old PCJR.ZIP stays unchanged.
 
 ## Display modes
 
@@ -98,11 +100,14 @@ Windows rendering evidence covers the emulated SL/2 only. Physical hardware,
 other SL/TL/RL models and Windows 3.1 remain unqualified; EX/HX must not use
 this driver. Run T2RESV successfully before Setup and every Windows start.
 
-[TEXT80 and compact C25](docs/TEXT80.MD) ([front door](https://github.com/astrobleem/text-mode-windows)) are merged experimental text-mode
-driver profiles with emulator evidence. C25 passed 54/54 in 86Box 6.0 build
-9001 on an emulated IBM XT/CGA (8088, 4.77 MHz); see the [Notepad capture](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/1dc95619dde79663d0e1d9e1c7d251b00978b7ed/docs/text80/RUN_c3/c80w3/notepad.png)
-and [tested commit 1dc9561](https://github.com/astrobleem/oemdisplay-tandy/commit/1dc95619dde79663d0e1d9e1c7d251b00978b7ed). No current TEXT80/C25 binary
-package has been released; the older rc.6 TXTMODE feasibility driver is historical.
+**[Download TEXT80 / compact C25](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TEXT80/TEXT80.ZIP)**
+for experimental 80-column text Windows 3.0, including PAN and VGA variants.
+[Installation, rollback and exact test scope](downloads/experimental/TEXT80/README.MD)
+and [rendering details](docs/TEXT80.MD) ([front door](https://github.com/astrobleem/text-mode-windows)).
+C25 matches its recorded Windows-tested binary (54/54 in 86Box XT/CGA).
+The other current rebuilds have fresh audits/presenter checks; their earlier
+Windows GUI sessions used different binary hashes. The older rc.6 TXTMODE
+feasibility driver is historical.
 Olivetti PC1/Yamaha has no public driver package, source packet, or machine-specific
 emulator capture/qualification record ([front door](https://github.com/astrobleem/windows-3-olivetti-pc1)); no download is available, and hardware
 support remains unqualified.

@@ -1,6 +1,17 @@
 # TEXT80: Windows 3.0 in 80-column text mode (experimental)
 
-[PR #133](https://github.com/astrobleem/oemdisplay-tandy/pull/133) and [PR #134](https://github.com/astrobleem/oemdisplay-tandy/pull/134) are merged. TEXT80 25, PAN, VGA and compact C25 remain experimental; no current TEXT80/C25 binary package has been released. No released driver or installer default was changed. The Windows runs below used emulators only; physical hardware is not qualified. Rebuilding a driver is not runtime acceptance.
+**[Download TEXT80.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TEXT80/TEXT80.ZIP)**
+([install, rollback and checksums](../downloads/experimental/TEXT80/README.MD)).
+The separate 2026-10-18 packet includes TEXT80 25, compact C25, PAN and VGA,
+original XT Pixels fonts and the DOS setup/rollback helper. Existing Windows
+XT releases, defaults and pins are unchanged.
+
+C25 rebuilds to the exact binary in the recorded Windows GUI session. The
+other three current drivers have fresh audits/presenter checks; their earlier
+GUI sessions used different binary hashes. No fresh Windows boot was run for
+this publication. See BUILD.JSN in the packet for exact evidence and limits.
+All evidence below is emulation; no real hardware is qualified. Branch names
+and session numbers below identify the historical development work.
 
 ## Verdict
 
