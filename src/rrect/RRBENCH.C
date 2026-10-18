@@ -4,8 +4,12 @@
  * 32 KB B800h frame buffer after each batch (C:\RBnn.BIN) and, when the
  * driver is a test-only RRTRACE build, saves its Output call table
  * (C:\TRnn.BIN, 20-byte records, see src/rrect/RRPATCH.PY). The last stage
- * starts CALC.EXE, times three full client repaints (InvalidateRect +
- * UpdateWindow) and closes it. Log: C:\RRBENCH.LOG, one KEY=value per line.
+ * stages start CALC.EXE, REVERSI.EXE and PBRUSH.EXE in turn, time three full
+ * client repaints each (InvalidateRect + UpdateWindow), dump, and close them.
+ * The cursor_overlap stage draws Calculator-sized keys with the arrow cursor
+ * visible over them, then moves it to the bottom-right corner before the
+ * dump, so cursor save/restore is part of the compared frame.
+ * Log: C:\RRBENCH.LOG, one KEY=value per line.
  * Command line: an optional batch count multiplier digit (default 1).
  */
 #define WINVER 0x0300
@@ -16,6 +20,7 @@ static HDC dc;
 static int width, height, seq = 0, mult = 1;
 static HPEN blackPen, nullPen;
 static HBRUSH white, gray, hollow, ltgray;
+static HWND lastApp = NULL;
 static char trbuf[4 + 64 * 20];
 
 static void putnum(char *b, int *n, long v)
@@ -163,23 +168,36 @@ static void pump(int n)
         }
 }
 
-static void calc(void)
+/* Start an application, wait for its window to become active, time three
+ * full client repaints, dump, close it. */
+static void app(char *name, char *exe)
 {
     HWND w = NULL;
     int i;
     DWORD t0, t1, ts;
+    char title[40];
     seq++;
     clear();
     line("STAGE", seq);
-    _lwrite(logFile, "NAME=calc\r\n", 11);
+    _lwrite(logFile, "NAME=", 5);
+    _lwrite(logFile, name, lstrlen(name));
+    _lwrite(logFile, "\r\n", 2);
     flush();
     ts = GetTickCount();
-    line("WINEXEC", WinExec("CALC.EXE", SW_SHOWNORMAL));
+    line("WINEXEC", WinExec(exe, SW_SHOWNORMAL));
     for (i = 0; i < 2000 && w == NULL; i++) {
         pump(4);
-        w = FindWindow(NULL, "Calculator");
+        w = GetActiveWindow();
+        if (w == lastApp || !IsWindow(w)) w = NULL;
     }
-    line("CALC_FOUND", w != NULL);
+    lastApp = w;
+    line("APP_FOUND", w != NULL);
+    if (w != NULL) {
+        i = GetWindowText(w, title, sizeof(title) - 1);
+        _lwrite(logFile, "TITLE=", 6);
+        _lwrite(logFile, title, i);
+        _lwrite(logFile, "\r\n", 2);
+    }
     if (w == NULL) { flush(); return; }
     UpdateWindow(w);
     pump(200);
@@ -200,6 +218,26 @@ static void calc(void)
     pump(400);
 }
 
+/* Calculator-sized keys drawn with the arrow cursor visible over them. */
+static void cursorstage(void)
+{
+    int c, shown = 0;
+    seq++;
+    clear();
+    SetCursor(LoadCursor(NULL, IDC_ARROW));
+    do { c = ShowCursor(TRUE); shown++; } while (c < 0 && shown < 40);
+    SetCursorPos(40, 10);
+    pump(20);
+    seq--;
+    batch("cursor_overlap", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 0);
+    SetCursorPos(width - 1, height - 1);
+    pump(20);
+    dump();
+    while (shown-- > 0) ShowCursor(FALSE);
+    SetCursor(NULL);
+    flush();
+}
+
 int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
 {
     int hide = 0, c;
@@ -210,7 +248,7 @@ int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
     dc = GetDC(NULL);
     width = GetSystemMetrics(SM_CXSCREEN);
     height = GetSystemMetrics(SM_CYSCREEN);
-    line("VERSION", 1);
+    line("VERSION", 2);
     line("SCREEN_WIDTH", width);
     line("SCREEN_HEIGHT", height);
     line("NUMCOLORS", GetDeviceCaps(dc, NUMCOLORS));
@@ -239,7 +277,10 @@ int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
     batch("roundrect_overlap", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 6, 4, 0);
     batch("roundrect_clipped", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 1);
     batch("ellipse_12", 3, 12, 12, 0, 0, blackPen, gray, R2_COPYPEN, 4, 20, 20, 0);
-    calc();
+    cursorstage();
+    app("calc", "CALC.EXE");
+    app("reversi", "REVERSI.EXE");
+    app("pbrush", "PBRUSH.EXE");
     line("COMPLETE", 1);
     _lclose(logFile);
     ReleaseDC(NULL, dc);

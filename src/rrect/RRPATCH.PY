@@ -346,6 +346,30 @@ def patch_candidate(tsoft):
     return replace_n(t, CAND_POLY_OLD, CAND_POLY_NEW, 1, "candidate polyline bounds")
 
 
+# --- deliberately broken candidates (test-only, prove RRCMP notices) --------
+def patch_mut_lastrow(tsoft):
+    """Polyline copy ends one row early: the outline's bottom row stays stale."""
+    t = patch_candidate(tsoft)
+    return replace_n(t, "    mov firstrow,ax\r\n    inc bx\r\n    mov lastrow,bx\r\n    jmp TOutput_bounded\r\n",
+                     "    mov firstrow,ax\r\n    mov lastrow,bx\r\n    jmp TOutput_bounded\r\n", 1, "mutant lastrow")
+
+
+def patch_mut_firstrow(tsoft):
+    """Polyline copy starts one row late: the outline's top row stays stale."""
+    t = patch_candidate(tsoft)
+    return replace_n(t, "    mov firstrow,ax\r\n    inc bx\r\n    mov lastrow,bx\r\n    jmp TOutput_bounded\r\n",
+                     "    inc ax\r\n    mov firstrow,ax\r\n    inc bx\r\n    mov lastrow,bx\r\n    jmp TOutput_bounded\r\n",
+                     1, "mutant firstrow")
+
+
+def patch_mut_scanskip(tsoft):
+    """Scanline fills are treated like markers: drawn in the shadow, never copied."""
+    t = patch_candidate(tsoft)
+    return replace_n(t, "    cmp style,4\r\n    jne TOutput_thin_count\r\n",
+                     "    cmp style,4\r\n    je TOutput_marker\r\n    jmp TOutput_thin_count\r\n", 1,
+                     "mutant scanskip")
+
+
 def decode_records(data):
     """Records from the probe's TRACEnn.BIN (concatenated 20-byte records)."""
     import struct
