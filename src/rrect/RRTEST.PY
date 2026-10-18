@@ -23,6 +23,9 @@ HERE = Path(__file__).resolve().parent
 C = importlib.machinery.SourceFileLoader("rrcmp", str(HERE / "RRCMP.PY")).load_module()
 P = importlib.machinery.SourceFileLoader("rrpatch", str(HERE / "RRPATCH.PY")).load_module()
 
+STEPS = 14
+
+
 def make_log(version=3, shots=0, api=None, repaints=3):
     """A complete RRBENCH log in the probe's own format (see RRBENCH.C)."""
     L = [f"VERSION={version}", "SCREEN_WIDTH=320", "SCREEN_HEIGHT=200", "MULTIPLIER=1"]
@@ -34,6 +37,9 @@ def make_log(version=3, shots=0, api=None, repaints=3):
             L += ["WINEXEC=33", "APP_FOUND=1" if version >= 2 else "CALC_FOUND=1"]
             L += [f"TITLE={name.title()}"] if version >= 2 else []
             L += ["LAUNCH_TO_PAINTED_MS=900"] + ["REPAINT_MS=500"] * repaints
+        elif name == "visible_steps":
+            L += ["KIND=4", f"COUNT={STEPS}"] + ["STEP_DUMP_CREATED=1", "STEP_DUMP_BYTES=32768"] * STEPS
+            L += ["ELAPSED_MS=900", f"API_SUCCESSES={STEPS}", f"STEP_DUMPS={STEPS}"]
         else:
             L += ["KIND=1", "COUNT=20", "ELAPSED_MS=100", f"API_SUCCESSES={20 if api is None else api}"]
         L += ["TRACE_RECORDS=-1", "TRACE_LOST=0", "DUMP_CREATED=1", "DUMP_BYTES=32768"]
@@ -43,6 +49,8 @@ def make_log(version=3, shots=0, api=None, repaints=3):
 
 LOG = make_log()
 N = len(C.expected_names(3, 0))
+LOG4 = make_log(version=4)
+N4 = len(C.expected_names(4, 0))
 
 
 # The exact staged-source anchors the patches edit (from BUILD88's TR5 stage).
@@ -55,20 +63,31 @@ GATE = ("sBegin Data\r\npublic enabled_flag,ScratchSel,is_protected,_cstods,diag
         "    cmp dirty,0\r\n    je TOutput_done\r\n"
         "    ; Preserve the actual renderer result and all post-render GPRs.\r\n"
         "    parmD output\r\ncBegin\r\n    xor ax,ax\r\n    les di,input\r\n    mov bx,function\r\n")
+# Plus the anchors the batch patch edits: FlushRetainRows' end, the four
+# drawing entries with the shared prologue (Pixel, ScanLR, StrBlt,
+# ExtTextOut), BitBlt's, the bounded-row presentation and the render label.
+BGATE = (GATE + "FlushRetainRows endp\r\n" + "cBegin\r\n    mov dirty,0\r\n    map_device dst,1\r\n" * 4
+         + "    mov resync,0\r\n" + "TOutput_bounded:\r\n    mov outrows,1\r\nTOutput_render:\r\n"
+         + "    mov ax,firstrow\r\n    mov bx,lastrow\r\n    call FlushRetainRows\r\n    jmp short TOutput_flushed\r\n")
 
 
 def frame(fill=0x11):
     return bytes([fill]) * 32768
 
 
-def run_dir(root, name, dumps=None, log=LOG):
+def run_dir(root, name, dumps=None, log=LOG, steps=None):
     d = root / name
     d.mkdir()
     (d / "RRBENCH.LOG").write_text(log, newline="")
+    v4 = "VERSION=4" in log
     if dumps is None:
-        dumps = {n: frame() for n in range(1, N + 1)}
+        dumps = {n: frame() for n in range(1, (N4 if v4 else N) + 1)}
     for n, data in dumps.items():
         (d / f"RB{n:02d}.BIN").write_bytes(data)
+    if steps is None and v4:
+        steps = {k: frame(k) for k in range(1, STEPS + 1)}
+    for k, data in (steps or {}).items():
+        (d / f"RV{k:02d}.BIN").write_bytes(data)
     return d
 
 
@@ -87,10 +106,10 @@ class Compare(unittest.TestCase):
     def cmp(self, a, b):
         return C.main([str(a), str(b)])
 
-    def pair(self, log_a, log_b=None, dumps_a=None, dumps_b=None):
+    def pair(self, log_a, log_b=None, dumps_a=None, dumps_b=None, steps_a=None, steps_b=None):
         self.k += 1
-        return (run_dir(self.root, f"a{self.k}", dumps_a, log_a),
-                run_dir(self.root, f"b{self.k}", dumps_b, log_a if log_b is None else log_b))
+        return (run_dir(self.root, f"a{self.k}", dumps_a, log_a, steps_a),
+                run_dir(self.root, f"b{self.k}", dumps_b, log_a if log_b is None else log_b, steps_b))
 
     def test_complete_identical_runs_pass(self):
         self.assertEqual(C.validate(LOG)[1], [])
@@ -163,6 +182,19 @@ class Compare(unittest.TestCase):
         self.assertEqual(C.validate(other)[1], [])
         self.assertEqual(self.cmp(*self.pair(LOG, other)), 1)
 
+    def test_v4_per_call_frames_are_compared(self):
+        self.assertEqual(C.validate(LOG4)[1], [])
+        self.assertEqual(self.cmp(*self.pair(LOG4)), 0)
+        held = {k: frame(k) for k in range(1, STEPS + 1)}
+        held[5] = frame(4)                         # a row held back past its call: final frame still equal
+        self.assertEqual(self.cmp(*self.pair(LOG4, steps_b=held)), 1)
+        some = {k: frame(k) for k in range(1, STEPS)}
+        self.assertEqual(self.cmp(*self.pair(LOG4, steps_a=some, steps_b=some)), 1)
+        short = LOG4.replace("STEP_DUMP_CREATED=1\r\nSTEP_DUMP_BYTES=32768\r\n", "", 1)
+        self.assertNotEqual(C.validate(short)[1], [])
+        self.assertEqual(self.cmp(*self.pair(short)), 1)
+        self.assertNotEqual(C.validate(LOG4.replace("NAME=visible_steps", "NAME=cursor_overlap"))[1], [])
+
     def test_timings_are_not_compared(self):
         self.assertEqual(self.cmp(*self.pair(LOG, LOG.replace("ELAPSED_MS=100", "ELAPSED_MS=3"))), 0)
 
@@ -186,6 +218,31 @@ class Patches(unittest.TestCase):
         self.assertIn("    inc bx\r\n    mov lastrow,bx\r\n", cand)
         self.assertNotIn("    inc bx\r\n    mov lastrow,bx\r\n", P.patch_mut_lastrow(GATE).split("TOutput_poly_point")[1]
                          .split("TOutput_two_point")[0])
+
+    def test_batch_patch_and_its_mutants(self):
+        b = P.patch_batch(BGATE)
+        self.assertEqual(b.count("    rr_settle\r\n"), 6)       # 4 entries, BitBlt, non-marker Output styles
+        m = b.index("TOutput_marker:")
+        self.assertLess(b.index("call BatchClose", m), b.index("mov rr_bopen,1", m))   # present, then open
+        hold = b[b.index("; RRBATCH: hold this fill row"):b.index("TOutput_present:")]
+        self.assertNotIn("FlushRetainRows", hold)
+        self.assertIn("mov rr_blast,bx", hold)
+        noend = P.patch_mut_noend(BGATE)
+        end = noend[noend.index("TOutput_marker:"):noend.index("TOutput_not_marker:")]
+        self.assertLess(end.index("mov rr_bopen,0"), end.index("call BatchClose"))
+        self.assertIn("    dec bx\r\n    cmp ax,bx\r\n    jae bc_done", P.patch_mut_short(BGATE))
+        early = P.patch_mut_early(BGATE)
+        # The copy is inserted at TOutput_render, i.e. before the renderer runs.
+        self.assertIn("TOutput_render:\r\n    cmp outrows,0\r\n    je TOutput_mut_go\r\n", early)
+        for fn in (P.patch_mut_noend, P.patch_mut_short, P.patch_mut_early):
+            self.assertNotEqual(fn(BGATE), b, fn.__name__)
+
+    def test_batch_patch_refuses_a_different_entry_count(self):
+        three = BGATE.replace("cBegin\r\n    mov dirty,0\r\n    map_device dst,1\r\n", "", 1)
+        with self.assertRaises(SystemExit):
+            P.patch_batch(three)
+        with self.assertRaises(SystemExit):
+            P.patch_batch(BGATE + "cBegin\r\n    mov dirty,0\r\n    map_device dst,1\r\n")
 
     def test_patch_refuses_missing_or_repeated_anchor(self):
         with self.assertRaises(SystemExit):
