@@ -64,7 +64,3 @@ docs/QUAL/** -text
 # Experimental packet pins include the exact native-qualified launcher source.
 experiments/DISPLAY3/** -text
 .github/workflows/display3.yml -text
-
-# RoundRect evidence keeps the probe's exact CRLF log bytes.
-docs/rrect/** -text
-docs/rrbatch/** -text
