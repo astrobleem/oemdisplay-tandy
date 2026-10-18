@@ -269,6 +269,83 @@ def patch_nodraw(tsoft):
     return replace_n(t, ABL_DRAW_OLD, ABL_DRAW_NEW, 1, "ablation draw")
 
 
+# --- candidate --------------------------------------------------------------
+# Two gate changes in TOutput; the renderer, its arguments and its order are
+# untouched, so every shadow pixel is as before; only the copy to the screen
+# changes:
+# 1. GDI's OS_BEGINNSCAN (80) and OS_ENDNSCAN (81) markers: OUTPUT.ASM
+#    returns -1 for every style but 4 and 18 before touching anything, so
+#    the shadow did not change and nothing needs copying. dirty=0 skips the
+#    copy (and its cursor hide/show) for exactly these two styles.
+# 2. OS_POLYLINE with 3..RR_POLY_MAX points: like the existing two-point
+#    case, every point must lie on the screen; the copy is then the rows from
+#    the lowest to the highest point (a thin polyline never leaves them). Any
+#    point off screen, or more points, keeps the full refresh.
+RR_POLY_MAX = 1024
+
+CAND_STYLE_OLD = ("TOutput_thin_count:\r\n"
+                  "    cmp style,18\r\n"
+                  "    or_require je,TOutput_render\r\n"
+                  "    cmp count,2\r\n"
+                  "    or_require je,TOutput_render\r\n"
+                  "TOutput_style_ok:\r\n")
+CAND_STYLE_NEW = ("TOutput_thin_count:\r\n"
+                  "    ; RRECT: GDI's OS_BEGINNSCAN/OS_ENDNSCAN markers draw nothing (the\r\n"
+                  "    ; renderer returns -1 for them untouched): no copy, no cursor work.\r\n"
+                  "    cmp style,80\r\n"
+                  "    je TOutput_marker\r\n"
+                  "    cmp style,81\r\n"
+                  "    jne TOutput_not_marker\r\n"
+                  "TOutput_marker:\r\n"
+                  "    mov dirty,0\r\n"
+                  "    jmp TOutput_render\r\n"
+                  "TOutput_not_marker:\r\n"
+                  "    cmp style,18\r\n"
+                  "    or_require je,TOutput_render\r\n"
+                  "    ; RRECT: two-point lines as before, and 3..N-point polylines.\r\n"
+                  "    cmp count,2\r\n"
+                  "    or_require jae,TOutput_render\r\n"
+                  f"    cmp count,{RR_POLY_MAX}\r\n"
+                  "    or_require jbe,TOutput_render\r\n"
+                  "TOutput_style_ok:\r\n")
+CAND_POLY_OLD = "TOutput_polyline:\r\n    mov cx,es:[di]\r\n"
+CAND_POLY_NEW = ("TOutput_polyline:\r\n"
+                 "    cmp count,2\r\n"
+                 "    je TOutput_two_point\r\n"
+                 "    ; RRECT: every point on the screen; rows = lowest..highest Y.\r\n"
+                 "    mov cx,count\r\n"
+                 "    mov ax,7fffh\r\n"
+                 "    xor bx,bx\r\n"
+                 "TOutput_poly_point:\r\n"
+                 "    mov dx,es:[di]\r\n"
+                 "    cmp dx,SCREEN_WIDTH\r\n"
+                 "    or_require jb,TOutput_render\r\n"
+                 "    mov dx,es:[di+2]\r\n"
+                 "    cmp dx,SCREEN_HEIGHT\r\n"
+                 "    or_require jb,TOutput_render\r\n"
+                 "    cmp dx,ax\r\n"
+                 "    jae TOutput_poly_notmin\r\n"
+                 "    mov ax,dx\r\n"
+                 "TOutput_poly_notmin:\r\n"
+                 "    cmp dx,bx\r\n"
+                 "    jbe TOutput_poly_notmax\r\n"
+                 "    mov bx,dx\r\n"
+                 "TOutput_poly_notmax:\r\n"
+                 "    add di,4\r\n"
+                 "    loop TOutput_poly_point\r\n"
+                 "    mov firstrow,ax\r\n"
+                 "    inc bx\r\n"
+                 "    mov lastrow,bx\r\n"
+                 "    jmp TOutput_bounded\r\n"
+                 "TOutput_two_point:\r\n"
+                 "    mov cx,es:[di]\r\n")
+
+
+def patch_candidate(tsoft):
+    t = replace_n(tsoft, CAND_STYLE_OLD, CAND_STYLE_NEW, 1, "candidate style gate")
+    return replace_n(t, CAND_POLY_OLD, CAND_POLY_NEW, 1, "candidate polyline bounds")
+
+
 def decode_records(data):
     """Records from the probe's TRACEnn.BIN (concatenated 20-byte records)."""
     import struct
