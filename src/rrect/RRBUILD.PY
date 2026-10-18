@@ -2,7 +2,7 @@
 """Build a TR5 driver variant for the RoundRect investigation (src/rrect).
 
   python3 src/rrect/RRBUILD.PY --repo <DEPS.PY display view> --dosbox <dosbox-x> \\
-      --out <fresh dir> --mode 320x200x16 --variant baseline|trace|noflush|nodraw|candidate|candidate-trace|mut-lastrow|mut-firstrow|mut-scanskip
+      --out <fresh dir> --mode 320x200x16 --variant baseline|trace|noflush|nodraw|candidate|candidate-trace|batch|batch-trace|mut-*
 
 Runs the view's BUILD88.PY unchanged; for any variant other than baseline,
 RRPATCH edits are applied to the staged EGA/TSOFT.ASM (and only there)
@@ -38,7 +38,11 @@ def edits_for(variant):
         return [P.patch_nodraw]
     if variant == "candidate":
         return [P.patch_candidate]
-    if variant in ("mut-lastrow", "mut-firstrow", "mut-scanskip"):
+    if variant == "batch":
+        return [P.patch_batch]
+    if variant == "batch-trace":
+        return [P.patch_batch, P.patch_trace]
+    if variant in ("mut-lastrow", "mut-firstrow", "mut-scanskip", "mut-noend", "mut-short", "mut-early"):
         return [getattr(P, "patch_" + variant.replace("-", "_"))]
     if variant == "candidate-trace":
         return [P.patch_candidate, P.patch_trace]
