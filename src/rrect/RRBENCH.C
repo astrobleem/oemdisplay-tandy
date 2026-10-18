@@ -10,6 +10,10 @@
  * visible over them, then moves it to the bottom-right corner before the
  * dump, so cursor save/restore is part of the compared frame.
  * Log: C:\RRBENCH.LOG, one KEY=value per line.
+ * If C:\RRECT\RRSHOTS.ON exists (screenshot runs only), only the application
+ * stages run; each logs REPAINT_START before its first timed repaint and
+ * HOLD after its dump, then keeps its window up for 30 s so that the host
+ * runner can take 86Box screenshots. Timings from such runs are not used.
  * Command line: an optional batch count multiplier digit (default 1).
  */
 #define WINVER 0x0300
@@ -17,7 +21,7 @@
 
 static HFILE logFile;
 static HDC dc;
-static int width, height, seq = 0, mult = 1;
+static int width, height, seq = 0, mult = 1, shots = 0;
 static HPEN blackPen, nullPen;
 static HBRUSH white, gray, hollow, ltgray;
 static HWND lastApp = NULL;
@@ -168,6 +172,15 @@ static void pump(int n)
         }
 }
 
+/* Screenshot runs: keep the current screen up for 30 s. */
+static void hold(void)
+{
+    DWORD t = GetTickCount();
+    line("HOLD", seq);
+    flush();
+    while (GetTickCount() - t < 30000L) pump(10);
+}
+
 /* Start an application, wait for its window to become active, time three
  * full client repaints, dump, close it. */
 static void app(char *name, char *exe)
@@ -205,6 +218,7 @@ static void app(char *name, char *exe)
     line("LAUNCH_TO_PAINTED_MS", (long)(t1 - ts));
     for (i = 0; i < 3; i++) {
         resettrace();
+        if (shots && i == 0) { line("REPAINT_START", seq); flush(); }
         InvalidateRect(w, NULL, TRUE);
         t0 = GetTickCount();
         UpdateWindow(w);
@@ -214,6 +228,7 @@ static void app(char *name, char *exe)
     savetrace();
     dump();
     flush();
+    if (shots) hold();
     PostMessage(w, WM_CLOSE, 0, 0L);
     pump(400);
 }
@@ -242,19 +257,22 @@ int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
 {
     int hide = 0, c;
     HCURSOR oldcur;
+    OFSTRUCT of;
     if (cmd && cmd[0] >= '1' && cmd[0] <= '9') mult = cmd[0] - '0';
     logFile = _lcreat("C:\\RRBENCH.LOG", 0);
     if (logFile == HFILE_ERROR) return 1;
     dc = GetDC(NULL);
     width = GetSystemMetrics(SM_CXSCREEN);
     height = GetSystemMetrics(SM_CYSCREEN);
-    line("VERSION", 2);
+    line("VERSION", 3);
     line("SCREEN_WIDTH", width);
     line("SCREEN_HEIGHT", height);
     line("NUMCOLORS", GetDeviceCaps(dc, NUMCOLORS));
     line("CURVECAPS", GetDeviceCaps(dc, CURVECAPS));
     line("POLYGONALCAPS", GetDeviceCaps(dc, POLYGONALCAPS));
     line("MULTIPLIER", mult);
+    shots = OpenFile("C:\\RRECT\\RRSHOTS.ON", &of, OF_EXIST) != HFILE_ERROR;
+    line("SHOTS", shots);
     white = GetStockObject(WHITE_BRUSH);
     gray = GetStockObject(GRAY_BRUSH);
     ltgray = GetStockObject(LTGRAY_BRUSH);
@@ -268,16 +286,18 @@ int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
     oldcur = SetCursor(NULL);
     flush();
     /* Calculator-sized keys first, then variants that exercise fallbacks. */
-    batch("roundrect_key", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 0);
-    batch("rectangle_key", 2, 26, 15, 0, 0, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 0);
-    batch("roundrect_large", 1, 60, 30, 12, 12, blackPen, white, R2_COPYPEN, 6, 64, 36, 0);
-    batch("roundrect_hollow", 1, 26, 15, 8, 8, blackPen, hollow, R2_COPYPEN, 20, 30, 20, 0);
-    batch("roundrect_nopen", 1, 26, 15, 8, 8, nullPen, gray, R2_COPYPEN, 20, 30, 20, 0);
-    batch("roundrect_xor", 1, 26, 15, 8, 8, blackPen, ltgray, R2_XORPEN, 20, 30, 20, 0);
-    batch("roundrect_overlap", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 6, 4, 0);
-    batch("roundrect_clipped", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 1);
-    batch("ellipse_12", 3, 12, 12, 0, 0, blackPen, gray, R2_COPYPEN, 4, 20, 20, 0);
-    cursorstage();
+    if (!shots) {
+        batch("roundrect_key", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 0);
+        batch("rectangle_key", 2, 26, 15, 0, 0, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 0);
+        batch("roundrect_large", 1, 60, 30, 12, 12, blackPen, white, R2_COPYPEN, 6, 64, 36, 0);
+        batch("roundrect_hollow", 1, 26, 15, 8, 8, blackPen, hollow, R2_COPYPEN, 20, 30, 20, 0);
+        batch("roundrect_nopen", 1, 26, 15, 8, 8, nullPen, gray, R2_COPYPEN, 20, 30, 20, 0);
+        batch("roundrect_xor", 1, 26, 15, 8, 8, blackPen, ltgray, R2_XORPEN, 20, 30, 20, 0);
+        batch("roundrect_overlap", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 6, 4, 0);
+        batch("roundrect_clipped", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 1);
+        batch("ellipse_12", 3, 12, 12, 0, 0, blackPen, gray, R2_COPYPEN, 4, 20, 20, 0);
+        cursorstage();
+    }
     app("calc", "CALC.EXE");
     app("reversi", "REVERSI.EXE");
     app("pbrush", "PBRUSH.EXE");

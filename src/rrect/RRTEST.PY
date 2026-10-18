@@ -27,7 +27,7 @@ GATE = ("sBegin Data\r\npublic enabled_flag,ScratchSel,is_protected,_cstods,diag
         "    cmp style,4\r\n    jne TOutput_thin_count\r\n"
         "TOutput_thin_count:\r\n    cmp style,18\r\n    or_require je,TOutput_render\r\n"
         "    cmp count,2\r\n    or_require je,TOutput_render\r\nTOutput_style_ok:\r\n"
-        "TOutput_polyline:\r\n    mov cx,es:[di]\r\n"
+        "    jmp short TOutput_bounded\r\nTOutput_polyline:\r\n    mov cx,es:[di]\r\n"
         "    popf\r\n    cCall Output,<dst,style,count,points,pen,brush,mode,clip>\r\n"
         "    cmp dirty,0\r\n    je TOutput_done\r\n"
         "    ; Preserve the actual renderer result and all post-render GPRs.\r\n"

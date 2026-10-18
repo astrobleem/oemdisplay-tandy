@@ -308,8 +308,10 @@ CAND_STYLE_NEW = ("TOutput_thin_count:\r\n"
                   f"    cmp count,{RR_POLY_MAX}\r\n"
                   "    or_require jbe,TOutput_render\r\n"
                   "TOutput_style_ok:\r\n")
-CAND_POLY_OLD = "TOutput_polyline:\r\n    mov cx,es:[di]\r\n"
-CAND_POLY_NEW = ("TOutput_polyline:\r\n"
+# The scanline path's short jump over this code no longer reaches: make it near.
+CAND_POLY_OLD = "    jmp short TOutput_bounded\r\nTOutput_polyline:\r\n    mov cx,es:[di]\r\n"
+CAND_POLY_NEW = ("    jmp TOutput_bounded\r\n"
+                 "TOutput_polyline:\r\n"
                  "    cmp count,2\r\n"
                  "    je TOutput_two_point\r\n"
                  "    ; RRECT: every point on the screen; rows = lowest..highest Y.\r\n"
