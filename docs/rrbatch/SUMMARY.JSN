@@ -1,0 +1,41 @@
+{
+ "rrcmp": {
+  "TR5C": {
+   "exit": 0,
+   "expected": 0
+  },
+  "TR5B": {
+   "exit": 0,
+   "expected": 0
+  },
+  "BATCH": {
+   "exit": 0,
+   "expected": 0
+  },
+  "BTR": {
+   "exit": 0,
+   "expected": 0
+  },
+  "SHOT": {
+   "exit": 0,
+   "expected": 0
+  },
+  "MNOEND": {
+   "exit": 1,
+   "expected": 1
+  },
+  "MSHORT": {
+   "exit": 1,
+   "expected": 1
+  },
+  "MEARLY": {
+   "exit": 1,
+   "expected": 1
+  }
+ },
+ "final_screenshots_identical": {
+  "CALC_END": true,
+  "REVER_END": true,
+  "PBRUS_END": true
+ }
+}

@@ -8,7 +8,8 @@ buffer after stage nn; mode 09h: offset (y%4)*8192+(y//4)*160+x//2, even X
 in the high nibble). Every stage present in either run must be present in
 both with byte-identical 32,768-byte dumps (all banks, including the padding
 bytes after each bank's 8,000 displayed bytes), the same stage names and the
-same API success counts. Before any frame is compared, each run's log must
+same API success counts; for version 4 also every per-call frame of the
+visible_steps stage (RVkk.BIN). Before any frame is compared, each run's log must
 be complete (validate(): COMPLETE=1 last, every expected stage for its probe
 version present in order, every batch's API_SUCCESSES present and equal to
 its COUNT, every application found with three repaints, every dump 32,768
@@ -46,8 +47,10 @@ def expected_names(version, shots):
     """The stages RRBENCH runs, in order, for a given probe version."""
     if version == 1:
         return BATCHES + ("calc",)
-    if version in (2, 3):
-        return APPS if shots else BATCHES + ("cursor_overlap",) + APPS
+    if version in (2, 3, 4):
+        if shots:
+            return APPS
+        return BATCHES + ("cursor_overlap",) + (("visible_steps",) if version >= 4 else ()) + APPS
     return None
 
 
@@ -79,7 +82,8 @@ def stages(log_text):
         for k in ("NAME", "TITLE"):
             if k in r:
                 s[k.lower()] = r[k][0]
-        for k in ("ELAPSED_MS", "API_SUCCESSES", "COUNT", "LAUNCH_TO_PAINTED_MS", "APP_FOUND", "CALC_FOUND"):
+        for k in ("ELAPSED_MS", "API_SUCCESSES", "COUNT", "LAUNCH_TO_PAINTED_MS", "APP_FOUND", "CALC_FOUND",
+                  "STEP_DUMPS"):
             if k in r and r[k][0].lstrip("-").isdigit():
                 s[k.lower()] = int(r[k][0])
     return out
@@ -135,6 +139,12 @@ def validate(log_text):
             one_int(r, "LAUNCH_TO_PAINTED_MS", where)
             if len(r.get("REPAINT_MS", [])) != 3 or not all(x.isdigit() for x in r["REPAINT_MS"]):
                 bad.append(f"{where}: REPAINT_MS {r.get('REPAINT_MS')} (need three)")
+        if "STEP_DUMPS" in r or r.get("NAME") == ["visible_steps"]:
+            steps = one_int(r, "STEP_DUMPS", where)
+            made, size = r.get("STEP_DUMP_CREATED", []), r.get("STEP_DUMP_BYTES", [])
+            if (not steps or steps != len(made) or steps != one_int(r, "COUNT", where) or any(v != "1" for v in made)
+                    or len(size) != len(made) or any(v != "32768" for v in size)):
+                bad.append(f"{where}: step dumps {steps}, created {made} bytes {size}")
         made, size = r.get("DUMP_CREATED", []), r.get("DUMP_BYTES", [])
         if not made or any(v != "1" for v in made) or len(size) != len(made) or any(v != "32768" for v in size):
             bad.append(f"{where}: dumps created {made} bytes {size}")
@@ -202,13 +212,28 @@ def main(argv):
             c = compare_dumps(fa.read_bytes(), fb.read_bytes())
         else:
             c = {"equal": False, "error": "dump missing"}
-        keys = ("name", "count", "api_successes", "app_found", "calc_found", "title")
+        keys = ("name", "count", "api_successes", "app_found", "calc_found", "title", "step_dumps")
         same_meta = bool(ra) and all(ra.get(k) == rb.get(k) for k in keys)
         row = {"stage": n, "name": ra.get("name"), "frame": c, "same_name_and_api_results": same_meta,
                "api_successes": ra.get("api_successes", ra.get("app_found", ra.get("calc_found"))),
                "ref_ms": ra.get("elapsed_ms", ra.get("repaint_ms")),
                "cand_ms": rb.get("elapsed_ms", rb.get("repaint_ms"))}
         ok = ok and c["equal"] and same_meta
+        if ra.get("step_dumps"):
+            # Frame after every single call of the stage (RVkk.BIN), compared like the final frame.
+            row["steps"] = []
+            for k in range(1, ra["step_dumps"] + 1):
+                ga, gb = a.ref / f"RV{k:02d}.BIN", a.cand / f"RV{k:02d}.BIN"
+                sc = compare_dumps(ga.read_bytes(), gb.read_bytes()) if ga.exists() and gb.exists() \
+                    else {"equal": False, "error": "step dump missing"}
+                row["steps"].append(sc)
+                ok = ok and sc["equal"]
+                if not sc["equal"]:
+                    print(f"   step {k:2d} DIFFERS {sc.get('differing_pixels', '-')} px {sc.get('bbox', '')}")
+                    if a.png and "error" not in sc:
+                        a.png.mkdir(parents=True, exist_ok=True)
+                        image(pixels(gb.read_bytes()), a.png / f"V{k:02d}_DIFF.PNG", diff_with=pixels(ga.read_bytes()))
+            print(f"   {sum(s['equal'] for s in row['steps'])} of {len(row['steps'])} per-call frames equal")
         rows.append(row)
         print(f"{n:2d} {str(ra.get('name')):18s} {'EQUAL' if c['equal'] else 'DIFFERS'} "
               f"{c.get('differing_pixels', '-')} px {c.get('bbox', '')}  ref {row['ref_ms']}  cand {row['cand_ms']}")

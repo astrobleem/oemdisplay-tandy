@@ -1,0 +1,63 @@
+{
+ "vm": "vm5_batch",
+ "test_configuration": "SYSTEM.INI shell=C:\\RRECT\\RRBENCH.EXE (set by RRRUN)",
+ "shots": [],
+ "complete": true,
+ "host_seconds_win_to_complete": 180.1,
+ "files": {
+  "RB01.BIN": "ab9c37f77fe0487dc2c9ad9836ef22e19c526cd2143bf5baef4ed8c6c8575a8e",
+  "RB02.BIN": "ec9bfc5c157d81487864dcf698205c44e9afd22ee4c203a91e9a798c29b4b9ca",
+  "RB03.BIN": "4e8c4b07a87fe07f18b198fbfb6ac721cac21ad1d5367dfc2abd9bcdd3a4ca02",
+  "RB04.BIN": "e7e8fcefca7163daf1b1032c00bbf72d2bdcd08714e91b6f0a5bc2b9e5119b43",
+  "RB05.BIN": "31d7394c29c01de3891dd2c2faf49deb0421e6117d8d68765fcb63033bed5d5c",
+  "RB06.BIN": "8f5b22269482471efd2aeb4a10644c38f823fec996e7ed77de891c086d40b278",
+  "RB07.BIN": "6a8e3ad5f8fcd1547421e5d3262d7eb6d373f72e413040b08e9d5bafbe4cc2d3",
+  "RB08.BIN": "e3f356dac0cbed96bb4e8194be1df9528e30f29aee1f1a69ea152baabd3fd50f",
+  "RB09.BIN": "3fc41fda33edf57bd0be9df3525e66f43449052644c9db7a97886ab3c6ea12e4",
+  "RB10.BIN": "5f2559ddd57b346c99ef45d91593cc764492f6005800deeede7a6876d0cf640b",
+  "RB11.BIN": "6e764c5a5c9a23ddefe531f5946bbe41ac427a4a07d58d8598c92d519f373c12",
+  "RB12.BIN": "ae453ed200377a4341a42819e4903e6f1ceb41f1a3af9ad8e1a402986472d6d6",
+  "RB13.BIN": "341672e7ec889da273121a303168c160c7cb9abcd666e6f61496369af04778bb",
+  "RB14.BIN": "0d5d04331d5df98094c7b40c99d7c1756e3761d9de4624602255ca5076fab4fb",
+  "RRBENCH.LOG": "f36219241d7939075e59d08ea191fdf5b53b2064407b2088c21e00b76e488da1",
+  "RV01.BIN": "37a4b9be607cfd597758e1fcbf7e0f435f1d78c84d7c50bc76bafd32d16a47b3",
+  "RV02.BIN": "84820c2f5b7de8074ba7216ddc96c3d47a32d1553885a211e9d121faeadd5a52",
+  "RV03.BIN": "facf456bacd066cf4e15fe323bafd208493e374d20b18fa5431b338c5df1ed6e",
+  "RV04.BIN": "52636c6dfcce236d2ed6483dfaa2cd9306c991d31477a7e61e90b7dac6f5038b",
+  "RV05.BIN": "3ae5fbecca7e7c408096a69ccd08e2d6dcaecc39687d62a59db83a02b13d496e",
+  "RV06.BIN": "52485328e47df3e53eef10f68565cd2985801ddeaca32cac50ae3bb74bcf0b30",
+  "RV07.BIN": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7",
+  "RV08.BIN": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7",
+  "RV09.BIN": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7",
+  "RV10.BIN": "c432a5a08da1fe0cae13196b22356d3cb841385f7fb5ace0ac695f858cdff458",
+  "RV11.BIN": "9d2aac6dd2d1cdbf20b520d4734ead135da7d845c047526ddfe5eea27fe31c5e",
+  "RV12.BIN": "9c8bbcb59ff47033d740139a5966c021be52e60a6a22a1280d8639bcf4860f59",
+  "RV13.BIN": "ef706f43aca4c3dabafd4f2d63dbd2a3ee6e1f895ecf21848fc995a6db5b0d91",
+  "RV14.BIN": "1f931683805b119234114ff9bdf1179f8e41f101f59b03f4ad7ac0b060a98990"
+ },
+ "prep": {
+  "target": "rrect",
+  "pristine_sha256": "f55fe24baf83d9557e6c16612fbf8b4af5b175bf6b9b6d876e5784222e117561",
+  "driver": "TR53216.DRV",
+  "driver_sha256": "2ccccbb6e2f73dfb35961bacc486897ebfc6d7d1a0ed26953f35b585357dc87c",
+  "tools": {
+   "RESERVE.COM": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+   "MSTEST.COM": "51dd0966a76cbc6349f1685ef65bbdeb4883897679d5426168d8f9c5a9f462bc",
+   "RRBENCH.EXE": "9654d6a5fa05a45ba1e0dcfb82f8a1ddddbf08b01a9515c0acd059fad85c3721"
+  },
+  "control_ega": false,
+  "mouse": "msserial",
+  "fonts": null,
+  "grid": 0,
+  "tv": false,
+  "only_8x8": false,
+  "changes": [
+   "CONFIG.SYS: only files=30, buffers=30 (removed HIMEM, SMARTDRV, EGA.SYS: an XT has no XMS and no EGA)",
+   "AUTOEXEC.BAT: PATH/TEMP as before, run C:\\RRECT\\RESERVE, stay at the DOS prompt (no automatic WIN)",
+   "SYSTEM.INI: display.drv=TR53216.DRV; [keyboard] type=1 (PC/XT 83-key instead of AT)",
+   "WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); Wallpaper=BARS16.BMP (a full-screen 16-colour bar test image, centred)",
+   "added WINDOWS/BARS16.BMP: 320x200 4-bit, 16 bars of 20 pixels, palette = the driver's colour table (generated, sha256 42c3959625954073173f743ed2b432c68a75385135dafa1d643c70f93ce38fbe)",
+   "added WINDOWS/SYSTEM/TR53216.DRV and RRECT/RESERVE.COM, MSTEST.COM, RRBENCH.EXE"
+  ]
+ }
+}

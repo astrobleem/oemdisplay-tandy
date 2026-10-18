@@ -9,6 +9,11 @@
  * The cursor_overlap stage draws Calculator-sized keys with the arrow cursor
  * visible over them, then moves it to the bottom-right corner before the
  * dump, so cursor save/restore is part of the compared frame.
+ * The visible_steps stage (version 4) draws 14 mixed shapes with the arrow
+ * cursor shown over the first ones and saves the frame after every single
+ * call (C:\RVnn.BIN), so rows a driver holds back or copies early show up
+ * between calls, not only in the final frame. It covers pen and no-pen
+ * fills, XOR, hollow, clipped, partly and fully off-screen shapes.
  * Log: C:\RRBENCH.LOG, one KEY=value per line.
  * If C:\RRECT\RRSHOTS.ON exists (screenshot runs only), only the application
  * stages run; each logs REPAINT_START before its first timed repaint and
@@ -233,6 +238,104 @@ static void app(char *name, char *exe)
     pump(400);
 }
 
+/* One visible_steps shape: kind 1 RoundRect, 2 Rectangle, 3 Ellipse. */
+typedef struct { int kind, x, y, w, h, e, pen, brush, rop, clip; } STEP;
+static STEP steps[] = {
+    {1, 10, 10, 26, 15, 8, 1, 3, R2_COPYPEN, 0},     /* Calculator key under the cursor */
+    {1, 40, 10, 26, 15, 8, 0, 1, R2_COPYPEN, 0},     /* no pen: fill only */
+    {1, 25, 15, 26, 15, 8, 1, 3, R2_XORPEN, 0},      /* XOR over the first two */
+    {1, 70, 10, 26, 15, 8, 1, 2, R2_COPYPEN, 0},     /* hollow: outline only */
+    {1, 85, 8, 40, 20, 10, 1, 3, R2_COPYPEN, 1},     /* clipped to 90,12-110,20 */
+    {1, -10, -6, 30, 16, 8, 1, 3, R2_COPYPEN, 0},    /* off the top-left corner */
+    {1, -1, 120, 30, 16, 8, 0, 1, R2_COPYPEN, 0},    /* off the left edge, no pen */
+    {1, 10, -40, 30, 16, 8, 1, 3, R2_COPYPEN, 0},    /* entirely above the screen */
+    {1, 400, 50, 30, 16, 8, 1, 3, R2_COPYPEN, 0},    /* entirely right of it */
+    {3, 130, 10, 20, 14, 0, 1, 1, R2_COPYPEN, 0},    /* Ellipse */
+    {2, 160, 10, 26, 15, 0, 1, 3, R2_COPYPEN, 0},    /* Rectangle */
+    {1, 10, 40, 60, 30, 12, 1, 0, R2_COPYPEN, 0},    /* large, white */
+    {1, 50, 50, 26, 15, 8, 0, 1, R2_XORPEN, 0},      /* no pen, XOR */
+    {1, 0, 0, 0, 0, 8, 1, 3, R2_COPYPEN, 2}          /* bottom-right corner (set below) */
+};
+#define NSTEPS (sizeof(steps) / sizeof(steps[0]))
+
+static void stepdump(int k)
+{
+    HFILE h;
+    char n[] = "C:\\RV00.BIN";
+    numname(n, 5, k);
+    h = _lcreat(n, 0);
+    line("STEP_DUMP_CREATED", h != HFILE_ERROR);
+    if (h != HFILE_ERROR) {
+        line("STEP_DUMP_BYTES", _lwrite(h, (LPSTR)0xb8000000L, 0x8000U));
+        _lclose(h);
+    }
+}
+
+static void stepstage(void)
+{
+    int k, c, shown = 0, ok = 0;
+    HPEN pens[2];
+    HBRUSH brushes[4];
+    HPEN op;
+    HBRUSH ob;
+    HRGN rgn;
+    DWORD t0, t1;
+    STEP *s;
+    pens[0] = nullPen; pens[1] = blackPen;
+    brushes[0] = white; brushes[1] = gray; brushes[2] = hollow; brushes[3] = ltgray;
+    steps[NSTEPS - 1].x = width - 15;
+    steps[NSTEPS - 1].y = height - 8;
+    steps[NSTEPS - 1].w = 30;
+    steps[NSTEPS - 1].h = 16;
+    steps[NSTEPS - 1].clip = 0;
+    seq++;
+    clear();
+    SetCursor(LoadCursor(NULL, IDC_ARROW));
+    do { c = ShowCursor(TRUE); shown++; } while (c < 0 && shown < 40);
+    SetCursorPos(30, 22);
+    pump(20);
+    line("STAGE", seq);
+    _lwrite(logFile, "NAME=visible_steps\r\n", 20);
+    line("KIND", 4);
+    line("COUNT", NSTEPS);
+    flush();
+    resettrace();
+    t0 = GetTickCount();
+    for (k = 0; k < NSTEPS; k++) {
+        s = &steps[k];
+        op = SelectObject(dc, pens[s->pen]);
+        ob = SelectObject(dc, brushes[s->brush]);
+        SetROP2(dc, s->rop);
+        rgn = NULL;
+        if (s->clip == 1) {
+            rgn = CreateRectRgn(90, 12, 110, 20);
+            SelectClipRgn(dc, rgn);
+        }
+        if (s->kind == 1) ok += RoundRect(dc, s->x, s->y, s->x + s->w, s->y + s->h, s->e, s->e) != 0;
+        else if (s->kind == 2) ok += Rectangle(dc, s->x, s->y, s->x + s->w, s->y + s->h) != 0;
+        else ok += Ellipse(dc, s->x, s->y, s->x + s->w, s->y + s->h) != 0;
+        if (rgn) {
+            SelectClipRgn(dc, NULL);
+            DeleteObject(rgn);
+        }
+        SetROP2(dc, R2_COPYPEN);
+        SelectObject(dc, op);
+        SelectObject(dc, ob);
+        stepdump(k + 1);
+    }
+    t1 = GetTickCount();
+    line("ELAPSED_MS", (long)(t1 - t0));
+    line("API_SUCCESSES", ok);
+    line("STEP_DUMPS", NSTEPS);
+    savetrace();
+    SetCursorPos(width - 1, height - 1);
+    pump(20);
+    dump();
+    while (shown-- > 0) ShowCursor(FALSE);
+    SetCursor(NULL);
+    flush();
+}
+
 /* Calculator-sized keys drawn with the arrow cursor visible over them. */
 static void cursorstage(void)
 {
@@ -264,7 +367,7 @@ int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
     dc = GetDC(NULL);
     width = GetSystemMetrics(SM_CXSCREEN);
     height = GetSystemMetrics(SM_CYSCREEN);
-    line("VERSION", 3);
+    line("VERSION", 4);
     line("SCREEN_WIDTH", width);
     line("SCREEN_HEIGHT", height);
     line("NUMCOLORS", GetDeviceCaps(dc, NUMCOLORS));
@@ -297,6 +400,7 @@ int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
         batch("roundrect_clipped", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 1);
         batch("ellipse_12", 3, 12, 12, 0, 0, blackPen, gray, R2_COPYPEN, 4, 20, 20, 0);
         cursorstage();
+        stepstage();
     }
     app("calc", "CALC.EXE");
     app("reversi", "REVERSI.EXE");
