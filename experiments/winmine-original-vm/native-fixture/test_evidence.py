@@ -145,7 +145,8 @@ def validate_record(
                 errors.append(f"host probe record unavailable or invalid for {name}: {exc}")
                 continue
             record = host_files.get(name)
-            if not isinstance(record, dict) or record.get("bytes") != len(data) or record.get("sha256") != hashlib.sha256(data).hexdigest():
+            normalized_data = data.replace(b"\r\n", b"\n")
+            if not isinstance(record, dict) or record.get("bytes") != len(normalized_data) or record.get("sha256") != hashlib.sha256(normalized_data).hexdigest():
                 errors.append(f"host probe record hash mismatch for {name}")
             if result.get("input_sha256") != digest or result.get("input_bytes") != 30032:
                 errors.append(f"host probe did not use the pinned original input in {name}")

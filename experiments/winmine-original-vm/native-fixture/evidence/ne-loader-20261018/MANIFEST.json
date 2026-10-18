@@ -52,14 +52,15 @@
   "host_probe_source_file_sha256_lf_normalized": "511527b683ad1274e5826685b576e4d949e2fcc204b61db4a0c70e092ca7987b",
   "host_probe_files": {
     "MNSN1-host-probe.json": {
-      "bytes": 1476,
-      "sha256": "4f61e93aa066444b6f862dc804563fde772d39116a1358e81f607455cedc8715"
+      "bytes": 1416,
+      "sha256": "71f18f71946811004423c419cc0873542c3526debf7f307f9daaa5982030fc3c"
     },
     "MNSN2-host-probe.json": {
-      "bytes": 1476,
-      "sha256": "a02c4ab625122386c847eba8aff6bfe11376e658f939bed4f877a77f1a45a5ce"
+      "bytes": 1416,
+      "sha256": "cb5b34715092fb2bd6ed0d2723fb97ed865fc061de9b5f2861b21bbe0438d7a3"
     }
   },
+  "host_probe_hash_normalization": "CRLF normalized to LF",
   "original_winmine_ne_inventory": {
     "target_os": "Windows",
     "expected_windows_version": "3.0",
