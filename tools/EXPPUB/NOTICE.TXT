@@ -1,0 +1,21 @@
+EXPERIMENTAL DISPLAY ADAPTATIONS - THIRD-PARTY NOTICES
+
+TEXT80 and TNDYJR reuse Microsoft Windows DDK renderer code/resources.
+JRGRAB.GR2 is the PCjr-specific rebuild of the DDK 286 CGA grabber with
+anchored safety edits in src/pcjr/INSTALL/BUILDGR.PY. It is a derivative,
+not the retail Microsoft CGA.GR2. Microsoft Corporation notices,
+including the 1983-1987 notices in reused sources, remain applicable.
+The packaging/launcher MIT license does not relicense that material.
+The existing owner publication authorization is recorded in
+experiments/DISPLAY3/RIGHTS.JSN; it is not a third-party license grant.
+
+The XT Pixels fonts and static logo are original first-party work under
+their included FONTLIC.TXT and LOGOLIC.TXT notices. TEXT80's two added
+faces use that original XT Pixels strike; no Microsoft/ROM glyphs are
+copied. The PCjr packet carries only the static startup artwork.
+
+These packets exclude original DDK/compiler/library inputs, emulators,
+ROMs, Windows/DOS media and Microsoft fonts/retail grabbers. Windows and
+DOS are supplied by the user. Physical hardware remains unqualified.
+PCjr clean Setup evidence is DOSBox-X emulation. Current TEXT80 rebuilds
+have presenter/audit evidence and have not been booted in Windows here.
