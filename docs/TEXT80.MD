@@ -1,9 +1,6 @@
 # TEXT80: Windows 3.0 in 80-column text mode (experimental)
 
-Branch `ai/text80` (TXT40 + XTPAN merged in), draft PR. Nothing here
-changes a released driver, an installer default, a package, a pin or a
-release hash. A rebuild is not runtime acceptance: everything below was
-run in emulators, none of it on real hardware yet.
+[PR #133](https://github.com/astrobleem/oemdisplay-tandy/pull/133) and [PR #134](https://github.com/astrobleem/oemdisplay-tandy/pull/134) are merged. TEXT80 25, PAN, VGA and compact C25 remain experimental; no current TEXT80/C25 binary package has been released. No released driver or installer default was changed. The Windows runs below used emulators only; physical hardware is not qualified. Rebuilding a driver is not runtime acceptance.
 
 ## Verdict
 
