@@ -1,0 +1,208 @@
+{
+ "reference": "out3_base",
+ "candidate": "out3_mut-scanskip",
+ "runs_complete": true,
+ "problems": {},
+ "all_frames_equal": false,
+ "stages": [
+  {
+   "stage": 1,
+   "name": "roundrect_key",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 64317,
+   "cand_ms": 3075
+  },
+  {
+   "stage": 2,
+   "name": "rectangle_key",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 20816,
+   "cand_ms": 2033
+  },
+  {
+   "stage": 3,
+   "name": "roundrect_large",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 6,
+   "ref_ms": 19938,
+   "cand_ms": 1483
+  },
+  {
+   "stage": 4,
+   "name": "roundrect_hollow",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 20926,
+   "cand_ms": 2087
+  },
+  {
+   "stage": 5,
+   "name": "roundrect_nopen",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 3460,
+    "differing_pixels": 6640,
+    "bbox": [
+     4,
+     4,
+     268,
+     57
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 43281,
+   "cand_ms": 879
+  },
+  {
+   "stage": 6,
+   "name": "roundrect_xor",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 63877,
+   "cand_ms": 2691
+  },
+  {
+   "stage": 7,
+   "name": "roundrect_overlap",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 63988,
+   "cand_ms": 2746
+  },
+  {
+   "stage": 8,
+   "name": "roundrect_clipped",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 51080,
+   "cand_ms": 1428
+  },
+  {
+   "stage": 9,
+   "name": "ellipse_12",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 4,
+   "ref_ms": 12688,
+   "cand_ms": 440
+  },
+  {
+   "stage": 10,
+   "name": "cursor_overlap",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 71073,
+   "cand_ms": 3570
+  },
+  {
+   "stage": 11,
+   "name": "calc",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 1,
+   "ref_ms": [
+    92549,
+    92548,
+    92604
+   ],
+   "cand_ms": [
+    7690,
+    7689,
+    7690
+   ]
+  },
+  {
+   "stage": 12,
+   "name": "reversi",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 1,
+   "ref_ms": [
+    13566,
+    13622,
+    13566
+   ],
+   "cand_ms": [
+    1373,
+    1373,
+    1374
+   ]
+  },
+  {
+   "stage": 13,
+   "name": "pbrush",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 1,
+   "ref_ms": [
+    36745,
+    36140,
+    36086
+   ],
+   "cand_ms": [
+    5163,
+    4504,
+    4503
+   ]
+  }
+ ]
+}

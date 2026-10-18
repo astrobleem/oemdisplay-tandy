@@ -1,0 +1,48 @@
+{
+ "vm": "vm3_mut-firstrow",
+ "test_configuration": "SYSTEM.INI shell=C:\\RRECT\\RRBENCH.EXE (set by RRRUN)",
+ "shots": [],
+ "complete": true,
+ "host_seconds_win_to_complete": 180.1,
+ "files": {
+  "RB01.BIN": "3a2fec7573d2e44a5bba29fb5557cefcb45cd295582c4c5458518c57fff9bf6e",
+  "RB02.BIN": "e7b4f51279c377d056274519d0699cac71ad0e99b99eefacc56caa651a8f3286",
+  "RB03.BIN": "f4461098089958f47063c7f6c93f1b3456cfc34d824c06354a803396e0b97fcc",
+  "RB04.BIN": "ea013f31734c15625dee2e56ae2812aa54d6e09fee112b0978d9101412f45db5",
+  "RB05.BIN": "31d7394c29c01de3891dd2c2faf49deb0421e6117d8d68765fcb63033bed5d5c",
+  "RB06.BIN": "8f5b22269482471efd2aeb4a10644c38f823fec996e7ed77de891c086d40b278",
+  "RB07.BIN": "4f42a25b24c15f0695fb857f5ecb45b831317a63094daef1297e6462054680d2",
+  "RB08.BIN": "229746b6d5befb19882848fd62daded6c545771741ff4e123b94f1d82dc336d5",
+  "RB09.BIN": "860db702d972c05a0a19331f44dfab8d70cc1aa12f526a5522060afe67188da2",
+  "RB10.BIN": "0fb501ef2e33e307213b6f9316cfb2d371b659bffd7b237837e61e6be7fc4a3b",
+  "RB11.BIN": "72f2ec5a77f7a369be4c559cd079e2a4f1a17941df12849289f6fc916ca997a7",
+  "RB12.BIN": "49ae0594417d7bf046697ee099960138a959e278fbb59b84bbae1e55d881faff",
+  "RB13.BIN": "434ac86af4628cbb46b733a8c06f1a8ce1614d366dd37e8965b4010470833a1b",
+  "RRBENCH.LOG": "5ecaa8ecc1203e8be1659c74b1d06f70945a43b32f8b29fd131fd0ffef833d77"
+ },
+ "prep": {
+  "target": "rrect",
+  "pristine_sha256": "f55fe24baf83d9557e6c16612fbf8b4af5b175bf6b9b6d876e5784222e117561",
+  "driver": "TR53216.DRV",
+  "driver_sha256": "7b145f50f68d831cad01dd2ac60e245c36b2f194a8e049f99037692f7e9b85db",
+  "tools": {
+   "RESERVE.COM": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+   "MSTEST.COM": "51dd0966a76cbc6349f1685ef65bbdeb4883897679d5426168d8f9c5a9f462bc",
+   "RRBENCH.EXE": "8b8c3585812643bb15bbd1255ff431feb1ad8be1b56ac7b11d3e77b226875a8b"
+  },
+  "control_ega": false,
+  "mouse": "msserial",
+  "fonts": null,
+  "grid": 0,
+  "tv": false,
+  "only_8x8": false,
+  "changes": [
+   "CONFIG.SYS: only files=30, buffers=30 (removed HIMEM, SMARTDRV, EGA.SYS: an XT has no XMS and no EGA)",
+   "AUTOEXEC.BAT: PATH/TEMP as before, run C:\\RRECT\\RESERVE, stay at the DOS prompt (no automatic WIN)",
+   "SYSTEM.INI: display.drv=TR53216.DRV; [keyboard] type=1 (PC/XT 83-key instead of AT)",
+   "WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); Wallpaper=BARS16.BMP (a full-screen 16-colour bar test image, centred)",
+   "added WINDOWS/BARS16.BMP: 320x200 4-bit, 16 bars of 20 pixels, palette = the driver's colour table (generated, sha256 42c3959625954073173f743ed2b432c68a75385135dafa1d643c70f93ce38fbe)",
+   "added WINDOWS/SYSTEM/TR53216.DRV and RRECT/RESERVE.COM, MSTEST.COM, RRBENCH.EXE"
+  ]
+ }
+}

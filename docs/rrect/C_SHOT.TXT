@@ -1,0 +1,4 @@
+ 1 calc               EQUAL 0 px   ref [98975, 98975, 99030]  cand [14720, 14720, 14720]
+ 2 reversi            EQUAL 0 px   ref [13567, 13566, 13567]  cand [1428, 1428, 1428]
+ 3 pbrush             EQUAL 0 px   ref [36690, 36141, 36085]  cand [5163, 4559, 4558]
+ALL FRAMES EQUAL
