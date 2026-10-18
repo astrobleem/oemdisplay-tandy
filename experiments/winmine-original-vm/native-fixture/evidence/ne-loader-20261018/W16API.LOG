@@ -1,0 +1,33 @@
+Native Win16 API fixture
+NE loader=PASS segments=2 imports=KERNEL!GetVersion,USER!EnumWindows malformed=PASS
+VM smoke GetVersion INTFF=PASS calls=1 steps=3 stack=8
+VM far GetVersion CALL=PASS calls=1 steps=3 far_calls=1 retf=1 retf_bytes=0 return=1000:0005 stack=1
+GetVersion DWORD=0x06160003
+Windows version major=3 minor=0
+VM smoke callback result=1 stack=1 steps=14
+VM smoke wrong-cookie result=0 stack=1 steps=10
+VM far wrong-cookie result=0 stack=1 retf=1 bytes=6 return=1000:0005
+VM unsupported opcode fail-closed=PASS
+VM PUSH register stack=PASS
+VM unknown far import fail-closed=PASS
+ENUM callback hwnd=0x1090 lParam=0x13579BDF
+VM guest callback result=1 stack=1 steps=15 far_calls=1 retf=1 retf_bytes=6 return=2000:0005
+ENUM callback hwnd=0x0FBC lParam=0x13579BDF
+VM guest callback result=1 stack=1 steps=15 far_calls=1 retf=1 retf_bytes=6 return=2000:0005
+ENUM callback hwnd=0x0F78 lParam=0x13579BDF
+VM guest callback result=1 stack=1 steps=15 far_calls=1 retf=1 retf_bytes=6 return=2000:0005
+NE loaded file CALL=PASS GetVersion=0x06160003 EnumWindows=1 callbacks=3 far_calls=2 retf=2 stack=1 steps=13
+EnumWindows all-pass begin
+ENUM callback hwnd=0x1090 lParam=0x13579BDF
+VM guest callback result=1 stack=1 steps=15 far_calls=1 retf=1 retf_bytes=6 return=1000:0005
+ENUM callback hwnd=0x0FBC lParam=0x13579BDF
+VM guest callback result=1 stack=1 steps=15 far_calls=1 retf=1 retf_bytes=6 return=1000:0005
+ENUM callback hwnd=0x0F78 lParam=0x13579BDF
+VM guest callback result=1 stack=1 steps=15 far_calls=1 retf=1 retf_bytes=6 return=1000:0005
+EnumWindows all-pass result=1 callbacks=6 cookie_ok=1 probe_seen=1
+EnumWindows stop-on-first begin
+STOP callback hwnd=0x1090 lParam=0x13579BDF
+VM guest callback result=0 stack=1 steps=15 far_calls=1 retf=1 retf_bytes=6 return=1000:0005
+EnumWindows stop result=0 callbacks=1
+VM callbacks=7 failures=0 getversion_calls=1 far_getversion_calls=2
+RESULT=PASS

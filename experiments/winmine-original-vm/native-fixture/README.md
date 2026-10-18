@@ -34,13 +34,51 @@ the VM array. It performs a decoded far call, reads HWND and the two LPARAM
 words from its virtual Pascal frame, checks the cookie, then returns with
 decoded `RETF 6`. Windows itself supplies the real `EnumWindows` callback
 arguments to the native C `EnumProc`; that routine creates the VM frame and
-returns the VM's AX result to Windows. This proves the fixture's bounded
-far-call and callback semantics, not a general NE import bridge or execution
-of the original Minesweeper executable.
+returns the VM's AX result to Windows. The separate file-based fixture below
+adds a strict, first-party NE loading path; it does not change the generic
+loader or execute the original Minesweeper executable.
 
 The host oracle tests the checked-in byte arrays with a fixed version value.
 It does not model Python `Win16Host` or stand in for the native API result.
 The guest test below calls the real Win16 `GetVersion` under Windows 3.0.
+
+## Minimal native NE loader
+
+[`build_ne_fixture.py`](build_ne_fixture.py) generates the private 378-byte
+`W16TEST.NE` input from first-party bytecode. The native C fixture reads that
+file from the isolated guest disk, validates its DOS/NE headers and bounded
+tables, loads two segments, resolves the named `KERNEL!GetVersion` and
+`USER!EnumWindows` imports, and applies two imported far-pointer relocations
+plus one internal callback-segment relocation. The entry code passes the
+callback far pointer and 32-bit `LPARAM` through its virtual stack. The import
+bridge validates those arguments, calls the real Win16 APIs, maps the callback
+pointer to the fixture's `MakeProcInstance` thunk, and runs the callback bytes
+from the loaded NE segment. The callback returns with decoded `RETF 6`.
+
+This native loader deliberately accepts only this two-segment, two-module
+fixture shape and its specific far-pointer relocation records. It rejects bad
+signatures, invalid import references, unsupported fixups, and unsupported
+8088 opcodes. The test does not provide general NE loading, arbitrary Win16
+imports, task setup, resource loading, or execution of `WINMINE.EXE`.
+
+Source commit `28a0ffa38fa0d28016b68ccc382fb0e8ef3ec260` built with MASM 5.10,
+Microsoft C 6.0, and LINK4 5.01.17 (`BUILD=PASS`), then ran under 86Box v7.0
+development on a Tandy 1000 HX profile (emulated 8088 at 7.159092 MHz, 640 KB)
+under Windows 3.0 real mode. The log records both imported APIs, three
+callbacks executed from the relocated second NE segment, restored far-call
+frames, malformed-NE and unsupported-opcode rejection, `RESULT=PASS`, and a
+clean `WINRET=0` return to DOS. The run completed in 62.2 seconds with a
+90-second watchdog. The original guest disk image and both pinned
+`WINMINE.EXE` inputs retained their before-run SHA-256 values. See
+[`EVIDENCE-NE-LOADER-20261018.md`](EVIDENCE-NE-LOADER-20261018.md) for the
+sanitized raw records and hashes.
+
+This result is emulator-only compatibility evidence for the first-party
+fixture. It does not qualify a display driver, the original Minesweeper app,
+or physical hardware. The private fixture EXE, NE input, and guest image are
+not included. CI runs the Python parser/bytecode oracle and evidence checks;
+the production C behavior is tied to the exact build/source hashes and raw
+guest log above.
 
 ## Native emulator results
 
