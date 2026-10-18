@@ -37,7 +37,7 @@ internal callback-segment fixup. It does not load this original image, its
 resources, or its ordinal imports. The fixture’s successful API calls do not
 demonstrate original-application startup.
 
-## Bounded entry trace and first gap
+## Bounded entry trace and next API dependency
 
 The original host probe reached runtime selector:offset `1000:2563`. Its first
 far call is at segment 1 offset `2566h` (file offset `2B86h`), with source
@@ -51,23 +51,41 @@ not a Windows task initialization result. At `1000:256F` (segment 1 offset
 8C 06 22 01    MOV WORD PTR [0122h], ES
 ```
 
-The bounded CPU stopped before executing this instruction with
-`UnsupportedOpcode: opcode 8C at 256F`. The current native C fixture interpreter
-does not implement this `MOV r/m16,Sreg` form either. No later original import
-was reached by this trace, so this audit does not guess which API comes next.
+The bounded host CPU now supports this `MOV r/m16,Sreg` family, including the
+memory store used here. Its memory-store path checks the 20-bit physical
+address against the allocated host memory, writes low byte then high byte,
+preserves flags, and fails closed for unsupported segment fields or out-of-
+bounds destinations. Focused tests cover direct and BP-based operands,
+register destinations, 20-bit wrap, and bounds rejection.
 
-The next smallest trace dependency is this exact 8086 instruction form: store
-the segment register to a bounded memory operand, beginning with `[0122h]`.
-Implement and test only the required form, then resume the hash-pinned trace to
-the next import or unsupported instruction. Do not bind additional APIs until
-the original trace reaches them. A real `InitTask` implementation, task/PSP,
-stack, heap and instance setup, resource loading, and resolution of the 99
-ordinal imports remain separate requirements for original-image startup.
+After the synthetic `InitTask` return, the continuation reaches `1000:2573`
+(`ADD CX,0100h`), then `1000:2577` (`JB +51h`), which is not taken under the
+synthetic register values. It stores the synthetic startup registers, loads
+`AX=3500h`, tests a word through a CS override at `1000:2615`, and falls through
+the following `JZ`. At `1000:261E`, the guest makes a far call relocated to
+`KERNEL` ordinal 102 at `F001:0018`. The bounded trace stops at this next import
+without invoking it. `AX=3500h` at the boundary is recorded as machine state,
+not as evidence that a DOS service ran.
+
+Wine's current [`krnl386.exe16.spec`](https://github.com/wine-mirror/wine/blob/master/dlls/krnl386.exe16/krnl386.exe16.spec)
+labels `KERNEL` ordinal 102 `DOS3Call`; that implementation table is a
+cross-reference, not an independently verified export table for the target
+system. No ordinal 102 service was bound or executed. The next blocker is to
+verify that ordinal's target export and register contract before deciding
+whether a narrow host model is appropriate. The trace remains host-only: the
+`InitTask` return values and task context are synthetic. Real task/PSP, stack,
+heap and instance setup, resource loading, and resolution of the 99 ordinal
+imports remain separate requirements for original-image startup.
+
+The bounded continuation executed 15 guest instructions after the synthetic
+entry slice. Its stop record preserves the call site, relocated import target,
+registers, and the 256-instruction ceiling. It does not continue through the
+import stub or perform any DOS operation.
 
 ## Scope
 
 This report is a host-only identity, NE inventory, and bounded instruction
-trace. It makes no claim that the original application starts, displays a
-window, or supports gameplay. No Windows media, ROM, executable, or private
-candidate is included; no emulator or physical hardware was used for this
-audit.
+trace to the next imported API. It makes no claim that the original application
+starts, displays a window, or supports gameplay. No Windows media, ROM,
+executable, or private candidate is included; no emulator or physical hardware
+was used for this audit.

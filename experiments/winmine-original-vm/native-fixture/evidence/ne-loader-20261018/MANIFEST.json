@@ -51,6 +51,8 @@
   "host_probe_source_commit": "190016d9ff9cc34eceb10c4ef080a710abd7c964",
   "host_probe_source_file_sha256": "155f42ddcb5eac12782f8c97a009428f0e5b18eb68e546cc1bbc196c611297f0",
   "host_probe_source_file_sha256_lf_normalized": "511527b683ad1274e5826685b576e4d949e2fcc204b61db4a0c70e092ca7987b",
+  "host_probe_source_match_mode": "historical",
+  "host_probe_source_note": "The converted MNSN demo host-probe JSON records remain pinned to this historical probe source. The original-image trace runner has since been extended; these records were not regenerated.",
   "host_probe_files": {
     "MNSN1-host-probe.json": {
       "bytes": 1416,

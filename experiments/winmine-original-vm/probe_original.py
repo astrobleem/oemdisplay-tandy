@@ -1,9 +1,10 @@
 """Run a bounded, read-only WinMine original-entry probe on the host.
 
 This command reads a caller-supplied NE file, loads only its NE segments and
-known fixups, executes at most three original instructions, and traps the first
-far imported call. It does not write or patch the input image. The import stub
-returns a chosen AX value; it does not implement Windows or the imported API.
+known fixups, models the first imported InitTask call, and follows the guest
+code until its next imported call or unsupported instruction. It does not
+write or patch the input image. The InitTask return context is synthetic; no
+Windows task or imported API is implemented.
 """
 
 from __future__ import annotations
@@ -26,6 +27,83 @@ from win16_host import InitTaskRegisters, UnsupportedImport, Win16Host
 
 class ProbeError(RuntimeError):
     """The original entrypoint did not fit the explicitly bounded probe."""
+
+
+def _trace_to_dependency(cpu: CPU, loaded: Any, instruction_limit: int) -> dict[str, Any]:
+    """Continue guest code to the next imported call or fail-closed boundary."""
+    if instruction_limit <= 0:
+        raise ValueError("instruction_limit must be positive")
+    code_selectors = set(loaded.segment_selectors.values())
+    history: list[dict[str, str]] = []
+
+    def state() -> dict[str, str]:
+        return {name: f"{getattr(cpu, name):04X}" for name in (
+            "CS", "IP", "SS", "SP", "AX", "BX", "CX", "DX", "SI", "DI",
+            "BP", "DS", "ES"
+        )} | {"FLAGS": f"{cpu.flags:04X}"}
+
+    def bytes_at(cs: int, ip: int, count: int = 8) -> str:
+        return " ".join(f"{cpu.read8(cs, ip + i):02X}" for i in range(count))
+
+    def result(status: str, steps: int, **details: Any) -> dict[str, Any]:
+        return {
+            "status": status,
+            "instruction_limit": instruction_limit,
+            "instructions_executed": steps,
+            "last_instructions": history[-16:],
+            "state_at_stop": state(),
+            **details,
+        }
+
+    for steps in range(instruction_limit):
+        cs, ip = cpu.CS, cpu.IP
+        encoded = bytes_at(cs, ip, 8)
+        try:
+            event = cpu.step()
+        except UnsupportedOpcode as exc:
+            return result(
+                "unsupported_instruction",
+                steps,
+                location=f"{cs:04X}:{ip:04X}",
+                bytes=encoded,
+                error=str(exc),
+            )
+
+        history.append({"location": f"{cs:04X}:{ip:04X}", "bytes": encoded})
+        if event[0] == "host_interrupt":
+            return result(
+                "host_interrupt",
+                steps + 1,
+                location=f"{cs:04X}:{ip:04X}",
+                interrupt=f"{event[1]:02X}",
+            )
+        if event[0] == "far_call":
+            target_cs, target_ip = event[1], event[2]
+            target = loaded.import_targets.get((target_cs, target_ip))
+            if target is not None:
+                return result(
+                    "next_import",
+                    steps + 1,
+                    **{
+                        "call_site": f"{cs:04X}:{ip:04X}",
+                        "target_location": f"{target_cs:04X}:{target_ip:04X}",
+                        "import": {
+                            "module": target.module,
+                            "kind": target.kind,
+                            "ordinal": target.ordinal,
+                            "name": target.name,
+                        },
+                    },
+                )
+            if target_cs not in code_selectors:
+                return result(
+                    "unmapped_far_call",
+                    steps + 1,
+                    call_site=f"{cs:04X}:{ip:04X}",
+                    target_location=f"{target_cs:04X}:{target_ip:04X}",
+                )
+
+    return result("instruction_limit", instruction_limit)
 
 
 def _reference_entry_state(initial_ss: int, initial_sp: int, initial_cs: int,
@@ -60,8 +138,9 @@ def _reference_entry_state(initial_ss: int, initial_sp: int, initial_cs: int,
 
 
 def run_probe(image_bytes: bytes, expected_sha256: str, *,
-              task_registers: InitTaskRegisters | None = None) -> dict[str, Any]:
-    """Execute the bounded entry / KERNEL#91 / guest-return slice."""
+              task_registers: InitTaskRegisters | None = None,
+              continuation_limit: int = 256) -> dict[str, Any]:
+    """Execute the synthetic InitTask slice, then trace to the next dependency."""
     before = hashlib.sha256(image_bytes).hexdigest()
     if before.lower() != expected_sha256.lower():
         raise ProbeError(f"input SHA-256 mismatch: got {before}")
@@ -81,8 +160,8 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
     expected_guest_return = (loaded.initial_ip + 8) & 0xFFFF
     if (cpu.CS, cpu.IP) != (loaded.initial_cs, expected_guest_return):
         raise ProbeError("InitTask host service did not return to the guest call site")
-    continuation = bytes(cpu.read8(cpu.CS, expected_guest_return + i) for i in range(4))
-    if continuation[:2] not in (bytes.fromhex("09 C0"), bytes.fromhex("0B C0")) or continuation[2] != 0x74:
+    entry_bytes = bytes(cpu.read8(cpu.CS, expected_guest_return + i) for i in range(4))
+    if entry_bytes[:2] not in (bytes.fromhex("09 C0"), bytes.fromhex("0B C0")) or entry_bytes[2] != 0x74:
         raise ProbeError(
             "entry continuation is outside the bounded OR AX,AX / JE return slice"
         )
@@ -107,6 +186,15 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
     if flags != reference["defined_flags"]:
         raise ProbeError(f"CPU/reference flag mismatch: {flags!r}")
 
+    guest_return = {
+        "CS": f"{cpu.CS:04X}",
+        "IP": f"{cpu.IP:04X}",
+        "post_import_instructions": 2,
+        "success_branch_taken": False,
+    }
+    entry_stack_sentinel = {"SS": f"{cpu.SS:04X}", "SP": f"{cpu.SP:04X}", "word": "0000"}
+    post_entry_trace = _trace_to_dependency(cpu, loaded, continuation_limit)
+
     after = hashlib.sha256(image_bytes).hexdigest()
     if after != before:
         raise ProbeError("immutable input bytes changed during probe")
@@ -121,8 +209,7 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
         "import": {"module": host.calls[0].module, "kind": host.calls[0].kind,
                    "ordinal": host.calls[0].ordinal, "name": host.calls[0].name},
         "host_service": "KERNEL ordinal 91 InitTask register-return subset",
-        "guest_return": {"CS": f"{cpu.CS:04X}", "IP": f"{cpu.IP:04X}",
-                         "post_import_instructions": 2, "success_branch_taken": False},
+        "guest_return": guest_return,
         "task_register_context": {
             "AX": "0001", "BX": f"{task.command_tail_offset & 0xFFFF:04X}",
             "CX": f"{task.stack_limit & 0xFFFF:04X}",
@@ -131,14 +218,15 @@ def run_probe(image_bytes: bytes, expected_sha256: str, *,
             "DI": f"{task.instance & 0xFFFF:04X}",
             "ES": f"{task.psp_segment & 0xFFFF:04X}",
         },
-        "task_stack_sentinel": {"SS": f"{cpu.SS:04X}", "SP": f"{cpu.SP:04X}", "word": "0000"},
+        "task_stack_sentinel": entry_stack_sentinel,
         "final": {key: f"{value:04X}" for key, value in state.items()},
+        "post_entry_trace": post_entry_trace,
         "reference_match": True,
         "input_bytes_unchanged": True,
         "qualification": (
-            "host-only one-import bridge slice; InitTask register outputs use an explicit "
-            "synthetic launch context; no Windows task/heap/PSP allocation, broader startup, "
-            "full-app, release, or hardware qualification"
+            "host-only bounded entry trace; KERNEL ordinal 91 uses an explicit synthetic "
+            "InitTask context and tracing stops at the next import; no Windows task/heap/PSP "
+            "allocation, broader startup, full-app, release, or hardware qualification"
         ),
     }
 

@@ -85,9 +85,20 @@ def validate_record(
             errors.append("source file no longer matches the tested run record")
     normalized_probe_hash = manifest.get("host_probe_source_file_sha256_lf_normalized")
     if normalized_probe_hash is not None and tested_host_probe is not None:
-        source = tested_host_probe.read_bytes().replace(b"\r\n", b"\n")
-        if normalized_probe_hash != hashlib.sha256(source).hexdigest():
-            errors.append("host probe source no longer matches the recorded input check")
+        probe_match_mode = manifest.get("host_probe_source_match_mode", "current")
+        if probe_match_mode == "current":
+            source = tested_host_probe.read_bytes().replace(b"\r\n", b"\n")
+            if normalized_probe_hash != hashlib.sha256(source).hexdigest():
+                errors.append("host probe source no longer matches the recorded input check")
+        elif probe_match_mode == "historical":
+            source_commit = manifest.get("host_probe_source_commit")
+            source_hash = manifest.get("host_probe_source_file_sha256")
+            if re.fullmatch(r"[0-9a-f]{40}", source_commit or "") is None:
+                errors.append("historical host probe source commit is invalid")
+            if re.fullmatch(r"[0-9a-f]{64}", source_hash or "") is None:
+                errors.append("historical host probe source hash is invalid")
+        else:
+            errors.append("unknown host probe source match mode")
 
     file_records = manifest.get("files")
     if not isinstance(file_records, dict) or set(file_records) != RAW_FILES:
@@ -225,13 +236,33 @@ class NativeFixtureEvidenceTests(unittest.TestCase):
             "d2745b2567b80c6beb0f5e8248b2d53d18449e43b211847d606da38b3f54dccd",
         )
 
-    def test_native_ne_loader_evidence_is_hashed_and_matches_current_source(self) -> None:
+    def test_native_ne_loader_evidence_keeps_historical_host_probe_pin(self) -> None:
+        manifest = json.loads(
+            (EVIDENCE / "ne-loader-20261018" / "MANIFEST.json").read_text(
+                encoding="ascii"
+            )
+        )
+        self.assertEqual(manifest["host_probe_source_match_mode"], "historical")
+        self.assertEqual(
+            manifest["host_probe_source_commit"],
+            "190016d9ff9cc34eceb10c4ef080a710abd7c964",
+        )
+        self.assertEqual(
+            manifest["host_probe_source_file_sha256_lf_normalized"],
+            "511527b683ad1274e5826685b576e4d949e2fcc204b61db4a0c70e092ca7987b",
+        )
+        current_probe = Path(__file__).resolve().parents[1] / "probe_original.py"
+        current_hash = hashlib.sha256(
+            current_probe.read_bytes().replace(b"\r\n", b"\n")
+        ).hexdigest()
+        self.assertNotEqual(
+            current_hash, manifest["host_probe_source_file_sha256_lf_normalized"]
+        )
         self.assertEqual(
             validate_record(
                 EVIDENCE / "ne-loader-20261018",
                 NE_PATTERNS,
                 tested_source=Path(__file__).with_name("W16APIN.C"),
-                tested_host_probe=Path(__file__).resolve().parents[1] / "probe_original.py",
             ),
             (),
         )

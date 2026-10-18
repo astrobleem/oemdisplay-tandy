@@ -12,11 +12,11 @@ closed. The model does not reproduce Windows NE allocation, shared libraries,
 callbacks, or segmented-pointer lifetime rules.
 
 `probe_original.py` can read a caller-supplied NE executable after verifying a
-required SHA-256. It runs the bounded entry prefix through the first imported
-call, binds only `KERNEL` ordinal 91 (`InitTask`), and executes the guest's
-`OR AX,AX` / `JE` continuation after the host service returns. The service
-models its register-return values and pushed zero word with an explicit
-synthetic launch context. It does not allocate or initialize a Windows task,
+required SHA-256. It binds only `KERNEL` ordinal 91 (`InitTask`) to an explicit
+synthetic register/stack context, executes the guest's `OR AX,AX` / `JE`
+continuation, then traces at most 256 instructions to the next imported call
+or unsupported instruction. It stops at the imported call without invoking
+that service. The context does not allocate or initialize a Windows task,
 PSP, local heap, task stack, instance data, or DLLs. The input is read-only
 and no executable is modified or emitted. It accepts both 8086 encodings of
 `OR AX,AX` (`09 C0` and `0B C0`) in that exact bounded continuation.
@@ -29,6 +29,9 @@ values are `a94b33e78c3e54dc99a42237d801a54258b729a42a957ebd0982665a40dc384f`
 and `52be8bb486d3bad7809c19efc8a3202ef08a458e250634e392fbd127d4046c8a`,
 respectively. Their separate host probes and hashes are in
 [`native-fixture/evidence/ne-loader-20261018`](native-fixture/evidence/ne-loader-20261018/).
+Those converted-demo JSON records remain pinned to the probe source used when
+they were recorded; the expanded original-image trace does not regenerate or
+reinterpret them.
 
 The private pinned original is a distinct 27,776-byte image with SHA-256
 `633c1328922b4092351e0019b1ba1c6d56c0f0fea83824cc8b7e2e731b15e80b`. Its
@@ -89,9 +92,11 @@ full-app, release, or hardware qualification.
 The model has 16-bit general and segment registers, IP and arithmetic,
 direction, interrupt, and trap flags, plus flat byte-addressed memory. The
 implemented 8086 subset is immediate/register and register/memory word MOV,
-register PUSH/POP, ADD/SUB/XOR/OR/CMP, INC/DEC r16, NOP, short JE/JMP, near
-CALL/RET, far CALL/RETF, and supported 81h word-immediate groups /0, /5, and
-/7. 16-bit ModRM effective addresses are supported for those word operations.
+`MOV r/m16,Sreg`, register PUSH/POP, ADD/SUB/XOR/OR/CMP, `TEST r/m16,imm16`
+(`/0`), INC/DEC r16, NOP, short conditional branches and JMP, near CALL/RET,
+far CALL/RETF, and supported 81h word-immediate groups /0, /5, and /7.
+Segment override prefixes apply to supported ModRM memory operands. 16-bit
+ModRM effective addresses are supported for those word operations.
 
 The only 80186 instruction forms implemented are:
 
