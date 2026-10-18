@@ -7,19 +7,12 @@ The 2026-10-12 release covers three different video systems. PCjr also has a sep
 
 
 | Machine/card | Driver and mode | Installation/recovery guide |
-
 | --- | --- | --- |
-
 | Amstrad PC1512 | PC1512.DRV, 640x200x16 | [PC1512](PC1512.TXT) |
-
 | IBM PCjr (2026-10-12 release packet) | TNDYJR.DRV, 320x200x16; JRGUARD before every start | [PCjr cloned-install guide](PCJR.TXT) |
-
 | IBM PCjr (clean-Setup repository file) | PCJRSET.ZIP: TNDYJR.DRV, guard/launcher, fonts and PCjr-safe grabber | [Package guide](../../downloads/experimental/PCJR/README.MD); [direct ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PCJR/PCJRSET.ZIP), not a release asset |
-
 | IBM XT + Plantronics ColorPlus | PCP3216.DRV, 320x200x16 | [ColorPlus](PCP3216.TXT) |
-
 | Olivetti Prodest PC1, B000h | PC1YAMA.DRV, 160x200x16 | [PC1/B000 candidate ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha-candidate03/PC1-B000-CANDIDATE03.ZIP). Build/host checks only; no emulator, Setup or physical PC1 test. [Evidence](../../docs/yamaha/QUALIFICATION.MD) |
-
 | Standalone Yamaha V6355D emulator profile, B800h | YAM160.DRV, 160x200x16 | [B800 candidate ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha-candidate03/YAMAHA-B800-CANDIDATE03.ZIP). DOSBox-X raw-VRAM/API results; separate 86Box screenshot, not PC1 qualification. [Evidence](../../docs/yamaha/QUALIFICATION.MD) |
 
 
