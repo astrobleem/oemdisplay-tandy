@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "records": 263967,
+  "stdout": "PASS records 0004071F\r\n",
+  "exit_code": 0,
+  "executable": {
+    "file": "DTEST.EXE",
+    "bytes": 1725,
+    "sha256": "8564e32510bd8b2d19b092a56bdea78e4be84db253628b42a809ad3ad14bcfbc"
+  },
+  "vectors": {
+    "file": "VECTORS.BIN",
+    "bytes": 3167604,
+    "sha256": "20b1c3ba89154d530c975182b76e59154132d44edc1691aea45d213c7b4d315d"
+  },
+  "decoder_source": {
+    "file": "decoder.asm",
+    "bytes": 5589,
+    "sha256": "dd1635f38e9c2b4e90b099412d201874ce0dab226a87030cd85944cd6478add9"
+  },
+  "scope": "assembled 8086 DOS decoder; no Windows media or emulator binary included"
+}

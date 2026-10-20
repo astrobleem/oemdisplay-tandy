@@ -2,13 +2,32 @@
 
 **Windows 3.0 real mode for the Tandy 1000 EX/HX (640 KB).** Windows XT adds five Tandy graphics modes, original bitmap fonts and a compact Start desktop to an 8088 that would otherwise be left in CGA.
 
-[Download 720 KB ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.ZIP) · [Disk image](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.IMG) · [Release notes and checksums](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.6) · [Install and recover](docs/USERMAN.MD#install-windows-xt) · [User manual](docs/USERMAN.MD)
+[R1 wheel/font kit](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.7/WINXT-FIRST-PARTY-R1.zip) · [R1 overlay](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.7/WINXT-REDISTRIBUTABLE-OVERLAY-R1.zip) · [rc.7 notes and limits](docs/RELEASES/RC7.MD)
+
+[Preserved rc.6 720 KB ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.ZIP) · [Disk image](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.IMG) · [rc.6 notes and checksums](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.6) · [Install and recover](docs/USERMAN.MD#install-windows-xt) · [User manual](docs/USERMAN.MD)
 
 <img src="examples/HILLS/HILL320.PNG" alt="Actual Windows 3.0 desktop with Tandy Start in the 320x200x16 Tandy mode" width="640">
 
 *DOSBox-X guest capture · Windows 3.0 real mode · Tandy 320×200×16 logical mode, displayed doubled. The hill wallpaper is optional and separate from RC6. [Capture provenance](docs/PROMO/SHOWCASE.MD#desktop) · [capture commit 43cf098](https://github.com/astrobleem/oemdisplay-tandy/commit/43cf0984f1d3da389231c55cdd82d8757074836a).*
 
-## Current package: 0.1.0-rc.6 preview
+## Current release: 0.1.0-rc.7 R1 components and overlay
+
+The completed Oct19 R1 work now has a public redistributable wheel/font kit
+and an overlay with matching sources, MIT notices, dependency hashes and a
+local assembly utility. **This is not standalone Windows installation media.**
+The overlay needs 370 separately supplied exact local files, including owned
+Windows 3.0 and private display/keyboard/shell/bridge dependencies; Windows
+media alone is insufficient. The complete private installer remains local.
+See [installation prerequisites and release scope](docs/RELEASES/RC7.MD).
+
+Final R1 fresh/update installation, four wheel checks, eight exact viewport
+frames and two clean DOS restorations passed on the 7.16 MHz original 8088,
+640 KB Tandy HX emulator surrogate. Earlier real-EX HPXY panning/drawing
+acceptance remains separate; the final package and new first-party WHEEL.DRV
+have not received a new physical-hardware qualification. No guest or hardware
+run was added solely for publication. Existing rc.6 downloads remain available.
+
+## Preserved own-media installer: 0.1.0-rc.6 preview
 
 Install into your own Windows 3.0 real-mode setup on a Tandy 1000 EX/HX with DOS 3.3+ and 640 KB. Windows/DOS media and the non-font support files remain user-supplied. Follow the [install, mode-change and recovery guide](docs/USERMAN.MD#install-windows-xt); after installation, start Windows with the guarded C:\WINXT\WINXT launcher.
 
@@ -42,7 +61,7 @@ A converted Minesweeper demonstration shows one board extending below the 200-ro
 
 ## Panning on real Tandy hardware
 
-Panning keeps a 320×200 display while bringing the rest of a larger Windows desktop into view. HPXY R1 has been tested and accepted on the owner's real Tandy 1000 EX: Windows 3.0 real mode, stock-CGA profile, 7.16 MHz 8088, 640 KB. The scoped run recorded 54 pans, including 53 hardware operations, no ERROR records, return to software presentation at (0,0), and Windows exit code 0. That acceptance applies to this HPXY R1 configuration; it does not qualify other machines, display profiles or Windows 3.1. The next RC is planned to include this accepted panning feature; RC6 remains unchanged and does not include it.
+Panning keeps a 320×200 display while bringing the rest of a larger Windows desktop into view. HPXY R1 has been tested and accepted on the owner's real Tandy 1000 EX: Windows 3.0 real mode, stock-CGA profile, 7.16 MHz 8088, 640 KB. The scoped run recorded 54 pans, including 53 hardware operations, no ERROR records, return to software presentation at (0,0), and Windows exit code 0. That acceptance applies to this HPXY R1 configuration; it does not qualify other machines, display profiles or Windows 3.1. The rc.7 R1 overlay documents integration with separately supplied local XR1 dependencies; it does not bundle the private panning driver/helper or qualify the new first-party wheel driver on hardware. RC6 remains unchanged and does not include panning.
 
 | HPAN R3 | HPXY R1 |
 | --- | --- |
@@ -72,7 +91,7 @@ RC6 supplies original XT Pixels System, Fixed and OEM fonts with the inspected W
 
 The vertical-pan test keeps cursor shape and click targets aligned as the view moves; its keyboard shortcuts and edge-dwell controls are listed in [PAN.MD](docs/PAN.MD). Small Windows apps provide more examples: [Tandy Maze](examples/MAZE/GAME/README.MD), [Tandinator](examples/TANDINAT/README.MD), [Pinball](examples/PINBALL/README.MD), [Starfield](experiments/VISPART2/README.MD) and [Matrix](experiments/VISPART1/README.MD).
 
-Owner-reported input highlights include mouse-wheel scrolling in Program Manager, File Manager and Notepad on a real Tandy 1000 EX, plus Hold opening Tandy Start. The public Windows 3.0 R1 download is a bridge-only [source-inclusive experimental package](downloads/experimental/WINWHL/README.MD) with a [direct ZIP download](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/WINWHL/WHEELR1.ZIP). It requires a separately obtained, already configured WHEEL.DRV API 1.0; this ZIP does not include or install that driver, and this repository has no verified redistributable WHEEL.DRV download. A user without a compatible driver cannot add wheel scrolling with this package alone. The owner's hardware report is separate from the package's synthetic-input emulator checks and does not establish a fresh-install path. This package is not part of RC6 and does not support Windows 3.1. The public [WHEEL.EXE DOS diagnostic](tools/WHEEL/WHEEL.EXE) and its [instructions](tools/WHEEL/README.TXT) check mouse/serial data; they do not add Windows scrolling. RC6 ships the shell-side `TSINPUT.DLL` and Hold guide/screenshots; the compatible [TNDYK3 keyboard test candidate](src/tandyk3/README.md) is separate.
+Owner-reported input highlights include mouse-wheel scrolling in Program Manager, File Manager and Notepad on a real Tandy 1000 EX, plus Hold opening Tandy Start. The public Windows 3.0 R1 download is a bridge-only [source-inclusive experimental package](downloads/experimental/WINWHL/README.MD) with a [direct ZIP download](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/WINWHL/WHEELR1.ZIP). It requires a separately obtained, already configured WHEEL.DRV API 1.0; this ZIP does not include or install that driver, and the historical bridge ZIP supplies no driver. The [rc.7 first-party kit](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.7/WINXT-FIRST-PARTY-R1.zip) now supplies a separately licensed, source-inclusive WHEEL.DRV; its final qualification is emulator-only. A user still needs a compatible separately supplied wheel client and configuration; the kit alone does not install the complete scrolling system. The owner's hardware report is separate from the package's synthetic-input emulator checks and does not establish a fresh-install path. This package is not part of RC6 and does not support Windows 3.1. The public [WHEEL.EXE DOS diagnostic](tools/WHEEL/WHEEL.EXE) and its [instructions](tools/WHEEL/README.TXT) check mouse/serial data; they do not add Windows scrolling. RC6 ships the shell-side `TSINPUT.DLL` and Hold guide/screenshots; the compatible [TNDYK3 keyboard test candidate](src/tandyk3/README.md) is separate.
 
 <img src="https://raw.githubusercontent.com/astrobleem/oemsound-tandy/824ae10e1d79d1bd2d09f4a37447f58dd9cc9476/docs/SHOTS/WAMPUI3.PNG" alt="Tandy Winamp UX3 showing a seven-entry scrolling playlist in a Windows 3.0 emulator capture" width="480">
 

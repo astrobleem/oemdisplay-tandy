@@ -1,0 +1,66 @@
+WINDOWS XT v0.1.0-rc.7 - PUBLIC R1 COMPONENTS AND OVERLAY
+
+This is a redistributable subset of the qualified Oct19 private R1 package,
+not a complete Windows installer or a bootable disk. The complete private
+installer stays local; original Microsoft media and private executables are
+not published. Earlier physical EX panning acceptance is separate from the
+final R1/new first-party WHEEL.DRV emulator qualification. No new native or
+physical run was performed for this release. RC6 downloads remain unchanged.
+
+WINDOWS XT R1 - REDISTRIBUTABLE OVERLAY; LOCAL LICENSED INPUTS REQUIRED
+
+This ZIP contains only the MIT first-party WHEEL.DRV and three active XT Pixels
+fonts (nine destination copies), their notices, metadata and an authored Python
+assembly utility. It contains no Microsoft Windows/DOS media, DDK/SDK code,
+private display/keyboard drivers, shell, bridge or other third-party executable.
+The separate WINXT-FIRST-PARTY-R1.zip supplies component source/build material.
+No clean-room claim or blanket grant for external dependencies is made.
+
+LOCAL HOST ASSEMBLY (Python 3.8+, standard library only)
+Use your existing, lawfully held private R1 PACKAGE/DOS-CROOT directory, or the
+DOS-CROOT directory from your retained local private package. It must contain
+the exact Windows 3.0 source media and separately held project dependencies.
+Windows media alone is insufficient: XR1 also needs the qualified HPXY display
+and TNDYK3 keyboard drivers, TSHELL and helpers, XYCTL, WXTWHL and paired TP.
+Those dependencies are NOT licensed or supplied by this overlay.
+
+Unzip this overlay, open a host terminal there, then run (replace host paths):
+  python ASSEMBLE-LOCAL.py --local-dos-croot "PATH/TO/LOCAL/DOS-CROOT" --out "NEW/PRIVATE/DOS-CROOT"
+
+The utility reads local files only, checks all required hashes before creating
+the output, copies only the 379 exact manifest paths, overlays nine licensed
+component copies and verifies every output. Output must be a new directory.
+It never downloads, starts an emulator, writes CF/boot sectors or changes source.
+Do not distribute the assembled own-media output. If an input is missing or
+has a different hash, supply the matching licensed/private file; do not bypass
+the check or substitute a similarly named Windows release.
+
+INSTALL / UPDATE FROM PLAIN DOS
+Using your normal backup/media procedure, put the locally assembled DOS-CROOT
+contents at the root of the target's existing working DOS C: drive. Preserve
+the existing DOS boot files and MBR. This task performs no CF copying.
+  C:\SETUPXT
+Fresh installs use C:\WINDOWS. At Welcome/destination press Enter, select the
+first Tandy 1000 EX/HX (WindowsXT) entry: HPXY 640x256, PC/XT keyboard, COM1 wheel.
+Choose No Changes for DOS configuration. Setup returns to DOS; the finisher
+applies XR1 and starts the shell. Existing C:\WINDOWS\WIN.COM selects update.
+
+  C:\STARTXT          Start the selected profile.
+  C:\FIXXT            Repair selected files/profile/startup entries.
+  C:\FIXXT /VERIFY    Compare complete selected payloads.
+  C:\MODEXT /XR1      Select XR1 from plain DOS.
+Exit Windows to plain DOS before install, update or repair. If interrupted,
+retain BRG.JRN and recovery files, then rerun C:\SETUPXT for RECOVER/RESUME.
+The full qualified local-package instructions are in PRIVATE-INSTALL-REFERENCE.TXT;
+its references to media describe your local inputs, not files supplied here.
+
+SCOPE
+The assembled files match the previously qualified private R1 byte identities.
+Host assembly is verified; no new native run is claimed for this delivery ZIP.
+Existing evidence covers fresh/update installs, four wheel checks, eight exact
+320x200 viewport frames and two clean DOS restorations on a 7.16MHz original
+8088 / 640KB Tandy HX emulator surrogate. Physical EX/HX and mouse are untested.
+XR1 provides a 640x256 desktop through a 320x200 viewport. XYCTL starts Software;
+Ctrl+Alt+H selects Hardware, arrows pan, Home returns home. Recovery's 18 BIOS
+tick ingestion-age bound is not a response-time guarantee. See QUALIFICATION.json.
+No public release, CF write, ROM, emulator or guest disk is included.

@@ -1,0 +1,27 @@
+{
+  "status": "PASS_WITH_STATED_SCOPE",
+  "driver_sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0",
+  "clean_room_claim": false,
+  "dos": {
+    "run_id": "1a8fe88bfdfa424b90278dbb7251ab88",
+    "harness_sha256": "7ba136986c85221d835ef94e6e27ff2a5767fdc1e4a65d97b1a131c73a0833fd",
+    "scope": "Actual production procedures in assembled DOS harness; synthetic BIOS age fixtures; no ISR timing or Tandy performance claim"
+  },
+  "native": {
+    "run_id": "639c70a9258846c1a7e8b9634ebb40c9",
+    "checks": 172,
+    "timestamped_returns": 38,
+    "windows_cycles": 2,
+    "clean_dos_returns": 2,
+    "exact_uart_irq_bda_pic_restorations": 2,
+    "emulator_unchanged": true,
+    "base_unchanged": true,
+    "fat_copies_equal": true
+  },
+  "limits": [
+    "UART loopback, no physical mouse qualification",
+    "Windows3.0 real mode COM1/IRQ4 1200baud7N1 only",
+    "DOS exact-age fixtures are synthetic; NE effective operands checked separately",
+    "Same-day monotonic BIOS clock required; a caller date/epoch guard must reject full-day aliases"
+  ]
+}

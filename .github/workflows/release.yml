@@ -26,9 +26,10 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
-      # Frozen rc.6 source pins apply when producing release assets. Current
+      # Frozen rc.6 publisher handles only its own tag; rc.7 uses winr1.yml.
+      # Current
       # documentation and separate packets are checked as development builds.
-      QUALIFIED_RELEASE_REQUEST: ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && inputs.release_tag != '') }}
+      QUALIFIED_RELEASE_REQUEST: ${{ (github.event_name == 'push' && github.ref == 'refs/tags/v0.1.0-rc.6') || (github.event_name == 'workflow_dispatch' && inputs.release_tag == 'v0.1.0-rc.6') }}
     steps:
       # Anonymous Git preserves the exact public event-SHA checkout;
       # exact event-SHA checkout still tests GitHub's PR merge commit.
@@ -115,8 +116,8 @@ jobs:
     # Never run for PRs (including same-repository PRs) or ordinary main pushes.
     if: >-
       github.repository == 'astrobleem/oemdisplay-tandy' &&
-      ((github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) ||
-       (github.event_name == 'workflow_dispatch' && inputs.release_tag != ''))
+      ((github.event_name == 'push' && github.ref == 'refs/tags/v0.1.0-rc.6') ||
+       (github.event_name == 'workflow_dispatch' && inputs.release_tag == 'v0.1.0-rc.6'))
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions:
