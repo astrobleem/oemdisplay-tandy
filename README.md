@@ -18,17 +18,14 @@ Requires **Windows 3.0 real mode, DOS 3.3+ and 640 KB RAM** on an EX/HX.
 
 | What you want | Download and guide |
 | --- | --- |
-| Install the Windows XT desktop and graphics modes | **rc.6:** [720 KB ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.ZIP) · [disk image](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.IMG) · [install and recover](docs/USERMAN.MD#install-windows-xt) |
-| The newer wheel driver and fonts, with source and MIT notices | **rc.7:** [first-party kit](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.7/WINXT-FIRST-PARTY-R1.zip) |
-| Update an existing matching local R1 setup | **rc.7:** [R1 overlay](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.7/WINXT-REDISTRIBUTABLE-OVERLAY-R1.zip) · [prerequisites and instructions](docs/RELEASES/RC7.MD) |
+| Install or update the current XR1 desktop, panning and wheel input | **rc.8:** [installer ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP) · [prepare, install and recover](docs/RELEASES/RC8.MD) |
+| Converted Minesweeper app and About shim | **rc.8:** [Minesweeper ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINMINE30.ZIP), including its installation guide |
 
-The R1 overlay is **not a standalone installer**. It needs the matching local
-Windows files and separately supplied project components; Windows media alone
-is insufficient. The wheel kit also needs a compatible wheel client to scroll.
-
-Back up Windows before installing. For rc.6, follow the guide and use the
-guarded `C:\WINXT\WINXT` launcher afterward. Public downloads contain no
-Microsoft Windows or DOS media; keep assembled own-media folders private.
+Supply the matching Windows 3.0 media; **all required project components are
+included**. Use Python on a modern computer to prepare the files, then run
+`C:\SETUPXT` from plain DOS. Back up Windows first; start afterward with
+`C:\STARTXT`. Public downloads contain no Windows or DOS installation media. Keep prepared
+own-media folders private. [Earlier packages](docs/RELEASES/RC8.MD#verification-and-notices) remain available.
 
 ## More color, compact controls
 
@@ -42,32 +39,32 @@ Microsoft Windows or DOS media; keep assembled own-media folders private.
 - A DOS display-mode menu with undo and interrupted-switch recovery.
 - Optional Hold-to-Start with the [compatible keyboard driver](src/tandyk3/README.md).
 
-| Graphics mode | Colors |
-| --- | ---: |
-| **320×200** | **16 — default** |
-| 640×200 | 2 or 4 |
-| 320×200 | 4 |
-| 160×200 | 16 |
+XR1 shows a **640x256 logical desktop through a 320x200, sixteen-color view**.
+Keyboard panning brings off-screen windows and controls into reach.
+[XR1 controls and installation](docs/RELEASES/RC8.MD#what-is-current) ·
+[Original fonts](docs/FONTS/README.MD)
 
-These are five profiles; narrow modes can clip wide Windows dialogs.
-[Mode details](docs/MODES.MD) · [Original fonts](docs/FONTS/README.MD)
+The earlier five fixed profiles, including 640x200 and 160x200, remain separate
+downloads. [Mode details](docs/MODES.MD).
 
-## Experiments in motion
+## More room to play
 
-These separate experiments have their own setup and are not in the rc.6 installer.
+The current XR1 package includes panning and the combined drawing improvements.
+The captures below retain their original, separately documented test scope.
 
 | More room for windows | A board beyond the screen |
 | --- | --- |
 | <img src="docs/pan/DEMO.GIF" alt="Emulator demonstration of vertical software panning" width="390"> | <img src="docs/pan/MINE/REVEAL.PNG" alt="Converted Minesweeper demonstration in the emulator's larger desktop" width="390"> |
 
-Panning brings off-screen windows and buttons into view. See the
-[software-panning guide](docs/PAN.MD) and [hardware-panning packages](downloads/experimental/hpan-hpxy/README.md).
-The converted Minesweeper app and shim shown here are not distributed.
+Use Ctrl+Alt+arrows to pan and Ctrl+Alt+Home to return home. XYCTL's menu or
+Ctrl+Alt+H switches between software and hardware presentation.
+[Download Minesweeper and its shim](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINMINE30.ZIP) ·
+[Capture notes](docs/pan/MINE/CAPTURE.MD).
 
 <img src="docs/rrect/TIMELINE.PNG" alt="Matched emulator captures comparing the original and optimized Calculator repaint" width="640">
 
-One experimental Calculator repaint fell from **92.5 to 10.4 seconds** in a
-matched emulator run. [Drawing work and exact test scope](docs/RRECT.MD).
+One Calculator repaint fell from **92.5 to 10.4 seconds** in a matched emulator
+experiment. That comparison has its own [drawing test scope](docs/RRECT.MD).
 
 ## Games, savers and sound
 
@@ -77,7 +74,7 @@ matched emulator run. [Drawing work and exact test scope](docs/RRECT.MD).
 
 Try [Pinball](examples/PINBALL/README.MD), [Cookie Clicker](examples/COOKIE/README.MD),
 [Starfield](experiments/VISPART2/README.MD) and [Matrix](experiments/VISPART1/README.MD).
-Maze is a separate game preview; the installer retains the older saver.
+XR1 includes the current Maze game/saver, Pinball, Starfield and Matrix.
 
 The separate [Tandy sound companion](https://github.com/astrobleem/oemsound-tandy)
 includes Winamp's playlist player, PSG music and Beats/Fiddle tools.
@@ -86,15 +83,16 @@ includes Winamp's playlist player, PSG music and Beats/Fiddle tools.
 
 ## Compatibility and source
 
-Experimental software: earlier HPXY panning was accepted on a real EX, but the
-final R1 package and new first-party wheel driver remain emulator-qualified.
+Experimental software: earlier HPXY panning was accepted on a real EX; the
+current XR1 package and new first-party wheel driver are emulator-qualified.
 That does not certify every mode or app. Windows 3.1 is not supported.
 [Hardware and capture scope](docs/SHOWCASE.MD#panning-on-real-tandy-hardware)
 
 Other machines use [separate driver packages](docs/PLATFORM.MD), including
 Video II, PC1512, PCjr, Plantronics, Yamaha and text-mode experiments.
 
-The original wheel/font kit is MIT-licensed; other components retain their
-own notices. [Provenance](tools/WINR1/KIT/mouse/PROVENANCE.md) ·
+The original wheel/font kit is MIT-licensed; adapted drivers and other
+components retain their own [notices](tools/XR1PACK/NOTICE.TXT).
+[Provenance](tools/XR1PACK/PROVENANCE.JSN) ·
 [Build guide](BUILDING.MD) · [Development notes](docs/STATUS.MD) ·
 [Canonical source](https://github.com/astrobleem/oemdisplay-tandy)
