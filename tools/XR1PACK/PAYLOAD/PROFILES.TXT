@@ -1,0 +1,8 @@
+WINDOWS XT XR1 PROFILE
+Default: HPXY 640x256 logical desktop, 320x200 sixteen-color viewport.
+PC/XT Hold keyboard and COM1/IRQ4 serial wheel mouse are selected by Setup.
+Software presentation is the startup default; XYCTL enables Hardware mode.
+Ctrl+Alt+arrows pan; Ctrl+Alt+Home returns home; XYCTL has a Help menu.
+Run C:\MODEXT /XR1 from plain DOS to restore this profile.
+Legacy /160, /320 and /PAN payloads are not part of this XR1 package.
+See C:\START.TXT and the supplied host README.TXT for installation.

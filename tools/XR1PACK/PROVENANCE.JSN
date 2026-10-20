@@ -1,0 +1,297 @@
+{
+  "schema": 1,
+  "scope": "Current XR1 supplied components; per-component authorship is distinct from compiler/runtime and Microsoft-derived implementation rights. No blanket MIT grant.",
+  "base_public_source": "acc43b29207c75f08c0849693305516cab1852cd",
+  "private_source_snapshot": "Oct19 R1 source/evidence handoff; source archive identifiers below describe provenance, not extra public download promises",
+  "ddk": {
+    "version": "Microsoft Windows 3.1 DDK",
+    "pinned_tree": "96ce6971a1757f3c77094322ed82741791c79646",
+    "relevant_files_matched": 546,
+    "keyboard_BASESHA_all_match": true,
+    "no_new_license_grant": true
+  },
+  "files": {
+    "APPS.TXT": {
+      "bytes": 412,
+      "sha256": "22018a4cc6a6c5edd39d74ad6c4e39058be9ebf629ed460b16d4d385a100400b",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "CPSET.EXE": {
+      "bytes": 36612,
+      "sha256": "e4fccba25d817f9a07a900a3cf443d9ea8a28cfb82cd39887293e8436589fa4d",
+      "source_record": "SOURCE/CPSET.C + INPUTS/CPSET-BUILD.json",
+      "classification": "project-authored; source expressly permits redistribution; Open Watcom runtime"
+    },
+    "FIXXT.BAT": {
+      "bytes": 314,
+      "sha256": "b8a060cdc2d125989379375b8f9dbbb04d0a17f4aa71a6235350291f65f410c8",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "FIXXT.EXE": {
+      "bytes": 38046,
+      "sha256": "24c8e726ea6a5e5df59bb36c6e6ea9d73860ed5820b0f2a7a7cf5243009c376e",
+      "source_record": "SOURCE/FIXXT.C",
+      "classification": "project-authored; Open Watcom runtime"
+    },
+    "FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "source_record": "original component notice retained",
+      "classification": "component-specific permission notice; no blanket relicense"
+    },
+    "HPXY.DRV": {
+      "bytes": 56704,
+      "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275",
+      "source_record": "COMPANIONS/HPXY-XR1-SOURCE/experiments/XYRRECT plus src/tandysw and external Microsoft Windows3.1 DDK renderer/resources",
+      "classification": "Microsoft-DDK-derived adaptation; Microsoft rights/notices retained; no new license grant"
+    },
+    "LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "source_record": "original component notice retained",
+      "classification": "component-specific permission notice; no blanket relicense"
+    },
+    "MATRIX.EXE": {
+      "bytes": 14669,
+      "sha256": "854e0692b4a2571b7d53b45f15da7d954137fde9dce079e8a17df753ec94aca8",
+      "source_record": "COMPANIONS/R8-SOURCE.ZIP:examples/MATRIX/SOURCE",
+      "classification": "project-authored; existing Microsoft C6 runtime build"
+    },
+    "MAZE.EXE": {
+      "bytes": 28013,
+      "sha256": "9905abccd267dd229502fad2d7e57375f51c34b2c445fc52ea754508407de389",
+      "source_record": "examples/MAZE/GAME/MAZE.C",
+      "classification": "project-authored; existing Microsoft C6 runtime build"
+    },
+    "MODELIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "source_record": "original component notice retained",
+      "classification": "component-specific permission notice; no blanket relicense"
+    },
+    "MODEXT.BAT": {
+      "bytes": 481,
+      "sha256": "7f9948334d1d7f073326be6c5153e3a24a24ef836fa823fc45667b1a79e2fa5a",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "OEMSETUP.INF": {
+      "bytes": 882,
+      "sha256": "81957f3577522507e896899ad8d6a4fb98177fcd5ca3ff720e19d8e05d47f8d3",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "OWNERS.TXT": {
+      "bytes": 10115,
+      "sha256": "24fb0e181a42c9de2dd2e67abf0d579726fd7df00ee6aabff0ada569bf3f8be1",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "PINBALL.EXE": {
+      "bytes": 15487,
+      "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f",
+      "source_record": "examples/PINBALL/PINBALL.C",
+      "classification": "project-authored; existing Microsoft C6 runtime build"
+    },
+    "PROFILES.TXT": {
+      "bytes": 522,
+      "sha256": "883b21b861c9243c48258bb9bee0684fc93007bd134f0a6849c860d9ea2132a0",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "RESERVE.COM": {
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+      "source_record": "src/tandysw/RESERVE.ASM",
+      "classification": "project-authored assembly; no CRT"
+    },
+    "SETAUTO.EXE": {
+      "bytes": 10976,
+      "sha256": "e2908cba3430be2a3b24058061f6b477629305476f8702d6a7c2f7fd81d45e0a",
+      "source_record": "WindowsXT-SETUPXT-Qualified-20261013-01/HOST-EVIDENCE/POSTFULL.C",
+      "classification": "project-authored setup helper; binary matches source handoff"
+    },
+    "SETUPXT.BAT": {
+      "bytes": 1726,
+      "sha256": "46baa557d053b704fd6f1d79db1b1a2455cfbdd67901225dca2b86538734eb9a",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "SHOOK.COM": {
+      "bytes": 1249,
+      "sha256": "ba35ca3ce5407270e61c0ca15d27c4ca052bcd2a1112c7819fc214b74bd0d211",
+      "source_record": "WindowsXT-SETUPXT-Qualified-20261013-01/HOST-EVIDENCE/SHOOK.ASM",
+      "classification": "project-authored assembly; no CRT"
+    },
+    "STARFLD.EXE": {
+      "bytes": 17295,
+      "sha256": "c615fcd8c18ed740ed051542093e1bd18e26b92e820eef5b1bb4fa69f2ab8ff5",
+      "source_record": "COMPANIONS/R8-SOURCE.ZIP:examples/STARFLD/SOURCE",
+      "classification": "project-authored; existing Microsoft C6 runtime build"
+    },
+    "START.TXT": {
+      "bytes": 1396,
+      "sha256": "9c5ca7f0e989e8e19deefe47aacf18ca4477cabbac94615d0e6c37b589bd9d2d",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "STARTXT.BAT": {
+      "bytes": 31,
+      "sha256": "2644ccde425aae149e6240db084401aa7ae1ede3610c5daeb34a7234d5081aaa",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "TABOUT.EXE": {
+      "bytes": 6479,
+      "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed",
+      "source_record": "examples/TABOUT/TABOUT.C",
+      "classification": "project-authored; existing Microsoft C6 runtime build"
+    },
+    "TCHIME.EXE": {
+      "bytes": 3999,
+      "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121",
+      "source_record": "examples/TANDYLAB/SOURCES.TXT: TANDY-WIN30-PSG-MILESTONE.ZIP",
+      "classification": "related Tandy sound project; exact source archive not bundled here"
+    },
+    "TEXIT.EXE": {
+      "bytes": 8687,
+      "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99",
+      "source_record": "examples/TANDYLAB/SOURCES.TXT: oemsound PR18/TANDY-EXIT-CHIME.ZIP",
+      "classification": "related Tandy sound project; exact source archive not bundled here"
+    },
+    "TNDYK3.DRV": {
+      "bytes": 7640,
+      "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5",
+      "source_record": "src/tandyk3/SOURCE plus external Microsoft Windows3.1 DDK/286/KEYBOARD",
+      "classification": "Microsoft-DDK-derived adaptation; Microsoft rights/notices retained; no new license grant"
+    },
+    "TP.EXE": {
+      "bytes": 12303,
+      "sha256": "3260c222fee2dcb33cabadc8602cf878c266a7c0c6a4d5125c05784e32793b74",
+      "source_record": "COMPANIONS/WXTWHL-TP-SOURCE/TP/TP.C + TPSOUND.C",
+      "classification": "project-authored paired client; existing component/runtime notices apply"
+    },
+    "TSHELL.EXE": {
+      "bytes": 71763,
+      "sha256": "b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49",
+      "source_record": "COMPANIONS/R8-SOURCE.ZIP:examples/TSHELL/TSHELL.C",
+      "classification": "project-authored; Microsoft C6 runtime and Windows import-library build"
+    },
+    "TSHELL.INI": {
+      "bytes": 999,
+      "sha256": "9b0dca9bf1f66bcb5f99cbc347dbf093942ee30c6e0b3d546127e88585cec2f5",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "TSINPUT.DLL": {
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80",
+      "source_record": "COMPANIONS/R8-SOURCE.ZIP:examples/TSHELL/IDLE/TSINPUT.C + LIBENTRY.ASM",
+      "classification": "project-authored; no CRT; Windows import library"
+    },
+    "WHEEL.DRV": {
+      "bytes": 1820,
+      "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0",
+      "source_record": "tools/WINR1/KIT/mouse/driver.asm + decoder.asm + timestamp.asm",
+      "classification": "original project implementation; explicit MIT; no clean-room claim"
+    },
+    "WINBRDG.EXE": {
+      "bytes": 28656,
+      "sha256": "230a24f8dec830dd8ceb8e11bb6f9694ed9a67b25ef232b9352e5e743cd3d74b",
+      "source_record": "WindowsXT-SETUPXT-Qualified-20261013-01/HOST-EVIDENCE/WINBRDG.C",
+      "classification": "project-authored installer bridge; Open Watcom runtime"
+    },
+    "WINXT.BAT": {
+      "bytes": 332,
+      "sha256": "8b484c67b9896deb2ba281f79a4020e35c7ef238fad5c5055ca63699c87c683b",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+      "source_record": "current XR1 authored package/configuration metadata",
+      "classification": "project-authored text/configuration; existing notices retained"
+    },
+    "WXTWHL.EXE": {
+      "bytes": 7222,
+      "sha256": "0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6",
+      "source_record": "SOURCE/TIMED-CANDIDATE/bridge-18tick-candidate/WXTWHL.C",
+      "classification": "project-authored bridge; Open Watcom runtime"
+    },
+    "XPCHIME.EXE": {
+      "bytes": 4543,
+      "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f",
+      "source_record": "examples/TANDYLAB/SOURCES.TXT: TANDY-XP-NOTE-CHIME.ZIP",
+      "classification": "related Tandy sound project; exact source archive not bundled here"
+    },
+    "XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+      "source_record": "tools/XTFONTS original glyph/generator source",
+      "classification": "original project fonts; explicit MIT in FONTLIC.TXT"
+    },
+    "XTCLEAN.COM": {
+      "bytes": 1071,
+      "sha256": "be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad",
+      "source_record": "COMPANIONS/R8-SOURCE.ZIP:examples/WXTSPL/WAVE/XTCLEAN.ASM",
+      "classification": "project-authored assembly; no CRT"
+    },
+    "XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "source_record": "tools/XTFONTS original glyph/generator source",
+      "classification": "original project fonts; explicit MIT in FONTLIC.TXT"
+    },
+    "XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326",
+      "source_record": "tools/XTFONTS original glyph/generator source",
+      "classification": "original project fonts; explicit MIT in FONTLIC.TXT"
+    },
+    "XTEFIX.FON": {
+      "bytes": 4656,
+      "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+      "source_record": "tools/XTFONTS original glyph/generator source",
+      "classification": "original project fonts; explicit MIT in FONTLIC.TXT"
+    },
+    "XTEOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "source_record": "tools/XTFONTS original glyph/generator source",
+      "classification": "original project fonts; explicit MIT in FONTLIC.TXT"
+    },
+    "XTESYS.FON": {
+      "bytes": 5680,
+      "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
+      "source_record": "tools/XTFONTS original glyph/generator source",
+      "classification": "original project fonts; explicit MIT in FONTLIC.TXT"
+    },
+    "XTLOGO.LGO": {
+      "bytes": 35971,
+      "sha256": "8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c",
+      "source_record": "COMPANIONS/R8-SOURCE.ZIP:examples/WXTSPL/WAVE/XTLOGO.ASM",
+      "classification": "project-authored startup code; original Windows loader not included"
+    },
+    "XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef",
+      "source_record": "tools/XTLOGO original static-logo source",
+      "classification": "original project logo; explicit MIT in LOGOLIC.TXT"
+    },
+    "XTTSYS.FON": {
+      "bytes": 4208,
+      "sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa",
+      "source_record": "tools/XTFONTS original glyph/generator source",
+      "classification": "original project fonts; explicit MIT in FONTLIC.TXT"
+    },
+    "XYCTL.EXE": {
+      "bytes": 9679,
+      "sha256": "7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055",
+      "source_record": "COMPANIONS/HPXY-XR1-SOURCE/experiments/XYPAN/XYCTL.C",
+      "classification": "project-authored helper; existing Windows/compiler import/runtime notices apply"
+    }
+  }
+}
