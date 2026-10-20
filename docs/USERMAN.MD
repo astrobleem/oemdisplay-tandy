@@ -241,16 +241,19 @@ compatible loaded keyboard driver and TSINPUT. A plain press/release of Hold
 opens Start over another app; Escape returns focus. Modifier combinations,
 modal dialogs and saver wake-up have separate handling.
 
-The [TNDYK3 keyboard candidate](../src/tandyk3/README.md) has its own guarded
-installer and rollback. The public K3TOOLS packet contains probes, not that
-driver. Raw hardware press/release observations do not qualify Windows key
-translation or physical Hold behavior. [Hold support and scope](../distributions/WINXT/HOLD14.TXT).
+Current rc.8 XR1 installs `TNDYK3.DRV` and the matching `TSINPUT.DLL`.
+The standalone [TNDYK3 candidate guide](../src/tandyk3/README.md) retains its
+own guarded installer and rollback. Its separate K3TOOLS packet contains
+probes, rather than the driver. Raw hardware press/release observations do
+not qualify Windows key translation or physical Hold behavior.
+[Hold support and scope](../distributions/WINXT/HOLD14.TXT).
 
 [EXJOY](../examples/EXJOY/README.MD) is an optional raw joystick diagnostic
 with session-only calibration; physical input remains unverified. The public
 [DOS wheel diagnostic](../tools/WHEEL/README.TXT) probes wheel/API and serial
-data. It does not install Windows scrolling; the recovered Win3 wheel
-extension is not a public driver download.
+data; it does not install Windows scrolling. Current rc.8 XR1 supplies the
+first-party `WHEEL.DRV`, the `WXTWHL.EXE` client and their startup configuration.
+Use the [rc.8 installation guide](RELEASES/RC8.MD) for that combined wheel setup.
 
 ### Screen savers and sound
 
@@ -272,15 +275,17 @@ MIDI synthesizer.
 
 ## Games and utilities
 
-The main disk includes Pinball, About and the three saver companions. Other
-apps are separate downloads or source projects; follow their own guides.
+Current rc.8 XR1 includes Pinball, About, Matrix, Starfield and the current
+Maze game/saver. The retained rc.6 disk includes Pinball, About and its three
+saver companions, including the older Maze saver. Other apps below are
+separate downloads or source projects; follow their own guides.
 
 | App | What to try |
 | --- | --- |
 | [Pinball](../examples/PINBALL/README.MD) | Space launches; Z/Left and / or Right control the flippers; P pauses. |
 | [Cookie Clicker](../examples/COOKIE/README.MD) | Click or press Space, buy upgrades, save and load. Fits 160×200. |
 | [Fly Swat](../examples/SWAT/README.MD) | Mouse-controlled fly hunting, pause/restart, windowed and fullscreen paths. |
-| [Maze game preview](../examples/MAZE/GAME/README.MD) | A separate playable preview; the disk retains the older Maze saver. |
+| [Maze game/saver](../examples/MAZE/GAME/README.MD) | Included in rc.8 XR1; the retained rc.6 disk has the older Maze saver. |
 | [Tandinator](../examples/TANDINAT/README.MD) | Character guessing; [0.3.8](../experiments/TANDI11/README.MD) is a separate experimental packet. |
 | [Green hill wallpaper](../examples/HILLS/README.TXT) | Native landscapes for the 160/320-pixel sixteen-color modes. |
 | [XTEyes](../examples/XTEYES/README.TXT) / [Slosh](../examples/SLOSH/README.MD) | Pointer-following eyes and a tiny moving water surface. |
