@@ -1,3 +1,28 @@
+# Current XR1 own-media package / rc.8
+
+Use [tools/XR1PACK](tools/XR1PACK/README.MD) for the current combined XR1
+installer and separate Minesweeper packet. It packages the existing qualified
+runtime binaries; it does not rebuild the drivers or require the former
+private DOS-CROOT. The end-user [rc.8 guide](docs/RELEASES/RC8.MD) describes
+preparation from matching Windows 3.0 media, fresh installation and update.
+
+```text
+python tools/XR1PACK/TESTPREP.PY
+python tools/XR1PACK/TESTPUB.PY
+python tools/XR1PACK/PUBLISH.PY --out <new-release-folder> --commit <full-sha>
+python tools/XR1PACK/PUBLISH.PY --verify <release-folder> --commit <full-sha>
+```
+
+PUBLISH validates closed source/runtime pins and the recorded fresh/update
+qualification before creating six deterministic assets. The rc.8 workflow
+checks the exact event commit and permits only a new tag-specific draft.
+User-owned Windows loaders and Setup metadata are generated locally by
+PREPARE.PY and stay outside the public package. Component notices accompany
+the adapted display/keyboard drivers and other supplied runtime files.
+
+The workflows below are retained font, startup and fixed-profile build paths.
+Their accepted payload pins and historical packages remain unchanged.
+
 # rc.5 original fonts and exact qualified package
 
 The seven XT Pixels font resources are original MIT grid drawings. Build
@@ -20,7 +45,7 @@ disk and toolkit remain byte-identical. Current QUALIFY.JSON and START-HERE
 carry the final qualification and instructions. Native code/binary changes
 still require a separately allocated emulator slot and new qualification.
 
-# Current Windows XT build and splash default
+# Retained fixed-profile build and splash default
 
 The accepted independent startup default is the [slow flag wave](examples/WXTSPL/WAVE/README.MD).
 The portable toolkit carries its exact qualified module/wrapper and own-media
@@ -29,8 +54,8 @@ in qualified Color mode; other profiles retain static startup.
 [Installer qualification and exact pins](docs/QUAL/WAVEINS.JSON) cover normal
 Color/static exits, native refusals and byte-verified rollback.
 
-The current public release is built by `tools/FLASHDISK/MAKEIMG.PY` and the
-Windows XT release workflow. Every current Setup display profile selects the
+The retained fixed-profile package is built by `tools/FLASHDISK/MAKEIMG.PY`
+and its Windows XT release workflow. Every current Setup display profile selects the
 approved `WXTSPL01.RLE` (SHA-256
 `eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c`).
 The retired Tandy image is not a current installation choice.

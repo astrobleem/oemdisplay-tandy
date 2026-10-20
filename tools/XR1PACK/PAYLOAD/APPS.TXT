@@ -1,0 +1,6 @@
+WINDOWS XT XR1 APPLICATIONS
+Programs opens the supplied Maze, Starfield, Matrix, Pinball and About apps.
+The shell reads existing Program Manager groups and preserves custom settings.
+The separate Minesweeper preview ZIP includes its converted app and About shim;
+follow that ZIP's README.TXT to add it. It is not installed by SETUPXT.
+Existing experimental app and sound packages retain their own guides.

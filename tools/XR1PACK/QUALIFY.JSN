@@ -1,0 +1,366 @@
+{
+  "schema": 1,
+  "status": "PASS_HOST_AND_NATIVE",
+  "target": {
+    "machine": "original Tandy1000HX emulator surrogate",
+    "cpu": "original8088",
+    "ram_kb": 640,
+    "hz": 7159092,
+    "windows": "3.0 real mode"
+  },
+  "physical_qualification": false,
+  "tested_source_pins": {
+    "PREPARE.PY": {
+      "bytes": 11110,
+      "sha256": "c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1"
+    },
+    "INPUTS.JSN": {
+      "bytes": 72340,
+      "sha256": "25d8be09702fa1cd8bc1dd16189a6854860e8b20e7141d2cd38c7b0f8d5fda87"
+    }
+  },
+  "runtime_pins": {
+    "APPS.TXT": {
+      "bytes": 412,
+      "sha256": "22018a4cc6a6c5edd39d74ad6c4e39058be9ebf629ed460b16d4d385a100400b"
+    },
+    "CPSET.EXE": {
+      "bytes": 36612,
+      "sha256": "e4fccba25d817f9a07a900a3cf443d9ea8a28cfb82cd39887293e8436589fa4d"
+    },
+    "FIXXT.BAT": {
+      "bytes": 314,
+      "sha256": "b8a060cdc2d125989379375b8f9dbbb04d0a17f4aa71a6235350291f65f410c8"
+    },
+    "FIXXT.EXE": {
+      "bytes": 38046,
+      "sha256": "24c8e726ea6a5e5df59bb36c6e6ea9d73860ed5820b0f2a7a7cf5243009c376e"
+    },
+    "FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "HPXY.DRV": {
+      "bytes": 56704,
+      "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275"
+    },
+    "LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "MATRIX.EXE": {
+      "bytes": 14669,
+      "sha256": "854e0692b4a2571b7d53b45f15da7d954137fde9dce079e8a17df753ec94aca8"
+    },
+    "MAZE.EXE": {
+      "bytes": 28013,
+      "sha256": "9905abccd267dd229502fad2d7e57375f51c34b2c445fc52ea754508407de389"
+    },
+    "MODELIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "MODEXT.BAT": {
+      "bytes": 481,
+      "sha256": "7f9948334d1d7f073326be6c5153e3a24a24ef836fa823fc45667b1a79e2fa5a"
+    },
+    "OEMSETUP.INF": {
+      "bytes": 882,
+      "sha256": "81957f3577522507e896899ad8d6a4fb98177fcd5ca3ff720e19d8e05d47f8d3"
+    },
+    "OWNERS.TXT": {
+      "bytes": 10115,
+      "sha256": "24fb0e181a42c9de2dd2e67abf0d579726fd7df00ee6aabff0ada569bf3f8be1"
+    },
+    "PINBALL.EXE": {
+      "bytes": 15487,
+      "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f"
+    },
+    "PROFILES.TXT": {
+      "bytes": 522,
+      "sha256": "883b21b861c9243c48258bb9bee0684fc93007bd134f0a6849c860d9ea2132a0"
+    },
+    "RESERVE.COM": {
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+    },
+    "SETAUTO.EXE": {
+      "bytes": 10976,
+      "sha256": "e2908cba3430be2a3b24058061f6b477629305476f8702d6a7c2f7fd81d45e0a"
+    },
+    "SETUPXT.BAT": {
+      "bytes": 1726,
+      "sha256": "46baa557d053b704fd6f1d79db1b1a2455cfbdd67901225dca2b86538734eb9a"
+    },
+    "SHOOK.COM": {
+      "bytes": 1249,
+      "sha256": "ba35ca3ce5407270e61c0ca15d27c4ca052bcd2a1112c7819fc214b74bd0d211"
+    },
+    "STARFLD.EXE": {
+      "bytes": 17295,
+      "sha256": "c615fcd8c18ed740ed051542093e1bd18e26b92e820eef5b1bb4fa69f2ab8ff5"
+    },
+    "START.TXT": {
+      "bytes": 1396,
+      "sha256": "9c5ca7f0e989e8e19deefe47aacf18ca4477cabbac94615d0e6c37b589bd9d2d"
+    },
+    "STARTXT.BAT": {
+      "bytes": 31,
+      "sha256": "2644ccde425aae149e6240db084401aa7ae1ede3610c5daeb34a7234d5081aaa"
+    },
+    "TABOUT.EXE": {
+      "bytes": 6479,
+      "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed"
+    },
+    "TCHIME.EXE": {
+      "bytes": 3999,
+      "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121"
+    },
+    "TEXIT.EXE": {
+      "bytes": 8687,
+      "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99"
+    },
+    "TNDYK3.DRV": {
+      "bytes": 7640,
+      "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+    },
+    "TP.EXE": {
+      "bytes": 12303,
+      "sha256": "3260c222fee2dcb33cabadc8602cf878c266a7c0c6a4d5125c05784e32793b74"
+    },
+    "TSHELL.EXE": {
+      "bytes": 71763,
+      "sha256": "b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49"
+    },
+    "TSHELL.INI": {
+      "bytes": 999,
+      "sha256": "9b0dca9bf1f66bcb5f99cbc347dbf093942ee30c6e0b3d546127e88585cec2f5"
+    },
+    "TSINPUT.DLL": {
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+    },
+    "WHEEL.DRV": {
+      "bytes": 1820,
+      "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+    },
+    "WINBRDG.EXE": {
+      "bytes": 28656,
+      "sha256": "230a24f8dec830dd8ceb8e11bb6f9694ed9a67b25ef232b9352e5e743cd3d74b"
+    },
+    "WINXT.BAT": {
+      "bytes": 332,
+      "sha256": "8b484c67b9896deb2ba281f79a4020e35c7ef238fad5c5055ca63699c87c683b"
+    },
+    "WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    },
+    "WXTWHL.EXE": {
+      "bytes": 7222,
+      "sha256": "0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6"
+    },
+    "XPCHIME.EXE": {
+      "bytes": 4543,
+      "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f"
+    },
+    "XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "XTCLEAN.COM": {
+      "bytes": 1071,
+      "sha256": "be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad"
+    },
+    "XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "XTEFIX.FON": {
+      "bytes": 4656,
+      "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+    },
+    "XTEOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "XTESYS.FON": {
+      "bytes": 5680,
+      "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+    },
+    "XTLOGO.LGO": {
+      "bytes": 35971,
+      "sha256": "8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c"
+    },
+    "XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "XTTSYS.FON": {
+      "bytes": 4208,
+      "sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa"
+    },
+    "XYCTL.EXE": {
+      "bytes": 9679,
+      "sha256": "7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055"
+    }
+  },
+  "host": {
+    "boundary_tests": 24,
+    "fresh_files": 367,
+    "update_files": 80,
+    "all_qualified_executable_bytes_unchanged": true,
+    "new_authored_metadata": "XR1-only profiles and prompts; locally generated Setup metadata separately pinned",
+    "setup_structural_contract": "49840 bytes; seven EOF markers contain only CR/LF after first; first/last32 match unchanged finisher input contract.",
+    "publisher_tests": 9
+  },
+  "native": {
+    "fresh": {
+      "status": "PASS",
+      "run_id": "e1ba711b479448c5bd92268f201814c7",
+      "owned_process_stopped": true,
+      "lease_released": true,
+      "emulator_unchanged": true,
+      "emulator_sha256": "7961bf880aeb6ac2b6a978d6d047b702acc5197604f2e7e8452f0e8443c8f2eb",
+      "seconds": 687.53,
+      "owned_seconds": 686.84,
+      "prepared_file_count": 367,
+      "prepared_manifest": {
+        "bytes": 111913,
+        "sha256": "753fff29be7f0a2b5c6a68216d849c9ddd2379059f6adeb357cc631d0a98fd7a"
+      },
+      "post_install_graphics_mode": 9,
+      "post_install_wait_seconds": 60,
+      "normal_shell": "TSHELL.EXE",
+      "system_ini": {
+        "display.drv": "HPXY.DRV",
+        "mouse.drv": "WHEEL.DRV",
+        "keyboard.drv": "TNDYK3.DRV",
+        "fonts.fon": "XTCSYS.FON",
+        "fixedfon.fon": "XTCFIX.FON",
+        "oemfonts.fon": "XTCOEM.FON"
+      },
+      "startup_run_value": "C:\\WINXT\\XYCTL.EXE C:\\WINXT\\WXTWHL.EXE",
+      "completion_markers": true,
+      "protected_boot_files_unchanged": {
+        "CONFIG.SYS": true,
+        "AUTOEXEC.BAT": true,
+        "IO.SYS": true,
+        "MSDOS.SYS": true,
+        "COMMAND.COM": true
+      },
+      "unrelated_ini_sections_preserved": "not applicable",
+      "screenshot": {
+        "path": "docs/QUAL/XR1/FRESH.PNG",
+        "bytes": 3290,
+        "sha256": "6e6e925f56e91c86f73451b7a2caa918c0f1abda7bf89d1ade423228348fedaf"
+      },
+      "private_evidence": {
+        "result": {
+          "bytes": 2998,
+          "sha256": "5f29808ca232f2f66b13b6fe41d70719b380e00087e794f51f03dfa43d09a259"
+        },
+        "native_qualification": {
+          "bytes": 2242,
+          "sha256": "80d828514f88ee7d201864603c7e37410a65e37b7bea63c0ba6cc3921bca5473"
+        },
+        "lease": {
+          "bytes": 208,
+          "sha256": "b8d49e70b9c9fd7c2ee018dbee08dc7bfe0e965a7027bf0e4f803e5b732ead78"
+        },
+        "fixture": {
+          "bytes": 319437,
+          "sha256": "1b6794e36fd0eae3e24703dc7493ee951834b72282908563f56eb05b540e3a5d"
+        }
+      },
+      "CF_access": false
+    },
+    "update": {
+      "status": "PASS",
+      "run_id": "ae03bb685c0740e7ae7d59700b6c4b32",
+      "owned_process_stopped": true,
+      "lease_released": true,
+      "emulator_unchanged": true,
+      "emulator_sha256": "7961bf880aeb6ac2b6a978d6d047b702acc5197604f2e7e8452f0e8443c8f2eb",
+      "seconds": 135.78,
+      "owned_seconds": 134.98,
+      "prepared_file_count": 80,
+      "prepared_manifest": {
+        "bytes": 20841,
+        "sha256": "6ba7328e717c828026fef944f695dc030262b8756568dbb4ec5e780a34a5d29b"
+      },
+      "post_install_graphics_mode": 9,
+      "post_install_wait_seconds": 60,
+      "normal_shell": "TSHELL.EXE",
+      "system_ini": {
+        "display.drv": "HPXY.DRV",
+        "mouse.drv": "WHEEL.DRV",
+        "keyboard.drv": "TNDYK3.DRV",
+        "fonts.fon": "XTCSYS.FON",
+        "fixedfon.fon": "XTCFIX.FON",
+        "oemfonts.fon": "XTCOEM.FON"
+      },
+      "startup_run_value": "C:\\WINXT\\XYCTL.EXE C:\\WINXT\\WXTWHL.EXE",
+      "completion_markers": true,
+      "protected_boot_files_unchanged": {
+        "CONFIG.SYS": true,
+        "AUTOEXEC.BAT": true,
+        "IO.SYS": true,
+        "MSDOS.SYS": true,
+        "COMMAND.COM": true
+      },
+      "unrelated_ini_sections_preserved": true,
+      "screenshot": {
+        "path": "docs/QUAL/XR1/UPDATE.PNG",
+        "bytes": 3283,
+        "sha256": "869239162a1a6c9943fa3376d471035d951654aa1ae198db40672431e82807d5"
+      },
+      "private_evidence": {
+        "result": {
+          "bytes": 2972,
+          "sha256": "40c4068a9ee7be312763e0c68d03961e2a470df310546ab53a400de841d0f81e"
+        },
+        "native_qualification": {
+          "bytes": 2243,
+          "sha256": "e873c771e04e29fcc53e1a2840f1700827c2749d3b7cfd6073b889057eb9220c"
+        },
+        "lease": {
+          "bytes": 207,
+          "sha256": "f2b0e356546a014409ac5cff0bc40311135a969f93a36e0a61f375aef8311b30"
+        },
+        "fixture": {
+          "bytes": 279324,
+          "sha256": "7c7c5de1868aae7d4d116e21556edb9eef8eb773a1fdc63a5d3863f5233592fe"
+        }
+      },
+      "CF_access": false
+    }
+  },
+  "previous_R1_integration": {
+    "run_id": "59e08544551f42a18848856e5761cc61",
+    "scope": "4wheelchecks,8exactviewportframes,2cleanDOSreturns; separate prior Oct19 runtime verification"
+  },
+  "minesweeper": {
+    "status": "PASS_HOST",
+    "scope": "exact existing R20/MNSN2 tested binary identities; new packet CRC/hashes/notice checks; no new guest claimed",
+    "files": {
+      "WINMINE.EXE": {
+        "bytes": 30032,
+        "sha256": "52be8bb486d3bad7809c19efc8a3202ef08a458e250634e392fbd127d4046c8a"
+      },
+      "WMABT.DLL": {
+        "bytes": 1998,
+        "sha256": "caf0967644eca52d8c69b5bf83696e78ada52995d9a16dfd10b1a86412e0d893"
+      }
+    }
+  },
+  "limits": [
+    "Emulator qualification only; no new physical hardware run.",
+    "Original serial-mouse physical behavior and other display profiles remain outside this package qualification.",
+    "Minesweeper About shim source/build project was not recovered; no source reproducibility claim."
+  ]
+}

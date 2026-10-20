@@ -76,3 +76,8 @@ tools/WINR1/** -text
 downloads/R1/** -text
 docs/RELEASES/RC7.MD -text
 .github/workflows/winr1.yml -text
+
+# Current own-media package and release evidence preserve reviewed bytes.
+tools/XR1PACK/** -text
+docs/RELEASES/RC8.MD -text
+.github/workflows/xr1pack.yml -text

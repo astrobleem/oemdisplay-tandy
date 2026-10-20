@@ -7,8 +7,8 @@
 - **Linker:** LINK4 (Segmented Executable Linker v5.x).
 - **Current Build:** `python3 src/tandysw/BUILD88.PY --dosbox <dosbox-x> --out <new-path> [--mode <profile>]`; five profiles are in `docs/MODES.MD`. Omitted mode selects 320x200x16 in the current development pipeline; see docs/TRIAL4/README.MD.
 - **Legacy Build:** old TNDY16 source/builders are preserved in [DEV](docs/DEV.MD); use current external source views.
-- **Packaging:** current public Windows XT uses `tools/FLASHDISK/MAKEIMG.PY`; test with `TESTFAT.PY` and `TESTPKG.PY`. Root `MAKEDISK` is historical TANDY88 reproduction only. See `BUILDING.MD`.
-- **Install:** current own-media WINXT disk, six Windows Setup Other display choices, and guarded `C:\WINXT\WINXT` launcher. Every profile selects approved `WXTSPL01.RLE`; the old Tandy picture is retired. Never use manual INI edits as normal install instructions.
+- **Packaging:** current combined XR1 uses `tools/XR1PACK/PUBLISH.PY`, `TESTPREP.PY` and `TESTPUB.PY`. The retained fixed-profile route uses `tools/FLASHDISK/MAKEIMG.PY`, `TESTFAT.PY` and `TESTPKG.PY`. Root `MAKEDISK` is historical TANDY88 reproduction only. See `BUILDING.MD`.
+- **Install:** current XR1 uses PREPARE.PY with matching owned Windows media, plain-DOS `C:\SETUPXT` and guarded `C:\STARTXT`. It supplies one custom XR1 profile. Retained fixed-profile packages keep their own Setup choices and launcher. Approved `WXTSPL01.RLE` remains selected; never use manual INI edits as normal install instructions.
 
 ## 2. File Handling Rules
 - **Line Endings:** **CRLF** (Windows style) is MANDATORY.
@@ -81,7 +81,7 @@ snapshot scope. Publication uses PUBLISH.PY and the guarded release workflow,
 with no old asset/tag overwrite. Keep DOS/Windows and non-font owned resources
 out of new public payloads. An emulator launch still requires an explicit slot.
 
-## Current rc.6 release
+## Historical rc.6 release
 
 Use tools/FLASHDISK/PUBLISH.PY for rc.6. Keep the rc.5 font publisher and
 qualification historical. docs/QUAL/RC6.JSON binds the current source/runtime
@@ -90,3 +90,16 @@ DOCPINS reproduces a bounded documentation-data refresh. The refreshed helper
 was not rerun in the guest. Preserve that distinction. New source archives
 exclude historical binary ZIP bundles via export-ignore. No owned Windows
 resources, compiler or emulator bytes belong in new downloads.
+
+## Current XR1 / rc.8 packaging
+
+Keep all accepted executable bytes unchanged unless a separately qualified
+runtime change is explicitly requested. INPUTS.JSN describes own-media input
+hashes and local generation; PUBLIC.JSN closes the distributable input set.
+QUALIFY.JSN records the final preparation source pins and separate fresh/update
+guest results. Preserve all Windows/DOS media, prepared DOS-CROOT trees and
+raw guest images outside publication. Exact qualified HPXY/TNDYK3 adaptations
+and the converted Minesweeper app/shim ship with accurate component notices;
+do not apply a blanket project license to Microsoft-derived code. Preserve
+prior downloads/tags. A native test still needs the shared normal emulator
+lease, an owned-process watchdog and verified stop/release cleanup.

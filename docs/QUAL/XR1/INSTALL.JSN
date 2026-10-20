@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "status": "PASS_HOST_AND_NATIVE",
+  "scope": "XR1 own-media preparation fresh/update on original8088 HX emulator surrogate; raw OS media/images/INIs remain private.",
+  "physical_qualification": false,
+  "tested_source_pins": {
+    "PREPARE.PY": {
+      "bytes": 11110,
+      "sha256": "c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1"
+    },
+    "INPUTS.JSN": {
+      "bytes": 72340,
+      "sha256": "25d8be09702fa1cd8bc1dd16189a6854860e8b20e7141d2cd38c7b0f8d5fda87"
+    }
+  },
+  "generated_setup": {
+    "bytes": 49840,
+    "sha256": "b0d08a677638715125175d3a11550fe48c71f74aef1f5c107ed74ba28bdabc02"
+  },
+  "native": {
+    "fresh": {
+      "status": "PASS",
+      "run_id": "e1ba711b479448c5bd92268f201814c7",
+      "owned_process_stopped": true,
+      "lease_released": true,
+      "emulator_unchanged": true,
+      "emulator_sha256": "7961bf880aeb6ac2b6a978d6d047b702acc5197604f2e7e8452f0e8443c8f2eb",
+      "seconds": 687.53,
+      "owned_seconds": 686.84,
+      "prepared_file_count": 367,
+      "prepared_manifest": {
+        "bytes": 111913,
+        "sha256": "753fff29be7f0a2b5c6a68216d849c9ddd2379059f6adeb357cc631d0a98fd7a"
+      },
+      "post_install_graphics_mode": 9,
+      "post_install_wait_seconds": 60,
+      "normal_shell": "TSHELL.EXE",
+      "system_ini": {
+        "display.drv": "HPXY.DRV",
+        "mouse.drv": "WHEEL.DRV",
+        "keyboard.drv": "TNDYK3.DRV",
+        "fonts.fon": "XTCSYS.FON",
+        "fixedfon.fon": "XTCFIX.FON",
+        "oemfonts.fon": "XTCOEM.FON"
+      },
+      "startup_run_value": "C:\\WINXT\\XYCTL.EXE C:\\WINXT\\WXTWHL.EXE",
+      "completion_markers": true,
+      "protected_boot_files_unchanged": {
+        "CONFIG.SYS": true,
+        "AUTOEXEC.BAT": true,
+        "IO.SYS": true,
+        "MSDOS.SYS": true,
+        "COMMAND.COM": true
+      },
+      "unrelated_ini_sections_preserved": "not applicable",
+      "screenshot": {
+        "path": "docs/QUAL/XR1/FRESH.PNG",
+        "bytes": 3290,
+        "sha256": "6e6e925f56e91c86f73451b7a2caa918c0f1abda7bf89d1ade423228348fedaf"
+      },
+      "private_evidence": {
+        "result": {
+          "bytes": 2998,
+          "sha256": "5f29808ca232f2f66b13b6fe41d70719b380e00087e794f51f03dfa43d09a259"
+        },
+        "native_qualification": {
+          "bytes": 2242,
+          "sha256": "80d828514f88ee7d201864603c7e37410a65e37b7bea63c0ba6cc3921bca5473"
+        },
+        "lease": {
+          "bytes": 208,
+          "sha256": "b8d49e70b9c9fd7c2ee018dbee08dc7bfe0e965a7027bf0e4f803e5b732ead78"
+        },
+        "fixture": {
+          "bytes": 319437,
+          "sha256": "1b6794e36fd0eae3e24703dc7493ee951834b72282908563f56eb05b540e3a5d"
+        }
+      },
+      "CF_access": false
+    },
+    "update": {
+      "status": "PASS",
+      "run_id": "ae03bb685c0740e7ae7d59700b6c4b32",
+      "owned_process_stopped": true,
+      "lease_released": true,
+      "emulator_unchanged": true,
+      "emulator_sha256": "7961bf880aeb6ac2b6a978d6d047b702acc5197604f2e7e8452f0e8443c8f2eb",
+      "seconds": 135.78,
+      "owned_seconds": 134.98,
+      "prepared_file_count": 80,
+      "prepared_manifest": {
+        "bytes": 20841,
+        "sha256": "6ba7328e717c828026fef944f695dc030262b8756568dbb4ec5e780a34a5d29b"
+      },
+      "post_install_graphics_mode": 9,
+      "post_install_wait_seconds": 60,
+      "normal_shell": "TSHELL.EXE",
+      "system_ini": {
+        "display.drv": "HPXY.DRV",
+        "mouse.drv": "WHEEL.DRV",
+        "keyboard.drv": "TNDYK3.DRV",
+        "fonts.fon": "XTCSYS.FON",
+        "fixedfon.fon": "XTCFIX.FON",
+        "oemfonts.fon": "XTCOEM.FON"
+      },
+      "startup_run_value": "C:\\WINXT\\XYCTL.EXE C:\\WINXT\\WXTWHL.EXE",
+      "completion_markers": true,
+      "protected_boot_files_unchanged": {
+        "CONFIG.SYS": true,
+        "AUTOEXEC.BAT": true,
+        "IO.SYS": true,
+        "MSDOS.SYS": true,
+        "COMMAND.COM": true
+      },
+      "unrelated_ini_sections_preserved": true,
+      "screenshot": {
+        "path": "docs/QUAL/XR1/UPDATE.PNG",
+        "bytes": 3283,
+        "sha256": "869239162a1a6c9943fa3376d471035d951654aa1ae198db40672431e82807d5"
+      },
+      "private_evidence": {
+        "result": {
+          "bytes": 2972,
+          "sha256": "40c4068a9ee7be312763e0c68d03961e2a470df310546ab53a400de841d0f81e"
+        },
+        "native_qualification": {
+          "bytes": 2243,
+          "sha256": "e873c771e04e29fcc53e1a2840f1700827c2749d3b7cfd6073b889057eb9220c"
+        },
+        "lease": {
+          "bytes": 207,
+          "sha256": "f2b0e356546a014409ac5cff0bc40311135a969f93a36e0a61f375aef8311b30"
+        },
+        "fixture": {
+          "bytes": 279324,
+          "sha256": "7c7c5de1868aae7d4d116e21556edb9eef8eb773a1fdc63a5d3863f5233592fe"
+        }
+      },
+      "CF_access": false
+    }
+  },
+  "previous_R1_integration": {
+    "run_id": "59e08544551f42a18848856e5761cc61",
+    "scope": "4wheelchecks,8exactviewportframes,2cleanDOSreturns; separate prior Oct19 runtime verification"
+  },
+  "CF_access": false
+}
