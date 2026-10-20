@@ -1,7 +1,9 @@
 # Minesweeper panning captures
 
-These are real emulator captures from a private converted Minesweeper build;
-the executable and shim are not published or included.
+These are real emulator captures from the converted Minesweeper build.
+The [rc.8 app/shim download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINMINE30.ZIP)
+includes installation instructions, notices and the exact tested binary hashes.
+This page preserves the original capture scope.
 
 - Emulator: 86Box native headless build.
 - Machine: Tandy 1000 HX, 8088 at 7.159090 MHz, 640 KB conventional memory.
@@ -15,9 +17,9 @@ the executable and shim are not published or included.
 - Tested software: the capture used the private combined HPXY XR1 PR151 + E1
   runtime. The public PR151 component is linked at
   [commit fc7b09b](https://github.com/astrobleem/oemdisplay-tandy/commit/fc7b09bdbe7e37dc9d562bdb746cf435b0628ba0).
-  E1 and the exact combined runtime are not public, so this commit link does
-  not identify the full capture build. No public source commit or release pin
-  represents that combined runtime.
+  This component link does not identify the full capture build. The capture
+  predates rc.8, whose current combined-runtime pins and installer tests are
+  recorded separately in [the release guide](../../RELEASES/RC8.MD).
 - Hardware: the combined XR1 PR151 + E1 runtime shown here was not physically
   tested. The separate HPXY R1 physical acceptance described in the
   [panning package guide](../../../downloads/experimental/hpan-hpxy/README.md)

@@ -81,3 +81,5 @@ docs/RELEASES/RC7.MD -text
 tools/XR1PACK/** -text
 docs/RELEASES/RC8.MD -text
 .github/workflows/xr1pack.yml -text
+
+docs/SHOWCASE.MD -text

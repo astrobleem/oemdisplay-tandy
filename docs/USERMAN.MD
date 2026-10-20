@@ -5,11 +5,12 @@
 [Experimental drivers](#separate-experimental-drivers) ·
 [Recovery](#restore-your-previous-installation)
 
-Windows XT adds five graphics modes, a compact Start-menu desktop, original
-bitmap fonts, games and utilities to **Windows 3.0 real mode on a Tandy 1000
-EX/HX with 640 KB RAM**. The current main package is the experimental
-**[0.1.0-rc.6 preview](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/v0.1.0-rc.6)**.
-You supply DOS and Windows; the downloads contain no Windows installation.
+Windows XT adds a compact Start-menu desktop, color graphics, original fonts,
+games and utilities to **Windows 3.0 real mode on a Tandy 1000 EX/HX with
+640 KB RAM**. The current combined package is **[rc.8 XR1](RELEASES/RC8.MD)**,
+with fresh-install/update preparation from your Windows media, panning and
+wheel input. You supply DOS and Windows. The fixed-profile instructions below
+retain the earlier rc.6 route; use the rc.8 guide for current XR1 installation.
 
 ![Windows XT startup wave captured in DOSBox-X at native 320x200 pixels](PROMO/XTWAVE.GIF)
 
@@ -25,7 +26,8 @@ or replace those release binaries.
 
 | Your machine or goal | Download and guide |
 | --- | --- |
-| **Original Tandy 1000 EX/HX, everyday graphics preview** | **[WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.ZIP)**, or the [720 KB image](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.IMG). Follow the installation below. |
+| **Original Tandy 1000 EX/HX, current combined XR1 desktop** | **[WINXT-XR1.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP)** and the [rc.8 fresh/update guide](RELEASES/RC8.MD). All project runtime components are supplied; use matching owned Windows 3.0 media. |
+| Earlier fixed-profile EX/HX graphics preview (rc.6) | **[WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.ZIP)**, or the [720 KB image](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.IMG). Follow the installation below. |
 | Try 80-column text, including compact C25 | Separate **experimental [TEXT80.ZIP](../downloads/experimental/TEXT80/TEXT80.ZIP?raw=1)** and [packet guide](../downloads/experimental/TEXT80/). See [TEXT80](#text80-and-compact-c25). |
 | IBM PCjr with memory expansion | Separate **experimental [PCJRSET.ZIP](../downloads/experimental/PCJR/PCJRSET.ZIP?raw=1)** and [packet guide](../downloads/experimental/PCJR/). See [PCjr](#ibm-pcjr-clean-setup). |
 | Tandy Video II, Amstrad PC1512 or Plantronics ColorPlus | Use the [machine-specific guides](#other-video-hardware). The EX/HX package does not select these drivers. |
@@ -37,7 +39,12 @@ packet has its own checksums and qualification scope.
 
 ## Install Windows XT
 
-### Before you start
+**Current XR1:** follow the [rc.8 preparation and installation guide](RELEASES/RC8.MD).
+Prepare on a modern Python host, transfer DOS-CROOT, run `C:\SETUPXT` from
+plain DOS and start afterward with `C:\STARTXT`. Use `C:\FIXXT` for repair.
+The steps below preserve the separate rc.6 fixed-profile installation path.
+
+### Before you start (rc.6)
 
 You need a working Windows 3.0 installation, DOS 3.3 or later, an original
 EX/HX with 640 KB, and writable storage for `C:\WINXT`. Keep a backup of
@@ -138,6 +145,10 @@ The [startup guide](../examples/WXTSPL/WAVE/README.MD) covers re-enabling it
 and supported older installations.
 
 ## Choose a display mode
+
+For current XR1, restore the selected profile with `C:\MODEXT /XR1` from plain
+DOS. Other custom profiles are separate packages. The menu below belongs to
+the retained fixed-profile installer.
 
 After the initial Setup installation, exit Windows fully and run:
 
