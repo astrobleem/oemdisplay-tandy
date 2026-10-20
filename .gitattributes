@@ -70,3 +70,9 @@ docs/rrect/** -text
 tools/WHEEL/WIN16/** -text
 downloads/experimental/WINWHL/** -text
 docs/pan/MINE/** -text
+
+# Qualified R1 source/archive bytes are immutable snapshots.
+tools/WINR1/** -text
+downloads/R1/** -text
+docs/RELEASES/RC7.MD -text
+.github/workflows/winr1.yml -text

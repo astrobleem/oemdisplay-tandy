@@ -1,0 +1,23 @@
+{
+  "source_archive_sha256": "98b6369f08257f047da1909a157c328a3f49fe223097f03d299d6684a7524f90",
+  "license": "MIT",
+  "runtime_files": {
+    "XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326",
+      "original_member": "distributions/WINXT/XTCSYS.FON"
+    },
+    "XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+      "original_member": "distributions/WINXT/XTCFIX.FON"
+    },
+    "XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "original_member": "distributions/WINXT/XTCOEM.FON"
+    }
+  },
+  "generator_license_member": "tools/XTFONTS/LICENSE",
+  "no_private_windows_font_bytes_included": true
+}

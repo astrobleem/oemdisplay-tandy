@@ -1,0 +1,46 @@
+{
+  "status": "PASS_HOST_REPRODUCTION",
+  "driver_sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0",
+  "driver_byte_identical": true,
+  "fonts": [
+    {
+      "file": "XTCSYS.FON",
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326",
+      "exact_rebuild": true
+    },
+    {
+      "file": "XTCFIX.FON",
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+      "exact_rebuild": true
+    },
+    {
+      "file": "XTCOEM.FON",
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "exact_rebuild": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "WHEEL-BUILD",
+      "returncode": 0
+    },
+    {
+      "name": "DECODER-HOST",
+      "returncode": 0
+    },
+    {
+      "name": "FONT-BUILD",
+      "returncode": 0
+    },
+    {
+      "name": "FONT-TEST",
+      "returncode": 0
+    }
+  ],
+  "native_or_physical_run": false,
+  "emulator_lease_acquired": false,
+  "CF_access": false
+}

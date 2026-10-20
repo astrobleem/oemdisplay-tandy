@@ -1,0 +1,21 @@
+format windows dll
+name WHEEL.DRV
+option modname=MOUSE
+option caseexact
+option start=LibMain
+option map=WHEEL.MAP
+option nodefaultlibs
+option stack=0
+option version=3.0
+segment type code preload fixed
+segment type data preload fixed
+file driver.obj,decoder.obj,timestamp.obj
+export INQUIRE.1=Inquire
+export ENABLE.2=Enable
+export DISABLE.3=Disable
+export MOUSEGETINTVECT.4=MouseGetIntVect
+export WEP.5
+export WHEELAPIVERSION.10=WheelApiVersion
+export WHEELREADDELTA.11=WheelReadDelta
+export WHEELLOSTPACKETS.12=WheelLostPackets
+export WHEELREADDELTAAGE.13=WheelReadDeltaAge
