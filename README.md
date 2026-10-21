@@ -91,6 +91,8 @@ That does not certify every mode or app. Windows 3.1 is not supported.
 Other machines use [separate driver packages](docs/PLATFORM.MD), including
 Video II, PC1512, PCjr, Plantronics, Yamaha and text-mode experiments.
 
+For separate source-only DOS and portable C89 Tandy components—SN76489-family PSG state, mode-9 graphics, bounded surfaces, input and cooperative timing—see [libtandy](https://github.com/astrobleem/libtandy). This Windows display driver does not depend on that library.
+
 The original wheel/font kit is MIT-licensed; adapted drivers and other
 components retain their own [notices](tools/XR1PACK/NOTICE.TXT).
 [Provenance](tools/XR1PACK/PROVENANCE.JSN) ·
