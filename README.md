@@ -5,6 +5,9 @@
 Windows XT brings color graphics, a compact Start-menu desktop, games and
 utilities to Windows 3.0 on the original Tandy 1000 EX/HX.
 
+**[Watch the Windows XT overview video](https://youtu.be/A1i9R6zSxHY)** — a look at the 16-color
+Windows 3.0 desktop.
+
 | Startup | Desktop | Shutdown |
 | --- | --- | --- |
 | <img src="docs/PROMO/XTWAVE.GIF" alt="Windows XT animated startup" width="260"> | <img src="examples/HILLS/HILL320.PNG" alt="Tandy Start with optional green hill wallpaper" width="260"> | <img src="docs/PROMO/XTEXIT.PNG" alt="Windows XT moon-and-stars shutdown screen" width="260"> |
