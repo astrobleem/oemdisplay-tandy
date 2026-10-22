@@ -12,6 +12,8 @@ include gdidefs.inc
 include display.inc
 .8086
 externFP DeviceBitmapBits
+externFP RLEInit
+externFP RLENextRow
 externFP BitBlt
 externFP GlobalAlloc
 externFP GlobalLock
@@ -38,6 +40,16 @@ local good
 good:
 endm
 
+; MASM 5.1 does not expand conditional branches beyond the 8086 short span.
+sd_branch macro condition,target
+local taken,not_taken
+    condition taken
+    jmp short not_taken
+taken:
+    jmp target
+not_taken:
+endm
+
 cProc DIBScreenBlt,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
     parmD lp_pdevice
     parmW ScrXorg
@@ -54,7 +66,11 @@ cProc DIBScreenBlt,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
     localW resultScans
     localW mapWidth
     localW mapHeight
+    localW nextSegment
     localW bitCount
+    localW compression
+    localW paletteColors
+    localW compressedFlag
     localW headerBytes
     localW ownStride
     localW allocationBytes
@@ -63,16 +79,24 @@ cProc DIBScreenBlt,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
     localW xSrc
     localW xCount
     localW rowCount
+    localW validateRowsLeft
     localW clippedTop
     localW clippedBottom
     localW bandScans
     localW skipScans
+    localW firstRleScan
+    localW lastRleScan
+    localW decodedScan
     localD dibPitch
     localD privateInfo
     localD rowBits
     localD rowDevice
     localD screenDevice
     localD sourceBits
+    localD rleSize
+    localD rleStatePtr
+    localD rleRowBits
+    localV rleState,36
     localD nullPointer
     localD copyRop
     localW zeroWord
@@ -84,9 +108,13 @@ cBegin
     xor ax,ax
     mov heapHandle,ax
     mov resultScans,ax
-    mov zeroWord,ax
-    mov word ptr nullPointer,ax
-    mov word ptr nullPointer+2,ax
+    mov compressedFlag,ax
+    mov ax,__NEXTSEG
+    mov nextSegment,ax
+    xor bx,bx
+    mov zeroWord,bx
+    mov word ptr nullPointer,bx
+    mov word ptr nullPointer+2,bx
     mov oneWord,1
     mov word ptr copyRop,0020h
     mov word ptr copyRop+2,00cch
@@ -114,9 +142,28 @@ cBegin
     sd_require je
     cmp word ptr es:[di].biSize+2,0
     sd_require je
-    mov ax,word ptr es:[di].biCompression
-    or ax,word ptr es:[di].biCompression+2
+    mov ax,word ptr es:[di].biCompression+2
+    or ax,ax
     sd_require jz
+    mov ax,word ptr es:[di].biCompression
+    mov compression,ax
+    or ax,ax
+    jz sd_compression_ok
+    cmp ax,1
+    je sd_rle8_format
+    cmp ax,2
+    sd_require je
+    mov ax,1
+    mov compressedFlag,ax
+    cmp es:[di].biBitCount,4
+    sd_require je
+    jmp short sd_compression_ok
+sd_rle8_format:
+    mov ax,1
+    mov compressedFlag,ax
+    cmp es:[di].biBitCount,8
+    sd_require je
+sd_compression_ok:
     cmp es:[di].biPlanes,1
     sd_require je
     mov ax,word ptr es:[di].biWidth
@@ -162,6 +209,7 @@ sd_format:
 sd_palette_default:
     ; Missing indexed colors are zero-filled and normalized below, including
     ; the second entry when a 1-bit DIB supplies only one palette color.
+    mov paletteColors,bx
     shl bx,1
     shl bx,1
     add bx,40
@@ -174,6 +222,16 @@ sd_palette_default:
     add ax,__NEXTSEG
     sd_require jnc
 sd_palette_address:
+    cmp compressedFlag,0
+    je sd_palette_size_ready
+    les di,lp_bi
+    mov ax,word ptr es:[di].biSizeImage
+    mov dx,word ptr es:[di].biSizeImage+2
+    mov word ptr rleSize,ax
+    mov word ptr rleSize+2,dx
+    or ax,dx
+    sd_require jnz
+sd_palette_size_ready:
     mov ax,StartScan
     cmp ax,mapHeight
     sd_require jb
@@ -275,10 +333,22 @@ sd_ycount:
     mov rowCount,cx
     dec bx
     mov yDst,bx
+    mov ax,StartScan
+    add ax,skipScans
+    sd_require jnc
+    mov firstRleScan,ax
+    add ax,rowCount
+    sd_require jnc
+    mov lastRleScan,ax
 
     ; DWORD-aligned source pitch, retaining both words for wide 24-bit DIBs.
     mov ax,mapWidth
-    mul bitCount
+    mov cx,bitCount
+    cmp compressedFlag,0
+    je sd_pitch_bits_ready
+    mov cx,8
+sd_pitch_bits_ready:
+    mul cx
     add ax,31
     adc dx,0
     shr dx,1
@@ -290,6 +360,8 @@ sd_ycount:
     and ax,0fffch
     mov word ptr dibPitch,ax
     mov word ptr dibPitch+2,dx
+    cmp compressedFlag,0
+    jne sd_preflight_rle
     ; source offset of the first visible scan = skipScans * pitch.
     mov cx,skipScans
     call sd_multiply_pitch
@@ -323,6 +395,26 @@ sd_ycount:
     sd_require jz
     add ax,word ptr sourceBits+2
     sd_require jnc
+    jmp short sd_source_ready
+sd_preflight_rle:
+    lea ax,rleState
+    mov word ptr rleStatePtr,ax
+    mov word ptr rleStatePtr+2,ss
+    cCall RLEInit,<rleStatePtr,lp_bits,rleSize,mapWidth,mapHeight,bitCount,compression,nextSegment,paletteColors>
+    cmp ax,1
+    sd_require je
+    mov ax,mapHeight
+    mov validateRowsLeft,ax
+sd_validate_rle_rows:
+    cCall RLENextRow,<rleStatePtr,nullPointer>
+    cmp ax,1
+    sd_require je
+    dec validateRowsLeft
+    jnz sd_validate_rle_rows
+    cCall RLENextRow,<rleStatePtr,nullPointer>
+    cmp ax,2
+    sd_require je
+sd_source_ready:
 
     ; WORD-aligned per-plane row <=4096 bytes, four planes <=16384.
     mov ax,mapWidth
@@ -335,6 +427,12 @@ sd_ycount:
     shl ax,1
     shl ax,1
     add ax,1064
+    sd_require jnc
+    cmp compressedFlag,0
+    je sd_allocation_size_ready
+    add ax,word ptr dibPitch
+    sd_require jnc
+sd_allocation_size_ready:
     mov allocationBytes,ax
     xor ax,ax
     mov bx,0040h                  ; GMEM_FIXED | GMEM_ZEROINIT
@@ -351,7 +449,18 @@ sd_ycount:
     mov bx,ax
     add bx,allocationBytes
     sd_require jnc
+    mov ax,word ptr privateInfo
     add ax,1064
+    sd_require jnc
+    mov dx,word ptr privateInfo+2
+    mov word ptr rleRowBits,ax
+    mov word ptr rleRowBits+2,dx
+    cmp compressedFlag,0
+    je sd_row_device_pointer
+    add ax,word ptr dibPitch
+    adc dx,word ptr dibPitch+2
+    sd_require jnc
+sd_row_device_pointer:
     mov word ptr rowBits,ax
     mov word ptr rowBits+2,dx
 
@@ -374,6 +483,12 @@ sd_info_no_wrap:
     les di,privateInfo
     mov word ptr es:[di].biHeight,1
     mov word ptr es:[di].biHeight+2,0
+    cmp compressedFlag,0
+    je sd_private_compression_ready
+    mov word ptr es:[di].biCompression,0
+    mov word ptr es:[di].biCompression+2,0
+    mov word ptr es:[di].biBitCount,8
+sd_private_compression_ready:
     ; The converter's translation table is stack storage. Initialize all
     ; indexed entries, including missing palette entries (zero-filled black),
     ; so an out-of-range input index cannot read stale stack translations.
@@ -388,7 +503,16 @@ sd_info_no_wrap:
     je sd_private_colors
     xor ax,ax
 sd_private_colors:
+    cmp compressedFlag,0
+    je sd_private_color_count
+    mov ax,paletteColors
+    jmp short sd_private_color_store
+sd_private_color_count:
     mov word ptr es:[di].biClrUsed,ax
+    jmp short sd_private_image_size
+sd_private_color_store:
+    mov word ptr es:[di].biClrUsed,ax
+sd_private_image_size:
     mov ax,word ptr dibPitch
     mov word ptr es:[di].biSizeImage,ax
     mov ax,word ptr dibPitch+2
@@ -417,18 +541,20 @@ sd_private_colors:
     mov word ptr screenDevice,offset shadow_device
     mov word ptr screenDevice+2,ds
 
+    cmp compressedFlag,0
+    sd_branch jne,sd_rle_draw_start
 sd_next_row:
     cCall DeviceBitmapBits,<rowDevice,zeroWord,zeroWord,oneWord,sourceBits,privateInfo,lpDrawMode,dwColorInfo>
     cmp ax,1
-    jne sd_rows_done
+    sd_branch jne,sd_rows_done
     cCall BitBlt,<screenDevice,xDst,yDst,rowDevice,xSrc,zeroWord,xCount,oneWord,copyRop,nullPointer,lpDrawMode>
     ; All arguments describe fully clipped memory surfaces; preserve the
     ; original engine's return semantics and count only successful rows.
     or ax,ax
-    jz sd_rows_done
+    sd_branch jz,sd_rows_done
     inc resultScans
     dec rowCount
-    jz sd_rows_done
+    sd_branch jz,sd_rows_done
     dec yDst
     mov ax,word ptr dibPitch
     mov dx,word ptr dibPitch+2
@@ -439,6 +565,38 @@ sd_next_row:
     mul bx
     add word ptr sourceBits+2,ax
     jmp sd_next_row
+
+sd_rle_draw_start:
+    cmp rowCount,0
+    sd_branch je,sd_rows_done
+    cCall RLEInit,<rleStatePtr,lp_bits,rleSize,mapWidth,mapHeight,bitCount,compression,nextSegment,paletteColors>
+    cmp ax,1
+    sd_branch jne,sd_rows_done
+sd_rle_next_row:
+    cCall RLENextRow,<rleStatePtr,rleRowBits>
+    cmp ax,1
+    sd_branch jne,sd_rows_done
+    mov decodedScan,dx
+    mov ax,decodedScan
+    cmp ax,firstRleScan
+    jb sd_rle_next_row
+    cmp ax,lastRleScan
+    jae sd_rle_next_row
+    mov ax,word ptr rleRowBits
+    mov word ptr sourceBits,ax
+    mov ax,word ptr rleRowBits+2
+    mov word ptr sourceBits+2,ax
+    cCall DeviceBitmapBits,<rowDevice,zeroWord,zeroWord,oneWord,sourceBits,privateInfo,lpDrawMode,dwColorInfo>
+    cmp ax,1
+    jne sd_rows_done
+    cCall BitBlt,<screenDevice,xDst,yDst,rowDevice,xSrc,zeroWord,xCount,oneWord,copyRop,nullPointer,lpDrawMode>
+    or ax,ax
+    jz sd_rows_done
+    inc resultScans
+    dec rowCount
+    jz sd_rows_done
+    dec yDst
+    jmp sd_rle_next_row
 sd_rows_done:
     cmp resultScans,0
     je sd_cleanup

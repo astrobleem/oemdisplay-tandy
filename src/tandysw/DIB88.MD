@@ -25,14 +25,11 @@ private, and freed on every exit:1064 bytes for header/palette plus at most
 16384 bytes for one scan-interleaved four-plane row. The caller's header and
 palette are never rewritten. Pointer arithmetic includes huge-segment carries.
 
-Supported native screen input is a 40-byte BITMAPINFOHEADER, positive dimensions
-up to 32767 subject to checked stride/offset bounds, and BI_RGB depths1/4/8/24.
-Nonzero compression returns zero before conversion or output-header mutation.
-RLE, negative-height top-down DIBs, and extended headers are not supported by
-the new screen entry. Short indexed palettes are padded black in private
-storage; optional24-bit reference palettes do not affect direct RGB pixels.
-These limits do not assert exhaustive malformed-input validation in inherited
-DDK memory-conversion routines.
+At the Candidate05 revision documented here, native screen input was a 40-byte
+BITMAPINFOHEADER, positive dimensions up to 32767 subject to checked
+stride/offset bounds, and BI_RGB depths 1/4/8/24. That revision rejected
+nonzero compression; its other limits do not assert exhaustive malformed-input
+validation in inherited DDK memory-conversion routines.
 
 Source-Y is bottom-left, as specified by the Windows 3 SDK. The supplied band
 starts at StartScan, not at the full DIB origin. See ORACLE.MD for the original
@@ -71,3 +68,32 @@ Paintbrush interactions can take 10-20seconds under this test configuration.
 No performance optimization is part of the DIB correction.
 
 ![Reopened native Paintbrush bitmap with sixteen colors and cyan lettering](../../docs/tandy-dib-roundtrip.png)
+
+
+## Current staged extension: BI_RLE4 and BI_RLE8
+
+The run41 candidate adds matching-depth BI_RLE4 (4bpp) and BI_RLE8 (8bpp)
+input to the actual Windows 3.0 `DeviceBitmapBits` / `SetDIBits` memory path
+and `DIBScreenBlt` / `SetDIBitsToDevice` shadow-backed screen path. The parser
+uses nonzero `biSizeImage` as its hard input bound because the 40-byte Windows
+3.0 DIB ABI has no separate compressed-buffer length. It validates the whole
+stream through EOB before writes, then streams one expanded scanline at a time;
+there is no whole-image allocation. BI_RLE4 alternates high/low nibbles in
+encoded runs. Both formats handle absolute runs, word padding, EOL, EOB and
+delta, with clipping, palette translation, and bottom-up scan order. Unsupported
+compression/depth pairs, truncated input and malformed streams fail closed.
+
+`RLE88.ASM` is the shared bounded decoder, `PORTDIB.PY` connects it to the
+existing DIB entrypoints, and `SDIB88.ASM` retains the screen bridge's shadow,
+flush, pan and cursor contracts. The 8086 build audit checks the emitted
+listing and ABI helper. `RLETEST.PY` compares fixtures against a separate
+stream oracle and Pillow's uncompressed BMP path; the Win3 matrix and full-frame
+checker sources are `MODETEST.C` and `MODECHK.PY`.
+
+Qualification is recorded in `docs/RLE-RUN41-QUALIFICATION.md`. Run41 exercised
+an emulator's original 8088 core in Windows 3.0 real mode, at logical
+640x256x16 with a 320x200 view and 640 KB. It is not physical-hardware, other
+profile, default-payload, or performance qualification. The screen capture for
+case146 is a pre-call case-start image; pixel proof is the saved post-call
+framebuffer and full-frame checker. The callback-entry observer was unarmed and
+is inconclusive.
