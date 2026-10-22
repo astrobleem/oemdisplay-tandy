@@ -1,0 +1,35 @@
+XY OVERVIEW / RUN 08 ACCEPTANCE STATUS
+
+SOURCE AND BUILD
+The source files here contain the reviewed R17 XYCTL and R19 EDGEQA revisions.
+Their SHA-256 hashes match the tested source candidates. Fresh Open Watcom 1.9
+builds completed with zero warnings/errors. XYCTL.EXE SHA-256
+b1456c14bee9bc3abb267f3d9c87b710180b0ea41935b70036e65432ee56a4f9 matches
+the tested R17 binary. EDGEQA-R19.EXE SHA-256
+fea3b349145aa90290e5aa515cec68f235a997cb45180cc4cdf9c64452b13ea3 matches
+the tested R19 binary. See INTEGRATION-BUILD-RESULT.JSON.
+
+RUNTIME ASSERTIONS ACCEPTED
+The bounded Run 08 focused guest test used accepted HPXY driver hash
+9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275 and the
+accepted startup chain. Scripted Win16 messages passed map geometry, clamp and
+alignment; drag release, cancel and external-pan cancellation; non-home
+recovery; preservation skips; recovery-close; restart/log append; and shutdown
+state assertions. Recovery guarantees titlebar reachability in Home, not full
+window visibility. Recovery is manual and does not relocate windows during
+ordinary panning.
+
+VISUAL REVIEW
+Visual review accepted the settled Drag (X=80,Y=16), Recovery-Close, and DOS
+shutdown frames. The Run 08 Home frame did not show a usable overview, so it
+does not visually prove Home. The guest query and markers passed; usable Home
+visual evidence remains outstanding. The screenshots remain in private test
+evidence and are not part of this source PR.
+
+NOT QUALIFIED
+Input was scripted Win16 messages, not physical mouse or raw keyboard input.
+Keyboard accessibility was NOT RUN in focused mode. Unsupported-driver
+behavior and the overview on physical Tandy 1000EX hardware were NOT RUN. The
+Run 08 emulator used a Tandy 1000 HX surrogate. The unrelated legacy modal
+dialog test was explicitly skipped. No new emulator run was made during this
+integration step. No installed driver or package was changed.

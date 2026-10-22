@@ -1,0 +1,56 @@
+{
+  "status": "PASS_INTEGRATED_REBUILD_EXACT_CANDIDATE_IDENTITIES",
+  "date_utc": "2026-10-22",
+  "compiler": "Open Watcom C16 1.9",
+  "linker": "Open Watcom Linker 1.9",
+  "build_directory": "fresh external build directory (not included in this source set)",
+  "source_integration": {
+    "source_directory": "experiments/XYOVERVIEW",
+    "XYCTL.C": "a7ac274a2248518954d02376a917afcd92ccfd5f9fc11cfa0f0d3149fc4df6ef",
+    "EDGEQA.C": "b478b8aac2274e7549931260d90c8b8813649acc7f64e99eb53a090c7b8fee9a",
+    "line_endings": "CRLF preserved",
+    "scope": "new experimental source copy; no existing helper, accepted driver, or package overwritten"
+  },
+  "artifacts": [
+    {
+      "source": "XYCTL.C",
+      "source_sha256": "a7ac274a2248518954d02376a917afcd92ccfd5f9fc11cfa0f0d3149fc4df6ef",
+      "built_executable": "XYCTL.EXE",
+      "executable_bytes": 12884,
+      "executable_sha256": "b1456c14bee9bc3abb267f3d9c87b710180b0ea41935b70036e65432ee56a4f9",
+      "tested_candidate_executable_sha256": "b1456c14bee9bc3abb267f3d9c87b710180b0ea41935b70036e65432ee56a4f9",
+      "byte_identical_to_tested_candidate": true,
+      "command": "WCC -zW -0 -ms -IC:\\WATCOM\\H -IC:\\WATCOM\\H\\WIN XYCTL.C; WLINK @XYCTL.LNK",
+      "build_log_sha256": {
+        "XYCTL-WCC.log": "4fe16fe6d5691ecf8e41521b6d26e6cd6caca364b383167192bc3cc67e4d20c9",
+        "XYCTL-WLINK.log": "db974f9cc0c874ca2ae87599ce1340136cd46be078a33508afcdc677152718aa"
+      }
+    },
+    {
+      "source": "EDGEQA.C",
+      "source_sha256": "b478b8aac2274e7549931260d90c8b8813649acc7f64e99eb53a090c7b8fee9a",
+      "built_executable": "EDGEQA-R19.EXE",
+      "executable_bytes": 21754,
+      "executable_sha256": "fea3b349145aa90290e5aa515cec68f235a997cb45180cc4cdf9c64452b13ea3",
+      "tested_candidate_executable_sha256": "fea3b349145aa90290e5aa515cec68f235a997cb45180cc4cdf9c64452b13ea3",
+      "byte_identical_to_tested_candidate": true,
+      "command": "WCC -zW -0 -ms -od -IC:\\WATCOM\\H -IC:\\WATCOM\\H\\WIN EDGEQA-OD.C; WLINK @EDGEQA-R19.LNK",
+      "build_log_sha256": {
+        "EDGEQA-WCC.log": "04ccc780b095f0d4006742a526ce306bed2a62214b632b80480dab7b5c6bac48",
+        "EDGEQA-WLINK.log": "db974f9cc0c874ca2ae87599ce1340136cd46be078a33508afcdc677152718aa"
+      }
+    }
+  ],
+  "runtime_reference": {
+    "run": "Run 08 focused guest test",
+    "accepted_driver_sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275",
+    "new_emulator_run": false,
+    "accepted_scope": "see RUN08-STATUS.TXT"
+  },
+  "excluded_from_source_bundle": [
+    "DISK.IMG",
+    "XYCTL.EXE",
+    "EDGEQA-R19.EXE",
+    "all other executable and object files"
+  ]
+}
