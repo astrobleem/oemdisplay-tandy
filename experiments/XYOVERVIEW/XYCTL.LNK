@@ -1,0 +1,4 @@
+system windows
+name XYCTL.EXE
+option map=XYCTL.MAP
+file XYCTL.obj

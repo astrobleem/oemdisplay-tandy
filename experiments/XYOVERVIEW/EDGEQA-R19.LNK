@@ -1,0 +1,4 @@
+system windows
+name EDGEQA-R19.EXE
+option map=EDGEQA-R19.MAP
+file EDGEQA-OD.obj

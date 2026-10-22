@@ -83,3 +83,5 @@ docs/RELEASES/RC8.MD -text
 .github/workflows/xr1pack.yml -text
 
 docs/SHOWCASE.MD -text
+# Preserve exact Watcom source and review evidence bytes.
+experiments/XYOVERVIEW/** -text
