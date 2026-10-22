@@ -100,6 +100,8 @@ handler, but the test assumed 1:1 mickey-to-cursor scaling. The observed
 cursor moved 48x16 pixels for 24x8 mickeys, so the expected-pan assertion
 failed. The later helper-close phase timed out before a complete restart and
 shutdown result. These observations do not establish a map defect. Raw-input
-qualification remains incomplete; keyboard input and physical Tandy 1000EX
-hardware were not qualified. The unrelated legacy modal-dialog test was
+Keyboard Home and Ctrl+Alt+R assertions passed in the incomplete R2 run, but
+the raw serial drag target and complete close/restart lifecycle did not.
+Overall raw-input qualification remains incomplete. Physical Tandy 1000EX
+hardware was not qualified. The unrelated legacy modal-dialog test was
 skipped in focused mode. No installed driver or release package was changed.
