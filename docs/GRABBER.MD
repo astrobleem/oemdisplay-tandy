@@ -1,86 +1,110 @@
-# Clipboard and DOS-program grabber, Tandy 320x200x16 (test candidate)
+# Clipboard and DOS programs, Tandy 320x200x16 (test candidate)
 
-Status: emulator evidence only (86Box 6.0, Tandy 1000 HX machine; the
+Status: emulator evidence only (86Box 6.0, Tandy 1000 HX machine, the
 Windows XT `TR53216.DRV` unchanged). Not run on real hardware. The shipped
 Windows XT disk, drivers, RESERVE and accepted hashes are unchanged; the
-candidate is a separate Setup packet (`src/tgrab/TGPACK.PY`).
+candidate is a separate packet (`src/tgrab/TGPACK.PY`).
 
 ## Which component does what
 
-| Operation | Component | Result |
+| Operation | Components | Status |
 | --- | --- | --- |
-| Print Screen in Windows (whole screen to the Clipboard) | USER + display driver (`BitBlt` screen to a device bitmap) | works with the shipped `TR53216.DRV`, no change |
-| Paintbrush Copy / Paste / Paste of a screen capture | Paintbrush + display driver | works, no change |
-| Switching away from a full-screen DOS program and back | WINOLDAP + grabber (`SaveScreen` / `RestoreScreen`) | needed a grabber for the Tandy modes: `TANDYGR.GR2` |
-| Print Screen inside a full-screen DOS program | WINOLDAP + grabber (`GetInfo`, `GetBlock`) | Windows 3.0 real mode copies **text screens only** |
+| Print Screen in Windows | USER + display driver | works with the shipped `TR53216.DRV`, no change |
+| Paintbrush Copy / Paste | Paintbrush + display driver | works, no change |
+| Switching away from a full-screen DOS program and back | WINOLDAP + grabber Save/RestoreScreen | **new grabber `TANDYGR.GR2`** (CGA.GR2 scrambles modes 8-0Ah) |
+| Print Screen in a DOS text program | WINOLDAP + grabber GetBlock | works; with RESERVE it hung Windows: **fixed by `TGEVEN.COM`** |
+| Print Screen in a DOS 16-colour graphics program (modes 8, 9) | grabber GetInfo/GetBlock + Windows-side consumer | **new**: `TANDYGR.GR2` writes a BMP, **`TGCLIP.EXE`** puts it on the Clipboard as a bitmap |
 
-The Tandy keyboard has no SysReq key: Print Screen is **Shift + PRINT**
-(scan code 37h with Shift), which both Windows and WINOLDAP accept.
+Print Screen on the Tandy keyboard is **Shift + PRINT** (scan code 37h
+with Shift), which Windows and WINOLDAP both accept.
 
-## TANDYGR.GR2
+## DOS graphics screens to the Clipboard
 
-Built by `src/tgrab/BUILDTG.PY` from the Windows 3.0 DDK 286 CGA grabber
-(pinned DDK view, nothing committed) with anchored edits, plus an unmodified
-control build. The edits: mode from the BIOS data area (no light-pen
-measurement), InfoContext entries for Tandy modes 8, 9, 0Ah, a 32 KB
-graphics save area, refusal of unsupported modes (7, above 0Ah), and a mode
-re-read before every grab. Size 2,255 bytes.
+The DDK grabber interface does describe graphics grabs (`GetBlock` with
+`FMT_OTHER`, `GT_NEWBITMAP` records). The consumer in Windows 3.0 **real
+mode** (`WINOLDAP.MOD`, the only mode an 8088 runs) does not use them:
 
-## Evidence (86Box Tandy 1000 HX, src/tgrab/TGSESS.PY; docs/tgrab)
+- its DOS-side grab routine continues only when the grabber's `GetInfo`
+  returns 1 (text screen);
+- the Windows side reads the record from its grab file and calls
+  `SetClipboardData` with `CF_OEMTEXT` for text; for any other record type
+  it passes a pointer value as the format; its only GDI import is ordinal
+  154, so it cannot create a bitmap.
 
-Run `sA2` (TR53216.DRV, RESERVE, TANDYGR.GR2): 9/9 checks pass
-(`docs/tgrab/sA2.JSN`, frames `A_*.png`).
+So the capture is implemented in two parts of our own, without changing
+WINOLDAP:
 
-- TGIMG.BMP (64x40, all 16 colours, asymmetric marker) opens in Paintbrush,
-  all 2,560 pixels exact.
-- Pick tool, Edit > Copy, File > New, Edit > Paste: anchored picture exact.
-  Save As PASTE.BMP: the 64x40 picture at (0,0) with the original RGB
-  colours, the rest of the 320x170 canvas white (`PASTE.BMP`); reopened:
-  exact.
-- Shift+PRINT: the Clipboard (saved by CLIPBRD as SCREEN.CLP) holds a
-  320x200, 4-plane device bitmap equal to the screen in every pixel except
-  the parked pointer's corner.
-- That capture pasted into a new Paintbrush image and saved: pixel-exact in
-  the part Paintbrush pastes (its drawing area at 320x200), the rest white.
-- TGPAT.COM in BIOS mode 9; Alt+Tab to Windows and back: all 64,000 pixels
-  restored. Shift+PRINT in mode 9 leaves the Clipboard bitmap unchanged.
+1. **`TANDYGR.GR2`**: `GetInfo` reports modes 8 and 9 as grabbable.
+   `GetBlock` (called by WINOLDAP with DOS idle, just before it writes its
+   own file) writes the screen as a 4-bit BMP: rows bottom-up, each Tandy
+   IRGB nibble translated to the Windows device index (bits 0 and 2
+   swapped), palette = the display driver's colour table. The file goes to
+   `%TEMP%\TANDYGR.BMP` (else the root of the current drive), and WINOLDAP
+   gets one text line: `TANDYGR <path>`.
+2. **`TGCLIP.EXE`** (Windows, C, 5 KB): a Clipboard viewer. When that line
+   arrives it reads the BMP, `CreateDIBitmap`s a device bitmap, replaces the
+   Clipboard contents with it (`CF_BITMAP`) and deletes the file. Run once,
+   it adds itself to WIN.INI `load=`.
 
-Run `sB` (same, retail CGA.GR2): the mode-9 program comes back in a CGA
-4-colour mode with a scrambled picture (`B_dos9_after_cgagr2.png`).
+## The text-grab hang with RESERVE, and TGEVEN
 
-Run `sC` (TANDYGR.GR2, RESERVE) text grab: Windows stops answering
-(`C_text_after_grab_reserve.png`, limitation 2). Control without RESERVE
-(Microsoft CGA.DRV, TANDYGR.GR2, otherwise the same machine): the Clipboard
-holds the DOS text (`D_text_clip_noreserve_cgadrv.png`). TR53216.DRV itself
-does not start without RESERVE, so that control cannot use it.
+KERNEL places the global heap's end sentinel at `(end - 1) AND 0FFFEh`
+(GlobalInit, `KERNEL.EXE` code segment 1 offset B42Fh). RESERVE puts its
+block header at 97FFh, so the free block Windows takes ends at 97FFh (odd)
+and the sentinel is the block's **last paragraph** (97FEh); without RESERVE
+the end is 9C00h and the sentinel is 9BFEh. A full-screen DOS program run
+from Windows gets the memory up to that end, and WINOLDAP does not put the
+sentinel paragraph back (DOSBox-X memory dumps: valid `Z` sentinel at
+97FEh on the desktop, zeros after a DOS session). The next walk of the
+heap that reaches the end loops for ever; the first one after a text grab
+is the Clipboard allocation, so Windows stopped answering.
 
-Install: the packet's OEMSETUP.INF gives one Setup choice. The tested
-installation has exactly the result of that choice (SYSTEM.INI
-`286grabber=TANDYGR.GR2`, the file in WINDOWS\SYSTEM, the unchanged
-driver). Choosing it through Windows Setup inside Windows was not completed
-in the emulator: at 320x200 Setup's display list cannot be opened from the
-keyboard or mouse (the dialog is wider than the screen).
+Isolating it: a generic TSR that allocates a high 16 KB block the same way
+reproduces the hang; a low block of the same size does not; a 1-paragraph
+guard (end stays odd) does not help; a 2-paragraph guard (end even) fixes
+it. `TGEVEN.COM` (run right after RESERVE) allocates exactly that guard at
+the top of the largest free block when its end is odd, keeps only its PSP
+resident (304 bytes in all), never edits an MCB, and does nothing when the
+end is already even. RESERVE itself is unchanged. The packet's
+`TGSTART.BAT` is the Windows XT launcher with that one step added.
+
+## Evidence (86Box Tandy 1000 HX, `src/tgrab/TGSESS.PY`, `docs/tgrab`)
+
+Run `sG` (TR53216.DRV, RESERVE + TGEVEN, TANDYGR.GR2, TGCLIP): every check
+in one session, see `sG.JSN` and the `G_*.png` frames.
+
+- Self-test (host): the BMP colour check passes the original picture and
+  fails a changed palette entry and a changed pixel. All BMP checks compare
+  each pixel's colour with the reference palette (`TGIMG.WINPAL`), not
+  with the saved file's own palette.
+- TGIMG.BMP (64x40, all 16 colours, asymmetric marker) shown exactly;
+  Pick, Copy, New, Paste: exact; saved PASTE.BMP: exact colours, rest
+  white; reopened: exact.
+- Shift+PRINT in Windows: Clipboard bitmap 320x200, 4 planes, equal to the
+  screen; pasted and saved: exact in the part Paintbrush pastes.
+- TGPAT.COM (mode 9): exact; Alt+Tab away and back: all 64,000 pixels.
+- Shift+PRINT in mode 9: the Clipboard holds a 320x200 bitmap equal to the
+  DOS screen in every pixel (saved by CLIPBRD as DOS9.CLP); pasted into
+  Paintbrush and saved as DOS9.BMP: the picture at (128,80) in the reference
+  colours, black around it.
+- Text: COMMAND.COM, ECHO line, Shift+PRINT, EXIT: Windows answers and the
+  Clipboard holds the line (TEXT.CLP).
+
+Controls: `sF` (same, **without** TGEVEN): the text check fails (Windows
+stops answering). `sB` (retail CGA.GR2): the mode-9 program comes back
+scrambled.
 
 ## Limitations
 
-1. **No DOS graphics screens on the Clipboard in Windows 3.0 real mode.**
-   WINOLDAP's grab code continues only when the grabber's `GetInfo` returns
-   1 (text screen), and the module imports no GDI bitmap-creation function
-   (its only GDI import is ordinal 154), so it can only place OEM text on the
-   Clipboard. No grabber change can add graphics capture; it would need a
-   different WINOLDAP (standard/386 mode needs a 286/386).
-2. **Text capture from a DOS program fails while RESERVE is loaded.** After
-   Shift+PRINT in a text-mode DOS program and returning to Windows, Windows
-   stops answering input (hourglass; keys are consumed by a DOS console
-   read). Reproduced with TR53216 and with Microsoft's CGA.DRV, with
-   CGA.GR2 and TANDYGR.GR2, in 86Box and DOSBox-X. Without RESERVE, or
-   with an equal 18 KB block resident low in memory instead, the same grab
-   works and the Clipboard holds the text. The trigger is RESERVE's
-   allocated block at the top of the DOS arena; the exact failing operation
-   inside WINOLDAP is not yet identified. Avoid DOS text capture with the
-   Tandy drivers until this is fixed.
-3. Palette changes made by a DOS program through the Tandy palette
-   registers, or CRT page changes outside the BIOS, are not saved; the BIOS
-   mode set on restore gives the default palette and pages.
-4. The 32 KB save area costs 16 KB more memory per switched-away graphics
-   DOS program than CGA.GR2.
+1. Graphics capture covers the 16-colour modes 8 and 9. CGA modes 4-6 and
+   Tandy 0Ah keep the DDK behaviour (not copied).
+2. Paintbrush pastes only what fits its drawing window (262x126 at
+   320x200); the Clipboard bitmap itself is the full 320x200.
+3. Without TGCLIP running, a mode-8/9 Print Screen leaves the text line
+   `TANDYGR <path>` on the Clipboard and the BMP in TEMP.
+4. TGEVEN must run after RESERVE and before Windows (TGSTART.BAT); the
+   shipped TSTART.BAT does not run it.
+5. A DOS program's own Tandy palette or CRT-page changes made outside the
+   BIOS are not saved or captured (default palette assumed).
+6. The 32 KB save area costs 16 KB more than CGA.GR2 per switched-away
+   graphics program.
