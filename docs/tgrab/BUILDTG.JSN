@@ -1,0 +1,25 @@
+{
+ "tandygr": {
+  "file": "TANDYGR.GR2",
+  "bytes": 2255,
+  "sha256": "37d3dd259e8b932ae9168048b5037a8b768f3a85c10ad0829946ea42ae4bf566"
+ },
+ "control": {
+  "file": "CONTROL.GR2",
+  "bytes": 2106,
+  "sha256": "310988d7963017988300479aea0b504febb7e4eeb71caff61c5abdc2ab7afb0f",
+  "what": "unmodified DDK 286 CGA grabber, same build"
+ },
+ "patched_sources_sha256": {
+  "CGAHERC/CGA/CGA.ASM": "b0bf82e2ac488c7e5a8ad7c13d2e50af43ce0fae94addca9ff43e43e4cd59818",
+  "CGAHERC/GSMODE.ASM": "7e64ba1ffd2a345548122f6ac504f235f4096bd911ec5983bfc5ef28cd466093",
+  "CGAHERC/SRSCR.ASM": "f7040952fe82f12a73a71e8d2ca9d8a160b19fccf366284311ebd29da6669c7a",
+  "BLOCK.ASM": "0fd565eb7728e83e74caa5ad48e9ac01003e4a370b5a488332daef8bff04b8d3"
+ },
+ "edits": 11,
+ "retail_cga_gr2": {
+  "bytes": 2104,
+  "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+  "equals_control": false
+ }
+}

@@ -1,0 +1,120 @@
+{
+ "steps": [
+  {
+   "step": "Paintbrush opens TGIMG.BMP",
+   "t": 1792840890.6
+  },
+  {
+   "step": "Pick tool selects the picture; Edit > Copy",
+   "t": 1792841050.2
+  },
+  {
+   "step": "File > New, Edit > Paste",
+   "t": 1792841106.7
+  },
+  {
+   "step": "File > Save As PASTE.BMP",
+   "t": 1792841225.8
+  },
+  {
+   "step": "close, reopen PASTE.BMP",
+   "t": 1792841308.4
+  },
+  {
+   "step": "Shift+PRINT: Windows screen to the Clipboard",
+   "t": 1792841488.4
+  },
+  {
+   "step": "Clipboard: File > Save As C:\\SCREEN.CLP",
+   "t": 1792841531.6
+  },
+  {
+   "step": "Paintbrush: File > New, Edit > Paste the screen, Save As SCREEN.BMP",
+   "t": 1792841714.8
+  },
+  {
+   "step": "TGPAT.COM (BIOS mode 9) from File > Run",
+   "t": 1792842038.6
+  },
+  {
+   "step": "Alt+Tab to Windows",
+   "t": 1792842096.5
+  },
+  {
+   "step": "Alt+Tab back to TGPAT",
+   "t": 1792842159.5
+  },
+  {
+   "step": "Shift+PRINT in mode 9, then Space ends TGPAT",
+   "t": 1792842222.6
+  }
+ ],
+ "checks": [
+  {
+   "mismatches": 0,
+   "at": [
+    36,
+    48
+   ],
+   "check": "TGIMG.BMP shown exactly at the canvas origin (all 2,560 pixels, every colour)",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "pasted picture anchored at the canvas origin, all pixels and colours exact",
+   "ok": true
+  },
+  {
+   "file": "PASTE.BMP",
+   "width": 320,
+   "height": 170,
+   "picture_mismatches": 0,
+   "rest_white": true,
+   "check": "PASTE.BMP: the 64x40 picture at (0,0) with exactly the original colours, the rest white",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "reopened PASTE.BMP shows the picture exactly",
+   "ok": true
+  },
+  {
+   "width": 320,
+   "height": 200,
+   "planes": 4,
+   "bits": 1,
+   "mismatches": 0,
+   "check": "Clipboard bitmap is 320x200, 4 planes x 1 bit, equal to the screen (pointer corner excluded)",
+   "ok": true
+  },
+  {
+   "bmp_size": [
+    320,
+    170
+   ],
+   "exact_region": [
+    262,
+    126
+   ],
+   "rest_white": true,
+   "check": "SCREEN.BMP: the pasted screen equals the captured screen pixel for pixel in the part Paintbrush pastes (its drawing area); the rest of the canvas stays white",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "TGPAT mode-9 picture on screen exactly",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "after switching away and back the mode-9 screen is restored exactly (64,000 pixels)",
+   "ok": true
+  },
+  {
+   "compared": "CF_BITMAP size, planes and every pixel (the .CLP headers hold run-time handles)",
+   "check": "a mode-9 Print Screen leaves the Clipboard as it was (Windows 3.0 real mode grabs text screens only)",
+   "ok": true
+  }
+ ],
+ "verdict": "PASS"
+}

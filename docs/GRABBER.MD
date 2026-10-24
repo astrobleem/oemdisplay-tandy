@@ -26,27 +26,40 @@ measurement), InfoContext entries for Tandy modes 8, 9, 0Ah, a 32 KB
 graphics save area, refusal of unsupported modes (7, above 0Ah), and a mode
 re-read before every grab. Size 2,255 bytes.
 
-## Evidence (86Box Tandy 1000 HX, src/tgrab/TGSESS.PY)
+## Evidence (86Box Tandy 1000 HX, src/tgrab/TGSESS.PY; docs/tgrab)
 
-`win` part, all exact:
+Run `sA2` (TR53216.DRV, RESERVE, TANDYGR.GR2): 9/9 checks pass
+(`docs/tgrab/sA2.JSN`, frames `A_*.png`).
 
-- TGIMG.BMP (64x40, all 16 colours, asymmetric marker) opens in Paintbrush.
-- Pick tool, Edit > Copy, File > New, Edit > Paste, Save As PASTE.BMP:
-  the saved BMP holds the 64x40 picture at (0,0) with the original RGB
-  colours, the rest white; reopening shows it exactly.
+- TGIMG.BMP (64x40, all 16 colours, asymmetric marker) opens in Paintbrush,
+  all 2,560 pixels exact.
+- Pick tool, Edit > Copy, File > New, Edit > Paste: anchored picture exact.
+  Save As PASTE.BMP: the 64x40 picture at (0,0) with the original RGB
+  colours, the rest of the 320x170 canvas white (`PASTE.BMP`); reopened:
+  exact.
 - Shift+PRINT: the Clipboard (saved by CLIPBRD as SCREEN.CLP) holds a
-  320x200, 4-plane device bitmap equal to the screen in every pixel
-  (except the parked pointer's corner).
+  320x200, 4-plane device bitmap equal to the screen in every pixel except
+  the parked pointer's corner.
 - That capture pasted into a new Paintbrush image and saved: pixel-exact in
-  the part Paintbrush pastes (its 262x126 drawing area at 320x200); the
-  rest of the canvas stays white. That clipping is Paintbrush behaviour.
+  the part Paintbrush pastes (its drawing area at 320x200), the rest white.
+- TGPAT.COM in BIOS mode 9; Alt+Tab to Windows and back: all 64,000 pixels
+  restored. Shift+PRINT in mode 9 leaves the Clipboard bitmap unchanged.
 
-`dos9` part:
+Run `sB` (same, retail CGA.GR2): the mode-9 program comes back in a CGA
+4-colour mode with a scrambled picture (`B_dos9_after_cgagr2.png`).
 
-- TGPAT.COM draws the picture in BIOS mode 9. Alt+Tab to Windows and back:
-  all 64,000 pixels restored with TANDYGR.GR2. With the retail CGA.GR2 the
-  same run does not restore the screen (see the evidence folder).
-- Shift+PRINT in mode 9 leaves the Clipboard unchanged (expected, below).
+Run `sC` (TANDYGR.GR2, RESERVE) text grab: Windows stops answering
+(`C_text_after_grab_reserve.png`, limitation 2). Control without RESERVE
+(Microsoft CGA.DRV, TANDYGR.GR2, otherwise the same machine): the Clipboard
+holds the DOS text (`D_text_clip_noreserve_cgadrv.png`). TR53216.DRV itself
+does not start without RESERVE, so that control cannot use it.
+
+Install: the packet's OEMSETUP.INF gives one Setup choice. The tested
+installation has exactly the result of that choice (SYSTEM.INI
+`286grabber=TANDYGR.GR2`, the file in WINDOWS\SYSTEM, the unchanged
+driver). Choosing it through Windows Setup inside Windows was not completed
+in the emulator: at 320x200 Setup's display list cannot be opened from the
+keyboard or mouse (the dialog is wider than the screen).
 
 ## Limitations
 

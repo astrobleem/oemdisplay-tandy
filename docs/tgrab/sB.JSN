@@ -1,0 +1,38 @@
+{
+ "steps": [
+  {
+   "step": "TGPAT.COM (BIOS mode 9) from File > Run",
+   "t": 1792842791.1
+  },
+  {
+   "step": "Alt+Tab to Windows",
+   "t": 1792842848.9
+  },
+  {
+   "step": "Alt+Tab back to TGPAT",
+   "t": 1792842912.0
+  },
+  {
+   "step": "Shift+PRINT in mode 9, then Space ends TGPAT",
+   "t": 1792842975.1
+  }
+ ],
+ "checks": [
+  {
+   "mismatches": 0,
+   "check": "TGPAT mode-9 picture on screen exactly",
+   "ok": true
+  },
+  {
+   "mismatches": 4448,
+   "check": "after switching away and back the mode-9 screen is restored exactly (64,000 pixels)",
+   "ok": false
+  },
+  {
+   "compared": "CF_BITMAP size, planes and every pixel (the .CLP headers hold run-time handles)",
+   "check": "a mode-9 Print Screen leaves the Clipboard as it was (Windows 3.0 real mode grabs text screens only)",
+   "ok": false
+  }
+ ],
+ "verdict": "FAIL"
+}
