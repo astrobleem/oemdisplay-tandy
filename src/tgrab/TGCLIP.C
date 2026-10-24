@@ -2,16 +2,16 @@
  * a bitmap (Windows 3.0 real mode; MIT).
  *
  * Windows 3.0 real-mode WINOLDAP copies a full-screen DOS program's screen
- * to the Clipboard only as OEM text. For the Tandy 16-colour modes 8 and 9,
- * TANDYGR.GR2 writes the screen to a 4-bit BMP file and hands WINOLDAP one
- * text line instead:   TANDYGR <path of the BMP>
+ * to the Clipboard only as OEM text. For graphics modes (CGA 4, 5, 6 and
+ * Tandy 8, 9, 0Ah) TANDYGR.GR2 writes the screen to a 4-bit BMP file and
+ * hands WINOLDAP one text line instead:   TANDYGR <path of the BMP>
  * TGCLIP sits in the Clipboard viewer chain (start it from WIN.INI load=).
  * When that line appears it reads the BMP, makes a device bitmap with
  * CreateDIBitmap, replaces the Clipboard contents with it (CF_BITMAP) and
  * deletes the file. Paintbrush's Edit > Paste then pastes the picture.
- * Any other Clipboard contents are left alone. Started once by hand, it
- * also adds itself to WIN.INI [windows] load= (WriteProfileString), so it
- * starts with Windows from then on. C, small model, 8086.
+ * Any other Clipboard contents are left alone. TGSETUP.EXE (DOS) puts it
+ * in WIN.INI [windows] load=, so it starts with Windows. C, small model,
+ * 8086.
  */
 #include <windows.h>
 
@@ -165,29 +165,6 @@ long FAR PASCAL WndProc(HWND hwnd, unsigned msg, WORD wParam, LONG lParam)
     return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-/* Add this program to WIN.INI load= unless TGCLIP is already listed. */
-static void Register(HANDLE hInst)
-{
-    char load[256], self[128];
-    int i, n, m;
-
-    GetProfileString("windows", "load", "", load, sizeof(load));
-    for (i = 0; load[i]; i++) {
-        if ((load[i] | 0x20) == 't' && (load[i + 1] | 0x20) == 'g' &&
-            (load[i + 2] | 0x20) == 'c' && (load[i + 3] | 0x20) == 'l' &&
-            (load[i + 4] | 0x20) == 'i' && (load[i + 5] | 0x20) == 'p')
-            return;
-    }
-    m = GetModuleFileName(hInst, self, sizeof(self));
-    n = lstrlen(load);
-    if (m <= 0 || n + m + 2 > (int)sizeof(load))
-        return;
-    if (n > 0)
-        load[n++] = ' ';
-    lstrcpy(load + n, self);
-    WriteProfileString("windows", "load", load);
-}
-
 int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
 {
     WNDCLASS wc;
@@ -196,7 +173,6 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
 
     if (hPrev)
         return 0;                       /* one copy is enough */
-    Register(hInst);
     wc.style = 0;
     wc.lpfnWndProc = WndProc;
     wc.cbClsExtra = 0;

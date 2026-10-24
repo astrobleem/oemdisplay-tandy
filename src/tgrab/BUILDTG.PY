@@ -9,10 +9,12 @@ CGAHERC branch, -dCGA as its makefiles), from the pinned DDK view
 DOSBox-X with the view's MASM 5.10, LINK and EXE2BIN:
 
   CONTROL.GR2   the unmodified DDK sources (control)
-  TANDYGR.GR2   the same sources with the anchored edits in PATCHES
+  TANDYGR.GR2   the same sources with the anchored edits in PATCHES and
+                our own modules in OWN
 
-What the edits add for the Tandy 1000 (the retail CGA.GR2 knows only the
-CGA modes 0-6, and indexes its mode table past its end for modes 8-0Ah):
+What the edits and our modules (TGTANDY, TGSRSCR, TGBMP) add for the
+Tandy 1000 (the retail CGA.GR2 knows only the CGA modes 0-6, and indexes
+its mode table past its end for modes 8-0Ah):
 
   * The video mode, start address, cursor and mode-control bytes come from
     the BIOS data area (the DDK's own PGA path), not from the CGA light-pen
@@ -21,13 +23,17 @@ CGA modes 0-6, and indexes its mode table past its end for modes 8-0Ah):
     InfoContext entries (Tandy layouts: 16 KB in two banks, 32 KB in four).
     Mode 7 and modes above 0Ah set fBadMode: SaveScreen refuses (Windows
     then does not switch away) and GetBlock grabs nothing.
-  * The graphics save area is 32 KB (was 16 KB), so a DOS program in a
-    32 KB mode is saved and restored exactly when the user switches away.
+  * Switching away: text screens stay in the save area; graphics screens
+    (16 or 32 KB) go to a temporary file, so every session's save area is
+    the text size (MAX_CDSIZE + 4 KB) instead of 16 KB (CGA.GR2) or 32 KB.
+  * Palette: an INT 10h hook inside the DOS session keeps a copy of the
+    palette registers the BIOS loads (the registers are write-only); it is
+    restored after switching back and used for grabs.
+  * Print Screen in any graphics mode (4, 5, 6, 8, 9, 0Ah): GetInfo reports
+    the screen grabbable and GetBlock writes it as a 4-bit BMP in the
+    colours shown, plus a one-line text record for WINOLDAP that
+    TGCLIP.EXE turns into a Clipboard bitmap.
   * GetBlock re-reads the mode first, so a grab describes the current screen.
-
-Windows 3.0 real-mode WINOLDAP copies a DOS screen to the Clipboard only
-when GetInfo reports a text screen, so graphics screens are never grabbed
-(docs/GRABBER.MD); text grabs work as with the DDK grabber.
 
 Exit 0 on success. RESULT.JSON records both hashes and the patched sources.
 """
@@ -46,282 +52,35 @@ R = importlib.machinery.SourceFileLoader("reserve_harness", str(ROOT / "src" / "
 
 COMMON = ["BLOCK", "EDGRAB", "ENTRY", "GETINFO", "GRABBITS", "GRABSCR", "INOUT", "INQUIRE", "OEM", "PROMPT", "RCOLOR"]
 BRANCH = ["BEPAINT", "BLOCKDEV", "EDSAVE", "GSMODE", "SETSWAP", "SRSCR"]
+REPLACED = ["SETSWAP", "SRSCR", "EDSAVE"]  # by TGSRSCR in the patched build
 
 
 def L(*lines):
     return "".join(x + "\r\n" for x in lines)
 
 
-GRABBMP = L(
-    "",
-    ";TANDYGR: GrabBmp - full-screen grab of a 16-colour Tandy mode (8, 9).",
-    ";  Windows 3.0 real-mode WINOLDAP puts only OEM text on the Clipboard,",
-    ";  so the screen goes to a 4-bit BMP file (TEMP directory, else the root",
-    ";  of the current drive) and WINOLDAP gets one text line:",
-    ";  TANDYGR <path>.  TGCLIP.EXE turns that into a Clipboard bitmap.",
-    ";  BMP colour index = Windows device index of the Tandy IRGB colour",
-    ";  (bits 0 and 2 swapped), palette = the display driver's colour table.",
-    ";  ENTRY es:di -> GrabRequest, ds = cs.  EXIT ax = record size, carry",
-    ";  set if the file could not be written.  Called only from GetBlock,",
-    ";  which WINOLDAP calls with DOS idle (it writes its own grab file next).",
-    "tgPre\t\tdb\t'TANDYGR '",
-    "tgPath\t\tdb\t80 dup (0)",
-    "tgLen\t\tdw\t0\t\t\t;bytes of 'TANDYGR path',13,10",
-    "tgTemp\t\tdb\t'TEMP='",
-    "tgName\t\tdb\t'TANDYGR.BMP',0",
-    "tgHandle\tdw\t0",
-    "tgY\t\tdw\t0",
-    "tgTblOk\t\tdb\t0",
-    "tgTbl\t\tdb\t256 dup (0)",
-    "tgRow\t\tdb\t160 dup (0)",
-    "tgHdr\t\tdb\t'BM'",
-    "tgFSize\t\tdd\t0",
-    "\t\tdw\t0,0",
-    "\t\tdd\t118",
-    "\t\tdd\t40",
-    "tgW\t\tdd\t0",
-    "tgH\t\tdd\t0",
-    "\t\tdw\t1,4",
-    "\t\tdd\t0",
-    "tgISize\t\tdd\t0",
-    "\t\tdd\t0,0,16,16",
-    "\t\tdb\t000h, 000h, 000h, 000h, 000h, 000h, 080h, 000h, 000h, 080h, 000h, 000h, 000h, 080h, 080h, 000h",
-    "\t\tdb\t080h, 000h, 000h, 000h, 080h, 000h, 080h, 000h, 080h, 080h, 000h, 000h, 080h, 080h, 080h, 000h",
-    "\t\tdb\t040h, 040h, 040h, 000h, 000h, 000h, 0FFh, 000h, 000h, 0FFh, 000h, 000h, 000h, 0FFh, 0FFh, 000h",
-    "\t\tdb\t0FFh, 000h, 000h, 000h, 0FFh, 000h, 0FFh, 000h, 0FFh, 0FFh, 000h, 000h, 0FFh, 0FFh, 0FFh, 000h",
-    "TGHDRLEN\tequ\t$ - tgHdr",
-    "",
-    ";tgPath = TEMP + '\\TANDYGR.BMP' (or d:\\TANDYGR.BMP); tgLen set",
-    "tgBuildPath\tproc\tnear",
-    "\t\tassume\tds:_TEXT",
-    "\t\tpush\tes",
-    "\t\tpush\tdi",
-    "\t\tpush\tsi",
-    "\t\tpush\tcx",
-    "\t\tpush\tbx",
-    "\t\tmov\tdi,offset tgPath",
-    "\t\tmov\tah,62h\t\t\t;current PSP",
-    "\t\tint\t21h",
-    "\t\tmov\tes,bx",
-    "\t\tmov\tbx,es:[2Ch]",
-    "\t\tor\tbx,bx",
-    "\t\tjz\ttgNoTemp",
-    "\t\tmov\tes,bx",
-    "\t\txor\tbx,bx",
-    "tgEnv:",
-    "\t\tcmp\tbyte ptr es:[bx],0",
-    "\t\tje\ttgNoTemp",
-    "\t\tmov\tsi,offset tgTemp",
-    "\t\tmov\tcx,5",
-    "tgCmp:",
-    "\t\tmov\tal,es:[bx]",
-    "\t\tcmp\tal,[si]",
-    "\t\tjne\ttgSkip",
-    "\t\tinc\tbx",
-    "\t\tinc\tsi",
-    "\t\tloop\ttgCmp",
-    "\t\tmov\tcx,64",
-    "tgCopy:",
-    "\t\tmov\tal,es:[bx]",
-    "\t\tor\tal,al",
-    "\t\tjz\ttgSlash",
-    "\t\tmov\t[di],al",
-    "\t\tinc\tdi",
-    "\t\tinc\tbx",
-    "\t\tloop\ttgCopy",
-    "\t\tjmp\tshort tgSlash",
-    "tgSkip:",
-    "\t\tcmp\tbyte ptr es:[bx],0",
-    "\t\tje\ttgNext",
-    "\t\tinc\tbx",
-    "\t\tjmp\ttgSkip",
-    "tgNext:",
-    "\t\tinc\tbx",
-    "\t\tjmp\ttgEnv",
-    "tgNoTemp:",
-    "\t\tmov\tah,19h\t\t\t;current drive",
-    "\t\tint\t21h",
-    "\t\tadd\tal,'A'",
-    "\t\tmov\t[di],al",
-    "\t\tmov\tbyte ptr [di+1],':'",
-    "\t\tadd\tdi,2",
-    "tgSlash:",
-    "\t\tcmp\tdi,offset tgPath",
-    "\t\tje\ttgAddSl",
-    "\t\tcmp\tbyte ptr [di-1],'\\'",
-    "\t\tje\ttgName0",
-    "tgAddSl:",
-    "\t\tmov\tbyte ptr [di],'\\'",
-    "\t\tinc\tdi",
-    "tgName0:",
-    "\t\tmov\tsi,offset tgName",
-    "tgName1:",
-    "\t\tmov\tal,[si]",
-    "\t\tmov\t[di],al",
-    "\t\tinc\tsi",
-    "\t\tinc\tdi",
-    "\t\tor\tal,al",
-    "\t\tjnz\ttgName1",
-    "\t\tsub\tdi,offset tgPath + 1\t;path length",
-    "\t\tadd\tdi,8 + 2\t\t;'TANDYGR ' and CR LF",
-    "\t\tmov\t[tgLen],di",
-    "\t\tpop\tbx",
-    "\t\tpop\tcx",
-    "\t\tpop\tsi",
-    "\t\tpop\tdi",
-    "\t\tpop\tes",
-    "\t\tret",
-    "tgBuildPath\tendp",
-    "",
-    "\t\tpublic\tGrabBmp",
-    "GrabBmp\t\tproc\tnear",
-    "\t\tassume\tds:_TEXT",
-    "\t\tcld",
-    "\t\tcall\ttgBuildPath",
-    "\t\tmov\tax,es:[di]",
-    "\t\tor\tax,es:[di][2]",
-    "\t\tjnz\ttgGo",
-    "\t\tmov\tax,[tgLen]\t\t;size query",
-    "\t\tadd\tax,4 + 1",
-    "\t\tclc",
-    "\t\tret",
-    "tgGo:",
-    "\t\tpush\tes",
-    "\t\tpush\tdi",
-    "\t\tcmp\t[tgTblOk],0\t\t;nibble table: IRGB to Windows index",
-    "\t\tjne\ttgTblDone",
-    "\t\txor\tbx,bx",
-    "tgTblLp:",
-    "\t\tmov\tal,bl",
-    "\t\tcall\ttgSwap",
-    "\t\tmov\tah,al\t\t\t;low nibble done",
-    "\t\tmov\tal,bl",
-    "\t\tmov\tcl,4",
-    "\t\tshr\tal,cl",
-    "\t\tcall\ttgSwap",
-    "\t\tshl\tal,cl",
-    "\t\tor\tal,ah",
-    "\t\tmov\ttgTbl[bx],al",
-    "\t\tinc\tbx",
-    "\t\tcmp\tbx,256",
-    "\t\tjb\ttgTblLp",
-    "\t\tmov\t[tgTblOk],1",
-    "tgTblDone:",
-    "\t\tmov\tax,[IC.icPixelsX]",
-    "\t\tmov\tword ptr [tgW],ax",
-    "\t\tmov\tax,[IC.icPixelsY]",
-    "\t\tmov\tword ptr [tgH],ax",
-    "\t\tmul\t[IC.icWidthBytes]",
-    "\t\tmov\tword ptr [tgISize],ax",
-    "\t\tmov\tword ptr [tgISize][2],dx",
-    "\t\tadd\tax,TGHDRLEN",
-    "\t\tadc\tdx,0",
-    "\t\tmov\tword ptr [tgFSize],ax",
-    "\t\tmov\tword ptr [tgFSize][2],dx",
-    "\t\tmov\tdx,offset tgPath\t;create the file",
-    "\t\txor\tcx,cx",
-    "\t\tmov\tah,3Ch",
-    "\t\tint\t21h",
-    "\t\tjnc\ttgOpen",
-    "\t\tjmp\ttgFail0",
-    "tgOpen:",
-    "\t\tmov\t[tgHandle],ax",
-    "\t\tmov\tbx,ax",
-    "\t\tmov\tdx,offset tgHdr",
-    "\t\tmov\tcx,TGHDRLEN",
-    "\t\tmov\tah,40h",
-    "\t\tint\t21h",
-    "\t\tjc\ttgFail",
-    "\t\tmov\tax,[IC.icPixelsY]\t;rows bottom-up",
-    "\t\tmov\t[tgY],ax",
-    "tgRowLp:",
-    "\t\tdec\t[tgY]",
-    "\t\tmov\tbx,[tgY]",
-    "\t\tpush\tds",
-    "\t\tlds\tsi,[IC.iclpScr]",
-    "\t\tassume\tds:nothing",
-    "\t\txor\tsi,si",
-    "\t\tcall\tComputeYBufPos",
-    "\t\tpush\tcs",
-    "\t\tpop\tes",
-    "\t\tmov\tdi,offset tgRow",
-    "\t\tmov\tcx,cs:[IC.icWidthBytes]",
-    "\t\txor\tbh,bh",
-    "tgXl:",
-    "\t\tlodsb",
-    "\t\tmov\tbl,al",
-    "\t\tmov\tal,cs:tgTbl[bx]",
-    "\t\tstosb",
-    "\t\tloop\ttgXl",
-    "\t\tpop\tds",
-    "\t\tassume\tds:_TEXT",
-    "\t\tmov\tbx,[tgHandle]",
-    "\t\tmov\tdx,offset tgRow",
-    "\t\tmov\tcx,[IC.icWidthBytes]",
-    "\t\tmov\tah,40h",
-    "\t\tint\t21h",
-    "\t\tjc\ttgFail",
-    "\t\tcmp\t[tgY],0",
-    "\t\tjne\ttgRowLp",
-    "\t\tmov\tbx,[tgHandle]",
-    "\t\tmov\tah,3Eh",
-    "\t\tint\t21h",
-    "\t\tpop\tdi\t\t\t;the text record for WINOLDAP",
-    "\t\tpop\tes",
-    "\t\tles\tdi,es:[di][grlpData]",
-    "\t\tmov\tax,GT_TEXT",
-    "\t\tstosw",
-    "\t\tmov\tax,[tgLen]",
-    "\t\tadd\tax,4 + 1",
-    "\t\tstosw",
-    "\t\tmov\tsi,offset tgPre",
-    "\t\tmov\tcx,[tgLen]",
-    "\t\tsub\tcx,2",
-    "\t\trep\tmovsb",
-    "\t\tmov\tax,0A0Dh",
-    "\t\tstosw",
-    "\t\txor\tal,al",
-    "\t\tstosb",
-    "\t\tmov\tax,[tgLen]",
-    "\t\tadd\tax,4 + 1",
-    "\t\tclc",
-    "\t\tret",
-    "tgFail:",
-    "\t\tmov\tbx,[tgHandle]",
-    "\t\tmov\tah,3Eh",
-    "\t\tint\t21h",
-    "tgFail0:",
-    "\t\tpop\tdi",
-    "\t\tpop\tes",
-    "\t\tstc",
-    "\t\tret",
-    "GrabBmp\t\tendp",
-    "",
-    ";al = IRGB nibble -> Windows device index (bits 0 and 2 swapped)",
-    "tgSwap\t\tproc\tnear",
-    "\t\tpush\tdx",
-    "\t\tmov\tdl,al",
-    "\t\tand\tdl,0Ah",
-    "\t\ttest\tal,1",
-    "\t\tjz\ttgS1",
-    "\t\tor\tdl,4",
-    "tgS1:",
-    "\t\ttest\tal,4",
-    "\t\tjz\ttgS2",
-    "\t\tor\tdl,1",
-    "tgS2:",
-    "\t\tmov\tal,dl",
-    "\t\tpop\tdx",
-    "\t\tret",
-    "tgSwap\t\tendp",
-    "",
-)
+# Our own modules (MIT, in this directory), assembled in the CGAHERC branch
+# directory with the DDK's includes:
+#   TGTANDY  InitScreen, INT 10h palette shadow, pixel -> colour map
+#   TGSRSCR  SaveScreen/RestoreScreen (graphics screens in a temporary file),
+#            SetSwapDrive
+#   TGBMP    GrabBmp: Print Screen of a graphics mode to a 4-bit BMP
+OWN = ["TGTANDY", "TGSRSCR", "TGBMP"]
+
 
 # (file, old, new, count): CRLF text, matched exactly.
 PATCHES = [
-    # 32 KB graphics save area (the 32 KB Tandy modes).
-    ("CGAHERC/CGA/CGA.ASM", L("MAX_TOTGRPH\t=\t16*1024"),
-     L("MAX_TOTGRPH\t=\t32*1024\t\t;TANDYGR: Tandy 32 KB modes"), 1),
+    # The save area: contexts, palette shadow and file name, plus 4 KB for a
+    # text screen or the graphics file buffer (TGSRSCR.ASM); graphics
+    # screens go to a file, so text and graphics need the same size.
+    ("CGAHERC/CGA/CGA.ASM", L("MAX_CDSIZE2\t=\t(SIZE HpBiosData)"),
+     L("MAX_CDSIZE2\t=\t(SIZE HpBiosData) + 98\t;TANDYGR: palette shadow, file name"), 1),
+    ("CGAHERC/CGA/CGA.ASM", L("SaveGrphSize\tdw\tMAX_CDSIZE + MAX_TOTGRPH"),
+     L("SaveGrphSize\tdw\tMAX_CDSIZE + MAX_TOTTEXT\t;TANDYGR: graphics in a file"), 1),
+    # InitScreen is TGTANDY's (it hooks INT 10h in the DOS session).
+    ("CGAHERC/CGA/CGA.ASM", L("\t\tpublic\tInitScreen"), L(";TANDYGR: InitScreen is in TGTANDY.ASM"), 1),
+    ("CGAHERC/CGA/CGA.ASM", L("InitScreen\tproc\tfar"), L("DdkInitScr\tproc\tfar\t\t;TANDYGR: unused"), 1),
+    ("CGAHERC/CGA/CGA.ASM", L("InitScreen\tendp"), L("DdkInitScr\tendp"), 1),
     # Trust the BIOS data area for the mode (no light-pen measurement).
     ("CGAHERC/CGA/CGA.ASM", L("\t\tcmp\t[fPGA],TRUE", "\t\tje\tgmdNotRogue"),
      L("\t\tjmp\tgmdNotRogue\t\t;TANDYGR: the Tandy BIOS mode is reliable",
@@ -351,42 +110,34 @@ PATCHES = [
        "gmModeOk:"), 1),
     ("CGAHERC/GSMODE.ASM", L("\t\tsubttl\tGetmode"),
      L("fBadMode\tdb\t0\t\t\t;TANDYGR: set by GetMode", "", "\t\tsubttl\tGetmode"), 1),
-    # SaveScreen refuses an unsupported mode (Windows then stays in it).
-    ("CGAHERC/SRSCR.ASM", L("\t\textrn\tSetMode:near"),
-     L("\t\textrn\tSetMode:near", "\t\textrn\tfBadMode:byte"), 1),
-    ("CGAHERC/SRSCR.ASM",
-     L("\t\tcall\tGetmode", "\t\tmov\t[DC.dcfSwitchGmt],FALSE"),
-     L("\t\tcall\tGetmode",
-       "\t\tcmp\t[fBadMode],TRUE\t\t;TANDYGR: unsupported mode",
-       "\t\tjne\tssModeOk",
-       "\t\tjmp\tssErr",
-       "ssModeOk:",
-       "\t\tmov\t[DC.dcfSwitchGmt],FALSE"), 1),
     # GetBlock: current mode first; no grab of an unsupported mode.
     ("BLOCK.ASM", L("\t\textrn\tGrabBits:near"),
-     L("\t\textrn\tGrabBits:near", "\t\textrn\tGetMode:near", "\t\textrn\tfBadMode:byte"), 1),
+     L("\t\textrn\tGrabBits:near", "\t\textrn\tGetMode:near", "\t\textrn\tfBadMode:byte",
+       "\t\textrn\tGrabBmp:near"), 1),
     ("BLOCK.ASM",
      L("GetBlock\tproc\tnear", "\t\tassume\tds:_TEXT"),
      L("GetBlock\tproc\tnear", "\t\tassume\tds:_TEXT",
        "\t\tcall\tGetMode\t\t\t;TANDYGR: grab what is on screen now"), 1),
+    # Every graphics mode: GetInfo reports it grabbable (WINOLDAP only grabs
+    # when GetInfo returns 1) and GetBlock writes a BMP plus a one-line text
+    # record (TGBMP.ASM, TGCLIP.EXE).
     ("BLOCK.ASM", L("gbGrph:"),
      L("gbGrph:", "\t\tcmp\t[fBadMode],0\t\t;TANDYGR: unsupported mode",
-       "\t\tjne\tgbErrUs"), 1),
-    # Graphics grabs of the 16-colour Tandy modes: GetInfo reports them as
-    # grabbable (WINOLDAP only grabs when GetInfo returns 1) and GetBlock
-    # writes a BMP plus a one-line text record (GrabBmp, TGCLIP.EXE).
+       "\t\tjne\tgbErrUs",
+       "\t\tcall\tGrabBmp\t\t\t;TANDYGR: graphics to a BMP",
+       "\t\tjc\tgbErrUs", "\t\tjmp\tgbExitGood"), 1),
+    ("GETINFO.ASM", L("\t\tpublic\tGetInfo"),
+     L("\t\tpublic\tGetInfo", "\t\textrn\tfBadMode:byte"), 1),
     ("GETINFO.ASM", L("\t\tinc\tax\t\t\t\t;else show text", "giX:"),
      L("\t\tinc\tax\t\t\t\t;else show text", "giX:",
-       "\t\tcmp\t[IC.icBitsPixel],4\t;TANDYGR: 16-colour modes 8, 9",
+       "\t\tcmp\t[fBadMode],0\t\t;TANDYGR: graphics modes too",
        "\t\tjne\tgiX2", "\t\tmov\tax,1", "giX2:"), 1),
-    ("BLOCK.ASM", L("\t\textrn\tGrabBits:near"),
-     L("\t\textrn\tGrabBits:near", "\t\textrn\tGrabBmp:near"), 1),
-    ("BLOCK.ASM", L("\t\tjne\tgbErrUs"),
-     L("\t\tjne\tgbErrUs",
-       "\t\tcmp\t[IC.icBitsPixel],4\t;TANDYGR: 16-colour modes to a BMP",
-       "\t\tjne\tgbGrphCga", "\t\tcall\tGrabBmp", "\t\tjc\tgbErrUs",
-       "\t\tjmp\tgbExitGood", "gbGrphCga:"), 1),
-    ("GRABBITS.ASM", L("\t\tsubttl\tGrabBits"), GRABBMP + L("\t\tsubttl\tGrabBits"), 1),
+    ("GRABBITS.ASM", L("\t\tpublic\tGrabBits"),
+     L("\t\tpublic\tGrabBits", "\t\tpublic\tComputeYBufPos\t;TANDYGR: TGBMP.ASM"), 1),
+    # Link our modules instead of the DDK's SetSwapDrive and Save/Restore.
+    ("CGAHERC/CGA/CGA.LNK", L("      setswap.obj       +", "      srscr.obj         +"),
+     L("      tgsrscr.obj       +", "      tgtandy.obj       +", "      tgbmp.obj         +"), 1),
+    ("CGAHERC/CGA/CGA.LNK", L("      edsave.obj        +"), "", 1),
 ]
 
 
@@ -405,6 +156,10 @@ def stage(view, dest, patch):
             p.write_bytes(raw.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n"))
     changed = {}
     if patch:
+        for name in OWN:
+            raw = (HERE / f"{name}.ASM").read_bytes()
+            (dest / "GRABBERS" / "CGAHERC" / f"{name}.ASM").write_bytes(raw.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n"))
+            changed[f"CGAHERC/{name}.ASM"] = sha((dest / "GRABBERS" / "CGAHERC" / f"{name}.ASM").read_bytes())
         for rel, old, new, want in PATCHES:
             p = dest / "GRABBERS" / rel
             text = p.read_bytes().decode("latin-1")
@@ -417,10 +172,14 @@ def stage(view, dest, patch):
     return changed
 
 
-def batches():
+def branch_modules(patch):
+    return [f for f in BRANCH if f not in REPLACED] + OWN if patch else BRANCH
+
+
+def batches(patch):
     inc = r"-i.\ -i..\ -iR:\INC\ -v -dCGA"
     common = ["CD \\GRABBERS"] + [f"C:\\BIN\\MASM {inc} {f}; >> R:\\BUILD.LOG" for f in COMMON]
-    branch = ["CD \\GRABBERS\\CGAHERC"] + [f"C:\\BIN\\MASM {inc} {f}.ASM,CGA\\; >> R:\\BUILD.LOG" for f in BRANCH]
+    branch = ["CD \\GRABBERS\\CGAHERC"] + [f"C:\\BIN\\MASM {inc} {f}.ASM,CGA\\; >> R:\\BUILD.LOG" for f in branch_modules(patch)]
     final = ["CD \\GRABBERS\\CGAHERC\\CGA",
              r"C:\BIN\MASM -i.\ -i..\ -i..\..\ -iR:\INC\ -v -dCGA CGA; >> R:\BUILD.LOG",
              r"C:\BIN\LINK @CGA.LNK >> R:\BUILD.LOG",
@@ -431,12 +190,12 @@ def batches():
 def build(view, dosbox, d, patch):
     d.mkdir(parents=True)
     changed = stage(view, d, patch)
-    for i, text in enumerate(batches(), 1):
+    for i, text in enumerate(batches(patch), 1):
         R.dos_text(d / f"BUILD{i}.BAT", text)
         R.run_dos(dosbox, view, d, f"BUILD{i}.BAT")
     log = (d / "BUILD.LOG").read_text(errors="replace")
     severe = re.findall(r"(\d+)\s+Severe\s+Errors", log)
-    if len(severe) != len(COMMON) + len(BRANCH) + 1 or any(s != "0" for s in severe) or \
+    if len(severe) != len(COMMON) + len(branch_modules(patch)) + 1 or any(s != "0" for s in severe) or \
             re.search(r"error [AL]\d+|fatal|cannot", log, re.I):
         raise SystemExit(f"BUILDTG: assembly/link failed; see {d / 'BUILD.LOG'}")
     out = d / "GRABBERS" / "CGAHERC" / "CGA" / "CGA.BIN"

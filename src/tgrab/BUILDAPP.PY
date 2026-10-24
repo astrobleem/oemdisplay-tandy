@@ -15,7 +15,8 @@ import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-FILES = ("TGCLIP.C", "TGCLIP.DEF", "TGCLIP.RSP", "BUILDW.BAT")
+FILES = ("TGCLIP.C", "TGCLIP.DEF", "TGCLIP.RSP", "TGCLOG.C", "TGCLOG.DEF", "TGCLOG.RSP", "TGSETUP.C", "BUILDW.BAT")
+PRODUCTS = ("TGCLIP.EXE", "TGSETUP.EXE", "TGCLOG.EXE")
 CONF = """[sdl]
 fullscreen=false
 output=surface
@@ -48,7 +49,7 @@ def main():
     repo, out = a.repo.resolve(), a.out.resolve()
     if out.exists():
         ap.error("--out must be new")
-    for n in ("BIN/CL.EXE", "BIN/LINK4.EXE", "LIB/SLIBCEW.LIB", "LIB/LIBW.LIB"):
+    for n in ("BIN/CL.EXE", "BIN/LINK4.EXE", "BIN/LINK.EXE", "LIB/SLIBCEW.LIB", "LIB/LIBW.LIB", "LIB/SLIBCE.LIB"):
         if not (repo / n).is_file():
             ap.error("missing toolchain input: " + n)
     out.mkdir(parents=True)
