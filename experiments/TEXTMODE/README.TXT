@@ -1,3 +1,6 @@
+HISTORICAL TXTMODE PROOF. Current TEXT80/C25 download and installation:
+https://github.com/astrobleem/oemdisplay-tandy/blob/main/downloads/experimental/TEXT80/README.MD
+
 TANDY WINDOWS 3.0 REAL 80x25 TEXT-MODE PROOF
 
 STATUS: isolated feasibility experiment. It is not a finished replacement

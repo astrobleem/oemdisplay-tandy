@@ -1,3 +1,6 @@
+> Historical TXTMODE feasibility proof. For the current text-mode driver,
+> [download TEXT80 and install C25](../../downloads/experimental/TEXT80/README.MD).
+
 # Experimental Windows 3.0 hardware text-mode driver
 
 **Feasibility proof only: not suitable for everyday use. Keep this out of normal Windows installations and OEM/Setup disks.** Nothing here replaces the accepted graphics driver, launcher, or default build.

@@ -1,3 +1,8 @@
+CURRENT INSTALLATION: download WINXT-XR1.ZIP and follow
+https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/RELEASES/RC8.MD
+
+HISTORICAL R1 COMPONENT / OVERLAY INSTRUCTIONS FOLLOW
+
 WINDOWS XT v0.1.0-rc.7 - PUBLIC R1 COMPONENTS AND OVERLAY
 
 This is a redistributable subset of the qualified Oct19 private R1 package,

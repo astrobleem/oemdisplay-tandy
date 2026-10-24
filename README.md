@@ -12,7 +12,7 @@ Windows 3.0 desktop.
 | --- | --- | --- |
 | <img src="docs/PROMO/XTWAVE.GIF" alt="Windows XT animated startup" width="260"> | <img src="examples/HILLS/HILL320.PNG" alt="Tandy Start with optional green hill wallpaper" width="260"> | <img src="docs/PROMO/XTEXIT.PNG" alt="Windows XT moon-and-stars shutdown screen" width="260"> |
 
-[Get started](#get-started) · [User manual](docs/USERMAN.MD) ·
+[Get started](#get-started) · [Other machines](docs/PLATFORM.MD) ·
 [More screenshots and capture notes](docs/SHOWCASE.MD)
 
 ## Get started
@@ -21,14 +21,14 @@ Requires **Windows 3.0 real mode, DOS 3.3+ and 640 KB RAM** on an EX/HX.
 
 | What you want | Download and guide |
 | --- | --- |
-| Install or update the current XR1 desktop, panning and wheel input | **rc.8:** [installer ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP) · [prepare, install and recover](docs/RELEASES/RC8.MD) |
+| Install or update the current XR1 desktop, panning and wheel input | **rc.8:** [installer ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP) · [install guide](docs/RELEASES/RC8.MD) |
 | Converted Minesweeper app and About shim | **rc.8:** [Minesweeper ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINMINE30.ZIP), including its installation guide |
 
 Supply the matching Windows 3.0 media; **all required project components are
 included**. Use Python on a modern computer to prepare the files, then run
-`C:\SETUPXT` from plain DOS. Back up Windows first; start afterward with
-`C:\STARTXT`. Public downloads contain no Windows or DOS installation media. Keep prepared
-own-media folders private. [Earlier packages](docs/RELEASES/RC8.MD#verification-and-notices) remain available.
+`C:\SETUPXT` from plain DOS. Start Windows afterward with `C:\STARTXT` on
+every launch. Follow the [short install guide](docs/RELEASES/RC8.MD) for the
+preparation command and Setup choices. Windows and DOS media are supplied by you.
 
 ## More color, compact controls
 

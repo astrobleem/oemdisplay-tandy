@@ -1,11 +1,10 @@
 # TEXT80 and compact C25 — experimental download
 
-**[Download TEXT80.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TEXT80/TEXT80.ZIP)** · [SHA-256](SHA256.SUM) · [Detailed behavior](../../../docs/TEXT80.MD)
+**[Download TEXT80.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TEXT80/TEXT80.ZIP)** · [Detailed behavior](../../../docs/TEXT80.MD)
 
 Windows 3.0 real mode, 8086/8088, 640 KB. This separate 2026-10-18 packet
 contains four text display profiles, the DOS installer/rollback program,
-panning helper and original XT Pixels fonts. It does not replace Windows XT
-rc.6 or its historical TXTMODE experiment. No physical hardware is qualified.
+panning helper and original XT Pixels fonts. It is separate from the Windows XT graphics package. No physical hardware is qualified.
 
 | Profile | Driver | View and desktop | Exact evidence for this download |
 | --- | --- | --- | --- |
@@ -22,7 +21,7 @@ C25's compact controls are exact only when aligned to the text-cell grid.
 
 ## Install and undo
 
-Back up a working Windows 3.0 installation. Extract the `TEXT80` folder to
+Use an existing Windows 3.0 installation. Extract the `TEXT80` folder to
 `C:\TEXT80`. From plain DOS, after exiting Windows:
 
 ```bat
@@ -31,8 +30,14 @@ CD \TEXT80
 T80ON C:\WINDOWS C25
 ```
 
-Use your actual Windows directory. Read the result and start with `WIN /R`
-from that Windows directory only after setup succeeds. Retain any existing
+Use your actual Windows directory. Continue only after the setup success
+message, then start Windows:
+
+```bat
+C:
+CD \WINDOWS
+WIN /R
+``` Retain any existing
 machine-specific memory guard required by your installation. Normal `25`,
 `PAN` and VGA-only `VGA` are alternative profile arguments. PAN uses about
 100 KB more Windows memory; Alt+PgDn / Alt+PgUp and pointer-edge dwell pan.
@@ -50,7 +55,10 @@ succeeds. Damaged state causes refusal without changes; explicit
 `T80SET RESTORE` restores whole backups and discards subsequent INI changes.
 Read `TEXT80/INSTALL.TXT` inside the ZIP before using recovery.
 
-## Verification and source
+<details>
+<summary>Source, optional checksums and test records</summary>
+
+
 
 The ZIP is **389,919 bytes**, SHA-256
 `cd892a48db2973e7c99f4d6a00977cfe7e2466699baa5afcd4baf977aa2a30b9`.
@@ -64,3 +72,5 @@ runs produced identical ZIP bytes. All runtime filenames use DOS 8.3 names.
 The download contains no Windows/DOS media, Microsoft fonts, retail grabber,
 ROM, compiler, emulator or credentials. Display derivatives retain DDK
 notices; the included original XT Pixels fonts have their own MIT license.
+
+</details>

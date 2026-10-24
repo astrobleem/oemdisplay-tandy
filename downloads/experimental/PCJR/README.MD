@@ -1,6 +1,6 @@
 # IBM PCjr clean Setup — experimental download
 
-**[Download PCJRSET.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PCJR/PCJRSET.ZIP)** · [SHA-256](SHA256.SUM) · [Full install/recovery guide](../../../src/pcjr/INSTALL/INSTALL.TXT)
+**[Download PCJRSET.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PCJR/PCJRSET.ZIP)** · [Full install/recovery guide](../../../src/pcjr/INSTALL/INSTALL.TXT)
 
 Windows 3.0 real mode, 320×200 in 16 colors, with an existing PCjr memory
 expansion and a DOS-reserved video page. This 2026-10-18 packet publishes the
@@ -46,7 +46,10 @@ To undo the display choice, exit Windows and use Windows Setup to restore
 your previous display, as described in INSTALL.TXT. PCjr-only DOS video
 modes 8, 9 and 0Ah cannot switch away with Alt+Tab; finish them to return.
 
-## Verification and source
+<details>
+<summary>Source, optional checksums and test records</summary>
+
+
 
 The ZIP is **114,994 bytes**, SHA-256
 `a781614c5c8c5f6c498e6e9a82364b4c2c9c3c3f7e2b2be0c67b42b2f57c17d8`.
@@ -63,3 +66,5 @@ DDK-derived PCjr grabber, not the retail CGA.GR2; derivative notices remain
 applicable. No Windows/DOS media, Microsoft fonts, retail grabber, ROM,
 compiler, emulator or credentials are included. The older released PCJR.ZIP
 is preserved unchanged; use this separate packet for clean Setup.
+
+</details>

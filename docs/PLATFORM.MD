@@ -12,8 +12,7 @@ software. **Emulator-tested** identifies a Windows run on the named setup;
 **host-checked** covers builds/models without a Windows runtime test;
 **hardware-reported** identifies an owner's physical-machine result. Shared
 adapter targets remain unverified until tested. The screenshots are authentic
-existing emulator captures; physical results are reported separately. Use the
-matching recovery guide and a backup. Windows 3.1 is unsupported.
+existing emulator captures; physical results are reported separately. Windows 3.1 is unsupported.
 
 Graphics modes below give **width × height, displayed colors and color depth**:
 2 colors = 1 bpp, 4 = 2 bpp, 16 = 4 bpp. A panning desktop is larger than its
@@ -35,7 +34,7 @@ C25 profile gives window controls their own cells, as shown here in Notepad.
 *86Box · IBM XT / IBM CGA · T80CMP.DRV (C25) · 80×25 characters, 640×200
 logical desktop · Notepad. [Session record](text80/RUN_c3/c80w3/T80WIN.JSN).*
 
-**[Download TEXT80.ZIP and follow the install/rollback guide](../downloads/experimental/TEXT80/README.MD).**
+**[Download TEXT80.ZIP and follow the install guide](../downloads/experimental/TEXT80/README.MD).**
 The 25, C25 and PAN profiles share a CGA-compatible color-text path targeting
 IBM CGA, Tandy 1000 EX/HX, PCjr-class video, EGA and VGA; VGA 80×50 has its own
 BIOS checks. All four use a 16-color logical palette, presented through
@@ -89,10 +88,10 @@ TR3/TR4 checkpoints remain in the [development history](MODEHIST.MD).
 
 | Driver | Systems / adapters | Windows mode | Status, download and setup |
 | --- | --- | --- | --- |
-| `TNDYV2.DRV` | Tandy 1000 **SL/2 family selector**; related SL/TL/RL models unverified | 640×200, 16 colors / 4 bpp | Emulator-tested: 86Box SL/2. 640 KB; T2RESV before Setup and every start. **Never use on EX/HX:** the guard cannot distinguish these models. [ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-video-ii-2026-10-14-r2/TNDYV2.ZIP) · [setup/recovery](tga2/INSTALL.TXT) · [Video II guide](TGA2.MD). |
-| `PC1512.DRV` | Amstrad PC1512 built-in video; **not PC1640** | 640×200, 16 colors / 4 bpp | Emulator-tested: 86Box PC1512. Cursor-state issue unresolved; Setup unverified. [ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) · [project](https://github.com/astrobleem/windows-3-amstrad-pc1512) · [setup/recovery](../experiments/DISPLAY3/PC1512.TXT) · [guide](PC1512.MD). |
-| `TNDYJR.DRV` | IBM PCjr | 320×200, 16 colors / 4 bpp | Emulator-tested: DOSBox-X PCjr, clean and existing-install Setup. JRGUARD requires an already reserved DOS video page. [PCJRSET.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PCJR/PCJRSET.ZIP) · [project](https://github.com/astrobleem/windows-3-pcjr) · [setup/recovery](../downloads/experimental/PCJR/README.MD). |
-| `PCP3216.DRV` | XT-class PCs with the ColorPlus family listed below | 320×200, 16 colors / 4 bpp | Emulator-tested: 86Box IBM XT + Plantronics ColorPlus. [ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP) · [project](https://github.com/astrobleem/windows-3-plantronics) · [setup/recovery](../experiments/DISPLAY3/PCP3216.TXT) · [guide](PCP.MD). |
+| `TNDYV2.DRV` | Tandy 1000 **SL/2 family selector**; related SL/TL/RL models unverified | 640×200, 16 colors / 4 bpp | Emulator-tested: 86Box SL/2. 640 KB; T2RESV before Setup and every start. **Never use on EX/HX:** the guard cannot distinguish these models. [ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-video-ii-2026-10-14-r2/TNDYV2.ZIP) · [install guide](tga2/INSTALL.TXT) · [Video II guide](TGA2.MD). |
+| `PC1512.DRV` | Amstrad PC1512 built-in video; **not PC1640** | 640×200, 16 colors / 4 bpp | Emulator-tested: 86Box PC1512. Cursor-state issue unresolved; Setup unverified. [ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) · [project](https://github.com/astrobleem/windows-3-amstrad-pc1512) · [install guide](../experiments/DISPLAY3/PC1512.TXT) · [guide](PC1512.MD). |
+| `TNDYJR.DRV` | IBM PCjr | 320×200, 16 colors / 4 bpp | Emulator-tested: DOSBox-X PCjr, clean and existing-install Setup. JRGUARD requires an already reserved DOS video page. [PCJRSET.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PCJR/PCJRSET.ZIP) · [project](https://github.com/astrobleem/windows-3-pcjr) · [install guide](../downloads/experimental/PCJR/README.MD). |
+| `PCP3216.DRV` | XT-class PCs with the ColorPlus family listed below | 320×200, 16 colors / 4 bpp | Emulator-tested: 86Box IBM XT + Plantronics ColorPlus. [ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP) · [project](https://github.com/astrobleem/windows-3-plantronics) · [install guide](../experiments/DISPLAY3/PCP3216.TXT) · [guide](PCP.MD). |
 | `PC1YAMA.DRV` | Olivetti Prodest PC1 / Yamaha V6355D, **B000h** | 160×200, 16 colors / 4 bpp | Host-checked; runtime and Setup unverified, screenshot pending. [PC1 ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha-candidate03/PC1-B000-CANDIDATE03.ZIP) · [project](https://github.com/astrobleem/windows-3-olivetti-pc1) · [guide](../experiments/YAMAHA/README.MD). |
 | `YAM160.DRV` | Standalone Yamaha V6355D **B800h** card profile on IBM XT | 160×200, 16 colors / 4 bpp | Emulator-tested: 86Box scanout; separate DOSBox-X API/raw-VRAM tests. Public-packet Setup unverified. [B800 ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha-candidate03/YAMAHA-B800-CANDIDATE03.ZIP) · [Yamaha guide](yamaha/QUALIFICATION.MD). |
 

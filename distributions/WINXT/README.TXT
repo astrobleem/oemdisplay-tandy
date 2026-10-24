@@ -1,3 +1,9 @@
+HISTORICAL / DEVELOPMENT GUIDE
+
+Current XR1 download and installation:
+https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/RELEASES/RC8.MD
+The commands below describe the earlier package or source checkpoint.
+
 WINDOWS XT - ONE SUPPORT FOLDER / SIX DISPLAY CHOICES
 Windows 3.0 real mode on Tandy EX/HX / 8088
 

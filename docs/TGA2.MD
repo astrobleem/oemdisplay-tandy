@@ -1,5 +1,11 @@
 # Tandy Video II 640x200x16 (TNDYV2.DRV): first build, emulator-tested
 
+**[Download TNDYV2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-video-ii-2026-10-14-r2/TNDYV2.ZIP)** and follow the
+[short install guide](tga2/INSTALL.TXT). The current r2 packet includes
+PREPINF for support-file staging and the Windows Setup selector.
+
+The remaining sections preserve the development and test record.
+
 Status: **Windows 3.0 runs TNDYV2.DRV in 640x200 with 16 colours on 86Box's
 Tandy 1000 SL/2, and the scripted session passes 88 of 88 checks
 (2026-10-14).** The experimental driver-only prerelease is available; nothing

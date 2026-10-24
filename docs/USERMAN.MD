@@ -1,6 +1,6 @@
 # Windows XT user manual
 
-[Project and downloads](../README.md) · [Install](#install-windows-xt) ·
+[Project and downloads](../README.md) · [Install](RELEASES/RC8.MD) ·
 [Display modes](#choose-a-display-mode) · [Tandy Start](#use-tandy-start) ·
 [Experimental drivers](#separate-experimental-drivers) ·
 [Recovery](#restore-your-previous-installation)
@@ -33,16 +33,15 @@ or replace those release binaries.
 | Tandy Video II, Amstrad PC1512 or Plantronics ColorPlus | Use the [machine-specific guides](#other-video-hardware). The EX/HX package does not select these drivers. |
 | Add games or utilities to an existing installation | The separate [TANDYLAB catalog](../examples/TANDYLAB/CATALOG.TXT) and [experimental release](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/experiments-2026-10-07) identify each packet and its instructions. |
 
-Use the [rc.6 SHA256SUMS](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/SHA256SUMS)
-to check that download on a modern computer. Each separate experimental
-packet has its own checksums and qualification scope.
-
 ## Install Windows XT
 
 **Current XR1:** follow the [rc.8 preparation and installation guide](RELEASES/RC8.MD).
 Prepare on a modern Python host, transfer DOS-CROOT, run `C:\SETUPXT` from
 plain DOS and start afterward with `C:\STARTXT`. Use `C:\FIXXT` for repair.
 The steps below preserve the separate rc.6 fixed-profile installation path.
+
+<details>
+<summary>Earlier rc.6 fixed-profile installation and display choices</summary>
 
 ### Before you start (rc.6)
 
@@ -196,6 +195,9 @@ TEXT80/C25 packet below. Its [runtime notes](../distributions/WINXT/TEXTMODE.TXT
 record limits, including unverified full DOS-app switching. Tandy Start is
 not qualified with this driver.
 
+
+</details>
+
 ## Use Tandy Start
 
 Tandy Start provides a compact Start button and clock bar. Program Manager
@@ -335,7 +337,7 @@ CD \WINTXT
 WIN /R
 ```
 
-Use the actual directory containing your cloned Windows installation. To
+Use your actual Windows installation directory. To
 change profile, exit Windows and run `T80OFF C:\WINTXT` from the packet folder
 before running `T80ON` again with `25`, `PAN`, `VGA` or `C25`. In PAN, with
 NumLock off, **Alt+PgDn / Alt+PgUp** pan and **Alt+F9** returns to the top;
@@ -457,7 +459,7 @@ input path. Standard/enhanced mode and an unexpanded 256 KB EX are outside
 this Windows 3.0 real-mode acceptance scope.
 
 A useful issue report includes the machine and RAM, DOS/Windows versions,
-package and driver SHA-256, mode, exact steps, expected and actual behavior,
+package name, mode, exact steps, expected and actual behavior,
 and whether it ran on hardware or an emulator. Keep a working rollback.
 
 [Development status](STATUS.MD) · [Build guide](../BUILDING.MD) ·

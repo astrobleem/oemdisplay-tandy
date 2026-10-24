@@ -1,3 +1,6 @@
+> For current installation, use [XR1](../../docs/RELEASES/RC8.MD).
+> This directory preserves the historical R1 component publisher.
+
 # Qualified R1 redistributable release
 
 This publisher binds the two previously reviewed, unchanged R1 ZIPs to their

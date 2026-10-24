@@ -1,3 +1,7 @@
+> Historical / development guide. For the current download and installation,
+> use the [XR1 install guide](../../docs/RELEASES/RC8.MD). The commands below describe the
+> earlier package or source checkpoint.
+
 # Unpublished combined source revision
 
 Seven original MIT fonts remove Windows font-media and vintage Python needs.

@@ -1,6 +1,9 @@
 # Windows XT R1 public downloads
 
-These are the exact first-party/overlay ZIPs from the qualified Oct19 R1
+**Installing Windows XT? Use [WINXT-XR1.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP) and the
+[current XR1 guide](../../docs/RELEASES/RC8.MD).**
+
+The downloads below are historical R1 component archives. These are the exact first-party/overlay ZIPs from the qualified Oct19 R1
 work. Neither contains Windows media or the full private installer.
 
 - [WINXT-FIRST-PARTY-R1.zip](WINXT-FIRST-PARTY-R1.zip): 65,989 bytes;
@@ -18,6 +21,4 @@ is insufficient. Local assembly checks all 379 completed files and preserves
 the source. Never redistribute the assembled own-media directory.
 
 Read [installation and limits](../../tools/WINR1/START-HERE.TXT) and
-[rc.7 release notes](../../docs/RELEASES/RC7.MD). New users needing the existing
-own-media install route can continue to use the preserved rc.6 download;
-rc.7 is the newer qualified R1 redistributable component/overlay subset.
+[rc.7 release notes](../../docs/RELEASES/RC7.MD). Use the current XR1 package above for a normal installation.
