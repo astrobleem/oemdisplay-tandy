@@ -2,8 +2,9 @@ WINDOWS XT - START HERE
 
 Already have Windows 3.0 real mode on a Tandy EX/HX with 640 KB?
 Download the current XRSYNC display update:
-https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-xrsync-2026-10-24/XRSYNC.ZIP
-Follow its automatic preparation and Windows Setup guide:
+https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE
+From plain DOS run XRSYNC C:\WINDOWS. No host preparation is needed.
+Follow its automatic Windows support gathering and Setup guide:
 https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/RELEASES/XRSYNC.MD
 Start that profile with C:\XR155\RUNSYNC.BAT.
 
