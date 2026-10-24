@@ -130,6 +130,87 @@ def run(out, dialog_helper=None):
             checks += [target + ': wrong-target and repeated install refused before mutation',
                        target + ': exact rollback; intervening user edits preserved/refused']
 
+            # Completed evidence is archived only after full baseline validation.
+            journal = (clone / 'C16STATE.JSN').read_bytes()
+            (clone / 'C16H0001.JSN').write_bytes(b'older evidence; never overwrite')
+            saved = tree(clone)
+            refusal(lambda: PREP.rollback(clone))
+            assert tree(clone) == saved
+            for change in ('status', 'schema', 'target', 'hash', 'duplicate', 'missing', 'unsafe'):
+                state = json.loads(journal)
+                if change == 'status': state['status'] = 'INSTALLED'
+                elif change == 'schema': state['schema'] = True
+                elif change == 'target': state['target'] = []
+                elif change == 'hash': state['entries'][0]['before_sha256'] = '0' * 64
+                elif change == 'duplicate': state['entries'].append(state['entries'][0])
+                elif change == 'missing': state['entries'].pop(0)
+                else: state['entries'][0]['path'] = '../outside'
+                (clone / 'C16STATE.JSN').write_text(json.dumps(state))
+                bad_tree = tree(clone)
+                refusal(lambda: PREP.install(clone, packet, target))
+                assert tree(clone) == bad_tree
+            (clone / 'C16STATE.JSN').write_bytes(journal)
+            f = clone / 'WIN.INI'
+            f.write_bytes(original_tree['WIN.INI'] + b'; changed baseline')
+            saved = tree(clone)
+            refusal(lambda: PREP.install(clone, packet, target))
+            assert tree(clone) == saved
+            f.write_bytes(original_tree['WIN.INI'])
+            # Interrupt between archival and the next PREPARED journal. No file
+            # has changed; retained history permits a fresh retry.
+            original_atomic = PREP.atomic
+            def before_prepared(path, data):
+                raise OSError('intentional interruption after archival')
+            PREP.atomic = before_prepared
+            try:
+                try: PREP.install(clone, packet, target)
+                except OSError: pass
+                else: raise AssertionError('interruption did not fire')
+            finally: PREP.atomic = original_atomic
+            assert not (clone / 'C16STATE.JSN').exists()
+            assert (clone / 'C16H0002.JSN').read_bytes() == journal
+            for cycle in range(2):
+                PREP.install(clone, packet, target)
+                PREP.rollback(clone)
+            restored = tree(clone)
+            assert restored.pop('C16STATE.JSN') == journal
+            assert restored.pop('C16H0001.JSN') == b'older evidence; never overwrite'
+            assert restored.pop('C16H0002.JSN') == journal
+            assert restored.pop('C16H0003.JSN') == journal
+            assert restored == original_tree
+            checks += [target + ': on/off/on/off exact restoration and immutable numbered history',
+                       target + ': corrupt, active and inconsistent completed journals refused unchanged',
+                       target + ': interruption after archival safely retries without payload mutation']
+
+            # A failed archive flush leaves the active journal recoverable and
+            # retains the incomplete history slot; retry must never overwrite it.
+            archive_clone = scratch / (target + '-archive-interrupted')
+            (archive_clone / 'SYSTEM').mkdir(parents=True)
+            for name, data in original_tree.items():
+                (archive_clone / name).write_bytes(data)
+            (archive_clone / 'C16STATE.JSN').write_bytes(journal)
+            original_fsync = PREP.os.fsync
+            def fail_flush(fd):
+                raise OSError('intentional archive flush interruption')
+            PREP.os.fsync = fail_flush
+            try:
+                try: PREP.install(archive_clone, packet, target)
+                except OSError: pass
+                else: raise AssertionError('archive interruption did not fire')
+            finally: PREP.os.fsync = original_fsync
+            saved = tree(archive_clone)
+            assert saved.pop('C16STATE.JSN') == journal
+            assert saved.pop('C16H0001.JSN') == journal
+            assert saved == original_tree
+            PREP.install(archive_clone, packet, target)
+            PREP.rollback(archive_clone)
+            restored = tree(archive_clone)
+            assert restored.pop('C16STATE.JSN') == journal
+            assert restored.pop('C16H0001.JSN') == journal
+            assert restored.pop('C16H0002.JSN') == journal
+            assert restored == original_tree
+            checks += [target + ': failed archive flush retains journal/history and safely retries']
+
             # Recover a prepared journal after only one payload was replaced.
             # This is file-transaction interruption, not an emulator crash test.
             interrupted = scratch / (target + '-interrupted')

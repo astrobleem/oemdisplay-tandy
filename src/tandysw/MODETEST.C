@@ -2,7 +2,8 @@
  * C:\MODETEST.INI [mode]: width=640, height=256, colors=16, bios=9, phases=40.
  * phases: 1 core/BitBlt, 2 DIB imports, 4 DIB readback, 8 fonts/cursor,
  * 16 raw aliases (2/4-color), 32 bounded BI_RLE4/8 including a huge palette,
- * invalid compression/depth pairs and an early-EOB case.
+ * invalid compression/depth pairs and an early-EOB case; 64 nonzero-X
+ * vertical deltas at both depths/import paths, dy=1 and dy=3.
  * palette=1 selects red/green; palette=0 CGA.
  * Only PROBEASM BIOS AH=0F metadata is used; never BIOS pixel reads.
  */
@@ -289,26 +290,46 @@ static int rleearlyfixture(void)
  for(i=0;i<stride*DH;i++)rawBefore[i]=rleRaw[i];
  return 4;
 }
-static void rlecase(int bpp,int memory,int id)
+/* Nonzero current X followed by a vertical delta. Independent BI_RGB
+   oracle marks X=4, never raw dx=2, after both one and three rows. */
+static int rledeltafixture(int bpp,int dy)
+{
+ int i,x,stride;
+ initinfo(&rleInfo,bpp);rawInfo=rleInfo;
+ rleInfo.h.biCompression=(bpp==8)?BI_RLE8:BI_RLE4;
+ rawInfo.h.biCompression=BI_RGB;stride=((DW*bpp+31)/32)*4;
+ for(i=0;i<4096;i++)rleRaw[i]=0;
+ for(x=0;x<2;x++)rleputraw(bpp,stride,x,0,5);
+ for(x=4;x<7;x++)rleputraw(bpp,stride,x,dy,9);
+ rleBits[0]=2;rleBits[1]=(bpp==8)?5:0x55;
+ rleBits[2]=0;rleBits[3]=2;rleBits[4]=2;rleBits[5]=dy;
+ rleBits[6]=3;rleBits[7]=(bpp==8)?9:0x99;
+ rleBits[8]=0;rleBits[9]=1;
+ rleInfo.h.biSizeImage=10;rawInfo.h.biSizeImage=(LONG)(stride*DH);
+ for(i=0;i<10;i++)rleBefore[i]=rleBits[i];
+ for(i=0;i<stride*DH;i++)rawBefore[i]=rleRaw[i];
+ return 10;
+}
+static void rlecase(int bpp,int memory,int id,int deltaY)
 {
  HDC mem;HBITMAP rlebm,rawbm,old;HRGN clip;int i,errors,rs,us,br,bu,compressedSize,rawSize,startScan,scanCount,stride;
   LPSTR rawSource;struct INFO256 savedRle,savedRaw;
- compressedSize=rlefixture(bpp);rawSize=(int)rawInfo.h.biSizeImage;
- startScan=(!memory && bpp==8)?3:0;scanCount=startScan?5:DH;
+ compressedSize=deltaY?rledeltafixture(bpp,deltaY):rlefixture(bpp);rawSize=(int)rawInfo.h.biSizeImage;
+ startScan=(!deltaY && !memory && bpp==8)?3:0;scanCount=startScan?5:DH;
  stride=((DW*bpp+31)/32)*4;rawSource=(LPSTR)rleRaw+startScan*stride;
  savedRle=rleInfo;savedRaw=rawInfo;
-  fill(dc,0,0,width,logicalHeight,colors[8]);begin(id,13);
+  fill(dc,0,0,width,logicalHeight,colors[8]);begin(id,deltaY?19:13);line("RLE_DELTA_Y",deltaY);
   line("RLE_PRE_CLEAR",1);flushlog();
  line("BPP",bpp);line("RLE_METHOD",memory);line("RLE_SIZE",compressedSize);
  line("RLE_START_SCAN",startScan);line("RLE_SCAN_COUNT",scanCount);
  if(!memory){
-  clip=CreateRectRgn(12,62,45,69);line("RLE_CLIP1",clip!=NULL && SelectClipRgn(dc,clip)!=ERROR);
+  clip=CreateRectRgn(deltaY?10:12,deltaY?60:62,deltaY?47:45,deltaY?71:69);line("RLE_CLIP1",clip!=NULL && SelectClipRgn(dc,clip)!=ERROR);
    line("RLE_CALL_READY",1);flushlog();
   rs=SetDIBitsToDevice(dc,10,60,DW,DH,0,0,startScan,scanCount,(LPSTR)rleBits,
     (LPBITMAPINFO)&rleInfo,DIB_RGB_COLORS);
    line("RLE_API_RETURN",rs);flushlog();
   SelectClipRgn(dc,NULL);if(clip)DeleteObject(clip);
-  clip=CreateRectRgn(62,62,95,69);line("RLE_CLIP2",clip!=NULL && SelectClipRgn(dc,clip)!=ERROR);
+  clip=CreateRectRgn(deltaY?60:62,deltaY?60:62,deltaY?97:95,deltaY?71:69);line("RLE_CLIP2",clip!=NULL && SelectClipRgn(dc,clip)!=ERROR);
    line("RAW_CALL_READY",1);flushlog();
   us=SetDIBitsToDevice(dc,60,60,DW,DH,0,0,startScan,scanCount,rawSource,
     (LPBITMAPINFO)&rawInfo,DIB_RGB_COLORS);
@@ -327,10 +348,10 @@ static void rlecase(int bpp,int memory,int id)
    us=SetDIBits(dc,rawbm,0,DH,(LPSTR)rleRaw,(LPBITMAPINFO)&rawInfo,DIB_RGB_COLORS);
     line("RAW_API_RETURN",us);flushlog();
    line("RLE_SETDIB_RETURN",rs);line("RAW_SETDIB_RETURN",us);
-   clip=CreateRectRgn(12,62,45,69);line("RLE_CLIP1",clip!=NULL && SelectClipRgn(dc,clip)!=ERROR);
+   clip=CreateRectRgn(deltaY?10:12,deltaY?60:62,deltaY?47:45,deltaY?71:69);line("RLE_CLIP1",clip!=NULL && SelectClipRgn(dc,clip)!=ERROR);
    old=SelectObject(mem,rlebm);br=BitBlt(dc,10,60,DW,DH,mem,0,0,SRCCOPY);
    SelectClipRgn(dc,NULL);if(clip)DeleteObject(clip);
-   clip=CreateRectRgn(62,62,95,69);line("RLE_CLIP2",clip!=NULL && SelectClipRgn(dc,clip)!=ERROR);
+   clip=CreateRectRgn(deltaY?60:62,deltaY?60:62,deltaY?97:95,deltaY?71:69);line("RLE_CLIP2",clip!=NULL && SelectClipRgn(dc,clip)!=ERROR);
    SelectObject(mem,rawbm);bu=BitBlt(dc,60,60,DW,DH,mem,0,0,SRCCOPY);
    SelectClipRgn(dc,NULL);if(clip)DeleteObject(clip);
    SelectObject(mem,old);line("RLE_BLT_RETURN",br);line("RAW_BLT_RETURN",bu);
@@ -516,10 +537,10 @@ static void rlephase(void)
  line("RLE_PAN_X",pan[0]);line("RLE_PAN_Y",pan[1]);
  line("RLE_PAN_VIEW_WIDTH",pan[2]);line("RLE_PAN_VIEW_HEIGHT",pan[3]);
  line("RLE_PAN_LOGICAL_WIDTH",pan[4]);line("RLE_PAN_LOGICAL_HEIGHT",pan[5]);
- if(rleMask&1)rlecase(8,0,140);
- if(rleMask&2)rlecase(4,0,141);
- if(rleMask&4)rlecase(8,1,142);
- if(rleMask&8)rlecase(4,1,143);
+ if(rleMask&1)rlecase(8,0,140,0);
+ if(rleMask&2)rlecase(4,0,141,0);
+ if(rleMask&4)rlecase(8,1,142,0);
+ if(rleMask&8)rlecase(4,1,143,0);
  if(rleMask&32)rlemalformed();
  if(rleMask&16)rlecrosssegment();
  if(rleMask&64)rleinvalidpairs();
@@ -799,6 +820,16 @@ int PASCAL WinMain(HINSTANCE inst,HINSTANCE prev,LPSTR cmd,int show)
  }
  hidden=0;do{ret=ShowCursor(FALSE);hidden++;}while(ret>=0 && hidden<32);SetCursor(NULL);
  if(phases&1)core();if(phases&2)imports();if(phases&4)readback();if(phases&8)textcursor();if(phases&16)aliases();if(phases&32)rlephase();
+ if(phases&64){
+  rlecase(4,0,150,1);
+  rlecase(4,0,151,3);
+  rlecase(4,1,152,1);
+  rlecase(4,1,153,3);
+  rlecase(8,0,154,1);
+  rlecase(8,0,155,3);
+  rlecase(8,1,156,1);
+  rlecase(8,1,157,3);
+ }
  line("COMPLETE",1);_lclose(logFile);ReleaseDC(NULL,dc);
  while(hidden>0){ShowCursor(TRUE);hidden--;}
  return 0;

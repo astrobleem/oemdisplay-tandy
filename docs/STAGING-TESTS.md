@@ -21,3 +21,9 @@ this closure step.
   `cb12b6b8ecb657b44b2b5122895dcaabca84fbc15c9b9f1a542e14d9f935629d`, exact
   byte match to run41, link PASS, 16,563 8086 instruction rows audited and
   zero unsupported opcodes. Runtime was not run by this build.
+
+## Nonzero-X delta correction
+
+The historical candidate above predates the nonzero-X vertical-delta fix.
+See [follow-up evidence](RLEDELTA.MD) for the new source, actual assembly before/after tests,
+and distinct default-profile scope. The old candidate hash is historical.

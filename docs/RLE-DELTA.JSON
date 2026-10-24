@@ -1,0 +1,1325 @@
+{
+  "schema": 1,
+  "base_commit": "15f2c2910feb0e3745ba23d3af25f5344f1c1519",
+  "scope": "Actual assembled driver, Windows 3.0 WIN /R APIs and raw B800 VRAM; no hardware qualification",
+  "emulator": {
+    "name": "official installed DOSBox-X 2025.10.07",
+    "sha256": "df62e4502eb25d8b7b9893ea8e479b05820baa11d4b54b02439c688ac1d834bd",
+    "machine": "tandy",
+    "cpu": "8086_prefetch",
+    "memsize_mb": 1,
+    "xms": false,
+    "ems": false,
+    "umb": false,
+    "guard": "accepted RESERVE.COM reserved 16KB overlap",
+    "timeout_seconds_each_guest": 120
+  },
+  "fixture": {
+    "phase": 64,
+    "cases": "150..157: RLE4 then RLE8, screen then memory, dy1 then dy3",
+    "stream": "02 55/05 00 02 02 01/03 03 99/09 00 01",
+    "expected": "run of 5 at X0..1,row0; run of 9 at X4..6,rowdy; all other pixels zero",
+    "oracle": "independent BI_RGB image plus full raw-VRAM MODECHK expectations"
+  },
+  "runtime": {
+    "before": {
+      "pass": false,
+      "case_count": 8,
+      "pixels_compared": 512000,
+      "assertions": [
+        {
+          "name": "metadata.VERSION",
+          "pass": true,
+          "actual": [
+            2
+          ],
+          "expected": [
+            1,
+            2
+          ]
+        },
+        {
+          "name": "metadata.PALETTE_KIND",
+          "pass": true,
+          "actual": [
+            0
+          ],
+          "expected": [
+            0
+          ]
+        },
+        {
+          "name": "metadata.PHASES",
+          "pass": true,
+          "actual": [
+            64
+          ],
+          "expected": [
+            64
+          ]
+        },
+        {
+          "name": "metadata.HORZRES",
+          "pass": true,
+          "actual": [
+            320
+          ],
+          "expected": [
+            320
+          ]
+        },
+        {
+          "name": "metadata.VERTRES",
+          "pass": true,
+          "actual": [
+            200
+          ],
+          "expected": [
+            200
+          ]
+        },
+        {
+          "name": "metadata.BITSPIXEL",
+          "pass": true,
+          "actual": [
+            1
+          ],
+          "expected": [
+            1
+          ]
+        },
+        {
+          "name": "metadata.PLANES",
+          "pass": true,
+          "actual": [
+            4
+          ],
+          "expected": [
+            4
+          ]
+        },
+        {
+          "name": "metadata.NUMCOLORS",
+          "pass": true,
+          "actual": [
+            16
+          ],
+          "expected": [
+            16
+          ]
+        },
+        {
+          "name": "metadata.BIOS",
+          "pass": true,
+          "actual": [
+            9
+          ],
+          "expected": [
+            9
+          ]
+        },
+        {
+          "name": "metadata.COMPLETE",
+          "pass": true,
+          "actual": [
+            1
+          ],
+          "expected": [
+            1
+          ]
+        },
+        {
+          "name": "complete_case_sequence",
+          "pass": true,
+          "actual": [
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157
+          ],
+          "expected": [
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157
+          ]
+        },
+        {
+          "name": "no.WRONG_DISPLAY",
+          "pass": true,
+          "actual": [],
+          "expected": []
+        },
+        {
+          "name": "no.DUMP_ERROR",
+          "pass": true,
+          "actual": [],
+          "expected": []
+        },
+        {
+          "name": "no.BRUSH_ERROR",
+          "pass": true,
+          "actual": [],
+          "expected": []
+        },
+        {
+          "name": "no.ALIASES_WRONG_PROFILE",
+          "pass": true,
+          "actual": [],
+          "expected": []
+        }
+      ],
+      "results": [
+        {
+          "case": 150,
+          "kind": 19,
+          "pass": false,
+          "mismatch_count": 4,
+          "first_mismatches": [
+            [
+              12,
+              69,
+              0,
+              9
+            ],
+            [
+              13,
+              69,
+              0,
+              9
+            ],
+            [
+              15,
+              69,
+              9,
+              0
+            ],
+            [
+              16,
+              69,
+              9,
+              0
+            ]
+          ],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "RLE_return_value": true,
+            "RAW_return_value": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 151,
+          "kind": 19,
+          "pass": false,
+          "mismatch_count": 4,
+          "first_mismatches": [
+            [
+              12,
+              67,
+              0,
+              9
+            ],
+            [
+              13,
+              67,
+              0,
+              9
+            ],
+            [
+              15,
+              67,
+              9,
+              0
+            ],
+            [
+              16,
+              67,
+              9,
+              0
+            ]
+          ],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "RLE_return_value": true,
+            "RAW_return_value": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 152,
+          "kind": 19,
+          "pass": false,
+          "mismatch_count": 4,
+          "first_mismatches": [
+            [
+              12,
+              69,
+              0,
+              9
+            ],
+            [
+              13,
+              69,
+              0,
+              9
+            ],
+            [
+              15,
+              69,
+              9,
+              0
+            ],
+            [
+              16,
+              69,
+              9,
+              0
+            ]
+          ],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "memory_allocated": true,
+            "RLE_setdib_scans": true,
+            "RAW_setdib_scans": true,
+            "RLE_bitblt": true,
+            "RAW_bitblt": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 153,
+          "kind": 19,
+          "pass": false,
+          "mismatch_count": 4,
+          "first_mismatches": [
+            [
+              12,
+              67,
+              0,
+              9
+            ],
+            [
+              13,
+              67,
+              0,
+              9
+            ],
+            [
+              15,
+              67,
+              9,
+              0
+            ],
+            [
+              16,
+              67,
+              9,
+              0
+            ]
+          ],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "memory_allocated": true,
+            "RLE_setdib_scans": true,
+            "RAW_setdib_scans": true,
+            "RLE_bitblt": true,
+            "RAW_bitblt": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 154,
+          "kind": 19,
+          "pass": false,
+          "mismatch_count": 4,
+          "first_mismatches": [
+            [
+              12,
+              69,
+              0,
+              9
+            ],
+            [
+              13,
+              69,
+              0,
+              9
+            ],
+            [
+              15,
+              69,
+              9,
+              0
+            ],
+            [
+              16,
+              69,
+              9,
+              0
+            ]
+          ],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "RLE_return_value": true,
+            "RAW_return_value": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 155,
+          "kind": 19,
+          "pass": false,
+          "mismatch_count": 4,
+          "first_mismatches": [
+            [
+              12,
+              67,
+              0,
+              9
+            ],
+            [
+              13,
+              67,
+              0,
+              9
+            ],
+            [
+              15,
+              67,
+              9,
+              0
+            ],
+            [
+              16,
+              67,
+              9,
+              0
+            ]
+          ],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "RLE_return_value": true,
+            "RAW_return_value": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 156,
+          "kind": 19,
+          "pass": false,
+          "mismatch_count": 4,
+          "first_mismatches": [
+            [
+              12,
+              69,
+              0,
+              9
+            ],
+            [
+              13,
+              69,
+              0,
+              9
+            ],
+            [
+              15,
+              69,
+              9,
+              0
+            ],
+            [
+              16,
+              69,
+              9,
+              0
+            ]
+          ],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "memory_allocated": true,
+            "RLE_setdib_scans": true,
+            "RAW_setdib_scans": true,
+            "RLE_bitblt": true,
+            "RAW_bitblt": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 157,
+          "kind": 19,
+          "pass": false,
+          "mismatch_count": 4,
+          "first_mismatches": [
+            [
+              12,
+              67,
+              0,
+              9
+            ],
+            [
+              13,
+              67,
+              0,
+              9
+            ],
+            [
+              15,
+              67,
+              9,
+              0
+            ],
+            [
+              16,
+              67,
+              9,
+              0
+            ]
+          ],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "memory_allocated": true,
+            "RLE_setdib_scans": true,
+            "RAW_setdib_scans": true,
+            "RLE_bitblt": true,
+            "RAW_bitblt": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        }
+      ],
+      "files": {
+        "MB150.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD150.BIN": {
+          "bytes": 32768,
+          "sha256": "83a4728b3ff4b3fe324dffc040de5dc2db88fef00321814c4a064d94519814c2"
+        },
+        "MB151.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD151.BIN": {
+          "bytes": 32768,
+          "sha256": "1ca3475c9df851b0a3e26bf8693d661b12ea417d73dc08fa52ede67e2656c28f"
+        },
+        "MB152.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD152.BIN": {
+          "bytes": 32768,
+          "sha256": "83a4728b3ff4b3fe324dffc040de5dc2db88fef00321814c4a064d94519814c2"
+        },
+        "MB153.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD153.BIN": {
+          "bytes": 32768,
+          "sha256": "1ca3475c9df851b0a3e26bf8693d661b12ea417d73dc08fa52ede67e2656c28f"
+        },
+        "MB154.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD154.BIN": {
+          "bytes": 32768,
+          "sha256": "83a4728b3ff4b3fe324dffc040de5dc2db88fef00321814c4a064d94519814c2"
+        },
+        "MB155.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD155.BIN": {
+          "bytes": 32768,
+          "sha256": "1ca3475c9df851b0a3e26bf8693d661b12ea417d73dc08fa52ede67e2656c28f"
+        },
+        "MB156.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD156.BIN": {
+          "bytes": 32768,
+          "sha256": "83a4728b3ff4b3fe324dffc040de5dc2db88fef00321814c4a064d94519814c2"
+        },
+        "MB157.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD157.BIN": {
+          "bytes": 32768,
+          "sha256": "1ca3475c9df851b0a3e26bf8693d661b12ea417d73dc08fa52ede67e2656c28f"
+        },
+        "WINDOWS\\MODETEST.EXE": {
+          "bytes": 29071,
+          "sha256": "449727892ee99ba25ebfbc076c75f771cb80f0d3132a6252f4104dc163e72cf3"
+        },
+        "WINDOWS\\SYSTEM\\TANDY88.DRV": {
+          "bytes": 58592,
+          "sha256": "12bc895bf40dd7840db911e8857158e0d27faeb7884ae2b269413a3183b14a4f"
+        }
+      },
+      "driver_bytes": 58592,
+      "driver_sha256": "12bc895bf40dd7840db911e8857158e0d27faeb7884ae2b269413a3183b14a4f",
+      "rle_listing_sha256": "345d529ebc07d87605fd3cfbe18c888846073e9faa14e17cccf18b26e8f51f36",
+      "rle_abi_audit": {
+        "source": {
+          "near_helper_returns": 2,
+          "delta_skip_width": 1
+        },
+        "listing": {
+          "near_call_sites": [
+            "0360",
+            "0438",
+            "0460",
+            "049A"
+          ],
+          "helper_success_opcode": "C3",
+          "helper_failure_opcode": "C3",
+          "helper_stack_delta_bytes": {
+            "success": 0,
+            "failure": 0
+          },
+          "far_cleanup": {
+            "RLEInit": 24,
+            "RLENextRow": 8
+          },
+          "delta_skip_compare": "byte [ES:DI+27]"
+        }
+      },
+      "instruction_audit": {
+        "emitted_instruction_rows_checked": 16552,
+        "listing_counts": {
+          "BITBLT.LST": 2070,
+          "BMC_ETI.LST": 813,
+          "BMC_ITE.LST": 667,
+          "BMC_MAIN.LST": 109,
+          "CBLT.LST": 586,
+          "CHARWDTH.LST": 105,
+          "CHKSTK.LST": 90,
+          "COLORINF.LST": 34,
+          "COLORS.LST": 98,
+          "DITHERS.LST": 327,
+          "ENUM.LST": 88,
+          "FB.LST": 347,
+          "LODITHER.LST": 44,
+          "OUTPUT.LST": 11,
+          "PIXEL.LST": 198,
+          "POLYLINE.LST": 1807,
+          "REALFIX.LST": 629,
+          "REALPRO.LST": 705,
+          "RLBLDSTR.LST": 1178,
+          "RLE88.LST": 1082,
+          "RLSTRBLT.LST": 1210,
+          "ROBJECT.LST": 349,
+          "SCANLINE.LST": 583,
+          "SCANLR.LST": 228,
+          "SDIB88.LST": 636,
+          "SETMODE.LST": 2,
+          "TCURSOR.LST": 620,
+          "TSOFT.LST": 1936
+        },
+        "unsupported": [],
+        "scope": "Emitted instruction rows, including macro expansions (some macro header rows repeat bytes). Numeric runtime-code templates are audited separately by PORT8086."
+      },
+      "process_exit": 0,
+      "owned_child_not_running": true,
+      "lease_released": true,
+      "exact_windows_restoration": {
+        "windows_exact": true,
+        "files": 118,
+        "tree_sha256": "0ef9589efcad5b779b1b8e46d70c2c800002fcae45b04c37a34e33c70401dfae"
+      }
+    },
+    "after": {
+      "pass": true,
+      "case_count": 8,
+      "pixels_compared": 512000,
+      "assertions": [
+        {
+          "name": "metadata.VERSION",
+          "pass": true,
+          "actual": [
+            2
+          ],
+          "expected": [
+            1,
+            2
+          ]
+        },
+        {
+          "name": "metadata.PALETTE_KIND",
+          "pass": true,
+          "actual": [
+            0
+          ],
+          "expected": [
+            0
+          ]
+        },
+        {
+          "name": "metadata.PHASES",
+          "pass": true,
+          "actual": [
+            64
+          ],
+          "expected": [
+            64
+          ]
+        },
+        {
+          "name": "metadata.HORZRES",
+          "pass": true,
+          "actual": [
+            320
+          ],
+          "expected": [
+            320
+          ]
+        },
+        {
+          "name": "metadata.VERTRES",
+          "pass": true,
+          "actual": [
+            200
+          ],
+          "expected": [
+            200
+          ]
+        },
+        {
+          "name": "metadata.BITSPIXEL",
+          "pass": true,
+          "actual": [
+            1
+          ],
+          "expected": [
+            1
+          ]
+        },
+        {
+          "name": "metadata.PLANES",
+          "pass": true,
+          "actual": [
+            4
+          ],
+          "expected": [
+            4
+          ]
+        },
+        {
+          "name": "metadata.NUMCOLORS",
+          "pass": true,
+          "actual": [
+            16
+          ],
+          "expected": [
+            16
+          ]
+        },
+        {
+          "name": "metadata.BIOS",
+          "pass": true,
+          "actual": [
+            9
+          ],
+          "expected": [
+            9
+          ]
+        },
+        {
+          "name": "metadata.COMPLETE",
+          "pass": true,
+          "actual": [
+            1
+          ],
+          "expected": [
+            1
+          ]
+        },
+        {
+          "name": "complete_case_sequence",
+          "pass": true,
+          "actual": [
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157
+          ],
+          "expected": [
+            150,
+            151,
+            152,
+            153,
+            154,
+            155,
+            156,
+            157
+          ]
+        },
+        {
+          "name": "no.WRONG_DISPLAY",
+          "pass": true,
+          "actual": [],
+          "expected": []
+        },
+        {
+          "name": "no.DUMP_ERROR",
+          "pass": true,
+          "actual": [],
+          "expected": []
+        },
+        {
+          "name": "no.BRUSH_ERROR",
+          "pass": true,
+          "actual": [],
+          "expected": []
+        },
+        {
+          "name": "no.ALIASES_WRONG_PROFILE",
+          "pass": true,
+          "actual": [],
+          "expected": []
+        }
+      ],
+      "results": [
+        {
+          "case": 150,
+          "kind": 19,
+          "pass": true,
+          "mismatch_count": 0,
+          "first_mismatches": [],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "RLE_return_value": true,
+            "RAW_return_value": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 151,
+          "kind": 19,
+          "pass": true,
+          "mismatch_count": 0,
+          "first_mismatches": [],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "RLE_return_value": true,
+            "RAW_return_value": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 152,
+          "kind": 19,
+          "pass": true,
+          "mismatch_count": 0,
+          "first_mismatches": [],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "memory_allocated": true,
+            "RLE_setdib_scans": true,
+            "RAW_setdib_scans": true,
+            "RLE_bitblt": true,
+            "RAW_bitblt": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 153,
+          "kind": 19,
+          "pass": true,
+          "mismatch_count": 0,
+          "first_mismatches": [],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "memory_allocated": true,
+            "RLE_setdib_scans": true,
+            "RAW_setdib_scans": true,
+            "RLE_bitblt": true,
+            "RAW_bitblt": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 154,
+          "kind": 19,
+          "pass": true,
+          "mismatch_count": 0,
+          "first_mismatches": [],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "RLE_return_value": true,
+            "RAW_return_value": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 155,
+          "kind": 19,
+          "pass": true,
+          "mismatch_count": 0,
+          "first_mismatches": [],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "RLE_return_value": true,
+            "RAW_return_value": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 156,
+          "kind": 19,
+          "pass": true,
+          "mismatch_count": 0,
+          "first_mismatches": [],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "memory_allocated": true,
+            "RLE_setdib_scans": true,
+            "RAW_setdib_scans": true,
+            "RLE_bitblt": true,
+            "RAW_bitblt": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        },
+        {
+          "case": 157,
+          "kind": 19,
+          "pass": true,
+          "mismatch_count": 0,
+          "first_mismatches": [],
+          "pixels_compared": 64000,
+          "padding_bytes_compared": 768,
+          "padding_mismatches": [],
+          "padding_mismatch_count": 0,
+          "checks": {
+            "scan_start": true,
+            "scan_count": true,
+            "stage_receipts_ordered": true,
+            "preclear_receipt": true,
+            "compressed_call_receipt": true,
+            "postrender_receipt": true,
+            "RLE_CLIP1": true,
+            "RLE_CLIP2": true,
+            "RLE_INPUT_CHANGED": true,
+            "RAW_INPUT_CHANGED": true,
+            "INFO_INPUT_CHANGED": true,
+            "memory_allocated": true,
+            "RLE_setdib_scans": true,
+            "RAW_setdib_scans": true,
+            "RLE_bitblt": true,
+            "RAW_bitblt": true,
+            "compressed_size": true,
+            "case_completed": true
+          }
+        }
+      ],
+      "files": {
+        "MB150.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD150.BIN": {
+          "bytes": 32768,
+          "sha256": "c454546d3a776bb24a7607c5381f6696ec8be05266ce2a32e671e3f7b2aa0343"
+        },
+        "MB151.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD151.BIN": {
+          "bytes": 32768,
+          "sha256": "3f3f387c1e4780dfe75de2a016dd6848bddfcb2040dae2c520e51e43a8254b7c"
+        },
+        "MB152.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD152.BIN": {
+          "bytes": 32768,
+          "sha256": "c454546d3a776bb24a7607c5381f6696ec8be05266ce2a32e671e3f7b2aa0343"
+        },
+        "MB153.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD153.BIN": {
+          "bytes": 32768,
+          "sha256": "3f3f387c1e4780dfe75de2a016dd6848bddfcb2040dae2c520e51e43a8254b7c"
+        },
+        "MB154.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD154.BIN": {
+          "bytes": 32768,
+          "sha256": "c454546d3a776bb24a7607c5381f6696ec8be05266ce2a32e671e3f7b2aa0343"
+        },
+        "MB155.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD155.BIN": {
+          "bytes": 32768,
+          "sha256": "3f3f387c1e4780dfe75de2a016dd6848bddfcb2040dae2c520e51e43a8254b7c"
+        },
+        "MB156.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD156.BIN": {
+          "bytes": 32768,
+          "sha256": "c454546d3a776bb24a7607c5381f6696ec8be05266ce2a32e671e3f7b2aa0343"
+        },
+        "MB157.BIN": {
+          "bytes": 32768,
+          "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+        },
+        "MD157.BIN": {
+          "bytes": 32768,
+          "sha256": "3f3f387c1e4780dfe75de2a016dd6848bddfcb2040dae2c520e51e43a8254b7c"
+        },
+        "WINDOWS\\MODETEST.EXE": {
+          "bytes": 29071,
+          "sha256": "449727892ee99ba25ebfbc076c75f771cb80f0d3132a6252f4104dc163e72cf3"
+        },
+        "WINDOWS\\SYSTEM\\TANDY88.DRV": {
+          "bytes": 58592,
+          "sha256": "5a845c8f735206b3f479e06d4afd25ec7bf1e8f81484dd57c5bffba76690508e"
+        }
+      },
+      "driver_bytes": 58592,
+      "driver_sha256": "5a845c8f735206b3f479e06d4afd25ec7bf1e8f81484dd57c5bffba76690508e",
+      "rle_listing_sha256": "ee5a1d0bbc50c38dea2ae7dddebd9e7996e05f0918f917c809b1ec869dfa165e",
+      "rle_abi_audit": {
+        "source": {
+          "near_helper_returns": 2,
+          "delta_skip_width": 1
+        },
+        "listing": {
+          "near_call_sites": [
+            "0360",
+            "0438",
+            "0460",
+            "049A"
+          ],
+          "helper_success_opcode": "C3",
+          "helper_failure_opcode": "C3",
+          "helper_stack_delta_bytes": {
+            "success": 0,
+            "failure": 0
+          },
+          "far_cleanup": {
+            "RLEInit": 24,
+            "RLENextRow": 8
+          },
+          "delta_skip_compare": "byte [ES:DI+27]"
+        }
+      },
+      "instruction_audit": {
+        "emitted_instruction_rows_checked": 16553,
+        "listing_counts": {
+          "BITBLT.LST": 2070,
+          "BMC_ETI.LST": 813,
+          "BMC_ITE.LST": 667,
+          "BMC_MAIN.LST": 109,
+          "CBLT.LST": 586,
+          "CHARWDTH.LST": 105,
+          "CHKSTK.LST": 90,
+          "COLORINF.LST": 34,
+          "COLORS.LST": 98,
+          "DITHERS.LST": 327,
+          "ENUM.LST": 88,
+          "FB.LST": 347,
+          "LODITHER.LST": 44,
+          "OUTPUT.LST": 11,
+          "PIXEL.LST": 198,
+          "POLYLINE.LST": 1807,
+          "REALFIX.LST": 629,
+          "REALPRO.LST": 705,
+          "RLBLDSTR.LST": 1178,
+          "RLE88.LST": 1083,
+          "RLSTRBLT.LST": 1210,
+          "ROBJECT.LST": 349,
+          "SCANLINE.LST": 583,
+          "SCANLR.LST": 228,
+          "SDIB88.LST": 636,
+          "SETMODE.LST": 2,
+          "TCURSOR.LST": 620,
+          "TSOFT.LST": 1936
+        },
+        "unsupported": [],
+        "scope": "Emitted instruction rows, including macro expansions (some macro header rows repeat bytes). Numeric runtime-code templates are audited separately by PORT8086."
+      },
+      "process_exit": 0,
+      "owned_child_not_running": true,
+      "lease_released": true,
+      "exact_windows_restoration": {
+        "windows_exact": true,
+        "files": 118,
+        "tree_sha256": "0ef9589efcad5b779b1b8e46d70c2c800002fcae45b04c37a34e33c70401dfae"
+      }
+    }
+  },
+  "source_sha256": {
+    "src/tandysw/RLE88.ASM": "617e8a5fea847fe1f06a810404232d8f418587e7fd3680b60d9491a38cf131bc",
+    "src/tandysw/MODETEST.C": "11f60ec6149a2575f6595426b46e35d11481265d8a8bae6e403ab0fa3c89802e",
+    "src/tandysw/MODECHK.PY": "a944f5387b7cadf396bdab9c89aac26677df6b5dc2a8d1b9a05ef0685665556d"
+  },
+  "probe": {
+    "bytes": 29071,
+    "sha256": "449727892ee99ba25ebfbc076c75f771cb80f0d3132a6252f4104dc163e72cf3",
+    "source_note": "Compiled before comment-only phase documentation; executable code matches published source."
+  },
+  "baseline_rle_source_sha256": "4668100f7082583adec427f918c73d8f95cc2b0a521a60de1e46aa57aada38f8",
+  "limitations": [
+    "Default 320x200x16 development profile tested; HPXY and other profiles not rerun",
+    "No physical-machine, CF, performance or input qualification",
+    "Accepted driver packages and runtime binaries remain unchanged"
+  ],
+  "frame_archive": {
+    "path": "docs/RLEDELTA.ZIP",
+    "sha256": "ce5a2a9948168117c0cc01f937031537f96e157c5cce58f228dae6defa5158b7",
+    "bytes": 7834
+  }
+}

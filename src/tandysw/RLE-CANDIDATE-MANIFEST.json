@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "integration_status": "LOCAL_SOURCE_STAGING_NOT_PUBLICATION_READY",
+  "integration_status": "MERGED_HISTORICAL_RUN41_PLUS_NONZERO_X_DELTA_FOLLOWUP",
   "canonical_repository": "https://github.com/astrobleem/oemdisplay-tandy.git",
   "base_commit": "fcfb74825001a5ba1888b82b1fbbddf037356015",
   "base_tree": "79e44cb578b04a1179542174447e2650876ec606",
@@ -42,8 +42,8 @@
   },
   "staged_files": {
     "docs/RLE-RUN41-QUALIFICATION.md": {
-      "bytes": 1551,
-      "sha256": "7e2f2cb5812541f7add2e15478a6b8402698a8907781ced1f479d5bbe961456a",
+      "bytes": 1857,
+      "sha256": "6570acf86c9d838dc79f1da6f4bf2b9e7e92425b67e1ab5de89083f094bac5a2",
       "staged_from": "generated local integration document"
     },
     "docs/RUN41-MODECHK-RECHECK.json": {
@@ -51,8 +51,8 @@
       "sha256": "2cea78ca2a98284d766b3f90b8cebc379afae7a1a45df86b78603db0aae45ddd"
     },
     "docs/STAGING-TESTS.md": {
-      "bytes": 1452,
-      "sha256": "3a884c7a46b741d9474b782dc2cde863ed5173acf0b5312ae1cf69cf807317ee"
+      "bytes": 1755,
+      "sha256": "16c8bc6232bb7522b2bff15529905fbd7480e9dd3bc3198cd869af3e694d0449"
     },
     "experiments/HPAN/HFLUSH.ASM": {
       "bytes": 2745,
@@ -110,13 +110,13 @@
       "staged_from": "canonical HEAD DIB88.MD plus reviewed RLE section"
     },
     "src/tandysw/MODECHK.PY": {
-      "bytes": 46824,
-      "sha256": "e88257a9f1faba0f74525123ef964cd3b1d48680844b517f160e1e9f98046b81",
+      "bytes": 47520,
+      "sha256": "a944f5387b7cadf396bdab9c89aac26677df6b5dc2a8d1b9a05ef0685665556d",
       "staged_from": "RLE-ABI-RETURN-FIX-REVIEW/source/matrix/MODECHK.PY"
     },
     "src/tandysw/MODETEST.C": {
-      "bytes": 38184,
-      "sha256": "485a7765d0394e5a94abd63559c02f1bceb055d14fc73a4a6c0f1068003b2d78",
+      "bytes": 39568,
+      "sha256": "11f60ec6149a2575f6595426b46e35d11481265d8a8bae6e403ab0fa3c89802e",
       "staged_from": "RLE-ABI-RETURN-FIX-REVIEW/source/matrix/MODETEST.C"
     },
     "src/tandysw/PORTDIB.PY": {
@@ -125,8 +125,8 @@
       "staged_from": "build-root/src/tandysw/PORTDIB.PY"
     },
     "src/tandysw/RLE-INTEGRATION.md": {
-      "bytes": 3256,
-      "sha256": "c3a645acf2f180a16ba8056f3b2751c63adde06641bafe5cb3b048e0091f93af",
+      "bytes": 3604,
+      "sha256": "5d9a8b38919fd0debd52f87578e4ea56589d27faea506fbec40d7a0e8f33b04b",
       "staged_from": "generated local integration document"
     },
     "src/tandysw/RLE-PROVENANCE.md": {
@@ -135,8 +135,8 @@
       "staged_from": "generated local integration document"
     },
     "src/tandysw/RLE88.ASM": {
-      "bytes": 23231,
-      "sha256": "4668100f7082583adec427f918c73d8f95cc2b0a521a60de1e46aa57aada38f8",
+      "bytes": 23308,
+      "sha256": "617e8a5fea847fe1f06a810404232d8f418587e7fd3680b60d9491a38cf131bc",
       "staged_from": "build-root/src/tandysw/RLE88.ASM"
     },
     "src/tandysw/RLEABITEST.PY": {
@@ -381,5 +381,16 @@
     "tree": "523075e94d83a53b2c980c59a961e9949d4e23f4",
     "subject": "Add experimental Windows XT overview and recovery helper (#165)",
     "role": "current canonical main used for the verified closure rebuild"
+  },
+  "staged_files_role": "Current exact file bytes; historical run41/reproduction candidate hashes retain their original scope.",
+  "delta_followup": {
+    "record": "docs/RLE-DELTA.JSON",
+    "sha256": "3281dbd0463e20a838fc67fc5e5b2d33e7f1c7870e546117c20acfc990f29d5f",
+    "candidate": "5a845c8f735206b3f479e06d4afd25ec7bf1e8f81484dd57c5bffba76690508e",
+    "bytes": 58592,
+    "profile": "320x200x16; development output only; accepted payload unchanged",
+    "actual_assembly_cases": 8,
+    "before_failed": 8,
+    "after_passed": 8
   }
 }

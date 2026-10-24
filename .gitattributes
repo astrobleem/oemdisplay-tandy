@@ -88,3 +88,15 @@ experiments/XYOVERVIEW/** -text
 
 # Original compact160 sources and evidence keep reviewed bytes.
 experiments/COMPACT/** -text
+
+# RLE follow-up preserves mandatory CRLF and exact test evidence bytes.
+docs/RLE-RUN41-QUALIFICATION.md -text
+docs/STAGING-TESTS.md -text
+src/tandysw/RLE-CANDIDATE-MANIFEST.json -text
+src/tandysw/RLE-INTEGRATION.md -text
+src/tandysw/RLE88.ASM -text
+src/tandysw/MODETEST.C -text
+src/tandysw/MODECHK.PY -text
+docs/RLEDELTA.MD -text
+docs/RLE-DELTA.JSON -text
+docs/RLEDELTA.ZIP -text

@@ -55,3 +55,9 @@ or performance improvement. The RLE implementation uses bounded stream
 input and one scan-row scratch buffer; no whole-image allocation is made.
 The DIB entrypoint limit remains that compressed inputs require nonzero
 `biSizeImage`; malformed and unsupported format combinations fail closed.
+
+## Nonzero-X delta correction
+
+The historical candidate above predates the nonzero-X vertical-delta fix.
+See [follow-up evidence](../../docs/RLEDELTA.MD) for the new source, actual assembly before/after tests,
+and distinct default-profile scope. The old candidate hash is historical.
