@@ -85,3 +85,6 @@ docs/RELEASES/RC8.MD -text
 docs/SHOWCASE.MD -text
 # Preserve exact Watcom source and review evidence bytes.
 experiments/XYOVERVIEW/** -text
+
+# Original compact160 sources and evidence keep reviewed bytes.
+experiments/COMPACT/** -text
