@@ -43,6 +43,9 @@ modes 8, 9 and 0Ah cannot switch away with Alt+Tab; finish them to return.
 <details>
 <summary>Source, optional checksums and test records</summary>
 
+Installation text and its manifests were refreshed; driver/helper bytes and
+saved test records are unchanged. No native rebuild or new runtime claim is made.
+
 All driver, guard, launcher, grabber, font and logo bytes match the recorded
 clean-install emulator packet. The [26/26 session](../../../docs/pcjr/INSTALL/SESSION.JSN),
 [existing-install conversion](../../../docs/pcjr/INSTALL/CONVERT.JSN) and
@@ -50,11 +53,11 @@ clean-install emulator packet. The [26/26 session](../../../docs/pcjr/INSTALL/SE
 No fresh Windows boot was run for publication. Physical PCjr memory
 expansion, keyboard, mouse/serial input and timing remain unqualified.
 
-The ZIP is **114,994 bytes**, SHA-256
-`a781614c5c8c5f6c498e6e9a82364b4c2c9c3c3f7e2b2be0c67b42b2f57c17d8`.
+The ZIP is **114,921 bytes**, SHA-256
+`a5280c3cd1dde76c603e2d0f4f0dc56986aba2a2e5d4bf5a6299cd2321a19cd2`.
 `PCJREXP/SHA256.SUM` covers every member. `BUILD.JSN` records exact source,
-payloads, fresh builds and inherited emulator qualification. Two independent
-package runs produced identical ZIP bytes. The merged JRPACK builder's
+payloads, fresh builds and inherited emulator qualification. The original packet builds were reproducible; this refresh changes only
+installation text and manifests. The merged JRPACK builder's
 original runtime pins and all existing release assets remain unchanged.
 
 [Machine and evidence guide](../../../docs/PCJR.MD) ·

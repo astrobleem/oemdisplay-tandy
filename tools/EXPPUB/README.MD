@@ -2,7 +2,9 @@
 
 `PACKAGE.PY` reproduces and verifies the 2026-10-18 TEXT80 and PCjr ZIPs.
 These are separate from Windows XT rc.6 and the historical DISPLAY3 release.
-Existing package bytes, tags, release assets and qualification pins stay fixed.
+Runtime bytes, tags, release assets and qualification pins stay fixed.
+The repository-file ZIPs have refreshed installation text and manifests;
+all other members retain their original bytes and test scope.
 
 The runtime source is commit `997e7b910eb4623226b676c1c229aa0dd4e81661`.
 `PINS.JSN` is the explicit payload allowlist; `QUALIFY.JSN` records exact

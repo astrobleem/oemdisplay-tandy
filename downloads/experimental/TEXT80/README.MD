@@ -57,6 +57,9 @@ Physical adapter coverage is unqualified.
 <details>
 <summary>Source, optional checksums and test records</summary>
 
+Installation text and its manifests were refreshed; driver/helper bytes and
+saved test records are unchanged. No native rebuild or new runtime claim is made.
+
 | Profile | Driver | View and desktop | Exact evidence for this download |
 | --- | --- | --- | --- |
 | **C25** | T80CMP.DRV | 80×25, compact controls, 640×200 | Matches the recorded 54/54 Windows GUI session binary. |
@@ -70,11 +73,11 @@ later recorded DOS-tested build and passes fresh compact/rollback fixtures.
 Scrolling is slow; graphics and larger fonts appear as block approximations.
 C25's compact controls are exact only when aligned to the text-cell grid.
 
-The ZIP is **389,919 bytes**, SHA-256
-`cd892a48db2973e7c99f4d6a00977cfe7e2466699baa5afcd4baf977aa2a30b9`.
+The ZIP is **389,855 bytes**, SHA-256
+`1ea8fc1444520633b671a4fcd760a903aafd33a12789d4a4ed623197c2246e03`.
 Each member is bound by `TEXT80/SHA256.SUM`; `BUILD.JSN` records exact source,
-compiler, emulator, payload and test identities. Two independent package
-runs produced identical ZIP bytes. All runtime filenames use DOS 8.3 names.
+compiler, emulator, payload and test identities. The original packet builds were reproducible; this refresh changes only
+installation text and manifests. All runtime filenames use DOS 8.3 names.
 
 [Build and packaging recipe](../../../tools/EXPPUB/README.MD) ·
 [Qualification record](../../../tools/EXPPUB/QUALIFY.JSN) ·
