@@ -7,16 +7,16 @@ The included XRSYNC.DRV is the exact 60,800-byte native-tested candidate:
 ae2d06f69ff68e64f099c3e0af79028e40e7dca89bd442de23eb18d36be4dca1
 
 PREPARE ON THE HOST (Python 3)
-1. Extract XRSYNC.ZIP to a new host folder.
-2. Supply your matching Windows 3.0 CGA.GR2 (2,104 bytes, SHA256
-   1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067).
-   Use a flat merged media folder (expanded or SZDD), or your owned Windows
-   SYSTEM folder. The Windows file is added locally and is not in this ZIP.
-3. Run:
-   python PREPARE.PY --windows-media C:\OWNW30 --out C:\XR155
-   The new output is a complete OEM display disk. Preparation verifies every
-   supplied runtime byte and the grabber before creating it. Copy that whole
-   folder into the DOS computer/guest at C:\XR155. Keep it for Setup prompts.
+Extract XRSYNC.ZIP. Point preparation at your existing owned Windows 3.0
+folder; it finds and verifies the required support file automatically:
+
+  python PREPARE.PY --windows C:\OWNW30\WINDOWS --out C:\XR155
+
+Use your installed Windows folder's host path in place of C:\OWNW30\WINDOWS.
+A flat merged source-media folder is also accepted. Preparation checks all
+runtime bytes before creating the new complete OEM display folder. Copy the
+whole resulting folder to C:\XR155 in DOS. No manual file gathering is needed.
+The Windows support file is supplied locally and is absent from the download.
 
 INSTALL FROM PLAIN DOS
 Use a separate backed-up stock-CGA Windows 3.0 installation at C:\WINDOWS,
@@ -40,6 +40,8 @@ QUALIFICATION
 hardware pan (8,56), far software pan (320,56), visible cursor and diagonal
 pan/return. Abandoned-BEGIN rows are immediately visible in direct B800 reads.
 All 17 RLE cases pass (1,088,000 independent oracle pixels per driver).
+Normal DOS Setup installs this OEM kit. A cold boot through RUNSYNC.BAT
+passes the cursor-visible pan probe with 17 more matching full-VRAM frames.
 At DOSBox-X fixed 3,000 cycles, cursor-key redraw drops from 4,010-4,064 to
 549-604 ms; Calculator median drops from 2,142 to 1,099 ms. These are emulator
 workloads, not calibrated hardware speed claims. Native-tested driver alias,

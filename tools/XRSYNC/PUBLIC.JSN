@@ -5,7 +5,7 @@
       "source": "tools/XRSYNC/INPUTS.JSN",
       "identity": {
         "bytes": 2086,
-        "sha256": "0940360798f3e4e9dd6af78c54f97293a4da2da821a31248f9ee2fc3c64f96db"
+        "sha256": "0415dd516f93b9eaf84245c2dd11b2fb8b1bd19470db27a4f99d925206548368"
       }
     },
     "NOTICE.TXT": {
@@ -39,15 +39,15 @@
     "PAYLOAD/OEMSETUP.INF": {
       "source": "tools/XRSYNC/PAYLOAD/OEMSETUP.INF",
       "identity": {
-        "bytes": 430,
-        "sha256": "fd896e6bb901b793d6384be0d175b81f13ffe731bf7ce8e4fce1403eb448631e"
+        "bytes": 437,
+        "sha256": "2f69abfd75344f6381cf2041cb34160300e9f3f9e103780e2087da047d3d3f4f"
       }
     },
     "PAYLOAD/README.TXT": {
       "source": "tools/XRSYNC/PAYLOAD/README.TXT",
       "identity": {
-        "bytes": 3196,
-        "sha256": "7d88f553bc22a50cb7c751861cfb59417e56365f74c0d344d78c0d931c72c8af"
+        "bytes": 3307,
+        "sha256": "f62ea83c47797cd99102aca46e18899fe71f9933a4662b46ee109ecad77e6be1"
       }
     },
     "PAYLOAD/RESERVE.COM": {
@@ -116,15 +116,15 @@
     "PREPARE.PY": {
       "source": "tools/XRSYNC/PREPARE.PY",
       "identity": {
-        "bytes": 2832,
-        "sha256": "7580025c4b66d3c0f2d6b550910e9e97d18ac858b8fdd42c363c2dc3a3749956"
+        "bytes": 3017,
+        "sha256": "155f9d3cf69c37e87cc5515aeba5c215336ed14ee8254f07aa8f9a5458a05ba9"
       }
     },
     "README.TXT": {
       "source": "tools/XRSYNC/README.TXT",
       "identity": {
-        "bytes": 3196,
-        "sha256": "7d88f553bc22a50cb7c751861cfb59417e56365f74c0d344d78c0d931c72c8af"
+        "bytes": 3307,
+        "sha256": "f62ea83c47797cd99102aca46e18899fe71f9933a4662b46ee109ecad77e6be1"
       }
     },
     "XRMEDIA.PY": {

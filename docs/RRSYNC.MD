@@ -96,15 +96,10 @@ python experiments/XYRRECT/XRBUILD.PY --repo <view> --out <fresh> --dosbox <dosb
 `--batch` remains an alias for that current XR1 option. The separate TR5
 RRBUILD deferred variants remain historical negative controls only.
 
-The local `PR155-SYNC-OEM.zip` is a complete private OEM display packet using
-the same candidate bytes as `XRSYNC.DRV`, preventing cached HPXY reuse. That
-alias loads and passes API/pan-frame tests at all three viewports. The packet
-uses the existing display/font Setup tuple and includes the owned CGA.GR2
-solely for this local test. Install only in a separate stock-CGA Windows 3.0
-guest copy through normal Setup / Display / Other; its README gives the path.
-No accepted guarded XR1 install or release pin is changed. The native Setup
-wizard itself was not replayed; physical hardware and CF writes are outside
-this qualification. The packet remains local and is not for publication.
+The earlier private OEM packet contains the owned CGA grabber and stays local.
+Its XRSYNC alias passed the API/pan tests above. The separate public kit below
+completes preparation, native Setup and a cold boot without including Windows
+support bytes in the download.
 
 ## Public installable kit
 
@@ -115,16 +110,26 @@ OEM kit contains the exact tested alias driver, RESERVE, XYCTL, original
 fonts/artwork and component notices. No accepted payload or package pin is
 replaced. The public archive excludes CGA.GR2 and all Windows/DOS media.
 
-After extracting it, run `python PREPARE.PY --windows-media <owned-folder>
+After extracting it, run `python PREPARE.PY --windows <installed-Windows-folder>
 --out <fresh-OEM-folder>`. The unchanged XR1 bounded own-media reader accepts
 only the pinned 2,104-byte CGA grabber, expanded or SZDD, and checks all runtime
 pins before creating the complete private OEM folder. Copy it to C:\XR155;
 use plain-DOS Windows Setup / Display / Other, then RUNSYNC.BAT and XYCTL.
 The kit README supplies the exact paths and rollback procedure.
 
-Seven package regressions check complete output, wrong owned input, changed
+Nine package regressions check complete output, wrong owned input, changed
 driver, existing-output preservation, input/output overlap, deterministic
-closed ZIP inventory and corrupted-release refusal. Actual owned-grabber
-preparation also passes; the prepared driver is byte-identical to the native
-qualified alias. This host preparation does not add a new Setup-wizard or
-physical-hardware test claim to the runtime evidence above.
+closed ZIP inventory and corrupted-release refusal.
+Actual installed-Windows preparation also passes. A cloned installation then
+ran normal DOS Windows Setup / Display / Other from that prepared kit. Setup
+selected XRSYNC, copied the exact driver and three matching fonts into SYSTEM,
+and rebuilt the startup files. Its copy source uses C:\XR155, following the
+accepted XR1 OEM convention; a relative disk path had caused an avoidable
+second source prompt during qualification and was corrected.
+
+A separate cold boot through the packaged RUNSYNC.BAT then completed the
+existing cursor-visible diagonal-pan probe and returned to DOS. All 17 raw
+VRAM frames match the earlier native-qualified alias run byte-for-byte.
+[SETUP.JSN](rrsync/SETUP.JSN) binds installed identities, boot selections,
+frame comparisons, screenshot and probe log. Both owned emulator processes
+exited and both leases were released. No physical hardware or CF was used.

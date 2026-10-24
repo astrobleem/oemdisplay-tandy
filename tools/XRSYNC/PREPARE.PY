@@ -21,6 +21,9 @@ def media_module():
 
 def prepare(windows, payload, output, manifest=None):
     media = media_module()
+    # Accept the installed Windows directory, as well as flat source media.
+    if (windows / "SYSTEM").is_dir():
+        windows = windows / "SYSTEM"
     spec = manifest or json.loads((HERE / "INPUTS.JSN").read_bytes())
     if spec["schema"] != 1 or spec["profile"] != "XRSYNC":
         raise media.Refused("Unsupported OEM preparation manifest")
@@ -51,8 +54,8 @@ def prepare(windows, payload, output, manifest=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--windows-media", required=True, type=Path,
-                        help="Flat matching media folder or owned WINDOWS/SYSTEM folder")
+    parser.add_argument("--windows", "--windows-media", dest="windows_media", required=True, type=Path,
+                        help="Owned Windows directory or flat matching media folder")
     parser.add_argument("--payload", default=HERE / "PAYLOAD", type=Path)
     parser.add_argument("--out", required=True, type=Path)
     args = parser.parse_args()

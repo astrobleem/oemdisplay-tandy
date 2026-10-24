@@ -3,6 +3,7 @@ import importlib.util
 from importlib.machinery import SourceFileLoader
 import io
 import json
+import ntpath
 from pathlib import Path
 import shutil
 import tempfile
@@ -51,6 +52,13 @@ class PackageTests(unittest.TestCase):
             self.run_prepare()
         self.assertFalse(self.out.exists())
 
+    def test_installed_windows_directory_is_automatic(self):
+        system = self.media / "SYSTEM"
+        system.mkdir()
+        (self.media / "CGA.GR2").rename(system / "CGA.GR2")
+        self.run_prepare()
+        self.assertEqual((self.out / "CGA.GR2").read_bytes(), self.fixture)
+
     def test_changed_runtime_creates_nothing(self):
         (self.payload / "XRSYNC.DRV").write_bytes(b"wrong")
         with self.assertRaises(ValueError):
@@ -79,6 +87,12 @@ class PackageTests(unittest.TestCase):
             self.assertEqual(set(archive.namelist()), set(entries))
             self.assertNotIn("PAYLOAD/CGA.GR2", archive.namelist())
             self.assertEqual(publish.pub.identity(archive.read("PAYLOAD/XRSYNC.DRV")), publish.DRIVER)
+
+    def test_oem_copy_path_resolves_from_windows_directory(self):
+        inf = (self.payload / "OEMSETUP.INF").read_text()
+        disk = next(line for line in inf.splitlines() if line.startswith("a = "))
+        location = disk.split("=", 1)[1].split(",", 1)[0].strip()
+        self.assertEqual(ntpath.normpath(ntpath.join("C:\\WINDOWS", location)), "C:\\XR155")
 
     def test_published_assets_verify_and_reject_tamper(self):
         release = self.root / "release"
