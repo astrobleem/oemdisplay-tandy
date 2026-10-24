@@ -325,8 +325,9 @@ class Sess:
         before = (self.got / "SCREEN.CLP").read_bytes() if (self.got / "SCREEN.CLP").exists() else None
         after = self.fetch("/AFTER9.CLP", "AFTER9.CLP")
         self.check("a mode-9 Print Screen leaves the Clipboard as it was (Windows 3.0 real mode grabs text screens only)",
-                   after is not None and (before is None or after == before),
-                   unchanged=before is not None and after == before, compared=before is not None)
+                   after is not None and before is not None
+                   and self.clp_bitmap(after) == self.clp_bitmap(before),
+                   compared="CF_BITMAP size, planes and every pixel (the .CLP headers hold run-time handles)")
         self.key("alt+F4", wait=15)
         self.park()
 
