@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "target": "8088 / DOS 3.20+",
+  "compiler": "Open Watcom 16-bit DOS; -bt=dos -0 -ml -os",
+  "binary": {
+    "bytes": 47214,
+    "sha256": "a0b1a938614239c9ad2e7b5aa51a8b8004f1eac7d1013e03b9e70b302179ad80"
+  },
+  "sources": {
+    "DOSCORE.H": {
+      "bytes": 23248,
+      "sha256": "d00db5ed02216200f34f05170efbd1053d39885ae367c133f4c6bf11fe1e556f"
+    },
+    "PACKPINS.H": {
+      "bytes": 73,
+      "sha256": "fa96864511f03aed1628668d10c4073314e49e554f965a90db6e44a16ec403ac"
+    },
+    "SZSTREAM.H": {
+      "bytes": 1867,
+      "sha256": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68"
+    },
+    "XSETUP.C": {
+      "bytes": 5681,
+      "sha256": "c332c09b9b034b20065aecc8ae455a8dd7aec07a32bf32826ebe3d246d9c1169"
+    },
+    "XSPINS.H": {
+      "bytes": 1091,
+      "sha256": "593505453c42c9af6aa77194e03a2088ed0b52b34b085b8fc14e480850c51057"
+    }
+  }
+}

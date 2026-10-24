@@ -8,10 +8,11 @@ This notice does not relicense Microsoft's implementation or grant a new
 license to original Microsoft materials. No blanket MIT claim applies.
 
 XYCTL and RESERVE are existing project helpers. XT Pixels fonts and original
-artwork retain FONTLIC.TXT and LOGOLIC.TXT. The host preparation/publishing
-tools are project-authored; XRMEDIA.PY is the unchanged XR1 own-media reader.
+artwork retain FONTLIC.TXT and LOGOLIC.TXT. The DOS-native XSETUP installer and developer
+preparation/publishing tools are project-authored. The native helper uses
+the Open Watcom runtime; retain the supplied OWATCOM.TXT notice.
 
-CGA.GR2 comes from your licensed Windows copy. PREPARE.PY adds it locally to
+CGA.GR2 comes from your licensed Windows copy. XSETUP gathers it locally into
 a private OEM disk after checking its exact identity. Public downloads contain
 no Windows/DOS media, DDK source/libraries, compilers, ROMs or guest images.
 Tandy and Microsoft names identify compatibility, not endorsement.

@@ -5,6 +5,7 @@ from importlib.machinery import SourceFileLoader
 import json
 from pathlib import Path
 import re
+import struct
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
@@ -18,7 +19,7 @@ DRIVER = {"bytes": 60800, "sha256":
 
 def collect():
     spec = json.loads((HERE / "PUBLIC.JSN").read_bytes())
-    pub.require(spec["schema"] == 1, "Unsupported public manifest")
+    pub.require(spec["schema"] == 2, "Unsupported public manifest")
     entries = {}
     for name, record in spec["files"].items():
         pub.safe_path(name)
@@ -28,10 +29,33 @@ def collect():
     pub.require(pub.identity(entries["PAYLOAD/XRSYNC.DRV"]) == DRIVER,
                 "Driver differs from the native-qualified candidate")
     public_payload = {n[8:]: pub.identity(d) for n, d in entries.items() if n.startswith("PAYLOAD/")}
-    inputs = json.loads(entries["INPUTS.JSN"])
-    pub.require(inputs["payload"] == public_payload, "Prepared runtime inventory differs")
+    inputs = json.loads((HERE / "INPUTS.JSN").read_bytes())
+    expected = {n: pin for n, pin in inputs["payload"].items() if n != "RUNSYNC.BAT"}
+    pub.require(expected == public_payload, "Prepared runtime inventory differs")
     pub.require("CGA.GR2" not in public_payload, "Owned grabber cannot be public")
+    pub.require(not any(n.endswith(".PY") for n in entries), "Consumer kit includes host preparation")
+    native = json.loads((HERE.parent / "DOSINST/XSNATIVE.JSN").read_bytes())
+    pub.require(pub.identity(entries["XSETUP.EXE"]) == native["binary"], "Native helper differs")
+    for name, pin in native["sources"].items():
+        pub.require(pub.identity(pub.read_file(HERE.parent / "DOSINST", name)) == pin,
+                    "Native build source differs: " + name)
+    mz_size(entries["XSETUP.EXE"])
+    qualified = json.loads((REPO / "docs/QUAL/DOSINST/XRSYNC.JSN").read_bytes())
+    pub.require(qualified["install"]["complete"] and qualified["cold"]["complete"] and
+                all(qualified["checks"].values()), "Native qualification incomplete")
+    packet = pub.zip_bytes(entries)
+    pub.require(qualified["public_assets"]["XRSYNC.ZIP"] == pub.identity(packet) and
+                qualified["public_assets"]["XRSYNC.EXE"] == pub.identity(entries["XSETUP.EXE"] + packet),
+                "Package differs from native-qualified download")
     return entries
+
+
+def mz_size(data):
+    pub.require(len(data) >= 28 and data[:2] == b"MZ", "Native helper is not a DOS EXE")
+    last, pages = struct.unpack_from("<HH", data, 2)
+    size = pages * 512 - (512 - last if last else 0)
+    pub.require(0 < size == len(data), "Native EXE image length differs")
+    return size
 
 
 def build(output, commit):
@@ -39,11 +63,13 @@ def build(output, commit):
     entries = collect()
     archive = pub.zip_bytes(entries)
     pub.check_zip(archive, entries, "XRSYNC.ZIP")
-    report = {"schema": 1, "source_commit": commit, "driver": DRIVER,
+    report = {"schema": 2, "source_commit": commit, "driver": DRIVER,
               "files": {n: pub.identity(d) for n, d in sorted(entries.items())},
               "contains_owned_windows_bytes": False, "physical_qualification": False,
-              "runtime_report": "docs/RRSYNC.MD", "runtime_evidence": "docs/rrsync/"}
-    result = {"XRSYNC.ZIP": archive, "README.TXT": entries["README.TXT"],
+              "runtime_report": "docs/RRSYNC.MD", "runtime_evidence": "docs/rrsync/",
+              "native_installation": "docs/QUAL/DOSINST/XRSYNC.JSN",
+              "consumer_command": "XRSYNC C:\\WINDOWS"}
+    result = {"XRSYNC.EXE": entries["XSETUP.EXE"] + archive, "XRSYNC.ZIP": archive, "README.TXT": entries["README.TXT"],
               "RELEASE.JSON": (json.dumps(report, indent=2) + "\n").replace("\n", "\r\n").encode("ascii")}
     result["SHA256SUMS"] = "".join(pub.digest(d) + "  " + n + "\r\n"
                                     for n, d in sorted(result.items())).encode("ascii")

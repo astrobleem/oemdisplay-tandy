@@ -3,6 +3,7 @@ import importlib.util
 from importlib.machinery import SourceFileLoader
 import io
 import json
+import struct
 import ntpath
 from pathlib import Path
 import shutil
@@ -88,11 +89,26 @@ class PackageTests(unittest.TestCase):
             self.assertNotIn("PAYLOAD/CGA.GR2", archive.namelist())
             self.assertEqual(publish.pub.identity(archive.read("PAYLOAD/XRSYNC.DRV")), publish.DRIVER)
 
+    def test_self_contained_native_exe(self):
+        release = self.root / "native-release"
+        publish.build(release, "e84a17d1562a3f938b5268b8a92fc5e47b176deb")
+        data = (release / "XRSYNC.EXE").read_bytes()
+        helper = publish.collect()["XSETUP.EXE"]
+        self.assertEqual(data[:len(helper)], helper)
+        self.assertEqual(data[len(helper):], (release / "XRSYNC.ZIP").read_bytes())
+        with zipfile.ZipFile(io.BytesIO(data[len(helper):])) as archive:
+            self.assertFalse(any(n.endswith(".PY") for n in archive.namelist()))
+            self.assertNotIn("PAYLOAD/CGA.GR2", archive.namelist())
+            self.assertNotIn("PAYLOAD/RUNSYNC.BAT", archive.namelist())
+            self.assertIn("XSETUP.EXE", archive.namelist())
+            self.assertIn("OWATCOM.TXT", archive.namelist())
+
     def test_oem_copy_path_resolves_from_windows_directory(self):
         inf = (self.payload / "OEMSETUP.INF").read_text()
         disk = next(line for line in inf.splitlines() if line.startswith("a = "))
         location = disk.split("=", 1)[1].split(",", 1)[0].strip()
-        self.assertEqual(ntpath.normpath(ntpath.join("C:\\WINDOWS", location)), "C:\\XR155")
+        for windows in ("C:\\WINDOWS", "D:\\WIN30", "C:\\OS\\WIN30"):
+            self.assertEqual(ntpath.normpath(ntpath.join(windows, location)), "C:\\XR155")
 
     def test_published_assets_verify_and_reject_tamper(self):
         release = self.root / "release"

@@ -1,54 +1,53 @@
-XRSYNC: SYNCHRONOUS XR1 OUTPUT / PR155
+XRSYNC - DOS-NATIVE WINDOWS 3.0 DISPLAY INSTALLER
 
-640x256 logical desktop, 320x200 sixteen-colour Tandy viewport, Windows 3.0
-real mode. The driver presents every Output before returning, including an
-abandoned BEGIN marker, using narrow column copies and cursor-aware updates.
-The included XRSYNC.DRV is the exact 60,800-byte native-tested candidate:
-ae2d06f69ff68e64f099c3e0af79028e40e7dca89bd442de23eb18d36be4dca1
+Tandy 1000 EX/HX, 8088, normal 640 KB RAM, DOS 3.20 or later.
+Requires an existing English Windows 3.0 real-mode installation.
 
-PREPARE ON THE HOST (Python 3)
-Extract XRSYNC.ZIP. Point preparation at your existing owned Windows 3.0
-folder; it finds and verifies the required support file automatically:
+INSTALL ON THE DOS COMPUTER
+Download XRSYNC.EXE and put it anywhere on the DOS computer. Exit Windows.
+Run it with your installed Windows directory, for example:
 
-  python PREPARE.PY --windows C:\OWNW30\WINDOWS --out C:\XR155
+  XRSYNC C:\WINDOWS
 
-Use your installed Windows folder's host path in place of C:\OWNW30\WINDOWS.
-A flat merged source-media folder is also accepted. Preparation checks all
-runtime bytes before creating the new complete OEM display folder. Copy the
-whole resulting folder to C:\XR155 in DOS. No manual file gathering is needed.
-The Windows support file is supplied locally and is absent from the download.
+It gathers the existing Windows support file automatically, prepares the
+complete OEM disk in C:\XR155, reserves video memory and opens Windows Setup.
+No Python, compiler, modern computer or separate unpacker is needed.
+It works when started from another drive. Use your actual Windows path.
 
-INSTALL FROM PLAIN DOS
-Use a separate backed-up stock-CGA Windows 3.0 installation at C:\WINDOWS,
-on a Tandy-compatible system with normal 640K conventional RAM. Exit Windows.
-1. Run C:\WINDOWS\SETUP. Choose Display, Other, then C:\XR155.
-2. Select "Tandy XR1 640x256 synchronous Output". Let Setup install the display,
-   grabber, original XT fonts and artwork. Keep your keyboard/mouse choices.
-3. Run C:\XR155\RUNSYNC.BAT from plain DOS. It reserves Tandy video memory
-   before starting WIN /R. Do this on each boot; do not start WIN directly.
-4. In Windows, use Program Manager File / Run: C:\XR155\XYCTL.EXE.
-   XYCTL provides viewport pan, Home and software/hardware presentation.
-   Existing compatible Tandy keyboard hotkeys remain available if installed.
+In Setup choose Display / Other, enter C:\XR155, select
+  Tandy XR1 640x256 synchronous Output
+then Complete Changes. Keep your keyboard and mouse selections. Select
+No Changes when Setup asks about DOS configuration.
 
-This is a separate OEM choice named XRSYNC.DRV. Keep an accepted guarded XR1
-installation separate: its STARTXT/FIXXT pins deliberately bind its own driver.
-Use the saved installation to roll back, or select stock CGA through DOS Setup.
-No manual INI edits, launcher-pin changes or writes to physical media are needed.
+Start each Windows session from plain DOS with:
+  C:\XR155\RUNSYNC.BAT
 
-QUALIFICATION
-165 full-VRAM frame pairs match the current-main baseline across origin,
-hardware pan (8,56), far software pan (320,56), visible cursor and diagonal
-pan/return. Abandoned-BEGIN rows are immediately visible in direct B800 reads.
-All 17 RLE cases pass (1,088,000 independent oracle pixels per driver).
-Normal DOS Setup installs this OEM kit. A cold boot through RUNSYNC.BAT
-passes the cursor-visible pan probe with 17 more matching full-VRAM frames.
-At DOSBox-X fixed 3,000 cycles, cursor-key redraw drops from 4,010-4,064 to
-549-604 ms; Calculator median drops from 2,142 to 1,099 ms. These are emulator
-workloads, not calibrated hardware speed claims. Native-tested driver alias,
-per-call pixels, panning and RLE evidence: docs/RRSYNC.MD and docs/rrsync/ at
-the release source commit. Physical hardware was not newly qualified.
+RUNSYNC checks the installed display and fonts, reserves video memory and
+starts WIN /R from the Windows directory used during installation.
+In Windows, run C:\XR155\XYCTL.EXE for viewport and presentation controls.
 
-SHA256SUMS binds the public assets; RELEASE.JSON binds their source commit,
-payload and notices. The prepared output contains your Windows grabber and
-stays private. No Windows/DOS media, DDK, compiler or emulator is supplied.
-See NOTICE.TXT and the separate original font/artwork notices.
+XRSYNC.ZIP is the same driver disk for users with a DOS ZIP utility. Extract
+it on the target computer and run XSETUP C:\WINDOWS from the extracted folder.
+The complete XRSYNC.EXE download does not require extraction.
+
+Existing differing C:\XR155 files are refused rather than overwritten.
+Missing or wrong Windows support is reported before creating the OEM disk.
+Use Windows Setup to choose the previous display if you want to switch back.
+After selecting XRSYNC, use RUNSYNC; STARTXT/FIXXT belongs to the original
+HPXY profile. No manual SYSTEM.INI or launcher-pin changes are needed.
+
+This installs the synchronous Output display update, not the full rc.8 shell.
+Its 60,800-byte driver is unchanged from the qualified graphics release.
+The logical desktop is 640x256 through a 320x200, sixteen-colour viewport.
+
+QUALIFICATION AND NOTICES
+DOS 3.20 / 8088 emulator: native staging from another drive, missing-input
+refusal, normal Windows Setup and a cold RUNSYNC cursor/panning probe.
+Existing per-call pixel, marker, cursor, panning and RLE results are retained
+in docs/RRSYNC.MD. Exact native installer results are in
+ docs/QUAL/DOSINST/XRSYNC.JSN
+at the source commit in RELEASE.JSON. No new physical test is claimed.
+
+The download excludes Windows/DOS files, disk images and proprietary tools.
+Your installed Windows CGA.GR2 is gathered locally and remains private.
+See NOTICE.TXT, OWATCOM.TXT and the font/artwork notices.

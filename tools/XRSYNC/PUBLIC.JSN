@@ -1,18 +1,11 @@
 {
-  "schema": 1,
+  "schema": 2,
   "files": {
-    "INPUTS.JSN": {
-      "source": "tools/XRSYNC/INPUTS.JSN",
-      "identity": {
-        "bytes": 2086,
-        "sha256": "0415dd516f93b9eaf84245c2dd11b2fb8b1bd19470db27a4f99d925206548368"
-      }
-    },
     "NOTICE.TXT": {
       "source": "tools/XRSYNC/NOTICE.TXT",
       "identity": {
-        "bytes": 1025,
-        "sha256": "e90b305ad44ec8f1d700d5cc819747610ee5d3213bc475601d7cf31c71c4637b"
+        "bytes": 1102,
+        "sha256": "96d204600d857033df78126ccfc7e351ed29659a9d5113e2d789d931c842bffd"
       }
     },
     "PAYLOAD/FONTLIC.TXT": {
@@ -32,8 +25,8 @@
     "PAYLOAD/NOTICE.TXT": {
       "source": "tools/XRSYNC/PAYLOAD/NOTICE.TXT",
       "identity": {
-        "bytes": 1025,
-        "sha256": "e90b305ad44ec8f1d700d5cc819747610ee5d3213bc475601d7cf31c71c4637b"
+        "bytes": 1102,
+        "sha256": "96d204600d857033df78126ccfc7e351ed29659a9d5113e2d789d931c842bffd"
       }
     },
     "PAYLOAD/OEMSETUP.INF": {
@@ -46,8 +39,8 @@
     "PAYLOAD/README.TXT": {
       "source": "tools/XRSYNC/PAYLOAD/README.TXT",
       "identity": {
-        "bytes": 3307,
-        "sha256": "f62ea83c47797cd99102aca46e18899fe71f9933a4662b46ee109ecad77e6be1"
+        "bytes": 2648,
+        "sha256": "50f33b715ee31526dfb951c97de13c92be7f12c445b9dab18646f051d50b6fab"
       }
     },
     "PAYLOAD/RESERVE.COM": {
@@ -55,13 +48,6 @@
       "identity": {
         "bytes": 1512,
         "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
-      }
-    },
-    "PAYLOAD/RUNSYNC.BAT": {
-      "source": "tools/XRSYNC/PAYLOAD/RUNSYNC.BAT",
-      "identity": {
-        "bytes": 90,
-        "sha256": "c0311f9370ead5e705c6e393eeb57bbb96fa2df08755f35c34417ad6d39c79ce"
       }
     },
     "PAYLOAD/WXTSPL01.RLE": {
@@ -113,25 +99,25 @@
         "sha256": "7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055"
       }
     },
-    "PREPARE.PY": {
-      "source": "tools/XRSYNC/PREPARE.PY",
-      "identity": {
-        "bytes": 3017,
-        "sha256": "155f9d3cf69c37e87cc5515aeba5c215336ed14ee8254f07aa8f9a5458a05ba9"
-      }
-    },
     "README.TXT": {
       "source": "tools/XRSYNC/README.TXT",
       "identity": {
-        "bytes": 3307,
-        "sha256": "f62ea83c47797cd99102aca46e18899fe71f9933a4662b46ee109ecad77e6be1"
+        "bytes": 2648,
+        "sha256": "50f33b715ee31526dfb951c97de13c92be7f12c445b9dab18646f051d50b6fab"
       }
     },
-    "XRMEDIA.PY": {
-      "source": "tools/XR1PACK/PREPARE.PY",
+    "XSETUP.EXE": {
+      "source": "tools/DOSINST/BIN/XSETUP.EXE",
       "identity": {
-        "bytes": 11110,
-        "sha256": "c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1"
+        "bytes": 47214,
+        "sha256": "a0b1a938614239c9ad2e7b5aa51a8b8004f1eac7d1013e03b9e70b302179ad80"
+      }
+    },
+    "OWATCOM.TXT": {
+      "source": "tools/XR1PACK/OWATCOM.TXT",
+      "identity": {
+        "bytes": 21128,
+        "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
       }
     }
   }

@@ -6,6 +6,8 @@ on:
       - 'src/rrect/**'
       - 'experiments/XYRRECT/**'
       - 'tools/XRSYNC/**'
+      - 'tools/DOSINST/**'
+      - 'docs/QUAL/DOSINST/**'
       - 'docs/rrect/**'
       - 'docs/rrbatch/**'
       - 'docs/rrsync/**'
@@ -17,6 +19,8 @@ on:
       - 'src/rrect/**'
       - 'experiments/XYRRECT/**'
       - 'tools/XRSYNC/**'
+      - 'tools/DOSINST/**'
+      - 'docs/QUAL/DOSINST/**'
       - 'docs/rrect/**'
       - 'docs/rrbatch/**'
       - 'docs/rrsync/**'
@@ -43,7 +47,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/src/rrect/\n/experiments/XYRRECT/\n/tools/XRSYNC/\n/tools/XR1PACK/\n/docs/rrect/\n/docs/rrbatch/\n/docs/rrsync/\n/docs/TRIAL5/BUILDS.JSN\n' | git sparse-checkout set --no-cone --stdin
+          printf '/src/rrect/\n/experiments/XYRRECT/\n/tools/XRSYNC/\n/tools/XR1PACK/\n/tools/DOSINST/\n/docs/QUAL/DOSINST/\n/docs/rrect/\n/docs/rrbatch/\n/docs/rrsync/\n/docs/TRIAL5/BUILDS.JSN\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Verify exact frame checker, patch anchors and recorded A/B evidence

@@ -1,0 +1,20 @@
+
+C>@ECHO OFF
+
+C>C:\XR155\XSETUP.EXE /CHECK C:\WINDOWS
+XSETUP - DOS-native XRSYNC driver installation (8088 / DOS 3.20+)
+
+C>IF ERRORLEVEL 1 GOTO END
+
+C>C:\XR155\RESERVE.COM
+RESERVE: video reservation already installed.
+
+C>IF ERRORLEVEL 1 GOTO END
+
+C>C:
+
+C>CD \WINDOWS
+
+C>WIN /R
+
+C>
