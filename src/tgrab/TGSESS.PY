@@ -76,10 +76,28 @@ def prepare(a):
     P.mt("mcopy", "-o", "-i", i, str(gr), "::/WINDOWS/SYSTEM/" + gr.name.upper())
     P.mt("mcopy", "-o", "-i", i, str(Path(a.tools) / "TGPAT.COM"), "::/XTPAN/TGPAT.COM")
     bars = vm / "prep" / "BARS16.BMP"
-    (vm / "prep" / "TGIMG.BMP").write_bytes(T.bmp(T.read_bmp(bars.read_bytes())[3]))
+    if T.read_bmp(bars.read_bytes())[3] != T.WINPAL:
+        raise SystemExit("TGSESS: BARS16.BMP palette is not TGIMG.WINPAL")
+    (vm / "prep" / "TGIMG.BMP").write_bytes(T.bmp(T.WINPAL))
     P.mt("mcopy", "-o", "-i", i, str(vm / "prep" / "TGIMG.BMP"), "::/WINDOWS/TGIMG.BMP")
     changes.append("added XTPAN/TGPAT.COM (sha256 %s) and WINDOWS/TGIMG.BMP (TGIMG.PY, palette of BARS16.BMP)"
                    % P.sha(Path(a.tools) / "TGPAT.COM"))
+    auto = P.mt("mtype", "-i", i, "::/AUTOEXEC.BAT").decode("latin1")
+    if a.even:
+        P.mt("mcopy", "-o", "-i", i, str(Path(a.tools) / "TGEVEN.COM"), "::/XTPAN/TGEVEN.COM")
+        auto = P.edit(auto, "RESERVE\r\n", "RESERVE\r\nTGEVEN\r\n")
+        changes.append("added XTPAN/TGEVEN.COM (sha256 %s); AUTOEXEC.BAT runs it right after RESERVE"
+                       % P.sha(Path(a.tools) / "TGEVEN.COM"))
+    if a.tgclip:
+        P.mt("mcopy", "-o", "-i", i, str(Path(a.tools) / "TGCLIP.EXE"), "::/XTPAN/TGCLIP.EXE")
+        win = P.mt("mtype", "-i", i, "::/WINDOWS/WIN.INI").decode("latin1")
+        win = P.edit(win, "load=C:\\XTPAN\\XTPAN.EXE\r\n", "load=C:\\XTPAN\\XTPAN.EXE C:\\XTPAN\\TGCLIP.EXE\r\n")
+        (vm / "prep" / "WIN.INI").write_bytes(win.encode("latin1"))
+        P.mt("mcopy", "-o", "-i", i, str(vm / "prep" / "WIN.INI"), "::/WINDOWS/WIN.INI")
+        changes.append("added XTPAN/TGCLIP.EXE (sha256 %s); WIN.INI load= also starts it"
+                       % P.sha(Path(a.tools) / "TGCLIP.EXE"))
+    (vm / "prep" / "AUTOEXEC.BAT").write_bytes(auto.encode("latin1"))
+    P.mt("mcopy", "-o", "-i", i, str(vm / "prep" / "AUTOEXEC.BAT"), "::/AUTOEXEC.BAT")
     if a.no_reserve:
         auto = P.mt("mtype", "-i", i, "::/AUTOEXEC.BAT").decode("latin1")
         auto = P.edit(auto, "RESERVE\r\n", "")
@@ -150,14 +168,41 @@ class Sess:
                if px[x0 + x, y0 + y] != win_to_tandy(P_[y][x])]
         return bad
 
+    @staticmethod
+    def rgb(pal, i):
+        return bytes(pal[4 * i:4 * i + 3])
+
+    @staticmethod
+    def ref_rgb_of_tandy(tc):
+        """Reference RGB (BGR bytes) of a Tandy IRGB screen colour."""
+        w = win_to_tandy(tc)                  # the swap is its own inverse
+        return bytes(T.WINPAL[4 * w:4 * w + 3])
+
     def bmp_check(self, data, name):
+        """The 64x40 picture at (0,0): every pixel's colour, looked up in the
+        file's own palette, must equal the reference colour of TGIMG
+        (TGIMG.WINPAL), so a wrong palette entry or pixel fails."""
         w, h, rows, pal = T.read_bmp(data)
-        _, _, ref, rpal = T.read_bmp(T.bmp(pal))
-        rgb = lambda p, i: p[4 * i:4 * i + 3]
-        bad = sum(rgb(pal, rows[y][x]) != rgb(rpal, ref[y][x]) for y in range(40) for x in range(64))
-        white = all(rgb(pal, rows[y][x]) == b"\xff\xff\xff" for y in range(h) for x in range(w)
+        ref = T.pixels()
+        bad = sum(self.rgb(pal, rows[y][x]) != self.rgb(T.WINPAL, ref[y][x])
+                  for y in range(min(40, h)) for x in range(min(64, w))) + \
+            (0 if w >= 64 and h >= 40 else 1)
+        white = all(self.rgb(pal, rows[y][x]) == b"\xff\xff\xff" for y in range(h) for x in range(w)
                     if x >= 64 or y >= 40)
         return {"file": name, "width": w, "height": h, "picture_mismatches": bad, "rest_white": white}
+
+    def selftest(self):
+        """Host-only: the checks must reject a corrupted colour or pixel."""
+        good = T.bmp(T.WINPAL)
+        badpal = bytearray(good)
+        badpal[54 + 4 * 12] ^= 0x40           # palette entry 12 (marker colour) changed
+        badpix = bytearray(good)
+        badpix[-1] ^= 0x11                    # one byte of the top row's pixels changed
+        r0, r1, r2 = (self.bmp_check(bytes(x), n) for x, n in
+                      ((good, "good"), (badpal, "bad palette"), (badpix, "bad pixel")))
+        ok = r0["picture_mismatches"] == 0 and r1["picture_mismatches"] > 0 and r2["picture_mismatches"] > 0
+        self.check("self-test: the BMP colour check passes the original and fails a changed palette "
+                   "entry and a changed pixel", ok, good=r0, bad_palette=r1, bad_pixel=r2)
 
     def clp_bitmap(self, data):
         """(width, height, planes, bits/pixel, rows of colour indices) of the
@@ -279,10 +324,10 @@ class Sess:
         data = self.fetch("/WINDOWS/SCREEN.BMP", "SCREEN.BMP")
         if data:
             w, h, rows, pal = T.read_bmp(data)
-            same = lambda x, y: x < 320 and y < 200 and win_to_tandy(rows[y][x]) == src[x, y]
+            same = lambda x, y: x < 320 and y < 200 and self.rgb(pal, rows[y][x]) == self.ref_rgb_of_tandy(src[x, y])
             ww = next((x for x in range(w) if not same(x, 0)), w)
             hh = next((y for y in range(h) if not all(same(x, y) for x in range(ww))), h)
-            rest = all(rows[y][x] == 15 for y in range(h) for x in range(w) if x >= ww or y >= hh)
+            rest = all(self.rgb(pal, rows[y][x]) == b"\xff\xff\xff" for y in range(h) for x in range(w) if x >= ww or y >= hh)
             self.check("SCREEN.BMP: the pasted screen equals the captured screen pixel for pixel in the "
                        "part Paintbrush pastes (its drawing area); the rest of the canvas stays white",
                        ww >= 250 and hh >= 100 and rest, bmp_size=[w, h], exact_region=[ww, hh], rest_white=rest)
@@ -310,25 +355,58 @@ class Sess:
         bad = [(x, y) for y in range(200) for x in range(320) if a[x, y] != c[x, y]]
         self.check("after switching away and back the mode-9 screen is restored exactly (64,000 pixels)",
                    not bad, mismatches=len(bad))
-        self.step("Shift+PRINT in mode 9, then Space ends TGPAT")
-        self.key("shift+KP_Multiply", wait=30)
+        self.step("Shift+PRINT in mode 9 (TANDYGR writes a BMP), then Space ends TGPAT")
+        self.key("shift+KP_Multiply", wait=40)
         self.frame("dos9_printed")
         self.key("space", wait=60)
         self.park()
         self.frame("dos9_ended")
+        self.step("Clipboard: File > Save As C:\\DOS9.CLP")
         self.run_cmd("CLIPBRD", wait=40)
         self.frame("dos9_clipbrd")
         self.key("alt+f", wait=5)
         self.key("a", wait=12)
-        r.text("C:\\AFTER9.CLP")
+        r.text("C:\\DOS9.CLP")
         self.key("Return", wait=60)
-        before = (self.got / "SCREEN.CLP").read_bytes() if (self.got / "SCREEN.CLP").exists() else None
-        after = self.fetch("/AFTER9.CLP", "AFTER9.CLP")
-        self.check("a mode-9 Print Screen leaves the Clipboard as it was (Windows 3.0 real mode grabs text screens only)",
-                   after is not None and before is not None
-                   and self.clp_bitmap(after) == self.clp_bitmap(before),
-                   compared="CF_BITMAP size, planes and every pixel (the .CLP headers hold run-time handles)")
+        data = self.fetch("/DOS9.CLP", "DOS9.CLP")
+        bm = self.clp_bitmap(data) if data else None
+        if bm and bm[:2] == (320, 200):
+            w, h, pl, bp, rows = bm
+            bad = [(x, y) for y in range(200) for x in range(320) if win_to_tandy(rows[y][x]) != a[x, y]]
+            self.check("the DOS mode-9 screen is on the Clipboard as a 320x200 bitmap equal to the "
+                       "DOS screen in every pixel", (pl, bp) == (4, 1) and not bad,
+                       width=w, height=h, planes=pl, bits=bp, mismatches=len(bad))
+        else:
+            self.check("the DOS mode-9 screen is on the Clipboard as a 320x200 bitmap", False,
+                       saved=data is not None, bitmap=None if not bm else list(bm[:4]))
         self.key("alt+F4", wait=15)
+        self.step("Paintbrush: File > New, Edit > Paste, Save As DOS9.BMP")
+        self.run_cmd("PBRUSH", wait=70)
+        self.key("alt+space", wait=5)
+        self.key("x", wait=50)
+        self.key("alt+e", wait=5)
+        self.key("p", wait=40)
+        self.park()
+        self.frame("dos9_pasted")
+        r.click(*SCISSORS, wait=8)
+        self.key("alt+f", wait=5)
+        self.key("a", wait=12)
+        r.text("DOS9.BMP")
+        self.key("Return", wait=60)
+        self.frame("dos9_saved")
+        data = self.fetch("/WINDOWS/DOS9.BMP", "DOS9.BMP")
+        if data:
+            w, h, rows, pal = T.read_bmp(data)
+            x0, y0 = PAT_AT
+            pic = sum(self.rgb(pal, rows[y0 + y][x0 + x]) != self.ref_rgb_of_tandy(T.f(x, y))
+                      for y in range(40) for x in range(64)) if w >= x0 + 64 and h >= y0 + 40 else -1
+            black = sum(self.rgb(pal, rows[y][x]) != b"\x00\x00\x00" for y in range(y0) for x in range(min(w, 250)))
+            self.check("DOS9.BMP: the TGPAT picture at (128,80) with the original colours "
+                       "(reference palette), black around it", pic == 0 and black == 0,
+                       bmp_size=[w, h], picture_mismatches=pic, nonblack_above=black)
+        else:
+            self.check("DOS9.BMP saved", False)
+        self.key("alt+F4", wait=20)
         self.park()
 
     def part_text(self):
@@ -356,12 +434,13 @@ class Sess:
                    saved=data is not None)
 
     def run(self, part):
+        self.selftest()
         self.r.start_windows("start")
         if part in ("all", "win"):
             self.part_win()
         if part in ("all", "dos9"):
             self.part_dos9()
-        if part == "text":
+        if part in ("all", "text"):
             self.part_text()
         ok = all(c["ok"] for c in self.out["checks"])
         self.out["verdict"] = "PASS" if ok else "FAIL"
@@ -380,6 +459,8 @@ def main():
     ap.add_argument("--tools")
     ap.add_argument("--no-reserve", action="store_true")
     ap.add_argument("--display-drv")
+    ap.add_argument("--even", action="store_true", help="run TGEVEN.COM after RESERVE")
+    ap.add_argument("--tgclip", action="store_true", help="start TGCLIP.EXE with Windows")
     ap.add_argument("--part", default="all", choices=["all", "win", "dos9", "text"])
     a = ap.parse_args()
     if a.cmd == "prepare":

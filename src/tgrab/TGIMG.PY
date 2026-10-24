@@ -13,6 +13,10 @@ import struct
 from pathlib import Path
 
 W, H = 64, 40
+# The display driver's colour table as Windows writes it in a 4-bit BMP
+# (BGR0 per entry, Windows device index order). The reference colours.
+WINPAL = bytes.fromhex("00000000000080000080000000808000800000008000800080800000808080004040400"
+                       "00000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00")
 
 
 def f(x, y):
@@ -58,10 +62,10 @@ def read_bmp(data):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--palette", type=Path, required=True)
+    ap.add_argument("--palette", type=Path, help="default: WINPAL")
     ap.add_argument("--out", type=Path, required=True)
     a = ap.parse_args()
-    pal = read_bmp(a.palette.read_bytes())[3]
+    pal = read_bmp(a.palette.read_bytes())[3] if a.palette else WINPAL
     a.out.write_bytes(bmp(pal))
 
 
