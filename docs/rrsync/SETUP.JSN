@@ -1,0 +1,249 @@
+{
+  "schema": 1,
+  "status": "PASS_NATIVE_SETUP_AND_COLD_BOOT",
+  "date_utc": "2026-10-24",
+  "route": "Normal DOS Windows Setup / Display / Other / C:\\XR155; complete changes; separate cold boot via packaged RUNSYNC.BAT",
+  "setup_modified_display_and_fonts": true,
+  "fixture_shell": "existing RRBENCH v7; selected before Setup, no manual display/font INI edits",
+  "setup_installed": {
+    "XRSYNC.DRV": {
+      "bytes": 60800,
+      "sha256": "ae2d06f69ff68e64f099c3e0af79028e40e7dca89bd442de23eb18d36be4dca1"
+    },
+    "XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    }
+  },
+  "boot_selection": {
+    "display.drv": "XRSYNC.DRV",
+    "fonts.fon": "XTCSYS.FON",
+    "fixedfon.fon": "XTCFIX.FON",
+    "oemfonts.fon": "XTCOEM.FON",
+    "286grabber": "CGA.GR2"
+  },
+  "oemsetup": {
+    "bytes": 437,
+    "sha256": "2f69abfd75344f6381cf2041cb34160300e9f3f9e103780e2087da047d3d3f4f"
+  },
+  "setup_video": {
+    "bytes": 3973646,
+    "sha256": "cf28274a55d108a8b59d60a40e49f8f11ab55d0abeb0b634f33fd697a6cceb48"
+  },
+  "setup_screen": {
+    "bytes": 7523,
+    "sha256": "4a426e5361014628024c33f9e1994b0d1113bf2fe0892ea1cd2ad9592c3e4fd1"
+  },
+  "probe_log": {
+    "bytes": 1094,
+    "sha256": "77ffefd50572ae21ced0486cf6db951ea1f072c8ed43ee93e6dc4814869d5142"
+  },
+  "frame_comparisons": {
+    "RB01.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "6e764c5a5c9a23ddefe531f5946bbe41ac427a4a07d58d8598c92d519f373c12"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "6e764c5a5c9a23ddefe531f5946bbe41ac427a4a07d58d8598c92d519f373c12"
+      },
+      "equal": true
+    },
+    "RV01.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "37a4b9be607cfd597758e1fcbf7e0f435f1d78c84d7c50bc76bafd32d16a47b3"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "37a4b9be607cfd597758e1fcbf7e0f435f1d78c84d7c50bc76bafd32d16a47b3"
+      },
+      "equal": true
+    },
+    "RV02.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "84820c2f5b7de8074ba7216ddc96c3d47a32d1553885a211e9d121faeadd5a52"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "84820c2f5b7de8074ba7216ddc96c3d47a32d1553885a211e9d121faeadd5a52"
+      },
+      "equal": true
+    },
+    "RV03.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "facf456bacd066cf4e15fe323bafd208493e374d20b18fa5431b338c5df1ed6e"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "facf456bacd066cf4e15fe323bafd208493e374d20b18fa5431b338c5df1ed6e"
+      },
+      "equal": true
+    },
+    "RV04.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "52636c6dfcce236d2ed6483dfaa2cd9306c991d31477a7e61e90b7dac6f5038b"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "52636c6dfcce236d2ed6483dfaa2cd9306c991d31477a7e61e90b7dac6f5038b"
+      },
+      "equal": true
+    },
+    "RV05.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "3ae5fbecca7e7c408096a69ccd08e2d6dcaecc39687d62a59db83a02b13d496e"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "3ae5fbecca7e7c408096a69ccd08e2d6dcaecc39687d62a59db83a02b13d496e"
+      },
+      "equal": true
+    },
+    "RV06.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "52485328e47df3e53eef10f68565cd2985801ddeaca32cac50ae3bb74bcf0b30"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "52485328e47df3e53eef10f68565cd2985801ddeaca32cac50ae3bb74bcf0b30"
+      },
+      "equal": true
+    },
+    "RV07.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7"
+      },
+      "equal": true
+    },
+    "RV08.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7"
+      },
+      "equal": true
+    },
+    "RV09.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7"
+      },
+      "equal": true
+    },
+    "RV10.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "c432a5a08da1fe0cae13196b22356d3cb841385f7fb5ace0ac695f858cdff458"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "c432a5a08da1fe0cae13196b22356d3cb841385f7fb5ace0ac695f858cdff458"
+      },
+      "equal": true
+    },
+    "RV11.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "9d2aac6dd2d1cdbf20b520d4734ead135da7d845c047526ddfe5eea27fe31c5e"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "9d2aac6dd2d1cdbf20b520d4734ead135da7d845c047526ddfe5eea27fe31c5e"
+      },
+      "equal": true
+    },
+    "RV12.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "9c8bbcb59ff47033d740139a5966c021be52e60a6a22a1280d8639bcf4860f59"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "9c8bbcb59ff47033d740139a5966c021be52e60a6a22a1280d8639bcf4860f59"
+      },
+      "equal": true
+    },
+    "RV13.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "ef706f43aca4c3dabafd4f2d63dbd2a3ee6e1f895ecf21848fc995a6db5b0d91"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "ef706f43aca4c3dabafd4f2d63dbd2a3ee6e1f895ecf21848fc995a6db5b0d91"
+      },
+      "equal": true
+    },
+    "RV14.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "1f931683805b119234114ff9bdf1179f8e41f101f59b03f4ad7ac0b060a98990"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "1f931683805b119234114ff9bdf1179f8e41f101f59b03f4ad7ac0b060a98990"
+      },
+      "equal": true
+    },
+    "RV15.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "16bf3b9ddacea7e1655dee14c9bc06c010ae47f31f553a66c7f138c376ebdddc"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "16bf3b9ddacea7e1655dee14c9bc06c010ae47f31f553a66c7f138c376ebdddc"
+      },
+      "equal": true
+    },
+    "RV16.BIN": {
+      "installed": {
+        "bytes": 32768,
+        "sha256": "1f931683805b119234114ff9bdf1179f8e41f101f59b03f4ad7ac0b060a98990"
+      },
+      "reference": {
+        "bytes": 32768,
+        "sha256": "1f931683805b119234114ff9bdf1179f8e41f101f59b03f4ad7ac0b060a98990"
+      },
+      "equal": true
+    }
+  },
+  "matched_full_vram_frames": 17,
+  "setup_exit_code": 0,
+  "boot_exit_code": 0,
+  "both_owned_processes_stopped": true,
+  "both_leases_released": true,
+  "physical_hardware_tested": false,
+  "CF_access": false
+}

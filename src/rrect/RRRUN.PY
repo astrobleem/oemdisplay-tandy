@@ -137,7 +137,7 @@ def main(argv):
     listing = mt(vm, "mdir", "-b", "::/").stdout.decode("latin-1").split()
     got = {}
     for name in sorted(n.split("/")[-1].upper() for n in listing):
-        if name == "RRBENCH.LOG" or re.fullmatch(r"(RB|TR)\d\d\.BIN", name):
+        if name == "RRBENCH.LOG" or re.fullmatch(r"(RB|TR|RV)\d\d\.BIN", name):
             mt(vm, "mcopy", "-o", "::/" + name, str(out / name))
             got[name] = hashlib.sha256((out / name).read_bytes()).hexdigest()
     res["files"] = got

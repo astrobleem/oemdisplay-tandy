@@ -1,0 +1,86 @@
+{
+  "viewport": "X",
+  "expected_old_candidate_failure": true,
+  "differences": [
+    {
+      "file": "RB12.BIN",
+      "equal": false,
+      "differing_bytes": 42,
+      "differing_pixels": 82,
+      "bbox": [
+        4,
+        144,
+        44,
+        145
+      ]
+    },
+    {
+      "file": "RM09.BIN",
+      "equal": false,
+      "differing_bytes": 42,
+      "differing_pixels": 82,
+      "bbox": [
+        4,
+        144,
+        44,
+        145
+      ]
+    }
+  ],
+  "marker_oracle": [
+    {
+      "step": 1,
+      "pass": true,
+      "differing_pixels": 0,
+      "pixels_compared": 64000
+    },
+    {
+      "step": 2,
+      "pass": true,
+      "differing_pixels": 0,
+      "pixels_compared": 64000
+    },
+    {
+      "step": 3,
+      "pass": true,
+      "differing_pixels": 0,
+      "pixels_compared": 64000
+    },
+    {
+      "step": 4,
+      "pass": true,
+      "differing_pixels": 0,
+      "pixels_compared": 64000
+    },
+    {
+      "step": 5,
+      "pass": true,
+      "differing_pixels": 0,
+      "pixels_compared": 64000
+    },
+    {
+      "step": 6,
+      "pass": true,
+      "differing_pixels": 0,
+      "pixels_compared": 64000
+    },
+    {
+      "step": 7,
+      "pass": true,
+      "differing_pixels": 0,
+      "pixels_compared": 64000
+    },
+    {
+      "step": 8,
+      "pass": true,
+      "differing_pixels": 0,
+      "pixels_compared": 64000
+    },
+    {
+      "step": 9,
+      "pass": false,
+      "differing_pixels": 82,
+      "pixels_compared": 64000
+    }
+  ]
+}

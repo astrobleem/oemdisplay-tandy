@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "files": {
+    "INPUTS.JSN": {
+      "source": "tools/XRSYNC/INPUTS.JSN",
+      "identity": {
+        "bytes": 2086,
+        "sha256": "0415dd516f93b9eaf84245c2dd11b2fb8b1bd19470db27a4f99d925206548368"
+      }
+    },
+    "NOTICE.TXT": {
+      "source": "tools/XRSYNC/NOTICE.TXT",
+      "identity": {
+        "bytes": 1025,
+        "sha256": "e90b305ad44ec8f1d700d5cc819747610ee5d3213bc475601d7cf31c71c4637b"
+      }
+    },
+    "PAYLOAD/FONTLIC.TXT": {
+      "source": "tools/XRSYNC/PAYLOAD/FONTLIC.TXT",
+      "identity": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      }
+    },
+    "PAYLOAD/LOGOLIC.TXT": {
+      "source": "tools/XRSYNC/PAYLOAD/LOGOLIC.TXT",
+      "identity": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      }
+    },
+    "PAYLOAD/NOTICE.TXT": {
+      "source": "tools/XRSYNC/PAYLOAD/NOTICE.TXT",
+      "identity": {
+        "bytes": 1025,
+        "sha256": "e90b305ad44ec8f1d700d5cc819747610ee5d3213bc475601d7cf31c71c4637b"
+      }
+    },
+    "PAYLOAD/OEMSETUP.INF": {
+      "source": "tools/XRSYNC/PAYLOAD/OEMSETUP.INF",
+      "identity": {
+        "bytes": 437,
+        "sha256": "2f69abfd75344f6381cf2041cb34160300e9f3f9e103780e2087da047d3d3f4f"
+      }
+    },
+    "PAYLOAD/README.TXT": {
+      "source": "tools/XRSYNC/PAYLOAD/README.TXT",
+      "identity": {
+        "bytes": 3307,
+        "sha256": "f62ea83c47797cd99102aca46e18899fe71f9933a4662b46ee109ecad77e6be1"
+      }
+    },
+    "PAYLOAD/RESERVE.COM": {
+      "source": "tools/XRSYNC/PAYLOAD/RESERVE.COM",
+      "identity": {
+        "bytes": 1512,
+        "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+      }
+    },
+    "PAYLOAD/RUNSYNC.BAT": {
+      "source": "tools/XRSYNC/PAYLOAD/RUNSYNC.BAT",
+      "identity": {
+        "bytes": 90,
+        "sha256": "c0311f9370ead5e705c6e393eeb57bbb96fa2df08755f35c34417ad6d39c79ce"
+      }
+    },
+    "PAYLOAD/WXTSPL01.RLE": {
+      "source": "tools/XRSYNC/PAYLOAD/WXTSPL01.RLE",
+      "identity": {
+        "bytes": 4062,
+        "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+      }
+    },
+    "PAYLOAD/XRSYNC.DRV": {
+      "source": "tools/XRSYNC/PAYLOAD/XRSYNC.DRV",
+      "identity": {
+        "bytes": 60800,
+        "sha256": "ae2d06f69ff68e64f099c3e0af79028e40e7dca89bd442de23eb18d36be4dca1"
+      }
+    },
+    "PAYLOAD/XTCFIX.FON": {
+      "source": "tools/XRSYNC/PAYLOAD/XTCFIX.FON",
+      "identity": {
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+      }
+    },
+    "PAYLOAD/XTCOEM.FON": {
+      "source": "tools/XRSYNC/PAYLOAD/XTCOEM.FON",
+      "identity": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      }
+    },
+    "PAYLOAD/XTCSYS.FON": {
+      "source": "tools/XRSYNC/PAYLOAD/XTCSYS.FON",
+      "identity": {
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+      }
+    },
+    "PAYLOAD/XTSTATIC.LGO": {
+      "source": "tools/XRSYNC/PAYLOAD/XTSTATIC.LGO",
+      "identity": {
+        "bytes": 361,
+        "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+      }
+    },
+    "PAYLOAD/XYCTL.EXE": {
+      "source": "tools/XRSYNC/PAYLOAD/XYCTL.EXE",
+      "identity": {
+        "bytes": 9679,
+        "sha256": "7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055"
+      }
+    },
+    "PREPARE.PY": {
+      "source": "tools/XRSYNC/PREPARE.PY",
+      "identity": {
+        "bytes": 3017,
+        "sha256": "155f9d3cf69c37e87cc5515aeba5c215336ed14ee8254f07aa8f9a5458a05ba9"
+      }
+    },
+    "README.TXT": {
+      "source": "tools/XRSYNC/README.TXT",
+      "identity": {
+        "bytes": 3307,
+        "sha256": "f62ea83c47797cd99102aca46e18899fe71f9933a4662b46ee109ecad77e6be1"
+      }
+    },
+    "XRMEDIA.PY": {
+      "source": "tools/XR1PACK/PREPARE.PY",
+      "identity": {
+        "bytes": 11110,
+        "sha256": "c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1"
+      }
+    }
+  }
+}

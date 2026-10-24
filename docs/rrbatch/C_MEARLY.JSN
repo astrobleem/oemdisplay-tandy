@@ -1,0 +1,347 @@
+{
+ "reference": "out5_cand",
+ "candidate": "out5_mut-early",
+ "runs_complete": true,
+ "problems": {},
+ "all_frames_equal": false,
+ "stages": [
+  {
+   "stage": 1,
+   "name": "roundrect_key",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 4723,
+   "cand_ms": 4778
+  },
+  {
+   "stage": 2,
+   "name": "rectangle_key",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 2032,
+   "cand_ms": 2032
+  },
+  {
+   "stage": 3,
+   "name": "roundrect_large",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 6,
+   "ref_ms": 2472,
+   "cand_ms": 2527
+  },
+  {
+   "stage": 4,
+   "name": "roundrect_hollow",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 2088,
+   "cand_ms": 2088
+  },
+  {
+   "stage": 5,
+   "name": "roundrect_nopen",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 519,
+    "differing_pixels": 996,
+    "bbox": [
+     34,
+     4,
+     268,
+     57
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 2527,
+   "cand_ms": 2527
+  },
+  {
+   "stage": 6,
+   "name": "roundrect_xor",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 4339,
+   "cand_ms": 4339
+  },
+  {
+   "stage": 7,
+   "name": "roundrect_overlap",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 4449,
+   "cand_ms": 4449
+  },
+  {
+   "stage": 8,
+   "name": "roundrect_clipped",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 1867,
+   "cand_ms": 1867
+  },
+  {
+   "stage": 9,
+   "name": "ellipse_12",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 4,
+   "ref_ms": 714,
+   "cand_ms": 769
+  },
+  {
+   "stage": 10,
+   "name": "cursor_overlap",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 9557,
+   "cand_ms": 9502
+  },
+  {
+   "stage": 11,
+   "name": "visible_steps",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 14,
+   "ref_ms": 9393,
+   "cand_ms": 9447,
+   "steps": [
+    {
+     "equal": true,
+     "differing_pixels": 0,
+     "differing_bytes": 0
+    },
+    {
+     "equal": false,
+     "differing_bytes": 173,
+     "differing_pixels": 332,
+     "bbox": [
+      40,
+      10,
+      64,
+      23
+     ]
+    },
+    {
+     "equal": false,
+     "differing_bytes": 59,
+     "differing_pixels": 113,
+     "bbox": [
+      40,
+      10,
+      64,
+      14
+     ]
+    },
+    {
+     "equal": true,
+     "differing_pixels": 0,
+     "differing_bytes": 0
+    },
+    {
+     "equal": true,
+     "differing_pixels": 0,
+     "differing_bytes": 0
+    },
+    {
+     "equal": true,
+     "differing_pixels": 0,
+     "differing_bytes": 0
+    },
+    {
+     "equal": false,
+     "differing_bytes": 206,
+     "differing_pixels": 407,
+     "bbox": [
+      0,
+      120,
+      27,
+      134
+     ]
+    },
+    {
+     "equal": false,
+     "differing_bytes": 206,
+     "differing_pixels": 407,
+     "bbox": [
+      0,
+      120,
+      27,
+      134
+     ]
+    },
+    {
+     "equal": false,
+     "differing_bytes": 206,
+     "differing_pixels": 407,
+     "bbox": [
+      0,
+      120,
+      27,
+      134
+     ]
+    },
+    {
+     "equal": false,
+     "differing_bytes": 206,
+     "differing_pixels": 407,
+     "bbox": [
+      0,
+      120,
+      27,
+      134
+     ]
+    },
+    {
+     "equal": false,
+     "differing_bytes": 206,
+     "differing_pixels": 407,
+     "bbox": [
+      0,
+      120,
+      27,
+      134
+     ]
+    },
+    {
+     "equal": false,
+     "differing_bytes": 206,
+     "differing_pixels": 407,
+     "bbox": [
+      0,
+      120,
+      27,
+      134
+     ]
+    },
+    {
+     "equal": false,
+     "differing_bytes": 379,
+     "differing_pixels": 739,
+     "bbox": [
+      0,
+      50,
+      74,
+      134
+     ]
+    },
+    {
+     "equal": true,
+     "differing_pixels": 0,
+     "differing_bytes": 0
+    }
+   ]
+  },
+  {
+   "stage": 12,
+   "name": "calc",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 1,
+   "ref_ms": [
+    10326,
+    10380,
+    10326
+   ],
+   "cand_ms": [
+    10380,
+    10381,
+    10326
+   ]
+  },
+  {
+   "stage": 13,
+   "name": "reversi",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 1,
+   "ref_ms": [
+    1428,
+    1428,
+    1428
+   ],
+   "cand_ms": [
+    1428,
+    1428,
+    1428
+   ]
+  },
+  {
+   "stage": 14,
+   "name": "pbrush",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 1,
+   "ref_ms": [
+    4559,
+    4504,
+    4504
+   ],
+   "cand_ms": [
+    5547,
+    4504,
+    4559
+   ]
+  }
+ ]
+}

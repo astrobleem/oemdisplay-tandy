@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "profile": "XRSYNC",
+  "grabber": {
+    "bytes": 2104,
+    "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+  },
+  "payload": {
+    "FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "NOTICE.TXT": {
+      "bytes": 1025,
+      "sha256": "e90b305ad44ec8f1d700d5cc819747610ee5d3213bc475601d7cf31c71c4637b"
+    },
+    "OEMSETUP.INF": {
+      "bytes": 437,
+      "sha256": "2f69abfd75344f6381cf2041cb34160300e9f3f9e103780e2087da047d3d3f4f"
+    },
+    "README.TXT": {
+      "bytes": 3307,
+      "sha256": "f62ea83c47797cd99102aca46e18899fe71f9933a4662b46ee109ecad77e6be1"
+    },
+    "RESERVE.COM": {
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+    },
+    "RUNSYNC.BAT": {
+      "bytes": 90,
+      "sha256": "c0311f9370ead5e705c6e393eeb57bbb96fa2df08755f35c34417ad6d39c79ce"
+    },
+    "WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    },
+    "XRSYNC.DRV": {
+      "bytes": 60800,
+      "sha256": "ae2d06f69ff68e64f099c3e0af79028e40e7dca89bd442de23eb18d36be4dca1"
+    },
+    "XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "XYCTL.EXE": {
+      "bytes": 9679,
+      "sha256": "7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055"
+    }
+  }
+}

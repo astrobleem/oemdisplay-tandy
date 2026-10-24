@@ -151,7 +151,7 @@ def patch_tsoft(text):
     return replace_once(text, GATE_STUB, DUAL_BAND_GATE, "dual-band ORowsSpanSafe")
 
 
-def patch(renderer):
+def patch(renderer, batch=False):
     base = importlib.machinery.SourceFileLoader(
         "xy_patch_for_xyrrect", str(HERE.parent / "XYPAN" / "XYPATCH.PY")
     ).load_module()
@@ -162,3 +162,7 @@ def patch(renderer):
     if chr(10) in bare_lf:
         raise SystemExit("XRPATCH: refusing bare LF in TSOFT.ASM")
     p.write_bytes(patch_tsoft(text).encode("latin1"))
+    if batch:
+        batching = importlib.machinery.SourceFileLoader(
+            "xr_batch", str(HERE / "XRBATCH.PY")).load_module()
+        batching.patch(renderer)

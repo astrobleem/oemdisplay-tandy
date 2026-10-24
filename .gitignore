@@ -69,3 +69,9 @@ __pycache__/
 !/tools/WINR1/KIT/mouse/WHEEL.LNK
 !/downloads/R1/WINXT-FIRST-PARTY-R1.zip
 !/downloads/R1/WINXT-REDISTRIBUTABLE-OVERLAY-R1.zip
+
+!docs/rrbatch/*/RRBENCH.LOG
+!docs/rrbatch/current/*/RRBENCH.LOG
+!docs/rrbatch/current/RLE_*.LOG
+!docs/rrsync/*/RRBENCH.LOG
+!docs/rrsync/R*.LOG
