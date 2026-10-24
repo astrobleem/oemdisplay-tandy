@@ -23,9 +23,14 @@ HERE = Path(__file__).resolve().parent
 C = importlib.machinery.SourceFileLoader("rrcmp", str(HERE / "RRCMP.PY")).load_module()
 P = importlib.machinery.SourceFileLoader("rrpatch", str(HERE / "RRPATCH.PY")).load_module()
 
+STEPS = 14
+
+
 def make_log(version=3, shots=0, api=None, repaints=3):
     """A complete RRBENCH log in the probe's own format (see RRBENCH.C)."""
     L = [f"VERSION={version}", "SCREEN_WIDTH=320", "SCREEN_HEIGHT=200", "MULTIPLIER=1"]
+    if version == 5:
+        L += ["LOGICAL_WIDTH=640", "LOGICAL_HEIGHT=256", "PAN_RESULT=1", "PAN_X=0", "PAN_Y=0", "HARDWARE=0"]
     if version >= 3:
         L.append(f"SHOTS={shots}")
     for n, name in enumerate(C.expected_names(version, shots), 1):
@@ -34,6 +39,11 @@ def make_log(version=3, shots=0, api=None, repaints=3):
             L += ["WINEXEC=33", "APP_FOUND=1" if version >= 2 else "CALC_FOUND=1"]
             L += [f"TITLE={name.title()}"] if version >= 2 else []
             L += ["LAUNCH_TO_PAINTED_MS=900"] + ["REPAINT_MS=500"] * repaints
+        elif name in ("visible_steps", "marker_steps"):
+            count = STEPS if name == "visible_steps" else 8
+            L += ["KIND=4", f"COUNT={count}"] + ["STEP_DUMP_CREATED=1", "STEP_DUMP_BYTES=32768"] * count
+            if name == "marker_steps": L += ["RAW_OUTPUT_FOUND=1"]
+            L += ["ELAPSED_MS=900", f"API_SUCCESSES={count}", f"STEP_DUMPS={count}"]
         else:
             L += ["KIND=1", "COUNT=20", "ELAPSED_MS=100", f"API_SUCCESSES={20 if api is None else api}"]
         L += ["TRACE_RECORDS=-1", "TRACE_LOST=0", "DUMP_CREATED=1", "DUMP_BYTES=32768"]
@@ -43,6 +53,8 @@ def make_log(version=3, shots=0, api=None, repaints=3):
 
 LOG = make_log()
 N = len(C.expected_names(3, 0))
+LOG4 = make_log(version=4)
+N4 = len(C.expected_names(4, 0))
 
 
 # The exact staged-source anchors the patches edit (from BUILD88's TR5 stage).
@@ -55,20 +67,40 @@ GATE = ("sBegin Data\r\npublic enabled_flag,ScratchSel,is_protected,_cstods,diag
         "    cmp dirty,0\r\n    je TOutput_done\r\n"
         "    ; Preserve the actual renderer result and all post-render GPRs.\r\n"
         "    parmD output\r\ncBegin\r\n    xor ax,ax\r\n    les di,input\r\n    mov bx,function\r\n")
+# Plus the anchors the batch patch edits: FlushRetainRows' end, the four
+# drawing entries with the shared prologue (Pixel, ScanLR, StrBlt,
+# ExtTextOut), BitBlt's, the bounded-row presentation and the render label.
+BGATE = (GATE + "FlushRetainRows endp\r\n" + "cBegin\r\n    mov dirty,0\r\n    map_device dst,1\r\n" * 4
+         + "    mov resync,0\r\n" + "TOutput_bounded:\r\n    mov outrows,1\r\nTOutput_render:\r\n"
+         + "    mov ax,firstrow\r\n    mov bx,lastrow\r\n    call FlushRetainRows\r\n    jmp short TOutput_flushed\r\n")
 
 
 def frame(fill=0x11):
     return bytes([fill]) * 32768
 
 
-def run_dir(root, name, dumps=None, log=LOG):
+def run_dir(root, name, dumps=None, log=LOG, steps=None):
     d = root / name
     d.mkdir()
     (d / "RRBENCH.LOG").write_text(log, newline="")
+    v4 = "VERSION=4" in log or "VERSION=5" in log
     if dumps is None:
-        dumps = {n: frame() for n in range(1, N + 1)}
+        dumps = {n: frame() for n in range(1, (15 if "VERSION=5" in log else N4 if v4 else N) + 1)}
     for n, data in dumps.items():
         (d / f"RB{n:02d}.BIN").write_bytes(data)
+    if steps is None and v4:
+        steps = {k: frame(k) for k in range(1, STEPS + 1)}
+    for k, data in (steps or {}).items():
+        (d / f"RV{k:02d}.BIN").write_bytes(data)
+    if "VERSION=5" in log:
+        for k in range(1, 9):
+            raw = bytearray([255]) * 32768
+            coords = [(x, y) for y in range(144, 147 if k == 7 else 146) for x in range(4, 45)]
+            if k == 3: coords.append((100, 144))
+            for x, y in coords:
+                at = (y % 4) * 8192 + (y // 4) * 160 + x // 2
+                raw[at] &= 15 if x % 2 == 0 else 240
+            (d / f"RM{k:02d}.BIN").write_bytes(raw)
     return d
 
 
@@ -87,10 +119,10 @@ class Compare(unittest.TestCase):
     def cmp(self, a, b):
         return C.main([str(a), str(b)])
 
-    def pair(self, log_a, log_b=None, dumps_a=None, dumps_b=None):
+    def pair(self, log_a, log_b=None, dumps_a=None, dumps_b=None, steps_a=None, steps_b=None):
         self.k += 1
-        return (run_dir(self.root, f"a{self.k}", dumps_a, log_a),
-                run_dir(self.root, f"b{self.k}", dumps_b, log_a if log_b is None else log_b))
+        return (run_dir(self.root, f"a{self.k}", dumps_a, log_a, steps_a),
+                run_dir(self.root, f"b{self.k}", dumps_b, log_a if log_b is None else log_b, steps_b))
 
     def test_complete_identical_runs_pass(self):
         self.assertEqual(C.validate(LOG)[1], [])
@@ -163,8 +195,33 @@ class Compare(unittest.TestCase):
         self.assertEqual(C.validate(other)[1], [])
         self.assertEqual(self.cmp(*self.pair(LOG, other)), 1)
 
+    def test_v4_per_call_frames_are_compared(self):
+        self.assertEqual(C.validate(LOG4)[1], [])
+        self.assertEqual(self.cmp(*self.pair(LOG4)), 0)
+        held = {k: frame(k) for k in range(1, STEPS + 1)}
+        held[5] = frame(4)                         # a row held back past its call: final frame still equal
+        self.assertEqual(self.cmp(*self.pair(LOG4, steps_b=held)), 1)
+        some = {k: frame(k) for k in range(1, STEPS)}
+        self.assertEqual(self.cmp(*self.pair(LOG4, steps_a=some, steps_b=some)), 1)
+        short = LOG4.replace("STEP_DUMP_CREATED=1\r\nSTEP_DUMP_BYTES=32768\r\n", "", 1)
+        self.assertNotEqual(C.validate(short)[1], [])
+        self.assertEqual(self.cmp(*self.pair(short)), 1)
+        self.assertNotEqual(C.validate(LOG4.replace("NAME=visible_steps", "NAME=cursor_overlap"))[1], [])
+
     def test_timings_are_not_compared(self):
         self.assertEqual(self.cmp(*self.pair(LOG, LOG.replace("ELAPSED_MS=100", "ELAPSED_MS=3"))), 0)
+
+    def test_current_xr_marker_frames_and_pan_identity(self):
+        log = make_log(version=5)
+        self.assertEqual(C.validate(log)[1], [])
+        a, b = self.pair(log)
+        self.assertEqual(self.cmp(a, b), 0)
+        (b / "RM04.BIN").write_bytes(frame(9))
+        self.assertEqual(self.cmp(a, b), 1)
+        (b / "RM04.BIN").unlink()
+        self.assertEqual(self.cmp(a, b), 1)
+        self.assertEqual(self.cmp(*self.pair(log, log.replace("PAN_X=0", "PAN_X=8"))), 1)
+        self.assertNotEqual(C.validate(log.replace("RAW_OUTPUT_FOUND=1", "RAW_OUTPUT_FOUND=0"))[1], [])
 
 
 class Patches(unittest.TestCase):
@@ -186,6 +243,31 @@ class Patches(unittest.TestCase):
         self.assertIn("    inc bx\r\n    mov lastrow,bx\r\n", cand)
         self.assertNotIn("    inc bx\r\n    mov lastrow,bx\r\n", P.patch_mut_lastrow(GATE).split("TOutput_poly_point")[1]
                          .split("TOutput_two_point")[0])
+
+    def test_batch_patch_and_its_mutants(self):
+        b = P.patch_batch(BGATE)
+        self.assertEqual(b.count("    rr_settle\r\n"), 6)       # 4 entries, BitBlt, non-marker Output styles
+        m = b.index("TOutput_marker:")
+        self.assertLess(b.index("call BatchClose", m), b.index("mov rr_bopen,1", m))   # present, then open
+        hold = b[b.index("; RRBATCH: hold this fill row"):b.index("TOutput_present:")]
+        self.assertNotIn("FlushRetainRows", hold)
+        self.assertIn("mov rr_blast,bx", hold)
+        noend = P.patch_mut_noend(BGATE)
+        end = noend[noend.index("TOutput_marker:"):noend.index("TOutput_not_marker:")]
+        self.assertLess(end.index("mov rr_bopen,0"), end.index("call BatchClose"))
+        self.assertIn("    dec bx\r\n    cmp ax,bx\r\n    jae bc_done", P.patch_mut_short(BGATE))
+        early = P.patch_mut_early(BGATE)
+        # The copy is inserted at TOutput_render, i.e. before the renderer runs.
+        self.assertIn("TOutput_render:\r\n    cmp outrows,0\r\n    je TOutput_mut_go\r\n", early)
+        for fn in (P.patch_mut_noend, P.patch_mut_short, P.patch_mut_early):
+            self.assertNotEqual(fn(BGATE), b, fn.__name__)
+
+    def test_batch_patch_refuses_a_different_entry_count(self):
+        three = BGATE.replace("cBegin\r\n    mov dirty,0\r\n    map_device dst,1\r\n", "", 1)
+        with self.assertRaises(SystemExit):
+            P.patch_batch(three)
+        with self.assertRaises(SystemExit):
+            P.patch_batch(BGATE + "cBegin\r\n    mov dirty,0\r\n    map_device dst,1\r\n")
 
     def test_patch_refuses_missing_or_repeated_anchor(self):
         with self.assertRaises(SystemExit):
@@ -240,6 +322,81 @@ class Evidence(unittest.TestCase):
         cand = json.loads((self.D / "B_CAND.JSN").read_text())["sha256"]
         for run in ("CAND", "SHOTCAND"):
             self.assertIn(cand, json.dumps(json.loads((self.D / run / "RRRUN.JSN").read_text())["prep"]))
+
+class BatchEvidence(unittest.TestCase):
+    """docs/rrbatch: fill-row batching against PR #151's driver."""
+    D = HERE.parents[1] / "docs" / "rrbatch"
+
+    def load(self, tag):
+        return json.loads((self.D / f"C_{tag}.JSN").read_text())
+
+    def test_logs_complete_and_are_the_runs_own_bytes(self):
+        runs = [p for p in self.D.iterdir() if (p / "RRBENCH.LOG").exists()]
+        self.assertEqual(len(runs), 9)
+        for d in runs:
+            raw = (d / "RRBENCH.LOG").read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),
+                             json.loads((d / "RRRUN.JSN").read_text())["files"]["RRBENCH.LOG"], d.name)
+            self.assertEqual(C.validate(raw.decode("latin-1"))[1], [], d.name)
+
+    def test_batch_equals_151_and_tr5_including_every_call(self):
+        for tag, n in (("TR5C", 14), ("TR5B", 14), ("BATCH", 14), ("BTR", 14), ("SHOT", 3)):
+            r = self.load(tag)
+            self.assertTrue(r["runs_complete"] and r["all_frames_equal"], tag)
+            self.assertEqual(len(r["stages"]), n, tag)
+            steps = [s for s in r["stages"] if s.get("steps")]
+            if n == 14:
+                self.assertEqual(len(steps), 1)
+                self.assertEqual(len(steps[0]["steps"]), 14)
+                self.assertTrue(all(x["equal"] for x in steps[0]["steps"]))
+
+    def test_each_broken_batch_is_caught_between_calls(self):
+        for tag in ("MNOEND", "MSHORT", "MEARLY"):
+            r = self.load(tag)
+            self.assertTrue(r["runs_complete"], tag)
+            self.assertFalse(r["all_frames_equal"], tag)
+            steps = [s for s in r["stages"] if s.get("steps")][0]["steps"]
+            self.assertTrue(any(not x["equal"] for x in steps), tag)
+
+    def test_drivers_compared_are_the_built_ones(self):
+        for run, build in (("CAND", "CAND"), ("BATCH", "BATCH"), ("TR5", "TR5"), ("SHOTCAND", "CAND"),
+                           ("SHOTBAT", "BATCH")):
+            sha = json.loads((self.D / f"B_{build}.JSN").read_text())["sha256"]
+            self.assertIn(sha, json.dumps(json.loads((self.D / run / "RRRUN.JSN").read_text())["prep"]), run)
+        self.assertIn(json.loads((self.D / "B_TR5.JSN").read_text())["sha256"],
+                      (HERE.parents[1] / "docs" / "TRIAL5" / "BUILDS.JSN").read_text())
+
+class CurrentXREvidence(unittest.TestCase):
+    D = HERE.parents[1] / "docs/rrbatch/current"
+
+    def test_current_runs_are_complete_and_hash_bound(self):
+        builds = {v: json.loads((self.D / ("B_" + v + ".JSN")).read_text()) for v in ("BASE", "BATCH")}
+        for v in ("BASE", "BATCH"):
+            for pan in "XYZ":
+                d = self.D / (("BASE" if v == "BASE" else "BAT") + pan)
+                raw = (d / "RRBENCH.LOG").read_bytes()
+                receipt = json.loads((d / "RUN.JSN").read_text())
+                self.assertTrue(receipt["pass"] and receipt["lease_released"] and receipt["owned_child_stopped"])
+                self.assertEqual(hashlib.sha256(raw).hexdigest(), receipt["files"]["RRBENCH.LOG"])
+                self.assertEqual(receipt["driver_sha256"], builds[v]["sha256"])
+                self.assertEqual(C.validate(raw.decode("latin1"))[1], [])
+                state = [x.split("=")[1] for x in raw.decode("latin1").splitlines() if x.startswith("ROWS_VISIBLE_BEFORE_SETTLE=")]
+                self.assertEqual(state, ["1" if v == "BASE" else "0"] * 8)
+
+    def test_current_comparisons_oracles_and_rle_pass(self):
+        for pan in "XYZ":
+            r = json.loads((self.D / ("C_" + pan + ".JSN")).read_text())
+            self.assertTrue(r["runs_complete"] and r["all_frames_equal"])
+            self.assertEqual(len(r["stages"]), 15)
+            self.assertEqual(sum(len(s.get("steps", [])) for s in r["stages"]), 22)
+            for rows in r["marker_oracle"].values():
+                self.assertEqual(len(rows), 8)
+                self.assertTrue(all(x["pass"] and x["pixels_compared"] == 64000 for x in rows))
+        for v in ("BASE", "BATCH"):
+            r = json.loads((self.D / ("RLE_" + v + ".JSN")).read_text())
+            self.assertTrue(r["pass"])
+            self.assertEqual((r["case_count"], r["pixels_compared"]), (9, 576000))
+
 
 if __name__ == "__main__":
     unittest.main()

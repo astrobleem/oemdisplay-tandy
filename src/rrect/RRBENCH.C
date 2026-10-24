@@ -9,6 +9,11 @@
  * The cursor_overlap stage draws Calculator-sized keys with the arrow cursor
  * visible over them, then moves it to the bottom-right corner before the
  * dump, so cursor save/restore is part of the compared frame.
+ * The visible_steps stage (version 4) draws 14 mixed shapes with the arrow
+ * cursor shown over the first ones and saves the frame after every single
+ * call (C:\RVnn.BIN), so rows a driver holds back or copies early show up
+ * between calls, not only in the final frame. It covers pen and no-pen
+ * fills, XOR, hollow, clipped, partly and fully off-screen shapes.
  * Log: C:\RRBENCH.LOG, one KEY=value per line.
  * If C:\RRECT\RRSHOTS.ON exists (screenshot runs only), only the application
  * stages run; each logs REPAINT_START before its first timed repaint and
@@ -26,6 +31,19 @@ static HPEN blackPen, nullPen;
 static HBRUSH white, gray, hollow, ltgray;
 static HWND lastApp = NULL;
 static char trbuf[4 + 64 * 20];
+static int xr = 0, panx = 0, pany = 0, hardware = 0;
+static void line(char *key, long value);
+
+static void cursorpos(int x, int y) { SetCursorPos(x + panx, y + pany); }
+
+static void setpan(void)
+{
+    int in[2], out[6], enabled = 1;
+    if (hardware) Escape(dc, 0x5861, 2, (LPSTR)&enabled, NULL);
+    in[0] = panx; in[1] = pany;
+    line("PAN_RESULT", Escape(dc, 0x5860, 4, (LPSTR)in, (LPSTR)out));
+    line("PAN_X", out[0]); line("PAN_Y", out[1]);
+}
 
 static void putnum(char *b, int *n, long v)
 {
@@ -124,7 +142,7 @@ static void batch(char *name, int kind, int w, int h, int ew, int eh, HPEN pen, 
     ob = SelectObject(dc, brush);
     SetROP2(dc, rop2);
     if (clip) {
-        rgn = CreateRectRgn(40, 30, width - 40, height - 30);
+        rgn = CreateRectRgn(40 + panx, 30 + pany, width - 40 + panx, height - 30 + pany);
         SelectClipRgn(dc, rgn);
     }
     line("STAGE", seq);
@@ -233,6 +251,165 @@ static void app(char *name, char *exe)
     pump(400);
 }
 
+/* One visible_steps shape: kind 1 RoundRect, 2 Rectangle, 3 Ellipse. */
+typedef struct { int kind, x, y, w, h, e, pen, brush, rop, clip; } STEP;
+static STEP steps[] = {
+    {1, 10, 10, 26, 15, 8, 1, 3, R2_COPYPEN, 0},     /* Calculator key under the cursor */
+    {1, 40, 10, 26, 15, 8, 0, 1, R2_COPYPEN, 0},     /* no pen: fill only */
+    {1, 25, 15, 26, 15, 8, 1, 3, R2_XORPEN, 0},      /* XOR over the first two */
+    {1, 70, 10, 26, 15, 8, 1, 2, R2_COPYPEN, 0},     /* hollow: outline only */
+    {1, 85, 8, 40, 20, 10, 1, 3, R2_COPYPEN, 1},     /* clipped to 90,12-110,20 */
+    {1, -10, -6, 30, 16, 8, 1, 3, R2_COPYPEN, 0},    /* off the top-left corner */
+    {1, -1, 120, 30, 16, 8, 0, 1, R2_COPYPEN, 0},    /* off the left edge, no pen */
+    {1, 10, -40, 30, 16, 8, 1, 3, R2_COPYPEN, 0},    /* entirely above the screen */
+    {1, 400, 50, 30, 16, 8, 1, 3, R2_COPYPEN, 0},    /* entirely right of it */
+    {3, 130, 10, 20, 14, 0, 1, 1, R2_COPYPEN, 0},    /* Ellipse */
+    {2, 160, 10, 26, 15, 0, 1, 3, R2_COPYPEN, 0},    /* Rectangle */
+    {1, 10, 40, 60, 30, 12, 1, 0, R2_COPYPEN, 0},    /* large, white */
+    {1, 50, 50, 26, 15, 8, 0, 1, R2_XORPEN, 0},      /* no pen, XOR */
+    {1, 0, 0, 0, 0, 8, 1, 3, R2_COPYPEN, 2}          /* bottom-right corner (set below) */
+};
+#define NSTEPS (sizeof(steps) / sizeof(steps[0]))
+
+static void framedump(int k, int marker)
+{
+    HFILE h;
+    char n[] = "C:\\RV00.BIN";
+    if (marker) n[4] = 'M';
+    numname(n, 5, k);
+    h = _lcreat(n, 0);
+    line("STEP_DUMP_CREATED", h != HFILE_ERROR);
+    if (h != HFILE_ERROR) {
+        line("STEP_DUMP_BYTES", _lwrite(h, (LPSTR)0xb8000000L, 0x8000U));
+        _lclose(h);
+    }
+}
+
+static void stepdump(int k) { framedump(k, 0); }
+
+/* Actual ordinal-8 calls exercise incomplete/interleaved marker streams.
+ * A nonzero device type is mapped to the real driver shadow. A zeroed
+ * six-byte physical pen is solid index 0; draw mode starts with R2_COPYPEN.
+ * The malformed-batch case uses valid 65-point storage rejected only by
+ * the bounded gate's conservative 64-point limit.
+ */
+static void markerstage(void)
+{
+    typedef int (FAR PASCAL *OUTPROC)(LPSTR,int,int,POINT FAR *,LPSTR,LPSTR,LPSTR,RECT FAR *);
+    OUTPROC output;
+    POINT pts[65];
+    int device = 1, memory = 0, mode[16], pen[3], k, i, ok = 0, a, b, at;
+    DWORD t0 = GetTickCount();
+    output = (OUTPROC)GetProcAddress(GetModuleHandle("DISPLAY"), MAKEINTRESOURCE(8));
+    for (i = 0; i < 16; i++) mode[i] = 0;
+    for (i = 0; i < 3; i++) pen[i] = 0;
+    mode[0] = R2_COPYPEN; mode[1] = OPAQUE;
+    pts[0].x = 0; pts[0].y = pany + 144;
+    for (i = 1; i < 65; i++) { pts[i].x = panx + 4; pts[i].y = panx + 45; }
+    seq++;
+    line("STAGE", seq);
+    _lwrite(logFile, "NAME=marker_steps\r\n", 19);
+    line("KIND", 5); line("COUNT", 8);
+    line("RAW_OUTPUT_FOUND", output != NULL);
+    if (!output) { flush(); return; }
+    for (k = 1; k <= 8; k++) {
+        clear();
+        pts[0].y = pany + 144;
+        output((LPSTR)&device,80,0,NULL,NULL,NULL,NULL,NULL);
+        a = output((LPSTR)&device,4,2,pts,(LPSTR)pen,NULL,(LPSTR)mode,NULL);
+        pts[0].y++;
+        b = output((LPSTR)&device,4,2,pts,(LPSTR)pen,NULL,(LPSTR)mode,NULL);
+        at = (144 / 4) * 160 + 2;
+        if (hardware) at += ((pany / 4) * 160 + panx / 2) & 8191;
+        at &= 8191;
+        line("ROWS_VISIBLE_BEFORE_SETTLE", (((BYTE FAR *)0xb8000000L)[at] & 15) == 0);
+        if (k == 1) output((LPSTR)&device,81,0,NULL,NULL,NULL,NULL,NULL);
+        if (k == 2) {
+            output((LPSTR)&device,80,0,NULL,NULL,NULL,NULL,NULL);
+            output((LPSTR)&device,81,0,NULL,NULL,NULL,NULL,NULL);
+        }
+        if (k == 3) SetPixel(dc, 100, 144, RGB(0,0,0));
+        if (k == 4) output((LPSTR)&memory,81,0,NULL,NULL,NULL,NULL,NULL);
+        if (k == 5) output((LPSTR)&device,79,0,NULL,NULL,NULL,NULL,NULL);
+        if (k == 6) setpan();
+        if (k == 7) {
+            pts[0].y++;
+            output((LPSTR)&device,4,65,pts,(LPSTR)pen,NULL,(LPSTR)mode,NULL);
+        }
+        if (k == 8) GetPixel(dc, 4, 144);
+        ok += a != 0 && b != 0;
+        framedump(k, 1);
+    }
+    line("ELAPSED_MS", GetTickCount() - t0);
+    line("API_SUCCESSES", ok); line("STEP_DUMPS", 8);
+    dump(); flush();
+}
+
+static void stepstage(void)
+{
+    int k, c, shown = 0, ok = 0;
+    HPEN pens[2];
+    HBRUSH brushes[4];
+    HPEN op;
+    HBRUSH ob;
+    HRGN rgn;
+    DWORD t0, t1;
+    STEP *s;
+    pens[0] = nullPen; pens[1] = blackPen;
+    brushes[0] = white; brushes[1] = gray; brushes[2] = hollow; brushes[3] = ltgray;
+    steps[NSTEPS - 1].x = width - 15;
+    steps[NSTEPS - 1].y = height - 8;
+    steps[NSTEPS - 1].w = 30;
+    steps[NSTEPS - 1].h = 16;
+    steps[NSTEPS - 1].clip = 0;
+    seq++;
+    clear();
+    SetCursor(LoadCursor(NULL, IDC_ARROW));
+    do { c = ShowCursor(TRUE); shown++; } while (c < 0 && shown < 40);
+    cursorpos(30, 22);
+    pump(20);
+    line("STAGE", seq);
+    _lwrite(logFile, "NAME=visible_steps\r\n", 20);
+    line("KIND", 4);
+    line("COUNT", NSTEPS);
+    flush();
+    resettrace();
+    t0 = GetTickCount();
+    for (k = 0; k < NSTEPS; k++) {
+        s = &steps[k];
+        op = SelectObject(dc, pens[s->pen]);
+        ob = SelectObject(dc, brushes[s->brush]);
+        SetROP2(dc, s->rop);
+        rgn = NULL;
+        if (s->clip == 1) {
+            rgn = CreateRectRgn(90 + panx, 12 + pany, 110 + panx, 20 + pany);
+            SelectClipRgn(dc, rgn);
+        }
+        if (s->kind == 1) ok += RoundRect(dc, s->x, s->y, s->x + s->w, s->y + s->h, s->e, s->e) != 0;
+        else if (s->kind == 2) ok += Rectangle(dc, s->x, s->y, s->x + s->w, s->y + s->h) != 0;
+        else ok += Ellipse(dc, s->x, s->y, s->x + s->w, s->y + s->h) != 0;
+        if (rgn) {
+            SelectClipRgn(dc, NULL);
+            DeleteObject(rgn);
+        }
+        SetROP2(dc, R2_COPYPEN);
+        SelectObject(dc, op);
+        SelectObject(dc, ob);
+        stepdump(k + 1);
+    }
+    t1 = GetTickCount();
+    line("ELAPSED_MS", (long)(t1 - t0));
+    line("API_SUCCESSES", ok);
+    line("STEP_DUMPS", NSTEPS);
+    savetrace();
+    cursorpos(width - 1, height - 1);
+    pump(20);
+    dump();
+    while (shown-- > 0) ShowCursor(FALSE);
+    SetCursor(NULL);
+    flush();
+}
+
 /* Calculator-sized keys drawn with the arrow cursor visible over them. */
 static void cursorstage(void)
 {
@@ -241,11 +418,11 @@ static void cursorstage(void)
     clear();
     SetCursor(LoadCursor(NULL, IDC_ARROW));
     do { c = ShowCursor(TRUE); shown++; } while (c < 0 && shown < 40);
-    SetCursorPos(40, 10);
+    cursorpos(40, 10);
     pump(20);
     seq--;
     batch("cursor_overlap", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 0);
-    SetCursorPos(width - 1, height - 1);
+    cursorpos(width - 1, height - 1);
     pump(20);
     dump();
     while (shown-- > 0) ShowCursor(FALSE);
@@ -258,13 +435,28 @@ int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
     int hide = 0, c;
     HCURSOR oldcur;
     OFSTRUCT of;
+    HFILE xf;
+    char xrmode[2];
+    xf = _lopen("C:\\XRPAN.INI", OF_READ);
+    if (xf != HFILE_ERROR) {
+        xrmode[0] = 'x'; xrmode[1] = 0;
+        _lread(xf, (LPSTR)xrmode, 1); _lclose(xf);
+        cmd = (LPSTR)xrmode;
+    }
+    if (cmd && (cmd[0] == 'x' || cmd[0] == 'y' || cmd[0] == 'z')) {
+        xr = 1; panx = cmd[0] == 'z' ? 320 : (cmd[0] == 'y' ? 8 : 0); pany = cmd[0] == 'x' ? 0 : 56;
+    }
     if (cmd && cmd[0] >= '1' && cmd[0] <= '9') mult = cmd[0] - '0';
     logFile = _lcreat("C:\\RRBENCH.LOG", 0);
     if (logFile == HFILE_ERROR) return 1;
     dc = GetDC(NULL);
+    hardware = OpenFile("C:\\XRHARD.ON", &of, OF_EXIST) != HFILE_ERROR;
     width = GetSystemMetrics(SM_CXSCREEN);
     height = GetSystemMetrics(SM_CYSCREEN);
-    line("VERSION", 3);
+    line("VERSION", xr ? 5 : 4);
+    if (xr) line("HARDWARE", hardware);
+    line("LOGICAL_WIDTH", width); line("LOGICAL_HEIGHT", height);
+    if (xr) { width = 320; height = 200; setpan(); SetViewportOrg(dc, panx, pany); }
     line("SCREEN_WIDTH", width);
     line("SCREEN_HEIGHT", height);
     line("NUMCOLORS", GetDeviceCaps(dc, NUMCOLORS));
@@ -297,6 +489,9 @@ int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
         batch("roundrect_clipped", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 1);
         batch("ellipse_12", 3, 12, 12, 0, 0, blackPen, gray, R2_COPYPEN, 4, 20, 20, 0);
         cursorstage();
+        stepstage();
+        if (xr) markerstage();
+        if (xr) { panx = pany = 0; SetViewportOrg(dc, 0, 0); setpan(); }
     }
     app("calc", "CALC.EXE");
     app("reversi", "REVERSI.EXE");

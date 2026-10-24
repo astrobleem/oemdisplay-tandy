@@ -12,6 +12,7 @@ def main():
     p.add_argument('--out',type=Path,required=True)
     p.add_argument('--dosbox',type=Path,required=True)
     p.add_argument('--lease',type=Path,required=True,help='Shared emulator-lock file')
+    p.add_argument('--batch',action='store_true',help='Opt-in PR155 batching; accepted packages stay unchanged')
     a=p.parse_args();repo=a.repo.resolve();out=a.out.resolve()
     sys.path.insert(0,str(repo/'src/tandysw'))
     patcher=importlib.machinery.SourceFileLoader('xypatch',str(Path(__file__).with_name('XRPATCH.PY'))).load_module()
@@ -21,7 +22,7 @@ def main():
         r,s=prepare(repo,out);state.update(renderer=r,resources=s);return r,s
     def invoke(*args,**kw):
         if not state.get('patched'):
-            patcher.patch(state['renderer']);state['patched']=True
+            patcher.patch(state['renderer'],batch=a.batch);state['patched']=True
         return run(*args,**kw)
     b.baseline.prepare,b.bounded_run=prep,invoke
     original=subprocess.Popen
@@ -46,7 +47,7 @@ def main():
     gross=sum(struct.unpack_from('<H',raw,off+i*8+6)[0] or 65536 for i in range(count))
     assert gross-102955<=24576,('incremental budget',gross)
     baseline=out/'RESULT.json';baseline.rename(out/'BASEPIPE.json')
-    report=dict(build='PASS',runtime='NOT_TESTED_BY_BUILD',candidate='PRIVATE HPXY bounded Output rows (PR151)',logical=[640,256,16],viewport=[320,200,16],shadow_bands=[64000,17920],stage_bytes=1440,hardware_default=False,physical_tested=False,gross_NE_bytes=gross,delta_from_R3_gross_bytes=gross-102955,ceiling_delta=24576,sha256=hashlib.sha256(raw).hexdigest(),baseline_pipeline_report='BASEPIPE.json describes transformations before the XY overlay; its mode and optimization descriptions are not final XY behavior')
+    report=dict(build='PASS',runtime='NOT_TESTED_BY_BUILD',candidate=('PRIVATE HPXY PR151 + PR155 batching' if a.batch else 'PRIVATE HPXY bounded Output rows (PR151)'),batching=a.batch,logical=[640,256,16],viewport=[320,200,16],shadow_bands=[64000,17920],stage_bytes=1440,hardware_default=False,physical_tested=False,gross_NE_bytes=gross,delta_from_R3_gross_bytes=gross-102955,ceiling_delta=24576,sha256=hashlib.sha256(raw).hexdigest(),baseline_pipeline_report='BASEPIPE.json describes transformations before the XY overlay; its mode and optimization descriptions are not final XY behavior')
     baseline.write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report))
 if __name__=='__main__':main()

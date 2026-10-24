@@ -1,0 +1,713 @@
+{
+  "profile": "640x256x16-rle-pan",
+  "guest": "native\\RLE-BATCH\\CROOT",
+  "phase_mask": 32,
+  "profile_contract": {
+    "width": 320,
+    "logical_width": 640,
+    "logical_height": 256,
+    "colors": 16,
+    "bios": 9,
+    "banks": 4,
+    "pitch": 160,
+    "storage": 32768,
+    "palette": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        128
+      ],
+      [
+        0,
+        128,
+        0
+      ],
+      [
+        0,
+        128,
+        128
+      ],
+      [
+        128,
+        0,
+        0
+      ],
+      [
+        128,
+        0,
+        128
+      ],
+      [
+        128,
+        128,
+        0
+      ],
+      [
+        128,
+        128,
+        128
+      ],
+      [
+        64,
+        64,
+        64
+      ],
+      [
+        0,
+        0,
+        255
+      ],
+      [
+        0,
+        255,
+        0
+      ],
+      [
+        0,
+        255,
+        255
+      ],
+      [
+        255,
+        0,
+        0
+      ],
+      [
+        255,
+        0,
+        255
+      ],
+      [
+        255,
+        255,
+        0
+      ],
+      [
+        255,
+        255,
+        255
+      ]
+    ],
+    "hardware": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "rle_pan": [
+      8,
+      4
+    ]
+  },
+  "complete": true,
+  "case_count": 9,
+  "getdibits_null_buffer_query_supported": false,
+  "pixels_compared": 576000,
+  "physical_bytes_checked": 294912,
+  "assertions": [
+    {
+      "name": "metadata.VERSION",
+      "pass": true,
+      "actual": [
+        2
+      ],
+      "expected": [
+        1,
+        2
+      ]
+    },
+    {
+      "name": "metadata.PALETTE_KIND",
+      "pass": true,
+      "actual": [
+        0
+      ],
+      "expected": [
+        0
+      ]
+    },
+    {
+      "name": "metadata.PHASES",
+      "pass": true,
+      "actual": [
+        32
+      ],
+      "expected": [
+        32
+      ]
+    },
+    {
+      "name": "metadata.HORZRES",
+      "pass": true,
+      "actual": [
+        640
+      ],
+      "expected": [
+        640
+      ]
+    },
+    {
+      "name": "metadata.VERTRES",
+      "pass": true,
+      "actual": [
+        256
+      ],
+      "expected": [
+        256
+      ]
+    },
+    {
+      "name": "metadata.BITSPIXEL",
+      "pass": true,
+      "actual": [
+        1
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "name": "metadata.PLANES",
+      "pass": true,
+      "actual": [
+        4
+      ],
+      "expected": [
+        4
+      ]
+    },
+    {
+      "name": "metadata.NUMCOLORS",
+      "pass": true,
+      "actual": [
+        16
+      ],
+      "expected": [
+        16
+      ]
+    },
+    {
+      "name": "metadata.BIOS",
+      "pass": true,
+      "actual": [
+        9
+      ],
+      "expected": [
+        9
+      ]
+    },
+    {
+      "name": "metadata.COMPLETE",
+      "pass": true,
+      "actual": [
+        1
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "name": "metadata.RLE_PAN_RETURN",
+      "pass": true,
+      "actual": [
+        1
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "name": "metadata.RLE_PAN_X",
+      "pass": true,
+      "actual": [
+        8
+      ],
+      "expected": [
+        8
+      ]
+    },
+    {
+      "name": "metadata.RLE_PAN_Y",
+      "pass": true,
+      "actual": [
+        4
+      ],
+      "expected": [
+        4
+      ]
+    },
+    {
+      "name": "metadata.RLE_PAN_VIEW_WIDTH",
+      "pass": true,
+      "actual": [
+        320
+      ],
+      "expected": [
+        320
+      ]
+    },
+    {
+      "name": "metadata.RLE_PAN_VIEW_HEIGHT",
+      "pass": true,
+      "actual": [
+        200
+      ],
+      "expected": [
+        200
+      ]
+    },
+    {
+      "name": "metadata.RLE_PAN_LOGICAL_WIDTH",
+      "pass": true,
+      "actual": [
+        640
+      ],
+      "expected": [
+        640
+      ]
+    },
+    {
+      "name": "metadata.RLE_PAN_LOGICAL_HEIGHT",
+      "pass": true,
+      "actual": [
+        256
+      ],
+      "expected": [
+        256
+      ]
+    },
+    {
+      "name": "metadata.RLE_PAN_RESTORE",
+      "pass": true,
+      "actual": [
+        1
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "name": "complete_case_sequence",
+      "pass": true,
+      "actual": [
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148
+      ],
+      "expected": [
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148
+      ]
+    },
+    {
+      "name": "no.WRONG_DISPLAY",
+      "pass": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "no.DUMP_ERROR",
+      "pass": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "no.BRUSH_ERROR",
+      "pass": true,
+      "actual": [],
+      "expected": []
+    },
+    {
+      "name": "no.ALIASES_WRONG_PROFILE",
+      "pass": true,
+      "actual": [],
+      "expected": []
+    }
+  ],
+  "results": [
+    {
+      "case": 140,
+      "kind": 13,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pixels_compared": 64000,
+      "padding_bytes_compared": 768,
+      "padding_mismatches": [],
+      "padding_mismatch_count": 0,
+      "checks": {
+        "scan_start": true,
+        "scan_count": true,
+        "stage_receipts_ordered": true,
+        "preclear_receipt": true,
+        "compressed_call_receipt": true,
+        "postrender_receipt": true,
+        "RLE_CLIP1": true,
+        "RLE_CLIP2": true,
+        "RLE_INPUT_CHANGED": true,
+        "RAW_INPUT_CHANGED": true,
+        "INFO_INPUT_CHANGED": true,
+        "RLE_return_value": true,
+        "RAW_return_value": true,
+        "compressed_size": true,
+        "case_completed": true
+      }
+    },
+    {
+      "case": 141,
+      "kind": 13,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pixels_compared": 64000,
+      "padding_bytes_compared": 768,
+      "padding_mismatches": [],
+      "padding_mismatch_count": 0,
+      "checks": {
+        "scan_start": true,
+        "scan_count": true,
+        "stage_receipts_ordered": true,
+        "preclear_receipt": true,
+        "compressed_call_receipt": true,
+        "postrender_receipt": true,
+        "RLE_CLIP1": true,
+        "RLE_CLIP2": true,
+        "RLE_INPUT_CHANGED": true,
+        "RAW_INPUT_CHANGED": true,
+        "INFO_INPUT_CHANGED": true,
+        "RLE_return_value": true,
+        "RAW_return_value": true,
+        "compressed_size": true,
+        "case_completed": true
+      }
+    },
+    {
+      "case": 142,
+      "kind": 13,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pixels_compared": 64000,
+      "padding_bytes_compared": 768,
+      "padding_mismatches": [],
+      "padding_mismatch_count": 0,
+      "checks": {
+        "scan_start": true,
+        "scan_count": true,
+        "stage_receipts_ordered": true,
+        "preclear_receipt": true,
+        "compressed_call_receipt": true,
+        "postrender_receipt": true,
+        "RLE_CLIP1": true,
+        "RLE_CLIP2": true,
+        "RLE_INPUT_CHANGED": true,
+        "RAW_INPUT_CHANGED": true,
+        "INFO_INPUT_CHANGED": true,
+        "memory_allocated": true,
+        "RLE_setdib_scans": true,
+        "RAW_setdib_scans": true,
+        "RLE_bitblt": true,
+        "RAW_bitblt": true,
+        "compressed_size": true,
+        "case_completed": true
+      }
+    },
+    {
+      "case": 143,
+      "kind": 13,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pixels_compared": 64000,
+      "padding_bytes_compared": 768,
+      "padding_mismatches": [],
+      "padding_mismatch_count": 0,
+      "checks": {
+        "scan_start": true,
+        "scan_count": true,
+        "stage_receipts_ordered": true,
+        "preclear_receipt": true,
+        "compressed_call_receipt": true,
+        "postrender_receipt": true,
+        "RLE_CLIP1": true,
+        "RLE_CLIP2": true,
+        "RLE_INPUT_CHANGED": true,
+        "RAW_INPUT_CHANGED": true,
+        "INFO_INPUT_CHANGED": true,
+        "memory_allocated": true,
+        "RLE_setdib_scans": true,
+        "RAW_setdib_scans": true,
+        "RLE_bitblt": true,
+        "RAW_bitblt": true,
+        "compressed_size": true,
+        "case_completed": true
+      }
+    },
+    {
+      "case": 144,
+      "kind": 14,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pixels_compared": 64000,
+      "padding_bytes_compared": 768,
+      "padding_mismatches": [],
+      "padding_mismatch_count": 0,
+      "checks": {
+        "truncated_size": true,
+        "RLE_input_unchanged": true,
+        "INFO_input_unchanged": true,
+        "stage_receipts_ordered": true,
+        "preclear_receipt": true,
+        "compressed_call_receipt": true,
+        "postrender_receipt": true,
+        "screen_rejected_before_write": true,
+        "case_completed": true
+      }
+    },
+    {
+      "case": 145,
+      "kind": 14,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pixels_compared": 64000,
+      "padding_bytes_compared": 768,
+      "padding_mismatches": [],
+      "padding_mismatch_count": 0,
+      "checks": {
+        "truncated_size": true,
+        "RLE_input_unchanged": true,
+        "INFO_input_unchanged": true,
+        "stage_receipts_ordered": true,
+        "preclear_receipt": true,
+        "compressed_call_receipt": true,
+        "postrender_receipt": true,
+        "memory_allocated": true,
+        "memory_rejected": true,
+        "destination_unchanged": true,
+        "case_completed": true
+      }
+    },
+    {
+      "case": 146,
+      "kind": 16,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pixels_compared": 64000,
+      "padding_bytes_compared": 768,
+      "padding_mismatches": [],
+      "padding_mismatch_count": 0,
+      "checks": {
+        "guest_real_mode_before_alias": true,
+        "mode_guard_receipt_consistent": true,
+        "global_allocated": true,
+        "stage_receipts_ordered": true,
+        "preclear_receipt": true,
+        "compressed_call_receipt": true,
+        "postrender_receipt": true,
+        "global_lock_base_offset_zero": true,
+        "header_at_ffc0": true,
+        "palette_starts_at_ffe8": true,
+        "palette_crosses_64k": true,
+        "compressed_global_allocated": true,
+        "compressed_base_offset_valid": true,
+        "compressed_allocation_is_small": true,
+        "compressed_stream_layout_matches_fixture": true,
+        "compressed_buffer_guards_bound_stream": true,
+        "compressed_stream_starts_near_segment_end": true,
+        "compressed_far_offset_matches_alias": true,
+        "compressed_segment_alias_matches": true,
+        "compressed_alias_linear_equivalent": true,
+        "compressed_carry_segment_equivalent": true,
+        "compressed_far_stream_crosses_64k": true,
+        "compressed_stream_crosses_64k": true,
+        "compressed_alias_valid": true,
+        "memory_allocated": true,
+        "RLE_setdib_scans": true,
+        "RAW_setdib_scans": true,
+        "caller_info_unchanged": true,
+        "compressed_cross_segment_input_unchanged": true,
+        "compressed_buffer_guards_unchanged": true,
+        "compressed_fixture_unchanged": true,
+        "raw_info_unchanged": true,
+        "case_completed": true
+      }
+    },
+    {
+      "case": 147,
+      "kind": 17,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pixels_compared": 64000,
+      "padding_bytes_compared": 768,
+      "padding_mismatches": [],
+      "padding_mismatch_count": 0,
+      "checks": {
+        "RLE8_screen_mismatch_bpp": true,
+        "stage_receipts_ordered": true,
+        "preclear_receipt": true,
+        "RLE8_screen_call_receipt": true,
+        "RLE4_memory_call_receipt": true,
+        "postrender_receipt": true,
+        "RLE8_screen_fixture_size": true,
+        "RLE8_screen_rejected": true,
+        "RLE8_screen_input_unchanged": true,
+        "RLE8_screen_info_unchanged": true,
+        "RLE4_memory_mismatch_bpp": true,
+        "RLE4_memory_fixture_size": true,
+        "RLE4_memory_allocated": true,
+        "RLE4_memory_rejected": true,
+        "RLE4_memory_destination_unchanged": true,
+        "RLE4_memory_input_unchanged": true,
+        "RLE4_memory_info_unchanged": true,
+        "case_completed": true
+      }
+    },
+    {
+      "case": 148,
+      "kind": 18,
+      "pass": true,
+      "mismatch_count": 0,
+      "first_mismatches": [],
+      "pixels_compared": 64000,
+      "padding_bytes_compared": 768,
+      "padding_mismatches": [],
+      "padding_mismatch_count": 0,
+      "checks": {
+        "early_eob_stream_size": true,
+        "stage_receipts_ordered": true,
+        "preclear_receipt": true,
+        "compressed_call_receipt": true,
+        "postrender_receipt": true,
+        "RLE_api_returned": true,
+        "raw_api_returned": true,
+        "RLE_input_unchanged": true,
+        "raw_input_unchanged": true,
+        "info_unchanged": true,
+        "case_completed": true
+      }
+    }
+  ],
+  "files": {
+    "MB140.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MD140.BIN": {
+      "bytes": 32768,
+      "sha256": "ffa3b9b4ff0b0588d050940eb0015e23221fe70a4ec0664d5c696d4975cd9929"
+    },
+    "MB141.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MD141.BIN": {
+      "bytes": 32768,
+      "sha256": "2869e5612cdcc7ce5b6670dfedcb55d93501de7d602e885abf85ba9e49b007a6"
+    },
+    "MB142.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MD142.BIN": {
+      "bytes": 32768,
+      "sha256": "222201add4f5c40caa7c6d40a12453e837c6011a422fc360681944fb2c4940cc"
+    },
+    "MB143.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MD143.BIN": {
+      "bytes": 32768,
+      "sha256": "2869e5612cdcc7ce5b6670dfedcb55d93501de7d602e885abf85ba9e49b007a6"
+    },
+    "MB144.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MD144.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MB145.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MD145.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MB146.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MD146.BIN": {
+      "bytes": 32768,
+      "sha256": "b6531bb555f61002df2e779a0999de64e09e3a17a12497cedc426654a2b65a7a"
+    },
+    "MB147.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MD147.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MB148.BIN": {
+      "bytes": 32768,
+      "sha256": "c90d07b84d5d6463d78848a60d79125640796263459259e694a815685e0ce0eb"
+    },
+    "MD148.BIN": {
+      "bytes": 32768,
+      "sha256": "1de0ca9e17664deb5fba533d0f10766297338e5f0d4c44fba2b4fe175a2ad381"
+    },
+    "WINDOWS\\MODETEST.EXE": {
+      "bytes": 29071,
+      "sha256": "449727892ee99ba25ebfbc076c75f771cb80f0d3132a6252f4104dc163e72cf3"
+    },
+    "WINDOWS\\SYSTEM\\TANDY88.DRV": {
+      "bytes": 51296,
+      "sha256": "ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee"
+    }
+  },
+  "limits": [
+    "Text shape uses memory-DDB reference, not an independent font parser",
+    "Raw VRAM does not verify hardware palette register RGB values",
+    "Future profiles have codec support, not a driver acceptance claim",
+    "No physical Tandy hardware validation"
+  ],
+  "pass": true
+}

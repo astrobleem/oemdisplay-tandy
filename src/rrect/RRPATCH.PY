@@ -372,6 +372,141 @@ def patch_mut_scanskip(tsoft):
                      "mutant scanskip")
 
 
+# --- RRBATCH (experimental, on top of the candidate) ------------------------
+# Fill rows that GDI sends between OS_BEGINNSCAN (80) and OS_ENDNSCAN (81) are
+# held as one pending row range and presented once, at the end marker,
+# through the same cursor-aware FlushRetainRows. Any other screen Output
+# style, and every other drawing entry (BitBlt, Pixel, ScanLR, StrBlt,
+# ExtTextOut), first presents what is pending and ends the batch, so an
+# unterminated batch is presented by the next driver call. Interrupt-time
+# cursor code never reads the shadow (TCURSOR keeps its overlay in VRAM) and
+# is untouched. Memory-bitmap output never reaches the gate.
+BATCH_DATA_OLD = TRACE_DATA_OLD
+BATCH_DATA_NEW = (BATCH_DATA_OLD +
+                  "; RRBATCH: rows held between OS_BEGINNSCAN and OS_ENDNSCAN.\r\n"
+                  "rr_bopen db 0\r\n"
+                  "rr_bfirst dw SCREEN_HEIGHT\r\n"
+                  "rr_blast dw 0\r\n")
+BATCH_PROC_OLD = "FlushRetainRows endp\r\n"
+BATCH_PROC_NEW = (BATCH_PROC_OLD + "\r\n"
+                  "; RRBATCH: present held rows (if any) and end the batch.\r\n"
+                  "; Preserves every register and FLAGS. Foreground only.\r\n"
+                  "BatchClose proc near\r\n"
+                  "    pushf\r\n"
+                  "    push ax\r\n"
+                  "    push bx\r\n"
+                  "    mov rr_bopen,0\r\n"
+                  "    mov ax,rr_bfirst\r\n"
+                  "    mov bx,rr_blast\r\n"
+                  "    mov rr_bfirst,SCREEN_HEIGHT\r\n"
+                  "    mov rr_blast,0\r\n"
+                  "    cmp ax,bx\r\n"
+                  "    jae bc_done\r\n"
+                  "    call FlushRetainRows\r\n"
+                  "bc_done:\r\n"
+                  "    pop bx\r\n"
+                  "    pop ax\r\n"
+                  "    popf\r\n"
+                  "    ret\r\n"
+                  "BatchClose endp\r\n"
+                  "\r\n"
+                  "rr_settle macro\r\n"
+                  "local settled\r\n"
+                  "    cmp rr_bopen,0\r\n"
+                  "    je settled\r\n"
+                  "    call BatchClose\r\n"
+                  "settled:\r\n"
+                  "endm\r\n")
+BATCH_ENTRY_OLD = "cBegin\r\n    mov dirty,0\r\n    map_device dst,1\r\n"          # Pixel, ScanLR, StrBlt, ExtTextOut
+BATCH_ENTRY_NEW = "cBegin\r\n    rr_settle\r\n    mov dirty,0\r\n    map_device dst,1\r\n"
+BATCH_BLT_OLD = "    mov resync,0\r\n"
+BATCH_BLT_NEW = "    mov resync,0\r\n    rr_settle\r\n"
+BATCH_MARK_OLD = ("TOutput_marker:\r\n"
+                  "    mov dirty,0\r\n"
+                  "    jmp TOutput_render\r\n"
+                  "TOutput_not_marker:\r\n")
+BATCH_MARK_NEW = ("TOutput_marker:\r\n"
+                  "    ; RRBATCH: either marker presents what is held (an unterminated\r\n"
+                  "    ; batch, or this one); OS_BEGINNSCAN then opens a new batch.\r\n"
+                  "    call BatchClose\r\n"
+                  "    cmp style,80\r\n"
+                  "    jne TOutput_marker_off\r\n"
+                  "    mov rr_bopen,1\r\n"
+                  "TOutput_marker_off:\r\n"
+                  "    mov dirty,0\r\n"
+                  "    jmp TOutput_render\r\n"
+                  "TOutput_not_marker:\r\n"
+                  "    rr_settle\r\n")
+BATCH_HOLD_OLD = ("    mov ax,firstrow\r\n"
+                  "    mov bx,lastrow\r\n"
+                  "    call FlushRetainRows\r\n"
+                  "    jmp short TOutput_flushed\r\n")
+BATCH_HOLD_NEW = ("    mov ax,firstrow\r\n"
+                  "    mov bx,lastrow\r\n"
+                  "    cmp rr_bopen,0\r\n"
+                  "    je TOutput_present\r\n"
+                  "    cmp style,4\r\n"
+                  "    jne TOutput_present\r\n"
+                  "    ; RRBATCH: hold this fill row until OS_ENDNSCAN.\r\n"
+                  "    cmp ax,rr_bfirst\r\n"
+                  "    jae TOutput_held_first\r\n"
+                  "    mov rr_bfirst,ax\r\n"
+                  "TOutput_held_first:\r\n"
+                  "    cmp bx,rr_blast\r\n"
+                  "    jbe TOutput_flushed\r\n"
+                  "    mov rr_blast,bx\r\n"
+                  "    jmp short TOutput_flushed\r\n"
+                  "TOutput_present:\r\n"
+                  "    call FlushRetainRows\r\n"
+                  "    jmp short TOutput_flushed\r\n")
+
+
+def patch_batch(tsoft):
+    """Candidate (#151) plus fill-row batching between the scan markers."""
+    return batch_after_candidate(patch_candidate(tsoft))
+
+
+def batch_after_candidate(t, flush_end=BATCH_PROC_OLD):
+    """Apply only PR155 to a stage that already has PR151 (including XR1)."""
+    t = replace_n(t, BATCH_DATA_OLD, BATCH_DATA_NEW, 1, "batch data")
+    t = replace_n(t, flush_end, BATCH_PROC_NEW.replace(BATCH_PROC_OLD, flush_end, 1), 1, "batch close proc")
+    t = replace_n(t, BATCH_ENTRY_OLD, BATCH_ENTRY_NEW, 4, "batch settle at drawing entries")
+    t = replace_n(t, BATCH_BLT_OLD, BATCH_BLT_NEW, 1, "batch settle at BitBlt")
+    t = replace_n(t, BATCH_MARK_OLD, BATCH_MARK_NEW, 1, "batch markers")
+    return replace_n(t, BATCH_HOLD_OLD, BATCH_HOLD_NEW, 1, "batch hold")
+
+
+def patch_mut_noend(tsoft):
+    """End marker closes the batch without presenting it: held rows stay stale
+    until the next begin marker."""
+    t = patch_batch(tsoft)
+    return replace_n(t, "    call BatchClose\r\n    cmp style,80\r\n    jne TOutput_marker_off\r\n",
+                     "    cmp style,80\r\n    je TOutput_mut_begin\r\n    mov rr_bopen,0\r\n"
+                     "    jmp short TOutput_marker_off\r\nTOutput_mut_begin:\r\n    call BatchClose\r\n",
+                     1, "mutant noend")
+
+
+def patch_mut_short(tsoft):
+    """The presented range stops one row early: each batch's last fill row stays stale."""
+    t = patch_batch(tsoft)
+    return replace_n(t, "    cmp ax,bx\r\n    jae bc_done\r\n    call FlushRetainRows\r\n",
+                     "    dec bx\r\n    cmp ax,bx\r\n    jae bc_done\r\n    call FlushRetainRows\r\n",
+                     1, "mutant short")
+
+
+def patch_mut_early(tsoft):
+    """Premature: each held fill row is copied before the renderer draws it."""
+    t = patch_batch(tsoft)
+    return replace_n(t, "    mov outrows,1\r\nTOutput_render:\r\n",
+                     "    mov outrows,1\r\nTOutput_render:\r\n"
+                     "    cmp outrows,0\r\n    je TOutput_mut_go\r\n"
+                     "    cmp style,4\r\n    jne TOutput_mut_go\r\n"
+                     "    cmp rr_bopen,0\r\n    je TOutput_mut_go\r\n"
+                     "    push ax\r\n    push bx\r\n    mov ax,firstrow\r\n    mov bx,lastrow\r\n"
+                     "    call FlushRetainRows\r\n    pop bx\r\n    pop ax\r\n    mov dirty,0\r\n"
+                     "TOutput_mut_go:\r\n", 1, "mutant early")
+
+
 def decode_records(data):
     """Records from the probe's TRACEnn.BIN (concatenated 20-byte records)."""
     import struct
