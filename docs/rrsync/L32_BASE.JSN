@@ -1,0 +1,21 @@
+{
+  "started_utc": "2026-10-24T07:31:24.168986+00:00",
+  "children": [
+    {
+      "pid": 3680,
+      "command": [
+        "C:\\DOSBox-X\\dosbox-x.exe",
+        "-nopromptfolder",
+        "-conf",
+        "C:\\Users\\chad\\Documents\\Codex\\2026-10-24\\task-2\\native\\SRLE32-BASE\\RUN.CNF"
+      ],
+      "exit_code": 0,
+      "stopped": true
+    }
+  ],
+  "lease_acquired": true,
+  "emulators_before": "0",
+  "lease_released": true,
+  "exit_code": 0,
+  "finished_utc": "2026-10-24T07:31:29.132475+00:00"
+}

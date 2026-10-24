@@ -15,19 +15,23 @@ def main():
     p.add_argument('--cycles',type=int,default=3000)
     p.add_argument('--expect-held',action='store_true',help='Require eight row reads to remain unpresented before settlement')
     p.add_argument('--hardware',action='store_true',help='Exercise the existing opt-in hardware pan mode')
+    p.add_argument('--pan-only',action='store_true',help='Cursor-visible one-step pan and return using the existing shape stage')
+    p.add_argument('--driver-name',default='HPXY.DRV',help='DOS driver filename in this private cloned installation')
     a=p.parse_args();out=a.out.resolve()
+    if not re.fullmatch(r'[A-Z0-9_]{1,8}\.DRV',a.driver_name):p.error('canonical uppercase 8.3 driver name required')
     if out.exists():p.error('fresh output directory required')
     out.mkdir(parents=True);c=out/'CROOT';w=c/'WINDOWS'
     shutil.copytree(a.windows,w)
-    for src,dst in ((a.reserve,c/'RESERVE.COM'),(a.driver,w/'HPXY.DRV'),(a.probe,w/'RRBENCH.EXE')):
+    for src,dst in ((a.reserve,c/'RESERVE.COM'),(a.driver,w/a.driver_name),(a.probe,w/'RRBENCH.EXE')):
         shutil.copyfile(src,dst)
     ini=w/'SYSTEM.INI';t=ini.read_bytes().decode('latin1')
     boot,tail=t.split('[boot.description]',1)
-    boot=re.sub(r'(?im)^display\.drv=[^\r\n]*','display.drv=HPXY.DRV',boot)
+    boot=re.sub(r'(?im)^display\.drv=[^\r\n]*','display.drv='+a.driver_name,boot)
     boot=re.sub(r'(?im)^shell=[^\r\n]*','shell=RRBENCH.EXE',boot)
     ini.write_bytes((boot+'[boot.description]'+tail).encode('latin1'))
     (c/'XRPAN.INI').write_bytes(a.pan.encode('ascii'))
     if a.hardware:(c/'XRHARD.ON').write_bytes(b'1')
+    if a.pan_only:(c/'XRPONLY.ON').write_bytes(b'1')
     (c/'TEST.BAT').write_bytes(b'@echo off\r\nSET PATH=C:\\WINDOWS;Z:\\\r\nSET TEMP=C:\\WINDOWS\\TEMP\r\nC:\\RESERVE.COM > C:\\RESERVE.TXT\r\nIF ERRORLEVEL 1 GOTO FAIL\r\nCD WINDOWS\r\nWIN /R > C:\\WINERR.TXT\r\nCD \\\r\nECHO RETURNED>C:\\RETURNED.TXT\r\nGOTO END\r\n:FAIL\r\nECHO GUARDFAILED>C:\\FAILED.TXT\r\n:END\r\nEXIT\r\n')
     cfg=out/'RUN.CNF'
     cfg.write_text('[sdl]\nfullscreen=false\noutput=surface\n[dosbox]\nmachine=tandy\nmemsize=1\n'
@@ -36,7 +40,7 @@ def main():
         '[mixer]\nnosound=true\n[midi]\nmididevice=none\n[autoexec]\n@echo off\nmount C "'+str(c)+'"\nC:\nTEST.BAT\n')
     sha=lambda path:hashlib.sha256(path.read_bytes()).hexdigest()
     result=dict(driver_sha256=sha(a.driver),probe_sha256=sha(a.probe),dosbox_sha256=sha(a.dosbox),
-        pan=a.pan,hardware=a.hardware,cycles=a.cycles,timeout_seconds=180,child_started=False,
+        pan=a.pan,hardware=a.hardware,pan_only=a.pan_only,driver_name=a.driver_name,cycles=a.cycles,timeout_seconds=180,child_started=False,
         started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat())
     proc=None
     try:
@@ -75,8 +79,14 @@ def main():
         expected={'x':(0,0),'y':(8,56),'z':(320,56)}[a.pan]
         result['pan_verified']=all(('PAN_'+k+'='+str(v)+'\n') in header for k,v in zip(('X','Y'),expected))
         values=re.findall(r'^ROWS_VISIBLE_BEFORE_SETTLE=(\d+)$',(c/'RRBENCH.LOG').read_text(),re.M)
-        result['batch_state_verified']=values==(['0' if a.expect_held else '1']*8)
-    result['pass']=result.get('exit_code')==0 and result['returned_to_DOS'] and result['probe_complete'] and result.get('pan_verified') and result.get('batch_state_verified')
+        count=0 if a.pan_only else 9 if 'VERSION=6\n' in header else 8
+        result['batch_state_verified']=values==(['0' if a.expect_held else '1']*count)
+        if count==9:
+            log=(c/'RRBENCH.LOG').read_text()
+            wanted='0' if a.expect_held else '1'
+            result['idle_visibility_verified']=all(('IDLE_VRAM_'+k+'='+wanted+'\n') in log for k in ('NOW','LATER')) and bool(re.search(r'^IDLE_BIOS_TICKS=(?:9|[1-9]\d+)$',log,re.M))
+        else:result['idle_visibility_verified']=True
+    result['pass']=result.get('exit_code')==0 and result['returned_to_DOS'] and result['probe_complete'] and result.get('pan_verified') and result.get('batch_state_verified') and result.get('idle_visibility_verified')
     (out/'RRXRUN.JSN').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
     return 0 if result['pass'] else 1
 

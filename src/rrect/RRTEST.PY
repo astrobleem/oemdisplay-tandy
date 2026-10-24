@@ -29,7 +29,7 @@ STEPS = 14
 def make_log(version=3, shots=0, api=None, repaints=3):
     """A complete RRBENCH log in the probe's own format (see RRBENCH.C)."""
     L = [f"VERSION={version}", "SCREEN_WIDTH=320", "SCREEN_HEIGHT=200", "MULTIPLIER=1"]
-    if version == 5:
+    if version in (5, 6, 7):
         L += ["LOGICAL_WIDTH=640", "LOGICAL_HEIGHT=256", "PAN_RESULT=1", "PAN_X=0", "PAN_Y=0", "HARDWARE=0"]
     if version >= 3:
         L.append(f"SHOTS={shots}")
@@ -40,9 +40,11 @@ def make_log(version=3, shots=0, api=None, repaints=3):
             L += [f"TITLE={name.title()}"] if version >= 2 else []
             L += ["LAUNCH_TO_PAINTED_MS=900"] + ["REPAINT_MS=500"] * repaints
         elif name in ("visible_steps", "marker_steps"):
-            count = STEPS if name == "visible_steps" else 8
+            count = (STEPS + (2 if version == 7 else 0)) if name == "visible_steps" else 9 if version == 6 else 8
             L += ["KIND=4", f"COUNT={count}"] + ["STEP_DUMP_CREATED=1", "STEP_DUMP_BYTES=32768"] * count
             if name == "marker_steps": L += ["RAW_OUTPUT_FOUND=1"]
+            if name == "marker_steps" and version == 6:
+                L += ["IDLE_VRAM_NOW=1", "IDLE_VRAM_LATER=1", "IDLE_BIOS_TICKS=9"]
             L += ["ELAPSED_MS=900", f"API_SUCCESSES={count}", f"STEP_DUMPS={count}"]
         else:
             L += ["KIND=1", "COUNT=20", "ELAPSED_MS=100", f"API_SUCCESSES={20 if api is None else api}"]
@@ -83,17 +85,17 @@ def run_dir(root, name, dumps=None, log=LOG, steps=None):
     d = root / name
     d.mkdir()
     (d / "RRBENCH.LOG").write_text(log, newline="")
-    v4 = "VERSION=4" in log or "VERSION=5" in log
+    v4 = any("VERSION=" + str(v) in log for v in (4, 5, 6, 7))
     if dumps is None:
-        dumps = {n: frame() for n in range(1, (15 if "VERSION=5" in log else N4 if v4 else N) + 1)}
+        dumps = {n: frame() for n in range(1, (1 if "VERSION=7" in log else 15 if "VERSION=5" in log or "VERSION=6" in log else N4 if v4 else N) + 1)}
     for n, data in dumps.items():
         (d / f"RB{n:02d}.BIN").write_bytes(data)
     if steps is None and v4:
-        steps = {k: frame(k) for k in range(1, STEPS + 1)}
+        steps = {k: frame(k) for k in range(1, STEPS + (3 if "VERSION=7" in log else 1))}
     for k, data in (steps or {}).items():
         (d / f"RV{k:02d}.BIN").write_bytes(data)
-    if "VERSION=5" in log:
-        for k in range(1, 9):
+    if "VERSION=5" in log or "VERSION=6" in log:
+        for k in range(1, 10 if "VERSION=6" in log else 9):
             raw = bytearray([255]) * 32768
             coords = [(x, y) for y in range(144, 147 if k == 7 else 146) for x in range(4, 45)]
             if k == 3: coords.append((100, 144))
@@ -222,6 +224,27 @@ class Compare(unittest.TestCase):
         self.assertEqual(self.cmp(a, b), 1)
         self.assertEqual(self.cmp(*self.pair(log, log.replace("PAN_X=0", "PAN_X=8"))), 1)
         self.assertNotEqual(C.validate(log.replace("RAW_OUTPUT_FOUND=1", "RAW_OUTPUT_FOUND=0"))[1], [])
+
+    def test_abandoned_begin_requires_immediate_and_idle_vram_observations(self):
+        log = make_log(version=6)
+        self.assertEqual(C.validate(log)[1], [])
+        self.assertEqual(self.cmp(*self.pair(log)), 0)
+        self.assertNotEqual(C.validate(log.replace("IDLE_VRAM_NOW=1\r\n", ""))[1], [])
+        self.assertNotEqual(C.validate(log.replace("IDLE_VRAM_LATER=1\r\n", ""))[1], [])
+        self.assertNotEqual(C.validate(log.replace("IDLE_BIOS_TICKS=9", "IDLE_BIOS_TICKS=0"))[1], [])
+        a, b = self.pair(log)
+        (b / "RM09.BIN").write_bytes(frame(255))
+        self.assertEqual(self.cmp(a, b), 1)
+
+    def test_cursor_visible_pan_frames_are_compared(self):
+        log = make_log(version=7)
+        self.assertEqual(C.validate(log)[1], [])
+        a, b = self.pair(log)
+        self.assertEqual(self.cmp(a, b), 0)
+        (b / "RV15.BIN").write_bytes(frame(1))
+        self.assertEqual(self.cmp(a, b), 1)
+        (b / "RV16.BIN").unlink()
+        self.assertEqual(self.cmp(a, b), 1)
 
 
 class Patches(unittest.TestCase):
@@ -396,6 +419,50 @@ class CurrentXREvidence(unittest.TestCase):
             r = json.loads((self.D / ("RLE_" + v + ".JSN")).read_text())
             self.assertTrue(r["pass"])
             self.assertEqual((r["case_count"], r["pixels_compared"]), (9, 576000))
+
+
+class SynchronousXREvidence(unittest.TestCase):
+    D = HERE.parents[1] / "docs/rrsync"
+
+    def test_synchronous_rows_are_visible_without_a_later_driver_call(self):
+        for variant in ("BASE", "OLD", "NEW"):
+            build = json.loads((self.D / ("B_" + variant + ".JSN")).read_text())
+            for pan in "XYZ":
+                d = self.D / (variant + pan)
+                raw = (d / "RRBENCH.LOG").read_bytes()
+                receipt = json.loads((d / "RUN.JSN").read_text())
+                self.assertEqual(hashlib.sha256(raw).hexdigest(), receipt["files"]["RRBENCH.LOG"])
+                self.assertEqual(receipt["driver_sha256"], build["sha256"])
+                self.assertTrue(receipt["pass"] and receipt["idle_visibility_verified"] and receipt["lease_released"])
+                self.assertEqual(C.validate(raw.decode("latin1"))[1], [])
+                stage = [r for r in C.parse(raw.decode("latin1"))[1] if r.get("NAME") == ["marker_steps"]][0]
+                want = ["0" if variant == "OLD" else "1"]
+                self.assertEqual(stage["IDLE_VRAM_NOW"], want)
+                self.assertEqual(stage["IDLE_VRAM_LATER"], want)
+                self.assertGreaterEqual(int(stage["IDLE_BIOS_TICKS"][0]), 9)
+                self.assertEqual(stage["ROWS_VISIBLE_BEFORE_SETTLE"], want * 9)
+
+    def test_current_pixels_pan_negative_control_and_rle(self):
+        for pan in "XYZ":
+            r = json.loads((self.D / ("C_" + pan + ".JSN")).read_text())
+            self.assertTrue(r["all_frames_equal"] and r["runs_complete"])
+            self.assertEqual(len(r["stages"]), 15)
+            self.assertEqual(sum(len(s.get("steps", [])) for s in r["stages"]), 23)
+            for rows in r["marker_oracle"].values():
+                self.assertEqual(len(rows), 9)
+                self.assertTrue(all(x["pass"] for x in rows))
+            neg = json.loads((self.D / ("NEG_" + pan + ".JSN")).read_text())
+            self.assertEqual(sorted(x["file"] for x in neg["differences"]), ["RB12.BIN", "RM09.BIN"])
+            self.assertFalse(neg["marker_oracle"][-1]["pass"])
+            for variant in ("OLD", "NEW"):
+                r = json.loads((self.D / ("P_" + variant + "_" + pan + ".JSN")).read_text())
+                self.assertTrue(r["all_frames_equal"])
+                self.assertEqual(len(r["stages"][0]["steps"]), 16)
+        for phase, count in ((32, 9), (64, 8)):
+            for variant in ("BASE", "OLD", "NEW"):
+                r = json.loads((self.D / ("R" + str(phase) + "_" + variant + ".JSN")).read_text())
+                self.assertTrue(r["pass"])
+                self.assertEqual((r["case_count"], r["pixels_compared"]), (count, count * 64000))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,461 @@
+{
+  "reference": "SAFE-BASE-Z",
+  "candidate": "SAFE-NEW-Z",
+  "runs_complete": true,
+  "problems": {},
+  "all_frames_equal": true,
+  "stages": [
+    {
+      "stage": 1,
+      "name": "roundrect_key",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 20,
+      "ref_ms": 1153,
+      "cand_ms": 384
+    },
+    {
+      "stage": 2,
+      "name": "rectangle_key",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 20,
+      "ref_ms": 604,
+      "cand_ms": 164
+    },
+    {
+      "stage": 3,
+      "name": "roundrect_large",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 6,
+      "ref_ms": 659,
+      "cand_ms": 220
+    },
+    {
+      "stage": 4,
+      "name": "roundrect_hollow",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 20,
+      "ref_ms": 604,
+      "cand_ms": 165
+    },
+    {
+      "stage": 5,
+      "name": "roundrect_nopen",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 20,
+      "ref_ms": 604,
+      "cand_ms": 219
+    },
+    {
+      "stage": 6,
+      "name": "roundrect_xor",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 20,
+      "ref_ms": 1154,
+      "cand_ms": 329
+    },
+    {
+      "stage": 7,
+      "name": "roundrect_overlap",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 20,
+      "ref_ms": 1154,
+      "cand_ms": 329
+    },
+    {
+      "stage": 8,
+      "name": "roundrect_clipped",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 20,
+      "ref_ms": 440,
+      "cand_ms": 165
+    },
+    {
+      "stage": 9,
+      "name": "ellipse_12",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 4,
+      "ref_ms": 220,
+      "cand_ms": 55
+    },
+    {
+      "stage": 10,
+      "name": "cursor_overlap",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 20,
+      "ref_ms": 4010,
+      "cand_ms": 549
+    },
+    {
+      "stage": 11,
+      "name": "visible_steps",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 14,
+      "ref_ms": 2362,
+      "cand_ms": 714,
+      "steps": [
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        }
+      ]
+    },
+    {
+      "stage": 12,
+      "name": "marker_steps",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 9,
+      "ref_ms": 4229,
+      "cand_ms": 4174,
+      "steps": [
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        }
+      ]
+    },
+    {
+      "stage": 13,
+      "name": "calc",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 1,
+      "ref_ms": [
+        2143,
+        2142,
+        2142
+      ],
+      "cand_ms": [
+        1099,
+        1043,
+        1099
+      ]
+    },
+    {
+      "stage": 14,
+      "name": "reversi",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 1,
+      "ref_ms": [
+        1098,
+        1099,
+        1098
+      ],
+      "cand_ms": [
+        769,
+        714,
+        714
+      ]
+    },
+    {
+      "stage": 15,
+      "name": "pbrush",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 1,
+      "ref_ms": [
+        2362,
+        2362,
+        2306
+      ],
+      "cand_ms": [
+        1538,
+        1483,
+        1538
+      ]
+    }
+  ],
+  "marker_oracle": {
+    "reference": [
+      {
+        "step": 1,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 2,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 3,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 4,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 5,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 6,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 7,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 8,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 9,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      }
+    ],
+    "candidate": [
+      {
+        "step": 1,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 2,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 3,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 4,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 5,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 6,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 7,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 8,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      },
+      {
+        "step": 9,
+        "pass": true,
+        "differing_pixels": 0,
+        "pixels_compared": 64000
+      }
+    ]
+  }
+}

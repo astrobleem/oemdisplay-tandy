@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Build a TR5 driver variant for the RoundRect investigation (src/rrect).
 
+The deferred batch variants reproduce the historical experiment and its
+known abandoned-BEGIN failure. Use experiments/XYRRECT/XRBUILD.PY
+--sync-output for the synchronous current-XR1 follow-up.
+
   python3 src/rrect/RRBUILD.PY --repo <DEPS.PY display view> --dosbox <dosbox-x> \\
       --out <fresh dir> --mode 320x200x16 --variant baseline|trace|noflush|nodraw|candidate|candidate-trace|batch|batch-trace|mut-*
 

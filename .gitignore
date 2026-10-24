@@ -73,3 +73,5 @@ __pycache__/
 !docs/rrbatch/*/RRBENCH.LOG
 !docs/rrbatch/current/*/RRBENCH.LOG
 !docs/rrbatch/current/RLE_*.LOG
+!docs/rrsync/*/RRBENCH.LOG
+!docs/rrsync/R*.LOG

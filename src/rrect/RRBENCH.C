@@ -31,7 +31,7 @@ static HPEN blackPen, nullPen;
 static HBRUSH white, gray, hollow, ltgray;
 static HWND lastApp = NULL;
 static char trbuf[4 + 64 * 20];
-static int xr = 0, panx = 0, pany = 0, hardware = 0;
+static int xr = 0, panx = 0, pany = 0, hardware = 0, panonly = 0;
 static void line(char *key, long value);
 
 static void cursorpos(int x, int y) { SetCursorPos(x + panx, y + pany); }
@@ -300,6 +300,9 @@ static void markerstage(void)
     POINT pts[65];
     int device = 1, memory = 0, mode[16], pen[3], k, i, ok = 0, a, b, at;
     DWORD t0 = GetTickCount();
+    WORD idleStart, idleElapsed = 0;
+    volatile WORD FAR *biosTicks = (volatile WORD FAR *)0x0040006cL;
+    int idleNow = -1, idleLater = -1;
     output = (OUTPROC)GetProcAddress(GetModuleHandle("DISPLAY"), MAKEINTRESOURCE(8));
     for (i = 0; i < 16; i++) mode[i] = 0;
     for (i = 0; i < 3; i++) pen[i] = 0;
@@ -309,10 +312,10 @@ static void markerstage(void)
     seq++;
     line("STAGE", seq);
     _lwrite(logFile, "NAME=marker_steps\r\n", 19);
-    line("KIND", 5); line("COUNT", 8);
+    line("KIND", 5); line("COUNT", 9);
     line("RAW_OUTPUT_FOUND", output != NULL);
     if (!output) { flush(); return; }
-    for (k = 1; k <= 8; k++) {
+    for (k = 1; k <= 9; k++) {
         clear();
         pts[0].y = pany + 144;
         output((LPSTR)&device,80,0,NULL,NULL,NULL,NULL,NULL);
@@ -322,6 +325,20 @@ static void markerstage(void)
         at = (144 / 4) * 160 + 2;
         if (hardware) at += ((pany / 4) * 160 + panx / 2) & 8191;
         at &= 8191;
+        if (k == 9) {
+            /* Abandon BEGIN. No END, GDI, Control, Disable, message pump,
+             * DOS call, or cooperative timer is used during observation.
+             * Read real VRAM immediately, then busy-wait nine BIOS IRQ
+             * clock ticks with interrupts enabled and read it again.
+             */
+            idleNow = (((volatile BYTE FAR *)0xb8000000L)[at] & 15) == 0;
+            idleStart = *biosTicks;
+            do { idleElapsed = (WORD)(*biosTicks - idleStart); } while (idleElapsed < 9);
+            idleLater = (((volatile BYTE FAR *)0xb8000000L)[at] & 15) == 0;
+            line("IDLE_VRAM_NOW", idleNow);
+            line("IDLE_VRAM_LATER", idleLater);
+            line("IDLE_BIOS_TICKS", idleElapsed);
+        }
         line("ROWS_VISIBLE_BEFORE_SETTLE", (((BYTE FAR *)0xb8000000L)[at] & 15) == 0);
         if (k == 1) output((LPSTR)&device,81,0,NULL,NULL,NULL,NULL,NULL);
         if (k == 2) {
@@ -341,7 +358,7 @@ static void markerstage(void)
         framedump(k, 1);
     }
     line("ELAPSED_MS", GetTickCount() - t0);
-    line("API_SUCCESSES", ok); line("STEP_DUMPS", 8);
+    line("API_SUCCESSES", ok); line("STEP_DUMPS", 9);
     dump(); flush();
 }
 
@@ -355,6 +372,7 @@ static void stepstage(void)
     HRGN rgn;
     DWORD t0, t1;
     STEP *s;
+    int panin[2], panout[6], targetx, targety, panret;
     pens[0] = nullPen; pens[1] = blackPen;
     brushes[0] = white; brushes[1] = gray; brushes[2] = hollow; brushes[3] = ltgray;
     steps[NSTEPS - 1].x = width - 15;
@@ -371,7 +389,7 @@ static void stepstage(void)
     line("STAGE", seq);
     _lwrite(logFile, "NAME=visible_steps\r\n", 20);
     line("KIND", 4);
-    line("COUNT", NSTEPS);
+    line("COUNT", NSTEPS + (panonly ? 2 : 0));
     flush();
     resettrace();
     t0 = GetTickCount();
@@ -397,10 +415,26 @@ static void stepstage(void)
         SelectObject(dc, ob);
         stepdump(k + 1);
     }
+    if (panonly) {
+        /* Move one supported diagonal pan step while the cursor is still
+         * visible over the drawing, then return. Hardware mode exercises
+         * the existing 1,440-byte preconverted stage and bank wrapping.
+         */
+        targetx = panx == 320 ? panx - 8 : panx + 8;
+        targety = pany == 56 ? pany - 4 : pany + 4;
+        panin[0] = targetx; panin[1] = targety;
+        panret = Escape(dc, 0x5860, 4, (LPSTR)panin, (LPSTR)panout);
+        ok += panret > 0 && panout[0] == targetx && panout[1] == targety;
+        stepdump(NSTEPS + 1);
+        panin[0] = panx; panin[1] = pany;
+        panret = Escape(dc, 0x5860, 4, (LPSTR)panin, (LPSTR)panout);
+        ok += panret > 0 && panout[0] == panx && panout[1] == pany;
+        stepdump(NSTEPS + 2);
+    }
     t1 = GetTickCount();
     line("ELAPSED_MS", (long)(t1 - t0));
     line("API_SUCCESSES", ok);
-    line("STEP_DUMPS", NSTEPS);
+    line("STEP_DUMPS", NSTEPS + (panonly ? 2 : 0));
     savetrace();
     cursorpos(width - 1, height - 1);
     pump(20);
@@ -451,9 +485,10 @@ int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
     if (logFile == HFILE_ERROR) return 1;
     dc = GetDC(NULL);
     hardware = OpenFile("C:\\XRHARD.ON", &of, OF_EXIST) != HFILE_ERROR;
+    panonly = OpenFile("C:\\XRPONLY.ON", &of, OF_EXIST) != HFILE_ERROR;
     width = GetSystemMetrics(SM_CXSCREEN);
     height = GetSystemMetrics(SM_CYSCREEN);
-    line("VERSION", xr ? 5 : 4);
+    line("VERSION", xr ? (panonly ? 7 : 6) : 4);
     if (xr) line("HARDWARE", hardware);
     line("LOGICAL_WIDTH", width); line("LOGICAL_HEIGHT", height);
     if (xr) { width = 320; height = 200; setpan(); SetViewportOrg(dc, panx, pany); }
@@ -478,7 +513,7 @@ int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
     oldcur = SetCursor(NULL);
     flush();
     /* Calculator-sized keys first, then variants that exercise fallbacks. */
-    if (!shots) {
+    if (!shots && !panonly) {
         batch("roundrect_key", 1, 26, 15, 8, 8, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 0);
         batch("rectangle_key", 2, 26, 15, 0, 0, blackPen, ltgray, R2_COPYPEN, 20, 30, 20, 0);
         batch("roundrect_large", 1, 60, 30, 12, 12, blackPen, white, R2_COPYPEN, 6, 64, 36, 0);
@@ -493,9 +528,12 @@ int PASCAL WinMain(HANDLE inst, HANDLE prev, LPSTR cmd, int show)
         if (xr) markerstage();
         if (xr) { panx = pany = 0; SetViewportOrg(dc, 0, 0); setpan(); }
     }
-    app("calc", "CALC.EXE");
-    app("reversi", "REVERSI.EXE");
-    app("pbrush", "PBRUSH.EXE");
+    if (panonly) stepstage();
+    else {
+        app("calc", "CALC.EXE");
+        app("reversi", "REVERSI.EXE");
+        app("pbrush", "PBRUSH.EXE");
+    }
     line("COMPLETE", 1);
     _lclose(logFile);
     ReleaseDC(NULL, dc);

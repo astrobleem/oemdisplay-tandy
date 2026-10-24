@@ -7,6 +7,7 @@ on:
       - 'experiments/XYRRECT/**'
       - 'docs/rrect/**'
       - 'docs/rrbatch/**'
+      - 'docs/rrsync/**'
       - 'docs/TRIAL5/BUILDS.JSN'
       - '.github/workflows/rrect.yml'
   push:
@@ -16,6 +17,7 @@ on:
       - 'experiments/XYRRECT/**'
       - 'docs/rrect/**'
       - 'docs/rrbatch/**'
+      - 'docs/rrsync/**'
       - 'docs/TRIAL5/BUILDS.JSN'
       - '.github/workflows/rrect.yml'
   workflow_dispatch:
@@ -39,7 +41,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/src/rrect/\n/experiments/XYRRECT/\n/docs/rrect/\n/docs/rrbatch/\n/docs/TRIAL5/BUILDS.JSN\n' | git sparse-checkout set --no-cone --stdin
+          printf '/src/rrect/\n/experiments/XYRRECT/\n/docs/rrect/\n/docs/rrbatch/\n/docs/rrsync/\n/docs/TRIAL5/BUILDS.JSN\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Verify exact frame checker, patch anchors and recorded A/B evidence

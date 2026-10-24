@@ -50,7 +50,7 @@ def marker_oracle(directory, identity):
     px, py = (int(x[0]) for x in identity["pan"])
     start = ((py // 4) * 160 + px // 2) & 8191 if hardware else 0
     rows = []
-    for k in range(1, 9):
+    for k in range(1, 10 if identity.get("version") == 6 else 9):
         path = directory / f"RM{k:02d}.BIN"
         if not path.exists() or path.stat().st_size != 32768:
             rows.append({"step": k, "pass": False, "error": "marker frame missing or truncated"})
@@ -81,7 +81,9 @@ def expected_names(version, shots):
     """The stages RRBENCH runs, in order, for a given probe version."""
     if version == 1:
         return BATCHES + ("calc",)
-    if version == 5:
+    if version == 7:
+        return ("visible_steps",)
+    if version in (5, 6, 7):
         return BATCHES + ("cursor_overlap", "visible_steps", "marker_steps") + APPS
     if version in (2, 3, 4):
         if shots:
@@ -148,7 +150,7 @@ def validate(log_text):
     if not lines or lines[-1] != "COMPLETE=1" or log_text.count("COMPLETE=") != 1:
         bad.append("run not complete (COMPLETE=1 must be the last line, once)")
     names = [r.get("NAME", ["?"])[0] for r in rows]
-    if version == 5:
+    if version in (5, 6, 7):
         if head.get("LOGICAL_WIDTH") != ["640"] or head.get("LOGICAL_HEIGHT") != ["256"]:
             bad.append("XR probe requires the current 640x256 dual-band driver")
         if head.get("PAN_RESULT") != ["1"]:
@@ -156,6 +158,13 @@ def validate(log_text):
         for r in rows:
             if r.get("NAME") == ["marker_steps"] and r.get("RAW_OUTPUT_FOUND") != ["1"]:
                 bad.append("direct driver Output entry was not found")
+            if version == 6 and r.get("NAME") == ["marker_steps"]:
+                for key in ("IDLE_VRAM_NOW", "IDLE_VRAM_LATER"):
+                    if one_int(r, key, "idle observation") not in (0, 1):
+                        bad.append("idle VRAM observation must be 0 or 1")
+                ticks = one_int(r, "IDLE_BIOS_TICKS", "idle observation")
+                if ticks is None or ticks < 9:
+                    bad.append("idle observation must span nine BIOS clock ticks")
     want = expected_names(version, shots)
     if want is None:
         bad.append(f"unknown probe version {version}")
@@ -194,7 +203,7 @@ def validate(log_text):
             bad.append(f"{where}: dumps created {made} bytes {size}")
     ident = {"version": version, "shots": shots, "multiplier": head.get("MULTIPLIER"),
              "screen": (head.get("SCREEN_WIDTH"), head.get("SCREEN_HEIGHT"))}
-    if version == 5:
+    if version in (5, 6, 7):
         ident["pan"] = (head.get("PAN_X"), head.get("PAN_Y"))
         ident["hardware"] = head.get("HARDWARE")
     return ident, bad
@@ -247,7 +256,7 @@ def main(argv):
             problems[side] = bad
             for b in bad:
                 print(f"INCOMPLETE {side}: {b}")
-        elif ident.get("version") == 5:
+        elif ident.get("version") in (5, 6):
             oracles[side] = marker_oracle(d, ident)
             if not all(x["pass"] for x in oracles[side]):
                 problems[side] = ["direct Output frames failed the independent pixel oracle"]

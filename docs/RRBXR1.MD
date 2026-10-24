@@ -1,5 +1,9 @@
 # PR155 on current XR1: opt-in batching candidate
 
+Historical candidate `ff5d5e38`; its abandoned-BEGIN gap is superseded by the
+local synchronous follow-up in [RRSYNC.MD](RRSYNC.MD). The measurements below
+remain the exact earlier experiment, not the current implementation.
+
 Base: main `5ada3e8092b761aab9099c6d96a7b893ed3a6902`. Original PR155 head:
 `364662202d625d07ef0e8c02934ed887d84a33ea`. No release package, accepted
 binary, source pin or default is replaced. Physical hardware is untested.
