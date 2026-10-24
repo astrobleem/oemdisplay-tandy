@@ -80,11 +80,11 @@ def main():
         print((out / "BUILD.LOG").read_text(errors="replace") if (out / "BUILD.LOG").exists() else "no BUILD.LOG")
         raise SystemExit("BUILDAPP: build failed; inspect BUILD.LOG and HOST.LOG")
     res = {}
-    for n in ("TGCLIP.EXE",):
+    for n in PRODUCTS:
         b = (out / n).read_bytes()
         res[n] = {"bytes": len(b), "sha256": hashlib.sha256(b).hexdigest()}
-    res["compiler_flags"] = "/nologo /c /G0 /Gw /AS /W3 /Od"
-    res["target"] = "Windows 3.0 real mode, 8086"
+    res["compiler_flags"] = {"TGCLIP.EXE": "/G0 /Gw /AS /W3 /Od, LINK4", "TGCLOG.EXE": "/G0 /Gw /AS /W3 /Od, LINK4 (test tool)", "TGSETUP.EXE": "/c /AS /G0 /W3 /Ox, LINK SLIBCE (DOS)"}
+    res["target"] = "Windows 3.0 real mode / DOS, 8086"
     (out / "RESULT.JSON").write_text(json.dumps(res, indent=2) + "\n")
     print(json.dumps(res, indent=2))
     return 0

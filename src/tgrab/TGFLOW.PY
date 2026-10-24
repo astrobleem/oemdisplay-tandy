@@ -107,6 +107,7 @@ def stop(vm):
 # -------------------------------------------------------------------- run --
 MODES = {4: (320, 4), 5: (320, 4), 6: (640, 2), 8: (160, 16), 9: (320, 16), 10: (640, 4)}
 PM_PARK = (316, 196)
+PB_OUTSIDE = {320: (300, 100), 640: (300, 185), 160: (300, 100)}
 
 
 def prepare_run(a):
@@ -120,6 +121,9 @@ def prepare_run(a):
     shutil.copyfile(kitdir / "86box.cfg", vm / "86box.cfg")
     (vm / "prep").mkdir()
     i = f"{vm / 'pcp.img'}{PART}"
+    auto = "PATH C:\\;C:\\WINDOWS;C:\\WINXT;C:\\TGT\r\nSET TEMP=C:\\WINDOWS\\TEMP\r\n"
+    (vm / "prep" / "AUTOEXEC.BAT").write_bytes(auto.encode())
+    mt("mcopy", "-o", "-i", i, str(vm / "prep" / "AUTOEXEC.BAT"), "::/AUTOEXEC.BAT")
     mt("mmd", "-i", i, "::/TGT")
     mt("mmd", "-i", i, "::/TGCLOG")
     test = Path(a.test)
@@ -142,7 +146,8 @@ def prepare_run(a):
     rec = {"kit_image_sha256": P.sha(kitdir / "kit.img"),
            "packet": {f.name: P.sha(f) for f in files},
            "test_tools": {n: P.sha(test / n) for n in ("TGCLOG.EXE", "TGFREE.COM", "TGHIGH.COM")},
-           "changes": ["C:\\TGT: TGCLOG.EXE, TGFREE.COM, TGHIGH.COM (test only)", "C:\\TGCLOG: log folder",
+           "changes": ["AUTOEXEC.BAT PATH adds C:\\WINXT and C:\\TGT (the 86Box keyboard map loses backslash and space typed at the DOS prompt)",
+                       "C:\\TGT: TGCLOG.EXE, TGFREE.COM, TGHIGH.COM (test only)", "C:\\TGCLOG: log folder",
                        "WIN.INI load=C:\\TGT\\TGCLOG.EXE (test only)", "WINDOWS\\TGIMG.BMP (TGIMG.PY)",
                        "A: 720 KB floppy with the packet"]}
     (vm / "PREP.JSN").write_text(json.dumps(rec, indent=1) + "\n")
@@ -181,7 +186,14 @@ class Flow:
         self.r.text(s, wait=wait)
 
     def dos(self, cmd, wait):
-        self.text(cmd)
+        """At the DOS prompt the 86Box keyboard map loses typed spaces:
+        send them as key presses."""
+        parts = cmd.split(" ")
+        for k, part in enumerate(parts):
+            if k:
+                self.key("space", wait=0.3)
+            if part:
+                self.text(part, wait=0.3)
         self.key("Return", wait=wait)
 
     def shot(self, name, width=320, decode=True, settle=1.5):
@@ -275,8 +287,9 @@ class Flow:
 
     def launch(self, tag):
         self.step("C:\\WINXT\\WINXT (" + tag + ")")
-        self.dos("CD \\WINXT", 3)
+        self.r.m("ident", "on")            # serial mouse identification for Windows
         self.dos("WINXT", 170)
+        self.r.m("ident", "off")
         for _ in range(5):              # Program Manager's old group messages
             self.key("Escape", wait=8)
         self.park()
@@ -289,11 +302,10 @@ class Flow:
         self.key("alt+F4", wait=8)
         self.key("Return", wait=40)
         self.shot(tag + "_dos", decode=False)
-        self.dos("CD \\", 2)
 
     def dos_tgfree(self, what):
         n = len(self.dos_free())
-        self.dos("C:\\TGT\\TGFREE", 8)
+        self.dos("TGFREE", 8)
         v = self.dos_free()
         val = v[-1] if len(v) > n else None
         self.out["memory"].append({"what": what, "dos_free": val})
@@ -393,40 +405,42 @@ class Flow:
         return a, (rows if bm else None)
 
     def pb_paste_full(self, name, w, screen):
-        """Paintbrush, normal workflow for a whole picture: (640 wide: Options >
-        Image Attributes 640 x 200 pels, File > New), View > Zoom Out,
-        Edit > Paste, click to place it, View > Zoom In, File > Save As."""
-        self.step("Paintbrush: paste the whole %dx200 picture (Zoom Out), Save As %s" % (w, name))
+        """Paintbrush, its own workflow for a whole picture: Options > Image
+        Attributes w x 200 pels, File > New, View > Zoom Out, Edit > Paste,
+        a click outside the picture places it, View > Zoom In, Save As."""
+        self.step("Paintbrush: Image Attributes %dx200, Zoom Out, Paste, Save As %s" % (w, name))
         self.run_cmd("PBRUSH", wait=70)
         self.key("alt+space", wait=5)
         self.key("x", wait=50)
-        if w == 640:
-            self.key("alt+o", wait=5)
-            self.key("i", wait=15)
-            self.shot(name[:-4] + "_attr")
-            self.key("alt+p", wait=3)           # Pels
-            self.key("alt+w", wait=3)
-            self.text("640")
-            self.key("alt+h", wait=3)
-            self.text("200")
-            self.key("Return", wait=15)
-            self.key("alt+f", wait=5)
-            self.key("n", wait=30)
-            self.key("n", wait=20)
-        self.key("alt+v", wait=5)
+        self.key("alt+o", wait=8)
+        self.key("i", wait=15)
+        self.key("alt+h", wait=3)
+        self.key("Tab", wait=3)                # the Units buttons: in, cm, pels
+        self.key("KP_Down", wait=3)
+        self.key("KP_Down", wait=3)
+        self.key("alt+w", wait=3)
+        self.text(str(w))
+        self.key("alt+h", wait=3)
+        self.text("200")
+        self.shot(name[:-4] + "_attr", decode=False)
+        self.key("Return", wait=15)
+        self.key("alt+f", wait=8)
+        self.key("n", wait=30)
+        self.key("n", wait=20)                 # "save changes?" if asked
+        self.key("alt+v", wait=8)
         self.key("o", wait=40)
-        self.park()
-        self.shot(name[:-4] + "_zoomout")
-        self.key("alt+e", wait=5)
+        self.key("alt+e", wait=8)
         self.key("p", wait=60)
         self.park()
-        self.shot(name[:-4] + "_pasted_out")
-        self.r.click(250, 180, wait=20)          # outside the picture: place it
-        self.key("alt+v", wait=5)
+        self.shot(name[:-4] + "_hatched")
+        self.r.click(*PB_OUTSIDE[w], wait=40)
+        self.park()
+        self.shot(name[:-4] + "_placed")
+        self.key("alt+v", wait=8)
         self.key("i", wait=40)
         self.park()
         self.shot(name[:-4] + "_pasted")
-        self.key("alt+f", wait=5)
+        self.key("alt+f", wait=8)
         self.key("a", wait=12)
         self.text(name)
         self.key("Return", wait=90)
@@ -437,8 +451,8 @@ class Flow:
             bw, bh, rows, pal = T.read_bmp(data)
             res["size"] = [bw, bh]
             if (bw, bh) == (w, 200):
-                bad = sum(bytes(pal[4 * rows[y][x]:4 * rows[y][x] + 3]) !=
-                          bytes(T.WINPAL[4 * win_to_tandy(screen[y * w + x]):4 * win_to_tandy(screen[y * w + x]) + 3])
+                ref = lambda x, y: T.WINPAL[4 * win_to_tandy(screen[y * w + x]):4 * win_to_tandy(screen[y * w + x]) + 3]
+                bad = sum(bytes(pal[4 * rows[y][x]:4 * rows[y][x] + 3]) != bytes(ref(x, y))
                           for y in range(200) for x in range(w))
                 res["mismatches"] = bad
                 ok = bad == 0
@@ -447,6 +461,164 @@ class Flow:
         self.park()
         return self.check("Paintbrush pastes the whole %dx200 picture and saves %s with every pixel in the "
                           "reference colour of the screen" % (w, name), ok, **res)
+
+    # -- scenario ----------------------------------------------------------------
+    def selftest(self):
+        """Host-only: the comparisons must reject a changed pixel and an
+        unchanged (previous) Clipboard."""
+        screen = bytes([(x // 20) & 15 for y in range(200) for x in range(320)])
+        rows = [[win_to_tandy((x // 20) & 15) for x in range(320)] for y in range(200)]
+        good = self.compare(rows, screen, 320)
+        rows[50][60] ^= 1
+        bad = self.compare(rows, screen, 320)
+        self.check("self-test: the Clipboard comparison passes an equal bitmap and fails one changed pixel",
+                   good == 0 and bad == 1, good=good, bad=bad)
+
+    def part_pb(self):
+        """TGIMG.BMP round trip in Paintbrush (Windows to Windows)."""
+        import importlib.machinery as m
+        S = m.SourceFileLoader("tgsess", str(HERE / "TGSESS.PY")).load_module()
+        s = S.Sess.__new__(S.Sess)
+        s.vm, s.r, s.got, s.out = self.vm, self.r, self.got, self.out
+        s.save = self.save
+        s.check, s.step = self.check, self.step
+        # only the first half of TGSESS part_win: open, copy, paste, save, reopen
+        r = self.r
+        s.step("Paintbrush opens TGIMG.BMP")
+        s.run_cmd("PBRUSH TGIMG.BMP", wait=70)
+        s.key("alt+space", wait=5)
+        s.key("x", wait=50)
+        s.park()
+        px = s.frame("pb_img")
+        bad = s.img_on_screen(px, *S.IMG_AT)
+        s.check("TGIMG.BMP shown exactly at the canvas origin (all 2,560 pixels, every colour)", not bad,
+                mismatches=len(bad))
+        r.click(*S.PICK, wait=4)
+        r.drag(S.IMG_AT[0], S.IMG_AT[1], S.IMG_AT[0] + 64, S.IMG_AT[1] + 40, wait=8)
+        s.key("alt+e", wait=8)
+        s.key("c", wait=15)
+        s.key("alt+f", wait=8)
+        s.key("n", wait=20)
+        s.key("n", wait=20)
+        s.key("alt+e", wait=8)
+        s.key("p", wait=30)
+        r.click(250, 150, wait=6)
+        s.park()
+        px = s.frame("pb_anchored")
+        bad = s.img_on_screen(px, *S.IMG_AT)
+        s.check("pasted picture anchored at the canvas origin, all pixels and colours exact", not bad,
+                mismatches=len(bad))
+        s.key("alt+f", wait=8)
+        s.key("a", wait=12)
+        r.text("PASTE.BMP")
+        s.key("Return", wait=60)
+        data = s.fetch("/WINDOWS/PASTE.BMP", "PASTE.BMP")
+        res = s.bmp_check(data, "PASTE.BMP") if data else {"missing": True}
+        s.check("PASTE.BMP: the 64x40 picture at (0,0) with exactly the original colours, the rest white",
+                data and res["picture_mismatches"] == 0 and res["rest_white"], **res)
+        s.key("alt+F4", wait=20)
+        s.run_cmd("PBRUSH PASTE.BMP", wait=70)
+        s.key("alt+space", wait=5)
+        s.key("x", wait=50)
+        s.park()
+        px = s.frame("pb_reopened")
+        bad = s.img_on_screen(px, *S.IMG_AT)
+        s.check("reopened PASTE.BMP shows the picture exactly", not bad, mismatches=len(bad))
+        s.key("alt+F4", wait=20)
+        s.park()
+
+    def part_winprt(self):
+        self.step("Shift+PRINT in Windows, the whole screen pasted and saved")
+        self.park()
+        before = len(self.clips())
+        a = self.shot("winprt_screen")
+        self.key("shift+KP_Multiply", wait=40)
+        k, lines = self.new_clip(before, "winprt")
+        bm = self.clip_bitmap(k) if k else None
+        ok = bm is not None and bm[:2] == (320, 200)
+        corner = lambda x, y: x >= 316 and y >= 196
+        mism = sum(win_to_tandy(bm[4][y][x]) != a[y * 320 + x] for y in range(200) for x in range(320)
+                   if not corner(x, y)) if ok else None
+        self.check("Windows Print Screen: the Clipboard holds a 320x200 bitmap equal to the screen "
+                   "(pointer corner excluded)", ok and mism == 0, mismatches=mism, clip_lines=lines)
+        self.pb_paste_full("WINPRT.BMP", 320, a)
+
+    def part_modes(self):
+        refs = {}
+        for m in (4, 5, 6, 8, 9, 10):
+            refs[m], _ = self.grab_mode(m, 0)
+            a, rows = self.grab_mode(m, 1, switch=m in (4, 6, 9, 10))
+            if m == 9:
+                self.pb_paste_full("DOS9P1.BMP", 320, a)
+            if m == 10:
+                self.pb_paste_full("DOSAP1.BMP", 640, a)
+        for m in (4, 9):
+            self.grab_mode(m, 2, switch=True, ref=refs[m])
+
+    def part_memory(self, tag, n=4):
+        self.step("memory: %d DOS sessions from Windows (%s)" % (n, tag))
+        recs = [self.win_session_free("%s session %d" % (tag, k + 1)) for k in range(n)]
+        dos = [r["dos_free_in_session"] for r in recs]
+        win = [r["windows"] for r in recs]
+        self.check("%s: every DOS session gets the same memory and Windows' free memory is the same after "
+                   "each closed session" % tag,
+                   None not in dos and len(set(dos)) == 1 and None not in win and len(set(win)) == 1,
+                   dos_free=dos, windows_free=win)
+        return dos[0]
+
+    def scenario(self, part):
+        self.selftest()
+        if part in ("all", "main"):
+            grab, load = self.tgsetup()
+            self.check("TGSETUP from drive A: selects the grabber and starts TGCLIP from WIN.INI load=",
+                       grab == ["286grabber=TANDYGR.GR2"] and len(load) == 1 and "C:\\WINDOWS\\TGCLIP.EXE" in load[0]
+                       and "C:\\TGT\\TGCLOG.EXE" in load[0], grabber=grab, load=load)
+            d0 = self.dos_tgfree("DOS prompt before Windows")
+            self.launch("l1")
+            self.part_pb()
+            self.part_winprt()
+            self.part_modes()
+            self.part_text("l1")
+            self.out["dos_free_session_tandygr"] = self.part_memory("TANDYGR.GR2")
+            self.exit_windows("l1")
+            d1 = self.dos_tgfree("DOS prompt after Windows exit 1")
+        if part in ("all", "relaunch"):
+            if part == "relaunch":
+                self.tgsetup()
+                d1 = self.dos_tgfree("DOS prompt before Windows")
+            for k in (2, 3):
+                self.launch("l%d" % k)
+                self.part_text("l%d" % k)
+                self.exit_windows("l%d" % k)
+                dk = self.dos_tgfree("DOS prompt after Windows exit %d" % k)
+                self.check("launch %d: free DOS memory after Windows exits is the same as after the first "
+                           "(nothing accumulates)" % k, dk == d1, first=d1, now=dk)
+            for n in (1, 2, 3):
+                self.step("TGHIGH %d: a different memory layout below RESERVE" % n)
+                self.dos("TGHIGH %d" % n, 8)
+                self.launch("h%d" % n)
+                self.part_text("h%d" % n)
+                self.exit_windows("h%d" % n)
+        if part in ("all", "remove"):
+            if part == "remove":
+                self.tgsetup()
+            self.launch("t")
+            dt = self.part_memory("TANDYGR.GR2 (control pair)", n=2)
+            self.exit_windows("t")
+            grab, load = self.tgsetup("/REMOVE", tag="remove")
+            self.check("TGSETUP /REMOVE puts CGA.GR2 back and takes TGCLIP out of load=",
+                       grab == ["286grabber=CGA.GR2"] and "TGCLIP" not in load[0].upper(), grabber=grab, load=load)
+            self.launch("c")
+            dc = self.part_memory("CGA.GR2", n=2)
+            self.exit_windows("c")
+            self.out["dos_free_session"] = {"TANDYGR.GR2": dt, "CGA.GR2": dc}
+            self.check("a DOS program started from Windows gets at least as much memory with TANDYGR.GR2 as "
+                       "with CGA.GR2", dt is not None and dc is not None and dt >= dc, tandygr=dt, cgagr2=dc)
+        ok = all(c["ok"] for c in self.out["checks"])
+        self.out["verdict"] = "PASS" if ok else "FAIL"
+        self.save()
+        print(self.out["verdict"])
+        return 0 if ok else 1
 
     @staticmethod
     def compare(rows, screen, width):
@@ -468,3 +640,12 @@ if __name__ == "__main__":
     a = ap.parse_args()
     if a.cmd == "kit":
         kit(a)
+    elif a.cmd == "run":
+        prepare_run(a)
+        start(a.vm)
+        time.sleep(80)
+        try:
+            rc = Flow(a.vm).scenario(a.part)
+        finally:
+            stop(a.vm)
+        sys.exit(rc)
