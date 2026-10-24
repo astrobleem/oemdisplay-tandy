@@ -31,8 +31,7 @@ metadata from your own Windows files. These generated files contain Microsoft
 bytes; do not redistribute the prepared DOS-CROOT or an assembled Windows tree.
 
 INSTALL OR UPDATE FROM PLAIN DOS
-Back up an existing Windows installation. Transfer the contents of the new
-DOS-CROOT folder to DOS C:\ using your normal storage-transfer procedure.
+Transfer the contents of the new DOS-CROOT folder to DOS C:\ using your normal storage-transfer procedure.
 Preserve DOS boot files and boot configuration; none is supplied here.
 Allow about 20 MB free for a fresh Windows source/install and temporary files.
 Exit Windows completely and run:
@@ -47,7 +46,7 @@ route and preserves unrelated INI settings and shell customization.
 Next starts: C:\STARTXT. Repair from plain DOS: C:\FIXXT.
 C:\FIXXT /VERIFY requests full file comparison. If installation stops, retain
 its journal/recovery files and read the error; rerunning SETUPXT performs the
-existing recovery/resume path. Keep your pre-install backup for full rollback.
+existing recovery/resume path. START-HERE describes recovery.
 
 USING XR1
 XYCTL starts in Software mode. Its menu enables Hardware presentation.

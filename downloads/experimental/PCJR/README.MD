@@ -9,13 +9,6 @@ grabber, original XT Pixels fonts and static startup logo. It supports fresh
 Windows Setup and changing an existing installation. You supply DOS and
 Windows 3.0 media; no Python runs on the PCjr.
 
-All driver, guard, launcher, grabber, font and logo bytes match the recorded
-clean-install emulator packet. The [26/26 session](../../../docs/pcjr/INSTALL/SESSION.JSN),
-[existing-install conversion](../../../docs/pcjr/INSTALL/CONVERT.JSN) and
-[grabber matrix](../../../docs/pcjr/INSTALL/GRJRGRAB.JSN) passed in DOSBox-X.
-No fresh Windows boot was run for publication. Physical PCjr memory
-expansion, keyboard, mouse/serial input and timing remain unqualified.
-
 ## Install
 
 Extract the complete `PCJREXP` folder to **`C:\PCJREXP`**. That fixed path is
@@ -42,14 +35,20 @@ C:\PCJREXP\JRWIN
 ```
 
 JRWIN calls JRGUARD and launches `C:\WINDOWS\WIN.COM /R` only after success.
-To undo the display choice, exit Windows and use Windows Setup to restore
+To undo the display choice, exit Windows, run JRGUARD successfully and use
+Windows Setup to restore
 your previous display, as described in INSTALL.TXT. PCjr-only DOS video
 modes 8, 9 and 0Ah cannot switch away with Alt+Tab; finish them to return.
 
 <details>
 <summary>Source, optional checksums and test records</summary>
 
-
+All driver, guard, launcher, grabber, font and logo bytes match the recorded
+clean-install emulator packet. The [26/26 session](../../../docs/pcjr/INSTALL/SESSION.JSN),
+[existing-install conversion](../../../docs/pcjr/INSTALL/CONVERT.JSN) and
+[grabber matrix](../../../docs/pcjr/INSTALL/GRJRGRAB.JSN) passed in DOSBox-X.
+No fresh Windows boot was run for publication. Physical PCjr memory
+expansion, keyboard, mouse/serial input and timing remain unqualified.
 
 The ZIP is **114,994 bytes**, SHA-256
 `a781614c5c8c5f6c498e6e9a82364b4c2c9c3c3f7e2b2be0c67b42b2f57c17d8`.

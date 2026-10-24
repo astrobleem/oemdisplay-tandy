@@ -1,7 +1,7 @@
 # Windows XT user manual
 
 [Project and downloads](../README.md) · [Install](RELEASES/RC8.MD) ·
-[Display modes](#choose-a-display-mode) · [Tandy Start](#use-tandy-start) ·
+[XR1 controls](RELEASES/RC8.MD#what-is-current) · [Tandy Start](#use-tandy-start) ·
 [Experimental drivers](#separate-experimental-drivers) ·
 [Recovery](#restore-your-previous-installation)
 
@@ -27,7 +27,6 @@ or replace those release binaries.
 | Your machine or goal | Download and guide |
 | --- | --- |
 | **Original Tandy 1000 EX/HX, current combined XR1 desktop** | **[WINXT-XR1.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP)** and the [rc.8 fresh/update guide](RELEASES/RC8.MD). All project runtime components are supplied; use matching owned Windows 3.0 media. |
-| Earlier fixed-profile EX/HX graphics preview (rc.6) | **[WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.ZIP)**, or the [720 KB image](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.6/WINXT720.IMG). Follow the installation below. |
 | Try 80-column text, including compact C25 | Separate **experimental [TEXT80.ZIP](../downloads/experimental/TEXT80/TEXT80.ZIP?raw=1)** and [packet guide](../downloads/experimental/TEXT80/). See [TEXT80](#text80-and-compact-c25). |
 | IBM PCjr with memory expansion | Separate **experimental [PCJRSET.ZIP](../downloads/experimental/PCJR/PCJRSET.ZIP?raw=1)** and [packet guide](../downloads/experimental/PCJR/). See [PCjr](#ibm-pcjr-clean-setup). |
 | Tandy Video II, Amstrad PC1512 or Plantronics ColorPlus | Use the [machine-specific guides](#other-video-hardware). The EX/HX package does not select these drivers. |
@@ -46,8 +45,8 @@ The steps below preserve the separate rc.6 fixed-profile installation path.
 ### Before you start (rc.6)
 
 You need a working Windows 3.0 installation, DOS 3.3 or later, an original
-EX/HX with 640 KB, and writable storage for `C:\WINXT`. Keep a backup of
-Windows and a way to boot DOS. These instructions use `C:\WINDOWS`;
+EX/HX with 640 KB, and writable storage for `C:\WINXT`. These instructions
+use `C:\WINDOWS`;
 [alternate paths and host staging](../distributions/WINXT/README.MD) have
 additional limits. The integrated optional shell expects these default paths.
 
@@ -271,8 +270,8 @@ Exit to skip its sound.
 
 The separate **[OEMSound-Tandy](https://github.com/astrobleem/oemsound-tandy)**
 project supplies Mini MIDI, Mini Piano, Beats Lab, Automatic Mouth, PSGPLAY
-and other experiments. Use its [starter release](https://github.com/astrobleem/oemsound-tandy/releases/tag/sound-v0.1.0-preview.20261007)
-and each app's guide. App-local MIDIMAP is not a system MIDI device or General
+and other experiments. Start with its [current sound installation guides](https://github.com/astrobleem/oemsound-tandy#try-it)
+and choose the app you want. App-local MIDIMAP is not a system MIDI device or General
 MIDI synthesizer.
 
 ## Games and utilities
@@ -302,10 +301,8 @@ combined; read each packet's dependencies and rollback instructions.
 
 ## Separate experimental drivers
 
-Use a separate, backed-up Windows 3.0 installation for these packets. Their
-installers and launchers have their own contracts. They do not replace the
-rc.6 drivers or change its defaults. Emulator qualification is recorded for
-specific binaries and configurations; physical support is not implied.
+Choose the packet for your machine and follow its installer and launcher.
+The current downloads below are separate from the EX/HX XR1 package.
 
 ### TEXT80 and compact C25
 
@@ -327,23 +324,30 @@ icons and graphics appear as block approximations. C25 gives exact compact
 controls when windows align to the eight-pixel grid; some dialogs and off-grid
 controls remain approximate. Scrolling can take seconds on an emulated XT.
 
-For a standalone test installation at `C:\WINTXT`, exit Windows, change to
-the extracted runtime folder, then run:
+Extract to `C:\TEXT80`, exit Windows and run from plain DOS:
 
 ```bat
-T80ON C:\WINTXT C25
 C:
-CD \WINTXT
+CD \TEXT80
+T80ON C:\WINDOWS C25
+```
+
+After the setup success message, use your existing required memory guard,
+then start Windows from its own directory:
+
+```bat
+C:
+CD \WINDOWS
 WIN /R
 ```
 
 Use your actual Windows installation directory. To
-change profile, exit Windows and run `T80OFF C:\WINTXT` from the packet folder
+change profile, exit Windows and run `T80OFF C:\WINDOWS` from the packet folder
 before running `T80ON` again with `25`, `PAN`, `VGA` or `C25`. In PAN, with
 NumLock off, **Alt+PgDn / Alt+PgUp** pan and **Alt+F9** returns to the top;
 the helper also follows windows and pointer-edge dwell.
 
-To undo from DOS, run `T80OFF C:\WINTXT` from the runtime folder. It removes
+To undo from DOS, run `T80OFF C:\WINDOWS` from the runtime folder. It removes
 its recorded INI changes while preserving unrelated later settings. Keep its
 state and backup files until rollback succeeds. If it reports a damaged or
 missing record, stop and read the [recovery instructions](TEXT80.MD#7-installing-and-removing-dos)
@@ -426,7 +430,10 @@ not qualify physical PC1 hardware.
 
 ## Restore your previous installation
 
-For Windows XT rc.6, exit Windows and use the numbered backup path printed
+For current XR1, start with `C:\FIXXT` from plain DOS and the
+[repair guide](RELEASES/RC8.MD#repair).
+
+For historical Windows XT rc.6, exit Windows and use the numbered backup path printed
 by INSTALL and recorded in `C:\WINXT\BACKUP.TXT`, for example:
 
 ```bat
@@ -460,7 +467,7 @@ this Windows 3.0 real-mode acceptance scope.
 
 A useful issue report includes the machine and RAM, DOS/Windows versions,
 package name, mode, exact steps, expected and actual behavior,
-and whether it ran on hardware or an emulator. Keep a working rollback.
+and whether it ran on hardware or an emulator.
 
 [Development status](STATUS.MD) · [Build guide](../BUILDING.MD) ·
 [Graphics mode contracts](MODES.MD) · [Source provenance](../src/tandysw/PROVENANCE.md)

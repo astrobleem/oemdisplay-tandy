@@ -4,20 +4,8 @@
 
 Windows 3.0 real mode, 8086/8088, 640 KB. This separate 2026-10-18 packet
 contains four text display profiles, the DOS installer/rollback program,
-panning helper and original XT Pixels fonts. It is separate from the Windows XT graphics package. No physical hardware is qualified.
-
-| Profile | Driver | View and desktop | Exact evidence for this download |
-| --- | --- | --- | --- |
-| **C25** | T80CMP.DRV | 80×25, compact controls, 640×200 | Matches the recorded 54/54 Windows GUI session binary. |
-| 25 | TEXT80.DRV | 80×25, 640×200 | Fresh 8086/link/REP-prefix audits and presenter tests; earlier GUI session used a different hash. |
-| PAN | T80PAN.DRV | 80×25 viewport over 640×400 | Fresh audits and panned presenter tests; earlier GUI session used a different hash. |
-| VGA | T80VGA.DRV | 80×50, 640×400, VGA only | Fresh audits and full-height presenter tests; earlier GUI session used a different hash. |
-
-The current 25/PAN/VGA driver bytes have not been booted in Windows here.
-C25 is byte-identical to the earlier tested driver. T80SET.EXE matches its
-later recorded DOS-tested build and passes fresh compact/rollback fixtures.
-Scrolling is slow; graphics and larger fonts appear as block approximations.
-C25's compact controls are exact only when aligned to the text-cell grid.
+panning helper and original XT Pixels fonts. Start with **C25**, the compact 80x25 profile, on a CGA-compatible color text
+adapter. It is separate from Windows XT graphics.
 
 ## Install and undo
 
@@ -31,14 +19,16 @@ T80ON C:\WINDOWS C25
 ```
 
 Use your actual Windows directory. Continue only after the setup success
-message, then start Windows:
+message. Run any machine-specific memory guard your system requires,
+then start Windows:
 
 ```bat
 C:
 CD \WINDOWS
 WIN /R
-``` Retain any existing
-machine-specific memory guard required by your installation. Normal `25`,
+```
+
+Normal `25`,
 `PAN` and VGA-only `VGA` are alternative profile arguments. PAN uses about
 100 KB more Windows memory; Alt+PgDn / Alt+PgUp and pointer-edge dwell pan.
 To change profiles, exit Windows and run T80OFF first.
@@ -46,6 +36,8 @@ To change profiles, exit Windows and run T80OFF first.
 Undo from the extracted folder at the DOS prompt:
 
 ```bat
+C:
+CD \TEXT80
 T80OFF C:\WINDOWS
 ```
 
@@ -55,10 +47,28 @@ succeeds. Damaged state causes refusal without changes; explicit
 `T80SET RESTORE` restores whole backups and discards subsequent INI changes.
 Read `TEXT80/INSTALL.TXT` inside the ZIP before using recovery.
 
+## Known limits
+
+Scrolling is slow; graphics and larger fonts are block approximations.
+Compact controls fit exactly on the text-cell grid. C25 matches the recorded
+Windows GUI session; current 25/PAN/VGA builds await a fresh Windows run.
+Physical adapter coverage is unqualified.
+
 <details>
 <summary>Source, optional checksums and test records</summary>
 
+| Profile | Driver | View and desktop | Exact evidence for this download |
+| --- | --- | --- | --- |
+| **C25** | T80CMP.DRV | 80×25, compact controls, 640×200 | Matches the recorded 54/54 Windows GUI session binary. |
+| 25 | TEXT80.DRV | 80×25, 640×200 | Fresh 8086/link/REP-prefix audits and presenter tests; earlier GUI session used a different hash. |
+| PAN | T80PAN.DRV | 80×25 viewport over 640×400 | Fresh audits and panned presenter tests; earlier GUI session used a different hash. |
+| VGA | T80VGA.DRV | 80×50, 640×400, VGA only | Fresh audits and full-height presenter tests; earlier GUI session used a different hash. |
 
+The current 25/PAN/VGA driver bytes have not been booted in Windows here.
+C25 is byte-identical to the earlier tested driver. T80SET.EXE matches its
+later recorded DOS-tested build and passes fresh compact/rollback fixtures.
+Scrolling is slow; graphics and larger fonts appear as block approximations.
+C25's compact controls are exact only when aligned to the text-cell grid.
 
 The ZIP is **389,919 bytes**, SHA-256
 `cd892a48db2973e7c99f4d6a00977cfe7e2466699baa5afcd4baf977aa2a30b9`.

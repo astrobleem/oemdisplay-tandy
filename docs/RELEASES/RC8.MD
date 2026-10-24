@@ -25,7 +25,8 @@ real mode. Windows 3.1 is not supported.
    are accepted. The preparer checks the supported media set automatically;
    if it refuses, read its message before continuing. Update preparation
    needs matching CGA.GR2, WIN.CNF and original SETUP.INF; fresh preparation
-   also needs the Windows Setup files.
+   also needs the Windows Setup files. Allow about 20 MB on the DOS drive
+   for a fresh source/install and temporary files.
 2. Transfer the prepared **DOS-CROOT contents** to DOS `C:\`, preserving your
    DOS boot files and configuration. Exit Windows completely and run:
 
