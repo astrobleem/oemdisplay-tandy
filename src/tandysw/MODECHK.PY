@@ -13,7 +13,8 @@ exports/readback=4, text/cursor=8, raw aliases=16 (2/4-color), and RLE4/RLE8
 screen and memory DIB imports plus invalid compression/depth pairs=32.
 The checker requires all selected phases. RLE cases 140-148 cover valid
 RLE4/8, truncated streams, a guarded 1KB real-mode 64K alias crossing,
-invalid compression/depth pairs, and early EOB.
+invalid compression/depth pairs, and early EOB. Phase 64 adds cases 150-157:
+nonzero-X vertical deltas at both depths through both import paths (dy=1/3).
 
 This checker imports no renderer, quantizer, or encoder implementation.
 Each captured frame is decoded and every visible pixel compared against
@@ -209,6 +210,7 @@ def expected_cases(phases):
     if phases&8:ids += [110]+list(range(120,125))
     if phases&16:ids += [130,131]
     if phases&32:ids += [140,141,142,143,144,145,146,147,148]
+    if phases&64:ids += list(range(150,158))
     return ids
 
 
@@ -407,27 +409,31 @@ def analyze(guest,profile,phases):
                           ('cursor_locality',all(cx<=i%w<cx+32 and cy<=i//w<cy+32 for i in changed))]
                 r['visible_changed_pixels']=len(changed)
                 if (cx,cy)==(w-1,199):r['clipped_arrow_tip_expected_index']=0
-            elif kind==13:
+            elif kind in (13,19):
                 bpp=c['BPP'];method=c['RLE_METHOD']
                 if bpp not in (4,8) or method not in (0,1):raise ValueError('Invalid RLE case metadata')
                 start_scan=c.get('RLE_START_SCAN',0);scan_count=c.get('RLE_SCAN_COUNT',11)
-                want_start=3 if method==0 and bpp==8 else 0
+                delta_y=c.get('RLE_DELTA_Y',0)
+                if kind==19 and (delta_y not in (1,3) or n!=150+(bpp==8)*4+method*2+(delta_y==3)):
+                    raise ValueError('Invalid nonzero-X delta fixture metadata')
+                want_start=3 if kind==13 and method==0 and bpp==8 else 0
                 want_count=5 if want_start else 11
                 if (start_scan,scan_count)!=(want_start,want_count):
                     raise ValueError('Unexpected RLE scan-band metadata')
                 band_top=60+11-(start_scan+scan_count);band_bottom=60+11-start_scan
-                returned_rows=max(0,min(band_bottom,69,200)-max(band_top,62,0))
+                returned_rows=11 if kind==19 else max(0,min(band_bottom,69,200)-max(band_top,62,0))
                 expected=solid(p,8);pan_x,pan_y=p.get('rle_pan',(0,0))
                 for y in range(11):
                     for x in range(37):
                         scan=10-y
-                        if bpp==8 and scan==1:value=0
+                        if kind==19:value=5 if scan==0 and x<2 else 9 if scan==delta_y and 4<=x<7 else 0
+                        elif bpp==8 and scan==1:value=0
                         elif bpp==8 and scan==0 and x<2:value=0
                         elif bpp==8 and scan==0 and x<6:value=1
                         elif x<4:
                             value=((scan+1)&15) if bpp==8 else (2 if x&1 else 1)
                         else:value=(x*3+y*5)&15
-                        if start_scan<=scan<start_scan+scan_count and 2<=x<35 and 2<=y<9:
+                        if start_scan<=scan<start_scan+scan_count and (kind==19 or (2<=x<35 and 2<=y<9)):
                             sy=60+y-pan_y
                             if 0<=sy<200:
                                 for dx in (10+x-pan_x,60+x-pan_x):
@@ -450,7 +456,7 @@ def analyze(guest,profile,phases):
                               ('RAW_setdib_scans',c.get('RAW_SETDIB_RETURN')==11),
                               ('RLE_bitblt',c.get('RLE_BLT_RETURN')==1),
                               ('RAW_bitblt',c.get('RAW_BLT_RETURN')==1)]
-                extra.append(('compressed_size',c.get('RLE_SIZE')==(408 if bpp==8 else 266)))
+                extra.append(('compressed_size',c.get('RLE_SIZE')==(10 if kind==19 else 408 if bpp==8 else 266)))
             elif kind==14:
                 bpp=c['BPP'];declared_size=407 if bpp==8 else 265
                 if bpp not in (4,8) or n not in (144,145):raise ValueError('Invalid truncated-RLE case metadata')
@@ -731,6 +737,8 @@ def selftest():
     assert realmode_cross_segment_alias(0x5000,0,0x400,16,4,16,16) is None
     assert not rle_call_and_unchanged({'RLE_CALL_READY':0,'RLE_SETDIB_RETURN':0,'RLE_INPUT_CHANGED':0},'RLE_INPUT_CHANGED')
     assert rle_call_and_unchanged({'RLE_CALL_READY':1,'RLE_SETDIB_RETURN':11,'RLE_INPUT_CHANGED':0},'RLE_INPUT_CHANGED')
+    assert expected_cases(64)==list(range(150,158))
+    assert expected_cases(96)==list(range(140,149))+list(range(150,158))
     print(json.dumps({'selftest':'PASS','profiles':list(PROFILES),'640x200x4_pixels':128000,
                       'cases_in_complete_run':len(expected_cases(31)),
                       'rle_cross_segment_alias_cases':7,'rle_call_gate_cases':2},indent=2))
@@ -743,7 +751,7 @@ def main():
     ap.add_argument('--selftest',action='store_true');a=ap.parse_args()
     if a.selftest:selftest();return 0
     if a.guest is None:ap.error('guest directory is required unless --selftest is used')
-    if not 0<a.phases<64:ap.error('--phases must be a bit mask from 1 through 63')
+    if not 0<a.phases<128:ap.error('--phases must be a bit mask from 1 through 127')
     try:report=analyze(a.guest,a.profile,a.phases)
     except (OSError,ValueError) as e:report={'pass':False,'error':str(e),'profile':a.profile,'guest':str(a.guest)}
     out=a.out or a.guest/'MODECHK.json';out.write_text(json.dumps(report,indent=2)+'\n')

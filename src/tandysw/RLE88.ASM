@@ -509,6 +509,7 @@ rlen_delta:
     rle_branch jc,rlen_bad
     cmp ax,es:[di+rsWidth]
     rle_branch ja,rlen_bad
+    mov startX,ax              ; validated absolute X + dx
     mov ax,es:[di+rsY]
     add ax,runCount
     rle_branch jc,rlen_bad
@@ -517,12 +518,12 @@ rlen_delta:
     cmp runCount,0
     rle_branch je,rlen_delta_same_row
     ; Finish the current row; skipped rows are returned as zero rows before
-    ; the target row resumes at deltaX.
+    ; the target row resumes at the saved absolute X + dx.
     mov ax,es:[di+rsY]
     cmp ax,es:[di+rsHeight]
     rle_branch jae,rlen_bad
     mov scanIndex,ax
-    mov ax,runIndex
+    mov ax,startX
     mov es:[di+rsDeltaX],ax
     mov ax,runCount
     dec ax

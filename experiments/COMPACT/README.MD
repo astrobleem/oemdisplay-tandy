@@ -71,8 +71,9 @@ python -B experiments/COMPACT/HOST.PY TEST.PY --out ../C16TEST
 The offline suite checks deterministic builds, preservation outside resource
 descriptors, FNT/NE bounds and coverage, distinct control states, unchanged
 normal profiles, target refusal, custom-shell preservation, interrupted-install
-recovery and exact rollback with intervening-edit protection. It passes 17
-grouped checks, or 19 with the optional locally built helper:
+recovery, repeat on/off cycles, retained history, corrupt-journal refusal and
+exact rollback with intervening-edit protection. It passes 25
+grouped checks, or 27 with the optional locally built helper:
 
 ```
 python -B experiments/COMPACT/HOST.PY TEST.PY --out ../C16TEST2 --dialog-helper ../PRIVATEBUILD/C16VIEW.EXE
@@ -112,8 +113,14 @@ python -B experiments/COMPACT/HOST.PY PREP.PY off --offline-private-clone --wind
 
 Rollback restores original bytes and removes only transaction-owned new files.
 It refuses intervening edits; preserve and reconcile them before retrying.
-The restored journal remains for review. App-created documents remain user
-data. An interrupted host write may leave a .C16TMP file; inspect it rather
+The restored journal remains for review. A later `on` validates its schema,
+saved originals and exact restored files, then archives it as the first unused
+`C16H0001.JSN` through `C16H9999.JSN` before creating a new transaction.
+Existing history (including an interrupted partial archive) is never overwritten.
+Active, corrupt or inconsistent journals are refused without mutation. Run
+only one PREP operation at a time on an offline clone. Preserve history files;
+rollback restores Windows files, not the transaction history. App-created
+documents remain user data. An interrupted host write may leave a .C16TMP file; inspect it rather
 than deleting unknown evidence. Generated OEMSETUP.INF is not native Setup
 acceptance. B800/B000 retain their own startup paths; do not add a Tandy launcher.
 

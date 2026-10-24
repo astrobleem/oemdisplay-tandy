@@ -24,3 +24,9 @@ Run41 used the emulator's original 8088 core, Tandy 1000 HX surrogate, Windows
 not physical-hardware or other-profile qualification and establishes no
 performance improvement. The current-main build closure separately reproduced
 the exact run41 candidate; that compiler run did not launch a Windows guest.
+
+## Nonzero-X delta correction
+
+The historical candidate above predates the nonzero-X vertical-delta fix.
+See [follow-up evidence](RLEDELTA.MD) for the new source, actual assembly before/after tests,
+and distinct default-profile scope. The old candidate hash is historical.

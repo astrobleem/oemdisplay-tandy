@@ -263,8 +263,8 @@
     "HOST.PY": "97477286c8baca6fbe1e560f9ddbb52274788ca708cb03671ae5b835fce0af17",
     "HOSTGDI.PY": "e25142fb07bf6c5ae575b7043666832d045c29ffdffc1afe802f731b59ee1f2c",
     "LICENSE": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
-    "PREP.PY": "62a685807a384ab0be983c41bbee7fd0b7ca1abf573191a1d74fa2a402613b9d",
-    "TEST.PY": "feec3fe1294e89b4610096486a833b0889830d86dba861adfd0cb7f27994e0b7",
+    "PREP.PY": "b78dbdad386c81fd125b68cbdcf2f81e907cc597a22462356fca48241d232f15",
+    "TEST.PY": "08f0c14fb105ec26e77dc6b31d4882c5d7eea7a298d0c85d12dcee0e8f4b617f",
     "UI.PY": "353b38a456e1ee37d0544dfc1e794162f63d2a14448e89c6ad8061ddd572a901"
   },
   "remaining": [
@@ -276,7 +276,7 @@
     "Fresh 320/640 GUI regressions; existing source/package bytes unchanged"
   ],
   "publication_checks": {
-    "compact_offline_checks": 19,
+    "compact_offline_checks": 27,
     "host_GDI_ascii_rasters": 475,
     "existing_font_glyph_boundaries": 1404,
     "existing_font_corruptions_refused": 72,
@@ -285,5 +285,22 @@
     "five_fonts_match_reviewed": true,
     "runtime_sources_match_reviewed": true,
     "emulator_rerun": false
+  },
+  "journal_followup": {
+    "base_commit": "15f2c2910feb0e3745ba23d3af25f5344f1c1519",
+    "repeat_on_off_exact": true,
+    "immutable_numbered_history": true,
+    "corrupt_active_inconsistent_journal_refusal": true,
+    "interruption_after_archival_recovery": true,
+    "archive_flush_failure_recovery": true,
+    "before": {
+      "source_sha256": "62a685807a384ab0be983c41bbee7fd0b7ca1abf573191a1d74fa2a402613b9d",
+      "first_on_off_exact": true,
+      "journal_status": "ROLLED_BACK",
+      "errors": {
+        "second_on": "existing compact transaction; rollback first",
+        "second_off": "invalid/already-restored transaction"
+      }
+    }
   }
 }

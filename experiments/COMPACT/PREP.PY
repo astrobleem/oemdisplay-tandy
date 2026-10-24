@@ -106,12 +106,84 @@ def clone_root(windows):
     return root
 
 
+def journal_entries(root, state):
+    """Validate schema and the closed set of files owned by this transaction."""
+    if (not isinstance(state, dict) or type(state.get('schema')) is not int or state['schema'] != 1
+            or not isinstance(state.get('target'), str) or state['target'] not in BUILD.TARGETS):
+        raise ValueError('invalid compact journal')
+    entries = state.get('entries')
+    if not isinstance(entries, list) or not entries:
+        raise ValueError('invalid journal entries')
+    output = BUILD.TARGETS[state['target']]['output']
+    paths = [e.get('path') for e in entries if isinstance(e, dict)]
+    prefixes = [p for p in ('', 'SYSTEM/') if p + output in paths]
+    if len(prefixes) != 1:
+        raise ValueError('invalid journal driver path')
+    required = {prefixes[0] + n for n in [output] + list(BUILD.FONT.FACES)} | {'SYSTEM.INI', 'WIN.INI'}
+    allowed = required | {'C16VIEW.EXE', 'PROGMAN.INI'}
+    decoded, seen = [], set()
+    for entry in entries:
+        if not isinstance(entry, dict) or set(entry) != {'path', 'before', 'before_sha256', 'after_sha256'}:
+            raise ValueError('invalid journal entry')
+        name = entry['path']
+        if not isinstance(name, str) or name not in allowed or name.casefold() in seen:
+            raise ValueError('invalid/duplicate transaction path')
+        seen.add(name.casefold())
+        safe(root, name)
+        if not isinstance(entry['after_sha256'], str) or not re.fullmatch(r'[0-9a-f]{64}', entry['after_sha256']):
+            raise ValueError('invalid saved after hash')
+        encoded = entry['before']
+        if encoded is not None and not isinstance(encoded, str):
+            raise ValueError('invalid saved before bytes')
+        before = None if encoded is None else base64.b64decode(encoded, validate=True)
+        if sha(before) != entry['before_sha256']:
+            raise ValueError('corrupt saved before bytes')
+        decoded.append((entry, before))
+    if not required <= set(paths):
+        raise ValueError('incomplete compact journal')
+    return decoded
+
+
+def completed_journal(root, data):
+    state = json.loads(data)
+    if not isinstance(state, dict) or state.get('status') != 'ROLLED_BACK':
+        raise ValueError('existing compact transaction; rollback first')
+    for entry, before in journal_entries(root, state):
+        if read(safe(root, entry['path'])) != before:
+            raise ValueError('completed journal does not match restored files: ' + entry['path'])
+
+
+def archive_journal(root, data):
+    """Preserve evidence with exclusive creation; a crash never overwrites it."""
+    statepath = safe(root, 'C16STATE.JSN')
+    if read(statepath) != data:
+        raise ValueError('compact journal changed before archival')
+    completed_journal(root, data)
+    for index in range(1, 10000):
+        path = safe(root, 'C16H%04d.JSN' % index)
+        try:
+            with path.open('xb') as f:
+                f.write(data)
+                f.flush()
+                os.fsync(f.fileno())
+        except FileExistsError:
+            continue
+        # Interrupted/partial history files are retained too. Never unlink the
+        # active journal before the complete archive has been flushed.
+        if read(statepath) != data:
+            raise ValueError('compact journal changed during archival')
+        statepath.unlink()
+        return path.name
+    raise ValueError('compact journal history is full')
+
+
 def install(windows, packet, target, dialog_helper=None):
     root, packet = clone_root(windows), Path(packet).resolve()
     t = BUILD.TARGETS[target]
-    statepath = root / 'C16STATE.JSN'
-    if statepath.exists():
-        raise ValueError('existing compact transaction; rollback first')
+    statepath = safe(root, 'C16STATE.JSN')
+    previous = read(statepath)
+    if previous is not None:
+        completed_journal(root, previous)
     system = read(safe(root, 'SYSTEM.INI'))
     win = read(safe(root, 'WIN.INI'))
     if system is None or win is None:
@@ -173,6 +245,8 @@ def install(windows, packet, target, dialog_helper=None):
         entries.append(dict(path=name, before=None if before is None else base64.b64encode(before).decode('ascii'),
                             before_sha256=sha(before), after_sha256=sha(data)))
     state = dict(schema=1, target=target, status='PREPARED', entries=entries)
+    if previous is not None:
+        archive_journal(root, previous)
     atomic(statepath, (json.dumps(state, indent=2) + '\n').encode('ascii'))
     # A durable journal exists before any Windows file changes. On interruption
     # rollback accepts either exact before or after bytes, including absent files.
@@ -185,25 +259,18 @@ def install(windows, packet, target, dialog_helper=None):
 
 def rollback(windows):
     root = clone_root(windows)
-    statepath = root / 'C16STATE.JSN'
-    state = json.loads(statepath.read_text())
-    if state.get('schema') != 1 or state.get('status') not in ('PREPARED', 'INSTALLED'):
+    statepath = safe(root, 'C16STATE.JSN')
+    state = json.loads(read(statepath))
+    if not isinstance(state, dict) or state.get('status') not in ('PREPARED', 'INSTALLED'):
         raise ValueError('invalid/already-restored transaction')
+    decoded = journal_entries(root, state)
     entries = state['entries']
-    seen = set()
-    for entry in entries:
-        if entry['path'] in seen:
-            raise ValueError('duplicate transaction path')
-        seen.add(entry['path'])
+    for entry, before in decoded:
         current = read(safe(root, entry['path']))
-        before = None if entry['before'] is None else base64.b64decode(entry['before'], validate=True)
-        if sha(before) != entry['before_sha256']:
-            raise ValueError('corrupt saved before bytes')
         if sha(current) not in (entry['before_sha256'], entry['after_sha256']):
             raise ValueError('changed since installation; preserve and resolve first: ' + entry['path'])
-    for entry in entries:
+    for entry, before in decoded:
         path = safe(root, entry['path'])
-        before = None if entry['before'] is None else base64.b64decode(entry['before'])
         if before is None:
             if path.exists():
                 path.unlink()  # only this transaction's exact checked file
