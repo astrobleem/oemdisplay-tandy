@@ -1,0 +1,289 @@
+{
+  "schema": 1,
+  "status": "experimental source candidate; partial software validation",
+  "reviewed_commit": "03468e6689f5dbddc290d4aeb5ea6438611d5db4",
+  "publication_base": "3e70fd91c0cf97b9efedaa14ff0eab00a044bd36",
+  "scope": {
+    "system": "Windows 3.0 real mode",
+    "geometry": [
+      160,
+      200
+    ],
+    "yamaha_b800": "Windows API plus GDI rendering observations",
+    "pc1_b000": "separate Windows API/rollback only",
+    "physical_hardware_qualified": false,
+    "actual_yamaha_scanout_qualified": false,
+    "calculator": "UNSUPPORTED; fixed owner-drawn layout clips; no width adjustment"
+  },
+  "emulator": {
+    "name": "official installed DOSBox-X 2025.10.07",
+    "sha256": "df62e4502eb25d8b7b9893ea8e479b05820baa11d4b54b02439c688ac1d834bd",
+    "machine": "cga",
+    "cpu": "8086_prefetch",
+    "conventional_kb": 640,
+    "xms": false,
+    "ems": false,
+    "umb": false
+  },
+  "metrics": {
+    "dialog_base_before": [
+      8,
+      8
+    ],
+    "dialog_base_compact": [
+      4,
+      8
+    ],
+    "system_height": 8,
+    "system_average_before": 7,
+    "system_average_compact": 4,
+    "system_maximum_before": 14,
+    "system_maximum_compact": 6,
+    "menu_text_before": 167,
+    "menu_text_compact": 84,
+    "caption_height_before": 16,
+    "caption_height_compact": 9,
+    "menu_height_before": 14,
+    "menu_height_compact": 9,
+    "caption_button_before": [
+      27,
+      14
+    ],
+    "caption_button_compact": [
+      6,
+      7
+    ],
+    "scrollbar_width_before": 18,
+    "scrollbar_width_compact": 6,
+    "icons": [
+      32,
+      16
+    ],
+    "icon_compression_unchanged": [
+      2,
+      4
+    ]
+  },
+  "drivers": {
+    "yamaha-b800": {
+      "baseline_sha256": "a3d339a3f1e831bd8499fb2b0a28c683bf08f9fbeb0e96689dc3f6ef9a627c8a",
+      "output_sha256": "4a22f1188e63a0b4a7073148ed557f1624ef50c998c20bf6e09abce1c86dab84"
+    },
+    "pc1-b000": {
+      "baseline_sha256": "8c73d52d6811fff071dd252343c33702a1cfea0b2613ec8b20faf5a739da2a08",
+      "output_sha256": "12d1fda3e9e0f43d5c5601299861a9efa1339ed72c32d06a638bda0df28aafca"
+    }
+  },
+  "fonts": {
+    "C16COUR.FON": "311fe7b4378e67f27b641a2d5b7e4697be094db8705766914c4d5c1f6ce0273a",
+    "C16FIX.FON": "cef8df540fe2b3e0e2f7b74933bb349ef73c3c367b1a6e802c974432b20525e3",
+    "C16HELV.FON": "ef586fe20ed5c37f01b452530cc5ba6d2341a84e11652cbdc334b86e6be7e091",
+    "C16OEM.FON": "90dc3e8f2a057688585706ee4ebd18afa77620790a0108bc93a778479bae5127",
+    "C16SYS.FON": "4efa211e8d04e5e74a6f4978520ed9ee590a94601c4766c6b7251e5c4aeb762a"
+  },
+  "helper": {
+    "sha256": "e4e92c79615a1607494168e3518be5bb082911955903d5ca771829ae81b888d1",
+    "source_sha256": "e2d85e78a667273226fcf8eea00df49b3a2fc1593d237c173e6c6064a1c49111",
+    "calculator_resize": false,
+    "input_hook": false,
+    "final_build_matches_previous_focus_only_build": true,
+    "compile_flags": "/G0 /Gw /AS /W3 /Od",
+    "build_recipe": "C16VIEW.BAT",
+    "toolchain_lock_commit": "96ce6971a1757f3c77094322ed82741791c79646"
+  },
+  "observations": {
+    "control_values": {
+      "checkbox": 1,
+      "radio": [
+        0,
+        1
+      ],
+      "three_state": 2
+    },
+    "caption_hit_codes": {
+      "system_menu": 3,
+      "minimize": 8,
+      "maximize": 9,
+      "caption": 2,
+      "right_frame": 11
+    },
+    "scrollbar": "native keyboard Right step20 to21 and explicit thumb-position rendering; physical drag/repeat unqualified",
+    "notepad": "native text insertion, exact Save As contents, Open/Cancel, dialog-manager Tab/Escape and API window actions",
+    "notepad_saved_file": {
+      "bytes": 1612,
+      "sha256": "7389e801a3b7582d05983e2b0be5556bbd39c30891aaac68a5a1e8d0d32b62df"
+    },
+    "paintbrush": "main/toolbox/canvas, About and Open/Cancel observed; drawing/Save unqualified",
+    "final_notepad_cancel_rect": [
+      108,
+      71,
+      158,
+      85
+    ],
+    "final_calculator_geometry_unchanged": [
+      88,
+      134
+    ]
+  },
+  "rollback": {
+    "api_windows_files_exact_per_target": 118,
+    "api_baseline_cold_metrics_restored": true,
+    "final_focus_windows_files_exact": 119,
+    "final_transaction_files": 10,
+    "intervening_edits_refused": true
+  },
+  "dialog_limits": {
+    "program_manager_about_template_du": [
+      175,
+      110
+    ],
+    "program_manager_about_window": [
+      185,
+      128
+    ],
+    "notepad_open_template_du": [
+      192,
+      130
+    ],
+    "notepad_open_window": [
+      202,
+      148
+    ],
+    "explicit_font": "8pt Helv",
+    "behavior": "focus navigation, not arbitrary dialog reflow"
+  },
+  "captures": {
+    "BEFORE": {
+      "label": "Baseline Program Manager, explicitly maximized",
+      "scope": "Windows 3.0 GDI software rendering inside DOSBox-X; not Yamaha scanout",
+      "raw": "EVIDENCE/RAW/BEFORE.PNG",
+      "raw_sha256": "12058f67ed5d784f79e1a10f4a11d79b167513569b97e657c756053cc2e5bf37",
+      "raw_pixels_sha256": "8f63f17ba616a9abf9b142c196d8c5e8c97891c8133ae3f6f97df56a017602c2",
+      "dimensions": [
+        160,
+        200
+      ],
+      "presentation": "EVIDENCE/PREVIEW/BEFORE.PNG",
+      "presentation_sha256": "5882897c7cd7ec37ff103976122275ac1563ad32ee4c415da9335703235106bf",
+      "nearest_scale": [
+        4,
+        2
+      ],
+      "source_capture_sha256": "8720153c05f1e7caa3f7f4a5b428a00af2077bf039a2cc783b9224481c12d24d"
+    },
+    "AFTER": {
+      "label": "Compact Program Manager, same maximize action",
+      "scope": "Windows 3.0 GDI software rendering inside DOSBox-X; not Yamaha scanout",
+      "raw": "EVIDENCE/RAW/AFTER.PNG",
+      "raw_sha256": "d06cc800dc61957097aece9d0503f43529abf963e279f833dbc68533f48a95a2",
+      "raw_pixels_sha256": "37c6124567d900852bf2cb7c6f92f9059595d4fe0607eb92fa813ce8b5420337",
+      "dimensions": [
+        160,
+        200
+      ],
+      "presentation": "EVIDENCE/PREVIEW/AFTER.PNG",
+      "presentation_sha256": "438ff987ef31e1e048e6be8e7d386712dee003177578d9023e3c7e7efd20e2a3",
+      "nearest_scale": [
+        4,
+        2
+      ],
+      "source_capture_sha256": "6c6fb956abc818a4085fe2cff214211eb4513ceed22893d996378966986d0490"
+    },
+    "STATES": {
+      "label": "Native checkbox/radio/three-state and focus rendering",
+      "scope": "Windows 3.0 GDI software rendering inside DOSBox-X; not Yamaha scanout",
+      "raw": "EVIDENCE/RAW/STATES.PNG",
+      "raw_sha256": "29ae62c304a8fa4d2add32e8f56271bfd7fb26e5b06f686b38f7e067877bb0e9",
+      "raw_pixels_sha256": "a88f6f97624609ba56fc69872445a22890ac2f828258df24af96d46eb723f039",
+      "dimensions": [
+        160,
+        200
+      ],
+      "presentation": "EVIDENCE/PREVIEW/STATES.PNG",
+      "presentation_sha256": "c2e871821e7030f0b6b143e944921084128346a036b450ad9f22b029cfa2fb05",
+      "nearest_scale": [
+        4,
+        2
+      ],
+      "source_capture_sha256": "82d6f3005e2a1f591f3e5a9c9c2b9fe56968c520779985b39b5d5bfa7c3e5ee7"
+    },
+    "OPEN": {
+      "label": "Notepad Open with filename field focused",
+      "scope": "Windows 3.0 GDI software rendering inside DOSBox-X; not Yamaha scanout",
+      "raw": "EVIDENCE/RAW/OPEN.PNG",
+      "raw_sha256": "11b57db3b7ae8f7270d4820d6c04a184bd1e36afd52df882af62b0c8545b5004",
+      "raw_pixels_sha256": "ac9cf8883e66f1cda4f57fffa966a7738cc4c584bed402b703613786f15f0c4b",
+      "dimensions": [
+        160,
+        200
+      ],
+      "presentation": "EVIDENCE/PREVIEW/OPEN.PNG",
+      "presentation_sha256": "bc69965534fae6ffb57ff5db3c88130080bf39324c351e34f35dbcd8832a9da2",
+      "nearest_scale": [
+        4,
+        2
+      ],
+      "source_capture_sha256": "4a7add64acd14fc3e2f3919da027d0577e6a907fc40c56b69f0062b8279931d1"
+    },
+    "CANCEL": {
+      "label": "Notepad Open with Cancel focused; helper reveals button pane",
+      "scope": "Windows 3.0 GDI software rendering inside DOSBox-X; not Yamaha scanout",
+      "raw": "EVIDENCE/RAW/CANCEL.PNG",
+      "raw_sha256": "c4c06b8b873c02e8de3519c0656510b900c0f764b79a2ee01cadb870c7fbff7f",
+      "raw_pixels_sha256": "311e67b863c25438519f7f2ce81862f63e2313029bf3d044b1ab3e9090dcb247",
+      "dimensions": [
+        160,
+        200
+      ],
+      "presentation": "EVIDENCE/PREVIEW/CANCEL.PNG",
+      "presentation_sha256": "0183b1fea819d38afba2201773e5529f933efbbbfdb05305ca2cc8cf62a9f1ba",
+      "nearest_scale": [
+        4,
+        2
+      ],
+      "source_capture_sha256": "c9350d16786b73fd87d85306cd8b1197233cac21cfbd8b71ea64d16bdc99461a"
+    }
+  },
+  "source_sha256": {
+    "BUILD.PY": "53c7ef49f95be53413f34667867fb1d60966284ff645609204b270fe378bc80a",
+    "C16APP.BAT": "14c7ffb40157a28997b9613458978287d10ef429a5cdcb92e2d8310d98fda443",
+    "C16APP.C": "61f25f0baa91adb00278ebe3c7e6fc52494dccd525ebfbd1599a75f69a729c57",
+    "C16APP.DEF": "8c76f6004a1dc7bbd181d3bf1228f1d5308596d31d963e49939a407773f7efa0",
+    "C16MET.BAT": "4f315748741d30d4bac78e34c71dd9184cc894836835561f70c23feab65ea496",
+    "C16MET.C": "26d18532242caa1bba393943394beca84b320fdb3d84274edafe370d2216e02c",
+    "C16MET.DEF": "ac00266dbfe91aa71e7673be34742b448b83b46b6e6453772da5a99334700412",
+    "C16QA.BAT": "5f50668fd71199fb7c74501860db1d0fd9948e649dd12fdb66e82d30db53642a",
+    "C16QA.C": "14bd05cd21952fbbb01a8783e5cc494dbdcb829c16fd811fe5894b9a115f01c4",
+    "C16QA.DEF": "c3fa2a67a3c67a29db8707eb139270ddae017b9f6e9d8536365acf074b575975",
+    "C16VIEW.BAT": "9b67836ddcce7bb5fa58d9cfea3d2e199ab441bb2051583e5179977ef8a7fde1",
+    "C16VIEW.C": "e2d85e78a667273226fcf8eea00df49b3a2fc1593d237c173e6c6064a1c49111",
+    "C16VIEW.DEF": "8797014aba6986bb812315103353a20b942e140105114bca4e307546e467ff38",
+    "FONT.PY": "a828ef88dd3370dc3157e73142d3863c6f0a4c65b597685f2193f63c529142d7",
+    "GRID.PY": "45f662d6c6c8df412f723bb354db4b45bbcac9f6887dc410d8551a59f7537a5e",
+    "HOST.PY": "97477286c8baca6fbe1e560f9ddbb52274788ca708cb03671ae5b835fce0af17",
+    "HOSTGDI.PY": "e25142fb07bf6c5ae575b7043666832d045c29ffdffc1afe802f731b59ee1f2c",
+    "LICENSE": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+    "PREP.PY": "62a685807a384ab0be983c41bbee7fd0b7ca1abf573191a1d74fa2a402613b9d",
+    "TEST.PY": "feec3fe1294e89b4610096486a833b0889830d86dba861adfd0cb7f27994e0b7",
+    "UI.PY": "353b38a456e1ee37d0544dfc1e794162f63d2a14448e89c6ad8061ddd572a901"
+  },
+  "remaining": [
+    "Actual Yamaha scanout and physical PC1",
+    "Physical mouse/keyboard hit/drag/repeat matrix",
+    "Native OEM Setup",
+    "Calculator unsupported",
+    "Paintbrush edited-image Save",
+    "Fresh 320/640 GUI regressions; existing source/package bytes unchanged"
+  ],
+  "publication_checks": {
+    "compact_offline_checks": 19,
+    "host_GDI_ascii_rasters": 475,
+    "existing_font_glyph_boundaries": 1404,
+    "existing_font_corruptions_refused": 72,
+    "existing_font_identical_rebuild_files": 28,
+    "regenerated_drivers_match_reviewed": true,
+    "five_fonts_match_reviewed": true,
+    "runtime_sources_match_reviewed": true,
+    "emulator_rerun": false
+  }
+}
