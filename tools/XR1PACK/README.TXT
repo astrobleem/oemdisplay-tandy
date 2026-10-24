@@ -46,7 +46,7 @@ route and preserves unrelated INI settings and shell customization.
 Next starts: C:\STARTXT. Repair from plain DOS: C:\FIXXT.
 C:\FIXXT /VERIFY requests full file comparison. If installation stops, retain
 its journal/recovery files and read the error; rerunning SETUPXT performs the
-existing recovery/resume path. START-HERE describes recovery.
+existing recovery/resume path. Rerun SETUPXT for its recovery/resume path.
 
 USING XR1
 XYCTL starts in Software mode. Its menu enables Hardware presentation.

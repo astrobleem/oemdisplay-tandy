@@ -50,7 +50,7 @@ Windows files; the public ZIP contains the project components and preparer.
 ## Repair
 
 From plain DOS, run `C:\FIXXT`. `C:\FIXXT /VERIFY` adds a full file comparison.
-The included START-HERE instructions cover interrupted installation and recovery.
+The included README.TXT covers interrupted installation and recovery.
 
 ## Optional Minesweeper
 
