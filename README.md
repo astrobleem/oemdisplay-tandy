@@ -19,16 +19,16 @@ Windows 3.0 desktop.
 
 Requires **Windows 3.0 real mode, DOS 3.3+ and 640 KB RAM** on an EX/HX.
 
-| What you want | Download and guide |
-| --- | --- |
-| Install or update the current XR1 desktop, panning and wheel input | **rc.8:** [installer ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP) · [install guide](docs/RELEASES/RC8.MD) |
-| Converted Minesweeper app and About shim | **rc.8:** [Minesweeper ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINMINE30.ZIP), including its installation guide |
+**Already have Windows 3.0? [Download XRSYNC.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-xrsync-2026-10-24/XRSYNC.ZIP)** and follow
+the [short display install guide](docs/RELEASES/XRSYNC.MD). Preparation gathers
+the required Windows support file automatically. Install through Windows
+Setup, then start every session with `C:\XR155\RUNSYNC.BAT`.
 
-Supply the matching Windows 3.0 media; **all required project components are
-included**. Use Python on a modern computer to prepare the files, then run
-`C:\SETUPXT` from plain DOS. Start Windows afterward with `C:\STARTXT` on
-every launch. Follow the [short install guide](docs/RELEASES/RC8.MD) for the
-preparation command and Setup choices. Windows and DOS media are supplied by you.
+For a **complete new Windows XT desktop** from your Windows 3.0 media,
+[download the rc.8 installer](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP)
+and follow its [prepare/install guide](docs/RELEASES/RC8.MD). Run `C:\SETUPXT`
+from plain DOS and use `C:\STARTXT` for that original HPXY profile. XRSYNC is
+the separate display update above.
 
 ## More color, compact controls
 
@@ -71,7 +71,7 @@ experiment. That comparison has its own [drawing test scope](docs/RRECT.MD).
 
 ## Games, savers and sound
 
-| [Maze preview](examples/MAZE/GAME/README.MD) | [Tandinator](examples/TANDINAT/README.MD) | [Tandy Winamp](https://github.com/astrobleem/oemsound-tandy/releases/tag/tandy-winamp-ux3.20261018) |
+| [Maze preview](examples/MAZE/GAME/README.MD) | [Tandinator](examples/TANDINAT/README.MD) | [Tandy Winamp](https://github.com/astrobleem/oemsound-tandy/releases/tag/tandy-winamp-xt1.20261024) |
 | --- | --- | --- |
 | <img src="docs/PROMO/XTMAZE.PNG" alt="Windows XT Maze preview" width="260"> | <img src="examples/TANDINAT/SHOTS/320x200x16.PNG" alt="Tandinator character-guessing game" width="260"> | <img src="https://raw.githubusercontent.com/astrobleem/oemsound-tandy/824ae10e1d79d1bd2d09f4a37447f58dd9cc9476/docs/SHOTS/WAMPUI3.PNG" alt="Tandy Winamp companion with a scrolling playlist" width="260"> |
 
@@ -81,7 +81,7 @@ XR1 includes the current Maze game/saver, Pinball, Starfield and Matrix.
 
 The separate [Tandy sound companion](https://github.com/astrobleem/oemsound-tandy)
 includes Winamp's playlist player, PSG music and Beats/Fiddle tools.
-[Download Winamp UX3](https://github.com/astrobleem/oemsound-tandy/releases/download/tandy-winamp-ux3.20261018/TWUX3.ZIP) ·
+[Download Winamp XT1](https://github.com/astrobleem/oemsound-tandy/releases/download/tandy-winamp-xt1.20261024/TWXT1.ZIP) ·
 [App and sound details](docs/SHOWCASE.MD#apps-input-and-sound)
 
 ## Compatibility and source

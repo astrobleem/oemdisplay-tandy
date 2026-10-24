@@ -5,6 +5,9 @@ It supplies the shell, helpers, adapted display/keyboard drivers, wheel driver,
 original fonts and artwork. No previous private R1 build folder is required.
 The earlier downloads remain available with their original contents.
 
+For the latest display drawing update on an existing Windows installation,
+use [XRSYNC](XRSYNC.MD). This rc.8 package remains the complete desktop installer.
+
 ## Download
 
 **[Download WINXT-XR1.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP)** for the complete XR1 desktop.

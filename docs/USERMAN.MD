@@ -22,6 +22,10 @@ packets. The [manual saved with rc.6](https://github.com/astrobleem/oemdisplay-t
 is the immutable release snapshot. Updating this guide does not requalify
 or replace those release binaries.
 
+For the current synchronous display update, use [XRSYNC](RELEASES/XRSYNC.MD).
+It has its own Setup and guarded RUNSYNC launcher; the complete desktop
+installation below uses rc.8.
+
 ## Pick a download
 
 | Your machine or goal | Download and guide |

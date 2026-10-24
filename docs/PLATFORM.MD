@@ -63,6 +63,9 @@ The earlier text experiments are also available:
 
 ## Tandy EX/HX graphics
 
+**[Current XRSYNC display download and install](RELEASES/XRSYNC.MD)** for
+existing Windows 3.0. The complete desktop installer remains [rc.8](RELEASES/RC8.MD).
+
 The original **Tandy 1000 EX and 1000 HX** share these drivers. Use 640 KB RAM
 and the package's reservation helper/guarded launcher, including lower-color
 modes. These are EX/HX packages; Video II systems use the separate driver below.
