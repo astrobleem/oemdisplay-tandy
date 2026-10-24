@@ -434,8 +434,9 @@ not qualify physical PC1 hardware.
 
 ## Restore your previous installation
 
-For current XR1, start with `C:\FIXXT` from plain DOS and the
-[repair guide](RELEASES/RC8.MD#repair).
+For XRSYNC, use its [DOS Setup and RUNSYNC procedure](RELEASES/XRSYNC.MD).
+For the original rc.8 HPXY desktop, use `C:\FIXXT` from plain DOS and the
+[rc.8 repair guide](RELEASES/RC8.MD#repair).
 
 For historical Windows XT rc.6, exit Windows and use the numbered backup path printed
 by INSTALL and recorded in `C:\WINXT\BACKUP.TXT`, for example:
