@@ -1,6 +1,6 @@
-# PR155 abandoned-BEGIN gap: synchronous local candidate
+# PR155: synchronous XR1 Output
 
-This local follow-up supersedes `ff5d5e38`'s deferred rows. Every screen
+This follow-up supersedes `ff5d5e38`'s deferred rows. Every screen
 Output presents before returning. BEGIN/END are still no-op drawing markers;
 no row range is retained, no later call is needed, and no timer is involved.
 Accepted release packages, installations and the previous candidate are preserved.
@@ -105,3 +105,26 @@ guest copy through normal Setup / Display / Other; its README gives the path.
 No accepted guarded XR1 install or release pin is changed. The native Setup
 wizard itself was not replayed; physical hardware and CF writes are outside
 this qualification. The packet remains local and is not for publication.
+
+## Public installable kit
+
+`tools/XRSYNC/PUBLISH.PY --out <new-release> --commit <full-source-sha>`
+creates and re-verifies deterministic XRSYNC.ZIP, README.TXT, RELEASE.JSON
+and SHA256SUMS through the existing XR1 publishing helpers. The standalone
+OEM kit contains the exact tested alias driver, RESERVE, XYCTL, original
+fonts/artwork and component notices. No accepted payload or package pin is
+replaced. The public archive excludes CGA.GR2 and all Windows/DOS media.
+
+After extracting it, run `python PREPARE.PY --windows-media <owned-folder>
+--out <fresh-OEM-folder>`. The unchanged XR1 bounded own-media reader accepts
+only the pinned 2,104-byte CGA grabber, expanded or SZDD, and checks all runtime
+pins before creating the complete private OEM folder. Copy it to C:\XR155;
+use plain-DOS Windows Setup / Display / Other, then RUNSYNC.BAT and XYCTL.
+The kit README supplies the exact paths and rollback procedure.
+
+Seven package regressions check complete output, wrong owned input, changed
+driver, existing-output preservation, input/output overlap, deterministic
+closed ZIP inventory and corrupted-release refusal. Actual owned-grabber
+preparation also passes; the prepared driver is byte-identical to the native
+qualified alias. This host preparation does not add a new Setup-wizard or
+physical-hardware test claim to the runtime evidence above.
