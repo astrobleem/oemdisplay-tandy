@@ -27,10 +27,12 @@
  "86box_cfg": "[General]\nconfirm_exit = 0\nconfirm_reset = 0\nconfirm_save = 0\nvid_renderer = qt_software\nvideo_filter_method = 0\nscale = 3\n\n[Machine]\nmachine = tandy1000hx\ncpu_family = 8088\ncpu_speed = 7159092\ncpu_multi = 1\ncpu_use_dynarec = 0\nmem_size = 640\ntime_sync = disabled\n\n[Video]\ngfxcard = internal\n\n[Input devices]\nmouse_type = none\n\n[Storage controllers]\nhdc_1 = xtide\n\n[PC/XT XTIDE #1]\nbios = xt\n\n[Hard disks]\nhdd_01_fn = pcp.img\nhdd_01_ide_channel = 0:0\nhdd_01_parameters = 17, 4, 615, 0, ide\n\n[Ports (COM & LPT)]\nserial1_enabled = 1\nserial1_device = serial_passthrough\n\n[Serial Passthrough (COM) #1]\npath = @PTY@\nreconnect = 1\n",
  "tgsess": {
   "grabber": "TANDYGR.GR2",
-  "grabber_sha256": "37d3dd259e8b932ae9168048b5037a8b768f3a85c10ad0829946ea42ae4bf566",
+  "grabber_sha256": "29f85af50a1f02e93e06cfaac58f36257c2ffc28d37c6e713cfa56c2a6b8aef7",
   "changes": [
-   "SYSTEM.INI: 286grabber=TANDYGR.GR2 (sha256 37d3dd259e8b932ae9168048b5037a8b768f3a85c10ad0829946ea42ae4bf566)",
-   "added XTPAN/TGPAT.COM (sha256 22a967028823945ece1868510bc1672ffc050044fd94e655d965c6fbf185d4ed) and WINDOWS/TGIMG.BMP (TGIMG.PY, palette of BARS16.BMP)"
+   "SYSTEM.INI: 286grabber=TANDYGR.GR2 (sha256 29f85af50a1f02e93e06cfaac58f36257c2ffc28d37c6e713cfa56c2a6b8aef7)",
+   "added XTPAN/TGPAT.COM (sha256 22a967028823945ece1868510bc1672ffc050044fd94e655d965c6fbf185d4ed) and WINDOWS/TGIMG.BMP (TGIMG.PY, palette of BARS16.BMP)",
+   "added XTPAN/TGEVEN.COM (sha256 da252ce70c22d0c4457e6bc356baf88caebe1734e9a87ddce55b28ee79c9dcfd); AUTOEXEC.BAT runs it right after RESERVE",
+   "added XTPAN/TGCLIP.EXE (sha256 f21be7106f977e147eb18add174a6bf3f6ff8020389b822df358b4fd3344ecd8); WIN.INI load= also starts it"
   ]
  }
 }

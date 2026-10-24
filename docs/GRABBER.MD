@@ -68,6 +68,19 @@ resident (304 bytes in all), never edits an MCB, and does nothing when the
 end is already even. RESERVE itself is unchanged. The packet's
 `TGSTART.BAT` is the Windows XT launcher with that one step added.
 
+## Installing the packet
+
+Windows 3.0 DOS Setup, Display > Other (disk from the manufacturer), path
+of the packet: Setup lists the packet's one entry ("Tandy EX/HX 320x200 16
+colors, Tandy grabber (TEST)", `L_list.png`), copies the files and writes
+`display.drv=TR53216.DRV` and `286grabber=TANDYGR.GR2` to SYSTEM.INI. Run
+on 86Box (fresh install into a new directory, `L_*.png`): the installed
+`TANDYGR.GR2` and `TR53216.DRV` are byte-identical to the packet's (SHA-256
+`29f85af5...`, `33f681b0...`), and the Setup GUI itself ran on
+`TR53216.DRV`. Setup does not copy TGEVEN, TGCLIP or TGSTART.BAT: copy them
+from the packet to the Windows directory, start Windows with TGSTART.BAT
+and run TGCLIP once (it then adds itself to `load=`).
+
 ## Evidence (86Box Tandy 1000 HX, `src/tgrab/TGSESS.PY`, `docs/tgrab`)
 
 Run `sG` (TR53216.DRV, RESERVE + TGEVEN, TANDYGR.GR2, TGCLIP): every check
@@ -92,7 +105,7 @@ in one session, see `sG.JSN` and the `G_*.png` frames.
 
 Controls: `sF` (same, **without** TGEVEN): the text check fails (Windows
 stops answering). `sB` (retail CGA.GR2): the mode-9 program comes back
-scrambled.
+scrambled (`B_*.png`).
 
 ## Limitations
 

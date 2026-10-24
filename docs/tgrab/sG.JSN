@@ -2,54 +2,91 @@
  "steps": [
   {
    "step": "Paintbrush opens TGIMG.BMP",
-   "t": 1792840890.6
+   "t": 1792868829.2
   },
   {
    "step": "Pick tool selects the picture; Edit > Copy",
-   "t": 1792841050.2
+   "t": 1792868988.7
   },
   {
    "step": "File > New, Edit > Paste",
-   "t": 1792841106.7
+   "t": 1792869045.1
   },
   {
    "step": "File > Save As PASTE.BMP",
-   "t": 1792841225.8
+   "t": 1792869163.9
   },
   {
    "step": "close, reopen PASTE.BMP",
-   "t": 1792841308.4
+   "t": 1792869246.5
   },
   {
    "step": "Shift+PRINT: Windows screen to the Clipboard",
-   "t": 1792841488.4
+   "t": 1792869426.4
   },
   {
    "step": "Clipboard: File > Save As C:\\SCREEN.CLP",
-   "t": 1792841531.6
+   "t": 1792869469.5
   },
   {
    "step": "Paintbrush: File > New, Edit > Paste the screen, Save As SCREEN.BMP",
-   "t": 1792841714.8
+   "t": 1792869652.6
   },
   {
    "step": "TGPAT.COM (BIOS mode 9) from File > Run",
-   "t": 1792842038.6
+   "t": 1792869976.3
   },
   {
    "step": "Alt+Tab to Windows",
-   "t": 1792842096.5
+   "t": 1792870034.1
   },
   {
    "step": "Alt+Tab back to TGPAT",
-   "t": 1792842159.5
+   "t": 1792870097.2
   },
   {
-   "step": "Shift+PRINT in mode 9, then Space ends TGPAT",
-   "t": 1792842222.6
+   "step": "Shift+PRINT in mode 9 (TANDYGR writes a BMP), then Space ends TGPAT",
+   "t": 1792870160.3
+  },
+  {
+   "step": "Clipboard: File > Save As C:\\DOS9.CLP",
+   "t": 1792870272.5
+  },
+  {
+   "step": "Paintbrush: File > New, Edit > Paste, Save As DOS9.BMP",
+   "t": 1792870435.1
+  },
+  {
+   "step": "COMMAND.COM, ECHO, Shift+PRINT, EXIT",
+   "t": 1792870761.4
   }
  ],
  "checks": [
+  {
+   "good": {
+    "file": "good",
+    "width": 64,
+    "height": 40,
+    "picture_mismatches": 0,
+    "rest_white": true
+   },
+   "bad_palette": {
+    "file": "bad palette",
+    "width": 64,
+    "height": 40,
+    "picture_mismatches": 184,
+    "rest_white": true
+   },
+   "bad_pixel": {
+    "file": "bad pixel",
+    "width": 64,
+    "height": 40,
+    "picture_mismatches": 2,
+    "rest_white": true
+   },
+   "check": "self-test: the BMP colour check passes the original and fails a changed palette entry and a changed pixel",
+   "ok": true
+  },
   {
    "mismatches": 0,
    "at": [
@@ -111,8 +148,27 @@
    "ok": true
   },
   {
-   "compared": "CF_BITMAP size, planes and every pixel (the .CLP headers hold run-time handles)",
-   "check": "a mode-9 Print Screen leaves the Clipboard as it was (Windows 3.0 real mode grabs text screens only)",
+   "width": 320,
+   "height": 200,
+   "planes": 4,
+   "bits": 1,
+   "mismatches": 0,
+   "check": "the DOS mode-9 screen is on the Clipboard as a 320x200 bitmap equal to the DOS screen in every pixel",
+   "ok": true
+  },
+  {
+   "bmp_size": [
+    320,
+    170
+   ],
+   "picture_mismatches": 0,
+   "nonblack_above": 0,
+   "check": "DOS9.BMP: the TGPAT picture at (128,80) with the original colours (reference palette), black around it",
+   "ok": true
+  },
+  {
+   "saved": true,
+   "check": "after the DOS text grab Windows still answers and the Clipboard holds the ECHO line (saved as C:\\TEXT.CLP)",
    "ok": true
   }
  ],

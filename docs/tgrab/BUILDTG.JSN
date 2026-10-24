@@ -1,8 +1,8 @@
 {
  "tandygr": {
   "file": "TANDYGR.GR2",
-  "bytes": 2255,
-  "sha256": "37d3dd259e8b932ae9168048b5037a8b768f3a85c10ad0829946ea42ae4bf566"
+  "bytes": 3361,
+  "sha256": "29f85af50a1f02e93e06cfaac58f36257c2ffc28d37c6e713cfa56c2a6b8aef7"
  },
  "control": {
   "file": "CONTROL.GR2",
@@ -14,12 +14,9 @@
   "CGAHERC/CGA/CGA.ASM": "b0bf82e2ac488c7e5a8ad7c13d2e50af43ce0fae94addca9ff43e43e4cd59818",
   "CGAHERC/GSMODE.ASM": "7e64ba1ffd2a345548122f6ac504f235f4096bd911ec5983bfc5ef28cd466093",
   "CGAHERC/SRSCR.ASM": "f7040952fe82f12a73a71e8d2ca9d8a160b19fccf366284311ebd29da6669c7a",
-  "BLOCK.ASM": "0fd565eb7728e83e74caa5ad48e9ac01003e4a370b5a488332daef8bff04b8d3"
+  "BLOCK.ASM": "9b3f69ee626e141270ce2de40948c559a9617713bd589fd06184e0c40c182af0",
+  "GETINFO.ASM": "5755b0c5d0f61cdd9eb503bff423da50b0229841551535a1db3c434ab73b1fdc",
+  "GRABBITS.ASM": "f039ccb01f8030bd1b98fd24099675081239fb80d39b5cbd69950de18d88169b"
  },
- "edits": 11,
- "retail_cga_gr2": {
-  "bytes": 2104,
-  "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
-  "equals_control": false
- }
+ "edits": 15
 }

@@ -5,16 +5,24 @@
    "sha256": "fd0e0fc3cde18487b134e894c74158ca2aa581953187ecfb101b85827f9ae74b"
   },
   "README.TXT": {
-   "bytes": 2017,
-   "sha256": "4ec2087c302a988e811cf1adf5fd5295423fe0be25775974411902803a67f11a"
+   "bytes": 2489,
+   "sha256": "f9b56f39a12f8f6ebbab8bba9a8f79a1cf0f6279dffe6637f09c985ae572b68b"
   },
   "RESERVE.COM": {
    "bytes": 1512,
    "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
   },
   "TANDYGR.GR2": {
-   "bytes": 2255,
-   "sha256": "37d3dd259e8b932ae9168048b5037a8b768f3a85c10ad0829946ea42ae4bf566"
+   "bytes": 3361,
+   "sha256": "29f85af50a1f02e93e06cfaac58f36257c2ffc28d37c6e713cfa56c2a6b8aef7"
+  },
+  "TGCLIP.EXE": {
+   "bytes": 5023,
+   "sha256": "f21be7106f977e147eb18add174a6bf3f6ff8020389b822df358b4fd3344ecd8"
+  },
+  "TGEVEN.COM": {
+   "bytes": 557,
+   "sha256": "da252ce70c22d0c4457e6bc356baf88caebe1734e9a87ddce55b28ee79c9dcfd"
   },
   "TGIMG.BMP": {
    "bytes": 1398,
@@ -23,6 +31,10 @@
   "TGPAT.COM": {
    "bytes": 172,
    "sha256": "22a967028823945ece1868510bc1672ffc050044fd94e655d965c6fbf185d4ed"
+  },
+  "TGSTART.BAT": {
+   "bytes": 2521,
+   "sha256": "05959e2a82978fecc86839da76e4ccde836e0e1e3a2cef2e54c60816b35dc571"
   },
   "TR53216.DRV": {
    "bytes": 54896,

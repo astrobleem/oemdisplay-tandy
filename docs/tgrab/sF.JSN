@@ -1,0 +1,41 @@
+{
+ "steps": [
+  {
+   "step": "COMMAND.COM, ECHO, Shift+PRINT, EXIT",
+   "t": 1792868196.8
+  }
+ ],
+ "checks": [
+  {
+   "good": {
+    "file": "good",
+    "width": 64,
+    "height": 40,
+    "picture_mismatches": 0,
+    "rest_white": true
+   },
+   "bad_palette": {
+    "file": "bad palette",
+    "width": 64,
+    "height": 40,
+    "picture_mismatches": 184,
+    "rest_white": true
+   },
+   "bad_pixel": {
+    "file": "bad pixel",
+    "width": 64,
+    "height": 40,
+    "picture_mismatches": 2,
+    "rest_white": true
+   },
+   "check": "self-test: the BMP colour check passes the original and fails a changed palette entry and a changed pixel",
+   "ok": true
+  },
+  {
+   "saved": false,
+   "check": "after the DOS text grab Windows still answers and the Clipboard holds the ECHO line (saved as C:\\TEXT.CLP)",
+   "ok": false
+  }
+ ],
+ "verdict": "FAIL"
+}
