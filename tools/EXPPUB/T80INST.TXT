@@ -2,20 +2,21 @@ EXPERIMENTAL TEXT80 / COMPACT C25 - WINDOWS 3.0 REAL MODE
 
 This is the current-source 2026-10-18 experimental build. It is separate
 from Windows XT rc.6 and does not change any existing release or its pins.
-No real hardware has been qualified. Read BUILD.JSN for exact evidence.
+No real hardware has been qualified.
 
 WHAT YOU NEED
 - Your own installed Windows 3.0 and DOS, 640 KB conventional RAM.
 - A CGA-compatible color 80-column text adapter. The earlier GUI sessions
   cover an emulated IBM XT/CGA and Tandy HX; VGA 80x50 was shown in
   DOSBox-X only. Other adapters and physical machines remain unqualified.
-- A backup of the WHOLE Windows folder and a way to boot to plain DOS.
 - Extract the TEXT80 folder to C:\TEXT80. Python is not used on the XT.
 
 INSTALL - FROM PLAIN DOS, AFTER EXITING WINDOWS
-1. Back up Windows. CD \TEXT80
-2. For normal 80x25 text, type: T80ON C:\WINDOWS 25
-   For compact 80x25 controls, type: T80ON C:\WINDOWS C25
+1. Select the extracted folder:
+   C:
+   CD \TEXT80
+2. Start with compact 80x25 controls:
+   T80ON C:\WINDOWS C25
    Use your actual Windows folder if different.
 3. Read the result; start Windows only after setup succeeds. For
    C:\WINDOWS, select its drive and change to its folder first:
@@ -30,6 +31,7 @@ INSTALL - FROM PLAIN DOS, AFTER EXITING WINDOWS
 4. Switch profiles only after exiting Windows and running T80OFF first.
 
 OPTIONAL PROFILES
+T80ON C:\WINDOWS 25: ordinary 80x25 controls, 640x200 desktop.
 T80ON C:\WINDOWS PAN: an 80x25 view of a 640x400 desktop, about 100 KB more
 Windows memory than 25. XTPAN.EXE is added to load= without removing other
 entries. Alt+PgDn / Alt+PgUp or moving the pointer to the edge pans it.
@@ -37,6 +39,7 @@ T80ON C:\WINDOWS VGA: VGA-only 80x50, 640x400 desktop. Do not select this
 on CGA/Tandy/EGA. If Windows refuses to start, return to DOS and T80OFF.
 
 UNDO / RECOVERY - FROM DOS
+C:
 CD \TEXT80
 T80OFF C:\WINDOWS
 This restores only recorded settings still at the values T80ON wrote.

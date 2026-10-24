@@ -1,3 +1,7 @@
+> Historical / development guide. For the current download and installation,
+> use the [XR1 install guide](../RELEASES/RC8.MD). The commands below describe the
+> earlier package or source checkpoint.
+
 # Shared WINXT installation and recovery
 
 The completed own-media package has one flat WINXT support folder. Native

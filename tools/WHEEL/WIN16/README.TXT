@@ -1,3 +1,10 @@
+CURRENT WHEEL DRIVER AND INSTALLATION
+The XR1 package supplies WHEEL.DRV, the bridge and paired client:
+https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP
+https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/RELEASES/RC8.MD
+
+HISTORICAL BRIDGE-ONLY R1 GUIDE FOLLOWS
+
 WINDOWS XT WHEEL BRIDGE R1 - EXPERIMENTAL
 =========================================
 
@@ -10,9 +17,8 @@ REQUIREMENTS
 - Windows 3.0 real mode.
 - An existing MOUSE module exposing WHEEL.DRV API 1.0, with the wheel driver
   already configured and working. This package does not include that driver,
-  and the repository has no verified redistributable driver download. Without
-  an independently obtained compatible driver, this bridge alone cannot add
-  wheel scrolling.
+  but the current XR1 package linked above supplies it. This older bridge
+  alone cannot add wheel scrolling.
 - The existing DOS/Windows mouse configuration. This bridge does not install
   or replace a driver, edit SYSTEM.INI, add startup entries, or change the
   pointer/button path.

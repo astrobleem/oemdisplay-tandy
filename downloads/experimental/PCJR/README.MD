@@ -1,6 +1,6 @@
 # IBM PCjr clean Setup — experimental download
 
-**[Download PCJRSET.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PCJR/PCJRSET.ZIP)** · [SHA-256](SHA256.SUM) · [Full install/recovery guide](../../../src/pcjr/INSTALL/INSTALL.TXT)
+**[Download PCJRSET.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PCJR/PCJRSET.ZIP)** · [Full install/recovery guide](../../../src/pcjr/INSTALL/INSTALL.TXT)
 
 Windows 3.0 real mode, 320×200 in 16 colors, with an existing PCjr memory
 expansion and a DOS-reserved video page. This 2026-10-18 packet publishes the
@@ -8,13 +8,6 @@ merged clean-install folder: pinned TNDYJR driver, guard/launcher, PCjr-safe
 grabber, original XT Pixels fonts and static startup logo. It supports fresh
 Windows Setup and changing an existing installation. You supply DOS and
 Windows 3.0 media; no Python runs on the PCjr.
-
-All driver, guard, launcher, grabber, font and logo bytes match the recorded
-clean-install emulator packet. The [26/26 session](../../../docs/pcjr/INSTALL/SESSION.JSN),
-[existing-install conversion](../../../docs/pcjr/INSTALL/CONVERT.JSN) and
-[grabber matrix](../../../docs/pcjr/INSTALL/GRJRGRAB.JSN) passed in DOSBox-X.
-No fresh Windows boot was run for publication. Physical PCjr memory
-expansion, keyboard, mouse/serial input and timing remain unqualified.
 
 ## Install
 
@@ -42,17 +35,29 @@ C:\PCJREXP\JRWIN
 ```
 
 JRWIN calls JRGUARD and launches `C:\WINDOWS\WIN.COM /R` only after success.
-To undo the display choice, exit Windows and use Windows Setup to restore
+To undo the display choice, exit Windows, run JRGUARD successfully and use
+Windows Setup to restore
 your previous display, as described in INSTALL.TXT. PCjr-only DOS video
 modes 8, 9 and 0Ah cannot switch away with Alt+Tab; finish them to return.
 
-## Verification and source
+<details>
+<summary>Source, optional checksums and test records</summary>
 
-The ZIP is **114,994 bytes**, SHA-256
-`a781614c5c8c5f6c498e6e9a82364b4c2c9c3c3f7e2b2be0c67b42b2f57c17d8`.
+Installation text and its manifests were refreshed; driver/helper bytes and
+saved test records are unchanged. No native rebuild or new runtime claim is made.
+
+All driver, guard, launcher, grabber, font and logo bytes match the recorded
+clean-install emulator packet. The [26/26 session](../../../docs/pcjr/INSTALL/SESSION.JSN),
+[existing-install conversion](../../../docs/pcjr/INSTALL/CONVERT.JSN) and
+[grabber matrix](../../../docs/pcjr/INSTALL/GRJRGRAB.JSN) passed in DOSBox-X.
+No fresh Windows boot was run for publication. Physical PCjr memory
+expansion, keyboard, mouse/serial input and timing remain unqualified.
+
+The ZIP is **114,921 bytes**, SHA-256
+`a5280c3cd1dde76c603e2d0f4f0dc56986aba2a2e5d4bf5a6299cd2321a19cd2`.
 `PCJREXP/SHA256.SUM` covers every member. `BUILD.JSN` records exact source,
-payloads, fresh builds and inherited emulator qualification. Two independent
-package runs produced identical ZIP bytes. The merged JRPACK builder's
+payloads, fresh builds and inherited emulator qualification. The original packet builds were reproducible; this refresh changes only
+installation text and manifests. The merged JRPACK builder's
 original runtime pins and all existing release assets remain unchanged.
 
 [Machine and evidence guide](../../../docs/PCJR.MD) ·
@@ -63,3 +68,5 @@ DDK-derived PCjr grabber, not the retail CGA.GR2; derivative notices remain
 applicable. No Windows/DOS media, Microsoft fonts, retail grabber, ROM,
 compiler, emulator or credentials are included. The older released PCJR.ZIP
 is preserved unchanged; use this separate packet for clean Setup.
+
+</details>

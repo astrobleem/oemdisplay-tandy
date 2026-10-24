@@ -2,7 +2,7 @@ EXPERIMENTAL IBM PCjr DISPLAY - WINDOWS 3.0 SETUP
 TNDYJR.DRV 320x200 16 colors, Windows 3.0 real mode only (WIN /R)
 
 Tested only in emulation (DOSBox-X, machine=pcjr). It has not run on a real
-PCjr. Keep a bootable DOS floppy and a backup of your hard disk.
+PCjr.
 
 WHAT YOU NEED
 - An IBM PCjr with memory expansion, DOS 3.x and a hard disk as drive C:.
@@ -12,7 +12,7 @@ WHAT YOU NEED
   disks: copy the files of all disks into one folder on C:, for example
   C:\WIN30SRC, using another PC. A 360 KB disk set can be used from A:.
 - This folder, copied to C:\PCJREXP exactly (Setup and JRWIN use that path).
-  Every file in it is first-party; no Windows file is needed from you.
+  The display support files are included; supply your own Windows media.
 - Optional: a Microsoft serial mouse. Without one, use the keyboard.
 
 NEW INSTALLATION
@@ -61,7 +61,7 @@ JRGUARD.COM  checks the video page reservation (does not reserve RAM)
 JRWIN.COM    guarded launcher
 XTESYS.FON, XTEFIX.FON, XTEOEM.FON  XT Pixels fonts (MIT, FONTLIC.TXT)
 XTSTATIC.LGO, WXTSPL01.RLE  static startup logo (MIT, LOGOLIC.TXT)
-OEMSETUP.INF, SHA256.SUM (check the files on a modern computer)
+OEMSETUP.INF; optional checksum list SHA256.SUM
 
 KNOWN LIMITS
 - DOS programs in text modes 0-3 and CGA graphics modes 4, 5 and 6 can

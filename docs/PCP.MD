@@ -1,5 +1,11 @@
 # Plantronics ColorPlus 320x200x16 driver (PCP3216): first build
 
+**[Download PCP3216.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP)** ·
+[Install in an existing Windows 3.0 installation](../experiments/DISPLAY3/PCP3216.TXT).
+
+The development and test record follows.
+
+
 Status: **PCP3216.DRV runs Windows 3.0 real mode on an emulated IBM PC/XT
 with a Plantronics ColorPlus card in 86Box 6.0, and passes all 88 checks of
 a scripted session: desktop redraws, overlapping windows moved with the

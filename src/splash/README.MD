@@ -1,8 +1,8 @@
 # Tandy Windows 3.0 startup image
 
 Historical TANDY88 / Tandy-picture record. The old splash is retired from
-current installation choices. Current releases use Windows XT in every profile;
-see [the active guide](../../distributions/WINXT/README.MD). The retained source, captures, artifacts and
+current installation choices. For the current XR1 download and installation,
+see [the active guide](../../docs/RELEASES/RC8.MD). The retained source, captures, artifacts and
 backup/recovery support below preserve historical provenance.
 
 

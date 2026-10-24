@@ -1,6 +1,8 @@
 # Current XR1 own-media package
 
-`README.TXT` is the end-user preparation and installation guide. This package
+For installation, use the current [XRSYNC guide](../../docs/RELEASES/XRSYNC.MD)
+or [complete rc.8 desktop guide](../../docs/RELEASES/RC8.MD).
+`README.TXT` is the frozen guide embedded in the original rc.8 archive. This package
 starts from ordinary owned Windows 3.0 media; it does not require the earlier
 private DOS-CROOT. The supplied 47 payload inputs include the selected adapted
 drivers, authored shell/helpers, wheel driver, original fonts and artwork.

@@ -1,4 +1,10 @@
-# Windows XT wheel bridge R1 (experimental)
+# Wheel input for Windows XT
+
+**Current EX/HX installation:** [download XR1](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP) and follow the
+[XR1 install guide](../../../docs/RELEASES/RC8.MD). It includes the first-party
+WHEEL.DRV, bridge and paired client; no separate driver hunt is needed.
+
+## Historical bridge-only R1 packet
 
 [Download WHEELR1.ZIP](WHEELR1.ZIP) · [SHA-256](SHA256.TXT) · [source, build and qualification](../../../tools/WHEEL/WIN16/README.TXT)
 
@@ -10,10 +16,8 @@ Release asset, installer, or part of Windows XT RC6.
 
 `WHEELR1.ZIP` supplies the bridge and paired TP client, not `WHEEL.DRV`. The
 active Windows `MOUSE` module must already use a working `WHEEL.DRV` that
-exports API 1.0. This repository has no verified redistributable download for
-that driver. A user without a compatible driver cannot enable wheel scrolling
-with this package alone; obtain a matching driver from a source you are
-authorized to use and follow that driver's installation instructions first.
+exports API 1.0. The current XR1 package above supplies that driver. This
+older bridge-only packet cannot add wheel scrolling by itself.
 The steps below begin after the driver is already configured.
 
 ## Quick use
