@@ -79,6 +79,13 @@
         "bytes": 31314,
         "sha256": "42be449e522044b7344a645b86f5cc9080899a5940c132336d7444ef2351c114"
       }
+    },
+    "PITDOS.ZIP": {
+      "source": "tools/CURRENT/INPUTS/PITDOS.ZIP",
+      "identity": {
+        "bytes": 42927,
+        "sha256": "765c81678f9655f3805fc348ebe444eb919adc47915f27e92eb6816cb18d324f"
+      }
     }
   },
   "sound": {
@@ -151,6 +158,32 @@
     "COOKSET.ZIP": {
       "member": "INSTALL.TXT",
       "source": "tools/CURRENT/GUIDES/COOKSET.TXT"
+    }
+  },
+  "collection": {
+    "source": "examples/TANDYLAB/TANDYLAB.ZIP",
+    "identity": {
+      "bytes": 355159,
+      "sha256": "ac825b9e38d6fc636cbf33960e2e55eb00693dc92de49d8d04adf093bcb13881"
+    }
+  },
+  "core_source_commit": "1a29ce3ff3b16a6fe97194dde3edebbbd21ee10a",
+  "core_identities": {
+    "WINXT.ZIP": {
+      "bytes": 648375,
+      "sha256": "dac91c866628f71d14d6fa52a930339fac5bf07546e79a43f03e6f3ead5b49e8"
+    },
+    "WINXTSRC.ZIP": {
+      "bytes": 100529,
+      "sha256": "9e32793d07820154d627cdcf147bbfc7086d5db7addf76f5c66d310ff9ff220a"
+    },
+    "WINXT.JSN": {
+      "bytes": 8670,
+      "sha256": "f5a3eee8ea1f81d9d57326df37c69e632dd9379a033b3841bee883ae4fd00aa8"
+    },
+    "WINXT.SHA": {
+      "bytes": 234,
+      "sha256": "0784ef6d7ff276bdc4fab33025b4bee5a5494babe31ab0bfeb5dc02ed00fa4f2"
     }
   }
 }

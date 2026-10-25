@@ -32,7 +32,7 @@ def input_archive(config):
  files['INPUTS.JSN']=text(json.dumps(config['developer_inputs'],indent=2)+'\n')
  files['README.TXT']=text('DEVELOPER BUILD INPUTS\n\nThese original public app/driver archives are retained for source reproduction.\nThey are not consumer installation prerequisites. Current installations use\nthe product ZIPs and expanded files linked from the main README.\n\nT2INPUT.ZIP is the accepted Video II packet read by src/tga2/T2PACK.PY.\nMML3AUTH.ZIP and PITEXPR.ZIP are the immutable original sound-app inputs\nread by the sound PITPACK/recut builder. Their current consumer packets\nare separate qualified products; use the original names here for rebuilding.\n')
  return archive(files)
-def ancillary(sound):
+def ancillary(sound,main_zip):
  config=spec();files={n:exact(ROOT/row['source'],row['identity']) for n,row in config['local'].items()}
  for name,row in config.get('documentation_overlays',{}).items():
   original=zip_files(files[name]);updated=dict(original)
@@ -44,11 +44,25 @@ def ancillary(sound):
   files[name]=archive(updated)
  for name,row in config['sound'].items():files[name]=exact(sound/name,row['identity'])
  files['BUILDIN.ZIP']=input_archive(config)
+ files['TANDYLAB.ZIP']=collection(config,main_zip)
  for name,data in files.items():
   if not name.endswith('.ZIP'):raise ValueError('Consumer alternatives must be ZIPs: '+name)
   zip_files(data)
  if set(files)&set(config['excluded_consumer_alternatives']):raise ValueError('Obsolete raw installer alternative included')
  return files
+def collection(config,main_zip):
+ original=zip_files(exact(ROOT/config['collection']['source'],config['collection']['identity']))
+ files={n:b for n,b in original.items() if not n.startswith('TANDYLAB/DRIVERS/') and n not in ['TANDYLAB/README.TXT','TANDYLAB/CHECK.TXT','TANDYLAB/MANIFEST.SHA']}
+ # The exact already-qualified movable source, including every OEM INF reference
+ # and its unchanged launch guards. No toolkit staging or nested ZIP is retained.
+ main=main_product(main_zip)
+ files.update({'TANDYLAB/DRIVERS/'+n:b for n,b in main.items() if n.startswith('WINXT/')})
+ files['TANDYLAB/README.TXT']=(HERE/'GUIDES/TANDYLAB.TXT').read_bytes()
+ files['TANDYLAB/CHECK.TXT']=(HERE/'GUIDES/TANDYLAB.TXT').read_bytes()
+ files['TANDYLAB/DRIVERS/README.TXT']=text('WINDOWS XT DISPLAY SOURCE\n\nChange to DRIVERS\\WINXT in DOS and read DISPLAY.TXT. Run DISPLAY for\nWindows Setup and DISPWIN for each launch; reservation is automatic.\nUse installed Windows 3.0 real mode on an original EX/HX with normal 640 KB.\nThe folder includes all driver fonts, grabber, logos and helpers.\n')
+ files['TANDYLAB/MANIFEST.SHA']=text(''.join(identity(b)['sha256']+'  '+n[len('TANDYLAB/'):]+'\n' for n,b in sorted(files.items())))
+ return archive(files)
+
 def main_product(data):
  files=zip_files(data)
  if set(n.split('/')[0] for n in files)!={'SETUP.EXE','README.TXT','WINXT'}:raise ValueError('Expected SETUP.EXE, README.TXT and one WINXT folder')
@@ -71,9 +85,9 @@ def build(output,sound,core_input,commit):
  config=spec()
  core=importlib.machinery.SourceFileLoader('current_native_producer',str(ROOT/'tools/DOSINST/RCPUB.PY')).load_module()
  if set(core.ASSETS)!=set(config['core_assets']):raise ValueError('Expanded native producer is not installed in this source snapshot')
- supplied={n:(core_input/n).read_bytes() for n in config['core_assets']}
+ supplied={n:exact(core_input/n,config['core_identities'][n]) for n in config['core_assets']}
  producer_commit=json.loads(supplied['WINXT.JSN'])['source_commit']
- if not re.fullmatch('[0-9a-f]{40}',producer_commit):raise ValueError('Invalid core producer commit')
+ if producer_commit!=config['core_source_commit']:raise ValueError('Core producer commit differs from live qualified core')
  # The producer refuses output until exact full FRESH/UPDATE/negative records
  # are complete. Never substitute a caller-supplied SFX or bypass that gate.
  with tempfile.TemporaryDirectory(prefix='winxt-current-') as tmp:
@@ -81,7 +95,7 @@ def build(output,sound,core_input,commit):
   files={n:(folder/n).read_bytes() for n in config['core_assets']}
   if files!=supplied:raise ValueError('Supplied core artifacts differ from the native-gated producer')
  main_product(files['WINXT.ZIP'])
- files.update(ancillary(sound))
+ files.update(ancillary(sound,files['WINXT.ZIP']))
  record={'schema':1,'repository':config['repository'],'tag':config['tag'],'title':config['title'],
          'source_commit':commit,'core_source_commit':producer_commit,'primary_download':'WINXT.ZIP',
          'main_layout':['SETUP.EXE','README.TXT','WINXT/'],

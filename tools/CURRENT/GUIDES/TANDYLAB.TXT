@@ -1,0 +1,25 @@
+TANDYLAB - WINDOWS 3.0 APPLICATION COLLECTION
+
+Extract the TANDYLAB folder onto your DOS computer. You supply installed
+Windows 3.0 real mode. Use your normal guarded Windows startup.
+In Program Manager File / Run, enter C:\TANDYLAB\ABOUT\TABOUT.EXE,
+or choose an app from CATALOG.TXT. Use your actual drive/folder if different.
+Keep each application's files together. Launch the COMMDLG demo through
+EXPER\CDLG\CDSTART.EXE; keep its DLL and app beside it. Close one sound
+demo before starting another. Cookie Save writes COOKIE.SAV beside the app.
+
+OPTIONAL DISPLAY INSTALLATION - ORIGINAL TANDY EX/HX, NORMAL 640 KB
+The DRIVERS\WINXT folder contains the complete current Windows XT display
+source. Exit Windows, change to that folder and run DISPLAY. In Windows
+Setup choose Display / Other, enter that folder's full path at its source
+disk prompts, select HPXY and complete changes. Keep keyboard, mouse and
+DOS configuration choices unchanged. For every Windows launch, change to
+that folder and run DISPWIN. Both entries reserve shared video RAM and stop
+if that fails. DISPLAY.TXT covers a Windows directory other than C:\WINDOWS.
+All fonts, grabber, logos and helpers are included. No Python or extra support
+files are needed. This optional route does not install a replacement shell.
+
+The collection's application bytes are unchanged. Its original app-specific
+limits remain in the folder notes and DOCS. Physical hardware performance
+is not established by the saved emulator results. Full Windows XT, source
+and build inputs are available in the same Windows XT release.

@@ -161,3 +161,15 @@ tools/SOUNDOWN/** -text
 tools/CURRENT/** -text
 tools/CURRENT/INPUTS/*.ZIP -export-ignore
 tools/XROEM/** -text
+
+docs/DRIVERS.MD -text
+
+.github/workflows/current.yml -text
+
+examples/TANDYLAB/README.MD -text
+
+examples/COOKIE/README.MD -text
+
+examples/COOKIE/INSTALL.TXT -text
+
+tools/MINEAPP/INSTALL.TXT -text

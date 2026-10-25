@@ -37,7 +37,7 @@ Each product has one current packet and a short install guide.
 A **320x400 desktop through a 320x200, 16-color viewport** is now available
 for these adapters. The kits include the helper and a fixed-mode switch-back.
 
-**[PCjr download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-softpan-2026-10-24/JRPAN.ZIP)** | **[ColorPlus download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-softpan-2026-10-24/CPPAN.ZIP)** |
+**[PCjr download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/JRPAN.ZIP)** | **[ColorPlus download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP)** |
 [Short install instructions](docs/SOFTPAN/RELEASE.MD) | [Windows emulator evidence](docs/SOFTPAN/README.MD)
 
 These use software copies and 32,000 additional shadow bytes. The Windows
@@ -57,7 +57,7 @@ runs cover DOSBox-X PCjr and 86Box XT/Plantronics, each with 640 KB RAM.
 
 The display shows a **640x256 logical desktop through a 320x200, sixteen-color view**.
 Keyboard panning brings off-screen windows and controls into reach.
-[Display controls and installation](docs/RELEASES/XRSYNC.MD) ·
+[Display controls and installation](docs/DRIVERS.MD) ·
 [Original fonts](docs/FONTS/README.MD)
 
 For a fixed-resolution desktop, choose the [fixed profiles](docs/FIXED.MD).
@@ -73,8 +73,8 @@ The captures below retain their original, separately documented test scope.
 
 Use Ctrl+Alt+arrows to pan and Ctrl+Alt+Home to return home. XYCTL's menu or
 Ctrl+Alt+H switches between software and hardware presentation.
-[Install Minesweeper](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/MINESET.EXE) ·
-[Install guide](tools/MINEAPP/INSTALL.TXT) · [Capture notes](docs/pan/MINE/CAPTURE.MD).
+[Install Minesweeper](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/MINESET.ZIP) ·
+[Install guide](tools/CURRENT/GUIDES/MINESET.TXT) · [Capture notes](docs/pan/MINE/CAPTURE.MD).
 
 <img src="docs/rrect/TIMELINE.PNG" alt="Matched emulator captures comparing the original and optimized Calculator repaint" width="640">
 
@@ -83,7 +83,7 @@ experiment. That comparison has its own [drawing test scope](docs/RRECT.MD).
 
 ## Games, savers and sound
 
-| [Maze preview](examples/MAZE/GAME/README.MD) | [Tandinator](examples/TANDINAT/README.MD) | [Tandy Winamp](https://github.com/astrobleem/oemsound-tandy/releases/tag/tandy-winamp-xt1.20261024) |
+| [Maze preview](examples/MAZE/GAME/README.MD) | [Tandinator](examples/TANDINAT/README.MD) | [Tandy Winamp](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt) |
 | --- | --- | --- |
 | <img src="docs/PROMO/XTMAZE.PNG" alt="Windows XT Maze preview" width="260"> | <img src="examples/TANDINAT/SHOTS/320x200x16.PNG" alt="Tandinator character-guessing game" width="260"> | <img src="https://raw.githubusercontent.com/astrobleem/oemsound-tandy/824ae10e1d79d1bd2d09f4a37447f58dd9cc9476/docs/SHOTS/WAMPUI3.PNG" alt="Tandy Winamp companion with a scrolling playlist" width="260"> |
 
@@ -93,7 +93,7 @@ The [desktop bundle](docs/DESKTOP.MD) includes Maze, Pinball, Starfield and Matr
 
 The separate [Tandy sound companion](https://github.com/astrobleem/oemsound-tandy)
 includes Winamp's playlist player, PSG music and Beats/Fiddle tools.
-[Download Winamp XT1](https://github.com/astrobleem/oemsound-tandy/releases/download/tandy-winamp-xt1.20261024/TWXT1.ZIP) ·
+[Download Tandy Winamp](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TWXT2.ZIP) ·
 [App and sound details](docs/SHOWCASE.MD#apps-input-and-sound)
 
 ## Compatibility and source

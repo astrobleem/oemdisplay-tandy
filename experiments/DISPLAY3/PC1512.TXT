@@ -1,28 +1,21 @@
 DOWNLOAD
-https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PC1512/P15SET.EXE
+https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PC1512.ZIP
 
 AMSTRAD PC1512 - WINDOWS 3.0 DISPLAY
 640x200, 16 colors
 
-For the PC1512's built-in video, 8086 and 640 KB. Not PC1640 or ordinary CGA.
-Requires an installed Windows 3.0. The driver, fonts, grabber and startup
-logos are included. Dedicated video RAM needs no memory reservation helper.
+For PC1512 built-in video, 8086, 640 KB and installed Windows 3.0 real mode.
+Not PC1640 or ordinary CGA. Driver, fonts, grabber and startup logos are included.
 
-INSTALL
-1. Exit Windows to DOS. Run P15SET to prepare C:\P15EXP.
+1. Extract all files from PC1512.ZIP to C:\P15EXP. Exit Windows to DOS.
 2. Run C:\P15EXP\INSTALL.
 3. In Windows Setup choose Display, Other, C:\P15EXP, then
    Amstrad PC1512 640x200 16 colors. Complete Setup and return to DOS.
 4. Start Windows with C:\P15EXP\P15WIN.
 
-Windows defaults to C:\WINDOWS. For another installation, use both entries
-with its drive and directory, for example INSTALL D: \WIN30 and
-P15WIN D: \WIN30. No SYSTEM.INI editing or separate support files are needed.
-
-CHANGE DISPLAY
-From DOS run the installer again and select another display in Windows
-Setup. PC1512.DRV is inactive when another display is selected.
-
-The accepted renderer has been exercised in an emulated PC1512. Physical
-hardware, the Amstrad mouse port and DOS-box switching are not qualified.
-Windows 3.1 is not supported. Detailed test records remain in docs/PC1512.MD.
+For Windows outside C:\WINDOWS, pass its drive and directory to both entries,
+for example INSTALL D: \WIN30 and P15WIN D: \WIN30.
+Dedicated video RAM needs no reservation helper. No INI editing is needed.
+The driver was tested in an emulated PC1512; physical hardware, the Amstrad
+mouse port and DOS-box switching remain unqualified. Windows 3.1 is unsupported.
+Technical records: docs/PC1512.MD in the source repository.

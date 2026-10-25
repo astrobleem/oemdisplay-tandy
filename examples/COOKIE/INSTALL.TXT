@@ -1,23 +1,13 @@
 TANDY COOKIE - WINDOWS 3.0 REAL MODE
 
-1. From DOS run COOKSET. It puts the ready app in C:\COOKIE.
-   To use another folder, run COOKSET D:\GAMES\COOKIE; its parent must exist.
-   No ZIP utility, Python, compiler or Windows support-file collection is needed.
-2. Start your normal guarded Windows desktop. If it is already running, use it.
-3. In Tandy Start choose Run, or in Program Manager choose File / Run:
+1. Extract all files from COOKSET.ZIP together into C:\COOKIE, or your chosen folder.
+2. Start your normal guarded Windows desktop, or use the desktop already running.
+3. In Tandy Start Run, or Program Manager File / Run, enter:
      C:\COOKIE\COOKIE.EXE
-   Substitute your chosen app folder if different.
-
-COOKIE.EXE is the ready native app. It does not start Windows, select a driver
-or require the historical C:\TANDY88 launcher. Keep the ordinary safeguards of
-the Windows display profile you already use. The app needs no DLL or data file.
+   Use your chosen folder if different.
 
 Space clicks the cookie. U buys +1 CPS for ten cookies. Game / Save writes
 COOKIE.SAV beside the app; Game / Load reads it. Exit does not save automatically.
-The installer never overwrites a different existing file or your saved game.
-If a copy fails, rerun the same installer to finish its missing files.
-
-No Windows, INI, shell or boot files are changed. To remove the app, close it,
-preserve COOKIE.SAV if wanted, and remove the private app folder.
-ZIP alternative: extract the complete packet on DOS, then run COOKIE.EXE from
-Windows. The EXE installer needs no ZIP utility.
+The app needs no extra DLL, display change or INI edit.
+To remove it, close the app and remove its private folder; keep COOKIE.SAV if wanted.
+The application bytes match the native-qualified packet.
