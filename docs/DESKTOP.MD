@@ -1,10 +1,10 @@
 # Windows XT: native DOS installation
 
-**[Download WINXTDOS.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.2/WINXTDOS.ZIP)**
+**[Download WINXTDOS.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXTDOS.ZIP)**
 
 Extract `WINXT.EXE` and put it on the DOS computer. Extraction works on DOS
 or another computer; the included executable is ready to run.
-[Direct EXE alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.2/WINXT.EXE).
+[Direct EXE alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE).
 
 Run this on the Tandy from plain DOS. It gathers Windows files automatically,
 prepares the installer, reserves video memory and starts installation.
@@ -52,10 +52,6 @@ XR1 provides a 640x256 logical desktop through a 320x200, sixteen-colour
 viewport, Tandy Start, panning, COM1/IRQ4 mouse and optional wheel input.
 XYCTL starts in Software mode; its menu or Ctrl+Alt+H enables Hardware.
 Ctrl+Alt+arrows pan and Ctrl+Alt+Home returns home. Windows 3.1 is unsupported.
-
-The desktop installs one shared SOUND driver for Windows alerts, legacy sound
-calls, PIT instruments and Winamp. Current clients acquire and release the
-same driver; no per-app driver replacement is needed.
 
 [Current optional apps](DOWNLOADS.MD) have separate packets and install guides.
 
