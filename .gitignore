@@ -73,3 +73,9 @@ __pycache__/
 !docs/rrbatch/current/RLE_*.LOG
 !docs/rrsync/*/RRBENCH.LOG
 !docs/rrsync/R*.LOG
+
+# Exact qualified ColorPlus payload and native replay logs are release inputs.
+!docs/pcp/OUTPUT/BASELINE/RRBENCH.LOG
+!docs/pcp/OUTPUT/CANDIDATE/RRBENCH.LOG
+!docs/pcp/OUTPUT/SHIPPED/RRBENCH.LOG
+!tools/CPPACK/PAYLOAD/PCP3216.DRV
