@@ -96,7 +96,7 @@ class SelectionTests(unittest.TestCase):
         record(self.receipt, self.acceptance)
         self.args = argparse.Namespace(native=self.native, client_suffix='9',
             driver=self.native/'driver8', fixxt=self.fixxt, sound_repo=self.sound,
-            acceptance=self.receipt, apply=False, report=None)
+            acceptance=self.receipt, apply=False, report=None, tshell_build=None)
 
     def restore_module(self):
         update.HERE, update.REPO = self.old_here, self.old_repo
@@ -112,6 +112,46 @@ class SelectionTests(unittest.TestCase):
         self.args.client_suffix = '3'
         with self.assertRaisesRegex(ValueError, 'Stale source:'):
             update.native_inputs(self.args)
+        self.assertFalse((self.display/'tools/XR1PACK').exists())
+
+    def shell_override(self, source=None):
+        build = self.native/'tshell12'
+        relative = 'client/TSHELL.EXE.C'
+        text = (self.display/relative).read_bytes() if source is None else source
+        binary = b'separately qualified primary shell binary'
+        put(build/'TSHELL.EXE', binary)
+        put(build/Path(relative).name, text)
+        record(build/'BUILD.JSON', {
+            'source_pins': {'unified/oemdisplay-tandy/'+relative: update.identity(text)},
+            'runtime': {'TSHELL.EXE': update.identity(binary)}})
+        record(build/'PROCESS.JSON', self.clean)
+        self.args.tshell_build = build
+        return binary
+
+    def test_shell_override_keeps_four_unchanged_suffix_clients(self):
+        shell = self.shell_override()
+        binaries, records = update.native_inputs(self.args)
+        expected = dict(self.current)
+        expected['TSHELL.EXE'] = shell
+        self.assertEqual(binaries, expected)
+        self.assertEqual(records['TSHELL.EXE']['runtime'], update.identity(shell))
+        self.assertFalse((self.display/'tools/XR1PACK').exists())
+
+    def test_shell_override_source_mismatch_refuses(self):
+        self.shell_override(b'stale command-tail source')
+        with self.assertRaisesRegex(ValueError, 'Stale source:'):
+            update.native_inputs(self.args)
+
+    def test_shell_override_retains_cleanup_gate(self):
+        self.shell_override()
+        record(self.args.tshell_build/'PROCESS.JSON', {**self.clean, 'return': 1})
+        with self.assertRaisesRegex(ValueError, 'did not complete/clean up: TSHELL.EXE'):
+            update.native_inputs(self.args)
+
+    def test_shell_override_needs_matching_installed_shell_acceptance(self):
+        self.shell_override()
+        with self.assertRaisesRegex(ValueError, 'another installed TSHELL'):
+            update.integrate(self.args)
         self.assertFalse((self.display/'tools/XR1PACK').exists())
 
     def test_stale_explicit_driver_refuses_current_source_mismatch(self):

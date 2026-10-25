@@ -95,8 +95,11 @@ def native_inputs(args):
     """Select only the caller's explicitly identified native build set."""
     binaries, records = {}, {}
     for name, directory in NAMES.items():
+        build = args.native/(directory+args.client_suffix)
+        if name == 'TSHELL.EXE' and getattr(args, 'tshell_build', None):
+            build = args.tshell_build
         binaries[name], records[name] = native(
-            args.native/(directory+args.client_suffix), name, args.sound_repo)
+            build, name, args.sound_repo)
     binaries['FIXXT.EXE'], records['FIXXT.EXE'] = native(args.fixxt, 'FIXXT.EXE',
                                                         args.sound_repo)
     binaries['SOUND.DRV'], records['SOUND.DRV'] = native(args.driver, 'SOUND.DRV',
@@ -189,7 +192,9 @@ def integrate(args):
     report = {'scope': 'current XR1 canonical sound driver, five consumers and matching finisher',
               'native_acceptance': identity(args.acceptance.read_bytes()),
               'native_selection': {'client_suffix': args.client_suffix,
-                                   'driver_directory': str(args.driver)},
+                                   'driver_directory': str(args.driver),
+                                   'tshell_build': str(args.tshell_build)
+                                      if getattr(args, 'tshell_build', None) else None},
               'native_builds': records,
               'installed_targets': {'TSHELL.EXE': 'WINDOWS',
                 'TCHIME.EXE': 'WINXT', 'XPCHIME.EXE': 'WINXT',
@@ -225,6 +230,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--native', required=True, type=Path)
     parser.add_argument('--client-suffix', required=True)
+    parser.add_argument('--tshell-build', type=Path)
     parser.add_argument('--driver', required=True, type=Path)
     parser.add_argument('--fixxt', required=True, type=Path)
     parser.add_argument('--sound-repo', required=True, type=Path)
