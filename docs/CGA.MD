@@ -194,3 +194,32 @@ Native window measurements still show Run at 220 pixels wide and File Open
 at 202x115 after the smaller dialog files were supplied. The new strike is
 not being selected as intended. Registration/mapping remains under diagnosis;
 neither font fit nor this packet's usability is accepted yet.
+
+A subsequent native probe confirms Helv is available at startup and maps to
+5x3 before explicit AddFontResource (which also succeeds). Run and its
+controls instead report a System 6x4 LOGFONT. The next font candidate makes
+System/Helv proportional five-row UI faces with average width three, retaining
+spacing for capitals/digits. Fixed/OEM remain 4x6; Courier is 4x5. The ANSI
+variable descriptor follows 5x3. Native acceptance remains pending.
+
+Using exact inherited Windows logical-palette RGBs, the second GDI probe
+produced native bar codes 0..15 and all four expected 16-pixel BitBlt rows.
+The last pixel was code 4. A 32x32 cursor at odd origin (1,1), then three
+edges, restored all 16 KB exactly and left padding unchanged. The draw suite
+measured 1,978 guest milliseconds excluding log writes; it is one workload,
+not a speedup claim or a physical-hardware timing result.
+
+The proportional System prototype reports System height 5 / average width 3,
+with fixed/OEM still 4x6. Native File Open now fits at 154x98; Save As is
+153x86; Find is 159x58; a message box is 98x46. An actual Notepad open/new/save
+workflow produced the exact expected two-line file. Checkbox and radio
+accelerators changed their native states. Run's frame is 168 pixels wide,
+but its command field and all buttons fit (rightmost control edge 156).
+The bounded exploratory run ended before its final DOS-exit check. A rebuilt
+consumer packet with passive instrumentation still needs acceptance.
+
+The current headless FRAME API returns target_buffer from row zero, while
+CGA's scanout blits from firstline. Its raw PNGs retain upper blanking and
+can omit lower scanout rows; they are raw-buffer records, not complete monitor
+screenshots. Native control bounds, saved-file bytes and complete VRAM captures
+are separate evidence. No reconstructed image is presented as native scanout.

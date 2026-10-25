@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Original 4x6 CGA100 desktop and 3x5 dialog faces; developer tool.
+"""Original CGA100 compact UI and 4x6 fixed/OEM faces; developer tool.
 
 ASCII grids are drawn here, not sampled from ROM, installed or Windows
 fonts. CP437 box/block primitives reuse XT Pixels' original algorithm.
@@ -92,6 +92,14 @@ def drawing(char, width, height, fixed=False):
         # 3x5 dialog strike targets its layout while desktop text stays 4x6.
         rows = list(G.get(char,G['\u25a1']))
         if char == '0': rows = ['###','#.#','#.#','#.#','###']
+        elif char == 'I' and width==2: rows = ['##.','.#.','.#.','.#.','##.']
+        elif char == 'i' and width==2: rows = ['#..','...','#..','#..','#..']
+        elif char == 'l' and width==2: rows = ['#..','#..','#..','#..','##.']
+        elif char == 'j' and width==2: rows = ['.#.','...','.#.','.#.','##.']
+        elif char == 'E' and width==3: rows = ['##.','#..','##.','#..','##.']
+        elif char == 'F' and width==3: rows = ['##.','#..','##.','#..','#..']
+        elif char == 'L' and width==3: rows = ['#..','#..','#..','#..','##.']
+        elif char == 'J' and width==3: rows = ['.#.','.#.','.#.','##.','##.']
         elif char == '$': rows = ['.##','##.','.##','##.','.#.']
         elif rows[-1] == '...': rows.pop()
         elif '...' in rows: rows.remove('...')
@@ -115,21 +123,34 @@ FACES = {'CG1SYS.FON': ('System','FONTS',27,0,True,700,0x20),
          'CG1COUR.FON': ('Courier','CG1COUR',27,0,False,400,0x30)}
 
 
+def ui_width(char):
+    # Preserve a spacing column for capitals, digits and wide lower case.
+    # Narrow lower case and punctuation bring the dialog base unit to three
+    # pixels without joining every capital in DOS paths and file names.
+    if not char:return 4
+    if char in " iljI.,:;'|!": return 2
+    if char in 'EFJL[]()': return 3
+    if char.isascii() and char.islower(): return 4 if char in 'mw' else 3
+    return 4
+
+
 def build(out):
     out.mkdir(parents=True, exist_ok=True)
     B.glyph = drawing
-    rec = {'runtime':'NOT_TESTED', 'desktop_cell':[4,6], 'dialog_cell':[3,5], 'dpi':[48,40], 'fonts':{},
+    rec = {'runtime':'NOT_TESTED', 'ui_average':[3,5], 'fixed_cell':[4,6], 'dpi':[48,40], 'fonts':{},
            'provenance':'Original CGA100 ASCII grids and XT Pixels box/block algorithm; MIT',
            'limits':'ASCII plus OEM box/block primitives. Other extended bytes show a fallback box.'}
     for filename,(face,mod,rid,charset,variable,weight,family) in FACES.items():
-        dialog = filename in ('CG1HELV.FON','CG1COUR.FON')
-        width,height = (3,5) if dialog else (4,6)
+        ui = filename in ('CG1SYS.FON','CG1HELV.FON')
+        small = ui or filename=='CG1COUR.FON'
+        width,height = (3 if ui else 4,5) if small else (4,6)
         first,last = (32,255) if charset == 0 else (1,254)
-        contract = dict(type=0,points=9 if dialog else 11,vert_res=40,horiz_res=48,ascent=5,internal=0,external=0,
+        widths=[ui_width(B.decode_code(c,charset)) if ui else width for c in range(first,last+1)]
+        contract = dict(type=0,points=9 if small else 11,vert_res=40,horiz_res=48,ascent=5,internal=0,external=0,
                         italic=0,underline=0,strikeout=0,weight=weight,charset=charset,
                         pix_width=0 if variable else width,height=height,pitch_family=family|int(variable),
                         avg_width=width,max_width=8,first=first,last=last,default=ord('?')-first,
-                        **{'break':32-first}, widths=[width]*(last-first+1),face=face)
+                        **{'break':32-first}, widths=widths,face=face)
         raw,_ = B.fnt(contract)
         data = B.fon(raw,mod,rid,'CGA100 original %dx%d %s; native unqualified'%(width,height,face))
         (out/filename).write_bytes(data)
@@ -153,11 +174,15 @@ def specimen(out):
              'C:\\WINDOWS>WIN /R  AaBbCcGgPpQqYy', '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~']
     im = Image.new('RGB',(160,100),'#aaa')
     for line,text in enumerate(lines):
-        for i,ch in enumerate(text[:40]):
-            rows = drawing(ch,4,6)
+        pen=0
+        for ch in text:
+            width=ui_width(ch)
+            if pen+width>160:break
+            rows = drawing(ch,width,5)
             for y,row in enumerate(rows):
                 for x,p in enumerate(row):
-                    if p: im.putpixel((i*4+x,6+line*10+y),(0,0,0))
+                    if p: im.putpixel((pen+x,6+line*10+y),(0,0,0))
+            pen+=width
     im.save(out/'CGAFONT.PNG')
     im.resize((640,480),Image.Resampling.NEAREST).save(out/'CGA43.PNG')
 

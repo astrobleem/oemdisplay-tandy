@@ -94,7 +94,7 @@ def font_checks(out):
         off=font_entry[3]
         raw=data[off:off+struct.unpack_from('<I',data,off+2)[0]]
         info=validator.validate_fnt(raw)
-        expected = (5,5,3,48,40) if name in ('CG1HELV.FON','CG1COUR.FON') else (6,5,4,48,40)
+        expected = (5,5,3,48,40) if name in ('CG1SYS.FON','CG1HELV.FON') else (5,5,4,48,40) if name=='CG1COUR.FON' else (6,5,4,48,40)
         assert (info['height'],info['ascent'],info['avg_width'],info['horiz_res'],info['vert_res'])==expected
         validator.validate_fon(data,{'module':module,'resources':[{'id':item['rid'],'font':info}]})
         assert not any(code in item['fallback_bytes'] for code in range(32,127))
@@ -144,6 +144,9 @@ def stage_checks(repo,out):
                 raw=(directory/'resources'/name).read_bytes()
                 assert struct.unpack_from('<H',raw,20)[0]==6
             assert struct.unpack_from('<HH',(directory/'resources/OBUTTON.BMP').read_bytes(),18)==(24,18)
+            fonts=S.read(directory/'resources/FONTS.ASM')
+            assert 'AnsiVar \tdw\t5\t\t;lfheight\n\t\tdw\t3\t\t;lfwidth' in fonts
+            assert 'AnsiFixed\tdw\t6' in fonts and 'OEMFixed\tdw\t6' in fonts
         else:
             # Independently invoke the baseline pipeline, proving that the
             # CGA names introduce no changes to the normal-mode source set.

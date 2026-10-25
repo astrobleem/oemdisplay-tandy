@@ -113,11 +113,13 @@ for stream buffers; an earlier 20 KB candidate with progress output left only
 
 ## Fonts, controls and native acceptance
 
-CGAFONT generates CG1SYS/FIX/OEM at 4x6 and the additional Helv/Courier dialog
-faces at 3x5, 48x40 logical dpi. The first native 4x6 dialog strike clipped
-Notepad's 192x130-unit File Open template. The smaller dialog strike is a
-candidate fix requiring another native fit/legibility check. Desktop fonts
-and all three driver binaries remain unchanged. The ASCII drawings are original; extended unsupported
+CGAFONT generates proportional five-row System/Helv faces averaging three
+pixels, 4x6 fixed/OEM faces and a 4x5 Courier strike, at 48x40 logical dpi.
+Capitals/digits retain spacing; narrower lower case reduces dialog base units.
+The native Run dialog used System 4x6 despite the available small Helv face.
+The new System strike is a candidate fix requiring native fit/legibility
+checks. CGAUI's ANSI variable-font descriptor follows the new 5x3 metrics;
+renderer code and normal-mode drivers remain unchanged. The drawings are original; extended unsupported
 characters visibly fall back. OEM box/block primitives reuse XT Pixels.
 Retain `tools/XTFONTS/LICENSE` with generated fonts. FNT/FON serialization uses
 the existing kit. The adapted driver retains its existing component notices;
@@ -141,3 +143,11 @@ message boxes, File Manager, keyboard traversal and recovery must be shown
 reachable before calling this usable. If those fail, the next design decision
 is a separately qualified viewport using existing panning work, not a new
 general renderer or per-application driver.
+
+`CGAMET.C` and `BUILDPROB.PY` are private developer instrumentation, excluded
+from the consumer inventory. Build with explicit --repo, --dosbox, --lease
+and fresh --out. Without arguments the probe records screen/stock-font and
+window/control bounds. F9 toggles its palette/BitBlt/pair test window; each
+F8 advances a custom 32x32 cursor through odd-origin/edge/hide checks. A
+command beginning F additionally tests font mapping and AddFontResource;
+that diagnostic mode changes the session font table and is not consumer proof.

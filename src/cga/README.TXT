@@ -55,7 +55,8 @@ the configuration unchanged; UNDO can clean the packet's own interrupted
 copy work. The program refuses unrelated filename collisions rather than
 overwriting them. Keep any reported failure receipt for diagnosis.
 
-160x100 has original 4x6 desktop and 3x5 dialog ASCII fonts, with six-row
+160x100 has original five-row proportional System/Helv ASCII fonts,
+4x6 fixed/OEM text and a 4x5 Courier strike, with six-row
 controls. SETUP prints progress while checking and installing files; allow
 several minutes on a 4.77 MHz 8088. Unsupported
 extended characters currently show a fallback box. Native dialog fit,

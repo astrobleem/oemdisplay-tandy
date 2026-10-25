@@ -93,6 +93,8 @@ def stage(resources):
     if n != 3: raise ValueError('CGAUI font heights')
     fonts,n = re.subn(r'dw\t[89](\t+;lfwidth)',r'dw\t4\1',fonts)
     if n != 3: raise ValueError('CGAUI font widths')
+    fonts = once(fonts,'AnsiVar \tdw\t6\t\t;lfheight\n\t\tdw\t4\t\t;lfwidth',
+                 'AnsiVar \tdw\t5\t\t;lfheight\n\t\tdw\t3\t\t;lfwidth')
     for name,rows in images.items():
         (resources/name).write_bytes(COMPACT.bitmap(rows))
     write(resources/'CONFIG.ASM',config)

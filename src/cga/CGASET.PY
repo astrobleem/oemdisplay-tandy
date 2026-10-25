@@ -35,7 +35,7 @@ def ini_source(repo):
         ('edit(\'S\', "[boot]", sset, 4, NULL, 0, NULL)',
          'edit(\'S\', "[boot]", sset, 5, NULL, 0, NULL)'),
         ('"Helv 8x8 (TEXT80)=T80HELV.FON"','"Helv 3x5 (CGA100)=CG1HELV.FON"'),
-        ('"Courier 8x8 (TEXT80)=T80COUR.FON"','"Courier 3x5 (CGA100)=CG1COUR.FON"'),
+        ('"Courier 8x8 (TEXT80)=T80COUR.FON"','"Courier 4x5 (CGA100)=CG1COUR.FON"'),
         ('edit(\'W\', "[fonts]", NULL, 0, fadd, 2, NULL)',
          'edit(\'W\', "[fonts]", NULL, 0, fadd, cga_small ? 2 : 0, NULL)'),
     ): s=once(s,old,new)
