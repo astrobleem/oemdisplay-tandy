@@ -81,7 +81,7 @@ def main():
         ini=(w/'WIN.INI').read_bytes()
         assert b'load=CLOCK.EXE' in ini and b'Modern=MODERN.FON' in ini
         if mode=='100':
-            assert b'Helv 4x6 (CGA100)=CG1HELV.FON' in ini and b'BorderWidth=1' in ini
+            assert b'Helv 3x5 (CGA100)=CG1HELV.FON' in ini and b'BorderWidth=1' in ini
             assert b'fonts.fon=CG1SYS.FON' in (w/'SYSTEM.INI').read_bytes()
         else:assert ini==WIN
         run(w,'UNDO');assert snapshot(w)==before;passed('install/undo '+mode)

@@ -94,7 +94,8 @@ def font_checks(out):
         off=font_entry[3]
         raw=data[off:off+struct.unpack_from('<I',data,off+2)[0]]
         info=validator.validate_fnt(raw)
-        assert (info['height'],info['ascent'],info['avg_width'],info['horiz_res'],info['vert_res'])==(6,5,4,48,40)
+        expected = (5,5,3,48,40) if name in ('CG1HELV.FON','CG1COUR.FON') else (6,5,4,48,40)
+        assert (info['height'],info['ascent'],info['avg_width'],info['horiz_res'],info['vert_res'])==expected
         validator.validate_fon(data,{'module':module,'resources':[{'id':item['rid'],'font':info}]})
         assert not any(code in item['fallback_bytes'] for code in range(32,127))
     # Common ambiguous characters must stay distinct in the actual drawings.

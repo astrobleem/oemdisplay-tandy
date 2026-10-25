@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Original 4x6 CGA100 System/Fixed/OEM and dialog faces; developer tool.
+"""Original 4x6 CGA100 desktop and 3x5 dialog faces; developer tool.
 
 ASCII grids are drawn here, not sampled from ROM, installed or Windows
 fonts. CP437 box/block primitives reuse XT Pixels' original algorithm.
@@ -87,7 +87,17 @@ put('0', '.#./#.#/#.#/#.#/.#./.#.')
 
 
 def drawing(char, width, height, fixed=False):
-    if height != 6: raise ValueError('CGA100 strike must have six rows')
+    if height == 5:
+        # The stock Notepad Open template is 192x130 dialog units. A true
+        # 3x5 dialog strike targets its layout while desktop text stays 4x6.
+        rows = list(G.get(char,G['\u25a1']))
+        if char == '0': rows = ['###','#.#','#.#','#.#','###']
+        elif char == '$': rows = ['.##','##.','.##','##.','.#.']
+        elif rows[-1] == '...': rows.pop()
+        elif '...' in rows: rows.remove('...')
+        else: rows = rows[:5]
+        return [[int(x < 3 and rows[y][x] == '#') for x in range(width)] for y in range(5)]
+    if height != 6: raise ValueError('CGA100 strike must have five or six rows')
     cell = B.cell_glyph(char, width, height) if fixed else None
     if cell is not None: return cell
     if char not in G:
@@ -108,18 +118,20 @@ FACES = {'CG1SYS.FON': ('System','FONTS',27,0,True,700,0x20),
 def build(out):
     out.mkdir(parents=True, exist_ok=True)
     B.glyph = drawing
-    rec = {'runtime':'NOT_TESTED', 'cell':[4,6], 'dpi':[48,40], 'fonts':{},
+    rec = {'runtime':'NOT_TESTED', 'desktop_cell':[4,6], 'dialog_cell':[3,5], 'dpi':[48,40], 'fonts':{},
            'provenance':'Original CGA100 ASCII grids and XT Pixels box/block algorithm; MIT',
            'limits':'ASCII plus OEM box/block primitives. Other extended bytes show a fallback box.'}
     for filename,(face,mod,rid,charset,variable,weight,family) in FACES.items():
+        dialog = filename in ('CG1HELV.FON','CG1COUR.FON')
+        width,height = (3,5) if dialog else (4,6)
         first,last = (32,255) if charset == 0 else (1,254)
-        contract = dict(type=0,points=11,vert_res=40,horiz_res=48,ascent=5,internal=0,external=0,
+        contract = dict(type=0,points=9 if dialog else 11,vert_res=40,horiz_res=48,ascent=5,internal=0,external=0,
                         italic=0,underline=0,strikeout=0,weight=weight,charset=charset,
-                        pix_width=0 if variable else 4,height=6,pitch_family=family|int(variable),
-                        avg_width=4,max_width=8,first=first,last=last,default=ord('?')-first,
-                        **{'break':32-first}, widths=[4]*(last-first+1),face=face)
+                        pix_width=0 if variable else width,height=height,pitch_family=family|int(variable),
+                        avg_width=width,max_width=8,first=first,last=last,default=ord('?')-first,
+                        **{'break':32-first}, widths=[width]*(last-first+1),face=face)
         raw,_ = B.fnt(contract)
-        data = B.fon(raw,mod,rid,'CGA100 original 4x6 '+face+'; native unqualified')
+        data = B.fon(raw,mod,rid,'CGA100 original %dx%d %s; native unqualified'%(width,height,face))
         (out/filename).write_bytes(data)
         fallback = []
         for code in range(first,last+1):

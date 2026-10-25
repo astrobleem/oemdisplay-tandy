@@ -108,8 +108,11 @@ no current release or shared installer runtime is replaced.
 
 ## Fonts, controls and native acceptance
 
-CGAFONT generates CG1SYS/FIX/OEM and the additional Helv/Courier faces at 4x6,
-48x40 logical dpi. The ASCII drawings are original; extended unsupported
+CGAFONT generates CG1SYS/FIX/OEM at 4x6 and the additional Helv/Courier dialog
+faces at 3x5, 48x40 logical dpi. The first native 4x6 dialog strike clipped
+Notepad's 192x130-unit File Open template. The smaller dialog strike is a
+candidate fix requiring another native fit/legibility check. Desktop fonts
+and all three driver binaries remain unchanged. The ASCII drawings are original; extended unsupported
 characters visibly fall back. OEM box/block primitives reuse XT Pixels.
 Retain `tools/XTFONTS/LICENSE` with generated fonts. FNT/FON serialization uses
 the existing kit. The adapted driver retains its existing component notices;

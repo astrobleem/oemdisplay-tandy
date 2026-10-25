@@ -62,8 +62,8 @@ must not be described as creating current GitHub releases automatically.
 
 ## Native source builds
 
-The [CGA source candidate](docs/CGA.MD) adds host-only staging and font/control
-checks under `src/cga/`. With the verified existing display view:
+The [CGA source candidate](docs/CGA.MD) adds staging, native builders and
+font/control checks under `src/cga/`. With the verified existing display view:
 
 ```text
 python -B src/cga/TESTCGA.PY --repo DISPLAY-VIEW --out NEW-CGA-HOST

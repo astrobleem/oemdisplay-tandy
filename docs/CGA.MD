@@ -74,7 +74,8 @@ flicker and is not a proven fast path. BIOS mode restoration additionally
 restores the prior text page, cursor shape and position. Ordinary DOS return,
 Windows re-entry and full-screen DOS/grabber interactions need actual tests.
 
-`CGAFONT.PY` reuses XT Pixels' FNT/FON writer for original 4x6 ASCII faces;
+`CGAFONT.PY` reuses XT Pixels' FNT/FON writer for original 4x6 desktop and
+3x5 dialog ASCII faces;
 `CGAUI.PY` reuses the compact BMP serializer for six-row controls. These are
 first candidates, not proof of native text quality or complete charset support.
 `CGAMODEL.PY` validates host/reference VRAM captures; it is not a new renderer.
@@ -147,6 +148,29 @@ Do not promise speed from reduced shadow size or host script timings.
    full manifests/recipes/notices. Preserve other modes, current release
    identities and old assets. Push, merge and publication need authorization.
 
-The shared emulator is allocated elsewhere for panning/ColorPlus work. This
-candidate is host/source work only until the parent schedules its normal
-shared lease. No competing emulator or peer scheduling message is needed.
+## Native development results
+
+All three drivers passed native C6/MASM/link/resource and 8086 audits from
+source checkpoint 5e1c8cde. The 58,208-byte CGA100 driver SHA-256 is
+3c204d3515f94893750c2352d9089977a4e675de582a4128828ae7bbf1f035bd.
+Native DOS SETUP installed/switched 100, 320, 640, 100 and UNDO restored both
+INIs exactly. These tests used the normal shared lease and owned watchdog.
+
+The first IBM XT 4.77 MHz / 640 KB / IBM CGA snow-enabled Windows run loaded
+160x100x16, 48x40 dpi and 4x6 System/Fixed/OEM fonts. Program Manager menus
+and Notepad worked. Notepad's actual File Open dialog clipped its right and
+bottom controls: its stock Helv 8 template is 192x130 dialog units. The
+first six-row dialog face is rejected for fit. A 3x5 dialog-only strike is
+now staged for retest; desktop fonts/driver bytes are unchanged. SETUP now
+prints per-file checking/copy progress for slow 8088 installation.
+
+Windows exited to an ordinary C:\\WINDOWS prompt with BIOS mode 3 / 640 KB.
+This is an initial native smoke check, not complete palette/cursor/GDI,
+re-entry, other-mode GUI or physical-hardware acceptance. The first helper's
+window-text measurements had a varargs pointer bug and are not evidence;
+its screen/font metrics and actual captured frames are retained. The private
+86Box capture fixture will use simple line doubling for the next run, avoiding
+the raw unscaled framebuffer's stale lower rows. No image editing supplies
+native proof. No publication has occurred.
+
+Native slots remain coordinated through the parent and normal shared lease.

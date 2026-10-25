@@ -202,6 +202,7 @@ static int preflight(void)
     unsigned i;
     for(i=0;i<CGA_COUNT;i++){
         paths(i);
+        printf("SETUP: checking %s\n",cga_files[i].name);fflush(stdout);
         if(!matches(srcpath,&cga_files[i])){printf("SETUP: missing/damaged packet file %s\n",srcpath);return 0;}
         if(!cga_files[i].target[0]){owned[i]=2;continue;}
         if(exists(tmppath)){printf("SETUP: temporary already exists: %s\n",tmppath);return 0;}
@@ -218,6 +219,7 @@ static int copy_payload(void)
     unsigned i,done=0;
     for(i=0;i<CGA_COUNT;i++)if(owned[i]==0){
         paths(i);
+        printf("SETUP: installing %s\n",cga_files[i].name);fflush(stdout);
         if(exists(dstpath) || !copyfile(srcpath,tmppath) || !matches(tmppath,&cga_files[i]) || rename(tmppath,dstpath))
             return 0;
         done++;
