@@ -16,9 +16,9 @@ python -B tools/CURRENT/BUNDLE.PY --commit <catalog-source-sha> --core <qualifie
 ```
 
 The three sound packets are byte-pinned in PRODUCTS.JSN and are also tracked
-under `artifacts/win30` at OEMSound commit
-`68f829739d9f9721e9739add8834fbceeeff7e33`. Their anonymous Git raw source
-paths remain usable after historical release presentation changes.
+under `artifacts/win30` at its exact pinned OEMSound source commit. Their
+anonymous Git raw source paths remain usable after historical release
+presentation changes.
 
 `BUILDIN.ZIP` is a developer source-input archive. It preserves the original
 Video II packet and two original sound-app packets needed by source rebuilds.

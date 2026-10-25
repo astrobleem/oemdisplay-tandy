@@ -180,3 +180,6 @@ tools/MINEAPP/INSTALL.TXT -text
 
 # Contributor guidance retains the mandated CRLF bytes.
 CLAUDE.md -text
+
+# Shared native/helper source and byte-pinned host verification retain exact bytes.
+src/panui/** -text

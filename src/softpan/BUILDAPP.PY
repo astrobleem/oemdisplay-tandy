@@ -39,6 +39,8 @@ def main():
         write(out / ('MEMTEST.' + ext), (HERE / ('SPTEST.' + ext)).read_text().replace('SPTEST', 'MEMTEST'))
     for n in ('XTPAN.C', 'XTPAN.DEF', 'XTPAN.RSP'):
         shutil.copyfile(HERE.parent / 'xtpan' / n, out / n)
+    for n in ('PANSET.C', 'PANSET.H', 'PANDLG.C', 'PANDLG.H'):
+        shutil.copyfile(HERE.parent / 'panui' / n, out / n)
     write(out / 'XTPAN.C', sync_helper((out / 'XTPAN.C').read_text()))
     shutil.copyfile(HERE.parent / 'pcjr/JRGUARD.ASM', out / 'JRGUARD.ASM')
     cfg = '[sdl]\nfullscreen=false\noutput=surface\n[dosbox]\nmachine=tandy\nmemsize=1\n[cpu]\ncore=normal\ncputype=8086_prefetch\ncycles=fixed 200000\n[dos]\nxms=false\nems=false\numb=false\n[mixer]\nnosound=true\n[autoexec]\n@echo off\nmount C "'+str(a.repo.resolve())+'"\nmount D "'+str(out)+'"\nD:\nBLDTEST.BAT\n'

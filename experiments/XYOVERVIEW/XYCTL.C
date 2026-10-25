@@ -1,6 +1,7 @@
 #define WINVER 0x0300
 #include <windows.h>
 #include <string.h>
+#include "PANDLG.H"
 #define ESC_XY 0x5860
 #define ESC_MODE 0x5861
 #define LEFT 101
@@ -19,6 +20,7 @@
 #define REPEAT200 114
 #define REPEAT500 115
 #define RECOVER 116
+#define SETTINGS 117
 #define XY_LOG_LINE_CAP 112
 #define XY_PAINT_LINE_CAP 128
 #define XY_CLASS_NAME "XYOverviewControl"
@@ -45,6 +47,8 @@ static int dragging,dragAnchorX,dragAnchorY,previewLeft,previewTop,dragOriginX,d
 static int recoveryMoved,recoveryFailed;
 static unsigned recoveryVisited;
 static int driverWarning;
+static UINT openMsg;
+static PANHOST panHost;
 static char recoveryStatus[48]="Recovery is manual";
 static int keys[10]={VK_LEFT,VK_RIGHT,VK_UP,VK_DOWN,VK_HOME,'H','E','F','Q','R'};
 static void DriverLost(LPSTR why);
@@ -273,7 +277,7 @@ static void Cleanup(void) {
  Log("STOP_ORIGIN",left,top,live,0);
 }
 static void Stop(void) {
- if(closing)return;CancelMapDrag();closing=1;edge=follow=0;ResetEdge();KillTimer(window,1);Cleanup();live=0;
+ if(closing)return;CancelMapDrag();closing=1;PanDlgClose();edge=follow=0;ResetEdge();KillTimer(window,1);Cleanup();live=0;
 }
 static int Press(int key,int i) {
  int down;down=(GetAsyncKeyState(key)&0x8000)!=0;
@@ -359,17 +363,52 @@ static int Follow(void) {
  if(x!=left || y!=top){Log("DIALOG",r.left,r.top,r.right,r.bottom);Pan(x,y);}
  return 1; /* Active dialog following owns the viewport, even after it fits. */
 }
+/* Shared settings window glue: it edits the engine variables the timer already uses. */
+static void CopyArg(char *d,LPSTR s,int cap) {
+ int i=0;while(s[i] && i<cap-1){d[i]=s[i];i++;}d[i]=0;
+}
+static int IniGet(void *c,const char *s,const char *k,int d) {
+ return (int)GetProfileInt(s,k,d);
+}
+static int IniPut(void *c,const char *s,const char *k,int v) {
+ char b[12];wsprintf(b,"%d",v);return WriteProfileString(s,k,b);
+}
+static int XyQuery(void *c,PANCAPS *cp,PANSET *s) {
+ if(!live || !Query()){cp->backend=PS_BACK_NONE;cp->caps=0;return 0;}
+ cp->backend=PS_BACK_XY;cp->caps=PanCapsFor(PS_BACK_XY,statsProc!=0);
+ cp->viewX=left;cp->viewY=top;cp->viewW=viewWidth;cp->viewH=viewHeight;cp->workW=logicalWidth;cp->workH=logicalHeight;
+ PanSetDefaults(PS_BACK_XY,s);s->edgeOn=edge;s->repeat=edgeRepeat;s->followDlg=follow;s->mode=hardware;return 1;
+}
+static int XyApply(void *c,const PANSET *w,PANSET *a,char *note,int cap) {
+ int want;
+ if(!live || !Query())return PS_E_LOST;
+ want=w->mode;note[0]=0;
+ /* Mode is only touched when it can be read back; the result is what the driver reports. */
+ if(statsProc && want!=hardware){Mode(want);if(!live)return PS_E_LOST;}
+ edge=w->edgeOn;edgePolled=0;edgeRepeat=w->repeat;follow=w->followDlg;ResetEdge();
+ Log("EDGE",edge,500,0,0);Log("RATE",edgeRepeat,500,0,0);Log("FOLLOW",follow,0,0,0);
+ PanSetDefaults(PS_BACK_XY,a);a->edgeOn=edge;a->repeat=edgeRepeat;a->followDlg=follow;a->mode=hardware;
+ if(statsProc && want!=hardware)if(cap>=48)lstrcpy(note,want?"Hardware pan not granted; running software.":"Software pan not granted; running hardware.");
+ InvalidateRect(window,0,FALSE);return PS_OK;
+}
+static int XyHome(void *c) {
+ return live && Pan(0,0);
+}
+static void OpenSettings(void) {
+ PanDlgOpen(instanceHandle,&panHost);
+}
 static HMENU Menu(void) {
  HMENU bar,p,m,e,w;bar=CreateMenu();p=CreatePopupMenu();m=CreatePopupMenu();e=CreatePopupMenu();w=CreatePopupMenu();
  AppendMenu(p,MF_STRING,LEFT,"&Left 8");AppendMenu(p,MF_STRING,RIGHT,"&Right 8");AppendMenu(p,MF_STRING,UP,"&Up 4");AppendMenu(p,MF_STRING,DOWN,"&Down 4");AppendMenu(p,MF_STRING,HOME,"&Home");AppendMenu(p,MF_STRING,QUIT,"E&xit");
  AppendMenu(m,MF_STRING,SOFT,"&Software");AppendMenu(m,MF_STRING,HARD,"&Hardware");
  AppendMenu(e,MF_STRING,EDGEON,"Edge &on");AppendMenu(e,MF_STRING,EDGEOFF,"Edge o&ff");AppendMenu(e,MF_STRING,FOLLOWON,"Dialog follow on");AppendMenu(e,MF_STRING,FOLLOWOFF,"Dialog follow off");
- AppendMenu(e,MF_STRING,REPEAT100,"Repeat &100ms");AppendMenu(e,MF_STRING,REPEAT200,"Repeat &200ms");AppendMenu(e,MF_STRING,REPEAT500,"Repeat &500ms");
+ AppendMenu(e,MF_STRING,SETTINGS,"Panning &settings...");AppendMenu(e,MF_STRING,REPEAT100,"Repeat &100ms");AppendMenu(e,MF_STRING,REPEAT200,"Repeat &200ms");AppendMenu(e,MF_STRING,REPEAT500,"Repeat &500ms");
  AppendMenu(w,MF_STRING,RECOVER,"&Bring windows back");
  AppendMenu(bar,MF_POPUP,(UINT)p,"&Pan");AppendMenu(bar,MF_POPUP,(UINT)m,"&Mode");AppendMenu(bar,MF_POPUP,(UINT)e,"&Options");AppendMenu(bar,MF_POPUP,(UINT)w,"&Windows");return bar;
 }
 long FAR PASCAL __export Wnd(HWND w,UINT msg,WPARAM a,LPARAM b) {
  PAINTSTRUCT ps;HDC dc;char line[XY_PAINT_LINE_CAP];
+ if(openMsg && msg==openMsg){OpenSettings();return 0;}
  switch(msg){
  case WM_CREATE:
   homeButton=CreateWindow("BUTTON","Home",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,176,52,112,22,w,(HMENU)HOME,instanceHandle,0);
@@ -395,7 +434,7 @@ long FAR PASCAL __export Wnd(HWND w,UINT msg,WPARAM a,LPARAM b) {
  case WM_KEYDOWN:case WM_SYSKEYDOWN:
   if(a==VK_ESCAPE && dragging){CancelMapDrag();return 0;}
   if(KeyMessage(a,b))return 0;break;
- case WM_TIMER:if(!closing && live){int oldX,oldY;if(!timerSeen){timerSeen=1;Log("TIMER_START",left,top,edge,0);}oldX=left;oldY=top;if(!Query()){DriverLost("QUERY_ERROR");return 0;}if(dragging){if(GetCapture()!=w || oldX!=left || oldY!=top)CancelMapDrag();return 0;}Keyboard();if(Follow()){ResetEdge();PaintEdge();}else Edge();}return 0;
+ case WM_TIMER:if(!closing && live){int oldX,oldY;if(!timerSeen){timerSeen=1;Log("TIMER_START",left,top,edge,0);}oldX=left;oldY=top;if(!Query()){DriverLost("QUERY_ERROR");return 0;}if(dragging){if(GetCapture()!=w || oldX!=left || oldY!=top)CancelMapDrag();return 0;}Keyboard();if(Follow()){ResetEdge();PaintEdge();}else Edge();PanDlgTrack();}return 0;
  case WM_COMMAND:
   if(a==RECOVER)Log("RECOVER_ENTRY",(int)w,(int)a,left,top);
   if(a!=QUIT && live && !Query()){DriverLost("COMMAND_QUERY");return 0;}
@@ -405,6 +444,7 @@ long FAR PASCAL __export Wnd(HWND w,UINT msg,WPARAM a,LPARAM b) {
    case EDGEON:case EDGEOFF:edge=a==EDGEON;edgePolled=0;ResetEdge();Log("EDGE",edge,500,0,0);InvalidateRect(w,0,FALSE);break;
    case FOLLOWON:case FOLLOWOFF:follow=a==FOLLOWON;ResetEdge();Log("FOLLOW",follow,0,0,0);InvalidateRect(w,0,FALSE);break;
    case REPEAT100:case REPEAT200:case REPEAT500:edgeRepeat=a==REPEAT100?100:(a==REPEAT200?200:500);ResetEdge();Log("RATE",edgeRepeat,500,0,0);InvalidateRect(w,0,FALSE);break;
+   case SETTINGS:OpenSettings();break;
    case QUIT:PostMessage(w,WM_CLOSE,0,0L);break;
   }return 0;
  case WM_PAINT:
@@ -424,8 +464,14 @@ long FAR PASCAL __export Wnd(HWND w,UINT msg,WPARAM a,LPARAM b) {
  }return DefWindowProc(w,msg,a,b);
 }
 int PASCAL WinMain(HINSTANCE instance,HINSTANCE previous,LPSTR command,int show) {
- WNDCLASS wc;FARPROC thunk;MSG msg;HINSTANCE driver;int value;
+ WNDCLASS wc;FARPROC thunk;MSG msg;HINSTANCE driver;int value,settings;char arg[24];HWND owner;
  instanceHandle=instance;
+ /* One owner: route a second launch to the first before any driver escape (an escape would reset its mode). */
+ CopyArg(arg,command,sizeof(arg));settings=PanCmdParse(arg)==PS_CMD_SETTINGS;openMsg=RegisterWindowMessage(PS_MSG_XY);
+ switch(PanOwnerStart(previous!=0,settings)){
+ case PS_OWN_FORWARD:owner=FindWindow(XY_CLASS_NAME,0);if(owner)PostMessage(owner,openMsg,0,0L);return 0;
+ case PS_OWN_EXIT:owner=FindWindow(XY_CLASS_NAME,0);if(owner){if(IsIconic(owner))ShowWindow(owner,SW_RESTORE);BringWindowToTop(owner);}return 0;
+ }
  display=GetDC(0);if(!display)return 1;driver=GetModuleHandle("DISPLAY");statsProc=(STATS)GetProcAddress(driver,(LPSTR)106L);
  if(GetDeviceCaps(display,HORZRES)!=640 || GetDeviceCaps(display,VERTRES)!=256 || !Query()){
   MessageBox(0,"This display does not report the supported 640x256 desktop and 320x200 Tandy pan geometry. No pan controls were started.","XY overview unavailable",MB_OK|MB_ICONEXCLAMATION);
@@ -437,11 +483,19 @@ int PASCAL WinMain(HINSTANCE instance,HINSTANCE previous,LPSTR command,int show)
   Cleanup();MessageBox(0,"The display driver stopped reporting the supported XY panning geometry. No pan controls were started.","XY overview unavailable",MB_OK|MB_ICONEXCLAMATION);
   live=0;ReleaseDC(0,display);return 1;
  }
+ panHost.ops.query=XyQuery;panHost.ops.apply=XyApply;panHost.ops.home=XyHome;panHost.store.get=IniGet;panHost.store.put=IniPut;
+ panHost.title="XY panning settings";panHost.backend="Tandy XY pan (HPXY)";
+ {PANCAPS pc;PANSET ps;
+  /* Saved edge/repeat/dialog settings only; the mode always starts in software. */
+  pc.backend=PS_BACK_XY;pc.caps=PanCapsFor(PS_BACK_XY,statsProc!=0);PanSetLoad(&pc,&ps,&panHost.store);
+  edge=ps.edgeOn;edgeRepeat=ps.repeat;follow=ps.followDlg;}
  OpenLog(instance);Log("START",left,top,hardware,0);Log("EDGE_E1",500,edgeRepeat,100,0);
  memset(&wc,0,sizeof(wc));thunk=MakeProcInstance((FARPROC)Wnd,instance);wc.lpfnWndProc=(WNDPROC)thunk;wc.hInstance=instance;wc.hCursor=LoadCursor(0,IDC_ARROW);wc.hbrBackground=(HBRUSH)(COLOR_WINDOW+1);wc.lpszClassName=XY_CLASS_NAME;RegisterClass(&wc);
  window=CreateWindow(XY_CLASS_NAME,XY_WINDOW_TITLE,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX,left+4,top+2,312,196,0,Menu(),instance,0);
  if(!window){Cleanup();goto done;}ShowWindow(window,show);UpdateWindow(window);
+ if(settings)PostMessage(window,openMsg,0,0L);
  while(GetMessage(&msg,0,0,0)){
+  if(PanDlgMessage(&msg))continue;
   if(msg.message==WM_KEYDOWN && msg.wParam==VK_ESCAPE && dragging){CancelMapDrag();continue;}
   if(msg.message==WM_KEYDOWN && msg.wParam==VK_TAB && (msg.hwnd==window || msg.hwnd==homeButton || msg.hwnd==recoverButton)){
    int reverse;reverse=(GetKeyState(VK_SHIFT)&0x8000)!=0;

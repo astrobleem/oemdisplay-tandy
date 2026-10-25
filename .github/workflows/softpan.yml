@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths:
       - 'src/softpan/**'
+      - 'src/xtpan/**'
+      - 'src/panui/**'
+      - 'tools/PANUI/**'
+      - 'docs/QUAL/PANUI/**'
+      - 'experiments/XYOVERVIEW/**'
       - 'tools/SPPACK/**'
       - 'docs/SOFTPAN/**'
       - 'downloads/experimental/SOFTPAN/**'
@@ -20,7 +25,7 @@ jobs:
     steps:
       - name: Check out exact public event source without credentials
         env:
-          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           SOURCE_REPOSITORY: ${{ github.repository }}
           GIT_TERMINAL_PROMPT: '0'
         run: |
@@ -37,6 +42,7 @@ jobs:
           echo "$RUNNER_TEMP/softpan-python/bin" >> "$GITHUB_PATH"
       - name: Replay qualified frames and verify exact public packages
         run: |
+          python3 src/panui/HOSTUI.PY
           python3 src/softpan/TESTUI.PY
           python3 tools/SPPACK/TESTREL.PY
           python3 tools/SPPACK/TESTPKG.PY

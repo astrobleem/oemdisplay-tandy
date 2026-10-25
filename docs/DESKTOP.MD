@@ -49,7 +49,9 @@ The installer installs Tandy Start and the apps, then starts Windows.
 controls remain open above it. Use `C:\STARTXT` for every later session.*
 
 The display supplies a 640x256 desktop with a 320x200 hardware viewport.
-Run XYCTL for viewport controls; Ctrl+Alt+arrows move the view and
+XYCTL starts automatically with viewport controls. Choose **Options / Panning
+settings** to change the available movement and follow options; Apply saves
+changes and Cancel leaves them unchanged. Ctrl+Alt+arrows move the view and
 Ctrl+Alt+Home returns home. Ctrl+Alt+Down brings the Start bar into view.
 
 ## Drivers only

@@ -3,6 +3,7 @@ import copy
 import importlib.machinery
 import json
 import io
+import shutil
 import zipfile
 from pathlib import Path
 import tempfile
@@ -167,10 +168,18 @@ class ExpandedPublisherTests(unittest.TestCase):
             self.qual["evidence"][name] = M.pub.identity(data)
         src = self.root / "tools/XR1PACK/SOUNDSRC.ZIP"
         src.parent.mkdir(parents=True);src.write_bytes(self.source)
+        self.here = self.root / "tools/DOSINST"
+        self.here.mkdir()
+        oem_root = self.root / "tools/XROEM"
+        shutil.copytree(M.HERE.parent / "XROEM/QA", oem_root / "QA")
+        oem = json.loads((M.HERE.parent / "XROEM/NATIVE.JSN").read_bytes())
+        oem["packet"] = self.qual["archive"]
+        oem["members"] = self.qual["files"]
+        (oem_root / "NATIVE.JSN").write_text(json.dumps(oem))
 
     def run_build(self, out, verify=False):
         self.receipt.write_text(json.dumps(self.qual), encoding="ascii")
-        with patch.object(M,"REPO",self.root),patch.object(M,"expanded_entries",return_value=self.entries):
+        with patch.object(M,"REPO",self.root),patch.object(M,"HERE",self.here),patch.object(M,"expanded_entries",return_value=self.entries):
             return M.build(out,COMMIT,verify)
 
     def test_actual_expanded_tree_and_plain_executable(self):
@@ -182,6 +191,8 @@ class ExpandedPublisherTests(unittest.TestCase):
         self.assertEqual(len(exe),pages*512-(512-last if last else 0))
         self.assertLess(len(exe),90000)
         core=M.collect()
+        current=importlib.machinery.SourceFileLoader('test_current_settings',str(M.HERE/'PANUI.PY')).load_module()
+        core.update({'PAYLOAD/'+n:b for n,b in current.runtimes().items()})
         for n,b in core.items():
             if n.startswith('PAYLOAD/'):
                 self.assertEqual(self.entries['WINXT/'+('HPXY.INF' if n[8:]=='OEMSETUP.INF' else n[8:])],b)

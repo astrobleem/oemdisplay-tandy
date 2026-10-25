@@ -43,6 +43,8 @@ def ancillary(sound,main_zip):
   if {n:b for n,b in updated.items() if n!=row['member']}!={n:b for n,b in original.items() if n!=row['member']}:raise ValueError('Documentation refresh changed runtime')
   files[name]=archive(updated)
  for name,row in config['sound'].items():files[name]=exact(sound/name,row['identity'])
+ panning=importlib.machinery.SourceFileLoader('current_panning_products',str(ROOT/'tools/PANUI/PACKAGE.PY')).load_module()
+ panning.verify(files)
  files['BUILDIN.ZIP']=input_archive(config)
  files['TANDYLAB.ZIP']=collection(config,main_zip)
  for name,data in files.items():
@@ -80,6 +82,10 @@ def main_product(data):
  for name in re.findall(rb'a:([A-Z0-9]+\.[A-Z0-9]+)',descriptor):
   if 'WINXT/'+name.decode('ascii') not in files:raise ValueError('OEM support missing: '+name.decode('ascii'))
  native=json.loads((ROOT/'tools/XROEM/NATIVE.JSN').read_bytes())
+ if native['packet']!=identity(data):
+  core=importlib.machinery.SourceFileLoader('current_panui_gate',str(ROOT/'tools/DOSINST/RCPUB.PY')).load_module()
+  core.expanded_qualification(files,data)
+  return files
  if native['complete'] is not True or native['packet']!=identity(data) or not all(native['checks'].values()):raise ValueError('Exact ordinary OEM qualification missing')
  for name,pin in native['sources'].items():
   if identity(files['WINXT/'+name])!=pin:raise ValueError('Ordinary OEM source changed: '+name)
