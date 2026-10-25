@@ -1,0 +1,36 @@
+{
+  "complete": true,
+  "conventional_kb": 640,
+  "bios_mode": 6,
+  "post_win_marker": "RETURNED\r\n",
+  "visual_dos_prompt": true,
+  "visual_observation": "RETURNED.PNG shows completed ECHO RETURNED redirection and C> prompts; normal consumer BIOS mode6 retained",
+  "result": {
+    "bytes": 8546,
+    "sha256": "fe26d7666dc15ca350bd5aaa0daf9c15e16adf74403e257b039d197aab7de29b"
+  },
+  "return_image": {
+    "bytes": 1172,
+    "sha256": "f399be7a70b1ca8882700461d2875d977d09ef4a5624af56a46af50ab024b772"
+  },
+  "postcheck": {
+    "bytes": 331,
+    "sha256": "6f651efeaa4a21c10a488ac10da07e0577ac6134d403933164f892f5d110c82a"
+  },
+  "driver": {
+    "bytes": 54832,
+    "sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406"
+  },
+  "probe": {
+    "bytes": 14367,
+    "sha256": "d1409021a8afa7a1a9c85fedbd75f0bee2d4bc6807ce7728ae8efe429b12b433"
+  },
+  "config": {
+    "bytes": 563,
+    "sha256": "f6a90a0060a611b0ae89f02bcbf46ee502d915d45b8e519957ed07b300309ef3"
+  },
+  "emulator": {
+    "bytes": 40974314,
+    "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+  }
+}

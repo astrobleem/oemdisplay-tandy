@@ -8,8 +8,10 @@ Usage (same pinned inputs as BUILD88; see tools/BUILDDEPS/README.MD):
 Runs the view's own src/tandysw/BUILD88.PY unchanged for profile 320x200x16,
 with one interposition: after BUILD88 has staged and ported every source and
 before the first DOSBox-X assembly, PCPPATCH.patch_staged() edits the staged
-EGA/TSOFT.ASM and EGA/TCURSOR.ASM. BUILD88's own instruction, REP-prefix and
-link audits then run on the patched listings. The result is copied to
+EGA/TSOFT.ASM and EGA/TCURSOR.ASM, then CPPOUT.patch_staged() adds the Output
+optimisations (marker skip, bounded polylines, narrow synchronous flush) to
+the staged TOutput only. BUILD88's own instruction, REP-prefix and link
+audits then run on the patched listings. The result is copied to
 PCP3216.DRV and summarized in PCPRES.JSON.
 
 A successful build is not runtime acceptance. No package or pin is changed.
@@ -24,6 +26,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 PCPPATCH = importlib.machinery.SourceFileLoader("pcppatch", str(HERE / "PCPPATCH.PY")).load_module()
+CPPOUT = importlib.machinery.SourceFileLoader("cppout", str(HERE / "CPPOUT.PY")).load_module()
 
 
 def main():
@@ -52,6 +55,8 @@ def main():
             edits = PCPPATCH.patch_staged(ega)
             state["patched"] = {k: hashlib.sha256(v.encode("latin-1")).hexdigest()
                                 for k, v in edits.items()}
+            output = CPPOUT.patch_staged(ega)
+            state["output"] = {"TSOFT.ASM": hashlib.sha256(output.encode("latin-1")).hexdigest()}
         return real_run(command, env, path, timeout)
 
     b88.baseline.prepare = prepare
@@ -81,6 +86,7 @@ def main():
         "driver_sha256": hashlib.sha256(data).hexdigest(),
         "base": "BUILD88 320x200x16 (TR5) from the supplied view",
         "plantronics_edits_staged_sha256": state["patched"],
+        "output_gate_staged_sha256": state["output"],
         "build88_audits": "see RESULT.json (instruction, REP-prefix, link)",
         "runtime": "NOT_TESTED",
     }

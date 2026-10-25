@@ -43,7 +43,7 @@ def ancillary(sound,main_zip):
   if {n:b for n,b in updated.items() if n!=row['member']}!={n:b for n,b in original.items() if n!=row['member']}:raise ValueError('Documentation refresh changed runtime')
   files[name]=archive(updated)
  for name,row in config['sound'].items():files[name]=exact(sound/name,row['identity'])
- panning=importlib.machinery.SourceFileLoader('current_panning_products',str(ROOT/'tools/PANUI/PACKAGE.PY')).load_module()
+ panning=importlib.machinery.SourceFileLoader('current_composed_colorplus',str(ROOT/'tools/CPPACK/PACKAGE.PY')).load_module()
  panning.verify(files)
  files['BUILDIN.ZIP']=input_archive(config)
  files['TANDYLAB.ZIP']=collection(config,main_zip)

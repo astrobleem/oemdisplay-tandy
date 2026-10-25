@@ -29,7 +29,7 @@ def colorplus(folder,archive):
                       'INSTALL.TXT':native.identity(original['INSTALL.TXT'])}
     status,receipt=native.status('ColorPlus',baseline_outputs,original)
     if not status.startswith('PASS:'):raise ValueError(status)
-    pack=importlib.machinery.SourceFileLoader('verify_current_panning',str(ROOT/'tools/PANUI/PACKAGE.PY')).load_module()
+    pack=importlib.machinery.SourceFileLoader('verify_current_panning',str(ROOT/'tools/CPPACK/PACKAGE.PY')).load_module()
     data=(folder/archive).read_bytes()
     expected=pack.outputs()['CPPAN.ZIP']
     if data!=expected:raise ValueError('Qualified current ColorPlus packet differs')
@@ -39,11 +39,14 @@ def colorplus(folder,archive):
         raise ValueError('Packaged and direct install guides differ')
     settings=importlib.machinery.SourceFileLoader('verify_colorplus_settings',str(ROOT/'src/panui/VERIFY.PY')).load_module()
     settings.verify()
+    fixed=importlib.machinery.SourceFileLoader('verify_fixed_colorplus',str(ROOT/'src/pcp/CPVERIFY.PY')).load_module()
+    fixed.verify()
     q=ROOT/'docs/QUAL/PANUI/NATIVE.JSN'
     return {'outputs':{archive:native.identity(data),'INSTALL.TXT':native.identity(guide)},
             'native_receipt':receipt,
             'settings_receipt':{'path':q.relative_to(ROOT).as_posix(),**native.identity(q.read_bytes())},
-            'status':'PASS: native shared settings; original ColorPlus installer, driver and support bytes preserved'}
+            'fixed_receipt':{'path':'tools/CPPACK/QUALIFY.JSN',**native.identity((ROOT/'tools/CPPACK/QUALIFY.JSN').read_bytes())},
+            'status':'PASS: native fixed ColorPlus Output and shared settings; original installer and all other current kit members preserved'}
 
 
 def verify(product,folder,exe,archive):

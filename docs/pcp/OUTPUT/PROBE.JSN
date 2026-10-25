@@ -1,0 +1,12 @@
+{
+ "sources_sha256": {
+  "RRBENCH.C": "ead375674a35df5ca344b7609dcd62df228ef55a28027f70c84659f12cc6008e",
+  "RRBENCH.DEF": "9f48e68de7a32f5d65c6efcc2309e2fe24f1a4a1fba7e32b45464fb886566e9d",
+  "RRBENCH.RSP": "1851c0be7760d6bba98ae313604adf05e47e26f7871fd7833ae2dc2fb7ec9295",
+  "BUILD.BAT": "9dce751bdded4d8de32841458f98777d9228070f2444d38bd8ec847b3482913b"
+ },
+ "exe": "RRBENCH.EXE",
+ "exe_bytes": 14367,
+ "exe_sha256": "d1409021a8afa7a1a9c85fedbd75f0bee2d4bc6807ce7728ae8efe429b12b433",
+ "warnings": []
+}

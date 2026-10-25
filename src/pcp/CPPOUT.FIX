@@ -1,0 +1,182 @@
+cProc TOutput,<FAR,PUBLIC,WIN,PASCAL>,<si,di>
+    parmD dst
+    parmW style
+    parmW count
+    parmD points
+    parmD pen
+    parmD brush
+    parmD mode
+    parmD clip
+    localW dirty
+    localW outrows
+    localW firstrow
+    localW lastrow
+cBegin
+    mov dirty,0
+    mov outrows,0
+    map_device dst,1
+    ; Capture bounds before rendering. FULL is the fail-closed default.
+    ; Restore all validation scratch state before the exact renderer call.
+    pushf
+    push ax
+    push bx
+    push cx
+    push dx
+    push si
+    push di
+    push es
+    cmp dirty,0
+    or_require jne,TOutput_render
+    ; WIDESCAN: bounded scan lists only. Thin-line gate stays count=2.
+    cmp style,4
+    jne TOutput_thin_count
+    cmp count,2
+    or_require jae,TOutput_render
+    cmp count,64
+    or_require jbe,TOutput_render
+    jmp short TOutput_style_ok
+TOutput_thin_count:
+    cmp style,18
+    or_require je,TOutput_render
+    cmp count,2
+    or_require je,TOutput_render
+TOutput_style_ok:
+    les di,points
+    mov cx,count
+    shl cx,1
+    shl cx,1
+    call ORowsSpanSafe
+    or_require jnc,TOutput_render
+    les di,mode
+    mov cx,32
+    call ORowsSpanSafe
+    or_require jnc,TOutput_render
+    mov ax,es:[di]
+    dec ax
+    cmp ax,15
+    or_require jbe,TOutput_render
+    mov ax,es:[di+2]
+    dec ax
+    cmp ax,1
+    or_require jbe,TOutput_render
+    ; SCANLINE never reads clip. Do not newly dereference an ignored input.
+    cmp style,4
+    je TOutput_clip_ok
+    les di,clip
+    mov ax,es
+    or ax,di
+    jz TOutput_clip_ok
+    mov cx,8
+    call ORowsSpanSafe
+    or_require jnc,TOutput_render
+    mov ax,es:[di]
+    mov bx,es:[di+4]
+    cmp ax,bx
+    or_require jb,TOutput_render
+    cmp bx,SCREEN_WIDTH
+    or_require jbe,TOutput_render
+    mov ax,es:[di+2]
+    mov bx,es:[di+6]
+    cmp ax,bx
+    or_require jb,TOutput_render
+    cmp bx,SCREEN_HEIGHT
+    or_require jbe,TOutput_render
+TOutput_clip_ok:
+    cmp style,18
+    je TOutput_check_pen
+    les di,brush
+    mov ax,es
+    or ax,di
+    jz TOutput_check_pen
+    mov cx,54
+    call ORowsSpanSafe
+    or_require jnc,TOutput_render
+    cmp word ptr es:[di+40],0
+    or_require je,TOutput_render
+    jmp short TOutput_objects_ok
+TOutput_check_pen:
+    les di,pen
+    mov cx,6
+    call ORowsSpanSafe
+    or_require jnc,TOutput_render
+    cmp word ptr es:[di+4],4
+    or_require jbe,TOutput_render
+TOutput_objects_ok:
+    les di,points
+    cmp style,18
+    je TOutput_polyline
+    ; One Y shared by count-1 intervals. Rendering order/overlap unchanged.
+    ; Validate the complete far span above, then every exclusive-X pair.
+    mov ax,es:[di+2]
+    cmp ax,SCREEN_HEIGHT
+    or_require jb,TOutput_render
+    mov firstrow,ax
+    inc ax
+    mov lastrow,ax
+    mov cx,count
+    dec cx
+TOutput_scan_interval:
+    add di,4
+    mov bx,es:[di]
+    mov dx,es:[di+2]
+    cmp bx,dx
+    or_require jb,TOutput_render
+    cmp dx,SCREEN_WIDTH
+    or_require jbe,TOutput_render
+    loop TOutput_scan_interval
+    jmp short TOutput_bounded
+TOutput_polyline:
+    mov cx,es:[di]
+    cmp cx,SCREEN_WIDTH
+    or_require jb,TOutput_render
+    mov dx,es:[di+4]
+    cmp dx,SCREEN_WIDTH
+    or_require jb,TOutput_render
+    mov ax,es:[di+2]
+    cmp ax,SCREEN_HEIGHT
+    or_require jb,TOutput_render
+    mov bx,es:[di+6]
+    cmp bx,SCREEN_HEIGHT
+    or_require jb,TOutput_render
+    cmp ax,bx
+    jne TOutput_line_nonempty
+    cmp cx,dx
+    or_require jne,TOutput_render
+TOutput_line_nonempty:
+    cmp ax,bx
+    jbe TOutput_line_ordered
+    xchg ax,bx
+TOutput_line_ordered:
+    mov firstrow,ax
+    inc bx
+    mov lastrow,bx
+TOutput_bounded:
+    mov outrows,1
+TOutput_render:
+    pop es
+    pop di
+    pop si
+    pop dx
+    pop cx
+    pop bx
+    pop ax
+    popf
+    cCall Output,<dst,style,count,points,pen,brush,mode,clip>
+    cmp dirty,0
+    je TOutput_done
+    ; Preserve the actual renderer result and all post-render GPRs.
+    push ax
+    push bx
+    cmp outrows,0
+    je TOutput_full
+    mov ax,firstrow
+    mov bx,lastrow
+    call FlushRetainRows
+    jmp short TOutput_flushed
+TOutput_full:
+    call FlushShadow
+TOutput_flushed:
+    pop bx
+    pop ax
+TOutput_done:
+cEnd
