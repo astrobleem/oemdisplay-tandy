@@ -7,11 +7,23 @@
 #define FAST_CRC
 #define ZIP_INDEX
 #define DEST "C:\\WINXT"
+#ifndef PINFILE
 #define PINFILE "XR1PINS.H"
+#endif
 #define SZHEADER "XRSTRM.H"
 #include "DOSCORE.H"
-#include "XRFILES.H"
-#include "XRINPUT.H"
+#ifndef FILE_HEADER
+#define FILE_HEADER "XRFILES.H"
+#endif
+#include FILE_HEADER
+#ifndef INPUT_HEADER
+#define INPUT_HEADER "XRINPUT.H"
+#endif
+#include INPUT_HEADER
+#ifndef FRESH_COUNT
+#define FRESH_COUNT 369
+#define UPDATE_COUNT 82
+#endif
 #include "VARSET.H"
 #include <malloc.h>
 
@@ -305,7 +317,7 @@ int main(int argc,char **argv)
   if(files[i].kind==1)find_input(files[i].source,files[i].size,path);
   stage(i,1);count++;
  }
- if(count!=(fresh?369:82))stop("Compiled preparation inventory differs.","");
+ if(count!=(fresh?FRESH_COUNT:UPDATE_COUNT))stop("Compiled preparation inventory differs.","");
  checkcancel();
  /* SETUPXT.BAT is withheld until every private source and readback succeeds. */
  for(i=0;i<NFILES;i++)if(strcmp(files[i].path,"SETUPXT.BAT")&&(fresh||strncmp(files[i].path,"W30\\",4)))stage(i,0);

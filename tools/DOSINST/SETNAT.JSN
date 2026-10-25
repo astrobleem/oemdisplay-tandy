@@ -3,17 +3,17 @@
   "target": "8088 / DOS 3.3+",
   "compiler": "Open Watcom 16-bit DOS; -bt=dos -0 -ml -os",
   "binary": {
-    "bytes": 83002,
-    "sha256": "da83606ed294127117d1b54421d3ffea2fc24faff0fe73b2d3174d1556de359e"
+    "bytes": 83142,
+    "sha256": "535cb890469930c54584ee08260b43faf4656f3f82f4a3ce3066f1ab3e9d7257"
   },
   "sources": {
     "SETUP.C": {
-      "bytes": 195,
-      "sha256": "b15dfa06b6b586107ff5eef7194c1b2116a3e0fe5278a0d56c485d2982420ce6"
+      "bytes": 343,
+      "sha256": "b1891eab01bccc5adacc36d784b1b24b739abe1b5bb1074fcb5100223b3a7ae0"
     },
     "XRPREP.C": {
-      "bytes": 17470,
-      "sha256": "93f668d0d196be1580ee7b3f7cf36499eb34e6792993a02354dad55508c64b43"
+      "bytes": 17719,
+      "sha256": "67a6f720956cf5bda08397afa8a876c3e3397a2bd3e63fd072b4b1159b73e79e"
     },
     "DOSCORE.H": {
       "bytes": 24157,
@@ -46,6 +46,26 @@
     "PACKPINS.H": {
       "bytes": 73,
       "sha256": "fa96864511f03aed1628668d10c4073314e49e554f965a90db6e44a16ec403ac"
+    },
+    "SETPINS.H": {
+      "bytes": 5329,
+      "sha256": "45ca1e3071fe58f3853314ffcde4eb9cc1df0d322a7cb3b181e04ef3776e5fe0"
+    },
+    "SETFILES.H": {
+      "bytes": 19724,
+      "sha256": "c69e067db3b0601c49bc74c88ff96d6fcdd3376247216051afa89c04d54dba58"
+    },
+    "MAKESET.PY": {
+      "bytes": 1492,
+      "sha256": "b21d45365ed158d3c63dcb4289e11ff08435f92af86cc7f7fd4686d2cec3c032"
+    },
+    "SETINPUT.H": {
+      "bytes": 14566,
+      "sha256": "f527ee4f68f891d83a0d2ce5dc11de5492b03549eed1340f2fc5b23e7dfc9b7f"
+    },
+    "BUILD.PY": {
+      "bytes": 3155,
+      "sha256": "7690592160e58565081ebe8e2c1ae813791d720baaa51265578898a68e400512"
     }
   }
 }

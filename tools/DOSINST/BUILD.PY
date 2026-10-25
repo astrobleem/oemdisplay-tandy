@@ -1,5 +1,6 @@
 """Developer-only Open Watcom 16-bit DOS build; consumers use the shipped EXE."""
 import argparse
+import importlib.machinery
 import os
 from pathlib import Path
 import shutil
@@ -12,6 +13,11 @@ def build(home, output, target):
     driver = home / "binnt/wcl.exe"
     if not driver.is_file() or not (home / "h/dos.h").is_file():
         raise ValueError("Complete Open Watcom DOS toolchain required")
+    if target == "setup":
+        aliases = importlib.machinery.SourceFileLoader("setup_alias_builder", str(HERE / "MAKESET.PY")).load_module()
+        for name, data in aliases.generate().items():
+            if (HERE / name).read_bytes() != data:
+                raise ValueError("Regenerate expanded Setup input aliases first: " + name)
     output.mkdir(parents=True, exist_ok=False)
     for source in HERE.iterdir():
         if source.suffix in (".C", ".H", ".ASM"):
