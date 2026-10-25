@@ -4,7 +4,6 @@
 
 Extract `WINXT.EXE` and put it on the DOS computer. Extraction works on DOS
 or another computer; the included executable is ready to run.
-[Direct EXE alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE).
 
 Run this on the Tandy from plain DOS. It gathers Windows files automatically,
 prepares the installer, reserves video memory and starts installation.
