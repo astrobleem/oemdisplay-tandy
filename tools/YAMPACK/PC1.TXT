@@ -1,0 +1,25 @@
+YAMAHA DISPLAY DRIVER - Olivetti Prodest PC1 / B000h
+
+Windows 3.0 real mode, 640 KB, 160x200 with 16 colors.
+Choose the packet for your display-memory aperture. PC1/B000h and
+standalone Yamaha/B800h are different hardware profiles; there is no
+automatic detection. Physical PC1 and RGB/SCART output remain unqualified.
+
+INSTALL
+1. Extract this complete packet to C:\YAMAHA. Its fonts, grabber and
+   startup logo are included; no Windows support-file collection is needed.
+2. Exit Windows to plain DOS. Change to your Windows directory and run:
+     C:
+     CD \WINDOWS
+     SETUP
+   Choose Display / Other (disk supplied by a hardware manufacturer),
+   enter C:\YAMAHA and select:
+     EXPERIMENTAL Olivetti PC1 160x200x16
+   Choose Complete Changes. Keep your existing mouse and keyboard choices.
+3. From your Windows directory, start with WIN /R. Use your actual Windows
+   path if different. These adapters do not use Tandy's RESERVE launcher.
+
+Some dialogs clip at 160 pixels. To select another display, exit Windows
+and run Setup from DOS. Native test details are in docs/yamaha/SUPPORT.MD
+in the source repository. Component notices are in NOTICE.TXT, FONTLIC.TXT
+and LOGOLIC.TXT.

@@ -1,0 +1,52 @@
+name: Verify Yamaha support packets
+
+on:
+  pull_request:
+    paths:
+      - 'tools/YAMPACK/**'
+      - 'tools/XR1PACK/PREPARE.PY'
+      - 'CGA.GR2'
+      - 'distributions/WINXT/**'
+      - 'downloads/experimental/yamaha/**'
+      - 'downloads/experimental/yamaha-candidate03/*.ZIP'
+      - '.github/workflows/yampack.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/YAMPACK/**'
+      - 'tools/XR1PACK/PREPARE.PY'
+      - 'CGA.GR2'
+      - 'distributions/WINXT/**'
+      - 'downloads/experimental/yamaha/**'
+      - 'downloads/experimental/yamaha-candidate03/*.ZIP'
+      - '.github/workflows/yampack.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  host:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Check out exact public source without credentials
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git sparse-checkout init --no-cone
+          printf '/.gitattributes\n/tools/YAMPACK/\n/tools/XR1PACK/PREPARE.PY\n/CGA.GR2\n/downloads/experimental/yamaha-candidate03/PC1-B000-CANDIDATE03.ZIP\n/downloads/experimental/yamaha-candidate03/YAMAHA-B800-CANDIDATE03.ZIP\n/downloads/experimental/yamaha/PC1.ZIP\n/downloads/experimental/yamaha/YAMAHA.ZIP\n/distributions/WINXT/XTCSYS.FON\n/distributions/WINXT/XTCFIX.FON\n/distributions/WINXT/XTCOEM.FON\n/distributions/WINXT/XTSTATIC.LGO\n/distributions/WINXT/WXTSPL01.RLE\n/distributions/WINXT/FONTLIC.TXT\n/distributions/WINXT/LOGOLIC.TXT\n' | git sparse-checkout set --no-cone --stdin
+          git checkout --detach --force FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Verify real accepted packets and support refusals
+        run: python3 -B tools/YAMPACK/TEST.PY
+      - name: Verify committed current packets
+        run: |
+          python3 -B tools/YAMPACK/PACK.PY --profile pc1 --verify downloads/experimental/yamaha/PC1.ZIP
+          python3 -B tools/YAMPACK/PACK.PY --profile b800 --verify downloads/experimental/yamaha/YAMAHA.ZIP

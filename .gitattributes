@@ -105,3 +105,7 @@ docs/RLEDELTA.ZIP -text
 # TGA2 font integration and historical receipts keep exact CRLF bytes.
 src/tga2/** -text
 docs/tga2/** -text
+tools/YAMPACK/** -text
+downloads/experimental/yamaha/** -text
+docs/yamaha/SUPPORT.MD -text
+.github/workflows/yampack.yml -text
