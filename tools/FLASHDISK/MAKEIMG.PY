@@ -238,7 +238,35 @@ def document_pin_source_payload():
     files.update({n:read_file(HERE / n) for n in ('CPBIND.PY','CPBUILD.JSN','CPSET.EXE')})
     launch = load('current_launch_source', HERE / 'LAUNCH/BIND.PY')
     files.update(launch.source_payload())
+    if (HERE / 'CURRENT.JSN').is_file():
+        files['CURRENT.JSN'] = read_file(HERE / 'CURRENT.JSN')
+        record = json.loads(files['CURRENT.JSN'])
+        files.update({'QA/' + n: read_file(HERE / 'QA' / n) for n in record['evidence']})
     return files
+
+
+def native_receipt(payload, helper):
+    """Carry native component evidence only for the exact current resources."""
+    path = HERE / 'CURRENT.JSN'
+    if not path.is_file():
+        return False, None
+    record = json.loads(read_file(path))
+    identity = lambda data: {'bytes': len(data), 'sha256': sha(data)}
+    if (record.get('complete') is not True or
+            record.get('runtime') != {n: identity(b) for n, b in payload.items()} or
+            record.get('helper') != identity(helper['PREPXT.EXE']) or
+            len(record.get('checks', {})) != 8 or
+            not all(value is True for value in record['checks'].values())):
+        return False, None
+    names = {'FIVE.JSON', 'COLD.JSON', 'ORIG.JSON', 'INPUT.JSN',
+             'FIVE.PY', 'COLD.PY', 'ORIG.PY', 'COLD.PNG', 'ORIG.PNG'}
+    if set(record.get('evidence', {})) != names:
+        raise PackageError('Current native evidence allowlist differs')
+    for name, expected in record['evidence'].items():
+        if identity(read_file(HERE / 'QA' / name)) != expected:
+            raise PackageError('Current native evidence differs: ' + name)
+    return True, {'path': 'CURRENT.JSN', 'sha256': sha(read_file(path)),
+                  'scope': record['scope']}
 
 
 def validate_helper_pins(payload, helper):
@@ -443,12 +471,14 @@ def build(runtime, out, windows_files=None):
             entries['HELPER.SHA'] = read_file(HERE / 'HELPER.SHA')
             entries['README.TXT'] = guide
             write_zip(out / 'WXTTOOLS.ZIP', entries)
-        metadata = {'schema': 1, 'fonts_are_original': True, 'native_package_qualified': False, 'publication_allowed': False,
+        qualified, receipt = native_receipt(public, helper)
+        metadata = {'schema': 1, 'fonts_are_original': True, 'native_package_qualified': qualified, 'publication_allowed': qualified,
             'native_implementation_qualified': True, 'documentation_pin_refresh_verified': True,
             'refreshed_binary_rerun_in_guest': False,
-            'qualification_scope': 'Host package build; unchanged PREPXT code with current CPSET/launch resource and document pins. Native installer qualification is recorded separately.',
+            'qualification_scope': 'Native component evidence is carried only for exact current resources. PREPXT resource-data binding preserves its measured code; the refreshed helper was not separately rerun.',
+            'native_receipt': receipt,
             'documentation_binding_sha256': sha(read_file(HERE / 'DOCPINS' / 'BIND.JSON')),
-            'kind': 'private-own-media' if private else 'dos-mode-switcher-test-candidate',
+            'kind': 'private-own-media' if private else 'dos-fixed-profiles',
             'binary_policy': 'accepted drivers/support, current CPSET and absolute-child wrapper; unchanged PREPXT code',
             'independent_startup_default': 'slow-flag-wave',
             'disk_setup_startup': 'guarded-color-wave-static-fallback',

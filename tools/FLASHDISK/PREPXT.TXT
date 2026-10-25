@@ -13,7 +13,8 @@ Then select C:, CD \WINXT and run INSTALL with that same Windows path.
 The helper never starts Setup itself. Its existing no-overwrite, free-space,
 bounded input and I/O checks remain. /VERIFY enables deeper diagnostics.
 
-Preparation checks the included grabber first. The historical runtime and
-native evidence remain preserved; current packet generation refreshes only
-its guide and document hash rows. Executable code is unchanged. The current
-native test receipt is docs/QUAL/FIXGRAB.JSN in the source repository.
+Preparation checks the included grabber first. Executable code is unchanged;
+current resource/document pins are bound to the complete packet. Native
+preparation, both supported metadata inputs and guarded startup are recorded
+in tools/FLASHDISK/CURRENT.JSN in the source repository. Historical receipts
+retain their original byte and test scope.

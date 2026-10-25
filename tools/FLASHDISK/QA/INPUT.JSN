@@ -1,0 +1,9 @@
+{
+  "stage_from": "native/FIX720-CP5/STAGE.IMG",
+  "stage_native_verified": true,
+  "metadata": {
+    "bytes": 49046,
+    "sha256": "4f4b65bdc0ce2d4a23859494f8936376296e857872a554b0037ceb068f2202f2"
+  },
+  "purpose": "second concrete original metadata input; actualfive-disk case remains separate"
+}

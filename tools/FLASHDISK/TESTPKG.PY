@@ -86,10 +86,13 @@ def verify(out, runtime=RUNTIME):
     toolkit['README.TXT'] = guide
     check(zip_entries(out / 'WXTTOOLS.ZIP') == toolkit, 'Portable toolkit mismatch')
     metadata = json.loads(data['BUILD.JSON'])
-    check(metadata['publication_allowed'] is False and metadata['windows_support_included'] is True
+    check(metadata['windows_support_included'] is True
           and metadata['operating_system_included'] is False
           and metadata['driver_support_complete'] is True
-          and metadata['kind'] == 'dos-mode-switcher-test-candidate', 'Driver support/OS inclusion contract differs')
+          and metadata['kind'] == 'dos-fixed-profiles', 'Driver support/OS inclusion contract differs')
+    qualified, receipt = package.native_receipt(package.public_payload(runtime), helper)
+    check(metadata['native_package_qualified'] is qualified and metadata['publication_allowed'] is qualified
+          and metadata['native_receipt'] == receipt, 'Native component receipt differs')
     check(metadata['independent_startup_default'] == 'slow-flag-wave'
           and metadata['disk_setup_startup'] == 'guarded-color-wave-static-fallback'
           and metadata['wave_payload_sha256'] == {n:package.sha(b) for n,b in package.wave_payload().items()},
@@ -110,6 +113,26 @@ class PackageTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(prefix='winxt-package-test-')
         self.addCleanup(self.temp.cleanup)
         self.base = Path(self.temp.name)
+
+    def test_native_receipt_does_not_qualify_changed_runtime(self):
+        payload = package.public_payload(RUNTIME)
+        helper = package.helper_payload()
+        self.assertTrue(package.native_receipt(payload, helper)[0])
+        payload['CPSET.EXE'] += b'x'
+        self.assertEqual(package.native_receipt(payload, helper), (False, None))
+
+    def test_native_receipt_requires_exact_evidence(self):
+        payload = package.public_payload(RUNTIME)
+        helper = package.helper_payload()
+        fake = self.base / 'evidence'
+        fake.mkdir()
+        shutil.copyfile(HERE / 'CURRENT.JSN', fake / 'CURRENT.JSN')
+        shutil.copytree(HERE / 'QA', fake / 'QA')
+        with (fake / 'QA/COLD.PNG').open('ab') as f:
+            f.write(b'changed')
+        with mock.patch.object(package, 'HERE', fake):
+            with self.assertRaisesRegex(package.PackageError, 'native evidence differs'):
+                package.native_receipt(payload, helper)
 
     def test_native_implementation_and_document_binding(self):
         evidence = json.loads((HERE.parents[1] / 'docs/QUAL/MODEBLD.JSON').read_bytes())

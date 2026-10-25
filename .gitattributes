@@ -129,3 +129,6 @@ tools/FLASHDISK/CPBIND.PY -text
 tools/FLASHDISK/CPBUILD.JSN -text
 tools/FLASHDISK/CPSET.EXE -text
 tools/FLASHDISK/LAUNCH/** -text
+
+tools/FLASHDISK/CURRENT.JSN -text
+tools/FLASHDISK/QA/** -text

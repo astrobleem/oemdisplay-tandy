@@ -1,7 +1,8 @@
 HISTORICAL RC6 TEST SUMMARY
 
 The following retained results describe the earlier own-media packet. Current
-bundled-grabber validation is in docs/QUAL/FIXGRAB.JSN.
+bundled-support/metadata/startup qualification is in CURRENT.JSN beside this
+file. It retains the earlier failed harness results with their exact scope.
 
 PREPXT - QUALIFIED PRIVATE STATIC-LOGO / MODE-SWITCHER CANDIDATE
 

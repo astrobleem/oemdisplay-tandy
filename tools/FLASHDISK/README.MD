@@ -25,15 +25,20 @@ its manifest. The supplied SZDD file was expanded with the existing bounded
 decoder and matched the accepted 2104-byte identity. No other Windows
 support/media files are admitted by the closed image allowlist.
 
-PREPXT already searches the runtime folder first. Its code, MZ header,
-relocations and non-document pins remain unchanged. The generated guide
-and its manifest row are refreshed using DOCPINS/REBIND.PY's existing narrow
-allowlist; helper hash data is rebound accordingly. The original runtime
-README/manifest remain intact. HISTORY retains the prior helper/header/binding
-so historical native receipts are checked against their actual bytes.
+PREPXT searches the runtime folder first. CPBIND.PY refreshes the reviewed
+CPSET.EXE, XTCLEAN.COM and WAVEXT.EXE resource pins plus permitted document
+rows; its executable code, header, relocations, paths and buffers stay exact.
+The original runtime README/manifest and historical helper/header/binding
+remain intact. LAUNCH records the directory-aware absolute child and the
+updater's corresponding expected digest; all reservation and cleanup checks
+remain in place.
 
-The data image remains 720 KB FAT12 and non-bootable. Reproduction, exact
-membership, disk capacity and missing/changed-grabber refusals are tested.
-Current native support evidence is recorded separately in
-[FIXGRAB.JSN](../../docs/QUAL/FIXGRAB.JSN). This does not add rendering or
-physical-hardware qualification. Publication remains pending approval.
+The image remains 720 KB FAT12 and non-bootable. The current component
+qualification is [CURRENT.JSN](CURRENT.JSN): native preparation with both
+Windows CGA copies absent, native Setup for the concrete 49,046- and
+49,095-byte Windows metadata inputs, and normal guarded cold startup/DOS
+return. The current wrapper also passed an alternate-directory child check.
+The final PREPXT data binding is host-verified against its unchanged measured
+code; its refreshed data was not separately rerun. Raw earlier failures and
+scoped native receipts remain under QA. No driver rendering or physical
+hardware qualification is added by this packaging change.
