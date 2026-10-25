@@ -21,7 +21,7 @@ WINXT FRESH A:\
 Use its actual drive letter. The preparer asks for each next disk and gathers
 the files itself. A complete existing Setup directory is also accepted:
 `WINXT FRESH C:\WIN30SRC`. Expanded files and mode-A SZDD compression work
-on the DOS computer. Allow about 20 MB for fresh source, installation and
+on the DOS computer. Allow about 30 MB for fresh source, installation and
 temporary files. Windows is installed in `C:\WINDOWS`.
 
 In fresh Setup, press Enter at Welcome and directory. At System Information,

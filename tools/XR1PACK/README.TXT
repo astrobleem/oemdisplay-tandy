@@ -23,7 +23,7 @@ A complete existing Windows Setup folder also works:
   WINXT FRESH C:\WIN30SRC
 
 Expanded files and original mode-A SZDD files are read directly. The automatic
-media cache and prepared source stay on this DOS computer. Allow about 20 MB
+media cache and prepared source stay on this DOS computer. Allow about 30 MB
 for fresh source, installation and temporary files. Windows is installed in C:\WINDOWS.
 
 Fresh Windows Setup: Enter at Welcome and directory. At System Information
