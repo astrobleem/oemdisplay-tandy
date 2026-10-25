@@ -38,6 +38,7 @@ jobs:
       - name: Replay qualified frames and verify exact public packages
         run: |
           python3 src/softpan/TESTUI.PY
+          python3 tools/SPPACK/TESTREL.PY
           python3 tools/SPPACK/TESTPKG.PY
           python3 tools/SPPACK/PACKAGE.PY --out release-softpan
       - name: Upload verified release files
@@ -62,6 +63,16 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       SOURCE_SHA: ${{ github.sha }}
     steps:
+      - name: Check out this exact publisher source without credentials
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${GH_REPO}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git sparse-checkout init --no-cone
+          printf '/tools/SPPACK/RELEASE.PY\n' | git sparse-checkout set --no-cone --stdin
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Download this exact run's verified files
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
@@ -101,61 +112,5 @@ jobs:
           Path('tag.txt').write_text(release['tag'])
           Path('expected.json').write_text(json.dumps(expected))
           PY
-      - name: Publish immutable reviewed downloads
-        shell: bash
-        run: |
-          set -euo pipefail
-          tag=$(cat tag.txt)
-          if gh api "repos/$GH_REPO/git/ref/tags/$tag" > tag-ref.json 2>/dev/null; then
-            python3 - <<'PY'
-          import json,os
-          ref=json.load(open('tag-ref.json'))
-          assert ref['object']['type']=='commit' and ref['object']['sha']==os.environ['SOURCE_SHA'], 'Existing tag belongs to another commit'
-          PY
-          fi
-          if ! gh api "repos/$GH_REPO/releases/tags/$tag" > existing.json 2>/dev/null; then
-            gh release create "$tag" --target "$SOURCE_SHA" --draft --prerelease \
-              --title "PCjr and ColorPlus software panning" --notes-file release-softpan/README.TXT
-            gh api "repos/$GH_REPO/releases/tags/$tag" > existing.json
-          fi
-          python3 - <<'PY'
-          import json,os
-          release=json.load(open('existing.json'));expected=json.load(open('expected.json'))
-          assert release['target_commitish']==os.environ['SOURCE_SHA'], 'Existing draft targets another source commit'
-          for asset in release['assets']:
-              assert asset['name'] in expected, 'Unexpected existing asset'
-              assert asset.get('digest')=='sha256:'+expected[asset['name']], 'Existing asset differs; refusing overwrite'
-          present={a['name'] for a in release['assets']}
-          open('missing.txt','w').write('\n'.join(sorted(set(expected)-present)))
-          PY
-          while IFS= read -r name || [[ -n "$name" ]]; do
-            [[ -z "$name" ]] || gh release upload "$tag" "release-softpan/$name"
-          done < missing.txt
-          gh api "repos/$GH_REPO/releases/tags/$tag" > uploaded.json
-          python3 - <<'PY'
-          import json
-          release=json.load(open('uploaded.json'));expected=json.load(open('expected.json'))
-          assert {a['name'] for a in release['assets']}==set(expected)
-          assert all(a.get('digest')=='sha256:'+expected[a['name']] for a in release['assets'])
-          PY
-          if ! gh api "repos/$GH_REPO/git/ref/tags/$tag" > final-tag.json 2>/dev/null; then
-            gh api --method POST "repos/$GH_REPO/git/refs" -f ref="refs/tags/$tag" -f sha="$SOURCE_SHA" > /dev/null
-            gh api "repos/$GH_REPO/git/ref/tags/$tag" > final-tag.json
-          fi
-          python3 - <<'PY'
-          import json,os
-          ref=json.load(open('final-tag.json'))
-          assert ref['object']['type']=='commit' and ref['object']['sha']==os.environ['SOURCE_SHA']
-          PY
-          gh release edit "$tag" --draft=false --prerelease
-          gh release download "$tag" --dir downloaded-softpan
-          python3 - <<'PY'
-          import hashlib,json
-          from pathlib import Path
-          expected=json.load(open('expected.json'));root=Path('downloaded-softpan')
-          assert {p.name for p in root.iterdir()}==set(expected)
-          for name,digest in expected.items():
-              assert hashlib.sha256((root/name).read_bytes()).hexdigest()==digest, name
-          print('Downloaded published assets match every reviewed SHA256')
-          print(json.dumps(expected,sort_keys=True))
-          PY
+      - name: Publish by release ID and verify public downloads
+        run: python3 tools/SPPACK/RELEASE.PY
