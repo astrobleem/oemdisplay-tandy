@@ -180,3 +180,7 @@ tools/MINEAPP/INSTALL.TXT -text
 
 # Contributor guidance retains the mandated CRLF bytes.
 CLAUDE.md -text
+
+# CGA staged assembly, tools and source guide retain required CRLF bytes.
+src/cga/** -text
+docs/CGA.MD -text
