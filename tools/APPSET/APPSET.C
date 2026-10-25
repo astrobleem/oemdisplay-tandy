@@ -23,6 +23,14 @@
 typedef unsigned long U32;
 struct entry { char *name; U32 size, crc; long offset; };
 #include "FILES.H"
+/* Driver packets may supply a plain-DOS completion message in FILES.H. */
+#ifndef APP_READY
+#define APP_READY(where) do { \
+ puts(APP_TITLE " is ready. Start your usual guarded Windows 3.0 desktop."); \
+ printf("In Tandy Start or Program Manager, choose Run: %s\\%s\n",(where),RUN_NAME); \
+ puts("All app files stay in that folder. No Windows or boot settings were changed."); \
+} while(0)
+#endif
 #define COUNT (sizeof(files)/sizeof(files[0]))
 #define PATHLEN 128
 static unsigned char buf[2048];
@@ -156,8 +164,6 @@ int main(int argc,char **argv)
  if(!exists(target)&&mkdir(target))fail("Cannot create app folder. Its parent directory must exist.");
  for(i=0;i<COUNT;i++)copy_entry(i);
  if(fclose(packet))fail("App packet close failed.");
- puts(APP_TITLE " is ready. Start your usual guarded Windows 3.0 desktop.");
- printf("In Tandy Start or Program Manager, choose Run: %s\\%s\n",target,RUN_NAME);
- puts("All app files stay in that folder. No Windows or boot settings were changed.");
+ APP_READY(target);
  return 0;
 }

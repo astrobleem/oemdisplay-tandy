@@ -1,6 +1,6 @@
 {
   "status": "PASS_HOST",
-  "checks": 59,
+  "checks": 60,
   "passed": [
     "mine fresh extraction",
     "mine identical retry",
@@ -42,6 +42,7 @@
     "cookie-dos crc refuses before output",
     "cookie-dos header refuses before output",
     "cookie-dos truncated refuses before output",
+    "plain-DOS completion hook replaces only the final message",
     "DOS backend catches the original mixed-handle mutation",
     "private launcher normal",
     "private launcher normal changes no files",
@@ -62,5 +63,5 @@
     "private launcher damaged WMABT.DLL",
     "private launcher damaged WINMINE.EXE"
   ],
-  "native_dos_windows": "PENDING allocation"
+  "scope": "Host tests only; see NATIVE.JSN for the separately recorded DOS/Windows run"
 }

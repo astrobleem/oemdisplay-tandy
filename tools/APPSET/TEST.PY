@@ -66,6 +66,15 @@ def run_tests(build,out,gcc_wrapper):
             packet.write_bytes(damaged);bad=out/(key+'-'+kind);p=invoke(bad)
             check(key+' '+kind+' refuses before output',p.returncode!=0 and not bad.exists())
         packet.write_bytes(original)
+    # One narrow compile-time completion hook for the driver's plain-DOS path.
+    hook=out/'hook';hook.mkdir()
+    (hook/'FILES.H').write_text('#define APP_READY(where) printf("Ready for DOS INSTALL: %s\\n",(where))\n'+(build/'mine/FILES.H').read_text())
+    hook_exe=out/'hook.exe'
+    compile(HERE/'APPSET.C',hook_exe,['-DHOST_TEST','-DDOS_API_MOCK','-I',str(hook),str(HERE/'TESTS/DOSMOCK.C')])
+    child=env.copy();child['APPSET_PACKET']=str(build/'MINESET.EXE')
+    dest=out/'hook-target'
+    p=subprocess.run([str(hook_exe),str(dest)],env=child,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    check('plain-DOS completion hook replaces only the final message',p.returncode==0 and b'Ready for DOS INSTALL:' in p.stdout and b'Start your usual guarded Windows' not in p.stdout and (dest/'MINERUN.EXE').exists())
     # Reintroduce the exact native bug in a private host-only copy: raw DOS
     # creation followed by CRT write/close. The offset-handle mock must catch it.
     mixed=(HERE/'APPSET.C').read_text()
@@ -97,7 +106,7 @@ def run_tests(build,out,gcc_wrapper):
         good=(fixture/name).read_bytes();(fixture/name).write_bytes(b'damaged')
         p=launch('normal');check('private launcher damaged '+name,p.returncode!=0 and b'EXEC 0' in p.stdout)
         (fixture/name).write_bytes(good)
-    report={'status':'PASS_HOST','checks':len(results),'passed':results,'native_dos_windows':'PENDING allocation'}
+    report={'status':'PASS_HOST','checks':len(results),'passed':results,'scope':'Host tests only; see NATIVE.JSN for the separately recorded DOS/Windows run'}
     (out/'RESULT.JSN').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 
 if __name__=='__main__':
