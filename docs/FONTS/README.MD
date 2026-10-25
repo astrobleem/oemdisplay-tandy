@@ -1,18 +1,15 @@
 # XT Pixels R10 original fonts
 
-Windows XT rc.5 bundles original MIT-licensed System, Fixed and OEM bitmap
-fonts for CGA/EGA, plus a fixed TXTSYS strike. The six inspected Windows
-dependencies are CGASYS, CGAFIX, CGAOEM, EGASYS, EGAFIX and EGAOEM. New
-8.3 XTC*/XTE*/XTTSYS filenames make Windows Setup copy our fonts instead of
-retaining same-name installed fonts. Resource identities, every advance and
-required system/dialog metrics are preserved.
+Windows XT includes original MIT-licensed System, Fixed and OEM bitmap
+fonts for its graphics profiles, plus a fixed text-mode System font.
+Current packets select their compatible XTC*/XTE*/XTTSYS aliases through
+Setup or their installation helper. You do not need to collect CGA/EGA
+font files. Start with [current downloads](../DOWNLOADS.MD) for your driver.
 
-[Glyphs and generator](../../tools/XTFONTS/README.MD) explain verified resource
-contracts, encoding, provenance and host reproduction. No Microsoft/ROM
-glyph bitmaps were copied or rasterized. The ready fonts and source are MIT;
-other suite components keep their existing licenses. No Python or Windows
-font media is required on the vintage machine. Windows itself, CGA.GR2,
-CGALOGO.LGO and existing non-font components remain user-supplied.
+The [glyphs and generator](../../tools/XTFONTS/README.MD) document the
+resource contracts and reproducible source. The records below preserve the
+original R10 qualification; each current packet has its own install guide
+and support integration checks. Windows itself remains a prerequisite.
 
 ## Qualification
 
