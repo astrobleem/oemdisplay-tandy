@@ -18,6 +18,8 @@ Usage (same pinned inputs as BUILD88; see tools/BUILDDEPS/README.MD):
        the 320x200x16 ones (P15PATCH.restore_sixteen): sixteen colours again;
      - P15PATCH edits the staged EGA/TSOFT.ASM, EGA/TCURSOR.ASM and the
        EGA/TSOFT.DEF description for the PC1512 hardware.
+     - P15OUT then edits the patched EGA/TSOFT.ASM Output gate: PR151
+       marker/polyline handling and synchronous narrow column presentation.
    BUILD88's instruction, REP-prefix and link audits then run on the
    patched listings.
 The driver is copied to OUT/PC1512.DRV; P15RES.JSON records what was used.
@@ -34,6 +36,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 P15 = importlib.machinery.SourceFileLoader("p15patch", str(HERE / "P15PATCH.PY")).load_module()
+P15OUT = importlib.machinery.SourceFileLoader("p15out", str(HERE / "P15OUT.PY")).load_module()
 
 DEF_OLD = "Tandy 640x200 4-color software raster"
 DEF_NEW = "Amstrad PC1512 640x200 16-color raster"
@@ -87,6 +90,8 @@ def main():
                                        (base / "EGA" / "TSOFT.ASM").read_bytes().decode("latin-1"))
             tsoft.write_bytes(text.encode("latin-1"))
             edits = P15.patch_staged(ren / "EGA")
+            # P15OUT edits TSOFT.ASM again, exactly once, on the P15PATCH text.
+            edits["TSOFT.ASM"] = P15OUT.patch_staged_output(ren / "EGA")
             d = ren / "EGA" / "TSOFT.DEF"
             t = d.read_bytes().decode("latin-1")
             if t.count(DEF_OLD) != 1:
