@@ -1,5 +1,5 @@
 > Historical / development guide. For the current download and installation,
-> use the [XR1 install guide](../../docs/RELEASES/RC8.MD). The commands below describe the
+> use the [current downloads](../../docs/DOWNLOADS.MD). The commands below describe the
 > earlier package or source checkpoint.
 
 # Unpublished combined source revision

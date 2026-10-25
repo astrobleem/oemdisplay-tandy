@@ -41,5 +41,4 @@ remains a separate historical result; it was not rerun or relabeled here.
 
 The recovered paths, emulator/probe identities, native selected aliases and
 installed bytes are in the receipt. Source images remained unchanged. All
-owned test processes stopped and released the shared lease. Publication of
-these new current packets is pending approval.
+owned test processes stopped and released the shared lease.

@@ -1,6 +1,6 @@
 # Video II support integration
 
-The candidate packet includes the existing original `XTCSYS.FON`,
+The current packet includes the existing original `XTCSYS.FON`,
 `XTCFIX.FON` and `XTCOEM.FON` fonts, the expanded `CGA.GR2` grabber, and the
 existing `XTSTATIC.LGO` / `WXTSPL01.RLE` startup pair. Its driver and DOS
 helper executables retain the accepted r2 bytes. `PREPINF` now only checks
@@ -49,5 +49,5 @@ The old Setup/staging receipts remain bound to exact r2 INF, batch and
 notice snapshots under `src/tga2/HISTORY`; they are not claims about this
 new support selection. `T2ITEST.PY` checks both scopes.
 
-Publication of this candidate is pending approval. Existing release assets
-have not been replaced and the current download URL still names r2.
+The current packet is available from `downloads/experimental/TGA2/TNDYV2.ZIP`.
+The original r2 release remains available for reproducing its historical tests.

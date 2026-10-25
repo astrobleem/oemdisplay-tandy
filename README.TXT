@@ -1,30 +1,15 @@
-WINDOWS XT - START HERE
+WINDOWS XT - CURRENT DOWNLOADS
 
-Already have Windows 3.0 real mode on a Tandy EX/HX with 640 KB?
-Download the current XRSYNC display update:
-https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE
-From plain DOS run XRSYNC C:\WINDOWS. No host preparation is needed.
-Follow its complete supplied display packet and Setup guide:
-https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/RELEASES/XRSYNC.MD
-Start that profile with C:\XR155\RUNSYNC.BAT.
-
-For a complete Windows XT desktop install from matching Windows 3.0 media,
-use the rc.8 installer:
+Full Tandy Start desktop, fonts, mouse/wheel input and apps:
 https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP
+Desktop installation: https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/DESKTOP.MD
+Start later sessions with C:\STARTXT.
 
-Extract it on a modern computer and prepare with Python 3.8+ and matching
-English Windows 3.0 media:
-  python PREPARE.PY --windows-media C:\WIN30SRC --mode fresh --out C:\XR1NEW
-For an existing Windows installation, use --mode update and a new output
-folder. Transfer the prepared DOS-CROOT contents to DOS C:\, keeping your
-DOS boot files and configuration. From plain DOS run C:\SETUPXT.
-Start Windows every time with C:\STARTXT.
+For only the synchronous display update:
+https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE
+Exit Windows, run XRSYNC C:\WINDOWS, then follow:
+https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/RELEASES/XRSYNC.MD
+Start later sessions with C:\XR155\RUNSYNC.BAT.
 
-Setup choices and repair:
-https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/RELEASES/RC8.MD
-Other machines (PCjr, PC1512, ColorPlus, Video II, Yamaha, text mode):
-https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/PLATFORM.MD
-
-EARLIER PACKAGES
-Historical TANDY88 disk instructions and fixed-mode details:
-https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/OEMDISK.MD
+Other hardware, sound and apps:
+https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/DOWNLOADS.MD
