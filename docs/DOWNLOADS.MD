@@ -7,7 +7,7 @@ working packet. Windows 3.0 and DOS are supplied by you.
 | --- | --- | --- |
 | Tandy 1000 EX/HX panning display, 640x256 desktop / 320x200 view | [XRSYNC.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE) | [Display setup](RELEASES/XRSYNC.MD) |
 | Tandy EX/HX fixed-resolution graphics profiles | [WINXT720.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/FIXED/WINXT720.ZIP) | [Fixed profiles](FIXED.MD) |
-| Windows XT desktop bundle: Tandy Start, wheel input, fonts and apps | [WINXT.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE) | [Desktop setup](DESKTOP.MD) |
+| Full Windows XT desktop: Tandy Start, wheel input, fonts and apps | [WINXTDOS.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXTDOS.ZIP) ([direct EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE)) | [Desktop setup](DESKTOP.MD) |
 | Tandy SL/2 Video II, 640x200x16; not EX/HX | [TNDYV2.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TGA2/TNDYV2.ZIP) | [Video II setup](tga2/INSTALL.TXT) |
 | IBM PCjr, 320x400x16 software desktop / 320x200 view | [JRPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-softpan-2026-10-24/JRPAN.ZIP) | [PCjr setup](SOFTPAN/RELEASE.MD) |
 | Amstrad PC1512 built-in video; not PC1640 | [PC1512.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) | [PC1512 setup](../experiments/DISPLAY3/PC1512.TXT) |

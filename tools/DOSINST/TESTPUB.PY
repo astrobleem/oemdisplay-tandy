@@ -2,6 +2,8 @@
 import copy
 import importlib.machinery
 import json
+import io
+import zipfile
 from pathlib import Path
 import tempfile
 import unittest
@@ -78,6 +80,35 @@ class NativePublisherTests(unittest.TestCase):
         self.assertEqual(first, self.run_build(output, True))
         self.assertEqual(set(p.name for p in output.iterdir()), set(M.ASSETS))
         self.assertEqual((output / "WINXT.EXE").read_bytes(), self.entries["PREPXR.EXE"] + self.archive)
+
+    def test_download_zip_extracts_the_qualified_ready_to_run_exe(self):
+        output = self.root / "wrapped"
+        self.run_build(output)
+        body = (output / "WINXTDOS.ZIP").read_bytes()
+        with zipfile.ZipFile(io.BytesIO(body)) as zf:
+            self.assertEqual(zf.namelist(), ["README.TXT", "WINXT.EXE"])
+            self.assertIsNone(zf.testzip())
+            self.assertEqual(zf.read("WINXT.EXE"), (output / "WINXT.EXE").read_bytes())
+            self.assertEqual(zf.read("WINXT.EXE"), self.entries["PREPXR.EXE"] + self.archive)
+            self.assertEqual(zf.read("README.TXT"), (M.HERE / "WRAP.TXT").read_bytes())
+            self.assertNotIn("PREPXR", zf.read("README.TXT").decode("ascii"))
+            self.assertNotIn(b"\r\r\n", zf.read("README.TXT"))
+            self.assertNotIn(b"\n", zf.read("README.TXT").replace(b"\r\n", b""))
+        report = json.loads((output / "RELEASE.JSON").read_bytes())
+        self.assertEqual(report["download_archive"]["executable"], M.pub.identity((output / "WINXT.EXE").read_bytes()))
+        self.assertEqual(report["download_archive"]["sha256"], M.pub.identity(body)["sha256"])
+        self.assertEqual(body, M.download_zip((output / "WINXT.EXE").read_bytes()))
+        # Reject either altered delivery member and altered outer metadata on verification.
+        for member in ("WINXT.EXE", "README.TXT"):
+            with zipfile.ZipFile(io.BytesIO(body)) as zf:
+                entries = {name: zf.read(name) for name in zf.namelist()}
+            entries[member] += b"changed"
+            (output / "WINXTDOS.ZIP").write_bytes(M.pub.zip_bytes(entries))
+            with self.assertRaises(ValueError):
+                self.run_build(output, True)
+        (output / "WINXTDOS.ZIP").write_bytes(body + b"changed")
+        with self.assertRaises(ValueError):
+            self.run_build(output, True)
 
     def test_wrong_or_incomplete_native_result_refused_before_output(self):
         original = copy.deepcopy(self.qual)

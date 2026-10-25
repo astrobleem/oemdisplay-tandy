@@ -10,7 +10,7 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 pub = importlib.machinery.SourceFileLoader("xr1_native_helpers", str(HERE.parent / "XR1PACK/PUBLISH.PY")).load_module()
 media = importlib.machinery.SourceFileLoader("xr1_native_media", str(HERE.parent / "XR1PACK/PREPARE.PY")).load_module()
-ASSETS = ("WINXT.EXE", "WINXT.ZIP", "README.TXT", "RELEASE.JSON", "SHA256SUMS")
+ASSETS = ("WINXTDOS.ZIP", "WINXT.EXE", "WINXT.ZIP", "README.TXT", "RELEASE.JSON", "SHA256SUMS")
 
 def check_inputs(recipe, header, records, qualified):
     rows = re.findall(r'{"([^"\n]+)","([^"\n]+)",(\d+)UL,(\d+)}', recipe)
@@ -68,6 +68,12 @@ def collect():
     pub.require(pages * 512 - (512 - last if last else 0) == len(helper), "Native EXE image length differs")
     return entries
 
+def download_zip(executable):
+    entries = {"WINXT.EXE": executable, "README.TXT": pub.read_file(HERE, "WRAP.TXT")}
+    archive = pub.zip_bytes(entries)
+    pub.check_zip(archive, entries, "WINXTDOS.ZIP")
+    return archive
+
 def build(output, commit, verify=False):
     pub.require(re.fullmatch(r"[0-9a-f]{40}", commit or ""), "Full source commit required")
     entries = collect()
@@ -90,10 +96,13 @@ def build(output, commit, verify=False):
     pub.require(validation["native_valid_inputs"]["prepared_comparison"] == {"count": 367, "different": []},
                 "CRC-validated fresh outputs differ")
     pub.require(q["public_assets"]["WINXT.ZIP"] == pub.identity(archive) and q["public_assets"]["WINXT.EXE"] == pub.identity(executable), "Package differs from qualified native kit")
+    download = download_zip(executable)
     report = {"schema": 1, "tag": "v0.1.0-rc.8-dos.1", "source_commit": commit,
               "native_report": "docs/QUAL/DOSINST/RC8.JSN", "physical_qualification": False,
+              "download_archive": {"name": "WINXTDOS.ZIP", **pub.identity(download),
+                                   "executable": pub.identity(executable)},
               "files": {n: pub.identity(d) for n, d in sorted(entries.items())}}
-    assets = {"WINXT.EXE": executable, "WINXT.ZIP": archive,
+    assets = {"WINXTDOS.ZIP": download, "WINXT.EXE": executable, "WINXT.ZIP": archive,
               "README.TXT": entries["README.TXT"], "RELEASE.JSON": pub.json_bytes(report)}
     assets["SHA256SUMS"] = pub.sums_bytes(assets)
     if output.exists():
