@@ -1,0 +1,438 @@
+{
+  "schema": 1,
+  "status": "PASS_NATIVE_AND_HOST",
+  "physical_test": false,
+  "target": {
+    "machine": "Tandy 1000 HX emulator",
+    "CPU": "8088",
+    "MHz": 7.159092,
+    "RAM_KB": 640,
+    "DOS": "MS-DOS 6.22",
+    "minimum_supported_DOS": "3.3",
+    "Windows": "English Windows 3.0 real mode"
+  },
+  "public_assets": {
+    "WINXT.ZIP": {
+      "bytes": 599420,
+      "sha256": "fd60c7af5fb530b44e3d964711f5c2c58134da128778f5281f7ff7b7c9dc8c2a"
+    },
+    "WINXT.EXE": {
+      "bytes": 680780,
+      "sha256": "8e22de6a4bec0d098aa6b5f0abdc94ec08dad4fbfe8a5a66759190846d3dd4d4"
+    }
+  },
+  "fresh": {
+    "complete": true,
+    "actions": [
+      {
+        "contains": "",
+        "keys": []
+      },
+      {
+        "contains": "",
+        "keys": []
+      },
+      {
+        "contains": "",
+        "hardware": true,
+        "keys": [
+          "ENTER"
+        ]
+      },
+      {
+        "contains": "",
+        "keys": []
+      },
+      {
+        "contains": "",
+        "hardware": true,
+        "keys": [
+          "F10",
+          "ENTER"
+        ]
+      },
+      {
+        "contains": "",
+        "keys": []
+      },
+      {
+        "contains": "",
+        "keys": []
+      }
+    ],
+    "bound_seconds": 900,
+    "cold_launch": false,
+    "pid": 5740,
+    "desktop_mode": 9,
+    "desktop_settle_seconds": 60,
+    "seconds": 608.3,
+    "dos_version": "\r\nMS-DOS Version 6.22\r\n\r\n",
+    "system_ini": "[boot]           \r\n286grabber=CGA.GR2\r\nshell=TSHELL.EXE\r\nnetwork.drv=\r\nlanguage.dll=\r\nfixedfon.fon=XTCFIX.FON\r\ncomm.drv=comm.drv\r\nsound.drv=sound.drv\r\noemfonts.fon=XTCOEM.FON\r\nfonts.fon=XTCSYS.FON\r\nmouse.drv=WHEEL.DRV\r\nkeyboard.drv=TNDYK3.DRV\r\ndisplay.drv=HPXY.DRV\r\nsystem.drv=system.drv\r\n386grabber=\r\n[keyboard]\r\nsubtype=\r\ntype=1\r\noemansi.bin=\r\nkeyboard.dll=\r\n[boot.description]\r\n\r\nnetwork.drv=Network not installed\r\nlanguage.dll=English (American)\r\nkeyboard.typ=PC/XT - Type keyboard (84 keys)\r\nmouse.drv=Tandy serial wheel mouse (COM1/IRQ4)\r\ndisplay.drv=Tandy EX/HX accepted HPXY 640x200 wide-font mode\r\nsystem.drv=Tandy 1000 EX/HX (WindowsXT)\r\n[386Enh]\r\ndisplay=*vddvga\r\nkeyboard=*vkd\r\nmouse=*vmd\r\nnetwork=*vnetbios, *dosnet\r\ndevice=*vpicd\r\ndevice=*vtd\r\ndevice=*reboot\r\ndevice=*vdmad\r\ndevice=*vsd\r\ndevice=*v86mmgr\r\ndevice=*pageswap\r\ndevice=*dosmgr\r\ndevice=*vmpoll\r\ndevice=*wshell\r\ndevice=*vhd\r\ndevice=*vfd\r\ndevice=*vpd\r\ndevice=*parity\r\ndevice=*biosxlat\r\ndevice=*vcd\r\ndevice=*vmcpd\r\ndevice=*combuff\r\ndevice=*cdpscsi\r\nlocal=CON\r\nFileSysChange=off\r\n\r\n[standard]\r\n\r\n[NonWindowsApp]\r\n",
+    "boot_files_unchanged": {
+      "AUTOEXEC.BAT": true,
+      "CONFIG.SYS": true
+    },
+    "prepared_comparison": {
+      "count": 367,
+      "different": []
+    },
+    "installed_wrapper_sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c",
+    "installed_wrapper_matches_source": true,
+    "managed_sentinel_preserved": true,
+    "staging_temps": [],
+    "owned_stopped": true,
+    "lease_released": true,
+    "selected_boot": {
+      "display.drv": "HPXY.DRV",
+      "keyboard.drv": "TNDYK3.DRV",
+      "mouse.drv": "WHEEL.DRV",
+      "shell": "TSHELL.EXE",
+      "286grabber": "CGA.GR2",
+      "fonts.fon": "XTCSYS.FON",
+      "fixedfon.fon": "XTCFIX.FON",
+      "oemfonts.fon": "XTCOEM.FON"
+    },
+    "resume_prefix_detection_seconds": 2.6,
+    "preparation_seconds_including_boot": 1122.5,
+    "resumed_from_graphical_Setup_checkpoint": true
+  },
+  "update": {
+    "complete": true,
+    "actions": [
+      {
+        "contains": "",
+        "keys": []
+      }
+    ],
+    "bound_seconds": 600,
+    "pid": 28568,
+    "preparation_seconds_including_boot": 136.9,
+    "desktop_mode": 9,
+    "desktop_settle_seconds": 60,
+    "seconds": 272.9,
+    "dos_version": "\r\nMS-DOS Version 6.22\r\n\r\n",
+    "system_ini": "[boot]           \r\n286grabber=CGA.GR2\r\nshell=TSHELL.EXE\r\nnetwork.drv=\r\nlanguage.dll=\r\nfixedfon.fon=XTCFIX.FON\r\ncomm.drv=comm.drv\r\nsound.drv=sound.drv\r\noemfonts.fon=XTCOEM.FON\r\nfonts.fon=XTCSYS.FON\r\nmouse.drv=WHEEL.DRV\r\nkeyboard.drv=TNDYK3.DRV\r\ndisplay.drv=HPXY.DRV\r\nsystem.drv=system.drv\r\n386grabber=\r\n[keyboard]\r\nsubtype=\r\ntype=1\r\noemansi.bin=\r\nkeyboard.dll=\r\n[boot.description]\r\n\r\nnetwork.drv=Network not installed\r\nlanguage.dll=English (American)\r\nkeyboard.typ=PC/XT - Type keyboard (84 keys)\r\nmouse.drv=Tandy serial wheel mouse (COM1/IRQ4)\r\ndisplay.drv=Tandy EX/HX accepted HPXY 640x200 wide-font mode\r\nsystem.drv=Tandy 1000 EX/HX (WindowsXT)\r\n[386Enh]\r\nDEVICE=WINDEBUG.386\r\ndisplay=*vddvga\r\nkeyboard=*vkd\r\nmouse=*vmd\r\nnetwork=*vnetbios, *dosnet\r\ndevice=*vpicd\r\ndevice=*vtd\r\ndevice=*reboot\r\ndevice=*vdmad\r\ndevice=*vsd\r\ndevice=*v86mmgr\r\ndevice=*pageswap\r\ndevice=*dosmgr\r\ndevice=*vmpoll\r\ndevice=*wshell\r\ndevice=*vhd\r\ndevice=*vfd\r\ndevice=*vpd\r\ndevice=*parity\r\ndevice=*biosxlat\r\ndevice=*vcd\r\ndevice=*vmcpd\r\ndevice=*combuff\r\ndevice=*cdpscsi\r\nlocal=CON\r\nFileSysChange=off\r\n\r\n[standard]\r\n\r\n[NonWindowsApp]\r\n\r\n[NativeInstallSentinel]\r\npreserve=yes\r\n",
+    "boot_files_unchanged": {
+      "AUTOEXEC.BAT": true,
+      "CONFIG.SYS": true
+    },
+    "prepared_comparison": {
+      "count": 80,
+      "different": []
+    },
+    "installed_wrapper_sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c",
+    "installed_wrapper_matches_source": true,
+    "managed_sentinel_preserved": true,
+    "staging_temps": [],
+    "owned_stopped": true,
+    "lease_released": true,
+    "selected_boot": {
+      "display.drv": "HPXY.DRV",
+      "keyboard.drv": "TNDYK3.DRV",
+      "mouse.drv": "WHEEL.DRV",
+      "shell": "TSHELL.EXE",
+      "286grabber": "CGA.GR2",
+      "fonts.fon": "XTCSYS.FON",
+      "fixedfon.fon": "XTCFIX.FON",
+      "oemfonts.fon": "XTCOEM.FON"
+    }
+  },
+  "cold": {
+    "complete": true,
+    "actions": [],
+    "bound_seconds": 240,
+    "cold_launch": true,
+    "pid": 4756,
+    "desktop_mode": 9,
+    "desktop_settle_seconds": 60,
+    "seconds": 97.5,
+    "dos_version": "\r\nMS-DOS Version 6.22\r\n\r\n",
+    "system_ini": "[boot]           \r\n286grabber=CGA.GR2\r\nshell=TSHELL.EXE\r\nnetwork.drv=\r\nlanguage.dll=\r\nfixedfon.fon=XTCFIX.FON\r\ncomm.drv=comm.drv\r\nsound.drv=sound.drv\r\noemfonts.fon=XTCOEM.FON\r\nfonts.fon=XTCSYS.FON\r\nmouse.drv=WHEEL.DRV\r\nkeyboard.drv=TNDYK3.DRV\r\ndisplay.drv=HPXY.DRV\r\nsystem.drv=system.drv\r\n386grabber=\r\n[keyboard]\r\nsubtype=\r\ntype=1\r\noemansi.bin=\r\nkeyboard.dll=\r\n[boot.description]\r\n\r\nnetwork.drv=Network not installed\r\nlanguage.dll=English (American)\r\nkeyboard.typ=PC/XT - Type keyboard (84 keys)\r\nmouse.drv=Tandy serial wheel mouse (COM1/IRQ4)\r\ndisplay.drv=Tandy EX/HX accepted HPXY 640x200 wide-font mode\r\nsystem.drv=Tandy 1000 EX/HX (WindowsXT)\r\n[386Enh]\r\nDEVICE=WINDEBUG.386\r\ndisplay=*vddvga\r\nkeyboard=*vkd\r\nmouse=*vmd\r\nnetwork=*vnetbios, *dosnet\r\ndevice=*vpicd\r\ndevice=*vtd\r\ndevice=*reboot\r\ndevice=*vdmad\r\ndevice=*vsd\r\ndevice=*v86mmgr\r\ndevice=*pageswap\r\ndevice=*dosmgr\r\ndevice=*vmpoll\r\ndevice=*wshell\r\ndevice=*vhd\r\ndevice=*vfd\r\ndevice=*vpd\r\ndevice=*parity\r\ndevice=*biosxlat\r\ndevice=*vcd\r\ndevice=*vmcpd\r\ndevice=*combuff\r\ndevice=*cdpscsi\r\nlocal=CON\r\nFileSysChange=off\r\n\r\n[standard]\r\n\r\n[NonWindowsApp]\r\n\r\n[NativeInstallSentinel]\r\npreserve=yes\r\n",
+    "boot_files_unchanged": {
+      "AUTOEXEC.BAT": true,
+      "CONFIG.SYS": true
+    },
+    "prepared_comparison": {
+      "count": 80,
+      "different": []
+    },
+    "installed_wrapper_sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c",
+    "installed_wrapper_matches_source": true,
+    "managed_sentinel_preserved": true,
+    "staging_temps": [],
+    "owned_stopped": true,
+    "lease_released": true,
+    "selected_boot": {
+      "display.drv": "HPXY.DRV",
+      "keyboard.drv": "TNDYK3.DRV",
+      "mouse.drv": "WHEEL.DRV",
+      "shell": "TSHELL.EXE",
+      "286grabber": "CGA.GR2",
+      "fonts.fon": "XTCSYS.FON",
+      "fixedfon.fon": "XTCFIX.FON",
+      "oemfonts.fon": "XTCOEM.FON"
+    }
+  },
+  "installed_files": {
+    "fresh": {
+      "HPXY.DRV": {
+        "installed_path": "WINDOWS/SYSTEM/HPXY.DRV",
+        "bytes": 56704,
+        "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275"
+      },
+      "TNDYK3.DRV": {
+        "installed_path": "WINDOWS/SYSTEM/TNDYK3.DRV",
+        "bytes": 7640,
+        "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+      },
+      "WHEEL.DRV": {
+        "installed_path": "WINDOWS/SYSTEM/WHEEL.DRV",
+        "bytes": 1820,
+        "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+      },
+      "TSHELL.EXE": {
+        "installed_path": "WINDOWS/TSHELL.EXE",
+        "bytes": 71763,
+        "sha256": "b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49"
+      },
+      "CGA.GR2": {
+        "installed_path": "WINDOWS/SYSTEM/CGA.GR2",
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+      },
+      "XTCSYS.FON": {
+        "installed_path": "WINDOWS/SYSTEM/XTCSYS.FON",
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+      },
+      "XTCFIX.FON": {
+        "installed_path": "WINDOWS/SYSTEM/XTCFIX.FON",
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+      },
+      "XTCOEM.FON": {
+        "installed_path": "WINDOWS/SYSTEM/XTCOEM.FON",
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      },
+      "XTCLEAN.COM": {
+        "bytes": 1071,
+        "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
+      }
+    },
+    "update": {
+      "HPXY.DRV": {
+        "installed_path": "WINDOWS/SYSTEM/HPXY.DRV",
+        "bytes": 56704,
+        "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275"
+      },
+      "TNDYK3.DRV": {
+        "installed_path": "WINDOWS/SYSTEM/TNDYK3.DRV",
+        "bytes": 7640,
+        "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+      },
+      "WHEEL.DRV": {
+        "installed_path": "WINDOWS/SYSTEM/WHEEL.DRV",
+        "bytes": 1820,
+        "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+      },
+      "TSHELL.EXE": {
+        "installed_path": "WINDOWS/TSHELL.EXE",
+        "bytes": 71763,
+        "sha256": "b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49"
+      },
+      "CGA.GR2": {
+        "installed_path": "WINDOWS/SYSTEM/CGA.GR2",
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+      },
+      "XTCSYS.FON": {
+        "installed_path": "WINDOWS/SYSTEM/XTCSYS.FON",
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+      },
+      "XTCFIX.FON": {
+        "installed_path": "WINDOWS/SYSTEM/XTCFIX.FON",
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+      },
+      "XTCOEM.FON": {
+        "installed_path": "WINDOWS/SYSTEM/XTCOEM.FON",
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      },
+      "XTCLEAN.COM": {
+        "bytes": 1071,
+        "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
+      }
+    },
+    "cold": {
+      "HPXY.DRV": {
+        "installed_path": "WINDOWS/SYSTEM/HPXY.DRV",
+        "bytes": 56704,
+        "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275"
+      },
+      "TNDYK3.DRV": {
+        "installed_path": "WINDOWS/SYSTEM/TNDYK3.DRV",
+        "bytes": 7640,
+        "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+      },
+      "WHEEL.DRV": {
+        "installed_path": "WINDOWS/SYSTEM/WHEEL.DRV",
+        "bytes": 1820,
+        "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+      },
+      "TSHELL.EXE": {
+        "installed_path": "WINDOWS/TSHELL.EXE",
+        "bytes": 71763,
+        "sha256": "b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49"
+      },
+      "CGA.GR2": {
+        "installed_path": "WINDOWS/SYSTEM/CGA.GR2",
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+      },
+      "XTCSYS.FON": {
+        "installed_path": "WINDOWS/SYSTEM/XTCSYS.FON",
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+      },
+      "XTCFIX.FON": {
+        "installed_path": "WINDOWS/SYSTEM/XTCFIX.FON",
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+      },
+      "XTCOEM.FON": {
+        "installed_path": "WINDOWS/SYSTEM/XTCOEM.FON",
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      },
+      "XTCLEAN.COM": {
+        "bytes": 1071,
+        "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
+      }
+    }
+  },
+  "native_source_manifest": "tools/DOSINST/RCNATIVE.JSN",
+  "runtime_rendering_changed": false,
+  "external_driver_support_inputs": [],
+  "OS_inputs": {
+    "update": [
+      "Supported installed Windows Setup metadata, automatically located",
+      "WIN.CNF or the matching installed WIN.COM prefix, automatically read"
+    ],
+    "fresh": "Original Windows 3.0 Setup disks; the DOS helper automatically gathers 284 ordinary OS filenames"
+  },
+  "checks": {
+    "bundled_grabber_used_with_all_Windows_media_grabber_copies_absent": true,
+    "expanded_and_modeA_SZDD_inputs": true,
+    "media_cancel_and_resume": true,
+    "corrupt_managed_output_repaired": true,
+    "unrelated_sentinel_preserved": true,
+    "temporary_outputs_removed": true,
+    "cold_start_without_Windows_in_PATH": true,
+    "guarded_normal_launcher": true,
+    "boot_files_preserved": true,
+    "all_selected_installed_components_match_public_payload": true
+  },
+  "fresh_staging": {
+    "verified_files": 367,
+    "different": [],
+    "seconds_including_boot": 1122.5,
+    "media_gather_seconds_including_boot_and_cancel_controller": 646.0,
+    "interrupted_stage": "Graphical Windows Setup, before the finisher",
+    "recovery_command": "C:\\SETUPXT",
+    "repeated_preparation": false,
+    "controller_error_not_accepted_as_install_PASS": true
+  },
+  "qualification_delta": {
+    "fresh_tested_packet": {
+      "WINXT.ZIP": {
+        "bytes": 599359,
+        "sha256": "4c58732597e9b85fd7893cb9518b1f48605ff4e0045b9bdd7451aa62bcbaedc2"
+      },
+      "WINXT.EXE": {
+        "bytes": 680719,
+        "sha256": "7fc19b475a72144b98042c4521adabe83d66fa08bccda2bea4b92cf76080e9b7"
+      }
+    },
+    "update_tested_packet": {
+      "WINXT.ZIP": {
+        "bytes": 599359,
+        "sha256": "f52dfec2a66ca3904198a5b2d413087684cbbaaeddf7b24a0da715275a22f1cb"
+      },
+      "WINXT.EXE": {
+        "bytes": 680719,
+        "sha256": "eae8dd154af57e4b11b27136f6440922359138520bb4190e9e3584197f5c4cd5"
+      }
+    },
+    "public_packet_text_delta": [
+      "README.TXT"
+    ],
+    "text_changes": "Accurate 30 MB fresh-space estimate and actual Setup/finisher mouse steps",
+    "unchanged_archive_members": 52,
+    "native_helper_identical": true,
+    "runtime_members_identical": true
+  },
+  "measured_preparation_comparison": {
+    "same_cold_update_fixture_before_byte_CRC_seconds": 307.1,
+    "after_byte_CRC_seconds": 235.2,
+    "saved_seconds": 71.9,
+    "improvement_percent": 23.4,
+    "managed_repair_is_a_separate_reuse_case_seconds": 136.9
+  },
+  "host_checks": {
+    "native_packet": 6,
+    "XR1_prepare": 24,
+    "legacy_publisher_boundaries": 9,
+    "frozen_package": 16,
+    "XRSYNC_packet": 7,
+    "CRC_zlib_vectors": 17
+  },
+  "evidence": {
+    "RCFRESH.PNG": {
+      "bytes": 3249,
+      "sha256": "5cc926154bcd669b7ed74e9782de5b0a8a94496194068850094c28d00b3dd27b"
+    },
+    "RCFRESH.LOG": {
+      "bytes": 13292,
+      "sha256": "e2f0c787fbd05d0cac3f0060a2421e782909bc990814797d34bf0e08accbd164"
+    },
+    "RCUPDATE.PNG": {
+      "bytes": 3770,
+      "sha256": "cbd036e1dcfd212140ab187ce08dadf911d2dcd96ad2da017ebf87cb15f1a41a"
+    },
+    "RCUPDATE.LOG": {
+      "bytes": 924,
+      "sha256": "8ef4a103efc337c6074f8ce1aa83697fc60095b235d5d0d00a41d391e5d0cca7"
+    },
+    "RCCOLD.PNG": {
+      "bytes": 3770,
+      "sha256": "cbd036e1dcfd212140ab187ce08dadf911d2dcd96ad2da017ebf87cb15f1a41a"
+    },
+    "RCCOLD.LOG": {
+      "bytes": 113,
+      "sha256": "b53ee31d1885bee564a7231ad344c46c0486248b448924df54f35c2e2296d81f"
+    },
+    "RCPREP.LOG": {
+      "bytes": 11674,
+      "sha256": "dedab464ee68f5906838d8c80ef810187f2e653cffd58d691c37a3eb539bc086"
+    },
+    "RCSETUP.PNG": {
+      "bytes": 4293,
+      "sha256": "3ea649885053e34ab277edcdf9b0c13553f84e4eefd387fa956f0b32f0704640"
+    },
+    "RCFHASH.JSN": {
+      "bytes": 48619,
+      "sha256": "5fa66872e885c574c35985ac368a788b5bce2121c58b23bb4d5f20cb4d2ad67a"
+    },
+    "RCUHASH.JSN": {
+      "bytes": 10799,
+      "sha256": "cccd60810ef693dfc723c5d6cedee6bf7ea094a0873cd7438bbdc86330992fec"
+    }
+  },
+  "private_controller": {
+    "bytes": 7543,
+    "sha256": "51be4739b7f7fd72ba69a40785fd1d2296a2b3e00fe689767178ba67dea8cda5"
+  }
+}
