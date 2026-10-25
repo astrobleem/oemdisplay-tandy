@@ -182,7 +182,7 @@ Use your actual Windows path with PREPXT WINXT D:\WINDOWS, then pass that
 same path to the second INSTALL. PREPXT checks existing output, free space,
 source structure and I/O before staging; /VERIFY enables deeper diagnostics.
 It never starts Setup itself. MODEINFO.TXT describes mode controls/recovery;
-PREPXT.TXT describes preparation. Windows' own Setup, loader, kernel and
+Windows' own Setup, loader, kernel and
 other OS components remain required and are read from your installation.
 """)
 
