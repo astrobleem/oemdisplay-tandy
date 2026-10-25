@@ -88,9 +88,9 @@ mfound:
 		mov	[ishift],al
 		mov	al,[bx+6]
 		mov	[imask],al
-		mov	ax,[wid]		;bytes per line
-		mov	cl,[bpp]
-		mul	cl
+		mov	al,[bpp]		;bytes per line
+		xor	ah,ah
+		mul	[wid]
 		mov	cl,3
 		shr	ax,cl
 		mov	[rowb],ax
