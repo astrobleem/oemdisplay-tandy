@@ -46,5 +46,8 @@ The included README.TXT covers interrupted installation and recovery.
 
 ## Optional Minesweeper
 
-[Download WINMINE30.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINMINE30.ZIP)
-and follow its included guide. SETUPXT does not install this separate app.
+[Download MINESET.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/MINESET.EXE) and run
+`MINESET` from DOS. In your normal guarded Windows desktop, choose Run and
+enter `C:\MINETST\MINERUN.EXE`. The bundled About helper stays beside the app.
+[Installation details](../tools/MINEAPP/INSTALL.TXT) cover another app folder.
+SETUPXT does not install this separate app.
