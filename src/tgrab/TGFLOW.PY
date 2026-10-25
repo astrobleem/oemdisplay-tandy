@@ -558,12 +558,15 @@ class Flow:
 
     def part_memory(self, tag, n=4):
         self.step("memory: %d DOS sessions from Windows (%s)" % (n, tag))
+        self.out.setdefault("memory_note", "windows = [GetFreeSpace(0), GlobalCompact(0)]; the largest block "
+                            "moves with compaction, the check uses the free total")
         recs = [self.win_session_free("%s session %d" % (tag, k + 1)) for k in range(n)]
         dos = [r["dos_free_in_session"] for r in recs]
         win = [r["windows"] for r in recs]
         self.check("%s: every DOS session gets the same memory and Windows' free memory is the same after "
                    "each closed session" % tag,
-                   None not in dos and len(set(dos)) == 1 and None not in win and len(set(win)) == 1,
+                   None not in dos and len(set(dos)) == 1 and None not in win
+                   and len(set(w[0] for w in win)) == 1,
                    dos_free=dos, windows_free=win)
         return dos[0]
 
@@ -583,6 +586,17 @@ class Flow:
             self.out["dos_free_session_tandygr"] = self.part_memory("TANDYGR.GR2")
             self.exit_windows("l1")
             d1 = self.dos_tgfree("DOS prompt after Windows exit 1")
+        if part == "fix":
+            self.tgsetup()
+            self.launch("l1")
+            self.part_winprt()
+            for m in (9, 10):
+                self.grab_mode(m, 0)
+                a, rows = self.grab_mode(m, 1, switch=True)
+                self.pb_paste_full("DOS%XP1.BMP" % m, MODES[m][0], a)
+            self.out["dos_free_session_tandygr"] = self.part_memory("TANDYGR.GR2", n=3)
+            self.exit_windows("l1")
+            self.dos_tgfree("DOS prompt after Windows exit 1")
         if part in ("all", "relaunch"):
             if part == "relaunch":
                 self.tgsetup()
