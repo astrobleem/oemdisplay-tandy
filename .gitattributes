@@ -110,3 +110,6 @@ downloads/experimental/yamaha/** -text
 docs/yamaha/SUPPORT.MD -text
 .github/workflows/yampack.yml -text
 docs/yamaha/SUPPORT.JSN -text
+
+# Native DOS compiler inputs and payload pins retain reviewed CRLF bytes.
+tools/DOSINST/** -text
