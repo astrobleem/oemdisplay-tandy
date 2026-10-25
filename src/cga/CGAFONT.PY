@@ -89,7 +89,7 @@ put('0', '.#./#.#/#.#/#.#/.#./.#.')
 def drawing(char, width, height, fixed=False):
     if height == 5:
         # The stock Notepad Open template is 192x130 dialog units. A true
-        # 3x5 dialog strike targets its layout while desktop text stays 4x6.
+        # 3x5 UI strike targets its layout; fixed/OEM text stays 4x6.
         rows = list(G.get(char,G['\u25a1']))
         if char == '0': rows = ['###','#.#','#.#','#.#','###']
         elif char == 'I' and width==2: rows = ['##.','.#.','.#.','.#.','##.']

@@ -1,0 +1,207 @@
+{
+  "status": "PARTIAL_NATIVE_QUALIFICATION_CGA100_PASS",
+  "source_commit": "8cc53057dc53dbcee0a2fdbcb7e257099d33e142",
+  "consumer_packet": {
+    "bytes": 124035,
+    "sha256": "0dfd429e13f6ec47628e29cb842771ecb309efe36045277ab356bad32854002a"
+  },
+  "installer": {
+    "build": "PASS",
+    "sources": {
+      "CGAPINS.H": "1e8c3aee9304215238a4d51d7b7563a95b6c907280a2c5d77bc6fb95f8bd9948",
+      "CRCFAST.H": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8",
+      "INICGA.C": "1edfafc4a3e58843060d56d4ffde5ee188e3762381fcc8863dce66946452c635",
+      "SETUP.C": "a6b59b5af6ea91b701d2063abccaabeea6e96c5a470bc40cf5360dfa87486843"
+    },
+    "binary": {
+      "bytes": 30595,
+      "sha256": "066bf458813c9879c3f73bd0a5ab8d51c2b94a5a830677ae87038d42fe602f7d",
+      "crc32": "e9c4497d"
+    },
+    "data_budget": {
+      "data_and_stack_bytes": 59968,
+      "data_group_headroom_bytes": 5568
+    },
+    "runtime": "NOT_TESTED",
+    "source_commit": "8cc53057dc53dbcee0a2fdbcb7e257099d33e142",
+    "process": "PROCESS.JSON"
+  },
+  "native_driver": {
+    "bytes": 58208,
+    "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3"
+  },
+  "runtime_driver_core": "All eleven NE code/data segment payloads byte-identical to native-cga100-01; native-cga100-03/SEGMENTS.JSON",
+  "consumer_install": "Complete actual native SETUP in native-cga-gui100-03; continuation uses verified identical installed payload, no font/INI changes or AddFontResource test call",
+  "fixture": {
+    "source_image": {
+      "bytes": 84341760,
+      "sha256": "37d831fe15f1df18313b496e5a168a5516d81f532eb492a2f9d2b46fb99bdf35"
+    },
+    "mode": "100",
+    "config": {
+      "bytes": 694,
+      "sha256": "02fc78f698874a0c89517db8cf3aa239708cd6ffa14ec278b38ec0eba26f78b7"
+    },
+    "probe": {
+      "bytes": 8399,
+      "sha256": "8466e40eab987ba22493b87e4750c8eb57fb02864ff22b18c8b1b0f36b0da9d8"
+    },
+    "packet": "C:\\Users\\chad\\Documents\\Codex\\2026-10-25\\task-4\\native-cga-packet-03"
+  },
+  "mode100": {
+    "native_data": "PASS",
+    "mode": "100",
+    "palette": "PASS",
+    "memory_blt": "PASS",
+    "all_256_pairs": "PASS",
+    "draw_under_odd_cursor": "PASS",
+    "edges_and_hide": "PASS",
+    "padding": "PASS",
+    "saved_file_exact": "PASS",
+    "dos_mode": 3,
+    "source_captures": {
+      "009.VRM": "61a3fda65d5aa5f5f12923ce444769e44c6eda82f53e430a4631a6d7e3134d02",
+      "012.VRM": "3cd30f01f17733953667b060fe1b64341334e076d71a98c5f31297c7e2ad38b4"
+    },
+    "physical_hardware": "UNQUALIFIED",
+    "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification",
+    "draw_guest_ms": 3185,
+    "draw_clock_resolution_ms": 55,
+    "speedup_comparison": "NO BASELINE; includes added256pair grid, excludes log I/O"
+  },
+  "dialogs": [
+    {
+      "title": "Run",
+      "rect": [
+        0,
+        15,
+        168,
+        64
+      ],
+      "controls": 5,
+      "all_controls_within_screen": true
+    },
+    {
+      "title": "File Open",
+      "rect": [
+        0,
+        0,
+        154,
+        98
+      ],
+      "controls": 10,
+      "all_controls_within_screen": true
+    },
+    {
+      "title": "File Save As",
+      "rect": [
+        0,
+        10,
+        153,
+        96
+      ],
+      "controls": 8,
+      "all_controls_within_screen": true
+    },
+    {
+      "title": "Find",
+      "rect": [
+        0,
+        25,
+        159,
+        83
+      ],
+      "controls": 8,
+      "all_controls_within_screen": true
+    }
+  ],
+  "native_log": {
+    "bytes": 28998,
+    "sha256": "1db7e85c0ad6c33afaade8b1c57e9b771b2588db169cf6f57994889733ab23bb"
+  },
+  "native_plan": {
+    "bytes": 7416,
+    "sha256": "5d92a9de8e44af2ebe0b95ec37a0df5f2cb81a165e0415f8bb5103cbfa6b83f1"
+  },
+  "owned_process": {
+    "complete": true,
+    "bound_seconds": 900,
+    "lease_acquired": true,
+    "owned_pid": 26592,
+    "emulator": {
+      "bytes": 40974314,
+      "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+    },
+    "rom_floppy_prompt_acknowledged": true,
+    "owned_stopped": true,
+    "lease_released": true,
+    "seconds": 386.9539999999106
+  },
+  "capture_limitation": "Headless FRAME reads row zero rather than CGA firstline; retained raw PNGs are not complete monitor screenshots. VRAM/API/file checks are separate. Decoded native VRAM images are labeled, never scanout proof.",
+  "remaining": [
+    "Large Control Panel dialogs and File Manager",
+    "320x200x4 and 640x200x2 native IBM GUI",
+    "Revised SETUP mode-switch/UNDO native regression",
+    "Original IBM physical hardware, CRT scanout, flicker/snow and serial mouse"
+  ],
+  "publication": "NOT_AUTHORIZED",
+  "installer_mode_switch_undo": {
+    "complete": true,
+    "modes": [
+      "100",
+      "320",
+      "640",
+      "100"
+    ],
+    "undo_exact": true,
+    "created_payload_removed": true,
+    "original": {
+      "SYSTEM.INI": {
+        "bytes": 1058,
+        "sha256": "53d91a6dd6485079b332387319a2e8197249292d614cd227a3fe8cb71b8e93c8"
+      },
+      "WIN.INI": {
+        "bytes": 1301,
+        "sha256": "67ae933f4d719ae482378e156faf72d1f117c2211ad86f164a503f18cae5c090"
+      }
+    }
+  },
+  "control_panel_gate": {
+    "status": "USABILITY_GATE_FAILED",
+    "consumer_driver_and_fonts_unchanged": true,
+    "control_panel_main": {
+      "window": [
+        0,
+        0,
+        164,
+        68
+      ],
+      "last_icon_cells": [
+        [
+          149,
+          15,
+          186,
+          41
+        ],
+        [
+          149,
+          41,
+          186,
+          67
+        ]
+      ],
+      "maximize_reflow": false
+    },
+    "Desktop": "Native VRAM shows 200x158-DU stock Desktop extending below100 rows; native 004.VRM retained. Complete API tree while Desktop active was not captured, so exact control bounds are not claimed.",
+    "native_move": "Control Panel main moves only to y=-8 with tested upward sequence; no acceptance of complete dialog reachability.",
+    "dos_return": "RETURNED, BIOS3,640KB",
+    "followup": "Evaluate software viewport using existing XTPAN/HPXY sources, preserving fixed100 and normal320/640 options. Do not shrink letters below readable size or replace shared panning branch.",
+    "physical_hardware": "UNQUALIFIED"
+  },
+  "mode320_UI": {
+    "status": "FAIL_ORIGINAL_FONT_SELECTION",
+    "Run_edit_right": 356,
+    "screen_width": 320,
+    "candidate_fix": "Original4x6 System/dialog fonts, retaining existing normal-mode renderer bytes"
+  }
+}

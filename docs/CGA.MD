@@ -74,8 +74,8 @@ flicker and is not a proven fast path. BIOS mode restoration additionally
 restores the prior text page, cursor shape and position. Ordinary DOS return,
 Windows re-entry and full-screen DOS/grabber interactions need actual tests.
 
-`CGAFONT.PY` reuses XT Pixels' FNT/FON writer for original 4x6 desktop and
-3x5 dialog ASCII faces;
+`CGAFONT.PY` reuses XT Pixels' FNT/FON writer for original five-row
+proportional System/Helv, 4x6 fixed/OEM and 4x5 Courier ASCII faces;
 `CGAUI.PY` reuses the compact BMP serializer for six-row controls. These are
 first candidates, not proof of native text quality or complete charset support.
 `CGAMODEL.PY` validates host/reference VRAM captures; it is not a new renderer.
@@ -239,3 +239,19 @@ controls. Basic Run/Open/Save/Find results do not qualify every desktop dialog.
 If native controls remain unreachable, evaluate the existing software viewport
 and task-time helper contracts in src/softpan/SPPATCH.PY and src/xtpan/XTPAN.C
 before proposing another renderer. No viewport or peer branch is changed here.
+
+The complete revised consumer packet now installs natively on the IBM XT
+fixture and passively selects System/ANSI variable fonts at height 5 / average
+width 3. SETUP's C6 map leaves 5,568 bytes after data/stack, passing its gate.
+The native GUI continuation verifies identical installed payloads and performs
+no explicit font registration. Run/Open/Save As/Find controls fit; Directory:
+measures exactly its 26-pixel control width. Checkbox/radio states and center
+hit tests are recorded. Notepad's saved two-line file matches exactly.
+
+The current native VRAM oracle passes all 16 palette indices, all 256 adjacent
+color pairs, memory BitBlt, drawing beneath an odd-origin cursor, three edges,
+hide/restoration and untouched bank padding. Windows returns normally to DOS
+mode 3 with 640 KB. The owned process stops and releases the shared lease.
+See src/cga/NATIVE.JSN for exact packet, build, probe/run and evidence pins.
+Larger desktop dialogs, normal-mode IBM GUI and physical hardware remain
+separate gates; this is still an unpublished development candidate.

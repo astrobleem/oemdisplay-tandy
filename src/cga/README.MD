@@ -156,3 +156,10 @@ hit-test handles. These are API-level checks, not physical mouse acceptance.
 F6 appends a fresh window/control snapshot without changing the test scene.
 A command beginning F additionally tests font mapping and AddFontResource;
 that diagnostic mode changes the session font table and is not consumer proof.
+
+CGACTL.C / BUILDUI.PY stage a separate window-access candidate for the large
+Control Panel failure. It has no renderer/video-port code. It is not yet
+installed or included in the qualified development packet; modal-dialog
+reachability must pass natively before consumer integration. It responds
+only to explicit Ctrl+Alt+arrow/Home/End chords. The fixed renderer checkpoint
+and its proof remain unchanged.
