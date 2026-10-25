@@ -1,0 +1,126 @@
+{
+  "pass": true,
+  "cases": 13,
+  "bytes_compared": 426192,
+  "staged_tsoft_sha256": "97ba91fcded9a86501eac43857b03c6cee096b8bfa5e7d296b6be00feb93d75a",
+  "scope": "actual staged FlushRows and ColorPlus macros, video segment redirected to guarded RAM; not Windows/adapter qualification",
+  "results": [
+    {
+      "top": 0,
+      "first": 0,
+      "last": 400,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 1,
+      "first": 0,
+      "last": 400,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 99,
+      "first": 0,
+      "last": 400,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 100,
+      "first": 0,
+      "last": 400,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 199,
+      "first": 0,
+      "last": 400,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 200,
+      "first": 0,
+      "last": 400,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 100,
+      "first": 95,
+      "last": 108,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 100,
+      "first": 0,
+      "last": 20,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 100,
+      "first": 299,
+      "last": 305,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 200,
+      "first": 393,
+      "last": 410,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 1,
+      "first": -10,
+      "last": 2,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 200,
+      "first": 400,
+      "last": 401,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    },
+    {
+      "top": 0,
+      "first": 200,
+      "last": 200,
+      "bytes": 32784,
+      "mismatches": 0,
+      "first_mismatches": [],
+      "pass": true
+    }
+  ]
+}

@@ -1,69 +1,58 @@
-WINDOWS XT XR1 - CURRENT OWN-MEDIA INSTALLER
+WINDOWS XT - DOS-NATIVE INSTALLATION
 
-Windows 3.0 real mode on an original Tandy 1000 EX/HX, 640 KB RAM, DOS 3.3+.
-XR1 provides a 640x256 logical desktop through a 320x200 sixteen-color view,
-Tandy Start, original fonts, keyboard panning, hardware-pan controls and
-COM1/IRQ4 serial mouse/wheel input. The required project components are here.
-You supply Windows and DOS. The prepared output stays private.
+Tandy 1000 EX/HX, 8088, normal 640 KB, DOS 3.3+, Windows 3.0 real mode.
+The driver, shell, helpers, wheel input, grabber, original fonts and artwork
+are supplied.
+You supply your Windows 3.0 installation or original Setup disks.
 
-PREPARE ON A MODERN COMPUTER
-Use Python 3.8+ with its standard library; no compiler or emulator is needed.
-Supply a merged folder from the supported English Windows 3.0 media set.
-Expanded files and the original mode-A SZDD compression are accepted.
-Different media bytes are refused before output is created; the tool does
-not fetch missing files or substitute a different Windows release.
+RUN ON THE DOS COMPUTER
+Put WINXT.EXE anywhere on the DOS computer. Exit Windows completely.
+To update an existing English Windows 3.0 installation at C:\WINDOWS:
 
-For a new Windows installation:
-  python PREPARE.PY --windows-media C:\WIN30SRC --mode fresh --out C:\XR1NEW
+  WINXT UPDATE C:\WINDOWS
 
-For an existing Windows 3.0 installation:
-  python PREPARE.PY --windows-media C:\WIN30SRC --mode update --out C:\XR1UPD
+It reads Windows Setup metadata and its loader automatically, stages the complete
+installer and starts SETUPXT. No Python, modern PC, compiler, conversion or
+manual file collection is needed.
 
-Use your actual paths and a new output folder. Update preparation needs only
-the matching CGA.GR2, WIN.CNF and original SETUP.INF media inputs; fresh
-preparation also gathers the Windows Setup files. The supplied PAYLOAD folder
-contains the current shell/helpers, adapted display/keyboard drivers, wheel
-driver, fonts and artwork. No old private build folder is needed.
+For new Windows, insert the first original English Windows 3.0 Setup disk:
+  WINXT FRESH A:\
 
-The tool verifies every input and generated output. PREPARE.JSN records the
-result beside DOS-CROOT. It generates CNF.PIN, XTTEST.COM and modified Setup
-metadata from your own Windows files. These generated files contain Microsoft
-bytes; do not redistribute the prepared DOS-CROOT or an assembled Windows tree.
+It gathers files from each disk, asking for the next disk until complete.
+A complete existing Windows Setup folder also works:
+  WINXT FRESH C:\WIN30SRC
 
-INSTALL OR UPDATE FROM PLAIN DOS
-Back up an existing Windows installation. Transfer the contents of the new
-DOS-CROOT folder to DOS C:\ using your normal storage-transfer procedure.
-Preserve DOS boot files and boot configuration; none is supplied here.
-Allow about 20 MB free for a fresh Windows source/install and temporary files.
-Exit Windows completely and run:
-  C:\SETUPXT
+Expanded files and original mode-A SZDD files are read directly. The automatic
+media cache and prepared source stay on this DOS computer. Allow about 30 MB
+for fresh source, installation and temporary files. Windows is installed in C:\WINDOWS.
 
-Fresh Setup uses C:\WINDOWS. At the hardware screen choose the FIRST Computer
-entry, Tandy 1000 EX/HX (WindowsXT). Confirm HPXY 640x256, PC/XT keyboard and
-the COM1 wheel mouse. Choose No Changes for DOS configuration. Setup and the
-finisher complete automatically. An existing installation uses the update
-route and preserves unrelated INI settings and shell customization.
+Fresh Windows Setup: Enter at Welcome and directory. At System Information
+select Computer, then the FIRST Tandy 1000 EX/HX (WindowsXT) entry. Confirm
+HPXY 640x256 and PC/XT keyboard; keep Setup's mouse choice. Select No Changes
+for DOS configuration. The finisher installs the COM1 wheel mouse and current
+desktop automatically after Windows Setup. Update preserves
+unrelated INI entries and shell customization. No manual INI edits are needed.
 
-Next starts: C:\STARTXT. Repair from plain DOS: C:\FIXXT.
-C:\FIXXT /VERIFY requests full file comparison. If installation stops, retain
-its journal/recovery files and read the error; rerunning SETUPXT performs the
-existing recovery/resume path. Keep your pre-install backup for full rollback.
+Start later sessions from plain DOS: C:\STARTXT.
+Repair from plain DOS: C:\FIXXT. C:\FIXXT /VERIFY adds full file comparison.
+If interrupted, rerun C:\SETUPXT for the existing recovery/resume path.
+
+WINXT.ZIP is the same kit for a DOS ZIP utility: extract on the target computer
+and use PREPXR UPDATE C:\WINDOWS or PREPXR FRESH A:\ in that folder.
+The complete WINXT.EXE download needs no extraction utility.
 
 USING XR1
-XYCTL starts in Software mode. Its menu enables Hardware presentation.
-Ctrl+Alt+H toggles the mode; Ctrl+Alt+arrows pan and Ctrl+Alt+Home returns home.
-The helper's Help menu lists its controls. Run MODEXT /XR1 from plain DOS to
-restore this profile. Other custom display profiles are separate downloads.
-WXTWHL starts once for scrolling in supported ordinary Windows controls.
-The mouse driver uses COM1/IRQ4, 1200 baud 7N1, two buttons and an optional
-signed wheel nibble. This package is for Windows 3.0 real mode, not 3.1.
+The 640x256 logical desktop is viewed through 320x200 in sixteen colours.
+XYCTL starts in Software mode. Its menu or Ctrl+Alt+H enables Hardware.
+Ctrl+Alt+arrows pan; Ctrl+Alt+Home returns home. WXTWHL supports scrolling in
+ordinary Windows controls. The mouse uses COM1/IRQ4, 1200 baud, 7N1.
+Windows 3.1 is unsupported.
 
-Minesweeper is a separate WINMINE30.ZIP download with its own short install
-guide and tested About shim; SETUPXT does not install it automatically.
+Current optional app packets and their installation guides:
+https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/DOWNLOADS.MD
 
-QUALIFICATION AND NOTICES
-Read QUALIFY.JSN for exact emulator test scope and remaining limits, and
-NOTICE.TXT for authorship, adaptation and component notices. The final package
-and new wheel driver have emulator qualification; no new physical run is
-claimed. Earlier real-EX panning acceptance has its own separately scoped
-record. Large redraws and some apps can still be slow on an original 8088.
+The display and keyboard drivers, fonts and artwork are unchanged. Native results
+are in docs/QUAL/DOSINST/RC8.JSN at the source commit in RELEASE.JSON.
+No new physical hardware test is claimed. See NOTICE.TXT, OWATCOM.TXT and
+individual font/artwork/wheel notices. The supplied CGA grabber is included;
+a Windows/DOS installation, disk images, ROMs and proprietary tools are not.

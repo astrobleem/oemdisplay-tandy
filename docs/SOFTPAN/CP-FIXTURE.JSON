@@ -1,0 +1,23 @@
+{
+  "resolved": true,
+  "accepted_driver_sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406",
+  "old_fixture": {
+    "boot_image": "HOV8088-BASE.IMG",
+    "accepted_fixed_boots": false,
+    "observation": "same static startup screen; sampled CS:IP 0000:003D; BIOS ticks advance"
+  },
+  "repaired_fixture": {
+    "boot_media": "existing PCjs PC DOS 3.20 image",
+    "accepted_fixed_boots": true,
+    "panned_boots": true,
+    "partition_offset": 8704,
+    "chs": [
+      615,
+      4,
+      17
+    ],
+    "change": "DOS boot image and its required disk geometry; same Windows support files and emulator configuration"
+  },
+  "outcome": "fixture repaired; no candidate driver-byte change required",
+  "limit": "This identifies the boot-fixture dependency; it does not establish that every newer DOS setup fails."
+}

@@ -1,0 +1,20 @@
+BEGIN_NORMAL_DESKTOP_APPS
+step=0 round=0 tick=27517 Starting private MINERUN from normal desktop
+C:\MINETST\WMABT.DLL
+step=1 round=0 tick=66678 Game window and private About module present
+Minesweeper
+step=2 round=0 tick=71512 About dialog present
+step=3 round=0 tick=76730 New game requested after About
+step=5 round=0 tick=108696 Minesweeper closed normally
+step=0 round=1 tick=109300 Starting private MINERUN from normal desktop
+C:\MINETST\WMABT.DLL
+step=1 round=1 tick=147693 Game window and private About module present
+Minesweeper
+step=2 round=1 tick=154723 About dialog present
+step=3 round=1 tick=161754 New game requested after About
+step=5 round=1 tick=194434 Minesweeper closed normally
+step=6 round=1 tick=194873 Starting unchanged Cookie directly from desktop
+step=8 round=1 tick=205968 Cookie click/buy/save produced a valid one-CPS save
+step=9 round=1 tick=207561 Cookie load/save passed
+step=10 round=1 tick=213273 Cookie closed normally
+PASS_NORMAL_DESKTOP_APPS

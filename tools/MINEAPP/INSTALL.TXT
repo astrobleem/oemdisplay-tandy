@@ -1,0 +1,28 @@
+MINESWEEPER - WINDOWS 3.0 REAL MODE
+
+1. From DOS, run MINESET. It puts all app files in C:\MINETST.
+   To use another folder, run MINESET D:\GAMES\MINE; its parent must exist.
+   No ZIP utility, Python, compiler or Windows support-file collection is needed.
+2. Start your normal guarded Windows 3.0 desktop.
+3. In Tandy Start choose Run, or in Program Manager choose File / Run:
+     C:\MINETST\MINERUN.EXE
+   Use the folder selected in step 1 if different.
+
+MINERUN loads the bundled WMABT.DLL by full path before starting WINMINE.EXE.
+Keep the three app files together. Nothing is copied to Windows or SYSTEM;
+no INI, display, shell or boot setting changes. Use MINERUN for later launches.
+
+Left click reveals, right click flags, F2 starts a game, Help / About uses the
+included helper. Close the app normally. To remove it, close Windows and remove
+this private app folder. The installer refuses a different file at the chosen
+destination; select another folder rather than overwriting it. A failed copy
+can be completed by rerunning the same installer in that folder.
+
+An already loaded different WMABT module is left alone. Exit Windows normally
+and restart your normal desktop before using MINERUN. No global DLL needs to
+be removed or replaced. Existing game/shim bytes are unchanged from the accepted
+Windows 3.0 packet. Native qualification of the new private launcher is recorded
+separately from the old packet; see the release's test record.
+
+ZIP alternative: extract the complete packet together on the DOS computer,
+then run MINERUN from Windows as above. The EXE needs no ZIP utility.

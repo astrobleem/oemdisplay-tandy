@@ -17,7 +17,7 @@ INF = importlib.machinery.SourceFileLoader("t2pack_inf", str(HERE / "T2INF.PY"))
 MEDIA = importlib.machinery.SourceFileLoader(
     "t2pack_media", str(ROOT / "tools/XR1PACK/PREPARE.PY")).load_module()
 STAMP = (1980, 1, 1, 0, 0, 0)
-SOURCE_NAMES = {"OEMSETUP.INF", "PREPINF.BAT", "README.TXT", "FONTLIC.TXT", "NOTICE.TXT"}
+SOURCE_NAMES = {"OEMSETUP.INF", "PREPINF.BAT", "README.TXT", "FONTLIC.TXT", "NOTICE.TXT", "INSTALL.BAT", "T2WIN.BAT"}
 
 
 def identity(data):
@@ -55,7 +55,9 @@ def archive(files):
 
 
 def source_files():
-    return {"OEMSETUP.INF": (HERE / "OEMSETUP.INF").read_bytes(),
+    return {"INSTALL.BAT": (HERE / "INSTALL.BAT").read_bytes(),
+            "T2WIN.BAT": (HERE / "T2WIN.BAT").read_bytes(),
+            "OEMSETUP.INF": (HERE / "OEMSETUP.INF").read_bytes(),
             "PREPINF.BAT": (HERE / "PREPINF.BAT").read_bytes(),
             "README.TXT": (HERE / "INSTALL.TXT").read_bytes(),
             "FONTLIC.TXT": (ROOT / "distributions/WINXT/FONTLIC.TXT").read_bytes(),
@@ -101,7 +103,7 @@ def prepare(accepted, output, grabber=None):
         files[name] = exact(data, pin, name)
     receipt = {
         "schema": 1,
-        "scope": "original fonts/logo/support integration; driver and DOS helpers unchanged",
+        "scope": "original support and guarded DOS batch entries; driver and COM executables unchanged",
         "files": {n: identity(b) for n, b in sorted(files.items())},
         "selected_fonts": {"fonts.fon": "XTCSYS.FON", "fixedfon.fon": "XTCFIX.FON",
                            "oemfonts.fon": "XTCOEM.FON"},

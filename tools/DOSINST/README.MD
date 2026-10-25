@@ -1,26 +1,47 @@
 # Native consumer installers
 
-XSETUP is the DOS 3.20+ / 8088 preparation and Setup front end for XRSYNC.
-Consumers use the prebuilt XRSYNC.EXE download on their DOS computer.
-It reads the public stored ZIP or its own appended ZIP, gathers the matching
-installed Windows support locally, validates CRCs and readback, and hands
-installation to normal Windows Setup. RUNSYNC uses its installed-file check.
-No Windows bytes, toolchain, emulator or disk image is distributed here.
+The prebuilt XRSYNC.EXE and WINXT.EXE run on the DOS computer itself. Both
+include the supplied, expanded CGA.GR2 grabber and all driver support files;
+consumers do not collect support files or run Python.
 
-Developer rebuild only:
+XRSYNC installs the display into an existing Windows 3.0 system:
 
-```text
-python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --out NEWBUILD
+```bat
+XRSYNC C:\WINDOWS
 ```
 
-Open Watcom's 16-bit DOS compiler uses `-bt=dos -0 -ml -os`; BIN/XSETUP.EXE
-is the tested prebuilt helper. XSNATIVE.JSN binds its exact build inputs.
-The runtime driver remains the qualified PR155 XRSYNC.DRV. Public packet
-construction and checks live in tools/XRSYNC/PUBLISH.PY and TESTPKG.PY.
-The retained Python preparation script is developer reference tooling and
-is absent from the consumer download.
+WINXT prepares the complete current desktop, using the installed Windows OS
+or gathering the original Windows 3.0 Setup disks automatically:
 
-[Actual DOS installation results](../../docs/QUAL/DOSINST/XRSYNC.JSN)
-bind the helper, package, Setup selection, normal/cold launches and frame
-hashes. The shared emulator lease and owned-process cleanup were used.
-The existing RRTEST and RLE evidence retain their original scope.
+```bat
+WINXT UPDATE C:\WINDOWS
+WINXT FRESH A:\
+```
+
+XRSYNC targets DOS 3.20+; WINXT targets DOS 3.3+. Both target the 8088 and
+normal 640 KB. The Windows/DOS installation, private prepared OS files,
+toolchain, emulator and guest disk images are outside the public packets.
+
+Developer rebuilds use Open Watcom's 16-bit DOS compiler:
+
+```text
+python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target xrsync --out NEWBUILD
+python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target rc8 --out NEWBUILD
+python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target finisher --out NEWBUILD
+python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target wrapper --out NEWBUILD
+```
+
+Use a fresh output directory for each command. XSNATIVE.JSN and RCNATIVE.JSN
+bind the source and prebuilt binary identities. The public publishers refuse
+assets that differ from their native qualification records. Developer-only
+Python reference recipes remain outside consumer downloads.
+XRINPUT.H pins the CRC of every required expanded Windows OS stream;
+XRINPUT.JSN binds those CRCs to the existing qualified size/SHA identities.
+The helper checks CRC during its existing reads and withholds the new Setup
+entry on failure. It discards a rejected copy only in its own tagged media
+cache, so a normal retry gathers that file again from the original media.
+
+[Display installation results](../../docs/QUAL/DOSINST/XRSYNC.JSN) and
+[complete desktop installation results](../../docs/QUAL/DOSINST/RC8.JSN)
+record the native preparation, Setup and guarded launch checks. Rendering
+qualification remains separate from installation qualification.

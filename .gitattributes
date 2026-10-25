@@ -110,11 +110,22 @@ downloads/experimental/yamaha/** -text
 docs/yamaha/SUPPORT.MD -text
 .github/workflows/yampack.yml -text
 docs/yamaha/SUPPORT.JSN -text
-tools/FLASHDISK/HISTORY/** -text
 
-# Current CPSET resource binding keeps compiled source/data pins byte-exact.
+# Native DOS compiler inputs and payload pins retain reviewed CRLF bytes.
+tools/DOSINST/** -text
+
+# Scoped portable app sources and candidate identities preserve exact CRLF bytes.
+tools/APPSET/** -text
+tools/APPSET/BIN/*.ZIP -export-ignore
+tools/MINEAPP/** -text
+examples/COOKIE/INSTALL.TXT -text
+.github/workflows/app-packets.yml -text
+
+# Preserve actual DOS echo output in the pinned native execution receipt.
+tools/APPSET/QA/DONEAPP.TXT whitespace=-blank-at-eol
+
+tools/FLASHDISK/HISTORY/** -text
 tools/FLASHDISK/CPBIND.PY -text
 tools/FLASHDISK/CPBUILD.JSN -text
 tools/FLASHDISK/CPSET.EXE -text
-
 tools/FLASHDISK/LAUNCH/** -text

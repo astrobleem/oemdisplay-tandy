@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
     branches: [main]
-    tags: ['v0.1.0-rc.8']
+    tags: ['v0.1.0-rc.8-dos.1']
   workflow_dispatch:
 
 permissions:
@@ -30,7 +30,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/tools/XR1PACK/\n/docs/RELEASES/RC8.MD\n/.github/\n/.gitattributes\n/AGENTS.md\n' | git sparse-checkout set --no-cone --stdin
+          printf '/CGA.GR2\n/tools/XR1PACK/\n/tools/DOSINST/\n/docs/QUAL/DOSINST/\n/docs/RELEASES/RC8.MD\n/.github/\n/.gitattributes\n/AGENTS.md\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
 
@@ -40,6 +40,8 @@ jobs:
         run: |
           python3 tools/XR1PACK/TESTPREP.PY
           python3 tools/XR1PACK/TESTPUB.PY
+          python3 tools/DOSINST/TESTPUB.PY
+          python3 tools/DOSINST/TESTCRC.PY
           python3 tools/XR1PACK/PUBLISH.PY --out release-xr1 --commit "$SOURCE_SHA"
           python3 tools/XR1PACK/PUBLISH.PY --verify release-xr1 --commit "$SOURCE_SHA"
           cd release-xr1
@@ -52,239 +54,3 @@ jobs:
           path: release-xr1/*
           if-no-files-found: error
           retention-days: 30
-
-  draft-release:
-    needs: verify
-    if: >-
-      github.repository == 'astrobleem/oemdisplay-tandy' &&
-      github.event_name == 'push' && github.ref == 'refs/tags/v0.1.0-rc.8'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 5
-    permissions:
-      contents: write
-    concurrency:
-      group: winxt-draft-v0.1.0-rc.8
-      cancel-in-progress: false
-    steps:
-      # This runner never checks out or executes repository/artifact code.
-      - name: Download only this run's verified artifact
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
-        with:
-          name: winxt-xr1-${{ github.sha }}
-          path: release-xr1
-
-      - name: Recheck fixed archive identities and qualification
-        env:
-          SOURCE_SHA: ${{ github.sha }}
-        run: |
-          python3 - <<'PY'
-          import hashlib, json, os, re, zipfile
-          from pathlib import Path
-          p = Path('release-xr1')
-          pins = {'QUALIFY.JSON': {'bytes': 12679,
-                            'sha256': 'bda3ae0713b49667c3b9e85be9fb462df83242ff6f6394b7df0bf013ded490d2'},
-           'START-HERE.TXT': {'bytes': 3926,
-                              'sha256': '9701510132b7ddef84223f7fb9aea3836f0610c4d05537f66a473276c5ef20f2'},
-           'WINMINE30.ZIP': {'bytes': 37810,
-                             'sha256': 'b2ece1d699a5c44a816f9590a16063f7c633faf421428cadca78999830d120db'},
-           'WINXT-XR1.ZIP': {'bytes': 634359,
-                             'sha256': 'dfc3a64cc7cd645bade5f170711f43942828b93db716a5128f1d16805eb2560e'}}
-          expected_release = {'bundles': {'WINMINE30.ZIP': {'bytes': 37810,
-                                         'sha256': 'b2ece1d699a5c44a816f9590a16063f7c633faf421428cadca78999830d120db'},
-                       'WINXT-XR1.ZIP': {'bytes': 634359,
-                                         'sha256': 'dfc3a64cc7cd645bade5f170711f43942828b93db716a5128f1d16805eb2560e'}},
-           'physical_qualification': False,
-           'qualification_sha256': 'bda3ae0713b49667c3b9e85be9fb462df83242ff6f6394b7df0bf013ded490d2',
-           'schema': 1,
-           'source_fingerprints': {'INPUTS.JSN': {'bytes': 72340,
-                                                  'sha256': '25d8be09702fa1cd8bc1dd16189a6854860e8b20e7141d2cd38c7b0f8d5fda87'},
-                                   'MINE/NOTICE.TXT': {'bytes': 797,
-                                                       'sha256': 'f5982f2aa5d10b3439189e8966b9b355ea45965b29281c0534d8d1f9dce66e93'},
-                                   'MINE/QUALIFY.JSN': {'bytes': 2640,
-                                                        'sha256': 'c4dbbf9cb8245992b467a39b7418de4faacedd6cfe60cde7cd56a72f3603362b'},
-                                   'MINE/README.TXT': {'bytes': 1350,
-                                                       'sha256': '94629de1b9292fc129bbf32ce7dfbe77a1af9e3b9b315808858b7d4a1ae69aab'},
-                                   'MINE/SHA256S.TXT': {'bytes': 391,
-                                                        'sha256': 'f74b1ee99cc913f5402a943e1bf7478266385a72eef92633f6a44ade8d819cdf'},
-                                   'MINE/WINMINE.EXE': {'bytes': 30032,
-                                                        'sha256': '52be8bb486d3bad7809c19efc8a3202ef08a458e250634e392fbd127d4046c8a'},
-                                   'MINE/WMABT.DLL': {'bytes': 1998,
-                                                      'sha256': 'caf0967644eca52d8c69b5bf83696e78ada52995d9a16dfd10b1a86412e0d893'},
-                                   'NOTICE.TXT': {'bytes': 2888,
-                                                  'sha256': '674620312bccba24fbad7719d97032528d5efe0d2ce75bfa9933306b05d86235'},
-                                   'OWATCOM.TXT': {'bytes': 21128,
-                                                   'sha256': '7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d'},
-                                   'PAYLOAD/APPS.TXT': {'bytes': 412,
-                                                        'sha256': '22018a4cc6a6c5edd39d74ad6c4e39058be9ebf629ed460b16d4d385a100400b'},
-                                   'PAYLOAD/CPSET.EXE': {'bytes': 36612,
-                                                         'sha256': 'e4fccba25d817f9a07a900a3cf443d9ea8a28cfb82cd39887293e8436589fa4d'},
-                                   'PAYLOAD/FIXXT.BAT': {'bytes': 314,
-                                                         'sha256': 'b8a060cdc2d125989379375b8f9dbbb04d0a17f4aa71a6235350291f65f410c8'},
-                                   'PAYLOAD/FIXXT.EXE': {'bytes': 38046,
-                                                         'sha256': '24c8e726ea6a5e5df59bb36c6e6ea9d73860ed5820b0f2a7a7cf5243009c376e'},
-                                   'PAYLOAD/FONTLIC.TXT': {'bytes': 1101,
-                                                           'sha256': 'b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80'},
-                                   'PAYLOAD/HPXY.DRV': {'bytes': 56704,
-                                                        'sha256': '9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275'},
-                                   'PAYLOAD/LOGOLIC.TXT': {'bytes': 1101,
-                                                           'sha256': 'b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80'},
-                                   'PAYLOAD/MATRIX.EXE': {'bytes': 14669,
-                                                          'sha256': '854e0692b4a2571b7d53b45f15da7d954137fde9dce079e8a17df753ec94aca8'},
-                                   'PAYLOAD/MAZE.EXE': {'bytes': 28013,
-                                                        'sha256': '9905abccd267dd229502fad2d7e57375f51c34b2c445fc52ea754508407de389'},
-                                   'PAYLOAD/MODELIC.TXT': {'bytes': 1101,
-                                                           'sha256': 'b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80'},
-                                   'PAYLOAD/MODEXT.BAT': {'bytes': 481,
-                                                          'sha256': '7f9948334d1d7f073326be6c5153e3a24a24ef836fa823fc45667b1a79e2fa5a'},
-                                   'PAYLOAD/OEMSETUP.INF': {'bytes': 882,
-                                                            'sha256': '81957f3577522507e896899ad8d6a4fb98177fcd5ca3ff720e19d8e05d47f8d3'},
-                                   'PAYLOAD/OWNERS.TXT': {'bytes': 10115,
-                                                          'sha256': '24fb0e181a42c9de2dd2e67abf0d579726fd7df00ee6aabff0ada569bf3f8be1'},
-                                   'PAYLOAD/PINBALL.EXE': {'bytes': 15487,
-                                                           'sha256': 'af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f'},
-                                   'PAYLOAD/PROFILES.TXT': {'bytes': 522,
-                                                            'sha256': '883b21b861c9243c48258bb9bee0684fc93007bd134f0a6849c860d9ea2132a0'},
-                                   'PAYLOAD/RESERVE.COM': {'bytes': 1512,
-                                                           'sha256': '644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8'},
-                                   'PAYLOAD/SETAUTO.EXE': {'bytes': 10976,
-                                                           'sha256': 'e2908cba3430be2a3b24058061f6b477629305476f8702d6a7c2f7fd81d45e0a'},
-                                   'PAYLOAD/SETUPXT.BAT': {'bytes': 1726,
-                                                           'sha256': '46baa557d053b704fd6f1d79db1b1a2455cfbdd67901225dca2b86538734eb9a'},
-                                   'PAYLOAD/SHOOK.COM': {'bytes': 1249,
-                                                         'sha256': 'ba35ca3ce5407270e61c0ca15d27c4ca052bcd2a1112c7819fc214b74bd0d211'},
-                                   'PAYLOAD/STARFLD.EXE': {'bytes': 17295,
-                                                           'sha256': 'c615fcd8c18ed740ed051542093e1bd18e26b92e820eef5b1bb4fa69f2ab8ff5'},
-                                   'PAYLOAD/START.TXT': {'bytes': 1396,
-                                                         'sha256': '9c5ca7f0e989e8e19deefe47aacf18ca4477cabbac94615d0e6c37b589bd9d2d'},
-                                   'PAYLOAD/STARTXT.BAT': {'bytes': 31,
-                                                           'sha256': '2644ccde425aae149e6240db084401aa7ae1ede3610c5daeb34a7234d5081aaa'},
-                                   'PAYLOAD/TABOUT.EXE': {'bytes': 6479,
-                                                          'sha256': 'b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed'},
-                                   'PAYLOAD/TCHIME.EXE': {'bytes': 3999,
-                                                          'sha256': 'c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121'},
-                                   'PAYLOAD/TEXIT.EXE': {'bytes': 8687,
-                                                         'sha256': '78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99'},
-                                   'PAYLOAD/TNDYK3.DRV': {'bytes': 7640,
-                                                          'sha256': 'e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5'},
-                                   'PAYLOAD/TP.EXE': {'bytes': 12303,
-                                                      'sha256': '3260c222fee2dcb33cabadc8602cf878c266a7c0c6a4d5125c05784e32793b74'},
-                                   'PAYLOAD/TSHELL.EXE': {'bytes': 71763,
-                                                          'sha256': 'b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49'},
-                                   'PAYLOAD/TSHELL.INI': {'bytes': 999,
-                                                          'sha256': '9b0dca9bf1f66bcb5f99cbc347dbf093942ee30c6e0b3d546127e88585cec2f5'},
-                                   'PAYLOAD/TSINPUT.DLL': {'bytes': 6281,
-                                                           'sha256': 'd14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80'},
-                                   'PAYLOAD/WHEEL.DRV': {'bytes': 1820,
-                                                         'sha256': '84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0'},
-                                   'PAYLOAD/WINBRDG.EXE': {'bytes': 28656,
-                                                           'sha256': '230a24f8dec830dd8ceb8e11bb6f9694ed9a67b25ef232b9352e5e743cd3d74b'},
-                                   'PAYLOAD/WINXT.BAT': {'bytes': 332,
-                                                         'sha256': '8b484c67b9896deb2ba281f79a4020e35c7ef238fad5c5055ca63699c87c683b'},
-                                   'PAYLOAD/WXTSPL01.RLE': {'bytes': 4062,
-                                                            'sha256': 'eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c'},
-                                   'PAYLOAD/WXTWHL.EXE': {'bytes': 7222,
-                                                          'sha256': '0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6'},
-                                   'PAYLOAD/XPCHIME.EXE': {'bytes': 4543,
-                                                           'sha256': '63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f'},
-                                   'PAYLOAD/XTCFIX.FON': {'bytes': 4208,
-                                                          'sha256': '3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971'},
-                                   'PAYLOAD/XTCLEAN.COM': {'bytes': 1071,
-                                                           'sha256': 'be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad'},
-                                   'PAYLOAD/XTCOEM.FON': {'bytes': 4560,
-                                                          'sha256': '8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055'},
-                                   'PAYLOAD/XTCSYS.FON': {'bytes': 4592,
-                                                          'sha256': 'c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326'},
-                                   'PAYLOAD/XTEFIX.FON': {'bytes': 4656,
-                                                          'sha256': '3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c'},
-                                   'PAYLOAD/XTEOEM.FON': {'bytes': 4560,
-                                                          'sha256': '8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055'},
-                                   'PAYLOAD/XTESYS.FON': {'bytes': 5680,
-                                                          'sha256': '50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946'},
-                                   'PAYLOAD/XTLOGO.LGO': {'bytes': 35971,
-                                                          'sha256': '8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c'},
-                                   'PAYLOAD/XTSTATIC.LGO': {'bytes': 361,
-                                                            'sha256': '995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef'},
-                                   'PAYLOAD/XTTSYS.FON': {'bytes': 4208,
-                                                          'sha256': 'dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa'},
-                                   'PAYLOAD/XYCTL.EXE': {'bytes': 9679,
-                                                         'sha256': '7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055'},
-                                   'PREPARE.PY': {'bytes': 11110,
-                                                  'sha256': 'c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1'},
-                                   'PROVENANCE.JSN': {'bytes': 14770,
-                                                      'sha256': 'da6e89a3af1990b94eb79c717129880876150674ef613297b11e14441f41cf6d'},
-                                   'PUBLIC.JSN': {'bytes': 11925,
-                                                  'sha256': 'e8fac59ab41a648f4eeefc4a7fc633d24381a54f53d095c79395d8c2add650b2'},
-                                   'PUBLISH.PY': {'bytes': 19523,
-                                                  'sha256': 'b9438d8f068b30b43d7930c38c47b1eda86c5b3b615ff4bd17c0836155c313c2'},
-                                   'QUALIFY.JSN': {'bytes': 12679,
-                                                   'sha256': 'bda3ae0713b49667c3b9e85be9fb462df83242ff6f6394b7df0bf013ded490d2'},
-                                   'README.TXT': {'bytes': 3926,
-                                                  'sha256': '9701510132b7ddef84223f7fb9aea3836f0610c4d05537f66a473276c5ef20f2'},
-                                   'WHEELLIC.TXT': {'bytes': 1101,
-                                                    'sha256': 'b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80'},
-                                   'WHEELPRO.TXT': {'bytes': 4166,
-                                                    'sha256': '8301b3e7e80fcdd8d53e3895b13e257a75f8d0f72de9443f2da226135cdeadaf'}},
-           'status': 'PASS_HOST_AND_NATIVE',
-           'tag': 'v0.1.0-rc.8'}
-          names = set(pins) | {'RELEASE.JSON', 'SHA256SUMS'}
-          assert {x.name for x in p.iterdir()} == names
-          assert all(x.is_file() and not x.is_symlink() for x in p.iterdir())
-          digest = lambda data: hashlib.sha256(data).hexdigest()
-          for name, pin in pins.items():
-              data = (p/name).read_bytes()
-              assert {'bytes': len(data), 'sha256': digest(data)} == pin, name
-          assert (p/'RELEASE.JSON').stat().st_size < 131072
-          r = json.loads((p/'RELEASE.JSON').read_bytes())
-          sha = os.environ['SOURCE_SHA']
-          assert re.fullmatch('[0-9a-f]{40}', sha)
-          expected_release['commit'] = sha
-          assert r == expected_release
-          q = json.loads((p/'QUALIFY.JSON').read_bytes())
-          assert q['status'] == 'PASS_HOST_AND_NATIVE' and q['physical_qualification'] is False
-          for case in ('fresh', 'update'):
-              row = q['native'][case]
-              assert row['status'] == 'PASS' and row['owned_process_stopped'] is True
-              assert row['lease_released'] is True and row['run_id']
-          for name in ('WINXT-XR1.ZIP', 'WINMINE30.ZIP'):
-              with zipfile.ZipFile(p/name) as z:
-                  members = z.infolist()
-                  assert len(members) == (56 if name == 'WINXT-XR1.ZIP' else 6)
-                  assert len({i.filename.casefold() for i in members}) == len(members)
-                  assert z.testzip() is None and not z.comment
-                  for item in members:
-                      assert item.date_time == (1980, 1, 1, 0, 0, 0)
-                      assert item.compress_type == zipfile.ZIP_STORED and not item.extra and not item.comment
-                      assert item.create_system == 0 and item.external_attr == 0x20 and item.flag_bits == 0
-          expected_sums = ''.join(digest((p/name).read_bytes())+'  '+name+'\r\n' for name in sorted(names-{'SHA256SUMS'}))
-          assert (p/'SHA256SUMS').read_bytes() == expected_sums.encode('ascii')
-          print('PASS: exact six assets, frozen bundles, source commit and qualification')
-          PY
-
-      - name: Create a new draft without replacing prior releases
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-          SOURCE_SHA: ${{ github.sha }}
-        run: |
-          set -euo pipefail
-          tag=v0.1.0-rc.8
-          test "$(gh api "repos/$GH_REPO/commits/$tag" --jq .sha)" = "$SOURCE_SHA"
-          gh api --paginate "repos/$GH_REPO/releases?per_page=100" --jq '.[].tag_name' > existing-tags.txt
-          if grep -Fxq -- "$tag" existing-tags.txt; then
-            echo 'Release already exists; refusing replacement.' >&2
-            exit 1
-          fi
-          printf '%s\n' \
-            'Current XR1 installer package: supply matching Windows 3.0 media; all required project runtime components are included.' \
-            'Includes the adapted display/keyboard drivers with notices, shell, helpers, wheel driver and original fonts/artwork.' \
-            'Separate WINMINE30.ZIP contains the converted Minesweeper app, About shim and instructions.' \
-            'Read START-HERE.TXT and QUALIFY.JSON. No Windows/DOS media, compiler or emulator is included.' \
-            'Final fresh/update qualification is emulator-only; earlier physical EX panning is separately scoped.' \
-            "Exact source commit: $SOURCE_SHA" \
-            "Build: https://github.com/$GH_REPO/actions/runs/${{ github.run_id }}" > release-notes.txt
-          gh release create "$tag" --repo "$GH_REPO" --verify-tag --draft --prerelease --latest=false \
-            --title "Windows XT $tag - current XR1 installer and Minesweeper" \
-            --notes-file release-notes.txt \
-            release-xr1/WINXT-XR1.ZIP release-xr1/WINMINE30.ZIP \
-            release-xr1/START-HERE.TXT release-xr1/QUALIFY.JSON \
-            release-xr1/RELEASE.JSON release-xr1/SHA256SUMS

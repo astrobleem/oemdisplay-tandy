@@ -1,0 +1,7 @@
+WINDOWS XT DISPLAY
+
+The current profile is XR1: 640x256 logical desktop, 320x200 sixteen-colour
+viewport. Start with C:\STARTXT. From plain DOS, C:\MODEXT /XR1 restores
+this profile through the guarded finisher.
+
+See C:\START.TXT and the supplied README.TXT for current installation and use.

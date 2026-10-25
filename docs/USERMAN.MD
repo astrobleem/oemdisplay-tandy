@@ -236,7 +236,7 @@ uses more Windows memory. [Text panning controls and memory](TEXT80.MD#3-memory)
 
 | Machine/card | Driver and installation guide |
 | --- | --- |
-| Tandy Video II, emulated SL/2 family | [TNDYV2.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TGA2/TNDYV2.ZIP) and [Setup/recovery](tga2/INSTALL.TXT). Run T2RESV successfully before Setup and every start. **EX/HX must not use it.** |
+| Tandy Video II, emulated SL/2 family | [TNDYV2.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TGA2/TNDYV2.ZIP) and [Setup/recovery](tga2/INSTALL.TXT). Use INSTALL for Setup and T2WIN for every start; both reserve video memory automatically. **EX/HX must not use it.** |
 | Amstrad PC1512 | [PC1512 experimental packet](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) and [guide](../experiments/DISPLAY3/PC1512.TXT). |
 | IBM XT + Plantronics ColorPlus | [PCP3216 experimental packet](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP) and [guide](../experiments/DISPLAY3/PCP3216.TXT). Requires the card and its dedicated VRAM. |
 
