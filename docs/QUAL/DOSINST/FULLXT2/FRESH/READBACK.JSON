@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "status": "PASS_NATIVE_READBACK",
+  "physical_test": false,
+  "source_commit": "8320cf2bd9615f915159311cd41fb80ee1e4958c",
+  "helper": {
+    "bytes": 83544,
+    "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
+  },
+  "public_assets": {
+    "WINXT.ZIP": {
+      "bytes": 746928,
+      "sha256": "ce7698e0595d2add6e8e8f550b144bcb5dd996c0ee49f8448373f76065f6dbff"
+    },
+    "WINXT.EXE": {
+      "bytes": 830472,
+      "sha256": "292c28c67b97c3fe611ca8c5171a92581153bb6a17924adef7f8cf53f8d16ea4"
+    }
+  },
+  "checks": {
+    "actual_raw_run_complete": true,
+    "owned_process_stopped": true,
+    "lease_reported_released": true,
+    "controller_exact": true,
+    "current_helper": true,
+    "current_public_assets": true,
+    "host_packet_exact_WINXT.ZIP": true,
+    "host_packet_exact_WINXT.EXE": true,
+    "frozen_source_pins": true,
+    "native_build_manifest_binds_source_and_helper": true,
+    "fat_copies_consistent_after_owned_stop": true,
+    "shared_byte_zero_independently_free": true,
+    "executed_sfx_still_exact": true,
+    "boot_files_preserved": true,
+    "all_current_prepared_bytes_exact": true,
+    "all_current_installed_bytes_exact": true,
+    "no_root_sound_shadow": true,
+    "managed_sentinel_identity_preserved": true,
+    "continuous_graphics_interval_observed": true,
+    "actual_desktop_visually_confirmed": true,
+    "native_current_369_complete_and_handoff": true,
+    "native_all_284_input_stream_scope": true,
+    "capture_hash_matches_raw_result": true
+  },
+  "raw_result": {
+    "path": "FRESH/RESULT.JSON",
+    "identity": {
+      "bytes": 6321,
+      "sha256": "13703612985d86b35ad69a4c5b13c89eed9ca264889c8eeba27ea7defa016e51"
+    }
+  },
+  "capture": {
+    "path": "FRESH/DESKTOP.PNG",
+    "identity": {
+      "bytes": 3242,
+      "sha256": "0b039dcb4aca28b68faeef031cfd1ed7590d436353520144dec49f458d2bd298"
+    }
+  },
+  "visual_scope": "Actual Windows desktop capture reviewed; XYCTL foreground window, not splash. Primary shell bytes/selection checked separately; shell window visibility is not claimed by this capture.",
+  "readback_source": {
+    "bytes": 7350,
+    "sha256": "33af16f60fe1ebd9ca1274ff83128b4bca58fdcb5e6f8382578133d2af816691"
+  }
+}

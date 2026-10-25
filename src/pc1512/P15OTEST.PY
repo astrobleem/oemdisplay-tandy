@@ -15,6 +15,7 @@ These are source and model tests. They do not assemble or run the driver and
 prove nothing about PC1512 speed or native behaviour.
 """
 import importlib.machinery
+import ast
 import random
 import re
 import tempfile
@@ -120,12 +121,42 @@ class Structure(unittest.TestCase):
     def test_synchronous_presentation_only(self):
         t = self.t
         self.assertEqual(t.count("call FlushRetainColumns"), 1)
-        self.assertEqual(t.count("call FlushRetainRows"), 0)
+        self.assertEqual(t.count("call FlushRetainRows"), 1)
         for banned in ("rr_bopen", "BatchClose", "rr_bfirst", "rr_settle"):
             self.assertNotIn(banned, t)
         # The presentation sits between the renderer call and the return.
         self.assertLess(t.index("cCall Output,"), t.index("call FlushRetainColumns"))
         self.assertLess(t.index("call FlushRetainColumns"), t.index("TOutput_done:"))
+        self.assertLess(t.index("cCall Output,"), t.index("call FlushRetainRows"))
+        self.assertLess(t.index("call FlushRetainRows"), t.index("TOutput_done:"))
+
+    def test_full_scan_shortcut_is_after_safety_checks(self):
+        t=self.t
+        a=t.index("    cmp count,2\r\n    jne TOutput_scan_collect")
+        b=t.index("TOutput_scan_collect:",a)
+        fast=t[a:b]
+        self.assertIn("    cmp word ptr es:[di+4],0\r\n",fast)
+        self.assertIn("    cmp word ptr es:[di+6],SCREEN_WIDTH\r\n",fast)
+        self.assertEqual(fast.count("    jne TOutput_scan_collect"),3)
+        self.assertTrue(fast.endswith("    mov outrows,2\r\n    jmp TOutput_render\r\n"))
+        prefix=t[:a]
+        self.assertIn("    call ORowsSpanSafe\r\n",prefix)
+        self.assertIn("    les di,mode\r\n",prefix)
+        self.assertIn("    cmp ax,SCREEN_HEIGHT\r\n",prefix)
+        self.assertIn("    mov firstrow,ax\r\n    inc ax\r\n    mov lastrow,ax\r\n",prefix)
+        self.assertNotIn("firstcol",fast)
+
+    def test_full_width_rows_do_not_read_uninitialized_columns(self):
+        t=self.t
+        a=t.index("; Preserve the actual renderer result")
+        seg=t[a:t.index("TOutput_done:",a)]
+        flag=seg.index("    cmp outrows,2\r\n    je TOutput_rows\r\n")
+        self.assertLess(flag,seg.index("    cmp firstcol,0"))
+        self.assertIn("    cmp lastcol,SCREEN_WIDTH\r\n    je TOutput_rows\r\n",seg)
+        rows=seg[seg.index("TOutput_rows:"):seg.index("TOutput_full:")]
+        self.assertEqual(rows,"TOutput_rows:\r\n    call FlushRetainRows\r\n    jmp short TOutput_flushed\r\n")
+        self.assertLess(seg.index("    push cx"),seg.index("call FlushRetainColumns"))
+        self.assertLess(seg.index("call FlushRetainColumns"),seg.index("    pop cx"))
 
     def test_fallback_unchanged(self):
         # Rejected cases still end in the stage's full FlushShadow.
@@ -354,8 +385,18 @@ class Scope(unittest.TestCase):
                 list(root.glob("experiments/**/*.PY")):
             if p.name in ("P15OUT.PY", "P15OTEST.PY"):
                 continue
-            if "P15OUT" in p.read_bytes().decode("latin-1"):
-                users.add(p.name)
+            text=p.read_bytes().decode("latin-1")
+            if "P15OUT" not in text:continue
+            # A source-hash binding is not an application of the patch.
+            # Check imports/loaders and actual patch calls, without granting
+            # another builder or verifier an exception to the integration rule.
+            for node in ast.walk(ast.parse(text)):
+                if isinstance(node,ast.Import) and any(n.name.split('.')[-1]=='P15OUT' for n in node.names):users.add(p.name)
+                if isinstance(node,ast.ImportFrom) and (node.module or '').split('.')[-1]=='P15OUT':users.add(p.name)
+                if isinstance(node,ast.Call) and isinstance(node.func,ast.Attribute):
+                    if node.func.attr=='patch_staged_output':users.add(p.name)
+                    if node.func.attr=='SourceFileLoader' and any(isinstance(n,ast.Constant) and isinstance(n.value,str) and n.value.upper().endswith('P15OUT.PY') for n in ast.walk(node)):
+                        users.add(p.name)
         self.assertEqual(users, {"BUILD15.PY"})
 
     def test_build15_applies_it_once_after_patch_staged(self):

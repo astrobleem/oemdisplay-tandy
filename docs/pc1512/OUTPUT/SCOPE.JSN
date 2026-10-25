@@ -1,0 +1,90 @@
+{
+  "only_changed_staged_source": [
+    "EGA/TSOFT.ASM"
+  ],
+  "only_TOutput": true,
+  "baseline": {
+    "bytes": 58128,
+    "sha256": "802857ead9b70dbbdc7eb6f36db593e92d14be4b9b9a461a97df8409088e2042",
+    "staged_patched_sha256": {
+      "TSOFT.ASM": "30b2c183a6382700df91981387f5e6ace82d5fa1379876065b78610751054ab0",
+      "TCURSOR.ASM": "4ded456320df4280c8bd8f074bbe5143325d8099dd3323a44f70d9e3f1beb775"
+    }
+  },
+  "candidate": {
+    "bytes": 58368,
+    "sha256": "2f9f59e29a7e472e17a39fa54bd138cdb5b3f4d9562690791fddb3b5f4a76998",
+    "staged_patched_sha256": {
+      "TSOFT.ASM": "3cefcb55501525e769884d4728cc79050d91df1602aa8bf9722e84d691d1ce1e",
+      "TCURSOR.ASM": "4ded456320df4280c8bd8f074bbe5143325d8099dd3323a44f70d9e3f1beb775"
+    }
+  },
+  "segments": [
+    {
+      "name": "_BLUEMOON",
+      "baseline": 936,
+      "candidate": 936,
+      "delta": 0
+    },
+    {
+      "name": "_DATA",
+      "baseline": 1636,
+      "candidate": 1636,
+      "delta": 0
+    },
+    {
+      "name": "_DIMAPS",
+      "baseline": 3608,
+      "candidate": 3608,
+      "delta": 0
+    },
+    {
+      "name": "_INIT",
+      "baseline": 426,
+      "candidate": 426,
+      "delta": 0
+    },
+    {
+      "name": "_LINES",
+      "baseline": 4472,
+      "candidate": 4472,
+      "delta": 0
+    },
+    {
+      "name": "_PIXEL",
+      "baseline": 628,
+      "candidate": 628,
+      "delta": 0
+    },
+    {
+      "name": "_PROTECT",
+      "baseline": 46,
+      "candidate": 46,
+      "delta": 0
+    },
+    {
+      "name": "_REAL",
+      "baseline": 9406,
+      "candidate": 9406,
+      "delta": 0
+    },
+    {
+      "name": "_SCANLINE",
+      "baseline": 1504,
+      "candidate": 1504,
+      "delta": 0
+    },
+    {
+      "name": "_SHADOW",
+      "baseline": 64000,
+      "candidate": 64000,
+      "delta": 0
+    },
+    {
+      "name": "_TEXT",
+      "baseline": 19251,
+      "candidate": 19491,
+      "delta": 240
+    }
+  ]
+}

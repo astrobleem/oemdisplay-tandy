@@ -1,0 +1,69 @@
+name: PC1512 Output qualification
+
+on:
+  pull_request:
+    paths:
+      - 'src/pc1512/**'
+      - 'src/rrect/**'
+      - 'src/tandysw/**'
+      - 'tools/BUILDDEPS/LOCK.JSON'
+      - 'tools/APPSET/**'
+      - 'tools/YAMPACK/SUPPORT.JSN'
+      - 'tools/XR1PACK/PREPARE.PY'
+      - 'tools/XR1PACK/OWATCOM.TXT'
+      - 'distributions/WINXT/**'
+      - 'downloads/experimental/PC1512/**'
+      - 'tools/P15PACK/**'
+      - 'tools/CURRENT/PRODUCTS.JSN'
+      - 'tools/CURRENT/GUIDES/PC1512.TXT'
+      - 'tools/CURRENT/BUNDLE.PY'
+      - 'tools/DRVSET/**'
+      - 'docs/pc1512/OUTPUT/**'
+      - '.github/workflows/pc1512.yml'
+  push:
+    branches: [main, ai/pc1512-output-opt]
+    paths:
+      - 'src/pc1512/**'
+      - 'src/rrect/**'
+      - 'src/tandysw/**'
+      - 'tools/BUILDDEPS/LOCK.JSON'
+      - 'tools/APPSET/**'
+      - 'tools/YAMPACK/SUPPORT.JSN'
+      - 'tools/XR1PACK/PREPARE.PY'
+      - 'tools/XR1PACK/OWATCOM.TXT'
+      - 'distributions/WINXT/**'
+      - 'downloads/experimental/PC1512/**'
+      - 'tools/P15PACK/**'
+      - 'tools/CURRENT/PRODUCTS.JSN'
+      - 'tools/CURRENT/GUIDES/PC1512.TXT'
+      - 'tools/CURRENT/BUNDLE.PY'
+      - 'tools/DRVSET/**'
+      - 'docs/pc1512/OUTPUT/**'
+      - '.github/workflows/pc1512.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - name: Confirm exact reviewed head
+        run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: PC1512 source and planar models
+        run: |
+          python3 -B src/pc1512/P15PATCH.PY --check
+          python3 -B src/pc1512/P15OTEST.PY
+          python3 -B src/pc1512/P15CTEST.PY
+      - name: Replay saved native captures and exact packet bindings
+        run: |
+          python3 -B src/pc1512/P15VERIFY.PY
+          python3 -B tools/DRVSET/VERIFY.PY

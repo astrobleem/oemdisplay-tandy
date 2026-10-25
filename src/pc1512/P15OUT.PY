@@ -13,7 +13,9 @@ P15PATCH.patch_staged and before the first assembly (BUILD15.PY):
 2. The synchronous X half of experiments/XYRRECT/XRBATCH.PY (PR155
    follow-up): TOutput also collects the validated X extent, rounds it
    outward to eight-pixel logical byte columns and presents through the
-   stage's existing FlushRetainColumns. Every Output call still presents
+   stage's existing FlushRetainColumns. Full-width work keeps FlushRetainRows;
+   the validated single [0,640) scan also skips unnecessary X collection.
+   Every Output call still presents
    before it returns; there is no pending state and no marker-owned state.
 
 PC1512 specifics: a logical byte column is one byte in each of the four
@@ -50,6 +52,12 @@ X_EDITS = (
      "    mov dirty,0\n    mov outrows,0\n"),
     ("scan X initialization",
      "    mov cx,count\n    dec cx\nTOutput_scan_interval:\n",
+     "    ; Points/mode spans and Y are already validated. For count=2,\n"
+     "    ; the exact [0,SCREEN_WIDTH) interval proves both X predicates.\n"
+     "    cmp count,2\n    jne TOutput_scan_collect\n"
+     "    cmp word ptr es:[di+4],0\n    jne TOutput_scan_collect\n"
+     "    cmp word ptr es:[di+6],SCREEN_WIDTH\n    jne TOutput_scan_collect\n"
+     "    mov outrows,2\n    jmp TOutput_render\nTOutput_scan_collect:\n"
      "    mov firstcol,SCREEN_WIDTH\n    mov lastcol,0\n    mov cx,count\n"
      "    dec cx\nTOutput_scan_interval:\n"),
     ("scan X bounds",
@@ -76,21 +84,27 @@ X_EDITS = (
      "TOutput_line_ordered:\n    cmp cx,dx\n    jbe TOutput_x_ordered\n"
      "    xchg cx,dx\nTOutput_x_ordered:\n    mov firstcol,cx\n    inc dx\n"
      "    mov lastcol,dx\n    mov firstrow,ax\n"),
-    ("Output preserve X registers",
+    ("Output result register contract",
      "    ; Preserve the actual renderer result and all post-render GPRs.\n"
      "    push ax\n    push bx\n",
      "    ; Preserve the actual renderer result and all post-render GPRs.\n"
-     "    push ax\n    push bx\n    push cx\n    push dx\n"),
-    ("synchronous narrow presentation",
+     "    push ax\n    push bx\n"),
+    ("synchronous rows or narrow presentation",
      "    mov ax,firstrow\n    mov bx,lastrow\n    call FlushRetainRows\n"
      "    jmp short TOutput_flushed\n",
-     "    mov ax,firstrow\n    mov bx,lastrow\n    mov cx,firstcol\n"
+     "    mov ax,firstrow\n    mov bx,lastrow\n"
+     "    cmp outrows,2\n    je TOutput_rows\n"
+     "    cmp firstcol,0\n    jne TOutput_columns\n"
+     "    cmp lastcol,SCREEN_WIDTH\n    je TOutput_rows\n"
+     "TOutput_columns:\n    push cx\n    push dx\n    mov cx,firstcol\n"
      "    mov dx,lastcol\n    add dx,7\n    shr cx,1\n    shr cx,1\n"
      "    shr cx,1\n    shr dx,1\n    shr dx,1\n    shr dx,1\n"
-     "    call FlushRetainColumns\n    jmp short TOutput_flushed\n"),
-    ("Output restore X registers",
+     "    call FlushRetainColumns\n    pop dx\n    pop cx\n"
+     "    jmp short TOutput_flushed\nTOutput_rows:\n"
+     "    call FlushRetainRows\n    jmp short TOutput_flushed\n"),
+    ("Output return register contract",
      "TOutput_flushed:\n    pop bx\n    pop ax\n",
-     "TOutput_flushed:\n    pop dx\n    pop cx\n    pop bx\n    pop ax\n"),
+     "TOutput_flushed:\n    pop bx\n    pop ax\n"),
 )
 
 

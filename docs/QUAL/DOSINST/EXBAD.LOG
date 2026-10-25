@@ -1,0 +1,34 @@
+Windows XT SETUP - DOS-native installation
+Checking the supplied runtime and required Windows files before output.
+Checking C:\WINXT\CGA.GR2
+Checking C:\WINXT\APPS.TXT
+Checking C:\WINXT\CPSET.EXE
+Checking C:\WINXT\FIXXT.BAT
+Checking C:\WINXT\FIXXT.EXE
+Checking C:\WINXT\FONTLIC.TXT
+Checking C:\WINXT\HPXY.DRV
+Checking C:\WINXT\LOGOLIC.TXT
+Checking C:\WINXT\MATRIX.EXE
+Checking C:\WINXT\MAZE.EXE
+Checking C:\WINXT\MODELIC.TXT
+Checking C:\WINXT\MODEXT.BAT
+Checking C:\WINXT\HPXY.INF
+Checking C:\WINXT\OWNERS.TXT
+Checking C:\WINXT\PINBALL.EXE
+Checking C:\WINXT\PROFILES.TXT
+Checking C:\WINXT\RESERVE.COM
+Checking C:\WINXT\SETAUTO.EXE
+Checking C:\WINXT\SETUPXT.BAT
+Checking C:\WINXT\SHOOK.COM
+Checking C:\WINXT\STARFLD.EXE
+Checking C:\WINXT\START.TXT
+Checking C:\WINXT\STARTXT.BAT
+Checking C:\WINXT\TABOUT.EXE
+Checking C:\WINXT\TCHIME.EXE
+Checking C:\WINXT\TEXIT.EXE
+Checking C:\WINXT\TNDYK3.DRV
+Checking C:\WINXT\TP.EXE
+
+REFUSED: File size/CRC differs from release.
+C:\WINXT\TP.EXE
+Installation stopped. Correct the error above and rerun the installer.

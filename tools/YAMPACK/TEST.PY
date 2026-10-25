@@ -9,6 +9,14 @@ import zipfile
 HERE = Path(__file__).resolve().parent
 P = importlib.machinery.SourceFileLoader('yampack_tests', str(HERE / 'PACK.PY')).load_module()
 
+
+
+def compressed_grabber():
+    raw = (P.ROOT / 'distributions/WINXT/CGA.GR2').read_bytes()
+    body = b''.join(bytes([(1 << len(raw[i:i+8])) - 1]) + raw[i:i+8]
+                    for i in range(0, len(raw), 8))
+    return b'SZDD\x88\xf0\x27\x33A\x00' + len(raw).to_bytes(4, 'little') + body
+
 class Packets(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='yampack-')
@@ -30,7 +38,7 @@ class Packets(unittest.TestCase):
             self.assertEqual(record['native_test'], 'not asserted by host packaging')
 
     def test_reproducible_packet_and_expanded_grabber_match(self):
-        compressed = (P.ROOT / 'CGA.GR2').read_bytes()
+        compressed = compressed_grabber()
         expanded = self.base / 'CGA.GR2'
         expanded.write_bytes(P.MEDIA.expanded_file(compressed, 'CGA.GR2'))
         for profile in P.PROFILES:
@@ -62,7 +70,7 @@ class Packets(unittest.TestCase):
         self.assertEqual(before, path.read_bytes())
 
     def test_malformed_grabber_refused_before_output(self):
-        good = (P.ROOT / 'CGA.GR2').read_bytes()
+        good = compressed_grabber()
         for index, data in enumerate([good[:13], good[:-1], good + b'trailing', b'wrong']):
             bad = self.base / ('BAD' + str(index))
             bad.write_bytes(data)
@@ -101,6 +109,10 @@ class Packets(unittest.TestCase):
         self.assertFalse(report['physical_hardware_qualified'])
         self.assertFalse(report['actual_yamaha_scanout_qualified'])
         for name, pin in report['integration_sources'].items():
+            relocation = report.get('source_relocations', {}).get(name)
+            if relocation:
+                self.assertEqual(relocation['native_snapshot'], pin)
+                pin = relocation['current_source']
             self.assertEqual(P.identity((P.ROOT / name).read_bytes()), pin, name)
         for profile, entry in report['profiles'].items():
             self.assertEqual(P.identity((P.ROOT / entry['packet_path']).read_bytes()), entry['packet'])

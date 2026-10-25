@@ -19,7 +19,7 @@ Usage (same pinned inputs as BUILD88; see tools/BUILDDEPS/README.MD):
      - P15PATCH edits the staged EGA/TSOFT.ASM, EGA/TCURSOR.ASM and the
        EGA/TSOFT.DEF description for the PC1512 hardware.
      - P15OUT then edits the patched EGA/TSOFT.ASM Output gate: PR151
-       marker/polyline handling and synchronous narrow column presentation.
+       marker/polyline handling and synchronous rows/column presentation.
    BUILD88's instruction, REP-prefix and link audits then run on the
    patched listings.
 The driver is copied to OUT/PC1512.DRV; P15RES.JSON records what was used.
@@ -53,6 +53,12 @@ def main():
     ap.add_argument("--out", type=Path, required=True)
     a = ap.parse_args()
     repo, out = a.repo.resolve(), a.out.resolve()
+    adapter_source = {
+        "src/pc1512/BUILD15.PY": sha(Path(__file__).read_bytes()),
+        "src/pc1512/P15PATCH.PY": sha(Path(P15.__file__).read_bytes()),
+        "src/pc1512/P15OUT.PY": sha(Path(P15OUT.__file__).read_bytes()),
+        "src/rrect/RRPATCH.PY": sha(Path(P15OUT.RR.__file__).read_bytes()),
+    }
     out.mkdir(parents=True, exist_ok=False)
     tandysw = repo / "src" / "tandysw"
 
@@ -119,9 +125,11 @@ def main():
         "base_320x200x16": {"driver_sha256": r320.get("driver_sha256"),
                             "resource_sha256": r320.get("resource_sha256")},
         "pipeline": "BUILD88 --mode 640x200x4 unchanged; sixteen-colour files/sections restored "
-                    "from the 320x200x16 stage; P15PATCH; BUILD88 audits on the patched listings",
+                    "from the 320x200x16 stage; P15PATCH; P15OUT synchronous rows/columns; "
+                    "BUILD88 audits on the patched listings",
         "restored_from_320x200x16": state["restored"],
         "staged_patched_sha256": state["patched"],
+        "adapter_source_sha256": adapter_source,
         "build88": {k: r640[k] for k in ("build", "runtime", "resource_sha256", "instruction_audit",
                                           "rep_prefix_audit", "link_audit") if k in r640},
         "runtime": "NOT_TESTED by this build",

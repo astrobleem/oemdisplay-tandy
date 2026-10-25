@@ -1,65 +1,59 @@
 # DOS-native Windows XT installer qualification
 
-WINXT.EXE performs fresh or update preparation on the 8088 DOS computer,
-then reserves video memory and hands control to the existing guarded
-Windows installer. It supplies the grabber, fonts, artwork and project
-helpers. Windows itself comes from its installed directory or original disks.
-There is no consumer Python step, host conversion or support-file collection.
-The current instructions are in [desktop setup](../../DESKTOP.MD).
+The current WINXT.EXE package prepares and installs the desktop on the DOS
+computer. Its native recipe includes the canonical SOUND.DRV and current
+shell, alerts and clients: 49 runtime members, 369 fresh outputs and 82 update
+outputs. Consumers use the [desktop setup guide](../../DESKTOP.MD).
 
-The native recipe produces the same 367 fresh / 80 update files as the
-developer reference, with the qualified launcher/finisher corrections and
-current guide text. All three CGA.GR2 destinations use the bundled module.
-The supplied SZDD module expands to the existing qualified 2,104-byte grabber.
-The HPXY and keyboard rendering/input driver binaries are unchanged.
+The current qualification used PREPXR 83544 bytes, SHA256
+`98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69`.
+The exact delivered containers are:
 
-| Current native check | Observed result |
+| Asset | Bytes | SHA256 |
+| --- | ---: | --- |
+| WINXT.ZIP | 746928 | `ce7698e0595d2add6e8e8f550b144bcb5dd996c0ee49f8448373f76065f6dbff` |
+| WINXT.EXE | 830472 | `292c28c67b97c3fe611ca8c5171a92581153bb6a17924adef7f8cf53f8d16ea4` |
+
+| Current native case | Actual result |
 | --- | --- |
-| Fresh media gathering | Cancellation after the first disk retained its verified cache; resume gathered the remaining files on DOS. Expanded and mode-A SZDD input were exercised. |
-| Fresh preparation | 367 files match the current reference exactly; 1,122.5 seconds including boot/controller from the complete cache. |
-| Setup continuation | A bounded controller stop during graphical Setup was classified incomplete. Normal C:\SETUPXT recovery completed Setup and the finisher without repeating preparation; 608.3 seconds through a 60-second settled final GUI. |
-| Managed update | Both Windows grabber copies were absent. A damaged managed TP payload and changed guide files were repaired; all 80 files match, unrelated sentinel/INI and boot files preserved, no staging temporary files left. Preparation 136.9 seconds; 272.9 seconds through settled GUI. |
-| Cold normal launch | C:\STARTXT with Windows absent from PATH completed its checks/reservation and reached the visible GUI; 97.5 seconds through the 60-second settle. |
+| Fresh preparation and valid inputs | Reused a complete installed Windows/media-cache fixture; the current helper checked all 284 expanded input streams and all 369 staged outputs. Preparation 1057.7s; normal finisher and guarded desktop through 1201.3s. |
+| Managed update | All 82 prepared outputs and 12 installed component identities matched. Preparation 181.6s; desktop through 328.7s. The managed sentinel and boot files were preserved. |
+| Cold launch | A copy of that successfully updated installation booted with no attached floppy and Windows absent from PATH. C:\STARTXT reached the desktop in 103.9s including the graphics observation interval. |
+| Corruption and retry | Byte 100 of the 545-byte cached 123.PIF was changed without changing its length. The current helper refused its CRC and removed the bad tagged-cache copy. A normal retry gathered the original file and reached a deliberate later 3270.TXT directory guard. All 9 assertions passed in 245.2s. |
 
-An unchanged cold-staging update fixture measured 307.1 seconds before the
-byte-oriented CRC shift and 235.2 seconds after: 71.9 seconds / 23.4% less
-preparation time. The 136.9-second managed repair is a separate reuse case.
-The actual CRC implementation also matches zlib on 17 vectors. The native
-preparer uses indexed ZIP lookup and skips a second write/readback pass for
-already verified matching outputs.
+The fresh and valid-input roles reference the same actual current run.
+Windows Setup and media gathering were not repeated. The earlier full Setup,
+disk-gathering and 367/80-output tests remain historical evidence in Git at
+`745041d21103552e7d564ceb5f2369c58966f56a`; their existing logs and captures
+are unchanged. No earlier receipt is relabeled as a current-helper test.
 
-The guarded DOS wrapper now executes C:\WINDOWS\XTTEST.COM by absolute
-path. Its accepted 1,071-byte result rebuilds exactly from the source under
-tools/DOSINST; the frozen wave package's source and binary stay unchanged.
-The finisher compares the entire wrapper because its changed middle bytes
-are invisible to the old first/last sample check.
+Each positive case continuously observed graphics mode 9 for at least 60s.
+The final captures were visually checked as the actual Windows desktop with
+XYCTL in the foreground. The interval includes graphics startup; it is not
+described as 60s of independently timed settled desktop. Installed SOUND.DRV
+is 9752 bytes/SHA256 `ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd`.
+The current TSHELL, TSINPUT, TCHIME, XPCHIME, TEXIT, TP and FIXXT identities
+also match the delivered payload. There is no Windows-root SOUND.DRV shadow.
 
-[RC8.JSN](RC8.JSN) binds the package, selected boot values, installed files,
-raw logs and captures. RCFHASH.JSN / RCUHASH.JSN contain only output identities,
-including private OS-file hashes, not OS contents. The earlier full Setup tests
-used the same runtime and an earlier preparer; following review, the preparer
-now checks every expanded Windows OS stream against its qualified CRC. The
-final helper is exact to both the integrity and normal-launch replays. All
-53 archive members match the normal-launch replay; the corruption test
-container differs only in README.TXT. The publisher rejects incomplete/error-bearing
-receipts and changed package bytes. The original premature controller result
-was retained privately and explicitly adjudicated incomplete, never accepted
-as an install pass.
+Both fresh and update preserved WIN.INI byte-for-byte. SYSTEM.INI changed
+only the sound.drv value spelling to SOUND.DRV. Boot files, the update
+sentinel and unrelated settings were preserved; no staging files remained.
+The corruption case preserved the complete Windows tree and original media
+file, repaired only the tagged cache and withheld SETUPXT.BAT. Its DOS
+capture includes the fixture's B: diskette prompt after the completed batch;
+the refusal/retry logs and strict filesystem readback establish its result.
 
-Tests used an 8088 / 640 KB Tandy HX emulator with DOS 6.22 and Windows 3.0
-real mode. No physical-machine qualification or CF access is claimed.
+All owned emulator processes stopped and released the shared lease after
+each case. Independent host readbacks passed 23/21/21/18 checks respectively,
+including stable identical FAT copies, exact files, source/package pins and
+an independently free lease. Tests used an 8088/640 KB Tandy HX emulator,
+DOS 6.22 and Windows 3.0 real mode; physical hardware and CF writes were outside
+these runs.
 
-The input-integrity regression toggled byte 100 of the 545-byte 123.PIF,
-leaving its length unchanged. The old helper reached the deliberate later
-3270.TXT guard, proving that it accepted the damaged stream. The corrected
-helper refused the CRC, removed only the bad tagged-cache copy and a normal
-retry automatically gathered the good source. Windows and the original
-source stayed unchanged; the new Setup entry remained withheld. RCIOLD,
-RCIBAD and RCIRETRY logs plus RCICRC.PNG record the actual DOS run.
-
-A saved complete fresh installation then exercised the final helper against
-all 284 expanded OS streams and all 367 staged files before the normal
-installer/guarded desktop handoff. This does not repeat or relabel the earlier
-fresh Windows Setup test. RCIVAL.LOG/PNG record this affected-path replay;
-RCIHOST.JSN records the actual C CRC comparison of 9,611,961 bytes with zlib
-and the previously qualified size/SHA pins. No Windows OS bytes are published.
+[RC8.JSN](RC8.JSN) binds the current qualification. [FULLXT2](FULLXT2/README.MD)
+contains its exact logs, captures, public receipt projections and strict
+readbacks. The source reconciliation proof links native source 8320cf2,
+rebase f01fcdb and final source 57d72c: the tracked expanded CGA input replaces
+the former loose SZDD input while all 57 collected entries, compiled inputs,
+helper, ZIP and SFX remain byte-identical. The publisher's existing exact
+helper/output/container gates remain active.

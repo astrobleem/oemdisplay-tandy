@@ -1,7 +1,7 @@
 # Wheel input for Windows XT
 
-**Current EX/HX installation:** [download XR1](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP) and follow the
-[XR1 install guide](../../../docs/RELEASES/RC8.MD). It includes the first-party
+**Current EX/HX installation:** [download Windows XT](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT.ZIP) and follow the
+[Windows XT install guide](../../../docs/RELEASES/RC8.MD). It includes the first-party
 WHEEL.DRV, bridge and paired client; no separate driver hunt is needed.
 
 ## Historical bridge-only R1 packet

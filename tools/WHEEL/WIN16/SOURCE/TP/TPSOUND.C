@@ -1,8 +1,9 @@
 /* Optional original TP cues. Microsoft C6 /G0 /Gw /AS, C89.
    Tone 0 and fixed-rate noise only; no IRQ, PIT, PIC or speaker-control writes.
    The app supplies a yielding 100 ms WM_TIMER and stops on focus/close.
-   This is cooperative known-writer exclusion, not a global hardware lock. */
+   SOUND.DRV supplies exclusive task ownership for every raw PSG cue. */
 #include "TPSOUND.H"
+#include "PSGOWN.H"
 #ifndef TDSOUND_HOST
 #include <conio.h>
 #endif
@@ -21,6 +22,7 @@ static HINSTANCE module;
 static int classOwned,allowed,enabled,playing,pending,touched;
 static DWORD queuedAt,startedAt;
 static TDSNDSTAT stats;
+static PSG_OWNER soundOwner;
 static char markerClass[]="TandyPSGTest";
 
 static int machineReady(void)
@@ -45,7 +47,7 @@ static int ownMarker(void)
 
 static int foreignBusy(void)
 {
-    HWND w;HMODULE h;char name[32];unsigned count;
+    HWND w;char name[32];unsigned count;
     if(FindWindow("TandyStartupChime",NULL) ||
        FindWindow("TandyXPStartupChime",NULL) ||
        FindWindow("TandyAutomaticMouth",NULL) ||
@@ -53,8 +55,6 @@ static int foreignBusy(void)
        FindWindow("TandyMiniMIDI",NULL) ||
        FindWindow("TandyJoyMIDI",NULL) ||
        FindWindow("TandyBeatsLab",NULL) || GetModuleHandle("TEXIT"))return 1;
-    h=GetModuleHandle("SOUND");
-    if(h && GetProcAddress(h,"DEBUGTIMER")!=NULL)return 1;
     if(!marker)return FindWindow(markerClass,NULL)!=NULL;
     if(!ownMarker())return 1;
     /* FindWindow alone could find our marker and hide a second PSGPLAY.
@@ -95,7 +95,7 @@ static void finish(int natural)
     int own;
     /* Recheck even on ordinary close: a newly opened writer takes priority.
        If ownership is uncertain, abandon without silencing anyone else. */
-    own=marker && ownMarker() && !foreignBusy();
+    own=marker && ownMarker() && PsgOwnerHeld(&soundOwner);
     if(playing && !own)stats.ownershipLosses++;
     if(touched && own){psg(0x9f);psg(0xff);}
     if(playing) {
@@ -104,6 +104,7 @@ static void finish(int natural)
     }
     playing=pending=touched=0;
     score=NULL;noteCount=noteIndex=cueId=0;
+    PsgOwnerRelease(&soundOwner);
     releaseMarker();
 }
 
@@ -145,18 +146,28 @@ int TpSoundBegin(HWND owner,int cue,DWORD now)
     /* Replace only this app's cue. Do not queue sounds behind slow gameplay. */
     if(playing || marker || classOwned)finish(0);
     if(marker || classOwned) { stats.failures++;return TD_SND_FAILED; }
-    if(foreignBusy()) { stats.busySkips++;return TD_SND_BUSY; }
+    if(foreignBusy() || !PsgOwnerAcquire(&soundOwner)) {
+        stats.busySkips++;return TD_SND_BUSY;
+    }
     c.style=0;c.lpfnWndProc=DefWindowProc;c.cbClsExtra=c.cbWndExtra=0;
     c.hInstance=module;c.hIcon=NULL;c.hCursor=NULL;c.hbrBackground=NULL;
     c.lpszMenuName=NULL;c.lpszClassName=markerClass;
     /* Register our own local class. Never instantiate a foreign class after
        RegisterClass failure. DefWindowProc requires no app callback export. */
-    if(!RegisterClass(&c)) { stats.failures++;return TD_SND_FAILED; }
+    if(!RegisterClass(&c)) {
+        stats.failures++;PsgOwnerRelease(&soundOwner);return TD_SND_FAILED;
+    }
     classOwned=1;
     marker=CreateWindow(markerClass,"TP sound busy",WS_POPUP,
                         0,0,0,0,NULL,NULL,module,NULL);
-    if(!marker) { stats.failures++;releaseMarker();return TD_SND_FAILED; }
-    if(foreignBusy()) { stats.busySkips++;releaseMarker();return TD_SND_BUSY; }
+    if(!marker) {
+        stats.failures++;PsgOwnerRelease(&soundOwner);
+        releaseMarker();return TD_SND_FAILED;
+    }
+    if(foreignBusy() || !PsgOwnerHeld(&soundOwner)) {
+        stats.busySkips++;PsgOwnerRelease(&soundOwner);
+        releaseMarker();return TD_SND_BUSY;
+    }
     score=flush;noteCount=12;
     cueId=cue;noteIndex=0;queuedAt=now;playing=pending=1;touched=0;
     stats.starts[cue-1]++;
@@ -180,7 +191,7 @@ void TpSoundTick(HWND owner,DWORD now)
     DWORD elapsed;unsigned next;
     if(owner!=target || !playing)return;
     if(!enabled || !allowed || !activeOwner(owner)) { finish(0);return; }
-    if(!ownMarker() || foreignBusy()) { finish(0);return; }
+    if(!ownMarker() || !PsgOwnerHeld(&soundOwner)) { finish(0);return; }
     if(pending) {
         /* The caller should service us every 100 ms. A long first delay
            drops the cue rather than playing it after the moment passed. */

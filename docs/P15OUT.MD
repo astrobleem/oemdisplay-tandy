@@ -1,97 +1,103 @@
-# PC1512 Output optimisation (host-tested, not native-qualified)
+# PC1512 Output optimisation
 
-Source and host tests only. No PC1512.DRV was built or run for this change,
-no accepted pin or package is touched, and nothing here measures PC1512
-speed. Tandy measurements do not transfer to the four-plane adapter.
+The current PC1512 driver is native-qualified in 86Box's emulated 8 MHz
+8086 PC1512, with 640 KB and built-in 640x200, sixteen-colour video.
+The original shipped driver, a same-input current-main baseline and the
+final candidate produced identical pixels in all 48 captured frames.
+This is emulator evidence; physical PC1512 hardware remains unqualified.
 
-## What changes
+## Bounded change
 
-`src/pc1512/BUILD15.PY` now calls `P15OUT.patch_staged_output` once, right
-after `P15.patch_staged` and before the first assembly, so BUILD88's
-instruction, REP-prefix and link audits run on the result. It edits only the
-`TOutput` gate of the staged `EGA/TSOFT.ASM`:
+BUILD15 applies P15OUT once after P15PATCH and before assembly. It reuses
+RRPATCH's marker no-copy and bounded-polyline gate, and the generic
+synchronous X bounds/column flush. Only staged EGA/TSOFT.ASM TOutput changes.
+There is no XR1 viewport, packed-pixel, cursor or panning adaptation.
+Rejected calls retain FlushShadow; accepted drawing is presented before
+return. The existing PC1512 plane selection and CGA interleaving remain.
 
-1. `src/rrect/RRPATCH.patch_candidate` (PR151), reused unchanged:
-   `OS_BEGINNSCAN`/`OS_ENDNSCAN` skip the copy and cursor work; polylines of
-   3..1024 points are bounded to their rows.
-2. The synchronous X half of `experiments/XYRRECT/XRBATCH.PY` (PR155
-   follow-up): the gate also collects the validated X extent, rounds it
-   outward to eight-pixel columns (`first>>3`, `(last+7)>>3`) and presents
-   through the stage's existing `FlushRetainColumns`, preserving AX..DX.
+An exact validated two-point scan spanning [0,640), and other validated
+full-width spans, use the existing FlushRetainRows path. Narrow spans use
+FlushRetainColumns. This avoids the measurable full-width overhead found
+in the initial all-Columns candidate. That candidate was not promoted.
 
-On PC1512 one logical column is one byte in each of the four planes (80-byte
-plane rows), and P15PATCH already removed the Tandy doubling, so no scaling
-is added. XR1's viewport, packed-pixel, dual-band and XY cursor edits are not
-used; the stage's own cursor retention is untouched. Every Output call still
-presents before returning (no pending rows, no marker-owned state). Calls the
-gate rejects keep the existing `FlushShadow` fallback.
+## Matched drawing results
 
-Each anchor must match the stated number of times or nothing is written; a
-stage that already has either change is refused, so nothing applies twice.
+All runs used the same saved installed fixture, probe executable, emulator
+binary and configuration. Timings use the BIOS clock. Application figures
+are medians of three forced redraws, not launch or whole-session speedups.
 
-## Host results
+| Workload | Baseline | Final candidate | Ratio |
+| --- | ---: | ---: | ---: |
+| Calculator redraw | 25,211 ms | 3,076 ms | 8.2x |
+| Reversi redraw | 3,954 ms | 823 ms | 4.8x |
+| Twenty small rounded keys | 16,477 ms | 1,373 ms | 12.0x |
+| 20,000 full-width direct scans | 59,154 ms | 59,209 ms | within one 55 ms tick |
+| 20,000 narrow direct scans | 55,255 ms | 33,999 ms | 1.6x |
 
-    python3 src/pc1512/P15PATCH.PY --check           PASS (unchanged model)
-    python3 -B src/pc1512/P15OTEST.PY              27 tests OK
-    python3 src/pc1512/P15OUT.PY --check --stage <staged EGA dir>
+The original 54,448-byte consumer driver is retained as the comparison
+anchor. Its 48 frames equal the 58,128-byte main baseline, and its drawing
+timings are within a timer tick of that baseline for these cases. The
+3,680-byte increase predates this patch: RLE88 adds 2,933 bytes, SDIB88 adds
+646, BMC_MAIN adds 73, and file layout/relocations account for 28. Resources,
+TSOFT and TCURSOR match; this is the stock profile without diagnostics.
+See [the focused map comparison](pc1512/OUTPUT/SHIPSIZE.JSN).
 
-`P15OUT.FIX` is `TOutput` from the real post-P15PATCH stage (main 316f21b,
-BUILD88 view, no emulator); the tests assert it is patchable, every anchor
-matches once and refuses when missing/duplicated, the validation order, the
-unchanged fallback, register preservation and no XR1/Tandy-only text. A
-plane-aware model (P15PATCH's flush/decoder) checks that the rounded region
-equals a full flush for random polylines and scanlines, including x=0, x=639
-and 632..640, with negative controls that fail when rounding is dropped.
-The model is not the assembled code: it does not prove the driver runs.
+The final driver is **58,368 bytes**, SHA256
+`2f9f59e29a7e472e17a39fa54bd138cdb5b3f4d9562690791fddb3b5f4a76998`.
+Compared with the same-input main baseline, _TEXT grows by 240 bytes;
+_DATA stays 1,636 bytes and the four-plane shadow stays 64,000 bytes.
+Free memory before the probe is 294,976 versus 294,752 bytes (224 fewer).
+Compared with the shipped control, total file growth is 3,920 bytes.
+The candidate launched on the same 640 KB fixture and returned to DOS.
 
-## Native handoff (dot)
+## Native checks and retained evidence
 
-Changed build inputs: `src/pc1512/BUILD15.PY` (one import, one call, one
-docstring line), new `src/pc1512/P15OUT.PY`. `P15OUT.FIX`, `P15OTEST.PY`
-and this note are host-only. P15RES.JSON's `staged_patched_sha256` for
-TSOFT.ASM will change; BUILD88, RRPATCH, XRBATCH and the other adapters are
-unchanged. PC1512.DRV bytes will differ from any currently pinned build.
+P15BENCH minimally adapts RRBENCH. Capture reads actual port 3DEh plane
+selection 0..3, copying each displayed 8,000-byte bank atomically before
+DOS file I/O, then restoring the read selector to zero. Each row has 80
+bytes; alternate rows start at +0000h/+2000h. A capture contains exactly
+64,000 displayed bytes across four planes. Distinct plane sentinels and
+write-mask probes check selection, 3DDh=0Fh and default 3DEh=0. Flat B800h
+and packed-pixel probes are not used as PC1512 evidence.
 
-Expected `P15RES.JSON` `staged_patched_sha256` (host dry run of the real
-BUILD15 on a BUILD88 view of main 316f21b, stopped before any emulator
-launch; compare to confirm the native build assembled the reviewed text):
+The 19 stages include left/right edges, immediate output after consecutive
+calls, idle visibility, markers, 2/3/1024-point polylines, preserved fallback,
+cursor overlap/restoration, Calculator, Reversi and Paintbrush. Independent
+pixel oracles supplement byte equality for direct scans and markers.
+All 48 frames pass against both references, with zero differing pixels.
+Every driver build passed BUILD88 instruction, REP-prefix and link audits.
 
-    TSOFT.ASM   09736072f813770b3d2d24625d326be85bd7a43203e05c97ce0eb9616ad70def
-    TCURSOR.ASM 4ded456320df4280c8bd8f074bbe5143325d8099dd3323a44f70d9e3f1beb775
+The shipped run's original receipt retains its failed mode-3 assertion.
+Its separate assessment records the actual DOS prompt, post-WIN marker,
+BIOS mode 6 and 640 KB. Both comparison runs returned the same state;
+mode-3 restoration is not claimed. No raw failure receipt was rewritten.
 
-(TSOFT.ASM without this change: 30b2c183...ab0; TCURSOR.ASM is unchanged.)
-Versus the pre-change stage only EGA/TSOFT.ASM differs (TSOFT.DEF differs
-only in the existing BUILD15 description swap).
+[QUALIFY.JSN](../tools/P15PACK/QUALIFY.JSN) binds current source, compiled
+and executed driver bytes, three runs, captures, probe, effective emulator
+profile and the new native carrier transaction. [OUTPUT](pc1512/OUTPUT)
+contains the replayable records. The original installer/OEM Setup receipt
+in tools/DRVSET/NATIVE.JSN remains unchanged. All installer, launcher,
+fonts, grabber and logo bytes are preserved. The rebuilt carrier separately
+passed default extraction, fixed-target refusal, case retry and exact
+payload checks. The current release's ZIP guide overlay retains every
+runtime member from that qualified packet.
 
-Acceptance, on the same inputs with and without this change:
+## Replay and rebuild
 
-1. Build via BUILD15; BUILD88 audits and the link audit pass.
-2. Calculator and Reversi redraw correctly; no stale rows or edge columns,
-   including objects touching column 0 and the right edge.
-3. Plane-aware output identical to the unpatched driver: compare the four
-   hardware planes (3DEh read select 0..3, rows interleaved at +0000h/+2000h,
-   80 bytes per row), not one flat buffer.
-4. Drawing is visible immediately after each Output call returns (no wait
-   for an END marker or next call).
-5. Cursor moves over and is restored after drawing; 3DDh=0Fh and 3DEh=0
-   afterwards.
-6. Only then, matched timing, never a figure borrowed from Tandy.
+```text
+python -B src/pc1512/P15PATCH.PY --check
+python -B src/pc1512/P15OTEST.PY
+python -B src/pc1512/P15CTEST.PY
+python -B src/pc1512/P15VERIFY.PY
+python -B tools/DRVSET/VERIFY.PY
+```
 
-Capture adaptation: `src/rrect/RRBENCH.C` dumps the flat B800h 32 KB
-(`0xb8000000`, 0x8000 bytes). PC1512 has four 16 KB planes behind that
-window, selected by 3DEh for reads, so that dump sees one plane at most and
-is not valid evidence. The idle/visibility probes (RRBENCH.C reading
-`[at] & 15` at B800h) also assume packed 4-bit pixels; on PC1512 that byte is
-eight pixels of the plane 3DEh selects, so "immediate visibility" needs its
-own plane-aware probe. The capture needs a capture that reads each plane through
-3DEh (restoring 3DEh=0) and writes 64,000 bytes, and RRCMP's frame size
-expectations adapted to match. Not done here.
-
-Reuse and watch-points: Output now calls `FlushRetainColumns`, which the
-stage already runs from TBitBlt (its copy loop is the `p15_row` version).
-TBitBlt keeps a `FlushRetainRows` fast path for full-width spans; this patch
-always uses Columns, as XRBATCH does, so check full-width fills first if
-timing disappoints.
-
-Overlap: PR #183 edits `docs/PC1512.MD` and the PC1512 package; this branch
-touches neither. Follow with a pointer in PC1512.MD after #183 merges.
+These commands replay saved native evidence on the host; they do not run
+Windows or measure new performance. P15OTEST has 29 source/model tests;
+P15CTEST includes deliberate corruptions of the planar proof. Fresh native
+builds use BUILD15's existing pinned external display view and actual
+MASM/LINK toolchain, as documented in tools/BUILDDEPS/README.MD.
+Final staged TSOFT SHA256 is
+`3cefcb55501525e769884d4728cc79050d91df1602aa8bf9722e84d691d1ce1e`;
+TCURSOR remains `4ded456320df4280c8bd8f074bbe5143325d8099dd3323a44f70d9e3f1beb775`.
+No other adapter binary or release is part of this replacement.

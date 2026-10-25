@@ -93,7 +93,7 @@ def prepare(accepted, output, grabber=None):
     files.update(source)
     for name, pin in pins["support"].items():
         if name == "CGA.GR2":
-            path = Path(grabber) if grabber else ROOT / name
+            path = Path(grabber) if grabber else ROOT / "distributions/WINXT" / name
             if path.stat().st_size > 1048576:
                 raise ValueError("Grabber input exceeds 1 MiB")
             raw = path.read_bytes()

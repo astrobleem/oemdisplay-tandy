@@ -17,13 +17,15 @@ complete desktop bundle. You supply DOS and Windows.
 
 ## Download and install
 
-For the Tandy EX/HX panning display, [download XRSYNC.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE).
-Exit Windows and run `XRSYNC C:\WINDOWS` from DOS, then follow the
-[Setup choices](RELEASES/XRSYNC.MD). Use `C:\XR155\RUNSYNC.BAT` on every launch.
+[Download WINXT.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT.ZIP) and extract it. It contains
+`SETUP.EXE`, `README.TXT` and one expanded `WINXT` folder.
 
-For the full Tandy Start desktop bundle, use [desktop setup](DESKTOP.MD).
-For fixed-resolution graphics or other hardware, use [current downloads](DOWNLOADS.MD).
-Each is a product/profile choice; no older-release installation chain is needed.
+- **Full desktop:** on DOS run `SETUP UPDATE C:\WINDOWS`, or `SETUP FRESH A:\`
+  for a new Windows installation. Follow [desktop setup](DESKTOP.MD), then use `C:\STARTXT`.
+- **Drivers only:** use [Windows Setup with the expanded WINXT folder](DRIVERS.MD).
+  The same folder includes all fonts, grabber and logos; the custom installer is optional.
+
+[Other hardware and applications](DOWNLOADS.MD) have their own current packets.
 
 ## Use Tandy Start
 
@@ -41,9 +43,8 @@ a group to refresh its contents. Existing groups are read-only to the shell.
 | **Exit Windows** | Confirms exit and lets apps ask about unsaved work. Hold Shift while selecting Exit to skip its chime. Enter or Escape initially cancels; E selects Exit. |
 
 Maximized apps can cover the bar; it is not an application taskbar.
-The [shell guide](../examples/TSHELL/README.MD) covers settings, upgrades and
-recovery. Newer shell overlays have their own installation guides; use a
-matching shell and TSINPUT.DLL pair.
+The current desktop packet includes the matching Tandy Start and TSINPUT
+files. Use the [desktop guide](DESKTOP.MD) for installation and recovery.
 
 ### Browse existing long filenames
 
@@ -128,7 +129,7 @@ combined; read each packet's dependencies and rollback instructions.
 ## Separate experimental drivers
 
 Choose the packet for your machine and follow its installer and launcher.
-The current downloads below are separate from the EX/HX XR1 package.
+The current downloads below are separate from the EX/HX desktop.
 
 ### TEXT80 and compact C25
 
@@ -188,44 +189,16 @@ sessions used older hashes; those rebuilt bytes have not booted in Windows here.
 qualification record for each profile's exact identity and test scope.
 [Detailed behavior, evidence and limitations](TEXT80.MD).
 
-### IBM PCjr clean Setup
+### IBM PCjr
 
-Download **[PCJRSET.ZIP](../downloads/experimental/PCJR/PCJRSET.ZIP?raw=1)**
-and follow the included `INSTALL.TXT`. Copy its complete install folder to
-**`C:\PCJREXP`**. The fixed path matters to Setup and its launcher.
-
-This experimental driver provides **320×200 in 16 colors**. You need your own
-Windows 3.0 media, DOS, a hard disk and suitable PCjr memory expansion. Before
-Setup, run:
-
-```bat
-C:\PCJREXP\JRGUARD
-```
-
-Continue only after **OK**. The guard checks that the 32 KB video page at
-segments 1800h–1FFFh is already excluded from DOS allocation; **it does not
-reserve RAM**. Run your own Windows Setup, select **Other display**, point it
-to `C:\PCJREXP`, and choose **EXPERIMENTAL IBM PCjr 320x200 16 colors**. Choose
-the PC/XT 84-key keyboard and the mouse option matching your hardware. Follow
-the packet's remaining Setup choices and **return to DOS**, rather than
-restarting Windows from Setup.
-
-Start Windows every time with:
-
-```bat
-C:\PCJREXP\JRWIN
-```
-
-The clean-install Windows Setup flow passed **26/26 emulator checks**, and
-this packet's driver matches the qualified pin. Real PCjr memory expansions,
-keyboard, serial input and timing remain unqualified. PCjr-only DOS video
-modes cannot switch away with Alt+Tab; finish that DOS program to return.
-[Full installation, existing-install and recovery guide](../src/pcjr/INSTALL/INSTALL.TXT) ·
-[Native session record](pcjr/INSTALL/SESSION.JSN).
+Use the current [JRPAN.ZIP and PCjr setup guide](SOFTPAN/RELEASE.MD).
+The packet offers fixed 320x200 and software-panning 320x400 profiles.
+Its guard checks an already reserved 32 KB video page; it does not reserve it.
+Use JRSTART for every Windows launch.
 
 ### Panning
 
-For EX/HX graphics panning, use the [XRSYNC display](RELEASES/XRSYNC.MD).
+For EX/HX graphics panning, use the [Windows XT display](DRIVERS.MD).
 Ctrl+Alt+arrows move its 320x200 view over the 640x256 desktop;
 Ctrl+Alt+Home returns home. XYCTL selects software or hardware presentation.
 
@@ -236,9 +209,9 @@ uses more Windows memory. [Text panning controls and memory](TEXT80.MD#3-memory)
 
 | Machine/card | Driver and installation guide |
 | --- | --- |
-| Tandy Video II, emulated SL/2 family | [TNDYV2.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TGA2/TNDYV2.ZIP) and [Setup/recovery](tga2/INSTALL.TXT). Use INSTALL for Setup and T2WIN for every start; both reserve video memory automatically. **EX/HX must not use it.** |
-| Amstrad PC1512 | [PC1512 experimental packet](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP) and [guide](../experiments/DISPLAY3/PC1512.TXT). |
-| IBM XT + Plantronics ColorPlus | [PCP3216 experimental packet](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP) and [guide](../experiments/DISPLAY3/PCP3216.TXT). Requires the card and its dedicated VRAM. |
+| Tandy Video II, emulated SL/2 family | [TNDYV2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TNDYV2.ZIP) and [Setup/recovery](tga2/INSTALL.TXT). Use INSTALL for Setup and T2WIN for every start; both reserve video memory automatically. **EX/HX must not use it.** |
+| Amstrad PC1512 | [PC1512.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PC1512.ZIP) and [guide](PC1512.MD). |
+| IBM XT + Plantronics ColorPlus | [CPPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP) and [guide](PCP.MD). Requires the card and its dedicated VRAM. |
 
 These have separate Windows 3.0 real-mode evidence and hardware limits. Other
 Video II models are unqualified. [Olivetti PC1/Yamaha candidates](../experiments/YAMAHA/README.MD)
@@ -247,7 +220,7 @@ not qualify physical PC1 hardware.
 
 ## Recovery
 
-For XRSYNC, use its [DOS Setup and RUNSYNC procedure](RELEASES/XRSYNC.MD).
+For drivers only, use [Windows Setup and DISPWIN](DRIVERS.MD).
 For the desktop bundle, use `C:\FIXXT` from plain DOS as described in
 [desktop setup](DESKTOP.MD). For TEXT80, run `T80OFF` from its extracted folder.
 PCjr and the other hardware drivers use the Setup/removal instructions in

@@ -1,3 +1,11 @@
+# Windows XT display installation
+
+Use [WINXT.ZIP and the ordinary Windows Setup route](../DRIVERS.MD), or the
+[full desktop installer](../DESKTOP.MD). Both use the same expanded driver folder.
+
+<details>
+<summary>Historical standalone XRSYNC installation record</summary>
+
 # XRSYNC: DOS-native display installation
 
 **[Download XRSYNC.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE)**
@@ -38,3 +46,5 @@ The rendering driver is unchanged. [Graphics results](../RRSYNC.MD) and
 qualification; there is no new physical-hardware claim. The download contains
 the supplied grabber and all display support files. An installed Windows 3.0
 system remains required.
+
+</details>

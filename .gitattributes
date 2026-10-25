@@ -134,4 +134,46 @@ tools/FLASHDISK/CURRENT.JSN -text
 tools/FLASHDISK/QA/** -text
 
 .github/workflows/cpset.yml -text
+
+tools/P15PACK/** -text
+tools/DRVSET/** -text
+tools/DRVSET/QA/** -text
+downloads/experimental/PC1512/** -text
+downloads/experimental/CPPAN/** -text
+docs/PC1512.MD -text
+docs/PCP.MD -text
+docs/FIXED.MD -text
+downloads/experimental/FIXED/README.MD -text
+docs/DOWNLOADS.MD -text
+
+.github/workflows/driver-packets.yml -text
 src/pc1512/** -text
+
+# Retained OEM development sources and relocated-source CI retain CRLF.
+oemdisk/** -text
+.github/workflows/rrect.yml -text
+.github/workflows/tga2.yml -text
+.github/workflows/softpan.yml -text
+
+.github/workflows/root-layout.yml -text
+# Native shared-sound consumer source and exact build receipts.
+tools/SOUNDOWN/** -text
+
+# PC1512 generated video captures and native qualification records.
+docs/pc1512/OUTPUT/** -text
+.github/workflows/pc1512.yml -text
+tools/CURRENT/** -text
+tools/CURRENT/INPUTS/*.ZIP -export-ignore
+tools/XROEM/** -text
+
+docs/DRIVERS.MD -text
+
+.github/workflows/current.yml -text
+
+examples/TANDYLAB/README.MD -text
+
+examples/COOKIE/README.MD -text
+
+examples/COOKIE/INSTALL.TXT -text
+
+tools/MINEAPP/INSTALL.TXT -text

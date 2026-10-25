@@ -1,43 +1,21 @@
-AMSTRAD PC1512 - WINDOWS 3.0 REAL-MODE DISPLAY
+DOWNLOAD
+https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PC1512.ZIP
+
+AMSTRAD PC1512 - WINDOWS 3.0 DISPLAY
 640x200, 16 colors
 
-DOWNLOAD
-https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP
+For PC1512 built-in video, 8086, 640 KB and installed Windows 3.0 real mode.
+Not PC1640 or ordinary CGA. Driver, fonts, grabber and startup logos are included.
 
-WHAT YOU NEED
-Amstrad PC1512 built-in video, 8086 and 640 KB. Not PC1640 or ordinary CGA.
-An existing Windows 3.0 real-mode installation. The packet has no automatic
-installer or fresh Windows Setup integration. Dedicated video RAM needs no
-RESERVE or JRGUARD helper.
+1. Extract all files from PC1512.ZIP to C:\P15EXP. Exit Windows to DOS.
+2. Run C:\P15EXP\INSTALL.
+3. In Windows Setup choose Display, Other, C:\P15EXP, then
+   Amstrad PC1512 640x200 16 colors. Complete Setup and return to DOS.
+4. Start Windows with C:\P15EXP\P15WIN.
 
-INSTALL
-1. Extract the complete ZIP to C:\P15EXP. Exit Windows to plain DOS.
-2. Copy the driver:
-     COPY C:\P15EXP\PC1512.DRV C:\WINDOWS\SYSTEM\PC1512.DRV
-3. In C:\WINDOWS\SYSTEM.INI, change the display.drv line under [boot] to:
-     display.drv=PC1512.DRV
-   Keep the other settings, fonts and grabber as they are.
-4. Start Windows:
-     C:
-     CD \WINDOWS
-     WIN /R
-
-Use your actual Windows directory if different. Use ordinary Windows startup;
-the Tandy WINXT reservation and palette-animation route is for other hardware.
-The existing WIN.COM keeps its startup logo behavior; no logo is installed.
-
-LIMITS
-86Box Windows checks passed 88/88. One cursor-state case needed a retry;
-its cause remains unresolved. Physical PC1512, the Amstrad mouse port,
-fresh Setup and DOS-box switching remain unqualified.
-The recorded runs used an existing AT/EGA installation and its fonts/grabber.
-Windows 3.1 is not supported.
-
-TROUBLESHOOTING AND REMOVAL
-From plain DOS, use Windows Setup to restore your previous display, or put
-the previous display.drv value back in SYSTEM.INI. The copied driver is
-inactive once another display is selected. Keep existing font/grabber entries
-unless you are changing the whole display through Setup.
-
-Source, optional checksums, notices and detailed test records are in the
-release and the corresponding docs/PC1512.MD guide. No installer needs to be built.
+For Windows outside C:\WINDOWS, pass its drive and directory to both entries,
+for example INSTALL D: \WIN30 and P15WIN D: \WIN30.
+Dedicated video RAM needs no reservation helper. No INI editing is needed.
+The driver was tested in an emulated PC1512; physical hardware, the Amstrad
+mouse port and DOS-box switching remain unqualified. Windows 3.1 is unsupported.
+Technical records: docs/PC1512.MD in the source repository.

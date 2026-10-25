@@ -1,68 +1,34 @@
-# Windows XT: native DOS installation
+# Windows XT
 
-**[Download WINXT.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE)**
+[Download WINXT.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT.ZIP).
+Extract it on the DOS computer. It contains `SETUP.EXE`, `README.TXT` and
+an expanded `WINXT` folder with the drivers, apps, fonts, grabber and logos.
+Keep those extracted files together; the ZIP is no longer needed.
 
-Run this on the Tandy from plain DOS. It gathers Windows files automatically,
-prepares the installer, reserves video memory and starts installation.
-No Python, modern computer, conversion or manual file collection is required.
+The target is an original Tandy 1000 EX/HX with normal 640 KB and Windows 3.0
+real mode. Original Windows and DOS are required. Installation runs on the
+DOS computer itself.
 
-For an existing English Windows 3.0 installation at `C:\WINDOWS`:
-
-```bat
-WINXT UPDATE C:\WINDOWS
-```
-
-For new Windows, insert the first original English Windows 3.0 Setup disk:
+For the complete desktop, exit Windows and run:
 
 ```bat
-WINXT FRESH A:\
+SETUP UPDATE C:\WINDOWS
 ```
 
-Use its actual drive letter. The preparer asks for each next disk and gathers
-the files itself. A complete existing Setup directory is also accepted:
-`WINXT FRESH C:\WIN30SRC`. Expanded files and mode-A SZDD compression work
-on the DOS computer. Allow about 30 MB for fresh source, installation and
-temporary files. Windows is installed in `C:\WINDOWS`.
+For a new Windows installation, insert the first original Setup disk and run:
 
-In fresh Setup, press Enter at Welcome and directory. At System Information,
-choose Computer and select the first **Tandy 1000 EX/HX (WindowsXT)** entry.
-Confirm **HPXY 640x256** and **PC/XT keyboard**; keep Setup's mouse choice.
-Complete the remaining Windows Setup screens and choose **No Changes** for
-DOS configuration. The finisher installs the COM1 wheel mouse and current
-desktop automatically. Update preserves unrelated INI entries and shell customization.
+```bat
+SETUP FRESH A:\
+```
 
-Start every later session from plain DOS with **`C:\STARTXT`**.
-Repair uses `C:\FIXXT`; `C:\FIXXT /VERIFY` adds full file comparison. If
-interrupted, rerun `C:\SETUPXT` for the existing recovery/resume path.
+The installer gathers Windows files automatically, runs Setup as needed,
+installs Tandy Start and the apps, and starts the desktop. Use `C:\STARTXT`
+on every later launch. The full installer requires DOS 3.3 or later.
 
-[ZIP alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.ZIP):
-extract on the target DOS computer and run `PREPXR UPDATE C:\WINDOWS` or
-`PREPXR FRESH A:\` in that folder. The EXE download needs no unpacker.
+For drivers only, use the same expanded folder as an ordinary Windows Setup
+source. The included `WINXT\DISPLAY.TXT` describes the guarded Setup and
+launch entries; this path leaves the desktop and bundled apps uninstalled.
+It does not require running the custom `SETUP.EXE`.
 
-Requires an original Tandy 1000 EX/HX, normal 640 KB, DOS 3.3+ and Windows
-3.0 real mode. You supply Windows and DOS; their files are absent from the
-download. The gathered Windows files remain private on the DOS computer.
-For the separate synchronous display update, see [XRSYNC](RELEASES/XRSYNC.MD).
-
-## What is current
-
-XR1 provides a 640x256 logical desktop through a 320x200, sixteen-colour
-viewport, Tandy Start, panning, COM1/IRQ4 mouse and optional wheel input.
-XYCTL starts in Software mode; its menu or Ctrl+Alt+H enables Hardware.
-Ctrl+Alt+arrows pan and Ctrl+Alt+Home returns home. Windows 3.1 is unsupported.
-
-[Current optional apps](DOWNLOADS.MD) have separate packets and install guides.
-
-The display and keyboard drivers, fonts and artwork are preserved. The native
-preparer has [fresh/update results](QUAL/DOSINST/RC8.JSN), separate from
-[earlier runtime qualification](QUAL/XR1/INSTALL.JSN). No new physical
-hardware test is claimed. NOTICE.TXT and the individual component notices
-retain the Microsoft-derived driver notices and original project licenses.
-
-## Optional Minesweeper
-
-[Download MINESET.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/MINESET.EXE) and run
-`MINESET` from DOS. In your normal guarded Windows desktop, choose Run and
-enter `C:\MINETST\MINERUN.EXE`. The bundled About helper stays beside the app.
-[Installation details](../tools/MINEAPP/INSTALL.TXT) cover another app folder.
-SETUPXT does not install this separate app.
+The display supplies a 640x256 desktop with a 320x200 hardware viewport.
+Run XYCTL for viewport controls. 

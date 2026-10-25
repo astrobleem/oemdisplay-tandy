@@ -1,0 +1,44 @@
+name: Verify current download catalog
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
+      - name: Fetch immutable qualified sound inputs
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,urllib.request
+          from pathlib import Path
+          rows=json.loads(Path('tools/CURRENT/PRODUCTS.JSN').read_bytes())['sound']
+          Path('sound-inputs').mkdir()
+          for name,row in rows.items():
+              data=urllib.request.urlopen(row['source'],timeout=60).read()
+              assert {'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}==row['identity'],name
+              (Path('sound-inputs')/name).write_bytes(data)
+          PY
+      - name: Reproduce core and check complete catalog
+        run: |
+          CORE_SHA=$(python3 -c "import json; print(json.load(open('tools/CURRENT/PRODUCTS.JSN'))['core_source_commit'])")
+          python3 -B tools/DOSINST/RCPUB.PY --out core --commit "$CORE_SHA"
+          python3 -B tools/CURRENT/CHECK.PY --core core --sound sound-inputs --report catalog-check.json
+          python3 -B tools/CURRENT/BUNDLE.PY --core core --sound sound-inputs --commit "${{ github.sha }}" --out current
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: current-catalog-${{ github.sha }}
+          path: |
+            current/*
+            catalog-check.json
+          if-no-files-found: error

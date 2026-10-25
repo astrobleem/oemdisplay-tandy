@@ -1,10 +1,27 @@
-# Plantronics ColorPlus 320x200x16 driver (PCP3216): first build
+# Windows 3.0 on Plantronics ColorPlus
 
-**[Download PCP3216.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP)** ·
-[Install in an existing Windows 3.0 installation](../experiments/DISPLAY3/PCP3216.TXT).
+**[Download CPPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP)**
 
-The development and test record follows.
+1. Extract all files to `C:\CPPAN`. Exit Windows to DOS.
+2. Run `C:\CPPAN\INSTALL`.
+3. Select the display in Setup, complete changes and return to DOS.
+4. Start Windows with `C:\CPPAN\CPWIN`.
 
+For a PC/XT with ColorPlus video, 640 KB, DOS 3.20+ and installed Windows 3.0
+real mode in `C:\WINDOWS`. Ordinary CGA, PC1512 and Tandy/PCjr video use other drivers.
+Fonts, grabber, startup logos and helpers are included.
+
+In Setup choose Display, Other, `C:\CPPAN`, then **ColorPlus 320x200 fixed** or
+**EXPERIMENTAL ColorPlus 320x400 panning** for the taller desktop.
+For panning, run `C:\CPPAN\PANCFG` inside Windows once. Move the pointer past
+an edge or use Alt+PgDn/Alt+PgUp; Alt+F9 returns to the top.
+Panning uses 32,000 additional shadow bytes. To select fixed mode later,
+run `PANCFG OFF`, exit Windows and repeat Setup. No reservation helper is needed.
+Exit Windows before running DOS programs. Native Setup/startup passed in
+emulation; physical ColorPlus clones remain unqualified.
+
+<details>
+<summary>Archived renderer development and test record</summary>
 
 Status: **PCP3216.DRV runs Windows 3.0 real mode on an emulated IBM PC/XT
 with a Plantronics ColorPlus card in 86Box 6.0, and passes all 88 checks of
@@ -303,3 +320,5 @@ skipped) and `python3 src/pcjr/CHKTEST.PY`. Built tools: `pcp/PCPIDB.JSN`,
 - [86Box `src/video/vid_cga_colorplus.c`](https://github.com/86Box/86Box/blob/master/src/video/vid_cga_colorplus.c)
 - [Plantronics ColorPlus notes (seasip.info)](https://www.seasip.info/VintagePC/plantronics.html)
 - [WINPCP repository and hardware notes](https://github.com/cluehawk/WINPCP)
+
+</details>

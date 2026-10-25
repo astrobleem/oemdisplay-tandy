@@ -1,33 +1,27 @@
 # PCjr and ColorPlus: a larger software desktop
 
-Each kit provides a **320x400 Windows desktop through a 320x200, 16-color
-viewport**, with an included helper and fixed-driver switch-back.
+Each packet includes a 320x400 desktop viewed through a 320x200, 16-color
+screen, plus its fixed 320x200 choice, fonts, grabber, logos and helpers.
 
-| Your adapter | Download | Folder | Start Windows |
+| Hardware | Download | Extract | Start Windows |
 | --- | --- | --- | --- |
-| IBM PCjr | [JRPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-softpan-2026-10-24/JRPAN.ZIP) | `C:\JRPAN` | `C:\JRPAN\JRSTART` |
-| Plantronics ColorPlus | [CPPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-softpan-2026-10-24/CPPAN.ZIP) | `C:\CPPAN` | `C:\CPPAN\CPWIN` |
+| IBM PCjr | [JRPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/JRPAN.ZIP) | Extract its JRPAN folder to `C:\JRPAN` | `C:\JRPAN\JRSTART` |
+| Plantronics ColorPlus | [CPPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP) | Extract all files directly to `C:\CPPAN` | `C:\CPPAN\CPWIN` |
 
-Use an existing Windows 3.0 real-mode installation in `C:\WINDOWS`.
-Extract the matching ZIP to `C:\`, exit Windows, and run `INSTALL` from
-the kit's folder. In Setup choose **Display → Other**, enter that same
-folder, and select the **320x400 software-panning** entry. Return to DOS
-and start Windows with the command in the table. In Program Manager's
-**File → Run**, run `PANCFG` from the kit's folder.
+Use installed Windows 3.0 real mode in `C:\WINDOWS` with 640 KB. PCjr's DOS
+memory driver must already reserve the 32 KB video page; the included guard
+checks that reservation before Setup and every start. ColorPlus uses its card RAM.
 
-The helper follows the pointer and newly activated windows. Alt+PgDn pans
-down; Alt+PgUp pans up; Alt+F9 returns to the top.
+1. Exit Windows and run `INSTALL` from the extracted folder.
+2. In Setup choose **Display / Other**, enter that folder, and select its
+   **320x400 software-panning** entry. Complete changes and return to DOS.
+3. Start Windows with the matching command above. In Program Manager File / Run,
+   run `PANCFG` from the extracted folder once.
 
-To switch back, run `PANCFG OFF` from Windows, exit, and run the kit's
-`INSTALL` again. Choose its **320x200 fixed (rollback)** entry. The same
-start command continues to work.
+The viewport follows the pointer and newly activated windows. Alt+PgDn pans
+down, Alt+PgUp pans up, and Alt+F9 returns to the top. To select fixed mode,
+run `PANCFG OFF`, exit Windows, repeat `INSTALL` and select **320x200 fixed**.
 
-PCjr's DOS memory driver must reserve the 32 KB video page; the included
-guard checks it before Setup and each start. Both downloads include their
-grabber, fonts, logos and helper programs. No manual
-checksums, file searches or INI editing are required.
-
-The shadow uses 64,000 bytes, 32,000 more than fixed mode. These are software
-copies, with Windows evidence from DOSBox-X PCjr and 86Box XT/Plantronics,
-each with 640 KB RAM. They do not claim hardware panning or physical-machine
-qualification. [Qualification and captures](README.MD).
+Software panning uses 32,000 additional shadow bytes. Native results cover
+DOSBox-X PCjr and 86Box XT/Plantronics, rather than physical hardware.
+[Test records](README.MD) and [ColorPlus details](../PCP.MD) are separate from installation.

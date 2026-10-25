@@ -1,0 +1,12 @@
+EXPERIMENTAL DISPLAY DRIVER - NOT A WINDOWS/DOS DISTRIBUTION
+
+This driver reuses Microsoft Windows DDK renderer code/resources.
+Microsoft Corporation copyright notices, including 1983-1987
+notices in reused renderer sources, remain applicable. The new
+packaging/launcher MIT license does not relicense this material.
+Release-owner record (not a blanket third-party license grant):
+Release owner explicitly authorized these separate experimental derivative driver packages. Existing Microsoft DDK renderer/resource copyright notices remain applicable; the new packaging/launcher MIT license grants no rights to those components. Historical DDK license-envelope terms are not present in the materialized inputs. This record is publication authorization and preservation of notices, not a blanket third-party license grant. Original DDK, compiler, Windows, DOS, fonts/grabbers and ROM inputs are excluded.
+
+Windows, DOS, system fonts/grabbers, ROMs, compiler, libraries and
+original DDK inputs are excluded. Use authorized owned inputs.
+Physical hardware and fresh Setup integration remain unqualified.

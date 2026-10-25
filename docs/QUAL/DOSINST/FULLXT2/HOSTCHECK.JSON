@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "status": "PASS_HOST_STAGING",
+  "new_native_test": false,
+  "emulator_launched": false,
+  "checks": {
+    "controller_sources_compile": true,
+    "fresh_oracle_exact_count": true,
+    "fresh_oracle_exact_bytes": true,
+    "update_oracle_exact_count": true,
+    "update_oracle_exact_bytes": true,
+    "FRESH_foreign_source_unchanged": true,
+    "FRESH_current_sfx": true,
+    "FRESH_no_stale_native_completion": true,
+    "FRESH_bootpins": true,
+    "FRESH_old_prepared_bytes_rejected": true,
+    "FRESH_old_runtime_rejected": true,
+    "UPDATE_foreign_source_unchanged": true,
+    "UPDATE_current_sfx": true,
+    "UPDATE_no_stale_native_completion": true,
+    "UPDATE_bootpins": true,
+    "UPDATE_old_prepared_bytes_rejected": true,
+    "UPDATE_old_runtime_rejected": true,
+    "managed_sentinel_present_before_current_run": true,
+    "NEGATIVE_foreign_source_unchanged": true,
+    "NEGATIVE_current_sfx": true,
+    "NEGATIVE_no_stale_native_completion": true,
+    "NEGATIVE_bootpins": true,
+    "current_negative_real_same_length_fault": true,
+    "current_negative_guarded_without_setup": true,
+    "cold_requires_actual_current_update": true
+  },
+  "source_pins": {
+    "PREPARE.PY": {
+      "bytes": 11588,
+      "sha256": "dcc8d48d812a2c19766945c1ff11d82555d923952f09088a99075847f54b2ea8"
+    },
+    "RUNDOS.PY": {
+      "bytes": 15844,
+      "sha256": "6cf776da679fb877e836697b04360f9c4db4f128a30dfb4010ef6276c4701364"
+    },
+    "CLONECOLD.PY": {
+      "bytes": 2417,
+      "sha256": "e8212d24747014b350501200f855f327dd0114dc8d36fb3e4a54d0e57b726567"
+    },
+    "CHECKHOST.PY": {
+      "bytes": 4103,
+      "sha256": "d48328aab1d5fcf7e2ae2f6b328e8e27b610f03ecad94e33f21536b8c5051f15"
+    },
+    "PLAN.JSON": {
+      "bytes": 3661,
+      "sha256": "a48ff787797ddaf8e0b12df14874d7372046761caec9644b26e666880d01143f"
+    },
+    "ORACLE.JSON": {
+      "bytes": 68143,
+      "sha256": "2833c3ea620417bd370ecbe1d9f1dc85825d0cc722e4802b05a742589fd9f7db"
+    }
+  },
+  "helper": {
+    "bytes": 83544,
+    "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
+  },
+  "public_assets": {
+    "WINXT.ZIP": {
+      "bytes": 746928,
+      "sha256": "ce7698e0595d2add6e8e8f550b144bcb5dd996c0ee49f8448373f76065f6dbff"
+    },
+    "WINXT.EXE": {
+      "bytes": 830472,
+      "sha256": "292c28c67b97c3fe611ca8c5171a92581153bb6a17924adef7f8cf53f8d16ea4"
+    }
+  }
+}

@@ -133,5 +133,18 @@
   },
   "source_fixture_unchanged": true,
   "physical_hardware_qualified": false,
-  "Windows31_qualified": false
+  "Windows31_qualified": false,
+  "source_relocations": {
+    "src/tga2/T2PACK.PY": {
+      "native_snapshot": {
+        "bytes": 8302,
+        "sha256": "3bc088fb85b377a5089711cc22a7bbf45c66e1934feea8601b35674b40d47e49"
+      },
+      "current_source": {
+        "bytes": 8326,
+        "sha256": "8f21dcc889ea1587ee7c4a0eca9ec14f7cd1fd2737da481310966d5479c40912"
+      },
+      "scope": "Only default grabber location changed to existing expanded support copy; complete current packet remains byte-identical to native-qualified download."
+    }
+  }
 }

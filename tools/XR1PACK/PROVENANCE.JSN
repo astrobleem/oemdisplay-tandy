@@ -30,9 +30,9 @@
       "classification": "project-authored text/configuration; existing notices retained"
     },
     "FIXXT.EXE": {
-      "bytes": 38046,
-      "sha256": "24c8e726ea6a5e5df59bb36c6e6ea9d73860ed5820b0f2a7a7cf5243009c376e",
-      "source_record": "SOURCE/FIXXT.C",
+      "bytes": 33001,
+      "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a",
+      "source_record": "tools/DOSINST/FIXXT.C",
       "classification": "project-authored; Open Watcom runtime"
     },
     "FONTLIC.TXT": {
@@ -84,8 +84,8 @@
       "classification": "project-authored text/configuration; existing notices retained"
     },
     "OWNERS.TXT": {
-      "bytes": 10115,
-      "sha256": "24fb0e181a42c9de2dd2e67abf0d579726fd7df00ee6aabff0ada569bf3f8be1",
+      "bytes": 10369,
+      "sha256": "3be16666dd35e2509a8fdeb437d249a74afcd5b77ed961a8efd0c162753460c6",
       "source_record": "current XR1 authored package/configuration metadata",
       "classification": "project-authored text/configuration; existing notices retained"
     },
@@ -150,15 +150,15 @@
       "classification": "project-authored; existing Microsoft C6 runtime build"
     },
     "TCHIME.EXE": {
-      "bytes": 3999,
-      "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121",
-      "source_record": "examples/TANDYLAB/SOURCES.TXT: TANDY-WIN30-PSG-MILESTONE.ZIP",
+      "bytes": 5071,
+      "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61",
+      "source_record": "src/win30/CHIME/TCHIME.C",
       "classification": "related Tandy sound project; exact source archive not bundled here"
     },
     "TEXIT.EXE": {
-      "bytes": 8687,
-      "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99",
-      "source_record": "examples/TANDYLAB/SOURCES.TXT: oemsound PR18/TANDY-EXIT-CHIME.ZIP",
+      "bytes": 9215,
+      "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148",
+      "source_record": "src/win30/TEXIT/TEXIT.C",
       "classification": "related Tandy sound project; exact source archive not bundled here"
     },
     "TNDYK3.DRV": {
@@ -168,15 +168,15 @@
       "classification": "Microsoft-DDK-derived adaptation; Microsoft rights/notices retained; no new license grant"
     },
     "TP.EXE": {
-      "bytes": 12303,
-      "sha256": "3260c222fee2dcb33cabadc8602cf878c266a7c0c6a4d5125c05784e32793b74",
-      "source_record": "COMPANIONS/WXTWHL-TP-SOURCE/TP/TP.C + TPSOUND.C",
+      "bytes": 12847,
+      "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33",
+      "source_record": "tools/WHEEL/WIN16/SOURCE/TP/TP.C + TPSOUND.C",
       "classification": "project-authored paired client; existing component/runtime notices apply"
     },
     "TSHELL.EXE": {
-      "bytes": 71763,
-      "sha256": "b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49",
-      "source_record": "COMPANIONS/R8-SOURCE.ZIP:examples/TSHELL/TSHELL.C",
+      "bytes": 72323,
+      "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9",
+      "source_record": "examples/TSHELL/TSHELL.C + TSBOOT.C",
       "classification": "project-authored; Microsoft C6 runtime and Windows import-library build"
     },
     "TSHELL.INI": {
@@ -222,9 +222,9 @@
       "classification": "project-authored bridge; Open Watcom runtime"
     },
     "XPCHIME.EXE": {
-      "bytes": 4543,
-      "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f",
-      "source_record": "examples/TANDYLAB/SOURCES.TXT: TANDY-XP-NOTE-CHIME.ZIP",
+      "bytes": 5103,
+      "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0",
+      "source_record": "src/win30/XPCHIME/XPCHIME.C",
       "classification": "related Tandy sound project; exact source archive not bundled here"
     },
     "XTCFIX.FON": {
@@ -292,6 +292,12 @@
       "sha256": "7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055",
       "source_record": "COMPANIONS/HPXY-XR1-SOURCE/experiments/XYPAN/XYCTL.C",
       "classification": "project-authored helper; existing Windows/compiler import/runtime notices apply"
+    },
+    "SOUND.DRV": {
+      "bytes": 9752,
+      "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd",
+      "source_record": "SOUNDSRC.ZIP: canonical oemsound-tandy src/win30/DRIVER",
+      "classification": "Project sound driver; included SOUNDLIC.TXT applies"
     }
   }
 }
