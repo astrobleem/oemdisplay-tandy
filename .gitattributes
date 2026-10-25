@@ -177,3 +177,6 @@ examples/COOKIE/README.MD -text
 examples/COOKIE/INSTALL.TXT -text
 
 tools/MINEAPP/INSTALL.TXT -text
+
+# Contributor guidance retains the mandated CRLF bytes.
+CLAUDE.md -text
