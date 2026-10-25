@@ -113,6 +113,7 @@ docs/yamaha/SUPPORT.JSN -text
 
 # Scoped portable app sources and candidate identities preserve exact CRLF bytes.
 tools/APPSET/** -text
+tools/APPSET/BIN/*.ZIP -export-ignore
 tools/MINEAPP/** -text
 examples/COOKIE/INSTALL.TXT -text
 .github/workflows/app-packets.yml -text
