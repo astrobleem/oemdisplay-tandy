@@ -117,3 +117,6 @@ tools/APPSET/BIN/*.ZIP -export-ignore
 tools/MINEAPP/** -text
 examples/COOKIE/INSTALL.TXT -text
 .github/workflows/app-packets.yml -text
+
+# Preserve actual DOS echo output in the pinned native execution receipt.
+tools/APPSET/QA/DONEAPP.TXT whitespace=-blank-at-eol
