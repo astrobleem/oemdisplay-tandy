@@ -19,3 +19,8 @@ except PCP3216.DRV. Anonymous changed-file and final asset readbacks follow.
 The native source pin retains CPPOUT.FIX. Archived DISPLAY3 release pins
 and its historical source packet stay unchanged; its exporter now accepts
 .FIX and tests exact fixture retention when a later source pin is used.
+
+Before publication, --prepare restores the pinned already-public TANDYLAB
+collection in local catalog artifacts and records that preservation. It does
+not adopt unknown bytes or upload anything. Every other unaffected asset
+still must match the live release exactly; collection changes are out of scope.

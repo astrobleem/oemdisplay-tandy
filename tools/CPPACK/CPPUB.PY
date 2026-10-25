@@ -10,12 +10,33 @@ P=importlib.machinery.SourceFileLoader('p15_catalog',str(ROOT/'tools/CURRENT/BUN
 V=importlib.machinery.SourceFileLoader('p15_release_proof',str(ROOT/'src/pcp/CPVERIFY.PY')).load_module()
 ORDER=('CPPAN.ZIP','CURRENT.SHA','CURRENT.JSN')
 CHANGED=set(ORDER)
+# The panning core update intentionally left the accepted collection alone.
+# A broad BUNDLE rebuild derives a newer collection from that core; this
+# driver-only publication must preserve the exact already-public collection.
+PRESERVE_CURRENT={'TANDYLAB.ZIP':{'bytes':939983,'sha256':'e9420280a2149f5c12eaf5ef2adaa726609076d09f447201c0581db5a8ac1384'}}
 REPOSITORY='astrobleem/oemdisplay-tandy'
 URL='https://github.com/'+REPOSITORY+'/releases/download/windows-xt/'
 
 def download(url):
     request=urllib.request.Request(url,headers={'User-Agent':'qualified-colorplus-publisher','Cache-Control':'no-cache'})
     return urllib.request.urlopen(request,timeout=60).read()
+
+def prepare(folder,release):
+    """Prepare local catalog artifacts, never mutate the release."""
+    record=json.loads((folder/'CURRENT.JSN').read_bytes())
+    for name,pin in PRESERVE_CURRENT.items():
+        rows=[r for r in release['assets'] if r['name']==name]
+        if len(rows)!=1 or {'bytes':rows[0]['size'],'sha256':rows[0]['digest'].removeprefix('sha256:')}!=pin:
+            raise ValueError('Pinned unaffected current asset changed: '+name)
+        path=folder/name
+        if P.identity(path.read_bytes())!=pin:
+            data=download(rows[0]['browser_download_url'])
+            if P.identity(data)!=pin:raise ValueError('Unaffected current asset download differs: '+name)
+            path.write_bytes(data)
+        record['assets'][name]=pin
+    record['preserved_current_assets']=PRESERVE_CURRENT
+    (folder/'CURRENT.JSN').write_bytes(P.text(json.dumps(record,indent=2)+'\n'))
+    (folder/'CURRENT.SHA').write_bytes(P.text(''.join(P.identity(p.read_bytes())['sha256']+'  '+p.name+'\n' for p in sorted(folder.iterdir()) if p.is_file() and p.name!='CURRENT.SHA')))
 
 def check(folder,release):
     spec=P.spec(); expected={x.name:P.identity(x.read_bytes()) for x in folder.iterdir() if x.is_file()}
@@ -73,12 +94,15 @@ def main():
     a.add_argument('--folder',type=Path,required=True)
     a.add_argument('--commit',required=True)
     a.add_argument('--publish',action='store_true')
+    a.add_argument('--prepare',action='store_true',help='Preserve pinned unaffected bytes in local catalog artifacts; no release writes')
     args=a.parse_args();folder=args.folder.resolve()
+    if args.prepare and args.publish:a.error('Prepare and publication are separate operations')
     record=json.loads((folder/'CURRENT.JSN').read_bytes())
     head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     if args.commit!=head or record['source_commit']!=head:
         raise ValueError('Publisher requires its exact catalog/source commit')
     release=json.loads(download('https://api.github.com/repos/'+REPOSITORY+'/releases/tags/windows-xt'))
+    if args.prepare:prepare(folder,release)
     expected,actual=check(folder,release)
     print(json.dumps({'commit':head,'replacement_assets':sorted(CHANGED),
                       'unchanged_assets':len(expected)-len(CHANGED),'write_requested':args.publish},indent=2))

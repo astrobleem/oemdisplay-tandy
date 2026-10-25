@@ -39,5 +39,20 @@ class Scope(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'release metadata'):self.check(damage_metadata=True)
     def test_already_uploaded_packet_can_finish_catalog(self):self.check(dict(self.files))
     def test_interrupted_missing_allowlisted_packet_can_be_repaired(self):self.check(missing=True)
+    def test_local_preparation_preserves_exact_unrelated_asset(self):
+        pin=M.P.identity(b'unrelated');(self.out/'KEEP.ZIP').write_bytes(b'new broad-build collection')
+        release={'assets':[{'name':'KEEP.ZIP','size':pin['bytes'],'digest':'sha256:'+pin['sha256'],'browser_download_url':'https://example.invalid/KEEP.ZIP'}]}
+        with mock.patch.object(M,'PRESERVE_CURRENT',{'KEEP.ZIP':pin}),mock.patch.object(M,'download',return_value=b'unrelated'):
+            M.prepare(self.out,release)
+        self.assertEqual((self.out/'KEEP.ZIP').read_bytes(),b'unrelated')
+        self.assertEqual(json.loads((self.out/'CURRENT.JSN').read_bytes())['preserved_current_assets'],{'KEEP.ZIP':pin})
+        self.check()
+    def test_unrecognized_unrelated_asset_is_not_adopted(self):
+        pin=M.P.identity(b'unrelated');before=(self.out/'CURRENT.JSN').read_bytes()
+        release={'assets':[{'name':'KEEP.ZIP','size':1,'digest':'sha256:'+'0'*64}]}
+        with mock.patch.object(M,'PRESERVE_CURRENT',{'KEEP.ZIP':pin}),mock.patch.object(M,'download') as download:
+            with self.assertRaisesRegex(ValueError,'unaffected current asset changed'):M.prepare(self.out,release)
+            download.assert_not_called()
+        self.assertEqual((self.out/'CURRENT.JSN').read_bytes(),before)
 
 if __name__=='__main__':unittest.main()
