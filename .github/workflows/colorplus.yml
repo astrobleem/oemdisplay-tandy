@@ -108,7 +108,6 @@ jobs:
           python3 -B tools/DOSINST/RCPUB.PY --out core --commit "$CORE_SHA"
           python3 -B tools/CURRENT/CHECK.PY --core core --sound sound-inputs --report catalog-check.json
           python3 -B tools/CURRENT/BUNDLE.PY --core core --sound sound-inputs --commit "$SOURCE_SHA" --out current
-          python3 -B tools/CPPACK/CPPUB.PY --folder current --commit "$SOURCE_SHA" --prepare
       - name: Determine whether this catalog changes the ColorPlus packet
         id: scope
         run: |
@@ -144,7 +143,9 @@ jobs:
           PYCODE
       - name: Check the exact ColorPlus candidate against current release without writes
         if: steps.scope.outputs.changed == 'true'
-        run: python3 -B tools/CPPACK/CPPUB.PY --folder current --commit "$SOURCE_SHA"
+        run: |
+          python3 -B tools/CPPACK/CPPUB.PY --folder current --commit "$SOURCE_SHA" --prepare
+          python3 -B tools/CPPACK/CPPUB.PY --folder current --commit "$SOURCE_SHA"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: colorplus-current-${{ env.SOURCE_SHA }}
