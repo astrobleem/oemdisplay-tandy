@@ -1,0 +1,29 @@
+name: Shared SOUND clients
+on:
+  pull_request:
+  push:
+    branches: [main, feature/unified-sound-setup]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  current:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - name: Confirm exact reviewed head
+        run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Exercise actual shared sound consumers and busy handoff
+        run: python3 tools/SOUNDOWN/TESTOWN.PY
+      - name: Exercise current full XT publication guards
+        run: python3 tools/XR1PACK/TESTPUB.PY
+      - name: Exercise current native recipe and OS identity closure
+        run: python3 tools/DOSINST/TESTPUB.PY
+      - name: Refuse stale native source and shell selections
+        run: python3 tools/SOUNDOWN/TESTUPD.PY

@@ -5,16 +5,12 @@ The window caption is shortened to **Cookie** so it fits 160 pixels.
 
 ## Install and run
 
-1. [Download COOKSET.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/COOKSET.EXE).
-   From DOS run `COOKSET`; it puts the ready app in `C:\COOKIE`.
-2. Start your normal guarded Windows 3.0 desktop, or use it if already running.
-3. In Tandy Start choose Run, or in Program Manager choose File > Run, and enter
-   `C:\COOKIE\COOKIE.EXE` (use its actual folder if different).
+1. [Download COOKSET.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/COOKSET.ZIP) and extract its files to `C:\COOKIE`.
+2. Start your normal guarded Windows 3.0 desktop.
+3. In Tandy Start Run or Program Manager File / Run, enter `C:\COOKIE\COOKIE.EXE`.
 
-The EXE installer needs no separate unpacker, Python, compiler or support files.
-[Installation details](INSTALL.TXT) cover another folder and retrying a copy.
-A [ZIP alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/COOKSET.ZIP) is available.
-The app opens maximized and needs no DLL, COMMDLG or data file.
+Use your chosen folder if different. The app needs no extra DLL or INI edit.
+[Installation details](../../tools/CURRENT/GUIDES/COOKSET.TXT).
 
 Click inside the cookie (a GDI ellipse with five chips), or press Space, to add
 one cookie. The native **Buy +1 CPS (10)** button costs ten cookies and adds one

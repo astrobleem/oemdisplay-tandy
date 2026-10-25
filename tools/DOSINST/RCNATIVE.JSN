@@ -3,21 +3,21 @@
   "target": "8088 / DOS 3.3+",
   "compiler": "Open Watcom 16-bit DOS; -bt=dos -0 -ml -os",
   "binary": {
-    "bytes": 83372,
-    "sha256": "cffb1f1d61636373d740df8c9d17497aaed2e08b9a38906f7995722369dd828a"
+    "bytes": 83544,
+    "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
   },
   "sources": {
     "XRPREP.C": {
-      "bytes": 16983,
-      "sha256": "d72099edaa74e2bec06745391ef09e9b654da9bbb778953016db9cbff82465d1"
+      "bytes": 17719,
+      "sha256": "67a6f720956cf5bda08397afa8a876c3e3397a2bd3e63fd072b4b1159b73e79e"
     },
     "XR1PINS.H": {
-      "bytes": 5121,
-      "sha256": "93f7b7c9536710ce55df8d7b96d0990d33a88e5ecca64c65ada96e02954f76be"
+      "bytes": 5226,
+      "sha256": "e914082d6e00f3c9758c250673f62653d0233e4554d6fd0b19f0000488408208"
     },
     "XRFILES.H": {
-      "bytes": 19588,
-      "sha256": "5b4cbba7c24ee5e42cb62881cfb3a1fb55069831bc65a5abe93eb8e3bd1b522b"
+      "bytes": 19683,
+      "sha256": "af5c185471490779b92dec550bcd52059637f4264baa8d4d1077ea5ba9bcae96"
     },
     "XRSTRM.H": {
       "bytes": 1861,
@@ -40,30 +40,34 @@
       "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
     },
     "XRINPUT.H": {
-      "bytes": 14440,
-      "sha256": "16fc7fb2f3296e099a46f9663b98610ca9f493aeb8aee86a1d8a96b4793d9ecc"
+      "bytes": 14525,
+      "sha256": "0b577e38adae31b4c710d9eb109d631b67ae7179598a0f6a31b78cd438afe4f4"
     }
   },
   "companions": {
     "FIXXT.EXE": {
       "source": "tools/DOSINST/FIXXT.C",
       "source_identity": {
-        "bytes": 21119,
-        "sha256": "29ccefd3ec9b86213673268e3d132b3e5dab1fa0035f58b3756c709709dfdd3d"
+        "bytes": 24478,
+        "sha256": "d376ce1ada77675521d562d996ede339668c974446449b6e4a7d67d5525df4da"
       },
       "binary": "tools/DOSINST/BIN/FIXXT.EXE",
       "binary_identity": {
-        "bytes": 38046,
-        "sha256": "0f4bc4dc6fa35c6ad566a2aa74b3c4e15fd0fe51de46b2b10eb5afa76bbef3f6"
+        "bytes": 33001,
+        "sha256": "c7430205b27c4236a786bddddebddf89e64b1c92d422c443ebcec86691c61838"
       },
-      "flags": [
-        "-q",
-        "-bt=dos",
-        "-0",
-        "-ms",
-        "-s",
-        "-k8192"
-      ]
+      "compiler": "Microsoft C6 /G0 /AS /W3 /Od; LINK4 8KB stack",
+      "source_dependencies": {
+        "tools/DOSINST/SOUNDID.H": {
+          "bytes": 201,
+          "sha256": "c7645359276c478e8609881559a4d252e9ee966161261b255f9b389482610310"
+        }
+      },
+      "build_record": "tools/DOSINST/FIXBUILD.JSN",
+      "build_record_identity": {
+        "bytes": 743,
+        "sha256": "dc244c5c71e1d4f3495e1601e1554fe609fb4c6037f709eba23441878bff8b59"
+      }
     },
     "XTCLEAN.COM": {
       "source": "tools/DOSINST/XTCLEAN.ASM",
@@ -77,6 +81,19 @@
         "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
       },
       "assembler": "Open Watcom wasm -0; wlink system dos com"
+    }
+  },
+  "host_build": {
+    "toolchain": "existing Open Watcom16-bit DOS; compiler runs on host",
+    "native_execution": false,
+    "build_output": "fullxt-prep14",
+    "wcl": {
+      "bytes": 61952,
+      "sha256": "0697939fe0263f8b04dfbb0b98d98b10f3af936c2da9efd0b7a78ca38e2886e7"
+    },
+    "build_log": {
+      "bytes": 59,
+      "sha256": "7b43d5ffc9c233d540a5a6d7bb8662c30bc5595b06a59ce6e36ee005fc2b217f"
     }
   }
 }

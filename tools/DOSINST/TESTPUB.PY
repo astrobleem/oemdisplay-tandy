@@ -3,6 +3,7 @@ import copy
 import importlib.machinery
 import json
 import io
+import shutil
 import zipfile
 from pathlib import Path
 import tempfile
@@ -23,7 +24,7 @@ class NativePublisherTests(unittest.TestCase):
                      "public_assets": {"WINXT.ZIP": M.pub.identity(self.archive),
                      "WINXT.EXE": M.pub.identity(self.entries["PREPXR.EXE"] + self.archive)},
                      "cold": {"complete": True, "owned_stopped": True, "lease_released": True}}
-        for mode, count in (("fresh", 367), ("update", 80)):
+        for mode, count in (("fresh", 369), ("update", 82)):
             self.qual[mode] = {"complete": True, "owned_stopped": True, "lease_released": True,
                               "prepared_comparison": {"count": count, "different": []}}
         self.qual["input_validation"] = {
@@ -36,14 +37,26 @@ class NativePublisherTests(unittest.TestCase):
     def run_build(self, output, verify=False):
         self.receipt.write_text(json.dumps(self.qual), encoding="ascii")
         with patch.object(M, "REPO", self.root), patch.object(M, "collect", return_value=self.entries):
-            return M.build(output, COMMIT, verify)
+            return M.qualified_core(self.entries)
 
     def test_closed_native_archive(self):
-        self.assertEqual(len(self.entries), 53)
+        self.assertEqual(len(self.entries), 57)
         self.assertFalse(any(n.endswith(".PY") for n in self.entries))
         self.assertEqual(M.pub.identity(self.entries["PAYLOAD/CGA.GR2"]), {"bytes": 2104, "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"})
         M.pub.check_zip(self.archive, self.entries, "native")
         self.assertEqual(self.archive, M.pub.zip_bytes(self.entries))
+
+    def test_current_grabber_has_no_loose_root_dependency(self):
+        spec = json.loads((M.HERE / "RCPUBLIC.JSN").read_bytes())
+        self.assertEqual(spec["files"]["PAYLOAD/CGA.GR2"], {
+            "source": "distributions/WINXT/CGA.GR2",
+            "identity": M.pub.identity(self.entries["PAYLOAD/CGA.GR2"])})
+        original = M.pub.read_file
+        def read_without_loose_root(root, name):
+            self.assertNotEqual(str(name), "CGA.GR2")
+            return original(root, name)
+        with patch.object(M.pub, "read_file", side_effect=read_without_loose_root):
+            self.assertEqual(M.collect(), self.entries)
 
     def test_recipe_uses_bundled_grabber_for_both_output_trees(self):
         import re
@@ -74,41 +87,33 @@ class NativePublisherTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             M.check_inputs(recipe, header.replace("W30\\\\123.PIF", "wrong", 1), pins, qualified)
 
-    def test_verified_assets_and_overlay(self):
-        output = self.root / "release"
-        first = self.run_build(output)
-        self.assertEqual(first, self.run_build(output, True))
-        self.assertEqual(set(p.name for p in output.iterdir()), set(M.ASSETS))
-        self.assertEqual((output / "WINXT.EXE").read_bytes(), self.entries["PREPXR.EXE"] + self.archive)
+    def test_update_after_winamp_needs_no_original_stock_sound(self):
+        import re
+        rows = re.findall(r'\{"([^"\n]+)","([^"\n]+)",(\d+)UL,(\d+)\}',
+                          (M.HERE / "XRFILES.H").read_text())
+        owned = [row for row in rows if row[3] == "1"]
+        self.assertEqual(len(owned), 284)
+        self.assertTrue(all(row[0].startswith("W30\\\\") for row in owned))
+        update = [row for row in rows if not row[0].startswith("W30\\\\")]
+        self.assertEqual(len(update), 82)
+        self.assertFalse(any(row[3] == "1" for row in update))
+        sound = [row for row in update if row[1] == "SOUND.DRV"]
+        self.assertEqual(len(sound), 2)
+        self.assertTrue(all(row[3] == "0" for row in sound))
+        self.assertEqual({row[0] for row in sound},
+                         {"WINXT\\\\SOUND.DRV", "WINXT\\\\FILES\\\\SOUND.DRV"})
+        source = (M.HERE / "XRPREP.C").read_text()
+        self.assertIn('if(fresh||strncmp(files[i].path,"W30\\\\",4))', source)
 
-    def test_download_zip_extracts_the_qualified_ready_to_run_exe(self):
-        output = self.root / "wrapped"
-        self.run_build(output)
-        body = (output / "WINXTDOS.ZIP").read_bytes()
-        with zipfile.ZipFile(io.BytesIO(body)) as zf:
-            self.assertEqual(zf.namelist(), ["README.TXT", "WINXT.EXE"])
-            self.assertIsNone(zf.testzip())
-            self.assertEqual(zf.read("WINXT.EXE"), (output / "WINXT.EXE").read_bytes())
-            self.assertEqual(zf.read("WINXT.EXE"), self.entries["PREPXR.EXE"] + self.archive)
-            self.assertEqual(zf.read("README.TXT"), (M.HERE / "WRAP.TXT").read_bytes())
-            self.assertNotIn("PREPXR", zf.read("README.TXT").decode("ascii"))
-            self.assertNotIn(b"\r\r\n", zf.read("README.TXT"))
-            self.assertNotIn(b"\n", zf.read("README.TXT").replace(b"\r\n", b""))
-        report = json.loads((output / "RELEASE.JSON").read_bytes())
-        self.assertEqual(report["download_archive"]["executable"], M.pub.identity((output / "WINXT.EXE").read_bytes()))
-        self.assertEqual(report["download_archive"]["sha256"], M.pub.identity(body)["sha256"])
-        self.assertEqual(body, M.download_zip((output / "WINXT.EXE").read_bytes()))
-        # Reject either altered delivery member and altered outer metadata on verification.
-        for member in ("WINXT.EXE", "README.TXT"):
-            with zipfile.ZipFile(io.BytesIO(body)) as zf:
-                entries = {name: zf.read(name) for name in zf.namelist()}
-            entries[member] += b"changed"
-            (output / "WINXTDOS.ZIP").write_bytes(M.pub.zip_bytes(entries))
-            with self.assertRaises(ValueError):
-                self.run_build(output, True)
-        (output / "WINXTDOS.ZIP").write_bytes(body + b"changed")
-        with self.assertRaises(ValueError):
-            self.run_build(output, True)
+    def test_preserves_all_284_published_os_identity_rows(self):
+        protected = json.loads((M.HERE/'SOUNDDELTA.JSN').read_bytes())['protected']
+        for name in ('DOSCORE.H','CRCFAST.H','VARSET.H','XRSTRM.H','XRINPUT.JSN'):
+            self.assertEqual(M.pub.identity((M.HERE/name).read_bytes()), protected[name])
+
+    def test_published_fresh_receipt_cannot_qualify_new_helper(self):
+        self.qual['fresh']['prepared_comparison']['count'] = 367
+        with self.assertRaisesRegex(ValueError, 'Prepared bytes differ: fresh'):
+            self.run_build(self.root/'stale-fresh')
 
     def test_wrong_or_incomplete_native_result_refused_before_output(self):
         original = copy.deepcopy(self.qual)
@@ -133,16 +138,127 @@ class NativePublisherTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.run_build(self.root / "bad")
 
-    def test_extra_or_modified_asset_refused(self):
-        output = self.root / "release"
-        self.run_build(output)
-        (output / "EXTRA.TXT").write_bytes(b"extra")
-        with self.assertRaises(ValueError):
-            self.run_build(output, True)
-        (output / "EXTRA.TXT").unlink()
-        (output / "WINXT.EXE").write_bytes(b"changed")
-        with self.assertRaises(ValueError):
-            self.run_build(output, True)
+
+class ExpandedPublisherTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.entries = M.expanded_entries()
+        self.archive = M.pub.zip_bytes(self.entries)
+        self.source = M.pub.read_file(M.REPO, "tools/XR1PACK/SOUNDSRC.ZIP")
+        self.qual = {"status": "PASS_EXPANDED_NATIVE", "physical_test": False,
+                     "archive": M.pub.identity(self.archive),
+                     "files": {n: M.pub.identity(b) for n,b in sorted(self.entries.items())},
+                     "negative": {"complete": True, "owned_stopped": True, "lease_released": True, "helper": M.pub.identity(self.entries["SETUP.EXE"]), "archive": M.pub.identity(self.archive)}}
+        for mode in ("fresh", "update", "drivers_only"):
+            self.qual[mode] = {"complete": True, "owned_stopped": True, "lease_released": True,
+                               "archive": self.qual["archive"]}
+            if mode != "drivers_only":
+                self.qual[mode].update(helper=M.pub.identity(self.entries["SETUP.EXE"]),
+                    prepared_comparison={"count":370 if mode=="fresh" else 83,"different":[]})
+        self.qual["drivers_only"].update(custom_setup_executed=False,
+           descriptor_unchanged=True,alternate_source="C:\\EXTRACT\\WINXT")
+        self.receipt = self.root / "docs/QUAL/DOSINST/EXPAND.JSN"
+        self.receipt.parent.mkdir(parents=True)
+        self.qual["evidence"] = {}
+        for name in ("EXUP.LOG", "EXUP.PNG", "EXMISS.LOG", "EXBAD.LOG", "EXBAD.PNG", "EXCASE.JSN", "EXFRESH.LOG", "EXFRESH.PNG"):
+            data = ("test evidence " + name).encode()
+            self.receipt.with_name(name).write_bytes(data)
+            self.qual["evidence"][name] = M.pub.identity(data)
+        src = self.root / "tools/XR1PACK/SOUNDSRC.ZIP"
+        src.parent.mkdir(parents=True);src.write_bytes(self.source)
+        self.here = self.root / "tools/DOSINST"
+        self.here.mkdir()
+        oem_root = self.root / "tools/XROEM"
+        shutil.copytree(M.HERE.parent / "XROEM/QA", oem_root / "QA")
+        oem = json.loads((M.HERE.parent / "XROEM/NATIVE.JSN").read_bytes())
+        oem["packet"] = self.qual["archive"]
+        oem["members"] = self.qual["files"]
+        (oem_root / "NATIVE.JSN").write_text(json.dumps(oem))
+
+    def run_build(self, out, verify=False):
+        self.receipt.write_text(json.dumps(self.qual), encoding="ascii")
+        with patch.object(M,"REPO",self.root),patch.object(M,"HERE",self.here),patch.object(M,"expanded_entries",return_value=self.entries):
+            return M.build(out,COMMIT,verify)
+
+    def test_actual_expanded_tree_and_plain_executable(self):
+        import struct
+        self.assertEqual({n.split('/')[0] for n in self.entries},{"SETUP.EXE","README.TXT","WINXT"})
+        self.assertEqual(len(self.entries),60)
+        self.assertFalse(any(n.endswith((".ZIP",".PY")) for n in self.entries))
+        exe=self.entries['SETUP.EXE'];last,pages=struct.unpack_from('<HH',exe,2)
+        self.assertEqual(len(exe),pages*512-(512-last if last else 0))
+        self.assertLess(len(exe),90000)
+        core=M.collect()
+        current=importlib.machinery.SourceFileLoader('test_current_settings',str(M.HERE/'PANUI.PY')).load_module()
+        core.update({'PAYLOAD/'+n:b for n,b in current.runtimes().items()})
+        for n,b in core.items():
+            if n.startswith('PAYLOAD/'):
+                self.assertEqual(self.entries['WINXT/'+('HPXY.INF' if n[8:]=='OEMSETUP.INF' else n[8:])],b)
+        for n in ('OEMSETUP.INF','CGA.GR2','HPXY.DRV','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','XTSTATIC.LGO','WXTSPL01.RLE','DISPLAY.BAT','DISPWIN.BAT'):
+            self.assertIn('WINXT/'+n,self.entries)
+        M.pub.check_zip(self.archive,self.entries,'expanded')
+
+    def test_expanded_crc_indices_preserve_every_original_windows_identity(self):
+        import re
+        rows=re.findall(r'{"([^"\n]+)","([^"\n]+)",(\d+)UL,(\d+)}',(M.HERE/'SETFILES.H').read_text())
+        crcs=re.findall(r'0x([0-9a-f]{8})UL, /\* ([^*]+) \*/',(M.HERE/'SETINPUT.H').read_text())
+        expected=json.loads((M.HERE/'XRINPUT.JSN').read_bytes())
+        self.assertEqual(len(rows),370)
+        self.assertEqual(len(crcs),370)
+        actual={}
+        for (path,source,size,kind),(crc,label) in zip(rows,crcs):
+            self.assertEqual(path,label)
+            if kind=='1':actual[path.replace(chr(92)*2,'/')]=(int(size),crc)
+            else:self.assertEqual(crc,'00000000')
+        self.assertEqual(actual,{p:(v['bytes'],v['crc32']) for p,v in expected.items()})
+        self.assertEqual(len(actual),284)
+
+    def test_verified_current_assets_and_developer_source_separation(self):
+        out=self.root/'release';first=self.run_build(out)
+        self.assertEqual(first,self.run_build(out,True))
+        self.assertEqual(set(first),set(M.ASSETS))
+        self.assertEqual((out/'WINXTSRC.ZIP').read_bytes(),self.source)
+        self.assertEqual(json.loads((out/'WINXT.JSN').read_bytes())['tag'],'windows-xt')
+        with zipfile.ZipFile(io.BytesIO((out/'WINXT.ZIP').read_bytes())) as z:
+            self.assertEqual(z.read('SETUP.EXE'),self.entries['SETUP.EXE'])
+            self.assertIsNone(z.testzip())
+            self.assertNotIn('WINXT.EXE',z.namelist())
+
+    def test_stale_or_incomplete_native_evidence_is_refused(self):
+        original=copy.deepcopy(self.qual)
+        mutations=[lambda q:q.update(status='PENDING'),lambda q:q['archive'].update(sha256='0'*64),
+          lambda q:q['files'].pop('WINXT/HPXY.DRV'),lambda q:q['fresh'].update(complete=False),
+          lambda q:q['fresh']['helper'].update(sha256='0'*64),
+          lambda q:q['update']['prepared_comparison'].update(count=80),
+          lambda q:q['drivers_only'].update(error='copy source prompt'),
+          lambda q:q['drivers_only'].update(lease_released=False),lambda q:q['negative'].update(complete=False),
+          lambda q:q['drivers_only'].update(custom_setup_executed=True),
+          lambda q:q['drivers_only'].update(descriptor_unchanged=False),
+          lambda q:q['drivers_only'].update(alternate_source=r'C:\WINXT')]
+        for mutate in mutations:
+            self.qual=copy.deepcopy(original);mutate(self.qual)
+            with self.assertRaises(ValueError):self.run_build(self.root/'refused')
+            self.assertFalse((self.root/'refused').exists())
+
+    def test_changed_native_raw_evidence_refused_before_publication(self):
+        self.receipt.with_name("EXUP.PNG").write_bytes(b"changed")
+        with self.assertRaisesRegex(ValueError,"Expanded evidence differs"):
+            self.run_build(self.root/"refused")
+        self.assertFalse((self.root/"refused").exists())
+
+    def test_modified_asset_extra_file_and_changed_member_refused(self):
+        out=self.root/'release';self.run_build(out)
+        (out/'extra').write_bytes(b'extra')
+        with self.assertRaises(ValueError):self.run_build(out,True)
+        (out/'extra').unlink()
+        original=(out/'WINXT.ZIP').read_bytes()
+        for n in ('SETUP.EXE','WINXT/HPXY.DRV','README.TXT'):
+            e=dict(self.entries);e[n]+=b'changed';(out/'WINXT.ZIP').write_bytes(M.pub.zip_bytes(e))
+            with self.assertRaises(ValueError):self.run_build(out,True)
+        (out/'WINXT.ZIP').write_bytes(original+b'changed')
+        with self.assertRaises(ValueError):self.run_build(out,True)
 
 if __name__ == "__main__":
     unittest.main()

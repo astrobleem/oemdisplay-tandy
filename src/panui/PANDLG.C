@@ -32,12 +32,13 @@
 
 /* Client layout in pixels: two text lines, one row per capability, then the
  * status line and the buttons at the bottom. The row pitch is 14 when there
- * is room and shrinks (down to 11) when all eight rows must fit 176 px. */
+ * is room and shrinks (down to 11) if additional rows must fit 176 px. */
 #define PAN_X       7
 #define PAN_W       280
-#define TXT_H       10
-#define LAY_ROW     26      /* top of the first capability row */
-#define LAY_FOOT    30      /* client bottom to top of the status line */
+#define TXT_H       12
+#define STATUS_H    24      /* two lines for validation and driver messages */
+#define LAY_ROW     30      /* top of the first capability row */
+#define LAY_FOOT    44      /* client bottom to top of the status line */
 #define LAY_BTN     16      /* client bottom to top of the buttons */
 #define BTN_H       14
 #define ROW_MAX     14
@@ -250,7 +251,7 @@ static void BuildControls(HWND hwnd)
     const char *bk = pHost->backend ? pHost->backend : "";
 
     MakeChild(hwnd, "STATIC", bk, SS_LEFT, PAN_X, 3, PAN_W, TXT_H, ID_BACKEND);
-    MakeChild(hwnd, "STATIC", "", SS_LEFT, PAN_X, 14, PAN_W, TXT_H, ID_VIEW);
+    MakeChild(hwnd, "STATIC", "", SS_LEFT, PAN_X, 16, PAN_W, TXT_H, ID_VIEW);
 
     if (caps & PS_CAP_STEP) {
         MakeChild(hwnd, "STATIC", "Step (rows)", SS_LEFT, PAN_X, y, 180,
@@ -309,7 +310,7 @@ static void BuildControls(HWND hwnd)
     }
 
     MakeChild(hwnd, "STATIC", "", SS_LEFT, PAN_X, h - LAY_FOOT, PAN_W,
-              TXT_H, ID_STATUS);
+              STATUS_H, ID_STATUS);
     if (caps & PS_CAP_HOME)
         MakeChild(hwnd, "BUTTON", "Home", BS_PUSHBUTTON | WS_TABSTOP, PAN_X,
                   h - LAY_BTN, 60, BTN_H, ID_HOME);
@@ -326,7 +327,7 @@ static void BuildControls(HWND hwnd)
 static void Reposition(HWND hwnd)
 {
     SetWindowPos(hwnd, NULL, model.caps.viewX + 4, model.caps.viewY + 2,
-                 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+                 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
 /* Repeat open: query the driver but keep the typed edits. The controls were
@@ -350,6 +351,30 @@ static void RefreshCaps(void)
     }
     model.caps = fresh;
     model.live = live;
+}
+
+void PanDlgTrack(void)
+{
+    int x, y, backend;
+    RECT r;
+    if (!hDlg || !IsWindow(hDlg))
+        return;
+    x = model.caps.viewX;
+    y = model.caps.viewY;
+    backend = model.caps.backend;
+    RefreshCaps();
+    if (backend != model.caps.backend) {
+        ShowStatus(hDlg);
+        UpdateButtons(hDlg);
+    }
+    if (x != model.caps.viewX || y != model.caps.viewY) {
+        SetViewLine(hDlg);
+        GetWindowRect(hDlg, &r);
+        if (r.left < model.caps.viewX || r.top < model.caps.viewY ||
+            r.right > model.caps.viewX + model.caps.viewW ||
+            r.bottom > model.caps.viewY + model.caps.viewH)
+            Reposition(hDlg);
+    }
 }
 
 static void DoApply(HWND hwnd)
@@ -499,6 +524,17 @@ long FAR PASCAL PAN_EXPORT PanDlgProc(HWND hwnd, UINT msg, WPARAM wParam,
         /* IsDialogMessage asks for the default button; without this answer
          * Enter would not reach Apply. */
         return MAKELONG(IDOK, DC_HASDEFID);
+    case WM_NEXTDLGCTL: {
+        HWND next;
+        next = lParam ? (HWND)wParam :
+               GetNextDlgTabItem(hwnd, GetFocus(), wParam != 0);
+        if (next) {
+            SetFocus(next);
+            if (SendMessage(next, WM_GETDLGCODE, 0, 0L) & DLGC_HASSETSEL)
+                SendMessage(next, EM_SETSEL, 0, MAKELONG(0, -1));
+        }
+        return 0L;
+    }
     case WM_COMMAND:
         if (wParam == IDOK)
             DoApply(hwnd);

@@ -1,6 +1,6 @@
 # TEXT80 and compact C25 — experimental download
 
-**[Download TEXT80.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TEXT80/TEXT80.ZIP)** · [Detailed behavior](../../../docs/TEXT80.MD)
+**[Download TEXT80.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TEXT80.ZIP)** · [Detailed behavior](../../../docs/TEXT80.MD)
 
 Windows 3.0 real mode, 8086/8088, 640 KB. This separate 2026-10-18 packet
 contains four text display profiles, the DOS installer/rollback program,

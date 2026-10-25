@@ -5,6 +5,7 @@ GitHub Actions, an emulator, Windows media discovery, or publication services.
 """
 import argparse
 import hashlib
+import io
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -12,6 +13,7 @@ import re
 import shutil
 import tempfile
 import zipfile
+import zlib
 
 HERE = Path(__file__).resolve().parent
 ASSETS = (
@@ -20,8 +22,9 @@ ASSETS = (
 )
 BUNDLES = ("WINXT-XR1.ZIP", "WINMINE30.ZIP")
 DOCS = ("PREPARE.PY", "INPUTS.JSN", "README.TXT", "NOTICE.TXT", "QUALIFY.JSN",
-        "WHEELLIC.TXT", "WHEELPRO.TXT", "OWATCOM.TXT", "PROVENANCE.JSN")
-PAYLOAD_COUNT = 47
+        "WHEELLIC.TXT", "WHEELPRO.TXT", "OWATCOM.TXT", "PROVENANCE.JSN",
+        "SOUNDID.JSN", "SOUNDSRC.ZIP", "SOUNDLIC.TXT")
+PAYLOAD_COUNT = 48
 MINE_COUNT = 6
 MINE_PINS = {
     "WINMINE.EXE": "52be8bb486d3bad7809c19efc8a3202ef08a458e250634e392fbd127d4046c8a",
@@ -198,6 +201,7 @@ def collect(root, commit):
         banned_names.add(path.name.casefold())
         banned_ids.add((row.get("bytes"), row.get("sha256")))
 
+    canonical_sound = validate_sound(data_by_source)
     qdata = data_by_source["QUALIFY.JSN"]
     qualification = parse_json(qdata, "QUALIFY.JSN")
     validate_qualification(root, qualification, data_by_source)
@@ -234,9 +238,11 @@ def collect(root, commit):
                 leaf = PurePosixPath(source_path).name
                 archive_leaf = PurePosixPath(archive_path).name
                 allow_adapted_driver = leaf in ("HPXY.DRV", "TNDYK3.DRV") and archive_leaf == leaf
+                allow_canonical_sound = (leaf == archive_leaf == "SOUND.DRV" and
+                                         ident == canonical_sound)
                 require((ident["bytes"], ident["sha256"]) not in banned_ids,
                         "Runtime payload bytes overlap original/generated Windows input: " + leaf)
-                require(allow_adapted_driver or
+                require(allow_adapted_driver or allow_canonical_sound or
                         (leaf.casefold() not in banned_names and archive_leaf.casefold() not in banned_names),
                         "Runtime payload name overlaps original/generated Windows input: " + leaf)
             elif source_path == "NOTICE.TXT":
@@ -289,6 +295,38 @@ def collect(root, commit):
     check_zip(assets["WINXT-XR1.ZIP"], bundle_entries["WINXT-XR1.ZIP"], "WINXT-XR1.ZIP")
     check_zip(assets["WINMINE30.ZIP"], bundle_entries["WINMINE30.ZIP"], "WINMINE30.ZIP")
     return assets
+
+
+def validate_sound(data):
+    """Bind the one authored SOUND replacement to its corresponding source."""
+    manifest = parse_json(data["SOUNDID.JSN"], "SOUNDID.JSN")
+    require(manifest.get("file") == "SOUND.DRV", "Canonical sound name differs")
+    pin = {key: manifest[key] for key in ("bytes", "sha256")}
+    sound = data["PAYLOAD/SOUND.DRV"]
+    require(identity(sound) == pin and
+            "%08x" % zlib.crc32(sound) == manifest["crc32"],
+            "Canonical sound artifact differs from generated identity")
+    try:
+        with zipfile.ZipFile(io.BytesIO(data["SOUNDSRC.ZIP"])) as archive:
+            names = archive.namelist()
+            require(len(names) == len(set(names)), "Duplicate sound source member")
+            for name in names:
+                safe_path(name)
+                require(name.startswith("SOUND/") and
+                        PurePosixPath(name).suffix.upper() not in
+                        (".EXE", ".DRV", ".DLL", ".COM", ".LIB", ".OBJ"),
+                        "Unexpected sound source member: " + name)
+            build = parse_json(archive.read("SOUND/BUILD.JSN"), "Sound native build")
+            require(build["runtime"] == pin, "Sound source build covers another driver")
+            for name, source_pin in build["sources"].items():
+                safe_path(name)
+                require(identity(archive.read("SOUND/" + name)) == source_pin,
+                        "Corresponding sound source differs: " + name)
+            require(archive.read("SOUND/LICENSE") == data["SOUNDLIC.TXT"],
+                    "Sound source license differs")
+    except (OSError, KeyError, zipfile.BadZipFile) as error:
+        raise Refused("Incomplete corresponding sound source") from error
+    return pin
 
 
 def json_bytes(value):

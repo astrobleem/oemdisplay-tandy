@@ -381,7 +381,7 @@ static int XyQuery(void *c,PANCAPS *cp,PANSET *s) {
 }
 static int XyApply(void *c,const PANSET *w,PANSET *a,char *note,int cap) {
  int want;
- if(!live)return PS_E_LOST;
+ if(!live || !Query())return PS_E_LOST;
  want=w->mode;note[0]=0;
  /* Mode is only touched when it can be read back; the result is what the driver reports. */
  if(statsProc && want!=hardware){Mode(want);if(!live)return PS_E_LOST;}
@@ -434,7 +434,7 @@ long FAR PASCAL __export Wnd(HWND w,UINT msg,WPARAM a,LPARAM b) {
  case WM_KEYDOWN:case WM_SYSKEYDOWN:
   if(a==VK_ESCAPE && dragging){CancelMapDrag();return 0;}
   if(KeyMessage(a,b))return 0;break;
- case WM_TIMER:if(!closing && live){int oldX,oldY;if(!timerSeen){timerSeen=1;Log("TIMER_START",left,top,edge,0);}oldX=left;oldY=top;if(!Query()){DriverLost("QUERY_ERROR");return 0;}if(dragging){if(GetCapture()!=w || oldX!=left || oldY!=top)CancelMapDrag();return 0;}Keyboard();if(Follow()){ResetEdge();PaintEdge();}else Edge();}return 0;
+ case WM_TIMER:if(!closing && live){int oldX,oldY;if(!timerSeen){timerSeen=1;Log("TIMER_START",left,top,edge,0);}oldX=left;oldY=top;if(!Query()){DriverLost("QUERY_ERROR");return 0;}if(dragging){if(GetCapture()!=w || oldX!=left || oldY!=top)CancelMapDrag();return 0;}Keyboard();if(Follow()){ResetEdge();PaintEdge();}else Edge();PanDlgTrack();}return 0;
  case WM_COMMAND:
   if(a==RECOVER)Log("RECOVER_ENTRY",(int)w,(int)a,left,top);
   if(a!=QUIT && live && !Query()){DriverLost("COMMAND_QUERY");return 0;}

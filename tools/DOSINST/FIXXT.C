@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include <fcntl.h>
 #include <io.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 #include <direct.h>
@@ -16,6 +17,7 @@
 #else
 #include <windows.h>
 #endif
+#include "SOUNDID.H"
 #define PTH 200
 #define CAP 14000
 static char win[PTH],home[PTH],sys[PTH],savepath[PTH];
@@ -23,10 +25,11 @@ static char oldini[CAP+1],newini[CAP+1];
 static unsigned char io[2048],other[2048];
 static int backup,verify,checking,fresh,last=-1;
 static unsigned long total,done;
-static const char *names[]={"TSHELL.EXE","TSINPUT.DLL","TSHELL.INI","XTTEST.COM","XTCLEAN.COM","TNDYK3.DRV","WHEEL.DRV","C216N6.DRV","C23216.DRV","XTS6SYS.FON","XTS6FIX.FON","XTCSYS.FON","XTCFIX.FON","XTCOEM.FON","CGA.GR2","SETUP.INF","TABOUT.EXE","MATRIX.EXE","MAZE.EXE","STARFLD.EXE","PINBALL.EXE","XPCHIME.EXE","TCHIME.EXE","TEXIT.EXE","RESERVE.COM","WINXT.BAT","CPSET.EXE","WINBRDG.EXE","SHOOK.COM","SETAUTO.EXE","PANCMP2.DRV","XTPAN.EXE","TP.EXE","HPXY.DRV","XYCTL.EXE","WXTWHL.EXE"};
-static unsigned long sizes[]={71763UL,6281UL,999UL,39427UL,1071UL,7640UL,1820UL,54752UL,54768UL,4240UL,4240UL,4592UL,4208UL,4560UL,2104UL,49840UL,6479UL,14669UL,28013UL,17295UL,15487UL,4543UL,3999UL,8687UL,1512UL,332UL,36612UL,28656UL,1249UL,10976UL,55104UL,6415UL,12303UL,56704UL,9679UL,7222UL};
-static int target[]={0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2};
-#define COUNT 36
+static const char *names[]={"TSHELL.EXE","TSINPUT.DLL","TSHELL.INI","XTTEST.COM","XTCLEAN.COM","TNDYK3.DRV","WHEEL.DRV","C216N6.DRV","C23216.DRV","XTS6SYS.FON","XTS6FIX.FON","XTCSYS.FON","XTCFIX.FON","XTCOEM.FON","CGA.GR2","SETUP.INF","TABOUT.EXE","MATRIX.EXE","MAZE.EXE","STARFLD.EXE","PINBALL.EXE","XPCHIME.EXE","TCHIME.EXE","TEXIT.EXE","RESERVE.COM","WINXT.BAT","CPSET.EXE","WINBRDG.EXE","SHOOK.COM","SETAUTO.EXE","PANCMP2.DRV","XTPAN.EXE","TP.EXE","HPXY.DRV","XYCTL.EXE","WXTWHL.EXE","SOUND.DRV"};
+static unsigned long sizes[]={72323UL,6281UL,999UL,39427UL,1071UL,7640UL,1820UL,54752UL,54768UL,4240UL,4240UL,4592UL,4208UL,4560UL,2104UL,49840UL,6479UL,14669UL,28013UL,17295UL,15487UL,5103UL,5071UL,9215UL,1512UL,332UL,36612UL,28656UL,1249UL,10976UL,55104UL,6415UL,12847UL,56704UL,21160UL,7222UL,SOUND_BYTES};
+static int target[]={0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,1};
+#define COUNT 37
+#define KEEP_XRSYNC 4
 static char media[PTH];
 static int changed,needs[COUNT],ini_changed,forced=-1;
 static const char *inifile="SYSTEM.INI";
@@ -52,7 +55,13 @@ static void writeall(int h,const unsigned char *b,unsigned n,const char *p){
 static int create(const char *p){int h=open(p,O_WRONLY|O_CREAT|O_EXCL|O_BINARY,S_IREAD|S_IWRITE);if(h<0)stop("Cannot create new file",p);return h;}
 static int flush_handle(int h){
 #ifndef HOST_TEST
+#ifdef _MSC_VER
+ /* C6 lacks Watcom's wrapper for this same DOS 3.3 commit service. */
+ union REGS r;
+ r.h.ah=0x68;r.x.bx=h;intdos(&r,&r);return r.x.cflag!=0;
+#else
  return _dos_commit(h);
+#endif
 #else
  return !FlushFileBuffers((HANDLE)_get_osfhandle(h));
 #endif
@@ -83,6 +92,52 @@ static void loadini(void){char p[PTH];FILE *f;unsigned n;path(p,win,inifile);if(
 static int inivalue(const char *key,char *out){char line[300],*p=oldini,*e,*eq;unsigned n;int boot=0,sections=0,seen=0;
  out[0]=0;while(*p){e=strchr(p,'\n');n=e?(unsigned)(e-p)+1:(unsigned)strlen(p);if(n>=sizeof(line))stop("INI line too long","");memcpy(line,p,n);line[n]=0;trim(line);if(line[0]=='['){char *q=strchr(line,']');if(!q)stop("Malformed INI section","");*q=0;boot=!stricmp(line+1,"boot");if(boot)sections++;}else if(boot&&(eq=strchr(line,'='))!=NULL){*eq=0;trim(line);if(!stricmp(line,key)){if(++seen>1)stop("Duplicate intended INI setting",key);strcpy(out,eq+1);trim(out);}}p+=n;}
  if(sections!=1)stop("Expected one boot section","");return seen;
+}
+
+
+static int pinned_file(const char *name,unsigned long bytes,
+                       unsigned long expected){
+ static unsigned long tab[16]={0,0x1db71064UL,0x3b6e20c8UL,
+  0x26d930acUL,0x76dc4190UL,0x6b6b51f4UL,0x4db26158UL,
+  0x5005713cUL,0xedb88320UL,0xf00f9344UL,0xd6d6a3e8UL,
+  0xcb61b38cUL,0x9b64c2b0UL,0x86d3d2d4UL,0xa00ae278UL,
+  0xbdbdf21cUL};
+ FILE *f;unsigned n,i;unsigned long c=0xffffffffUL,total=0;
+ if(kind(name)!=1||(unsigned long)length(name)!=bytes)return 0;
+ f=fopen(name,"rb");if(!f)return 0;
+ while((n=(unsigned)fread(io,1,sizeof(io),f))!=0){
+  total+=n;if(total>bytes){fclose(f);return 0;}
+  for(i=0;i<n;i++){
+   c^=io[i];c=(c>>4)^tab[(unsigned)c&15];
+   c=(c>>4)^tab[(unsigned)c&15];
+  }
+ }
+ if(ferror(f)||fclose(f))return 0;
+ return total==bytes&&(c^0xffffffffUL)==expected;
+}
+static void sound_files(void){
+ char p[PTH];
+ path(p,win,"SYSTEM.DRV");
+ if(kind(p))stop("A root SYSTEM.DRV shadows the supported system",p);
+ path(p,sys,"SYSTEM.DRV");
+ if(!pinned_file(p,2784UL,0x3ff05fecUL))
+  stop("The installed real-mode SYSTEM.DRV is incompatible",p);
+ path(p,media,SOUND_FILE);
+ if(!pinned_file(p,SOUND_BYTES,SOUND_CRC))
+  stop("The canonical SOUND.DRV source is missing or damaged",p);
+ path(p,win,SOUND_FILE);
+ if(kind(p)&&!pinned_file(p,SOUND_BYTES,SOUND_CRC))
+  stop("A different root SOUND.DRV shadows the canonical driver",p);
+}
+static void sound_selection(void){
+ char v[300],*comment;
+ if(inivalue("system.drv",v)!=1)
+  stop("One generic SYSTEM.DRV selection is required","");
+ comment=strchr(v,';');if(comment)*comment=0;trim(v);
+ if(stricmp(v,"SYSTEM.DRV"))
+  stop("The installed SYSTEM driver is incompatible with SOUND",v);
+ if(inivalue("sound.drv",v)!=1)
+  stop("One existing boot sound.drv entry is required","");
 }
 
 /* Replace only the owned key, remove its duplicates, and add missing entries.
@@ -123,9 +178,14 @@ static void changeini(const char *section,const char *key,const char *value){
 }
 static int current(const char *source,const char *dest){
  unsigned char first[32],last[32],got[32];long len;int a,b;
+ const char *leaf;
  if(kind(dest)!=1)return 0;len=length(source);if(length(dest)!=len)return 0;
- /* The wrapper launch path lies inside the file, outside cheap end samples. */
- if(verify||!stricmp(strrchr(source,'\\')+1,"XTCLEAN.COM"))return equal(source,dest);
+ leaf=strrchr(source,'\\');leaf=leaf?leaf+1:source;
+ if(verify||!stricmp(leaf,"XTCLEAN.COM")||
+    !stricmp(leaf,SOUND_FILE)||!stricmp(leaf,"TSHELL.EXE")||
+    !stricmp(leaf,"TCHIME.EXE")||!stricmp(leaf,"XPCHIME.EXE")||
+    !stricmp(leaf,"TEXIT.EXE")||!stricmp(leaf,"TP.EXE"))
+  return equal(source,dest);
  a=open(source,O_RDONLY|O_BINARY);b=open(dest,O_RDONLY|O_BINARY);
  if(a<0||b<0)stop("Cannot sample payload",dest);
  if(len<64){close(a);close(b);return equal(source,dest);}
@@ -134,7 +194,16 @@ static int current(const char *source,const char *dest){
  if(lseek(a,len-32,SEEK_SET)<0||lseek(b,len-32,SEEK_SET)<0||read(a,last,32)!=32||read(b,got,32)!=32)stop("Payload end read failed",dest);
  if(close(a)||close(b))stop("Payload close failed",dest);return !memcmp(last,got,32);
 }
-static int profile(void){char v[300],p[PTH];FILE *f;
+static int profile(void){char v[300],p[PTH],*comment;FILE *f;
+ /* Installed XRSYNC owns its display, fonts, grabber and panning settings.
+    It takes priority over stale PROFILE.TXT and legacy install defaults. */
+ inivalue("display.drv",v);
+ comment=strchr(v,';');if(comment)*comment=0;trim(v);
+ if(!stricmp(v,"XRSYNC.DRV")){
+  path(p,sys,"XRSYNC.DRV");
+  if(kind(p)!=1)stop("Selected XRSYNC driver is missing",p);
+  return KEEP_XRSYNC;
+ }
  if(forced>=0)return forced;
  path(p,home,"PROFILE.TXT");
  if(!fresh&&kind(p)==1){f=fopen(p,"rt");if(!f||!fgets(v,sizeof(v),f)||fclose(f))stop("Profile record read failed",p);trim(v);}
@@ -159,8 +228,18 @@ static int textmatches(const char *p,const char *text){
  return n==want&&!memcmp(got,text,want);
 }
 
+static int display_payload(const char *name){
+ return !stricmp(name,"C216N6.DRV")||!stricmp(name,"C23216.DRV")||
+  !stricmp(name,"PANCMP2.DRV")||!stricmp(name,"HPXY.DRV")||
+  !stricmp(name,"XYCTL.EXE")||!stricmp(name,"XTPAN.EXE")||
+  !stricmp(name,"XTS6SYS.FON")||!stricmp(name,"XTS6FIX.FON")||
+  !stricmp(name,"XTCSYS.FON")||!stricmp(name,"XTCFIX.FON")||
+  !stricmp(name,"XTCOEM.FON")||!stricmp(name,"CGA.GR2")||
+  !stricmp(name,"SETUP.INF");
+}
 static void checkfiles(int mode){char p[PTH],a[PTH];unsigned i;
  for(i=0;i<COUNT;i++){
+  if(mode==KEEP_XRSYNC&&display_payload(names[i])){needs[i]=0;continue;}
   if((!stricmp(names[i],"C216N6.DRV")&&mode!=0)||(!stricmp(names[i],"C23216.DRV")&&mode!=1)||(!stricmp(names[i],"PANCMP2.DRV")&&mode!=2)||(!stricmp(names[i],"XTPAN.EXE")&&mode!=2)||(!stricmp(names[i],"HPXY.DRV")&&mode!=3)||(!stricmp(names[i],"XYCTL.EXE")&&mode!=3)||((!stricmp(names[i],"XTS6SYS.FON")||!stricmp(names[i],"XTS6FIX.FON"))&&mode!=0)||((!stricmp(names[i],"XTCSYS.FON")||!stricmp(names[i],"XTCFIX.FON"))&&mode==0)){needs[i]=0;continue;}
   path(p,media,names[i]);if((unsigned long)length(p)!=sizes[i])stop("Repair source size differs",p);
   path(a,target[i]==2?home:target[i]?sys:win,names[i]);regular_or_missing(a);
@@ -202,6 +281,7 @@ static void startup_token(char *out,const char *leaf){
 static void panini(int mode){
  char p[PTH],n[PTH],o[PTH],j[PTH],run[512],result[512],border[512],token[PTH+4],word[512];
  unsigned i=0,k=0,w;int quoted,comma=0,space=0,h;
+ if(mode==KEEP_XRSYNC)return;
  inifile="WIN.INI";ini_changed=0;loadini();sectionvalue("windows","run",run);
  while(run[i]){
   if(run[i]==' '||run[i]=='\t'||run[i]==','){
@@ -238,24 +318,29 @@ int main(int argc,char **argv){char p[PTH],a[PTH],v[300],n[PTH],o[PTH],j[PTH],m[
  path(sys,win,"SYSTEM");path(media,home,"FILES");
  if(kind(win)!=2||kind(sys)!=2||kind(media)!=2)stop("Required directories missing",win);
  for(i=4;i<(unsigned)argc;i++){if(!stricmp(argv[i],"/VERIFY"))verify=1;else if(!stricmp(argv[i],"/FRESH"))fresh=1;else if(!stricmp(argv[i],"/160")){forced=0;fresh=1;}else if(!stricmp(argv[i],"/320")){forced=1;fresh=1;}else if(!stricmp(argv[i],"/PAN")){forced=2;fresh=1;}else if(!stricmp(argv[i],"/XR1")){forced=3;fresh=1;}else stop("Unknown option",argv[i]);}
- not_windows();recover(win);recover(sys);recover(home);loadini();mode=profile();checkfiles(mode);
+ not_windows();sound_files();
+ recover(win);recover(sys);recover(home);loadini();
+ sound_selection();mode=profile();checkfiles(mode);
+ changeini("boot","sound.drv",SOUND_FILE);
  changeini("boot","shell","TSHELL.EXE");changeini("boot","keyboard.drv","TNDYK3.DRV");
  changeini("boot","mouse.drv","WHEEL.DRV");changeini("keyboard","type","1");
+ if(mode!=KEEP_XRSYNC){
  changeini("boot","display.drv",mode==3?"HPXY.DRV":mode==2?"PANCMP2.DRV":mode?"C23216.DRV":"C216N6.DRV");
  changeini("boot","fonts.fon",mode?"XTCSYS.FON":"XTS6SYS.FON");
  changeini("boot","fixedfon.fon",mode?"XTCFIX.FON":"XTS6FIX.FON");
  changeini("boot","oemfonts.fon","XTCOEM.FON");changeini("boot","286grabber","CGA.GR2");
+ }
  changeini("boot.description","system.drv","Tandy 1000 EX/HX (WindowsXT)");
  changeini("boot.description","keyboard.typ","PC/XT - Type keyboard (84 keys)");
  changeini("boot.description","mouse.drv","Tandy serial wheel mouse (COM1/IRQ4)");
- changeini("boot.description","display.drv",mode==3?"Tandy EX/HX accepted HPXY 640x200 wide-font mode":mode==2?"Tandy EX/HX optional compact panning 320x400":mode?"Tandy EX/HX 320x200 compact 16 colors":"Tandy EX/HX 160x200 small fonts (accepted narrow160)");
+ if(mode!=KEEP_XRSYNC)changeini("boot.description","display.drv",mode==3?"Tandy EX/HX accepted HPXY 640x200 wide-font mode":mode==2?"Tandy EX/HX optional compact panning 320x400":mode?"Tandy EX/HX 320x200 compact 16 colors":"Tandy EX/HX 160x200 small fonts (accepted narrow160)");
  if(ini_changed)total+=(unsigned long)strlen(oldini);for(i=0;i<COUNT;i++)changed+=needs[i];
  if(checking){if(ini_changed||changed)stop("Owned entries or payloads need FIXXT REPAIR","");panini(mode);puts("Owned entries and cheap payload samples match.");return 0;}
  if(changed||ini_changed){space();puts("Repair/copy only missing or outdated payloads and owned INI keys.");progress("");
   for(i=0;i<COUNT;i++)if(needs[i]){path(p,media,names[i]);replace_file(p,target[i]==2?home:target[i]?sys:win,names[i]);}putchar('\n');
   if(ini_changed){begin(win,"SYSTEM.INI",n,o,j);h=create(n);writeall(h,(unsigned char*)oldini,(unsigned)strlen(oldini),n);closeout(h,n);commit(win,"SYSTEM.INI",n,o,j);done+=(unsigned long)strlen(oldini);progress("SYSTEM.INI");putchar('\n');}
  }else puts("No-op: all owned entries match; no payloads copied or INIs written.");
- path(p,home,"PROFILE.TXT");sprintf(v,"%s\r\n",mode==3?"HPXY.DRV":mode==2?"PANCMP2.DRV":mode==1?"C23216.DRV":"C216N6.DRV");
+ path(p,home,"PROFILE.TXT");sprintf(v,"%s\r\n",mode==KEEP_XRSYNC?"XRSYNC.DRV":mode==3?"HPXY.DRV":mode==2?"PANCMP2.DRV":mode==1?"C23216.DRV":"C216N6.DRV");
  if(!textmatches(p,v)){begin(home,"PROFILE.TXT",n,o,j);h=create(n);writeall(h,(unsigned char*)v,(unsigned)strlen(v),n);closeout(h,n);commit(home,"PROFILE.TXT",n,o,j);}
  path(p,home,"SIMPLE.OK");if(!kind(p)){marker(m);h=create(p);writeall(h,(unsigned char*)m,(unsigned)strlen(m),p);closeout(h,p);}
  printf("Complete: %d payloads copied, SYSTEM.INI %s. No WIN.COM/wave rebuild.\n",changed,ini_changed?"updated":"unchanged");panini(mode);return 0;

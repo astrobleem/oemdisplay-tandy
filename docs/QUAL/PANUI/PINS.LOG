@@ -1,0 +1,6 @@
+.<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
+...
+----------------------------------------------------------------------
+Ran 4 tests in 0.522s
+
+OK

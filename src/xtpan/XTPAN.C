@@ -349,6 +349,7 @@ long FAR PASCAL WndProc(HWND hwnd, unsigned msg, WORD wParam, LONG lParam)
     switch (msg) {
     case WM_TIMER:
         Tick();
+        PanDlgTrack();
         return 0;
     case WM_DESTROY:
         PanDlgClose();

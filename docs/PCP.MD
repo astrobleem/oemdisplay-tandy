@@ -1,30 +1,24 @@
 # Windows 3.0 on Plantronics ColorPlus
 
-**[Download CPPSET.EXE](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/CPPAN/CPPSET.EXE)**
+**[Download CPPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP)**
 
-For a PC/XT with ColorPlus video, 640 KB, DOS 3.20+ and Windows 3.0 in
-`C:\WINDOWS`. Ordinary CGA, PC1512 and Tandy/PCjr shared-memory video use
-other drivers. This one packet includes fixed 320x200 and software-panning
-320x400 profiles, matching fonts, grabber, logos and helpers.
-
-1. Copy CPPSET.EXE to the PC/XT. Exit Windows to DOS and run `CPPSET`.
+1. Extract all files to `C:\CPPAN`. Exit Windows to DOS.
 2. Run `C:\CPPAN\INSTALL`.
-3. In Setup choose Display, Other, `C:\CPPAN`, then **ColorPlus 320x200 fixed**
-   for the standard desktop or **EXPERIMENTAL ColorPlus 320x400 panning**
-   for the taller desktop. Complete Setup and return to DOS.
+3. Select the display in Setup, complete changes and return to DOS.
 4. Start Windows with `C:\CPPAN\CPWIN`.
 
-For panning, run `C:\CPPAN\PANCFG` once from Windows File, Run. Move the
-pointer beyond an edge or use Alt+PgDn/Alt+PgUp; Alt+F9 returns to the top.
-Panning uses 32,000 more bytes of shadow memory than the fixed profile.
-To select fixed mode later, run `PANCFG OFF`, exit Windows and use Setup again.
-Exit Windows before running DOS programs. No Tandy reservation helper is used.
+For a PC/XT with ColorPlus video, 640 KB, DOS 3.20+ and installed Windows 3.0
+real mode in `C:\WINDOWS`. Ordinary CGA, PC1512 and Tandy/PCjr video use other drivers.
+Fonts, grabber, startup logos and helpers are included.
 
-[ZIP alternative](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/CPPAN/CPPAN.ZIP) |
-[Packaged instructions](../downloads/experimental/CPPAN/INSTALL.TXT).
-The existing native Setup/driver payload is unchanged; the DOS carrier was
-checked with every extracted file exact. Physical ColorPlus clones remain
-outside the recorded emulator qualification.
+In Setup choose Display, Other, `C:\CPPAN`, then **ColorPlus 320x200 fixed** or
+**EXPERIMENTAL ColorPlus 320x400 panning** for the taller desktop.
+For panning, run `C:\CPPAN\PANCFG` inside Windows once. Move the pointer past
+an edge or use Alt+PgDn/Alt+PgUp; Alt+F9 returns to the top.
+Panning uses 32,000 additional shadow bytes. To select fixed mode later,
+run `PANCFG OFF`, exit Windows and repeat Setup. No reservation helper is needed.
+Exit Windows before running DOS programs. Native Setup/startup passed in
+emulation; physical ColorPlus clones remain unqualified.
 
 <details>
 <summary>Archived renderer development and test record</summary>

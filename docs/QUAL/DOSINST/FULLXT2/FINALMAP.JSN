@@ -1,0 +1,46 @@
+{
+  "status": "PASS_METADATA_RECONCILIATION",
+  "native_test_source": "8320cf2bd9615f915159311cd41fb80ee1e4958c",
+  "rebased_source": "f01fcdb1b7f405e8c1208b18a3cd9c1ff037a66f",
+  "final_source_base": "57d72c8197c427899772ebc334ae67dedffaf900",
+  "compiled_source_build_pins_unchanged": {
+    "CRCFAST.H": true,
+    "DOSCORE.H": true,
+    "FIXXT.C": true,
+    "PACKPINS.H": true,
+    "RCNATIVE.JSN": true,
+    "SOUNDID.H": true,
+    "VARSET.H": true,
+    "XR1PINS.H": true,
+    "XRFILES.H": true,
+    "XRINPUT.H": true,
+    "XRINPUT.JSN": true,
+    "XRPREP.C": true,
+    "XRSTRM.H": true
+  },
+  "all_57_collected_entries_byte_identical": true,
+  "helper": {
+    "bytes": 83544,
+    "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
+  },
+  "public_assets": {
+    "WINXT.ZIP": {
+      "bytes": 746928,
+      "sha256": "ce7698e0595d2add6e8e8f550b144bcb5dd996c0ee49f8448373f76065f6dbff"
+    },
+    "WINXT.EXE": {
+      "bytes": 830472,
+      "sha256": "292c28c67b97c3fe611ca8c5171a92581153bb6a17924adef7f8cf53f8d16ea4"
+    }
+  },
+  "current_native_manifest": {
+    "bytes": 13010,
+    "sha256": "27792ba021b45af9e3b249d4db9df603276d859e1762051ff79ad280ea738189"
+  },
+  "current_publisher": {
+    "bytes": 8159,
+    "sha256": "e1a71f68a51e888985cc815d02604eaa60ef5e24dedb8638268b801708a291ae"
+  },
+  "change": "CGA input moved from a loose1768-byte SZDD source to the tracked expanded2104-byte source with identical expanded identity. Publisher report tag is.2. No C/H/helper/runtime/archive byte changed. Qualification evidence is the only subsequent delta.",
+  "native_execution_repeated_for_metadata": false
+}

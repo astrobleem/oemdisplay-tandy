@@ -1,0 +1,122 @@
+{
+  "complete": true,
+  "scope": "Actual new DOS SFX target refusal/default/case retry and byte-exact extraction. PC1512 driver runtime and unchanged original OEM Setup have separate evidence.",
+  "owned_child_stopped": true,
+  "lease_released": true,
+  "checks": {
+    "target_refusal_before_writes": true,
+    "exact_native_extraction": true,
+    "case_retry_preserved_user_file": true,
+    "normal_transaction_exit": true
+  },
+  "process": {
+    "started": "2026-10-25T09:29:47.250359+00:00",
+    "emulator": "C:\\Program Files\\DOSBox-X\\dosbox-x.exe",
+    "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-25\\task-2\\carrier-native\\TEST.CNF",
+    "emulator_sha256": "769fb38a5a94475488be2107856d9a9fcca65487df35676188f5c2ccd5a2e964",
+    "timeout": 60,
+    "lease_acquired": true,
+    "inventory": "",
+    "pid": 27756,
+    "return": 0,
+    "owned_child_stopped": true,
+    "lease_released": true
+  },
+  "outputs": {
+    "P15SET.EXE": {
+      "bytes": 141092,
+      "sha256": "983468fd14be726e41113955140ee223cfe2b8dd21d181cf04021136f4f2a915"
+    },
+    "PC1512.ZIP": {
+      "bytes": 108740,
+      "sha256": "e27ce3e01027c31a568178e8291a847cc3b0e0855d400fa218068a223c802437"
+    },
+    "INSTALL.TXT": {
+      "bytes": 1167,
+      "sha256": "2e42ad9ab4073781b50137780211d57d27a2f311c3142853be768f53ab0c622d"
+    }
+  },
+  "runtime": {
+    "CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "INSTALL.BAT": {
+      "bytes": 1078,
+      "sha256": "7c015a49abc0b2f6e583108014a47d61128aa01cd9aced3440b42b02a4a7a233"
+    },
+    "INSTALL.TXT": {
+      "bytes": 1167,
+      "sha256": "2e42ad9ab4073781b50137780211d57d27a2f311c3142853be768f53ab0c622d"
+    },
+    "LICENSE.TXT": {
+      "bytes": 1399,
+      "sha256": "5e550565afe576f23423d7b9c02f9f35af119b8d7ac87edbc94b98da4d04ddf0"
+    },
+    "LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "NOTICE.TXT": {
+      "bytes": 1112,
+      "sha256": "345878330787e795dfe35fd17664947d9c660d9ce1a4d5b6673a52c389abd83b"
+    },
+    "OEMSETUP.INF": {
+      "bytes": 413,
+      "sha256": "d6dded11bb9e28b4485fb071f4283a8d5beb872712ca0559a6d1f7b5b5986b1a"
+    },
+    "OWATCOM.TXT": {
+      "bytes": 21128,
+      "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+    },
+    "P15WIN.BAT": {
+      "bytes": 410,
+      "sha256": "f197f70235fd3f77514c06649a1a6e37ac28aa6891d6ffaae0fcf5de0cc3cd36"
+    },
+    "PC1512.DRV": {
+      "bytes": 58368,
+      "sha256": "2f9f59e29a7e472e17a39fa54bd138cdb5b3f4d9562690791fddb3b5f4a76998"
+    },
+    "WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    },
+    "XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    }
+  },
+  "batch_source": "@ECHO OFF\nP15SET C:\\OTHER > C:\\BAD.LOG\nIF NOT ERRORLEVEL 1 GOTO BAD\nIF EXIST C:\\OTHER GOTO BAD\nIF EXIST C:\\P15EXP GOTO BAD\nP15SET > C:\\EXTRACT.LOG\nIF ERRORLEVEL 1 GOTO BAD\nECHO KEEP>C:\\P15EXP\\USER.TXT\nP15SET c:\\p15exp > C:\\RETRY.LOG\nIF ERRORLEVEL 1 GOTO BAD\nECHO PASS>C:\\DONE.TXT\nGOTO END\n:BAD\nECHO FAIL>C:\\DONE.TXT\n:END\nEXIT\n",
+  "native_logs": {
+    "BAD.LOG": "",
+    "EXTRACT.LOG": "PC1512 files are ready. From plain DOS run C:\\P15EXP\\INSTALL.\n",
+    "RETRY.LOG": "PC1512 files are ready. From plain DOS run C:\\P15EXP\\INSTALL.\n",
+    "DONE.TXT": "PASS\n"
+  },
+  "host_probe_correction": {
+    "host_assertion": "Expected refusal text in redirected stdout BAD.LOG",
+    "observed": {
+      "BAD.LOG_bytes": 0,
+      "native_process_return": 0,
+      "guest_DONE.TXT": "PASS",
+      "OTHER_exists": false
+    },
+    "correction": "APPSET prints refusal to stderr; DOS > redirects stdout only. Guest ERRORLEVEL/nonexistence checks and PASS prove the refusal. Native process and logs are preserved, with no repeated native case."
+  }
+}

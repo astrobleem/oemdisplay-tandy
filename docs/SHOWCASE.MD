@@ -6,7 +6,7 @@ The pictures below are emulator captures; separately described physical
 acceptance is not a claim that a screenshot came from hardware.
 
 For downloads and installation use the [front page](../README.md#get-started).
-The current installer and Minesweeper download are in the [rc.8 guide](RELEASES/RC8.MD).
+Use [current downloads](DOWNLOADS.MD) for Windows XT and Minesweeper.
 Historical records remain in the [rc.7 notes](RELEASES/RC7.MD) and
 [rc.6 qualification](QUAL/RC6.MD).
 
@@ -31,7 +31,7 @@ and [color comparison record](PROMO/SHOWCASE.MD#earlier-windows-30-video).
 
 The XTPAN prototype makes lower windows and buttons reachable without changing the 320×200 display. Keyboard pans, edge dwell, cursor rendering and mouse hit-testing were checked; one 275-row dialog's bottom button was clicked after panning. This is software viewport panning, not CRTC hardware scrolling, and it is not in RC6. A Tandy 1000 EX owner reports XTPAN works on real hardware, but no scripted physical test of this software-panning prototype is recorded. The separate HPXY hardware-pan results below do not qualify XTPAN. See the [full investigation](PAN.MD).
 
-A converted Minesweeper demonstration shows one board extending below the 200-row viewport. The app conversion is specific to this application. [Download the converted app and About shim](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINMINE30.ZIP); the packet includes installation instructions, notices and exact prior test scope.
+A converted Minesweeper demonstration shows one board extending below the 200-row viewport. The app conversion is specific to this application. [Download the converted app and About shim](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/MINESET.ZIP); the packet includes installation instructions, notices and exact prior test scope.
 
 <img src="pan/MINE/REVEAL.PNG" alt="Revealed Minesweeper board in Windows 3.0 real mode on the emulated Tandy 1000 HX" width="640">
 
@@ -86,7 +86,7 @@ compatible [TNDYK3 keyboard candidate](../src/tandyk3/README.md) is separate.
 
 *Unmodified emulator capture · emulated Tandy 1000 HX, 8088 at 4.772728 MHz, 640 KB, stock CGA · Windows 3.0 real mode. The published capture record does not name the emulator product. [Capture provenance and image hash](https://github.com/astrobleem/oemsound-tandy/blob/824ae10e1d79d1bd2d09f4a37447f58dd9cc9476/docs/SHOTS/WINAMP3.MD) · [tested UI record](https://github.com/astrobleem/oemsound-tandy/blob/824ae10e1d79d1bd2d09f4a37447f58dd9cc9476/experimental/WINAMP30/VALIDATION-UI.MD) · [source commit 824ae10](https://github.com/astrobleem/oemsound-tandy/commit/824ae10e1d79d1bd2d09f4a37447f58dd9cc9476). The app's separate physical acceptance is on a real Tandy 1000 EX, 7.16 MHz 8088; see the [scoped acceptance record](https://github.com/astrobleem/oemsound-tandy/blob/824ae10e1d79d1bd2d09f4a37447f58dd9cc9476/experimental/WINAMP30/EVIDENCE/PHYSICAL.JSON).*
 
-**[Download Tandy Winamp](https://github.com/astrobleem/oemsound-tandy/releases/download/tandy-winamp-xt1.20261024/TWXT1.ZIP)** · [Install guide](https://github.com/astrobleem/oemsound-tandy/blob/main/experimental/WINAMP30/INSTALL.TXT)
+**[Download Tandy Winamp](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TWXT2.ZIP)** · [Install guide](https://github.com/astrobleem/oemsound-tandy/blob/main/experimental/WINAMP30/INSTALL.TXT)
 
 Tandy Winamp UX3 browses and adds music, manages a scrollable 32-entry playlist, and plays MIDI, supported VGM/VGZ and PSG-adapted MOD. On the real EX, the user accepted Browse/Add, Remove and scrolling past four songs; music also continued while they used Program Manager. Its separate HX emulator suite passed 396 native UI checks and 88 audio/event regression checks. This app update is separate from the Windows XT RC6 package.
 

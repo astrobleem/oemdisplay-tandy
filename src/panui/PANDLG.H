@@ -43,6 +43,10 @@ HWND PanDlgOpen(HINSTANCE inst, const PANHOST *host);
  * not translate or dispatch it. */
 int PanDlgMessage(MSG FAR *msg);
 
+/* Called by the owner's existing timer after its pan work. Keep the passive
+ * settings window inside the physical viewport without changing the engine. */
+void PanDlgTrack(void);
+
 /* Owner shutdown or driver loss: destroy the window if it exists. */
 void PanDlgClose(void);
 

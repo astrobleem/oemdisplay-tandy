@@ -1,24 +1,28 @@
 # Current downloads
 
-Choose your hardware or the program you want. Each row points to its current
-working packet. Windows 3.0 and DOS are supplied by you.
+All current packets are in the [Windows XT release](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt).
+Choose your hardware or application. You supply DOS and Windows 3.0.
 
-| Product or hardware profile | Download | Install |
+| Product or hardware | Download | Install |
 | --- | --- | --- |
-| Tandy 1000 EX/HX panning display, 640x256 desktop / 320x200 view | [XRSYNC.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE) | [Display setup](RELEASES/XRSYNC.MD) |
-| Tandy EX/HX fixed-resolution graphics profiles | [WINXT720.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/FIXED/WINXT720.ZIP) | [Fixed profiles](FIXED.MD) |
-| Full Windows XT desktop: Tandy Start, wheel input, fonts and apps | [WINXTDOS.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXTDOS.ZIP) ([direct EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE)) | [Desktop setup](DESKTOP.MD) |
-| Tandy SL/2 Video II, 640x200x16; not EX/HX | [TNDYV2.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TGA2/TNDYV2.ZIP) | [Video II setup](tga2/INSTALL.TXT) |
-| IBM PCjr, 320x400x16 software desktop / 320x200 view | [JRPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-softpan-2026-10-24/JRPAN.ZIP) | [PCjr setup](SOFTPAN/RELEASE.MD) |
-| Amstrad PC1512 built-in video; not PC1640 | [P15SET.EXE](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PC1512/P15SET.EXE) | [PC1512 setup](PC1512.MD) |
-| Plantronics ColorPlus, fixed or software-panning desktop | [CPPSET.EXE](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/CPPAN/CPPSET.EXE) | [ColorPlus setup](PCP.MD) |
-| Olivetti PC1 / Yamaha B000h | [PC1 driver](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha/PC1.ZIP) | [Yamaha setup](../experiments/YAMAHA/README.MD) |
-| Standalone Yamaha B800h profile | [Yamaha driver](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha/YAMAHA.ZIP) | [Yamaha setup](../experiments/YAMAHA/README.MD) |
-| Text-mode Windows, starting with compact C25 | [TEXT80.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TEXT80/TEXT80.ZIP) | [Text setup](../downloads/experimental/TEXT80/README.MD) |
-| Tandy Winamp and its sound driver | [TWXT1.ZIP](https://github.com/astrobleem/oemsound-tandy/releases/download/tandy-winamp-xt1.20261024/TWXT1.ZIP) | [Sound setup](https://github.com/astrobleem/oemsound-tandy/blob/main/experimental/WINAMP30/INSTALL.TXT) |
-| Minesweeper and private About helper | [MINESET.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/MINESET.EXE) ([ZIP alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/MINESET.ZIP)) | [Minesweeper setup](../tools/MINEAPP/INSTALL.TXT) |
-| Cookie Clicker | [COOKSET.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/COOKSET.EXE) ([ZIP alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/COOKSET.ZIP)) | [Cookie setup](../examples/COOKIE/INSTALL.TXT) |
+| Windows XT desktop or drivers only, original Tandy EX/HX | [WINXT.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT.ZIP) | [Full desktop](DESKTOP.MD) |
+| EX/HX drivers only, using the same expanded folder | [WINXT.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT.ZIP) | [Windows Setup](DRIVERS.MD) |
+| Tandy EX/HX fixed-resolution profiles | [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT720.ZIP) | [Fixed profiles](FIXED.MD) |
+| Tandy SL/2 Video II; not EX/HX | [TNDYV2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TNDYV2.ZIP) | [Video II](tga2/INSTALL.TXT) |
+| IBM PCjr, fixed or software-panning desktop | [JRPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/JRPAN.ZIP) | [PCjr](SOFTPAN/RELEASE.MD) |
+| Amstrad PC1512 built-in video; not PC1640 | [PC1512.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PC1512.ZIP) | [PC1512](PC1512.MD) |
+| Plantronics ColorPlus, fixed or software-panning desktop | [CPPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP) | [ColorPlus](PCP.MD) |
+| Olivetti PC1 / Yamaha B000h | [PC1.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PC1.ZIP) | [PC1](../experiments/YAMAHA/README.MD) |
+| Standalone Yamaha B800h | [YAMAHA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/YAMAHA.ZIP) | [Yamaha](../experiments/YAMAHA/README.MD) |
+| Text-mode Windows, starting with compact C25 | [TEXT80.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TEXT80.ZIP) | [Text mode](../downloads/experimental/TEXT80/README.MD) |
+| Tandy Winamp and sound driver | [TWXT2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TWXT2.ZIP) | [Sound setup](https://github.com/astrobleem/oemsound-tandy/blob/main/experimental/WINAMP30/INSTALL.TXT) |
+| MML/Beats music tools | [MML3AUTH.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/MML3AUTH.ZIP) | [Included INSTALL.TXT](https://github.com/astrobleem/oemsound-tandy/blob/main/docs/DOWNLOADS.MD) |
+| PIT speaker tools | [PITEXPR.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PITEXPR.ZIP) | [Included INSTALL.TXT](https://github.com/astrobleem/oemsound-tandy/blob/main/docs/DOWNLOADS.MD) |
+| DOS PSG sound test | [PITDOS.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PITDOS.ZIP) | Included README |
+| Minesweeper with app-local About helper | [MINESET.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/MINESET.ZIP) | [Minesweeper](../tools/CURRENT/GUIDES/MINESET.TXT) |
+| Cookie Clicker | [COOKSET.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/COOKSET.ZIP) | [Cookie](../tools/CURRENT/GUIDES/COOKSET.TXT) |
+| TANDYLAB application collection and optional complete driver folder | [TANDYLAB.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TANDYLAB.ZIP) | [TANDYLAB](../examples/TANDYLAB/README.MD) |
 
-The Tandy desktop bundle and fixed-resolution packet serve different desktop
-profiles from the panning display packet. Choose the profile you intend to
-install; no sequence of older software releases is required.
+Full installation and drivers only use the same WINXT.ZIP. Other rows are
+hardware or application choices, rather than a sequence of software versions.
+Developer source and build inputs are grouped separately in the release.

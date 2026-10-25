@@ -16,7 +16,8 @@ under one interface; only the two existing framebuffer helpers are covered.
   `PanDlgOpen(inst, host)` runs inside the owning helper only. A later
   Control Panel wrapper must route like `PANCFG SETTINGS` does: find the
   owner window and post `PS_MSG_VERT` or `PS_MSG_XY` to it.
-- `HOSTUI.PY`, `SETTEST.C` - host tests (below).
+- `HOSTUI.PY`, `SETTEST.C`, `XYAPPLY.C` - strict C89 tests, including the
+  actual XY Apply glue. `VERIFY.PY` binds native builds and saved UI evidence.
 
 ## Backends and settings
 
@@ -48,7 +49,8 @@ Settings are not merged by name.
   running XTPAN, or to a running XYCTL if there is no XTPAN window. If XTPAN is stopped but enabled it is started with
   `/SETTINGS`; if it is disabled PANCFG says so and starts nothing. It never
   edits `load=` or `Enabled`. `PANCFG` alone still enables and `PANCFG OFF`
-  still disables, with the same return codes (new: 7 = disabled, nothing
+  still removes autostart and stops the owner, with the same return codes
+  (new: 7 = disabled, nothing
   started).
 - `XTPAN.EXE /SETTINGS` and `XYCTL.EXE /SETTINGS`: a second copy only asks
   the first to open its window and exits. A second plain `XYCTL.EXE` now
@@ -70,41 +72,47 @@ launch route before touching `load=`, a driver escape or WIN.INI, the
 `sync_helper` transformation in `src/softpan/BUILDAPP.PY` against the current
 `XTPAN.C`, lint, and (when Open Watcom is installed) a 16-bit compile gate.
 
-## Not done here (needs the real Win16 build and a Tandy/emulator)
+## Native results
 
-Nothing in this directory was built with Microsoft C or run on Windows 3.0.
-Native checklist:
+The helpers were built with the established MSC6 and Open Watcom toolchains
+and exercised in Windows 3.0 real mode. Exact identities, source/build pins,
+raw snapshots, controls, memory readings, owned cleanup and DOS-return proof
+are in [NATIVE.JSN](../../docs/QUAL/PANUI/NATIVE.JSN). This is emulator evidence.
 
-1. Build XTPAN.EXE, PANCFG.EXE (softpan `BUILDAPP.PY`/`BLDTEST.BAT`) and
-   XYCTL.EXE (`experiments/XYOVERVIEW/BUILD-WATCOM.TXT`) with the pinned
-   toolchains; confirm `PanDlgProc` is exported in XTPAN (`XTPAN.DEF`).
-2. Window fits a 320x200 viewport for XTPAN and XYCTL, Tab/Enter/Esc work,
-   Esc cancels, nothing is clipped at the 11-14 px row pitch.
-3. Open from `PANCFG SETTINGS` while XTPAN runs: one window; repeat
-   invocations only activate it; with XTPAN stopped and enabled it starts
-   with the window; with it disabled nothing starts.
-4. XTPAN: change Step/Edge/Dwell/Follow, Apply; behavior changes at once,
-   `[XTPan]` has only those four keys; Cancel changes nothing; Home works and
-   the window stays in view.
-5. XYCTL: second `XYCTL.EXE` does not reset the running mode; Apply of edge,
-   repeat and dialog-follow takes effect and persists to `[XYPan]`; choosing
-   Hardware shows the mode the driver really reports (including a refusal);
-   restart comes up in software.
-6. Shutdown, driver-loss and window-recovery paths behave as before; the
-   dialog closes with its owner.
-7. Memory: XTPAN gains roughly 6 KB of code; rerun the softpan memory
-   tests (`MEMTEST`, `RAMTEST.PY`) because the PCjr budget is a qualified
-   number.
-8. Existing keys: `PANCFG`, `PANCFG OFF`, startup via `load=`, Alt+PgUp/PgDn,
-   Alt+F9, edge dwell, follow-active are unchanged.
+| Fixture | Driver geometry | Result |
+|---|---|---|
+| DOSBox-X PCjr, 640 KB | 320x400 through 320x200 | UI, keyboard, enable/OFF, singleton, Apply/Cancel, persistence, Home, Calculator and exit passed |
+| 86Box IBM XT/Plantronics, 640 KB | 320x400 through 320x200 | UI, singleton, Apply/Cancel, persistence, OFF and exit passed |
+| 86Box Tandy 1000 HX/8088, 640 KB | 640x256 through 320x200 | XY controls, Apply/Cancel, driver mode readback, duplicate owner, Home, application focus, persistence and exit passed |
 
-## Known fallout for the packaging owner
+Current builds: XTPAN 17,535 bytes; PANCFG 10,191 bytes; XYCTL 21,160 bytes.
+The softpan XTPAN uses the exact existing sync_helper transformation. HOSTUI
+passes 318 checks with real strict GCC through the managed host wrapper;
+`-x c` selects C for uppercase `.C` files and all warning flags are retained.
 
-`tools/SPPACK/PUBLIC.JSN` pins the hashes of `src/softpan/BLDTEST.BAT`,
-`BUILDAPP.PY`, `PANCFG.C`, `PANCFG.RSP`, `src/xtpan/XTPAN.C`, `XTPAN.DEF` and
-`XTPAN.RSP`, and `downloads/experimental/SOFTPAN/RELEASE.JSON` embeds the same
-identities. This change alters those files, so `tools/SPPACK/TESTPKG.PY` and
-`PACKAGE.PY` (the softpan CI job) fail until the pins and release record are
-regenerated after native qualification. They were deliberately not edited
-here. `tools/EXPPUB/QUALIFY.JSN` also lists `src/xtpan` files, but no test
-enforces it.
+PCjr and ColorPlus measured a 12,960-byte helper allocation. ColorPlus returned
+it exactly. In PCjr the measured Calculator session retained 704 bytes, and
+further helper open/remove cycles did not reduce the final free value.
+Tandy XY measured a 30,048-byte warm helper allocation; after Calculator and
+owner removal, free memory was 161,632 bytes and remained exactly that after
+reopen/removal. These are measured fixture observations, not a global
+zero-allocation or physical hardware qualification claim.
+
+The dialog follows the existing viewport after timer work without activating
+itself or replacing edits. Windows 3.0 Tab/Enter/Escape are handled explicitly.
+A disabled PANCFG notice is also positioned inside the physical viewport.
+
+## Current package integration
+
+Native-qualified helper/source pins have been refreshed. JRPAN and ColorPlus
+retain their driver, memory guards, ordinary Setup and support bytes. Current
+ZIP assembly is `tools/PANUI/PACKAGE.PY`; the main current-release curator
+checks these exact ZIPs and continues to use one expanded WINXT source folder.
+
+The expanded SETUP and C6 finisher catalogs bind the larger XYCTL. New main
+package output requires `docs/QUAL/PANUI/PACKAGE.JSN`, including exact packet,
+Setup and finisher identities and completed native preparation/startup proof.
+All remaining checks passed: fresh 370/370, update 83/83, C6 finisher and
+CPSET checks, automatic installed-owner startup through STARTXT, settings
+and normal DOS return. The owned VM stopped and the lease was released.
+No UI update is published or merged by this local qualification work.

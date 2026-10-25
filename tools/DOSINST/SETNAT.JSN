@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "target": "8088 / DOS 3.3+",
+  "compiler": "Open Watcom 16-bit DOS; -bt=dos -0 -ml -os",
+  "binary": {
+    "bytes": 83142,
+    "sha256": "f28363fcc40f2273ff38db0134f63a86db9c52408cc3fb8a43d5c2f78b3b6b36"
+  },
+  "sources": {
+    "SETUP.C": {
+      "bytes": 343,
+      "sha256": "b1891eab01bccc5adacc36d784b1b24b739abe1b5bb1074fcb5100223b3a7ae0"
+    },
+    "XRPREP.C": {
+      "bytes": 17719,
+      "sha256": "67a6f720956cf5bda08397afa8a876c3e3397a2bd3e63fd072b4b1159b73e79e"
+    },
+    "DOSCORE.H": {
+      "bytes": 24157,
+      "sha256": "4ad0d3e6518406a3a8bbb3ec5bd6a0c5faa8f39d90af4cacf0dfbe7442a6d617"
+    },
+    "XR1PINS.H": {
+      "bytes": 5226,
+      "sha256": "e914082d6e00f3c9758c250673f62653d0233e4554d6fd0b19f0000488408208"
+    },
+    "XRFILES.H": {
+      "bytes": 19683,
+      "sha256": "af5c185471490779b92dec550bcd52059637f4264baa8d4d1077ea5ba9bcae96"
+    },
+    "XRSTRM.H": {
+      "bytes": 1861,
+      "sha256": "8a2720b1b2a1f0ad8e76c6cddcfaf8746709ee14107b41343b4c2dd6ae748020"
+    },
+    "VARSET.H": {
+      "bytes": 12924,
+      "sha256": "db29b294520099d7221db5403d5637b2cc50b0d811a8366359760a312df7f4b3"
+    },
+    "CRCFAST.H": {
+      "bytes": 3941,
+      "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+    },
+    "XRINPUT.H": {
+      "bytes": 14525,
+      "sha256": "0b577e38adae31b4c710d9eb109d631b67ae7179598a0f6a31b78cd438afe4f4"
+    },
+    "PACKPINS.H": {
+      "bytes": 73,
+      "sha256": "fa96864511f03aed1628668d10c4073314e49e554f965a90db6e44a16ec403ac"
+    },
+    "SETPINS.H": {
+      "bytes": 5330,
+      "sha256": "dff953d359de1075d94b69744c7bbd0692795d758477f9cb4495925263b2e222"
+    },
+    "SETFILES.H": {
+      "bytes": 19726,
+      "sha256": "d7098857100d5126359aa0592f76a29f5edfd5793c7468926bcd44325b9e3293"
+    },
+    "MAKESET.PY": {
+      "bytes": 1774,
+      "sha256": "83be4ee591afe7b13415a7aaed036ee11665d5f77c98eb3673f9d419db589f3e"
+    },
+    "SETINPUT.H": {
+      "bytes": 14562,
+      "sha256": "7114a59bb3df6a5db65e2536296ac28e4e9f1477783c6004845dd898110a3c5a"
+    },
+    "BUILD.PY": {
+      "bytes": 3155,
+      "sha256": "7690592160e58565081ebe8e2c1ae813791d720baaa51265578898a68e400512"
+    },
+    "PANUI.PY": {
+      "bytes": 6620,
+      "sha256": "7ce55443418910f9b1f48f2194f83866ba28e9e33daff057f13140cd7ad90e3e"
+    }
+  }
+}

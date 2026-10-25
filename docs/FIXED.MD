@@ -1,6 +1,6 @@
 # Tandy fixed-resolution display profiles
 
-**[Download WINXT720.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/FIXED/WINXT720.ZIP)**
+**[Download WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT720.ZIP)**
 
 For Tandy 1000 EX/HX, 640 KB, DOS 3.3+ and an installed Windows 3.0 in real
 mode. The profiles are 320x200x16, 640x200x4, 160x200x16, 320x200x4 and

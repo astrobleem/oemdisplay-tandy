@@ -13,12 +13,19 @@ def supplied_grabber():
     decoder=importlib.machinery.SourceFileLoader('sp_expand',str(ROOT/'tools/XR1PACK/PREPARE.PY')).load_module()
     return decoder.expanded_file((ROOT/'distributions/WINXT/CGA.GR2').read_bytes(),'CGA.GR2')
 def payload(kind,spec):
+    ui=importlib.machinery.SourceFileLoader('sp_qualified_settings',str(ROOT/'src/panui/VERIFY.PY')).load_module()
+    qualification,binaries=ui.verify()
+    native_path='docs/QUAL/PANUI/NATIVE.JSN'
+    if spec['qualification']['ui_update']!={'path':native_path,'manifest':identity((ROOT/native_path).read_bytes())}:
+        raise ValueError('Changed native settings qualification manifest')
     base=HERE/'PAYLOAD'/kind
     expected=spec['profiles'][kind]['files']
     actual={p.name:p.read_bytes() for p in base.iterdir() if p.is_file()}
     if set(actual)!=set(expected):raise ValueError('Unexpected payload files '+kind)
     for n,b in actual.items():
         if identity(b)!=expected[n]:raise ValueError('Changed qualified payload '+kind+'/'+n)
+    for n in ('XTPAN.EXE','PANCFG.EXE'):
+        if actual[n]!=binaries[n]:raise ValueError('Different native-qualified settings helper '+kind+'/'+n)
     if kind=='CPPAN' and actual['CGA.GR2']!=supplied_grabber():raise ValueError('Changed supplied CGA grabber')
     return actual
 def archive(kind,files):

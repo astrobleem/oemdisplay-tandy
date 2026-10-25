@@ -1,9 +1,0 @@
-WINDOWS XT - DOS INSTALLER
-
-Extract WINXT.EXE and run it on DOS after exiting Windows.
-Existing Windows: WINXT UPDATE C:\WINDOWS
-New Windows: WINXT FRESH A:\ (insert the first original Setup disk)
-Later sessions: C:\STARTXT
-
-Full installation guide:
-https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/DESKTOP.MD

@@ -1789,8 +1789,8 @@
     },
     {
       "path": "WINXT/FILES/FIXXT.EXE",
-      "bytes": 38046,
-      "sha256": "24c8e726ea6a5e5df59bb36c6e6ea9d73860ed5820b0f2a7a7cf5243009c376e",
+      "bytes": 33001,
+      "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a",
       "origin": "components"
     },
     {
@@ -1855,14 +1855,14 @@
     },
     {
       "path": "WINXT/FILES/TCHIME.EXE",
-      "bytes": 3999,
-      "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121",
+      "bytes": 5071,
+      "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61",
       "origin": "components"
     },
     {
       "path": "WINXT/FILES/TEXIT.EXE",
-      "bytes": 8687,
-      "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99",
+      "bytes": 9215,
+      "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148",
       "origin": "components"
     },
     {
@@ -1873,14 +1873,14 @@
     },
     {
       "path": "WINXT/FILES/TP.EXE",
-      "bytes": 12303,
-      "sha256": "3260c222fee2dcb33cabadc8602cf878c266a7c0c6a4d5125c05784e32793b74",
+      "bytes": 12847,
+      "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33",
       "origin": "components"
     },
     {
       "path": "WINXT/FILES/TSHELL.EXE",
-      "bytes": 71763,
-      "sha256": "b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49",
+      "bytes": 72323,
+      "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9",
       "origin": "components"
     },
     {
@@ -1921,8 +1921,8 @@
     },
     {
       "path": "WINXT/FILES/XPCHIME.EXE",
-      "bytes": 4543,
-      "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f",
+      "bytes": 5103,
+      "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0",
       "origin": "components"
     },
     {
@@ -1963,8 +1963,8 @@
     },
     {
       "path": "WINXT/FIXXT.EXE",
-      "bytes": 38046,
-      "sha256": "24c8e726ea6a5e5df59bb36c6e6ea9d73860ed5820b0f2a7a7cf5243009c376e",
+      "bytes": 33001,
+      "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a",
       "origin": "components"
     },
     {
@@ -2011,8 +2011,8 @@
     },
     {
       "path": "WINXT/OWNERS.TXT",
-      "bytes": 10115,
-      "sha256": "24fb0e181a42c9de2dd2e67abf0d579726fd7df00ee6aabff0ada569bf3f8be1",
+      "bytes": 10369,
+      "sha256": "3be16666dd35e2509a8fdeb437d249a74afcd5b77ed961a8efd0c162753460c6",
       "origin": "components"
     },
     {
@@ -2059,14 +2059,14 @@
     },
     {
       "path": "WINXT/TCHIME.EXE",
-      "bytes": 3999,
-      "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121",
+      "bytes": 5071,
+      "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61",
       "origin": "components"
     },
     {
       "path": "WINXT/TEXIT.EXE",
-      "bytes": 8687,
-      "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99",
+      "bytes": 9215,
+      "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148",
       "origin": "components"
     },
     {
@@ -2077,14 +2077,14 @@
     },
     {
       "path": "WINXT/TP.EXE",
-      "bytes": 12303,
-      "sha256": "3260c222fee2dcb33cabadc8602cf878c266a7c0c6a4d5125c05784e32793b74",
+      "bytes": 12847,
+      "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33",
       "origin": "components"
     },
     {
       "path": "WINXT/TSHELL.EXE",
-      "bytes": 71763,
-      "sha256": "b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49",
+      "bytes": 72323,
+      "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9",
       "origin": "components"
     },
     {
@@ -2131,8 +2131,8 @@
     },
     {
       "path": "WINXT/XPCHIME.EXE",
-      "bytes": 4543,
-      "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f",
+      "bytes": 5103,
+      "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0",
       "origin": "components"
     },
     {
@@ -2206,11 +2206,23 @@
       "bytes": 1820,
       "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0",
       "origin": "components"
+    },
+    {
+      "path": "WINXT/SOUND.DRV",
+      "origin": "components",
+      "bytes": 9752,
+      "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+    },
+    {
+      "path": "WINXT/FILES/SOUND.DRV",
+      "origin": "components",
+      "bytes": 9752,
+      "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
     }
   ],
   "output_counts": {
-    "fresh": 367,
-    "update": 80
+    "fresh": 369,
+    "update": 82
   },
   "win_cnf": {
     "bytes": 3456,

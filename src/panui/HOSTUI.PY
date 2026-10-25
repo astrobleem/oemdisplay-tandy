@@ -15,7 +15,9 @@
 """
 import argparse
 import importlib.machinery
+import os
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -25,6 +27,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 WCC = Path(r"C:\WATCOM\BINNT\wcc.exe")
+CC = shlex.split(os.environ.get("CC", "cc"))
 fails = []
 
 VERT_DEF = {"step": 50, "dwell": 400, "edge": 3, "follow": 1}
@@ -38,7 +41,7 @@ ANCHOR = "    DWORD now = GetCurrentTime();\n    Keys();"
 
 PANUI_LINT = ["src/panui/PANSET.H", "src/panui/PANSET.C",
               "src/panui/PANDLG.H", "src/panui/PANDLG.C",
-              "src/panui/SETTEST.C", "src/panui/HOSTUI.PY"]
+              "src/panui/SETTEST.C", "src/panui/XYAPPLY.C", "src/panui/HOSTUI.PY"]
 OTHER_LINT = ["src/xtpan/XTPAN.C", "src/softpan/PANCFG.C",
               "experiments/XYOVERVIEW/XYCTL.C"]
 COMMENT_LINT = ["src/panui/PANSET.H", "src/panui/PANSET.C",
@@ -78,7 +81,7 @@ def run_harness(tmp):
         return None
     exe = Path(tmp) / "settest.exe"
     srcs = [str(HERE / "PANSET.C"), str(HERE / "SETTEST.C")]
-    r = subprocess.run(["cc", "-std=c89", "-pedantic", "-Wall", "-Werror",
+    r = subprocess.run(CC + ["-x", "c", "-std=c89", "-pedantic", "-Wall", "-Werror",
                         "-O1", "-o", str(exe)] + srcs,
                        capture_output=True, text=True)
     expect("SETTEST.C + PANSET.C compile as C89 (-pedantic -Wall -Werror)",
@@ -361,8 +364,8 @@ def sync_checks():
 
 
 def hostpan_check():
-    if shutil.which("cc") is None:
-        skip("python src/xtpan/HOSTPAN.PY: cc not on PATH")
+    if not CC or shutil.which(CC[0]) is None:
+        skip("python src/xtpan/HOSTPAN.PY: configured compiler unavailable")
         return
     r = subprocess.run([sys.executable, str(REPO / "src/xtpan/HOSTPAN.PY")],
                        cwd=str(REPO), capture_output=True, text=True,
@@ -371,6 +374,31 @@ def hostpan_check():
            r.returncode == 0)
     if r.returncode:
         print(r.stdout[-2000:] + r.stderr[-2000:])
+
+
+def xy_apply_checks(tmp):
+    source = text_of(REPO / "experiments/XYOVERVIEW/XYCTL.C")
+    found = re.search(r"(static int XyApply\(.*?)(?=static int XyHome\()",
+                      source, re.S)
+    expect("XYCTL Apply glue can be extracted", found is not None)
+    if found is None:
+        return
+    (Path(tmp) / "XYAPPLY.INC").write_text(found.group(1))
+    exe = Path(tmp) / "xyapply.exe"
+    command = CC + ["-x", "c", "-std=c89", "-pedantic", "-Wall", "-Werror",
+                    "-O1", "-I" + str(HERE), "-I" + str(tmp), "-o", str(exe),
+                    str(HERE / "XYAPPLY.C"), str(HERE / "PANSET.C")]
+    compiled = subprocess.run(command, capture_output=True, text=True)
+    expect("actual XYCTL Apply glue compiles as strict C89",
+           compiled.returncode == 0)
+    if compiled.returncode:
+        print(compiled.stdout + compiled.stderr)
+        return
+    ran = subprocess.run([str(exe)], capture_output=True, text=True, timeout=30)
+    expect("XYCTL Apply: lost driver, changed mode, refused mode and unchanged mode",
+           ran.returncode == 0)
+    if ran.returncode:
+        print(ran.stdout + ran.stderr)
 
 
 def source_order_checks():
@@ -566,6 +594,7 @@ def main():
             harness_checks(*got)
         sync_checks()
         hostpan_check()
+        xy_apply_checks(tmp)
         source_order_checks()
         dialog_checks()
         lint_checks(a.crlf)

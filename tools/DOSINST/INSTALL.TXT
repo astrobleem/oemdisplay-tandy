@@ -1,0 +1,32 @@
+WINDOWS XT - DOS INSTALLATION
+
+Original Tandy 1000 EX/HX, 640 KB, Windows 3.0 real mode.
+Extract this ZIP, keeping SETUP.EXE and the WINXT folder together.
+The files are ready to use. The ZIP is not needed after extraction.
+
+FULL DESKTOP (DOS 3.3+)
+Exit Windows and run:
+  SETUP UPDATE C:\WINDOWS
+For a new Windows installation, insert the first original Setup disk:
+  SETUP FRESH A:\
+Setup gathers the Windows disks automatically and installs the desktop.
+Use C:\STARTXT on every later launch.
+
+DRIVERS ONLY (DOS 3.20+; existing Windows)
+From the expanded WINXT folder, run DISPLAY from DOS. In Windows Setup
+choose Display, Other, enter that folder and select Tandy EX/HX HPXY.
+Complete Changes, giving the same folder when Setup requests its disk.
+Start later sessions with DISPWIN from the expanded WINXT folder.
+See WINXT\DISPLAY.TXT for another Windows directory and viewport controls.
+
+PANNING SETTINGS
+In the XY overview choose Options, Panning settings. Apply saves the
+available edge, repeat and dialog-follow settings; Cancel discards edits.
+Software/Hardware shows the effective mode reported by the driver.
+Each new XYCTL session starts in software mode. Reopening settings reuses
+the running owner. For drivers-only, run XYCTL /SETTINGS from this packet's
+expanded WINXT folder using Windows File, Run.
+
+Fonts, grabber and logos are included. Original Windows/DOS are required.
+Component notices and licences are in WINXT. SOUND source: WINXTSRC.ZIP
+beside the download at https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt

@@ -1,0 +1,17 @@
+{
+  "good": {
+    "bytes": 12847,
+    "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33"
+  },
+  "bad": {
+    "bytes": 12847,
+    "sha256": "ef1316294fa5e64101c3d1d5ce05ab688325a6190daa0dde3f061dce3035271f"
+  },
+  "same_length": true,
+  "different_offsets": [
+    100
+  ],
+  "source": "WINXT/TP.EXE",
+  "missing_folder": "C:/BARE/WINXT",
+  "archive_present_but_ignored": "C:/BARE/WINXT.ZIP"
+}

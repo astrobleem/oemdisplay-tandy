@@ -25,3 +25,8 @@ The packet does not include a Windows/DOS installation, compiler, SDK/DDK,
 ROM, emulator or disk image. Original Windows files remain on the target.
 
 The separate Minesweeper download retains its own component notices.
+
+CANONICAL SOUND DRIVER
+The desktop and Tandy Winamp use the same SOUND.DRV. The finisher installs
+it automatically. SOUNDSRC.ZIP contains its corresponding source; the
+existing source license is retained in SOUNDLIC.TXT.

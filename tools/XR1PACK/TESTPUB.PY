@@ -1,12 +1,14 @@
 """Synthetic host tests for the local XR1 release publisher; no guest/media use."""
 import copy
 import hashlib
+import io
 import importlib.machinery
 import json
 from pathlib import Path
 import tempfile
 import unittest
 import zipfile
+import zlib
 
 P = importlib.machinery.SourceFileLoader(
     "xr1_local_publish", str(Path(__file__).with_name("PUBLISH.PY"))).load_module()
@@ -28,8 +30,8 @@ class PublisherTests(unittest.TestCase):
         self.payload.mkdir()
         self.mine.mkdir()
         self.payload_data = {}
-        for index in range(1, 48):
-            leaf = "HPXY.DRV" if index == 1 else "TNDYK3.DRV" if index == 2 else "RT%02d.EXE" % index
+        for index in range(1, 49):
+            leaf = "HPXY.DRV" if index == 1 else "TNDYK3.DRV" if index == 2 else "SOUND.DRV" if index == 48 else "RT%02d.EXE" % index
             data = ("runtime-" + leaf).encode("ascii")
             (self.payload / leaf).write_bytes(data)
             self.payload_data[leaf] = data
@@ -57,6 +59,18 @@ class PublisherTests(unittest.TestCase):
             "NOTICE.TXT": (b"HPXY.DRV and TNDYK3.DRV are adapted from Microsoft DDK code. "
                            b"No public redistribution license is asserted.\r\n"),
         }
+        sound = self.payload_data['SOUND.DRV']
+        self.files['SOUNDID.JSN'] = json.dumps({'file': 'SOUND.DRV',
+            **ident(sound), 'crc32': '%08x' % zlib.crc32(sound)}).encode()
+        self.files['SOUNDLIC.TXT'] = b'Synthetic existing sound source license.\r\n'
+        source = b'Synthetic authored driver source\r\n'
+        build = {'runtime': ident(sound), 'sources': {'TSOUND.C': ident(source)}}
+        stream = io.BytesIO()
+        with zipfile.ZipFile(stream, 'w') as archive:
+            archive.writestr('SOUND/BUILD.JSN', json.dumps(build))
+            archive.writestr('SOUND/TSOUND.C', source)
+            archive.writestr('SOUND/LICENSE', self.files['SOUNDLIC.TXT'])
+        self.files['SOUNDSRC.ZIP'] = stream.getvalue()
         for name, data in self.files.items():
             (self.root / name).write_bytes(data)
         self.inputs = {
@@ -66,6 +80,8 @@ class PublisherTests(unittest.TestCase):
                  "sha256": hashlib.sha256(b"OS!!").hexdigest()},
                 {"path": "WINXT/SETUP.INF", "origin": "generated", "bytes": 5,
                  "sha256": hashlib.sha256(b"setup").hexdigest()},
+                {"path": "W30/SOUND.DRV", "origin": "windows", "bytes": 5,
+                 "sha256": hashlib.sha256(b"stock").hexdigest()},
                 {"path": "WINXT/HPXY.DRV", "origin": "drivers", "bytes": 1,
                  "sha256": hashlib.sha256(b"x").hexdigest()},
             ],
@@ -174,6 +190,26 @@ class PublisherTests(unittest.TestCase):
         self.qual["runtime_pins"]["RT03.EXE"] = ident(banned)
         self.refresh()
         with self.assertRaisesRegex(P.Refused, "overlap original/generated"):
+            P.collect(self.root, COMMIT)
+
+    def test_rejects_sound_source_build_for_other_artifact(self):
+        data = bytearray(self.payload_data['SOUND.DRV'])
+        data[0] ^= 1
+        self.payload_data['SOUND.DRV'] = bytes(data)
+        (self.payload/'SOUND.DRV').write_bytes(data)
+        self.files['SOUNDID.JSN'] = json.dumps({'file': 'SOUND.DRV',
+            **ident(data), 'crc32': '%08x' % zlib.crc32(data)}).encode()
+        (self.root/'SOUNDID.JSN').write_bytes(self.files['SOUNDID.JSN'])
+        self.qual['runtime_pins']['SOUND.DRV'] = ident(data)
+        self.refresh()
+        with self.assertRaisesRegex(P.Refused, 'source build covers another'):
+            P.collect(self.root, COMMIT)
+
+    def test_rejects_missing_corresponding_sound_source(self):
+        self.files['SOUNDSRC.ZIP'] = b'broken source packet'
+        (self.root/'SOUNDSRC.ZIP').write_bytes(self.files['SOUNDSRC.ZIP'])
+        self.refresh()
+        with self.assertRaisesRegex(P.Refused, 'corresponding sound source'):
             P.collect(self.root, COMMIT)
 
     def test_rejects_qualification_cleanup_failure(self):
