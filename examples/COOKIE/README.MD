@@ -5,10 +5,11 @@ The window caption is shortened to **Cookie** so it fits 160 pixels.
 
 ## Run the ready EXE
 
-1. Copy `COOKIE.EXE` to a writable DOS directory, for example `C:\COOKIE`.
-2. Start your existing accepted Tandy Windows installation through its
-   `C:\TANDY88\TANDY88` launcher. Keep its reservation helper and mode intact.
-3. In Program Manager choose File > Run and enter `C:\COOKIE\COOKIE.EXE`.
+1. Keep the ready `COOKIE.EXE` in a writable DOS directory, for example `C:\COOKIE`.
+2. Use your normal guarded Windows 3.0 desktop. The app runs inside Windows;
+   it needs no separate DOS launcher or display setup.
+3. In Tandy Start choose Run, or in Program Manager choose File > Run, and enter
+   `C:\COOKIE\COOKIE.EXE` (use its actual folder if different).
    The app opens maximized; it needs no installation, DLL, COMMDLG, or data file.
 
 Click inside the cookie (a GDI ellipse with five chips), or press Space, to add
