@@ -1,5 +1,9 @@
 # Native consumer installers
 
+WINXTDOS.ZIP contains the ready-to-run WINXT.EXE and a short README; the
+direct EXE remains available. The separate WINXT.ZIP is the raw preparer kit.
+The publisher checks extracted WINXT.EXE bytes against the qualified EXE.
+
 The prebuilt XRSYNC.EXE and WINXT.EXE run on the DOS computer itself. Both
 include the supplied, expanded CGA.GR2 grabber and all driver support files;
 consumers do not collect support files or run Python.

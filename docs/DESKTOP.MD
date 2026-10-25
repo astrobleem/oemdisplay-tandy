@@ -1,6 +1,10 @@
 # Windows XT: native DOS installation
 
-**[Download WINXT.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE)**
+**[Download WINXTDOS.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXTDOS.ZIP)**
+
+Extract `WINXT.EXE` and put it on the DOS computer. Extraction works on DOS
+or another computer; the included executable is ready to run.
+[Direct EXE alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE).
 
 Run this on the Tandy from plain DOS. It gathers Windows files automatically,
 prepares the installer, reserves video memory and starts installation.
@@ -35,9 +39,7 @@ Start every later session from plain DOS with **`C:\STARTXT`**.
 Repair uses `C:\FIXXT`; `C:\FIXXT /VERIFY` adds full file comparison. If
 interrupted, rerun `C:\SETUPXT` for the existing recovery/resume path.
 
-[ZIP alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.ZIP):
-extract on the target DOS computer and run `PREPXR UPDATE C:\WINDOWS` or
-`PREPXR FRESH A:\` in that folder. The EXE download needs no unpacker.
+The separately named `WINXT.ZIP` is the raw native-preparer kit.
 
 Requires an original Tandy 1000 EX/HX, normal 640 KB, DOS 3.3+ and Windows
 3.0 real mode. You supply Windows and DOS; their files are absent from the
