@@ -13,10 +13,15 @@ jobs:
   verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    env:
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           persist-credentials: false
+          ref: ${{ env.SOURCE_SHA }}
+      - name: Verify exact source checkout
+        run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Fetch immutable qualified sound inputs
         run: |
           python3 - <<'PY'
@@ -34,10 +39,10 @@ jobs:
           CORE_SHA=$(python3 -c "import json; print(json.load(open('tools/CURRENT/PRODUCTS.JSN'))['core_source_commit'])")
           python3 -B tools/DOSINST/RCPUB.PY --out core --commit "$CORE_SHA"
           python3 -B tools/CURRENT/CHECK.PY --core core --sound sound-inputs --report catalog-check.json
-          python3 -B tools/CURRENT/BUNDLE.PY --core core --sound sound-inputs --commit "${{ github.sha }}" --out current
+          python3 -B tools/CURRENT/BUNDLE.PY --core core --sound sound-inputs --commit "$SOURCE_SHA" --out current
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: current-catalog-${{ github.sha }}
+          name: current-catalog-${{ env.SOURCE_SHA }}
           path: |
             current/*
             catalog-check.json
