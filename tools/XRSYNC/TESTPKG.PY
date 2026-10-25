@@ -1,124 +1,90 @@
-"""Closed public archive and own-media OEM preparation regression checks."""
-import importlib.util
-from importlib.machinery import SourceFileLoader
+"""Complete native consumer packet, expansion, pin and archive checks."""
+import importlib.machinery
 import io
 import json
-import struct
 import ntpath
 from pathlib import Path
-import shutil
+import re
 import tempfile
 import unittest
 import zipfile
 
 HERE = Path(__file__).resolve().parent
-def load(name):
-    loader = SourceFileLoader(name.lower(), str(HERE / (name + ".PY")))
-    spec = importlib.util.spec_from_loader(loader.name, loader)
-    module = importlib.util.module_from_spec(spec)
-    loader.exec_module(module)
-    return module
-prepare = load("PREPARE")
-publish = load("PUBLISH")
-
+publish = importlib.machinery.SourceFileLoader('xs_publish_tests', str(HERE / 'PUBLISH.PY')).load_module()
 
 class PackageTests(unittest.TestCase):
-    def setUp(self):
-        self.temp = tempfile.TemporaryDirectory()
-        self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
-        self.media = self.root / "media"
-        self.media.mkdir()
-        self.payload = self.root / "payload"
-        shutil.copytree(HERE / "PAYLOAD", self.payload)
-        self.spec = json.loads((HERE / "INPUTS.JSN").read_bytes())
-        self.fixture = b"first-party synthetic grabber input; no Windows bytes"
-        self.spec["grabber"] = publish.pub.identity(self.fixture)
-        (self.media / "CGA.GR2").write_bytes(self.fixture)
-        self.out = self.root / "prepared"
+    def test_exact_native_runtime_and_grabber(self):
+        entries = publish.collect()
+        self.assertEqual(len([n for n in entries if n.startswith('PAYLOAD/')]), 14)
+        grabber = entries['PAYLOAD/CGA.GR2']
+        self.assertEqual(publish.pub.identity(grabber), {'bytes': 2104, 'sha256': '1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067'})
+        self.assertEqual(publish.pub.identity(entries['PAYLOAD/XRSYNC.DRV']), publish.DRIVER)
+        self.assertFalse(any(n.endswith('.PY') for n in entries))
 
-    def run_prepare(self):
-        return prepare.prepare(self.media, self.payload, self.out, self.spec)
+    def test_supplied_szdd_and_corruption(self):
+        raw = (publish.REPO / 'CGA.GR2').read_bytes()
+        self.assertEqual(len(raw), 1768)
+        self.assertEqual(raw[:8], b'SZDD\x88\xf0\x27\x33')
+        self.assertEqual(publish.media.expanded_file(raw, 'CGA.GR2'), publish.collect()['PAYLOAD/CGA.GR2'])
+        for bad in (raw[:13], raw[:-1], raw + b'extra'):
+            with self.assertRaises(ValueError):
+                publish.media.expanded_file(bad, 'CGA.GR2')
 
-    def test_complete_prepared_disk(self):
-        report = self.run_prepare()
-        self.assertEqual(set(report["files"]), set(self.spec["payload"]) | {"CGA.GR2"})
-        self.assertEqual((self.out / "CGA.GR2").read_bytes(), self.fixture)
-        for name, pin in report["files"].items():
-            self.assertEqual(publish.pub.identity((self.out / name).read_bytes()), pin)
-
-    def test_wrong_owned_input_creates_nothing(self):
-        (self.media / "CGA.GR2").write_bytes(b"wrong")
-        with self.assertRaises(ValueError):
-            self.run_prepare()
-        self.assertFalse(self.out.exists())
-
-    def test_installed_windows_directory_is_automatic(self):
-        system = self.media / "SYSTEM"
-        system.mkdir()
-        (self.media / "CGA.GR2").rename(system / "CGA.GR2")
-        self.run_prepare()
-        self.assertEqual((self.out / "CGA.GR2").read_bytes(), self.fixture)
-
-    def test_changed_runtime_creates_nothing(self):
-        (self.payload / "XRSYNC.DRV").write_bytes(b"wrong")
-        with self.assertRaises(ValueError):
-            self.run_prepare()
-        self.assertFalse(self.out.exists())
-
-    def test_existing_output_preserved(self):
-        self.out.mkdir()
-        (self.out / "KEEP").write_bytes(b"saved")
-        with self.assertRaises(ValueError):
-            self.run_prepare()
-        self.assertEqual((self.out / "KEEP").read_bytes(), b"saved")
-
-    def test_output_cannot_overlap_input(self):
-        self.out = self.media / "nested"
-        with self.assertRaises(ValueError):
-            self.run_prepare()
-        self.assertFalse(self.out.exists())
-
-    def test_public_zip_exact_and_deterministic(self):
+    def test_public_zip_closed_deterministic(self):
         entries = publish.collect()
         first = publish.pub.zip_bytes(entries)
         self.assertEqual(first, publish.pub.zip_bytes(entries))
-        publish.pub.check_zip(first, entries, "test")
-        with zipfile.ZipFile(io.BytesIO(first)) as archive:
-            self.assertEqual(set(archive.namelist()), set(entries))
-            self.assertNotIn("PAYLOAD/CGA.GR2", archive.namelist())
-            self.assertEqual(publish.pub.identity(archive.read("PAYLOAD/XRSYNC.DRV")), publish.DRIVER)
+        publish.pub.check_zip(first, entries, 'test')
+        with zipfile.ZipFile(io.BytesIO(first)) as z:
+            self.assertEqual(set(z.namelist()), set(entries))
+            self.assertIn('PAYLOAD/CGA.GR2', z.namelist())
+            self.assertNotIn('PAYLOAD/RUNSYNC.BAT', z.namelist())
 
-    def test_self_contained_native_exe(self):
-        release = self.root / "native-release"
-        publish.build(release, "e84a17d1562a3f938b5268b8a92fc5e47b176deb")
-        data = (release / "XRSYNC.EXE").read_bytes()
-        helper = publish.collect()["XSETUP.EXE"]
-        self.assertEqual(data[:len(helper)], helper)
-        self.assertEqual(data[len(helper):], (release / "XRSYNC.ZIP").read_bytes())
-        with zipfile.ZipFile(io.BytesIO(data[len(helper):])) as archive:
-            self.assertFalse(any(n.endswith(".PY") for n in archive.namelist()))
-            self.assertNotIn("PAYLOAD/CGA.GR2", archive.namelist())
-            self.assertNotIn("PAYLOAD/RUNSYNC.BAT", archive.namelist())
-            self.assertIn("XSETUP.EXE", archive.namelist())
-            self.assertIn("OWATCOM.TXT", archive.namelist())
+    def test_mz_overlay_and_native_crc_contract(self):
+        import zlib
+        entries = publish.collect()
+        helper = entries['XSETUP.EXE']
+        size = publish.mz_size(helper)
+        data = helper + publish.pub.zip_bytes(entries)
+        self.assertEqual(data[size:size+4], b'PK\x03\x04')
+        header = (HERE.parent / 'DOSINST/XSPINS.H').read_text()
+        rows = re.findall(r'{"([^"\n]+)","([0-9a-f]{64})",(\d+)UL,0,0x([0-9a-f]+)UL}', header)
+        self.assertEqual(len(rows), 10)
+        for name, sha, length, crc in rows:
+            body = entries['PAYLOAD/' + name]
+            self.assertEqual(len(body), int(length))
+            self.assertEqual(publish.pub.digest(body), sha)
+            self.assertEqual(zlib.crc32(body), int(crc, 16))
 
-    def test_oem_copy_path_resolves_from_windows_directory(self):
-        inf = (self.payload / "OEMSETUP.INF").read_text()
-        disk = next(line for line in inf.splitlines() if line.startswith("a = "))
-        location = disk.split("=", 1)[1].split(",", 1)[0].strip()
-        for windows in ("C:\\WINDOWS", "D:\\WIN30", "C:\\OS\\WIN30"):
-            self.assertEqual(ntpath.normpath(ntpath.join(windows, location)), "C:\\XR155")
+    def test_oem_paths_and_bundled_selections(self):
+        text = (HERE / 'PAYLOAD/OEMSETUP.INF').read_text()
+        disk = next(line for line in text.splitlines() if line.startswith('a = '))
+        location = disk.split('=', 1)[1].split(',', 1)[0].strip()
+        for windows in ('C:\\WINDOWS', 'D:\\WIN30', 'C:\\OS\\WIN30'):
+            self.assertEqual(ntpath.normpath(ntpath.join(windows, location)), 'C:\\XR155')
+        entries = publish.collect()
+        for name in ('CGA.GR2', 'XTCSYS.FON', 'XTCFIX.FON', 'XTCOEM.FON', 'XTSTATIC.LGO', 'WXTSPL01.RLE'):
+            self.assertIn(name, text)
+            self.assertIn('PAYLOAD/' + name, entries)
 
-    def test_published_assets_verify_and_reject_tamper(self):
-        release = self.root / "release"
-        publish.build(release, "e84a17d1562a3f938b5268b8a92fc5e47b176deb")
-        publish.build(release, "e84a17d1562a3f938b5268b8a92fc5e47b176deb")
-        with (release / "XRSYNC.ZIP").open("ab") as stream:
-            stream.write(b"tamper")
-        with self.assertRaises(ValueError):
-            publish.build(release, "e84a17d1562a3f938b5268b8a92fc5e47b176deb")
+    def test_native_evidence_hashes(self):
+        directory = publish.REPO / 'docs/QUAL/DOSINST'
+        for report in ('XSPACE.JSN', 'XRSYNC.JSN'):
+            receipt = json.loads((directory / report).read_bytes())
+            for name, pin in receipt['evidence'].items():
+                self.assertEqual(publish.pub.identity((directory / name).read_bytes()), pin, name)
 
+    def test_release_qualification_and_readback(self):
+        # Requires the actual tested final packet receipt; no synthetic approval.
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / 'release'
+            commit = '092700f59067824e7c8b30e70979ff735816d841'
+            publish.build(target, commit)
+            publish.build(target, commit)
+            with (target / 'XRSYNC.ZIP').open('ab') as f:
+                f.write(b'tamper')
+            with self.assertRaises(ValueError):
+                publish.build(target, commit)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

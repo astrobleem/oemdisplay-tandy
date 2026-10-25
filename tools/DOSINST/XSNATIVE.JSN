@@ -3,13 +3,13 @@
   "target": "8088 / DOS 3.20+",
   "compiler": "Open Watcom 16-bit DOS; -bt=dos -0 -ml -os",
   "binary": {
-    "bytes": 47214,
-    "sha256": "a0b1a938614239c9ad2e7b5aa51a8b8004f1eac7d1013e03b9e70b302179ad80"
+    "bytes": 49118,
+    "sha256": "a59402717f97d570ed6d22b22f7ac33a172c210196bb1b7feacb6634e495abd0"
   },
   "sources": {
     "DOSCORE.H": {
-      "bytes": 23248,
-      "sha256": "d00db5ed02216200f34f05170efbd1053d39885ae367c133f4c6bf11fe1e556f"
+      "bytes": 23408,
+      "sha256": "418e22890943f514d4bcf1696f3ef14b7977f0bb134145df8b67bac1940a78e5"
     },
     "PACKPINS.H": {
       "bytes": 73,
@@ -20,12 +20,12 @@
       "sha256": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68"
     },
     "XSETUP.C": {
-      "bytes": 5681,
-      "sha256": "c332c09b9b034b20065aecc8ae455a8dd7aec07a32bf32826ebe3d246d9c1169"
+      "bytes": 9307,
+      "sha256": "fb444f0a4afcb895a9444d48191b8892cead46f1cea4488a2055c0411e4521ca"
     },
     "XSPINS.H": {
       "bytes": 1091,
-      "sha256": "593505453c42c9af6aa77194e03a2088ed0b52b34b085b8fc14e480850c51057"
+      "sha256": "ed226db543daf43a753fa37f40db675d21b943e3c15a8cfe02f5fd68c14f723a"
     }
   }
 }

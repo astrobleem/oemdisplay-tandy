@@ -12,12 +12,12 @@
   "physical_test": false,
   "public_assets": {
     "XRSYNC.EXE": {
-      "bytes": 217349,
-      "sha256": "a3fb638898c2a67249f3ef6fba61b6444c8666641d8bc0d4e7981fd6ff5dd23e"
+      "bytes": 221175,
+      "sha256": "3ff316000266f24ed28f0b8b75491b3a7c1c923d8922f66344b3bd415129b007"
     },
     "XRSYNC.ZIP": {
-      "bytes": 170135,
-      "sha256": "cd4f72d1f2a9c4e8672c10efc8f33ceec206a62c58152d79297cefed4123d962"
+      "bytes": 172057,
+      "sha256": "c44f033a0b7a8910855505082045058023a3049aa6bee77021a80aac9113c538"
     }
   },
   "native_source_manifest": "tools/DOSINST/XSNATIVE.JSN",
@@ -33,21 +33,33 @@
       "No DOS configuration changes"
     ],
     "bound_seconds": 600,
-    "pid": 33236,
+    "pid": 4496,
+    "space_checks": {
+      "SPACE.OK": true,
+      "OLD.OK": true,
+      "REPAIR.OK": true,
+      "FAULT.OK": true,
+      "RETRY.OK": true
+    },
     "dos_version": "\r\nIBM Personal Computer DOS Version  3.20 \r\n",
     "probe_complete": true,
     "setup_done": true,
     "owned_stopped": true,
     "lease_released": true
   },
-  "install_seconds_including_boot_and_controller": 165.0,
+  "install_seconds_including_boot_and_controller": 315.3,
   "checks": {
     "frames_equal_to_qualified_reference": true,
     "installed_driver_exact": true,
     "helper_exact": true,
+    "DOS320_launcher_syntax": true,
     "no_python_or_host_preparation": true,
+    "supplied_grabber": true,
+    "nearly_full_refused_before_staging": true,
+    "partial_helper_removed": true,
+    "retry_complete": true,
     "started_from_B_drive_with_C_Windows": true,
-    "missing_Windows_and_wrong_grabber_refused_before_staging": true,
+    "Setup_from_packet_with_Windows_grabber_absent": true,
     "reservation_reuse": true,
     "DOS_system_files_unchanged": true,
     "config_unchanged": true
@@ -72,7 +84,7 @@
     "RB01.BIN": "6e764c5a5c9a23ddefe531f5946bbe41ac427a4a07d58d8598c92d519f373c12"
   },
   "host_checks": {
-    "XRSYNC_package_tests": 10,
+    "XRSYNC_package_tests": 7,
     "RoundRect_tests": 32,
     "XR1_preparation_tests": 24
   },
@@ -89,15 +101,21 @@
   "cold": {
     "complete": true,
     "actions": [],
-    "bound_seconds": 600,
-    "pid": 25012,
+    "bound_seconds": 300,
+    "pid": 22500,
     "dos_version": "\r\nIBM Personal Computer DOS Version  3.20 \r\n",
     "probe_complete": true,
-    "setup_done": true,
+    "previous_Setup_retained": true,
+    "space_checks": {
+      "SPACE.OK": true,
+      "FAULT.OK": true,
+      "RETRY.OK": true
+    },
     "owned_stopped": true,
-    "lease_released": true
+    "lease_released": true,
+    "note": "Cold boot; final exact packet preflight/failure/retry replay; existing qualified Setup retained; no Windows session before guarded launch."
   },
-  "cold_seconds_including_boot": 57.1,
+  "cold_seconds_including_boot": 142.2,
   "evidence": {
     "XCONFIG.PNG": {
       "bytes": 5329,
@@ -130,6 +148,60 @@
     "XSELECT.PNG": {
       "bytes": 7339,
       "sha256": "75f9bc0c1279cd461631e74dd9600fb168b8be38884c47ef040a4701c945f780"
+    },
+    "XFINALSP.LOG": {
+      "bytes": 352,
+      "sha256": "d54f34f7da1cd870eab6020085f9602cd55f10ef82bc17847089a9db2e56914f"
+    },
+    "XFINALFA.LOG": {
+      "bytes": 705,
+      "sha256": "712d145413e873c6db7961d265c3d14c2814d8be0e236204780efe4e23bc795c"
+    },
+    "XFINALRE.LOG": {
+      "bytes": 240,
+      "sha256": "18f2b93dd26bab29f981dcd6a33d8786bb1d2c0a2bcb60486bed58fc9732e03d"
+    },
+    "XFINALRU.LOG": {
+      "bytes": 148,
+      "sha256": "629cff3f25b67cddd4300ea6daf0458fda776cfd72e5abb42d1aba2629749e8d"
+    },
+    "XFINALPR.LOG": {
+      "bytes": 1094,
+      "sha256": "1e2524f08ed702517c5de30cdf68aa1f2ca6046786beb9865014ab1fa71c8d2a"
+    },
+    "XFINAL.PNG": {
+      "bytes": 1237,
+      "sha256": "7a74e93cb57a4737cd2a3ddef3477dcc16f1721d3fb7725913bbc6d6b8c9e66e"
+    },
+    "XFINALT.BAT": {
+      "bytes": 643,
+      "sha256": "9f13104fbabff42799a4ac06ec13942463a7411a8198a5c5a18d2cc9df6f5346"
+    }
+  },
+  "qualification_delta": {
+    "Setup_packet": "973342c7f458472cf3281bd4a38310d8e1c03ba7f26ac35390cc4dd7ace11a9e",
+    "final_packet": "3ff316000266f24ed28f0b8b75491b3a7c1c923d8922f66344b3bd415129b007",
+    "change_after_Setup_test": "Only generated launcher prefix changed from @ECHO OFF to DOS3.20-compatible ECHO OFF; source/helper rebuilt and final exact packet preflight/fault/retry/launcher retested.",
+    "independent_empty_PATH_cold": "XS-COLD7: passed; no Windows directory PATH prerequisite.",
+    "early_harness_failure": "Nested COMMAND.COM from empty-PATH B: asked for B disk before product batch began; preserved in local XS-COLD5/6 and isolated from normal C: cold launch."
+  },
+  "boot_files_final_unchanged": {
+    "AUTOEXEC.BAT": true,
+    "CONFIG.SYS": true
+  },
+  "recovery_report": "XSPACE.JSN",
+  "DOS_system_files": {
+    "COMMAND.COM": {
+      "sha256": "77402f36394f77fa8270f0563068f7f75949ce030dd28ec9fee7383f1e0b64db",
+      "unchanged": true
+    },
+    "IBMBIO.COM": {
+      "sha256": "841bf028620d0867293d7ba7613772f07e2681f36442182d2fa439133343fd8f",
+      "unchanged": true
+    },
+    "IBMDOS.COM": {
+      "sha256": "bbe0ad857e91f1f077af287d2f6748bd868983be9585a6cb0bba7c52dd42f789",
+      "unchanged": true
     }
   }
 }

@@ -43,7 +43,7 @@ static char archive[PTH];static long zip_start;static int zip_mode;
 #ifdef INSTALL_DIAGNOSTICS
 static U32 sha_blocks, output_readback;
 #endif
-/* Only a create-new packed output belongs to this cleanup path. */
+/* Only the current create-new, uncommitted output belongs to cleanup. */
 static char stream_output[PTH];
 struct sha { U32 h[8], bytes; unsigned used; unsigned char block[64]; };
 static struct sha state;
@@ -99,11 +99,10 @@ static void sha_end(struct sha *s,char *hex)
 static void stop(char *message,char *detail)
 {
  if(opened>=0){_dos_close(opened);opened=-1;}
- if(stream_output[0]){if(remove(stream_output))puts("Could not remove incomplete packed output; review the new folder.");stream_output[0]=0;}
+ if(stream_output[0]){if(remove(stream_output))puts("Could not remove the incomplete new output; review the named staging folder.");stream_output[0]=0;}
  printf("\nREFUSED: %s\n%s\n",message,detail?detail:"");
- puts("Windows, source media and boot files were not changed. Setup was not started.");
- if(made)puts("C:\\XR155 is incomplete. Do not run it. Review/remove that new folder to retry.");
- else puts("No output folder or installation marker was created.");
+ puts("Installation stopped. Correct the error above and rerun the installer.");
+ if(made)puts("The staging folder is incomplete; matching completed files can be reused.");
  exit(1);
 }
 static void onbreak(int sig){sig=sig;cancelled=1;signal(SIGINT,onbreak);}
@@ -312,27 +311,33 @@ static char *supportpath(unsigned k)
  if(!support_slot[k]||support_slot[k]>8)stop("Internal support path error.",pins[k].name);
  return chosen[support_slot[k]-1];
 }
-static void diskspace(void)
+static void diskspace(unsigned char *missing,U32 helper,U32 launcher,U32 retired)
 {
- struct diskfree_t d;U32 cluster,needed,avail;unsigned i;
+ struct diskfree_t d;U32 cluster,needed,avail,credit;unsigned i;
  if(_dos_getdiskfree(3,&d)||!d.bytes_per_sector||!d.sectors_per_cluster)stop("Cannot determine free space on C:.","");
  cluster=(U32)d.bytes_per_sector*d.sectors_per_cluster;
- /* DOS 3.x FAT directory: 45 entries plus dot entries; rounded clusters.
-  * Reserve another 128 KiB for filesystem overhead/headroom. Installer later
-  * separately checks its Windows backup requirement. */
- needed=((NPINS+2UL)*32+cluster-1)/cluster*cluster+131072UL;
- for(i=0;i<NPINS;i++)needed+=(pins[i].size+cluster-1)/cluster*cluster;
+ /* Peak temporary writes plus post-commit Windows Setup headroom. */
+ needed=((NPINS+7UL)*32+cluster-1)/cluster*cluster;
+ for(i=0;i<NPINS;i++)if(missing[i])needed+=(pins[i].size+cluster-1)/cluster*cluster;
+ needed+=(helper+cluster-1)/cluster*cluster;
+ needed+=(launcher+cluster-1)/cluster*cluster;
+ credit=retired/cluster*cluster;
+ if(credit<131072UL)needed+=131072UL-credit;
  avail=(U32)d.avail_clusters*cluster;
  printf("C: free %lu bytes; staging requires %lu bytes including headroom.\n",avail,needed);
- if(avail<needed)stop("Not enough free space on C:. No staging was attempted.","Free space, then retry. The later installer also needs space for backups.");
+ if(avail<needed)stop("Not enough free space on C:. No staging was attempted.","Free space, then retry.");
 }
 static void createout(char *path)
 {
  if(_dos_creatnew(path,_A_NORMAL,&opened))stop("Cannot create a new output file; no overwrite is allowed.",path);
+ strcpy(stream_output,path);
 }
 static void putbytes(unsigned char *p,unsigned n,char *path)
 {
  unsigned wrote;checkcancel();if(_dos_write(opened,p,n,&wrote)||wrote!=n)stop("Write error or disk full.",path);
+#ifdef XSETUP_WRITE_FAILURE
+ if(strstr(path,"XS000"))stop("Injected helper write failure.",path);
+#endif
 }
 static void closeout(char *path)
 {
@@ -359,7 +364,7 @@ static void copyone(unsigned k)
 {
  char from[PTH],to[PTH],hex[65];FILE *f;unsigned n;U32 total=0;
  join(to,DEST,!strcmp(pins[k].name,"INSTALL.BAT")?"INSTALL.NEW":pins[k].name);
- if(zip_mode&&pins[k].kind==0){createout(to);zip_member(k,1);closeout(to);hashfile(to,&pins[k]);printf("Verified %s\n",to);return;}
+ if(zip_mode&&pins[k].kind==0){createout(to);zip_member(k,1);closeout(to);hashfile(to,&pins[k]);stream_output[0]=0;printf("Verified %s\n",to);return;}
  if(pins[k].kind==1){expand(supportpath(k),(unsigned)pins[k].size);support_layout(k,work,(unsigned)pins[k].size);hashmem(work,(unsigned)pins[k].size,pins[k].hex,supportpath(k));createout(to);putbytes(work,(unsigned)pins[k].size,to);closeout(to);}
  else if(packed_mode[k]){
   int j=packedindex(pins[k].name);
@@ -378,7 +383,7 @@ static void copyone(unsigned k)
  if(pins[k].kind==0&&!packed_mode[k])verifyfile(to,from,NULL,pins[k].size);
  else if(pins[k].kind==0){/* Packed readback is opt-in; stream bounds and I/O are always checked. */}
  else if(pins[k].kind!=0)verifyfile(to,NULL,work,pins[k].size);
- printf("%s %s\n",deep_verify?"Verified":"Copied",to);
+ stream_output[0]=0;printf("%s %s\n",deep_verify?"Verified":"Copied",to);
 }
 static void not_windows(void)
 {

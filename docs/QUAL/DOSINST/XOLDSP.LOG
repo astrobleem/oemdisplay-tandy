@@ -1,0 +1,19 @@
+XSETUP - DOS-native XRSYNC driver installation (8088 / DOS 3.20+)
+Finding the installed Windows CGA support file and checking this disk.
+Checking C:\WINDOWS\SYSTEM\CGA.GR2
+C: free 262144 bytes; staging requires 237568 bytes including headroom.
+Verified C:\XR155\OEMSETUP.INF
+Verified C:\XR155\RESERVE.COM
+Verified C:\XR155\WXTSPL01.RLE
+Verified C:\XR155\XRSYNC.DRV
+Verified C:\XR155\XTCFIX.FON
+Verified C:\XR155\XTCOEM.FON
+Verified C:\XR155\XTCSYS.FON
+Verified C:\XR155\XTSTATIC.LGO
+Verified C:\XR155\XYCTL.EXE
+Copied C:\XR155\CGA.GR2
+
+REFUSED: Write error or disk full.
+C:\XR155\XSETUP.EXE
+Windows, source media and boot files were not changed. Setup was not started.
+C:\XR155 is incomplete. Do not run it. Review/remove that new folder to retry.

@@ -4,8 +4,8 @@
     "NOTICE.TXT": {
       "source": "tools/XRSYNC/NOTICE.TXT",
       "identity": {
-        "bytes": 1102,
-        "sha256": "96d204600d857033df78126ccfc7e351ed29659a9d5113e2d789d931c842bffd"
+        "bytes": 1121,
+        "sha256": "f87adce4388305dea922e35a34a21629c4dfed78105b7ca0d6d59f4c92c94470"
       }
     },
     "PAYLOAD/FONTLIC.TXT": {
@@ -25,8 +25,8 @@
     "PAYLOAD/NOTICE.TXT": {
       "source": "tools/XRSYNC/PAYLOAD/NOTICE.TXT",
       "identity": {
-        "bytes": 1102,
-        "sha256": "96d204600d857033df78126ccfc7e351ed29659a9d5113e2d789d931c842bffd"
+        "bytes": 1121,
+        "sha256": "f87adce4388305dea922e35a34a21629c4dfed78105b7ca0d6d59f4c92c94470"
       }
     },
     "PAYLOAD/OEMSETUP.INF": {
@@ -39,8 +39,8 @@
     "PAYLOAD/README.TXT": {
       "source": "tools/XRSYNC/PAYLOAD/README.TXT",
       "identity": {
-        "bytes": 2648,
-        "sha256": "50f33b715ee31526dfb951c97de13c92be7f12c445b9dab18646f051d50b6fab"
+        "bytes": 1533,
+        "sha256": "10a492d55a1f68a4bbdacecbc48553d70cea4e3a652d22e5b3b89cbbf7962ea3"
       }
     },
     "PAYLOAD/RESERVE.COM": {
@@ -102,15 +102,15 @@
     "README.TXT": {
       "source": "tools/XRSYNC/README.TXT",
       "identity": {
-        "bytes": 2648,
-        "sha256": "50f33b715ee31526dfb951c97de13c92be7f12c445b9dab18646f051d50b6fab"
+        "bytes": 1533,
+        "sha256": "10a492d55a1f68a4bbdacecbc48553d70cea4e3a652d22e5b3b89cbbf7962ea3"
       }
     },
     "XSETUP.EXE": {
       "source": "tools/DOSINST/BIN/XSETUP.EXE",
       "identity": {
-        "bytes": 47214,
-        "sha256": "a0b1a938614239c9ad2e7b5aa51a8b8004f1eac7d1013e03b9e70b302179ad80"
+        "bytes": 49118,
+        "sha256": "a59402717f97d570ed6d22b22f7ac33a172c210196bb1b7feacb6634e495abd0"
       }
     },
     "OWATCOM.TXT": {
@@ -118,6 +118,18 @@
       "identity": {
         "bytes": 21128,
         "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+      }
+    },
+    "PAYLOAD/CGA.GR2": {
+      "source": "CGA.GR2",
+      "source_identity": {
+        "bytes": 1768,
+        "sha256": "11389907999c7bef2bd01eae5d874c79c3b07679ccb146ec095a8e9878496b55"
+      },
+      "encoding": "SZDD",
+      "identity": {
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
       }
     }
   }

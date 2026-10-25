@@ -96,40 +96,27 @@ python experiments/XYRRECT/XRBUILD.PY --repo <view> --out <fresh> --dosbox <dosb
 `--batch` remains an alias for that current XR1 option. The separate TR5
 RRBUILD deferred variants remain historical negative controls only.
 
-The earlier private OEM packet contains the owned CGA grabber and stays local.
-Its XRSYNC alias passed the API/pan tests above. The separate public kit below
-completes preparation, native Setup and a cold boot without including Windows
-support bytes in the download.
+The earlier OEM packet remains the recorded graphics reference. The current
+public kit below includes the supplied CGA grabber and completes native
+preparation, Windows Setup and a guarded cold start on the DOS computer.
 
 ## Public installable kit
 
-`tools/XRSYNC/PUBLISH.PY --out <new-release> --commit <full-source-sha>`
-creates and re-verifies deterministic XRSYNC.ZIP, README.TXT, RELEASE.JSON
-and SHA256SUMS through the existing XR1 publishing helpers. The standalone
-OEM kit contains the exact tested alias driver, RESERVE, XYCTL, original
-fonts/artwork and component notices. No accepted payload or package pin is
-replaced. The public archive excludes CGA.GR2 and all Windows/DOS media.
+For installation use the [current DOS guide](RELEASES/XRSYNC.MD). The packet
+includes the driver, supplied CGA grabber, original fonts/artwork, RESERVE,
+XYCTL and native XSETUP. Run `XRSYNC C:\WINDOWS` on the DOS computer; it
+prepares `C:\XR155`, reserves video memory and starts Windows Setup. No
+separate support-file collection or host preparation is required.
 
-After extracting it, run `python PREPARE.PY --windows <installed-Windows-folder>
---out <fresh-OEM-folder>`. The unchanged XR1 bounded own-media reader accepts
-only the pinned 2,104-byte CGA grabber, expanded or SZDD, and checks all runtime
-pins before creating the complete private OEM folder. Copy it to C:\XR155;
-use plain-DOS Windows Setup / Display / Other, then RUNSYNC.BAT and XYCTL.
-The kit README supplies the exact paths and rollback procedure.
+Developer `tools/XRSYNC/PUBLISH.PY --out <new-release> --commit <full-source-sha>`
+creates and re-verifies deterministic XRSYNC.EXE, XRSYNC.ZIP, README.TXT,
+RELEASE.JSON and SHA256SUMS. It checks source/runtime identities and the exact
+native-qualified packet before creating a release directory. No rendering
+executable is changed by the native installer correction.
 
-Nine package regressions check complete output, wrong owned input, changed
-driver, existing-output preservation, input/output overlap, deterministic
-closed ZIP inventory and corrupted-release refusal.
-Actual installed-Windows preparation also passes. A cloned installation then
-ran normal DOS Windows Setup / Display / Other from that prepared kit. Setup
-selected XRSYNC, copied the exact driver and three matching fonts into SYSTEM,
-and rebuilt the startup files. Its copy source uses C:\XR155, following the
-accepted XR1 OEM convention; a relative disk path had caused an avoidable
-second source prompt during qualification and was corrected.
-
-A separate cold boot through the packaged RUNSYNC.BAT then completed the
-existing cursor-visible diagonal-pan probe and returned to DOS. All 17 raw
-VRAM frames match the earlier native-qualified alias run byte-for-byte.
-[SETUP.JSN](rrsync/SETUP.JSN) binds installed identities, boot selections,
-frame comparisons, screenshot and probe log. Both owned emulator processes
-exited and both leases were released. No physical hardware or CF was used.
+[Native installation and cold-start receipt](QUAL/DOSINST/XRSYNC.JSN) binds
+packet hashes, actual Setup selections, installed identities and the existing
+17-frame probe. [Recovery qualification](QUAL/DOSINST/XSPACE.JSN) records
+nearly-full-disk refusal, interrupted helper cleanup and retry. The earlier
+[SETUP.JSN](rrsync/SETUP.JSN) remains the historical reference for the original
+host-prepared installation. No physical hardware or CF was used.
