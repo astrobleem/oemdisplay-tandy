@@ -7,14 +7,59 @@ in its expanded `WINXT` folder. Drivers only do not require the custom `SETUP.EX
 Use installed Windows 3.0 real mode on an original Tandy 1000 EX/HX with
 normal 640 KB and DOS 3.20+. Fonts, grabber and startup artwork are included.
 
-1. Exit Windows. At the DOS prompt, change to the extracted `WINXT` folder
-   and run `DISPLAY`. For example: `C:`, `CD \ALT\WINXT`, then `DISPLAY`.
-2. In Windows Setup choose **Display / Other** and enter that folder's full
-   path. If Setup asks for the Windows XT driver disk, enter the same path.
-3. Select **Tandy EX/HX HPXY 640x256 hardware pan**, then **Complete Changes**.
-   Keep your keyboard, mouse and DOS configuration choices unchanged.
-4. For every Windows session, change to that `WINXT` folder and run `DISPWIN`.
-   In Windows, run `XYCTL.EXE` from that folder for viewport controls.
+## 1. Start Windows Setup
+
+Exit Windows. At the DOS prompt, change to the extracted `WINXT` folder and
+run `DISPLAY`. This example extracted the download into `C:\ALT`:
+
+```bat
+C:
+CD \ALT\WINXT
+DISPLAY
+```
+
+## 2. Choose Display, then Other
+
+Use the arrow keys to highlight **Display** and press Enter. In the display
+list, move down to **Other** and press Enter.
+
+![Windows Setup display list with Other selected](SETUP/OTHER.PNG)
+
+*Other lets Windows Setup read the driver from your extracted folder.*
+
+## 3. Point to the expanded folder
+
+Enter the full path to the folder containing `OEMSETUP.INF`, then press Enter.
+For this example it is `C:\ALT\WINXT`, rather than `C:\ALT`.
+
+![Windows Setup source prompt containing C:\ALT\WINXT](SETUP/FOLDER.PNG)
+
+*Use your own extraction path. If Setup later asks for the Windows XT driver
+disk, enter this same path again.*
+
+## 4. Select the driver and finish
+
+Select **Tandy EX/HX HPXY 640x256 hardware pan** and press Enter. Back on the
+System Information screen, choose **Complete Changes** and press Enter.
+Keep your keyboard, mouse and DOS configuration choices unchanged.
+
+![System Information showing the Tandy EX/HX HPXY display and Complete Changes selected](SETUP/SELECTED.PNG)
+
+*Check the Display line before accepting. Setup copies the included fonts,
+grabber and startup artwork along with the driver.*
+
+## 5. Launch Windows
+
+For every session, return to the expanded `WINXT` folder and run `DISPWIN`.
+For the example above:
+
+```bat
+C:
+CD \ALT\WINXT
+DISPWIN
+```
+
+In Windows, run `XYCTL.EXE` from that folder for viewport controls.
 
 `DISPLAY` and `DISPWIN` reserve shared video memory automatically and stop
 if reservation fails. They use Windows in `C:\WINDOWS`; for another directory,
@@ -26,3 +71,6 @@ presentation. Exit Windows before changing display drivers through Setup.
 
 [Other hardware](PLATFORM.MD) uses its matching packet. [Native installation
 evidence](../tools/XROEM/NATIVE.JSN) records the alternate-folder Setup and launch test.
+
+The included `WINXT\DISPLAY.TXT` has the same instructions without images.
+[Screenshot details](SETUP/CAPTURES.MD).
