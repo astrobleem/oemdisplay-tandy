@@ -111,6 +111,9 @@ docs/yamaha/SUPPORT.MD -text
 .github/workflows/yampack.yml -text
 docs/yamaha/SUPPORT.JSN -text
 
+# Native DOS compiler inputs and payload pins retain reviewed CRLF bytes.
+tools/DOSINST/** -text
+
 # Scoped portable app sources and candidate identities preserve exact CRLF bytes.
 tools/APPSET/** -text
 tools/APPSET/BIN/*.ZIP -export-ignore

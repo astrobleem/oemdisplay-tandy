@@ -1,0 +1,17 @@
+WINDOWS XT - QUICK START
+
+Start each Windows session from plain DOS with C:\STARTXT.
+Use C:\FIXXT from DOS to repair the current installation.
+
+The desktop is 640x256 through a 320x200 sixteen-colour viewport.
+XYCTL starts in Software mode. Its menu or Ctrl+Alt+H selects Hardware.
+Ctrl+Alt+arrows pan; Ctrl+Alt+Home returns home.
+WXTWHL supplies wheel scrolling in ordinary Windows controls.
+The mouse uses COM1/IRQ4, 1200 baud, 7N1.
+
+The current driver, original fonts/artwork, grabber and helpers are supplied.
+Run the native WINXT.EXE installer on this DOS computer for preparation and
+Setup. An installed Windows 3.0 system or its original Setup disks is required.
+No separate support-file collection or host preparation is needed.
+
+Current install guide: docs/RELEASES/RC8.MD at the source commit in RELEASE.JSON.

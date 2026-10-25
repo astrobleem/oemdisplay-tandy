@@ -1,48 +1,63 @@
-# Windows XT desktop bundle
+# Windows XT: native DOS installation
 
-**[Download WINXT-XR1.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP)**
+**[Download WINXT.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE)**
 
-For an original Tandy 1000 EX/HX with 640 KB, DOS 3.3+ and Windows 3.0 real
-mode. This bundle supplies Tandy Start, the HPXY panning profile, COM1 wheel
-input, fonts and apps. It is the complete desktop product; the standalone
-display packet is listed separately in [current downloads](DOWNLOADS.MD).
+Run this on the Tandy from plain DOS. It gathers Windows files automatically,
+prepares the installer, reserves video memory and starts installation.
+No Python, modern computer, conversion or manual file collection is required.
 
-## Install
+For an existing English Windows 3.0 installation at `C:\WINDOWS`:
 
-1. On a modern computer, extract the ZIP. From that folder, run Python 3.8+
-   with your matching English Windows 3.0 media collected in `C:\WIN30SRC`:
+```bat
+WINXT UPDATE C:\WINDOWS
+```
 
-   ```text
-   python PREPARE.PY --windows-media C:\WIN30SRC --mode fresh --out C:\XR1NEW
-   ```
+For new Windows, insert the first original English Windows 3.0 Setup disk:
 
-   Choose a new output folder. Expanded files and original mode-A SZDD files
-   are accepted. The preparer checks the supported media set automatically;
-   if it refuses, read its message before continuing. Supply matching Windows 3.0 media, including its Setup files. Allow about 20 MB on the DOS drive
-   for a fresh source/install and temporary files.
-2. Transfer the prepared **DOS-CROOT contents** to DOS `C:\`, preserving your
-   DOS boot files and configuration. Exit Windows completely and run:
+```bat
+WINXT FRESH A:\
+```
 
-   ```bat
-   C:\SETUPXT
-   ```
+Use its actual drive letter. The preparer asks for each next disk and gathers
+the files itself. A complete existing Setup directory is also accepted:
+`WINXT FRESH C:\WIN30SRC`. Expanded files and mode-A SZDD compression work
+on the DOS computer. Allow about 30 MB for fresh source, installation and
+temporary files. Windows is installed in `C:\WINDOWS`.
 
-   Fresh Setup uses `C:\WINDOWS`: choose the first **Tandy 1000 EX/HX**
-   Computer entry, **HPXY 640x256**, **PC/XT keyboard**, **COM1 wheel mouse**
-   and **No Changes** for DOS configuration.
-3. Start Windows with this command on every launch, including after reboot:
+In fresh Setup, press Enter at Welcome and directory. At System Information,
+choose Computer and select the first **Tandy 1000 EX/HX (WindowsXT)** entry.
+Confirm **HPXY 640x256** and **PC/XT keyboard**; keep Setup's mouse choice.
+Complete the remaining Windows Setup screens and choose **No Changes** for
+DOS configuration. The finisher installs the COM1 wheel mouse and current
+desktop automatically. Update preserves unrelated INI entries and shell customization.
 
-   ```bat
-   C:\STARTXT
-   ```
+Start every later session from plain DOS with **`C:\STARTXT`**.
+Repair uses `C:\FIXXT`; `C:\FIXXT /VERIFY` adds full file comparison. If
+interrupted, rerun `C:\SETUPXT` for the existing recovery/resume path.
 
-Windows and DOS media are supplied by you. The prepared folder contains
-Windows files; the public ZIP contains the project components and preparer.
+[ZIP alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.ZIP):
+extract on the target DOS computer and run `PREPXR UPDATE C:\WINDOWS` or
+`PREPXR FRESH A:\` in that folder. The EXE download needs no unpacker.
 
-## Repair
+Requires an original Tandy 1000 EX/HX, normal 640 KB, DOS 3.3+ and Windows
+3.0 real mode. You supply Windows and DOS; their files are absent from the
+download. The gathered Windows files remain private on the DOS computer.
+For the separate synchronous display update, see [XRSYNC](RELEASES/XRSYNC.MD).
 
-From plain DOS, run `C:\FIXXT`. `C:\FIXXT /VERIFY` adds a full file comparison.
-The included README.TXT covers interrupted installation and recovery.
+## What is current
+
+XR1 provides a 640x256 logical desktop through a 320x200, sixteen-colour
+viewport, Tandy Start, panning, COM1/IRQ4 mouse and optional wheel input.
+XYCTL starts in Software mode; its menu or Ctrl+Alt+H enables Hardware.
+Ctrl+Alt+arrows pan and Ctrl+Alt+Home returns home. Windows 3.1 is unsupported.
+
+[Current optional apps](DOWNLOADS.MD) have separate packets and install guides.
+
+The display and keyboard drivers, fonts and artwork are preserved. The native
+preparer has [fresh/update results](QUAL/DOSINST/RC8.JSN), separate from
+[earlier runtime qualification](QUAL/XR1/INSTALL.JSN). No new physical
+hardware test is claimed. NOTICE.TXT and the individual component notices
+retain the Microsoft-derived driver notices and original project licenses.
 
 ## Optional Minesweeper
 

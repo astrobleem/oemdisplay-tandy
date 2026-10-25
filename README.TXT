@@ -1,7 +1,9 @@
 WINDOWS XT - CURRENT DOWNLOADS
 
 Full Tandy Start desktop, fonts, mouse/wheel input and apps:
-https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP
+https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE
+From plain DOS run WINXT UPDATE C:\WINDOWS, or WINXT FRESH A:\ with
+the first original Windows Setup disk. It gathers the Windows OS files itself.
 Desktop installation: https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/DESKTOP.MD
 Start later sessions with C:\STARTXT.
 

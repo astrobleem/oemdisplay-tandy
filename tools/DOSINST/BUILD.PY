@@ -14,14 +14,28 @@ def build(home, output, target):
         raise ValueError("Complete Open Watcom DOS toolchain required")
     output.mkdir(parents=True, exist_ok=False)
     for source in HERE.iterdir():
-        if source.suffix in (".C", ".H"):
+        if source.suffix in (".C", ".H", ".ASM"):
             shutil.copyfile(source, output / source.name)
     env = os.environ.copy()
     env.update(WATCOM=str(home), INCLUDE=str(home / "h"))
     env["PATH"] = str(home / "binnt") + os.pathsep + env.get("PATH", "")
-    name = "XSETUP" if target == "xrsync" else "XRPREP"
-    binary = "XSETUP" if target == "xrsync" else "PREPXR"
-    result = subprocess.run([str(driver), "-zq", "-bt=dos", "-0", "-ml", "-os",
+    if target == "wrapper":
+        commands = [
+            [str(home / "binnt/wasm.exe"), "-zq", "-0", "-fo=XTCLEAN.OBJ", "XTCLEAN.ASM"],
+            [str(home / "binnt/wlink.exe"), "system", "dos", "com", "option", "quiet", "name", "XTCLEAN.COM", "file", "XTCLEAN.OBJ"],
+        ]
+        logs = []
+        for command in commands:
+            result = subprocess.run(command, cwd=output, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            logs.append(result.stdout)
+            (output / "BUILD.LOG").write_bytes(b"".join(logs))
+            if result.returncode:
+                raise ValueError("DOS wrapper build failed: " + str(result.returncode))
+        return
+    name = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "XRPREP"
+    binary = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "PREPXR"
+    flags = ["-zq", "-bt=dos", "-0", "-ms", "-s", "-k8192"] if target == "finisher" else ["-zq", "-bt=dos", "-0", "-ml", "-os"]
+    result = subprocess.run([str(driver)] + flags + [
                              "-fe=" + binary + ".EXE", name + ".C"],
                             cwd=output, env=env, stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT)
@@ -34,6 +48,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--watcom", required=True, type=Path)
     parser.add_argument("--out", required=True, type=Path)
-    parser.add_argument("--target", choices=("xrsync",), default="xrsync")
+    parser.add_argument("--target", choices=("xrsync", "rc8", "finisher", "wrapper"), default="xrsync")
     args = parser.parse_args()
     build(args.watcom, args.out, args.target)
