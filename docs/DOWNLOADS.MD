@@ -16,7 +16,8 @@ working packet. Windows 3.0 and DOS are supplied by you.
 | Standalone Yamaha B800h profile | [Yamaha driver](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha/YAMAHA.ZIP) | [Yamaha setup](../experiments/YAMAHA/README.MD) |
 | Text-mode Windows, starting with compact C25 | [TEXT80.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TEXT80/TEXT80.ZIP) | [Text setup](../downloads/experimental/TEXT80/README.MD) |
 | Tandy Winamp and its sound driver | [TWXT1.ZIP](https://github.com/astrobleem/oemsound-tandy/releases/download/tandy-winamp-xt1.20261024/TWXT1.ZIP) | [Sound setup](https://github.com/astrobleem/oemsound-tandy/blob/main/experimental/WINAMP30/INSTALL.TXT) |
-| Minesweeper and About shim | [WINMINE30.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINMINE30.ZIP) | Use the included README.TXT |
+| Minesweeper and private About helper | [MINESET.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/MINESET.EXE) ([ZIP alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/MINESET.ZIP)) | [Minesweeper setup](../tools/MINEAPP/INSTALL.TXT) |
+| Cookie Clicker | [COOKSET.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/COOKSET.EXE) ([ZIP alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/COOKSET.ZIP)) | [Cookie setup](../examples/COOKIE/INSTALL.TXT) |
 
 The Tandy desktop bundle and fixed-resolution packet serve different desktop
 profiles from the panning display packet. Choose the profile you intend to
