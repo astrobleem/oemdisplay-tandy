@@ -101,6 +101,10 @@ def font_checks(out):
     # Common ambiguous characters must stay distinct in the actual drawings.
     for chars in ('0O8','Il1','B68','rn','mw','ce'):
         assert len({tuple(F.G[ch]) for ch in chars})==len(chars),chars
+        assert len({tuple(tuple(row) for row in F.drawing(ch,F.ui_width(ch),5)) for ch in chars})==len(chars),chars
+    # Actual stock File Open static-control widths observed natively.
+    for text,width in (('Filename:',26),('Directory:',26),('Find What:',34)):
+        assert sum(F.ui_width(ch) for ch in text)<=width,(text,width)
     F.specimen(out)
     return {n:rec['fonts'][n]['sha256'] for n in rec['fonts']}
 

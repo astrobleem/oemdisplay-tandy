@@ -81,17 +81,41 @@ static void CursorStep(void)
  else if(cursorphase==4){ShowCursor(FALSE);SetCursor(oldcursor);DestroyCursor(testcursor);}
  wsprintf(line,"CURSOR phase=%d\r\n",++cursorphase);Log(line);
 }
+static void DrawUnder(void)
+{
+ HDC dc,mem;HBITMAP bmp,old;int x,y;
+ if(!pattern||cursorphase!=1)return;
+ dc=GetDC(pattern);SetPixel(dc,2,2,colors[15]);
+ mem=CreateCompatibleDC(dc);bmp=CreateCompatibleBitmap(dc,16,4);old=SelectObject(mem,bmp);
+ for(y=0;y<4;y++)for(x=0;x<16;x++)SetPixel(mem,x,y,colors[((x+y)&1)?0:15]);
+ BitBlt(dc,8,8,16,4,mem,0,0,SRCCOPY);
+ SelectObject(mem,old);DeleteObject(bmp);DeleteDC(mem);
+ wsprintf(line,"UNDER pixel=%08lx\r\n",GetPixel(dc,2,2));Log(line);
+ ReleaseDC(pattern,dc);Log("UNDER READY\r\n");
+}
 static void Tree(HWND w,int depth)
 {
- char cls[40],title[70];RECT r;HWND child;int n=0;HFONT f;LOGFONT lf;
+ char cls[40],title[70],clean[70];RECT r,client;POINT pt;HWND child,hit;
+ int n=0,i,j;HFONT f,old;LOGFONT lf;HDC dc;DWORD extent;
  for(;w && n++<60;w=GetWindow(w,GW_HWNDNEXT)){
   if(!IsWindowVisible(w)||w==hidden)continue;
-  GetClassName(w,cls,sizeof(cls));GetWindowText(w,title,sizeof(title));GetWindowRect(w,&r);
+  cls[0]=title[0]=0;GetClassName(w,cls,sizeof(cls));GetWindowText(w,title,sizeof(title));GetWindowRect(w,&r);
   wsprintf(line,"W %d %04x %s [%d,%d,%d,%d] %s\r\n",depth,w,(LPSTR)cls,r.left,r.top,r.right,r.bottom,(LPSTR)title);Log(line);
   if(depth<2){
    f=(HFONT)SendMessage(w,WM_GETFONT,0,0L);
    if(f&&GetObject(f,sizeof(lf),(LPSTR)&lf)){
     wsprintf(line,"LF %04x h=%d w=%d weight=%d face=%s\r\n",w,lf.lfHeight,lf.lfWidth,lf.lfWeight,(LPSTR)lf.lfFaceName);Log(line);
+   }
+   if(depth==1&&f&&title[0]&&(!lstrcmp(cls,"Static")||!lstrcmp(cls,"Button"))){
+    for(i=j=0;title[i]&&j<69;i++){
+     if(title[i]=='&'&&title[i+1]!='&')continue;
+     if(title[i]=='&')i++;
+     clean[j++]=title[i];
+    }
+    clean[j]=0;dc=GetDC(w);old=SelectObject(dc,f);
+    extent=GetTextExtent(dc,clean,j);SelectObject(dc,old);ReleaseDC(w,dc);
+    GetClientRect(w,&client);pt.x=(r.left+r.right)/2;pt.y=(r.top+r.bottom)/2;hit=WindowFromPoint(pt);
+    wsprintf(line,"TEXT %04x width=%d height=%d client=%d,%d checked=%d hit=%04x\r\n",w,LOWORD(extent),HIWORD(extent),client.right,client.bottom,(int)SendMessage(w,BM_GETCHECK,0,0L),hit);Log(line);
    }
   }
   child=GetWindow(w,GW_CHILD);if(child&&depth<4)Tree(child,depth+1);
@@ -108,7 +132,8 @@ long FAR PASCAL WndProc(HWND w,unsigned m,WORD wp,LONG lp)
    else{ShowCursor(FALSE);cursorphase=0;pattern=CreateWindow("CGAMET","CGA GDI",WS_POPUP|WS_VISIBLE,0,0,GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN),NULL,NULL,GetWindowWord(hidden,GWW_HINSTANCE),NULL);UpdateWindow(pattern);}
   }
   if(GetAsyncKeyState(VK_F8)&1)CursorStep();
-  if(active!=last||(GetAsyncKeyState(VK_SCROLL)&1)){
+  if(GetAsyncKeyState(VK_F7)&1)DrawUnder();
+  if(active!=last||(GetAsyncKeyState(VK_SCROLL)&1)||(GetAsyncKeyState(VK_F6)&1)){
    last=active;Log("SNAP\r\n");Tree(GetWindow(GetDesktopWindow(),GW_CHILD),0);
   }
   return 0;

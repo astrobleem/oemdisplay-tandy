@@ -148,6 +148,11 @@ general renderer or per-application driver.
 from the consumer inventory. Build with explicit --repo, --dosbox, --lease
 and fresh --out. Without arguments the probe records screen/stock-font and
 window/control bounds. F9 toggles its palette/BitBlt/pair test window; each
-F8 advances a custom 32x32 cursor through odd-origin/edge/hide checks. A
-command beginning F additionally tests font mapping and AddFontResource;
+F8 advances a custom 32x32 cursor through odd-origin/edge/hide checks.
+F7 with that cursor at its first position draws a pixel and a checkerboard
+BitBlt underneath it; the final hidden capture must preserve the new pixels.
+The window log includes text extents, control widths, check states and center
+hit-test handles. These are API-level checks, not physical mouse acceptance.
+F6 appends a fresh window/control snapshot without changing the test scene.
+A command beginning F additionally tests font mapping and AddFontResource;
 that diagnostic mode changes the session font table and is not consumer proof.

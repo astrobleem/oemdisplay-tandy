@@ -96,6 +96,8 @@ def drawing(char, width, height, fixed=False):
         elif char == 'i' and width==2: rows = ['#..','...','#..','#..','#..']
         elif char == 'l' and width==2: rows = ['#..','#..','#..','#..','##.']
         elif char == 'j' and width==2: rows = ['.#.','...','.#.','.#.','##.']
+        elif char == 'r' and width==2: rows = ['...','##.','#..','#..','#..']
+        elif char == 't' and width==2: rows = ['#..','##.','#..','#..','.#.']
         elif char == 'E' and width==3: rows = ['##.','#..','##.','#..','##.']
         elif char == 'F' and width==3: rows = ['##.','#..','##.','#..','#..']
         elif char == 'L' and width==3: rows = ['#..','#..','#..','#..','##.']
@@ -128,7 +130,7 @@ def ui_width(char):
     # Narrow lower case and punctuation bring the dialog base unit to three
     # pixels without joining every capital in DOS paths and file names.
     if not char:return 4
-    if char in " iljI.,:;'|!": return 2
+    if char in " iljrtI.,:;'|!": return 2
     if char in 'EFJL[]()': return 3
     if char.isascii() and char.islower(): return 4 if char in 'mw' else 3
     return 4

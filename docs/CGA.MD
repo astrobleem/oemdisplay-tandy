@@ -223,3 +223,19 @@ CGA's scanout blits from firstline. Its raw PNGs retain upper blanking and
 can omit lower scanout rows; they are raw-buffer records, not complete monitor
 screenshots. Native control bounds, saved-file bytes and complete VRAM captures
 are separate evidence. No reconstructed image is presented as native scanout.
+
+Offline follow-up tightens lower-case r/t so Directory: fits its observed
+26-pixel static control; the actual five-row glyphs and label widths pass
+the independent font checks. The passive probe now records text extents,
+check states and center hit-test handles, plus an explicit draw-under-cursor
+test. These changes await their scheduled native run. The native rebuilt
+driver is 58,208 bytes, SHA-256
+75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3;
+all eleven NE code/data segment payloads match the earlier tested driver.
+
+A host-only audit flags larger stock Control Panel templates for native
+confirmation. It is not a fit verdict: applications can hide or resize those
+controls. Basic Run/Open/Save/Find results do not qualify every desktop dialog.
+If native controls remain unreachable, evaluate the existing software viewport
+and task-time helper contracts in src/softpan/SPPATCH.PY and src/xtpan/XTPAN.C
+before proposing another renderer. No viewport or peer branch is changed here.
