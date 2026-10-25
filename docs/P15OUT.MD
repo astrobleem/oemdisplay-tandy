@@ -32,7 +32,7 @@ stage that already has either change is refused, so nothing applies twice.
 ## Host results
 
     python3 src/pc1512/P15PATCH.PY --check           PASS (unchanged model)
-    python3 -B src/pc1512/P15OUTTEST.PY              28 tests OK
+    python3 -B src/pc1512/P15OTEST.PY              27 tests OK
     python3 src/pc1512/P15OUT.PY --check --stage <staged EGA dir>
 
 `P15OUT.FIX` is `TOutput` from the real post-P15PATCH stage (main 316f21b,
@@ -47,14 +47,25 @@ The model is not the assembled code: it does not prove the driver runs.
 ## Native handoff (dot)
 
 Changed build inputs: `src/pc1512/BUILD15.PY` (one import, one call, one
-docstring line), new `src/pc1512/P15OUT.PY`. `P15OUT.FIX`, `P15OUTTEST.PY`
+docstring line), new `src/pc1512/P15OUT.PY`. `P15OUT.FIX`, `P15OTEST.PY`
 and this note are host-only. P15RES.JSON's `staged_patched_sha256` for
 TSOFT.ASM will change; BUILD88, RRPATCH, XRBATCH and the other adapters are
 unchanged. PC1512.DRV bytes will differ from any currently pinned build.
 
+Expected `P15RES.JSON` `staged_patched_sha256` (host dry run of the real
+BUILD15 on a BUILD88 view of main 316f21b, stopped before any emulator
+launch; compare to confirm the native build assembled the reviewed text):
+
+    TSOFT.ASM   09736072f813770b3d2d24625d326be85bd7a43203e05c97ce0eb9616ad70def
+    TCURSOR.ASM 4ded456320df4280c8bd8f074bbe5143325d8099dd3323a44f70d9e3f1beb775
+
+(TSOFT.ASM without this change: 30b2c183...ab0; TCURSOR.ASM is unchanged.)
+Versus the pre-change stage only EGA/TSOFT.ASM differs (TSOFT.DEF differs
+only in the existing BUILD15 description swap).
+
 Acceptance, on the same inputs with and without this change:
 
-1. Build via BUILD15; BUILD88 audits and the 28-listing link audit pass.
+1. Build via BUILD15; BUILD88 audits and the link audit pass.
 2. Calculator and Reversi redraw correctly; no stale rows or edge columns,
    including objects touching column 0 and the right edge.
 3. Plane-aware output identical to the unpatched driver: compare the four
@@ -69,9 +80,18 @@ Acceptance, on the same inputs with and without this change:
 Capture adaptation: `src/rrect/RRBENCH.C` dumps the flat B800h 32 KB
 (`0xb8000000`, 0x8000 bytes). PC1512 has four 16 KB planes behind that
 window, selected by 3DEh for reads, so that dump sees one plane at most and
-is not valid evidence. It needs a capture that reads each plane through
+is not valid evidence. The idle/visibility probes (RRBENCH.C reading
+`[at] & 15` at B800h) also assume packed 4-bit pixels; on PC1512 that byte is
+eight pixels of the plane 3DEh selects, so "immediate visibility" needs its
+own plane-aware probe. The capture needs a capture that reads each plane through
 3DEh (restoring 3DEh=0) and writes 64,000 bytes, and RRCMP's frame size
 expectations adapted to match. Not done here.
 
+Reuse and watch-points: Output now calls `FlushRetainColumns`, which the
+stage already runs from TBitBlt (its copy loop is the `p15_row` version).
+TBitBlt keeps a `FlushRetainRows` fast path for full-width spans; this patch
+always uses Columns, as XRBATCH does, so check full-width fills first if
+timing disappoints.
+
 Overlap: PR #183 edits `docs/PC1512.MD` and the PC1512 package; this branch
-touches neither.
+touches neither. Follow with a pointer in PC1512.MD after #183 merges.

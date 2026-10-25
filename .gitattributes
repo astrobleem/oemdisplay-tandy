@@ -134,3 +134,4 @@ tools/FLASHDISK/CURRENT.JSN -text
 tools/FLASHDISK/QA/** -text
 
 .github/workflows/cpset.yml -text
+src/pc1512/** -text

@@ -161,7 +161,7 @@ def main():
         print("P15OUT: staged TSOFT.ASM accepts the patch (%d -> %d bytes)"
               % (len(text), len(out)))
     else:
-        print("P15OUT: no --stage given; run P15OUTTEST.PY for the host tests")
+        print("P15OUT: no --stage given; run P15OTEST.PY for the host tests")
     return 0
 
 
