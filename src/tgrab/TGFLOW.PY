@@ -404,7 +404,7 @@ class Flow:
                            mismatches=res.get("back_vs_default_mismatches"))
         return a, (rows if bm else None)
 
-    def pb_paste_full(self, name, w, screen):
+    def pb_paste_full(self, name, w, screen, corner=False):
         """Paintbrush, its own workflow for a whole picture: Options > Image
         Attributes w x 200 pels, File > New, View > Zoom Out, Edit > Paste,
         a click outside the picture places it, View > Zoom In, Save As."""
@@ -453,7 +453,8 @@ class Flow:
             if (bw, bh) == (w, 200):
                 ref = lambda x, y: T.WINPAL[4 * win_to_tandy(screen[y * w + x]):4 * win_to_tandy(screen[y * w + x]) + 3]
                 bad = sum(bytes(pal[4 * rows[y][x]:4 * rows[y][x] + 3]) != bytes(ref(x, y))
-                          for y in range(200) for x in range(w))
+                          for y in range(200) for x in range(w)
+                          if not (corner and x >= 316 and y >= 196))   # the parked pointer
                 res["mismatches"] = bad
                 ok = bad == 0
         self.key("alt+F4", wait=20)
@@ -541,7 +542,7 @@ class Flow:
                    if not corner(x, y)) if ok else None
         self.check("Windows Print Screen: the Clipboard holds a 320x200 bitmap equal to the screen "
                    "(pointer corner excluded)", ok and mism == 0, mismatches=mism, clip_lines=lines)
-        self.pb_paste_full("WINPRT.BMP", 320, a)
+        self.pb_paste_full("WINPRT.BMP", 320, a, corner=True)
 
     def part_modes(self):
         refs = {}
