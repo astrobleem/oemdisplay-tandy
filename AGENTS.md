@@ -78,8 +78,13 @@ contains original MIT grids and reproducible host generation. Never clone
 Microsoft/ROM glyph bitmaps. docs/QUAL/FONTSR10.JSON binds the qualified disk,
 helper/source/runtime/font bytes. Historical BUILD/ZERO records retain their
 snapshot scope. Publication uses PUBLISH.PY and the guarded release workflow,
-with no old asset/tag overwrite. Keep DOS/Windows and non-font owned resources
-out of new public payloads. An emulator launch still requires an explicit slot.
+with no old asset/tag overwrite. Keep complete DOS/Windows media, guest
+installations and unrelated owned resources out of new public payloads. The
+user-supplied root CGA.GR2 is explicitly approved for current driver packets;
+expand its SZDD encoding and verify the qualified 2,104-byte grabber before
+bundling it. Consumers must not collect that support file themselves. This
+exception does not include other Windows OS files. An emulator launch still
+requires an explicit slot.
 
 ## Historical rc.6 release
 

@@ -1,0 +1,7 @@
+XSETUP - DOS-native XRSYNC driver installation (8088 / DOS 3.20+)
+Checking the complete supplied display packet.
+C: free 262144 bytes; staging requires 288768 bytes including headroom.
+
+REFUSED: Not enough free space on C:. No staging was attempted.
+Free space, then retry.
+Installation stopped. Correct the error above and rerun the installer.
