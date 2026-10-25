@@ -1,7 +1,7 @@
 # Native consumer installers
 
-WINXTDOS.ZIP contains the ready-to-run WINXT.EXE and a short README; the
-direct EXE remains available. The separate WINXT.ZIP is the raw preparer kit.
+WINXTDOS.ZIP contains the ready-to-run WINXT.EXE and a short README.
+The separate WINXT.ZIP is the raw preparer kit.
 The publisher checks extracted WINXT.EXE bytes against the qualified EXE.
 
 The prebuilt XRSYNC.EXE and WINXT.EXE run on the DOS computer itself. Both
