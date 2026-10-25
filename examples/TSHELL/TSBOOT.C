@@ -5,6 +5,7 @@
 #include "TSBOOT.H"
 #include "TNOTICE.H"
 #include "PROGMENU.H"
+#include "PSGOWN.H"
 static char config[144], soundDir[144];
 static char loadList[1024], runList[1024];
 static int begun, waiting, listed, warned, useExit;
@@ -32,18 +33,22 @@ static int soundPath(char *file,char *path) {
  return OpenFile(path,&of,OF_EXIST)!=HFILE_ERROR;
 }
 static int psgBusy(void) {
- HMODULE h;
+ PSG_OWNER owner;
  if(FindWindow("TandyPSGTest",NULL)||FindWindow("TandyStartupChime",NULL)||
     FindWindow("TandyXPStartupChime",NULL)||FindWindow("TandyAutomaticMouth",NULL)||
     FindWindow("TandyPreExitChime",NULL)||GetModuleHandle("TEXIT"))return 1;
- h=GetModuleHandle("SOUND");return h&&GetProcAddress(h,"DEBUGTIMER")!=NULL;
+ owner.lease=NULL;owner.opened=0;
+ if(!PsgOwnerAcquire(&owner))return 1;
+ PsgOwnerRelease(&owner);return 0;
 }
 /* WIN.INI 3.0 run/load are space-separated filenames, not commands with args.
    Executables/PIFs are supported. Associated documents are reported as skipped. */
 static void launchList(HWND w,char *p,int show) {
  char token[128],*b,*ext;int n,count=0;UINT r;
  while(*p){
-  while(*p==' '||*p=='\t')p++;if(!*p)break;n=0;
+  while(*p==' '||*p=='\t')p++;
+  if(!*p)break;
+  n=0;
   while(*p&&*p!=' '&&*p!='\t'){if(n<127)token[n++]=*p;p++;}
   token[n]=0;if(++count>64){warned=1;return;}
   if(!n||n>126){warned=1;continue;}
@@ -57,13 +62,15 @@ static void launchList(HWND w,char *p,int show) {
  }
 }
 static void runLists(HWND w) {
- if(listed)return;listed=1;
+ if(listed)return;
+ listed=1;
  launchList(w,loadList,SW_SHOWMINNOACTIVE);launchList(w,runList,SW_SHOWNORMAL);
  if(warned)status(w,"Startup skipped.","See README.TXT.");
 }
 void TandyBootBegin(HWND w) {
  char choice[16],path[144];UINT r;int n;
- if(begun)return;begun=1;readConfig();loadList[0]=runList[0]=0;
+ if(begun)return;
+ begun=1;readConfig();loadList[0]=runList[0]=0;
  if(GetPrivateProfileInt("Startup","LoadRun",1,config)){
   n=GetProfileString("windows","load","",loadList,sizeof(loadList));if(n>=(int)sizeof(loadList)-1){loadList[0]=0;warned=1;}
   n=GetProfileString("windows","run","",runList,sizeof(runList));if(n>=(int)sizeof(runList)-1){runList[0]=0;warned=1;}

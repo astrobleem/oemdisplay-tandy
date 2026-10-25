@@ -16,5 +16,6 @@ unsigned GetWindowWord(HWND,int);
 #define SW_SHOWMINNOACTIVE 7
 int lstrcmpi(const char*,const char*); int lstrlen(const char*); char*lstrcpy(char*,const char*);char*lstrcat(char*,const char*);
 UINT GetWindowsDirectory(char*,UINT);int GetPrivateProfileString(const char*,const char*,const char*,char*,int,const char*);int GetPrivateProfileInt(const char*,const char*,int,const char*);int GetProfileString(const char*,const char*,const char*,char*,int);
+int OpenSound(void);void CloseSound(void);
 int OpenFile(const char*,OFSTRUCT*,UINT);int FindWindow(const char*,const char*);HMODULE GetModuleHandle(const char*);FARPROC GetProcAddress(HMODULE,const char*);int SetTimer(HWND,int,int,void*);int KillTimer(HWND,int);UINT WinExec(const char*,UINT);int ExitWindows(DWORD,unsigned);int MessageBox(HWND,const char*,const char*,UINT);
 #endif
