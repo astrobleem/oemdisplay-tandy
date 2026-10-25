@@ -32,8 +32,8 @@ def build(home, output, target):
             if result.returncode:
                 raise ValueError("DOS wrapper build failed: " + str(result.returncode))
         return
-    name = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "XRPREP"
-    binary = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "PREPXR"
+    name = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "SETUP" if target == "setup" else "XRPREP"
+    binary = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "SETUP" if target == "setup" else "PREPXR"
     flags = ["-zq", "-bt=dos", "-0", "-ms", "-s", "-k8192"] if target == "finisher" else ["-zq", "-bt=dos", "-0", "-ml", "-os"]
     result = subprocess.run([str(driver)] + flags + [
                              "-fe=" + binary + ".EXE", name + ".C"],
@@ -48,6 +48,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--watcom", required=True, type=Path)
     parser.add_argument("--out", required=True, type=Path)
-    parser.add_argument("--target", choices=("xrsync", "rc8", "finisher", "wrapper"), default="xrsync")
+    parser.add_argument("--target", choices=("xrsync", "rc8", "setup", "finisher", "wrapper"), default="xrsync")
     args = parser.parse_args()
     build(args.watcom, args.out, args.target)
