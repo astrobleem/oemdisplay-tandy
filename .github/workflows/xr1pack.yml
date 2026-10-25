@@ -30,7 +30,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/CGA.GR2\n/examples/WXTSPL/WAVE/XTCLEAN.ASM\n/tools/XR1PACK/\n/tools/DOSINST/\n/docs/QUAL/DOSINST/\n/docs/RELEASES/RC8.MD\n/.github/\n/.gitattributes\n/AGENTS.md\n' | git sparse-checkout set --no-cone --stdin
+          printf '/CGA.GR2\n/tools/XR1PACK/\n/tools/DOSINST/\n/docs/QUAL/DOSINST/\n/docs/RELEASES/RC8.MD\n/.github/\n/.gitattributes\n/AGENTS.md\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
 

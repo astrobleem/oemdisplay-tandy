@@ -62,7 +62,7 @@
       ]
     },
     "XTCLEAN.COM": {
-      "source": "examples/WXTSPL/WAVE/XTCLEAN.ASM",
+      "source": "tools/DOSINST/XTCLEAN.ASM",
       "source_identity": {
         "bytes": 4210,
         "sha256": "6bb9c01e994c881cc0f6c16bdcbb2927b3768adcb23f622b4a2ec6045211d5f9"

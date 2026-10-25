@@ -215,9 +215,9 @@ tail db 22,' /R C:\EXJOY.EXE /test',13
 else
 tail db 3,' /R',13
 endif
-child db 'C:\WINDOWS\XTTEST.COM',0
+child db 'XTTEST.COM',0
 logfile db 'WRAP.BIN',0
-db 501 dup(0)
+db 512 dup(0)
 stack_end label byte
 code ends
 end entry

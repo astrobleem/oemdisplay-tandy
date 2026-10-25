@@ -28,6 +28,7 @@ Developer rebuilds use Open Watcom's 16-bit DOS compiler:
 python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target xrsync --out NEWBUILD
 python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target rc8 --out NEWBUILD
 python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target finisher --out NEWBUILD
+python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target wrapper --out NEWBUILD
 ```
 
 Use a fresh output directory for each command. XSNATIVE.JSN and RCNATIVE.JSN
