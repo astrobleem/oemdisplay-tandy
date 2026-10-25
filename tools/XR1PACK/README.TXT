@@ -1,4 +1,4 @@
-WINDOWS XT RC.8 - DOS-NATIVE INSTALLATION
+WINDOWS XT - DOS-NATIVE INSTALLATION
 
 Tandy 1000 EX/HX, 8088, normal 640 KB, DOS 3.3+, Windows 3.0 real mode.
 The driver, shell, helpers, wheel input, grabber, original fonts and artwork
@@ -24,8 +24,7 @@ A complete existing Windows Setup folder also works:
 
 Expanded files and original mode-A SZDD files are read directly. The automatic
 media cache and prepared source stay on this DOS computer. Allow about 20 MB
-for fresh source, installation and temporary files. Windows uses C:\WINDOWS,
-as in the existing rc.8 route.
+for fresh source, installation and temporary files. Windows is installed in C:\WINDOWS.
 
 Fresh Windows Setup: Enter at Welcome and directory. At System Information
 select Computer, then the FIRST Tandy 1000 EX/HX (WindowsXT) entry. Confirm
