@@ -51,3 +51,18 @@ new support selection. `T2ITEST.PY` checks both scopes.
 
 The current packet is available from `downloads/experimental/TGA2/TNDYV2.ZIP`.
 The original r2 release remains available for reproducing its historical tests.
+
+## Automatic install and start entries
+
+`INSTALL.BAT` runs the unchanged reservation helper and opens Setup only
+after success. `T2WIN.BAT` does the same before `WIN /R`; users do not run
+the helper separately. Both support the default C:\WINDOWS directory and
+explicit drive/directory arguments. [T2LAUNCH.JSN](T2LAUNCH.JSN) binds the
+current packet and exact batch/source bytes. Native SL/2 Setup selected the
+packet's aliases and assets; the guarded entry reached the [desktop](T2LAUNCH.PNG)
+and settled for 40 seconds. A 512 KB fixture caused both entries to stop with Windows
+unchanged. The native DOS 3.20 harness used COMMAND.COM /C, with no manual
+T2RESV calls. Failed CALL-based harness controls remain private failed records.
+
+The earlier support receipt above retains its exact original source snapshots
+under HISTORY. It is not relabeled as testing these new entry points.

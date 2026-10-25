@@ -67,6 +67,25 @@ def main():
     value = (HERE.parents[1] / capture["path"]).read_bytes()
     assert capture["bytes"] == len(value) and capture["sha256"] == hashlib.sha256(value).hexdigest()
     assert not current["physical_hardware_qualified"] and not current["Windows31_qualified"]
+    automatic = json.loads((HERE.parents[1] / "docs/tga2/T2LAUNCH.JSN").read_bytes())
+    assert automatic["status"] == "PASS_NATIVE_AUTOMATIC_ENTRIES"
+    assert automatic["native"]["complete"] and automatic["refusal"]["complete"]
+    assert automatic["native"]["reservation_before_setup"]["resident_id"] == "TNDYV2R1"
+    assert automatic["native"]["desktop_mode"] == 10
+    assert automatic["native"]["desktop_settle_seconds"] == 40
+    assert automatic["refusal"]["both_entries_returned"] and automatic["refusal"]["windows_unchanged"]
+    assert automatic["harness"]["manual_T2RESV_calls"] == 0
+    assert automatic["source_fixture_unchanged"]
+    for result in (automatic["native"], automatic["refusal"]):
+        assert result["owned_stopped"] and result["lease_released"]
+    for name, pin in automatic["integration_sources"].items():
+        value = (HERE.parents[1] / name).read_bytes()
+        assert pin == {"bytes":len(value),"sha256":hashlib.sha256(value).hexdigest()},name
+    value = (HERE.parents[1] / "downloads/experimental/TGA2/TNDYV2.ZIP").read_bytes()
+    assert automatic["packet"] == {"bytes":len(value),"sha256":hashlib.sha256(value).hexdigest()}
+    capture = automatic["capture"]
+    value = (HERE.parents[1] / capture["path"]).read_bytes()
+    assert capture["bytes"] == len(value) and capture["sha256"] == hashlib.sha256(value).hexdigest()
     print("T2ITEST: PASS (current support/native receipt; historical source bindings; selector refusals)")
 
 

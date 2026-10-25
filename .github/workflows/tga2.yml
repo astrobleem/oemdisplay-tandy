@@ -19,6 +19,8 @@ on:
       - 'docs/tga2/T2SETUP.JSN'
       - 'docs/tga2/T2SUP.JSN'
       - 'docs/tga2/T2SUP.PNG'
+      - 'docs/tga2/T2LAUNCH.JSN'
+      - 'docs/tga2/T2LAUNCH.PNG'
       - 'docs/tga2/T2STAGE.JSN'
       - '.github/workflows/tga2.yml'
   push:
@@ -40,6 +42,8 @@ on:
       - 'docs/tga2/T2SETUP.JSN'
       - 'docs/tga2/T2SUP.JSN'
       - 'docs/tga2/T2SUP.PNG'
+      - 'docs/tga2/T2LAUNCH.JSN'
+      - 'docs/tga2/T2LAUNCH.PNG'
       - 'docs/tga2/T2STAGE.JSN'
       - '.github/workflows/tga2.yml'
   workflow_dispatch:
@@ -63,7 +67,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/.gitattributes\n/src/tga2/\n/downloads/experimental/TGA2/\n/src/tandysw/RESERVE.PY\n/docs/tga2/T2RMUT.JSN\n/docs/tga2/T2SETUP.JSN\n/docs/tga2/T2STAGE.JSN\n/docs/tga2/T2SUP.JSN\n/docs/tga2/T2SUP.PNG\n/tools/XR1PACK/PREPARE.PY\n/distributions/WINXT/XTCSYS.FON\n/distributions/WINXT/XTCFIX.FON\n/distributions/WINXT/XTCOEM.FON\n/distributions/WINXT/XTSTATIC.LGO\n/distributions/WINXT/WXTSPL01.RLE\n/distributions/WINXT/FONTLIC.TXT\n/CGA.GR2\n' | git sparse-checkout set --no-cone --stdin
+          printf '/.gitattributes\n/src/tga2/\n/downloads/experimental/TGA2/\n/src/tandysw/RESERVE.PY\n/docs/tga2/T2RMUT.JSN\n/docs/tga2/T2SETUP.JSN\n/docs/tga2/T2STAGE.JSN\n/docs/tga2/T2SUP.JSN\n/docs/tga2/T2SUP.PNG\n/docs/tga2/T2LAUNCH.JSN\n/docs/tga2/T2LAUNCH.PNG\n/tools/XR1PACK/PREPARE.PY\n/distributions/WINXT/XTCSYS.FON\n/distributions/WINXT/XTCFIX.FON\n/distributions/WINXT/XTCOEM.FON\n/distributions/WINXT/XTSTATIC.LGO\n/distributions/WINXT/WXTSPL01.RLE\n/distributions/WINXT/FONTLIC.TXT\n/CGA.GR2\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Verify exact mutation acceptance and recorded DOS failures
