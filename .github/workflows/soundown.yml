@@ -23,3 +23,7 @@ jobs:
         run: python3 tools/SOUNDOWN/TESTOWN.PY
       - name: Exercise current full XT publication guards
         run: python3 tools/XR1PACK/TESTPUB.PY
+      - name: Exercise current native recipe and OS identity closure
+        run: python3 tools/DOSINST/TESTPUB.PY
+      - name: Refuse stale native source and shell selections
+        run: python3 tools/SOUNDOWN/TESTUPD.PY

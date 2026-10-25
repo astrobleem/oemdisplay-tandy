@@ -289,7 +289,7 @@ int main(int argc,char **argv)
   if(files[i].kind==1)find_input(files[i].source,files[i].size,path);
   stage(i,1);count++;
  }
- if(count!=(fresh?367:80))stop("Compiled preparation inventory differs.","");
+ if(count!=(fresh?369:82))stop("Compiled preparation inventory differs.","");
  checkcancel();
  /* SETUPXT.BAT is withheld until every private source and readback succeeds. */
  for(i=0;i<NFILES;i++)if(strcmp(files[i].path,"SETUPXT.BAT")&&(fresh||strncmp(files[i].path,"W30\\",4)))stage(i,0);

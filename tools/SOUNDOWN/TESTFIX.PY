@@ -51,10 +51,11 @@ def crc_fixture(length, wanted):
 def main():
     if os.name != 'nt':
         raise SystemExit('TESTFIX requires Windows host file APIs; native DOS QA is separate')
-    source = (HERE/'FIXXT.C').read_text()
+    canonical = HERE.parent/'DOSINST'
+    source = (canonical/'FIXXT.C').read_text()
     names = re.findall(r'"([^"]+)"', re.search(
         r'static const char \*names\[\]=\{([^}]+)\};', source).group(1))
-    sound_header = (HERE/'SOUNDID.H').read_text()
+    sound_header = (canonical/'SOUNDID.H').read_text()
     sound_bytes = int(re.search(r'#define SOUND_BYTES (\d+)U', sound_header).group(1))
     sound_crc = int(re.search(r'#define SOUND_CRC 0x([0-9a-f]+)UL', sound_header).group(1), 16)
     sizes = [sound_bytes if n == 'SOUND_BYTES' else int(n[:-2]) for n in re.search(
@@ -69,7 +70,7 @@ def main():
         root = Path(temp)
         exe = root/'FIXXT-HOST.EXE'
         subprocess.run([sys.executable, str(launcher), '--', '-x', 'c',
-            '-std=c89', '-DHOST_TEST', '-O0', str(HERE/'FIXXT.C'),
+            '-std=c89', '-DHOST_TEST', '-O0', str(canonical/'FIXXT.C'),
             '-o', str(exe)], check=True)
         win, home = root/'WIN', root/'WINXT'
         system, media = win/'SYSTEM', home/'FILES'

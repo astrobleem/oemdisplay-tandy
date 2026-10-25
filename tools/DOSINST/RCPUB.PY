@@ -15,7 +15,7 @@ ASSETS = ("WINXTDOS.ZIP", "WINXT.EXE", "WINXT.ZIP", "README.TXT", "RELEASE.JSON"
 def check_inputs(recipe, header, records, qualified):
     rows = re.findall(r'{"([^"\n]+)","([^"\n]+)",(\d+)UL,(\d+)}', recipe)
     crcs = re.findall(r'0x([0-9a-f]{8})UL, /\* ([^*]+) \*/', header)
-    pub.require(len(rows) == len(crcs) == 367, "Windows input CRC inventory differs")
+    pub.require(len(rows) == len(crcs) == 369, "Windows input CRC inventory differs")
     required = set()
     for (path, source, size, kind), (crc, comment) in zip(rows, crcs):
         pub.require(comment == path, "Windows CRC recipe ordering differs: " + path)
@@ -47,14 +47,15 @@ def collect():
     header = (HERE / "XR1PINS.H").read_text()
     rows = re.findall(r'{"([^"\n]+)","([0-9a-f]{64})",(\d+)UL,0,0x[0-9a-f]+UL}', header)
     runtime = {"PAYLOAD/" + name: {"bytes": int(size), "sha256": sha} for name, sha, size in rows}
-    pub.require(len(runtime) == 48 and set(runtime) == {n for n in entries if n.startswith("PAYLOAD/")}, "Runtime inventory differs")
-    pub.require(set(entries) == set(runtime) | {"PREPXR.EXE", "README.TXT", "NOTICE.TXT", "OWATCOM.TXT", "WHEELLIC.TXT"}, "Consumer archive inventory differs")
+    pub.require(len(runtime) == 49 and set(runtime) == {n for n in entries if n.startswith("PAYLOAD/")}, "Runtime inventory differs")
+    pub.require(set(entries) == set(runtime) | {"PREPXR.EXE", "README.TXT", "NOTICE.TXT", "OWATCOM.TXT", "WHEELLIC.TXT", "SOUNDID.JSN", "SOUNDSRC.ZIP", "SOUNDLIC.TXT"}, "Consumer archive inventory differs")
     for name, pin in runtime.items():
         pub.require(pub.identity(entries[name]) == pin, "Compiled runtime differs: " + name)
     pub.require(not any(n.endswith(".PY") for n in entries), "Private/host preparation file in consumer kit")
     check_inputs((HERE / "XRFILES.H").read_text(), (HERE / "XRINPUT.H").read_text(),
                  json.loads((HERE / "XRINPUT.JSN").read_bytes()),
                  {row["path"]: row for row in json.loads((HERE.parent / "XR1PACK/INPUTS.JSN").read_bytes())["files"]})
+    pub.validate_sound(entries)
     native = json.loads((HERE / "RCNATIVE.JSN").read_bytes())
     pub.require(pub.identity(entries["PREPXR.EXE"]) == native["binary"], "Native helper differs")
     for name, pin in native["sources"].items():
@@ -62,6 +63,12 @@ def collect():
     for record in native.get("companions", {}).values():
         for key in ("source", "binary"):
             pub.require(pub.identity(pub.read_file(REPO, record[key])) == record[key + "_identity"], "Companion differs: " + record[key])
+        for path, pin in record.get("source_dependencies", {}).items():
+            pub.require(pub.identity(pub.read_file(REPO, path)) == pin,
+                        "Companion source dependency differs: " + path)
+        if "build_record" in record:
+            pub.require(pub.identity(pub.read_file(REPO, record["build_record"])) ==
+                        record["build_record_identity"], "Companion build record differs")
     helper = entries["PREPXR.EXE"]
     pub.require(helper[:2] == b"MZ" and len(helper) >= 28, "DOS MZ helper required")
     last, pages = struct.unpack_from("<HH", helper, 2)
@@ -85,7 +92,7 @@ def build(output, commit, verify=False):
     for mode in ("fresh", "update"):
         row = q[mode]
         pub.require(row["complete"] and not row.get("error") and row["owned_stopped"] and row["lease_released"], "Native case incomplete: " + mode)
-        pub.require(row["prepared_comparison"]["count"] == (367 if mode == "fresh" else 80) and not row["prepared_comparison"]["different"], "Prepared bytes differ: " + mode)
+        pub.require(row["prepared_comparison"]["count"] == (369 if mode == "fresh" else 82) and not row["prepared_comparison"]["different"], "Prepared bytes differ: " + mode)
     pub.require(q["cold"]["complete"] and not q["cold"].get("error") and q["cold"]["owned_stopped"] and q["cold"]["lease_released"], "Cold launch incomplete")
     validation = q["input_validation"]
     pub.require(validation["helper"] == pub.identity(entries["PREPXR.EXE"]), "Input checks used a different helper")
@@ -93,7 +100,7 @@ def build(output, commit, verify=False):
         case = validation[name]
         pub.require(case["complete"] and not case.get("error") and case["owned_stopped"] and case["lease_released"],
                     "Native input validation incomplete: " + name)
-    pub.require(validation["native_valid_inputs"]["prepared_comparison"] == {"count": 367, "different": []},
+    pub.require(validation["native_valid_inputs"]["prepared_comparison"] == {"count": 369, "different": []},
                 "CRC-validated fresh outputs differ")
     pub.require(q["public_assets"]["WINXT.ZIP"] == pub.identity(archive) and q["public_assets"]["WINXT.EXE"] == pub.identity(executable), "Package differs from qualified native kit")
     download = download_zip(executable)

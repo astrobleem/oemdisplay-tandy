@@ -8,7 +8,8 @@
       "fonts.fon",
       "fixedfon.fon",
       "oemfonts.fon",
-      "286grabber"
+      "286grabber",
+      "sound.drv"
     ],
     "boot.description": [
       "system.drv",
@@ -35,9 +36,9 @@
     {
       "name": "TSHELL.EXE",
       "target": "WINDOWS",
-      "bytes": 71763,
-      "sha256": "b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49",
-      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+      "bytes": 72323,
+      "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9",
+      "policy": "Full byte comparison against checked canonical source"
     },
     {
       "name": "TSINPUT.DLL",
@@ -154,23 +155,23 @@
     {
       "name": "XPCHIME.EXE",
       "target": "WINXT",
-      "bytes": 4543,
-      "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f",
-      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+      "bytes": 5103,
+      "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0",
+      "policy": "Full byte comparison against checked canonical source"
     },
     {
       "name": "TCHIME.EXE",
       "target": "WINXT",
-      "bytes": 3999,
-      "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121",
-      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+      "bytes": 5071,
+      "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61",
+      "policy": "Full byte comparison against checked canonical source"
     },
     {
       "name": "TEXIT.EXE",
       "target": "WINXT",
-      "bytes": 8687,
-      "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99",
-      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+      "bytes": 9215,
+      "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148",
+      "policy": "Full byte comparison against checked canonical source"
     },
     {
       "name": "RESERVE.COM",
@@ -217,9 +218,9 @@
     {
       "name": "TP.EXE",
       "target": "WINXT",
-      "bytes": 12303,
-      "sha256": "3260c222fee2dcb33cabadc8602cf878c266a7c0c6a4d5125c05784e32793b74",
-      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+      "bytes": 12847,
+      "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33",
+      "policy": "Full byte comparison against checked canonical source"
     },
     {
       "name": "HPXY.DRV",
@@ -241,6 +242,13 @@
       "bytes": 7222,
       "sha256": "0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6",
       "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "SOUND.DRV",
+      "target": "SYSTEM",
+      "bytes": 9752,
+      "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd",
+      "policy": "Full byte comparison against checked canonical source"
     }
   ],
   "boot_files": "never write CONFIG.SYS/AUTOEXEC.BAT/IO.SYS/MSDOS.SYS/COMMAND.COM/MBR",

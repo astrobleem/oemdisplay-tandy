@@ -23,7 +23,7 @@ class NativePublisherTests(unittest.TestCase):
                      "public_assets": {"WINXT.ZIP": M.pub.identity(self.archive),
                      "WINXT.EXE": M.pub.identity(self.entries["PREPXR.EXE"] + self.archive)},
                      "cold": {"complete": True, "owned_stopped": True, "lease_released": True}}
-        for mode, count in (("fresh", 367), ("update", 80)):
+        for mode, count in (("fresh", 369), ("update", 82)):
             self.qual[mode] = {"complete": True, "owned_stopped": True, "lease_released": True,
                               "prepared_comparison": {"count": count, "different": []}}
         self.qual["input_validation"] = {
@@ -39,7 +39,7 @@ class NativePublisherTests(unittest.TestCase):
             return M.build(output, COMMIT, verify)
 
     def test_closed_native_archive(self):
-        self.assertEqual(len(self.entries), 53)
+        self.assertEqual(len(self.entries), 57)
         self.assertFalse(any(n.endswith(".PY") for n in self.entries))
         self.assertEqual(M.pub.identity(self.entries["PAYLOAD/CGA.GR2"]), {"bytes": 2104, "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"})
         M.pub.check_zip(self.archive, self.entries, "native")
@@ -73,6 +73,34 @@ class NativePublisherTests(unittest.TestCase):
             M.check_inputs(recipe, header, changed, qualified)
         with self.assertRaises(ValueError):
             M.check_inputs(recipe, header.replace("W30\\\\123.PIF", "wrong", 1), pins, qualified)
+
+    def test_update_after_winamp_needs_no_original_stock_sound(self):
+        import re
+        rows = re.findall(r'\{"([^"\n]+)","([^"\n]+)",(\d+)UL,(\d+)\}',
+                          (M.HERE / "XRFILES.H").read_text())
+        owned = [row for row in rows if row[3] == "1"]
+        self.assertEqual(len(owned), 284)
+        self.assertTrue(all(row[0].startswith("W30\\\\") for row in owned))
+        update = [row for row in rows if not row[0].startswith("W30\\\\")]
+        self.assertEqual(len(update), 82)
+        self.assertFalse(any(row[3] == "1" for row in update))
+        sound = [row for row in update if row[1] == "SOUND.DRV"]
+        self.assertEqual(len(sound), 2)
+        self.assertTrue(all(row[3] == "0" for row in sound))
+        self.assertEqual({row[0] for row in sound},
+                         {"WINXT\\\\SOUND.DRV", "WINXT\\\\FILES\\\\SOUND.DRV"})
+        source = (M.HERE / "XRPREP.C").read_text()
+        self.assertIn('if(fresh||strncmp(files[i].path,"W30\\\\",4))', source)
+
+    def test_preserves_all_284_published_os_identity_rows(self):
+        protected = json.loads((M.HERE/'SOUNDDELTA.JSN').read_bytes())['protected']
+        for name in ('DOSCORE.H','CRCFAST.H','VARSET.H','XRSTRM.H','XRINPUT.JSN'):
+            self.assertEqual(M.pub.identity((M.HERE/name).read_bytes()), protected[name])
+
+    def test_published_fresh_receipt_cannot_qualify_new_helper(self):
+        self.qual['fresh']['prepared_comparison']['count'] = 367
+        with self.assertRaisesRegex(ValueError, 'Prepared bytes differ: fresh'):
+            self.run_build(self.root/'stale-fresh')
 
     def test_verified_assets_and_overlay(self):
         output = self.root / "release"

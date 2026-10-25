@@ -47,3 +47,8 @@ The resulting prepared folder is private own-media output, not a public ZIP.
 MINESWEEPER
 The separate WINMINE30.ZIP contains a converted Microsoft WinMine application
 and its tested About helper. That packet has its own NOTICE.TXT and test scope.
+
+CANONICAL SOUND DRIVER
+SOUND.DRV is the same canonical driver used by Tandy Winamp and desktop
+alerts. Its corresponding source is SOUNDSRC.ZIP; SOUNDLIC.TXT retains
+the existing source license. No compiler or Windows implementation is included.

@@ -29,7 +29,8 @@ def main():
             parser.error('Missing external toolchain file: ' + name)
     out.mkdir(parents=True, exist_ok=False)
     for name in SOURCES:
-        shutil.copyfile(HERE / name, out / name)
+        source = HERE.parent/'DOSINST'/name if name in ('FIXXT.C', 'SOUNDID.H') else HERE/name
+        shutil.copyfile(source, out/name)
     config = f'''[sdl]
 fullscreen=false
 output=surface

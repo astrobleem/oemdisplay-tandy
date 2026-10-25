@@ -59,7 +59,7 @@ class SelectionTests(unittest.TestCase):
                     self.current[name] = binary
         self.fixxt = self.native/'fixxt-current'
         source, binary = b'current finisher source', b'current finisher binary'
-        put(update.HERE/'FIXXT.C', source)
+        put(update.HERE.parent/'DOSINST/FIXXT.C', source)
         put(self.fixxt/'FIXXT.C', source)
         put(self.fixxt/'FIXXT.EXE', binary)
         record(self.fixxt/'BUILD.JSON', {'sources': {'FIXXT.C': update.identity(source)},
@@ -82,7 +82,7 @@ class SelectionTests(unittest.TestCase):
         record(self.sound/'src/win30/DRIVER/SOUNDID.JSON', {
             'file': 'SOUND.DRV', **update.identity(sound),
             'crc32': '%08x' % zlib.crc32(sound)})
-        for path in (update.HERE/'SOUNDID.H',
+        for path in (update.HERE.parent/'DOSINST/SOUNDID.H',
                      self.sound/'src/win30/DRIVER/SOUNDID.H'):
             put(path, b'identical generated sound expectations')
         self.acceptance = {'runtime_claim': 'completed production-driver native observer',

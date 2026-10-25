@@ -1,0 +1,25 @@
+{
+  "target": "DOS3+, MSC6 /G0 /AS, LINK4, 8086, 8KB stack",
+  "sources": {
+    "FIXXT.C": {
+      "bytes": 24477,
+      "sha256": "355e09ada18bed990dae915df6e837ad3c9f67c434fbac7c5e4625c68517b64b"
+    },
+    "FIXXT.RSP": {
+      "bytes": 55,
+      "sha256": "452d093e9f80a45570f36abac6416430ea5722a380828087bb121027f59852b1"
+    },
+    "BLDFIX.BAT": {
+      "bytes": 310,
+      "sha256": "8342383329c376faf52e185ba7abe91b51b04d23bc76116842d5f8ebed1d3b31"
+    },
+    "SOUNDID.H": {
+      "bytes": 201,
+      "sha256": "c7645359276c478e8609881559a4d252e9ee966161261b255f9b389482610310"
+    }
+  },
+  "runtime": {
+    "bytes": 33001,
+    "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"
+  }
+}

@@ -21,7 +21,7 @@ SOURCE = {'TCHIME.EXE': 'src/win30/CHIME/TCHIME.C',
           'TEXIT.EXE': 'src/win30/TEXIT/TEXIT.C',
           'TP.EXE': 'tools/WHEEL/WIN16/SOURCE/TP/TP.C + TPSOUND.C',
           'TSHELL.EXE': 'examples/TSHELL/TSHELL.C + TSBOOT.C',
-          'FIXXT.EXE': 'tools/SOUNDOWN/FIXXT.C'}
+          'FIXXT.EXE': 'tools/DOSINST/FIXXT.C'}
 
 
 def require(ok, message):
@@ -56,7 +56,8 @@ def native(directory, name, sound):
         sources = record['sources']
         base = sound/'src/win30/DRIVER' if name == 'SOUND.DRV' else HERE
         for label, pin in sources.items():
-            require(identity((base/label).read_bytes()) == pin,
+            path = HERE.parent/'DOSINST'/label if name == 'FIXXT.EXE' and label in ('FIXXT.C', 'SOUNDID.H') else base/label
+            require(identity(path.read_bytes()) == pin,
                     'Stale finisher source: '+label)
             require(identity((directory/label).read_bytes()) == pin,
                     'Changed staged finisher source: '+label)
@@ -116,7 +117,7 @@ def integrate(args):
             {key: soundpin[key] for key in ('bytes', 'sha256')} and
             '%08x' % zlib.crc32(binaries['SOUND.DRV']) == soundpin['crc32'],
             'Canonical generated SOUND identity differs from native driver')
-    require((HERE/'SOUNDID.H').read_bytes() ==
+    require((HERE.parent/'DOSINST/SOUNDID.H').read_bytes() ==
             (args.sound_repo/'src/win30/DRIVER/SOUNDID.H').read_bytes(),
             'FIXXT and canonical driver use different generated expectations')
     acceptance = json.loads(args.acceptance.read_bytes())
