@@ -25,7 +25,11 @@ class Fake:
             assert n not in {a['name'] for a in self.release['assets']};self.release['assets'].append(self.asset(n));return self.asset(n)
         if method=='POST' and path.endswith('/git/refs'):self.tag=data['sha'];return {'object':{'type':'commit','sha':self.tag}}
         if path.endswith('/releases/423143949'):
-            if method=='PATCH':self.release.update(data)
+            if method=='PATCH':
+                # GitHub resolves an omitted tag_name from a draft's temporary tag.
+                if 'tag_name' not in data and self.release['draft']:
+                    self.release['tag_name']='untagged-5d8ec2820f1f449d1289'
+                self.release.update(data)
             return copy.deepcopy(self.release)
         raise AssertionError((method,path))
     def download(self,url,limit):return self.files[url.rsplit('/',1)[1]][:limit]
@@ -45,6 +49,10 @@ class Tests(unittest.TestCase):
         self.assertEqual((self.root.parent/'downloaded-softpan/JRPAN.ZIP').read_bytes(),self.files['JRPAN.ZIP'])
     def test_missing_release_uses_creation_id(self):
         f=Fake(self.files);f.release=None;self.assertTrue(self.run_publish(f)['pass'])
+    def test_observed_temporary_tag_draft_recovers_by_exact_id(self):
+        f=Fake(self.files);f.release['tag_name']='untagged-5d8ec2820f1f449d1289'
+        self.assertTrue(self.run_publish(f)['pass']);self.assertEqual(f.release['tag_name'],M.TAG)
+        self.assertFalse(any(p.endswith('/releases') for _,p,_ in f.mutations))
     def test_partial_correct_draft_uploads_only_missing(self):
         f=Fake(self.files,target=SOURCE,present=('JRPAN.ZIP','README.TXT'));self.run_publish(f)
         self.assertEqual(sum('/assets?name=' in p for _,p,_ in f.mutations),3)
