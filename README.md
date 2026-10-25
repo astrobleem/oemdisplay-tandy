@@ -92,7 +92,7 @@ Try [Pinball](examples/PINBALL/README.MD), [Cookie Clicker](examples/COOKIE/READ
 The [desktop bundle](docs/DESKTOP.MD) includes Maze, Pinball, Starfield and Matrix.
 
 The separate [Tandy sound companion](https://github.com/astrobleem/oemsound-tandy)
-includes Winamp's playlist player, PSG music and Beats/Fiddle tools.
+includes Winamp's playlist player, PSG music and Tandy Beats Lab/Fiddle tools.
 [Download Tandy Winamp](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TWXT2.ZIP) ·
 [App and sound details](docs/SHOWCASE.MD#apps-input-and-sound)
 
