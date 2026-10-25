@@ -79,6 +79,10 @@ def main():
     for result in (automatic["native"], automatic["refusal"]):
         assert result["owned_stopped"] and result["lease_released"]
     for name, pin in automatic["integration_sources"].items():
+        relocation = automatic.get("source_relocations", {}).get(name)
+        if relocation:
+            assert relocation["native_snapshot"] == pin, name
+            pin = relocation["current_source"]
         value = (HERE.parents[1] / name).read_bytes()
         assert pin == {"bytes":len(value),"sha256":hashlib.sha256(value).hexdigest()},name
     value = (HERE.parents[1] / "downloads/experimental/TGA2/TNDYV2.ZIP").read_bytes()

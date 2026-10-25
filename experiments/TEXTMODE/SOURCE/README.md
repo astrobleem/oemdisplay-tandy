@@ -91,8 +91,8 @@ For an existing stock-CGA Windows 3.0 installation at C:\WINDOWS:
 
 Setup copies the driver/fonts/grabber/logo and updates SYSTEM.INI itself.
 The helper lives outside Windows. Python is only needed for optional developer
-rebuilds described in BUILDING.MD. See [the full instructions](../../README.TXT),
-[packaging details](../../BUILDING.MD) and [OEM acceptance](../../docs/OEMDISK.MD).
+rebuilds described in BUILDING.MD. See [the full instructions](../../../README.TXT),
+[packaging details](../../../BUILDING.MD) and [OEM acceptance](../../../docs/OEMDISK.MD).
 Keep the stock Microsoft mouse driver; emulator tests use COM1 serialmouse.
 
 `RUN88.PY` remains the developer validator/launcher for previously prepared
