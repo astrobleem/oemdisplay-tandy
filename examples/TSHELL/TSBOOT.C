@@ -8,9 +8,27 @@
 #include "PSGOWN.H"
 static char config[144], soundDir[144];
 static char loadList[1024], runList[1024];
+static char bootCommand[128];
+static int commandSet,commandTooLong;
 static int begun, waiting, listed, warned, useExit;
 static char chimeModule[12];
 static int same(char *a,char *b) { return !lstrcmpi(a,b); }
+void TandyBootCommand(LPSTR command) {
+ LPSTR p;int n;
+ if(commandSet||begun||listed)return;
+ commandSet=1;
+ if(!command)return;
+ for(n=0;n<127&&command[n];n++);
+ if(n>126){commandTooLong=1;return;}
+ p=command;while(*p==' '||*p=='\t')p++;
+ if(!*p)return;
+ if(p[0]=='/'&&(p[1]=='S'||p[1]=='s')){
+  p+=2;while(*p==' '||*p=='\t')p++;
+  if(!*p)return;
+ }
+ for(n=0;command[n];n++)bootCommand[n]=command[n];
+ bootCommand[n]=0;
+}
 static char *baseName(char *s) {
  char *b=s;while(*s){if(*s=='\\'||*s==':')b=s+1;s++;}return b;
 }
@@ -65,6 +83,8 @@ static void runLists(HWND w) {
  if(listed)return;
  listed=1;
  launchList(w,loadList,SW_SHOWMINNOACTIVE);launchList(w,runList,SW_SHOWNORMAL);
+ if(commandTooLong)status(w,"Command too long.","126 chars max.");
+ else if(bootCommand[0])PmLaunchShow(w,bootCommand,SW_SHOWNORMAL);
  if(warned)status(w,"Startup skipped.","See README.TXT.");
 }
 void TandyBootBegin(HWND w) {

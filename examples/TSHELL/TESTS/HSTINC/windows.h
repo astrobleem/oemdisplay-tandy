@@ -4,6 +4,7 @@
 typedef unsigned UINT; typedef unsigned WPARAM; typedef long LPARAM; typedef unsigned long DWORD; typedef int HWND; typedef int HMODULE; typedef int HINSTANCE; typedef void *FARPROC; typedef struct {char szPathName[144];} OFSTRUCT;
 #define FAR
 #define PASCAL
+typedef char *LPSTR;
 typedef int BOOL;
 #define MB_OK 0
 #define MB_ICONEXCLAMATION 48
