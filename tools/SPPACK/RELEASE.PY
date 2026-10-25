@@ -4,6 +4,8 @@ import hashlib,json,os,re,urllib.error,urllib.parse,urllib.request
 
 NAMES={'JRPAN.ZIP','CPPAN.ZIP','README.TXT','RELEASE.JSON','SHA256SUMS'}
 TAG='experimental-softpan-2026-10-24'
+# The first failed publisher left this empty draft with a temporary tag.
+RECOVER_DRAFT_ID=423143949
 
 class ApiError(RuntimeError):
     def __init__(self,status,message):super().__init__(message);self.status=status
@@ -41,7 +43,8 @@ def publish(repo,source,root,expected,api=github,download=public_download):
     matches=[]
     for page in range(1,11):
         releases=api('GET',prefix+'/releases?per_page=100&page='+str(page))
-        matches.extend(x for x in releases if x['tag_name']==TAG)
+        matches.extend(x for x in releases if x['tag_name']==TAG or
+                       (x['id']==RECOVER_DRAFT_ID and x['tag_name']=='untagged-5d8ec2820f1f449d1289'))
         if len(releases)<100:break
     else:raise RuntimeError('Release listing bound reached')
     assert len(matches)<=1,'Duplicate release drafts; refusing ambiguous publication'
@@ -51,9 +54,9 @@ def publish(repo,source,root,expected,api=github,download=public_download):
             'name':'PCjr and ColorPlus software panning','body':files['README.TXT'].decode(),
             'draft':True,'prerelease':True})
     rid=release['id'];path=prefix+'/releases/'+str(rid);release=api('GET',path)
-    if release['target_commitish']!=source:
+    if release['target_commitish']!=source or release['tag_name']!=TAG:
         assert release['draft'] and not release['assets'] and tagref is None,'Cannot retarget a nonempty, tagged or published release'
-        api('PATCH',path,data={'target_commitish':source})
+        api('PATCH',path,data={'tag_name':TAG,'target_commitish':source})
         release=api('GET',path)
     assert release['tag_name']==TAG and release['target_commitish']==source
     present=set()
@@ -71,7 +74,7 @@ def publish(repo,source,root,expected,api=github,download=public_download):
     if tagref is None:
         api('POST',prefix+'/git/refs',data={'ref':'refs/tags/'+TAG,'sha':source});tagref=ref()
     exact_ref(tagref)
-    if release['draft']:api('PATCH',path,data={'draft':False,'prerelease':True})
+    if release['draft']:api('PATCH',path,data={'tag_name':TAG,'target_commitish':source,'draft':False,'prerelease':True})
     release=api('GET',path);assert not release['draft'] and release['target_commitish']==source
     downloaded=root.parent/'downloaded-softpan';downloaded.mkdir(exist_ok=False)
     for asset in release['assets']:
