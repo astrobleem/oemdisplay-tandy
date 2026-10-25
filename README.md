@@ -17,18 +17,17 @@ Windows 3.0 desktop.
 
 ## Get started
 
-Requires **Windows 3.0 real mode, DOS 3.3+ and 640 KB RAM** on an EX/HX.
+For an **original Tandy 1000 EX/HX with normal 640 KB and Windows 3.0 real mode**:
 
-**Already have Windows 3.0? [Download XRSYNC.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE)** and follow
-the [short display install guide](docs/RELEASES/XRSYNC.MD). Run it on the DOS
-computer: `XRSYNC C:\WINDOWS`. It gathers the existing Windows support file
-and opens Setup. Start every session with `C:\XR155\RUNSYNC.BAT`.
+- **Full desktop:** [download the Windows XT bundle](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP)
+  and follow [desktop setup](docs/DESKTOP.MD). It includes Tandy Start, fonts,
+  mouse/wheel input and apps. Use `C:\STARTXT` on every launch.
+- **Display update only:** [download XRSYNC.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE).
+  Exit Windows and run `XRSYNC C:\WINDOWS` from DOS, then follow the
+  [Setup choices](docs/RELEASES/XRSYNC.MD). Use `C:\XR155\RUNSYNC.BAT` on every launch.
 
-For a **complete new Windows XT desktop** from your Windows 3.0 media,
-[download the rc.8 installer](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP)
-and follow its [prepare/install guide](docs/RELEASES/RC8.MD). Run `C:\SETUPXT`
-from plain DOS and use `C:\STARTXT` for that original HPXY profile. XRSYNC is
-the separate display update above.
+Other hardware profiles and apps are in [current downloads](docs/DOWNLOADS.MD).
+Each product has one current packet and a short install guide.
 
 ## More color, compact controls
 
@@ -42,17 +41,16 @@ the separate display update above.
 - A DOS display-mode menu with undo and interrupted-switch recovery.
 - Optional Hold-to-Start with the [compatible keyboard driver](src/tandyk3/README.md).
 
-XR1 shows a **640x256 logical desktop through a 320x200, sixteen-color view**.
+The display shows a **640x256 logical desktop through a 320x200, sixteen-color view**.
 Keyboard panning brings off-screen windows and controls into reach.
-[XR1 controls and installation](docs/RELEASES/RC8.MD#what-is-current) ·
+[Display controls and installation](docs/RELEASES/XRSYNC.MD) ·
 [Original fonts](docs/FONTS/README.MD)
 
-The earlier five fixed profiles, including 640x200 and 160x200, remain separate
-downloads. [Mode details](docs/MODES.MD).
+For a fixed-resolution desktop, choose the [fixed profiles](docs/FIXED.MD).
 
 ## More room to play
 
-The current XR1 package includes panning and the combined drawing improvements.
+The display packet includes panning and synchronous drawing.
 The captures below retain their original, separately documented test scope.
 
 | More room for windows | A board beyond the screen |
@@ -77,7 +75,7 @@ experiment. That comparison has its own [drawing test scope](docs/RRECT.MD).
 
 Try [Pinball](examples/PINBALL/README.MD), [Cookie Clicker](examples/COOKIE/README.MD),
 [Starfield](experiments/VISPART2/README.MD) and [Matrix](experiments/VISPART1/README.MD).
-XR1 includes the current Maze game/saver, Pinball, Starfield and Matrix.
+The [desktop bundle](docs/DESKTOP.MD) includes Maze, Pinball, Starfield and Matrix.
 
 The separate [Tandy sound companion](https://github.com/astrobleem/oemsound-tandy)
 includes Winamp's playlist player, PSG music and Beats/Fiddle tools.

@@ -1,8 +1,8 @@
 # Tandy Video II 640x200x16 (TNDYV2.DRV): first build, emulator-tested
 
-**[Download TNDYV2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-video-ii-2026-10-14-r2/TNDYV2.ZIP)** and follow the
-[short install guide](tga2/INSTALL.TXT). The current r2 packet includes
-PREPINF for support-file staging and the Windows Setup selector.
+**[Download TNDYV2.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TGA2/TNDYV2.ZIP)** and follow the
+[short install guide](tga2/INSTALL.TXT). Fonts, grabber and startup logo are
+included. [Support integration test](tga2/SUPPORT.MD).
 
 The remaining sections preserve the development and test record.
 

@@ -1,4 +1,4 @@
-> For current installation, use [XR1](../../docs/RELEASES/RC8.MD).
+> For current installation, use [current downloads](../../docs/DOWNLOADS.MD).
 > This directory preserves the historical R1 component publisher.
 
 # Qualified R1 redistributable release

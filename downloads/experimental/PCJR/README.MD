@@ -66,7 +66,6 @@ original runtime pins and all existing release assets remain unchanged.
 The fonts and static logo are original MIT work. JRGRAB.GR2 is a patched
 DDK-derived PCjr grabber, not the retail CGA.GR2; derivative notices remain
 applicable. No Windows/DOS media, Microsoft fonts, retail grabber, ROM,
-compiler, emulator or credentials are included. The older released PCJR.ZIP
-is preserved unchanged; use this separate packet for clean Setup.
+compiler, emulator or credentials are included. Use the download above for Windows Setup.
 
 </details>
