@@ -109,8 +109,8 @@
     "XSETUP.EXE": {
       "source": "tools/DOSINST/BIN/XSETUP.EXE",
       "identity": {
-        "bytes": 49118,
-        "sha256": "a59402717f97d570ed6d22b22f7ac33a172c210196bb1b7feacb6634e495abd0"
+        "bytes": 49104,
+        "sha256": "b585fbbf885b9a2af0fd05fbacd0052836c352c44a4cd4089e9d41742f3eb0ba"
       }
     },
     "OWATCOM.TXT": {

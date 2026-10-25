@@ -30,3 +30,8 @@ recorded failure macro. DOS/Windows images and proprietary tools are excluded.
 
 Rendering executables are unchanged. This records emulator installation and
 recovery qualification; it makes no physical-hardware claim.
+
+The final self-contained EXE uses its own embedded packet ahead of neighboring
+ZIP/PAYLOAD files. A native replay beside deliberately invalid neighbors
+prepared the exact checker, started through RUNSYNC and matched all 17 frames.
+The final checker is 49,104 bytes; the rendering payload is unchanged.

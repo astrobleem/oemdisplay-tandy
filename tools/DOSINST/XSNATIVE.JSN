@@ -3,8 +3,8 @@
   "target": "8088 / DOS 3.20+",
   "compiler": "Open Watcom 16-bit DOS; -bt=dos -0 -ml -os",
   "binary": {
-    "bytes": 49118,
-    "sha256": "a59402717f97d570ed6d22b22f7ac33a172c210196bb1b7feacb6634e495abd0"
+    "bytes": 49104,
+    "sha256": "b585fbbf885b9a2af0fd05fbacd0052836c352c44a4cd4089e9d41742f3eb0ba"
   },
   "sources": {
     "DOSCORE.H": {
@@ -20,8 +20,8 @@
       "sha256": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68"
     },
     "XSETUP.C": {
-      "bytes": 9307,
-      "sha256": "fb444f0a4afcb895a9444d48191b8892cead46f1cea4488a2055c0411e4521ca"
+      "bytes": 9282,
+      "sha256": "b0fe464b63ab8358351afb6a2ba805cd9029b7ccf09e16aad5cd5c03f573c869"
     },
     "XSPINS.H": {
       "bytes": 1091,

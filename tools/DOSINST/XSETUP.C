@@ -108,16 +108,15 @@ int main(int argc,char **argv)
  if(check){absolute(windir,argv[1]);if(!installed())stop("XRSYNC is not the selected, complete display installation.",windir);return 0;}
  if(!canonical(self,argv[0],PTH)||(p=strrchr(self,'\\'))==NULL)stop("Cannot locate this driver disk.",argv[0]);
  strcpy(exe,self);if(p==self+2)p[1]=0;else *p=0;absolute(runtime,self);join(path,runtime,"PAYLOAD");
- if(attr(path,&a)){directory(path);strcpy(runtime,path);}
- else{
-  join(archive,runtime,"XRSYNC.ZIP");
-  if(attr(archive,&a)){zip_mode=1;zip_start=0;}
-  else{
-   f=fopen(exe,"rb");if(!f||fread(mz,1,6,f)!=6||mz[0]!='M'||mz[1]!='Z')stop("Cannot locate this driver packet.",exe);
-   image=(long)zw(mz+4)*512L;if(zw(mz+2))image-=512L-zw(mz+2);
-   if(fseek(f,image,SEEK_SET)||fread(mz,1,4,f)!=4||memcmp(mz,"PK\003\004",4)){fclose(f);stop("Keep XSETUP beside PAYLOAD or XRSYNC.ZIP, or use the complete XRSYNC.EXE download.",exe);}
-   fclose(f);strcpy(archive,exe);zip_mode=1;zip_start=image;
-  }
+ f=fopen(exe,"rb");if(!f||fread(mz,1,6,f)!=6||mz[0]!='M'||mz[1]!='Z')stop("Cannot locate this native helper.",exe);
+ image=(long)zw(mz+4)*512L;if(zw(mz+2))image-=512L-zw(mz+2);
+ if(!fseek(f,image,SEEK_SET)&&fread(mz,1,4,f)==4&&!memcmp(mz,"PK\003\004",4)){
+  strcpy(archive,exe);zip_mode=1;zip_start=image;
+ }
+ fclose(f);
+ if(!zip_mode){
+  if(attr(path,&a)){directory(path);strcpy(runtime,path);}
+  else{join(archive,runtime,"XRSYNC.ZIP");if(!attr(archive,&a))stop("Use complete XRSYNC.EXE, or keep XSETUP beside PAYLOAD or XRSYNC.ZIP.",exe);zip_mode=1;zip_start=0;}
  }
  absolute(windir,argc==2?argv[1]:"C:\\WINDOWS");join(path,windir,"SYSTEM.INI");if(!attr(path,&a))stop("Windows 3.0 installation not found.",windir);
  join(path,windir,"SETUP.EXE");if(!attr(path,&a))stop("Windows Setup is missing.",path);
