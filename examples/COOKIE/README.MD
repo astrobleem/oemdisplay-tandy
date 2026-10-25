@@ -3,13 +3,18 @@
 A tiny native Windows 3.0 usability test for the Tandy 1000 display driver.
 The window caption is shortened to **Cookie** so it fits 160 pixels.
 
-## Run the ready EXE
+## Install and run
 
-1. Copy `COOKIE.EXE` to a writable DOS directory, for example `C:\COOKIE`.
-2. Start your existing accepted Tandy Windows installation through its
-   `C:\TANDY88\TANDY88` launcher. Keep its reservation helper and mode intact.
-3. In Program Manager choose File > Run and enter `C:\COOKIE\COOKIE.EXE`.
-   The app opens maximized; it needs no installation, DLL, COMMDLG, or data file.
+1. [Download COOKSET.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/COOKSET.EXE).
+   From DOS run `COOKSET`; it puts the ready app in `C:\COOKIE`.
+2. Start your normal guarded Windows 3.0 desktop, or use it if already running.
+3. In Tandy Start choose Run, or in Program Manager choose File > Run, and enter
+   `C:\COOKIE\COOKIE.EXE` (use its actual folder if different).
+
+The EXE installer needs no separate unpacker, Python, compiler or support files.
+[Installation details](INSTALL.TXT) cover another folder and retrying a copy.
+A [ZIP alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/COOKSET.ZIP) is available.
+The app opens maximized and needs no DLL, COMMDLG or data file.
 
 Click inside the cookie (a GDI ellipse with five chips), or press Space, to add
 one cookie. The native **Buy +1 CPS (10)** button costs ten cookies and adds one

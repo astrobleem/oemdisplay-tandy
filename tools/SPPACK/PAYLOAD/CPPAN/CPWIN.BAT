@@ -1,0 +1,4 @@
+ECHO OFF
+C:
+CD \WINDOWS
+WIN /R

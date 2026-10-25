@@ -113,3 +113,13 @@ docs/yamaha/SUPPORT.JSN -text
 
 # Native DOS compiler inputs and payload pins retain reviewed CRLF bytes.
 tools/DOSINST/** -text
+
+# Scoped portable app sources and candidate identities preserve exact CRLF bytes.
+tools/APPSET/** -text
+tools/APPSET/BIN/*.ZIP -export-ignore
+tools/MINEAPP/** -text
+examples/COOKIE/INSTALL.TXT -text
+.github/workflows/app-packets.yml -text
+
+# Preserve actual DOS echo output in the pinned native execution receipt.
+tools/APPSET/QA/DONEAPP.TXT whitespace=-blank-at-eol
