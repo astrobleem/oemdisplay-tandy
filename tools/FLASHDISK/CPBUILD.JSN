@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "source_sha256": "082a50660fd2ab7e79926499e0a8b3b9830a31df1dfa44f12393be3f4edfaa42",
+  "runtime": {
+    "bytes": 38115,
+    "sha256": "2be80e6dbfd0108939f0d1cf278efd2947f234d231d930e06d865d72f28dd713"
+  },
+  "target": "8086 DOS3.3+; MSC6 /AL /G0 /Gs /W3 /Od; LINK4 /NOD /ST:4096 LLIBCE.LIB",
+  "host_checks": 53,
+  "native_installer_validation": "not asserted by compile record"
+}

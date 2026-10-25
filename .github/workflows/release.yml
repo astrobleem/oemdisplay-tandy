@@ -44,7 +44,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/examples/TSHELL/\n/tools/FLASHDISK/\n/tools/BUILDDEPS/\n/distributions/WINXT/\n/examples/WXTSPL/WAVE/\n/examples/WXTSPL/WXTSPL01.RLE\n/examples/WXTSPL/ART/assets/WXTSPL01.RLE\n/src/tandysw/TINST.C\n/examples/WXTSPL/UPDATER/\n/docs/QUAL/WAVEINS.JSON\n/docs/QUAL/CPSET.JSON\n/tools/CPSET/\n/docs/PROMO/VERIFY.PY\n/docs/PROMO/PBRUSH16.JSON\n/docs/PROMO/SHOWCASE.MD\n/README.md\n/tools/XTMODE/\n/tools/XTLOGO/\n/tools/XTFONTS/\n/docs/FONTS/\n/docs/QUAL/\n/.github/\n/.gitattributes\n/AGENTS.md\n/BUILDING.MD\n/docs/USERMAN.MD\n/tools/EXPPUB/\n/downloads/experimental/TEXT80/\n/downloads/experimental/PCJR/\n/src/pcjr/INSTALL/INSTALL.TXT\n/experiments/DISPLAY3/LICENSE.TXT\n' | git sparse-checkout set --no-cone --stdin
+          printf '/examples/TSHELL/\n/tools/FLASHDISK/\n/tools/BUILDDEPS/\n/distributions/WINXT/\n/examples/WXTSPL/WAVE/\n/examples/WXTSPL/WXTSPL01.RLE\n/examples/WXTSPL/ART/assets/WXTSPL01.RLE\n/src/tandysw/TINST.C\n/examples/WXTSPL/UPDATER/\n/docs/QUAL/WAVEINS.JSON\n/docs/QUAL/CPSET.JSON\n/tools/CPSET/\n/docs/PROMO/VERIFY.PY\n/docs/PROMO/PBRUSH16.JSON\n/docs/PROMO/SHOWCASE.MD\n/README.md\n/tools/XTMODE/\n/tools/XTLOGO/\n/tools/XTFONTS/\n/docs/FONTS/\n/docs/QUAL/\n/.github/\n/.gitattributes\n/AGENTS.md\n/BUILDING.MD\n/docs/USERMAN.MD\n/tools/EXPPUB/\n/downloads/experimental/TEXT80/\n/downloads/experimental/PCJR/\n/downloads/experimental/FIXED/\n/src/pcjr/INSTALL/INSTALL.TXT\n/experiments/DISPLAY3/LICENSE.TXT\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
 
@@ -85,6 +85,7 @@ jobs:
         run: |
           python3 tools/FLASHDISK/TESTWAVE.PY
           python3 tools/FLASHDISK/TESTPKG.PY --verify dist
+          cmp dist/WINXT720.ZIP downloads/experimental/FIXED/WINXT720.ZIP
           cd dist
           sha256sum --check SHA256SUMS
 
