@@ -25,9 +25,10 @@ computer: `XRSYNC C:\WINDOWS`. It gathers the existing Windows support file
 and opens Setup. Start every session with `C:\XR155\RUNSYNC.BAT`.
 
 For a **complete new Windows XT desktop** from your Windows 3.0 media,
-[download the rc.8 installer](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP)
-and follow its [prepare/install guide](docs/RELEASES/RC8.MD). Run `C:\SETUPXT`
-from plain DOS and use `C:\STARTXT` for that original HPXY profile. XRSYNC is
+[download the rc.8 installer](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE)
+and follow its [native install guide](docs/RELEASES/RC8.MD). Run
+`WINXT FRESH A:\` or `WINXT UPDATE C:\WINDOWS` on the DOS computer, then
+use `C:\STARTXT` for that original HPXY profile. XRSYNC is
 the separate display update above.
 
 ## More color, compact controls

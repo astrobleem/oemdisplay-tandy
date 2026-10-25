@@ -30,7 +30,7 @@ installation below uses rc.8.
 
 | Your machine or goal | Download and guide |
 | --- | --- |
-| **Original Tandy 1000 EX/HX, current combined XR1 desktop** | **[WINXT-XR1.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP)** and the [rc.8 fresh/update guide](RELEASES/RC8.MD). All project runtime components are supplied; use matching owned Windows 3.0 media. |
+| **Original Tandy 1000 EX/HX, current combined XR1 desktop** | **[WINXT.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE)** and the [rc.8 fresh/update guide](RELEASES/RC8.MD). All project runtime components are supplied; use matching owned Windows 3.0 media. |
 | Try 80-column text, including compact C25 | Separate **experimental [TEXT80.ZIP](../downloads/experimental/TEXT80/TEXT80.ZIP?raw=1)** and [packet guide](../downloads/experimental/TEXT80/). See [TEXT80](#text80-and-compact-c25). |
 | IBM PCjr with memory expansion | Separate **experimental [PCJRSET.ZIP](../downloads/experimental/PCJR/PCJRSET.ZIP?raw=1)** and [packet guide](../downloads/experimental/PCJR/). See [PCjr](#ibm-pcjr-clean-setup). |
 | Tandy Video II, Amstrad PC1512 or Plantronics ColorPlus | Use the [machine-specific guides](#other-video-hardware). The EX/HX package does not select these drivers. |
@@ -39,8 +39,9 @@ installation below uses rc.8.
 ## Install Windows XT
 
 **Current XR1:** follow the [rc.8 preparation and installation guide](RELEASES/RC8.MD).
-Prepare on a modern Python host, transfer DOS-CROOT, run `C:\SETUPXT` from
-plain DOS and start afterward with `C:\STARTXT`. Use `C:\FIXXT` for repair.
+Run `WINXT FRESH A:\` or `WINXT UPDATE C:\WINDOWS` on the DOS computer.
+It gathers files and starts installation automatically; no host preparation
+is needed. Start later with `C:\STARTXT`. Use `C:\FIXXT` for repair.
 The steps below preserve the separate rc.6 fixed-profile installation path.
 
 <details>

@@ -19,9 +19,10 @@ def build(home, output, target):
     env = os.environ.copy()
     env.update(WATCOM=str(home), INCLUDE=str(home / "h"))
     env["PATH"] = str(home / "binnt") + os.pathsep + env.get("PATH", "")
-    name = "XSETUP" if target == "xrsync" else "XRPREP"
-    binary = "XSETUP" if target == "xrsync" else "PREPXR"
-    result = subprocess.run([str(driver), "-zq", "-bt=dos", "-0", "-ml", "-os",
+    name = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "XRPREP"
+    binary = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "PREPXR"
+    flags = ["-zq", "-bt=dos", "-0", "-ms", "-s", "-k8192"] if target == "finisher" else ["-zq", "-bt=dos", "-0", "-ml", "-os"]
+    result = subprocess.run([str(driver)] + flags + [
                              "-fe=" + binary + ".EXE", name + ".C"],
                             cwd=output, env=env, stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT)
@@ -34,6 +35,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--watcom", required=True, type=Path)
     parser.add_argument("--out", required=True, type=Path)
-    parser.add_argument("--target", choices=("xrsync",), default="xrsync")
+    parser.add_argument("--target", choices=("xrsync", "rc8", "finisher"), default="xrsync")
     args = parser.parse_args()
     build(args.watcom, args.out, args.target)

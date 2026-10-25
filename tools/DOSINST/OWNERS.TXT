@@ -1,0 +1,260 @@
+{
+  "SYSTEM.INI": {
+    "boot": [
+      "shell",
+      "keyboard.drv",
+      "mouse.drv",
+      "display.drv",
+      "fonts.fon",
+      "fixedfon.fon",
+      "oemfonts.fon",
+      "286grabber"
+    ],
+    "boot.description": [
+      "system.drv",
+      "keyboard.typ",
+      "mouse.drv",
+      "display.drv"
+    ],
+    "keyboard": [
+      "type"
+    ]
+  },
+  "WIN.INI": {
+    "windows": {
+      "run": "Own only XTPAN.EXE, XYCTL.EXE and WXTWHL.EXE startup tokens, recognizing their basenames at prior paths. Preserve unrelated commands, load and other settings. XR1 starts one XYCTL and one WXTWHL; legacy PAN starts one XTPAN and one WXTWHL; static profiles start one WXTWHL.",
+      "BorderWidth": "Set to1 only for legacy /PAN; XR1 and static profiles preserve it."
+    },
+    "policy": "Default XR1 edits only owned run tokens; existing helper log files are not a repair blocker."
+  },
+  "TSHELL.INI": {
+    "owned_keys": [],
+    "policy": "seed accepted R8 defaults if absent, preserve all user customization thereafter"
+  },
+  "files": [
+    {
+      "name": "TSHELL.EXE",
+      "target": "WINDOWS",
+      "bytes": 71763,
+      "sha256": "b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "TSINPUT.DLL",
+      "target": "WINDOWS",
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "TSHELL.INI",
+      "target": "WINDOWS",
+      "bytes": 999,
+      "sha256": "9b0dca9bf1f66bcb5f99cbc347dbf093942ee30c6e0b3d546127e88585cec2f5",
+      "policy": "Seed only if absent; preserve customization"
+    },
+    {
+      "name": "XTTEST.COM",
+      "target": "WINDOWS",
+      "bytes": 39427,
+      "sha256": "d144918d757536b625b8ce04dc9b543ffd5592989d1d49855d4f832218e5fc5b",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "XTCLEAN.COM",
+      "target": "WINDOWS",
+      "bytes": 1071,
+      "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c",
+      "policy": "Full comparison (1071 bytes); child pathname lies outside end samples"
+    },
+    {
+      "name": "TNDYK3.DRV",
+      "target": "WINDOWS/SYSTEM",
+      "bytes": 7640,
+      "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "WHEEL.DRV",
+      "target": "WINDOWS/SYSTEM",
+      "bytes": 1820,
+      "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "XTCSYS.FON",
+      "target": "WINDOWS/SYSTEM",
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "XTCFIX.FON",
+      "target": "WINDOWS/SYSTEM",
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "XTCOEM.FON",
+      "target": "WINDOWS/SYSTEM",
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "CGA.GR2",
+      "target": "WINDOWS/SYSTEM",
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "SETUP.INF",
+      "target": "WINDOWS/SYSTEM",
+      "bytes": 49840,
+      "sha256": "b0d08a677638715125175d3a11550fe48c71f74aef1f5c107ed74ba28bdabc02",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "TABOUT.EXE",
+      "target": "WINXT",
+      "bytes": 6479,
+      "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "MATRIX.EXE",
+      "target": "WINXT",
+      "bytes": 14669,
+      "sha256": "854e0692b4a2571b7d53b45f15da7d954137fde9dce079e8a17df753ec94aca8",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "MAZE.EXE",
+      "target": "WINXT",
+      "bytes": 28013,
+      "sha256": "9905abccd267dd229502fad2d7e57375f51c34b2c445fc52ea754508407de389",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "STARFLD.EXE",
+      "target": "WINXT",
+      "bytes": 17295,
+      "sha256": "c615fcd8c18ed740ed051542093e1bd18e26b92e820eef5b1bb4fa69f2ab8ff5",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "PINBALL.EXE",
+      "target": "WINXT",
+      "bytes": 15487,
+      "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "XPCHIME.EXE",
+      "target": "WINXT",
+      "bytes": 4543,
+      "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "TCHIME.EXE",
+      "target": "WINXT",
+      "bytes": 3999,
+      "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "TEXIT.EXE",
+      "target": "WINXT",
+      "bytes": 8687,
+      "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "RESERVE.COM",
+      "target": "WINXT",
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "WINXT.BAT",
+      "target": "WINXT",
+      "bytes": 332,
+      "sha256": "8b484c67b9896deb2ba281f79a4020e35c7ef238fad5c5055ca63699c87c683b",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "CPSET.EXE",
+      "target": "WINXT",
+      "bytes": 36612,
+      "sha256": "e4fccba25d817f9a07a900a3cf443d9ea8a28cfb82cd39887293e8436589fa4d",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "WINBRDG.EXE",
+      "target": "WINXT",
+      "bytes": 28656,
+      "sha256": "230a24f8dec830dd8ceb8e11bb6f9694ed9a67b25ef232b9352e5e743cd3d74b",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "SHOOK.COM",
+      "target": "WINXT",
+      "bytes": 1249,
+      "sha256": "ba35ca3ce5407270e61c0ca15d27c4ca052bcd2a1112c7819fc214b74bd0d211",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "SETAUTO.EXE",
+      "target": "WINXT",
+      "bytes": 10976,
+      "sha256": "e2908cba3430be2a3b24058061f6b477629305476f8702d6a7c2f7fd81d45e0a",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "TP.EXE",
+      "target": "WINXT",
+      "bytes": 12303,
+      "sha256": "3260c222fee2dcb33cabadc8602cf878c266a7c0c6a4d5125c05784e32793b74",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "HPXY.DRV",
+      "target": "WINDOWS/SYSTEM",
+      "bytes": 56704,
+      "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "XYCTL.EXE",
+      "target": "WINXT",
+      "bytes": 9679,
+      "sha256": "7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    },
+    {
+      "name": "WXTWHL.EXE",
+      "target": "WINXT",
+      "bytes": 7222,
+      "sha256": "0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6",
+      "policy": "Default size plus first/last32 bytes; /VERIFY full comparison"
+    }
+  ],
+  "boot_files": "never write CONFIG.SYS/AUTOEXEC.BAT/IO.SYS/MSDOS.SYS/COMMAND.COM/MBR",
+  "repair_checks": "Size/header/end samples can detect missing, truncated and most older builds, not arbitrary same-size corruption. /VERIFY reads full selected payloads; modern host manifest is full SHA only.",
+  "startup": "Native Setup builds WIN.COM on initial install. XTTEST.COM is the prebuilt wave loader, not an embedded display/font cache; repair does not rebuild WIN.COM or wave. Cold/startup metrics will verify selected System and dialog font resources.",
+  "PROFILE.TXT": {
+    "policy": "single selected display name; repair restores only this selected packaged profile"
+  },
+  "created_completion_records": [
+    "WINXT/PROFILE.TXT",
+    "WINXT/SIMPLE.OK",
+    "WINDOWS/SYSTEM/CPREADY.OK"
+  ],
+  "repair_controls": "Default: selected profile files only, size plus 32-byte header/end samples. /VERIFY: complete read comparison on selected required payloads. TSHELL.INI is seed-only. Duplicate owned keys are normalized; duplicate owned sections stop with the named error.",
+  "bundle": "Windows XT native installation",
+  "profile": "XR1 640x256 logical / 320x200x16 viewport; other custom profiles omitted"
+}

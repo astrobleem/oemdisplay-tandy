@@ -1,37 +1,17 @@
-# Current XR1 own-media package
+# Windows XT native installer tooling
 
-For installation, use the current [XRSYNC guide](../../docs/RELEASES/XRSYNC.MD)
-or [complete rc.8 desktop guide](../../docs/RELEASES/RC8.MD).
-`README.TXT` is the frozen guide embedded in the original rc.8 archive. This package
-starts from ordinary owned Windows 3.0 media; it does not require the earlier
-private DOS-CROOT. The supplied 47 payload inputs include the selected adapted
-drivers, authored shell/helpers, wheel driver, original fonts and artwork.
-Their component identities and notices are separate from owned-media inputs.
+For installation use the prebuilt WINXT.EXE and the [current guide](../../docs/RELEASES/RC8.MD)
+on the DOS computer. The packet supplies display support, including the grabber,
+fonts, artwork and helpers. Windows itself comes from its installed directory
+or original Setup disks; the native helper gathers required OS files automatically.
 
-`PREPARE.PY` validates all inputs before creating a new output folder. It
-accepts expanded or SZDD files from the pinned English media set and generates
-the owned loader-containing files and Setup metadata locally. Fresh preparation
-creates 367 files; update preparation creates 80 and has no W30 Setup tree.
-The prepared output stays private. The public download contains no original
-Windows installation media or assembled loader.
+Developer source is in [DOSINST](../DOSINST/). BUILD.PY targets the 8088 DOS
+preparer or finisher using the recorded toolchain flags. PUBLISH.PY delegates
+to the closed native publisher; release creation requires matching native
+fresh/update/cold receipts and exact packet hashes.
 
-The current package is XR1-only. Legacy custom display rows and prompts have
-been removed. The unchanged CPSET/FIXXT binaries have a 49,840-byte Setup data
-contract, so the local transformation fills the removed rows with inert authored
-comments before the final language row and all seven DOS EOF markers. The resulting file has its own exact hash;
-the input hash, copy ranges and new project metadata are recorded in INPUTS.JSN.
-No executable pin or check is relaxed to accommodate this transformation.
-
-Host boundary checks use synthetic media:
-
-```text
-python tools/XR1PACK/TESTPREP.PY
-```
-
-New preparation/installation qualification is recorded in QUALIFY.JSN. Earlier
-R1 integration evidence remains separate; packaging does not turn emulator
-results into hardware qualification. The Minesweeper packet preserves the
-existing converted executable and shim with its own notices and exact scope.
-
-Publication uses PUBLISH.PY and TESTPUB.PY with an explicit commit and closed
-asset inventory. Existing rc.6/rc.7 releases and assets remain unchanged.
+PREPARE.PY remains a developer oracle for the accepted preparation recipe.
+It is excluded from the consumer download and is not an installation step.
+TESTPREP.PY checks that recipe, while DOSINST/TESTPUB.PY checks native archive
+closure and qualification guards. DOSINST/TESTCRC.PY checks actual C CRC code
+against zlib; Windows GCC builds use the shared preflighted launcher.

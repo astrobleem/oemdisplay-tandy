@@ -9,16 +9,16 @@ https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/RELEASES/XRSYNC.MD
 Start that profile with C:\XR155\RUNSYNC.BAT.
 
 For a complete Windows XT desktop install from matching Windows 3.0 media,
-use the rc.8 installer:
-https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP
+use the native rc.8 installer:
+https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE
 
-Extract it on a modern computer and prepare with Python 3.8+ and matching
-English Windows 3.0 media:
-  python PREPARE.PY --windows-media C:\WIN30SRC --mode fresh --out C:\XR1NEW
-For an existing Windows installation, use --mode update and a new output
-folder. Transfer the prepared DOS-CROOT contents to DOS C:\, keeping your
-DOS boot files and configuration. From plain DOS run C:\SETUPXT.
-Start Windows every time with C:\STARTXT.
+Run it on the DOS computer. For existing Windows at C:\WINDOWS:
+  WINXT UPDATE C:\WINDOWS
+For new Windows, insert the first original Setup disk:
+  WINXT FRESH A:\
+It gathers files and starts installation automatically. No modern computer,
+Python, conversion or manual file collection is needed.
+Start later sessions with C:\STARTXT.
 
 Setup choices and repair:
 https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/RELEASES/RC8.MD

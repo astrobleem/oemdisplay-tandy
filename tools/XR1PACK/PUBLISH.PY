@@ -385,22 +385,12 @@ def verify(directory, commit, root=HERE):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
-    action = parser.add_mutually_exclusive_group(required=True)
-    action.add_argument("--out", type=Path, help="New output directory; existing paths are refused")
-    action.add_argument("--verify", type=Path, help="Verify an existing six-asset release directory")
-    parser.add_argument("--commit", required=True, help="Full Git commit SHA to bind in RELEASE.JSON")
-    args = parser.parse_args(argv)
-    try:
-        if args.out:
-            result = publish(args.out, args.commit)
-            print(json.dumps({"status": "PASS_LOCAL_BUILD", "assets": result}, indent=2))
-        else:
-            release = verify(args.verify, args.commit)
-            print(json.dumps({"status": "PASS_LOCAL_VERIFY", "tag": release["tag"],
-                              "commit": release["commit"]}, indent=2))
-    except (OSError, Refused, KeyError, TypeError) as exc:
-        parser.exit(1, "Refused: " + str(exc) + "\n")
+    # Current consumers use the native profile; legacy helper functions above
+    # retain the historical publisher's synthetic boundary tests.
+    import importlib.machinery
+    module = importlib.machinery.SourceFileLoader(
+        "current_xr1_native", str(HERE.parent / "DOSINST/RCPUB.PY")).load_module()
+    module.main(argv)
 
 
 if __name__ == "__main__":
