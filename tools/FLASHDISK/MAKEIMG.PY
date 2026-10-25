@@ -89,9 +89,15 @@ def verify_default_splash(payload):
     if profiles != {'TR53216', 'TR56404', 'TR51616', 'TR53204', 'TR56402', 'TXTMODE'}:
         raise PackageError('Expected all six current Windows XT display profiles')
 
-def verify_dos_wave(payload):
+def verify_dos_wave(payload, historical=False):
     """The DOS updater must expand the exact already-qualified original module."""
     expected_wrapper = 'be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad'
+    if not historical:
+        current = load('verify_current_launch', HERE / 'LAUNCH/BIND.PY')
+        launch, unused = current.resources()
+        expected_wrapper = sha(launch['XTCLEAN.COM'])
+        if payload.get('WAVEXT.EXE') != launch['WAVEXT.EXE']:
+            raise PackageError('Current wave updater differs')
     expected_logo = '8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c'
     if sha(payload.get('XTCLEAN.COM', b'')) != expected_wrapper:
         raise PackageError('Qualified DOS wrapper changed')
@@ -133,9 +139,18 @@ def public_payload(runtime):
     if len(grabber) != 2104 or sha(grabber) != '1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067':
         raise PackageError('Bundled CGA grabber differs from accepted expanded bytes')
     verify_default_splash(payload)
-    verify_dos_wave(payload)
+    # The repository starts from the frozen runtime; the portable toolkit
+    # carries the already overlaid current runtime. Both are closed pin sets.
+    historical = sha(payload['XTCLEAN.COM']) == 'be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad'
+    verify_dos_wave(payload, historical=historical)
     # Preserve the historical runtime directory and its qualification snapshots.
     # Only the generated packet guide and its manifest row are refreshed.
+    current_cp = load('current_cpset_resource', HERE / 'CPBIND.PY')
+    payload['CPSET.EXE'], unused_build = current_cp.resource()
+    current_launch = load('current_launch_resources', HERE / 'LAUNCH/BIND.PY')
+    launch, unused_build = current_launch.resources()
+    payload.update(launch)
+    verify_dos_wave(payload)
     payload['README.TXT'] = readme(False)
     payload['MANIFEST.SHA'] = dos(''.join(sha(data) + '  ' + name + '\n'
                                        for name, data in sorted(payload.items())))
@@ -203,7 +218,7 @@ def helper_payload():
         if sha(data[name]) != digest:
             raise PackageError('Helper source/binary mismatch: ' + name)
     # Replay the document binding before carrying forward native acceptance.
-    rebinder = load('verified_document_rebinding', HERE / 'DOCPINS' / 'REBIND.PY')
+    rebinder = load('verified_resource_rebinding', HERE / 'CPBIND.PY')
     rebuilt, proof = rebinder.bind(HERE / 'XTPINS.H')
     if rebuilt != data['PREPXT.EXE']:
         raise PackageError('Document binding differs from helper binary')
@@ -219,7 +234,11 @@ def helper_payload():
 def document_pin_source_payload():
     """Include the reproducible host data binding and its measured base."""
     names = ('REBIND.PY', 'BASE.EXE', 'BASEPINS.H', 'BASE.MAP', 'BIND.JSON', 'NATIVE.BIND.JSON')
-    return {'DOCPINS/' + n: read_file(HERE / 'DOCPINS' / n) for n in names}
+    files = {'DOCPINS/' + n: read_file(HERE / 'DOCPINS' / n) for n in names}
+    files.update({n:read_file(HERE / n) for n in ('CPBIND.PY','CPBUILD.JSN','CPSET.EXE')})
+    launch = load('current_launch_source', HERE / 'LAUNCH/BIND.PY')
+    files.update(launch.source_payload())
+    return files
 
 
 def validate_helper_pins(payload, helper):
@@ -427,10 +446,10 @@ def build(runtime, out, windows_files=None):
         metadata = {'schema': 1, 'fonts_are_original': True, 'native_package_qualified': False, 'publication_allowed': False,
             'native_implementation_qualified': True, 'documentation_pin_refresh_verified': True,
             'refreshed_binary_rerun_in_guest': False,
-            'qualification_scope': 'Measured native implementation; host-verified document pin refresh. See QUALIFICATION.JSON.',
+            'qualification_scope': 'Host package build; unchanged PREPXT code with current CPSET/launch resource and document pins. Native installer qualification is recorded separately.',
             'documentation_binding_sha256': sha(read_file(HERE / 'DOCPINS' / 'BIND.JSON')),
             'kind': 'private-own-media' if private else 'dos-mode-switcher-test-candidate',
-            'binary_policy': 'accepted base payloads plus reviewed rebuilt helper/installer and original fonts',
+            'binary_policy': 'accepted drivers/support, current CPSET and absolute-child wrapper; unchanged PREPXT code',
             'independent_startup_default': 'slow-flag-wave',
             'disk_setup_startup': 'guarded-color-wave-static-fallback',
             'wave_payload_sha256': {n: sha(b) for n,b in wave.items()},

@@ -111,3 +111,10 @@ docs/yamaha/SUPPORT.MD -text
 .github/workflows/yampack.yml -text
 docs/yamaha/SUPPORT.JSN -text
 tools/FLASHDISK/HISTORY/** -text
+
+# Current CPSET resource binding keeps compiled source/data pins byte-exact.
+tools/FLASHDISK/CPBIND.PY -text
+tools/FLASHDISK/CPBUILD.JSN -text
+tools/FLASHDISK/CPSET.EXE -text
+
+tools/FLASHDISK/LAUNCH/** -text
