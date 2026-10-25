@@ -1,0 +1,66 @@
+{
+  "source_commit": "8320cf2bd9615f915159311cd41fb80ee1e4958c",
+  "helper": {
+    "bytes": 83544,
+    "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
+  },
+  "files": {
+    "CRCFAST.H": {
+      "bytes": 3941,
+      "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+    },
+    "DOSCORE.H": {
+      "bytes": 24157,
+      "sha256": "4ad0d3e6518406a3a8bbb3ec5bd6a0c5faa8f39d90af4cacf0dfbe7442a6d617"
+    },
+    "FIXXT.C": {
+      "bytes": 24477,
+      "sha256": "355e09ada18bed990dae915df6e837ad3c9f67c434fbac7c5e4625c68517b64b"
+    },
+    "PACKPINS.H": {
+      "bytes": 73,
+      "sha256": "fa96864511f03aed1628668d10c4073314e49e554f965a90db6e44a16ec403ac"
+    },
+    "RCNATIVE.JSN": {
+      "bytes": 3299,
+      "sha256": "782508d61510387272caae5adec19b6f78ddf147137aaf3c6be8c02cd6fd314c"
+    },
+    "RCPUBLIC.JSN": {
+      "bytes": 13165,
+      "sha256": "26957890f311c554434dd72d9bdf4a0903c27c3c806e01cd9f7e584901d6b47a"
+    },
+    "SOUNDID.H": {
+      "bytes": 201,
+      "sha256": "c7645359276c478e8609881559a4d252e9ee966161261b255f9b389482610310"
+    },
+    "VARSET.H": {
+      "bytes": 12924,
+      "sha256": "db29b294520099d7221db5403d5637b2cc50b0d811a8366359760a312df7f4b3"
+    },
+    "XR1PINS.H": {
+      "bytes": 5226,
+      "sha256": "e914082d6e00f3c9758c250673f62653d0233e4554d6fd0b19f0000488408208"
+    },
+    "XRFILES.H": {
+      "bytes": 19683,
+      "sha256": "af5c185471490779b92dec550bcd52059637f4264baa8d4d1077ea5ba9bcae96"
+    },
+    "XRINPUT.H": {
+      "bytes": 14525,
+      "sha256": "0b577e38adae31b4c710d9eb109d631b67ae7179598a0f6a31b78cd438afe4f4"
+    },
+    "XRINPUT.JSN": {
+      "bytes": 44820,
+      "sha256": "d7cb54cec5abcdbbc37a01adfc8ad99659e6d96262fd2765596fb136a1c5d00d"
+    },
+    "XRPREP.C": {
+      "bytes": 16983,
+      "sha256": "4cef7d54d3dc46be7b7cf7e3640aa2f16d3997572725543f57cb457d3d5e26eb"
+    },
+    "XRSTRM.H": {
+      "bytes": 1861,
+      "sha256": "8a2720b1b2a1f0ad8e76c6cddcfaf8746709ee14107b41343b4c2dd6ae748020"
+    }
+  },
+  "scope": "Exact source/header snapshot validated against RCNATIVE at host staging. No new native result."
+}
