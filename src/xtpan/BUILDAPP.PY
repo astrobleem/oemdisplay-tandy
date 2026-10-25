@@ -16,6 +16,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 FILES = ("XTPAN.C", "XTPAN.DEF", "XTPAN.RSP", "PANTEST.C", "PANTEST.DEF", "PANTEST.RSP", "BUILD.BAT")
+PANUI_FILES = ("PANSET.C", "PANSET.H", "PANDLG.C", "PANDLG.H")
 CONF = """[sdl]
 fullscreen=false
 output=surface
@@ -54,6 +55,9 @@ def main():
     out.mkdir(parents=True)
     for n in FILES:
         data = (HERE / n).read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
+        (out / n).write_bytes(data)
+    for n in PANUI_FILES:
+        data = (HERE.parent / "panui" / n).read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
         (out / n).write_bytes(data)
     (out / "BUILD.CNF").write_text(CONF.format(repo=repo, out=out))
     env = dict(os.environ, SDL_VIDEODRIVER="dummy", SDL_AUDIODRIVER="dummy")

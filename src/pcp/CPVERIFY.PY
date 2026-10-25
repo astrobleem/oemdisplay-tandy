@@ -2,7 +2,7 @@
 """Replay fixed ColorPlus native runs and exact current package bindings.
 
 No compiler, emulator or network is used. Original installer/panning evidence
-is retained; the fixed-driver update has separate build, frame and carrier proof.
+is retained; the fixed-driver update has separate build/frame and ZIP-composition proof.
 """
 from pathlib import Path
 import configparser,hashlib,importlib.machinery,json,tempfile
@@ -19,32 +19,40 @@ SOURCE_INPUTS|={'src/tandysw/'+n for n in ('build.py','BUILD88.PY','PORT8086.PY'
     'AUDIT88.PY','RLEABITEST.PY','V1.ASM','TCURSOR.ASM','TSOFT.DEF','TSOFT.LNK','BLDCOR.BAT','BLDCUR.BAT',
     'BLDRES.BAT','PACKRES.PY','MODECOL.ASM','MONOCOL.ASM','RLE88.ASM','SDIB88.ASM')}
 SOURCE_INPUTS|={'tools/BUILDDEPS/LOCK.JSON','tools/APPSET/APPSET.C','tools/APPSET/PACK.PY',
-    'tools/DRVSET/PACK.PY','tools/DRVSET/VERIFY.PY','tools/DRVSET/NATIVE.PY',
-    'tools/SPPACK/PACKAGE.PY','src/softpan/PACKCP.PY','tools/XR1PACK/PREPARE.PY','tools/XR1PACK/OWATCOM.TXT'}
+    'tools/DRVSET/VERIFY.PY','tools/DRVSET/NATIVE.PY','tools/CPPACK/PACKAGE.PY',
+    'tools/PANUI/PACKAGE.PY','tools/PANUI/BASE.JSN','tools/SPPACK/PACKAGE.PY','tools/SPPACK/PUBLIC.JSN',
+    'src/panui/VERIFY.PY','tools/CURRENT/BUNDLE.PY','tools/CURRENT/GUIDES/CPPAN.TXT',
+    'tools/XR1PACK/PREPARE.PY','tools/XR1PACK/OWATCOM.TXT'}
 
 def identity(data):return {'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}
+
+# These unchanged host-only producer files are LF in Git and CRLF in a
+# Windows autocrlf checkout. Native build/probe/evidence bytes stay exact.
+SOURCE_TEXT_LF={'tools/PANUI/BASE.JSN','tools/PANUI/PACKAGE.PY'}
+def source_identity(name,data):
+    return identity(data.replace(b'\r\n',b'\n') if name in SOURCE_TEXT_LF else data)
 
 def recorded_files(folder,run,frames):
     expected={n:identity((folder/n).read_bytes()) for n in set(frames)|{'RRBENCH.LOG'}}
     if run.get('files')!=expected:raise ValueError('Native run file manifest differs from exported frames/log')
 
+def package():
+    return importlib.machinery.SourceFileLoader('cpp_current_overlay',str(ROOT/'tools/CPPACK/PACKAGE.PY')).load_module()
+
 def packet():
-    p=importlib.machinery.SourceFileLoader('cpp_verify_payload',str(ROOT/'tools/SPPACK/PACKAGE.PY')).load_module()
-    files=p.payload('CPPAN',json.loads((ROOT/'tools/SPPACK/PUBLIC.JSN').read_bytes()))
-    files['INSTALL.TXT']=(ROOT/'tools/DRVSET/CPPAN.TXT').read_bytes()
-    files['OWATCOM.TXT']=(ROOT/'tools/XR1PACK/OWATCOM.TXT').read_bytes()
-    return files
+    p=package();return p.members(p.outputs()['CPPAN.ZIP'])
 
 def verify():
     q=json.loads(QUAL.read_bytes())
     if q.get('schema')!=1 or q.get('complete') is not True or q.get('physical_hardware_qualified') is not False:
         raise ValueError('ColorPlus fixed-driver qualification is incomplete')
     if not SOURCE_INPUTS<=set(q['sources']):raise ValueError('Missing ColorPlus source bindings')
+    if q.get('source_text_lf')!=sorted(SOURCE_TEXT_LF):raise ValueError('Host-only source text normalization differs')
     for n,pin in q['sources'].items():
-        if identity((ROOT/n).read_bytes())!=pin:raise ValueError('Qualified ColorPlus source differs: '+n)
+        if source_identity(n,(ROOT/n).read_bytes())!=pin:raise ValueError('Qualified ColorPlus source differs: '+n)
     for n,pin in q['evidence'].items():
         if identity((EVIDENCE/n).read_bytes())!=pin:raise ValueError('ColorPlus evidence differs: '+n)
-    required={'BUILD-B.JSN','BUILD-C.JSN','STAGE.JSN','SCOPE.JSN','SUMMARY.JSN','CARRIER.JSN','PROBE.JSN','PROBEGEN.JSN','PROFILE.CFG'}
+    required={'BUILD-B.JSN','BUILD-C.JSN','STAGE.JSN','SCOPE.JSN','SUMMARY.JSN','PROBE.JSN','PROBEGEN.JSN','PROFILE.CFG'}
     app=json.loads((EVIDENCE/'PROBE.JSN').read_bytes());emitted=json.loads((EVIDENCE/'PROBEGEN.JSN').read_bytes())
     if app.get('exe')!='RRBENCH.EXE' or app.get('warnings')!=[]:raise ValueError('ColorPlus native probe build differs')
     probe={'bytes':app['exe_bytes'],'sha256':app['exe_sha256']}
@@ -77,11 +85,14 @@ def verify():
     if q['original_installer_receipt']!=identity(original) or runs['SHIPPED']['fixture']['driver']!=old['runtime']['ColorPlus']['PCP3216.DRV']:raise ValueError('Original ColorPlus installer/shipped-driver anchor differs')
     if set(q['evidence'])!=required:raise ValueError('ColorPlus evidence closure differs')
     if any(r['fixture']['probe']!=probe or r['fixture']['source_image']!=runs['SHIPPED']['fixture']['source_image'] for r in runs.values()):raise ValueError('ColorPlus comparison inputs differ')
-    if runs['CANDIDATE']['fixture']['driver']!=q['driver'] or identity((ROOT/'tools/SPPACK/PAYLOAD/CPPAN/PCP3216.DRV').read_bytes())!=q['driver']:raise ValueError('Current fixed driver differs from executed candidate')
+    if runs['CANDIDATE']['fixture']['driver']!=q['driver'] or identity((ROOT/'tools/CPPACK/PAYLOAD/PCP3216.DRV').read_bytes())!=q['driver']:raise ValueError('Current fixed driver differs from executed candidate')
     actual={n:identity(b) for n,b in packet().items()}
     if q['runtime']!=actual or actual['PCP3216.DRV']!=q['driver']:raise ValueError('Current ColorPlus runtime closure differs')
-    if set(actual)!=set(old['runtime']['ColorPlus']) or any(actual[n]!=old['runtime']['ColorPlus'][n] for n in actual if n!='PCP3216.DRV'):raise ValueError('Fixed update changed panning/installer/support inputs')
-    if set(q['outputs'])!={'CPPSET.EXE','CPPAN.ZIP','INSTALL.TXT'} or any(identity((ROOT/'downloads/experimental/CPPAN'/n).read_bytes())!=pin for n,pin in q['outputs'].items()):raise ValueError('Current ColorPlus downloads differ from carrier proof')
+    p=package();base=p.P.outputs()['CPPAN.ZIP'];before=p.members(base)
+    if identity(base)!=q['panning_reference']['packet'] or q['panning_reference']['settings']!=identity((ROOT/'docs/QUAL/PANUI/NATIVE.JSN').read_bytes()):raise ValueError('Qualified published panning reference differs')
+    if identity(before['PCP3216.DRV'])!=runs['SHIPPED']['fixture']['driver'] or set(actual)!=set(before) or any(actual[n]!=identity(before[n]) for n in actual if n!='PCP3216.DRV'):raise ValueError('Fixed update changed current panning/installer/support inputs')
+    if identity((ROOT/'downloads/experimental/CPPAN/CPPSET.EXE').read_bytes())!=old['outputs']['ColorPlus']['CPPSET.EXE']:raise ValueError('Original ColorPlus carrier evidence changed')
+    if set(q['outputs'])!={'CPPAN.ZIP','INSTALL.TXT'} or any(identity((ROOT/'downloads/experimental/CPPAN'/n).read_bytes())!=pin for n,pin in q['outputs'].items()):raise ValueError('Current ColorPlus downloads differ from qualified ZIP composition')
     catalog=json.loads((ROOT/'tools/CURRENT/PRODUCTS.JSN').read_bytes())['local']['CPPAN.ZIP']
     if catalog!={'source':'downloads/experimental/CPPAN/CPPAN.ZIP','identity':q['outputs']['CPPAN.ZIP']}:raise ValueError('Current ColorPlus catalog binding differs')
     builds={}
@@ -100,18 +111,7 @@ def verify():
     if not shipped['pass'] or not candidate['pass']:raise ValueError('ColorPlus native frame/results differ')
     full=next(t for t in candidate['timings'] if t['stage']=='scan_full')
     if full['candidate_ms']>full['baseline_ms']+55:raise ValueError('ColorPlus full-width scan regression exceeds one BIOS tick')
-    carrier=json.loads((EVIDENCE/'CARRIER.JSN').read_bytes())
-    if any(carrier.get(k) is not True for k in ('complete','owned_child_stopped','lease_released')) or carrier.get('outputs')!=q['outputs'] or carrier.get('runtime')!=q['runtime'] or carrier.get('checks')!={n:True for n in ('target_refusal_before_writes','exact_native_extraction','case_retry_preserved_user_file','normal_transaction_exit')} or carrier.get('process',{}).get('return')!=0 or carrier['process'].get('lease_acquired') is not True:raise ValueError('New ColorPlus native carrier proof differs')
     return q,{'shipped':shipped,'candidate':candidate,'native_runs':runs}
-
-def status(outputs,files):
-    native=importlib.machinery.SourceFileLoader('cpp_original_installer',str(ROOT/'tools/DRVSET/NATIVE.PY')).load_module()
-    state,receipt=native.status('ColorPlus',outputs,files)
-    if state.startswith('PASS:') or not QUAL.is_file():return state,receipt
-    q=json.loads(QUAL.read_bytes())
-    if q.get('outputs')!=outputs or q.get('runtime')!={n:identity(b) for n,b in files.items()}:return state,receipt
-    verify()
-    return 'PASS: fixed ColorPlus Output/frame/return-state qualification and exact new carrier; original panning/installer/support preserved',{'path':'tools/CPPACK/QUALIFY.JSN',**identity(QUAL.read_bytes())}
 
 if __name__=='__main__':
     q,r=verify();print(json.dumps({'status':'PASS: host replay of qualified native ColorPlus runs','driver':q['driver'],'frames_per_comparison':len(r['candidate']['frames']),'physical_hardware_qualified':False},indent=2))

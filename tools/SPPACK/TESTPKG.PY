@@ -7,6 +7,10 @@ C=importlib.machinery.SourceFileLoader('sp_oracle',str(ROOT/'src/softpan/SPCHK.P
 P.verify(ROOT/'downloads/experimental/SOFTPAN')
 spec=json.loads((HERE/'PUBLIC.JSN').read_bytes())
 qpath=ROOT/'docs/SOFTPAN/PUBLISH/QUALIFY.JSON';q=json.loads(qpath.read_bytes())
+U=importlib.machinery.SourceFileLoader('sp_native_settings',str(ROOT/'src/panui/VERIFY.PY')).load_module()
+ui,binaries=U.verify()
+assert spec['qualification']['ui_update']=={'path':'docs/QUAL/PANUI/NATIVE.JSN',
+    'manifest':P.identity((ROOT/'docs/QUAL/PANUI/NATIVE.JSN').read_bytes())}
 assert q['pass'] and q['main']=='d12ba426faba8b79575f44a9b48e241420944590'
 assert P.identity(qpath.read_bytes())==spec['qualification']['manifest']
 support_pin=spec['qualification']['support_update']
@@ -20,7 +24,7 @@ for kind,adapter in [('JRPAN','pcjr'),('CPPAN','colorplus')]:
     payload=HERE/'PAYLOAD'/kind
     assert P.identity((payload/(kind+'.DRV')).read_bytes())==q['drivers'][kind]
     for n in ('XTPAN.EXE','PANCFG.EXE'):
-        assert P.identity((payload/n).read_bytes())==q['helpers'][n]
+        assert (payload/n).read_bytes()==binaries[n]
     record=q['profiles'][kind]
     assert record['native_install']['phase']==6 and record['native_rollback']['phase']==6
     assert record['native_install']['driver_matches_public_bytes']

@@ -49,6 +49,14 @@ def fixture(root):
     (root/'RRBENCH.LOG').write_bytes(text.encode());return text
 
 class Controls(unittest.TestCase):
+    def test_only_host_text_line_endings_are_canonical(self):
+        v=importlib.machinery.SourceFileLoader('cp_source_binding',str(HERE/'CPVERIFY.PY')).load_module()
+        self.assertEqual(v.SOURCE_TEXT_LF,{'tools/PANUI/BASE.JSN','tools/PANUI/PACKAGE.PY'})
+        for name in v.SOURCE_TEXT_LF:
+            self.assertEqual(v.source_identity(name,b'line\r\n'),v.source_identity(name,b'line\n'))
+            self.assertNotEqual(v.source_identity(name,b'line\n'),v.source_identity(name,b'changed\n'))
+        self.assertNotEqual(v.source_identity('src/pcp/CPPOUT.PY',b'line\r\n'),v.source_identity('src/pcp/CPPOUT.PY',b'line\n'))
+
     def test_native_receipt_file_binding(self):
         verifier=importlib.machinery.SourceFileLoader('cp_record_binding',str(HERE/'CPVERIFY.PY')).load_module()
         with tempfile.TemporaryDirectory() as temp:

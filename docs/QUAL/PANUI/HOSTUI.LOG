@@ -1,0 +1,322 @@
+ok   SETTEST.C + PANSET.C compile as C89 (-pedantic -Wall -Werror)
+ok   SETTEST.C runs to completion
+ok   defaults VERT step = 50
+ok   defaults VERT dwell = 400
+ok   defaults VERT edge = 3
+ok   defaults VERT follow = 1
+ok   defaults XY edgeOn = 0
+ok   defaults XY repeat = 100
+ok   defaults XY followDlg = 0
+ok   defaults XY mode = 0
+ok   XTPAN.C literal GetProfileInt("XTPan", "Step", 50)
+ok   XTPAN.C literal GetProfileInt("XTPan", "Dwell", 400)
+ok   XTPAN.C literal GetProfileInt("XTPan", "Edge", 3)
+ok   XTPAN.C literal GetProfileInt("XTPan", "FollowActive", 1)
+ok   empty store, VERT load: step = default 50
+ok   empty store, VERT load: dwell = default 400
+ok   empty store, VERT load: edge = default 3
+ok   empty store, VERT load: follow = default 1
+ok   empty store, XY load: edgeOn = default 0
+ok   empty store, XY load: repeat = default 100
+ok   empty store, XY load: followDlg = default 0
+ok   empty store, XY load: mode = default 0
+ok   validate: VERT Step 8 ok
+ok   validate: VERT Step 7 bad (PS_E_STEP)
+ok   validate: VERT Step = workH ok
+ok   validate: VERT Step workH+1 bad (PS_E_STEP)
+ok   validate: VERT Step 57 ok (no 8/4 alignment)
+ok   validate: VERT Edge 1 ok
+ok   validate: VERT Edge 0 bad (PS_E_EDGE)
+ok   validate: VERT Edge viewH/2 ok
+ok   validate: VERT Edge viewH/2+1 bad (PS_E_EDGE)
+ok   validate: VERT Dwell 0 ok
+ok   validate: VERT Dwell 10000 ok
+ok   validate: VERT Dwell 10001 bad (PS_E_DWELL)
+ok   validate: VERT Dwell -1 bad (PS_E_DWELL)
+ok   validate: VERT Follow 2 bad (PS_E_FOLLOW)
+ok   validate: VERT Follow 0 ok
+ok   validate: XY Repeat 100 ok
+ok   validate: XY Repeat 200 ok
+ok   validate: XY Repeat 500 ok
+ok   validate: XY Repeat 150 bad (PS_E_REPEAT)
+ok   validate: XY Repeat 0 bad (PS_E_REPEAT)
+ok   validate: XY Repeat 1000 bad (PS_E_REPEAT)
+ok   validate: XY EdgeOn 0 ok
+ok   validate: XY EdgeOn 1 ok
+ok   validate: XY EdgeOn 2 bad (PS_E_EDGEON)
+ok   validate: XY FollowDlg 0 ok
+ok   validate: XY FollowDlg 1 ok
+ok   validate: XY FollowDlg 2 bad (PS_E_FOLLOWD)
+ok   validate: XY mode 0 ok (PS_CAP_MODE)
+ok   validate: XY mode 1 ok (PS_CAP_MODE)
+ok   validate: XY mode 2 REJECTED (PS_E_MODE)
+ok   validate: XY mode -1 rejected (PS_E_MODE)
+ok   validate: XY mode 3 rejected (PS_E_MODE)
+ok   validate: XY mode 255 rejected (PS_E_MODE)
+ok   PanParseInt '12': returns 0
+ok   PanParseInt '12': value 12
+ok   PanParseInt '  7 ': returns 0
+ok   PanParseInt '  7 ': value 7
+ok   PanParseInt '': returns 10
+ok   PanParseInt '': value 999
+ok   PanParseInt ' ': returns 10
+ok   PanParseInt ' ': value 999
+ok   PanParseInt '1x': returns 10
+ok   PanParseInt '1x': value 999
+ok   PanParseInt '-5': returns 10
+ok   PanParseInt '-5': value 999
+ok   PanParseInt '+5': returns 10
+ok   PanParseInt '+5': value 999
+ok   PanParseInt '123456': returns 10
+ok   PanParseInt '123456': value 999
+ok   PanParseInt '1 2': returns 10
+ok   PanParseInt '1 2': value 999
+ok   PanParseInt '12345': returns 0
+ok   PanParseInt '12345': value 12345
+ok   gate: VERT caps, garbage XY fields do not fail validation
+ok   gate: VERT caps, Save returns PS_OK
+ok   gate: VERT caps, Save writes exactly the 4 XTPan keys
+ok   gate: VERT caps, Save put count is 4
+ok   gate: XY caps, garbage vertical fields do not fail validation
+ok   gate: XY caps, Save returns PS_OK
+ok   gate: XY caps, Save writes exactly the 3 XYPan keys
+ok   gate: XY caps, Save put count is 3
+ok   gate: BACK_NONE validate -> PS_E_BACKEND (1)
+ok   gate: BACK_NONE save -> PS_E_BACKEND (1)
+ok   gate: VERT with caps 0 save -> PS_E_BACKEND (1)
+ok   gate: XY readback 0 has no PS_CAP_MODE
+ok   gate: XY readback 0, mode 1 ignored by validate
+ok   gate: XY readback 0, mode 2 ignored by validate (not exposed)
+ok   gate: XY readback 0, Save returns PS_OK
+ok   gate: XY readback 0, Save writes exactly the 3 XYPan keys
+ok   gate: XY readback 0, no mode key ever saved
+ok   gate: XY readback 1 has PS_CAP_MODE
+ok   gate: VERT caps have no MODE/EDGEON/REPEAT/FOLLOWD (readback 1)
+ok   gate: VERT caps have no MODE/EDGEON/REPEAT/FOLLOWD (readback 0)
+ok   gate: VERT caps offer STEP|EDGE|DWELL|FOLLOW
+ok   gate: XY caps have no STEP/EDGE/DWELL/FOLLOW
+ok   gate: XY caps offer EDGEON|REPEAT|FOLLOWD
+ok   gate: XY readback 0 offers EDGEON|REPEAT|FOLLOWD
+ok   round trip VERT: Save returns PS_OK
+ok   round trip VERT: Save writes exactly XTPan Step/Dwell/Edge/Follow
+ok   round trip VERT: put count 4
+ok   round trip VERT: Load step 120
+ok   round trip VERT: Load dwell 700
+ok   round trip VERT: Load edge 5
+ok   round trip VERT: Load follow 0
+ok   round trip XY: Save returns PS_OK
+ok   round trip XY: Save writes exactly XYPan EdgeOn/RepeatMs/FollowDlg
+ok   round trip XY: put count 3
+ok   round trip XY: Load edgeOn 1
+ok   round trip XY: Load repeat 200
+ok   round trip XY: Load followDlg 1
+ok   round trip XY: mode is never loaded (stays 0)
+ok   rt.v.log: no Enabled/KeyMods/KeyDown/KeyUp/KeyTop/LogKeys/LogFile/mode key
+ok   rt.x.log: no Enabled/KeyMods/KeyDown/KeyUp/KeyTop/LogKeys/LogFile/mode key
+ok   save of invalid settings: PS_E_STEP (2)
+ok   save of invalid settings: writes nothing
+ok   failing put: Save returns PS_E_STORE (11)
+ok   clamp: stored VERT Step 3 loads as 8
+ok   clamp: stored VERT Edge 0 loads as 1
+ok   clamp: stored VERT Follow 7 loads as 1
+ok   clamp: stored XY RepeatMs 150 loads as 100
+ok   clamp: stored XY EdgeOn 5 loads as default 0
+ok   load never sets mode (stored XYPan Mode 1 ignored)
+ok   load never reads a mode key
+ok   open: work equals live
+ok   cancel: work equals live again
+ok   cancel: no apply calls
+ok   cancel: no puts
+ok   apply invalid: returns PS_E_STEP (2)
+ok   apply invalid: no apply calls
+ok   apply invalid: no puts
+ok   apply invalid: live unchanged
+ok   apply invalid: status set
+ok   apply engine refusal: returns PS_E_APPLY (12)
+ok   apply engine refusal: no puts
+ok   apply engine refusal: live unchanged
+ok   apply PS_E_LOST: returns PS_E_LOST (13)
+ok   apply PS_E_LOST: caps.backend becomes NONE (0)
+ok   apply PS_E_LOST: no puts
+ok   apply PS_E_LOST: live unchanged
+ok   apply ok: returns PS_OK
+ok   apply ok: apply called exactly once
+ok   apply ok: apply received the validated work
+ok   apply ok: no puts before apply
+ok   apply ok: 4 puts after apply
+ok   apply ok: live equals what the engine reports
+ok   apply ok: live step 120
+ok   apply ok: differs 0
+ok   apply ok: store Step 120
+ok   apply ok: store Dwell 500
+ok   apply ok: store Edge 4
+ok   apply ok: store FollowActive 0
+ok   hardware refused: returns PS_OK
+ok   hardware refused: differs 1
+ok   hardware refused: live mode 0
+ok   hardware refused: mode 1 was requested
+ok   hardware refused: status shows the engine note
+ok   hardware refused: mode never saved
+ok   hardware granted: returns PS_OK
+ok   hardware granted: differs 0
+ok   hardware granted: live mode 1
+ok   save failure after apply: returns PS_E_STORE (11)
+ok   save failure after apply: live updated
+ok   home: returns PS_OK
+ok   home: calls home once
+ok   home: re-queries the driver once
+ok   home: viewport origin re-read (0)
+ok   home: typed work values kept
+ok   home failure: returns PS_E_APPLY (12)
+ok   PanCmdParse('') = 0
+ok   PanCmdParse(NULL) = 0
+ok   PanCmdParse('OFF') = 1
+ok   PanCmdParse('off') = 1
+ok   PanCmdParse('Off') = 1
+ok   PanCmdParse('SETTINGS') = 2
+ok   PanCmdParse('settings') = 2
+ok   PanCmdParse('/SETTINGS') = 2
+ok   PanCmdParse('/settings') = 2
+ok   PanCmdParse(' OFF') = 0
+ok   PanCmdParse('OFFX') = 0
+ok   PanCmdParse('x') = 0
+ok   PanCmdParse('SETTINGS now') = 0
+ok   PanRoute(running=1, enabled=0) = POST
+ok   PanRoute(running=1, enabled=1) = POST
+ok   PanRoute(running=0, enabled=1) = START
+ok   PanRoute(running=0, enabled=0) = OFF
+ok   PanOwnerStart(other=0, settings=0) = RUN
+ok   PanOwnerStart(other=0, settings=1) = RUN
+ok   PanOwnerStart(other=1, settings=1) = FORWARD
+ok   PanOwnerStart(other=1, settings=0) = EXIT
+ok   PanSetErrorText(0) is non-empty
+ok   PanSetErrorText(1) is non-empty
+ok   PanSetErrorText(2) is non-empty
+ok   PanSetErrorText(3) is non-empty
+ok   PanSetErrorText(4) is non-empty
+ok   PanSetErrorText(5) is non-empty
+ok   PanSetErrorText(6) is non-empty
+ok   PanSetErrorText(7) is non-empty
+ok   PanSetErrorText(8) is non-empty
+ok   PanSetErrorText(9) is non-empty
+ok   PanSetErrorText(10) is non-empty
+ok   PanSetErrorText(11) is non-empty
+ok   PanSetErrorText(12) is non-empty
+ok   PanSetErrorText(13) is non-empty
+ok   XTPAN.C: anchor appears exactly once
+ok   sync_helper (CRLF as read): guard comment exactly once
+ok   sync_helper (CRLF as read): PanEscape(-1) guard between 'DWORD now' and 'Keys();'
+ok   sync_helper (LF form): guard comment exactly once
+ok   sync_helper (LF form): PanEscape(-1) guard between 'DWORD now' and 'Keys();'
+ok   sync_helper: anchor removed raises ValueError
+ok   sync_helper: anchor duplicated raises ValueError
+ok   src/xtpan/HOSTPAN.PY exits 0 (FollowTop still found in XTPAN.C)
+ok   XYCTL Apply glue can be extracted
+ok   actual XYCTL Apply glue compiles as strict C89
+ok   XYCTL Apply: lost driver, changed mode, refused mode and unchanged mode
+ok   PANCFG.C: PanCmdParse before first GetProfileString and WriteProfileString
+ok   PANCFG.C: SETTINGS branch present
+ok   PANCFG.C: SETTINGS branch does not WriteProfileString
+ok   PANCFG.C: SETTINGS branch does not load (no 'load' in code, comments ignored)
+ok   PANCFG.C: 'return 1;' still present
+ok   PANCFG.C: 'return 2;' still present
+ok   PANCFG.C: 'return 3;' still present
+ok   PANCFG.C: 'return 4;' still present
+ok   PANCFG.C: 'return 5;' still present
+ok   PANCFG.C: 'return 6;' still present
+ok   PANCFG.C: "XTPan","Enabled" literal present
+ok   PANCFG.C: FindWindow("XTPan" literal present
+ok   PANCFG.C: SETTINGS also reaches a running XYCTL (XYOverviewControl + PS_MSG_XY before PanRoute)
+ok   XYCTL.C: WinMain found
+ok   XYCTL.C: PanOwnerStart in WinMain
+ok   XYCTL.C WinMain: PanOwnerStart before first GetDC(
+ok   XYCTL.C WinMain: PanOwnerStart before first Escape(
+ok   XYCTL.C WinMain: PanOwnerStart before first RegisterClass
+ok   XTPAN.C: WinMain found
+ok   XTPAN.C WinMain: PanOwnerStart before GetProfileInt("XTPan", "Enabled"
+ok   XTPAN.C WinMain: no 'if (hPrev)' early exit left
+ok   XTPAN.C: PanDlgMessage in GetMessage loop before TranslateMessage
+ok   PANDLG.C: no SetTimer
+ok   PANDLG.C: no SetWindowsHookEx
+ok   PANDLG.C: no SetWindowsHook
+ok   PANDLG.C: no WinExec
+ok   PANDLG.C: class "PanSetDlg" present
+ok   PANDLG.C: class is not "XTPan" or "XYOverviewControl"
+ok   PANDLG.C: PanDlgOpen has an already-open check (IsWindow)
+ok   PANDLG.C: only PS_MODE_SOFT and PS_MODE_HARD are offered
+ok   PANDLG.C: no 'mode = 2' literal
+ok   src/panui/PANSET.H: line endings all-CRLF or all-LF
+ok   src/panui/PANSET.H: all-CRLF (--crlf)
+ok   src/panui/PANSET.H: ends with a newline
+ok   src/panui/PANSET.H: no tab characters
+ok   src/panui/PANSET.H: no // comment outside string literals
+ok   src/panui/PANSET.H: no line over 110 chars (first: [])
+ok   src/panui/PANSET.H: ASCII only
+ok   src/panui/PANSET.C: line endings all-CRLF or all-LF
+ok   src/panui/PANSET.C: all-CRLF (--crlf)
+ok   src/panui/PANSET.C: ends with a newline
+ok   src/panui/PANSET.C: no tab characters
+ok   src/panui/PANSET.C: no // comment outside string literals
+ok   src/panui/PANSET.C: no line over 110 chars (first: [])
+ok   src/panui/PANSET.C: ASCII only
+ok   src/panui/PANDLG.H: line endings all-CRLF or all-LF
+ok   src/panui/PANDLG.H: all-CRLF (--crlf)
+ok   src/panui/PANDLG.H: ends with a newline
+ok   src/panui/PANDLG.H: no tab characters
+ok   src/panui/PANDLG.H: no // comment outside string literals
+ok   src/panui/PANDLG.H: no line over 110 chars (first: [])
+ok   src/panui/PANDLG.H: ASCII only
+ok   src/panui/PANDLG.C: line endings all-CRLF or all-LF
+ok   src/panui/PANDLG.C: all-CRLF (--crlf)
+ok   src/panui/PANDLG.C: ends with a newline
+ok   src/panui/PANDLG.C: no tab characters
+ok   src/panui/PANDLG.C: no // comment outside string literals
+ok   src/panui/PANDLG.C: no line over 110 chars (first: [])
+ok   src/panui/PANDLG.C: ASCII only
+ok   src/panui/SETTEST.C: line endings all-CRLF or all-LF
+ok   src/panui/SETTEST.C: all-CRLF (--crlf)
+ok   src/panui/SETTEST.C: ends with a newline
+ok   src/panui/SETTEST.C: no tab characters
+ok   src/panui/SETTEST.C: no // comment outside string literals
+ok   src/panui/SETTEST.C: no line over 110 chars (first: [])
+ok   src/panui/SETTEST.C: ASCII only
+ok   src/panui/XYAPPLY.C: line endings all-CRLF or all-LF
+ok   src/panui/XYAPPLY.C: all-CRLF (--crlf)
+ok   src/panui/XYAPPLY.C: ends with a newline
+ok   src/panui/XYAPPLY.C: no tab characters
+ok   src/panui/XYAPPLY.C: no // comment outside string literals
+ok   src/panui/XYAPPLY.C: no line over 110 chars (first: [])
+ok   src/panui/XYAPPLY.C: ASCII only
+ok   src/panui/HOSTUI.PY: line endings all-CRLF or all-LF
+ok   src/panui/HOSTUI.PY: all-CRLF (--crlf)
+ok   src/panui/HOSTUI.PY: ends with a newline
+ok   src/panui/HOSTUI.PY: no tab characters
+ok   src/panui/HOSTUI.PY: no line over 110 chars (first: [])
+ok   src/panui/HOSTUI.PY: ASCII only
+ok   src/xtpan/XTPAN.C: line endings all-CRLF or all-LF
+ok   src/xtpan/XTPAN.C: all-CRLF (--crlf)
+ok   src/xtpan/XTPAN.C: ends with a newline
+ok   src/xtpan/XTPAN.C: no tab characters
+ok   src/xtpan/XTPAN.C: no // comment outside string literals
+ok   src/softpan/PANCFG.C: line endings all-CRLF or all-LF
+ok   src/softpan/PANCFG.C: all-CRLF (--crlf)
+ok   src/softpan/PANCFG.C: ends with a newline
+ok   src/softpan/PANCFG.C: no tab characters
+ok   src/softpan/PANCFG.C: no // comment outside string literals
+ok   experiments/XYOVERVIEW/XYCTL.C: line endings all-CRLF or all-LF
+ok   experiments/XYOVERVIEW/XYCTL.C: all-CRLF (--crlf)
+ok   experiments/XYOVERVIEW/XYCTL.C: ends with a newline
+ok   experiments/XYOVERVIEW/XYCTL.C: no tab characters
+ok   experiments/XYOVERVIEW/XYCTL.C: no // comment outside string literals
+ok   wcc: src/panui/PANSET.C compiles without errors
+ok   wcc: src/panui/PANSET.C has no new warnings
+ok   wcc: src/panui/PANDLG.C compiles without errors
+ok   wcc: src/panui/PANDLG.C has no new warnings
+ok   wcc: src/xtpan/XTPAN.C compiles without errors
+     src/xtpan/XTPAN.C: 1 warning(s) (pre-existing ones accepted)
+ok   wcc: src/softpan/PANCFG.C compiles without errors
+     src/softpan/PANCFG.C: 0 warning(s) (pre-existing ones accepted)
+ok   wcc: experiments/XYOVERVIEW/XYCTL.C compiles without errors
+     experiments/XYOVERVIEW/XYCTL.C: 0 warning(s) (pre-existing ones accepted)
+ok   wcc: sync_helper-transformed XTPAN.C compiles without errors
+HOSTUI: PASS

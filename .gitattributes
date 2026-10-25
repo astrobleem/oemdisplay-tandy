@@ -148,7 +148,6 @@ docs/DOWNLOADS.MD -text
 
 .github/workflows/driver-packets.yml -text
 src/pc1512/** -text
-src/pcp/CPPOUT.FIX -text
 
 # Retained OEM development sources and relocated-source CI retain CRLF.
 oemdisk/** -text
@@ -182,17 +181,20 @@ tools/MINEAPP/INSTALL.TXT -text
 # Contributor guidance retains the mandated CRLF bytes.
 CLAUDE.md -text
 
-# ColorPlus native evidence and current fixed-driver packaging.
+# Shared native/helper source and byte-pinned host verification retain exact bytes.
+src/panui/** -text
+
+# Fixed ColorPlus Output and native evidence preserve exact reviewed bytes.
+src/pcp/CPPOUT.FIX -text
+src/pcp/BUILDPCP.PY -text
+src/pcp/CPPOUT.PY -text
+src/pcp/CPPOTEST.PY -text
 src/pcp/CPBENCH.PY -text
 src/pcp/CPCMP.PY -text
 src/pcp/CPCTEST.PY -text
 src/pcp/CPVERIFY.PY -text
 docs/pcp/OUTPUT/** -text
+docs/pcp/INTERIM-CARRIER.JSN -text
 tools/CPPACK/** -text
 .github/workflows/colorplus.yml -text
-src/pcp/BUILDPCP.PY -text
-src/pcp/CPPOUT.PY -text
-src/pcp/CPPOTEST.PY -text
-
-# The effective native input config is retained byte-for-byte, including EOF.
 docs/pcp/OUTPUT/PROFILE.CFG whitespace=cr-at-eol,-blank-at-eof

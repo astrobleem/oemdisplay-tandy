@@ -46,8 +46,9 @@ SDIB88 and BMC_MAIN changes, not diagnostics; its frames and practical redraw
 timings match the shipped control. Windows free memory before the probe was
 340,256 bytes shipped, 336,576 baseline and 336,352 candidate. All runs use
 normal 640 KB and restore the same DOS mode and prompt. The original installer
-and panning evidence stays unchanged; the new carrier has separate native
-extraction proof. Physical ColorPlus hardware remains unqualified.
+and current panning evidence stays unchanged. The flat current ZIP changes
+only PCP3216.DRV; every settings/helper/installer/support member is preserved.
+Physical ColorPlus hardware remains unqualified.
 
 Run `python -B src/pcp/CPVERIFY.PY` to replay the saved native evidence and
 exact package/source bindings. [Qualification](../tools/CPPACK/QUALIFY.JSN)

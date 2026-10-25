@@ -48,13 +48,13 @@
     "FIXXT.EXE": {
       "source": "tools/DOSINST/FIXXT.C",
       "source_identity": {
-        "bytes": 24477,
-        "sha256": "355e09ada18bed990dae915df6e837ad3c9f67c434fbac7c5e4625c68517b64b"
+        "bytes": 24478,
+        "sha256": "d376ce1ada77675521d562d996ede339668c974446449b6e4a7d67d5525df4da"
       },
       "binary": "tools/DOSINST/BIN/FIXXT.EXE",
       "binary_identity": {
         "bytes": 33001,
-        "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"
+        "sha256": "c7430205b27c4236a786bddddebddf89e64b1c92d422c443ebcec86691c61838"
       },
       "compiler": "Microsoft C6 /G0 /AS /W3 /Od; LINK4 8KB stack",
       "source_dependencies": {
@@ -66,7 +66,7 @@
       "build_record": "tools/DOSINST/FIXBUILD.JSN",
       "build_record_identity": {
         "bytes": 743,
-        "sha256": "08106f2046f3398cb6a305a22b4295cb4d564bfabec4305d8d7eb2204bd78b63"
+        "sha256": "dc244c5c71e1d4f3495e1601e1554fe609fb4c6037f709eba23441878bff8b59"
       }
     },
     "XTCLEAN.COM": {

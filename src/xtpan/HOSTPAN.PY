@@ -19,8 +19,10 @@
 """
 import argparse
 import importlib.machinery
+import os
 import random
 import re
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -87,7 +89,8 @@ def follow_tests(tmp):
     src = Path(tmp) / "follow.c"
     src.write_text("#include <stdlib.h>\n" + HARNESS % m.group(0))
     exe = Path(tmp) / "follow"
-    r = subprocess.run(["cc", "-std=c89", "-pedantic", "-Wall", "-Werror", "-O1", "-o", str(exe), str(src)],
+    r = subprocess.run(shlex.split(os.environ.get("CC", "cc")) +
+                       ["-std=c89", "-pedantic", "-Wall", "-Werror", "-O1", "-o", str(exe), str(src)],
                        capture_output=True, text=True)
     expect("FollowTop compiles as C89 (-pedantic -Werror)", r.returncode == 0)
     if r.returncode:

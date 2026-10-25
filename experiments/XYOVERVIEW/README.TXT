@@ -75,6 +75,10 @@ installation, then run:
   C:\WATCOM\BINNT\WLINK.EXE @XYCTL.LNK
   C:\WATCOM\BINNT\WLINK.EXE @EDGEQA-R19.LNK
 
+These commands describe the reviewed pre-settings-UI source. XYCTL now also
+needs PANSET.C and PANDLG.C (src/panui) compiled beside it; see the SETTINGS
+UI ADDITION section of BUILD-WATCOM.TXT.
+
 The -od option and EDGEQA-OD.C filename are required for the tested R19 build.
 Build output hashes and compiler/linker logs are recorded in
 INTEGRATION-BUILD-RESULT.JSON and BUILD-WATCOM.TXT. Executables, object files,

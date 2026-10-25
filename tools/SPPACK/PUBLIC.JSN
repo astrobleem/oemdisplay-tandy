@@ -31,8 +31,8 @@
           "sha256": "8140d9b0f2ae5a47f8ef58c12d58047543d283b54ebae2f2119d7677816f892f"
         },
         "INSTALL.TXT": {
-          "bytes": 1278,
-          "sha256": "50baa279f29e01e6a0b9d40575193f917f93e05791a9c59e01db349184e47e79"
+          "bytes": 1437,
+          "sha256": "cdbbcc66bfd6f3b852b241ba20402d9d53d9b30fe7952155c1a8034e2af2b2bf"
         },
         "LICENSE.TXT": {
           "bytes": 1399,
@@ -51,12 +51,12 @@
           "sha256": "b4f1066a065bc1873eedfd201c037509da5e1f2f9c9f6220b0be7efae2e40dcc"
         },
         "PANCFG.EXE": {
-          "bytes": 4015,
-          "sha256": "e67238948079683788e626ad54a11b89e28a515da97632724bc394e2637a1442"
+          "bytes": 10191,
+          "sha256": "2c846db18df382d3130847df025ad444510d677cb67f2233fecc237b5faeeb2d"
         },
         "PCP3216.DRV": {
-          "bytes": 58752,
-          "sha256": "6fbee832bde5b8fec958eb654e6fde14a4e6cc8fa6e9749623311cb99049411c"
+          "bytes": 54832,
+          "sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406"
         },
         "WXTSPL01.RLE": {
           "bytes": 4062,
@@ -75,8 +75,8 @@
           "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
         },
         "XTPAN.EXE": {
-          "bytes": 6415,
-          "sha256": "ea81c0b2e880f28a3f8bf9b8b24d7d9ab7363660036cc382ef6e28c48b690f9b"
+          "bytes": 17535,
+          "sha256": "3bece11924d4a29a3d49612fb32e1c264bcb6e26767a50657b4d142cf3e09ea9"
         },
         "XTSTATIC.LGO": {
           "bytes": 361,
@@ -105,8 +105,8 @@
           "sha256": "21709e12067f966cfe829986954841348fd8454ba2fb89d16e8923980c879232"
         },
         "INSTALL.TXT": {
-          "bytes": 1244,
-          "sha256": "50fc8aa5d7942940a3f4b370ca56651af5158553e1b1ccd55c7593d55237dffe"
+          "bytes": 1403,
+          "sha256": "8ccbf545f4cc59e0b8899512f3d977d8aaa3b6065b37f664ca972147678c3299"
         },
         "JRGRAB.GR2": {
           "bytes": 2159,
@@ -141,8 +141,8 @@
           "sha256": "817bec236c5164f218065e978def24b4182a1347ad646ab622f69476cf148b36"
         },
         "PANCFG.EXE": {
-          "bytes": 4015,
-          "sha256": "e67238948079683788e626ad54a11b89e28a515da97632724bc394e2637a1442"
+          "bytes": 10191,
+          "sha256": "2c846db18df382d3130847df025ad444510d677cb67f2233fecc237b5faeeb2d"
         },
         "TNDYJR.DRV": {
           "bytes": 54976,
@@ -165,8 +165,8 @@
           "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
         },
         "XTPAN.EXE": {
-          "bytes": 6415,
-          "sha256": "ea81c0b2e880f28a3f8bf9b8b24d7d9ab7363660036cc382ef6e28c48b690f9b"
+          "bytes": 17535,
+          "sha256": "3bece11924d4a29a3d49612fb32e1c264bcb6e26767a50657b4d142cf3e09ea9"
         },
         "XTSTATIC.LGO": {
           "bytes": 361,
@@ -186,17 +186,17 @@
   },
   "publication_allowed": true,
   "published_source": {
-    "CGA.GR2": {
-      "bytes": 1768,
-      "sha256": "11389907999c7bef2bd01eae5d874c79c3b07679ccb146ec095a8e9878496b55"
+    "distributions/WINXT/CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
     },
     "src/softpan/BLDTEST.BAT": {
-      "bytes": 1172,
-      "sha256": "4b1bb0563d02f8432ac9db65df8d9f5bad9692c5df515d22b1b0130463e39f4c"
+      "bytes": 1340,
+      "sha256": "ee8e673f29f08389086c61fa7d3e78de72b5e683f0c8e974b2e7113f7411c49c"
     },
     "src/softpan/BUILDAPP.PY": {
-      "bytes": 3017,
-      "sha256": "c4e7a34d9f613c8a1cc8d77b9637102986da46e9e2d8b64b893096a47f208cd4"
+      "bytes": 3142,
+      "sha256": "69757f047beb2f118e45d05fa125b6a559cffdb2f6705b8fcc41b30f4d044dfa"
     },
     "src/softpan/BUILDSP.PY": {
       "bytes": 3347,
@@ -211,24 +211,24 @@
       "sha256": "dc0958659e27dcd86d52f502e11b2e70c0dc7130e3790f4009742391cd6f3f94"
     },
     "src/softpan/PACKCP.PY": {
-      "bytes": 4271,
-      "sha256": "38d35d19d457b31c3cc0c36cfc7b1282f7a2efec2fb6568985ec8a7ef6d93724"
+      "bytes": 4291,
+      "sha256": "a83e2ad32c0ee5bf5d3867cc815fd9ee9e1cc78372dedef7738320a1d4613077"
     },
     "src/softpan/PACKSP.PY": {
       "bytes": 3991,
       "sha256": "09c66a35934c33c6e6384b99ab7ea78e08aba745f14f672569a38cad91bc5267"
     },
     "src/softpan/PANCFG.C": {
-      "bytes": 1220,
-      "sha256": "553436ce2518cbea4c9b1d80fd781b23097dec7ed49290fc5c83829447bf857e"
+      "bytes": 4068,
+      "sha256": "7c425b29ec9f62091c63bb079b30ab06489ee4274a041e28c5d6ce6702883b33"
     },
     "src/softpan/PANCFG.DEF": {
-      "bytes": 182,
-      "sha256": "1f25682cfc0bc00190dca222fc867068792f4e878e89d56a51f9b217e96713b3"
+      "bytes": 207,
+      "sha256": "0d745f5571d436e6ef71bc29e38229721526db32bc41845fc63889f2f4824700"
     },
     "src/softpan/PANCFG.RSP": {
-      "bytes": 84,
-      "sha256": "564206d0fd3fdae167bd13cc35e5410c34aeb65264d8954513f30ef0d58ce13a"
+      "bytes": 95,
+      "sha256": "b018469c5bbf6e3933b3af963aa8d10c9b707c5d240e64e49b41bc0ed94aab45"
     },
     "src/softpan/RAMTEST.PY": {
       "bytes": 5900,
@@ -247,8 +247,8 @@
       "sha256": "efae8e438561e3aeaeb7d0b93f0ca3c470c86554472d5fe9232010619a6eea29"
     },
     "src/softpan/RUNUI86.PY": {
-      "bytes": 6108,
-      "sha256": "2ec035c927c9e3634a11fc2abc4c8d63bfca1a9263ccf45294b620d6fd27e8a0"
+      "bytes": 6694,
+      "sha256": "4b34ae6b20c356458bfd09e30763b680aa02b3e02de5c8f3ea011cfce29c550f"
     },
     "src/softpan/RUNUIJR.PY": {
       "bytes": 3544,
@@ -283,8 +283,8 @@
       "sha256": "1cd42273837ae176239243f96132778f50d02f3c4b03352b9c3c5e2fce0f459e"
     },
     "src/softpan/UITEST.C": {
-      "bytes": 5919,
-      "sha256": "c93af023a931518dc29a8884aa1cd498127fc4e2cbc501c83eae09e493b48e1b"
+      "bytes": 7813,
+      "sha256": "897f9d63cfe1c3e340adf38027c7d2d96d1d6ded858f69adb78f915a93c7f6ad"
     },
     "src/softpan/UITEST.DEF": {
       "bytes": 210,
@@ -299,42 +299,67 @@
       "sha256": "e970f8f83cbd651ad1a6f2beac397c8f2496ae8e9119d9761e30f6d404e9ec89"
     },
     "src/xtpan/XTPAN.C": {
-      "bytes": 10200,
-      "sha256": "062676656b1594acc501a7f0ada904cc106dfeddc59c52b8f5f05eb79d71248d"
+      "bytes": 13574,
+      "sha256": "38cd53c23c1506aa432c6fb74766152d41db7ebf6c4589ca0c6b1d7fdfb95489"
     },
     "src/xtpan/XTPAN.DEF": {
-      "bytes": 220,
-      "sha256": "99c7701080c70473532593202bb49f436ee1386f1d88668b6504b52dc6ce92cc"
+      "bytes": 236,
+      "sha256": "1ac236b056c469d7bfd0cc1190916bbd5029eec137309539b9a6e4a725f21afc"
     },
     "src/xtpan/XTPAN.RSP": {
-      "bytes": 80,
-      "sha256": "24a6cb1f0b427a7b61b2e43051f06dedc3a34719f5b78b6b4f67c6292c2829d4"
+      "bytes": 102,
+      "sha256": "e2cde0d25147973a1c6077bf4f8c2cc260272aa5981387ad4133b2295f73a5b8"
     },
     "tools/SPPACK/PACKAGE.PY": {
-      "bytes": 3553,
-      "sha256": "e7fa5eb621c36d299ef0728d6c5282521f820269595856fe5b05f3e1e0115954"
+      "bytes": 4151,
+      "sha256": "9847d139080556e7fcedaeb8be21c2d115471448e3c590795b0d18de2123d54e"
     },
     "tools/SPPACK/README.TXT": {
       "bytes": 1331,
       "sha256": "8f3ffd4dea3946ec8de63a403d0f4ac0dddbc5f915d5fab435b7e1b0d72a3941"
     },
     "tools/SPPACK/TESTPKG.PY": {
-      "bytes": 2849,
-      "sha256": "b322310c733c1dfb6bed322e2fe88bfbed41f1f299cc0cbca84e164184a7a91b"
+      "bytes": 3125,
+      "sha256": "f3020a4b7340deeafd24a22de72c6f71f2548a850ce5135e45ac792ddead22bc"
     },
     "tools/XR1PACK/PREPARE.PY": {
       "bytes": 11110,
       "sha256": "c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1"
+    },
+    "src/panui/PANSET.C": {
+      "bytes": 12906,
+      "sha256": "779be6959bf60bd13466d6ab40725311fa489b18ba457a36d9126f76e20e65b5"
+    },
+    "src/panui/PANSET.H": {
+      "bytes": 8460,
+      "sha256": "bc5016dd9edf8eb2dbf3e690c713c6d10a9f3f64e7a8b6576c8ecfbd5805e83f"
+    },
+    "src/panui/PANDLG.C": {
+      "bytes": 17247,
+      "sha256": "f89d4df77e386941cf305ceb5582ca77d60563f399f2ced0f383d51616131985"
+    },
+    "src/panui/PANDLG.H": {
+      "bytes": 2437,
+      "sha256": "d5f76a9614c68f03c12c9b5bd520983aff725e29c575010123462f974be14e9d"
+    },
+    "src/panui/VERIFY.PY": {
+      "bytes": 4363,
+      "sha256": "de409657c30ec15d3cd9c89c25b777030d1fb66d426d595f5b4e0214d85174bb"
+    },
+    "src/panui/HOSTUI.PY": {
+      "bytes": 28289,
+      "sha256": "d238b1e93d808e03c2131acb3f567cbcd287d9dd042c43869414f417f81f844a"
+    },
+    "src/panui/XYAPPLY.C": {
+      "bytes": 1688,
+      "sha256": "c997e234b840b5ce93b4255f51b6bc406d7c74203d5a8994cb322f28c891f5f3"
+    },
+    "src/panui/SETTEST.C": {
+      "bytes": 18710,
+      "sha256": "2f52f78ed2290ca2cca47e298e86693c0c2fbc7e7bfca1e6901f8f66af0710e2"
     }
   },
   "qualification": {
-    "fixed_driver_update": {
-      "manifest": {
-        "bytes": 35446,
-        "sha256": "3e14fda0aad966b646e877fb6622728f16d43e605459cb359892b81e48001c42"
-      },
-      "path": "tools/CPPACK/QUALIFY.JSN"
-    },
     "manifest": {
       "bytes": 40814,
       "sha256": "b3ac990ae69d2f068efa81789b7e6db2c1a5c983ba63c91fddb6fec5159a570c"
@@ -346,6 +371,13 @@
         "sha256": "072faff3d60999d84073bbe574d77c64481830e4862ed58ea576a47375b9ce23"
       },
       "path": "docs/SOFTPAN/SUPPORT.JSON"
+    },
+    "ui_update": {
+      "path": "docs/QUAL/PANUI/NATIVE.JSN",
+      "manifest": {
+        "bytes": 32816,
+        "sha256": "798dbe741c2662a2e5e7ce5111c134346c0a1f0469824f9d852754f1fa44bce5"
+      }
     }
   },
   "schema": 1,
@@ -355,12 +387,12 @@
       "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
     },
     "src/softpan/BLDTEST.BAT": {
-      "bytes": 1172,
-      "sha256": "4b1bb0563d02f8432ac9db65df8d9f5bad9692c5df515d22b1b0130463e39f4c"
+      "bytes": 1340,
+      "sha256": "ee8e673f29f08389086c61fa7d3e78de72b5e683f0c8e974b2e7113f7411c49c"
     },
     "src/softpan/BUILDAPP.PY": {
-      "bytes": 3017,
-      "sha256": "c4e7a34d9f613c8a1cc8d77b9637102986da46e9e2d8b64b893096a47f208cd4"
+      "bytes": 3142,
+      "sha256": "69757f047beb2f118e45d05fa125b6a559cffdb2f6705b8fcc41b30f4d044dfa"
     },
     "src/softpan/BUILDSP.PY": {
       "bytes": 3347,
@@ -375,24 +407,24 @@
       "sha256": "dc0958659e27dcd86d52f502e11b2e70c0dc7130e3790f4009742391cd6f3f94"
     },
     "src/softpan/PACKCP.PY": {
-      "bytes": 4307,
-      "sha256": "e98ecec351f683dad8842fd9176bb07bf3789e9fcae010f7c8ced2fd2813f14f"
+      "bytes": 4291,
+      "sha256": "a83e2ad32c0ee5bf5d3867cc815fd9ee9e1cc78372dedef7738320a1d4613077"
     },
     "src/softpan/PACKSP.PY": {
       "bytes": 3991,
       "sha256": "09c66a35934c33c6e6384b99ab7ea78e08aba745f14f672569a38cad91bc5267"
     },
     "src/softpan/PANCFG.C": {
-      "bytes": 1220,
-      "sha256": "553436ce2518cbea4c9b1d80fd781b23097dec7ed49290fc5c83829447bf857e"
+      "bytes": 4068,
+      "sha256": "7c425b29ec9f62091c63bb079b30ab06489ee4274a041e28c5d6ce6702883b33"
     },
     "src/softpan/PANCFG.DEF": {
-      "bytes": 182,
-      "sha256": "1f25682cfc0bc00190dca222fc867068792f4e878e89d56a51f9b217e96713b3"
+      "bytes": 207,
+      "sha256": "0d745f5571d436e6ef71bc29e38229721526db32bc41845fc63889f2f4824700"
     },
     "src/softpan/PANCFG.RSP": {
-      "bytes": 84,
-      "sha256": "564206d0fd3fdae167bd13cc35e5410c34aeb65264d8954513f30ef0d58ce13a"
+      "bytes": 95,
+      "sha256": "b018469c5bbf6e3933b3af963aa8d10c9b707c5d240e64e49b41bc0ed94aab45"
     },
     "src/softpan/RAMTEST.PY": {
       "bytes": 5900,
@@ -411,8 +443,8 @@
       "sha256": "efae8e438561e3aeaeb7d0b93f0ca3c470c86554472d5fe9232010619a6eea29"
     },
     "src/softpan/RUNUI86.PY": {
-      "bytes": 6108,
-      "sha256": "2ec035c927c9e3634a11fc2abc4c8d63bfca1a9263ccf45294b620d6fd27e8a0"
+      "bytes": 6694,
+      "sha256": "4b34ae6b20c356458bfd09e30763b680aa02b3e02de5c8f3ea011cfce29c550f"
     },
     "src/softpan/RUNUIJR.PY": {
       "bytes": 3544,
@@ -447,8 +479,8 @@
       "sha256": "1cd42273837ae176239243f96132778f50d02f3c4b03352b9c3c5e2fce0f459e"
     },
     "src/softpan/UITEST.C": {
-      "bytes": 5919,
-      "sha256": "c93af023a931518dc29a8884aa1cd498127fc4e2cbc501c83eae09e493b48e1b"
+      "bytes": 7813,
+      "sha256": "897f9d63cfe1c3e340adf38027c7d2d96d1d6ded858f69adb78f915a93c7f6ad"
     },
     "src/softpan/UITEST.DEF": {
       "bytes": 210,
@@ -463,32 +495,64 @@
       "sha256": "e970f8f83cbd651ad1a6f2beac397c8f2496ae8e9119d9761e30f6d404e9ec89"
     },
     "src/xtpan/XTPAN.C": {
-      "bytes": 10200,
-      "sha256": "062676656b1594acc501a7f0ada904cc106dfeddc59c52b8f5f05eb79d71248d"
+      "bytes": 13574,
+      "sha256": "38cd53c23c1506aa432c6fb74766152d41db7ebf6c4589ca0c6b1d7fdfb95489"
     },
     "src/xtpan/XTPAN.DEF": {
-      "bytes": 220,
-      "sha256": "99c7701080c70473532593202bb49f436ee1386f1d88668b6504b52dc6ce92cc"
+      "bytes": 236,
+      "sha256": "1ac236b056c469d7bfd0cc1190916bbd5029eec137309539b9a6e4a725f21afc"
     },
     "src/xtpan/XTPAN.RSP": {
-      "bytes": 80,
-      "sha256": "24a6cb1f0b427a7b61b2e43051f06dedc3a34719f5b78b6b4f67c6292c2829d4"
+      "bytes": 102,
+      "sha256": "e2cde0d25147973a1c6077bf4f8c2cc260272aa5981387ad4133b2295f73a5b8"
     },
     "tools/SPPACK/PACKAGE.PY": {
-      "bytes": 4053,
-      "sha256": "56e7024dc74c4d84a31f6e14a9eb10091a9f409d5f5078abd06b20e4fcf5f219"
+      "bytes": 4151,
+      "sha256": "9847d139080556e7fcedaeb8be21c2d115471448e3c590795b0d18de2123d54e"
     },
     "tools/SPPACK/README.TXT": {
       "bytes": 1331,
       "sha256": "8f3ffd4dea3946ec8de63a403d0f4ac0dddbc5f915d5fab435b7e1b0d72a3941"
     },
     "tools/SPPACK/TESTPKG.PY": {
-      "bytes": 2849,
-      "sha256": "b322310c733c1dfb6bed322e2fe88bfbed41f1f299cc0cbca84e164184a7a91b"
+      "bytes": 3125,
+      "sha256": "f3020a4b7340deeafd24a22de72c6f71f2548a850ce5135e45ac792ddead22bc"
     },
     "tools/XR1PACK/PREPARE.PY": {
       "bytes": 11110,
       "sha256": "c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1"
+    },
+    "src/panui/PANSET.C": {
+      "bytes": 12906,
+      "sha256": "779be6959bf60bd13466d6ab40725311fa489b18ba457a36d9126f76e20e65b5"
+    },
+    "src/panui/PANSET.H": {
+      "bytes": 8460,
+      "sha256": "bc5016dd9edf8eb2dbf3e690c713c6d10a9f3f64e7a8b6576c8ecfbd5805e83f"
+    },
+    "src/panui/PANDLG.C": {
+      "bytes": 17247,
+      "sha256": "f89d4df77e386941cf305ceb5582ca77d60563f399f2ced0f383d51616131985"
+    },
+    "src/panui/PANDLG.H": {
+      "bytes": 2437,
+      "sha256": "d5f76a9614c68f03c12c9b5bd520983aff725e29c575010123462f974be14e9d"
+    },
+    "src/panui/VERIFY.PY": {
+      "bytes": 4363,
+      "sha256": "de409657c30ec15d3cd9c89c25b777030d1fb66d426d595f5b4e0214d85174bb"
+    },
+    "src/panui/HOSTUI.PY": {
+      "bytes": 28289,
+      "sha256": "d238b1e93d808e03c2131acb3f567cbcd287d9dd042c43869414f417f81f844a"
+    },
+    "src/panui/XYAPPLY.C": {
+      "bytes": 1688,
+      "sha256": "c997e234b840b5ce93b4255f51b6bc406d7c74203d5a8994cb322f28c891f5f3"
+    },
+    "src/panui/SETTEST.C": {
+      "bytes": 18710,
+      "sha256": "2f52f78ed2290ca2cca47e298e86693c0c2fbc7e7bfca1e6901f8f66af0710e2"
     }
   },
   "tag": "experimental-softpan-2026-10-24"

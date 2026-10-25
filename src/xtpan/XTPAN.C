@@ -17,10 +17,13 @@
  *     brought into view with the smallest exact move (FollowTop; dialogs
  *     are centred on the 400-row desktop).
  * Settings: WIN.INI [XTPan]. Enabled=0 makes the helper exit at once.
+ * "PANCFG SETTINGS" (or XTPAN /SETTINGS) opens the shared panning settings
+ * window of the running helper (PANDLG.C); it adds no timer and no hook.
  * With any other display driver the escape is unsupported and the helper
  * exits quietly. C89, /G0 /Gw /AS.
  */
 #include <windows.h>
+#include "PANDLG.H"
 
 #define XTPAN_ESC 0x5850
 #define QUERYESC 8
@@ -35,6 +38,9 @@ static int bLogKeys;
 static DWORD dwSeen[3];         /* last time Ctrl, Alt, Shift was seen down */
 static HWND hLastActive;
 static char szLog[80];
+static HANDLE hInstance;
+static UINT uOpenMsg;
+static PANHOST host;
 
 static void LogLine(LPSTR text)
 {
@@ -254,13 +260,99 @@ static void Tick(void)
     }
 }
 
+/* Settings window glue: the dialog edits what Tick() already uses. */
+/* The command line is far; PANSET takes near strings. */
+static void CopyArg(char *d, LPSTR s, int cap)
+{
+    int i = 0;
+    while (s[i] && i < cap - 1) {
+        d[i] = s[i];
+        i++;
+    }
+    d[i] = 0;
+}
+
+static int IniGet(void *ctx, const char *sec, const char *key, int def)
+{
+    return (int)GetProfileInt(sec, key, def);
+}
+
+static int IniPut(void *ctx, const char *sec, const char *key, int value)
+{
+    char buf[12];
+    wsprintf(buf, "%d", value);
+    return WriteProfileString(sec, key, buf);
+}
+
+static int XtQuery(void *ctx, PANCAPS *c, PANSET *s)
+{
+    if (PanEscape(-1) < 0) {
+        c->backend = PS_BACK_NONE;
+        c->caps = 0;
+        return 0;
+    }
+    c->backend = PS_BACK_VERT;
+    c->caps = PanCapsFor(PS_BACK_VERT, 0);
+    c->viewX = 0;
+    c->viewY = nTop;
+    c->viewW = c->workW = GetSystemMetrics(SM_CXSCREEN);
+    c->viewH = nView;
+    c->workH = nLogical;
+    PanSetDefaults(PS_BACK_VERT, s);
+    s->step = nStep;
+    s->dwell = nDwell;
+    s->edge = nEdge;
+    s->follow = bFollow != 0;
+    return 1;
+}
+
+static int XtApply(void *ctx, const PANSET *w, PANSET *actual, char *note, int cap)
+{
+    if (PanEscape(-1) < 0)
+        return PS_E_LOST;
+    nStep = w->step;
+    nDwell = w->dwell;
+    nEdge = w->edge;
+    bFollow = w->follow;
+    /* a pending edge dwell was timed with the old band and delay */
+    nEdgeDir = 0;
+    dwEdgeSince = GetCurrentTime();
+    PanSetDefaults(PS_BACK_VERT, actual);
+    actual->step = nStep;
+    actual->dwell = nDwell;
+    actual->edge = nEdge;
+    actual->follow = bFollow;
+    note[0] = 0;
+    return PS_OK;
+}
+
+static int XtHome(void *ctx)
+{
+    if (PanEscape(-1) < 0)
+        return 0;
+    PanTo(0, "home");
+    KeepPointer();
+    return PanEscape(-1) >= 0 && nTop == 0;
+}
+
+static void OpenSettings(void)
+{
+    PanDlgOpen(hInstance, &host);
+}
+
 long FAR PASCAL WndProc(HWND hwnd, unsigned msg, WORD wParam, LONG lParam)
 {
+    if (uOpenMsg && msg == uOpenMsg) {
+        OpenSettings();
+        return 0;
+    }
     switch (msg) {
     case WM_TIMER:
         Tick();
+        PanDlgTrack();
         return 0;
     case WM_DESTROY:
+        PanDlgClose();
         KillTimer(hwnd, 1);
         PostQuitMessage(0);
         return 0;
@@ -273,10 +365,23 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
     WNDCLASS wc;
     MSG msg;
     int esc = XTPAN_ESC;
-    char buf[96];
+    char buf[96], arg[24];
+    int settings;
+    HWND hOwner;
 
-    if (hPrev)
+    /* One owner: a second copy only asks the first to open its settings. */
+    CopyArg(arg, lpCmd, sizeof(arg));
+    settings = PanCmdParse(arg) == PS_CMD_SETTINGS;
+    uOpenMsg = RegisterWindowMessage(PS_MSG_VERT);
+    switch (PanOwnerStart(hPrev != 0, settings)) {
+    case PS_OWN_FORWARD:
+        hOwner = FindWindow("XTPan", NULL);
+        if (hOwner)
+            PostMessage(hOwner, uOpenMsg, 0, 0L);
         return 0;
+    case PS_OWN_EXIT:
+        return 0;
+    }
     if (!GetProfileInt("XTPan", "Enabled", 1))
         return 0;
     nStep = GetProfileInt("XTPan", "Step", 50);
@@ -296,6 +401,8 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
 
     if (ScreenEscape(QUERYESC, sizeof(int), (LPSTR)&esc, NULL) <= 0 || PanEscape(-1) < 0) {
         LogLine("START no XTPAN driver: helper exits");
+        if (settings)
+            MessageBox(NULL, "No XTPAN panning driver is running.", "Panning settings", MB_OK | MB_ICONINFORMATION);
         return 0;
     }
     wsprintf(buf, "START top=%d view=%d logical=%d step=%d dwell=%d edge=%d free=%lu",
@@ -317,7 +424,19 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
     hMain = CreateWindow("XTPan", "XTPan", WS_POPUP, 0, 0, 0, 0, NULL, NULL, hInst, NULL);
     if (!hMain || !SetTimer(hMain, 1, 55, NULL))
         return 0;
+    hInstance = hInst;
+    host.ops.query = XtQuery;
+    host.ops.apply = XtApply;
+    host.ops.home = XtHome;
+    host.store.get = IniGet;
+    host.store.put = IniPut;
+    host.title = "XTPAN panning settings";
+    host.backend = "Vertical software pan";
+    if (settings)
+        PostMessage(hMain, uOpenMsg, 0, 0L);
     while (GetMessage(&msg, NULL, 0, 0)) {
+        if (PanDlgMessage(&msg))
+            continue;
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }

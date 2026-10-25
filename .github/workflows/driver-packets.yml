@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Check out exact public source without credentials
         env:
-          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           SOURCE_REPOSITORY: ${{ github.repository }}
           GIT_TERMINAL_PROMPT: '0'
         run: |

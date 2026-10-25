@@ -21,6 +21,8 @@ After choosing the taller desktop, run C:\CPPAN\PANCFG from Windows File,
 Run. It starts panning and enables it for later sessions. Move the pointer
 past an edge or use Alt+PgDn/Alt+PgUp; Alt+F9 returns to the top.
 This profile uses 32,000 more bytes of shadow memory than the fixed display.
+Run C:\CPPAN\PANCFG SETTINGS for step, edge, dwell and window-follow settings.
+Apply saves changes; Cancel discards edits. Reopening reuses the same helper.
 
 To select the fixed desktop later, run PANCFG OFF in Windows, exit to DOS,
 then run INSTALL and choose the fixed display again. Both profiles are in

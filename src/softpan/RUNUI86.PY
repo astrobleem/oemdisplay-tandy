@@ -4,7 +4,10 @@ import sys,shutil,importlib.machinery,os,subprocess,time,base64,json,argparse
 r=Path(__file__).resolve().parents[3]
 ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('stage',nargs='?',default='PREPARE');ap.add_argument('--prepare',action='store_true');ap.add_argument('--out',type=Path,default=r/'cp-native-install-01')
 for name in ('deps','control','emulator','roms'):ap.add_argument('--'+name,type=Path)
+ap.add_argument('--guest-log',help='Optional guest helper log to collect with UI evidence')
+ap.add_argument('--seconds',type=int,default=600,help='Owned native session bound (30..1800 seconds)')
 args=ap.parse_args()
+if not 30<=args.seconds<=1800:ap.error('--seconds must be 30..1800')
 out=args.out.resolve();c=out/'CROOT';image=out/'DISK.IMG'
 m=importlib.machinery.SourceFileLoader('lease',str(Path(__file__).resolve().parent/'WINRUN.PY')).load_module()
 runner=m.Runner(out/((args.stage if not args.prepare else 'PREPARE')+'-LEASE.JSON'))
@@ -15,6 +18,7 @@ def owned_session():
      if value is None or not value.exists():raise ValueError('Supply existing --'+name)
     sys.path[:0]=[str(args.deps.resolve()),str(args.control.resolve())]
     from pyfatfs.PyFatFS import PyFatFS
+    from pyfatfs._exceptions import PyFATException
     from src.gdbclient import GdbClient
     from src.headless_input import HeadlessCtl
     prepare=args.prepare
@@ -53,14 +57,17 @@ def owned_session():
     with (out/(stage+'-HOST.LOG')).open('wb') as log:
      si=subprocess.STARTUPINFO();si.dwFlags|=subprocess.STARTF_USESHOWWINDOW;si.wShowWindow=0
      p=subprocess.Popen([str(args.emulator.resolve()),'-P',str(out),'-R',str(args.roms.resolve()),'-N'],cwd=out,env=dict(os.environ,QT_QPA_PLATFORM='offscreen'),stdout=log,stderr=subprocess.STDOUT,startupinfo=si,creationflags=subprocess.CREATE_NO_WINDOW)
-     child={'pid':p.pid,'bound_seconds':600};runner.state['children'].append(child);runner.save()
+     child={'pid':p.pid,'bound_seconds':args.seconds};runner.state['children'].append(child);runner.save()
      try:
       started=time.monotonic();sent=None;captures=set();fresh=False
-      while time.monotonic()-started<600:
+      while time.monotonic()-started<args.seconds:
        assert p.poll() is None
        if stop.exists():break
        if g is None:
         try:g=GdbClient(timeout=3);g.connect();ctl=HeadlessCtl('127.0.0.1',12346)
+        except PermissionError:
+         if g:g.close()
+         raise
         except OSError:
          if g:g.close()
          g=None;time.sleep(.2);continue
@@ -76,12 +83,12 @@ def owned_session():
         sent=b
        try:
         with PyFatFS(str(image),offset=8704,read_only=True) as fs:
-         for n in ('UISTATE.TXT','UIVRAM.BIN','UIMEM.LOG'):
+         for n in ['UISTATE.TXT','UIVRAM.BIN','UIMEM.LOG']+([args.guest_log] if args.guest_log else []):
           if fs.exists(n):
            data=fs.readbytes(n)
-           if n=='UISTATE.TXT' and not data.startswith(b'STATE '):continue
+           if n=='UISTATE.TXT' and (not data.startswith(b'STATE ') or not data.endswith(b'UI_COMPLETE\r\n')):continue
            if n=='UIVRAM.BIN' and len(data)!=32768:continue
-           (c/n).write_bytes(data)
+           (c/Path(n).name).write_bytes(data)
          fresh=(c/'UISTATE.TXT').exists() and (c/'UISTATE.TXT').read_bytes().startswith(b'STATE ')
          done=fresh and b' EXIT' in b and g.read_memory(0x449,1)==b'\x03'
         if fresh:
@@ -91,10 +98,11 @@ def owned_session():
         if done:
          g.run_while(lambda:None,settle_seconds=4,start_delay=.01)
          text=g.read_memory(0xb8000,4000)[::2].decode('cp437')
-         if 'WINDOWS>' not in text and 'C>' not in text:continue
+         if 'WINDOWS>' not in text and 'C>' not in text and 'C:\\>' not in text:continue
          (out/(stage+'-DOS.TXT')).write_text(text)
          (out/(stage+'-RETURN.PNG')).write_bytes(base64.b64decode(ctl.capture_frame_png_b64()));print('NORMAL_DOS_RETURN',stage,flush=True);break
-       except (OSError,ValueError):pass
+       except PermissionError:raise
+       except (OSError,ValueError,PyFATException):pass
       else:raise TimeoutError('ColorPlus UI bound')
      finally:
       if ctl:ctl.close()
