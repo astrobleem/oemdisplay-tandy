@@ -1,0 +1,12 @@
+[data]
+Version = "3.0"
+[disks]
+a = C:\P15EXP, "Amstrad PC1512 display", OEMSETUP.INF
+[display]
+PC1512 = a:PC1512.DRV, "Amstrad PC1512 640x200 16 colors", "200,96,48", a:CGA.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE
+[sysfonts]
+a:XTCSYS.FON, "XT Pixels CGA System", "200,96,48"
+[fixedfonts]
+a:XTCFIX.FON, "XT Pixels CGA Fixed", "200,96,48"
+[oemfonts]
+a:XTCOEM.FON, "XT Pixels CGA Terminal", "200,96,48", 1

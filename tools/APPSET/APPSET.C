@@ -31,6 +31,9 @@ struct entry { char *name; U32 size, crc; long offset; };
  puts("All app files stay in that folder. No Windows or boot settings were changed."); \
 } while(0)
 #endif
+#ifndef APP_COLLISION
+#define APP_COLLISION "A different app file exists. Choose a new app folder."
+#endif
 #define COUNT (sizeof(files)/sizeof(files[0]))
 #define PATHLEN 128
 static unsigned char buf[2048];
@@ -69,6 +72,17 @@ static void destination(char *s)
  }
  if(i==start||s[i-1]=='.')fail("Use a directory below a drive root.");strcpy(target,s);
 }
+#ifdef APP_FIXED_TARGET
+static int fixed_target(char *s)
+{
+ const char *d=DEFAULT_DIR;
+ while(*s&&*d){
+  if(toupper((unsigned char)*s)!=toupper((unsigned char)*d))return 0;
+  s++;d++;
+ }
+ return !*s&&!*d;
+}
+#endif
 static int exists(char *path)
 {
  struct stat st;if(!stat(path,&st))return 1;if(errno!=ENOENT)fail("Cannot inspect destination.");return 0;
@@ -156,11 +170,16 @@ int main(int argc,char **argv)
  if(r.h.al<3||(r.h.al==3&&r.h.ah<20))fail("DOS 3.20 or later required.");
 #endif
  if(argc>2){puts("Usage: " SETUP_NAME " [" DEFAULT_DIR "]");return 1;}
+#ifdef APP_FIXED_TARGET
+ if(argc==2&&!fixed_target(argv[1]))fail("This packet extracts only to " DEFAULT_DIR ".");
+ destination(DEFAULT_DIR);
+#else
  destination(argc==2?argv[1]:DEFAULT_DIR);
+#endif
  packet=fopen(source,"rb");if(!packet)fail("Cannot read the supplied app installer.");scan();
  if(exists(target)){if(stat(target,&st)||!(st.st_mode&S_IFDIR))fail("Destination is not a directory.");}
  /* Validate every collision before copying any files. */
- for(i=0;i<COUNT;i++){join(output,target,files[i].name);if(exists(output)&&!valid(output,&files[i]))fail("A different app file exists. Choose a new app folder.");}
+ for(i=0;i<COUNT;i++){join(output,target,files[i].name);if(exists(output)&&!valid(output,&files[i]))fail(APP_COLLISION);}
  if(!exists(target)&&mkdir(target))fail("Cannot create app folder. Its parent directory must exist.");
  for(i=0;i<COUNT;i++)copy_entry(i);
  if(fclose(packet))fail("App packet close failed.");
