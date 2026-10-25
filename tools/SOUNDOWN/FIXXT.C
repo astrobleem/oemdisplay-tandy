@@ -182,7 +182,10 @@ static int current(const char *source,const char *dest){
  if(kind(dest)!=1)return 0;len=length(source);if(length(dest)!=len)return 0;
  leaf=strrchr(source,'\\');leaf=leaf?leaf+1:source;
  if(verify||!stricmp(leaf,"XTCLEAN.COM")||
-    !stricmp(leaf,SOUND_FILE))return equal(source,dest);
+    !stricmp(leaf,SOUND_FILE)||!stricmp(leaf,"TSHELL.EXE")||
+    !stricmp(leaf,"TCHIME.EXE")||!stricmp(leaf,"XPCHIME.EXE")||
+    !stricmp(leaf,"TEXIT.EXE")||!stricmp(leaf,"TP.EXE"))
+  return equal(source,dest);
  a=open(source,O_RDONLY|O_BINARY);b=open(dest,O_RDONLY|O_BINARY);
  if(a<0||b<0)stop("Cannot sample payload",dest);
  if(len<64){close(a);close(b);return equal(source,dest);}

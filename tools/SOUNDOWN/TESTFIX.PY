@@ -131,15 +131,16 @@ def main():
         require(run('REPAIR', '/XR1', '/FRESH').returncode == 0, 'Legacy install defaults overrode actual XRSYNC')
         require(all(p.read_bytes() == data for p, data in preserved.items()), 'Legacy install defaults changed display state')
         require((home/'PROFILE.TXT').read_bytes() == b'XRSYNC.DRV\r\n', 'Fresh default downgraded saved profile')
-        # Same-length, same-edge stale XTCLEAN must not survive repair.
-        wrapper = bytearray((win/'XTCLEAN.COM').read_bytes())
-        wrapper[len(wrapper)//2] ^= 1
-        (win/'XTCLEAN.COM').write_bytes(wrapper)
-        before = inventory(root)
-        require(run('CHECK').returncode == 2, 'Same-edge stale XTCLEAN was accepted')
-        require(inventory(root) == before, 'Stale-wrapper CHECK changed files')
-        require(run('REPAIR').returncode == 0, 'XTCLEAN exact repair failed')
-        require((win/'XTCLEAN.COM').read_bytes() == (media/'XTCLEAN.COM').read_bytes(), 'XTCLEAN full identity not restored')
+        # Current shell and wrapper can change only in their middle bytes.
+        for name in ('XTCLEAN.COM', 'TSHELL.EXE'):
+            stale = bytearray((win/name).read_bytes())
+            stale[len(stale)//2] ^= 1
+            (win/name).write_bytes(stale)
+            before = inventory(root)
+            require(run('CHECK').returncode == 2, 'Same-edge stale '+name+' was accepted')
+            require(inventory(root) == before, 'Stale-client CHECK changed files')
+            require(run('REPAIR').returncode == 0, name+' exact repair failed')
+            require((win/name).read_bytes() == (media/name).read_bytes(), name+' full identity not restored')
         (win/'SYSTEM.INI').write_bytes(ini.replace(b'sound.drv=SOUND.DRV', b'sound.drv=TSOUND.DRV'))
         require(run('REPAIR').returncode == 0, 'Existing sound entry was not unified')
         require((win/'SYSTEM.INI').read_bytes() == ini, 'Sound key repair changed unrelated settings')

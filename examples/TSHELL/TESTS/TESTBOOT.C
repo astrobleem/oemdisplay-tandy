@@ -5,7 +5,7 @@
 #include "windows.h"
 static char *choice="XP",*dir="C:\\TSTART",*loads="",*runs="";
 static int opts=1,exitopt=1,missing=0,timerok=1,busy=0,driver=1,live=0,exitLive=0,execfail=0,veto=0;
-static int api=1,soundBusy,claimFail,held,opens,closes;
+static int api=1,openapi=1,closeapi=1,soundBusy,claimFail,held,opens,closes;
 static char*busyClass="TandyPSGTest";
 static int execs,apps,exits,boxes,timer,mode[80];static char commands[80][144],last[180];
 int lstrcmpi(const char*a,const char*b){return strcasecmp(a,b);}int lstrlen(const char*a){return strlen(a);}char*lstrcpy(char*a,const char*b){return strcpy(a,b);}char*lstrcat(char*a,const char*b){return strcat(a,b);}
@@ -18,9 +18,15 @@ int OpenFile(const char*s,OFSTRUCT*o,UINT f){(void)s;(void)o;(void)f;return miss
 int FindWindow(const char*c,const char*t){(void)t;return busy&&!strcmp(c,busyClass);}
 HMODULE GetModuleHandle(const char*m){return !strcmp(m,"SOUND")?driver:!strcmp(m,"TEXIT")?exitLive:(!strcmp(m,"XPCHIME")||!strcmp(m,"TCHIME"))?live:0;}
 static int rawLease(unsigned v,unsigned op){if(v!=1)return -1;if(op==1){if(claimFail)return -3;held=1;return 0;}if(op==2){held=0;return 0;}return -1;}
-int OpenSound(void){if(soundBusy)return -1;opens++;return 3;}
-void CloseSound(void){closes++;held=0;}
-FARPROC GetProcAddress(HMODULE h,const char*s){return h&&(!strcmp(s,"DEBUGTIMER")||(api&&!strcmp(s,"TANDYPSGLEASE")))?(FARPROC)rawLease:NULL;}
+static int mockOpen(void){if(soundBusy)return -1;opens++;return 3;}
+static void mockClose(void){closes++;held=0;}
+FARPROC GetProcAddress(HMODULE h,const char*s){
+ if(!h)return NULL;
+ if(!strcmp(s,"DEBUGTIMER")||(api&&!strcmp(s,"TANDYPSGLEASE")))return (FARPROC)rawLease;
+ if(openapi&&!strcmp(s,"OPENSOUND"))return (FARPROC)mockOpen;
+ if(closeapi&&!strcmp(s,"CLOSESOUND"))return (FARPROC)mockClose;
+ return NULL;
+}
 int SetTimer(HWND w,int i,int ms,void*f){(void)w;(void)i;(void)ms;(void)f;timer=timerok;return timerok;}int KillTimer(HWND w,int i){(void)w;(void)i;timer=0;return 1;}
 UINT WinExec(const char*c,UINT s){(void)s;execs++;assert(!held);strcpy(last,c);if(execfail)return 2;if(strstr(c,"TEXIT"))exitLive=1;else live=1;return 42;}
 UINT PmLaunchShow(HWND w,char*c,int show){(void)w;strcpy(commands[apps],c);mode[apps++]=show;return 42;}
@@ -28,7 +34,7 @@ int ExitWindows(DWORD d,unsigned r){(void)d;(void)r;exits++;return !veto;}int Me
 unsigned GetWindowWord(HWND w,int n){(void)w;(void)n;return 1;}
 void TinyNotice(HWND w,HINSTANCE i,char*t,char*s){(void)w;(void)i;(void)t;(void)s;boxes++;}
 #include "../TSBOOT.C"
-static void reset(void){begun=waiting=listed=warned=useExit=0;choice="XP";dir="C:\\TSTART";loads=runs="";opts=exitopt=timerok=1;missing=busy=live=exitLive=execfail=veto=0;driver=api=1;soundBusy=claimFail=held=opens=closes=0;execs=apps=exits=boxes=timer=0;busyClass="TandyPSGTest";}
+static void reset(void){begun=waiting=listed=warned=useExit=0;choice="XP";dir="C:\\TSTART";loads=runs="";opts=exitopt=timerok=1;missing=busy=live=exitLive=execfail=veto=0;driver=api=openapi=closeapi=1;soundBusy=claimFail=held=opens=closes=0;execs=apps=exits=boxes=timer=0;busyClass="TandyPSGTest";}
 int main(void){char huge[1100];int i;
 reset();loads="ONE.EXE";runs="TWO.COM XPCHIME.EXE TCHIME.EXE";TandyBootBegin(1);assert(execs==1&&apps==0&&timer);TandyBootBegin(1);TandyBootTick(1);assert(execs==1&&apps==0);live=0;TandyBootTick(1);assert(apps==2&&mode[0]==7&&mode[1]==1&&!timer);TandyBootTick(1);assert(apps==2);assert(!strcmp(commands[0],"ONE.EXE"));
 reset();choice="TANDY";TandyBootBegin(1);assert(strstr(last,"TCHIME.EXE")&&!strstr(last,"XPCHIME"));
@@ -58,4 +64,6 @@ reset();driver=0;TandyBootBegin(1);assert(!execs&&!opens&&!held);
 reset();api=0;TandyBootBegin(1);assert(!execs&&!opens&&!held);
 reset();claimFail=1;TandyBootBegin(1);assert(!execs&&opens==1&&closes==1&&!held);
 reset();TandyExit(1,0);assert(execs==1&&opens==1&&closes==1&&!held);
-puts("PASS: 28 host startup/exit lifecycle and lease scenarios");return 0;}
+reset();openapi=0;TandyBootBegin(1);assert(!execs&&!opens&&!closes&&!held);
+reset();closeapi=0;TandyBootBegin(1);assert(!execs&&!opens&&!closes&&!held);
+puts("PASS: 30 host startup/exit lifecycle and dynamic lease scenarios");return 0;}
