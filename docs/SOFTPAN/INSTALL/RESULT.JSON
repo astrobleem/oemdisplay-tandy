@@ -1,0 +1,188 @@
+{
+  "pass": true,
+  "feature_commits": [
+    "5ceb401912968c45e5f5ef1776af7ba10ea30fbb",
+    "24280c5c9d36e2c13be6ecfc40d9b48895c39cf4"
+  ],
+  "scope": "Software panning only; no physical hardware qualification, CF writes, merge or publication.",
+  "packets": {
+    "JRPAN-REVIEW.ZIP": {
+      "bytes": 49403,
+      "sha256": "df88a88d1325aaac9b293fc08f20cd6aa2c2ee47df969a8082eaa62fd578629b"
+    },
+    "CPPAN-INSTALL.ZIP": {
+      "bytes": 76866,
+      "sha256": "e220c2ecdafc8db1088d5fbc4a314f0b6d71447c65ad8cfb4dc423c1483fba46"
+    }
+  },
+  "pcjr": {
+    "driver_sha256": "a0d5f44d5663420dde4bae364e43149fc3f284b9f6318206a925101cd474207d",
+    "fixed_sha256": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4",
+    "flows": {
+      "enable": [
+        {
+          "label": "INSTALLED",
+          "state": "STATE seq=1 width=320 height=400 top=0 free=283488 helper=0 active=4524 focus=5952 load=C:\\WINDOWS\\UITEST.EXE"
+        },
+        {
+          "label": "ENABLED",
+          "state": "STATE seq=7 width=320 height=400 top=50 free=275392 helper=6952 active=4524 focus=5952 load=C:\\WINDOWS\\UITEST.EXE C:\\JRPAN\\XTPAN.EXE"
+        }
+      ],
+      "off": [
+        {
+          "label": "AUTOLOAD",
+          "state": "STATE seq=9 width=320 height=400 top=50 free=275392 helper=4404 active=4648 focus=6076 load=C:\\WINDOWS\\UITEST.EXE C:\\JRPAN\\XTPAN.EXE"
+        },
+        {
+          "label": "OFF0",
+          "state": "STATE seq=14 width=320 height=400 top=50 free=283488 helper=0 active=4648 focus=6076 load=C:\\WINDOWS\\UITEST.EXE"
+        },
+        {
+          "label": "OFF1",
+          "state": "STATE seq=23 width=320 height=400 top=50 free=283488 helper=0 active=4648 focus=6076 load=C:\\WINDOWS\\UITEST.EXE"
+        },
+        {
+          "label": "OFF2",
+          "state": "STATE seq=32 width=320 height=400 top=50 free=283488 helper=0 active=4648 focus=6076 load=C:\\WINDOWS\\UITEST.EXE"
+        }
+      ],
+      "fixed": [
+        {
+          "label": "FIXED_RETURN",
+          "state": "STATE seq=35 width=320 height=200 top=-2 free=316864 helper=0 active=4524 focus=5952 load=C:\\WINDOWS\\UITEST.EXE"
+        }
+      ]
+    },
+    "stable_free_before": 286816,
+    "helper_enabled_free": 278720,
+    "stable_free_after": [
+      286816,
+      286816,
+      286816
+    ],
+    "guarded_startup": true,
+    "normal_exit": "RETPAN2.TXT, RETAUTO.TXT, RETFIXED.TXT; lease PASS"
+  },
+  "colorplus": {
+    "driver_sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+    "fixed_sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406",
+    "native_install": {
+      "native_setup_returned": true,
+      "packet": "CPPAN",
+      "row": 0,
+      "phase": 6,
+      "actions": 6,
+      "boot": "[boot]           \n286grabber=CGA.GR2\nfixedfon.fon=XTEFIX.FON\noemfonts.fon=XTEOEM.FON\nfonts.fon=XTESYS.FON\ndisplay.drv=CPPAN.DRV\nmouse.drv=mouse.drv\nshell=PROGMAN.EXE\nnetwork.drv=\nlanguage.dll=\ncomm.drv=comm.drv\nsound.drv=sound.drv\nkeyboard.drv=keyboard.drv\nsystem.drv=system.drv\n386grabber=\n[keyboard]\nsubtype=\ntype=1\noemansi.bin=\nkeyboard.dll=\n[boot.description]\n\ndisplay.drv=EXPERIMENTAL ColorPlus 320x400 panning\nmouse.drv=Microsoft, or IBM PS/2\nnetwork.drv=Network not installed\nlanguage.dll=English (American)\nkeyboard.typ=PC/XT - Type keyboard (84 keys)\nsystem.drv=MS-DOS or PC-DOS System\n[386Enh]\ndisplay=*vddvga\nkeyboard=*vkd\nmouse=*vmd\nnetwork=*vnetbios, *dosnet\ndevice=*vpicd\ndevice=*vtd\ndevice=*reboot\ndevice=*vdmad\ndevice=*vsd\ndevice=*v86mmgr\ndevice=*pageswap\ndevice=*dosmgr\ndevice=*vmpoll\ndevice=*wshell\ndevice=*vhd\ndevice=*vfd\ndevice=*vpd\ndevice=*parity\ndevice=*biosxlat\ndevice=*vcd\ndevice=*vmcpd\ndevice=*combuff\ndevice=*cdpscsi\nlocal=CON\nFileSysChange=off\n\n[standard]\n\n[NonWindowsApp]\n",
+      "installed": {
+        "CPPAN.DRV": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+        "PCP3216.DRV": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406",
+        "CGA.GR2": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+        "XTESYS.FON": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
+        "XTEFIX.FON": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+        "XTEOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      }
+    },
+    "native_rollback": {
+      "native_setup_returned": true,
+      "packet": "CPPAN",
+      "row": 1,
+      "phase": 6,
+      "actions": 6,
+      "boot": "[boot]           \n286grabber=CGA.GR2\nfixedfon.fon=XTEFIX.FON\noemfonts.fon=XTEOEM.FON\nfonts.fon=XTESYS.FON\ndisplay.drv=PCP3216.DRV\nmouse.drv=mouse.drv\nshell=PROGMAN.EXE\nnetwork.drv=\nlanguage.dll=\ncomm.drv=comm.drv\nsound.drv=sound.drv\nkeyboard.drv=keyboard.drv\nsystem.drv=system.drv\n386grabber=\n[keyboard]\nsubtype=\ntype=1\noemansi.bin=\nkeyboard.dll=\n[boot.description]\n\ndisplay.drv=ColorPlus 320x200 fixed (rollback)\nmouse.drv=Microsoft, or IBM PS/2\nnetwork.drv=Network not installed\nlanguage.dll=English (American)\nkeyboard.typ=PC/XT - Type keyboard (84 keys)\nsystem.drv=MS-DOS or PC-DOS System\n[386Enh]\ndisplay=*vddvga\nkeyboard=*vkd\nmouse=*vmd\nnetwork=*vnetbios, *dosnet\ndevice=*vpicd\ndevice=*vtd\ndevice=*reboot\ndevice=*vdmad\ndevice=*vsd\ndevice=*v86mmgr\ndevice=*pageswap\ndevice=*dosmgr\ndevice=*vmpoll\ndevice=*wshell\ndevice=*vhd\ndevice=*vfd\ndevice=*vpd\ndevice=*parity\ndevice=*biosxlat\ndevice=*vcd\ndevice=*vmcpd\ndevice=*combuff\ndevice=*cdpscsi\nlocal=CON\nFileSysChange=off\n\n[standard]\n\n[NonWindowsApp]\n",
+      "installed": {
+        "CPPAN.DRV": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+        "PCP3216.DRV": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406",
+        "CGA.GR2": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+        "XTESYS.FON": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
+        "XTEFIX.FON": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+        "XTEOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      }
+    },
+    "flows": {
+      "enable": [
+        {
+          "label": "INSTALLED",
+          "state": "STATE seq=1 width=320 height=400 top=0 free=299808 helper=0 active=4524 focus=5952 load=C:\\WINDOWS\\UITEST.EXE"
+        },
+        {
+          "label": "ENABLED",
+          "state": "STATE seq=6 width=320 height=400 top=50 free=291712 helper=6952 active=4524 focus=5952 load=C:\\WINDOWS\\UITEST.EXE C:\\CPPAN\\XTPAN.EXE"
+        }
+      ],
+      "off": [
+        {
+          "label": "AUTOLOAD",
+          "state": "STATE seq=2 width=320 height=400 top=50 free=291712 helper=4404 active=4648 focus=6076 load=C:\\WINDOWS\\UITEST.EXE C:\\CPPAN\\XTPAN.EXE"
+        },
+        {
+          "label": "OFF0",
+          "state": "STATE seq=7 width=320 height=400 top=50 free=299808 helper=0 active=4648 focus=6076 load=C:\\WINDOWS\\UITEST.EXE"
+        }
+      ],
+      "fixed": [
+        {
+          "label": "FIXED_RETURN",
+          "state": "STATE seq=1 width=320 height=200 top=-2 free=335808 helper=0 active=4524 focus=5952 load=C:\\WINDOWS\\UITEST.EXE"
+        }
+      ]
+    },
+    "stable_free_before": 303136,
+    "helper_enabled_free": 295040,
+    "stable_free_after": 303136,
+    "normal_fixed_exit": "Actual C> prompt in CP-DOS-PROMPT.PNG; process stopped afterwards; FIXED-LEASE.JSON PASS"
+  },
+  "earlier_colorplus_runtime_recheck": {
+    "image": "cp-panned-dos320-01/DISK.IMG",
+    "driver_bytes": 58864,
+    "driver_sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+    "sessions": [
+      {
+        "session": 1,
+        "driver_sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+        "width": 320,
+        "height": 400,
+        "frames": 32,
+        "pass": true
+      },
+      {
+        "session": 2,
+        "driver_sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+        "width": 320,
+        "height": 400,
+        "frames": 32,
+        "pass": true
+      }
+    ],
+    "contaminated_by_setup_fixture": false
+  },
+  "retracted_setup_attempt": {
+    "fixture": "cp-native-install-01/SETCPPAN0",
+    "source": "cp-fixed-dos320-01",
+    "error": "Accepted PCP3216 bytes had been stored under CPPAN.DRV by the earlier fixed control; native Setup retained that filename. Selected label was not an installation pass. Only this attempt was retracted.",
+    "correction": "Use actual PCP3216.DRV baseline filename, remove mislabeled CPPAN.DRV, repeat native Setup and assert installed driver bytes."
+  },
+  "memory_128_observation": "FREE_CLEAN in the old rendering fixture precedes helper launch. The owning GDI resource is not isolated. Native-flow OFF returned the complete 8096-byte helper allocation to the stable sampling baseline; no post-helper 128-byte residual was measured.",
+  "emulators": {
+    "pcjr": {
+      "exe": "dosbox-x.exe",
+      "machine": "pcjr",
+      "memory_kb": 640,
+      "cpu": "8086_prefetch fixed 200000",
+      "dos": "DOSBox-X internal DOS",
+      "exe_sha256": "df62e4502eb25d8b7b9893ea8e479b05820baa11d4b54b02439c688ac1d834bd"
+    },
+    "colorplus": {
+      "exe": "86Box.exe",
+      "machine": "ibmxt86",
+      "adapter": "plantronics",
+      "memory_kb": 640,
+      "cpu": "8088 4772728 Hz",
+      "dos": "PC DOS 3.20",
+      "native_setup_frontend": "DOSBox-X machine=cga, same private Windows Setup/support files; selected files copied into this owned boot image",
+      "exe_sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+    }
+  },
+  "all_owned_processes_stopped": true,
+  "public_copy": "Emulator host paths omitted; executable identities and guest evidence retained."
+}

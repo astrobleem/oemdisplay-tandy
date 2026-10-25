@@ -1,0 +1,13 @@
+[data]
+Version = "3.0"
+[disks]
+a = C:\CPPAN, "ColorPlus software panning candidate (C:\CPPAN)", OEMSETUP.INF
+[display]
+CPPAN = a:CPPAN.DRV, "EXPERIMENTAL ColorPlus 320x400 panning", "133,96,72", a:CGA.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE
+PCP3216 = a:PCP3216.DRV, "ColorPlus 320x200 fixed (rollback)", "133,96,72", a:CGA.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE
+[sysfonts]
+a:XTESYS.FON, "EGA System Font", "133,96,72"
+[fixedfonts]
+a:XTEFIX.FON, "EGA Fixed System Font", "133,96,72"
+[oemfonts]
+a:XTEOEM.FON, "EGA Terminal Font (USA/Europe)", "133,96,72", 1

@@ -1,0 +1,359 @@
+{
+  "base_main_commit": "5ada3e8092b761aab9099c6d96a7b893ed3a6902",
+  "base_tree": "257c97c5b2284e01473bfdc07523df60ba3e2cd4",
+  "pcjr": {
+    "candidate": {
+      "adapter": "PCjr",
+      "driver": "JRPAN.DRV",
+      "bytes": 59008,
+      "sha256": "a0d5f44d5663420dde4bae364e43149fc3f284b9f6318206a925101cd474207d",
+      "logical": [
+        320,
+        400
+      ],
+      "viewport": [
+        320,
+        200
+      ],
+      "pan_top": [
+        0,
+        200
+      ],
+      "shadow_bytes": 64000,
+      "video_page_bytes": 32768,
+      "new_shadow_bytes_vs_fixed": 32000,
+      "hardware_panning": false,
+      "staged_sha256": {
+        "TSOFT.ASM": "2ef6688e96b17214716228c63b7d8f2173a3f12642026cd3b59c290f69906f78",
+        "TCURSOR.ASM": "9a32a44d327318daa86e629a33706af1bbc63518caf4f3e2c43d14a015227fe3",
+        "SDIB88.ASM": "7bd9a73e45267018d62022e8090e4d707a7d3b0dfe52a25ee3d5bb07770ba5e2",
+        "TSOFT.DEF": "c037fd1dd80ffe7a3eb66ebe79d88316302f255404ecfe32e4e2bc07f77d5813"
+      },
+      "runtime": "NOT_TESTED"
+    },
+    "instruction_rows": 16687,
+    "unsupported_instructions": [],
+    "link_result": "PASS",
+    "linked_objects": 28,
+    "rle_abi": {
+      "source": {
+        "near_helper_returns": 2,
+        "delta_skip_width": 1
+      },
+      "listing": {
+        "near_call_sites": [
+          "0360",
+          "0438",
+          "0460",
+          "049A"
+        ],
+        "helper_success_opcode": "C3",
+        "helper_failure_opcode": "C3",
+        "helper_stack_delta_bytes": {
+          "success": 0,
+          "failure": 0
+        },
+        "far_cleanup": {
+          "RLEInit": 24,
+          "RLENextRow": 8
+        },
+        "delta_skip_compare": "byte [ES:DI+27]"
+      }
+    },
+    "runtime": {
+      "pass": true,
+      "windows_sessions": 2,
+      "frames": 64,
+      "pixels_compared": 4096000,
+      "padding_bytes_compared": 49152,
+      "guard": "JRGUARD passed before both boots; page held by DOS system block",
+      "free_start_bytes": 298144,
+      "free_after_bytes": 298016,
+      "repeated_pan_allocation_delta": 0,
+      "note": "128-byte residual vs initial fixture entry; no growth across the 40 measured pans in either session",
+      "helper": "PANCFG module-relative XTPAN path; preserve load entries, follow down/up, remove and stop",
+      "limits": [
+        "native Windows Setup selection has instructions but was not run by this fixture",
+        "text shape is compared with memory-DDB rendering",
+        "raw VRAM PNGs are decoded captures",
+        "no physical PCjr or hardware-panning claim"
+      ]
+    },
+    "memory_comparison": {
+      "fixed_accepted_free_bytes": [
+        339488,
+        339488
+      ],
+      "panned_free_bytes": [
+        303456,
+        303456
+      ],
+      "observed_difference_bytes": 36032,
+      "shadow_difference_bytes": 32000,
+      "fixture": "same MEMTEST.EXE; 640 KB PCjr; two returns each; accepted fixed driver versus current panned source build",
+      "limit": "36032 includes code/data and build-generation differences; not all is framebuffer allocation"
+    }
+  },
+  "colorplus": {
+    "candidate": {
+      "adapter": "colorplus",
+      "driver": "CPPAN.DRV",
+      "bytes": 58864,
+      "sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+      "logical": [
+        320,
+        400
+      ],
+      "viewport": [
+        320,
+        200
+      ],
+      "pan_top": [
+        0,
+        200
+      ],
+      "shadow_bytes": 64000,
+      "video_page_bytes": 32768,
+      "new_shadow_bytes_vs_fixed": 32000,
+      "hardware_panning": false,
+      "staged_sha256": {
+        "TSOFT.ASM": "97ba91fcded9a86501eac43857b03c6cee096b8bfa5e7d296b6be00feb93d75a",
+        "TCURSOR.ASM": "4563d9acd034503a9977628828034c31fe3fcdb02b9e5bc4ee3f6b0237393d64",
+        "SDIB88.ASM": "7bd9a73e45267018d62022e8090e4d707a7d3b0dfe52a25ee3d5bb07770ba5e2",
+        "TSOFT.DEF": "3fac9b905aa75115f7312a46770399da3c1be7c5460edee82211714fb34eb0a2"
+      },
+      "runtime": "NOT_TESTED"
+    },
+    "instruction_rows": 16351,
+    "unsupported_instructions": [],
+    "link_result": "PASS",
+    "linked_objects": 28,
+    "rle_abi": {
+      "source": {
+        "near_helper_returns": 2,
+        "delta_skip_width": 1
+      },
+      "listing": {
+        "near_call_sites": [
+          "0360",
+          "0438",
+          "0460",
+          "049A"
+        ],
+        "helper_success_opcode": "C3",
+        "helper_failure_opcode": "C3",
+        "helper_stack_delta_bytes": {
+          "success": 0,
+          "failure": 0
+        },
+        "far_cleanup": {
+          "RLEInit": 24,
+          "RLENextRow": 8
+        },
+        "delta_skip_compare": "byte [ES:DI+27]"
+      }
+    },
+    "presenter_runtime": {
+      "pass": true,
+      "cases": 13,
+      "bytes_compared": 426192,
+      "staged_tsoft_sha256": "97ba91fcded9a86501eac43857b03c6cee096b8bfa5e7d296b6be00feb93d75a",
+      "scope": "actual staged FlushRows and ColorPlus macros, video segment redirected to guarded RAM; not Windows/adapter qualification",
+      "results": [
+        {
+          "top": 0,
+          "first": 0,
+          "last": 400,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 1,
+          "first": 0,
+          "last": 400,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 99,
+          "first": 0,
+          "last": 400,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 100,
+          "first": 0,
+          "last": 400,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 199,
+          "first": 0,
+          "last": 400,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 200,
+          "first": 0,
+          "last": 400,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 100,
+          "first": 95,
+          "last": 108,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 100,
+          "first": 0,
+          "last": 20,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 100,
+          "first": 299,
+          "last": 305,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 200,
+          "first": 393,
+          "last": 410,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 1,
+          "first": -10,
+          "last": 2,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 200,
+          "first": 400,
+          "last": 401,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        },
+        {
+          "top": 0,
+          "first": 200,
+          "last": 200,
+          "bytes": 32784,
+          "mismatches": 0,
+          "first_mismatches": [],
+          "pass": true
+        }
+      ]
+    },
+    "windows_runtime": {
+      "status": "PASS",
+      "sessions": 2,
+      "frames": 64,
+      "pixels_compared": 4096000,
+      "padding_bytes_compared": 49152,
+      "profile": "86Box IBM XT 1986, 640 KB, 8088 4.77 MHz, Plantronics ColorPlus, PC DOS 3.20",
+      "initial_top_each_session": 0,
+      "repeated_pan_allocation_delta": 0,
+      "free_start_bytes": 314528,
+      "free_after_bytes": 314400,
+      "fixture_residual_bytes": 128,
+      "coverage": [
+        "DDB and DIB transfers",
+        "text",
+        "clipping",
+        "ScrollDC",
+        "screen copies",
+        "odd and boundary viewport positions",
+        "cursor clipping and restore",
+        "drawing under cursor",
+        "helper startup/follow/stop",
+        "normal DOS return and relaunch"
+      ],
+      "limits": [
+        "native Windows Setup was not exercised by this fixture",
+        "text uses a memory-DDB glyph reference",
+        "no physical hardware qualification or performance claim"
+      ]
+    },
+    "prior_fixture_failure": {
+      "status": "BLOCKED",
+      "action": "boot Windows 3.0 WIN /R with CPPAN.DRV and SPTEST shell",
+      "target": "isolated 86Box IBM XT 1986, 640 KB, 8088 4.77 MHz, Plantronics ColorPlus",
+      "reason": "remained at static Windows startup before SPTEST; no SPTEST log; captured frames at 61 and 181 seconds are byte-identical",
+      "outcome": "owned emulator stopped; lease released; no denial; driver vs VM cause not established",
+      "screenshot_sha256": "f781001eb08e82c019916727cf316a3c23bae0cf3a25359cff11028918e8b06b"
+    },
+    "fixture_diagnosis": {
+      "resolved": true,
+      "accepted_driver_sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406",
+      "old_fixture": {
+        "boot_image": "HOV8088-BASE.IMG",
+        "accepted_fixed_boots": false,
+        "observation": "same static startup screen; sampled CS:IP 0000:003D; BIOS ticks advance"
+      },
+      "repaired_fixture": {
+        "boot_media": "existing PCjs PC DOS 3.20 image",
+        "accepted_fixed_boots": true,
+        "panned_boots": true,
+        "partition_offset": 8704,
+        "chs": [
+          615,
+          4,
+          17
+        ],
+        "change": "DOS boot image and its required disk geometry; same Windows support files and emulator configuration"
+      },
+      "outcome": "fixture repaired; no candidate driver-byte change required",
+      "limit": "This identifies the boot-fixture dependency; it does not establish that every newer DOS setup fails."
+    },
+    "packet": {
+      "file": "CPPAN-REVIEW.ZIP",
+      "bytes": 76866,
+      "sha256": "df2c04bd92c8f047ccc6e9d7130c5490bf637544087edfeea27e533560ddfb71",
+      "local_owned_support_file": "CGA.GR2 from the existing private Windows installation; no complete OS media",
+      "rollback_driver_sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406"
+    }
+  },
+  "packet": {
+    "file": "JRPAN-REVIEW.ZIP",
+    "bytes": 49403,
+    "sha256": "df88a88d1325aaac9b293fc08f20cd6aa2c2ee47df969a8082eaa62fd578629b"
+  },
+  "accepted_payloads_modified": false,
+  "publication": false,
+  "hardware_tests": false
+}

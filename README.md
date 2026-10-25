@@ -29,6 +29,17 @@ For an **original Tandy 1000 EX/HX with normal 640 KB and Windows 3.0 real mode*
 Other hardware profiles and apps are in [current downloads](docs/DOWNLOADS.MD).
 Each product has one current packet and a short install guide.
 
+## PCjr and ColorPlus software panning
+
+A **320x400 desktop through a 320x200, 16-color viewport** is now available
+for these adapters. The kits include the helper and a fixed-mode switch-back.
+
+**[PCjr download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-softpan-2026-10-24/JRPAN.ZIP)** | **[ColorPlus download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-softpan-2026-10-24/CPPAN.ZIP)** |
+[Short install instructions](docs/SOFTPAN/RELEASE.MD) | [Windows emulator evidence](docs/SOFTPAN/README.MD)
+
+These use software copies and 32,000 additional shadow bytes. The Windows
+runs cover DOSBox-X PCjr and 86Box XT/Plantronics, each with 640 KB RAM.
+
 ## More color, compact controls
 
 | Before: Windows 3.0, four colors | Windows XT: sixteen colors |

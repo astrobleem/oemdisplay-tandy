@@ -1,0 +1,15 @@
+{
+  "children": [
+    {
+      "bound_seconds": 120,
+      "exit_code": 0,
+      "stopped": true
+    }
+  ],
+  "status": "PASS",
+  "lease_acquired": true,
+  "lease_released": true,
+  "no_emulator_before": true,
+  "no_emulator_after": true,
+  "public_copy": "Host paths, process identities and lease timing metadata omitted; bounded completion and ownership results retained."
+}

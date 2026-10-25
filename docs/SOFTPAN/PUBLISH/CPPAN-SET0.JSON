@@ -1,0 +1,16 @@
+{
+  "actions": 6,
+  "boot": "[boot]           \n286grabber=CGA.GR2\nfixedfon.fon=XTEFIX.FON\noemfonts.fon=XTEOEM.FON\nfonts.fon=XTESYS.FON\ndisplay.drv=CPPAN.DRV\nmouse.drv=mouse.drv\nshell=PROGMAN.EXE\nnetwork.drv=\nlanguage.dll=\ncomm.drv=comm.drv\nsound.drv=sound.drv\nkeyboard.drv=keyboard.drv\nsystem.drv=system.drv\n386grabber=\n[keyboard]\nsubtype=\ntype=1\noemansi.bin=\nkeyboard.dll=\n[boot.description]\n\ndisplay.drv=EXPERIMENTAL ColorPlus 320x400 panning\nmouse.drv=Microsoft, or IBM PS/2\nnetwork.drv=Network not installed\nlanguage.dll=English (American)\nkeyboard.typ=PC/XT - Type keyboard (84 keys)\nsystem.drv=MS-DOS or PC-DOS System\n[386Enh]\ndisplay=*vddvga\nkeyboard=*vkd\nmouse=*vmd\nnetwork=*vnetbios, *dosnet\ndevice=*vpicd\ndevice=*vtd\ndevice=*reboot\ndevice=*vdmad\ndevice=*vsd\ndevice=*v86mmgr\ndevice=*pageswap\ndevice=*dosmgr\ndevice=*vmpoll\ndevice=*wshell\ndevice=*vhd\ndevice=*vfd\ndevice=*vpd\ndevice=*parity\ndevice=*biosxlat\ndevice=*vcd\ndevice=*vmcpd\ndevice=*combuff\ndevice=*cdpscsi\nlocal=CON\nFileSysChange=off\n\n[standard]\n\n[NonWindowsApp]\n",
+  "installed": {
+    "CGA.GR2": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+    "CPPAN.DRV": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+    "PCP3216.DRV": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406",
+    "XTEFIX.FON": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+    "XTEOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+    "XTESYS.FON": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+  },
+  "native_setup_returned": true,
+  "packet": "CPPAN",
+  "phase": 6,
+  "row": 0
+}

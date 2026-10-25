@@ -1,0 +1,330 @@
+{
+  "pass": true,
+  "driver_sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+  "adapter": "colorplus",
+  "assertions": {
+    "complete": true,
+    "no_failed_calls": true,
+    "geometry": true,
+    "initial_top": true,
+    "video_segment": true,
+    "pan_sequence": true,
+    "frame_sequence": true,
+    "text_reference": true,
+    "text_bytes": true,
+    "dib_scans": true,
+    "cursor_show_counts": true,
+    "stable_pan_memory": true,
+    "helper_and_config": true
+  },
+  "frames": 32,
+  "pixels_compared": 2048000,
+  "padding_bytes_per_frame": 768,
+  "results": [
+    {
+      "frame": 0,
+      "top": 0,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 1,
+      "top": 1,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 2,
+      "top": 99,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 3,
+      "top": 100,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 4,
+      "top": 199,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 5,
+      "top": 200,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 6,
+      "top": 0,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 7,
+      "top": 200,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 8,
+      "top": 200,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 9,
+      "top": 100,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 10,
+      "top": 0,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 11,
+      "top": 200,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 12,
+      "top": 200,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 13,
+      "top": 0,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 14,
+      "top": 100,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 15,
+      "top": 100,
+      "cursor_visible": 1,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 16,
+      "top": 100,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 17,
+      "top": 100,
+      "cursor_visible": 1,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 18,
+      "top": 100,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 19,
+      "top": 100,
+      "cursor_visible": 1,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 20,
+      "top": 100,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 21,
+      "top": 100,
+      "cursor_visible": 1,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 22,
+      "top": 100,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 23,
+      "top": 100,
+      "cursor_visible": 1,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 24,
+      "top": 100,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 25,
+      "top": 100,
+      "cursor_visible": 1,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 26,
+      "top": 100,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 27,
+      "top": 100,
+      "cursor_visible": 1,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 28,
+      "top": 199,
+      "cursor_visible": 1,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 29,
+      "top": 200,
+      "cursor_visible": 1,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 30,
+      "top": 200,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    },
+    {
+      "frame": 31,
+      "top": 0,
+      "cursor_visible": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "first": [],
+      "pass": true
+    }
+  ],
+  "free_start": [
+    314528
+  ],
+  "free_after": [
+    314400
+  ],
+  "free_delta": [
+    -128
+  ],
+  "free_clean": [
+    314400
+  ],
+  "limits": [
+    "raw VRAM screenshots are decoded captures, not host window grabs",
+    "text glyph uses separately rendered memory bitmap reference",
+    "no physical hardware qualification or performance claim"
+  ]
+}
