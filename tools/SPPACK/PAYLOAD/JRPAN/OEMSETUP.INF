@@ -1,0 +1,18 @@
+; IBM PCjr 320x400 logical (JRPAN.DRV), Windows 3.0 real mode. EXPERIMENTAL.
+; Start Windows only with C:\JRPAN\JRSTART, which runs JRGUARD first.
+; All files are first-party: JRPAN.DRV, JRGRAB.GR2 (PCjr-safe grabber built
+; from the DDK CGA grabber), XTE*.FON fonts, XTSTATIC.LGO + WXTSPL01.RLE logo.
+; Setup copies from the absolute path below; keep the folder at C:\JRPAN.
+[data]
+Version = "3.0"
+[disks]
+a = C:\JRPAN, "IBM PCjr experimental display (C:\JRPAN)", OEMSETUP.INF
+[display]
+JRPAN = a:JRPAN.DRV, "EXPERIMENTAL IBM PCjr 320x400 software panning", "133,96,72", a:JRGRAB.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE
+TNDYJR = a:TNDYJR.DRV, "IBM PCjr 320x200 fixed (rollback)", "133,96,72", a:JRGRAB.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE
+[sysfonts]
+a:XTESYS.FON, "EGA System Font", "133,96,72"
+[fixedfonts]
+a:XTEFIX.FON, "EGA Fixed System Font", "133,96,72"
+[oemfonts]
+a:XTEOEM.FON, "EGA Terminal Font (USA/Europe)", "133,96,72", 1

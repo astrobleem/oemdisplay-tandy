@@ -1,0 +1,1429 @@
+{
+  "accepted_packages_modified": false,
+  "drivers": {
+    "CPPAN": {
+      "bytes": 58864,
+      "sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f"
+    },
+    "JRPAN": {
+      "bytes": 59008,
+      "sha256": "a0d5f44d5663420dde4bae364e43149fc3f284b9f6318206a925101cd474207d"
+    }
+  },
+  "hardware_panning": false,
+  "hardware_qualified": false,
+  "helpers": {
+    "PANCFG.EXE": {
+      "bytes": 4015,
+      "sha256": "e67238948079683788e626ad54a11b89e28a515da97632724bc394e2637a1442"
+    },
+    "XTPAN.EXE": {
+      "bytes": 6415,
+      "sha256": "ea81c0b2e880f28a3f8bf9b8b24d7d9ab7363660036cc382ef6e28c48b690f9b"
+    }
+  },
+  "launchers": {
+    "initial_drive": "Z:",
+    "launchers": [
+      "JRSTART.BAT",
+      "CPWIN.BAT"
+    ],
+    "observed_working_directories": [
+      "C:\\WINDOWS",
+      "C:\\WINDOWS"
+    ],
+    "pass": true,
+    "scope": "Launcher drive selection using a DOS WIN.BAT recorder; actual Windows rendering tested separately."
+  },
+  "main": "d12ba426faba8b79575f44a9b48e241420944590",
+  "pass": true,
+  "profiles": {
+    "CPPAN": {
+      "fixed_gui_runtime": "Byte-identical accepted fixed driver, bound to prior docs/SOFTPAN/INSTALL/RESULT.JSON Windows320x200 and exit evidence.",
+      "frames_archive": "docs/SOFTPAN/PUBLISH/CPPAN-FRAMES.ZIP",
+      "frames_identity": {
+        "bytes": 69268,
+        "sha256": "04f94d152e2cd80d1b6842ddb5252278e3365d691c8cbf83a3bbefd726d1b616"
+      },
+      "native_install": {
+        "CGA_GR2_staged_automatically": true,
+        "actions": 6,
+        "driver_matches_public_bytes": true,
+        "installer_invoked_from": "Z:",
+        "phase": 6,
+        "selected_driver": "CPPAN.DRV"
+      },
+      "native_rollback": {
+        "CGA_GR2_staged_automatically": true,
+        "actions": 6,
+        "driver_matches_public_bytes": true,
+        "installer_invoked_from": "Z:",
+        "phase": 6,
+        "selected_driver": "PCP3216.DRV"
+      },
+      "runtime": [
+        {
+          "adapter": "colorplus",
+          "assertions": {
+            "complete": true,
+            "config_reenabled": true,
+            "cursor_show_counts": true,
+            "dib_scans": true,
+            "frame_sequence": true,
+            "geometry": true,
+            "helper_and_config": true,
+            "helper_reset_sync": true,
+            "initial_top": true,
+            "no_failed_calls": true,
+            "pan_sequence": true,
+            "stable_pan_memory": true,
+            "text_bytes": true,
+            "text_reference": true,
+            "video_segment": true
+          },
+          "driver_sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+          "frames": 32,
+          "free_after": [
+            314336
+          ],
+          "free_clean": [
+            314336
+          ],
+          "free_delta": [
+            -128
+          ],
+          "free_start": [
+            314464
+          ],
+          "limits": [
+            "raw VRAM screenshots are decoded captures, not host window grabs",
+            "text glyph uses separately rendered memory bitmap reference",
+            "no physical hardware qualification or performance claim"
+          ],
+          "padding_bytes_per_frame": 768,
+          "pass": true,
+          "pixels_compared": 2048000,
+          "results": [
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 0,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 1,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 1
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 2,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 99
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 3,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 4,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 199
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 5,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 6,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 7,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 8,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 9,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 10,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 11,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 12,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 13,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 14,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 15,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 16,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 17,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 18,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 19,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 20,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 21,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 22,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 23,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 24,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 25,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 26,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 27,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 28,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 199
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 29,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 30,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 31,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            }
+          ]
+        },
+        {
+          "adapter": "colorplus",
+          "assertions": {
+            "complete": true,
+            "config_reenabled": true,
+            "cursor_show_counts": true,
+            "dib_scans": true,
+            "frame_sequence": true,
+            "geometry": true,
+            "helper_and_config": true,
+            "helper_reset_sync": true,
+            "initial_top": true,
+            "no_failed_calls": true,
+            "pan_sequence": true,
+            "stable_pan_memory": true,
+            "text_bytes": true,
+            "text_reference": true,
+            "video_segment": true
+          },
+          "driver_sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+          "frames": 32,
+          "free_after": [
+            314336
+          ],
+          "free_clean": [
+            314336
+          ],
+          "free_delta": [
+            -128
+          ],
+          "free_start": [
+            314464
+          ],
+          "limits": [
+            "raw VRAM screenshots are decoded captures, not host window grabs",
+            "text glyph uses separately rendered memory bitmap reference",
+            "no physical hardware qualification or performance claim"
+          ],
+          "padding_bytes_per_frame": 768,
+          "pass": true,
+          "pixels_compared": 2048000,
+          "results": [
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 0,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 1,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 1
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 2,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 99
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 3,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 4,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 199
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 5,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 6,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 7,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 8,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 9,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 10,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 11,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 12,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 13,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 14,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 15,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 16,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 17,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 18,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 19,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 20,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 21,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 22,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 23,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 24,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 25,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 26,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 27,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 28,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 199
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 29,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 30,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 31,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            }
+          ]
+        }
+      ]
+    },
+    "JRPAN": {
+      "fixed_gui_runtime": "Byte-identical accepted fixed driver, bound to prior docs/SOFTPAN/INSTALL/RESULT.JSON Windows320x200 and exit evidence.",
+      "frames_archive": "docs/SOFTPAN/PUBLISH/JRPAN-FRAMES.ZIP",
+      "frames_identity": {
+        "bytes": 83772,
+        "sha256": "9667b259a69b46c808bfa7c49f35efdc1df0463f77e9ed012e8d745675db7079"
+      },
+      "native_install": {
+        "CGA_GR2_staged_automatically": false,
+        "actions": 6,
+        "driver_matches_public_bytes": true,
+        "installer_invoked_from": "Z:",
+        "phase": 6,
+        "selected_driver": "JRPAN.DRV"
+      },
+      "native_rollback": {
+        "CGA_GR2_staged_automatically": false,
+        "actions": 6,
+        "driver_matches_public_bytes": true,
+        "installer_invoked_from": "Z:",
+        "phase": 6,
+        "selected_driver": "TNDYJR.DRV"
+      },
+      "runtime": [
+        {
+          "adapter": "pcjr",
+          "assertions": {
+            "complete": true,
+            "config_reenabled": true,
+            "cursor_show_counts": true,
+            "dib_scans": true,
+            "frame_sequence": true,
+            "geometry": true,
+            "helper_and_config": true,
+            "helper_reset_sync": true,
+            "initial_top": true,
+            "no_failed_calls": true,
+            "pan_sequence": true,
+            "stable_pan_memory": true,
+            "text_bytes": true,
+            "text_reference": true,
+            "video_segment": true
+          },
+          "driver_sha256": "a0d5f44d5663420dde4bae364e43149fc3f284b9f6318206a925101cd474207d",
+          "frames": 32,
+          "free_after": [
+            297952
+          ],
+          "free_clean": [
+            297952
+          ],
+          "free_delta": [
+            -128
+          ],
+          "free_start": [
+            298080
+          ],
+          "limits": [
+            "raw VRAM screenshots are decoded captures, not host window grabs",
+            "text glyph uses separately rendered memory bitmap reference",
+            "no physical hardware qualification or performance claim"
+          ],
+          "padding_bytes_per_frame": 768,
+          "pass": true,
+          "pixels_compared": 2048000,
+          "results": [
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 0,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 1,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 1
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 2,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 99
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 3,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 4,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 199
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 5,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 6,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 7,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 8,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 9,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 10,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 11,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 12,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 13,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 14,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 15,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 16,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 17,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 18,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 19,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 20,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 21,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 22,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 23,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 24,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 25,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 26,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 27,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 28,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 199
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 29,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 30,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 31,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            }
+          ]
+        },
+        {
+          "adapter": "pcjr",
+          "assertions": {
+            "complete": true,
+            "config_reenabled": true,
+            "cursor_show_counts": true,
+            "dib_scans": true,
+            "frame_sequence": true,
+            "geometry": true,
+            "helper_and_config": true,
+            "helper_reset_sync": true,
+            "initial_top": true,
+            "no_failed_calls": true,
+            "pan_sequence": true,
+            "stable_pan_memory": true,
+            "text_bytes": true,
+            "text_reference": true,
+            "video_segment": true
+          },
+          "driver_sha256": "a0d5f44d5663420dde4bae364e43149fc3f284b9f6318206a925101cd474207d",
+          "frames": 32,
+          "free_after": [
+            297952
+          ],
+          "free_clean": [
+            297952
+          ],
+          "free_delta": [
+            -128
+          ],
+          "free_start": [
+            298080
+          ],
+          "limits": [
+            "raw VRAM screenshots are decoded captures, not host window grabs",
+            "text glyph uses separately rendered memory bitmap reference",
+            "no physical hardware qualification or performance claim"
+          ],
+          "padding_bytes_per_frame": 768,
+          "pass": true,
+          "pixels_compared": 2048000,
+          "results": [
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 0,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 1,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 1
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 2,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 99
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 3,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 4,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 199
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 5,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 6,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 7,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 8,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 9,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 10,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 11,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 12,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 13,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 14,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 15,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 16,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 17,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 18,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 19,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 20,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 21,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 22,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 23,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 24,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 25,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 26,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 27,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 100
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 28,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 199
+            },
+            {
+              "cursor_visible": 1,
+              "first": [],
+              "frame": 29,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 30,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 200
+            },
+            {
+              "cursor_visible": 0,
+              "first": [],
+              "frame": 31,
+              "mismatches": 0,
+              "padding_mismatches": 0,
+              "pass": true,
+              "top": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "review_fixes": [
+    "PANCFG re-enables Enabled=0",
+    "helper queries viewport each timer tick after lifecycle/external resets",
+    "reused images are untouched before emulator lease acquisition",
+    "installers and launchers explicitly select C:"
+  ],
+  "schema": 1
+}

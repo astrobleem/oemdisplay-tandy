@@ -1,0 +1,161 @@
+name: PCjr and ColorPlus software panning
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - 'src/softpan/**'
+      - 'tools/SPPACK/**'
+      - 'docs/SOFTPAN/**'
+      - 'downloads/experimental/SOFTPAN/**'
+      - '.github/workflows/softpan.yml'
+      - 'CGA.GR2'
+      - 'tools/XR1PACK/PREPARE.PY'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact public event source without credentials
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Use the repository's pinned image dependency
+        run: |
+          python3 -m venv "$RUNNER_TEMP/softpan-python"
+          "$RUNNER_TEMP/softpan-python/bin/python" -m pip install --disable-pip-version-check Pillow==12.0.0
+          echo "$RUNNER_TEMP/softpan-python/bin" >> "$GITHUB_PATH"
+      - name: Replay qualified frames and verify exact public packages
+        run: |
+          python3 src/softpan/TESTUI.PY
+          python3 tools/SPPACK/TESTPKG.PY
+          python3 tools/SPPACK/PACKAGE.PY --out release-softpan
+      - name: Upload verified release files
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: software-panning-${{ github.sha }}
+          path: release-softpan/*
+          if-no-files-found: error
+          retention-days: 30
+  release:
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'astrobleem/oemdisplay-tandy'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    concurrency:
+      group: software-panning-release
+      cancel-in-progress: false
+    env:
+      GH_REPO: ${{ github.repository }}
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_SHA: ${{ github.sha }}
+    steps:
+      - name: Download this exact run's verified files
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: software-panning-${{ github.sha }}
+          path: release-softpan
+      - name: Validate assets without executing downloaded code
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,zipfile
+          from pathlib import Path
+          root=Path('release-softpan')
+          names={'JRPAN.ZIP','CPPAN.ZIP','README.TXT','RELEASE.JSON','SHA256SUMS'}
+          assert {p.name for p in root.iterdir()}==names
+          assert all(p.is_file() and not p.is_symlink() for p in root.iterdir())
+          release=json.loads((root/'RELEASE.JSON').read_bytes())
+          assert release['publication_allowed']
+          assert release['bundled_windows_support_files']=={'CPPAN':['CGA.GR2'],'JRPAN':[]}
+          assert release['hardware_panning'] is False and release['logical']==[320,400]
+          assert release['tag']=='experimental-softpan-2026-10-24'
+          expected={}
+          for line in (root/'SHA256SUMS').read_text().splitlines():
+              digest,name=line.split('  ',1)
+              assert name in names-{'SHA256SUMS'} and name not in expected
+              assert hashlib.sha256((root/name).read_bytes()).hexdigest()==digest
+              expected[name]=digest
+          assert set(expected)==names-{'SHA256SUMS'}
+          expected['SHA256SUMS']=hashlib.sha256((root/'SHA256SUMS').read_bytes()).hexdigest()
+          for kind in ('JRPAN','CPPAN'):
+              pins=release['profiles'][kind]['files']
+              if kind=='CPPAN':
+                  assert pins['CGA.GR2']=={'bytes':2104,'sha256':'1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067'}
+              with zipfile.ZipFile(root/(kind+'.ZIP')) as z:
+                  assert set(z.namelist())=={kind+'/'+n for n in pins}
+                  for name,pin in pins.items():
+                      data=z.read(kind+'/'+name)
+                      assert len(data)==pin['bytes'] and hashlib.sha256(data).hexdigest()==pin['sha256']
+          Path('tag.txt').write_text(release['tag'])
+          Path('expected.json').write_text(json.dumps(expected))
+          PY
+      - name: Publish immutable reviewed downloads
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag=$(cat tag.txt)
+          if gh api "repos/$GH_REPO/git/ref/tags/$tag" > tag-ref.json 2>/dev/null; then
+            python3 - <<'PY'
+          import json,os
+          ref=json.load(open('tag-ref.json'))
+          assert ref['object']['type']=='commit' and ref['object']['sha']==os.environ['SOURCE_SHA'], 'Existing tag belongs to another commit'
+          PY
+          fi
+          if ! gh api "repos/$GH_REPO/releases/tags/$tag" > existing.json 2>/dev/null; then
+            gh release create "$tag" --target "$SOURCE_SHA" --draft --prerelease \
+              --title "PCjr and ColorPlus software panning" --notes-file release-softpan/README.TXT
+            gh api "repos/$GH_REPO/releases/tags/$tag" > existing.json
+          fi
+          python3 - <<'PY'
+          import json,os
+          release=json.load(open('existing.json'));expected=json.load(open('expected.json'))
+          assert release['target_commitish']==os.environ['SOURCE_SHA'], 'Existing draft targets another source commit'
+          for asset in release['assets']:
+              assert asset['name'] in expected, 'Unexpected existing asset'
+              assert asset.get('digest')=='sha256:'+expected[asset['name']], 'Existing asset differs; refusing overwrite'
+          present={a['name'] for a in release['assets']}
+          open('missing.txt','w').write('\n'.join(sorted(set(expected)-present)))
+          PY
+          while IFS= read -r name || [[ -n "$name" ]]; do
+            [[ -z "$name" ]] || gh release upload "$tag" "release-softpan/$name"
+          done < missing.txt
+          gh api "repos/$GH_REPO/releases/tags/$tag" > uploaded.json
+          python3 - <<'PY'
+          import json
+          release=json.load(open('uploaded.json'));expected=json.load(open('expected.json'))
+          assert {a['name'] for a in release['assets']}==set(expected)
+          assert all(a.get('digest')=='sha256:'+expected[a['name']] for a in release['assets'])
+          PY
+          if ! gh api "repos/$GH_REPO/git/ref/tags/$tag" > final-tag.json 2>/dev/null; then
+            gh api --method POST "repos/$GH_REPO/git/refs" -f ref="refs/tags/$tag" -f sha="$SOURCE_SHA" > /dev/null
+            gh api "repos/$GH_REPO/git/ref/tags/$tag" > final-tag.json
+          fi
+          python3 - <<'PY'
+          import json,os
+          ref=json.load(open('final-tag.json'))
+          assert ref['object']['type']=='commit' and ref['object']['sha']==os.environ['SOURCE_SHA']
+          PY
+          gh release edit "$tag" --draft=false --prerelease
+          gh release download "$tag" --dir downloaded-softpan
+          python3 - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          expected=json.load(open('expected.json'));root=Path('downloaded-softpan')
+          assert {p.name for p in root.iterdir()}==set(expected)
+          for name,digest in expected.items():
+              assert hashlib.sha256((root/name).read_bytes()).hexdigest()==digest, name
+          print('Downloaded published assets match every reviewed SHA256')
+          print(json.dumps(expected,sort_keys=True))
+          PY
