@@ -1,0 +1,13 @@
+YAMAHA DISPLAY DRIVER - COMPONENT NOTICES
+
+PC1YAMA.DRV and YAM160.DRV retain their accepted driver bytes and existing
+component copyright notices. This packet does not grant a new or blanket
+license for third-party renderer or resource inputs.
+
+The CGA.GR2 grabber was supplied by the repository owner. Its existing
+component notices remain applicable. Original XT Pixels fonts and original
+XTSTATIC.LGO/WXTSPL01.RLE startup assets are included under their existing
+terms; FONTLIC.TXT and LOGOLIC.TXT contain their notices.
+
+An existing DOS and Windows 3.0 installation is required. No operating
+system installation media, ROM, compiler or SDK is included.

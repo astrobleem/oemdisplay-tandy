@@ -1,0 +1,349 @@
+{
+  "schema": 1,
+  "status": "PASS_NATIVE_SETUP_AND_SOFTWARE_STARTUP",
+  "scope": "Native Windows 3.0 maintenance Setup/support copies and subsequent real-mode software/API startup; no Yamaha scanout or physical PC1 qualification",
+  "physical_hardware_qualified": false,
+  "actual_yamaha_scanout_qualified": false,
+  "recovered_route": {
+    "emulator": "C:\\DOSBox-X\\dosbox-x.exe",
+    "emulator_sha256": "df62e4502eb25d8b7b9893ea8e479b05820baa11d4b54b02439c688ac1d834bd",
+    "prior_fixture_source": "C:\\Users\\chad\\Documents\\Codex\\2026-10-06\\task-7\\private-windows",
+    "prior_fixtures": "C:\\Users\\chad\\Documents\\Codex\\2026-10-23\\task-7\\native\\API2\\{pc1-b000-base,yamaha-b800-base}\\CROOT\\WINDOWS",
+    "recovered_from": "C:\\Users\\chad\\Documents\\Codex\\2026-10-23\\task-7\\native\\PREPAPI.PY and experiments/COMPACT/EVIDENCE.JSN",
+    "original_yamaha_packet_report": "EVIDENCE/WINDOWS.JSN retains an emulator hash but no fixture/executable path; original 86Box scanout record remains separate."
+  },
+  "integration_sources": {
+    "tools/YAMPACK/PACK.PY": {
+      "bytes": 6745,
+      "sha256": "3ab5d616f608de2bcc062cd37f4880a3053c32d8e23775a1988f336c3c06f101"
+    },
+    "tools/YAMPACK/SUPPORT.JSN": {
+      "bytes": 1023,
+      "sha256": "263a459802fb246955c69dc381a2b9a6d6d6d7078380a98d244eea6b13f5bee6"
+    },
+    "tools/YAMPACK/PC1.TXT": {
+      "bytes": 1213,
+      "sha256": "02ae6c334371e9a19cc8b91173e5251066edf549b7ea05fcad156c3ff00e3b31"
+    },
+    "tools/YAMPACK/B800.TXT": {
+      "bytes": 1236,
+      "sha256": "ef76a020eaa7c2563ac89a8ab865b832230d267b2ef0404a85deca8cbbcd51ad"
+    },
+    "tools/YAMPACK/NOTICE.TXT": {
+      "bytes": 670,
+      "sha256": "46a163f22bd669a8671a8110e923b2e17eb7f40cfe808c6466eab24084f5d36a"
+    },
+    "tools/XR1PACK/PREPARE.PY": {
+      "bytes": 11110,
+      "sha256": "c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1"
+    }
+  },
+  "profiles": {
+    "pc1": {
+      "packet": {
+        "bytes": 83655,
+        "sha256": "2c61c2a1a1ec7fc62f5b0bd38b8444450b209fe5bb91e161977329c02259ebd9"
+      },
+      "packet_path": "downloads/experimental/yamaha/PC1.ZIP",
+      "native_setup": {
+        "complete": true,
+        "bound_seconds": 600,
+        "actions": [
+          "Display",
+          "Other",
+          "C:\\YAMAHA",
+          "EXPERIMENTAL Olivetti PC1 160x200x16",
+          "Complete Changes",
+          "No DOS configuration changes"
+        ],
+        "scope": "Native maintenance Setup support/alias/logo verification on CGA fixture; no Yamaha driver execution or scanout claim",
+        "lease_acquired": true,
+        "owned_pid": 34416,
+        "setup_returned": true,
+        "selected_boot": {
+          "286grabber": "CGA.GR2",
+          "fixedfon.fon": "XTCFIX.FON",
+          "oemfonts.fon": "XTCOEM.FON",
+          "fonts.fon": "XTCSYS.FON",
+          "display.drv": "PC1YAMA.DRV"
+        },
+        "installed_support": {
+          "XTCSYS.FON": {
+            "bytes": 4592,
+            "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+          },
+          "XTCFIX.FON": {
+            "bytes": 4208,
+            "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+          },
+          "XTCOEM.FON": {
+            "bytes": 4560,
+            "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+          },
+          "CGA.GR2": {
+            "bytes": 2104,
+            "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+          },
+          "PC1YAMA.DRV": {
+            "bytes": 54992,
+            "sha256": "8c73d52d6811fff071dd252343c33702a1cfea0b2613ec8b20faf5a739da2a08"
+          }
+        },
+        "startup_logo_in_wincom": {
+          "XTSTATIC.LGO": true,
+          "WXTSPL01.RLE": true
+        },
+        "win_com": {
+          "bytes": 7879,
+          "sha256": "7d00588992559e99f7f0690538425f2cf4c28e771e651327ad243c9d07e32fc7"
+        },
+        "seconds": 96.7,
+        "owned_stopped": true,
+        "lease_released": true
+      },
+      "software_startup": {
+        "scope": "Windows 3.0 real-mode software/API startup after native Setup; not Yamaha scanout or physical PC1",
+        "complete": true,
+        "profile": "pc1",
+        "emulator_sha256": "df62e4502eb25d8b7b9893ea8e479b05820baa11d4b54b02439c688ac1d834bd",
+        "probe_sha256": "b0bc60ddf89ccee81d0511d62e119d3c232cd567c0928d4dc3d3b6e423bc0735",
+        "fixture": "extracted native maintenance-Setup output; shell-only metrics instrumentation",
+        "bound_seconds": 180,
+        "owned_pid": 7892,
+        "exit_code": 0,
+        "returned_to_dos": true,
+        "metrics": "WindowsVersion=3\nWindowsFlags=64\nSM_0=160\nSM_1=200\nSM_2=18\nSM_3=9\nSM_4=16\nSM_5=1\nSM_6=1\nSM_7=4\nSM_8=4\nSM_9=11\nSM_10=23\nSM_11=32\nSM_12=16\nSM_13=32\nSM_14=16\nSM_15=14\nSM_16=160\nSM_17=184\nSM_18=0\nSM_19=1\nSM_20=11\nSM_21=23\nSM_22=0\nSM_23=0\nSM_24=0\nSM_25=0\nSM_26=0\nSM_27=0\nSM_28=129\nSM_29=22\nSM_30=27\nSM_31=14\nSM_32=4\nSM_33=4\nSM_34=129\nSM_35=22\nSM_36=33\nSM_37=0\nSM_38=0\nSM_39=0\nSM_40=0\nSM_41=0\nSM_42=0\nDialogBaseX=8\nDialogBaseY=8\nStockFont=10\nHeight=8\nAscent=7\nInternal=0\nExternal=0\nAverage=8\nMaximum=8\nWeight=400\nCharset=255\nTerminal\nMenuTextWidth=192\nMenuTextHeight=8\nStockFont=11\nHeight=10\nAscent=9\nInternal=0\nExternal=0\nAverage=8\nMaximum=8\nWeight=400\nCharset=0\nCourier\nMenuTextWidth=192\nMenuTextHeight=10\nStockFont=12\nHeight=10\nAscent=9\nInternal=2\nExternal=0\nAverage=5\nMaximum=11\nWeight=400\nCharset=0\nHelv\nMenuTextWidth=122\nMenuTextHeight=10\nStockFont=13\nHeight=8\nAscent=7\nInternal=1\nExternal=0\nAverage=7\nMaximum=14\nWeight=700\nCharset=0\nSystem\nMenuTextWidth=167\nMenuTextHeight=8\n",
+        "win_errors": "",
+        "seconds": 1.6,
+        "owned_stopped": true,
+        "lease_released": true
+      },
+      "fixture": {
+        "scope": "Native Windows maintenance Setup metadata/support; CGA fixture, no Yamaha scanout",
+        "source_identity": {
+          "bytes": 21411840,
+          "sha256": "2e452953165397b5115f2d300a5557eb85b0bbbb69161b828dc7b28323b9e357"
+        },
+        "removed_fallbacks": [
+          "/WINDOWS/SYSTEM/CGA.GR2",
+          "/WINDOWS/SYSTEM/CGASYS.FON",
+          "/WINDOWS/SYSTEM/CGAFIX.FON",
+          "/WINDOWS/SYSTEM/CGAOEM.FON"
+        ],
+        "packet_files": {
+          "CGA.GR2": {
+            "bytes": 2104,
+            "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+          },
+          "FONTLIC.TXT": {
+            "bytes": 1101,
+            "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+          },
+          "LOGOLIC.TXT": {
+            "bytes": 1101,
+            "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+          },
+          "MANIFEST.JSN": {
+            "bytes": 1854,
+            "sha256": "0fb8256fe0101abd5b49414fde0ee78c3690d15982b7c35f4ea60b6edaf077cd"
+          },
+          "NOTICE.TXT": {
+            "bytes": 670,
+            "sha256": "46a163f22bd669a8671a8110e923b2e17eb7f40cfe808c6466eab24084f5d36a"
+          },
+          "OEMSETUP.INF": {
+            "bytes": 433,
+            "sha256": "178d65713e7931d50cbc12bec37d4a20f758d8d5bc625bd73a45fb895ff42fa6"
+          },
+          "PC1YAMA.DRV": {
+            "bytes": 54992,
+            "sha256": "8c73d52d6811fff071dd252343c33702a1cfea0b2613ec8b20faf5a739da2a08"
+          },
+          "README.TXT": {
+            "bytes": 1213,
+            "sha256": "02ae6c334371e9a19cc8b91173e5251066edf549b7ea05fcad156c3ff00e3b31"
+          },
+          "SHA256.SUM": {
+            "bytes": 1022,
+            "sha256": "9ac81130dcb5030b09b1c4f8e34f2ec0a5156a4675e5a3bc0247f5bd48806ec7"
+          },
+          "WXTSPL01.RLE": {
+            "bytes": 4062,
+            "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+          },
+          "XTCFIX.FON": {
+            "bytes": 4208,
+            "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+          },
+          "XTCOEM.FON": {
+            "bytes": 4560,
+            "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+          },
+          "XTCSYS.FON": {
+            "bytes": 4592,
+            "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+          },
+          "XTSTATIC.LGO": {
+            "bytes": 361,
+            "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+          }
+        },
+        "source_unchanged": true
+      },
+      "source_fixture_unchanged_after_test": true
+    },
+    "b800": {
+      "packet": {
+        "bytes": 83694,
+        "sha256": "cc750be92fad3e57ee87879d361c154881f56aa7bb10de6400f8e1e26339bb1c"
+      },
+      "packet_path": "downloads/experimental/yamaha/YAMAHA.ZIP",
+      "native_setup": {
+        "complete": true,
+        "bound_seconds": 600,
+        "actions": [
+          "Display",
+          "Other",
+          "C:\\YAMAHA",
+          "EXPERIMENTAL Yamaha B800 EMULATOR ONLY",
+          "Complete Changes",
+          "No DOS configuration changes"
+        ],
+        "scope": "Native maintenance Setup support/alias/logo verification on CGA fixture; no Yamaha driver execution or scanout claim",
+        "lease_acquired": true,
+        "owned_pid": 13484,
+        "setup_returned": true,
+        "selected_boot": {
+          "286grabber": "CGA.GR2",
+          "fixedfon.fon": "XTCFIX.FON",
+          "oemfonts.fon": "XTCOEM.FON",
+          "fonts.fon": "XTCSYS.FON",
+          "display.drv": "YAM160.DRV"
+        },
+        "installed_support": {
+          "XTCSYS.FON": {
+            "bytes": 4592,
+            "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+          },
+          "XTCFIX.FON": {
+            "bytes": 4208,
+            "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+          },
+          "XTCOEM.FON": {
+            "bytes": 4560,
+            "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+          },
+          "CGA.GR2": {
+            "bytes": 2104,
+            "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+          },
+          "YAM160.DRV": {
+            "bytes": 55008,
+            "sha256": "a3d339a3f1e831bd8499fb2b0a28c683bf08f9fbeb0e96689dc3f6ef9a627c8a"
+          }
+        },
+        "startup_logo_in_wincom": {
+          "XTSTATIC.LGO": true,
+          "WXTSPL01.RLE": true
+        },
+        "win_com": {
+          "bytes": 7879,
+          "sha256": "7d00588992559e99f7f0690538425f2cf4c28e771e651327ad243c9d07e32fc7"
+        },
+        "seconds": 96.6,
+        "owned_stopped": true,
+        "lease_released": true
+      },
+      "software_startup": {
+        "scope": "Windows 3.0 real-mode software/API startup after native Setup; not Yamaha scanout or physical PC1",
+        "complete": true,
+        "profile": "b800",
+        "emulator_sha256": "df62e4502eb25d8b7b9893ea8e479b05820baa11d4b54b02439c688ac1d834bd",
+        "probe_sha256": "b0bc60ddf89ccee81d0511d62e119d3c232cd567c0928d4dc3d3b6e423bc0735",
+        "fixture": "extracted native maintenance-Setup output; shell-only metrics instrumentation",
+        "bound_seconds": 180,
+        "owned_pid": 33508,
+        "exit_code": 0,
+        "returned_to_dos": true,
+        "metrics": "WindowsVersion=3\nWindowsFlags=64\nSM_0=160\nSM_1=200\nSM_2=18\nSM_3=9\nSM_4=16\nSM_5=1\nSM_6=1\nSM_7=4\nSM_8=4\nSM_9=11\nSM_10=23\nSM_11=32\nSM_12=16\nSM_13=32\nSM_14=16\nSM_15=14\nSM_16=160\nSM_17=184\nSM_18=0\nSM_19=1\nSM_20=11\nSM_21=23\nSM_22=0\nSM_23=0\nSM_24=0\nSM_25=0\nSM_26=0\nSM_27=0\nSM_28=129\nSM_29=22\nSM_30=27\nSM_31=14\nSM_32=4\nSM_33=4\nSM_34=129\nSM_35=22\nSM_36=33\nSM_37=0\nSM_38=0\nSM_39=0\nSM_40=0\nSM_41=0\nSM_42=0\nDialogBaseX=8\nDialogBaseY=8\nStockFont=10\nHeight=8\nAscent=7\nInternal=0\nExternal=0\nAverage=8\nMaximum=8\nWeight=400\nCharset=255\nTerminal\nMenuTextWidth=192\nMenuTextHeight=8\nStockFont=11\nHeight=10\nAscent=9\nInternal=0\nExternal=0\nAverage=8\nMaximum=8\nWeight=400\nCharset=0\nCourier\nMenuTextWidth=192\nMenuTextHeight=10\nStockFont=12\nHeight=10\nAscent=9\nInternal=2\nExternal=0\nAverage=5\nMaximum=11\nWeight=400\nCharset=0\nHelv\nMenuTextWidth=122\nMenuTextHeight=10\nStockFont=13\nHeight=8\nAscent=7\nInternal=1\nExternal=0\nAverage=7\nMaximum=14\nWeight=700\nCharset=0\nSystem\nMenuTextWidth=167\nMenuTextHeight=8\n",
+        "win_errors": "",
+        "seconds": 1.7,
+        "owned_stopped": true,
+        "lease_released": true
+      },
+      "fixture": {
+        "scope": "Native Windows maintenance Setup metadata/support; CGA fixture, no Yamaha scanout",
+        "source_identity": {
+          "bytes": 21411840,
+          "sha256": "2e452953165397b5115f2d300a5557eb85b0bbbb69161b828dc7b28323b9e357"
+        },
+        "removed_fallbacks": [
+          "/WINDOWS/SYSTEM/CGA.GR2",
+          "/WINDOWS/SYSTEM/CGASYS.FON",
+          "/WINDOWS/SYSTEM/CGAFIX.FON",
+          "/WINDOWS/SYSTEM/CGAOEM.FON"
+        ],
+        "packet_files": {
+          "CGA.GR2": {
+            "bytes": 2104,
+            "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+          },
+          "FONTLIC.TXT": {
+            "bytes": 1101,
+            "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+          },
+          "LOGOLIC.TXT": {
+            "bytes": 1101,
+            "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+          },
+          "MANIFEST.JSN": {
+            "bytes": 1855,
+            "sha256": "25d5736cd64b14299cf6779f984a00884e1775e3aca7da1150ad2e832d1153f1"
+          },
+          "NOTICE.TXT": {
+            "bytes": 670,
+            "sha256": "46a163f22bd669a8671a8110e923b2e17eb7f40cfe808c6466eab24084f5d36a"
+          },
+          "OEMSETUP.INF": {
+            "bytes": 435,
+            "sha256": "2b8a565671091e2e0bc87f598d8dcf48113ae70e9b127d572264e53b1dfb4221"
+          },
+          "README.TXT": {
+            "bytes": 1236,
+            "sha256": "ef76a020eaa7c2563ac89a8ab865b832230d267b2ef0404a85deca8cbbcd51ad"
+          },
+          "SHA256.SUM": {
+            "bytes": 1021,
+            "sha256": "229bf74f9547a71ebf977b59e8bfb64b8c3d28cadb87e723b55f494d38538227"
+          },
+          "WXTSPL01.RLE": {
+            "bytes": 4062,
+            "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+          },
+          "XTCFIX.FON": {
+            "bytes": 4208,
+            "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+          },
+          "XTCOEM.FON": {
+            "bytes": 4560,
+            "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+          },
+          "XTCSYS.FON": {
+            "bytes": 4592,
+            "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+          },
+          "XTSTATIC.LGO": {
+            "bytes": 361,
+            "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+          },
+          "YAM160.DRV": {
+            "bytes": 55008,
+            "sha256": "a3d339a3f1e831bd8499fb2b0a28c683bf08f9fbeb0e96689dc3f6ef9a627c8a"
+          }
+        },
+        "source_unchanged": true
+      },
+      "source_fixture_unchanged_after_test": true
+    }
+  }
+}

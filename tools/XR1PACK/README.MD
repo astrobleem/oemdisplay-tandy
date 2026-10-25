@@ -1,6 +1,6 @@
 # Windows XT native installer tooling
 
-For installation use the prebuilt WINXT.EXE and the [current guide](../../docs/RELEASES/RC8.MD)
+For installation use the prebuilt WINXT.EXE and the [current guide](../../docs/DESKTOP.MD)
 on the DOS computer. The packet supplies display support, including the grabber,
 fonts, artwork and helpers. Windows itself comes from its installed directory
 or original Setup disks; the native helper gathers required OS files automatically.
