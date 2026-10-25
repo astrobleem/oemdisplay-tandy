@@ -1,0 +1,82 @@
+{
+  "target": "DOS 3.20+ / 8088; Windows 3.0 real mode apps",
+  "native_windows_test": "PENDING: requires coordinator allocation",
+  "MINERUN_imports": [
+    "KERNEL",
+    "USER"
+  ],
+  "files": {
+    "MINESET": {
+      "exe": {
+        "bytes": 91536,
+        "sha256": "97312784e79dfb2636d59e0961df4b1706afd535534ba64d3695691766665096"
+      },
+      "zip": {
+        "bytes": 58772,
+        "sha256": "624631c1017a88592ab2d9cb31a351d5b8d839c0640a66dc8f1de5419f75afbe"
+      },
+      "payload": {
+        "WINMINE.EXE": {
+          "bytes": 30032,
+          "sha256": "52be8bb486d3bad7809c19efc8a3202ef08a458e250634e392fbd127d4046c8a"
+        },
+        "WMABT.DLL": {
+          "bytes": 1998,
+          "sha256": "caf0967644eca52d8c69b5bf83696e78ada52995d9a16dfd10b1a86412e0d893"
+        },
+        "MINERUN.EXE": {
+          "bytes": 2586,
+          "sha256": "25916ec9f00b9e36f451446850e533c7063db62a182f806736fc109d1cb107a8"
+        },
+        "NOTICE.TXT": {
+          "bytes": 797,
+          "sha256": "f5982f2aa5d10b3439189e8966b9b355ea45965b29281c0534d8d1f9dce66e93"
+        },
+        "OWATCOM.TXT": {
+          "bytes": 21128,
+          "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+        },
+        "INSTALL.TXT": {
+          "bytes": 1627,
+          "sha256": "8da75094ca884c3c431aae3f4c6273224e66dfda211694f7673c44c0b38d88cf"
+        }
+      }
+    },
+    "COOKSET": {
+      "exe": {
+        "bytes": 63972,
+        "sha256": "eca55f3f5fd7861e5dc7a34ca182959058084a3e45c325ca4d01462eec126f8d"
+      },
+      "zip": {
+        "bytes": 31314,
+        "sha256": "42be449e522044b7344a645b86f5cc9080899a5940c132336d7444ef2351c114"
+      },
+      "payload": {
+        "COOKIE.EXE": {
+          "bytes": 8543,
+          "sha256": "9edbfc5c23a245c555af690391d6a7f6efccd6db552de5473e613e9c2bae2a14"
+        },
+        "INSTALL.TXT": {
+          "bytes": 1329,
+          "sha256": "ac06e30abcd8955d9b3774b53e49fe133493fd778942150b4ed684429c52f733"
+        },
+        "OWATCOM.TXT": {
+          "bytes": 21128,
+          "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+        }
+      }
+    }
+  },
+  "sources": {
+    "tools/APPSET/APPSET.C": "d5db7553c8e578fa0504cc54ab06fd692ebec323e4bfc4ddc857f9ce4ef0a814",
+    "tools/APPSET/PACK.PY": "173354d88e7d286128fb23398b7f7292f4b7b97be289b03bd580bedfaf2e4c9e",
+    "tools/MINEAPP/MINERUN.C": "447132e9c47f8ff271a808b25b9ae21d27a131ee0e72b73956d51931cabea43d",
+    "tools/MINEAPP/INSTALL.TXT": "8da75094ca884c3c431aae3f4c6273224e66dfda211694f7673c44c0b38d88cf",
+    "examples/COOKIE/INSTALL.TXT": "ac06e30abcd8955d9b3774b53e49fe133493fd778942150b4ed684429c52f733"
+  },
+  "compiler": {
+    "binnt/wcl.exe": "0697939fe0263f8b04dfbb0b98d98b10f3af936c2da9efd0b7a78ca38e2886e7",
+    "binnt/wcc.exe": "d88049384eb428005c590af82e7cf63f48c14ed09af23f9572cf5dd579244d2d",
+    "binnt/wlink.exe": "d58013821bfd77b6b68b56ab6582419a1a33ab7839709c5b973a992cd499b4e8"
+  }
+}
