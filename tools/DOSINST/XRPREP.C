@@ -212,6 +212,7 @@ static void collect_media(char *source,char *cache)
   f=fopen(to,"rb");if(f){n=fread(tag,1,sizeof(tag),f);fclose(f);if(n==23&&!memcmp(tag,"XR1 own Windows media\r\n",23))break;}
  }
  if(i==100)stop("No free Windows media-cache name.","");
+ if(media_complete(cache)){puts("Using the complete Windows media cache.");return;}
  for(;;){
   count=0;join(pattern,source,"*.*");
   if(!_dos_findfirst(pattern,_A_NORMAL|_A_RDONLY|_A_HIDDEN|_A_SYSTEM|_A_ARCH,&entry))do{

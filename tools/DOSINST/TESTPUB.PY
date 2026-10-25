@@ -39,6 +39,17 @@ class NativePublisherTests(unittest.TestCase):
         M.pub.check_zip(self.archive, self.entries, "native")
         self.assertEqual(self.archive, M.pub.zip_bytes(self.entries))
 
+    def test_recipe_uses_bundled_grabber_for_both_output_trees(self):
+        import re
+        rows = re.findall(r'\{"([^"\n]+)","([^"\n]+)",(\d+)UL,(\d+)\}',
+                          (M.HERE / "XRFILES.H").read_text())
+        grabbers = [(path, source, int(size), int(kind))
+                    for path, source, size, kind in rows if source == "CGA.GR2"]
+        self.assertEqual(len(grabbers), 3)
+        self.assertTrue(all(size == 2104 and kind == 0 for _, _, size, kind in grabbers))
+        for _, source, size, _ in grabbers:
+            self.assertEqual(len(self.entries["PAYLOAD/" + source]), size)
+
     def test_verified_assets_and_overlay(self):
         output = self.root / "release"
         first = self.run_build(output)
