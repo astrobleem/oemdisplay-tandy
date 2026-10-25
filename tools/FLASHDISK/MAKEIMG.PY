@@ -305,7 +305,7 @@ def wave_payload():
     return {'WAVE/' + n: b for n,b in data.items()}
 
 
-CP_SOURCE_NAMES = {'BUILD.BAT', 'BUILD.TXT', 'CPSET.C', 'CPSET.TXT'}
+CP_SOURCE_NAMES = {'BUILD.BAT', 'BUILD.TXT', 'CPSET.C', 'CPSET.TXT', 'METATEST.C', 'TESTMETA.PY'}
 
 def computer_source_payload():
     source = HERE / 'CPSET' if (HERE / 'CPSET').is_dir() else HERE.parent / 'CPSET'
