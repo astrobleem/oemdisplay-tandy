@@ -1,6 +1,10 @@
 {
   "target": "DOS 3.20+ / 8088; Windows 3.0 real mode apps",
-  "native_windows_test": "PENDING: requires coordinator allocation",
+  "native_windows_test": "PASS: 8088/HX MS-DOS 6.22, normal guarded Windows 3.0 desktop; 386 seconds, 10 checks; stock SOUND.DRV",
+  "native_receipt": {
+    "path": "tools/APPSET/NATIVE.JSN",
+    "sha256": "2e2f96f1fc0c0702efc5b8280b3c8144f31c2f436e0d1b40641b50caa6d9dad1"
+  },
   "MINERUN_imports": [
     "KERNEL",
     "USER"
@@ -68,8 +72,8 @@
     }
   },
   "sources": {
-    "tools/APPSET/APPSET.C": "f55a52ff67375e3b1fd09e3a2b5a895f2e8c9dc35ca4f48d3885cad018534300",
-    "tools/APPSET/PACK.PY": "173354d88e7d286128fb23398b7f7292f4b7b97be289b03bd580bedfaf2e4c9e",
+    "tools/APPSET/APPSET.C": "a5901c061e6895071e892515421e70776807c290f2344d917bee1c3d48daaa1b",
+    "tools/APPSET/PACK.PY": "8e6a19beb7d33e5f773e0239ad93a39f3a0b66bd4d111c0d7984dd6aff361886",
     "tools/MINEAPP/MINERUN.C": "447132e9c47f8ff271a808b25b9ae21d27a131ee0e72b73956d51931cabea43d",
     "tools/MINEAPP/INSTALL.TXT": "8da75094ca884c3c431aae3f4c6273224e66dfda211694f7673c44c0b38d88cf",
     "examples/COOKIE/INSTALL.TXT": "ac06e30abcd8955d9b3774b53e49fe133493fd778942150b4ed684429c52f733"

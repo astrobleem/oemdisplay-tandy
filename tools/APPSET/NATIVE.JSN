@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "complete": true,
+  "started_utc": "2026-10-25T04:37:14.075822+00:00",
+  "finished_utc": "2026-10-25T04:43:45.061128+00:00",
+  "seconds": 386.0,
+  "bound_seconds": 660,
+  "target": {
+    "machine": "Tandy 1000 HX",
+    "cpu": "8088",
+    "cpu_hz": 7159092,
+    "memory_kb": 640,
+    "dynarec": false,
+    "dos_tested": "MS-DOS 6.22",
+    "windows": "Windows 3.0 real mode",
+    "display": "HPXY.DRV",
+    "sound": "stock SOUND.DRV",
+    "normal_entry": "C:\\STARTXT.BAT via WINXT/XTCLEAN/XTTEST",
+    "normal_shell": "TSHELL.EXE",
+    "physical_hardware": false
+  },
+  "procedure": [
+    "Private clone of the coordinator-qualified cold FullXT installation. No previous app directories or global WMABT.DLL.",
+    "Run both complete SFX installers from C:\\APPSRC into separate new folders; MINESET matching retry before Windows.",
+    "Use the unchanged normal guarded STARTXT desktop. Developer-only APPQA is an extra WIN.INI load task and waits for the normal shell before WinExec; no WIN command-tail forwarding is used.",
+    "Launch MINERUN from the normal desktop twice, verify loaded module C:\\MINETST\\WMABT.DLL, open the owned About dialog, request a new game, close normally each time.",
+    "Run unchanged COOKIE.EXE directly from the desktop, click/buy, Save, New, Load, Save, verify valid one-CPS save, close and return normally to DOS.",
+    "Run COOKSET matching retry after the save. Compare all installed packet files, unchanged save and installed configuration; stop owned child and release lease."
+  ],
+  "checks": {
+    "MINESET_all_files_exact": true,
+    "COOKSET_all_files_exact": true,
+    "normal_dos_return": true,
+    "gui_flow_pass": true,
+    "no_global_shim": true,
+    "private_shim_path": true,
+    "installed_system_ini_unchanged": true,
+    "config_sys_unchanged": true,
+    "cookie_save_preserved": true,
+    "no_native_staging_temps": true
+  },
+  "owned_stopped": true,
+  "lease_released": true,
+  "emulators_before": 0,
+  "emulator_sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c",
+  "private_source_disk_sha256": "9ef02ac67c6c13f5d63bd039755951abe45c8b0404fa4b5ae2f307735fea4c6b",
+  "controller_sha256": "ca550041301fc3fc3e06db446e3070a9ca99e239d375d93adae6adff0a7d900a",
+  "controller_source": "tools/MINEAPP/QA/APPQA.C",
+  "artifacts": {
+    "MINESET.EXE": {
+      "bytes": 90816,
+      "sha256": "6bcb8c692524bf9cf7d8caf830532523449aab180d1d63675568368334415088"
+    },
+    "MINESET.ZIP": {
+      "bytes": 58772,
+      "sha256": "624631c1017a88592ab2d9cb31a351d5b8d839c0640a66dc8f1de5419f75afbe"
+    },
+    "COOKSET.EXE": {
+      "bytes": 63268,
+      "sha256": "ec7b2bcc10aeec00161dee133b8f0e72c373307d83b4d9e68a9d0f8211b59b60"
+    },
+    "COOKSET.ZIP": {
+      "bytes": 31314,
+      "sha256": "42be449e522044b7344a645b86f5cc9080899a5940c132336d7444ef2351c114"
+    }
+  },
+  "native_tested_sources": {
+    "tools/APPSET/APPSET.C": "f55a52ff67375e3b1fd09e3a2b5a895f2e8c9dc35ca4f48d3885cad018534300",
+    "tools/APPSET/PACK.PY": "173354d88e7d286128fb23398b7f7292f4b7b97be289b03bd580bedfaf2e4c9e",
+    "tools/MINEAPP/MINERUN.C": "447132e9c47f8ff271a808b25b9ae21d27a131ee0e72b73956d51931cabea43d",
+    "tools/MINEAPP/INSTALL.TXT": "8da75094ca884c3c431aae3f4c6273224e66dfda211694f7673c44c0b38d88cf",
+    "examples/COOKIE/INSTALL.TXT": "ac06e30abcd8955d9b3774b53e49fe133493fd778942150b4ed684429c52f733"
+  },
+  "subsequent_source_change": "APP_READY compile-time completion hook 36db205 preserves all four tested artifact bytes exactly; no native rerun required for identical output.",
+  "cookie_save": {
+    "bytes": 12,
+    "sha256": "ef6c4df1b5a6b1822ca60cd576c926c8421d52de616400b1b1d11691c32400f1"
+  },
+  "unchanged_system_ini_sha256": "379c7c594a6d4df9b5570fa2adf8506b59adba9abd87dac7444ff6bf9d5bde10",
+  "unchanged_config_sys_sha256": "397ba8d70d7bc75f12b30343d2a0555de445d204ceaeb906f0db6a07238a4768",
+  "evidence": {
+    "QA/APPQA.LOG": {
+      "bytes": 999,
+      "sha256": "aeaa64b8604a8fd68ca6976fdd3bddd1a3787aa245a968f6debe7a0ed0d0352b"
+    },
+    "QA/COOK1.LOG": {
+      "bytes": 211,
+      "sha256": "ad603d77d3318305faf1c26dbba9919b27fd93909e20cf536aafbec8ce5d765f"
+    },
+    "QA/COOK2.LOG": {
+      "bytes": 211,
+      "sha256": "ad603d77d3318305faf1c26dbba9919b27fd93909e20cf536aafbec8ce5d765f"
+    },
+    "QA/DONEAPP.TXT": {
+      "bytes": 12,
+      "sha256": "3273d1ab907c2972ef9b1d22d49bff1e79fc16478e549ef43f4a7de9100d55cc"
+    },
+    "QA/MINE1.LOG": {
+      "bytes": 218,
+      "sha256": "c76a2ed12a65962f60c4b8e04773a4457ffd876b6e90312c01f1bc3f1d05871c"
+    },
+    "QA/MINE2.LOG": {
+      "bytes": 218,
+      "sha256": "c76a2ed12a65962f60c4b8e04773a4457ffd876b6e90312c01f1bc3f1d05871c"
+    }
+  },
+  "limits": [
+    "DOS 3.20+ is the code target; this native run used MS-DOS 6.22.",
+    "Failure/collision/damaged/private-module paths are host tested, not extra native tests in this bounded normal-flow run.",
+    "The separately owned unified SOUND release was not imported; no claim about its current unpublished closure.",
+    "The test controller uses normal Windows APIs after desktop startup; this is not a manual File/Run UI automation claim."
+  ],
+  "review": {
+    "reviewer": "Support/packaging owner (independent, no overlapping edits)",
+    "status": "No additional issue after raw DOS handle correction; static WMABT import and LoadLibrary/WinExec reference lifetime reviewed."
+  },
+  "diagnostic": "First native extraction stopped before Windows because raw _dos_creatnew handles were mixed with CRT write/close. Corrected in e142825; a raw-handle offset mock and exact mixed-API mutation now prevent regression. The failed run remains private; this receipt records the repaired run only.",
+  "controller_source_sha256": "6a8891c242b5b582798fdd343a75fc25a6e053745e610548c523a6f646133037"
+}

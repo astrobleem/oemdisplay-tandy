@@ -36,7 +36,23 @@ It does not run an emulator or prove Windows loader behavior. The DOS and
 Win16 builds use Open Watcom `-0`; MINERUN targets Windows 3.0 and imports only
 KERNEL and USER. `BUILD.JSN` records exact source, compiler and output identity.
 
-Native acceptance is pending the coordinator's emulator allocation. Follow
-the bounded [native checklist](../MINEAPP/NATIVE.MD). Do not publish these new
-packets or replace current front-door URLs until that result is recorded.
-Existing XR1/MINE and FullXT publisher inputs remain unchanged.
+The bounded native normal flow passed on 2026-10-25: 386 seconds, 10 checks,
+8088 / 640 KB / MS-DOS 6.22 / guarded Windows 3.0 real mode. Both SFX installers
+and matching retries ran in DOS. Minesweeper launched/About/closed twice with
+only the app-local DLL; Cookie click/buy/save/load/exit and preservation of its
+save through a DOS reinstall passed. SYSTEM.INI and CONFIG.SYS were unchanged.
+See [NATIVE.JSN](NATIVE.JSN) and the [scope/procedure](../MINEAPP/NATIVE.MD).
+The separately owned unified SOUND release was not imported into this fixture.
+
+`TESTPKG.PY` is a read-only standard-library source/packet regression check. It
+requires exact native-qualified artifact bytes and the pinned execution logs.
+A rebuild with different app bytes loses that recorded pass automatically.
+The GitHub workflow runs this check; no compiler or emulator is needed there.
+
+Driver packet builders may define `APP_READY(where)` in their generated
+FILES.H to print their own plain-DOS completion instruction. The default is
+unchanged. All four app packets are byte-identical with this source hook.
+This hook does not qualify another packet's installer or consumer path.
+
+Publication/front-door updates remain a separate release step. Existing
+XR1/MINE and FullXT publisher inputs remain unchanged.

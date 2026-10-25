@@ -53,6 +53,27 @@ def imports(data):
     if set(names)-{'KERNEL','USER'}:raise ValueError('Unexpected MINERUN dependency: '+str(names))
     return names
 
+def native_receipt(results):
+    """Only carry a recorded native pass forward for identical consumer bytes."""
+    path=HERE/'NATIVE.JSN'
+    pending='PENDING: no matching completed native receipt for these packet bytes'
+    if not path.is_file():return pending,None
+    record=json.loads(path.read_bytes())
+    expected={setup+'.'+kind.upper():pin for setup,item in results.items()
+              for kind,pin in item.items() if kind in ('exe','zip')}
+    checks=record.get('checks',{})
+    if (record.get('complete') is not True or record.get('artifacts')!=expected
+        or len(checks)!=10 or not all(v is True for v in checks.values())
+        or not record.get('owned_stopped') or not record.get('lease_released')):
+        return pending,None
+    if digest((ROOT/record['controller_source']).read_bytes())!=record['controller_source_sha256']:
+        return pending,None
+    for name,pin in record['evidence'].items():
+        data=(HERE/name).read_bytes()
+        if len(data)!=pin['bytes'] or digest(data)!=pin['sha256']:return pending,None
+    return ('PASS: 8088/HX MS-DOS 6.22, normal guarded Windows 3.0 desktop; '
+            '386 seconds, 10 checks; stock SOUND.DRV'),{'path':'tools/APPSET/NATIVE.JSN','sha256':digest(path.read_bytes())}
+
 def run(watcom,out,args):
     env=os.environ.copy();env['WATCOM']=str(watcom)
     env['INCLUDE']=os.pathsep.join([str(watcom/'h/win'),str(watcom/'h')])
@@ -100,8 +121,9 @@ def build(watcom,out):
         results[setup]={'exe':{'bytes':len(sfx),'sha256':digest(sfx)},
                         'zip':{'bytes':len(archive),'sha256':digest(archive)},
                         'payload':{n:{'bytes':len(d),'sha256':digest(d)} for n,d in files.items()}}
+    native_status,receipt=native_receipt(results)
     report={'target':'DOS 3.20+ / 8088; Windows 3.0 real mode apps',
-            'native_windows_test':'PENDING: requires coordinator allocation',
+            'native_windows_test':native_status,'native_receipt':receipt,
             'MINERUN_imports':modules,'files':results,
             'sources':{str(p.relative_to(ROOT)).replace('\\','/'):digest(p.read_bytes()) for p in
                        [HERE/'APPSET.C',HERE/'PACK.PY',ROOT/'tools/MINEAPP/MINERUN.C',

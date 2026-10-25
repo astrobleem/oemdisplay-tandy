@@ -1,4 +1,4 @@
-"""Read-only source/runtime closure for the private native app candidates."""
+"""Read-only source/runtime and recorded native closure for the app packets."""
 import hashlib
 import io
 import json
@@ -39,5 +39,7 @@ for setup,record in report['files'].items():
             assert pack.imports(z.read('MINERUN.EXE'))==report['MINERUN_imports']
             for name,pin in pack.PINS.items():assert pack.digest(z.read(name))==pin
         else:assert pack.digest(z.read('COOKIE.EXE'))==pack.COOKIE_PIN
-assert report['native_windows_test'].startswith('PENDING'), 'Update native qualification gate explicitly after allocated acceptance'
-print('PASS: both native app candidates have closed packet/source identities; native qualification remains pending.')
+status,receipt=pack.native_receipt(report['files'])
+assert status.startswith('PASS:'),status
+assert report['native_windows_test']==status and report['native_receipt']==receipt
+print('PASS: source/packet closure and exact native-qualified app bytes; '+status)

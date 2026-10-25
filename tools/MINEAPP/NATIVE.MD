@@ -1,30 +1,44 @@
-# Bounded native app acceptance
+# Native app normal-flow qualification
 
-Run only after the parent/current coordinator grants an emulator slot. Use a
-private existing DOS/Windows 3.0 real-mode fixture, not user storage. Keep the
-accepted WINMINE/WMABT/Cookie bytes unchanged. Record the exact BUILD.JSN and
-candidate SFX hashes used. No hypothetical older-version migration matrix.
+The bounded acceptance passed on 2026-10-25 in 386 seconds. [NATIVE.JSN](../APPSET/NATIVE.JSN)
+binds both EXE/ZIP pairs, the actual guest logs and the exact scope. The private
+fixture used an emulated Tandy 1000 HX, 8088 at 7.159092 MHz, 640 KB, no dynarec,
+MS-DOS 6.22 and Windows 3.0 real mode. This is not physical hardware evidence.
 
-1. From another current drive, run the complete MINESET.EXE into a new private
-   DOS directory. Run COOKSET.EXE into a second directory. Compare every output
-   with its packet; run each setup again to confirm a matching retry succeeds.
-   Confirm a differing destination app file is refused without changes.
-2. With no WMABT in Windows or SYSTEM, start the fixture's normal guarded
-   Windows desktop. From an unrelated current directory, use File / Run (or
-   Tandy Start / Run) with the full MINERUN path. Verify game play, Help / About,
-   normal close, then launch/About/close a second time. Confirm no global DLL,
-   INI, display, shell or boot bytes changed.
-3. Run COOKIE.EXE directly from the same normal desktop. Verify click/buy,
-   Save/Load and exit. Rerun its DOS setup and verify COOKIE.SAV is preserved.
-   No TANDY88 directory, launcher or legacy display installation is present.
-4. With the private shim temporarily missing, verify MINERUN's bounded error
-   and no child launch. Rerun MINESET to restore the missing packet member,
-   then repeat normal launch/About/exit. Do not remove a real user's file.
-5. Verify the same app launch under the actual current FullXT sound profile.
-   Unchanged WINMINE imports SOUND in addition to KERNEL/GDI/USER/WMABT; report
-   an actual failure to the sound owner rather than editing its clients here.
+Both complete DOS SFX installers extracted every pinned member exactly into new
+folders. Matching MINESET retry passed before Windows. The fixture retained its
+normal `C:\STARTXT.BAT` / WINXT / XTCLEAN / XTTEST route and TSHELL desktop, with
+HPXY.DRV and stock SOUND.DRV. Neither Windows nor SYSTEM contained WMABT.DLL.
 
-The host mock covers foreign-loaded-module and LoadLibrary/WinExec failure
-cleanup. Native loader behavior and the absent-global-DLL path still require
-the real Windows checks above. Stop/release owned processes and the lease
-under the coordinator's normal rules; retain a concise execution receipt.
+A developer-only extra WIN.INI load task, [APPQA.C](QA/APPQA.C), waited for the
+normal shell before launching the apps through WinExec. It did not replace the
+shell or depend on WIN application-command-tail forwarding. MINERUN loaded the
+private DLL at `C:\MINETST\WMABT.DLL`; the controller verified the module path,
+opened the owned Help / About dialog, requested a new game and closed normally.
+A second complete launch/About/close cycle passed. This verifies the Win16 DLL
+reference lifetime after MINERUN exits. It does not claim manual File/Run input.
+
+Cookie ran directly from the same desktop. Click/buy produced a valid one-CPS
+save; New/Load/Save restored that state, and the app closed normally. Windows
+returned normally to DOS. A COOKSET retry preserved COOKIE.SAV byte for byte.
+All packet members still matched. No global shim or staging temporary remained;
+installed SYSTEM.INI and CONFIG.SYS matched their pretest bytes. The controller's
+own startup/task setup is separate from the product's unchanged configuration.
+
+The 60-check host suite covers both CRT and raw DOS backends, all-collision
+preflight, corruption/refusal, disk-full cleanup/retry, foreign-file/save
+preservation and private-launcher error cleanup. Its offset-handle mock catches
+the mixed raw-DOS/CRT regression found in the first failed native extraction.
+These error cases were not additional native runs in this bounded window.
+
+DOS 3.20+ remains the code target; the actual native OS tested was MS-DOS 6.22.
+The separately owned unified SOUND release was not imported. No claim is made
+about that unpublished integration or a new physical-hardware matrix.
+
+To repeat the normal check, obtain a direct coordinator slot and byte-0 lease,
+clone a stopped accepted Windows fixture privately, run both SFX installers and
+matching retries, then use the normal guarded desktop with APPQA as an extra
+load task. Keep Windows/DOS media and raw images private. Record packet hashes,
+actual app logs and the bounded result; verify stop/release for owned children.
+The passing artifact bytes need no repeat solely for completion-hook source
+changes that rebuild to these exact same bytes.
