@@ -91,24 +91,24 @@
   "sound": {
     "TWXT2.ZIP": {
       "identity": {
-        "bytes": 2157594,
-        "sha256": "40d00a49ecb4dc177274042c5084a5a3b5ee3d4e59eca81003af8c6c083f72db"
+        "bytes": 2373822,
+        "sha256": "a65e1ae06b3fc874809a907bb94b6420c7e8490e2b8ca3776cbfda28ef81fd79"
       },
-      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/68f829739d9f9721e9739add8834fbceeeff7e33/artifacts/win30/TWXT2.ZIP"
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/e8393f46ed6b3e89ae0780a0dc071cea226e5bde/artifacts/win30/TWXT2.ZIP"
     },
     "MML3AUTH.ZIP": {
       "identity": {
-        "bytes": 2901496,
-        "sha256": "96f9ce17cf92840956b96366df855256a9ad903d383894d19b9b01d78b7de855"
+        "bytes": 3121015,
+        "sha256": "c78c4487b59cf8e85fa0e5f946db10168ea21a752964bc2dcd0d3b87c25f1c44"
       },
-      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/68f829739d9f9721e9739add8834fbceeeff7e33/artifacts/win30/MML3AUTH.ZIP"
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/e8393f46ed6b3e89ae0780a0dc071cea226e5bde/artifacts/win30/MML3AUTH.ZIP"
     },
     "PITEXPR.ZIP": {
       "identity": {
-        "bytes": 2942533,
-        "sha256": "17345caf47f1c740925dd8f1bd8a05e522a1be54468456d0428574a0a3198866"
+        "bytes": 3162052,
+        "sha256": "625dc5d0eb6bfd68facf07cf45a4722daf7aff9ef71e4925ec3846f264d3ab17"
       },
-      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/68f829739d9f9721e9739add8834fbceeeff7e33/artifacts/win30/PITEXPR.ZIP"
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/e8393f46ed6b3e89ae0780a0dc071cea226e5bde/artifacts/win30/PITEXPR.ZIP"
     }
   },
   "developer_inputs": {
