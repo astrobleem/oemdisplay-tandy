@@ -35,6 +35,8 @@ def build(out,watcom):
     ready='ColorPlus files are ready. From plain DOS run %s\\INSTALL.\n'
     lines=['#define APP_TITLE "ColorPlus display"','#define SETUP_NAME "CPPSET"',
            '#define DEFAULT_DIR '+json.dumps(r'C:\CPPAN'),'#define RUN_NAME "INSTALL.BAT"',
+           '#define APP_FIXED_TARGET 1',
+           '#define APP_COLLISION "Required C:\\\\CPPAN contains a different file. Extraction stopped."',
            '#define APP_READY(target) printf('+json.dumps(ready)+',target)',
            'static struct entry files[]={']
     lines+=[' {"%s",%dUL,0x%08xUL,0},'%(n,len(b),zlib.crc32(b)) for n,b in sorted(files.items())]

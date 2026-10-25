@@ -1,13 +1,13 @@
 {
   "schema": 1,
   "complete": true,
-  "scope": "PC1512 actual native SFX/OEMSetup/640x200real-mode launch/DOSreturn; ColorPlus native SFX extraction with byte-identical previously-qualified Setup/runtime inputs",
+  "scope": "PC1512 actual native SFX/OEMSetup/640x200real-mode launch/DOSreturn; ColorPlus native SFX extraction with byte-identical previously-qualified Setup/runtime inputs; final production carriers additionally passed native fixed-target refusal/default/case extraction with unchanged Windows payloads",
   "seconds": 208.1,
   "outputs": {
     "PC1512": {
       "P15SET.EXE": {
-        "bytes": 137008,
-        "sha256": "ede3356eb1209caf8feaf44438639a6e0669554ae0f8329328f9767023a3df02"
+        "bytes": 137172,
+        "sha256": "336a898f7c1f672827228010da2db098f96317bf010f044a738ce31f4b959c5a"
       },
       "PC1512.ZIP": {
         "bytes": 104820,
@@ -20,8 +20,8 @@
     },
     "ColorPlus": {
       "CPPSET.EXE": {
-        "bytes": 208293,
-        "sha256": "77bfb745aee9c2b5f33cd6c75536c06ee3b7974a30bdf1f5bba9c6a36ce50a43"
+        "bytes": 208455,
+        "sha256": "bae175b86864173062e31624e7e4875d8429150cdf6b0ca5151349716134fc1a"
       },
       "CPPAN.ZIP": {
         "bytes": 176009,
@@ -185,7 +185,8 @@
     "PC1512_640x200real_mode_and_normal_DOSreturn": true,
     "PC1512_dedicated_video_needs_no_reservation": true,
     "ColorPlus_native_Setup_and_driver_inputs_match_qualified_public_kit": true,
-    "owned_process_stopped_and_lease_released": true
+    "owned_process_stopped_and_lease_released": true,
+    "production_fixed_targets_refuse_other_folders_before_writes": true
   },
   "evidence": {
     "NATIVE.JSN": {
@@ -199,7 +200,28 @@
     "P15.PNG": {
       "bytes": 2688,
       "sha256": "41d84fc0f94880a9c6ae53c9f19349be18cc8dc15f5829e0585f7f5ef6ebfd4e"
+    },
+    "TARGET.JSN": {
+      "bytes": 6661,
+      "sha256": "ba36d11570dd342c26ae34f1896a00554ec4436cbb61b7dbb4b5fe56a11ba480"
+    },
+    "TARGET.LOG": {
+      "bytes": 712,
+      "sha256": "51f6d5f734f0089a9b7a6052b5c379f1e505967f0a982f3b59f89be456ff4297"
+    },
+    "TARGET.PY": {
+      "bytes": 3891,
+      "sha256": "19563583d5d6662bbbcd71e20c3972b3d24c67315f09e3c22f88247165db4fe0"
+    },
+    "TARGET.BAT": {
+      "bytes": 337,
+      "sha256": "c7733a422a1a7a4a9ec6a4c728c5c499bf00bd1ab26d7b6efcafd4bbe80bc4a8"
+    },
+    "TARGET.CNF": {
+      "bytes": 498,
+      "sha256": "1d2c56eb6c04ef6e253d7edb499c249efd9928e7d2696e29c1698697974fe933"
     }
   },
-  "physical_hardware_qualification": false
+  "physical_hardware_qualification": false,
+  "target_harness": "Functional batch reached PASS; original120s watchdog stopped the idle emulator because harness omitted EXIT. Raw process receipt retained. No repeated Windows Setup asserted for carrier-only guard."
 }

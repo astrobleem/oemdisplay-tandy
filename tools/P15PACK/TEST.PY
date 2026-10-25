@@ -34,9 +34,14 @@ def main():
     env=os.environ.copy();env['PATH']=r'C:\msys64\ucrt64\bin'+os.pathsep+env.get('PATH','')
     for backend in ['crt','dos']:
         exe=a.out/(backend+'.exe')
+        headers=a.out/(backend+'-headers');headers.mkdir()
+        original_header=(a.build/'native/FILES.H').read_text('ascii')
+        # Exercise shared extraction cases at isolated host directories;
+        # the fixed-directory branch is compiled and checked separately below.
+        (headers/'FILES.H').write_text(original_header.replace('#define APP_FIXED_TARGET 1\n',''),encoding='ascii')
         command=[sys.executable,str(a.gcc_wrapper),'--','-x','c','-std=c89',
                  '-Wall','-Wextra','-Werror','-Wno-misleading-indentation','-DHOST_TEST',
-                 '-I',str((a.build/'native').resolve())]
+                 '-I',str(headers.resolve())]
         if backend=='dos':command+=['-DDOS_API_MOCK',str((a.appset/'TESTS/DOSMOCK.C').resolve())]
         command += [str((a.appset/'APPSET.C').resolve()),'-o',str(exe.resolve())]
         done=subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
@@ -70,6 +75,26 @@ def main():
         damaged[info.header_offset+30+len(info.filename)]^=1;packet.write_bytes(damaged)
         bad=a.out/(backend+'-damaged');done=invoke(bad)
         check(backend+' damaged packet before writes',done.returncode!=0 and not bad.exists())
+    fixed=a.out/'fixed-destination';headers=a.out/'fixed-headers';headers.mkdir()
+    lines=original_header.splitlines()
+    lines=[('#define DEFAULT_DIR '+json.dumps(str(fixed.resolve()))) if x.startswith('#define DEFAULT_DIR ') else x for x in lines]
+    (headers/'FILES.H').write_text('\n'.join(lines)+'\n',encoding='ascii')
+    exe=a.out/'fixed.exe'
+    command=[sys.executable,str(a.gcc_wrapper),'--','-x','c','-std=c89','-DHOST_TEST',
+             '-I',str(headers.resolve()),str((a.appset/'APPSET.C').resolve()),'-o',str(exe.resolve())]
+    done=subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    check('fixed target compile',done.returncode==0)
+    packet.write_bytes(original);env['APPSET_PACKET']=str(packet.resolve())
+    other=a.out/'unsupported-destination'
+    done=subprocess.run([str(exe.resolve()),str(other.resolve())],env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    check('unsupported target refused before writes',done.returncode!=0 and b'extracts only to' in done.stdout and not other.exists() and not fixed.exists())
+    done=subprocess.run([str(exe.resolve())],env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    check('fixed default extraction succeeds',done.returncode==0 and all((fixed/n).read_bytes()==b for n,b in files.items()))
+    done=subprocess.run([str(exe.resolve()),str(fixed.resolve()).swapcase()],env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    check('fixed explicit target ignores case',done.returncode==0)
+    (fixed/sorted(files)[-1]).write_bytes(b'foreign')
+    done=subprocess.run([str(exe.resolve())],env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    check('fixed collision gives no unsupported folder advice',done.returncode!=0 and b'Choose a new app folder' not in done.stdout)
     report={'status':'PASS','checks':checks,'native_windows_test':'not asserted by host checks'}
     (a.out/'RESULT.JSON').write_text(json.dumps(report,indent=2)+'\n')
     print('PC1512 packet: %d host checks passed'%len(checks))

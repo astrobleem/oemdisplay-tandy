@@ -17,9 +17,9 @@ def status(product,outputs,files):
     if (record.get('complete') is not True or
         record.get('outputs',{}).get(product)!=outputs or
         record.get('runtime',{}).get(product)!={n:identity(b) for n,b in files.items()} or
-        len(record.get('checks',{}))!=6 or not all(v is True for v in record['checks'].values())):
+        len(record.get('checks',{}))!=7 or not all(v is True for v in record['checks'].values())):
         return pending,None
-    names={'NATIVE.JSN','NATIVE.PY','P15.PNG'}
+    names={'NATIVE.JSN','NATIVE.PY','P15.PNG','TARGET.JSN','TARGET.LOG','TARGET.PY','TARGET.BAT','TARGET.CNF'}
     if set(record.get('evidence',{}))!=names:raise ValueError('Native carrier evidence list differs')
     for name,pin in record['evidence'].items():
         if identity((HERE/'QA'/name).read_bytes())!=pin:

@@ -89,6 +89,8 @@ def build(accepted, appset, watcom, out):
     ready = 'PC1512 files are ready. From plain DOS run %s\\INSTALL.\n'
     lines = ['#define APP_TITLE "PC1512 display"', '#define SETUP_NAME "P15SET"',
              '#define DEFAULT_DIR '+json.dumps(r'C:\P15EXP'), '#define RUN_NAME "INSTALL.BAT"',
+             '#define APP_FIXED_TARGET 1',
+             '#define APP_COLLISION "Required C:\\\\P15EXP contains a different file. Extraction stopped."',
              '#define APP_READY(target) printf(' + json.dumps(ready) + ',target)',
              'static struct entry files[]={']
     lines += [' {"%s",%dUL,0x%08xUL,0},' % (n,len(d),zlib.crc32(d))
