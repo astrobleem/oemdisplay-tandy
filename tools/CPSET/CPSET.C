@@ -17,6 +17,7 @@
 #ifdef HOST_WINDOWS
 #include <io.h>
 #include <process.h>
+#define fsync _commit
 #endif
 typedef uint32_t U32;
 #ifndef HOST_WINDOWS
@@ -103,8 +104,10 @@ static unsigned readall(const char *p,unsigned char *b,unsigned lim)
 { int f,n; unsigned z=0; f=open(p,O_RDONLY|O_BINARY); if(f<0) die("Required file cannot be read."); while(z<lim) { n=read(f,b+z,(lim-z)>16000?16000:(lim-z)); if(n<0) { close(f); die("Read failed."); } if(!n) break; z+=(unsigned)n; } if(z==lim) { unsigned char c; n=read(f,&c,1); if(n!=0) {close(f);die("File exceeds safe size limit.");} } if(close(f)) die("Read close failed."); return z; }
 static int same(const char *p,const unsigned char *b,unsigned n)
 { unsigned char part[256]; unsigned off=0,k; int f,r; f=open(p,O_RDONLY|O_BINARY); if(f<0) return 0; while(off<n) { k=n-off; if(k>sizeof(part)) k=sizeof(part); r=read(f,part,k); if(r!=(int)k || memcmp(part,b+off,k)) {close(f);return 0;} off+=k; } r=read(f,part,1); if(close(f)) return 0; return r==0; }
+static U32 input_crc(const unsigned char *b,unsigned n);
+/* Same CRC32 journal format; share the bounded byte-table implementation. */
 static unsigned long crc(const unsigned char *p,unsigned n)
-{ unsigned long c=0xffffffffUL; unsigned i; while(n--) { c^=*p++; for(i=0;i<8;++i) c=(c&1)?(c>>1)^0xedb88320UL:c>>1; } return (c^0xffffffffUL)&0xffffffffUL; }
+{return (unsigned long)input_crc(p,n);}
 static void snapshot(const char *p,const unsigned char *b,unsigned n)
 { unsigned char h[HEAD]; unsigned long c; int f; unsigned i; memset(h,0,HEAD); memcpy(h,"CPINF01\n",8); strcpy((char*)h+8,ini); h[136]=(unsigned char)n; h[137]=(unsigned char)(n>>8); c=crc(b,n); for(i=0;i<4;++i) h[138+i]=(unsigned char)(c>>(i*8)); f=create(p); out(f,h,HEAD); out(f,b,n); finish(f); }
 static unsigned loadsnap(const char *p,unsigned char *b)
@@ -162,12 +165,86 @@ static void hashmem(const unsigned char *b,unsigned n,char *h) { SHA s;init(&s);
 static void hashfile(const char *p,char *h)
 { SHA s;int f,r;unsigned char b[512];init(&s);f=open(p,O_RDONLY|O_BINARY);if(f<0)die("Selected keyboard file unavailable.");while((r=read(f,b,sizeof(b)))>0)update(&s,b,(unsigned)r);if(r<0||close(f))die("Keyboard file read failed.");sha_finish(&s,h); }
 static unsigned locate(const char *s);
+/* Exact two installed-OS inputs, not a general Windows-version matrix.
+ * CRC bounds the default known-input check; /VERIFY retains full SHA256.
+ * The actual INF is kept unchanged for patching and exact rollback.
+ * Byte shifting avoids the 8086 compiler's slow 32-bit shift loop. */
+static const U32 metadata_crc[256]={
+ 0x00000000UL,0x77073096UL,0xee0e612cUL,0x990951baUL,0x076dc419UL,0x706af48fUL,0xe963a535UL,0x9e6495a3UL,
+ 0x0edb8832UL,0x79dcb8a4UL,0xe0d5e91eUL,0x97d2d988UL,0x09b64c2bUL,0x7eb17cbdUL,0xe7b82d07UL,0x90bf1d91UL,
+ 0x1db71064UL,0x6ab020f2UL,0xf3b97148UL,0x84be41deUL,0x1adad47dUL,0x6ddde4ebUL,0xf4d4b551UL,0x83d385c7UL,
+ 0x136c9856UL,0x646ba8c0UL,0xfd62f97aUL,0x8a65c9ecUL,0x14015c4fUL,0x63066cd9UL,0xfa0f3d63UL,0x8d080df5UL,
+ 0x3b6e20c8UL,0x4c69105eUL,0xd56041e4UL,0xa2677172UL,0x3c03e4d1UL,0x4b04d447UL,0xd20d85fdUL,0xa50ab56bUL,
+ 0x35b5a8faUL,0x42b2986cUL,0xdbbbc9d6UL,0xacbcf940UL,0x32d86ce3UL,0x45df5c75UL,0xdcd60dcfUL,0xabd13d59UL,
+ 0x26d930acUL,0x51de003aUL,0xc8d75180UL,0xbfd06116UL,0x21b4f4b5UL,0x56b3c423UL,0xcfba9599UL,0xb8bda50fUL,
+ 0x2802b89eUL,0x5f058808UL,0xc60cd9b2UL,0xb10be924UL,0x2f6f7c87UL,0x58684c11UL,0xc1611dabUL,0xb6662d3dUL,
+ 0x76dc4190UL,0x01db7106UL,0x98d220bcUL,0xefd5102aUL,0x71b18589UL,0x06b6b51fUL,0x9fbfe4a5UL,0xe8b8d433UL,
+ 0x7807c9a2UL,0x0f00f934UL,0x9609a88eUL,0xe10e9818UL,0x7f6a0dbbUL,0x086d3d2dUL,0x91646c97UL,0xe6635c01UL,
+ 0x6b6b51f4UL,0x1c6c6162UL,0x856530d8UL,0xf262004eUL,0x6c0695edUL,0x1b01a57bUL,0x8208f4c1UL,0xf50fc457UL,
+ 0x65b0d9c6UL,0x12b7e950UL,0x8bbeb8eaUL,0xfcb9887cUL,0x62dd1ddfUL,0x15da2d49UL,0x8cd37cf3UL,0xfbd44c65UL,
+ 0x4db26158UL,0x3ab551ceUL,0xa3bc0074UL,0xd4bb30e2UL,0x4adfa541UL,0x3dd895d7UL,0xa4d1c46dUL,0xd3d6f4fbUL,
+ 0x4369e96aUL,0x346ed9fcUL,0xad678846UL,0xda60b8d0UL,0x44042d73UL,0x33031de5UL,0xaa0a4c5fUL,0xdd0d7cc9UL,
+ 0x5005713cUL,0x270241aaUL,0xbe0b1010UL,0xc90c2086UL,0x5768b525UL,0x206f85b3UL,0xb966d409UL,0xce61e49fUL,
+ 0x5edef90eUL,0x29d9c998UL,0xb0d09822UL,0xc7d7a8b4UL,0x59b33d17UL,0x2eb40d81UL,0xb7bd5c3bUL,0xc0ba6cadUL,
+ 0xedb88320UL,0x9abfb3b6UL,0x03b6e20cUL,0x74b1d29aUL,0xead54739UL,0x9dd277afUL,0x04db2615UL,0x73dc1683UL,
+ 0xe3630b12UL,0x94643b84UL,0x0d6d6a3eUL,0x7a6a5aa8UL,0xe40ecf0bUL,0x9309ff9dUL,0x0a00ae27UL,0x7d079eb1UL,
+ 0xf00f9344UL,0x8708a3d2UL,0x1e01f268UL,0x6906c2feUL,0xf762575dUL,0x806567cbUL,0x196c3671UL,0x6e6b06e7UL,
+ 0xfed41b76UL,0x89d32be0UL,0x10da7a5aUL,0x67dd4accUL,0xf9b9df6fUL,0x8ebeeff9UL,0x17b7be43UL,0x60b08ed5UL,
+ 0xd6d6a3e8UL,0xa1d1937eUL,0x38d8c2c4UL,0x4fdff252UL,0xd1bb67f1UL,0xa6bc5767UL,0x3fb506ddUL,0x48b2364bUL,
+ 0xd80d2bdaUL,0xaf0a1b4cUL,0x36034af6UL,0x41047a60UL,0xdf60efc3UL,0xa867df55UL,0x316e8eefUL,0x4669be79UL,
+ 0xcb61b38cUL,0xbc66831aUL,0x256fd2a0UL,0x5268e236UL,0xcc0c7795UL,0xbb0b4703UL,0x220216b9UL,0x5505262fUL,
+ 0xc5ba3bbeUL,0xb2bd0b28UL,0x2bb45a92UL,0x5cb36a04UL,0xc2d7ffa7UL,0xb5d0cf31UL,0x2cd99e8bUL,0x5bdeae1dUL,
+ 0x9b64c2b0UL,0xec63f226UL,0x756aa39cUL,0x026d930aUL,0x9c0906a9UL,0xeb0e363fUL,0x72076785UL,0x05005713UL,
+ 0x95bf4a82UL,0xe2b87a14UL,0x7bb12baeUL,0x0cb61b38UL,0x92d28e9bUL,0xe5d5be0dUL,0x7cdcefb7UL,0x0bdbdf21UL,
+ 0x86d3d2d4UL,0xf1d4e242UL,0x68ddb3f8UL,0x1fda836eUL,0x81be16cdUL,0xf6b9265bUL,0x6fb077e1UL,0x18b74777UL,
+ 0x88085ae6UL,0xff0f6a70UL,0x66063bcaUL,0x11010b5cUL,0x8f659effUL,0xf862ae69UL,0x616bffd3UL,0x166ccf45UL,
+ 0xa00ae278UL,0xd70dd2eeUL,0x4e048354UL,0x3903b3c2UL,0xa7672661UL,0xd06016f7UL,0x4969474dUL,0x3e6e77dbUL,
+ 0xaed16a4aUL,0xd9d65adcUL,0x40df0b66UL,0x37d83bf0UL,0xa9bcae53UL,0xdebb9ec5UL,0x47b2cf7fUL,0x30b5ffe9UL,
+ 0xbdbdf21cUL,0xcabac28aUL,0x53b39330UL,0x24b4a3a6UL,0xbad03605UL,0xcdd70693UL,0x54de5729UL,0x23d967bfUL,
+ 0xb3667a2eUL,0xc4614ab8UL,0x5d681b02UL,0x2a6f2b94UL,0xb40bbe37UL,0xc30c8ea1UL,0x5a05df1bUL,0x2d02ef8dUL};
+static U32 input_crc(const unsigned char *b,unsigned n)
+{U32 c=0xffffffffUL;unsigned i;union {U32 value;unsigned char byte[4];} u;
+ while(n--){u.value=c;i=(unsigned)(u.byte[0]^*b++);u.byte[0]=u.byte[1];
+  u.byte[1]=u.byte[2];u.byte[2]=u.byte[3];u.byte[3]=0;c=u.value^metadata_crc[i];}
+ return ~c;
+}
+/* Validate real section lines and disk records before generate() uses its
+ * insertion anchors. Comments or duplicate/misordered headers cannot stand
+ * in for the required sections. Each supported layout has one disk table. */
+static void metadata_layout(void)
+{static const char *required[4]={"[setup]","[keyboard.drivers]","[io.device]","[disks]"};
+ unsigned seen[4]={0,0,0,0},at[4]={0,0,0,0};
+ unsigned p=0,e,q,z,t,i,id,mask=0,disks=0,want=on==49046U?4U:5U;
+ while(p<on){e=p;while(e<on&&orig[e]!='\r'&&orig[e]!='\n'&&orig[e]!=26)++e;
+  q=p;while(q<e&&space(orig[q]))++q;
+  if(q<e&&orig[q]=='['){z=q;while(z<e&&orig[z]!=']')++z;
+   if(z==e)die("Malformed SETUP.INF section.");
+   t=z+1;while(t<e&&space(orig[t]))++t;
+   if(t<e&&orig[t]!=';')die("Unexpected text after SETUP.INF section.");
+   disks=0;for(i=0;i<4;++i)if(z-q+1==strlen(required[i])&&!memcmp(orig+q,required[i],z-q+1)){
+    if(++seen[i]!=1)die("Duplicate SETUP.INF section.");at[i]=q;if(i==3)disks=1;}
+  }else if(disks&&q<e&&orig[q]!=';'){
+   id=0;t=q;while(t<e&&orig[t]>='0'&&orig[t]<='9'){
+    id=id*10U+(unsigned)(orig[t++]-'0');if(id>want)die("Unexpected SETUP.INF disk record.");}
+   if(t==q||!id)die("Malformed SETUP.INF disk record.");
+   while(t<e&&space(orig[t]))++t;
+   if(t==e||orig[t]!='='||(mask&(1U<<id)))die("Duplicate or malformed SETUP.INF disk record.");
+   mask|=1U<<id;
+  }
+  if(e<on&&orig[e]==26)break;
+  p=e;if(p<on&&orig[p]=='\r')++p;if(p<on&&orig[p]=='\n')++p;
+ }
+ for(i=0;i<4;++i)if(seen[i]!=1)die("Missing SETUP.INF section.");
+ if(!(at[0]<at[3]&&at[3]<at[1]&&at[1]<at[2]))die("SETUP.INF sections out of order.");
+ if(mask!=((1U<<(want+1))-2U))die("Incomplete SETUP.INF disk table.");
+}
 static void source(void)
 { char h[65];unsigned i;int eof=0;
- if(on!=49046U)die("Unsupported SETUP.INF size.");
+ if(on!=49046U&&on!=49095U)die("Unsupported SETUP.INF size.");
+ if(input_crc(orig,on)!=(on==49046U?0x92333a90UL:0xa8246e14UL))die("Unknown or modified SETUP.INF. Nothing is overwritten.");
  for(i=0;i<on;i++){if(orig[i]==26){eof=1;continue;}if(eof&&orig[i]!='\r'&&orig[i]!='\n')die("Invalid SETUP.INF EOF padding.");if(!orig[i]||(orig[i]<32&&orig[i]!='\r'&&orig[i]!='\n'&&orig[i]!='\t'))die("Invalid SETUP.INF text.");}
- locate("[setup]");locate("[keyboard.drivers]");locate("[io.device]");
- if(deep_verify){if(!selftest())die("SHA256 self-test failed.");hashmem(orig,on,h);if(strcmp(h,SOURCE_SHA))die("Unknown or modified SETUP.INF. Nothing is overwritten.");}
+ metadata_layout();
+ if(deep_verify){if(!selftest())die("SHA256 self-test failed.");hashmem(orig,on,h);if(strcmp(h,on==49046U?SOURCE_SHA:"aa4a92022c88750d9dee4a8c4b003de295d44f82f70f2d5430023f1984e6d84c"))die("Unknown or modified SETUP.INF. Nothing is overwritten.");}
  }
 static void join(char *p,const char *name,int system)
 { unsigned n=(unsigned)strlen(win);if(n+strlen(name)+10>=PLEN)die("Path too long.");strcpy(p,win);

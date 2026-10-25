@@ -1,0 +1,13 @@
+{
+  "changed_input": "C:/W30SRC/123.PIF",
+  "size": 545,
+  "byte_offset": 100,
+  "old_sha256": "dade3d5ecd0ca988c3169fa60b14b3e89de02fc767661dbbdb2d26f7a69069cc",
+  "corrupt_sha256": "8de938f662c8efb0df6b9ab7ab8a8e185b245473c5d618b2d6e13667102677d8",
+  "later_preflight_guard": "C:/W30/3270.TXT is a directory",
+  "tested_self_extracting_container_sha256": "bea982dbccdea9dab526781578605f6e757bb2e90c0d053e0cf9fe1052eb9517",
+  "helper_binary": {
+    "bytes": 83372,
+    "sha256": "cffb1f1d61636373d740df8c9d17497aaed2e08b9a38906f7995722369dd828a"
+  }
+}

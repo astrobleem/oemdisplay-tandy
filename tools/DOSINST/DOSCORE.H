@@ -213,14 +213,29 @@ static void unpack_public(char *path,struct pin *p,char *output)
  * No archive pathname is used as an output path. */
 static unsigned zw(unsigned char *p){return p[0]|((unsigned)p[1]<<8);}
 static U32 zd(unsigned char *p){return (U32)zw(p)|((U32)zw(p+2)<<16);}
+#ifdef FAST_CRC
+#include "CRCFAST.H"
+#endif
 static U32 crc_add(U32 c,unsigned char *p,unsigned n)
 {
+#ifdef FAST_CRC
+ return fast_crc(c,p,n);
+#else
  static U32 tab[16]={0,0x1db71064UL,0x3b6e20c8UL,0x26d930acUL,0x76dc4190UL,0x6b6b51f4UL,0x4db26158UL,0x5005713cUL,0xedb88320UL,0xf00f9344UL,0xd6d6a3e8UL,0xcb61b38cUL,0x9b64c2b0UL,0x86d3d2d4UL,0xa00ae278UL,0xbdbdf21cUL};
  while(n--){c^=*p++;c=(c>>4)^tab[(unsigned)c&15];c=(c>>4)^tab[(unsigned)c&15];}return c;
+#endif
 }
+#ifdef ZIP_INDEX
+static long zip_positions[NPINS],zip_scan_end;
+static unsigned char zip_known[NPINS];
+#endif
 static void zip_feed(unsigned k,int (*emit)(unsigned char *,unsigned,void *),void *ctx)
 {
  FILE *f;unsigned char h[30];char name[80],want[80];unsigned n;U32 size,left,wantcrc,c=0xffffffffUL;long pos=zip_start;
+#ifdef ZIP_INDEX
+ unsigned j;int scanning=!zip_known[k];
+ if(!scanning)pos=zip_positions[k];else if(zip_scan_end)pos=zip_scan_end;
+#endif
  strcpy(want,"PAYLOAD/");strcat(want,pins[k].name);
  f=fopen(archive,"rb");if(!f)stop("Cannot read the driver archive.",archive);
  for(;;){
@@ -228,8 +243,21 @@ static void zip_feed(unsigned k,int (*emit)(unsigned char *,unsigned,void *),voi
   if(zw(h+6)||zw(h+8)||zw(h+26)>=sizeof(name)||zw(h+28)){fclose(f);stop("Archive must use the supplied STORED format.",archive);}
   size=zd(h+22);if(size!=zd(h+18)||size>1024UL*1024UL){fclose(f);stop("Invalid driver archive size.",archive);}
   n=zw(h+26);if(fread(name,1,n,f)!=n){fclose(f);stop("Truncated driver archive name.",archive);}name[n]=0;
+#ifndef ZIP_INDEX
   if(!strcmp(name,want))break;
-  if(pos<0||size>0x7fffffffUL-(U32)pos-30-n){fclose(f);stop("Archive seek overflow.",archive);}pos+=30+n+(long)size;
+#endif
+  if(pos<0||size>0x7fffffffUL-(U32)pos-30-n){fclose(f);stop("Archive seek overflow.",archive);}
+#ifdef ZIP_INDEX
+  if(scanning){
+   if(!strncmp(name,"PAYLOAD/",8))for(j=0;j<NPINS;j++)if(!strcmp(name+8,pins[j].name)){
+    if(zip_known[j]&&zip_positions[j]!=pos){fclose(f);stop("Duplicate runtime member.",name);}
+    zip_positions[j]=pos;zip_known[j]=1;break;
+   }
+   zip_scan_end=pos+30+n+(long)size;
+  }
+  if(!strcmp(name,want))break;
+#endif
+  pos+=30+n+(long)size;
  }
  if(size!=pins[k].size){fclose(f);stop("Driver archive member differs from its release size.",want);}
  wantcrc=zd(h+14);if(pins[k].crc&&wantcrc!=pins[k].crc){fclose(f);stop("Archive member differs from compiled release CRC.",want);}left=size;

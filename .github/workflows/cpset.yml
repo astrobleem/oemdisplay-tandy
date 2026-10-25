@@ -1,0 +1,40 @@
+name: Verify installed Windows metadata support
+
+on:
+  pull_request:
+    paths:
+      - 'tools/CPSET/**'
+      - '.github/workflows/cpset.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/CPSET/**'
+      - '.github/workflows/cpset.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  metadata:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Check out exact public source without credentials
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git sparse-checkout init --no-cone
+          printf '/.gitattributes\n/tools/CPSET/\n' | git sparse-checkout set --no-cone --stdin
+          git checkout --detach --force FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Compile the real bounded parser and CRC source
+        run: gcc -x c -std=c89 -O2 -DHOST_TEST tools/CPSET/METATEST.C -o cpset-meta
+      - name: Verify layouts and malformed-input refusals without Windows media
+        run: python3 -B tools/CPSET/TESTMETA.PY --parser ./cpset-meta
