@@ -67,6 +67,7 @@ jobs:
         run: |
           python3 -B src/pc1512/P15VERIFY.PY
           python3 -B tools/DRVSET/VERIFY.PY
+          python3 -B tools/P15PACK/TESTSCP.PY
 
   publication-check:
     needs: exact-source
@@ -112,6 +113,21 @@ jobs:
           wanted={'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}
           actual=({'bytes':rows[0]['size'],'sha256':rows[0]['digest'].removeprefix('sha256:')} if rows else None)
           changed=actual!=wanted
+          if not changed:
+              catalogs={name:[row for row in release['assets'] if row['name']==name] for name in ['CURRENT.JSN','CURRENT.SHA']}
+              if any(len(rows)>1 for rows in catalogs.values()):raise ValueError('Duplicate current catalog assets')
+              changed=any(not rows for rows in catalogs.values())
+              if not changed:
+                  bodies={}
+                  for name,rows in catalogs.items():
+                      req=urllib.request.Request(rows[0]['browser_download_url'],headers={'User-Agent':'pc1512-publication-scope','Cache-Control':'no-cache'})
+                      bodies[name]=urllib.request.urlopen(req,timeout=60).read()
+                      if hashlib.sha256(bodies[name]).hexdigest()!=rows[0]['digest'].removeprefix('sha256:'):raise ValueError('Current catalog download differs')
+                  record=json.loads(bodies['CURRENT.JSN'])
+                  sums={name:digest for digest,name in (line.split('  ',1) for line in bodies['CURRENT.SHA'].decode('ascii').splitlines())}
+                  changed=(record['assets'].get('PC1512.ZIP')!=wanted or
+                           sums.get('PC1512.ZIP')!=wanted['sha256'] or
+                           sums.get('CURRENT.JSN')!=hashlib.sha256(bodies['CURRENT.JSN']).hexdigest())
           with open(os.environ['GITHUB_OUTPUT'],'a') as out:out.write('changed='+str(changed).lower()+'\n')
           print('PC1512 packet changed:',changed)
           PYCODE
