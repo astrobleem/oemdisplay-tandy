@@ -13,7 +13,7 @@ Test values, timings, binary hashes and cleanup claims are unchanged.
 FRESH is one actual 369-output run, also used for native_valid_inputs because
 it checked all 284 expanded Windows input streams. It reused an existing
 complete installation/cache. This is not a new Windows Setup/media-gather
-run. The previous 367/80 qualification remains in Git history at 57d72c;
+run. The previous 367/80 qualification remains in Git history at 745041d;
 its older raw files outside this directory are preserved.
 
 SOURCEPINS.JSON contains fingerprints only. RELOPROF.JSN and RELOREAD.JSN

@@ -24,7 +24,7 @@ The exact delivered containers are:
 The fresh and valid-input roles reference the same actual current run.
 Windows Setup and media gathering were not repeated. The earlier full Setup,
 disk-gathering and 367/80-output tests remain historical evidence in Git at
-`57d72c8197c427899772ebc334ae67dedffaf900`; their existing logs and captures
+`745041d21103552e7d564ceb5f2369c58966f56a`; their existing logs and captures
 are unchanged. No earlier receipt is relabeled as a current-helper test.
 
 Each positive case continuously observed graphics mode 9 for at least 60s.
