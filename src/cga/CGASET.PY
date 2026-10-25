@@ -43,9 +43,11 @@ def ini_source(repo):
     s=s.replace('.T8N','.CGN').replace('.T8O','.CGO')
     s=s.replace('T80SET','CGASET').replace('TEXT80','CGA').replace('BorderWidth=7','BorderWidth=1')
     s=s.replace('8x8 system/fixed/OEM fonts','selected system/fixed/OEM fonts')
-    # Leave room for CRC/copy state and a 4 KB stack in the 64 KB small-model
-    # data group. Oversized INIs are refused before configuration changes.
-    s=s.replace('24000','20000')
+    # Leave room for CRC/copy state, three C6 stream buffers and a 4 KB stack
+    # in the 64 KB small-model data group. The 20 KB candidate left only
+    # 1.5 KB of heap; progress output could make payload I/O unbuffered.
+    # Oversized INIs are refused before configuration changes.
+    s=s.replace('24000','18000')
     s=once(s,'        remove(in(OLDF[0]));\n        remove(in(OLDF[1]));\n        return 1;',
            '        if (remove(in(OLDF[0])) || remove(in(OLDF[1]))) return -1;\n        return 1;')
     # Record successful restoration before discarding any safety/state files.

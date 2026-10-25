@@ -283,7 +283,7 @@ int main(int argc,char **argv)
     }
     if(strcmp(mode,"100") && strcmp(mode,"320") && strcmp(mode,"640"))return fail("Choose 100, 320 or 640.");
     if(readfile(in("SYSTEM.INI"))<0 || readfile(in("WIN.INI"))<0)
-        return fail("Cannot read Windows INIs, or an INI exceeds 20000 bytes; nothing copied.");
+        return fail("Cannot read Windows INIs, or an INI exceeds 18000 bytes; nothing copied.");
     cga_small=!strcmp(mode,"100");
     if(!payload_location(argv[0]))return fail("Packet path too long.");
     if(exists(in("CGACOPY.NEW")))return fail("Incomplete copy record; no files changed. Keep it for diagnosis.");

@@ -155,7 +155,10 @@ def main():
     w,before=fixture('damaged completion');run(w,'100');(w/'CGADONE.STA').write_bytes(b'CGA DONE interrupted')
     current=snapshot(w);run(w,'UNDO',ok=1);assert snapshot(w)==current
     run(w,'RESTORE');assert snapshot(w)==before;passed('interrupted completion marker uses explicit safety restore')
-    w,before=fixture('oversized INI');(w/'WIN.INI').write_bytes(WIN+b';'+b'x'*20000+b'\r\n');before=snapshot(w)
+    w,before=fixture('large supported INI');pad=17000-len(WIN)-3
+    (w/'WIN.INI').write_bytes(WIN+b';pad\r\n'*(pad//6)+b';'+b'x'*(pad%6)+b'\r\n');before=snapshot(w)
+    run(w,'100');run(w,'UNDO');assert snapshot(w)==before;passed('17000-byte INI installs and restores exactly')
+    w,before=fixture('oversized INI');(w/'WIN.INI').write_bytes(WIN+b';'+b'x'*(18001-len(WIN)-3)+b'\r\n');before=snapshot(w)
     run(w,'100',ok=1);assert snapshot(w)==before;passed('small-model INI size limit refuses without residue')
 
     for extra in ('UNLISTED.DRV','CGA/UNLISTED.DRV'):

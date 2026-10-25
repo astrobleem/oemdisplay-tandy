@@ -100,7 +100,7 @@ formats or directory-wide cleanup are added.
 Host fault tests found and fixed a failed deletion leaving an INI temporary
 after its copy journal was removed. They also caught oversized INIs refused
 only after payload copying; size checks now precede all copying. The adapted
-INI buffers use a 20,000-byte limit for small-model data/stack headroom.
+INI buffers use a 18,000-byte limit for small-model data/stack headroom.
 These host C89 results do not establish native DOS or GUI acceptance.
 
 PACKCGA.PY prepares a closed payload from actual driver receipts, generated
@@ -174,3 +174,23 @@ the raw unscaled framebuffer's stale lower rows. No image editing supplies
 native proof. No publication has occurred.
 
 Native slots remain coordinated through the parent and normal shared lease.
+
+The next candidate's progress output exposed tight C6 small-model memory:
+its native map leaves 1,568 bytes after the data/stack reservation. Its file
+copy ran much slower and was stopped with the private image/records intact.
+Stream-buffer allocation is the working cause, pending the next native
+comparison. The INI buffers now cap each input at 18,000 bytes, freeing
+4,000 bytes. BUILDSET rejects maps with less than 4,096 bytes of remaining
+data-group address space. The shared INI source and published SETUP remain
+unchanged. A separate native font/GDI fixture may reuse the first complete
+install; it is explicitly not proof of the revised consumer transaction.
+
+That font/GDI fixture confirmed a 32x32 custom cursor restores the captured
+16 KB scene exactly after four tested positions, with unchanged VRAM padding.
+It exercised immediate pixels, RGB brush fills and a 16x4 memory BitBlt.
+The fill colors dithered against the inherited Windows logical palette;
+the helper's draw time included logging and is not a speed benchmark.
+Native window measurements still show Run at 220 pixels wide and File Open
+at 202x115 after the smaller dialog files were supplied. The new strike is
+not being selected as intended. Registration/mapping remains under diagnosis;
+neither font fit nor this packet's usability is accepted yet.

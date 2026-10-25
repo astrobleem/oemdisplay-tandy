@@ -67,7 +67,7 @@ UNDO preserves unrelated later INI edits, changed payloads and files still
 referenced by those INIs. Interrupted copies and cleanup are retryable through
 this packet's sealed copy record and completed-undo marker. Explicit RESTORE
 uses the two safety INIs, losing later INI edits. No legacy migration or
-directory-wide cleanup is introduced. Each INI is limited to 20,000 bytes to
+directory-wide cleanup is introduced. Each INI is limited to 18,000 bytes to
 leave small-model data/stack headroom; oversized input is refused before copying.
 
 Run the new transaction/packet host checks through the managed GCC launcher:
@@ -105,6 +105,11 @@ source/binary receipt must match preparation. Finalization rejects host PE
 executables and emits CGADEV.ZIP with root SETUP.EXE, README.TXT and CGA/.
 It remains a development packet until native install/Windows/GUI gates pass;
 no current release or shared installer runtime is replaced.
+
+The native SETUP map must leave at least 4,096 bytes of data-group address
+space beyond its data and reserved stack. The 18,000-byte INI cap leaves room
+for stream buffers; an earlier 20 KB candidate with progress output left only
+1,568 bytes and copied files too slowly on the IBM 8088 fixture.
 
 ## Fonts, controls and native acceptance
 

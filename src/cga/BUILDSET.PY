@@ -7,10 +7,23 @@ No published Windows XT installer source or binary is modified.
 import argparse
 import importlib.machinery
 import json
+import re
 import shutil
 from pathlib import Path
 import PACKCGA
 from STAGECGA import read,write
+
+
+def data_headroom(path):
+    text=read(path)
+    group=re.search(r'^\s*([0-9A-F]+):0\s+DGROUP\s*$',text,re.M|re.I)
+    stack=re.search(r'^\s*[0-9A-F]+H\s+([0-9A-F]+)H\s+[0-9A-F]+H\s+STACK\s+STACK\s*$',text,re.M|re.I)
+    if not group or not stack:raise ValueError('Missing native small-model data/stack map')
+    used=int(stack[1],16)+1-(int(group[1],16)<<4)
+    remaining=65536-used
+    if not 4096<=remaining<65536:
+        raise ValueError('C6 data/stack leave insufficient stream/heap headroom: '+str(remaining))
+    return dict(data_and_stack_bytes=used,data_group_headroom_bytes=remaining)
 
 
 def main():
@@ -60,7 +73,8 @@ BUILD.BAT
     log=read(out/'BUILD.LOG')
     if 'PASS' not in log or 'FAIL' in log or 'error ' in log.lower():raise ValueError('Native setup build failed; inspect BUILD.LOG')
     binary=(out/'SETUP.EXE').read_bytes();PACKCGA.dos_exe(binary)
-    record=dict(build='PASS',sources=rec['installer_sources'],binary=PACKCGA.identity(binary),
+    budget=data_headroom(out/'SETUP.MAP')
+    record=dict(build='PASS',sources=rec['installer_sources'],binary=PACKCGA.identity(binary),data_budget=budget,
                 runtime='NOT_TESTED',source_commit=rec['source_commit'],process='PROCESS.JSON')
     write(out/'SETBUILD.JSN',json.dumps(record,indent=2)+'\n')
     print(json.dumps(record,indent=2))

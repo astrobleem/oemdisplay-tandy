@@ -63,6 +63,6 @@ font selection and control hit testing still require acceptance. Report
 clipping or unreachable controls as failures. The initial VRAM policy
 blanks video during access to avoid unsynchronized writes; visible blanking
 and performance must be measured on the target. No speedup is promised.
-An INI larger than 20,000 bytes is refused before any files are copied.
+An INI larger than 18,000 bytes is refused before any files are copied.
 
 Component notices are in CGA\NOTICE.TXT and CGA\FONTLIC.TXT.
