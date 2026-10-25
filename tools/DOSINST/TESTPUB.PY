@@ -45,6 +45,18 @@ class NativePublisherTests(unittest.TestCase):
         M.pub.check_zip(self.archive, self.entries, "native")
         self.assertEqual(self.archive, M.pub.zip_bytes(self.entries))
 
+    def test_current_grabber_has_no_loose_root_dependency(self):
+        spec = json.loads((M.HERE / "RCPUBLIC.JSN").read_bytes())
+        self.assertEqual(spec["files"]["PAYLOAD/CGA.GR2"], {
+            "source": "distributions/WINXT/CGA.GR2",
+            "identity": M.pub.identity(self.entries["PAYLOAD/CGA.GR2"])})
+        original = M.pub.read_file
+        def read_without_loose_root(root, name):
+            self.assertNotEqual(str(name), "CGA.GR2")
+            return original(root, name)
+        with patch.object(M.pub, "read_file", side_effect=read_without_loose_root):
+            self.assertEqual(M.collect(), self.entries)
+
     def test_recipe_uses_bundled_grabber_for_both_output_trees(self):
         import re
         rows = re.findall(r'\{"([^"\n]+)","([^"\n]+)",(\d+)UL,(\d+)\}',
@@ -107,6 +119,8 @@ class NativePublisherTests(unittest.TestCase):
         first = self.run_build(output)
         self.assertEqual(first, self.run_build(output, True))
         self.assertEqual(set(p.name for p in output.iterdir()), set(M.ASSETS))
+        self.assertEqual(json.loads((output / "RELEASE.JSON").read_bytes())["tag"],
+                         "v0.1.0-rc.8-dos.2")
         self.assertEqual((output / "WINXT.EXE").read_bytes(), self.entries["PREPXR.EXE"] + self.archive)
 
     def test_download_zip_extracts_the_qualified_ready_to_run_exe(self):

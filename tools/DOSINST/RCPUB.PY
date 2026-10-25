@@ -104,7 +104,7 @@ def build(output, commit, verify=False):
                 "CRC-validated fresh outputs differ")
     pub.require(q["public_assets"]["WINXT.ZIP"] == pub.identity(archive) and q["public_assets"]["WINXT.EXE"] == pub.identity(executable), "Package differs from qualified native kit")
     download = download_zip(executable)
-    report = {"schema": 1, "tag": "v0.1.0-rc.8-dos.1", "source_commit": commit,
+    report = {"schema": 1, "tag": "v0.1.0-rc.8-dos.2", "source_commit": commit,
               "native_report": "docs/QUAL/DOSINST/RC8.JSN", "physical_qualification": False,
               "download_archive": {"name": "WINXTDOS.ZIP", **pub.identity(download),
                                    "executable": pub.identity(executable)},
