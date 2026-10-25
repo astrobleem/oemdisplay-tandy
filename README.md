@@ -19,9 +19,9 @@ Windows 3.0 desktop.
 
 For an **original Tandy 1000 EX/HX with normal 640 KB and Windows 3.0 real mode**:
 
-- **Full desktop:** [download WINXTDOS.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXTDOS.ZIP)
+- **Full desktop:** [download WINXTDOS.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.2/WINXTDOS.ZIP)
   and extract its ready-to-run `WINXT.EXE`; follow [desktop setup](docs/DESKTOP.MD).
-  The [direct EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.1/WINXT.EXE) is also available. It includes Tandy Start, fonts,
+  The [direct EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8-dos.2/WINXT.EXE) is also available. It includes Tandy Start, fonts,
   mouse/wheel input and apps. Run `WINXT UPDATE C:\WINDOWS` on DOS, or
   `WINXT FRESH A:\` with the first Windows Setup disk. Use `C:\STARTXT` on every launch.
 - **Display update only:** [download XRSYNC.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE).

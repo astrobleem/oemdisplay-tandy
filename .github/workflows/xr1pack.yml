@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
     branches: [main]
-    tags: ['v0.1.0-rc.8-dos.1']
+    tags: ['v0.1.0-rc.8-dos.2']
   workflow_dispatch:
 
 permissions:
@@ -30,7 +30,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/distributions/WINXT/CGA.GR2\n/tools/XR1PACK/\n/tools/DOSINST/\n/docs/QUAL/DOSINST/\n/docs/RELEASES/RC8.MD\n/.github/\n/.gitattributes\n/AGENTS.md\n' | git sparse-checkout set --no-cone --stdin
+          printf '/distributions/WINXT/CGA.GR2\n/tools/XR1PACK/\n/tools/DOSINST/\n/tools/SOUNDOWN/\n/docs/QUAL/DOSINST/\n/docs/RELEASES/RC8.MD\n/.github/\n/.gitattributes\n/AGENTS.md\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
 
