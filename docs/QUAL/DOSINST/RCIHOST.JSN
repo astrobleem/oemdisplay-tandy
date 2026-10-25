@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "streams": 284,
+  "bytes": 9611961,
+  "checks": [
+    "all actual C CRC values match zlib",
+    "all expanded bytes match prior qualified SHA256/size",
+    "all compiled recipe CRC rows match manifest"
+  ],
+  "compiler_launcher": "gcc-ucrt64.py (required compiler/runtime dependency preflight)",
+  "CRCFAST_sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+}

@@ -48,8 +48,8 @@ Ctrl+Alt+arrows pan; Ctrl+Alt+Home returns home. WXTWHL supports scrolling in
 ordinary Windows controls. The mouse uses COM1/IRQ4, 1200 baud, 7N1.
 Windows 3.1 is unsupported.
 
-Minesweeper is separate and is not added by this installer:
-https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINMINE30.ZIP
+Current optional app packets and their installation guides:
+https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/DOWNLOADS.MD
 
 The display and keyboard drivers, fonts and artwork are unchanged. Native results
 are in docs/QUAL/DOSINST/RC8.JSN at the source commit in RELEASE.JSON.

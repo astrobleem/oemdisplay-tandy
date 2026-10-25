@@ -51,8 +51,7 @@ viewport, Tandy Start, panning, COM1/IRQ4 mouse and optional wheel input.
 XYCTL starts in Software mode; its menu or Ctrl+Alt+H enables Hardware.
 Ctrl+Alt+arrows pan and Ctrl+Alt+Home returns home. Windows 3.1 is unsupported.
 
-[Minesweeper](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINMINE30.ZIP)
-remains a separate optional download with its existing notices and test scope.
+[Current optional apps](DOWNLOADS.MD) have separate packets and install guides.
 
 The display and keyboard drivers, fonts and artwork are preserved. The native
 preparer has [fresh/update results](QUAL/DOSINST/RC8.JSN), separate from

@@ -36,12 +36,30 @@ are invisible to the old first/last sample check.
 
 [RC8.JSN](RC8.JSN) binds the package, selected boot values, installed files,
 raw logs and captures. RCFHASH.JSN / RCUHASH.JSN contain only output identities,
-including private OS-file hashes, not OS contents. The final archive differs
-from the native test containers only in README.TXT; all 52 other
-members, including its helper, are identical. The publisher rejects incomplete/error-bearing
+including private OS-file hashes, not OS contents. The earlier full Setup tests
+used the same runtime and an earlier preparer; following review, the preparer
+now checks every expanded Windows OS stream against its qualified CRC. The
+final helper is exact to both the integrity and normal-launch replays. All
+53 archive members match the normal-launch replay; the corruption test
+container differs only in README.TXT. The publisher rejects incomplete/error-bearing
 receipts and changed package bytes. The original premature controller result
 was retained privately and explicitly adjudicated incomplete, never accepted
 as an install pass.
 
 Tests used an 8088 / 640 KB Tandy HX emulator with DOS 6.22 and Windows 3.0
 real mode. No physical-machine qualification or CF access is claimed.
+
+The input-integrity regression toggled byte 100 of the 545-byte 123.PIF,
+leaving its length unchanged. The old helper reached the deliberate later
+3270.TXT guard, proving that it accepted the damaged stream. The corrected
+helper refused the CRC, removed only the bad tagged-cache copy and a normal
+retry automatically gathered the good source. Windows and the original
+source stayed unchanged; the new Setup entry remained withheld. RCIOLD,
+RCIBAD and RCIRETRY logs plus RCICRC.PNG record the actual DOS run.
+
+A saved complete fresh installation then exercised the final helper against
+all 284 expanded OS streams and all 367 staged files before the normal
+installer/guarded desktop handoff. This does not repeat or relabel the earlier
+fresh Windows Setup test. RCIVAL.LOG/PNG record this affected-path replay;
+RCIHOST.JSN records the actual C CRC comparison of 9,611,961 bytes with zlib
+and the previously qualified size/SHA pins. No Windows OS bytes are published.

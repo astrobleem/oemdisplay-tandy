@@ -354,8 +354,8 @@
     "README.TXT": {
       "source": "tools/XR1PACK/README.TXT",
       "identity": {
-        "bytes": 2925,
-        "sha256": "c2e045251d0cbeb2e00a64792be05e6f8ca9e322faab6574939a2e2fe2f83280"
+        "bytes": 2909,
+        "sha256": "a50fbff5f37b18242b911230dd93ac365bc72a2fd2aeee80b5bf06a0cfdb2bdb"
       }
     },
     "WHEELLIC.TXT": {

@@ -1,0 +1,13 @@
+PREPXR - DOS-native XR1 fresh/update preparation
+Using the complete Windows media cache.
+Checking the supplied runtime and required Windows files before output.
+Complete native XR1 fresh preparation: 367 verified files.
+Next: C:\SETUPXT
+RESERVE: 16K video overlap reserved. Start Windows with WIN /R.
+Starting the existing guarded Windows XT installer.
+No-op: all owned entries match; no payloads copied or INIs written.
+Complete: 0 payloads copied, SYSTEM.INI unchanged. No WIN.COM/wave rebuild.
+Tandy Computer entry already registered; active selections preserved.
+Windows XT is ready. Starting the desktop.
+Owned entries and cheap payload samples match.
+RESERVE: video reservation already installed.
