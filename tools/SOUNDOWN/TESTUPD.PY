@@ -2,6 +2,10 @@
 from pathlib import Path
 import argparse
 import copy
+import contextlib
+import io
+import runpy
+import struct
 import importlib.util
 from importlib.machinery import SourceFileLoader
 import json
@@ -9,6 +13,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 import zlib
 
 SCRIPT = Path(__file__).with_name('UPDATE.PY')
@@ -25,6 +30,36 @@ def put(path, data):
 
 def record(path, value):
     put(path, json.dumps(value).encode('ascii'))
+
+
+
+def producer_build(wrapper, name, out, root):
+    tool = root/'toolchain'
+    for source in ('BIN/CL.EXE', 'BIN/LINK4.EXE', 'LIB/SLIBCEW.LIB',
+                   'LIB/LIBW.LIB', 'DDK/286/INC/WINDOWS.H'):
+        put(tool/source, b'host-test toolchain placeholder')
+    dosbox, lease = root/'DOSBOX.EXE', root/'LEASE'
+    put(dosbox, b'not executed'); put(lease, b'not acquired')
+    original = SourceFileLoader.exec_module
+    calls = []
+    def execute(loader, module):
+        if loader.name != 'consumer_rundos':
+            return original(loader, module)
+        def run(executable, config, shared_lease, timeout):
+            calls.append((executable, shared_lease, timeout))
+            exe = bytearray(128); exe[:2] = b'MZ'
+            struct.pack_into('<I', exe, 0x3c, 64); exe[64:66] = b'NE'
+            put(out/(name+'.EXE'), exe); put(out/'BUILD.LOG', b'PASS')
+            record(out/'PROCESS.JSON', {'return': 0, 'owned_child_stopped': True,
+                                       'lease_released': True})
+        module.run = run
+    argv = [str(wrapper), '--dosbox', str(dosbox), '--toolchain', str(tool),
+            '--lease', str(lease), '--out', str(out)]
+    with patch.object(sys, 'argv', argv), patch.object(SourceFileLoader, 'exec_module', execute):
+        with contextlib.redirect_stdout(io.StringIO()):
+            runpy.run_path(str(wrapper), run_name='__main__')
+    assert len(calls) == 1
+    return json.loads((out/'BUILD.JSON').read_bytes())
 
 
 class SelectionTests(unittest.TestCase):
@@ -100,6 +135,47 @@ class SelectionTests(unittest.TestCase):
 
     def restore_module(self):
         update.HERE, update.REPO = self.old_here, self.old_repo
+
+    def test_actual_tshell_and_tp_producers_feed_updater(self):
+        repo = SCRIPT.parents[2]
+        wrappers = (('TSHELL', 'examples/TSHELL/BUILD.PY'),
+                    ('TP', 'tools/WHEEL/WIN16/SOURCE/TP/BUILD.PY'))
+        for name, relative in wrappers:
+            with self.subTest(name=name):
+                build = self.root/('actual-'+name)
+                produced = producer_build(repo/relative, name, build, self.root)
+                self.assertIn('runtime', produced)
+                self.assertNotIn('sources', produced)
+                self.assertTrue(all(label.startswith('unified/oemdisplay-tandy/')
+                                    for label in produced['source_pins']))
+                with patch.object(update, 'REPO', repo):
+                    binary, accepted = update.native(build, name+'.EXE', self.sound)
+                    self.assertEqual(accepted['runtime'], update.identity(binary))
+                    source = next(iter(produced['source_pins']))
+                    changed = copy.deepcopy(produced)
+                    changed['source_pins'][source]['sha256'] = '0'*64
+                    record(build/'BUILD.JSON', changed)
+                    with self.assertRaisesRegex(ValueError, 'Stale source:'):
+                        update.native(build, name+'.EXE', self.sound)
+                    changed = copy.deepcopy(produced)
+                    changed['source_pins'] = {'unified/oemdisplay-tandy/../outside.C':
+                                            produced['source_pins'][source]}
+                    record(build/'BUILD.JSON', changed)
+                    with self.assertRaisesRegex(ValueError, 'Unsafe native source path:'):
+                        update.native(build, name+'.EXE', self.sound)
+                    changed = copy.deepcopy(produced); del changed['runtime']
+                    record(build/'BUILD.JSON', changed)
+                    with self.assertRaisesRegex(ValueError, 'Missing native runtime pin:'):
+                        update.native(build, name+'.EXE', self.sound)
+                    record(build/'BUILD.JSON', produced)
+                    staged = build/Path(source).name; data = staged.read_bytes()
+                    staged.unlink()
+                    with self.assertRaises(OSError):
+                        update.native(build, name+'.EXE', self.sound)
+                    put(staged, data)
+                    record(build/'PROCESS.JSON', {**self.clean, 'return': 1})
+                    with self.assertRaisesRegex(ValueError, 'did not complete/clean up:'):
+                        update.native(build, name+'.EXE', self.sound)
 
     def test_explicit_current_set_ignores_stale_default_directories(self):
         binaries, records = update.native_inputs(self.args)

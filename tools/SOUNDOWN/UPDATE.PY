@@ -37,22 +37,41 @@ def encoded(value):
     return (json.dumps(value, indent=2)+'\n').replace('\n', '\r\n').encode('ascii')
 
 
+def source_path(label, sound):
+    """Resolve the explicit logical repository root without escaping it."""
+    require(isinstance(label, str) and '\\' not in label and ':' not in label,
+            'Unsafe native source path: '+str(label))
+    parts = label.split('/')
+    require(len(parts) >= 3 and parts[0] == 'unified' and
+            parts[1] in ('oemdisplay-tandy', 'oemsound-tandy'),
+            'Unsupported native source root: '+label)
+    require(all(part not in ('', '.', '..') for part in parts) and
+            '\x00' not in label, 'Unsafe native source path: '+label)
+    root = (REPO if parts[1] == 'oemdisplay-tandy' else sound).resolve()
+    path = root.joinpath(*parts[2:]).resolve()
+    require(path.is_relative_to(root), 'Native source escapes repository: '+label)
+    return path
+
+
 def native(directory, name, sound):
     record = json.loads((directory/'BUILD.JSON').read_bytes())
     sourcepins = record.get('source_pins')
     if sourcepins is not None:
+        require(isinstance(sourcepins, dict) and sourcepins,
+                'Missing repo-rooted native sources: '+name)
         sources = {}
         for label, pin in sourcepins.items():
-            prefix, relative = label.split('/', 2)[1:]
-            require(prefix in ('oemdisplay-tandy', 'oemsound-tandy'),
-                    'Unsupported native source root: '+label)
-            path = (REPO if prefix == 'oemdisplay-tandy' else sound)/relative
+            path = source_path(label, sound)
             require(identity(path.read_bytes()) == pin, 'Stale source: '+label)
             require(identity((directory/path.name).read_bytes()) == pin,
                     'Changed staged source: '+label)
             sources[label] = pin
+        require(isinstance(record.get('runtime'), dict) and
+                name in record['runtime'], 'Missing native runtime pin: '+name)
         pin = record['runtime'][name]
     else:
+        require(name in ('SOUND.DRV', 'FIXXT.EXE'),
+                'Repo-rooted native source record required: '+name)
         sources = record['sources']
         base = sound/'src/win30/DRIVER' if name == 'SOUND.DRV' else HERE
         for label, pin in sources.items():
