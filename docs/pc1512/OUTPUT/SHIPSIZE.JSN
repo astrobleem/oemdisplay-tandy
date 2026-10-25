@@ -1,0 +1,31 @@
+{
+  "driver_file_delta": 3680,
+  "changed_object_contributions": [
+    {
+      "object": "BMC_MAIN.OBJ",
+      "segment": "_DIMAPS",
+      "shipped_bytes": 174,
+      "current_main_bytes": 247,
+      "delta": 73
+    },
+    {
+      "object": "RLE88.OBJ",
+      "segment": "_TEXT",
+      "shipped_bytes": 0,
+      "current_main_bytes": 2933,
+      "delta": 2933
+    },
+    {
+      "object": "SDIB88.OBJ",
+      "segment": "_TEXT",
+      "shipped_bytes": 1152,
+      "current_main_bytes": 1798,
+      "delta": 646
+    }
+  ],
+  "code_delta": 3652,
+  "file_layout_alignment_and_relocations_delta": 28,
+  "same_resource_sha256": true,
+  "staged_TSOFT_and_TCURSOR_unchanged": true,
+  "profile": "BUILD88 stock 640x200x4 staging, P15PATCH restores sixteen colours; no debug/trace variant"
+}

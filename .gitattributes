@@ -147,6 +147,7 @@ downloads/experimental/FIXED/README.MD -text
 docs/DOWNLOADS.MD -text
 
 .github/workflows/driver-packets.yml -text
+src/pc1512/** -text
 
 # Retained OEM development sources and relocated-source CI retain CRLF.
 oemdisk/** -text
@@ -158,6 +159,9 @@ oemdisk/** -text
 # Native shared-sound consumer source and exact build receipts.
 tools/SOUNDOWN/** -text
 
+# PC1512 generated video captures and native qualification records.
+docs/pc1512/OUTPUT/** -text
+.github/workflows/pc1512.yml -text
 tools/CURRENT/** -text
 tools/CURRENT/INPUTS/*.ZIP -export-ignore
 tools/XROEM/** -text

@@ -1,0 +1,48 @@
+{
+  "complete": true,
+  "scope": "Shipped control completed all native raster/app stages and returned to the DOS batch/prompt. The original extra mode-3 assertion failed and remains preserved; no mode-3 restoration is claimed.",
+  "driver": {
+    "bytes": 54448,
+    "sha256": "31aca63699f05ef57094443de0b3f6926de2c516657aaabc5ee580ac4f65d9f7"
+  },
+  "probe": {
+    "bytes": 14367,
+    "sha256": "68398f6bf9a50626f9a9d4f4d51c17843aa7f7a4c2428de4a9dc7e21eea2e19b"
+  },
+  "bios_mode": 6,
+  "conventional_kb": 640,
+  "post_win_marker": "RETURNED\r\n",
+  "mode3_restored": false,
+  "captures": 48,
+  "raster_problems": [],
+  "free_before_probe": [
+    "298656"
+  ],
+  "raw_result": {
+    "bytes": 7904,
+    "sha256": "5e8fe699a192e201a6723810c3f9bb324828ec1bf2c14b7ec27090fc14a8edc9"
+  },
+  "prompt_image": {
+    "bytes": 982,
+    "sha256": "15fb3df9027a9c4cad86e8e84a618e22f28d589a1d30c317c52ebb6e59a5ef57"
+  },
+  "independent_review": "native_harness_review verified native marker bytes/AUTOEXEC order, DOS prompt, emitted scanline return behavior and all raster checks; no renderer change.",
+  "emulator": {
+    "bytes": 40974314,
+    "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+  },
+  "config": {
+    "bytes": 711,
+    "sha256": "8b80d26ad27c542386919afdbeb1c5c3de71c5cd793b8f99198a039ea709503d"
+  },
+  "timing_profile": {
+    "cpu_family": "8086",
+    "cpu_multi": "1",
+    "cpu_speed": "8000000",
+    "cpu_use_dynarec": "0",
+    "machine": "pc1512",
+    "mem_size": "640",
+    "time_sync": "disabled"
+  },
+  "environment_assessment": "Emulator identity checked from the same fixed controller path and unchanged saved config after the shipped run; baseline/candidate collect these fields before launch."
+}

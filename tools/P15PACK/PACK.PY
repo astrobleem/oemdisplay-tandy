@@ -12,7 +12,7 @@ import zlib
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-DRIVER = '31aca63699f05ef57094443de0b3f6926de2c516657aaabc5ee580ac4f65d9f7'
+DRIVER = '2f9f59e29a7e472e17a39fa54bd138cdb5b3f4d9562690791fddb3b5f4a76998'
 SUPPORT = ('CGA.GR2', 'XTCSYS.FON', 'XTCFIX.FON', 'XTCOEM.FON',
            'XTSTATIC.LGO', 'WXTSPL01.RLE', 'FONTLIC.TXT', 'LOGOLIC.TXT')
 TEXT = ('OEMSETUP.INF', 'INSTALL.BAT', 'P15WIN.BAT', 'INSTALL.TXT')
@@ -39,7 +39,7 @@ def payload(accepted):
             raise ValueError('Accepted PC1512 payload membership differs')
         files={n:(source/n).read_bytes() for n in ['PC1512.DRV','LICENSE.TXT','NOTICE.TXT']}
     driver=files['PC1512.DRV']
-    if len(driver) != 54448 or sha(driver) != DRIVER:
+    if len(driver) != 58368 or sha(driver) != DRIVER:
         raise ValueError('Accepted PC1512 driver differs')
     pins = json.loads((ROOT / 'tools/YAMPACK/SUPPORT.JSN').read_bytes())
     for name in SUPPORT:
@@ -108,7 +108,7 @@ def build(accepted, appset, watcom, out):
     (out / 'PC1512.ZIP').write_bytes(archive)
     (out / 'INSTALL.TXT').write_bytes(files['INSTALL.TXT'])
     record = {'target':'PC1512 built-in video, Windows 3.0 real mode',
-              'driver_unchanged':True, 'support_complete':True,
+              'driver_unchanged':False, 'support_complete':True,
               'native_install_test':'PENDING: requires coordinated slot',
               'files':{n:{'bytes':len(d),'sha256':sha(d)} for n,d in sorted(files.items())},
               'sfx_engine_sha256':sha((engine / 'APPSET.C').read_bytes()),
