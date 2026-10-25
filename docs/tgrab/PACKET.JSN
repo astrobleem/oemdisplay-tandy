@@ -1,73 +1,29 @@
 {
  "files": {
-  "OEMSETUP.INF": {
-   "bytes": 588,
-   "sha256": "fd0e0fc3cde18487b134e894c74158ca2aa581953187ecfb101b85827f9ae74b"
-  },
   "README.TXT": {
-   "bytes": 2489,
-   "sha256": "f9b56f39a12f8f6ebbab8bba9a8f79a1cf0f6279dffe6637f09c985ae572b68b"
-  },
-  "RESERVE.COM": {
-   "bytes": 1512,
-   "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+   "bytes": 2426,
+   "sha256": "aabbdc1b7380629a001d2ed5e16e77b83349c4747100bc24b8485bc02b6a511c"
   },
   "TANDYGR.GR2": {
-   "bytes": 3361,
-   "sha256": "29f85af50a1f02e93e06cfaac58f36257c2ffc28d37c6e713cfa56c2a6b8aef7"
+   "bytes": 5480,
+   "sha256": "e3d03d6299e6a0a5a288f799c3fe4687dc1fabf96c2304030e8ae7d6547999af"
   },
   "TGCLIP.EXE": {
-   "bytes": 5023,
-   "sha256": "f21be7106f977e147eb18add174a6bf3f6ff8020389b822df358b4fd3344ecd8"
+   "bytes": 4991,
+   "sha256": "18b32919194c313966fb62a4a984af0875bd67db1bb9e4342dd66518f0681267"
   },
-  "TGEVEN.COM": {
-   "bytes": 557,
-   "sha256": "da252ce70c22d0c4457e6bc356baf88caebe1734e9a87ddce55b28ee79c9dcfd"
+  "TGMODES.COM": {
+   "bytes": 2478,
+   "sha256": "7cf3b04f694372c53939e66e4ddc85f07fba0457be82a4ead4ad23f0d2281df4"
   },
-  "TGIMG.BMP": {
-   "bytes": 1398,
-   "sha256": "a96e51c41839841852296da31b7b5a4085c4f82576b3f2d2499c86e1989699d3"
+  "TGSETUP.EXE": {
+   "bytes": 20607,
+   "sha256": "3d40751f3d75108fca0cf4d8dcc137e4609db42a033ade86ca02de372f774850"
   },
-  "TGPAT.COM": {
-   "bytes": 172,
-   "sha256": "22a967028823945ece1868510bc1672ffc050044fd94e655d965c6fbf185d4ed"
-  },
-  "TGSTART.BAT": {
-   "bytes": 2521,
-   "sha256": "05959e2a82978fecc86839da76e4ccde836e0e1e3a2cef2e54c60816b35dc571"
-  },
-  "TR53216.DRV": {
-   "bytes": 54896,
-   "sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61"
-  },
-  "WXTSPL01.RLE": {
-   "bytes": 4062,
-   "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
-  },
-  "XTEFIX.FON": {
-   "bytes": 4656,
-   "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
-  },
-  "XTEOEM.FON": {
-   "bytes": 4560,
-   "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
-  },
-  "XTESYS.FON": {
-   "bytes": 5680,
-   "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
-  },
-  "XTSTATIC.LGO": {
-   "bytes": 361,
-   "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+  "TGSETUP.LST": {
+   "bytes": 195,
+   "sha256": "a303620aee0b52c6c1773dd4c90761e932381f9cb78d7e74db0d9e62faebfeee"
   }
  },
- "from_winxt": {
-  "TR53216.DRV": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61",
-  "XTESYS.FON": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
-  "XTEFIX.FON": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
-  "XTEOEM.FON": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
-  "XTSTATIC.LGO": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef",
-  "WXTSPL01.RLE": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
-  "RESERVE.COM": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
- }
+ "bytes": 36177
 }

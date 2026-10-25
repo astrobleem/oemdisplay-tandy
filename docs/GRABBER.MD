@@ -147,7 +147,77 @@ Test-only additions, never in the packet:
 - `TGHIGH.COM n`: occupies n paragraphs below RESERVE, to change the layout.
 - PATH with `C:\WINXT;C:\TGT`, because the 86Box keyboard map loses typed spaces and backslashes at the DOS prompt.
 
-RESULTS_PLACEHOLDER
+Check results (last run per check wins; FA ran the old test picture, whose wide-mode lines were wrong, FB/FC rerun them):
+
+- FA PASS: self-test: the Clipboard comparison passes an equal bitmap and fails one changed pixel
+- FA PASS: TGSETUP from drive A: selects the grabber and starts TGCLIP from WIN.INI load=
+- FA PASS: TGIMG.BMP shown exactly at the canvas origin (all 2,560 pixels, every colour)
+- FA PASS: pasted picture anchored at the canvas origin, all pixels and colours exact
+- FA PASS: PASTE.BMP: the 64x40 picture at (0,0) with exactly the original colours, the rest white
+- FA PASS: reopened PASTE.BMP shows the picture exactly
+- FA PASS: Windows Print Screen: the Clipboard holds a 320x200 bitmap equal to the screen (pointer corner excluded)
+- FA FAIL: Paintbrush pastes the whole 320x200 picture and saves WINPRT.BMP with every pixel in the reference colour of the screen
+- FA PASS: mode 4h palette 0: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FA PASS: mode 4h palette 1: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FA PASS: mode 4h palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly
+- FA PASS: mode 5h palette 0: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FA PASS: mode 5h palette 1: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FA PASS: mode 6h palette 0: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (2 colours shown)
+- FA PASS: mode 6h palette 1: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (2 colours shown)
+- FA PASS: mode 6h palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly
+- FA PASS: mode 8h palette 0: Print Screen puts a 160x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)
+- FA PASS: mode 8h palette 1: Print Screen puts a 160x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)
+- FA FAIL: mode 9h palette 0: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)
+- FA FAIL: mode 9h palette 1: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)
+- FA PASS: mode 9h palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly
+- FA PASS: Paintbrush pastes the whole 320x200 picture and saves DOS9P1.BMP with every pixel in the reference colour of the screen
+- FA PASS: mode Ah palette 0: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FA PASS: mode Ah palette 1: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FA PASS: mode Ah palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly
+- FA FAIL: Paintbrush pastes the whole 640x200 picture and saves DOSAP1.BMP with every pixel in the reference colour of the screen
+- FA PASS: mode 4h palette 2 (registers written with OUT): the grab shows the BIOS palette (equal to the palette-0 screen), not the screen (the registers cannot be read)
+- FA PASS: mode 4h palette 2: after ALT+TAB back the screen has the BIOS palette again (equal to the palette-0 screen)
+- FA PASS: mode 9h palette 2 (registers written with OUT): the grab shows the BIOS palette (equal to the palette-0 screen), not the screen (the registers cannot be read)
+- FA PASS: mode 9h palette 2: after ALT+TAB back the screen has the BIOS palette again (equal to the palette-0 screen)
+- FA PASS: l1: after a DOS text grab Windows still answers (File > Run starts another DOS program) and the Clipboard holds the ECHO line
+- FB PASS: self-test: the Clipboard comparison passes an equal bitmap and fails one changed pixel
+- FB PASS: Windows Print Screen: the Clipboard holds a 320x200 bitmap equal to the screen (pointer corner excluded)
+- FB PASS: Paintbrush pastes the whole 320x200 picture and saves WINPRT.BMP with every pixel in the reference colour of the screen
+- FB FAIL: mode 9h palette 0: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)
+- FB FAIL: mode 9h palette 1: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)
+- FB PASS: mode 9h palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly
+- FB PASS: Paintbrush pastes the whole 320x200 picture and saves DOS9P1.BMP with every pixel in the reference colour of the screen
+- FB PASS: mode Ah palette 0: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FB PASS: mode Ah palette 1: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FB PASS: mode Ah palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly
+- FB PASS: Paintbrush pastes the whole 640x200 picture and saves DOSAP1.BMP with every pixel in the reference colour of the screen
+- FB PASS: TANDYGR.GR2: every DOS session gets the same memory and Windows' free memory is the same after each closed session
+- FC PASS: self-test: the Clipboard comparison passes an equal bitmap and fails one changed pixel
+- FC PASS: mode 4h palette 0: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FC PASS: mode 4h palette 1: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FC PASS: mode 4h palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly
+- FC PASS: mode 5h palette 0: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FC PASS: mode 5h palette 1: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FC PASS: mode 6h palette 0: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (2 colours shown)
+- FC PASS: mode 6h palette 1: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (2 colours shown)
+- FC PASS: mode 6h palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly
+- FC PASS: mode 8h palette 0: Print Screen puts a 160x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)
+- FC PASS: mode 8h palette 1: Print Screen puts a 160x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)
+- FC PASS: mode 9h palette 0: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)
+- FC PASS: mode 9h palette 1: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)
+- FC PASS: mode 9h palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly
+- FC PASS: Paintbrush pastes the whole 320x200 picture and saves DOS9P1.BMP with every pixel in the reference colour of the screen
+- FC PASS: mode Ah palette 0: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FC PASS: mode Ah palette 1: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)
+- FC PASS: mode Ah palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly
+- FC PASS: Paintbrush pastes the whole 640x200 picture and saves DOSAP1.BMP with every pixel in the reference colour of the screen
+- FC PASS: mode 4h palette 2 (registers written with OUT): the grab shows the BIOS palette (equal to the palette-0 screen), not the screen (the registers cannot be read)
+- FC PASS: mode 4h palette 2: after ALT+TAB back the screen has the BIOS palette again (equal to the palette-0 screen)
+- FC PASS: mode 9h palette 2 (registers written with OUT): the grab shows the BIOS palette (equal to the palette-0 screen), not the screen (the registers cannot be read)
+- FC PASS: mode 9h palette 2: after ALT+TAB back the screen has the BIOS palette again (equal to the palette-0 screen)
+
+All FAIL lines are test-harness faults fixed in later runs (pointer corner counted; TGMODES drew wrong/slow in wide modes; 640-wide placement click). FC (all modes, fixed picture) was stopped at the user's request after 16/16 passes; mode 0Ah palette 1 and the palette-2 cases passed in FA/FB. Relaunch/TGHIGH layouts and the /REMOVE memory comparison were not run.
+
 
 ## Limitations
 

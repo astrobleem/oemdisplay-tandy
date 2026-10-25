@@ -1,0 +1,792 @@
+{
+ "steps": [
+  {
+   "step": "A:TGSETUP ",
+   "t": 1792885017.2
+  },
+  {
+   "step": "C:\\WINXT\\WINXT (l1)",
+   "t": 1792885130.3
+  },
+  {
+   "step": "Paintbrush opens TGIMG.BMP",
+   "t": 1792885352.1
+  },
+  {
+   "step": "Shift+PRINT in Windows, the whole screen pasted and saved",
+   "t": 1792885956.0
+  },
+  {
+   "step": "Paintbrush: Image Attributes 320x200, Zoom Out, Paste, Save As WINPRT.BMP",
+   "t": 1792886005.1
+  },
+  {
+   "step": "TGMODES 4 0: Shift+PRINT",
+   "t": 1792886665.9
+  },
+  {
+   "step": "TGMODES 4 1: Shift+PRINT, ALT+TAB away and back",
+   "t": 1792886850.4
+  },
+  {
+   "step": "TGMODES 5 0: Shift+PRINT",
+   "t": 1792887161.1
+  },
+  {
+   "step": "TGMODES 5 1: Shift+PRINT",
+   "t": 1792887345.7
+  },
+  {
+   "step": "TGMODES 6 0: Shift+PRINT",
+   "t": 1792887530.2
+  },
+  {
+   "step": "TGMODES 6 1: Shift+PRINT, ALT+TAB away and back",
+   "t": 1792887714.9
+  },
+  {
+   "step": "TGMODES 8 0: Shift+PRINT",
+   "t": 1792888026.1
+  },
+  {
+   "step": "TGMODES 8 1: Shift+PRINT",
+   "t": 1792888210.5
+  },
+  {
+   "step": "TGMODES 9 0: Shift+PRINT",
+   "t": 1792888395.0
+  },
+  {
+   "step": "TGMODES 9 1: Shift+PRINT, ALT+TAB away and back",
+   "t": 1792888579.5
+  },
+  {
+   "step": "Paintbrush: Image Attributes 320x200, Zoom Out, Paste, Save As DOS9P1.BMP",
+   "t": 1792888890.2
+  },
+  {
+   "step": "TGMODES A 0: Shift+PRINT",
+   "t": 1792889551.4
+  },
+  {
+   "step": "TGMODES A 1: Shift+PRINT, ALT+TAB away and back",
+   "t": 1792889736.1
+  },
+  {
+   "step": "Paintbrush: Image Attributes 640x200, Zoom Out, Paste, Save As DOSAP1.BMP",
+   "t": 1792890047.3
+  },
+  {
+   "step": "TGMODES 4 2: Shift+PRINT, ALT+TAB away and back",
+   "t": 1792890708.1
+  },
+  {
+   "step": "TGMODES 9 2: Shift+PRINT, ALT+TAB away and back",
+   "t": 1792891018.9
+  },
+  {
+   "step": "text grab: COMMAND.COM, ECHO, Shift+PRINT, EXIT (l1)",
+   "t": 1792891329.7
+  },
+  {
+   "step": "memory: 4 DOS sessions from Windows (TANDYGR.GR2)",
+   "t": 1792891604.4
+  }
+ ],
+ "checks": [
+  {
+   "good": 0,
+   "bad": 1,
+   "check": "self-test: the Clipboard comparison passes an equal bitmap and fails one changed pixel",
+   "ok": true
+  },
+  {
+   "grabber": [
+    "286grabber=TANDYGR.GR2"
+   ],
+   "load": [
+    "load=C:\\TGT\\TGCLOG.EXE C:\\WINDOWS\\TGCLIP.EXE"
+   ],
+   "check": "TGSETUP from drive A: selects the grabber and starts TGCLIP from WIN.INI load=",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "TGIMG.BMP shown exactly at the canvas origin (all 2,560 pixels, every colour)",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "pasted picture anchored at the canvas origin, all pixels and colours exact",
+   "ok": true
+  },
+  {
+   "file": "PASTE.BMP",
+   "width": 320,
+   "height": 170,
+   "picture_mismatches": 0,
+   "rest_white": true,
+   "check": "PASTE.BMP: the 64x40 picture at (0,0) with exactly the original colours, the rest white",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "reopened PASTE.BMP shows the picture exactly",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "clip_lines": [
+    "CLIP 003 formats=2, bitmap=320x200x4x1 free=227616"
+   ],
+   "check": "Windows Print Screen: the Clipboard holds a 320x200 bitmap equal to the screen (pointer corner excluded)",
+   "ok": true
+  },
+  {
+   "file": "WINPRT.BMP",
+   "size": [
+    320,
+    200
+   ],
+   "mismatches": 1,
+   "check": "Paintbrush pastes the whole 320x200 picture and saves WINPRT.BMP with every pixel in the reference colour of the screen",
+   "ok": false
+  },
+  {
+   "mode": 4,
+   "palette": 0,
+   "colours_on_screen": 4,
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 4h palette 0: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)",
+   "ok": true
+  },
+  {
+   "mode": 4,
+   "palette": 1,
+   "colours_on_screen": 4,
+   "restore_mismatches": 0,
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 4h palette 1: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "mode 4h palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly",
+   "ok": true
+  },
+  {
+   "mode": 5,
+   "palette": 0,
+   "colours_on_screen": 4,
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 5h palette 0: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)",
+   "ok": true
+  },
+  {
+   "mode": 5,
+   "palette": 1,
+   "colours_on_screen": 4,
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 5h palette 1: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)",
+   "ok": true
+  },
+  {
+   "mode": 6,
+   "palette": 0,
+   "colours_on_screen": 2,
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 6h palette 0: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (2 colours shown)",
+   "ok": true
+  },
+  {
+   "mode": 6,
+   "palette": 1,
+   "colours_on_screen": 2,
+   "restore_mismatches": 0,
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 6h palette 1: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (2 colours shown)",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "mode 6h palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly",
+   "ok": true
+  },
+  {
+   "mode": 8,
+   "palette": 0,
+   "colours_on_screen": 16,
+   "bitmap": [
+    160,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 8h palette 0: Print Screen puts a 160x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)",
+   "ok": true
+  },
+  {
+   "mode": 8,
+   "palette": 1,
+   "colours_on_screen": 16,
+   "bitmap": [
+    160,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 8h palette 1: Print Screen puts a 160x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)",
+   "ok": true
+  },
+  {
+   "mode": 9,
+   "palette": 0,
+   "colours_on_screen": 9,
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 9h palette 0: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)",
+   "ok": false
+  },
+  {
+   "mode": 9,
+   "palette": 1,
+   "colours_on_screen": 9,
+   "restore_mismatches": 0,
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 9h palette 1: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)",
+   "ok": false
+  },
+  {
+   "mismatches": 0,
+   "check": "mode 9h palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly",
+   "ok": true
+  },
+  {
+   "file": "DOS9P1.BMP",
+   "size": [
+    320,
+    200
+   ],
+   "mismatches": 0,
+   "check": "Paintbrush pastes the whole 320x200 picture and saves DOS9P1.BMP with every pixel in the reference colour of the screen",
+   "ok": true
+  },
+  {
+   "mode": 10,
+   "palette": 0,
+   "colours_on_screen": 4,
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode Ah palette 0: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)",
+   "ok": true
+  },
+  {
+   "mode": 10,
+   "palette": 1,
+   "colours_on_screen": 4,
+   "restore_mismatches": 0,
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode Ah palette 1: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "mode Ah palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly",
+   "ok": true
+  },
+  {
+   "file": "DOSAP1.BMP",
+   "size": [
+    640,
+    200
+   ],
+   "mismatches": 128000,
+   "check": "Paintbrush pastes the whole 640x200 picture and saves DOSAP1.BMP with every pixel in the reference colour of the screen",
+   "ok": false
+  },
+  {
+   "mode": 4,
+   "palette": 2,
+   "colours_on_screen": 4,
+   "restore_mismatches": 57200,
+   "back_vs_default_mismatches": 0,
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 57200,
+   "clip_vs_default_mismatches": 0,
+   "check": "mode 4h palette 2 (registers written with OUT): the grab shows the BIOS palette (equal to the palette-0 screen), not the screen (the registers cannot be read)",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "mode 4h palette 2: after ALT+TAB back the screen has the BIOS palette again (equal to the palette-0 screen)",
+   "ok": true
+  },
+  {
+   "mode": 9,
+   "palette": 2,
+   "colours_on_screen": 9,
+   "restore_mismatches": 64000,
+   "back_vs_default_mismatches": 0,
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 64000,
+   "clip_vs_default_mismatches": 0,
+   "check": "mode 9h palette 2 (registers written with OUT): the grab shows the BIOS palette (equal to the palette-0 screen), not the screen (the registers cannot be read)",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "mode 9h palette 2: after ALT+TAB back the screen has the BIOS palette again (equal to the palette-0 screen)",
+   "ok": true
+  },
+  {
+   "clip_lines": [
+    "CLIP 032 formats=7,1, bitmap=none text=yes free=259392"
+   ],
+   "answered": true,
+   "check": "l1: after a DOS text grab Windows still answers (File > Run starts another DOS program) and the Clipboard holds the ECHO line",
+   "ok": true
+  }
+ ],
+ "clips": [
+  {
+   "after": "winprt",
+   "lines": [
+    "CLIP 003 formats=2, bitmap=320x200x4x1 free=227616"
+   ]
+  },
+  {
+   "after": "m4p0",
+   "lines": [
+    "CLIP 004 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 005 formats=2, bitmap=320x200x4x1 free=227616"
+   ]
+  },
+  {
+   "after": "m4p1",
+   "lines": [
+    "CLIP 006 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 007 formats=2, bitmap=320x200x4x1 free=227616"
+   ]
+  },
+  {
+   "after": "m5p0",
+   "lines": [
+    "CLIP 008 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 009 formats=2, bitmap=320x200x4x1 free=227616"
+   ]
+  },
+  {
+   "after": "m5p1",
+   "lines": [
+    "CLIP 010 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 011 formats=2, bitmap=320x200x4x1 free=227616"
+   ]
+  },
+  {
+   "after": "m6p0",
+   "lines": [
+    "CLIP 012 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 013 formats=2, bitmap=640x200x4x1 free=195616"
+   ]
+  },
+  {
+   "after": "m6p1",
+   "lines": [
+    "CLIP 014 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 015 formats=2, bitmap=640x200x4x1 free=195616"
+   ]
+  },
+  {
+   "after": "m8p0",
+   "lines": [
+    "CLIP 016 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 017 formats=2, bitmap=160x200x4x1 free=243616"
+   ]
+  },
+  {
+   "after": "m8p1",
+   "lines": [
+    "CLIP 018 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 019 formats=2, bitmap=160x200x4x1 free=243616"
+   ]
+  },
+  {
+   "after": "m9p0",
+   "lines": [
+    "CLIP 020 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 021 formats=2, bitmap=320x200x4x1 free=227616"
+   ]
+  },
+  {
+   "after": "m9p1",
+   "lines": [
+    "CLIP 022 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 023 formats=2, bitmap=320x200x4x1 free=227616"
+   ]
+  },
+  {
+   "after": "mAp0",
+   "lines": [
+    "CLIP 024 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 025 formats=2, bitmap=640x200x4x1 free=195616"
+   ]
+  },
+  {
+   "after": "mAp1",
+   "lines": [
+    "CLIP 026 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 027 formats=2, bitmap=640x200x4x1 free=195616"
+   ]
+  },
+  {
+   "after": "m4p2",
+   "lines": [
+    "CLIP 028 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 029 formats=2, bitmap=320x200x4x1 free=227616"
+   ]
+  },
+  {
+   "after": "m9p2",
+   "lines": [
+    "CLIP 030 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 031 formats=2, bitmap=320x200x4x1 free=227616"
+   ]
+  }
+ ],
+ "memory": [
+  {
+   "what": "DOS prompt before Windows",
+   "dos_free": 574144
+  },
+  {
+   "what": "l1: after the text grab",
+   "dos_free_in_session": 503328,
+   "windows": [
+    259392,
+    216800
+   ]
+  },
+  {
+   "what": "TANDYGR.GR2 session 1",
+   "dos_free_in_session": 503328,
+   "windows": [
+    259392,
+    253344
+   ]
+  },
+  {
+   "what": "TANDYGR.GR2 session 2",
+   "dos_free_in_session": 503328,
+   "windows": [
+    259392,
+    255456
+   ]
+  }
+ ],
+ "modes": [
+  {
+   "mode": 4,
+   "palette": 0,
+   "colours_on_screen": 4,
+   "clip_lines": [
+    "CLIP 004 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 005 formats=2, bitmap=320x200x4x1 free=227616"
+   ],
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 4,
+   "palette": 1,
+   "colours_on_screen": 4,
+   "restore_mismatches": 0,
+   "clip_lines": [
+    "CLIP 006 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 007 formats=2, bitmap=320x200x4x1 free=227616"
+   ],
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 5,
+   "palette": 0,
+   "colours_on_screen": 4,
+   "clip_lines": [
+    "CLIP 008 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 009 formats=2, bitmap=320x200x4x1 free=227616"
+   ],
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 5,
+   "palette": 1,
+   "colours_on_screen": 4,
+   "clip_lines": [
+    "CLIP 010 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 011 formats=2, bitmap=320x200x4x1 free=227616"
+   ],
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 6,
+   "palette": 0,
+   "colours_on_screen": 2,
+   "clip_lines": [
+    "CLIP 012 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 013 formats=2, bitmap=640x200x4x1 free=195616"
+   ],
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 6,
+   "palette": 1,
+   "colours_on_screen": 2,
+   "restore_mismatches": 0,
+   "clip_lines": [
+    "CLIP 014 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 015 formats=2, bitmap=640x200x4x1 free=195616"
+   ],
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 8,
+   "palette": 0,
+   "colours_on_screen": 16,
+   "clip_lines": [
+    "CLIP 016 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 017 formats=2, bitmap=160x200x4x1 free=243616"
+   ],
+   "bitmap": [
+    160,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 8,
+   "palette": 1,
+   "colours_on_screen": 16,
+   "clip_lines": [
+    "CLIP 018 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 019 formats=2, bitmap=160x200x4x1 free=243616"
+   ],
+   "bitmap": [
+    160,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 9,
+   "palette": 0,
+   "colours_on_screen": 9,
+   "clip_lines": [
+    "CLIP 020 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 021 formats=2, bitmap=320x200x4x1 free=227616"
+   ],
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 9,
+   "palette": 1,
+   "colours_on_screen": 9,
+   "restore_mismatches": 0,
+   "clip_lines": [
+    "CLIP 022 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 023 formats=2, bitmap=320x200x4x1 free=227616"
+   ],
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 10,
+   "palette": 0,
+   "colours_on_screen": 4,
+   "clip_lines": [
+    "CLIP 024 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 025 formats=2, bitmap=640x200x4x1 free=195616"
+   ],
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 10,
+   "palette": 1,
+   "colours_on_screen": 4,
+   "restore_mismatches": 0,
+   "clip_lines": [
+    "CLIP 026 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 027 formats=2, bitmap=640x200x4x1 free=195616"
+   ],
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 4,
+   "palette": 2,
+   "colours_on_screen": 4,
+   "restore_mismatches": 57200,
+   "back_vs_default_mismatches": 0,
+   "clip_lines": [
+    "CLIP 028 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 029 formats=2, bitmap=320x200x4x1 free=227616"
+   ],
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 57200,
+   "clip_vs_default_mismatches": 0
+  },
+  {
+   "mode": 9,
+   "palette": 2,
+   "colours_on_screen": 9,
+   "restore_mismatches": 64000,
+   "back_vs_default_mismatches": 0,
+   "clip_lines": [
+    "CLIP 030 formats=7,1, bitmap=none text=yes free=259616",
+    "CLIP 031 formats=2, bitmap=320x200x4x1 free=227616"
+   ],
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 64000,
+   "clip_vs_default_mismatches": 0
+  }
+ ]
+}
