@@ -9,7 +9,7 @@ on:
       - 'docs/SOFTPAN/**'
       - 'downloads/experimental/SOFTPAN/**'
       - '.github/workflows/softpan.yml'
-      - 'CGA.GR2'
+      - 'distributions/WINXT/CGA.GR2'
       - 'tools/XR1PACK/PREPARE.PY'
 permissions:
   contents: read

@@ -28,7 +28,7 @@ def source_payload(repo):
         elif name in ("INSTALL.BAT", "TANDY88.BAT"):
             source = repo / "oemdisk"
         else:
-            source = repo
+            source = repo / "oemdisk"
         payload[name] = stage.single_file(source, name).read_bytes()
     stage.verify_binaries(payload)
     stage.verify_splash(payload)
@@ -73,7 +73,7 @@ def toolkit_entries(repo):
     payload = source_payload(repo)
     payload["MANIFEST.SHA"] = stage.manifest(payload)
     entries = disk_entries(payload)
-    entries["STAGE.PY"] = stage.single_file(repo, "STAGE.PY").read_bytes()
+    entries["STAGE.PY"] = stage.single_file(repo / "oemdisk", "STAGE.PY").read_bytes()
     stage.checked_text(entries["STAGE.PY"], "STAGE.PY")
     entries["TOOLKIT.TXT"] = stage.dos_text(
         "DEVELOPER TOOLKIT - NOT AN INSTALL-READY DISK\n"
@@ -191,19 +191,19 @@ def main(argv=None):
     out = args.out or HERE / ("T88TOOLS.ZIP" if args.toolkit_only else "TANDY88.ZIP")
     try:
         if args.verify_toolkit:
-            verify_toolkit(HERE, args.verify_toolkit)
+            verify_toolkit(HERE.parent, args.verify_toolkit)
             print("Verified support-free toolkit ZIP and current source:", args.verify_toolkit)
             return 0
         if args.verify:
-            verify_archive(HERE, args.verify)
+            verify_archive(HERE.parent, args.verify)
             print("Verified complete OEM ZIP and current source:", args.verify)
             return 0
         if args.toolkit_only:
-            build_toolkit(HERE, out)
+            build_toolkit(HERE.parent, out)
             print("Created developer toolkit (not install-ready):", out)
             print("Normal users should download the complete TANDY88.ZIP.")
             return 0
-        support = build(HERE, out, args.windows_files, args.local_out, args.windows_dir)
+        support = build(HERE.parent, out, args.windows_files, args.local_out, args.windows_dir)
     except (stage.DiskError, OSError, zipfile.BadZipFile) as error:
         parser.exit(1, "ERROR: " + str(error) + "\n")
     print("Created ready-to-use OEM package:", out)

@@ -14,10 +14,8 @@ Other layouts, an occupied video overlap, or an unrecognized existing reservatio
 
 ## Normal installation and launch
 
-The ready-to-use [OEM disk](../../TANDY88.ZIP) includes this helper. Run its DOS
-INSTALL, then use C:\TANDY88\TANDY88 SETUP for installation and
-C:\TANDY88\TANDY88 to start Windows. The supplied launcher performs the check
-for you every time; end users do not need to build a helper or write a batch.
+Current display packets include this helper and a guarded starter. Follow the
+[current installation guide](../../../docs/RELEASES/XRSYNC.MD). Its launcher performs the reservation on every start.
 
 In plain terms, mode 09h needs 32 KB at the top of the Tandy's shared RAM, but
 the BIOS keeps only the upper 16 KB out of DOS's way. RESERVE asks DOS to keep

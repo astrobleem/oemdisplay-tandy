@@ -11,7 +11,7 @@ def text(s):return s.replace('\r\n','\n').replace('\n','\r\n').encode('ascii')
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('driver','apps','fixed','out'):ap.add_argument('--'+n,type=Path,required=True)
-    ap.add_argument('--grabber',type=Path,default=ROOT/'CGA.GR2')
+    ap.add_argument('--grabber',type=Path,default=ROOT/'distributions/WINXT/CGA.GR2')
     a=ap.parse_args();out=a.out.resolve();out.mkdir(parents=True,exist_ok=False)
     fixed=a.fixed.read_bytes();pin=json.loads((ROOT/'experiments/DISPLAY3/PINS.JSN').read_text())['drivers']['PCP3216']
     assert len(fixed)==pin['bytes'] and hashlib.sha256(fixed).hexdigest()==pin['sha256']

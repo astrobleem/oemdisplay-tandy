@@ -345,5 +345,18 @@
       },
       "source_fixture_unchanged_after_test": true
     }
+  },
+  "source_relocations": {
+    "tools/YAMPACK/PACK.PY": {
+      "native_snapshot": {
+        "bytes": 6745,
+        "sha256": "3ab5d616f608de2bcc062cd37f4880a3053c32d8e23775a1988f336c3c06f101"
+      },
+      "current_source": {
+        "bytes": 6769,
+        "sha256": "57e3aef79b969d3e03e3328b467a6388018ae1e7fd87d012f01df629ccd8a1a8"
+      },
+      "scope": "Only default grabber location changed to existing expanded support copy; both rebuilt packets remain byte-identical to the native-qualified packets."
+    }
   }
 }
