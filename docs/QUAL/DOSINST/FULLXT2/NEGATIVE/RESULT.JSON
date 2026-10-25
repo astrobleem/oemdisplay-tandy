@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "complete": true,
+  "mode": "input_crc",
+  "bound_seconds": 300,
+  "helper": {
+    "bytes": 83544,
+    "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
+  },
+  "public_assets": {
+    "WINXT.ZIP": {
+      "bytes": 746928,
+      "sha256": "ce7698e0595d2add6e8e8f550b144bcb5dd996c0ee49f8448373f76065f6dbff"
+    },
+    "WINXT.EXE": {
+      "bytes": 830472,
+      "sha256": "292c28c67b97c3fe611ca8c5171a92581153bb6a17924adef7f8cf53f8d16ea4"
+    }
+  },
+  "physical_test": false,
+  "actions": [],
+  "scope": null,
+  "controller": {
+    "bytes": 15844,
+    "sha256": "6cf776da679fb877e836697b04360f9c4db4f128a30dfb4010ef6276c4701364"
+  },
+  "owned_stopped": true,
+  "lease_released": true,
+  "process_inventory_before": [],
+  "lease_acquired": true,
+  "managed_sentinel_before": null,
+  "emulator": {
+    "identity": {
+      "bytes": 40974314,
+      "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+    }
+  },
+  "pid": 5252,
+  "checks": {
+    "injected_corruption_kept_length": true,
+    "current_helper_refuses_same_length_corruption": true,
+    "bad_owned_cache_removed": true,
+    "retry_automatically_recopies_source": true,
+    "cache_repaired": true,
+    "original_source_unchanged": true,
+    "windows_tree_unchanged": true,
+    "setup_entry_withheld": true,
+    "no_staging_temps": true
+  },
+  "returned_to_dos": true,
+  "capture": {
+    "bytes": 4367,
+    "sha256": "45fb99b439d2d788ec3ac94e19fd0286a71c10a3e5f7e10aecf36f942131d5f4"
+  },
+  "seconds": 245.2,
+  "public_projection": {
+    "original_private_record_identity": {
+      "bytes": 1690,
+      "sha256": "7aee5eb863f4870887c83fc470bcffd14cfc0e7777bcd864651073f2f92b8454"
+    },
+    "omitted_fields": [
+      "emulator.path"
+    ],
+    "scope": "Only the emulator host installation path is omitted. Every test value and artifact identity is retained. The unchanged READBACK.JSON raw_result identity references this original private record."
+  }
+}

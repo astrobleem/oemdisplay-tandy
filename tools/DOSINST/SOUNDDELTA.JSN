@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "base_main": "734040674b7b4ea35b946c5703234e43722492f7",
+  "native_execution": false,
+  "runtime_rows": 49,
+  "prepared_rows": {
+    "fresh": 369,
+    "update": 82
+  },
+  "windows_input_rows": 284,
+  "protected": {
+    "DOSCORE.H": {
+      "bytes": 24157,
+      "sha256": "4ad0d3e6518406a3a8bbb3ec5bd6a0c5faa8f39d90af4cacf0dfbe7442a6d617"
+    },
+    "CRCFAST.H": {
+      "bytes": 3941,
+      "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+    },
+    "VARSET.H": {
+      "bytes": 12924,
+      "sha256": "db29b294520099d7221db5403d5637b2cc50b0d811a8366359760a312df7f4b3"
+    },
+    "XRSTRM.H": {
+      "bytes": 1861,
+      "sha256": "8a2720b1b2a1f0ad8e76c6cddcfaf8746709ee14107b41343b4c2dd6ae748020"
+    },
+    "XRINPUT.JSN": {
+      "bytes": 44820,
+      "sha256": "d7cb54cec5abcdbbc37a01adfc8ad99659e6d96262fd2765596fb136a1c5d00d"
+    }
+  },
+  "preparer_code_change": "only final compiled inventory367/80 becomes369/82; source/data tables add canonical SOUND public rows",
+  "host_built_preparer": {
+    "bytes": 83544,
+    "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
+  },
+  "retained_native_finisher": {
+    "bytes": 33001,
+    "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"
+  },
+  "sound": {
+    "bytes": 9752,
+    "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+  },
+  "pending_native_gate": [
+    "current helper fresh369 comparison",
+    "current helper update82 comparison",
+    "current helper input validation including fresh369",
+    "cold normal desktop",
+    "exact candidate ZIP/SFX asset bindings"
+  ],
+  "qualification": "docs/QUAL/DOSINST/RC8.JSN retains its original published baseline scope; new helper is not native-qualified"
+}

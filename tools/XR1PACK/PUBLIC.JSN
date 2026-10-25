@@ -7,16 +7,16 @@
       "sha256": "c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1"
     },
     "INPUTS.JSN": {
-      "bytes": 72340,
-      "sha256": "25d8be09702fa1cd8bc1dd16189a6854860e8b20e7141d2cd38c7b0f8d5fda87"
+      "bytes": 72718,
+      "sha256": "834aefcd8b982bae2fa0858379a49c5d979369efe1b71d77f8a19f18ebe81903"
     },
     "README.TXT": {
       "bytes": 3926,
       "sha256": "9701510132b7ddef84223f7fb9aea3836f0610c4d05537f66a473276c5ef20f2"
     },
     "NOTICE.TXT": {
-      "bytes": 2888,
-      "sha256": "674620312bccba24fbad7719d97032528d5efe0d2ce75bfa9933306b05d86235"
+      "bytes": 3140,
+      "sha256": "2889ff0727078212f20ab656245b2142fd79e4aa82783da5d383f45b037a2e06"
     },
     "QUALIFY.JSN": {
       "bytes": 12679,
@@ -35,8 +35,8 @@
       "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
     },
     "PROVENANCE.JSN": {
-      "bytes": 14770,
-      "sha256": "da6e89a3af1990b94eb79c717129880876150674ef613297b11e14441f41cf6d"
+      "bytes": 14952,
+      "sha256": "918624e97197054892210c8116cf67ae8374ba7ce49d3264a0ee904955b04f5f"
     },
     "PAYLOAD/APPS.TXT": {
       "bytes": 412,
@@ -51,8 +51,8 @@
       "sha256": "b8a060cdc2d125989379375b8f9dbbb04d0a17f4aa71a6235350291f65f410c8"
     },
     "PAYLOAD/FIXXT.EXE": {
-      "bytes": 38046,
-      "sha256": "24c8e726ea6a5e5df59bb36c6e6ea9d73860ed5820b0f2a7a7cf5243009c376e"
+      "bytes": 33001,
+      "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"
     },
     "PAYLOAD/FONTLIC.TXT": {
       "bytes": 1101,
@@ -87,8 +87,8 @@
       "sha256": "81957f3577522507e896899ad8d6a4fb98177fcd5ca3ff720e19d8e05d47f8d3"
     },
     "PAYLOAD/OWNERS.TXT": {
-      "bytes": 10115,
-      "sha256": "24fb0e181a42c9de2dd2e67abf0d579726fd7df00ee6aabff0ada569bf3f8be1"
+      "bytes": 10369,
+      "sha256": "3be16666dd35e2509a8fdeb437d249a74afcd5b77ed961a8efd0c162753460c6"
     },
     "PAYLOAD/PINBALL.EXE": {
       "bytes": 15487,
@@ -131,24 +131,24 @@
       "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed"
     },
     "PAYLOAD/TCHIME.EXE": {
-      "bytes": 3999,
-      "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121"
+      "bytes": 5071,
+      "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61"
     },
     "PAYLOAD/TEXIT.EXE": {
-      "bytes": 8687,
-      "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99"
+      "bytes": 9215,
+      "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148"
     },
     "PAYLOAD/TNDYK3.DRV": {
       "bytes": 7640,
       "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
     },
     "PAYLOAD/TP.EXE": {
-      "bytes": 12303,
-      "sha256": "3260c222fee2dcb33cabadc8602cf878c266a7c0c6a4d5125c05784e32793b74"
+      "bytes": 12847,
+      "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33"
     },
     "PAYLOAD/TSHELL.EXE": {
-      "bytes": 71763,
-      "sha256": "b217d67b22f0594f5314f34cfd894d01c91163f68f91222b07cf7c5e1c141c49"
+      "bytes": 72323,
+      "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9"
     },
     "PAYLOAD/TSHELL.INI": {
       "bytes": 999,
@@ -179,8 +179,8 @@
       "sha256": "0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6"
     },
     "PAYLOAD/XPCHIME.EXE": {
-      "bytes": 4543,
-      "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f"
+      "bytes": 5103,
+      "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0"
     },
     "PAYLOAD/XTCFIX.FON": {
       "bytes": 4208,
@@ -249,6 +249,22 @@
     "MINE/WMABT.DLL": {
       "bytes": 1998,
       "sha256": "caf0967644eca52d8c69b5bf83696e78ada52995d9a16dfd10b1a86412e0d893"
+    },
+    "PAYLOAD/SOUND.DRV": {
+      "bytes": 9752,
+      "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+    },
+    "SOUNDID.JSN": {
+      "bytes": 152,
+      "sha256": "32cbeaec5be964abf44c3c84bd519a841958eb49cf491d9347a0ed5ff3d8741e"
+    },
+    "SOUNDSRC.ZIP": {
+      "bytes": 100529,
+      "sha256": "9e32793d07820154d627cdcf147bbfc7086d5db7addf76f5c66d310ff9ff220a"
+    },
+    "SOUNDLIC.TXT": {
+      "bytes": 35823,
+      "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809"
     }
   },
   "bundles": {
@@ -308,7 +324,11 @@
       "PAYLOAD/XTLOGO.LGO": "PAYLOAD/XTLOGO.LGO",
       "PAYLOAD/XTSTATIC.LGO": "PAYLOAD/XTSTATIC.LGO",
       "PAYLOAD/XTTSYS.FON": "PAYLOAD/XTTSYS.FON",
-      "PAYLOAD/XYCTL.EXE": "PAYLOAD/XYCTL.EXE"
+      "PAYLOAD/XYCTL.EXE": "PAYLOAD/XYCTL.EXE",
+      "PAYLOAD/SOUND.DRV": "PAYLOAD/SOUND.DRV",
+      "SOUNDID.JSN": "SOUNDID.JSN",
+      "SOUNDSRC.ZIP": "SOUNDSRC.ZIP",
+      "SOUNDLIC.TXT": "SOUNDLIC.TXT"
     },
     "WINMINE30.ZIP": {
       "NOTICE.TXT": "MINE/NOTICE.TXT",

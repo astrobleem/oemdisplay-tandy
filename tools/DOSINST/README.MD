@@ -6,7 +6,9 @@ The publisher checks extracted WINXT.EXE bytes against the qualified EXE.
 
 The prebuilt XRSYNC.EXE and WINXT.EXE run on the DOS computer itself. Both
 include the supplied, expanded CGA.GR2 grabber and all driver support files;
-consumers do not collect support files or run Python.
+consumers do not collect support files or run Python. The FullXT finisher
+installs the canonical SOUND.DRV shared by the desktop alerts and Tandy
+Winamp, together with their current shell and sound clients.
 
 XRSYNC installs the display into an existing Windows 3.0 system:
 
@@ -49,3 +51,10 @@ cache, so a normal retry gathers that file again from the original media.
 [complete desktop installation results](../../docs/QUAL/DOSINST/RC8.JSN)
 record the native preparation, Setup and guarded launch checks. Rendering
 qualification remains separate from installation qualification.
+
+The canonical finisher source is `tools/DOSINST/FIXXT.C`; its generated
+`SOUNDID.H` is byte-identical to the canonical OEMSound driver's header.
+The checked C6 finisher build route is `tools/SOUNDOWN/FINBUILD.PY`, with
+explicit external toolchain, installed DOSBox-X and shared lease arguments.
+The corresponding sound source and existing license accompany the native
+packet in `SOUNDSRC.ZIP` and `SOUNDLIC.TXT`.

@@ -1,0 +1,29 @@
+{
+  "helper": {
+    "bytes": 83544,
+    "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
+  },
+  "public_assets": {
+    "WINXT.ZIP": {
+      "bytes": 746928,
+      "sha256": "ce7698e0595d2add6e8e8f550b144bcb5dd996c0ee49f8448373f76065f6dbff"
+    },
+    "WINXT.EXE": {
+      "bytes": 830472,
+      "sha256": "292c28c67b97c3fe611ca8c5171a92581153bb6a17924adef7f8cf53f8d16ea4"
+    }
+  },
+  "changed_input": "W30SRC/123.PIF",
+  "bytes": 545,
+  "byte_offset": 100,
+  "good_identity": {
+    "bytes": 545,
+    "sha256": "dade3d5ecd0ca988c3169fa60b14b3e89de02fc767661dbbdb2d26f7a69069cc"
+  },
+  "corrupt_identity": {
+    "bytes": 545,
+    "sha256": "8de938f662c8efb0df6b9ab7ab8a8e185b245473c5d618b2d6e13667102677d8"
+  },
+  "later_guard": "W30/3270.TXT directory",
+  "setup_entry_absent_before_run": true
+}

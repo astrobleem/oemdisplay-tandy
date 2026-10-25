@@ -52,6 +52,10 @@ viewport, Tandy Start, panning, COM1/IRQ4 mouse and optional wheel input.
 XYCTL starts in Software mode; its menu or Ctrl+Alt+H enables Hardware.
 Ctrl+Alt+arrows pan and Ctrl+Alt+Home returns home. Windows 3.1 is unsupported.
 
+The desktop installs one shared SOUND driver for Windows alerts, legacy sound
+calls, PIT instruments and Winamp. Current clients acquire and release the
+same driver; no per-app driver replacement is needed.
+
 [Current optional apps](DOWNLOADS.MD) have separate packets and install guides.
 
 The display and keyboard drivers, fonts and artwork are preserved. The native

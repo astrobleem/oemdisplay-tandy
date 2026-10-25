@@ -543,12 +543,13 @@ LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
 }
 int PASCAL WinMain(HINSTANCE inst,HINSTANCE prev,LPSTR cmd,int show) {
  WNDCLASS wc;HWND w;MSG msg;char ini[144],configured[80];
- instance=inst;shellMode=(cmd[0]=='/'&&(cmd[1]=='S'||cmd[1]=='s'));
+ instance=inst;shellMode=!lstrcmpi(cmd,"/S");
  GetWindowsDirectory(ini,sizeof(ini));lstrcat(ini,"\\SYSTEM.INI");
  GetPrivateProfileString("boot","shell","",configured,sizeof(configured),ini);
  if(!lstrcmpi(configured,"TSHELL.EXE")){shellMode=1;primaryShell=1;}
  width=GetSystemMetrics(SM_CXSCREEN);
  if(prev)return 0;
+ if(primaryShell)TandyBootCommand(cmd);
  wc.style=CS_DBLCLKS;wc.lpfnWndProc=WndProc;wc.cbClsExtra=0;wc.cbWndExtra=0;wc.hInstance=inst;wc.hIcon=NULL;
  wc.hCursor=LoadCursor(NULL,IDC_ARROW);wc.hbrBackground=(HBRUSH)(COLOR_BTNFACE+1);wc.lpszMenuName=NULL;wc.lpszClassName="TandyStart";
  if(!RegisterClass(&wc))return 1;
