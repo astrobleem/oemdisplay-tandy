@@ -7,11 +7,23 @@
 #define FAST_CRC
 #define ZIP_INDEX
 #define DEST "C:\\WINXT"
+#ifndef PINFILE
 #define PINFILE "XR1PINS.H"
+#endif
 #define SZHEADER "XRSTRM.H"
 #include "DOSCORE.H"
-#include "XRFILES.H"
-#include "XRINPUT.H"
+#ifndef FILE_HEADER
+#define FILE_HEADER "XRFILES.H"
+#endif
+#include FILE_HEADER
+#ifndef INPUT_HEADER
+#define INPUT_HEADER "XRINPUT.H"
+#endif
+#include INPUT_HEADER
+#ifndef FRESH_COUNT
+#define FRESH_COUNT 369
+#define UPDATE_COUNT 82
+#endif
 #include "VARSET.H"
 #include <malloc.h>
 
@@ -252,13 +264,28 @@ int main(int argc,char **argv)
 {
  char self[PTH],exe[PTH],path[PTH],*p;unsigned a,i,count=0;int fresh,prepare=0,status,ready_setup=0;struct sink setup_sink;FILE *f;unsigned char h[6];long image;
  union REGS regs;
- setbuf(stdout,NULL);signal(SIGINT,onbreak);puts("PREPXR - DOS-native XR1 fresh/update preparation");
+ setbuf(stdout,NULL);signal(SIGINT,onbreak);
+#ifdef EXPANDED_SETUP
+ puts("Windows XT SETUP - DOS-native installation");
+#else
+ puts("PREPXR - DOS-native XR1 fresh/update preparation");
+#endif
  if(argc>1&&!stricmp(argv[argc-1],"/PREP")){prepare=1;argc--;}
  if(argc!=3||(stricmp(argv[1],"FRESH")&&stricmp(argv[1],"UPDATE"))){
-  puts("Usage: PREPXR UPDATE C:\\WINDOWS\n       PREPXR FRESH C:\\WIN30SRC\nRun on the DOS computer itself; no Python or host conversion is required.");return 1;}
+#ifdef EXPANDED_SETUP
+  puts("Usage: SETUP UPDATE C:\\WINDOWS\n       SETUP FRESH A:\\\nKeep the expanded WINXT folder beside SETUP.EXE.");
+#else
+  puts("Usage: PREPXR UPDATE C:\\WINDOWS\n       PREPXR FRESH C:\\WIN30SRC\nRun on the DOS computer itself; no Python or host conversion is required.");
+#endif
+  return 1;}
  fresh=!stricmp(argv[1],"FRESH");not_windows();
  regs.h.ah=0x30;intdos(&regs,&regs);if(regs.h.al<3||(regs.h.al==3&&regs.h.ah<30))stop("DOS 3.3 or later is required, as for the existing XR1 installer.","");
  if(!canonical(self,argv[0],PTH)||(p=strrchr(self,'\\'))==NULL)stop("Cannot locate this packet.",argv[0]);
+#ifdef EXPANDED_SETUP
+ if(p==self+2)p[1]=0;else *p=0;
+ absolute(exe,self);join(path,exe,"WINXT");directory(path);strcpy(runtime,path);
+ /* Expanded input only: never inspect the executable or seek an archive. */
+#else
  strcpy(exe,self);if(p==self+2)p[1]=0;else *p=0;absolute(runtime,self);join(path,runtime,"PAYLOAD");
  f=fopen(exe,"rb");if(!f||fread(h,1,6,f)!=6||h[0]!='M'||h[1]!='Z')stop("Cannot locate this native helper.",exe);
  image=(long)zw(h+4)*512L;if(zw(h+2))image-=512L-zw(h+2);
@@ -270,6 +297,7 @@ int main(int argc,char **argv)
   if(attr(path,&a)){directory(path);strcpy(runtime,path);}
   else{join(archive,runtime,"WINXT.ZIP");if(!attr(archive,&a))stop("Use complete WINXT.EXE, or keep PREPXR beside its payload or WINXT.ZIP.",exe);zip_mode=1;zip_start=0;}
  }
+#endif
  absolute(roots[0],argv[2]);
  if(!stricmp(roots[0],"C:\\WINXT")||!strnicmp(roots[0],"C:\\WINXT\\",9)||(fresh&&(!stricmp(roots[0],"C:\\W30")||!strnicmp(roots[0],"C:\\W30\\",7))))stop("Windows input must be separate from the installer output folders.",roots[0]);
  if(fresh&&!media_complete(roots[0])){collect_media(roots[0],path);strcpy(roots[0],path);}root_count=1;join(path,roots[0],"SYSTEM");if(attr(path,&a)){directory(path);strcpy(roots[root_count++],path);}
@@ -289,7 +317,7 @@ int main(int argc,char **argv)
   if(files[i].kind==1)find_input(files[i].source,files[i].size,path);
   stage(i,1);count++;
  }
- if(count!=(fresh?369:82))stop("Compiled preparation inventory differs.","");
+ if(count!=(fresh?FRESH_COUNT:UPDATE_COUNT))stop("Compiled preparation inventory differs.","");
  checkcancel();
  /* SETUPXT.BAT is withheld until every private source and readback succeeds. */
  for(i=0;i<NFILES;i++)if(strcmp(files[i].path,"SETUPXT.BAT")&&(fresh||strncmp(files[i].path,"W30\\",4)))stage(i,0);

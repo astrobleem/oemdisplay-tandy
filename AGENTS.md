@@ -8,7 +8,7 @@
 - **Current Build:** `python3 src/tandysw/BUILD88.PY --dosbox <dosbox-x> --out <new-path> [--mode <profile>]`; five profiles are in `docs/MODES.MD`. Omitted mode selects 320x200x16 in the current development pipeline; see docs/TRIAL4/README.MD.
 - **Legacy Build:** old TNDY16 source/builders are preserved in [DEV](docs/DEV.MD); use current external source views.
 - **Packaging:** current combined XR1 uses `tools/XR1PACK/PUBLISH.PY`, `TESTPREP.PY` and `TESTPUB.PY`. The retained fixed-profile route uses `tools/FLASHDISK/MAKEIMG.PY`, `TESTFAT.PY` and `TESTPKG.PY`. `oemdisk/MAKEDISK` is historical TANDY88 reproduction only. See `BUILDING.MD`.
-- **Install:** current XR1 consumers run the supplied WINXT.EXE on the DOS computer itself; it gathers Windows OS inputs, prepares Setup and launches the guarded installer. See `docs/DESKTOP.MD`. PREPARE.PY is a developer reference only. Consumer preparation must never require Python, a modern PC, host conversion or collecting individual driver support files. Use guarded `C:\STARTXT` on every launch. It supplies one custom XR1 profile. Fixed-profile packages keep their own Setup choices and launcher. Approved `WXTSPL01.RLE` remains selected; never use manual INI edits as normal install instructions.
+- **Install:** current XR1 consumers extract SETUP.EXE, README.TXT and the expanded WINXT folder, then run SETUP on the DOS computer itself; it gathers Windows OS inputs, prepares Setup and launches the guarded installer. See `docs/DESKTOP.MD`. PREPARE.PY is a developer reference only. Consumer preparation must never require Python, a modern PC, host conversion or collecting individual driver support files. Use guarded `C:\STARTXT` on every launch. It supplies one custom XR1 profile. Fixed-profile packages keep their own Setup choices and launcher. Approved `WXTSPL01.RLE` remains selected; never use manual INI edits as normal install instructions.
 
 ## 2. File Handling Rules
 - **Line Endings:** **CRLF** (Windows style) is MANDATORY.
@@ -97,7 +97,7 @@ resources, compiler or emulator bytes belong in new downloads.
 
 ## Current XR1 / rc.8 packaging
 
-Keep all accepted executable bytes unchanged unless a separately qualified
+Keep accepted driver/client bytes unchanged unless a separately qualified
 runtime change is explicitly requested. INPUTS.JSN describes own-media input
 hashes and local generation; PUBLIC.JSN closes the distributable input set.
 QUALIFY.JSN records the final preparation source pins and separate fresh/update

@@ -160,3 +160,4 @@ tools/SOUNDOWN/** -text
 
 tools/CURRENT/** -text
 tools/CURRENT/INPUTS/*.ZIP -export-ignore
+tools/XROEM/** -text

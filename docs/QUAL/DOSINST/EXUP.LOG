@@ -1,0 +1,63 @@
+Windows XT SETUP - DOS-native installation
+Checking the supplied runtime and required Windows files before output.
+Checking C:\WINXT\CGA.GR2
+Checking C:\WINXT\APPS.TXT
+Checking C:\WINXT\CPSET.EXE
+Checking C:\WINXT\FIXXT.BAT
+Checking C:\WINXT\FIXXT.EXE
+Checking C:\WINXT\FONTLIC.TXT
+Checking C:\WINXT\HPXY.DRV
+Checking C:\WINXT\LOGOLIC.TXT
+Checking C:\WINXT\MATRIX.EXE
+Checking C:\WINXT\MAZE.EXE
+Checking C:\WINXT\MODELIC.TXT
+Checking C:\WINXT\MODEXT.BAT
+Checking C:\WINXT\HPXY.INF
+Checking C:\WINXT\OWNERS.TXT
+Checking C:\WINXT\PINBALL.EXE
+Checking C:\WINXT\PROFILES.TXT
+Checking C:\WINXT\RESERVE.COM
+Checking C:\WINXT\SETAUTO.EXE
+Checking C:\WINXT\SETUPXT.BAT
+Checking C:\WINXT\SHOOK.COM
+Checking C:\WINXT\STARFLD.EXE
+Checking C:\WINXT\START.TXT
+Checking C:\WINXT\STARTXT.BAT
+Checking C:\WINXT\TABOUT.EXE
+Checking C:\WINXT\TCHIME.EXE
+Checking C:\WINXT\TEXIT.EXE
+Checking C:\WINXT\TNDYK3.DRV
+Checking C:\WINXT\TP.EXE
+Checking C:\WINXT\TSHELL.EXE
+Checking C:\WINXT\TSHELL.INI
+Checking C:\WINXT\TSINPUT.DLL
+Checking C:\WINXT\WHEEL.DRV
+Checking C:\WINXT\WINBRDG.EXE
+Checking C:\WINXT\WINXT.BAT
+Checking C:\WINXT\WXTSPL01.RLE
+Checking C:\WINXT\WXTWHL.EXE
+Checking C:\WINXT\XPCHIME.EXE
+Checking C:\WINXT\XTCFIX.FON
+Checking C:\WINXT\XTCLEAN.COM
+Checking C:\WINXT\XTCOEM.FON
+Checking C:\WINXT\XTCSYS.FON
+Checking C:\WINXT\XTEFIX.FON
+Checking C:\WINXT\XTEOEM.FON
+Checking C:\WINXT\XTESYS.FON
+Checking C:\WINXT\XTLOGO.LGO
+Checking C:\WINXT\XTSTATIC.LGO
+Checking C:\WINXT\XTTSYS.FON
+Checking C:\WINXT\XYCTL.EXE
+Checking C:\WINXT\SOUND.DRV
+Checking C:\WINXT\OEMSETUP.INF
+Prepared C:\SETUPXT.BAT
+Complete native XR1 update preparation: 83 verified files.
+Next: C:\SETUPXT
+RESERVE: 16K video overlap reserved. Start Windows with WIN /R.
+Starting the existing guarded Windows XT installer.
+No-op: all owned entries match; no payloads copied or INIs written.
+Complete: 0 payloads copied, SYSTEM.INI unchanged. No WIN.COM/wave rebuild.
+Tandy Computer entry already registered; active selections preserved.
+Windows XT is ready. Starting the desktop.
+Owned entries and cheap payload samples match.
+RESERVE: video reservation already installed.

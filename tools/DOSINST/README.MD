@@ -1,38 +1,26 @@
 # Native consumer installers
 
-WINXTDOS.ZIP contains the ready-to-run WINXT.EXE and a short README.
-The separate WINXT.ZIP is the raw preparer kit.
-The publisher checks extracted WINXT.EXE bytes against the qualified EXE.
+The current WINXT.ZIP extracts SETUP.EXE, README.TXT and one WINXT folder
+of actual expanded files. The native SETUP reads that adjacent folder; it
+neither opens an archive nor requires the original ZIP after extraction.
 
-The prebuilt XRSYNC.EXE and WINXT.EXE run on the DOS computer itself. Both
-include the supplied, expanded CGA.GR2 grabber and all driver support files;
-consumers do not collect support files or run Python. The FullXT finisher
-installs the canonical SOUND.DRV shared by the desktop alerts and Tandy
-Winamp, together with their current shell and sound clients.
+Run SETUP UPDATE C:\WINDOWS for the full desktop using an installed OS, or
+SETUP FRESH A:\ to gather the original Windows 3.0 disks automatically.
+The same expanded folder is an ordinary Windows Setup source for drivers
+only. Its guarded DISPLAY and DISPWIN entries are documented inside it.
+Full desktop preparation requires DOS 3.3+; the driver-only route targets
+DOS 3.20+. Both target 8088/640 KB Windows 3.0 real mode.
 
-XRSYNC installs the display into an existing Windows 3.0 system:
-
-```bat
-XRSYNC C:\WINDOWS
-```
-
-WINXT prepares the complete current desktop, using the installed Windows OS
-or gathering the original Windows 3.0 Setup disks automatically:
-
-```bat
-WINXT UPDATE C:\WINDOWS
-WINXT FRESH A:\
-```
-
-XRSYNC targets DOS 3.20+; WINXT targets DOS 3.3+. Both target the 8088 and
-normal 640 KB. The Windows/DOS installation, private prepared OS files,
-toolchain, emulator and guest disk images are outside the public packets.
+Runtime files, the supplied grabber, own fonts/logos and component licences
+are included. Windows/DOS OS files, private prepared trees, compiler and
+emulator remain outside publication. Current SOUND corresponding source is
+the separate WINXTSRC.ZIP developer asset alongside the download.
 
 Developer rebuilds use Open Watcom's 16-bit DOS compiler:
 
 ```text
 python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target xrsync --out NEWBUILD
-python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target rc8 --out NEWBUILD
+python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target setup --out NEWBUILD
 python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target finisher --out NEWBUILD
 python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target wrapper --out NEWBUILD
 ```
