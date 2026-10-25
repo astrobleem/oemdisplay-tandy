@@ -85,6 +85,28 @@ in both planes gives exactly the same result as on the Tandy.
 No memory reservation is needed. The video RAM is on the card, so there is
 no RESERVE or JRGUARD step.
 
+## Output optimisation (host-tested; native build and timing pending)
+
+`CPPOUT.PY` extends the PC1512 Output optimisations (`src/pc1512/P15OUT.PY`)
+to this driver. `BUILDPCP.PY` applies it once, after `PCPPATCH.patch_staged`
+and before the first assembly, and only the staged `TOutput` changes. It
+reuses `src/rrect/RRPATCH.patch_candidate` unchanged (the markers
+`OS_BEGINNSCAN`/`OS_ENDNSCAN` skip the copy and the cursor work; 3 to 1024
+point polylines are bounded to their rows) and presents narrow drawing through
+the stage's existing `FlushRetainColumns`, rounded outward to eight-pixel
+logical columns. The stage already turns a logical column into the two bytes
+per hardware plane, so the patch passes `x>>3` and `(right+7)>>3` and never
+scales again. Full-width work (`[0,320)`) keeps `FlushRetainRows`. Every call
+still presents before it returns, and rejected cases keep `FlushShadow`.
+ColorPlus has no port-selected planes: nothing from the PC1512 plane scheme is
+used.
+
+`python -B src/pcp/CPPOTEST.PY` runs the host tests on `CPPOUT.FIX`, the real
+`TOutput` of the post-`PCPPATCH` stage, with a ColorPlus model checked against
+`PCPPATCH.model_flush`/`pcp_pixel`. They assemble and run nothing. A native
+build, a frame comparison of 32,768-byte VRAM captures decoded with
+`SPCHK.PY --adapter colorplus`, and timings are still required before any claim of a working driver or a speedup.
+
 ## Evidence
 
 **Build.** `BUILDPCP.PY` runs the view's unchanged BUILD88 for 320x200x16

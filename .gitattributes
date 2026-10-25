@@ -148,6 +148,7 @@ docs/DOWNLOADS.MD -text
 
 .github/workflows/driver-packets.yml -text
 src/pc1512/** -text
+src/pcp/CPPOUT.FIX -text
 
 # Retained OEM development sources and relocated-source CI retain CRLF.
 oemdisk/** -text
