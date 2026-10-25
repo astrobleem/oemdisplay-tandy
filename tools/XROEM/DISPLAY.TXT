@@ -1,23 +1,25 @@
-WINDOWS XT - DISPLAY THROUGH WINDOWS SETUP
+WINDOWS XT - DRIVERS THROUGH WINDOWS SETUP
 
-The same WINXT folder used by the full installer is a complete Windows 3.0
-OEM driver source. This path installs the display without Tandy Start or
-the bundled applications. Use an installed Windows 3.0 in real mode on
-an original Tandy 1000 EX/HX with normal 640 KB and DOS 3.20+.
+The expanded WINXT folder is a complete Windows 3.0 OEM driver source.
+This path installs the display without Tandy Start or the applications.
+Use installed Windows 3.0 real mode on an original Tandy 1000 EX/HX with
+normal 640 KB and DOS 3.20+.
 
-1. Extract the main ZIP to C:\ so its expanded folder is C:\WINXT.
-2. Exit Windows. From plain DOS run C:\WINXT\DISPLAY.
-3. In Windows Setup choose Display, Other, and enter C:\WINXT.
-   Select Tandy EX/HX HPXY 640x256 hardware pan and Complete Changes.
+1. In plain DOS, change to the expanded WINXT folder and run DISPLAY.
+2. In Windows Setup choose Display, Other, and enter that folder's full
+   path. If Setup asks for the Windows XT driver disk, enter the same path.
+3. Select Tandy EX/HX HPXY 640x256 hardware pan and Complete Changes.
    Keep your keyboard, mouse and DOS configuration choices unchanged.
-4. Start every Windows session with C:\WINXT\DISPWIN.
-   Inside Windows, run C:\WINXT\XYCTL.EXE for viewport controls.
+4. For each Windows session, change to the WINXT folder and run DISPWIN.
+   Inside Windows run XYCTL.EXE from that folder for viewport controls.
 
-For Windows outside C:\WINDOWS, pass its drive and directory to both
-entries, for example DISPLAY D: \WIN30 and DISPWIN D: \WIN30.
-Both batch entries reserve shared video memory and stop if that fails.
-Windows Setup selects and copies the display, fonts, grabber and logos
-from this folder. No separate driver download or manual INI editing is needed.
+DISPLAY and DISPWIN reserve shared video memory and stop if that fails.
+They start Windows at C:\WINDOWS. For another Windows directory, pass
+its drive and path, for example DISPLAY D: \WIN30 or DISPWIN D: \WIN30.
+
+Windows Setup selects and copies the driver, fonts, grabber and logos
+from the folder you select. It can be on another drive or in another
+directory; no custom SETUP.EXE run, separate download or INI editing is needed.
 
 For the full desktop and applications, run the main ZIP's SETUP.EXE instead.
 The display is for EX/HX; other video hardware uses its matching driver.
