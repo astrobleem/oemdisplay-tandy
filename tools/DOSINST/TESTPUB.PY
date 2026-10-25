@@ -50,6 +50,24 @@ class NativePublisherTests(unittest.TestCase):
         for _, source, size, _ in grabbers:
             self.assertEqual(len(self.entries["PAYLOAD/" + source]), size)
 
+    def test_windows_crc_inventory_matches_qualified_inputs(self):
+        recipe = (M.HERE / "XRFILES.H").read_text()
+        header = (M.HERE / "XRINPUT.H").read_text()
+        pins = json.loads((M.HERE / "XRINPUT.JSN").read_bytes())
+        qualified = {r["path"]: r for r in json.loads((M.HERE.parent / "XR1PACK/INPUTS.JSN").read_bytes())["files"]}
+        self.assertEqual(len(pins), 284)
+        M.check_inputs(recipe, header, pins, qualified)
+        changed = copy.deepcopy(pins)
+        changed["W30/123.PIF"]["crc32"] = "00000000"
+        with self.assertRaises(ValueError):
+            M.check_inputs(recipe, header, changed, qualified)
+        changed = copy.deepcopy(pins)
+        changed["W30/123.PIF"]["sha256"] = "0" * 64
+        with self.assertRaises(ValueError):
+            M.check_inputs(recipe, header, changed, qualified)
+        with self.assertRaises(ValueError):
+            M.check_inputs(recipe, header.replace("W30\\\\123.PIF", "wrong", 1), pins, qualified)
+
     def test_verified_assets_and_overlay(self):
         output = self.root / "release"
         first = self.run_build(output)

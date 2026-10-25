@@ -3,13 +3,13 @@
   "target": "8088 / DOS 3.3+",
   "compiler": "Open Watcom 16-bit DOS; -bt=dos -0 -ml -os",
   "binary": {
-    "bytes": 81360,
-    "sha256": "d398a80a23393be7e360cc5f09631d7e956bd1f17abc49cb4ab1dce883001fbd"
+    "bytes": 83276,
+    "sha256": "a3f278583e71a8c73ccab2d184742dfdb8595c6223f314bf54ce692da7504ff7"
   },
   "sources": {
     "XRPREP.C": {
-      "bytes": 16056,
-      "sha256": "d8da4935db45ee72336e345801cc8b0c21c7305febaaab4daf5a2d4739138df7"
+      "bytes": 16851,
+      "sha256": "05e87c0da640fc2ac9869c210f22e03706dc1a81ae6025e2a4ff001f06b7482f"
     },
     "XR1PINS.H": {
       "bytes": 5121,
@@ -38,6 +38,10 @@
     "CRCFAST.H": {
       "bytes": 3941,
       "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+    },
+    "XRINPUT.H": {
+      "bytes": 14440,
+      "sha256": "16fc7fb2f3296e099a46f9663b98610ca9f493aeb8aee86a1d8a96b4793d9ecc"
     }
   },
   "companions": {

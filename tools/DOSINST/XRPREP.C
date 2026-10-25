@@ -11,20 +11,30 @@
 #define SZHEADER "XRSTRM.H"
 #include "DOSCORE.H"
 #include "XRFILES.H"
+#include "XRINPUT.H"
 #include "VARSET.H"
 #include <malloc.h>
 
 static char roots[3][PTH],input[PTH],original[PTH],loader[PTH];
 static unsigned root_count;
+static char cache_root[PTH];
 static unsigned char *setup_bytes,*setup_result,*cnf_bytes;
 static unsigned setup_used;
 static unsigned char checked_existing[NFILES],replace_existing[NFILES];
-struct sink { unsigned char *memory;U32 limit,used;int compare,write,different;FILE *file; };
+struct sink { unsigned char *memory;U32 limit,used,crc;int compare,write,different,checksum;FILE *file; };
+
+static void reject_input(char *message,char *path)
+{
+ unsigned n=strlen(cache_root);
+ if(n&&!strnicmp(path,cache_root,n)&&path[n]=='\\')remove(path);
+ stop(message,path);
+}
 
 static int emit(unsigned char *p,unsigned n,void *ctx)
 {
  struct sink *s=(struct sink *)ctx;unsigned char *other=verifybuf;
  if(s->used+n>s->limit)return 1;
+ if(s->checksum)s->crc=crc_add(s->crc,p,n);
  if(s->memory)memcpy(s->memory+(unsigned)s->used,p,n);
  if(s->write)putbytes(p,n,"XR1 output");
  if(s->compare){unsigned got=fread(other,1,n,s->file);if(ferror(s->file))return 1;if(got!=n||memcmp(p,other,n))s->different=1;}
@@ -37,7 +47,7 @@ static void read_stream(char *path,U32 want,struct sink *sink)
  n=fread(h,1,14,f);if(fseek(f,0L,SEEK_SET)){fclose(f);stop("Cannot seek input.",path);}
  if(n>=8&&!memcmp(h,"SZDD\210\360\047\063",8)){
   error=szdd_stream(f,want,ring,io,emit,sink);
-  if(error){fclose(f);stop(error,path);}
+  if(error){fclose(f);reject_input(error,path);}
  }else{
   while((n=fread(io,1,sizeof(io),f))!=0){total+=n;
    if(total>want||emit(io,n,sink)){fclose(f);stop("Input/output bounds or readback mismatch.",path);}}
@@ -75,7 +85,7 @@ static void critical(char *name,unsigned size,char *sha,unsigned char *memory,ch
  if(!locate_input(name,size,path)){
   if(!strcmp(name,"SETUP.INF")&&locate_input(name,49095UL,path)){
    sink.limit=49095UL;read_stream(path,49095UL,&sink);
-   if((crc_add(0xffffffffUL,memory,49095U)^0xffffffffUL)!=VARIANT_CRC)stop("Different installed Windows Setup metadata.",path);
+   if((crc_add(0xffffffffUL,memory,49095U)^0xffffffffUL)!=VARIANT_CRC)reject_input("Different installed Windows Setup metadata.",path);
    for(i=j=0;i<NVAR;i++){
     n=variation[i].ch?1:variation[i].end-variation[i].start;
     if(n>49046U-j)stop("Metadata normalization exceeds its bound.",path);
@@ -94,7 +104,7 @@ static void critical(char *name,unsigned size,char *sha,unsigned char *memory,ch
   stop("Required Windows 3.0 input missing or different.",name);
  }
  read_stream(path,size,&sink);sha=sha;
- if((crc_add(0xffffffffUL,memory,size)^0xffffffffUL)!=(!strcmp(name,"SETUP.INF")?SETUP_INPUT_CRC:!strcmp(name,"WIN.CNF")?CNF_CRC:CGA_CRC))stop("Windows 3.0 input CRC/version differs.",name);
+ if((crc_add(0xffffffffUL,memory,size)^0xffffffffUL)!=(!strcmp(name,"SETUP.INF")?SETUP_INPUT_CRC:!strcmp(name,"WIN.CNF")?CNF_CRC:CGA_CRC))reject_input("Windows 3.0 input CRC/version differs.",path);
 }
 static void setup_generate(void)
 {
@@ -120,7 +130,8 @@ static void payload(unsigned i,struct sink *sink)
  struct file_record *r=&files[i];char path[PTH];unsigned left,n,k;
  if(r->kind==0){k=pinindex(r->source);if(zip_mode)zip_feed(k,emit,sink);
   else{join(path,runtime,r->source);read_stream(path,r->size,sink);}}
- else if(r->kind==1){find_input(r->source,r->size,path);read_stream(path,r->size,sink);}
+ else if(r->kind==1){find_input(r->source,r->size,path);sink->checksum=1;sink->crc=0xffffffffUL;read_stream(path,r->size,sink);sink->checksum=0;
+  if((sink->crc^0xffffffffUL)!=input_crcs[i])reject_input("Windows OS input CRC/version differs.",path);}
  else if(r->kind==2){left=setup_used;while(left){n=left>4096?4096:left;if(emit(setup_result+setup_used-left,n,sink))stop("Setup output/readback failed.",r->path);left-=n;}}
  else if(r->kind==3){if(emit(cnf_bytes,3456,sink))stop("Loader output/readback failed.",r->path);}
  else if(r->kind==4){
@@ -199,7 +210,7 @@ static int media_complete(char *root)
 }
 static void collect_media(char *source,char *cache)
 {
- struct find_t entry;char pattern[PTH],from[PTH],to[PTH],answer[16],tag[32];unsigned a,i,count,n;FILE *f;U32 total;
+ struct find_t entry,existing;char pattern[PTH],from[PTH],to[PTH],answer[16],tag[32];unsigned a,i,count,n;FILE *f;U32 total;
  /* This cache contains only the user's Windows input, never public output. */
  for(i=0;i<100;i++){
   if(!i)strcpy(cache,"C:\\W30SRC");else sprintf(cache,"C:\\W30SRC%02u",i);
@@ -212,6 +223,7 @@ static void collect_media(char *source,char *cache)
   f=fopen(to,"rb");if(f){n=fread(tag,1,sizeof(tag),f);fclose(f);if(n==23&&!memcmp(tag,"XR1 own Windows media\r\n",23))break;}
  }
  if(i==100)stop("No free Windows media-cache name.","");
+ strcpy(cache_root,cache);
  if(media_complete(cache)){puts("Using the complete Windows media cache.");return;}
  for(;;){
   count=0;join(pattern,source,"*.*");
@@ -219,7 +231,12 @@ static void collect_media(char *source,char *cache)
    if(entry.attrib&(_A_SUBDIR|_A_VOLID)||!expected_media(entry.name))continue;
    if(entry.size>1024UL*1024UL)stop("Windows media file exceeds its bound.",entry.name);
    join(from,source,entry.name);join(to,cache,entry.name);
-   if(attr(to,&a)){verifyfile(to,from,NULL,entry.size);continue;}
+   if(attr(to,&a)){
+    if(a&(_A_SUBDIR|_A_VOLID))stop("Cached input is not a regular file.",to);
+    if(_dos_findfirst(to,_A_NORMAL|_A_RDONLY|_A_HIDDEN|_A_SYSTEM|_A_ARCH,&existing))stop("Cannot inspect cached input.",to);
+    if(existing.size==entry.size)continue;
+    if(remove(to))stop("Cannot replace incomplete cached input.",to);
+   }
    f=fopen(from,"rb");if(!f)stop("Cannot read Windows disk.",from);createout(to);total=0;
    while((n=fread(io,1,sizeof(io),f))!=0){total+=n;if(total>entry.size){fclose(f);stop("Windows media changed during copy.",from);}putbytes(io,n,to);}
    if(ferror(f)||fclose(f)||total!=entry.size)stop("Windows media read failed.",from);closeout(to);verifyfile(to,from,NULL,entry.size);stream_output[0]=0;count++;

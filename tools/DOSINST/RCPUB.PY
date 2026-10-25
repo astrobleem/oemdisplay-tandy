@@ -12,6 +12,26 @@ pub = importlib.machinery.SourceFileLoader("xr1_native_helpers", str(HERE.parent
 media = importlib.machinery.SourceFileLoader("xr1_native_media", str(HERE.parent / "XR1PACK/PREPARE.PY")).load_module()
 ASSETS = ("WINXT.EXE", "WINXT.ZIP", "README.TXT", "RELEASE.JSON", "SHA256SUMS")
 
+def check_inputs(recipe, header, records, qualified):
+    rows = re.findall(r'{"([^"\n]+)","([^"\n]+)",(\d+)UL,(\d+)}', recipe)
+    crcs = re.findall(r'0x([0-9a-f]{8})UL, /\* ([^*]+) \*/', header)
+    pub.require(len(rows) == len(crcs) == 367, "Windows input CRC inventory differs")
+    required = set()
+    for (path, source, size, kind), (crc, comment) in zip(rows, crcs):
+        pub.require(comment == path, "Windows CRC recipe ordering differs: " + path)
+        name = path.replace("\\\\", "/")
+        if kind != "1":
+            pub.require(crc == "00000000", "Unexpected Windows input CRC: " + name)
+            continue
+        required.add(name)
+        row = records[name]
+        pub.require(row["bytes"] == int(size) and row["crc32"] == crc,
+                    "Windows input CRC pin differs: " + name)
+        pub.require({k: row[k] for k in ("bytes", "sha256")} ==
+                    {k: qualified[name][k] for k in ("bytes", "sha256")},
+                    "Windows input differs from qualified media: " + name)
+    pub.require(set(records) == required, "Windows input pin closure differs")
+
 def collect():
     spec = json.loads((HERE / "RCPUBLIC.JSN").read_bytes())
     pub.require(spec["schema"] == 1, "Unsupported native rc.8 manifest")
@@ -32,6 +52,9 @@ def collect():
     for name, pin in runtime.items():
         pub.require(pub.identity(entries[name]) == pin, "Compiled runtime differs: " + name)
     pub.require(not any(n.endswith(".PY") for n in entries), "Private/host preparation file in consumer kit")
+    check_inputs((HERE / "XRFILES.H").read_text(), (HERE / "XRINPUT.H").read_text(),
+                 json.loads((HERE / "XRINPUT.JSN").read_bytes()),
+                 {row["path"]: row for row in json.loads((HERE.parent / "XR1PACK/INPUTS.JSN").read_bytes())["files"]})
     native = json.loads((HERE / "RCNATIVE.JSN").read_bytes())
     pub.require(pub.identity(entries["PREPXR.EXE"]) == native["binary"], "Native helper differs")
     for name, pin in native["sources"].items():
