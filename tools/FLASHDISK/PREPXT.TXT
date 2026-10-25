@@ -1,26 +1,19 @@
-PREPXT - QUALIFIED PRIVATE STATIC-LOGO / MODE-SWITCHER CANDIDATE
+PREPXT - WINDOWS XT FIXED-PROFILE PREPARATION
 
-DOS 3.3+, 8086/8088, 640 KB. Exit Windows before preparation.
-At disk root: INSTALL [owned-media directory]. Advanced:
-  PREPXT WINXT C:\WINDOWS [media-dir1 ... media-dir4] [/VERIFY]
+At the 720 KB data disk root, run INSTALL from plain DOS. The packet includes
+CGA.GR2, seven original fonts and the original startup logo. No separate
+Windows support-media folder is needed. An installed Windows 3.0 remains
+required; this data disk contains no DOS/Windows installation media.
 
-Only matching owned CGA.GR2 (2104 bytes) is gathered. Seven original MIT fonts
-and original XTSTATIC.LGO remove Windows font-media and CGALOGO.LGO source
-dependencies. Windows/DOS, WIN.CNF, Setup/kernel and other non-font components
-remain required. No vintage Python/compiler is required.
+Advanced syntax for a different installed Windows directory:
+  PREPXT WINXT D:\WINDOWS
 
-Default uses size/I/O/structural checks. The source-coupled instrumented
-default measured zero SHA blocks in preflight and copy and zero output
-readback. Production default separately passed exact native output/preimage
-checks. Emulator host times were about 42 seconds default and 139 seconds
-explicit /VERIFY. These are not physical 8088 estimates. /VERIFY enables
-expensive deep verification/readbacks; it stays optional developer diagnostics.
+PREPXT stages a fresh C:\WINXT after its checks and your Y confirmation.
+Then select C:, CD \WINXT and run INSTALL with that same Windows path.
+The helper never starts Setup itself. Its existing no-overwrite, free-space,
+bounded input and I/O checks remain. /VERIFY enables deeper diagnostics.
 
-Inputs remain read-only. Output must be fresh C:\WINXT; INSTALL.BAT commits
-last. Existing output, malformed/missing input, low space and declined
-confirmation refuse preparation. PREPXT never launches Windows or Setup.
-Native builds, defaults, VERIFY and Setup 6402/TEXT passed. QUALIFICATION.JSON
-binds evidence and the host-only document pin refresh. Executable code remains
-the measured native implementation; refreshed data pins were host-verified.
-Preserved failures include the corrected six-phase validator and a timed-out
-repeat. No extra guest was launched for documentation. No publication.
+Preparation checks the included grabber first. The historical runtime and
+native evidence remain preserved; current packet generation refreshes only
+its guide and document hash rows. Executable code is unchanged. The current
+native test receipt is docs/QUAL/FIXGRAB.JSN in the source repository.

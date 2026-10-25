@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Build reproducible 720 KB WINXT data disks from the accepted runtime.
 
-Public builds exclude Windows support files. The complete private own-media
-payload does not fit 720 KB; --windows-files is refused. Use PREPXT to prepare
-the complete folder on your DOS hard disk from your own matching media.
+The data disk bundles the validated expanded CGA grabber and original fonts
+and startup assets. Existing DOS/Windows remains required; no OS media is
+included and no consumer support-file gathering is needed.
 This packages pinned binaries. It does not compile or qualify new drivers.
 """
 import argparse
@@ -124,69 +124,66 @@ def public_payload(runtime):
     if set(manifest) != set(PUBLIC_NAMES) | set(WINDOWS_NAMES):
         raise PackageError('Runtime manifest changed; review the explicit publication allowlist')
     payload = {}
-    for name in PUBLIC_NAMES:
+    for name in PUBLIC_NAMES + WINDOWS_NAMES:
         data = read_file(runtime / name)
         if sha(data) != manifest[name]:
             raise PackageError('Runtime hash mismatch: ' + name)
         payload[name] = data
+    grabber = payload['CGA.GR2']
+    if len(grabber) != 2104 or sha(grabber) != '1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067':
+        raise PackageError('Bundled CGA grabber differs from accepted expanded bytes')
     verify_default_splash(payload)
     verify_dos_wave(payload)
-    payload['MANIFEST.SHA'] = raw
+    # Preserve the historical runtime directory and its qualification snapshots.
+    # Only the generated packet guide and its manifest row are refreshed.
+    payload['README.TXT'] = readme(False)
+    payload['MANIFEST.SHA'] = dos(''.join(sha(data) + '  ' + name + '\n'
+                                       for name, data in sorted(payload.items())))
     return payload
 
 
 def readme(private):
-    return dos(r"""WINDOWS XT - DOS MODE SWITCHER TEST CANDIDATE - NOT PUBLISHED
+    return dos(r"""WINDOWS XT - FIXED DISPLAY PROFILES
 
-This is a 720 KB DATA disk, not a DOS boot disk or a Windows installation.
-Requires DOS 3.3+, Windows 3.0 real mode, a compatible Tandy and writable CF.
-Back up Windows first. No Python/compiler is required on the vintage machine.
-Fonts are original XT Pixels, MIT licensed: WINXT\FONTLIC.TXT and FONTINFO.TXT.
-Only CGA.GR2 requires a matching owned support file. Static logo and fonts are original.
-This does not remove Windows itself or other non-font Windows dependencies.
+For Tandy 1000 EX/HX, 640 KB, DOS 3.3+ and an existing Windows 3.0 real-mode
+installation. This is a 720 KB data disk, not a DOS boot disk or Windows media.
+Its grabber, seven original fonts and startup logos are included.
 
-1. At plain DOS with the disk selected, run INSTALL from the disk root.
-2. PREPXT searches Windows and SYSTEM for the owned non-font grabber.
-   If missing, supply a media directory: INSTALL D:\WIN30SRC
-   Seven original fonts, four drivers, XTMODE and the unchanged shell are expanded
-   by the bounded DOS helper. No Windows font files or local derivation are
-   needed. Up to four owned-media directories may be supplied.
-3. After source checks, confirm the helper prompt. It creates fresh C:\WINXT.
-   It refuses existing output, wrong sizes, malformed compression, missing
-   inputs and insufficient free space. Source Windows/media remain read-only.
-   Default uses size/I/O/structural checks. Source-coupled diagnostic default
-   measured zero SHA blocks in both phases and zero output readback. Production
-   default separately passed exact native output checks. Emulator times were
-   about 42 seconds default and 139 seconds /VERIFY, not hardware estimates.
-   /VERIFY stays explicit, expensive developer diagnostics.
-4. C: then CD \WINXT then INSTALL. In Windows Setup select Display -> Other
-   display and source C:\WINXT; choose the mode and Complete Changes.
-   For CONFIG.SYS choose option 3 (no changes). The optional Computer choice
-   preserves the active Computer/keyboard. Read CPSET.TXT before changing it.
-5. Start with C:\WINXT\WINXT. Its video/recovery guards remain mandatory.
-   Optional desktop: C:\WINXT\TSSETUP. Existing Program Manager groups remain
-   read-only. To switch later, exit Windows fully and use C:\WINXT\MODES.
-   Run MODES and choose U to undo one prior mode. Read MODEINFO.TXT for recovery/limits.
-   Windows Setup remains available via WINXT SETUP.
+INSTALL
+1. Use WINXT720.IMG as a 720 KB data floppy, GoTek or emulator disk. A
+   physical 360 KB-only drive cannot read it. Boot your normal DOS system.
+2. Exit Windows completely. With the data disk in A:, run:
+     A:
+     CD \
+     INSTALL
+   PREPXT uses the included grabber. No support-media directory is needed.
+   After its source checks, type Y to prepare C:\WINXT.
+3. After preparation succeeds, run:
+     C:
+     CD \WINXT
+     INSTALL
+   In Windows Setup choose Display / Other, enter C:\WINXT, select your
+   display profile and Complete Changes. Keep your keyboard and mouse choices.
+   For CONFIG.SYS, choose No Changes.
+4. Start every session from plain DOS with:
+     C:\WINXT\WINXT
+   Its video-memory and recovery checks must succeed before Windows starts.
 
-160-pixel menus can wrap and wide dialogs clip. Preserved font metrics do not
-make every Windows dialog fit. Full native font and installation/rollback
-acceptance passed; docs/QUAL/RC6.JSON binds native evidence and this release.
-Documentation pins were refreshed on the host; measured executable code is unchanged.
-Experimental TXTMODE is opt-in and retains its known renderer limitations.
-The fixed TXTSYS font is original; font and renderer tests are separate.
+To select another profile, exit Windows and run C:\WINXT\MODES. Choose
+32016, 6404, 16016, 3204 or 6402; U undoes the previous mode selection.
+At 160 pixels, standard dialogs may clip. The separate TEXT choice retains
+known character-rendering limits; read TEXTMODE.TXT before choosing it.
 
-The IMG is FAT12 720 KB: 737280 bytes, 80 cylinders, 2 heads, 9 sectors/track.
-Use compatible GoTek/emulator/physical double-density media. A 360 KB-only
-physical drive cannot read it. DOSBox-X: IMGMOUNT A WINXT720.IMG -T FLOPPY.
-Do not run WINXT\INSTALL directly from a small/read-only floppy; PREPXT stages
-it to writable C:\WINXT. Keep the source mounted throughout Setup.
+For the optional Tandy Start desktop, run C:\WINXT\TSSETUP once from DOS.
+Later launches use the same guarded WINXT command.
 
-Rollback: exit Windows and run the numbered WINXT\BACKUP\B001\RESTORE YES
-path printed by INSTALL. It restores Computer metadata, disables the wave,
-restores prior Windows files and verifies the restored originals. Added driver
-files/helpers remain inactive. Do not redistribute a completed owned-media
-folder containing CGA.GR2.
+OPTIONAL DETAILS
+Use your actual Windows path with PREPXT WINXT D:\WINDOWS, then pass that
+same path to the second INSTALL. PREPXT checks existing output, free space,
+source structure and I/O before staging; /VERIFY enables deeper diagnostics.
+It never starts Setup itself. MODEINFO.TXT describes mode controls/recovery;
+PREPXT.TXT describes preparation. Windows' own Setup, loader, kernel and
+other OS components remain required and are read from your installation.
 """)
 
 
@@ -374,10 +371,9 @@ def font_source_payload():
 
 def build(runtime, out, windows_files=None):
     if windows_files is not None:
-        raise PackageError('Complete own-media payload does not fit the 720 KB disk; '
-                           '--windows-files is unsupported. Build the public image and '
-                           'use PREPXT with your matching Windows media to prepare C:\\WINXT '
-                           'on the DOS hard disk. No output was created.')
+        raise PackageError('--windows-files is unnecessary and unsupported: the packet bundles '
+                           'its driver support. Use PREPXT with the included runtime and '
+                           'an installed Windows directory. No output was created.')
     if out.exists():
         raise PackageError('Output exists; choose a fresh directory')
     wave = wave_payload()
@@ -444,7 +440,7 @@ def build(runtime, out, windows_files=None):
             'runtime_manifest_sha256': sha(public['MANIFEST.SHA']),
             'packed_transport': transport_report(public, payload),
             'helper_sha256': sha(helper['PREPXT.EXE']),
-            'windows_support_included': private, 'image_bytes': image.stat().st_size,
+            'windows_support_included': True, 'operating_system_included': False, 'driver_support_complete': True, 'image_bytes': image.stat().st_size,
             'geometry': {'cylinders': 80, 'heads': 2, 'sectors_per_track': 9,
                          'sector_bytes': 512}, 'fat_verification': report}
         (out / 'BUILD.JSON').write_bytes((json.dumps(metadata, indent=2, sort_keys=True) + '\n').encode('ascii'))

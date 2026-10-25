@@ -86,8 +86,10 @@ def verify(out, runtime=RUNTIME):
     toolkit['README.TXT'] = guide
     check(zip_entries(out / 'WXTTOOLS.ZIP') == toolkit, 'Portable toolkit mismatch')
     metadata = json.loads(data['BUILD.JSON'])
-    check(metadata['publication_allowed'] is False and metadata['windows_support_included'] is False
-          and metadata['kind'] == 'dos-mode-switcher-test-candidate', 'PRIVATE OUTPUT MUST NOT BE PUBLISHED')
+    check(metadata['publication_allowed'] is False and metadata['windows_support_included'] is True
+          and metadata['operating_system_included'] is False
+          and metadata['driver_support_complete'] is True
+          and metadata['kind'] == 'dos-mode-switcher-test-candidate', 'Driver support/OS inclusion contract differs')
     check(metadata['independent_startup_default'] == 'slow-flag-wave'
           and metadata['disk_setup_startup'] == 'guarded-color-wave-static-fallback'
           and metadata['wave_payload_sha256'] == {n:package.sha(b) for n,b in package.wave_payload().items()},
@@ -117,8 +119,10 @@ class PackageTests(unittest.TestCase):
         self.assertTrue(evidence['document_data_binding']['all_59_binary_pin_rows_match_source'])
         payload = package.public_payload(RUNTIME)
         self.assertEqual(evidence['installer_sha256'], package.sha(payload['TINST.EXE']))
-        self.assertEqual(evidence['runtime_manifest_sha256'], package.sha(payload['MANIFEST.SHA']))
-        self.assertEqual(evidence['helper_sha256'], package.sha(package.helper_payload()['PREPXT.EXE']))
+        self.assertEqual(evidence['document_data_binding'], json.loads((HERE / 'HISTORY/RC6BIND.JSN').read_bytes()))
+        self.assertEqual(evidence['runtime_manifest_sha256'], package.sha((RUNTIME / 'MANIFEST.SHA').read_bytes()))
+        self.assertEqual(evidence['helper_sha256'], package.sha((HERE / 'HISTORY/RC6PREP.EXE').read_bytes()))
+        self.assertEqual(evidence['compiled_source_pins']['XTPINS.H'], package.sha((HERE / 'HISTORY/RC6PINS.H').read_bytes()))
 
     def test_changed_dos_wave_refused(self):
         payload = package.public_payload(RUNTIME)
@@ -173,7 +177,7 @@ class PackageTests(unittest.TestCase):
     def test_private_720_mode_refused_before_output_or_input_reads(self):
         out = self.base / 'private'
         with mock.patch.object(package, 'public_payload') as payload:
-            with self.assertRaisesRegex(package.PackageError, 'does not fit.*PREPXT'):
+            with self.assertRaisesRegex(package.PackageError, 'unnecessary.*PREPXT'):
                 package.build(self.base / 'missing-runtime', out, self.base / 'missing-media')
             payload.assert_not_called()
         self.assertFalse(out.exists())
@@ -187,8 +191,9 @@ class PackageTests(unittest.TestCase):
         for name in OUTPUT_NAMES:
             self.assertEqual((a / name).read_bytes(), (b / name).read_bytes(), name)
         self.assertEqual(verified['image_bytes'], 737280)
-        for forbidden in package.WINDOWS_NAMES:
-            self.assertNotIn('WINXT/' + forbidden, verified['files'])
+        self.assertEqual(verified['files']['WINXT/CGA.GR2'], {'size': 2104, 'sha256':
+            '1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067'})
+        self.assertNotIn(b'owned-media directory', (a / 'README.TXT').read_bytes())
 
     def test_portable_toolkit_reproduces_public_outputs(self):
         a, portable, b = self.base / 'one', self.base / 'toolkit', self.base / 'two'
@@ -203,6 +208,24 @@ class PackageTests(unittest.TestCase):
                        check=True, capture_output=True, timeout=60)
         for name in OUTPUT_NAMES:
             self.assertEqual((a / name).read_bytes(), (b / name).read_bytes(), name)
+
+    def test_bundled_grabber_is_required_and_pinned(self):
+        runtime = self.base / 'runtime'
+        shutil.copytree(RUNTIME, runtime)
+        grabber = runtime / 'CGA.GR2'
+        original = grabber.read_bytes()
+        grabber.unlink()
+        with self.assertRaises(package.PackageError):
+            package.build(runtime, self.base / 'missing')
+        self.assertFalse((self.base / 'missing').exists())
+        altered = original[:-1] + bytes([original[-1] ^ 1])
+        grabber.write_bytes(altered)
+        manifest = (runtime / 'MANIFEST.SHA').read_bytes()
+        old = package.sha(original).encode('ascii')
+        (runtime / 'MANIFEST.SHA').write_bytes(manifest.replace(old, package.sha(altered).encode('ascii')))
+        with self.assertRaisesRegex(package.PackageError, 'accepted expanded bytes'):
+            package.build(runtime, self.base / 'changed')
+        self.assertFalse((self.base / 'changed').exists())
 
     def test_preexisting_output_is_preserved(self):
         out = self.base / 'existing'
@@ -252,12 +275,12 @@ class PackageTests(unittest.TestCase):
         p = out / 'BUILD.JSON'
         metadata = json.loads(p.read_bytes())
         metadata['publication_allowed'] = False
-        metadata['windows_support_included'] = True
+        metadata['operating_system_included'] = True
         p.write_bytes((json.dumps(metadata, sort_keys=True) + '\n').encode())
         hashes = ''.join(package.sha((out / n).read_bytes()) + '  ' + n + '\n'
                          for n in sorted(OUTPUT_NAMES - {'SHA256SUMS'}))
         (out / 'SHA256SUMS').write_bytes(hashes.encode())
-        with self.assertRaisesRegex(package.PackageError, 'PRIVATE'):
+        with self.assertRaisesRegex(package.PackageError, 'inclusion contract'):
             verify(out)
 
     def test_extra_helper_manifest_entry_refused(self):

@@ -1,3 +1,8 @@
+HISTORICAL RC6 TEST SUMMARY
+
+The following retained results describe the earlier own-media packet. Current
+bundled-grabber validation is in docs/QUAL/FIXGRAB.JSN.
+
 PREPXT - QUALIFIED PRIVATE STATIC-LOGO / MODE-SWITCHER CANDIDATE
 
 DOS 3.3+, 8086/8088, 640 KB. Exit Windows before preparation.

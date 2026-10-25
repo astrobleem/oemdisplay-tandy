@@ -2,9 +2,9 @@
   "binding_kind": "Host documentation data refresh of measured native implementation",
   "refreshed_binary_rerun_in_guest": false,
   "native_base_sha256": "5817a16b619377307f8f503b379f0d2bfec7b455797ee24f56f4c767e4eb59e5",
-  "helper_sha256": "192b936631a67324b83e4dabaaac396885e541973e74df8699adac7085746845",
+  "helper_sha256": "1f013f30e1ae3a72d1cab0b1f35f6f901df15e0da43fe4ce5bc9452314a54de0",
   "base_header_sha256": "7a914108407b3fb6dd2f5d8fe94e999fffed86bc7b85df9182384ee06b4b637d",
-  "updated_header_sha256": "bafdf849c7baa510704cda6e9e21c765850f184af4f4669b63b9c79df301a4d5",
+  "updated_header_sha256": "9a6c437604fcc68f4d4acbc7d3e312947b039ac04b50ab8898c8c9039876f90b",
   "all_59_binary_pin_rows_match_source": true,
   "only_document_data_changed": true,
   "changed_rows": [
@@ -20,7 +20,7 @@
     {
       "name": "MANIFEST.SHA",
       "old_sha256": "030acc0de847611c27278410db3e86d80531ab8dfc50658b58e5716c980ddf81",
-      "new_sha256": "1a651e1cfda2dc13bc5da3bdc631958fffc71655647b5547637e1d1474b9829c",
+      "new_sha256": "59187386eff706b9c883dde43480d91fd7a6ab892c9df01dfa9a0c2236042042",
       "old_size": 4554,
       "new_size": 4554,
       "digest_offset": 21623,
@@ -38,14 +38,14 @@
     {
       "name": "README.TXT",
       "old_sha256": "69ad2c1eb9224dfc875ea7c5c1e6cd6bc934c88f1188e4bf02387a37739d873f",
-      "new_sha256": "eeeb4899a1a351fad1fefe9a707e26d442dac9df64e950cd42171c9c71bc33fc",
+      "new_sha256": "cf98b82517f1d03937f301f97707cddb2596ef182cf65aca407e8bf50aeead50",
       "old_size": 10155,
-      "new_size": 10935,
+      "new_size": 1963,
       "digest_offset": 22236,
       "size_offset": 26964
     }
   ],
-  "changed_byte_count": 242,
+  "changed_byte_count": 239,
   "MZ_header_code_relocations_non_document_data_exact": true,
   "protected_prefix_sha256": "13a78e81fd6ab3189582b3f84e949ce4c0f19ccdd5403efa19d9939445a3f803",
   "protected_suffix_sha256": "1fff3fd09b7241f172f1dd766f605130329a099c43935ab988223c2140d90817",
