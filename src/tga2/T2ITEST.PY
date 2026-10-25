@@ -58,7 +58,10 @@ def main():
     assert current["external_driver_support_inputs"] == []
     assert current["source_fixture"]["unchanged_after_test"]
     for name, pin in current["integration_sources"].items():
-        value = (HERE.parents[1] / name).read_bytes()
+        snapshot = {"src/tga2/T2PACK.PY": "PACKSUP1.PY",
+                    "src/tga2/INSTALL.TXT": "INSSUP1.TXT",
+                    "src/tga2/PREPINF.BAT": "PRPSUP1.BAT"}.get(name)
+        value = (HERE / "HISTORY" / snapshot if snapshot else HERE.parents[1] / name).read_bytes()
         assert pin == {"bytes": len(value), "sha256": hashlib.sha256(value).hexdigest()}, name
     capture = current["capture"]
     value = (HERE.parents[1] / capture["path"]).read_bytes()

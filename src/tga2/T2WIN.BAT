@@ -1,0 +1,32 @@
+ECHO OFF
+IF NOT EXIST C:\T2EXP\T2RESV.COM GOTO PACKET
+IF "%1"=="" GOTO DEFAULT
+IF "%2"=="" GOTO USAGE
+IF NOT EXIST %1%2\WIN.COM GOTO WINDOWS
+C:\T2EXP\T2RESV.COM
+IF ERRORLEVEL 1 GOTO STOP
+%1
+CD %2
+WIN /R
+GOTO DONE
+:DEFAULT
+IF NOT EXIST C:\WINDOWS\WIN.COM GOTO WINDOWS
+C:\T2EXP\T2RESV.COM
+IF ERRORLEVEL 1 GOTO STOP
+C:
+CD \WINDOWS
+WIN /R
+GOTO DONE
+:USAGE
+ECHO Usage: T2WIN [drive: \Windows-directory]
+ECHO Example: T2WIN D: \WIN30
+GOTO DONE
+:WINDOWS
+ECHO ERROR: Windows directory not found. Use the drive and directory arguments.
+GOTO DONE
+:PACKET
+ECHO ERROR: Extract the complete packet to C:\T2EXP first.
+GOTO DONE
+:STOP
+ECHO Video II reservation failed. Windows was not started.
+:DONE

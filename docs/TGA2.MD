@@ -2,7 +2,9 @@
 
 **[Download TNDYV2.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TGA2/TNDYV2.ZIP)** and follow the
 [short install guide](tga2/INSTALL.TXT). Fonts, grabber and startup logo are
-included. [Support integration test](tga2/SUPPORT.MD).
+included. Run `C:\T2EXP\INSTALL` for Setup and `C:\T2EXP\T2WIN` on each
+start; both reserve memory automatically and stop on failure.
+[Support integration test](tga2/SUPPORT.MD).
 
 The remaining sections preserve the development and test record.
 
