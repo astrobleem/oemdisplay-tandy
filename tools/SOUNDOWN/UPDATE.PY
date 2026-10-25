@@ -14,8 +14,8 @@ import zlib
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
-NAMES = {'TCHIME.EXE': 'chime3', 'XPCHIME.EXE': 'xpchime3',
-         'TEXIT.EXE': 'texit3', 'TP.EXE': 'tp3', 'TSHELL.EXE': 'tshell3'}
+NAMES = {'TCHIME.EXE': 'chime', 'XPCHIME.EXE': 'xpchime',
+         'TEXIT.EXE': 'texit', 'TP.EXE': 'tp', 'TSHELL.EXE': 'tshell'}
 SOURCE = {'TCHIME.EXE': 'src/win30/CHIME/TCHIME.C',
           'XPCHIME.EXE': 'src/win30/XPCHIME/XPCHIME.C',
           'TEXIT.EXE': 'src/win30/TEXIT/TEXIT.C',
@@ -91,17 +91,22 @@ def sound_source(sound, directory):
     return output.getvalue()
 
 
-def integrate(args):
-    kit = REPO/'tools/XR1PACK'
+def native_inputs(args):
+    """Select only the caller's explicitly identified native build set."""
     binaries, records = {}, {}
     for name, directory in NAMES.items():
-        binaries[name], records[name] = native(args.native/directory, name,
-                                               args.sound_repo)
+        binaries[name], records[name] = native(
+            args.native/(directory+args.client_suffix), name, args.sound_repo)
     binaries['FIXXT.EXE'], records['FIXXT.EXE'] = native(args.fixxt, 'FIXXT.EXE',
                                                         args.sound_repo)
-    driver = args.native/'driver2'
-    binaries['SOUND.DRV'], records['SOUND.DRV'] = native(driver, 'SOUND.DRV',
+    binaries['SOUND.DRV'], records['SOUND.DRV'] = native(args.driver, 'SOUND.DRV',
                                                         args.sound_repo)
+    return binaries, records
+
+
+def integrate(args):
+    kit = REPO/'tools/XR1PACK'
+    binaries, records = native_inputs(args)
     soundid = (args.sound_repo/'src/win30/DRIVER/SOUNDID.JSON').read_bytes()
     soundpin = json.loads(soundid)
     require(identity(binaries['SOUND.DRV']) ==
@@ -165,7 +170,7 @@ def integrate(args):
                 record['source_record'] = SOURCE[name]
     files['PROVENANCE.JSN'] = encoded(source)
     files['SOUNDID.JSN'] = soundid
-    files['SOUNDSRC.ZIP'] = sound_source(args.sound_repo, driver)
+    files['SOUNDSRC.ZIP'] = sound_source(args.sound_repo, args.driver)
     files['SOUNDLIC.TXT'] = (args.sound_repo/'LICENSE').read_bytes()
     notice = (kit/'NOTICE.TXT').read_bytes()
     sound_note = (b'\r\nCANONICAL SOUND DRIVER\r\n'
@@ -183,6 +188,8 @@ def integrate(args):
     files['PUBLIC.JSN'] = encoded(public)
     report = {'scope': 'current XR1 canonical sound driver, five consumers and matching finisher',
               'native_acceptance': identity(args.acceptance.read_bytes()),
+              'native_selection': {'client_suffix': args.client_suffix,
+                                   'driver_directory': str(args.driver)},
               'native_builds': records,
               'installed_targets': {'TSHELL.EXE': 'WINDOWS',
                 'TCHIME.EXE': 'WINXT', 'XPCHIME.EXE': 'WINXT',
@@ -217,6 +224,8 @@ def integrate(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--native', required=True, type=Path)
+    parser.add_argument('--client-suffix', required=True)
+    parser.add_argument('--driver', required=True, type=Path)
     parser.add_argument('--fixxt', required=True, type=Path)
     parser.add_argument('--sound-repo', required=True, type=Path)
     parser.add_argument('--acceptance', required=True, type=Path)
