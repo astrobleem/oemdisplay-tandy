@@ -70,8 +70,8 @@ The captures below retain their original, separately documented test scope.
 
 Use Ctrl+Alt+arrows to pan and Ctrl+Alt+Home to return home. XYCTL's menu or
 Ctrl+Alt+H switches between software and hardware presentation.
-[Download Minesweeper and its shim](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINMINE30.ZIP) ·
-[Capture notes](docs/pan/MINE/CAPTURE.MD).
+[Install Minesweeper](https://github.com/astrobleem/oemdisplay-tandy/releases/download/native-apps-2026-10-25/MINESET.EXE) ·
+[Install guide](tools/MINEAPP/INSTALL.TXT) · [Capture notes](docs/pan/MINE/CAPTURE.MD).
 
 <img src="docs/rrect/TIMELINE.PNG" alt="Matched emulator captures comparing the original and optimized Calculator repaint" width="640">
 
