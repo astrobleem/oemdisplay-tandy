@@ -586,6 +586,11 @@ class Flow:
             self.out["dos_free_session_tandygr"] = self.part_memory("TANDYGR.GR2")
             self.exit_windows("l1")
             d1 = self.dos_tgfree("DOS prompt after Windows exit 1")
+        if part == "modes":
+            self.tgsetup()
+            self.launch("l1")
+            self.part_modes()
+            self.exit_windows("l1")
         if part == "fix":
             self.tgsetup()
             self.launch("l1")
