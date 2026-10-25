@@ -160,6 +160,11 @@ class ExpandedPublisherTests(unittest.TestCase):
            descriptor_unchanged=True,alternate_source="C:\\EXTRACT\\WINXT")
         self.receipt = self.root / "docs/QUAL/DOSINST/EXPAND.JSN"
         self.receipt.parent.mkdir(parents=True)
+        self.qual["evidence"] = {}
+        for name in ("EXUP.LOG", "EXUP.PNG", "EXMISS.LOG", "EXBAD.LOG", "EXBAD.PNG", "EXCASE.JSN", "EXFRESH.LOG", "EXFRESH.PNG"):
+            data = ("test evidence " + name).encode()
+            self.receipt.with_name(name).write_bytes(data)
+            self.qual["evidence"][name] = M.pub.identity(data)
         src = self.root / "tools/XR1PACK/SOUNDSRC.ZIP"
         src.parent.mkdir(parents=True);src.write_bytes(self.source)
 
@@ -210,6 +215,12 @@ class ExpandedPublisherTests(unittest.TestCase):
             self.qual=copy.deepcopy(original);mutate(self.qual)
             with self.assertRaises(ValueError):self.run_build(self.root/'refused')
             self.assertFalse((self.root/'refused').exists())
+
+    def test_changed_native_raw_evidence_refused_before_publication(self):
+        self.receipt.with_name("EXUP.PNG").write_bytes(b"changed")
+        with self.assertRaisesRegex(ValueError,"Expanded evidence differs"):
+            self.run_build(self.root/"refused")
+        self.assertFalse((self.root/"refused").exists())
 
     def test_modified_asset_extra_file_and_changed_member_refused(self):
         out=self.root/'release';self.run_build(out)

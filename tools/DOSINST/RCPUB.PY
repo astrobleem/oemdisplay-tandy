@@ -149,6 +149,21 @@ def expanded_qualification(entries, archive):
             pub.require(case["helper"] == pub.identity(entries["SETUP.EXE"]), "Different Setup tested: " + name)
             pub.require(case["prepared_comparison"] == {"count": 370 if name == "fresh" else 83, "different": []},
                         "Expanded prepared files differ: " + name)
+    evidence_root = REPO / "docs/QUAL/DOSINST"
+    required = {"EXUP.LOG", "EXUP.PNG", "EXMISS.LOG", "EXBAD.LOG", "EXBAD.PNG", "EXCASE.JSN", "EXFRESH.LOG", "EXFRESH.PNG"}
+    pub.require(required <= set(q["evidence"]), "Expanded raw evidence inventory incomplete")
+    for name, pin in q["evidence"].items():
+        pub.safe_path(name)
+        pub.require(pub.identity(pub.read_file(evidence_root, name)) == pin, "Expanded evidence differs: " + name)
+    oem_root = HERE.parent / "XROEM"
+    oem = json.loads(pub.read_file(oem_root, "NATIVE.JSN"))
+    pub.require(oem["complete"] and oem["packet"] == q["archive"] and
+                oem["members"] == q["files"] and all(oem["checks"].values()), "Ordinary OEM qualification differs")
+    for name, pin in oem["sources"].items():
+        pub.require(pub.identity(entries["WINXT/" + name]) == pin, "Ordinary OEM source differs: " + name)
+    for name, pin in oem["evidence"].items():
+        pub.safe_path(name)
+        pub.require(pub.identity(pub.read_file(oem_root / "QA", name)) == pin, "Ordinary OEM evidence differs: " + name)
     driver = q["drivers_only"]
     pub.require(driver["custom_setup_executed"] is False and driver["descriptor_unchanged"] is True,
                 "Drivers-only case depended on custom preparation")
