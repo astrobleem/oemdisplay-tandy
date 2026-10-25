@@ -54,6 +54,8 @@ def build(out,watcom):
             'outputs':{n:{'bytes':(out/n).stat().st_size,'sha256':sha((out/n).read_bytes())}
                        for n in ['CPPSET.EXE','CPPAN.ZIP','INSTALL.TXT']}}
     if not all(record['runtime_and_Setup_inputs_unchanged'].values()):raise ValueError('Qualified runtime changed')
+    native=importlib.machinery.SourceFileLoader('cpp_native_receipt',str(HERE/'NATIVE.PY')).load_module()
+    record['native_SFX_test'],record['native_receipt']=native.status('ColorPlus',record['outputs'],files)
     (out/'BUILD.JSN').write_bytes(dos(json.dumps(record,indent=2)+'\n'))
     print(json.dumps(record['outputs'],indent=2))
 

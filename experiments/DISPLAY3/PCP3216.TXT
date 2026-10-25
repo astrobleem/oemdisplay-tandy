@@ -1,44 +1,31 @@
-PLANTRONICS COLORPLUS - WINDOWS 3.0 REAL-MODE DISPLAY
-320x200, 16 colors
-
 DOWNLOAD
-https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP
+https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/CPPAN/CPPSET.EXE
 
-WHAT YOU NEED
-IBM PC/XT with Plantronics ColorPlus and 640 KB. Not ordinary CGA,
-PC1512 or Tandy/PCjr shared-memory video.
-An existing Windows 3.0 real-mode installation. The packet has no automatic
-installer or fresh Windows Setup integration. Dedicated video RAM needs no
-RESERVE or JRGUARD helper.
+PLANTRONICS COLORPLUS - WINDOWS 3.0 DISPLAY
+
+For a ColorPlus card with dedicated video RAM and an installed Windows 3.0.
+The standard desktop is 320x200, 16 colors. The same packet also offers a
+320x400 desktop with software panning through a 320x200 viewport.
 
 INSTALL
-1. Extract the complete ZIP to C:\PCPEXP. Exit Windows to plain DOS.
-2. Copy the driver:
-     COPY C:\PCPEXP\PCP3216.DRV C:\WINDOWS\SYSTEM\PCP3216.DRV
-3. In C:\WINDOWS\SYSTEM.INI, change the display.drv line under [boot] to:
-     display.drv=PCP3216.DRV
-   Keep the other settings, fonts and grabber as they are.
-4. Start Windows:
-     C:
-     CD \WINDOWS
-     WIN /R
+1. Exit Windows to DOS. Run CPPSET to prepare C:\CPPAN.
+2. Run C:\CPPAN\INSTALL.
+3. In Windows Setup choose Display, Other, C:\CPPAN. Select
+   ColorPlus 320x200 fixed for the standard desktop, or
+   EXPERIMENTAL ColorPlus 320x400 panning for the taller desktop.
+4. Complete Setup, return to DOS, then run C:\CPPAN\CPWIN.
 
-Use your actual Windows directory if different. Use ordinary Windows startup;
-the Tandy WINXT reservation and palette-animation route is for other hardware.
-The existing WIN.COM keeps its startup logo behavior; no logo is installed.
+The driver, matching fonts, grabber and startup logos are included.
+No SYSTEM.INI editing or Tandy/PCjr memory reservation is needed.
+These entries use Windows in C:\WINDOWS.
 
-LIMITS
-86Box IBM XT/ColorPlus Windows checks passed 88/88. Physical cards,
-ColorPlus clones (including ATI Small Wonder), fresh Setup and DOS-box
-switching remain unqualified. At 320 pixels, wide dialogs can clip.
-The recorded runs used an existing AT/EGA installation and its fonts/grabber.
-Windows 3.1 is not supported.
+PANNING
+After choosing the taller desktop, run C:\CPPAN\PANCFG from Windows File,
+Run. It starts panning and enables it for later sessions. Move the pointer
+past an edge or use Alt+PgDn/Alt+PgUp; Alt+F9 returns to the top.
+This profile uses 32,000 more bytes of shadow memory than the fixed display.
 
-TROUBLESHOOTING AND REMOVAL
-From plain DOS, use Windows Setup to restore your previous display, or put
-the previous display.drv value back in SYSTEM.INI. The copied driver is
-inactive once another display is selected. Keep existing font/grabber entries
-unless you are changing the whole display through Setup.
-
-Source, optional checksums, notices and detailed test records are in the
-release and the corresponding docs/PCP.MD guide. No installer needs to be built.
+To select the fixed desktop later, run PANCFG OFF in Windows, exit to DOS,
+then run INSTALL and choose the fixed display again. Both profiles are in
+this packet. Detailed emulator results remain in docs/SOFTPAN; physical
+ColorPlus hardware is not newly qualified by this installation package.

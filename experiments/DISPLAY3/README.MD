@@ -1,3 +1,22 @@
+# Windows 3.0 display drivers
+
+Choose the packet for your hardware. Each contains its ready-built driver;
+the current guides describe the native install and normal launch command.
+
+- [Amstrad PC1512](../../docs/PC1512.MD): 640x200, 16 colors, using P15SET.EXE.
+- [Plantronics ColorPlus](../../docs/PCP.MD): fixed 320x200 or software-panning
+  320x400, 16 colors, using CPPSET.EXE.
+- [IBM PCjr](../../docs/SOFTPAN/RELEASE.MD): fixed or software-panning profile
+  in one native Setup kit. Its 32 KB video page must already be reserved.
+- [Olivetti PC1 and Yamaha](../YAMAHA/README.MD): choose PC1/B000h or the
+  distinct standalone B800h hardware profile.
+- [Video II](../../docs/tga2/INSTALL.TXT): Tandy SL/2, 640x200, 16 colors.
+
+For Tandy EX/HX or text-mode Windows, use [current downloads](../../docs/DOWNLOADS.MD).
+
+<details>
+<summary>Archived 2026-10-12 development and rendering record</summary>
+
 # Experimental display driver packets
 
 
@@ -143,3 +162,5 @@ or resources. Historical DDK license-envelope terms are not present in the
 
 materialized inputs, and the packet does not assert a blanket license grant.
 
+
+</details>

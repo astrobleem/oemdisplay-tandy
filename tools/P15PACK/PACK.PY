@@ -112,6 +112,9 @@ def build(accepted, appset, watcom, out):
               'sfx_engine_sha256':sha((engine / 'APPSET.C').read_bytes()),
               'outputs':{n:{'bytes':(out/n).stat().st_size,'sha256':sha((out/n).read_bytes())}
                          for n in ['P15SET.EXE','PC1512.ZIP','INSTALL.TXT']}}
+    native=importlib.machinery.SourceFileLoader('p15_native_receipt',
+                    str(ROOT/'tools/DRVSET/NATIVE.PY')).load_module()
+    record['native_install_test'],record['native_receipt']=native.status('PC1512',record['outputs'],files)
     (out / 'BUILD.JSN').write_bytes(dos(json.dumps(record,indent=2)+'\n'))
     print(json.dumps(record['outputs'],indent=2))
 

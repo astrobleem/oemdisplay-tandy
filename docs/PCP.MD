@@ -1,10 +1,33 @@
-# Plantronics ColorPlus 320x200x16 driver (PCP3216): first build
+# Windows 3.0 on Plantronics ColorPlus
 
-**[Download PCP3216.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PCP3216.ZIP)** ·
-[Install in an existing Windows 3.0 installation](../experiments/DISPLAY3/PCP3216.TXT).
+**[Download CPPSET.EXE](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/CPPAN/CPPSET.EXE)**
 
-The development and test record follows.
+For a PC/XT with ColorPlus video, 640 KB, DOS 3.20+ and Windows 3.0 in
+`C:\WINDOWS`. Ordinary CGA, PC1512 and Tandy/PCjr shared-memory video use
+other drivers. This one packet includes fixed 320x200 and software-panning
+320x400 profiles, matching fonts, grabber, logos and helpers.
 
+1. Copy CPPSET.EXE to the PC/XT. Exit Windows to DOS and run `CPPSET`.
+2. Run `C:\CPPAN\INSTALL`.
+3. In Setup choose Display, Other, `C:\CPPAN`, then **ColorPlus 320x200 fixed**
+   for the standard desktop or **EXPERIMENTAL ColorPlus 320x400 panning**
+   for the taller desktop. Complete Setup and return to DOS.
+4. Start Windows with `C:\CPPAN\CPWIN`.
+
+For panning, run `C:\CPPAN\PANCFG` once from Windows File, Run. Move the
+pointer beyond an edge or use Alt+PgDn/Alt+PgUp; Alt+F9 returns to the top.
+Panning uses 32,000 more bytes of shadow memory than the fixed profile.
+To select fixed mode later, run `PANCFG OFF`, exit Windows and use Setup again.
+Exit Windows before running DOS programs. No Tandy reservation helper is used.
+
+[ZIP alternative](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/CPPAN/CPPAN.ZIP) |
+[Packaged instructions](../downloads/experimental/CPPAN/INSTALL.TXT).
+The existing native Setup/driver payload is unchanged; the DOS carrier was
+checked with every extracted file exact. Physical ColorPlus clones remain
+outside the recorded emulator qualification.
+
+<details>
+<summary>Archived renderer development and test record</summary>
 
 Status: **PCP3216.DRV runs Windows 3.0 real mode on an emulated IBM PC/XT
 with a Plantronics ColorPlus card in 86Box 6.0, and passes all 88 checks of
@@ -303,3 +326,5 @@ skipped) and `python3 src/pcjr/CHKTEST.PY`. Built tools: `pcp/PCPIDB.JSN`,
 - [86Box `src/video/vid_cga_colorplus.c`](https://github.com/86Box/86Box/blob/master/src/video/vid_cga_colorplus.c)
 - [Plantronics ColorPlus notes (seasip.info)](https://www.seasip.info/VintagePC/plantronics.html)
 - [WINPCP repository and hardware notes](https://github.com/cluehawk/WINPCP)
+
+</details>

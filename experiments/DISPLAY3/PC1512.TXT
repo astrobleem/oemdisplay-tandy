@@ -1,43 +1,28 @@
-AMSTRAD PC1512 - WINDOWS 3.0 REAL-MODE DISPLAY
+DOWNLOAD
+https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/PC1512/P15SET.EXE
+
+AMSTRAD PC1512 - WINDOWS 3.0 DISPLAY
 640x200, 16 colors
 
-DOWNLOAD
-https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-displays-2026-10-12/PC1512.ZIP
-
-WHAT YOU NEED
-Amstrad PC1512 built-in video, 8086 and 640 KB. Not PC1640 or ordinary CGA.
-An existing Windows 3.0 real-mode installation. The packet has no automatic
-installer or fresh Windows Setup integration. Dedicated video RAM needs no
-RESERVE or JRGUARD helper.
+For the PC1512's built-in video, 8086 and 640 KB. Not PC1640 or ordinary CGA.
+Requires an installed Windows 3.0. The driver, fonts, grabber and startup
+logos are included. Dedicated video RAM needs no memory reservation helper.
 
 INSTALL
-1. Extract the complete ZIP to C:\P15EXP. Exit Windows to plain DOS.
-2. Copy the driver:
-     COPY C:\P15EXP\PC1512.DRV C:\WINDOWS\SYSTEM\PC1512.DRV
-3. In C:\WINDOWS\SYSTEM.INI, change the display.drv line under [boot] to:
-     display.drv=PC1512.DRV
-   Keep the other settings, fonts and grabber as they are.
-4. Start Windows:
-     C:
-     CD \WINDOWS
-     WIN /R
+1. Exit Windows to DOS. Run P15SET to prepare C:\P15EXP.
+2. Run C:\P15EXP\INSTALL.
+3. In Windows Setup choose Display, Other, C:\P15EXP, then
+   Amstrad PC1512 640x200 16 colors. Complete Setup and return to DOS.
+4. Start Windows with C:\P15EXP\P15WIN.
 
-Use your actual Windows directory if different. Use ordinary Windows startup;
-the Tandy WINXT reservation and palette-animation route is for other hardware.
-The existing WIN.COM keeps its startup logo behavior; no logo is installed.
+Windows defaults to C:\WINDOWS. For another installation, use both entries
+with its drive and directory, for example INSTALL D: \WIN30 and
+P15WIN D: \WIN30. No SYSTEM.INI editing or separate support files are needed.
 
-LIMITS
-86Box Windows checks passed 88/88. One cursor-state case needed a retry;
-its cause remains unresolved. Physical PC1512, the Amstrad mouse port,
-fresh Setup and DOS-box switching remain unqualified.
-The recorded runs used an existing AT/EGA installation and its fonts/grabber.
-Windows 3.1 is not supported.
+CHANGE DISPLAY
+From DOS run the installer again and select another display in Windows
+Setup. PC1512.DRV is inactive when another display is selected.
 
-TROUBLESHOOTING AND REMOVAL
-From plain DOS, use Windows Setup to restore your previous display, or put
-the previous display.drv value back in SYSTEM.INI. The copied driver is
-inactive once another display is selected. Keep existing font/grabber entries
-unless you are changing the whole display through Setup.
-
-Source, optional checksums, notices and detailed test records are in the
-release and the corresponding docs/PC1512.MD guide. No installer needs to be built.
+The accepted renderer has been exercised in an emulated PC1512. Physical
+hardware, the Amstrad mouse port and DOS-box switching are not qualified.
+Windows 3.1 is not supported. Detailed test records remain in docs/PC1512.MD.
