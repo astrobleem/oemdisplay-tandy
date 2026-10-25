@@ -8,8 +8,8 @@
   "files": {
     "MINESET": {
       "exe": {
-        "bytes": 91536,
-        "sha256": "97312784e79dfb2636d59e0961df4b1706afd535534ba64d3695691766665096"
+        "bytes": 90816,
+        "sha256": "6bcb8c692524bf9cf7d8caf830532523449aab180d1d63675568368334415088"
       },
       "zip": {
         "bytes": 58772,
@@ -44,8 +44,8 @@
     },
     "COOKSET": {
       "exe": {
-        "bytes": 63972,
-        "sha256": "eca55f3f5fd7861e5dc7a34ca182959058084a3e45c325ca4d01462eec126f8d"
+        "bytes": 63268,
+        "sha256": "ec7b2bcc10aeec00161dee133b8f0e72c373307d83b4d9e68a9d0f8211b59b60"
       },
       "zip": {
         "bytes": 31314,
@@ -68,7 +68,7 @@
     }
   },
   "sources": {
-    "tools/APPSET/APPSET.C": "d5db7553c8e578fa0504cc54ab06fd692ebec323e4bfc4ddc857f9ce4ef0a814",
+    "tools/APPSET/APPSET.C": "f55a52ff67375e3b1fd09e3a2b5a895f2e8c9dc35ca4f48d3885cad018534300",
     "tools/APPSET/PACK.PY": "173354d88e7d286128fb23398b7f7292f4b7b97be289b03bd580bedfaf2e4c9e",
     "tools/MINEAPP/MINERUN.C": "447132e9c47f8ff271a808b25b9ae21d27a131ee0e72b73956d51931cabea43d",
     "tools/MINEAPP/INSTALL.TXT": "8da75094ca884c3c431aae3f4c6273224e66dfda211694f7673c44c0b38d88cf",

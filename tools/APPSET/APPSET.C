@@ -17,6 +17,9 @@
 #else
 #include <direct.h>
 #endif
+#ifdef DOS_API_MOCK
+#include "TESTS/DOSMOCK.H"
+#endif
 typedef unsigned long U32;
 struct entry { char *name; U32 size, crc; long offset; };
 #include "FILES.H"
@@ -86,6 +89,25 @@ static void scan(void)
   offset=files[i].offset+(long)files[i].size;
  }
 }
+/* _dos_creatnew returns a raw DOS handle, not a registered CRT descriptor. */
+static int output_write(int fd,unsigned char *data,unsigned count)
+{
+#if defined(HOST_TEST) && !defined(DOS_API_MOCK)
+ return write(fd,data,count);
+#else
+ unsigned wrote;
+ if(_dos_write(fd,data,count,&wrote))return -1;
+ return (int)wrote;
+#endif
+}
+static int output_close(int fd)
+{
+#if defined(HOST_TEST) && !defined(DOS_API_MOCK)
+ return close(fd);
+#else
+ return _dos_close(fd);
+#endif
+}
 static void copy_entry(unsigned i)
 {
  int fd=-1;unsigned n,serial;char final[PATHLEN],temp[13];U32 left=files[i].size;
@@ -94,7 +116,7 @@ static void copy_entry(unsigned i)
  for(serial=0;serial<1000;serial++){
   sprintf(temp,"AS%05u.NEW",serial);join(output,target,temp);
   if(exists(output))continue;
-#ifdef HOST_TEST
+#if defined(HOST_TEST) && !defined(DOS_API_MOCK)
   fd=open(output,O_WRONLY|O_CREAT|O_EXCL|O_BINARY,S_IREAD|S_IWRITE);
   if(fd<0)fail("Cannot create a new app file.");
 #else
@@ -104,14 +126,14 @@ static void copy_entry(unsigned i)
  }
  if(fd<0)fail("No free temporary filename in the app folder.");
  created=1;
- if(fseek(packet,files[i].offset,SEEK_SET)) {close(fd);fail("Cannot seek app packet.");}
+ if(fseek(packet,files[i].offset,SEEK_SET)) {output_close(fd);fail("Cannot seek app packet.");}
  while(left){n=left>sizeof(buf)?sizeof(buf):(unsigned)left;
 #ifdef HOST_TEST
-  if(getenv("APPSET_SHORT_WRITE")){write(fd,buf,n/2);close(fd);fail("Injected disk-full write.");}
+  if(getenv("APPSET_SHORT_WRITE")){output_write(fd,buf,n/2);output_close(fd);fail("Injected disk-full write.");}
 #endif
-  if(fread(buf,1,n,packet)!=n||write(fd,buf,n)!=(int)n){close(fd);fail("Copy failed or disk full. Rerun the same installer to finish.");}left-=n;
+  if(fread(buf,1,n,packet)!=n||output_write(fd,buf,n)!=(int)n){output_close(fd);fail("Copy failed or disk full. Rerun the same installer to finish.");}left-=n;
  }
- if(close(fd))fail("Cannot close the new app file.");
+ if(output_close(fd))fail("Cannot close the new app file.");
  if(!valid(output,&files[i]))fail("New app file failed readback.");
  if(exists(final)||rename(output,final))fail("Cannot commit the new app file.");created=0;
 }

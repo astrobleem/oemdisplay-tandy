@@ -30,6 +30,8 @@ python tools/APPSET/TEST.PY --build NEWBUILD --out NEWHOST
 The host suite invokes the required GCC wrapper and uses process-local runtime
 paths. It checks extraction, retries, collisions, damaged archives, disk-full
 cleanup, saved-game preservation, and private-loader success/refusal/release.
+The DOS backend mock assigns raw handles outside the CRT descriptor range;
+it catches accidental mixing of `_dos_creatnew` with CRT write/close.
 It does not run an emulator or prove Windows loader behavior. The DOS and
 Win16 builds use Open Watcom `-0`; MINERUN targets Windows 3.0 and imports only
 KERNEL and USER. `BUILD.JSN` records exact source, compiler and output identity.

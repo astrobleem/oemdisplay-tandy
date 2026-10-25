@@ -10,8 +10,8 @@ static HINSTANCE instance;
 static char line[256];
 static void logtext(char *text)
 {
- HFILE f;f=_lopen("D:\\APPQA.LOG",OF_WRITE);
- if(f==HFILE_ERROR)f=_lcreat("D:\\APPQA.LOG",0);
+ HFILE f;f=_lopen("C:\\APPQA.LOG",OF_WRITE);
+ if(f==HFILE_ERROR)f=_lcreat("C:\\APPQA.LOG",0);
  if(f==HFILE_ERROR)return;
  _llseek(f,0L,2);_lwrite(f,text,lstrlen(text));_lwrite(f,"\r\n",2);_lclose(f);
 }
@@ -111,7 +111,7 @@ int PASCAL WinMain(HINSTANCE inst,HINSTANCE prev,LPSTR args,int show)
 {
  WNDCLASS c;HWND w;MSG msg;HFILE f;
  prev=prev;args=args;show=show;instance=inst;
- f=_lcreat("D:\\APPQA.LOG",0);if(f!=HFILE_ERROR)_lclose(f);
+ f=_lcreat("C:\\APPQA.LOG",0);if(f!=HFILE_ERROR)_lclose(f);
  logtext("BEGIN_NORMAL_DESKTOP_APPS");
  c.style=0;c.lpfnWndProc=WindowProc;c.cbClsExtra=0;c.cbWndExtra=0;
  c.hInstance=instance;c.hIcon=NULL;c.hCursor=NULL;c.hbrBackground=NULL;

@@ -26,9 +26,13 @@ def run_tests(build,out,gcc_wrapper):
                          stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
         (out/(exe.stem+'.LOG')).write_bytes(p.stdout)
         if p.returncode:raise AssertionError(p.stdout.decode(errors='replace'))
-    for key,setup in [('mine','MINESET'),('cookie','COOKSET')]:
+    for key,setup,raw_dos in [('mine','MINESET',False),('cookie','COOKSET',False),
+                              ('mine-dos','MINESET',True),('cookie-dos','COOKSET',True)]:
         exe=out/(key+'.exe')
-        compile(HERE/'APPSET.C',exe,['-DHOST_TEST','-I',str(build/key)])
+        profile='mine' if setup=='MINESET' else 'cookie'
+        extra=['-DHOST_TEST','-I',str(build/profile)]
+        if raw_dos:extra+=['-DDOS_API_MOCK',str(HERE/'TESTS/DOSMOCK.C')]
+        compile(HERE/'APPSET.C',exe,extra)
         original=(build/(setup+'.EXE')).read_bytes()
         with zipfile.ZipFile(build/(setup+'.ZIP')) as z:
             payload={n:z.read(n) for n in z.namelist()}
@@ -62,6 +66,18 @@ def run_tests(build,out,gcc_wrapper):
             packet.write_bytes(damaged);bad=out/(key+'-'+kind);p=invoke(bad)
             check(key+' '+kind+' refuses before output',p.returncode!=0 and not bad.exists())
         packet.write_bytes(original)
+    # Reintroduce the exact native bug in a private host-only copy: raw DOS
+    # creation followed by CRT write/close. The offset-handle mock must catch it.
+    mixed=(HERE/'APPSET.C').read_text()
+    old=' if(_dos_write(fd,data,count,&wrote))return -1;\n return (int)wrote;'
+    assert old in mixed
+    mixed=mixed.replace(old,' wrote=0;return write(fd,data,count)+(int)wrote;').replace(' return _dos_close(fd);',' return close(fd);')
+    mutant=out/'mixed.c';mutant.write_text(mixed)
+    mixed_exe=out/'mixed.exe'
+    compile(mutant,mixed_exe,['-DHOST_TEST','-DDOS_API_MOCK','-I',str(HERE),'-I',str(build/'mine'),str(HERE/'TESTS/DOSMOCK.C')])
+    child=env.copy();child['APPSET_PACKET']=str(build/'MINESET.EXE')
+    bad=out/'mixed-target';p=subprocess.run([str(mixed_exe),str(bad)],env=child,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    check('DOS backend catches the original mixed-handle mutation',p.returncode!=0 and b'Copy failed' in p.stdout)
     mock=out/'winmock.exe'
     compile(HERE/'TESTS/WINMOCK.C',mock,['-I',str(HERE/'TESTS'),'-DMINE_CRC=0x46b1760dUL','-DSHIM_CRC=0x47c542faUL'])
     fixture=out/'private';fixture.mkdir()
