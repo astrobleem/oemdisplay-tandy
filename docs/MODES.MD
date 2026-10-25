@@ -226,7 +226,7 @@ For oracle self-tests and packaging controls:
 python3 src/tandysw/MODECHK.PY --selftest
 python3 oemdisk/TESTDISK.PY
 python3 oemdisk/TESTDOS.PY --dosbox /path/to/dosbox-x --out /new/dos-checks
-python3 MAKEDISK.PY --verify TANDY88.ZIP
+python3 oemdisk/MAKEDISK.PY --verify TANDY88.ZIP
 ```
 
 `MODECHK.PY` documents how to build MODETEST.EXE and run it in an isolated

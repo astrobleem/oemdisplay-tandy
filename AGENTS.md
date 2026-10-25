@@ -7,7 +7,7 @@
 - **Linker:** LINK4 (Segmented Executable Linker v5.x).
 - **Current Build:** `python3 src/tandysw/BUILD88.PY --dosbox <dosbox-x> --out <new-path> [--mode <profile>]`; five profiles are in `docs/MODES.MD`. Omitted mode selects 320x200x16 in the current development pipeline; see docs/TRIAL4/README.MD.
 - **Legacy Build:** old TNDY16 source/builders are preserved in [DEV](docs/DEV.MD); use current external source views.
-- **Packaging:** current combined XR1 uses `tools/XR1PACK/PUBLISH.PY`, `TESTPREP.PY` and `TESTPUB.PY`. The retained fixed-profile route uses `tools/FLASHDISK/MAKEIMG.PY`, `TESTFAT.PY` and `TESTPKG.PY`. Root `MAKEDISK` is historical TANDY88 reproduction only. See `BUILDING.MD`.
+- **Packaging:** current combined XR1 uses `tools/XR1PACK/PUBLISH.PY`, `TESTPREP.PY` and `TESTPUB.PY`. The retained fixed-profile route uses `tools/FLASHDISK/MAKEIMG.PY`, `TESTFAT.PY` and `TESTPKG.PY`. `oemdisk/MAKEDISK` is historical TANDY88 reproduction only. See `BUILDING.MD`.
 - **Install:** current XR1 consumers run the supplied WINXT.EXE on the DOS computer itself; it gathers Windows OS inputs, prepares Setup and launches the guarded installer. See `docs/DESKTOP.MD`. PREPARE.PY is a developer reference only. Consumer preparation must never require Python, a modern PC, host conversion or collecting individual driver support files. Use guarded `C:\STARTXT` on every launch. It supplies one custom XR1 profile. Fixed-profile packages keep their own Setup choices and launcher. Approved `WXTSPL01.RLE` remains selected; never use manual INI edits as normal install instructions.
 
 ## 2. File Handling Rules
@@ -32,7 +32,7 @@ retained, host-only nine-character filename; DOS payload names stay 8.3.
 
 1. Preserve the accepted candidate05 `src/tandysw/bin/TANDY88.DRV` (SHA256 `ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee`), `RESERVE.COM`, shared launcher and custom `TNDYLOGO.RLE` unless explicitly in scope. Main commit `54fdd714` and the custom-splash work have been merged locally; do not regress them.
 2. Rebuild with `BUILD88.PY` and review `RESULT.json`; run the documented CPU, memory and framebuffer tests.
-3. Package through `MAKEDISK.BAT` on Windows or `MAKEDISK.PY` elsewhere. Exact binary pins deliberately reject an unaccepted rebuild.
+3. Package through `oemdisk/MAKEDISK.BAT` on Windows or `oemdisk/MAKEDISK.PY` elsewhere. Exact binary pins deliberately reject an unaccepted rebuild.
 4. Use `--windows-files <owned-media-files> --local-out <new-disk-directory>` for a complete installable disk. The normal TANDY88.ZIP includes all five pinned drivers, eight pinned Windows 3.0 OEM support files and the pinned first-party TNDYLOGO.RLE. Only CGASYS.FON, CGAFIX.FON and CGAOEM.FON are new Windows dependencies.
 5. Test Windows Setup and the resulting installation without manually editing SYSTEM.INI. Keep full OS media, guest installations and unrelated toolchains out of publication. Only the eight pinned Windows OEM dependencies and first-party TNDYLOGO.RLE belong alongside the drivers/helpers and documented text/metadata in the complete runtime ZIP.
 6. Rebuild/reverify the package after changing a payload source such as FILE_ID.DIZ. The current measured FAT12 total is 326,656/368,640 bytes, including allocation/overhead, with 41,984 bytes free; remeasure after final edits.
@@ -80,9 +80,8 @@ helper/source/runtime/font bytes. Historical BUILD/ZERO records retain their
 snapshot scope. Publication uses PUBLISH.PY and the guarded release workflow,
 with no old asset/tag overwrite. Keep complete DOS/Windows media, guest
 installations and unrelated owned resources out of new public payloads. The
-user-supplied root CGA.GR2 is explicitly approved for current driver packets;
-expand its SZDD encoding and verify the qualified 2,104-byte grabber before
-bundling it. Consumers must not collect that support file themselves. This
+qualified expanded CGA.GR2 is retained at distributions/WINXT/CGA.GR2. Current
+producers use this 2,104-byte copy; do not restore a loose root duplicate. Consumers must not collect that support file themselves. This
 exception does not include other Windows OS files. An emulator launch still
 requires an explicit slot.
 

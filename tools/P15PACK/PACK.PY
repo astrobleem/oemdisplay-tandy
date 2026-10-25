@@ -46,7 +46,7 @@ def payload(accepted):
         if name == 'CGA.GR2':
             media = importlib.machinery.SourceFileLoader('p15_media',
                   str(ROOT / 'tools/XR1PACK/PREPARE.PY')).load_module()
-            data = media.expanded_file((ROOT / name).read_bytes(), name)
+            data = media.expanded_file((ROOT / 'distributions/WINXT' / name).read_bytes(), name)
         else:
             data = (ROOT / 'distributions/WINXT' / name).read_bytes()
         if name in pins and {'bytes':len(data), 'sha256':sha(data)} != pins[name]:

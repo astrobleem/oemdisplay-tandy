@@ -52,8 +52,6 @@ __pycache__/
 !docs/altmodes/CGAWIN.LOG
 !docs/altmodes/CGA-GUI.LOG
 
-# Ready-to-use OEM runtime disk (only the scoped pinned support files)
-!/TANDY88.ZIP
 
 # Verified first-party DOS media staging helper (source/pins beside it)
 !/tools/FLASHDISK/PREPXT.EXE

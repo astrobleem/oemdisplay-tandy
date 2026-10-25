@@ -147,3 +147,11 @@ downloads/experimental/FIXED/README.MD -text
 docs/DOWNLOADS.MD -text
 
 .github/workflows/driver-packets.yml -text
+
+# Retained OEM development sources and relocated-source CI retain CRLF.
+oemdisk/** -text
+.github/workflows/rrect.yml -text
+.github/workflows/tga2.yml -text
+.github/workflows/softpan.yml -text
+
+.github/workflows/root-layout.yml -text

@@ -11,7 +11,7 @@ def js(v):return dos(json.dumps(v,indent=2,sort_keys=True)+'\n')
 
 def supplied_grabber():
     decoder=importlib.machinery.SourceFileLoader('sp_expand',str(ROOT/'tools/XR1PACK/PREPARE.PY')).load_module()
-    return decoder.expanded_file((ROOT/'CGA.GR2').read_bytes(),'CGA.GR2')
+    return decoder.expanded_file((ROOT/'distributions/WINXT/CGA.GR2').read_bytes(),'CGA.GR2')
 def payload(kind,spec):
     base=HERE/'PAYLOAD'/kind
     expected=spec['profiles'][kind]['files']
@@ -38,7 +38,7 @@ def outputs():
     release={'schema':2,'tag':spec['tag'],'publication_allowed':True,'hardware_panning':False,
              'bundled_windows_support_files':spec['bundled_windows_support_files'],'logical':[320,400],'viewport':[320,200],
              'shadow_bytes':64000,'additional_shadow_bytes':32000,'profiles':spec['profiles'],
-             'source':spec['source'],'qualification':spec['qualification'],
+             'source':spec.get('published_source',spec['source']),'qualification':spec['qualification'],
              'assets':{n:identity(b) for n,b in sorted(files.items())}}
     files['RELEASE.JSON']=js(release)
     files['SHA256SUMS']=dos(''.join(identity(b)['sha256']+'  '+n+'\n' for n,b in sorted(files.items())))

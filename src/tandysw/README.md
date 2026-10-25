@@ -75,12 +75,12 @@ instruction, raw runtime-generated code, stack bounds and linked-library
 closure. [RESERVE.MD](RESERVE.MD) describes the DOS memory reservation and its
 supported layout/failure cases.
 
-## Install through the completed OEM driver disk
+## Historical candidate05 installation record
 
 Use Windows 3.0 Setup to install the driver and fonts. Do not manually edit
 SYSTEM.INI for a normal installation. Work on a backed-up or disposable guest.
 
-Download the ready-to-use [TANDY88.ZIP](../../TANDY88.ZIP) and extract DISK1.
+Extract DISK1 from the historical TANDY88.ZIP.
 It already includes the exact candidate05 driver, RESERVE, DOS installer/launcher,
 and all six Windows 3.0 Setup dependencies. End users do not need Python or a
 separate media-staging step.

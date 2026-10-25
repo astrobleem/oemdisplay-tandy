@@ -16,11 +16,11 @@ flow and a Windows restart. Start with stock-CGA Windows, then select OEM
 for every Windows start. There is no Python or support-file staging requirement
 for normal users.
 
-`MAKEDISK.BAT` remains the Windows developer entry point, invoking the portable
+`oemdisk/MAKEDISK.BAT` remains the Windows developer entry point, invoking the portable
 standard-library Python backend. Rebuilding requires the accepted media inputs:
 
 ```cmd
-MAKEDISK.BAT --windows-files MEDIA --out TANDY88.ZIP
+oemdisk/MAKEDISK.BAT --windows-files MEDIA --out TANDY88.ZIP
 ```
 
 `--local-out NEWDISK` additionally writes the extracted ready-to-use disk.
@@ -70,7 +70,7 @@ allocation plus **6,144 bytes** overhead: **326,656 / 368,640 bytes used**, leav
 **41,984 bytes** free. [The recorded package test](modes/PACKAGE.JSON) includes the
 final packaged-text rebuild and byte-identical repeated packaging.
 
-`python3 MAKEDISK.PY --verify TANDY88.ZIP` verifies the checked-in complete
+`python3 oemdisk/MAKEDISK.PY --verify TANDY88.ZIP` verifies a supplied historical complete
 archive without separately supplied media. It checks the exact member set,
 binary pins, completion marker, manifest, canonical archive metadata, current
 source payload and disk-capacity budget. The release workflow can publish that

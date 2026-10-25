@@ -22,8 +22,10 @@ class PackageTests(unittest.TestCase):
         self.assertFalse(any(n.endswith('.PY') for n in entries))
 
     def test_supplied_szdd_and_corruption(self):
-        raw = (publish.REPO / 'CGA.GR2').read_bytes()
-        self.assertEqual(len(raw), 1768)
+        data = (publish.REPO / 'distributions/WINXT/CGA.GR2').read_bytes()
+        body = b''.join(bytes([(1 << len(data[i:i+8])) - 1]) + data[i:i+8] for i in range(0,len(data),8))
+        raw = b'SZDD\x88\xf0\x27\x33A\x00' + len(data).to_bytes(4,'little') + body
+        self.assertEqual(len(data), 2104)
         self.assertEqual(raw[:8], b'SZDD\x88\xf0\x27\x33')
         self.assertEqual(publish.media.expanded_file(raw, 'CGA.GR2'), publish.collect()['PAYLOAD/CGA.GR2'])
         for bad in (raw[:13], raw[:-1], raw + b'extra'):

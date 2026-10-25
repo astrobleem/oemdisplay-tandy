@@ -185,22 +185,7 @@
     }
   },
   "publication_allowed": true,
-  "qualification": {
-    "manifest": {
-      "bytes": 40814,
-      "sha256": "b3ac990ae69d2f068efa81789b7e6db2c1a5c983ba63c91fddb6fec5159a570c"
-    },
-    "path": "docs/SOFTPAN/PUBLISH/QUALIFY.JSON",
-    "support_update": {
-      "manifest": {
-        "bytes": 2623,
-        "sha256": "072faff3d60999d84073bbe574d77c64481830e4862ed58ea576a47375b9ce23"
-      },
-      "path": "docs/SOFTPAN/SUPPORT.JSON"
-    }
-  },
-  "schema": 1,
-  "source": {
+  "published_source": {
     "CGA.GR2": {
       "bytes": 1768,
       "sha256": "11389907999c7bef2bd01eae5d874c79c3b07679ccb146ec095a8e9878496b55"
@@ -328,6 +313,163 @@
     "tools/SPPACK/PACKAGE.PY": {
       "bytes": 3553,
       "sha256": "e7fa5eb621c36d299ef0728d6c5282521f820269595856fe5b05f3e1e0115954"
+    },
+    "tools/SPPACK/README.TXT": {
+      "bytes": 1331,
+      "sha256": "8f3ffd4dea3946ec8de63a403d0f4ac0dddbc5f915d5fab435b7e1b0d72a3941"
+    },
+    "tools/SPPACK/TESTPKG.PY": {
+      "bytes": 2849,
+      "sha256": "b322310c733c1dfb6bed322e2fe88bfbed41f1f299cc0cbca84e164184a7a91b"
+    },
+    "tools/XR1PACK/PREPARE.PY": {
+      "bytes": 11110,
+      "sha256": "c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1"
+    }
+  },
+  "qualification": {
+    "manifest": {
+      "bytes": 40814,
+      "sha256": "b3ac990ae69d2f068efa81789b7e6db2c1a5c983ba63c91fddb6fec5159a570c"
+    },
+    "path": "docs/SOFTPAN/PUBLISH/QUALIFY.JSON",
+    "support_update": {
+      "manifest": {
+        "bytes": 2623,
+        "sha256": "072faff3d60999d84073bbe574d77c64481830e4862ed58ea576a47375b9ce23"
+      },
+      "path": "docs/SOFTPAN/SUPPORT.JSON"
+    }
+  },
+  "schema": 1,
+  "source": {
+    "distributions/WINXT/CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "src/softpan/BLDTEST.BAT": {
+      "bytes": 1172,
+      "sha256": "4b1bb0563d02f8432ac9db65df8d9f5bad9692c5df515d22b1b0130463e39f4c"
+    },
+    "src/softpan/BUILDAPP.PY": {
+      "bytes": 3017,
+      "sha256": "c4e7a34d9f613c8a1cc8d77b9637102986da46e9e2d8b64b893096a47f208cd4"
+    },
+    "src/softpan/BUILDSP.PY": {
+      "bytes": 3347,
+      "sha256": "784fa29a7a0e95618079a11c04426a3a816a4326c3e136f1208c4a87f6999995"
+    },
+    "src/softpan/MEMTEST.C": {
+      "bytes": 555,
+      "sha256": "5067f64d1425b468f7a80dbb3f7d2cf46140ba57896a29362bdbb60634a37523"
+    },
+    "src/softpan/NATSET.PY": {
+      "bytes": 3674,
+      "sha256": "dc0958659e27dcd86d52f502e11b2e70c0dc7130e3790f4009742391cd6f3f94"
+    },
+    "src/softpan/PACKCP.PY": {
+      "bytes": 4291,
+      "sha256": "a83e2ad32c0ee5bf5d3867cc815fd9ee9e1cc78372dedef7738320a1d4613077"
+    },
+    "src/softpan/PACKSP.PY": {
+      "bytes": 3991,
+      "sha256": "09c66a35934c33c6e6384b99ab7ea78e08aba745f14f672569a38cad91bc5267"
+    },
+    "src/softpan/PANCFG.C": {
+      "bytes": 1220,
+      "sha256": "553436ce2518cbea4c9b1d80fd781b23097dec7ed49290fc5c83829447bf857e"
+    },
+    "src/softpan/PANCFG.DEF": {
+      "bytes": 182,
+      "sha256": "1f25682cfc0bc00190dca222fc867068792f4e878e89d56a51f9b217e96713b3"
+    },
+    "src/softpan/PANCFG.RSP": {
+      "bytes": 84,
+      "sha256": "564206d0fd3fdae167bd13cc35e5410c34aeb65264d8954513f30ef0d58ce13a"
+    },
+    "src/softpan/RAMTEST.PY": {
+      "bytes": 5900,
+      "sha256": "814e51bbd4e314ba11cb5853efb2516da5e8ac7ab93f84410f25cbdb5e44a6ec"
+    },
+    "src/softpan/REPLAY86.PY": {
+      "bytes": 5652,
+      "sha256": "b1349d8efdefe9c69b15b81665da2ae2dd23066abd26b667b0719c1f6db3aabc"
+    },
+    "src/softpan/RUN86.PY": {
+      "bytes": 7945,
+      "sha256": "9c84a7a9817c03a61e15ca363bf1da3296b53b2e8f57e8c6221678a45c1058e4"
+    },
+    "src/softpan/RUNTEST.PY": {
+      "bytes": 4433,
+      "sha256": "efae8e438561e3aeaeb7d0b93f0ca3c470c86554472d5fe9232010619a6eea29"
+    },
+    "src/softpan/RUNUI86.PY": {
+      "bytes": 6108,
+      "sha256": "2ec035c927c9e3634a11fc2abc4c8d63bfca1a9263ccf45294b620d6fd27e8a0"
+    },
+    "src/softpan/RUNUIJR.PY": {
+      "bytes": 3544,
+      "sha256": "62d4b7ffab13b775e5dd79c450ddfcb2e54df45008833701ba2284c97c8aea4d"
+    },
+    "src/softpan/SPCHK.PY": {
+      "bytes": 7664,
+      "sha256": "2e933fb134df326e7549c42429007f1620dc5811073bc014273cc3d0061f98be"
+    },
+    "src/softpan/SPPATCH.PY": {
+      "bytes": 2771,
+      "sha256": "823bd3c5e940caeeba34e76a0ef456f9a92b66a7e92b4307fe1c9eda0f3a732b"
+    },
+    "src/softpan/SPTEST.C": {
+      "bytes": 7737,
+      "sha256": "4842b2abd1c620c03a6ecb91a17771614c656396e47e00389ce46362c814fdf4"
+    },
+    "src/softpan/SPTEST.DEF": {
+      "bytes": 178,
+      "sha256": "ce226ac04be069d689e4d680e4b2e9c378822469e9c74fe71a19b5c37209dbae"
+    },
+    "src/softpan/SPTEST.RSP": {
+      "bytes": 84,
+      "sha256": "293cd5ab96283a3d38ba732be15074deb52d79d07461ea94b5d04cb3a38d501b"
+    },
+    "src/softpan/TESTUI.PY": {
+      "bytes": 2305,
+      "sha256": "9564df5177b883231808ad5b9d23989974b0fa78658afa799ca81475a3c9f5d0"
+    },
+    "src/softpan/UIFLOW.PY": {
+      "bytes": 2270,
+      "sha256": "1cd42273837ae176239243f96132778f50d02f3c4b03352b9c3c5e2fce0f459e"
+    },
+    "src/softpan/UITEST.C": {
+      "bytes": 5919,
+      "sha256": "c93af023a931518dc29a8884aa1cd498127fc4e2cbc501c83eae09e493b48e1b"
+    },
+    "src/softpan/UITEST.DEF": {
+      "bytes": 210,
+      "sha256": "52401e7134bc424110b425fba4859135dbedab676c78bc2ad859ab436434c170"
+    },
+    "src/softpan/UITEST.RSP": {
+      "bytes": 84,
+      "sha256": "f09bd37ae75156532640ffdfcd4808409c62a1ab44eccaccc7cbf01e69fa0bc5"
+    },
+    "src/softpan/WINRUN.PY": {
+      "bytes": 5276,
+      "sha256": "e970f8f83cbd651ad1a6f2beac397c8f2496ae8e9119d9761e30f6d404e9ec89"
+    },
+    "src/xtpan/XTPAN.C": {
+      "bytes": 10200,
+      "sha256": "062676656b1594acc501a7f0ada904cc106dfeddc59c52b8f5f05eb79d71248d"
+    },
+    "src/xtpan/XTPAN.DEF": {
+      "bytes": 220,
+      "sha256": "99c7701080c70473532593202bb49f436ee1386f1d88668b6504b52dc6ce92cc"
+    },
+    "src/xtpan/XTPAN.RSP": {
+      "bytes": 80,
+      "sha256": "24a6cb1f0b427a7b61b2e43051f06dedc3a34719f5b78b6b4f67c6292c2829d4"
+    },
+    "tools/SPPACK/PACKAGE.PY": {
+      "bytes": 3602,
+      "sha256": "f206e420567f4c3b3f691abbbfa6a76ca50f51b218e25b45aed59504927adc09"
     },
     "tools/SPPACK/README.TXT": {
       "bytes": 1331,

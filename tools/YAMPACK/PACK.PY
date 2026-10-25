@@ -89,7 +89,7 @@ def build(profile, output, accepted=None, grabber=None):
     files = {driver: exact(old[driver], {'bytes': size, 'sha256': digest}, driver)}
     for name, pin in pins().items():
         if name == 'CGA.GR2':
-            path = Path(grabber) if grabber else ROOT / name
+            path = Path(grabber) if grabber else ROOT / "distributions/WINXT" / name
             if path.stat().st_size > 1048576:
                 raise ValueError('Grabber input exceeds 1 MiB')
             data = MEDIA.expanded_file(path.read_bytes(), name)

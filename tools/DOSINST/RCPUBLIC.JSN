@@ -366,12 +366,7 @@
       }
     },
     "PAYLOAD/CGA.GR2": {
-      "source": "CGA.GR2",
-      "source_identity": {
-        "bytes": 1768,
-        "sha256": "11389907999c7bef2bd01eae5d874c79c3b07679ccb146ec095a8e9878496b55"
-      },
-      "encoding": "SZDD",
+      "source": "distributions/WINXT/CGA.GR2",
       "identity": {
         "bytes": 2104,
         "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
