@@ -122,3 +122,5 @@ examples/COOKIE/INSTALL.TXT -text
 tools/APPSET/QA/DONEAPP.TXT whitespace=-blank-at-eol
 
 tools/P15PACK/** -text
+
+tools/DRVSET/** -text
