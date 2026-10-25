@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "repository": "astrobleem/oemdisplay-tandy",
+  "tag": "windows-xt",
+  "title": "Windows XT",
+  "core_assets": [
+    "WINXT.ZIP",
+    "WINXTSRC.ZIP",
+    "WINXT.JSN",
+    "WINXT.SHA"
+  ],
+  "local": {
+    "PC1512.ZIP": {
+      "source": "downloads/experimental/PC1512/PC1512.ZIP",
+      "identity": {
+        "bytes": 104820,
+        "sha256": "d57f9032275bfc88e0599d2d17dde86e0b8a1c305934c672689c4b30f46c9bc3"
+      }
+    },
+    "CPPAN.ZIP": {
+      "source": "downloads/experimental/CPPAN/CPPAN.ZIP",
+      "identity": {
+        "bytes": 176009,
+        "sha256": "230825e137e93795328125fba36d4e196c2456abb09372502ca47b56b1be2826"
+      }
+    },
+    "JRPAN.ZIP": {
+      "source": "downloads/experimental/SOFTPAN/JRPAN.ZIP",
+      "identity": {
+        "bytes": 77913,
+        "sha256": "279ac9f0b48bd644d2d6a6110a185231da3f18abcf1aba0ee7e7aff2b20935d7"
+      }
+    },
+    "TNDYV2.ZIP": {
+      "source": "downloads/experimental/TGA2/TNDYV2.ZIP",
+      "identity": {
+        "bytes": 94869,
+        "sha256": "c2c5d023c31c912d6e0ab5a7ae946e2faad2c4422a27fc11c6f40ac088f12f3f"
+      }
+    },
+    "PC1.ZIP": {
+      "source": "downloads/experimental/yamaha/PC1.ZIP",
+      "identity": {
+        "bytes": 83655,
+        "sha256": "2c61c2a1a1ec7fc62f5b0bd38b8444450b209fe5bb91e161977329c02259ebd9"
+      }
+    },
+    "YAMAHA.ZIP": {
+      "source": "downloads/experimental/yamaha/YAMAHA.ZIP",
+      "identity": {
+        "bytes": 83694,
+        "sha256": "cc750be92fad3e57ee87879d361c154881f56aa7bb10de6400f8e1e26339bb1c"
+      }
+    },
+    "TEXT80.ZIP": {
+      "source": "downloads/experimental/TEXT80/TEXT80.ZIP",
+      "identity": {
+        "bytes": 389855,
+        "sha256": "1ea8fc1444520633b671a4fcd760a903aafd33a12789d4a4ed623197c2246e03"
+      }
+    },
+    "WINXT720.ZIP": {
+      "source": "downloads/experimental/FIXED/WINXT720.ZIP",
+      "identity": {
+        "bytes": 739427,
+        "sha256": "8b3b07d788c665c926a60e0beb9152627d920894d572bdfa4730af58d0ec8440"
+      }
+    },
+    "MINESET.ZIP": {
+      "source": "tools/APPSET/BIN/MINESET.ZIP",
+      "identity": {
+        "bytes": 58772,
+        "sha256": "624631c1017a88592ab2d9cb31a351d5b8d839c0640a66dc8f1de5419f75afbe"
+      }
+    },
+    "COOKSET.ZIP": {
+      "source": "tools/APPSET/BIN/COOKSET.ZIP",
+      "identity": {
+        "bytes": 31314,
+        "sha256": "42be449e522044b7344a645b86f5cc9080899a5940c132336d7444ef2351c114"
+      }
+    }
+  },
+  "sound": {
+    "TWXT2.ZIP": {
+      "identity": {
+        "bytes": 1621025,
+        "sha256": "e455e1593963cfbad17e968cc6af2b2da5cd0bb50507376c8886c9a107508c1b"
+      },
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/a50637ee6d685f7194ba9a99bc7d8cc593049a3f/artifacts/win30/TWXT2.ZIP"
+    },
+    "MML3AUTH.ZIP": {
+      "identity": {
+        "bytes": 2353434,
+        "sha256": "1cc95417782d6dbd8b680d5a2505ea37206b5de2f7493851c091bce1e178f330"
+      },
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/a50637ee6d685f7194ba9a99bc7d8cc593049a3f/artifacts/win30/MML3AUTH.ZIP"
+    },
+    "PITEXPR.ZIP": {
+      "identity": {
+        "bytes": 2394471,
+        "sha256": "3e540f43c31f95626b2641a1f121e09e1e60cca9f1363fe4215c2c41de32b6fe"
+      },
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/a50637ee6d685f7194ba9a99bc7d8cc593049a3f/artifacts/win30/PITEXPR.ZIP"
+    }
+  },
+  "developer_inputs": {
+    "T2INPUT.ZIP": {
+      "bytes": 76280,
+      "sha256": "b6f35340040eeffe56296ed1e143282d6fb8f953f0beed9e33b610d3decd56b6"
+    },
+    "MML3AUTH.ZIP": {
+      "bytes": 168577,
+      "sha256": "e0b4e68365e24397688d6f41995b8f21fdc87d320f56f7a632ed1591301a25c2"
+    },
+    "PITEXPR.ZIP": {
+      "bytes": 201343,
+      "sha256": "2e3e43461496345eaff50b80f43f2aa82cf56031832b9725e8684040cc352453"
+    }
+  },
+  "developer_assets": [
+    "WINXTSRC.ZIP",
+    "BUILDIN.ZIP",
+    "WINXT.JSN",
+    "WINXT.SHA",
+    "CURRENT.JSN",
+    "CURRENT.SHA"
+  ],
+  "excluded_consumer_alternatives": [
+    "WINXT.EXE",
+    "WINXTDOS.ZIP",
+    "TWSETUP.EXE",
+    "P15SET.EXE",
+    "CPPSET.EXE",
+    "MINESET.EXE",
+    "COOKSET.EXE"
+  ],
+  "documentation_overlays": {
+    "PC1512.ZIP": {
+      "member": "INSTALL.TXT",
+      "source": "tools/CURRENT/GUIDES/PC1512.TXT"
+    },
+    "CPPAN.ZIP": {
+      "member": "INSTALL.TXT",
+      "source": "tools/CURRENT/GUIDES/CPPAN.TXT"
+    },
+    "MINESET.ZIP": {
+      "member": "INSTALL.TXT",
+      "source": "tools/CURRENT/GUIDES/MINESET.TXT"
+    },
+    "COOKSET.ZIP": {
+      "member": "INSTALL.TXT",
+      "source": "tools/CURRENT/GUIDES/COOKSET.TXT"
+    }
+  }
+}

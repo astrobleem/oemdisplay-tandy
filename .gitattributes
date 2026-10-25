@@ -157,3 +157,6 @@ oemdisk/** -text
 .github/workflows/root-layout.yml -text
 # Native shared-sound consumer source and exact build receipts.
 tools/SOUNDOWN/** -text
+
+tools/CURRENT/** -text
+tools/CURRENT/INPUTS/*.ZIP -export-ignore
