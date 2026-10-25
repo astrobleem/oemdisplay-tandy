@@ -81,6 +81,14 @@ def build(output, commit, verify=False):
         pub.require(row["complete"] and not row.get("error") and row["owned_stopped"] and row["lease_released"], "Native case incomplete: " + mode)
         pub.require(row["prepared_comparison"]["count"] == (367 if mode == "fresh" else 80) and not row["prepared_comparison"]["different"], "Prepared bytes differ: " + mode)
     pub.require(q["cold"]["complete"] and not q["cold"].get("error") and q["cold"]["owned_stopped"] and q["cold"]["lease_released"], "Cold launch incomplete")
+    validation = q["input_validation"]
+    pub.require(validation["helper"] == pub.identity(entries["PREPXR.EXE"]), "Input checks used a different helper")
+    for name in ("native_corruption", "native_valid_inputs"):
+        case = validation[name]
+        pub.require(case["complete"] and not case.get("error") and case["owned_stopped"] and case["lease_released"],
+                    "Native input validation incomplete: " + name)
+    pub.require(validation["native_valid_inputs"]["prepared_comparison"] == {"count": 367, "different": []},
+                "CRC-validated fresh outputs differ")
     pub.require(q["public_assets"]["WINXT.ZIP"] == pub.identity(archive) and q["public_assets"]["WINXT.EXE"] == pub.identity(executable), "Package differs from qualified native kit")
     report = {"schema": 1, "tag": "v0.1.0-rc.8-dos.1", "source_commit": commit,
               "native_report": "docs/QUAL/DOSINST/RC8.JSN", "physical_qualification": False,

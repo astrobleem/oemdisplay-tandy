@@ -347,8 +347,8 @@
     "PREPXR.EXE": {
       "source": "tools/DOSINST/BIN/PREPXR.EXE",
       "identity": {
-        "bytes": 83276,
-        "sha256": "a3f278583e71a8c73ccab2d184742dfdb8595c6223f314bf54ce692da7504ff7"
+        "bytes": 83372,
+        "sha256": "cffb1f1d61636373d740df8c9d17497aaed2e08b9a38906f7995722369dd828a"
       }
     },
     "README.TXT": {

@@ -35,6 +35,11 @@ Use a fresh output directory for each command. XSNATIVE.JSN and RCNATIVE.JSN
 bind the source and prebuilt binary identities. The public publishers refuse
 assets that differ from their native qualification records. Developer-only
 Python reference recipes remain outside consumer downloads.
+XRINPUT.H pins the CRC of every required expanded Windows OS stream;
+XRINPUT.JSN binds those CRCs to the existing qualified size/SHA identities.
+The helper checks CRC during its existing reads and withholds the new Setup
+entry on failure. It discards a rejected copy only in its own tagged media
+cache, so a normal retry gathers that file again from the original media.
 
 [Display installation results](../../docs/QUAL/DOSINST/XRSYNC.JSN) and
 [complete desktop installation results](../../docs/QUAL/DOSINST/RC8.JSN)

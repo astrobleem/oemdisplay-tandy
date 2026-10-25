@@ -187,12 +187,13 @@ static void stage(unsigned i,int check_only)
  }
  stream_output[0]=0;printf("Prepared %s\n",to);
 }
-static int expected_media(char *leaf)
+static U32 expected_media(char *leaf)
 {
  unsigned i,v;char name[13];
- if(!stricmp(leaf,"SETUP.INF")||!stricmp(leaf,"WIN.CNF"))return 1;
+ if(!stricmp(leaf,"SETUP.INF"))return 49046UL;
+ if(!stricmp(leaf,"WIN.CNF"))return 3456UL;
  for(i=0;i<NFILES;i++)if(files[i].kind==1)for(v=0;v<3;v++){
-  strcpy(name,files[i].source);if(v)name[strlen(name)-1]=v==1?'_':'$';if(!stricmp(leaf,name))return 1;
+  strcpy(name,files[i].source);if(v)name[strlen(name)-1]=v==1?'_':'$';if(!stricmp(leaf,name))return files[i].size;
  }
  return 0;
 }
@@ -210,7 +211,7 @@ static int media_complete(char *root)
 }
 static void collect_media(char *source,char *cache)
 {
- struct find_t entry,existing;char pattern[PTH],from[PTH],to[PTH],answer[16],tag[32];unsigned a,i,count,n;FILE *f;U32 total;
+ struct find_t entry,existing;char pattern[PTH],from[PTH],to[PTH],answer[16],tag[32];unsigned a,i,count,n;FILE *f;U32 total,want;
  /* This cache contains only the user's Windows input, never public output. */
  for(i=0;i<100;i++){
   if(!i)strcpy(cache,"C:\\W30SRC");else sprintf(cache,"C:\\W30SRC%02u",i);
@@ -228,13 +229,13 @@ static void collect_media(char *source,char *cache)
  for(;;){
   count=0;join(pattern,source,"*.*");
   if(!_dos_findfirst(pattern,_A_NORMAL|_A_RDONLY|_A_HIDDEN|_A_SYSTEM|_A_ARCH,&entry))do{
-   if(entry.attrib&(_A_SUBDIR|_A_VOLID)||!expected_media(entry.name))continue;
+   if(entry.attrib&(_A_SUBDIR|_A_VOLID)||(want=expected_media(entry.name))==0)continue;
    if(entry.size>1024UL*1024UL)stop("Windows media file exceeds its bound.",entry.name);
    join(from,source,entry.name);join(to,cache,entry.name);
    if(attr(to,&a)){
     if(a&(_A_SUBDIR|_A_VOLID))stop("Cached input is not a regular file.",to);
     if(_dos_findfirst(to,_A_NORMAL|_A_RDONLY|_A_HIDDEN|_A_SYSTEM|_A_ARCH,&existing))stop("Cannot inspect cached input.",to);
-    if(existing.size==entry.size)continue;
+    if(existing.size==entry.size&&(candidate(to,want)||(!stricmp(entry.name,"SETUP.INF")&&candidate(to,49095UL))))continue;
     if(remove(to))stop("Cannot replace incomplete cached input.",to);
    }
    f=fopen(from,"rb");if(!f)stop("Cannot read Windows disk.",from);createout(to);total=0;

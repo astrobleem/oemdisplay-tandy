@@ -24,6 +24,10 @@ class NativePublisherTests(unittest.TestCase):
         for mode, count in (("fresh", 367), ("update", 80)):
             self.qual[mode] = {"complete": True, "owned_stopped": True, "lease_released": True,
                               "prepared_comparison": {"count": count, "different": []}}
+        self.qual["input_validation"] = {
+            "helper": M.pub.identity(self.entries["PREPXR.EXE"]),
+            "native_corruption": copy.deepcopy(self.qual["cold"]),
+            "native_valid_inputs": copy.deepcopy(self.qual["fresh"])}
         self.receipt = self.root / "docs/QUAL/DOSINST/RC8.JSN"
         self.receipt.parent.mkdir(parents=True)
 
@@ -82,7 +86,10 @@ class NativePublisherTests(unittest.TestCase):
                        lambda q: q["update"].update(lease_released=False),
                        lambda q: q["cold"].update(owned_stopped=False),
                        lambda q: q["update"]["prepared_comparison"].update(different=["WINXT/HPXY.DRV"]),
-                       lambda q: q["fresh"]["prepared_comparison"].update(count=366)):
+                       lambda q: q["fresh"]["prepared_comparison"].update(count=366),
+                       lambda q: q["input_validation"]["helper"].update(sha256="0" * 64),
+                       lambda q: q["input_validation"]["native_corruption"].update(complete=False),
+                       lambda q: q["input_validation"]["native_valid_inputs"].update(error="CRC did not finish")):
             self.qual = copy.deepcopy(original)
             mutate(self.qual)
             output = self.root / "refused"
