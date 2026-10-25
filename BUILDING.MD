@@ -62,6 +62,18 @@ must not be described as creating current GitHub releases automatically.
 
 ## Native source builds
 
+The [CGA source candidate](docs/CGA.MD) adds host-only staging and font/control
+checks under `src/cga/`. With the verified existing display view:
+
+```text
+python -B src/cga/TESTCGA.PY --repo DISPLAY-VIEW --out NEW-CGA-HOST
+```
+
+For a scheduled native build, create a commit-pinned `--profile cga` source view and follow
+[its builder guide](src/cga/README.MD). It wraps BUILD88 with the shared
+watchdog/lease runner. No new CGA runtime or consumer packet is qualified by
+these commands; current accepted binaries and package pins remain unchanged.
+
 Main contains no DDK, legacy compiler or emulator. Use the explicit pinned
 external inputs and source-view commands in [BUILDDEPS](tools/BUILDDEPS/README.MD).
 Only its `fetch` command accesses the network; materialize/verify the locked
