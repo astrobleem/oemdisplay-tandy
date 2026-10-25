@@ -21,6 +21,7 @@ def generate():
     row = ('{"WINXT\\\\OEMSETUP.INF","OEMSETUP.INF",%dUL,0},\r\n' % len(ordinary)).encode()
     assert files.count(b'};\r\n#define NFILES') == 1
     files = files.replace(b'};\r\n#define NFILES',row+b'};\r\n#define NFILES')
+    crcs = crcs.replace(b'/* WINXT\\\\OEMSETUP.INF */', b'/* WINXT\\\\HPXY.INF */')
     assert crcs.count(b'};') == 1
     crcs = crcs.replace(b'};',b'0x00000000UL, /* WINXT\\\\OEMSETUP.INF */\r\n};')
     return {"SETPINS.H":pins,"SETFILES.H":files,"SETINPUT.H":crcs}

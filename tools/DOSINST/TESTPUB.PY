@@ -189,6 +189,21 @@ class ExpandedPublisherTests(unittest.TestCase):
             self.assertIn('WINXT/'+n,self.entries)
         M.pub.check_zip(self.archive,self.entries,'expanded')
 
+    def test_expanded_crc_indices_preserve_every_original_windows_identity(self):
+        import re
+        rows=re.findall(r'{"([^"\n]+)","([^"\n]+)",(\d+)UL,(\d+)}',(M.HERE/'SETFILES.H').read_text())
+        crcs=re.findall(r'0x([0-9a-f]{8})UL, /\* ([^*]+) \*/',(M.HERE/'SETINPUT.H').read_text())
+        expected=json.loads((M.HERE/'XRINPUT.JSN').read_bytes())
+        self.assertEqual(len(rows),370)
+        self.assertEqual(len(crcs),370)
+        actual={}
+        for (path,source,size,kind),(crc,label) in zip(rows,crcs):
+            self.assertEqual(path,label)
+            if kind=='1':actual[path.replace(chr(92)*2,'/')]=(int(size),crc)
+            else:self.assertEqual(crc,'00000000')
+        self.assertEqual(actual,{p:(v['bytes'],v['crc32']) for p,v in expected.items()})
+        self.assertEqual(len(actual),284)
+
     def test_verified_current_assets_and_developer_source_separation(self):
         out=self.root/'release';first=self.run_build(out)
         self.assertEqual(first,self.run_build(out,True))

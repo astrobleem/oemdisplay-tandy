@@ -56,12 +56,12 @@
       "sha256": "c69e067db3b0601c49bc74c88ff96d6fcdd3376247216051afa89c04d54dba58"
     },
     "MAKESET.PY": {
-      "bytes": 1492,
-      "sha256": "b21d45365ed158d3c63dcb4289e11ff08435f92af86cc7f7fd4686d2cec3c032"
+      "bytes": 1577,
+      "sha256": "65658e01604a5e83f655c60728bd084c0317d7a71fab104e3607a0b825f64113"
     },
     "SETINPUT.H": {
-      "bytes": 14566,
-      "sha256": "f527ee4f68f891d83a0d2ce5dc11de5492b03549eed1340f2fc5b23e7dfc9b7f"
+      "bytes": 14562,
+      "sha256": "7114a59bb3df6a5db65e2536296ac28e4e9f1477783c6004845dd898110a3c5a"
     },
     "BUILD.PY": {
       "bytes": 3155,
