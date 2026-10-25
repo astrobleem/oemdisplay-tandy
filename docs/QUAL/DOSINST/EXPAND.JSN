@@ -1,0 +1,941 @@
+{
+  "schema": 1,
+  "status": "PASS_EXPANDED_NATIVE",
+  "physical_test": false,
+  "archive": {
+    "bytes": 648375,
+    "sha256": "dac91c866628f71d14d6fa52a930339fac5bf07546e79a43f03e6f3ead5b49e8"
+  },
+  "files": {
+    "README.TXT": {
+      "bytes": 1157,
+      "sha256": "d4a8c0a3f117a75513c9793a40d56f0df8f521d3ef4222fcb1c98ef6f4e3e962"
+    },
+    "SETUP.EXE": {
+      "bytes": 83142,
+      "sha256": "535cb890469930c54584ee08260b43faf4656f3f82f4a3ce3066f1ab3e9d7257"
+    },
+    "WINXT/APPS.TXT": {
+      "bytes": 412,
+      "sha256": "22018a4cc6a6c5edd39d74ad6c4e39058be9ebf629ed460b16d4d385a100400b"
+    },
+    "WINXT/CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "WINXT/CPSET.EXE": {
+      "bytes": 36612,
+      "sha256": "e4fccba25d817f9a07a900a3cf443d9ea8a28cfb82cd39887293e8436589fa4d"
+    },
+    "WINXT/DISPLAY.BAT": {
+      "bytes": 816,
+      "sha256": "3a6a70e36e79fc6292bf7f1a3f6b075abcdf1e454235fd4b53d5e487b69668f8"
+    },
+    "WINXT/DISPLAY.TXT": {
+      "bytes": 1404,
+      "sha256": "7b1334e5c6e090dd98ec7de22674965b55207d411129d737d4acc5d781e58930"
+    },
+    "WINXT/DISPWIN.BAT": {
+      "bytes": 816,
+      "sha256": "5cf8f16ca715d66bbfc5450793f81c9220c349885212f21c283da86bbbc01588"
+    },
+    "WINXT/FIXXT.BAT": {
+      "bytes": 314,
+      "sha256": "b8a060cdc2d125989379375b8f9dbbb04d0a17f4aa71a6235350291f65f410c8"
+    },
+    "WINXT/FIXXT.EXE": {
+      "bytes": 33001,
+      "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"
+    },
+    "WINXT/FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/HPXY.DRV": {
+      "bytes": 56704,
+      "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275"
+    },
+    "WINXT/HPXY.INF": {
+      "bytes": 882,
+      "sha256": "81957f3577522507e896899ad8d6a4fb98177fcd5ca3ff720e19d8e05d47f8d3"
+    },
+    "WINXT/LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/MATRIX.EXE": {
+      "bytes": 14669,
+      "sha256": "854e0692b4a2571b7d53b45f15da7d954137fde9dce079e8a17df753ec94aca8"
+    },
+    "WINXT/MAZE.EXE": {
+      "bytes": 28013,
+      "sha256": "9905abccd267dd229502fad2d7e57375f51c34b2c445fc52ea754508407de389"
+    },
+    "WINXT/MODELIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/MODEXT.BAT": {
+      "bytes": 481,
+      "sha256": "7f9948334d1d7f073326be6c5153e3a24a24ef836fa823fc45667b1a79e2fa5a"
+    },
+    "WINXT/NOTICE.TXT": {
+      "bytes": 1845,
+      "sha256": "33c86c7e8f70c19fb9a942e1f8676556921cd0893388f16036f28af9dc4dfba2"
+    },
+    "WINXT/OEMSETUP.INF": {
+      "bytes": 898,
+      "sha256": "cbbaf65a62dadbc7cd7b2aaaf1a098ab9cd855c6479b5e2bba3225a512fd8f3b"
+    },
+    "WINXT/OWATCOM.TXT": {
+      "bytes": 21128,
+      "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+    },
+    "WINXT/OWNERS.TXT": {
+      "bytes": 10352,
+      "sha256": "a9ac59f348a4a4ee6efb2dea4860966a91cf628493e089d3c55d58cf34e3eae7"
+    },
+    "WINXT/PINBALL.EXE": {
+      "bytes": 15487,
+      "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f"
+    },
+    "WINXT/PROFILES.TXT": {
+      "bytes": 299,
+      "sha256": "c439e1fc0e3ac7a6d0db212b95908699993855bf6135c57ce4b889b5b465215c"
+    },
+    "WINXT/RESERVE.COM": {
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+    },
+    "WINXT/SETAUTO.EXE": {
+      "bytes": 10976,
+      "sha256": "e2908cba3430be2a3b24058061f6b477629305476f8702d6a7c2f7fd81d45e0a"
+    },
+    "WINXT/SETUPXT.BAT": {
+      "bytes": 1726,
+      "sha256": "46baa557d053b704fd6f1d79db1b1a2455cfbdd67901225dca2b86538734eb9a"
+    },
+    "WINXT/SHOOK.COM": {
+      "bytes": 1249,
+      "sha256": "ba35ca3ce5407270e61c0ca15d27c4ca052bcd2a1112c7819fc214b74bd0d211"
+    },
+    "WINXT/SOUND.DRV": {
+      "bytes": 9752,
+      "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+    },
+    "WINXT/SOUNDID.JSN": {
+      "bytes": 152,
+      "sha256": "32cbeaec5be964abf44c3c84bd519a841958eb49cf491d9347a0ed5ff3d8741e"
+    },
+    "WINXT/SOUNDLIC.TXT": {
+      "bytes": 35823,
+      "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809"
+    },
+    "WINXT/STARFLD.EXE": {
+      "bytes": 17295,
+      "sha256": "c615fcd8c18ed740ed051542093e1bd18e26b92e820eef5b1bb4fa69f2ab8ff5"
+    },
+    "WINXT/START.TXT": {
+      "bytes": 837,
+      "sha256": "31b58d7d339c2ad6c55d2be4d7d3fc1be4a954476dc7a61ef21ebd9af00bdf1b"
+    },
+    "WINXT/STARTXT.BAT": {
+      "bytes": 31,
+      "sha256": "2644ccde425aae149e6240db084401aa7ae1ede3610c5daeb34a7234d5081aaa"
+    },
+    "WINXT/TABOUT.EXE": {
+      "bytes": 6479,
+      "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed"
+    },
+    "WINXT/TCHIME.EXE": {
+      "bytes": 5071,
+      "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61"
+    },
+    "WINXT/TEXIT.EXE": {
+      "bytes": 9215,
+      "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148"
+    },
+    "WINXT/TNDYK3.DRV": {
+      "bytes": 7640,
+      "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+    },
+    "WINXT/TP.EXE": {
+      "bytes": 12847,
+      "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33"
+    },
+    "WINXT/TSHELL.EXE": {
+      "bytes": 72323,
+      "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9"
+    },
+    "WINXT/TSHELL.INI": {
+      "bytes": 999,
+      "sha256": "9b0dca9bf1f66bcb5f99cbc347dbf093942ee30c6e0b3d546127e88585cec2f5"
+    },
+    "WINXT/TSINPUT.DLL": {
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+    },
+    "WINXT/WHEEL.DRV": {
+      "bytes": 1820,
+      "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+    },
+    "WINXT/WHEELLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/WINBRDG.EXE": {
+      "bytes": 28656,
+      "sha256": "230a24f8dec830dd8ceb8e11bb6f9694ed9a67b25ef232b9352e5e743cd3d74b"
+    },
+    "WINXT/WINXT.BAT": {
+      "bytes": 332,
+      "sha256": "8b484c67b9896deb2ba281f79a4020e35c7ef238fad5c5055ca63699c87c683b"
+    },
+    "WINXT/WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    },
+    "WINXT/WXTWHL.EXE": {
+      "bytes": 7222,
+      "sha256": "0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6"
+    },
+    "WINXT/XPCHIME.EXE": {
+      "bytes": 5103,
+      "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0"
+    },
+    "WINXT/XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "WINXT/XTCLEAN.COM": {
+      "bytes": 1071,
+      "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
+    },
+    "WINXT/XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "WINXT/XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "WINXT/XTEFIX.FON": {
+      "bytes": 4656,
+      "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+    },
+    "WINXT/XTEOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "WINXT/XTESYS.FON": {
+      "bytes": 5680,
+      "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+    },
+    "WINXT/XTLOGO.LGO": {
+      "bytes": 35971,
+      "sha256": "8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c"
+    },
+    "WINXT/XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "WINXT/XTTSYS.FON": {
+      "bytes": 4208,
+      "sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa"
+    },
+    "WINXT/XYCTL.EXE": {
+      "bytes": 9679,
+      "sha256": "7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055"
+    }
+  },
+  "target": {
+    "CPU": "8088",
+    "MHz": 7.159092,
+    "RAM_KB": 640,
+    "DOS": "MS-DOS6.22",
+    "Windows": "3.0 real mode"
+  },
+  "update": {
+    "schema": 1,
+    "complete": true,
+    "mode": "update",
+    "archive": {
+      "bytes": 648375,
+      "sha256": "dac91c866628f71d14d6fa52a930339fac5bf07546e79a43f03e6f3ead5b49e8"
+    },
+    "bound_seconds": 600,
+    "helper": {
+      "bytes": 83142,
+      "sha256": "535cb890469930c54584ee08260b43faf4656f3f82f4a3ce3066f1ab3e9d7257"
+    },
+    "public_assets": {
+      "WINXT.ZIP": {
+        "bytes": 648375,
+        "sha256": "dac91c866628f71d14d6fa52a930339fac5bf07546e79a43f03e6f3ead5b49e8"
+      }
+    },
+    "physical_test": false,
+    "actions": [],
+    "scope": "Actual expanded input, no archive available, current installed OS with unrelated sentinel preserved.",
+    "controller": {
+      "bytes": 15245,
+      "sha256": "b22771befd8a6ad292c6c3755ae1663385ca1e896f640fa0f0760a37182dda26"
+    },
+    "owned_stopped": true,
+    "lease_released": true,
+    "process_inventory_before": [],
+    "lease_acquired": true,
+    "managed_sentinel_before": {
+      "bytes": 44,
+      "sha256": "8cf749318db64137816a8ba5e8a0ce5736ea6517b3fccc64d2f6be1bedd693c9"
+    },
+    "emulator": {
+      "path": "C:\\Users\\chad\\Documents\\Codex\\2026-10-16\\task-10\\EMU-STOS1\\fixed\\86Box.exe",
+      "identity": {
+        "bytes": 40974314,
+        "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+      }
+    },
+    "pid": 25796,
+    "preparation_seconds_including_boot": 82.1,
+    "prepared_comparison": {
+      "count": 83,
+      "different": []
+    },
+    "installed_files": {
+      "SOUND.DRV": {
+        "path": "WINDOWS/SYSTEM/SOUND.DRV",
+        "identity": {
+          "bytes": 9752,
+          "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+        },
+        "matches_packet": true
+      },
+      "TSHELL.EXE": {
+        "path": "WINDOWS/TSHELL.EXE",
+        "identity": {
+          "bytes": 72323,
+          "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9"
+        },
+        "matches_packet": true
+      },
+      "TSINPUT.DLL": {
+        "path": "WINDOWS/TSINPUT.DLL",
+        "identity": {
+          "bytes": 6281,
+          "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+        },
+        "matches_packet": true
+      },
+      "TCHIME.EXE": {
+        "path": "WINXT/TCHIME.EXE",
+        "identity": {
+          "bytes": 5071,
+          "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61"
+        },
+        "matches_packet": true
+      },
+      "XPCHIME.EXE": {
+        "path": "WINXT/XPCHIME.EXE",
+        "identity": {
+          "bytes": 5103,
+          "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0"
+        },
+        "matches_packet": true
+      },
+      "TEXIT.EXE": {
+        "path": "WINXT/TEXIT.EXE",
+        "identity": {
+          "bytes": 9215,
+          "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148"
+        },
+        "matches_packet": true
+      },
+      "TP.EXE": {
+        "path": "WINXT/TP.EXE",
+        "identity": {
+          "bytes": 12847,
+          "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33"
+        },
+        "matches_packet": true
+      },
+      "FIXXT.EXE": {
+        "path": "WINXT/FIXXT.EXE",
+        "identity": {
+          "bytes": 33001,
+          "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"
+        },
+        "matches_packet": true
+      },
+      "XTCLEAN.COM": {
+        "path": "WINDOWS/XTCLEAN.COM",
+        "identity": {
+          "bytes": 1071,
+          "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
+        },
+        "matches_packet": true
+      },
+      "HPXY.DRV": {
+        "path": "WINDOWS/SYSTEM/HPXY.DRV",
+        "identity": {
+          "bytes": 56704,
+          "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275"
+        },
+        "matches_packet": true
+      },
+      "TNDYK3.DRV": {
+        "path": "WINDOWS/SYSTEM/TNDYK3.DRV",
+        "identity": {
+          "bytes": 7640,
+          "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+        },
+        "matches_packet": true
+      },
+      "WHEEL.DRV": {
+        "path": "WINDOWS/SYSTEM/WHEEL.DRV",
+        "identity": {
+          "bytes": 1820,
+          "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+        },
+        "matches_packet": true
+      }
+    },
+    "desktop_mode": 9,
+    "graphics_observation_seconds": 60,
+    "normal_desktop_visual_review_required": true,
+    "dos_version": "\r\nMS-DOS Version 6.22\r\n\r\n",
+    "system_ini": "[boot]           \r\n286grabber=CGA.GR2\r\nshell=TSHELL.EXE\r\nnetwork.drv=\r\nlanguage.dll=\r\nfixedfon.fon=XTCFIX.FON\r\ncomm.drv=comm.drv\r\nsound.drv=SOUND.DRV\r\noemfonts.fon=XTCOEM.FON\r\nfonts.fon=XTCSYS.FON\r\nmouse.drv=WHEEL.DRV\r\nkeyboard.drv=TNDYK3.DRV\r\ndisplay.drv=HPXY.DRV\r\nsystem.drv=system.drv\r\n386grabber=\r\n[keyboard]\r\nsubtype=\r\ntype=1\r\noemansi.bin=\r\nkeyboard.dll=\r\n[boot.description]\r\n\r\nnetwork.drv=Network not installed\r\nlanguage.dll=English (American)\r\nkeyboard.typ=PC/XT - Type keyboard (84 keys)\r\nmouse.drv=Tandy serial wheel mouse (COM1/IRQ4)\r\ndisplay.drv=Tandy EX/HX accepted HPXY 640x200 wide-font mode\r\nsystem.drv=Tandy 1000 EX/HX (WindowsXT)\r\n[386Enh]\r\nDEVICE=WINDEBUG.386\r\ndisplay=*vddvga\r\nkeyboard=*vkd\r\nmouse=*vmd\r\nnetwork=*vnetbios, *dosnet\r\ndevice=*vpicd\r\ndevice=*vtd\r\ndevice=*reboot\r\ndevice=*vdmad\r\ndevice=*vsd\r\ndevice=*v86mmgr\r\ndevice=*pageswap\r\ndevice=*dosmgr\r\ndevice=*vmpoll\r\ndevice=*wshell\r\ndevice=*vhd\r\ndevice=*vfd\r\ndevice=*vpd\r\ndevice=*parity\r\ndevice=*biosxlat\r\ndevice=*vcd\r\ndevice=*vmcpd\r\ndevice=*combuff\r\ndevice=*cdpscsi\r\nlocal=CON\r\nFileSysChange=off\r\n\r\n[standard]\r\n\r\n[NonWindowsApp]\r\n\r\n[NativeInstallSentinel]\r\npreserve=yes\r\n",
+    "boot_files_unchanged": {
+      "AUTOEXEC.BAT": true,
+      "CONFIG.SYS": true
+    },
+    "staging_temps": [],
+    "installed_wrapper_matches_source": true,
+    "managed_sentinel_after": {
+      "bytes": 44,
+      "sha256": "8cf749318db64137816a8ba5e8a0ce5736ea6517b3fccc64d2f6be1bedd693c9"
+    },
+    "managed_sentinel_preserved": true,
+    "sound_shadow_absent": true,
+    "capture": {
+      "bytes": 3770,
+      "sha256": "cbd036e1dcfd212140ab187ce08dadf911d2dcd96ad2da017ebf87cb15f1a41a"
+    },
+    "seconds": 222.3,
+    "normal_desktop_visually_confirmed": true,
+    "visual_observation": "Visible XYCTL private window with GDI drawing, not a startup splash; no new shell functionality claim."
+  },
+  "negative": {
+    "schema": 1,
+    "complete": true,
+    "mode": "negative",
+    "archive": {
+      "bytes": 648375,
+      "sha256": "dac91c866628f71d14d6fa52a930339fac5bf07546e79a43f03e6f3ead5b49e8"
+    },
+    "bound_seconds": 180,
+    "helper": {
+      "bytes": 83142,
+      "sha256": "535cb890469930c54584ee08260b43faf4656f3f82f4a3ce3066f1ab3e9d7257"
+    },
+    "public_assets": {
+      "WINXT.ZIP": {
+        "bytes": 648375,
+        "sha256": "dac91c866628f71d14d6fa52a930339fac5bf07546e79a43f03e6f3ead5b49e8"
+      }
+    },
+    "physical_test": false,
+    "actions": [],
+    "scope": "Actual expanded input, no archive available, current installed OS with unrelated sentinel preserved.",
+    "controller": {
+      "bytes": 15245,
+      "sha256": "b22771befd8a6ad292c6c3755ae1663385ca1e896f640fa0f0760a37182dda26"
+    },
+    "owned_stopped": true,
+    "lease_released": true,
+    "process_inventory_before": [],
+    "lease_acquired": true,
+    "managed_sentinel_before": {
+      "bytes": 44,
+      "sha256": "8cf749318db64137816a8ba5e8a0ce5736ea6517b3fccc64d2f6be1bedd693c9"
+    },
+    "emulator": {
+      "path": "C:\\Users\\chad\\Documents\\Codex\\2026-10-16\\task-10\\EMU-STOS1\\fixed\\86Box.exe",
+      "identity": {
+        "bytes": 40974314,
+        "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+      }
+    },
+    "pid": 20732,
+    "checks": {
+      "missing_folder_refused": true,
+      "archive_not_used_as_fallback": true,
+      "same_length_runtime_corruption_refused": true,
+      "windows_unchanged": true,
+      "setup_entry_withheld": true,
+      "no_incomplete_outputs": true
+    },
+    "returned_to_dos": true,
+    "capture": {
+      "bytes": 4375,
+      "sha256": "39549100df1a05052db8fa184fc09afac876606f6b92eaa312a35b22ed03ac8d"
+    },
+    "seconds": 49.1,
+    "scope_correction": "This negative case deliberately included BARE/WINXT.ZIP to prove no archive fallback; normal fresh/update guests had no rootZIP/SFX."
+  },
+  "source_commit": "d5c3c3fdc6f8f073bbeb357c2fc1bc19b17f23c4",
+  "recipe_delta": "Current49 driver/client inputs retained; old full metadata namedHPXY.INF; portable OEMSETUP.INF adds one metadata output. 370fresh/83update. No driver/client/rendering code changes.",
+  "baseline": "RC8.JSN and FULLXT2 retain prior full Setup, sourceCRC and sound/runtime qualification. Fresh replay checks the affected expanded-input route against already installed OS/cache; no unchanged Windows Setup/rendering repeat.",
+  "evidence": {
+    "EXUP.LOG": {
+      "bytes": 2190,
+      "sha256": "7c568ef31e8d6c04061deb13c594aa4b0710691aefa8f376bd17a3baa5617f80"
+    },
+    "EXUP.PNG": {
+      "bytes": 3770,
+      "sha256": "cbd036e1dcfd212140ab187ce08dadf911d2dcd96ad2da017ebf87cb15f1a41a"
+    },
+    "EXMISS.LOG": {
+      "bytes": 178,
+      "sha256": "5eda65610252dab210ef11a74d743341161b4c7d652eea66923541eeaf6ccc2d"
+    },
+    "EXBAD.LOG": {
+      "bytes": 1084,
+      "sha256": "7d1471882646febe07d7eb365aa02ffea9f1eff3be0b4288159f6636fde86b25"
+    },
+    "EXBAD.PNG": {
+      "bytes": 4375,
+      "sha256": "39549100df1a05052db8fa184fc09afac876606f6b92eaa312a35b22ed03ac8d"
+    },
+    "EXCASE.JSN": {
+      "bytes": 435,
+      "sha256": "3dca968122bb502e2e9dc77937e28a4cfb7c01e33579db9e9a32486e99e7fd92"
+    },
+    "EXOEM.JSN": {
+      "bytes": 6023,
+      "sha256": "8f35b2ef80149dbc9253aedcd5c5713cdc5fa04de8a10742b7ca0f6b90f44906"
+    },
+    "EXOPREP.JSN": {
+      "bytes": 9203,
+      "sha256": "9b952f02954c66183cb93e283c706d30bfec75bbe7889d0fc941d52f9883d866"
+    },
+    "EXOEM.PNG": {
+      "bytes": 2614,
+      "sha256": "bfee475e0fc0db733a59507a000ff32148b2dc6109be8d79ce475761a07f5b47"
+    },
+    "EXORET.PNG": {
+      "bytes": 966,
+      "sha256": "120fea13f7a440b45a45791c50916fa82eac4d271ced5f39f7a29e2c8685e0a6"
+    },
+    "EXFRESH.LOG": {
+      "bytes": 2691,
+      "sha256": "828acdb1583d69e5c2d519a4a17ece3b0eb3b491e385730f8ffab343161c9cbf"
+    },
+    "EXFRESH.PNG": {
+      "bytes": 3509,
+      "sha256": "57da1be91808cddce2e0423162b2b40284ab462049ff81c3369f97c3d5746979"
+    },
+    "EXRUN1.PY": {
+      "bytes": 15245,
+      "sha256": "b22771befd8a6ad292c6c3755ae1663385ca1e896f640fa0f0760a37182dda26"
+    },
+    "EXRUN2.PY": {
+      "bytes": 15271,
+      "sha256": "ac7b5de3ba734da73b9d9be3e93727f7cac453d8551024e5f6d3a8a9960c4e06"
+    },
+    "EXGOLD.JSN": {
+      "bytes": 68435,
+      "sha256": "5a182bdc53bf01650d4d545428c1fd064ee77ca1bd742efa132caf77a9ffd75c"
+    }
+  },
+  "drivers_only": {
+    "complete": true,
+    "scope": "Plain ZIP, native Windows Other Setup, unchanged HPXY and complete support, guarded DOS batch install/start; no XSETUP/custom preparation EXE used",
+    "bound_seconds": 240,
+    "actual_combined_packet": {
+      "bytes": 648375,
+      "sha256": "dac91c866628f71d14d6fa52a930339fac5bf07546e79a43f03e6f3ead5b49e8"
+    },
+    "source_case": "unmodified final combined archive; C:\\ALT\\WINXT; canonical C:\\WINXT absent",
+    "actions": [
+      "No DOS configuration changes"
+    ],
+    "lease_acquired": true,
+    "owned_pid": 34132,
+    "reservation_before_setup": {
+      "segment": "97FF",
+      "paragraphs": 1024,
+      "owner": 3356
+    },
+    "native_source_reprompt": true,
+    "system_ini": "[boot]           \r\n286grabber=CGA.GR2\r\nfixedfon.fon=XTCFIX.FON\r\noemfonts.fon=XTCOEM.FON\r\nfonts.fon=XTCSYS.FON\r\ndisplay.drv=HPXY.DRV\r\nshell=progman.exe\r\nnetwork.drv=\r\nlanguage.dll=\r\ncomm.drv=comm.drv\r\nsound.drv=sound.drv\r\nmouse.drv=mouse.drv\r\nkeyboard.drv=keyboard.drv\r\nsystem.drv=system.drv\r\n386grabber=\r\n[keyboard]\r\nsubtype=\r\ntype=3\r\noemansi.bin=\r\nkeyboard.dll=\r\n[boot.description]\r\n\r\ndisplay.drv=Tandy EX/HX HPXY 640x256 hardware pan\r\nnetwork.drv=Network not installed\r\nlanguage.dll=English (American)\r\nkeyboard.typ=All AT type keyboards (84 - 86 keys)\r\nmouse.drv=Microsoft, or IBM PS/2\r\nsystem.drv=MS-DOS or PC-DOS System\r\n[386Enh]\r\nDEVICE=WINDEBUG.386\r\ndisplay=*vddvga\r\nkeyboard=*vkd\r\nmouse=*vmd\r\nnetwork=*vnetbios, *dosnet\r\ndevice=*vpicd\r\ndevice=*vtd\r\ndevice=*reboot\r\ndevice=*vdmad\r\ndevice=*vsd\r\ndevice=*v86mmgr\r\ndevice=*pageswap\r\ndevice=*dosmgr\r\ndevice=*vmpoll\r\ndevice=*wshell\r\ndevice=*vhd\r\ndevice=*vfd\r\ndevice=*vpd\r\ndevice=*parity\r\ndevice=*biosxlat\r\ndevice=*vcd\r\ndevice=*vmcpd\r\ndevice=*combuff\r\ndevice=*cdpscsi\r\nlocal=CON\r\nFileSysChange=off\r\n\r\n[standard]\r\n\r\n[NonWindowsApp]\r\n",
+    "installed_support": {
+      "HPXY.DRV": {
+        "bytes": 56704,
+        "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275"
+      },
+      "CGA.GR2": {
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+      },
+      "XTCSYS.FON": {
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+      },
+      "XTCFIX.FON": {
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+      },
+      "XTCOEM.FON": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      }
+    },
+    "logo_in_wincom": {
+      "XTSTATIC.LGO": true,
+      "WXTSPL01.RLE": true
+    },
+    "setup_returned": true,
+    "reservation_before_exit": {
+      "segment": "97FF",
+      "paragraphs": 1024,
+      "owner": 3356
+    },
+    "desktop_seconds": 15,
+    "movable_source_unchanged": {
+      "APPS.TXT": true,
+      "CGA.GR2": true,
+      "CPSET.EXE": true,
+      "DISPLAY.BAT": true,
+      "DISPLAY.TXT": true,
+      "DISPWIN.BAT": true,
+      "FIXXT.BAT": true,
+      "FIXXT.EXE": true,
+      "FONTLIC.TXT": true,
+      "HPXY.DRV": true,
+      "HPXY.INF": true,
+      "LOGOLIC.TXT": true,
+      "MATRIX.EXE": true,
+      "MAZE.EXE": true,
+      "MODELIC.TXT": true,
+      "MODEXT.BAT": true,
+      "NOTICE.TXT": true,
+      "OEMSETUP.INF": true,
+      "OWATCOM.TXT": true,
+      "OWNERS.TXT": true,
+      "PINBALL.EXE": true,
+      "PROFILES.TXT": true,
+      "RESERVE.COM": true,
+      "SETAUTO.EXE": true,
+      "SETUPXT.BAT": true,
+      "SHOOK.COM": true,
+      "SOUND.DRV": true,
+      "SOUNDID.JSN": true,
+      "SOUNDLIC.TXT": true,
+      "STARFLD.EXE": true,
+      "START.TXT": true,
+      "STARTXT.BAT": true,
+      "TABOUT.EXE": true,
+      "TCHIME.EXE": true,
+      "TEXIT.EXE": true,
+      "TNDYK3.DRV": true,
+      "TP.EXE": true,
+      "TSHELL.EXE": true,
+      "TSHELL.INI": true,
+      "TSINPUT.DLL": true,
+      "WHEEL.DRV": true,
+      "WHEELLIC.TXT": true,
+      "WINBRDG.EXE": true,
+      "WINXT.BAT": true,
+      "WXTSPL01.RLE": true,
+      "WXTWHL.EXE": true,
+      "XPCHIME.EXE": true,
+      "XTCFIX.FON": true,
+      "XTCLEAN.COM": true,
+      "XTCOEM.FON": true,
+      "XTCSYS.FON": true,
+      "XTEFIX.FON": true,
+      "XTEOEM.FON": true,
+      "XTESYS.FON": true,
+      "XTLOGO.LGO": true,
+      "XTSTATIC.LGO": true,
+      "XTTSYS.FON": true,
+      "XYCTL.EXE": true
+    },
+    "metrics": "WindowsVersion=3\r\nWindowsFlags=64\r\nSM_0=640\r\nSM_1=256\r\nSM_2=12\r\nSM_3=8\r\nSM_4=10\r\nSM_5=1\r\nSM_6=1\r\nSM_7=4\r\nSM_8=4\r\nSM_9=8\r\nSM_10=12\r\nSM_11=32\r\nSM_12=16\r\nSM_13=32\r\nSM_14=16\r\nSM_15=9\r\nSM_16=640\r\nSM_17=246\r\nSM_18=0\r\nSM_19=1\r\nSM_20=8\r\nSM_21=12\r\nSM_22=0\r\nSM_23=0\r\nSM_24=0\r\nSM_25=1\r\nSM_26=0\r\nSM_27=0\r\nSM_28=96\r\nSM_29=16\r\nSM_30=16\r\nSM_31=8\r\nSM_32=4\r\nSM_33=4\r\nSM_34=96\r\nSM_35=16\r\nSM_36=33\r\nSM_37=0\r\nSM_38=0\r\nSM_39=0\r\nSM_40=0\r\nSM_41=0\r\nSM_42=0\r\nDialogBaseX=8\r\nDialogBaseY=8\r\nStockFont=10\r\nHeight=8\r\nAscent=7\r\nInternal=0\r\nExternal=0\r\nAverage=8\r\nMaximum=8\r\nWeight=400\r\nCharset=255\r\nTerminal\r\nMenuTextWidth=192\r\nMenuTextHeight=8\r\nStockFont=11\r\nHeight=10\r\nAscent=9\r\nInternal=0\r\nExternal=0\r\nAverage=8\r\nMaximum=8\r\nWeight=400\r\nCharset=0\r\nCourier\r\nMenuTextWidth=192\r\nMenuTextHeight=10\r\nStockFont=12\r\nHeight=10\r\nAscent=9\r\nInternal=2\r\nExternal=0\r\nAverage=5\r\nMaximum=11\r\nWeight=400\r\nCharset=0\r\nHelv\r\nMenuTextWidth=122\r\nMenuTextHeight=10\r\nStockFont=13\r\nHeight=8\r\nAscent=7\r\nInternal=1\r\nExternal=0\r\nAverage=7\r\nMaximum=14\r\nWeight=700\r\nCharset=0\r\nSystem\r\nMenuTextWidth=167\r\nMenuTextHeight=8\r\n",
+    "dos_return": true,
+    "logs": {
+      "DOSVER.TXT": "\r\nIBM Personal Computer DOS Version  3.20 \r\n",
+      "INSTALL.LOG": "\r\nC>ECHO OFF\r\nRESERVE: 16K video overlap reserved. Start Windows with WIN /R.\r\n\r\n",
+      "START.LOG": "\r\nC>ECHO OFF\r\nRESERVE: video reservation already installed.\r\n\r\n"
+    },
+    "seconds": 130.0,
+    "owned_stopped": true,
+    "lease_released": true,
+    "archive": {
+      "bytes": 648375,
+      "sha256": "dac91c866628f71d14d6fa52a930339fac5bf07546e79a43f03e6f3ead5b49e8"
+    },
+    "custom_setup_executed": false,
+    "descriptor_unchanged": true,
+    "alternate_source": "C:\\ALT\\WINXT",
+    "canonical_source_absent": true,
+    "raw_receipt": "EXOEM.JSN"
+  },
+  "fresh": {
+    "schema": 1,
+    "complete": true,
+    "mode": "fresh",
+    "archive": {
+      "bytes": 648375,
+      "sha256": "dac91c866628f71d14d6fa52a930339fac5bf07546e79a43f03e6f3ead5b49e8"
+    },
+    "bound_seconds": 1500,
+    "helper": {
+      "bytes": 83142,
+      "sha256": "535cb890469930c54584ee08260b43faf4656f3f82f4a3ce3066f1ab3e9d7257"
+    },
+    "public_assets": {
+      "WINXT.ZIP": {
+        "bytes": 648375,
+        "sha256": "dac91c866628f71d14d6fa52a930339fac5bf07546e79a43f03e6f3ead5b49e8"
+      }
+    },
+    "physical_test": false,
+    "actions": [],
+    "scope": "Same current installed OS/cache reused; actual expanded FRESH from C:/EXTRACT verifies284 Windows streams and370outputs, including creating portable OEM metadata at C:/WINXT, then normal finisher/guarded desktop. No ZIP/rootSFX exists. Windows Setup is unchanged and not repeated.",
+    "controller": {
+      "bytes": 15271,
+      "sha256": "ac7b5de3ba734da73b9d9be3e93727f7cac453d8551024e5f6d3a8a9960c4e06"
+    },
+    "owned_stopped": true,
+    "lease_released": true,
+    "process_inventory_before": [],
+    "lease_acquired": true,
+    "managed_sentinel_before": {
+      "bytes": 44,
+      "sha256": "8cf749318db64137816a8ba5e8a0ce5736ea6517b3fccc64d2f6be1bedd693c9"
+    },
+    "emulator": {
+      "path": "C:\\Users\\chad\\Documents\\Codex\\2026-10-16\\task-10\\EMU-STOS1\\fixed\\86Box.exe",
+      "identity": {
+        "bytes": 40974314,
+        "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+      }
+    },
+    "pid": 6392,
+    "preparation_seconds_including_boot": 950.6,
+    "prepared_comparison": {
+      "count": 370,
+      "different": []
+    },
+    "installed_files": {
+      "SOUND.DRV": {
+        "path": "WINDOWS/SYSTEM/SOUND.DRV",
+        "identity": {
+          "bytes": 9752,
+          "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+        },
+        "matches_packet": true
+      },
+      "TSHELL.EXE": {
+        "path": "WINDOWS/TSHELL.EXE",
+        "identity": {
+          "bytes": 72323,
+          "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9"
+        },
+        "matches_packet": true
+      },
+      "TSINPUT.DLL": {
+        "path": "WINDOWS/TSINPUT.DLL",
+        "identity": {
+          "bytes": 6281,
+          "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+        },
+        "matches_packet": true
+      },
+      "TCHIME.EXE": {
+        "path": "WINXT/TCHIME.EXE",
+        "identity": {
+          "bytes": 5071,
+          "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61"
+        },
+        "matches_packet": true
+      },
+      "XPCHIME.EXE": {
+        "path": "WINXT/XPCHIME.EXE",
+        "identity": {
+          "bytes": 5103,
+          "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0"
+        },
+        "matches_packet": true
+      },
+      "TEXIT.EXE": {
+        "path": "WINXT/TEXIT.EXE",
+        "identity": {
+          "bytes": 9215,
+          "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148"
+        },
+        "matches_packet": true
+      },
+      "TP.EXE": {
+        "path": "WINXT/TP.EXE",
+        "identity": {
+          "bytes": 12847,
+          "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33"
+        },
+        "matches_packet": true
+      },
+      "FIXXT.EXE": {
+        "path": "WINXT/FIXXT.EXE",
+        "identity": {
+          "bytes": 33001,
+          "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"
+        },
+        "matches_packet": true
+      },
+      "XTCLEAN.COM": {
+        "path": "WINDOWS/XTCLEAN.COM",
+        "identity": {
+          "bytes": 1071,
+          "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
+        },
+        "matches_packet": true
+      },
+      "HPXY.DRV": {
+        "path": "WINDOWS/SYSTEM/HPXY.DRV",
+        "identity": {
+          "bytes": 56704,
+          "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275"
+        },
+        "matches_packet": true
+      },
+      "TNDYK3.DRV": {
+        "path": "WINDOWS/SYSTEM/TNDYK3.DRV",
+        "identity": {
+          "bytes": 7640,
+          "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+        },
+        "matches_packet": true
+      },
+      "WHEEL.DRV": {
+        "path": "WINDOWS/SYSTEM/WHEEL.DRV",
+        "identity": {
+          "bytes": 1820,
+          "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+        },
+        "matches_packet": true
+      }
+    },
+    "desktop_mode": 9,
+    "graphics_observation_seconds": 60,
+    "normal_desktop_visual_review_required": true,
+    "dos_version": "\r\nMS-DOS Version 6.22\r\n\r\n",
+    "system_ini": "[boot]           \r\n286grabber=CGA.GR2\r\nshell=TSHELL.EXE\r\nnetwork.drv=\r\nlanguage.dll=\r\nfixedfon.fon=XTCFIX.FON\r\ncomm.drv=comm.drv\r\nsound.drv=SOUND.DRV\r\noemfonts.fon=XTCOEM.FON\r\nfonts.fon=XTCSYS.FON\r\nmouse.drv=WHEEL.DRV\r\nkeyboard.drv=TNDYK3.DRV\r\ndisplay.drv=HPXY.DRV\r\nsystem.drv=system.drv\r\n386grabber=\r\n[keyboard]\r\nsubtype=\r\ntype=1\r\noemansi.bin=\r\nkeyboard.dll=\r\n[boot.description]\r\n\r\nnetwork.drv=Network not installed\r\nlanguage.dll=English (American)\r\nkeyboard.typ=PC/XT - Type keyboard (84 keys)\r\nmouse.drv=Tandy serial wheel mouse (COM1/IRQ4)\r\ndisplay.drv=Tandy EX/HX accepted HPXY 640x200 wide-font mode\r\nsystem.drv=Tandy 1000 EX/HX (WindowsXT)\r\n[386Enh]\r\ndisplay=*vddvga\r\nkeyboard=*vkd\r\nmouse=*vmd\r\nnetwork=*vnetbios, *dosnet\r\ndevice=*vpicd\r\ndevice=*vtd\r\ndevice=*reboot\r\ndevice=*vdmad\r\ndevice=*vsd\r\ndevice=*v86mmgr\r\ndevice=*pageswap\r\ndevice=*dosmgr\r\ndevice=*vmpoll\r\ndevice=*wshell\r\ndevice=*vhd\r\ndevice=*vfd\r\ndevice=*vpd\r\ndevice=*parity\r\ndevice=*biosxlat\r\ndevice=*vcd\r\ndevice=*vmcpd\r\ndevice=*combuff\r\ndevice=*cdpscsi\r\nlocal=CON\r\nFileSysChange=off\r\n\r\n[standard]\r\n\r\n[NonWindowsApp]\r\n",
+    "boot_files_unchanged": {
+      "AUTOEXEC.BAT": true,
+      "CONFIG.SYS": true
+    },
+    "staging_temps": [],
+    "installed_wrapper_matches_source": true,
+    "managed_sentinel_after": {
+      "bytes": 44,
+      "sha256": "8cf749318db64137816a8ba5e8a0ce5736ea6517b3fccc64d2f6be1bedd693c9"
+    },
+    "managed_sentinel_preserved": true,
+    "sound_shadow_absent": true,
+    "capture": {
+      "bytes": 3509,
+      "sha256": "57da1be91808cddce2e0423162b2b40284ab462049ff81c3369f97c3d5746979"
+    },
+    "native_crc_scope": {
+      "expanded_streams": 284,
+      "all_preflight_and_output_checks_completed": true,
+      "same_run_roles": [
+        "fresh",
+        "native_valid_inputs"
+      ],
+      "Windows_Setup_repeated": false
+    },
+    "seconds": 1080.5,
+    "normal_desktop_visually_confirmed": true,
+    "visual_observation": "Visible XYCTL private GDI window, not splash; unchanged full Windows Setup/rendering is not repeated.",
+    "source_readback": {
+      "all60_expanded_source_members_unchanged": {
+        "README.TXT": true,
+        "SETUP.EXE": true,
+        "WINXT/APPS.TXT": true,
+        "WINXT/CGA.GR2": true,
+        "WINXT/CPSET.EXE": true,
+        "WINXT/DISPLAY.BAT": true,
+        "WINXT/DISPLAY.TXT": true,
+        "WINXT/DISPWIN.BAT": true,
+        "WINXT/FIXXT.BAT": true,
+        "WINXT/FIXXT.EXE": true,
+        "WINXT/FONTLIC.TXT": true,
+        "WINXT/HPXY.DRV": true,
+        "WINXT/HPXY.INF": true,
+        "WINXT/LOGOLIC.TXT": true,
+        "WINXT/MATRIX.EXE": true,
+        "WINXT/MAZE.EXE": true,
+        "WINXT/MODELIC.TXT": true,
+        "WINXT/MODEXT.BAT": true,
+        "WINXT/NOTICE.TXT": true,
+        "WINXT/OEMSETUP.INF": true,
+        "WINXT/OWATCOM.TXT": true,
+        "WINXT/OWNERS.TXT": true,
+        "WINXT/PINBALL.EXE": true,
+        "WINXT/PROFILES.TXT": true,
+        "WINXT/RESERVE.COM": true,
+        "WINXT/SETAUTO.EXE": true,
+        "WINXT/SETUPXT.BAT": true,
+        "WINXT/SHOOK.COM": true,
+        "WINXT/SOUND.DRV": true,
+        "WINXT/SOUNDID.JSN": true,
+        "WINXT/SOUNDLIC.TXT": true,
+        "WINXT/STARFLD.EXE": true,
+        "WINXT/START.TXT": true,
+        "WINXT/STARTXT.BAT": true,
+        "WINXT/TABOUT.EXE": true,
+        "WINXT/TCHIME.EXE": true,
+        "WINXT/TEXIT.EXE": true,
+        "WINXT/TNDYK3.DRV": true,
+        "WINXT/TP.EXE": true,
+        "WINXT/TSHELL.EXE": true,
+        "WINXT/TSHELL.INI": true,
+        "WINXT/TSINPUT.DLL": true,
+        "WINXT/WHEEL.DRV": true,
+        "WINXT/WHEELLIC.TXT": true,
+        "WINXT/WINBRDG.EXE": true,
+        "WINXT/WINXT.BAT": true,
+        "WINXT/WXTSPL01.RLE": true,
+        "WINXT/WXTWHL.EXE": true,
+        "WINXT/XPCHIME.EXE": true,
+        "WINXT/XTCFIX.FON": true,
+        "WINXT/XTCLEAN.COM": true,
+        "WINXT/XTCOEM.FON": true,
+        "WINXT/XTCSYS.FON": true,
+        "WINXT/XTEFIX.FON": true,
+        "WINXT/XTEOEM.FON": true,
+        "WINXT/XTESYS.FON": true,
+        "WINXT/XTLOGO.LGO": true,
+        "WINXT/XTSTATIC.LGO": true,
+        "WINXT/XTTSYS.FON": true,
+        "WINXT/XYCTL.EXE": true
+      },
+      "portable_descriptor_staged_exact": true,
+      "root_setup_sfx_zip_absent": true
+    }
+  },
+  "host_checks": {
+    "expanded_publisher_unit": 15,
+    "preparation_unit": 24,
+    "legacy_publisher_unit": 11,
+    "fixed_package_unit": 19,
+    "C_CRC_vectors": 17,
+    "Windows_CRC_identity_rows": 284,
+    "Windows_host_GCC_launcher": "C:/Users/chad/Documents/Codex/toolchains/gcc-ucrt64.py",
+    "default_PREPXR_rebuild_identical": true,
+    "expanded_SETUP_rebuild_identical": true
+  }
+}

@@ -1,5 +1,6 @@
 """Developer-only Open Watcom 16-bit DOS build; consumers use the shipped EXE."""
 import argparse
+import importlib.machinery
 import os
 from pathlib import Path
 import shutil
@@ -12,6 +13,11 @@ def build(home, output, target):
     driver = home / "binnt/wcl.exe"
     if not driver.is_file() or not (home / "h/dos.h").is_file():
         raise ValueError("Complete Open Watcom DOS toolchain required")
+    if target == "setup":
+        aliases = importlib.machinery.SourceFileLoader("setup_alias_builder", str(HERE / "MAKESET.PY")).load_module()
+        for name, data in aliases.generate().items():
+            if (HERE / name).read_bytes() != data:
+                raise ValueError("Regenerate expanded Setup input aliases first: " + name)
     output.mkdir(parents=True, exist_ok=False)
     for source in HERE.iterdir():
         if source.suffix in (".C", ".H", ".ASM"):
@@ -32,8 +38,8 @@ def build(home, output, target):
             if result.returncode:
                 raise ValueError("DOS wrapper build failed: " + str(result.returncode))
         return
-    name = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "XRPREP"
-    binary = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "PREPXR"
+    name = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "SETUP" if target == "setup" else "XRPREP"
+    binary = "FIXXT" if target == "finisher" else "XSETUP" if target == "xrsync" else "SETUP" if target == "setup" else "PREPXR"
     flags = ["-zq", "-bt=dos", "-0", "-ms", "-s", "-k8192"] if target == "finisher" else ["-zq", "-bt=dos", "-0", "-ml", "-os"]
     result = subprocess.run([str(driver)] + flags + [
                              "-fe=" + binary + ".EXE", name + ".C"],
@@ -48,6 +54,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--watcom", required=True, type=Path)
     parser.add_argument("--out", required=True, type=Path)
-    parser.add_argument("--target", choices=("xrsync", "rc8", "finisher", "wrapper"), default="xrsync")
+    parser.add_argument("--target", choices=("xrsync", "rc8", "setup", "finisher", "wrapper"), default="xrsync")
     args = parser.parse_args()
     build(args.watcom, args.out, args.target)

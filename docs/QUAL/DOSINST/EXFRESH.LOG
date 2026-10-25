@@ -1,0 +1,66 @@
+Windows XT SETUP - DOS-native installation
+Using the complete Windows media cache.
+Checking the supplied runtime and required Windows files before output.
+Checking C:\EXTRACT\WINXT\CGA.GR2
+Checking C:\EXTRACT\WINXT\APPS.TXT
+Checking C:\EXTRACT\WINXT\CPSET.EXE
+Checking C:\EXTRACT\WINXT\FIXXT.BAT
+Checking C:\EXTRACT\WINXT\FIXXT.EXE
+Checking C:\EXTRACT\WINXT\FONTLIC.TXT
+Checking C:\EXTRACT\WINXT\HPXY.DRV
+Checking C:\EXTRACT\WINXT\LOGOLIC.TXT
+Checking C:\EXTRACT\WINXT\MATRIX.EXE
+Checking C:\EXTRACT\WINXT\MAZE.EXE
+Checking C:\EXTRACT\WINXT\MODELIC.TXT
+Checking C:\EXTRACT\WINXT\MODEXT.BAT
+Checking C:\EXTRACT\WINXT\HPXY.INF
+Checking C:\EXTRACT\WINXT\OWNERS.TXT
+Checking C:\EXTRACT\WINXT\PINBALL.EXE
+Checking C:\EXTRACT\WINXT\PROFILES.TXT
+Checking C:\EXTRACT\WINXT\RESERVE.COM
+Checking C:\EXTRACT\WINXT\SETAUTO.EXE
+Checking C:\EXTRACT\WINXT\SETUPXT.BAT
+Checking C:\EXTRACT\WINXT\SHOOK.COM
+Checking C:\EXTRACT\WINXT\STARFLD.EXE
+Checking C:\EXTRACT\WINXT\START.TXT
+Checking C:\EXTRACT\WINXT\STARTXT.BAT
+Checking C:\EXTRACT\WINXT\TABOUT.EXE
+Checking C:\EXTRACT\WINXT\TCHIME.EXE
+Checking C:\EXTRACT\WINXT\TEXIT.EXE
+Checking C:\EXTRACT\WINXT\TNDYK3.DRV
+Checking C:\EXTRACT\WINXT\TP.EXE
+Checking C:\EXTRACT\WINXT\TSHELL.EXE
+Checking C:\EXTRACT\WINXT\TSHELL.INI
+Checking C:\EXTRACT\WINXT\TSINPUT.DLL
+Checking C:\EXTRACT\WINXT\WHEEL.DRV
+Checking C:\EXTRACT\WINXT\WINBRDG.EXE
+Checking C:\EXTRACT\WINXT\WINXT.BAT
+Checking C:\EXTRACT\WINXT\WXTSPL01.RLE
+Checking C:\EXTRACT\WINXT\WXTWHL.EXE
+Checking C:\EXTRACT\WINXT\XPCHIME.EXE
+Checking C:\EXTRACT\WINXT\XTCFIX.FON
+Checking C:\EXTRACT\WINXT\XTCLEAN.COM
+Checking C:\EXTRACT\WINXT\XTCOEM.FON
+Checking C:\EXTRACT\WINXT\XTCSYS.FON
+Checking C:\EXTRACT\WINXT\XTEFIX.FON
+Checking C:\EXTRACT\WINXT\XTEOEM.FON
+Checking C:\EXTRACT\WINXT\XTESYS.FON
+Checking C:\EXTRACT\WINXT\XTLOGO.LGO
+Checking C:\EXTRACT\WINXT\XTSTATIC.LGO
+Checking C:\EXTRACT\WINXT\XTTSYS.FON
+Checking C:\EXTRACT\WINXT\XYCTL.EXE
+Checking C:\EXTRACT\WINXT\SOUND.DRV
+Checking C:\EXTRACT\WINXT\OEMSETUP.INF
+Prepared C:\WINXT\HPXY.INF
+Prepared C:\WINXT\OEMSETUP.INF
+Prepared C:\SETUPXT.BAT
+Complete native XR1 fresh preparation: 370 verified files.
+Next: C:\SETUPXT
+RESERVE: 16K video overlap reserved. Start Windows with WIN /R.
+Starting the existing guarded Windows XT installer.
+No-op: all owned entries match; no payloads copied or INIs written.
+Complete: 0 payloads copied, SYSTEM.INI unchanged. No WIN.COM/wave rebuild.
+Tandy Computer entry already registered; active selections preserved.
+Windows XT is ready. Starting the desktop.
+Owned entries and cheap payload samples match.
+RESERVE: video reservation already installed.

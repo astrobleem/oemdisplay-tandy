@@ -1,0 +1,34 @@
+; Portable Windows XT driver folder for Windows 3.0 Setup.
+[data]
+Version="3.0"
+[disks]
+a = .,"Windows XT XR1",OEMSETUP.INF
+[display]
+hpxy = a:HPXY.DRV, "Tandy EX/HX HPXY 640x256 hardware pan", "200,96,48", a:CGA.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE
+[sysfonts]
+a:XTCSYS.FON, "XT CGA System", "200,96,48"
+[fixedfonts]
+a:XTCFIX.FON, "XT CGA Fixed", "200,96,48"
+[oemfonts]
+a:XTCOEM.FON, "XT CGA Terminal", "200,96,48",1
+[keyboard.drivers]
+xtkbd = a:TNDYK3.DRV
+[keyboard.types]
+t1s0pcxt = "PC/XT - Type keyboard (84 keys)",nodll
+[pointing.device]
+xtwheel = a:WHEEL.DRV, "Tandy serial wheel mouse (COM1/IRQ4)"
+[system]
+system = 1:SYSTEM.DRV
+sound = 1:SOUND.DRV
+comm = 1:COMM.DRV
+[machine]
+    "Tandy 1000 EX/HX (WindowsXT)","78"
+        system
+        xtkbd
+        t1s0pcxt
+        xtwheel
+        hpxy
+        sound
+        comm
+        nohimemswitch
+        ebios

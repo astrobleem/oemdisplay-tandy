@@ -157,3 +157,5 @@ oemdisk/** -text
 .github/workflows/root-layout.yml -text
 # Native shared-sound consumer source and exact build receipts.
 tools/SOUNDOWN/** -text
+
+tools/XROEM/** -text
