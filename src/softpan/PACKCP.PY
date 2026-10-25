@@ -13,7 +13,7 @@ def main():
     for n in ('driver','apps','fixed','out'):ap.add_argument('--'+n,type=Path,required=True)
     ap.add_argument('--grabber',type=Path,default=ROOT/'distributions/WINXT/CGA.GR2')
     a=ap.parse_args();out=a.out.resolve();out.mkdir(parents=True,exist_ok=False)
-    fixed=a.fixed.read_bytes();pin=json.loads((ROOT/'experiments/DISPLAY3/PINS.JSN').read_text())['drivers']['PCP3216']
+    fixed=a.fixed.read_bytes();pin=json.loads((ROOT/'tools/SPPACK/PUBLIC.JSN').read_text())['profiles']['CPPAN']['files']['PCP3216.DRV']
     assert len(fixed)==pin['bytes'] and hashlib.sha256(fixed).hexdigest()==pin['sha256']
     decoder=importlib.machinery.SourceFileLoader('cp_expand',str(ROOT/'tools/XR1PACK/PREPARE.PY')).load_module()
     files={'CPPAN.DRV':a.driver.read_bytes(),'PCP3216.DRV':fixed,'CGA.GR2':decoder.expanded_file(a.grabber.read_bytes(),'CGA.GR2')}
@@ -62,7 +62,7 @@ the ColorPlus card has dedicated video RAM.
 RETURN TO THE FIXED DRIVER
 In Windows File > Run, run C:\\CPPAN\\PANCFG OFF. Exit Windows, run
 SETUP, choose Other, C:\\CPPAN, then ColorPlus 320x200 fixed (rollback).
-The included PCP3216.DRV is the unchanged accepted fixed driver.
+The included PCP3216.DRV is the qualified current fixed driver.
 
 The required CGA.GR2 grabber, fonts, logos and helpers are included.
 Use an existing Windows 3.0 installation.

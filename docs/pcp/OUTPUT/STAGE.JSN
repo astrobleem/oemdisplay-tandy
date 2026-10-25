@@ -1,0 +1,21 @@
+{
+  "host_only": true,
+  "native_built": false,
+  "baseline": {
+    "bytes": 43379,
+    "sha256": "340008a6a33951e89d423ca260ab2b540baff7dc8fd68ed2d3ab6994e5634acc"
+  },
+  "candidate": {
+    "bytes": 45883,
+    "sha256": "689589ae491eb1c1bfa3ee796cd2ed2979cccf5ae57a5803cc96e343afeecb0d"
+  },
+  "changed_staged_files": [
+    "renderer/EGA/TSOFT.ASM"
+  ],
+  "only_TOutput": true,
+  "tcursor": {
+    "bytes": 14983,
+    "sha256": "314173b064683b522f8682d0832b17e9fc31ef52f1f011fc417539cee4b14aff"
+  },
+  "native_processes_launched": 0
+}

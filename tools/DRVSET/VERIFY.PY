@@ -27,6 +27,9 @@ def verify(product,folder,exe,archive):
     if files['INSTALL.TXT']!=(folder/'INSTALL.TXT').read_bytes():
         raise ValueError('Packaged and direct install guides differ')
     status,receipt=native.status(product,outputs,files)
+    if product=='ColorPlus':
+        update=importlib.machinery.SourceFileLoader('verify_cpp_native_update',str(ROOT/'src/pcp/CPVERIFY.PY')).load_module()
+        status,receipt=update.status(outputs,files)
     if not status.startswith('PASS:'):raise ValueError(status)
     if product=='PC1512':
         pack=importlib.machinery.SourceFileLoader('verify_p15_source',str(ROOT/'tools/P15PACK/PACK.PY')).load_module()

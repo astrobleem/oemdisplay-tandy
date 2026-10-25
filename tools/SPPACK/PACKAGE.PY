@@ -31,6 +31,11 @@ def archive(kind,files):
 def outputs():
     spec=json.loads((HERE/'PUBLIC.JSN').read_bytes())
     if not spec['publication_allowed'] or spec['hardware_panning']:raise ValueError('Wrong publication state')
+    if spec['qualification'].get('fixed_driver_update'):
+        fixed=importlib.machinery.SourceFileLoader('sp_fixed_colorplus',str(ROOT/'src/pcp/CPVERIFY.PY')).load_module()
+        q,_=fixed.verify()
+        binding=spec['qualification']['fixed_driver_update']
+        if binding!={'path':'tools/CPPACK/QUALIFY.JSN','manifest':identity((ROOT/'tools/CPPACK/QUALIFY.JSN').read_bytes())}:raise ValueError('Changed fixed ColorPlus qualification')
     for n,pin in spec['source'].items():
         if identity((ROOT/n).read_bytes())!=pin:raise ValueError('Changed qualified source '+n)
     files={kind+'.ZIP':archive(kind,payload(kind,spec)) for kind in ('JRPAN','CPPAN')}

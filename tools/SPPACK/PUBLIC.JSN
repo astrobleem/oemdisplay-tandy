@@ -55,8 +55,8 @@
           "sha256": "e67238948079683788e626ad54a11b89e28a515da97632724bc394e2637a1442"
         },
         "PCP3216.DRV": {
-          "bytes": 54832,
-          "sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406"
+          "bytes": 58752,
+          "sha256": "6fbee832bde5b8fec958eb654e6fde14a4e6cc8fa6e9749623311cb99049411c"
         },
         "WXTSPL01.RLE": {
           "bytes": 4062,
@@ -328,6 +328,13 @@
     }
   },
   "qualification": {
+    "fixed_driver_update": {
+      "manifest": {
+        "bytes": 35446,
+        "sha256": "e044c356a76c353e1f74da9e9af9eea1134cbe5fd900b58dfacd89115770849b"
+      },
+      "path": "tools/CPPACK/QUALIFY.JSN"
+    },
     "manifest": {
       "bytes": 40814,
       "sha256": "b3ac990ae69d2f068efa81789b7e6db2c1a5c983ba63c91fddb6fec5159a570c"
@@ -368,8 +375,8 @@
       "sha256": "dc0958659e27dcd86d52f502e11b2e70c0dc7130e3790f4009742391cd6f3f94"
     },
     "src/softpan/PACKCP.PY": {
-      "bytes": 4291,
-      "sha256": "a83e2ad32c0ee5bf5d3867cc815fd9ee9e1cc78372dedef7738320a1d4613077"
+      "bytes": 4307,
+      "sha256": "e98ecec351f683dad8842fd9176bb07bf3789e9fcae010f7c8ced2fd2813f14f"
     },
     "src/softpan/PACKSP.PY": {
       "bytes": 3991,
@@ -468,8 +475,8 @@
       "sha256": "24a6cb1f0b427a7b61b2e43051f06dedc3a34719f5b78b6b4f67c6292c2829d4"
     },
     "tools/SPPACK/PACKAGE.PY": {
-      "bytes": 3602,
-      "sha256": "f206e420567f4c3b3f691abbbfa6a76ca50f51b218e25b45aed59504927adc09"
+      "bytes": 4053,
+      "sha256": "56e7024dc74c4d84a31f6e14a9eb10091a9f409d5f5078abd06b20e4fcf5f219"
     },
     "tools/SPPACK/README.TXT": {
       "bytes": 1331,

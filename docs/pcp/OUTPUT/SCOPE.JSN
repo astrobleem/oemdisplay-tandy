@@ -1,0 +1,31 @@
+{
+  "native_builds_pass": true,
+  "only_changed_staged_source": [
+    "EGA/TSOFT.ASM"
+  ],
+  "code_delta": 240,
+  "data_bytes": 930,
+  "data_delta": 0,
+  "shadow_bytes": 32000,
+  "baseline_bytes": 58512,
+  "candidate_bytes": 58752,
+  "same_resources": true,
+  "shipped_to_main_file_delta": 3680,
+  "shipped_to_main_object_deltas": [
+    {
+      "object": "BMC_MAIN.OBJ",
+      "segment": "_DIMAPS",
+      "delta": 73
+    },
+    {
+      "object": "RLE88.OBJ",
+      "segment": "_TEXT",
+      "delta": 2933
+    },
+    {
+      "object": "SDIB88.OBJ",
+      "segment": "_TEXT",
+      "delta": 646
+    }
+  ]
+}

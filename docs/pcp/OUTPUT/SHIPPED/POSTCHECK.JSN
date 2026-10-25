@@ -1,0 +1,14 @@
+{
+  "bad": [],
+  "frames": 48,
+  "fat": {
+    "bytes_per_sector": 512,
+    "fat_count": 2,
+    "sectors_per_fat": 41,
+    "copies_equal": true,
+    "sha256": [
+      "1634287d0e3a7842e207c4172a06baa98ca891aaae07b1301c544bb968eba772",
+      "1634287d0e3a7842e207c4172a06baa98ca891aaae07b1301c544bb968eba772"
+    ]
+  }
+}

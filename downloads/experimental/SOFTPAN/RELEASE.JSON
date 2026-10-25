@@ -2,8 +2,8 @@
   "additional_shadow_bytes": 32000,
   "assets": {
     "CPPAN.ZIP": {
-      "bytes": 77966,
-      "sha256": "1445e886a5eb56889c522be3c928b43bffb487057e175ae943a33445adbb491d"
+      "bytes": 80003,
+      "sha256": "df186e33e3d3c13a76b5ba35fa65e50b3535f3f33fd206a2b771b12ea56e42fa"
     },
     "JRPAN.ZIP": {
       "bytes": 77913,
@@ -74,8 +74,8 @@
           "sha256": "e67238948079683788e626ad54a11b89e28a515da97632724bc394e2637a1442"
         },
         "PCP3216.DRV": {
-          "bytes": 54832,
-          "sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406"
+          "bytes": 58752,
+          "sha256": "6fbee832bde5b8fec958eb654e6fde14a4e6cc8fa6e9749623311cb99049411c"
         },
         "WXTSPL01.RLE": {
           "bytes": 4062,
@@ -205,6 +205,13 @@
   },
   "publication_allowed": true,
   "qualification": {
+    "fixed_driver_update": {
+      "manifest": {
+        "bytes": 35446,
+        "sha256": "e044c356a76c353e1f74da9e9af9eea1134cbe5fd900b58dfacd89115770849b"
+      },
+      "path": "tools/CPPACK/QUALIFY.JSN"
+    },
     "manifest": {
       "bytes": 40814,
       "sha256": "b3ac990ae69d2f068efa81789b7e6db2c1a5c983ba63c91fddb6fec5159a570c"
