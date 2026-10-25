@@ -20,8 +20,26 @@ The host record explicitly makes no native-test assertion. The two profiles
 have different memory apertures; neither the driver nor Setup detects them.
 Historical Candidate03 source and qualification records remain intact.
 
-Native installation/startup verification for these complete packets is
-pending a compatible Yamaha emulator binary or fixture. The available
-Windows headless 86Box source has a TODO for 160x200x16 scanout and a fixed
-B800h mapping; it cannot qualify the PC1/B000h profile. A generic CGA screen
-will not be reported as Yamaha scanout. Publication is pending approval.
+## Native result
+
+[SUPPORT.JSN](SUPPORT.JSN) binds both exact packets and integration sources.
+Native Windows 3.0 maintenance Setup selected the correct driver and three
+XTC font aliases for each profile. Installed font/grabber/driver bytes matched
+both packets exactly, and WIN.COM contained XTSTATIC.LGO and WXTSPL01.RLE.
+The selected fonts and grabber were absent from Windows before Setup.
+
+Each Setup output was extracted to a private folder and started in the same
+installed DOSBox-X binary recorded by the compact evidence. The existing
+read-only metrics probe reported real mode, 160x200 and the expected original
+System/OEM metrics; both runs returned to DOS without loader errors. The only
+instrumentation was selecting the metrics probe as the shell after retaining
+the unmodified Setup output. No compact fonts or driver patches were applied.
+
+This is software/API startup validation. It does not qualify Yamaha scanout,
+physical PC1 hardware or RGB/SCART output. The original B800 scanout evidence
+remains a separate historical result; it was not rerun or relabeled here.
+
+The recovered paths, emulator/probe identities, native selected aliases and
+installed bytes are in the receipt. Source images remained unchanged. All
+owned test processes stopped and released the shared lease. Publication of
+these new current packets is pending approval.

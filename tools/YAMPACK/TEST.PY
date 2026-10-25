@@ -1,5 +1,6 @@
 """Verify both real accepted packets and support-integration refusals."""
 import importlib.machinery
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -93,6 +94,25 @@ class Packets(unittest.TestCase):
             z.writestr('PC1YAMA.DRV', b'duplicate')
         with self.assertRaises(ValueError):
             P.verify('pc1', path.read_bytes())
+
+    def test_recorded_native_setup_and_software_startup_bind_current_packets(self):
+        report = json.loads((P.ROOT / 'docs/yamaha/SUPPORT.JSN').read_bytes())
+        self.assertEqual(report['status'], 'PASS_NATIVE_SETUP_AND_SOFTWARE_STARTUP')
+        self.assertFalse(report['physical_hardware_qualified'])
+        self.assertFalse(report['actual_yamaha_scanout_qualified'])
+        for name, pin in report['integration_sources'].items():
+            self.assertEqual(P.identity((P.ROOT / name).read_bytes()), pin, name)
+        for profile, entry in report['profiles'].items():
+            self.assertEqual(P.identity((P.ROOT / entry['packet_path']).read_bytes()), entry['packet'])
+            self.assertTrue(entry['source_fixture_unchanged_after_test'])
+            for stage in ('native_setup', 'software_startup'):
+                self.assertTrue(entry[stage]['complete'])
+                self.assertTrue(entry[stage]['owned_stopped'])
+                self.assertTrue(entry[stage]['lease_released'])
+            self.assertTrue(all(entry['native_setup']['startup_logo_in_wincom'].values()))
+            self.assertTrue(entry['software_startup']['returned_to_dos'])
+            self.assertIn('SM_0=160\nSM_1=200\n', entry['software_startup']['metrics'])
+            self.assertEqual(entry['native_setup']['selected_boot']['display.drv'], P.PROFILES[profile][0])
 
 if __name__ == '__main__':
     unittest.main()

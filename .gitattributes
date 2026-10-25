@@ -109,3 +109,4 @@ tools/YAMPACK/** -text
 downloads/experimental/yamaha/** -text
 docs/yamaha/SUPPORT.MD -text
 .github/workflows/yampack.yml -text
+docs/yamaha/SUPPORT.JSN -text
