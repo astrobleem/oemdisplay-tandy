@@ -59,6 +59,10 @@ def collection(config,main_zip):
  files.update({'TANDYLAB/DRIVERS/'+n:b for n,b in main.items() if n.startswith('WINXT/')})
  files['TANDYLAB/README.TXT']=(HERE/'GUIDES/TANDYLAB.TXT').read_bytes()
  files['TANDYLAB/CHECK.TXT']=(HERE/'GUIDES/TANDYLAB.TXT').read_bytes()
+ catalog=original['TANDYLAB/CATALOG.TXT'].decode('ascii')
+ marker='DISPLAY TOOLKIT (OPTIONAL, MODERN PC PREPARATION ONLY)'
+ if catalog.count(marker)!=1:raise ValueError('TANDYLAB driver catalog section changed')
+ files['TANDYLAB/CATALOG.TXT']=text(catalog[:catalog.index(marker)]+'OPTIONAL WINDOWS XT DISPLAY SOURCE\n  Change to DRIVERS\\WINXT in plain DOS and run DISPLAY. Select that same\n  full path in Windows Setup, choose HPXY and complete changes. For each\n  launch change to that folder and run DISPWIN. Both entries reserve video\n  memory automatically. Fonts, grabber and logos are included; read DISPLAY.TXT.\n')
  files['TANDYLAB/DRIVERS/README.TXT']=text('WINDOWS XT DISPLAY SOURCE\n\nChange to DRIVERS\\WINXT in DOS and read DISPLAY.TXT. Run DISPLAY for\nWindows Setup and DISPWIN for each launch; reservation is automatic.\nUse installed Windows 3.0 real mode on an original EX/HX with normal 640 KB.\nThe folder includes all driver fonts, grabber, logos and helpers.\n')
  files['TANDYLAB/MANIFEST.SHA']=text(''.join(identity(b)['sha256']+'  '+n[len('TANDYLAB/'):]+'\n' for n,b in sorted(files.items())))
  return archive(files)

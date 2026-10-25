@@ -34,11 +34,14 @@ def check(sound,core):
  checks.append('Incomplete main layout refused')
  collection=P.zip_files(assets['TANDYLAB.ZIP']);original=P.zip_files((P.ROOT/config['collection']['source']).read_bytes())
  for n,b in original.items():
-  if n.startswith('TANDYLAB/DRIVERS/') or n in ['TANDYLAB/README.TXT','TANDYLAB/CHECK.TXT','TANDYLAB/MANIFEST.SHA']:continue
+  if n.startswith('TANDYLAB/DRIVERS/') or n in ['TANDYLAB/README.TXT','TANDYLAB/CHECK.TXT','TANDYLAB/MANIFEST.SHA','TANDYLAB/CATALOG.TXT']:continue
   assert collection[n]==b,n
  main=P.main_product((core/'WINXT.ZIP').read_bytes())
  assert {n[len('TANDYLAB/DRIVERS/'):]:b for n,b in collection.items() if n.startswith('TANDYLAB/DRIVERS/WINXT/')}=={n:b for n,b in main.items() if n.startswith('WINXT/')}
  assert not any(n.upper().endswith(('.ZIP','.PY')) for n in collection if n.startswith('TANDYLAB/DRIVERS/'))
+ assert collection['TANDYLAB/CATALOG.TXT'].split(b'OPTIONAL WINDOWS XT DISPLAY SOURCE')[0]==original['TANDYLAB/CATALOG.TXT'].split(b'DISPLAY TOOLKIT (OPTIONAL, MODERN PC PREPARATION ONLY)')[0]
+ for n in ['TANDYLAB/README.TXT','TANDYLAB/CHECK.TXT','TANDYLAB/CATALOG.TXT','TANDYLAB/DRIVERS/README.TXT']:
+  assert not any(chore in collection[n] for chore in [b'STAGE.PY',b'T88TOOLS.ZIP',b'CGASYS.FON EGAFIX.FON']),n
  checks.append('TANDYLAB app bytes unchanged; complete qualified movable OEM folder replaces Python toolkit')
  for name,data in assets.items():
   if name=='BUILDIN.ZIP':continue
