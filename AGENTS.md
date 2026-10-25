@@ -18,7 +18,8 @@ with normal 640 KB. Other hardware uses its matching packet in
   `tools/CURRENT/BUNDLE.PY`, checked by `tools/CURRENT/CHECK.PY` and pinned
   in `tools/CURRENT/PRODUCTS.JSN`.
 - **Developer display build:** `src/tandysw/BUILD88.PY` exists and builds
-  the five-profile TR5 base from an explicit external DDK/toolchain view.
+  the five-profile Tandy software-raster driver base (internally called `TR5`)
+  from an explicit external DDK/toolchain view.
   It is not a build of the complete current HPXY desktop packet. Supply
   `--repo`, `--dosbox`, a fresh `--out` and the intended `--mode`.
   `src/pc1512/BUILD15.PY` also uses BUILD88 as its base; successful compilation

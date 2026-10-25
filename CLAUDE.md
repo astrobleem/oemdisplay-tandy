@@ -13,7 +13,8 @@ preparation. Original XTC/XTE/XTTSYS fonts, the grabber and startup artwork are
 bundled as specified by the packet manifests. DOS/Windows itself remains required.
 Do not reintroduce historical support-file gathering or manual INI installation.
 
-`src/tandysw/BUILD88.PY` exists for the five-profile TR5 developer base;
+`src/tandysw/BUILD88.PY` builds the Tandy software-raster driver base, internally
+called `TR5`, with five display profiles;
 `src/pc1512/BUILD15.PY` uses it. Neither command means the current HPXY/desktop
 product was rebuilt. Use explicit commit-pinned external source/toolchain
 views from [BUILDDEPS](tools/BUILDDEPS/README.MD), supply DOSBox-X separately,

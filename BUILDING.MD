@@ -71,7 +71,8 @@ Use the full checkout for current core/catalog packaging. The adapter's retained
 its historical cleanup/review stages are not new removal instructions.
 
 `src/tandysw/BUILD88.PY` is still a real developer entry point. It builds the
-TR5 base, not the complete current HPXY/desktop product. From the documented
+Tandy software-raster driver base (internally called `TR5`), not the complete
+current HPXY/desktop product. From the documented
 `display` source view, an example is:
 
 ```text
