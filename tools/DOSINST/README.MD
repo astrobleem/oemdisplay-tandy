@@ -16,17 +16,17 @@ are included. Windows/DOS OS files, private prepared trees, compiler and
 emulator remain outside publication. Current SOUND corresponding source is
 the separate WINXTSRC.ZIP developer asset alongside the download.
 
-Developer rebuilds use Open Watcom's 16-bit DOS compiler:
+Developer SETUP, preparer and wrapper builds use Open Watcom's 16-bit DOS tools:
 
 ```text
-python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target xrsync --out NEWBUILD
-python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target setup --out NEWBUILD
-python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target finisher --out NEWBUILD
-python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target wrapper --out NEWBUILD
+python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target xrsync --out NEW-XRSYNC
+python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target setup --out NEW-SETUP
+python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target wrapper --out NEW-WRAPPER
 ```
 
-Use a fresh output directory for each command. XSNATIVE.JSN and RCNATIVE.JSN
-bind the source and prebuilt binary identities. The public publishers refuse
+Use a different fresh output directory for each command. SETNAT.JSN binds the
+current expanded SETUP source/binary; XSNATIVE.JSN and RCNATIVE.JSN preserve
+the earlier native preparer bindings. The public publishers refuse
 assets that differ from their native qualification records. Developer-only
 Python reference recipes remain outside consumer downloads.
 XRINPUT.H pins the CRC of every required expanded Windows OS stream;
@@ -44,5 +44,13 @@ The canonical finisher source is `tools/DOSINST/FIXXT.C`; its generated
 `SOUNDID.H` is byte-identical to the canonical OEMSound driver's header.
 The checked C6 finisher build route is `tools/SOUNDOWN/FINBUILD.PY`, with
 explicit external toolchain, installed DOSBox-X and shared lease arguments.
-The corresponding sound source and existing license accompany the native
-packet in `SOUNDSRC.ZIP` and `SOUNDLIC.TXT`.
+The accepted C6 route is:
+
+```text
+python tools/SOUNDOWN/FINBUILD.PY --toolchain C6-TOOLCHAIN --dosbox DOSBOX-X --lease SHARED-LEASE --out NEW-FIXXT
+```
+
+This starts a bounded leased native build. `BUILD.PY --target finisher` uses
+Open Watcom and does not reproduce the accepted C6 FIXXT binary in FIXBUILD.JSN.
+The corresponding sound source is the separate current `WINXTSRC.ZIP`
+developer asset; `SOUNDLIC.TXT` is included in the expanded WINXT folder.
