@@ -4,7 +4,8 @@ import io
 from pathlib import Path
 
 LABEL = "EXPERIMENTAL TANDY SL/2 FAMILY ONLY 640x200x16"
-SUPPORT = {"CGA.GR2", "CGALOGO.LGO", "CGALOGO.RLE", "CGASYS.FON", "CGAFIX.FON", "CGAOEM.FON"}
+BUNDLED = {"CGA.GR2", "XTCSYS.FON", "XTCFIX.FON", "XTCOEM.FON",
+           "XTSTATIC.LGO", "WXTSPL01.RLE"}
 
 
 def fields(line):
@@ -38,7 +39,7 @@ def verify(raw):
         raise ValueError("Wrong driver key or nine-field Setup tuple")
     if len(values[1]) > 47 or values[1] != LABEL:
         raise ValueError("Selector must retain the full experimental SL/2-only label within 47 characters")
-    expected = ["a:TNDYV2.DRV", LABEL, "200,96,48", "a:CGA.GR2", "a:CGALOGO.LGO", "", "", "", "a:CGALOGO.RLE"]
+    expected = ["a:TNDYV2.DRV", LABEL, "200,96,48", "a:CGA.GR2", "a:XTSTATIC.LGO", "", "", "", "a:WXTSPL01.RLE"]
     if values != expected:
         raise ValueError("Driver, geometry or support tuple changed")
     if len(sections["disks"]) != 1:
@@ -46,13 +47,13 @@ def verify(raw):
     disk_key, disk_row = sections["disks"][0].split("=", 1)
     if disk_key.strip() != "a" or fields(disk_row) != [r"C:\T2EXP", "EXPERIMENTAL TANDY SL/2 FAMILY ONLY", "OEMSETUP.INF"]:
         raise ValueError("Absolute OEM disk path or warning changed")
-    for section, name, count in (("sysfonts", "CGASYS.FON", 3), ("fixedfonts", "CGAFIX.FON", 3), ("oemfonts", "CGAOEM.FON", 4)):
+    for section, name, count in (("sysfonts", "XTCSYS.FON", 3), ("fixedfonts", "XTCFIX.FON", 3), ("oemfonts", "XTCOEM.FON", 4)):
         if len(sections[section]) != 1:
             raise ValueError("One matching font row required")
         row = fields(sections[section][0])
         if len(row) != count or row[0] != "a:" + name or row[2] != "200,96,48" or (count == 4 and row[3] != "1"):
-            raise ValueError("CGA font source/geometry changed")
-    return {"status": "PASS", "label": LABEL, "description_chars": len(LABEL), "limit": 47, "owned_support_files": sorted(SUPPORT)}
+            raise ValueError("Original font source/geometry changed")
+    return {"status": "PASS", "label": LABEL, "description_chars": len(LABEL), "limit": 47, "bundled_support_files": sorted(BUNDLED)}
 
 
 if __name__ == "__main__":

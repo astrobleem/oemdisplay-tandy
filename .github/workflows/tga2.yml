@@ -4,18 +4,40 @@ on:
   pull_request:
     paths:
       - 'src/tga2/**'
+      - 'tools/XR1PACK/PREPARE.PY'
+      - 'distributions/WINXT/XTCSYS.FON'
+      - 'distributions/WINXT/XTCFIX.FON'
+      - 'distributions/WINXT/XTCOEM.FON'
+      - 'distributions/WINXT/XTSTATIC.LGO'
+      - 'distributions/WINXT/WXTSPL01.RLE'
+      - 'distributions/WINXT/FONTLIC.TXT'
+      - 'CGA.GR2'
+      - '.gitattributes'
       - 'src/tandysw/RESERVE.PY'
       - 'docs/tga2/T2RMUT.JSN'
       - 'docs/tga2/T2SETUP.JSN'
+      - 'docs/tga2/T2SUP.JSN'
+      - 'docs/tga2/T2SUP.PNG'
       - 'docs/tga2/T2STAGE.JSN'
       - '.github/workflows/tga2.yml'
   push:
     branches: [main]
     paths:
       - 'src/tga2/**'
+      - 'tools/XR1PACK/PREPARE.PY'
+      - 'distributions/WINXT/XTCSYS.FON'
+      - 'distributions/WINXT/XTCFIX.FON'
+      - 'distributions/WINXT/XTCOEM.FON'
+      - 'distributions/WINXT/XTSTATIC.LGO'
+      - 'distributions/WINXT/WXTSPL01.RLE'
+      - 'distributions/WINXT/FONTLIC.TXT'
+      - 'CGA.GR2'
+      - '.gitattributes'
       - 'src/tandysw/RESERVE.PY'
       - 'docs/tga2/T2RMUT.JSN'
       - 'docs/tga2/T2SETUP.JSN'
+      - 'docs/tga2/T2SUP.JSN'
+      - 'docs/tga2/T2SUP.PNG'
       - 'docs/tga2/T2STAGE.JSN'
       - '.github/workflows/tga2.yml'
   workflow_dispatch:
@@ -39,7 +61,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/src/tga2/\n/src/tandysw/RESERVE.PY\n/docs/tga2/T2RMUT.JSN\n/docs/tga2/T2SETUP.JSN\n/docs/tga2/T2STAGE.JSN\n' | git sparse-checkout set --no-cone --stdin
+          printf '/.gitattributes\n/src/tga2/\n/src/tandysw/RESERVE.PY\n/docs/tga2/T2RMUT.JSN\n/docs/tga2/T2SETUP.JSN\n/docs/tga2/T2STAGE.JSN\n/docs/tga2/T2SUP.JSN\n/docs/tga2/T2SUP.PNG\n/tools/XR1PACK/PREPARE.PY\n/distributions/WINXT/XTCSYS.FON\n/distributions/WINXT/XTCFIX.FON\n/distributions/WINXT/XTCOEM.FON\n/distributions/WINXT/XTSTATIC.LGO\n/distributions/WINXT/WXTSPL01.RLE\n/distributions/WINXT/FONTLIC.TXT\n/CGA.GR2\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Verify exact mutation acceptance and recorded DOS failures
@@ -48,3 +70,6 @@ jobs:
         run: python3 -B src/tga2/T2PATCH.PY --check
       - name: Verify experimental SL2 selector, CRLF source and native evidence
         run: python3 -B src/tga2/T2ITEST.PY
+
+      - name: Verify original-font packet and bounded SZDD handling
+        run: python3 -B src/tga2/T2PTEST.PY

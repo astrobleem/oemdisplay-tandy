@@ -1,0 +1,19 @@
+TANDY VIDEO II DISPLAY DRIVER - COMPONENT NOTICES
+
+TNDYV2.DRV is a derivative of the existing Microsoft Windows DDK renderer
+and resource inputs. Existing Microsoft Corporation copyright notices,
+including the 1983-1987 renderer notices, remain applicable. This packet
+does not assert a new or blanket license grant for third-party components.
+The Video II adaptation, helper, diagnostic, test and packaging source
+retain their existing repository provenance. This notice does not relicense
+reused Microsoft renderer/resources or transfer rights in owned media.
+
+The packet includes the CGA.GR2 grabber supplied by the repository owner.
+Its existing component notices remain applicable. The expanded grabber,
+driver, reservation helper and diagnostic executables retain their accepted
+bytes. Original XT Pixels fonts and the original XTSTATIC.LGO/WXTSPL01.RLE
+startup assets are included; their source and MIT terms are in this
+repository. FONTLIC.TXT contains the font notice.
+
+An existing DOS and Windows 3.0 installation is required. No DOS/Windows
+installation media, BIOS ROMs, compiler or generic DDK source is included.

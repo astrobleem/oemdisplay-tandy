@@ -1,62 +1,45 @@
 TANDY VIDEO II - WINDOWS 3.0 REAL MODE, 640x200, 16 COLORS
 
-DOWNLOAD
-https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-video-ii-2026-10-14-r2/TNDYV2.ZIP
-
 For the Tandy 1000 SL/2 family with normal 640 KB RAM and an existing
 Windows 3.0 installation. Do not use on EX/HX: they have no Video II.
-T2RESV checks the memory layout, but cannot identify Video II or distinguish
-an EX/HX from an SL/2. Related SL/TL/RL models and physical hardware are
-unqualified; the recorded Windows runs use 86Box's SL/2.
+T2RESV checks memory, not the Video II model. Testing covers the emulated
+SL/2; physical machines and related SL/TL/RL models remain unqualified.
 
 INSTALL
-1. Extract all ZIP files to C:\T2EXP. Exit Windows completely to plain DOS.
-   These instructions use C:\WINDOWS; use your Windows path if different.
-2. Prepare the Windows support files with the included helper:
-     C:
-     CD \T2EXP
-     PREPINF C:\WINDOWS
-   Continue only after it says:
-     Prepared six owned Windows 3.0 support files.
-   PREPINF searches your Windows SYSTEM folder and then its root. It only
-   stages files; it does not install the driver or identify Windows versions.
-   Supply matching Windows 3.0 files, never Windows 3.1 files.
-3. From DOS text mode 3, run:
+1. Extract the entire packet to C:\T2EXP. Exit Windows to plain DOS.
+   The packet includes its fonts, grabber and startup logo. You do not need
+   to collect Windows support files or run PREPINF.
+2. From DOS text mode 3, run:
      C:\T2EXP\T2RESV
-   Continue only if it succeeds. Then:
+   Continue only after it succeeds. Then:
+     C:
      CD \WINDOWS
      SETUP
    Choose Display / Other (disk supplied by a hardware manufacturer), enter
-   C:\T2EXP, and select:
+   C:\T2EXP and select:
      EXPERIMENTAL TANDY SL/2 FAMILY ONLY 640x200x16
    Choose Complete Changes. Keep your existing keyboard and mouse choices.
-4. Before every Windows start, including after reboot, run:
+3. Before every Windows start, including after reboot, run:
      C:\T2EXP\T2RESV
    After it succeeds:
      C:
      CD \WINDOWS
      WIN /R
-   Always run T2RESV before Setup and before WIN /R, outside a Windows DOS box.
+   Run T2RESV before Setup and before WIN /R, outside a Windows DOS box.
+   Use your Windows directory in these commands if it is not C:\WINDOWS.
 
-TROUBLESHOOTING
-If PREPINF reports an existing support file or a copy failure, extract the
-packet into a fresh staging folder and retry. Do not continue after an error.
-If files are missing, obtain the matching files from your Windows 3.0 media.
-Manual staging is an alternative: copy these six files into C:\T2EXP:
-  CGA.GR2  CGALOGO.LGO  CGALOGO.RLE
-  CGASYS.FON  CGAFIX.FON  CGAOEM.FON
-For a staging path other than C:\T2EXP, change the [disks] a= path in
-OEMSETUP.INF and give Setup that same path.
+Setup selects the bundled XTCSYS.FON, XTCFIX.FON and XTCOEM.FON original
+XT Pixels fonts, the CGA.GR2 grabber and XTSTATIC.LGO/WXTSPL01.RLE startup
+logo. The driver, reservation helper and diagnostic programs are unchanged.
 
-To change back, exit to plain DOS, run T2RESV successfully, then use Windows
-Setup to select the previous display. Reboot afterward to remove T2RESV's
-resident reservation. If Windows cannot start, run Setup from plain DOS.
+OPTIONAL TROUBLESHOOTING
+PREPINF checks that the required packet files are present; it copies and
+installs nothing. If one is missing, extract the complete packet again.
+For another staging path, change the [disks] a= path in OEMSETUP.INF and
+provide that same path to Setup.
 
-OPTIONAL HARDWARE DIAGNOSTICS AND TECHNICAL RECORDS
-T2PROBE /W and T2MODES report the memory mapping and BIOS modes. T2SHOW draws
-16 color bars only after T2RESV succeeds. BIOS mode 0Ah alone is not this
-640x200x16 mode. Hardware investigation and exact test scope are documented at:
-https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/TGA2.MD
-QUALIFY.JSON records rendering, reservation and maintenance-Setup tests.
-Fresh Windows installation and DOS-box switching remain unqualified.
-Component notices are in NOTICE.TXT.
+To select another display, exit Windows, run T2RESV successfully and use
+Setup. Reboot afterward to remove the resident reservation.
+T2PROBE /W, T2MODES and T2SHOW are optional hardware diagnostics. Technical
+records: https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/TGA2.MD
+Component notices are in NOTICE.TXT and FONTLIC.TXT.
