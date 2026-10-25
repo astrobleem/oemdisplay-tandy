@@ -29,7 +29,7 @@ display packet is listed separately in [current downloads](DOWNLOADS.MD).
 
    Fresh Setup uses `C:\WINDOWS`: choose the first **Tandy 1000 EX/HX**
    Computer entry, **HPXY 640x256**, **PC/XT keyboard**, **COM1 wheel mouse**
-   and **No Changes** for DOS configuration. 
+   and **No Changes** for DOS configuration.
 3. Start Windows with this command on every launch, including after reboot:
 
    ```bat
