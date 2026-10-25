@@ -1,0 +1,28 @@
+[sdl]
+fullscreen=false
+output=surface
+[dosbox]
+machine=tandy
+memsize=1
+working directory option=force
+working directory default=C:\Users\chad\Documents\Codex\2026-10-24\task-3\native\DRIVER-TARGETS
+[cpu]
+core=normal
+cputype=8086_prefetch
+cycles=fixed 200000
+fpu=false
+[dos]
+xms=false
+ems=false
+umb=false
+[mixer]
+nosound=true
+[midi]
+mididevice=none
+[autoexec]
+echo off
+mount C "C:\Users\chad\Documents\Codex\2026-10-24\task-3\native\DRIVER-TARGETS"
+C:
+CD \
+TEST.BAT
+exit

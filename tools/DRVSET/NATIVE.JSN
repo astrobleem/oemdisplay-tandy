@@ -1,0 +1,227 @@
+{
+  "schema": 1,
+  "complete": true,
+  "scope": "PC1512 actual native SFX/OEMSetup/640x200real-mode launch/DOSreturn; ColorPlus native SFX extraction with byte-identical previously-qualified Setup/runtime inputs; final production carriers additionally passed native fixed-target refusal/default/case extraction with unchanged Windows payloads",
+  "seconds": 208.1,
+  "outputs": {
+    "PC1512": {
+      "P15SET.EXE": {
+        "bytes": 137172,
+        "sha256": "336a898f7c1f672827228010da2db098f96317bf010f044a738ce31f4b959c5a"
+      },
+      "PC1512.ZIP": {
+        "bytes": 104820,
+        "sha256": "d57f9032275bfc88e0599d2d17dde86e0b8a1c305934c672689c4b30f46c9bc3"
+      },
+      "INSTALL.TXT": {
+        "bytes": 1167,
+        "sha256": "2e42ad9ab4073781b50137780211d57d27a2f311c3142853be768f53ab0c622d"
+      }
+    },
+    "ColorPlus": {
+      "CPPSET.EXE": {
+        "bytes": 208455,
+        "sha256": "bae175b86864173062e31624e7e4875d8429150cdf6b0ca5151349716134fc1a"
+      },
+      "CPPAN.ZIP": {
+        "bytes": 176009,
+        "sha256": "230825e137e93795328125fba36d4e196c2456abb09372502ca47b56b1be2826"
+      },
+      "INSTALL.TXT": {
+        "bytes": 1391,
+        "sha256": "d2e2a20d4f65e21a981235ae4ee0454e44a223356200687fef97edcd5d6155e9"
+      }
+    }
+  },
+  "runtime": {
+    "PC1512": {
+      "CGA.GR2": {
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+      },
+      "FONTLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      },
+      "INSTALL.BAT": {
+        "bytes": 1078,
+        "sha256": "7c015a49abc0b2f6e583108014a47d61128aa01cd9aced3440b42b02a4a7a233"
+      },
+      "INSTALL.TXT": {
+        "bytes": 1167,
+        "sha256": "2e42ad9ab4073781b50137780211d57d27a2f311c3142853be768f53ab0c622d"
+      },
+      "LICENSE.TXT": {
+        "bytes": 1399,
+        "sha256": "5e550565afe576f23423d7b9c02f9f35af119b8d7ac87edbc94b98da4d04ddf0"
+      },
+      "LOGOLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      },
+      "NOTICE.TXT": {
+        "bytes": 1112,
+        "sha256": "345878330787e795dfe35fd17664947d9c660d9ce1a4d5b6673a52c389abd83b"
+      },
+      "OEMSETUP.INF": {
+        "bytes": 413,
+        "sha256": "d6dded11bb9e28b4485fb071f4283a8d5beb872712ca0559a6d1f7b5b5986b1a"
+      },
+      "OWATCOM.TXT": {
+        "bytes": 21128,
+        "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+      },
+      "P15WIN.BAT": {
+        "bytes": 410,
+        "sha256": "f197f70235fd3f77514c06649a1a6e37ac28aa6891d6ffaae0fcf5de0cc3cd36"
+      },
+      "PC1512.DRV": {
+        "bytes": 54448,
+        "sha256": "31aca63699f05ef57094443de0b3f6926de2c516657aaabc5ee580ac4f65d9f7"
+      },
+      "WXTSPL01.RLE": {
+        "bytes": 4062,
+        "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+      },
+      "XTCFIX.FON": {
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+      },
+      "XTCOEM.FON": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      },
+      "XTCSYS.FON": {
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+      },
+      "XTSTATIC.LGO": {
+        "bytes": 361,
+        "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+      }
+    },
+    "ColorPlus": {
+      "CGA.GR2": {
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+      },
+      "CPPAN.DRV": {
+        "bytes": 58864,
+        "sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f"
+      },
+      "CPWIN.BAT": {
+        "bytes": 35,
+        "sha256": "8d40f405422e12b6aa8b6c8875688d545d3184b429365a91caf5f4f90382fa7c"
+      },
+      "FONTLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      },
+      "INSTALL.BAT": {
+        "bytes": 550,
+        "sha256": "8140d9b0f2ae5a47f8ef58c12d58047543d283b54ebae2f2119d7677816f892f"
+      },
+      "INSTALL.TXT": {
+        "bytes": 1391,
+        "sha256": "d2e2a20d4f65e21a981235ae4ee0454e44a223356200687fef97edcd5d6155e9"
+      },
+      "LICENSE.TXT": {
+        "bytes": 1399,
+        "sha256": "5e550565afe576f23423d7b9c02f9f35af119b8d7ac87edbc94b98da4d04ddf0"
+      },
+      "LOGOLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      },
+      "NOTICE.TXT": {
+        "bytes": 1327,
+        "sha256": "adee88f4b348d0e0943f0acf6a807cbee3893219bc0f6431d76c0323c5020448"
+      },
+      "OEMSETUP.INF": {
+        "bytes": 568,
+        "sha256": "b4f1066a065bc1873eedfd201c037509da5e1f2f9c9f6220b0be7efae2e40dcc"
+      },
+      "PANCFG.EXE": {
+        "bytes": 4015,
+        "sha256": "e67238948079683788e626ad54a11b89e28a515da97632724bc394e2637a1442"
+      },
+      "PCP3216.DRV": {
+        "bytes": 54832,
+        "sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406"
+      },
+      "WXTSPL01.RLE": {
+        "bytes": 4062,
+        "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+      },
+      "XTEFIX.FON": {
+        "bytes": 4656,
+        "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+      },
+      "XTEOEM.FON": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      },
+      "XTESYS.FON": {
+        "bytes": 5680,
+        "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+      },
+      "XTPAN.EXE": {
+        "bytes": 6415,
+        "sha256": "ea81c0b2e880f28a3f8bf9b8b24d7d9ab7363660036cc382ef6e28c48b690f9b"
+      },
+      "XTSTATIC.LGO": {
+        "bytes": 361,
+        "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+      },
+      "OWATCOM.TXT": {
+        "bytes": 21128,
+        "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+      }
+    }
+  },
+  "checks": {
+    "both_native_carriers_extract_every_member_exactly": true,
+    "PC1512_selects_XTC3_and_CGA_and_original_logos": true,
+    "PC1512_640x200real_mode_and_normal_DOSreturn": true,
+    "PC1512_dedicated_video_needs_no_reservation": true,
+    "ColorPlus_native_Setup_and_driver_inputs_match_qualified_public_kit": true,
+    "owned_process_stopped_and_lease_released": true,
+    "production_fixed_targets_refuse_other_folders_before_writes": true
+  },
+  "evidence": {
+    "NATIVE.JSN": {
+      "bytes": 8252,
+      "sha256": "32e5ceda92309f889014fec487ad4e0cbb02a21f7d70bc91e9d800f1902f7b2e"
+    },
+    "NATIVE.PY": {
+      "bytes": 8792,
+      "sha256": "2f5238b26ff7fb501dc64c63f95387e9020580cf091bcf58757fc1010408665f"
+    },
+    "P15.PNG": {
+      "bytes": 2688,
+      "sha256": "41d84fc0f94880a9c6ae53c9f19349be18cc8dc15f5829e0585f7f5ef6ebfd4e"
+    },
+    "TARGET.JSN": {
+      "bytes": 6661,
+      "sha256": "ba36d11570dd342c26ae34f1896a00554ec4436cbb61b7dbb4b5fe56a11ba480"
+    },
+    "TARGET.LOG": {
+      "bytes": 712,
+      "sha256": "51f6d5f734f0089a9b7a6052b5c379f1e505967f0a982f3b59f89be456ff4297"
+    },
+    "TARGET.PY": {
+      "bytes": 3891,
+      "sha256": "19563583d5d6662bbbcd71e20c3972b3d24c67315f09e3c22f88247165db4fe0"
+    },
+    "TARGET.BAT": {
+      "bytes": 337,
+      "sha256": "c7733a422a1a7a4a9ec6a4c728c5c499bf00bd1ab26d7b6efcafd4bbe80bc4a8"
+    },
+    "TARGET.CNF": {
+      "bytes": 498,
+      "sha256": "1d2c56eb6c04ef6e253d7edb499c249efd9928e7d2696e29c1698697974fe933"
+    }
+  },
+  "physical_hardware_qualification": false,
+  "target_harness": "Functional batch reached PASS; original120s watchdog stopped the idle emulator because harness omitted EXIT. Raw process receipt retained. No repeated Windows Setup asserted for carrier-only guard."
+}

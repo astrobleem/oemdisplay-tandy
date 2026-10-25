@@ -41,9 +41,8 @@ a group to refresh its contents. Existing groups are read-only to the shell.
 | **Exit Windows** | Confirms exit and lets apps ask about unsaved work. Hold Shift while selecting Exit to skip its chime. Enter or Escape initially cancels; E selects Exit. |
 
 Maximized apps can cover the bar; it is not an application taskbar.
-The [shell guide](../examples/TSHELL/README.MD) covers settings, upgrades and
-recovery. Newer shell overlays have their own installation guides; use a
-matching shell and TSINPUT.DLL pair.
+The current desktop packet includes the matching Tandy Start and TSINPUT
+files. Use the [desktop guide](DESKTOP.MD) for installation and recovery.
 
 ### Browse existing long filenames
 
@@ -128,7 +127,7 @@ combined; read each packet's dependencies and rollback instructions.
 ## Separate experimental drivers
 
 Choose the packet for your machine and follow its installer and launcher.
-The current downloads below are separate from the EX/HX XR1 package.
+The current downloads below are separate from the EX/HX desktop.
 
 ### TEXT80 and compact C25
 

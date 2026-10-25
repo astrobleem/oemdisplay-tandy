@@ -1,0 +1,173 @@
+{
+  "functional_cases_complete": true,
+  "scope": "Production8086 DOS carriers: unsupported-target failure status/no writes, both fresh default extractions and case-insensitive canonical target succeeded; no WindowsSetup or app executed",
+  "files": {
+    "P15EXP": {
+      "CGA.GR2": {
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+      },
+      "FONTLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      },
+      "INSTALL.BAT": {
+        "bytes": 1078,
+        "sha256": "7c015a49abc0b2f6e583108014a47d61128aa01cd9aced3440b42b02a4a7a233"
+      },
+      "INSTALL.TXT": {
+        "bytes": 1167,
+        "sha256": "2e42ad9ab4073781b50137780211d57d27a2f311c3142853be768f53ab0c622d"
+      },
+      "LICENSE.TXT": {
+        "bytes": 1399,
+        "sha256": "5e550565afe576f23423d7b9c02f9f35af119b8d7ac87edbc94b98da4d04ddf0"
+      },
+      "LOGOLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      },
+      "NOTICE.TXT": {
+        "bytes": 1112,
+        "sha256": "345878330787e795dfe35fd17664947d9c660d9ce1a4d5b6673a52c389abd83b"
+      },
+      "OEMSETUP.INF": {
+        "bytes": 413,
+        "sha256": "d6dded11bb9e28b4485fb071f4283a8d5beb872712ca0559a6d1f7b5b5986b1a"
+      },
+      "OWATCOM.TXT": {
+        "bytes": 21128,
+        "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+      },
+      "P15WIN.BAT": {
+        "bytes": 410,
+        "sha256": "f197f70235fd3f77514c06649a1a6e37ac28aa6891d6ffaae0fcf5de0cc3cd36"
+      },
+      "PC1512.DRV": {
+        "bytes": 54448,
+        "sha256": "31aca63699f05ef57094443de0b3f6926de2c516657aaabc5ee580ac4f65d9f7"
+      },
+      "WXTSPL01.RLE": {
+        "bytes": 4062,
+        "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+      },
+      "XTCFIX.FON": {
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+      },
+      "XTCOEM.FON": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      },
+      "XTCSYS.FON": {
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+      },
+      "XTSTATIC.LGO": {
+        "bytes": 361,
+        "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+      }
+    },
+    "CPPAN": {
+      "CGA.GR2": {
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+      },
+      "CPPAN.DRV": {
+        "bytes": 58864,
+        "sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f"
+      },
+      "CPWIN.BAT": {
+        "bytes": 35,
+        "sha256": "8d40f405422e12b6aa8b6c8875688d545d3184b429365a91caf5f4f90382fa7c"
+      },
+      "FONTLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      },
+      "INSTALL.BAT": {
+        "bytes": 550,
+        "sha256": "8140d9b0f2ae5a47f8ef58c12d58047543d283b54ebae2f2119d7677816f892f"
+      },
+      "INSTALL.TXT": {
+        "bytes": 1391,
+        "sha256": "d2e2a20d4f65e21a981235ae4ee0454e44a223356200687fef97edcd5d6155e9"
+      },
+      "LICENSE.TXT": {
+        "bytes": 1399,
+        "sha256": "5e550565afe576f23423d7b9c02f9f35af119b8d7ac87edbc94b98da4d04ddf0"
+      },
+      "LOGOLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      },
+      "NOTICE.TXT": {
+        "bytes": 1327,
+        "sha256": "adee88f4b348d0e0943f0acf6a807cbee3893219bc0f6431d76c0323c5020448"
+      },
+      "OEMSETUP.INF": {
+        "bytes": 568,
+        "sha256": "b4f1066a065bc1873eedfd201c037509da5e1f2f9c9f6220b0be7efae2e40dcc"
+      },
+      "OWATCOM.TXT": {
+        "bytes": 21128,
+        "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+      },
+      "PANCFG.EXE": {
+        "bytes": 4015,
+        "sha256": "e67238948079683788e626ad54a11b89e28a515da97632724bc394e2637a1442"
+      },
+      "PCP3216.DRV": {
+        "bytes": 54832,
+        "sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406"
+      },
+      "WXTSPL01.RLE": {
+        "bytes": 4062,
+        "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+      },
+      "XTEFIX.FON": {
+        "bytes": 4656,
+        "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+      },
+      "XTEOEM.FON": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      },
+      "XTESYS.FON": {
+        "bytes": 5680,
+        "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+      },
+      "XTPAN.EXE": {
+        "bytes": 6415,
+        "sha256": "ea81c0b2e880f28a3f8bf9b8b24d7d9ab7363660036cc382ef6e28c48b690f9b"
+      },
+      "XTSTATIC.LGO": {
+        "bytes": 361,
+        "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+      }
+    }
+  },
+  "logs": {
+    "R15.LOG": "",
+    "RCP.LOG": "",
+    "OK15.LOG": "PC1512 files are ready. From plain DOS run C:\\P15EXP\\INSTALL.\n",
+    "OKCP.LOG": "ColorPlus files are ready. From plain DOS run C:\\CPPAN\\INSTALL.\n",
+    "CASE.LOG": "PC1512 files are ready. From plain DOS run C:\\P15EXP\\INSTALL.\n",
+    "DONE.TXT": "PASS\n"
+  },
+  "process": {
+    "started": "2026-10-25T06:37:54.690603+00:00",
+    "emulator": "C:\\Program Files\\DOSBox-X\\dosbox-x.exe",
+    "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-24\\task-3\\native\\DRIVER-TARGETS\\RUN.CNF",
+    "emulator_sha256": "769fb38a5a94475488be2107856d9a9fcca65487df35676188f5c2ccd5a2e964",
+    "timeout": 120,
+    "lease_acquired": true,
+    "inventory": "",
+    "pid": 13948,
+    "watchdog": true,
+    "owned_child_stopped": true,
+    "lease_released": true,
+    "error": "Command '['C:\\\\Program Files\\\\DOSBox-X\\\\dosbox-x.exe', '-nopromptfolder', '-conf', 'C:\\\\Users\\\\chad\\\\Documents\\\\Codex\\\\2026-10-24\\\\task-3\\\\native\\\\DRIVER-TARGETS\\\\RUN.CNF']' timed out after 120 seconds"
+  },
+  "harness_result": "Original watchdog receipt retained: TEST.BAT reached PASS then DOSBox remained at its prompt because the harness did not EXIT. Carrier commands had all returned with expected statuses; no payload copying repeat."
+}

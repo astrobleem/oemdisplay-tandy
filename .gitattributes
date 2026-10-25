@@ -134,3 +134,16 @@ tools/FLASHDISK/CURRENT.JSN -text
 tools/FLASHDISK/QA/** -text
 
 .github/workflows/cpset.yml -text
+
+tools/P15PACK/** -text
+tools/DRVSET/** -text
+tools/DRVSET/QA/** -text
+downloads/experimental/PC1512/** -text
+downloads/experimental/CPPAN/** -text
+docs/PC1512.MD -text
+docs/PCP.MD -text
+docs/FIXED.MD -text
+downloads/experimental/FIXED/README.MD -text
+docs/DOWNLOADS.MD -text
+
+.github/workflows/driver-packets.yml -text

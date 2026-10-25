@@ -1,0 +1,14 @@
+{
+  "started": "2026-10-25T06:37:54.690603+00:00",
+  "emulator": "C:\\Program Files\\DOSBox-X\\dosbox-x.exe",
+  "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-24\\task-3\\native\\DRIVER-TARGETS\\RUN.CNF",
+  "emulator_sha256": "769fb38a5a94475488be2107856d9a9fcca65487df35676188f5c2ccd5a2e964",
+  "timeout": 120,
+  "lease_acquired": true,
+  "inventory": "",
+  "pid": 13948,
+  "watchdog": true,
+  "owned_child_stopped": true,
+  "lease_released": true,
+  "error": "Command '['C:\\\\Program Files\\\\DOSBox-X\\\\dosbox-x.exe', '-nopromptfolder', '-conf', 'C:\\\\Users\\\\chad\\\\Documents\\\\Codex\\\\2026-10-24\\\\task-3\\\\native\\\\DRIVER-TARGETS\\\\RUN.CNF']' timed out after 120 seconds"
+}
