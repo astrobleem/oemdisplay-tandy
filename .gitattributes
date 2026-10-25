@@ -155,3 +155,5 @@ oemdisk/** -text
 .github/workflows/softpan.yml -text
 
 .github/workflows/root-layout.yml -text
+# Native shared-sound consumer source and exact build receipts.
+tools/SOUNDOWN/** -text

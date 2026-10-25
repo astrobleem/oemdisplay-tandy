@@ -1,0 +1,31 @@
+PREPXR - DOS-native XR1 fresh/update preparation
+Using the complete Windows media cache.
+Checking the supplied runtime and required Windows files before output.
+Prepared C:\WINXT\FILES\FIXXT.EXE
+Prepared C:\WINXT\FILES\TCHIME.EXE
+Prepared C:\WINXT\FILES\TEXIT.EXE
+Prepared C:\WINXT\FILES\TP.EXE
+Prepared C:\WINXT\FILES\TSHELL.EXE
+Prepared C:\WINXT\FILES\XPCHIME.EXE
+Prepared C:\WINXT\FIXXT.EXE
+Prepared C:\WINXT\OWNERS.TXT
+Prepared C:\WINXT\TCHIME.EXE
+Prepared C:\WINXT\TEXIT.EXE
+Prepared C:\WINXT\TP.EXE
+Prepared C:\WINXT\TSHELL.EXE
+Prepared C:\WINXT\XPCHIME.EXE
+Prepared C:\WINXT\SOUND.DRV
+Prepared C:\WINXT\FILES\SOUND.DRV
+Complete native XR1 fresh preparation: 369 verified files.
+Next: C:\SETUPXT
+RESERVE: 16K video overlap reserved. Start Windows with WIN /R.
+Starting the existing guarded Windows XT installer.
+INI SYSTEM.INI [boot] sound.drv
+Repair/copy only missing or outdated payloads and owned INI keys.
+[                    ]   0% 0/83158 bytes             [#                   ]   7% 6144/83158 bytes TSHELL.EXE  [##                  ]  12% 10240/83158 bytes TSHELL.EXE  [###                 ]  17% 14336/83158 bytes TSHELL.EXE  [####                ]  22% 18432/83158 bytes TSHELL.EXE  [#####               ]  27% 22528/83158 bytes TSHELL.EXE  [######              ]  32% 26624/83158 bytes TSHELL.EXE  [#######             ]  39% 32768/83158 bytes TSHELL.EXE  [########            ]  44% 36864/83158 bytes TSHELL.EXE  [#########           ]  49% 40960/83158 bytes TSHELL.EXE  [##########          ]  54% 45056/83158 bytes TSHELL.EXE  [###########         ]  59% 49152/83158 bytes TSHELL.EXE  [############        ]  64% 53248/83158 bytes TSHELL.EXE  [##############      ]  71% 59392/83158 bytes TSHELL.EXE  [###############     ]  76% 63488/83158 bytes TSHELL.EXE  [################    ]  81% 67584/83158 bytes TSHELL.EXE  [#################   ]  86% 71680/83158 bytes TSHELL.EXE  [##################  ]  91% 76419/83158 bytes SOUND.DRV   [################### ]  96% 80515/83158 bytes SOUND.DRV   
+[####################] 100% 83158/83158 bytes SYSTEM.INI  
+Complete: 2 payloads copied, SYSTEM.INI updated. No WIN.COM/wave rebuild.
+Tandy Computer entry already registered; active selections preserved.
+Windows XT is ready. Starting the desktop.
+Owned entries and cheap payload samples match.
+RESERVE: video reservation already installed.

@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "status": "PASS_NATIVE_READBACK",
+  "physical_test": false,
+  "source_commit": "8320cf2bd9615f915159311cd41fb80ee1e4958c",
+  "helper": {
+    "bytes": 83544,
+    "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
+  },
+  "public_assets": {
+    "WINXT.ZIP": {
+      "bytes": 746928,
+      "sha256": "ce7698e0595d2add6e8e8f550b144bcb5dd996c0ee49f8448373f76065f6dbff"
+    },
+    "WINXT.EXE": {
+      "bytes": 830472,
+      "sha256": "292c28c67b97c3fe611ca8c5171a92581153bb6a17924adef7f8cf53f8d16ea4"
+    }
+  },
+  "checks": {
+    "actual_raw_run_complete": true,
+    "owned_process_stopped": true,
+    "lease_reported_released": true,
+    "controller_exact": true,
+    "current_helper": true,
+    "current_public_assets": true,
+    "host_packet_exact_WINXT.ZIP": true,
+    "host_packet_exact_WINXT.EXE": true,
+    "frozen_source_pins": true,
+    "native_build_manifest_binds_source_and_helper": true,
+    "fat_copies_consistent_after_owned_stop": true,
+    "shared_byte_zero_independently_free": true,
+    "executed_sfx_still_exact": true,
+    "boot_files_preserved": true,
+    "all_nine_current_corruption_checks": true,
+    "good_source_and_repaired_cache_exact": true,
+    "withheld_setup_and_unchanged_windows": true,
+    "capture_hash_matches_raw_result": true
+  },
+  "raw_result": {
+    "path": "NEGATIVE/RESULT.JSON",
+    "identity": {
+      "bytes": 1690,
+      "sha256": "7aee5eb863f4870887c83fc470bcffd14cfc0e7777bcd864651073f2f92b8454"
+    }
+  },
+  "capture": {
+    "path": "NEGATIVE/RESULT.PNG",
+    "identity": {
+      "bytes": 4367,
+      "sha256": "45fb99b439d2d788ec3ac94e19fd0286a71c10a3e5f7e10aecf36f942131d5f4"
+    }
+  },
+  "visual_scope": "Native DOS corruption result; no desktop claim",
+  "readback_source": {
+    "bytes": 7350,
+    "sha256": "33af16f60fe1ebd9ca1274ff83128b4bca58fdcb5e6f8382578133d2af816691"
+  }
+}
