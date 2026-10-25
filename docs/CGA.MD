@@ -81,6 +81,34 @@ first candidates, not proof of native text quality or complete charset support.
 `BUILDCGA.PY` wraps BUILD88 with the existing shared watchdog/lease runner.
 The `cga` source-view profile closes over those tools and the font kit.
 
+## Consumer integration source
+
+The renderer/font checkpoint is preserved at `32d89b42`. Further work is on
+`work/cga-install`. `src/cga/SETUP.C` provides the expanded root-SETUP/README/CGA
+folder pattern for an existing Windows installation. `CGASET.PY` adapts the
+exact T80SET transaction in build output without changing shared source or
+published installer runtime. It selects display/fonts and private CGAGRAB.GR2
+together; 160x100 also registers the small Helv/Courier faces and compact borders.
+
+Native copy code checks compiled size/CRC pins, refuses unrelated collisions
+and records only its own new files. UNDO preserves unrelated later INI edits
+and changed/referenced files. Explicit whole-INI RESTORE and a completed-undo
+marker make this packet's interrupted copy/cleanup retryable. No historical
+formats or directory-wide cleanup are added.
+
+Host fault tests found and fixed a failed deletion leaving an INI temporary
+after its copy journal was removed. They also caught oversized INIs refused
+only after payload copying; size checks now precede all copying. The adapted
+INI buffers use a 20,000-byte limit for small-model data/stack headroom.
+These host C89 results do not establish native DOS or GUI acceptance.
+
+PACKCGA.PY prepares a closed payload from actual driver receipts, generated
+small fonts and pinned support. It automatically stages the helper source and
+header. BUILDSET.PY compiles that CGA-only helper in a coordinated leased slot.
+Finalization rejects host executables, extra files and synthetic fixtures,
+then emits a development ZIP with root SETUP.EXE/README.TXT and one CGA folder.
+Current core products, published installers and renderer profiles are unchanged.
+
 All modes still present 16,000 visible VRAM bytes per full repaint. A dirty
 eight-pixel logical column writes 8 bytes in CGA100, 2 in CGA320 or 1 in
 CGA640. These are write-volume facts, not elapsed-time measurements. Measure
@@ -97,9 +125,9 @@ Do not promise speed from reduced shadow size or host script timings.
 2. Scheduled native build: pinned `--profile cga` view; each mode through
    BUILDCGA; successful 8086 instruction, REP-prefix, link/resource audits;
    actual compiler logs/listings and owned-process stop/release receipts.
-3. Native DOS/Windows install: complete movable ordinary OEM folder, all
-   selected fonts/grabber/startup assets bundled. Integrate additional small
-   Helv/Courier registration and undo through native DOS tooling; exercise
+3. Native DOS/Windows install: the complete movable expanded SETUP packet,
+   with selected fonts/grabber/startup assets bundled. Validate the implemented
+   small Helv/Courier registration and native undo; exercise
    success, refused inputs, interrupted copy/recovery, exact rollback and
    mode switches with Windows closed. No consumer Python, manual INI edits or
    individual support-file collection. The source OEMSETUP.INF alone is not

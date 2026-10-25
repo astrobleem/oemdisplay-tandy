@@ -1,0 +1,23 @@
+CGA development packet - component notices
+
+The display renderer adapts the retained Microsoft Windows display-driver
+sources used by Windows XT. Existing Microsoft/DDK component notices remain
+in their source. CGAGRAB.GR2 is the byte-identical expanded CGA.GR2 already
+supplied by the current Windows XT driver packets, under a private filename.
+Windows/DOS, compiler, DDK and emulator installations are not included.
+
+CG1SYS/FIX/OEM/HELV/COUR are original CGA100 ASCII grid drawings using the
+existing XT Pixels FNT/FON writer and original OEM box/block algorithm.
+XTC fonts are the accepted XT Pixels originals. FONTLIC.TXT carries their
+MIT license. That license does not cover the Microsoft-derived components.
+
+XTSTATIC.LGO and WXTSPL01.RLE are the existing selected Windows XT startup
+assets. Their selection and accepted bytes are preserved. Native SETUP
+changes only the selected display/fonts/grabber and compact border settings;
+it does not replace Windows or redesign its startup loader.
+
+The CGA native installer reuses a staged adaptation of T80SET.C's reversible
+INI transaction and the existing first-party CRC implementation. It does
+not modify or replace the current published Windows XT SETUP runtime.
+Source/build-input access and all native qualification records must accompany
+any later authorized publication. This development packet is not that approval.

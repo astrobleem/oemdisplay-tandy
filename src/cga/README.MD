@@ -48,7 +48,65 @@ and stops/releases it. The compiler's Tandy DOSBox configuration is a build
 environment, not IBM CGA video qualification. BUILD88's instruction, REP-prefix,
 link and resource audits still apply. CGABUILD.JSN reports Windows NOT_TESTED.
 
-## Fonts, controls and installation work still gated
+## Expanded native installer and packet preparation
+
+The host-qualified renderer/font checkpoint remains `32d89b42`. Consumer
+integration continues on `work/cga-install`. Published installer runtimes and
+normal-mode renderer bytes are unchanged.
+
+`SETUP.C` is the CGA-specific DOS entry for an existing Windows installation.
+It finds the expanded `CGA` folder beside its executable, verifies compiled
+size/CRC pins and copies only new or byte-identical installed names. The
+accepted grabber uses private `CGAGRAB.GR2`, preserving stock `CGA.GR2`.
+`CGASET.PY` stages the exact existing T80SET transaction with private CGA
+backup/state names. It selects display, System/Fixed/OEM fonts and 286grabber;
+160x100 also registers the small Helv/Courier faces and one-pixel borders.
+Normal profiles keep XTC fonts and existing font-list entries.
+
+UNDO preserves unrelated later INI edits, changed payloads and files still
+referenced by those INIs. Interrupted copies and cleanup are retryable through
+this packet's sealed copy record and completed-undo marker. Explicit RESTORE
+uses the two safety INIs, losing later INI edits. No legacy migration or
+directory-wide cleanup is introduced. Each INI is limited to 20,000 bytes to
+leave small-model data/stack headroom; oversized input is refused before copying.
+
+Run the new transaction/packet host checks through the managed GCC launcher:
+
+```text
+python -B src/cga/INSTALLT.PY --repo CGA-CHECKOUT --support FULL-SUPPORT-CHECKOUT --out NEW-INSTALL-HOST
+```
+
+The explicit support checkout supplies existing pinned fonts, grabber,
+startup assets and notices to the developer producer. Consumers receive them
+bundled. Synthetic driver fixtures and modern SETUPHOST.EXE are host tests
+only; the packet finalizer refuses those fixtures.
+
+After the three scheduled driver builds:
+
+```text
+python CGA-VIEW/src/cga/PACKCGA.PY prepare --repo CGA-VIEW --support FULL-SUPPORT-CHECKOUT --build-100 BUILD100 --build-320 BUILD320 --build-640 BUILD640 --source-commit FULL_CGA_SOURCE_COMMIT --out NEW-CGA-PREP
+```
+
+Preparation checks all MZ/NE drivers against CGABUILD receipts, generates the
+small fonts and includes the pinned XTC fonts, grabber, startup assets and
+notices. It emits `packet/README.TXT`, one `packet/CGA` folder, PREPARED.JSN
+and private native-src files. Headers and manifests are generated, never
+consumer edits. Extra packet/helper-source files are rejected.
+
+In the coordinated native slot:
+
+```text
+python CGA-VIEW/src/cga/BUILDSET.PY --prepared NEW-CGA-PREP --repo CGA-VIEW --toolchain C6-TOOLCHAIN --dosbox DOSBOX-X --lease SHARED-LEASE --out NEW-CGA-SETUP
+python CGA-VIEW/src/cga/PACKCGA.PY finish --prepared NEW-CGA-PREP --build NEW-CGA-SETUP --out NEW-CGA-PACKET
+```
+
+BUILDSET uses C6 `/G0 /AS`, LINK4 and the existing leased watchdog. Its exact
+source/binary receipt must match preparation. Finalization rejects host PE
+executables and emits CGADEV.ZIP with root SETUP.EXE, README.TXT and CGA/.
+It remains a development packet until native install/Windows/GUI gates pass;
+no current release or shared installer runtime is replaced.
+
+## Fonts, controls and native acceptance
 
 CGAFONT generates CG1SYS/FIX/OEM and the additional Helv/Courier faces at 4x6,
 48x40 logical dpi. The ASCII drawings are original; extended unsupported
@@ -62,14 +120,12 @@ checkbox/radio atlas, combo button and menu marks. FONTS.ASM descriptions and
 compression metrics are staged with the driver. User/system-control behavior,
 OEM atlas interpretation and clickable footprints need native validation.
 
-OEMSETUP.INF is a portable **source candidate** for three ordinary Windows
-Setup choices. It is not a complete consumer packet: CGA driver binaries do
-not exist yet, the additional dialog faces still need native DOS installation
-integration, and CGA.GR2/return-from-DOS behavior needs qualification. Do not
-tell consumers to gather these files, edit INI files or run font tools. The
-eventual packet must bundle every selected font, grabber and existing startup
-asset and perform font registration/recovery natively. Mode changes go through
-Setup while Windows is closed and take effect on the next Windows start.
+OEMSETUP.INF is a qualification descriptor for three ordinary Windows Setup
+choices. The complete consumer route is the adjacent native SETUP, which also
+registers dialog faces. CGA binaries and CGAGRAB/return-from-DOS behavior still
+need native qualification. Do not direct users to the descriptor alone, gather
+files, edit INIs or run developer font tools. Mode changes occur while Windows
+is closed and take effect on the next start.
 
 No panning implementation/branch is changed. Compact metrics alone do not make
 every third-party dialog fit 160x100. Program Manager, Notepad Run/Open/Save,

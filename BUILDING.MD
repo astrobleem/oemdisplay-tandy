@@ -74,6 +74,13 @@ For a scheduled native build, create a commit-pinned `--profile cga` source view
 watchdog/lease runner. No new CGA runtime or consumer packet is qualified by
 these commands; current accepted binaries and package pins remain unchanged.
 
+CGA-specific integration uses `src/cga/INSTALLT.PY` for managed-host C89
+transaction checks and `PACKCGA.PY` for the expanded packet. Separate native
+`BUILDSET.PY` uses C6 and the existing leased child watchdog, preserving the
+published Windows XT SETUP runtime. The [CGA guide](src/cga/README.MD) lists
+prepare/build/finalize commands and required native installation/GUI gates.
+No consumer Python or support-file gathering is part of that packet.
+
 Main contains no DDK, legacy compiler or emulator. Use the explicit pinned
 external inputs and source-view commands in [BUILDDEPS](tools/BUILDDEPS/README.MD).
 Only its `fetch` command accesses the network; materialize/verify the locked

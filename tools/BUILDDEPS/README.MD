@@ -90,6 +90,9 @@ CGA source candidate, not a qualified consumer packet. See
 [CGA build/test guidance](../../src/cga/README.MD). Existing profiles and locked
 external inputs are unchanged. Native build execution still needs an explicit
 coordinated slot and the existing shared lease.
+Its consumer-integration closure also retains the exact `src/text80/T80SET.C`
+INI transaction and `tools/DOSINST/CRCFAST.H`; CGA stages private adaptations
+without changing either shared source or published installer runtimes.
 
 This compatibility approach copies about 88 MB of dependency bytes into each
 fresh external workspace. It avoids duplicating toolchains on main and avoids
