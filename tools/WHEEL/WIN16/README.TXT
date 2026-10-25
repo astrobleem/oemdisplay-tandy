@@ -1,6 +1,6 @@
 CURRENT WHEEL DRIVER AND INSTALLATION
 The XR1 package supplies WHEEL.DRV, the bridge and paired client:
-https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP
+https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT.ZIP
 https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/RELEASES/RC8.MD
 
 HISTORICAL BRIDGE-ONLY R1 GUIDE FOLLOWS

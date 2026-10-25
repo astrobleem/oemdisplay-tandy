@@ -3,9 +3,9 @@
 Choose the profile for your hardware. Both use Windows 3.0 real mode,
 640 KB and a 160x200, 16-color desktop:
 
-- **Olivetti Prodest PC1, B000h:** [download PC1.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha/PC1.ZIP).
+- **Olivetti Prodest PC1, B000h:** [download PC1.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PC1.ZIP).
   This uses `PC1YAMA.DRV`.
-- **Standalone Yamaha V6355D, B800h:** [download YAMAHA.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/yamaha/YAMAHA.ZIP).
+- **Standalone Yamaha V6355D, B800h:** [download YAMAHA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/YAMAHA.ZIP).
   This uses `YAM160.DRV` for the standalone emulator profile.
 
 These are different memory apertures, with no automatic detection. Physical

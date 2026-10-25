@@ -1,6 +1,6 @@
 # TEXT80: Windows 3.0 in 80-column text mode (experimental)
 
-**[Download TEXT80.ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/main/downloads/experimental/TEXT80/TEXT80.ZIP)**
+**[Download TEXT80.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TEXT80.ZIP)**
 ([install, rollback and checksums](../downloads/experimental/TEXT80/README.MD)).
 The separate 2026-10-18 packet includes TEXT80 25, compact C25, PAN and VGA,
 original XT Pixels fonts and the DOS setup/rollback helper. Existing Windows
