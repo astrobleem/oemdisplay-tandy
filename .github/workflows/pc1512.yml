@@ -67,3 +67,63 @@ jobs:
         run: |
           python3 -B src/pc1512/P15VERIFY.PY
           python3 -B tools/DRVSET/VERIFY.PY
+
+  publication-check:
+    needs: exact-source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - name: Build from existing native-qualified core and pinned catalog inputs
+        run: |
+          python3 - <<'PYCODE'
+          import hashlib,json,urllib.request
+          from pathlib import Path
+          spec=json.loads(Path('tools/CURRENT/PRODUCTS.JSN').read_bytes())
+          Path('sound-inputs').mkdir()
+          for name,row in spec['sound'].items():
+              data=urllib.request.urlopen(row['source'],timeout=60).read()
+              assert {'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}==row['identity'],name
+              (Path('sound-inputs')/name).write_bytes(data)
+          PYCODE
+          CORE_SHA=$(python3 -c "import json; print(json.load(open('tools/CURRENT/PRODUCTS.JSN'))['core_source_commit'])")
+          python3 -B tools/DOSINST/RCPUB.PY --out core --commit "$CORE_SHA"
+          python3 -B tools/CURRENT/CHECK.PY --core core --sound sound-inputs --report catalog-check.json
+          python3 -B tools/CURRENT/BUNDLE.PY --core core --sound sound-inputs --commit "$SOURCE_SHA" --out current
+      - name: Check the exact candidate against current release without writes
+        run: python3 -B tools/P15PACK/P15PUB.PY --folder current --commit "$SOURCE_SHA"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pc1512-current-${{ env.SOURCE_SHA }}
+          path: current/*
+          if-no-files-found: error
+
+  publish-pc1512:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: publication-check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: current-pc1512-publication
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Read back this run's verified catalog artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download "${{ github.run_id }}" --repo "${{ github.repository }}" --name "pc1512-current-${{ github.sha }}" --dir current
+      - name: Publish only the qualified PC1512 ZIP and catalog records, then read back
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -B tools/P15PACK/P15PUB.PY --folder current --commit "${{ github.sha }}" --publish
