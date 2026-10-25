@@ -55,9 +55,9 @@ def build(output, commit, verify=False):
     pub.require(q["status"] == "PASS_NATIVE_AND_HOST" and not q["physical_test"], "Native qualification incomplete")
     for mode in ("fresh", "update"):
         row = q[mode]
-        pub.require(row["complete"] and row["owned_stopped"] and row["lease_released"], "Native case incomplete: " + mode)
+        pub.require(row["complete"] and not row.get("error") and row["owned_stopped"] and row["lease_released"], "Native case incomplete: " + mode)
         pub.require(row["prepared_comparison"]["count"] == (367 if mode == "fresh" else 80) and not row["prepared_comparison"]["different"], "Prepared bytes differ: " + mode)
-    pub.require(q["cold"]["complete"] and q["cold"]["owned_stopped"] and q["cold"]["lease_released"], "Cold launch incomplete")
+    pub.require(q["cold"]["complete"] and not q["cold"].get("error") and q["cold"]["owned_stopped"] and q["cold"]["lease_released"], "Cold launch incomplete")
     pub.require(q["public_assets"]["WINXT.ZIP"] == pub.identity(archive) and q["public_assets"]["WINXT.EXE"] == pub.identity(executable), "Package differs from qualified native kit")
     report = {"schema": 1, "tag": "v0.1.0-rc.8-dos.1", "source_commit": commit,
               "native_report": "docs/QUAL/DOSINST/RC8.JSN", "physical_qualification": False,

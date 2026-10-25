@@ -28,8 +28,9 @@ for fresh source, installation and temporary files. Windows is installed in C:\W
 
 Fresh Windows Setup: Enter at Welcome and directory. At System Information
 select Computer, then the FIRST Tandy 1000 EX/HX (WindowsXT) entry. Confirm
-HPXY 640x256, PC/XT keyboard and COM1 wheel mouse. Select No Changes for DOS
-configuration. Setup and the finisher continue automatically. Update preserves
+HPXY 640x256 and PC/XT keyboard; keep Setup's mouse choice. Select No Changes
+for DOS configuration. The finisher installs the COM1 wheel mouse and current
+desktop automatically after Windows Setup. Update preserves
 unrelated INI entries and shell customization. No manual INI edits are needed.
 
 Start later sessions from plain DOS: C:\STARTXT.

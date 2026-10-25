@@ -26,9 +26,10 @@ temporary files. Windows is installed in `C:\WINDOWS`.
 
 In fresh Setup, press Enter at Welcome and directory. At System Information,
 choose Computer and select the first **Tandy 1000 EX/HX (WindowsXT)** entry.
-Confirm **HPXY 640x256**, **PC/XT keyboard**, **COM1 wheel mouse** and
-**No Changes** for DOS configuration. Setup and its finisher continue
-automatically. Update preserves unrelated INI entries and shell customization.
+Confirm **HPXY 640x256** and **PC/XT keyboard**; keep Setup's mouse choice.
+Complete the remaining Windows Setup screens and choose **No Changes** for
+DOS configuration. The finisher installs the COM1 wheel mouse and current
+desktop automatically. Update preserves unrelated INI entries and shell customization.
 
 Start every later session from plain DOS with **`C:\STARTXT`**.
 Repair uses `C:\FIXXT`; `C:\FIXXT /VERIFY` adds full file comparison. If

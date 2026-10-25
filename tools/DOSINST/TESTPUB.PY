@@ -60,6 +60,7 @@ class NativePublisherTests(unittest.TestCase):
     def test_wrong_or_incomplete_native_result_refused_before_output(self):
         original = copy.deepcopy(self.qual)
         for mutate in (lambda q: q["fresh"].update(complete=False),
+                       lambda q: q["fresh"].update(error="Setup did not finish"),
                        lambda q: q["update"].update(lease_released=False),
                        lambda q: q["cold"].update(owned_stopped=False),
                        lambda q: q["update"]["prepared_comparison"].update(different=["WINXT/HPXY.DRV"]),
