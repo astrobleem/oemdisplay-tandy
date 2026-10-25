@@ -38,6 +38,10 @@ pal16		db	16 dup (0)		;palette 1, 16 colours
 		db	0			;border
 palA		db	1,14,4,10,4,5,6,7,8,9,10,11,12,13,14,15,0
 row		db	320 dup (0)
+rowM		db	320 dup (0)
+rowU		db	320 dup (0)
+rowL		db	320 dup (0)
+rowE		db	320 dup (0)
 
 begin:
 		cld
@@ -107,9 +111,31 @@ p16:
 		int	10h
 		call	setpal
 
+		mov	bp,0			;the four kinds of line: build each
+		mov	di,offset rowM		;  once (marker, upper, lower, edge)
+		call	mkrow
+		mov	bp,20
+		mov	di,offset rowU
+		call	mkrow
+		mov	bp,100
+		mov	di,offset rowL
+		call	mkrow
+		mov	bp,199
+		mov	di,offset rowE
+		call	mkrow
 		xor	bp,bp			;bp = y
 yloop:
-		call	mkrow
+		mov	si,offset rowM
+		cmp	bp,20
+		jb	ypick
+		mov	si,offset rowU
+		cmp	bp,100
+		jb	ypick
+		mov	si,offset rowL
+		cmp	bp,199
+		jb	ypick
+		mov	si,offset rowE
+ypick:
 		call	putrow
 		inc	bp
 		cmp	bp,200
@@ -316,8 +342,9 @@ vNoHalf:
 		ret
 value		endp
 
-;mkrow - row[] <- packed line bp
+;mkrow - packed line bp into row[], then copied to di
 mkrow		proc	near
+		push	di
 		push	cs
 		pop	es
 		mov	di,offset row
@@ -331,6 +358,10 @@ mrLp:
 		inc	si
 		cmp	si,[wid]
 		jb	mrLp
+		pop	di
+		mov	si,offset row
+		mov	cx,[rowb]
+		rep	movsb
 		ret
 mkrow		endp
 
@@ -398,8 +429,9 @@ pkP2:
 		ret
 pack		endp
 
-;putrow - row[] to video memory, line bp
+;putrow - si -> a packed line, to video memory line bp
 putrow		proc	near
+		push	si
 		mov	ax,bp
 		and	al,[imask]
 		xor	ah,ah
@@ -413,7 +445,7 @@ putrow		proc	near
 		add	di,ax
 		mov	ax,0B800h
 		mov	es,ax
-		mov	si,offset row
+		pop	si
 		mov	cx,[rowb]
 		rep	movsb
 		push	cs
