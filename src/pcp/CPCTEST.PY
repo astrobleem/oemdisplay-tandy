@@ -49,6 +49,18 @@ def fixture(root):
     (root/'RRBENCH.LOG').write_bytes(text.encode());return text
 
 class Controls(unittest.TestCase):
+    def test_native_receipt_file_binding(self):
+        verifier=importlib.machinery.SourceFileLoader('cp_record_binding',str(HERE/'CPVERIFY.PY')).load_module()
+        with tempfile.TemporaryDirectory() as temp:
+            folder=Path(temp)
+            for n,b in [('RRBENCH.LOG',b'complete native log'),('RB01.BIN',b'frame')]:
+                (folder/n).write_bytes(b)
+            files={n:verifier.identity((folder/n).read_bytes()) for n in ['RRBENCH.LOG','RB01.BIN']}
+            verifier.recorded_files(folder,{'files':files},{'RB01.BIN':b'frame'})
+            for bad in [dict(files,**{'RB01.BIN':{'bytes':5,'sha256':'0'*64}}),{'RRBENCH.LOG':files['RRBENCH.LOG']},dict(files,**{'UNRUN.BIN':files['RB01.BIN']})]:
+                with self.assertRaisesRegex(ValueError,'manifest differs'):
+                    verifier.recorded_files(folder,{'files':bad},{'RB01.BIN':b'frame'})
+
     def test_decoder_all_colours_and_edges(self):
         shadow=bytes(((i*73+i//160)&255) for i in range(32000));raw=P.model_flush(shadow)
         actual=C.pixels(raw)

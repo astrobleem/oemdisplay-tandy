@@ -331,7 +331,7 @@
     "fixed_driver_update": {
       "manifest": {
         "bytes": 35446,
-        "sha256": "e044c356a76c353e1f74da9e9af9eea1134cbe5fd900b58dfacd89115770849b"
+        "sha256": "3e14fda0aad966b646e877fb6622728f16d43e605459cb359892b81e48001c42"
       },
       "path": "tools/CPPACK/QUALIFY.JSN"
     },

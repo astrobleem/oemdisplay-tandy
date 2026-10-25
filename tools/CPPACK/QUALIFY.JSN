@@ -127,8 +127,8 @@
       "sha256": "84650ec0526d1333cbf1ca294f2f403cf4043b54e34590235d69824f768f98d4"
     },
     "src/pcp/CPCTEST.PY": {
-      "bytes": 5975,
-      "sha256": "44543ef5531c220fa69e853efa354072b8ae88972e209003e0684f399de2292e"
+      "bytes": 6871,
+      "sha256": "832434538b6ae929e8d6366fedb6d1ad522ab9953bf0919f2422621fd0a446ca"
     },
     "src/pcp/CPPOTEST.PY": {
       "bytes": 38567,
@@ -143,8 +143,8 @@
       "sha256": "7bdb33b34e40d3373b3bcb10f26d30ce3fffc820973195b89732dd4c95da3239"
     },
     "src/pcp/CPVERIFY.PY": {
-      "bytes": 11748,
-      "sha256": "7bd79b6fd3f03af49cf728496fef1bcdc55131552e1ca72c7b15cb02fe4a7f26"
+      "bytes": 12035,
+      "sha256": "85addca9fd5541a62c72ee53630e9e39c2df143d831c6777fe0ea4aa45023845"
     },
     "src/pcp/PCPPATCH.PY": {
       "bytes": 13023,

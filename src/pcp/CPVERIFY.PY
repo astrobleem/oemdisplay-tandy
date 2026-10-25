@@ -24,6 +24,10 @@ SOURCE_INPUTS|={'tools/BUILDDEPS/LOCK.JSON','tools/APPSET/APPSET.C','tools/APPSE
 
 def identity(data):return {'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}
 
+def recorded_files(folder,run,frames):
+    expected={n:identity((folder/n).read_bytes()) for n in set(frames)|{'RRBENCH.LOG'}}
+    if run.get('files')!=expected:raise ValueError('Native run file manifest differs from exported frames/log')
+
 def packet():
     p=importlib.machinery.SourceFileLoader('cpp_verify_payload',str(ROOT/'tools/SPPACK/PACKAGE.PY')).load_module()
     files=p.payload('CPPAN',json.loads((ROOT/'tools/SPPACK/PUBLIC.JSN').read_bytes()))
@@ -59,6 +63,7 @@ def verify():
         if bad:raise ValueError(label+': '+repr(bad))
         required|={label+'/'+n for n in frames}|{label+'/RRBENCH.LOG',label+'/RUN.JSN',label+'/FINAL.JSN',label+'/PROMPT.PNG'}
         run=json.loads((folder/'RUN.JSN').read_bytes());runs[label]=run
+        recorded_files(folder,run,frames)
         if any(run.get(k) is not True for k in ('complete','lease_acquired','owned_stopped','lease_released')) or run.get('post_win_marker')!='RETURNED\r\n':raise ValueError(label+': native run did not complete and return')
         if run.get('bios_mode')!=6 or run.get('conventional_kb')!=640:raise ValueError(label+': DOS return differs from shipped control')
         if run['emulator']!=q['emulator'] or run['config']!=q['config'] or run['timing_profile']!=dict(profile['Machine']):raise ValueError(label+': unmatched native environment')
