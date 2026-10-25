@@ -19,10 +19,10 @@ Windows 3.0 desktop.
 
 Requires **Windows 3.0 real mode, DOS 3.3+ and 640 KB RAM** on an EX/HX.
 
-**Already have Windows 3.0? [Download XRSYNC.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-xrsync-2026-10-24/XRSYNC.ZIP)** and follow
-the [short display install guide](docs/RELEASES/XRSYNC.MD). Preparation gathers
-the required Windows support file automatically. Install through Windows
-Setup, then start every session with `C:\XR155\RUNSYNC.BAT`.
+**Already have Windows 3.0? [Download XRSYNC.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE)** and follow
+the [short display install guide](docs/RELEASES/XRSYNC.MD). Run it on the DOS
+computer: `XRSYNC C:\WINDOWS`. It gathers the existing Windows support file
+and opens Setup. Start every session with `C:\XR155\RUNSYNC.BAT`.
 
 For a **complete new Windows XT desktop** from your Windows 3.0 media,
 [download the rc.8 installer](https://github.com/astrobleem/oemdisplay-tandy/releases/download/v0.1.0-rc.8/WINXT-XR1.ZIP)

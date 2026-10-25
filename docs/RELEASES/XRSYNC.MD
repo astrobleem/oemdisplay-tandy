@@ -1,54 +1,40 @@
-# XRSYNC: current XR1 display update
+# XRSYNC: DOS-native display installation
 
-**[Download XRSYNC.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/experimental-xrsync-2026-10-24/XRSYNC.ZIP)**
+**[Download XRSYNC.EXE](https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.EXE)**
 
-This installs the synchronous drawing update: a 640x256 Windows desktop
-viewed through a 320x200, 16-color screen. Use an original Tandy 1000 EX/HX
-with normal 640 KB and an existing Windows 3.0 real-mode installation at
-`C:\WINDOWS`. For a complete new Windows XT desktop installation from your
-Windows media, use the [rc.8 installer](RC8.MD) first.
+Put this file on the Tandy and exit Windows. On the DOS computer, run:
 
-## Prepare and install
+```bat
+XRSYNC C:\WINDOWS
+```
 
-1. Extract the ZIP on a modern computer. From that folder, run Python 3,
-   pointing at your installed Windows 3.0 folder as seen by that computer:
+Use your actual installed Windows 3.0 directory. The packet includes its grabber, fonts and artwork, prepares `C:\XR155`, reserves video memory
+and opens normal Windows Setup. No Python, modern computer, conversion or
+unpacking step is needed. It can be started from another drive.
 
-   ```text
-   python PREPARE.PY --windows C:\OWNW30\WINDOWS --out C:\XR155
-   ```
+In Setup choose **Display / Other**, enter **C:\XR155**, select
+**Tandy XR1 640x256 synchronous Output**, then **Complete Changes**. Keep the
+existing keyboard and mouse choices. Select **No Changes** for DOS configuration.
 
-   Use your actual host paths and a new output folder. A merged source-media
-   folder is also accepted. Preparation finds and checks the required support
-   file automatically; no manual file collection is needed.
-2. Copy the entire prepared folder to **`C:\XR155` in DOS**. Exit Windows.
-   From plain DOS, run:
+Start every session from plain DOS with:
 
-   ```bat
-   C:\XR155\RESERVE.COM
-   ```
+```bat
+C:\XR155\RUNSYNC.BAT
+```
 
-   Continue only after success, then run `C:\WINDOWS\SETUP`. Choose
-   **Display / Other**, enter **`C:\XR155`**, select
-   **Tandy XR1 640x256 synchronous Output**, and complete Setup. Keep the
-   existing keyboard and mouse choices.
-3. Start Windows with this command every time:
+RUNSYNC verifies the installed display/fonts, reserves video memory and starts
+Windows from the directory you supplied. In Windows, run
+`C:\XR155\XYCTL.EXE` for viewport panning and presentation controls.
 
-   ```bat
-   C:\XR155\RUNSYNC.BAT
-   ```
+Requires an original Tandy 1000 EX/HX, normal 640 KB, DOS 3.20+ and an existing
+English Windows 3.0 real-mode installation.
 
-   RUNSYNC checks the video reservation before `WIN /R`. In Windows, use
-   Program Manager's **File / Run** to start **`C:\XR155\XYCTL.EXE`** for
-   viewport panning and software/hardware presentation controls.
+[ZIP alternative](https://github.com/astrobleem/oemdisplay-tandy/releases/download/xrsync-dos-2026-10-24/XRSYNC.ZIP):
+extract on the DOS computer and run `XSETUP C:\WINDOWS` in that folder.
+The EXE download includes the same payload and needs no ZIP utility.
 
-After selecting XRSYNC, use RUNSYNC rather than the rc.8 STARTXT/FIXXT path,
-which belongs to the original HPXY profile. No manual INI or launcher-pin
-changes are needed. To return to the previous display, exit Windows, run
-RESERVE successfully and select that display through DOS Windows Setup.
-
-## Details
-
-This is a display update, not a full Windows installation or a replacement
-for the rc.8 shell installer. Windows 3.1 is unsupported. Large redraws can
-still take time on an 8088. [Drawing and installation results](../RRSYNC.MD)
-record the emulator scope; there is no new physical-hardware qualification.
+The rendering driver is unchanged. [Graphics results](../RRSYNC.MD) and
+[native installation results](../QUAL/DOSINST/XRSYNC.JSN) record emulator
+qualification; there is no new physical-hardware claim. The download contains
+the supplied grabber and all display support files. An installed Windows 3.0
+system remains required.
