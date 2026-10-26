@@ -5,16 +5,13 @@
 Windows on IBM CGA, including **160x100 with 16 colors**, compact fonts and
 small controls. You need installed Windows 3.0 real mode, DOS 3.3+ and 640 KB.
 
-[![Program Manager on a 160x100 CGA desktop](CGA/DESK100X.PNG)](CGA/DESK100.PNG)
+[![Paintbrush showing a sixteen-color twilight landscape on CGA](CGA/PAINT100X.PNG)](CGA/PAINT100.PNG)
 
-*160x100 Program Manager, enlarged 4x; this desktop frame uses four colors.
-[Original 160x100 image](CGA/DESK100.PNG). All images here are decoded video
-memory from recorded IBM XT/CGA emulator runs, not real-hardware photographs.*
-
-[![Windows GDI test displaying all sixteen CGA colors](CGA/PAL100X.PNG)](CGA/PAL100.PNG)
-
-*All 16 RGBI colors, counted in the captured 160x100 Windows drawing test.
-[Original 160x100 image](CGA/PAL100.PNG).*
+*Windows 3.0 Paintbrush at 160x100, enlarged 4x. The picture itself uses all
+16 RGBI colors, verified pixel for pixel against the opened BMP.
+[Original 160x100 image](CGA/PAINT100.PNG) · [Palette view](CGA/PAINTPLX.PNG) ·
+[Try the picture](CGA/COVE16.BMP).
+Captured from native IBM XT/CGA emulation; not a real-hardware photograph.*
 
 ## 1. Extract the download
 
