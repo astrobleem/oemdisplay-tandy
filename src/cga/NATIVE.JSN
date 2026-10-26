@@ -358,5 +358,73 @@
     },
     "physical_hardware": "UNQUALIFIED"
   },
-  "integration_gate": "Shared WDESK/WTPLACE CGA client source only; no competing root table, no native shared-client build yet; waiting parent-coordinated slot after WDESK probe"
+  "integration_gate": "Shared WDESK/WTPLACE CGA client source only; no competing root table, no native shared-client build yet; waiting parent-coordinated slot after WDESK probe",
+  "shared_client_cross_compile": {
+    "build": "PASS",
+    "kind": "CGA_WINDOW_ACCESS_CANDIDATE",
+    "flags": [
+      "-bt=windows",
+      "-ms",
+      "-0",
+      "-os",
+      "-zq",
+      "-w4",
+      "-we",
+      "-zw"
+    ],
+    "source_sha256": "b7588e6b0aa6f4994eb692ca72a5bb5ee6d5b25d3705e0f8441314874f24f3c1",
+    "shared_source_sha256": {
+      "WDCORE.C": "66e20b18a618b18ccca0ede3daa706e6ecfc36efdd88c1625796a581bbaa7723",
+      "WDCORE.H": "30969b4c4314e718391200330ddd4f13b6b6adeb237f6ad5a6ddf8ee0c7d4739",
+      "WDWIN.C": "ed7ff4035c99280999de3c52c6bd178a754e20011425b71663c83094e5ad2bd5",
+      "WDWIN.H": "8d009036884444dfdb66b76c6cbc1e6beb2e5e869c511b0c447069534b9edfbf",
+      "WTPLACE.C": "fcf8e226b17ea8217a68c6a8e3f88eefca3e444d8de145d3a3b59f6e3fb2cec7",
+      "WTPLACE.H": "af77584f4676029813a6e39e172b4362f0ef79dcae42df5303a2c857b3564ce1"
+    },
+    "placement_owner": "shared WDWIN only",
+    "bytes": 24450,
+    "sha256": "58714a5b3363f269da6894369ebbd0a69af2347e6334457436ab080dc6730ab4",
+    "windows": "NOT_TESTED",
+    "emulator": "NOT_LAUNCHED_HOST_CROSS_COMPILER",
+    "compiler_sha256": "d88049384eb428005c590af82e7cf63f48c14ed09af23f9572cf5dd579244d2d",
+    "linker_sha256": "d58013821bfd77b6b68b56ab6582419a1a33ab7839709c5b973a992cd499b4e8",
+    "gates": [
+      [
+        3,
+        "WIN16",
+        "PASS",
+        "WIN16 COMPILE/LINK",
+        "wcc clean for CGACTL, WDCORE, WDWIN, WTPLACE (0 warnings, 0 errors)"
+      ],
+      [
+        6,
+        "NE",
+        "PASS",
+        "WIN16 COMPILE/LINK",
+        "NE 3.00, target OS 2, autodata present"
+      ],
+      [
+        7,
+        "IMPORT",
+        "PASS",
+        "WIN16 COMPILE/LINK",
+        "49 imports from 3 modules, all exported by the real Windows 3.00 modules"
+      ]
+    ],
+    "qualification": "Compiler/link/NE/real-Windows3 import gates only; no runtime or consumer acceptance"
+  },
+  "medium_font_refinement": {
+    "independent_font_contracts": "PASS",
+    "CGA100_five_fonts": "BYTE_IDENTICAL_QUALIFIED_PACKET",
+    "medium_label_targets": "Filename and Directory within35 pixels; native fit still pending",
+    "fonts": {
+      "CG1SYS.FON": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40",
+      "CG1FIX.FON": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52",
+      "CG1OEM.FON": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06",
+      "CG1HELV.FON": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d",
+      "CG1COUR.FON": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa",
+      "CG2SYS.FON": "1c5c985e0b1bf84fbb5a9ca0e3768b8c6e235bed427750872cdbecc5df7191fa",
+      "CG2HELV.FON": "eb7064a3d26118e757dc0853f727bc3749b43d959e9bb1ebbd6918ca7ae733a0"
+    }
+  }
 }

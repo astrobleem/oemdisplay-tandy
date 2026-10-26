@@ -7,6 +7,11 @@
 #define WINVER 0x0300
 #include <windows.h>
 #include "WDWIN.H"
+#ifdef __WATCOMC__
+#define CGA_ENTRY __export
+#else
+#define CGA_ENTRY
+#endif
 static HWND mainWindow;
 static DWORD lastMove;
 static int held;
@@ -20,7 +25,7 @@ static HWND Active(void)
  if(!w || w==mainWindow || !IsWindowVisible(w) || !IsWindowEnabled(w) || IsIconic(w))return 0;
  style=GetWindowLong(w,GWL_STYLE);
  if((style&WS_CHILD) || (style&WS_CAPTION)!=WS_CAPTION)return 0;
- GetClassName(w,cls,sizeof(cls));
+ cls[0]=0;if(!GetClassName(w,cls,sizeof(cls)))return 0;
  return !lstrcmp(cls,"Progman") || !lstrcmp(cls,"#32768") ? 0 : w;
 }
 static void SlideChildren(HWND w,int key)
@@ -76,7 +81,7 @@ static void Slide(int key)
  else if(key==VK_UP)(void)WDWinPanBy(0,-5);
  else if(key==VK_DOWN)(void)WDWinPanBy(0,5);
 }
-long FAR PASCAL WndProc(HWND w,unsigned m,WORD wp,LONG lp)
+long FAR PASCAL CGA_ENTRY WndProc(HWND w,unsigned m,UINT wp,LONG lp)
 {
  int keys[6],i,key=0;DWORD now;
  if(m==WM_TIMER){
@@ -106,6 +111,7 @@ long FAR PASCAL WndProc(HWND w,unsigned m,WORD wp,LONG lp)
 int PASCAL WinMain(HANDLE hi,HANDLE previous,LPSTR cmd,int show)
 {
  WNDCLASS wc;MSG msg;HDC dc;int ok;
+ (void)cmd;(void)show;
  if(previous)return 0;
  dc=GetDC(NULL);ok=GetDeviceCaps(dc,HORZRES)==160 && GetDeviceCaps(dc,VERTRES)==100 && GetDeviceCaps(dc,NUMCOLORS)==16;ReleaseDC(NULL,dc);
  if(!ok)return 0;

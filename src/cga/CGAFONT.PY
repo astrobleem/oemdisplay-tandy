@@ -138,6 +138,15 @@ def ui_width(char):
     return 4
 
 
+def medium_width(char):
+    # Preserve the six-row face's four-pixel base unit while fitting stock
+    # 320-mode labels (Directory: has35 pixels in the Open template).
+    if not char:return 4
+    if char in " il.,:;'|!":return 2
+    if char in 'jrt':return 3
+    return 4
+
+
 def build(out):
     out.mkdir(parents=True, exist_ok=True)
     B.glyph = drawing
@@ -150,7 +159,7 @@ def build(out):
         small = ui or filename=='CG1COUR.FON'
         width,height = (3 if ui else 4,5) if small else (4,6)
         first,last = (32,255) if charset == 0 else (1,254)
-        widths=[ui_width(B.decode_code(c,charset)) if ui else width for c in range(first,last+1)]
+        widths=[medium_width(B.decode_code(c,charset)) if medium else ui_width(B.decode_code(c,charset)) if ui else width for c in range(first,last+1)]
         contract = dict(type=0,points=9 if small or medium else 11,vert_res=48 if medium else 40,horiz_res=96 if medium else 48,ascent=5,internal=0,external=0,
                         italic=0,underline=0,strikeout=0,weight=weight,charset=charset,
                         pix_width=0 if variable else width,height=height,pitch_family=family|int(variable),
