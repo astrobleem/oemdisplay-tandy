@@ -68,6 +68,17 @@ class Packets(unittest.TestCase):
         (self.out / "SHA256SUMS").write_bytes("".join(P.sha(p.read_bytes()) + "  " + p.name + "\n"
             for p in sorted(self.out.iterdir()) if p.name != "SHA256SUMS").encode())
 
+    def test_new_source_fixture_is_preserved_exactly(self):
+        fixture=b"real post-patch TOutput\r\n"
+        def listing(repo,*args):
+            return b"src/pcp/CPPOUT.FIX\n" if args[-1]=="src/pcp" else b""
+        def blob(repo,commit,name):
+            return fixture if name=="src/pcp/CPPOUT.FIX" else b"source"
+        with patch.object(P,"git",side_effect=listing),patch.object(P,"read_blob",side_effect=blob):
+            files=P.source_members(self.root,self.root,self.commit)
+        self.assertEqual(files["src/pcp/CPPOUT.FIX"],fixture)
+        self.assertEqual(json.loads(files["SOURCE.JSN"])["files"]["src/pcp/CPPOUT.FIX"],P.sha(fixture))
+
     def test_deterministic_runtime_and_source_archives(self):
         self.build()
         second = self.root / "second"

@@ -9,7 +9,12 @@ C:\\MODETEST.INI [mode] defaults: width=640, colors=4, bios=10, phases=31.
 The 640x200x4 default uses palette=1 (black/red/green/white), hardware
 [0,12,10,15]. Use palette=0 and --profile 640x200x4-cga for prior CGA data.
 Set metadata to a listed profile; phase bits are core=1, imports=2,
-exports/readback=4, text/cursor=8, raw aliases=16 (2/4-color). The checker requires all phases by default.
+exports/readback=4, text/cursor=8, raw aliases=16 (2/4-color), and RLE4/RLE8
+screen and memory DIB imports plus invalid compression/depth pairs=32.
+The checker requires all selected phases. RLE cases 140-148 cover valid
+RLE4/8, truncated streams, a guarded 1KB real-mode 64K alias crossing,
+invalid compression/depth pairs, and early EOB. Phase 64 adds cases 150-157:
+nonzero-X vertical deltas at both depths through both import paths (dy=1/3).
 
 This checker imports no renderer, quantizer, or encoder implementation.
 Each captured frame is decoded and every visible pixel compared against
@@ -23,7 +28,7 @@ historical 640x200x4-cga hardware-palette contract, not an emulator palette read
 
 Examples:
   python3 MODECHK.PY /isolated/guest --profile 640x200x4 --out result.json
-  python3 MODECHK.PY /isolated/control --profile 320x200x16 --phases 1
+  python3 MODECHK.PY /isolated/control --profile 320x200x16 --phases 47
   python3 MODECHK.PY --selftest
 """
 import argparse
@@ -48,6 +53,12 @@ PROFILES = {
                        storage=32768, palette=FOUR, hardware=[0,11,13,15],dpi=[96,48],font_height=8,pens=20,palette_kind=0),
     '320x200x16': dict(width=320, colors=16, bios=9, banks=4, pitch=160,
                         storage=32768, palette=BASE, hardware=list(range(16))),
+    # HPXY XR1: 640x256 logical desktop with a 320x200 physical viewport.
+    # The RLE integration phase pans to (8,4); captures still contain the
+    # physical 320x200 VRAM window.
+    '640x256x16-rle-pan': dict(width=320, logical_width=640, logical_height=256,
+                        colors=16, bios=9, banks=4, pitch=160, storage=32768,
+                        palette=BASE, hardware=list(range(16)), rle_pan=(8,4)),
     '160x200x16': dict(width=160, colors=16, bios=8, banks=2, pitch=80,
                         storage=16384, palette=BASE, hardware=list(range(16)),dpi=[96,48],font_height=8,pens=80,palette_kind=0),
     '320x200x4': dict(width=320, colors=4, bios=4, banks=2, pitch=80,
@@ -110,6 +121,18 @@ def strips(p, grid=False):
 
 def solid(p,n):
     return [nearest(BASE[n],p)]*(p['width']*200)
+
+
+def expected_early_eob_frame(p):
+    expected=solid(p,8);color=nearest(BASE[3],p);zero=nearest(BASE[0],p)
+    pan_x,pan_y=p.get('rle_pan',(0,0))
+    for row in range(11):
+        sy=60+row-pan_y;row_color=color if row==10 else zero
+        for x in range(37):
+            for dx in (10+x-pan_x,60+x-pan_x):
+                if 0<=dx<p['width'] and 0<=sy<200:
+                    expected[sy*p['width']+dx]=row_color
+    return expected
 
 
 def pattern(p,x,y,bpp=4):
@@ -186,7 +209,89 @@ def expected_cases(phases):
     if phases&4:ids += list(range(100,109))
     if phases&8:ids += [110]+list(range(120,125))
     if phases&16:ids += [130,131]
+    if phases&32:ids += [140,141,142,143,144,145,146,147,148]
+    if phases&64:ids += list(range(150,158))
     return ids
+
+
+def ordered_events(case, names):
+    events=[key for key,value in case.get('events',[])]
+    position=-1
+    for name in names:
+        try:position=events.index(name,position+1)
+        except ValueError:return False
+    return True
+
+
+def realmode_cross_segment_alias(base_segment, base_offset, allocation_bytes,
+                                 stream_offset, stream_bytes,
+                                 guard_before=0, guard_after=0):
+    """Describe a bounded 8086 far alias whose byte stream crosses offset 64K.
+
+    Addresses are linear real-mode addresses before the 20-bit bus mask. The
+    alias is accepted only when its first byte and post-carry segment map to
+    the exact owned allocation bytes without segment underflow or 20-bit wrap.
+    """
+    values=(base_segment,base_offset,allocation_bytes,stream_offset,
+            stream_bytes,guard_before,guard_after)
+    if any(not isinstance(value,int) for value in values):return None
+    if not (0<=base_segment<=0xffff and 0<=base_offset<=0xffff):return None
+    if allocation_bytes<=0 or stream_offset<0 or stream_bytes<=0:return None
+    if guard_before<0 or guard_after<0 or stream_bytes>0xffff:return None
+    base_linear=(base_segment<<4)+base_offset
+    allocation_end=base_linear+allocation_bytes
+    stream_linear=base_linear+stream_offset
+    stream_end=stream_linear+stream_bytes
+    if allocation_end>0x100000 or stream_linear<base_linear:return None
+    if stream_offset<guard_before or stream_end+guard_after>allocation_end:return None
+    if stream_end+guard_after>0x100000:return None
+    alias_offset=0xfff0+(stream_linear&0x0f)
+    numerator=stream_linear-alias_offset
+    if numerator<0 or numerator&0x0f:return None
+    alias_segment=numerator>>4
+    carry_bytes=0x10000-alias_offset
+    if alias_segment>0xefff or not (0<carry_bytes<stream_bytes):return None
+    alias_linear=(alias_segment<<4)+alias_offset
+    carry_segment=alias_segment+0x1000
+    carry_linear=carry_segment<<4
+    if alias_linear!=stream_linear:return None
+    if carry_segment>0xffff or carry_linear!=stream_linear+carry_bytes:return None
+    return {
+        'base_linear':base_linear,
+        'allocation_end':allocation_end,
+        'stream_linear':stream_linear,
+        'stream_end':stream_end,
+        'alias_segment':alias_segment,
+        'alias_offset':alias_offset,
+        'alias_linear':alias_linear,
+        'segment_delta':alias_segment-base_segment,
+        'carry_bytes':carry_bytes,
+        'carry_segment':carry_segment,
+        'carry_linear':carry_linear,
+    }
+
+
+def rle_call_and_unchanged(case, changed_key,
+                           call_key='RLE_CALL_READY',
+                           return_key='RLE_SETDIB_RETURN'):
+    """Do not count unchanged bytes as a driver result when the call was skipped."""
+    return (case.get(call_key)==1 and case.get(return_key,0)>0 and
+            case.get(changed_key)==0)
+
+
+def win3_realmode_flags_clear(win_flags):
+    """WF_PMODE from the Win3 DDK WINDOWS.H is bit 0 (0x0001)."""
+    return isinstance(win_flags,int) and (win_flags & 0x0001)==0
+
+
+def rle_mode_guard_recorded(case):
+    """Check the guest's GetWinFlags record and fail-closed alias guard."""
+    win_flags=case.get('RLE_WIN_FLAGS')
+    if not isinstance(win_flags,int):return False
+    protected=bool(win_flags & 0x0001)
+    return (case.get('RLE_REAL_MODE')==(0 if protected else 1) and
+            case.get('RLE_MODE_GUARD_REJECT')==(1 if protected else 0) and
+            (not protected or case.get('RLE_CALL_READY')==0))
 
 
 def analyze(guest,profile,phases):
@@ -204,9 +309,18 @@ def analyze(guest,profile,phases):
         check('metadata.PALETTE_KIND',vals.get('PALETTE_KIND')==[p.get('palette_kind',0)],vals.get('PALETTE_KIND'),[p.get('palette_kind',0)])
     elif p.get('palette_kind')==1:
         check('metadata.palette_v2_required',False,1,2)
-    for k,v in [('PHASES',phases),('HORZRES',w),('VERTRES',200),
+    for k,v in [('PHASES',phases),('HORZRES',p.get('logical_width',w)),
+                ('VERTRES',p.get('logical_height',200)),
                 ('BITSPIXEL',1),('PLANES',4),('NUMCOLORS',p['colors']),('BIOS',p['bios']),('COMPLETE',1)]:
         check('metadata.'+k,vals.get(k)==[v],vals.get(k),[v])
+    if 'rle_pan' in p:
+        px,py=p['rle_pan']
+        for k,v in [('RLE_PAN_RETURN',[1]),('RLE_PAN_X',[px]),('RLE_PAN_Y',[py]),
+                    ('RLE_PAN_VIEW_WIDTH',[w]),('RLE_PAN_VIEW_HEIGHT',[200]),
+                    ('RLE_PAN_LOGICAL_WIDTH',[p['logical_width']]),
+                    ('RLE_PAN_LOGICAL_HEIGHT',[p['logical_height']]),
+                    ('RLE_PAN_RESTORE',[1])]:
+            check('metadata.'+k,vals.get(k)==v,vals.get(k),v)
     if 'dpi' in p:
         for k,v in zip(['LOGPIXELSX','LOGPIXELSY'],p['dpi']):check(k,vals.get(k)==[v],vals.get(k),[v])
         check('SYSTEM_FONT_HEIGHT',vals.get('SYSTEM_FONT_HEIGHT')==[p['font_height']],vals.get('SYSTEM_FONT_HEIGHT'),[p['font_height']])
@@ -284,12 +398,170 @@ def analyze(guest,profile,phases):
             elif kind==10:
                 expected=strips(p,True);visible=read('MV%03d.BIN'%n);vp=decode(visible,p)
                 changed=[i for i,(a,b) in enumerate(zip(actual,vp)) if a!=b]
-                cx=max(0,min(w-1,c['CURSOR_REQ_X']));cy=max(0,min(199,c['CURSOR_REQ_Y']))
+                logical_w=p.get('logical_width',w);logical_h=p.get('logical_height',200)
+                cx=max(0,min(logical_w-1,c['CURSOR_REQ_X']));cy=max(0,min(logical_h-1,c['CURSOR_REQ_Y']))
+                in_view=0<=cx<w and 0<=cy<200
+                if in_view and (cx,cy)==(w-1,199):cursor_ok=vp==expected[:-1]+[0]
+                elif in_view:cursor_ok=bool(changed)
+                else:cursor_ok=vp==expected
                 extra += [('cursor_position',(c['CURSOR_X'],c['CURSOR_Y'])==(cx,cy)),
-                          ('cursor_visible',bool(changed) if (cx,cy)!=(w-1,199) else vp==expected[:-1]+[0]),('cursor_restore',before==after),
+                          ('cursor_visible',cursor_ok),('cursor_restore',before==after),
                           ('cursor_locality',all(cx<=i%w<cx+32 and cy<=i//w<cy+32 for i in changed))]
                 r['visible_changed_pixels']=len(changed)
                 if (cx,cy)==(w-1,199):r['clipped_arrow_tip_expected_index']=0
+            elif kind in (13,19):
+                bpp=c['BPP'];method=c['RLE_METHOD']
+                if bpp not in (4,8) or method not in (0,1):raise ValueError('Invalid RLE case metadata')
+                start_scan=c.get('RLE_START_SCAN',0);scan_count=c.get('RLE_SCAN_COUNT',11)
+                delta_y=c.get('RLE_DELTA_Y',0)
+                if kind==19 and (delta_y not in (1,3) or n!=150+(bpp==8)*4+method*2+(delta_y==3)):
+                    raise ValueError('Invalid nonzero-X delta fixture metadata')
+                want_start=3 if kind==13 and method==0 and bpp==8 else 0
+                want_count=5 if want_start else 11
+                if (start_scan,scan_count)!=(want_start,want_count):
+                    raise ValueError('Unexpected RLE scan-band metadata')
+                band_top=60+11-(start_scan+scan_count);band_bottom=60+11-start_scan
+                returned_rows=11 if kind==19 else max(0,min(band_bottom,69,200)-max(band_top,62,0))
+                expected=solid(p,8);pan_x,pan_y=p.get('rle_pan',(0,0))
+                for y in range(11):
+                    for x in range(37):
+                        scan=10-y
+                        if kind==19:value=5 if scan==0 and x<2 else 9 if scan==delta_y and 4<=x<7 else 0
+                        elif bpp==8 and scan==1:value=0
+                        elif bpp==8 and scan==0 and x<2:value=0
+                        elif bpp==8 and scan==0 and x<6:value=1
+                        elif x<4:
+                            value=((scan+1)&15) if bpp==8 else (2 if x&1 else 1)
+                        else:value=(x*3+y*5)&15
+                        if start_scan<=scan<start_scan+scan_count and (kind==19 or (2<=x<35 and 2<=y<9)):
+                            sy=60+y-pan_y
+                            if 0<=sy<200:
+                                for dx in (10+x-pan_x,60+x-pan_x):
+                                    if 0<=dx<w:expected[sy*w+dx]=nearest(BASE[value],p)
+                extra += [('scan_start',start_scan==want_start),('scan_count',scan_count==want_count)]
+                extra += [('stage_receipts_ordered',ordered_events(c,['RLE_PRE_CLEAR','RLE_CALL_READY','RLE_API_RETURN','RAW_CALL_READY','RAW_API_RETURN','RLE_POST_RENDER'])),
+                          ('preclear_receipt',c.get('RLE_PRE_CLEAR')==1),
+                          ('compressed_call_receipt',c.get('RLE_CALL_READY')==1),
+                          ('postrender_receipt',c.get('RLE_POST_RENDER')==1)]
+                for k in ['RLE_CLIP1','RLE_CLIP2']:
+                    extra.append((k,c.get(k)==1))
+                for k in ['RLE_INPUT_CHANGED','RAW_INPUT_CHANGED','INFO_INPUT_CHANGED']:
+                    extra.append((k,c.get(k)==0))
+                if method==0:
+                    extra += [('RLE_return_value',c.get('RLE_RETURN',0)==returned_rows),
+                              ('RAW_return_value',c.get('RAW_RETURN',0)==returned_rows)]
+                else:
+                    extra += [('memory_allocated',c.get('RLE_MEMORY_OK')==1),
+                              ('RLE_setdib_scans',c.get('RLE_SETDIB_RETURN')==11),
+                              ('RAW_setdib_scans',c.get('RAW_SETDIB_RETURN')==11),
+                              ('RLE_bitblt',c.get('RLE_BLT_RETURN')==1),
+                              ('RAW_bitblt',c.get('RAW_BLT_RETURN')==1)]
+                extra.append(('compressed_size',c.get('RLE_SIZE')==(10 if kind==19 else 408 if bpp==8 else 266)))
+            elif kind==14:
+                bpp=c['BPP'];declared_size=407 if bpp==8 else 265
+                if bpp not in (4,8) or n not in (144,145):raise ValueError('Invalid truncated-RLE case metadata')
+                expected=solid(p,8)
+                extra += [('truncated_size',c.get('RLE_SIZE')==declared_size),
+                          ('RLE_input_unchanged',c.get('RLE_INPUT_CHANGED')==0),
+                          ('INFO_input_unchanged',c.get('INFO_INPUT_CHANGED')==0),
+                          ('stage_receipts_ordered',ordered_events(c,['RLE_PRE_CLEAR','RLE_CALL_READY','RLE_API_RETURN','RLE_POST_RENDER'])),
+                          ('preclear_receipt',c.get('RLE_PRE_CLEAR')==1),
+                          ('compressed_call_receipt',c.get('RLE_CALL_READY')==1),
+                          ('postrender_receipt',c.get('RLE_POST_RENDER')==1)]
+                if n==144:extra.append(('screen_rejected_before_write',c.get('RLE_RETURN')==0))
+                else:extra += [('memory_allocated',c.get('RLE_MEMORY_OK')==1),
+                               ('memory_rejected',c.get('RLE_SETDIB_RETURN')==0),
+                               ('destination_unchanged',c.get('DDB_UNCHANGED')==1 and c.get('DDB_FILL_BAD')==0)]
+            elif kind==16:
+                if n!=146 or c.get('BPP')!=8:raise ValueError('Invalid cross-segment RLE case metadata')
+                alias=realmode_cross_segment_alias(
+                    c.get('RLE_BITS_BASE_SEGMENT',-1),
+                    c.get('RLE_BITS_BASE_OFFSET',-1),
+                    c.get('RLE_BITS_ALLOC_BYTES',0),
+                    c.get('RLE_BITS_BUFFER_STREAM_OFFSET',-1),
+                    c.get('RLE_SIZE',0),
+                    c.get('RLE_BITS_PREFIX_GUARD',-1),
+                    c.get('RLE_BITS_SUFFIX_GUARD',-1))
+                expected=solid(p,8);pan_x,pan_y=p.get('rle_pan',(0,0))
+                for y in range(11):
+                    for x in range(37):
+                        scan=10-y
+                        if scan==1:value=0
+                        elif scan==0 and x<2:value=0
+                        elif scan==0 and x<6:value=1
+                        elif x<4:value=(scan+1)&15
+                        else:value=(x*3+y*5)&15
+                        color=nearest(BASE[value],p)
+                        sy=60+y-pan_y
+                        if 0<=sy<200:
+                            for dx in (10+x-pan_x,60+x-pan_x):
+                                if 0<=dx<w:expected[sy*w+dx]=color
+                extra += [('guest_real_mode_before_alias',win3_realmode_flags_clear(c.get('RLE_WIN_FLAGS')) and c.get('RLE_REAL_MODE')==1),
+                          ('mode_guard_receipt_consistent',rle_mode_guard_recorded(c)),
+                          ('global_allocated',c.get('RLE_INFO_ALLOC_OK')==1),
+                          ('stage_receipts_ordered',ordered_events(c,['RLE_PRE_CLEAR','RLE_CALL_READY','RLE_API_RETURN','RAW_CALL_READY','RAW_API_RETURN','RLE_POST_RENDER'])),
+                          ('preclear_receipt',c.get('RLE_PRE_CLEAR')==1),
+                          ('compressed_call_receipt',c.get('RLE_CALL_READY')==1),
+                          ('postrender_receipt',c.get('RLE_POST_RENDER')==1),
+                          ('global_lock_base_offset_zero',c.get('RLE_INFO_BASE_OFFSET')==0),
+                          ('header_at_ffc0',c.get('RLE_INFO_OFFSET')==0xffc0),
+                          ('palette_starts_at_ffe8',c.get('RLE_PALETTE_OFFSET')==0xffe8),
+                          ('palette_crosses_64k',c.get('RLE_PALETTE_CROSSES_64K')==1),
+                           ('compressed_global_allocated',c.get('RLE_BITS_ALLOC_OK')==1),
+                           ('compressed_base_offset_valid',0<=c.get('RLE_BITS_BASE_OFFSET',-1)<=0xffff),
+                           ('compressed_allocation_is_small',c.get('RLE_BITS_ALLOC_BYTES')==0x400),
+                           ('compressed_stream_layout_matches_fixture',c.get('RLE_BITS_BUFFER_STREAM_OFFSET')==16 and c.get('RLE_BITS_PREFIX_GUARD')==16 and c.get('RLE_BITS_SUFFIX_GUARD')==16 and c.get('RLE_SIZE')==408),
+                           ('compressed_buffer_guards_bound_stream',alias is not None),
+                           ('compressed_stream_starts_near_segment_end',alias is not None and c.get('RLE_BITS_OFFSET')==alias['alias_offset']),
+                           ('compressed_far_offset_matches_alias',alias is not None and c.get('RLE_BITS_FAR_OFFSET')==alias['alias_offset']),
+                           ('compressed_segment_alias_matches',alias is not None and c.get('RLE_BITS_FAR_SEGMENT')==alias['alias_segment'] and c.get('RLE_BITS_SEGMENT_DELTA')==alias['segment_delta']),
+                           ('compressed_alias_linear_equivalent',alias is not None and c.get('RLE_BITS_LINEAR')==alias['stream_linear'] and c.get('RLE_BITS_ALIAS_LINEAR')==alias['alias_linear']),
+                           ('compressed_carry_segment_equivalent',alias is not None and c.get('RLE_BITS_CARRY_BYTES')==alias['carry_bytes'] and c.get('RLE_BITS_CARRY_SEGMENT')==alias['carry_segment']),
+                           ('compressed_far_stream_crosses_64k',alias is not None and alias['alias_offset']+c.get('RLE_SIZE',0)>0x10000),
+                           ('compressed_stream_crosses_64k',c.get('RLE_BITS_CROSSES_64K')==1),
+                           ('compressed_alias_valid',c.get('RLE_BITS_ALIAS_VALID')==1),
+                          ('memory_allocated',c.get('RLE_MEMORY_OK')==1),
+                          ('RLE_setdib_scans',c.get('RLE_SETDIB_RETURN')==11),
+                          ('RAW_setdib_scans',c.get('RAW_SETDIB_RETURN')==11),
+                          ('caller_info_unchanged',rle_call_and_unchanged(c,'RLE_INFO_CHANGED')),
+                          ('compressed_cross_segment_input_unchanged',rle_call_and_unchanged(c,'RLE_INPUT_CHANGED')),
+                          ('compressed_buffer_guards_unchanged',rle_call_and_unchanged(c,'RLE_GUARDS_CHANGED')),
+                          ('compressed_fixture_unchanged',rle_call_and_unchanged(c,'RLE_FIXTURE_CHANGED')),
+                          ('raw_info_unchanged',rle_call_and_unchanged(c,'RAW_INFO_CHANGED','RAW_CALL_READY','RAW_SETDIB_RETURN'))]
+            elif kind==17:
+                if n!=147:raise ValueError('Invalid RLE format-pair case metadata')
+                expected=solid(p,8)
+                extra += [('RLE8_screen_mismatch_bpp',c.get('RLE8_SCREEN_BPP')==4),
+                          ('stage_receipts_ordered',ordered_events(c,['RLE_PRE_CLEAR','RLE8_SCREEN_CALL_READY','RLE8_SCREEN_API_RETURN','RLE4_MEMORY_CALL_READY','RLE4_MEMORY_API_RETURN','RLE_POST_RENDER'])),
+                          ('preclear_receipt',c.get('RLE_PRE_CLEAR')==1),
+                          ('RLE8_screen_call_receipt',c.get('RLE8_SCREEN_CALL_READY')==1),
+                          ('RLE4_memory_call_receipt',c.get('RLE4_MEMORY_CALL_READY')==1),
+                          ('postrender_receipt',c.get('RLE_POST_RENDER')==1),
+                          ('RLE8_screen_fixture_size',c.get('RLE8_SCREEN_SIZE')==408),
+                          ('RLE8_screen_rejected',c.get('RLE8_SCREEN_RETURN')==0),
+                          ('RLE8_screen_input_unchanged',c.get('RLE8_SCREEN_INPUT_CHANGED')==0),
+                          ('RLE8_screen_info_unchanged',c.get('RLE8_SCREEN_INFO_CHANGED')==0),
+                          ('RLE4_memory_mismatch_bpp',c.get('RLE4_MEMORY_BPP')==8),
+                          ('RLE4_memory_fixture_size',c.get('RLE4_MEMORY_SIZE')==266),
+                          ('RLE4_memory_allocated',c.get('RLE4_MEMORY_OK')==1),
+                          ('RLE4_memory_rejected',c.get('RLE4_MEMORY_RETURN')==0),
+                          ('RLE4_memory_destination_unchanged',c.get('RLE4_MEMORY_DEST_UNCHANGED')==1),
+                          ('RLE4_memory_input_unchanged',c.get('RLE4_MEMORY_INPUT_CHANGED')==0),
+                          ('RLE4_memory_info_unchanged',c.get('RLE4_MEMORY_INFO_CHANGED')==0)]
+            elif kind==18:
+                if n!=148 or c.get('BPP')!=8 or c.get('RLE_METHOD')!=0:
+                    raise ValueError('Invalid early-EOB RLE case metadata')
+                expected=expected_early_eob_frame(p)
+                extra += [('early_eob_stream_size',c.get('RLE_SIZE')==4),
+                          ('stage_receipts_ordered',ordered_events(c,['RLE_PRE_CLEAR','RLE_CALL_READY','RLE_API_RETURN','RAW_CALL_READY','RAW_API_RETURN','RLE_POST_RENDER'])),
+                          ('preclear_receipt',c.get('RLE_PRE_CLEAR')==1),
+                          ('compressed_call_receipt',c.get('RLE_CALL_READY')==1),
+                          ('postrender_receipt',c.get('RLE_POST_RENDER')==1),
+                          ('RLE_api_returned',c.get('RLE_RETURN',0)>0),
+                          ('raw_api_returned',c.get('RAW_RETURN',0)>0),
+                          ('RLE_input_unchanged',c.get('RLE_INPUT_CHANGED')==0),
+                          ('raw_input_unchanged',c.get('RAW_INPUT_CHANGED')==0),
+                          ('info_unchanged',c.get('INFO_INPUT_CHANGED')==0)]
             else:raise ValueError('Unknown case kind '+str(kind))
             pixels+=w*200;bytes_compared+=p['storage']
             r.update(differences(expected,actual,w));r['pixels_compared']=w*200
@@ -433,8 +705,43 @@ def selftest():
     mono,indices=ddb_pixels(aliasraw,16,1,2,bw)
     assert indices==list(range(16)) and mono==[i&1 for i in range(16)]
     assert expected_cases(15)==[0,1,2]+list(range(10,22))+list(range(30,36))+list(range(40,96))+list(range(100,109))+[110]+list(range(120,125))
+    assert expected_cases(32)==[140,141,142,143,144,145,146,147,148]
+    assert expected_cases(40)==[110,120,121,122,123,124,140,141,142,143,144,145,146,147,148]
+    assert expected_cases(47)[-9:]==[140,141,142,143,144,145,146,147,148] and len(expected_cases(47))==101
+    assert ordered_events({'events':[('RLE_PRE_CLEAR',1),('RLE_CALL_READY',1),('RLE_API_RETURN',5),('RLE_POST_RENDER',1)]},
+                          ['RLE_PRE_CLEAR','RLE_CALL_READY','RLE_API_RETURN','RLE_POST_RENDER'])
+    assert not ordered_events({'events':[('RLE_CALL_READY',1),('RLE_PRE_CLEAR',1),('RLE_API_RETURN',5)]},
+                              ['RLE_PRE_CLEAR','RLE_CALL_READY','RLE_API_RETURN'])
+    early=expected_early_eob_frame(PROFILES['640x256x16-rle-pan'])
+    early_color=nearest(BASE[3],PROFILES['640x256x16-rle-pan'])
+    early_zero=nearest(BASE[0],PROFILES['640x256x16-rle-pan'])
+    early_bg=nearest(BASE[8],PROFILES['640x256x16-rle-pan'])
+    assert sum(value==early_color for value in early)==74
+    assert all(early[66*320+x]==early_color for x in list(range(2,39))+list(range(52,89)))
+    early_zero_positions=[(60+row-4)*320+(dest+x-8)
+                          for row in range(10) for dest in (10,60) for x in range(37)]
+    assert len(early_zero_positions)==740 and early_zero!=early_bg
+    assert all(early[index]==early_zero for index in early_zero_positions)
+    alias=realmode_cross_segment_alias(0x5000,0,0x400,16,408,16,16)
+    assert alias is not None
+    assert (alias['alias_segment'],alias['alias_offset'])==(0x4002,0xfff0)
+    assert (alias['stream_linear'],alias['alias_linear'])==(0x50010,0x50010)
+    assert (alias['carry_bytes'],alias['carry_segment'],alias['carry_linear'])==(16,0x5002,0x50020)
+    odd=realmode_cross_segment_alias(0x5000,0x1237,0x400,16,408,16,16)
+    assert odd is not None and odd['alias_offset']==0xfff7 and odd['carry_bytes']==9
+    assert odd['carry_linear']==odd['stream_linear']+odd['carry_bytes']
+    assert realmode_cross_segment_alias(0x0800,0,0x400,16,408,16,16) is None
+    assert realmode_cross_segment_alias(0xffff,0xf000,0x400,16,408,16,16) is None
+    assert realmode_cross_segment_alias(0x5000,0,0x1b7,16,408,16,16) is None
+    assert realmode_cross_segment_alias(0x5000,0,0x400,15,408,16,16) is None
+    assert realmode_cross_segment_alias(0x5000,0,0x400,16,4,16,16) is None
+    assert not rle_call_and_unchanged({'RLE_CALL_READY':0,'RLE_SETDIB_RETURN':0,'RLE_INPUT_CHANGED':0},'RLE_INPUT_CHANGED')
+    assert rle_call_and_unchanged({'RLE_CALL_READY':1,'RLE_SETDIB_RETURN':11,'RLE_INPUT_CHANGED':0},'RLE_INPUT_CHANGED')
+    assert expected_cases(64)==list(range(150,158))
+    assert expected_cases(96)==list(range(140,149))+list(range(150,158))
     print(json.dumps({'selftest':'PASS','profiles':list(PROFILES),'640x200x4_pixels':128000,
-                      'cases_in_complete_run':len(expected_cases(31))},indent=2))
+                      'cases_in_complete_run':len(expected_cases(31)),
+                      'rle_cross_segment_alias_cases':7,'rle_call_gate_cases':2},indent=2))
 
 
 def main():
@@ -444,7 +751,7 @@ def main():
     ap.add_argument('--selftest',action='store_true');a=ap.parse_args()
     if a.selftest:selftest();return 0
     if a.guest is None:ap.error('guest directory is required unless --selftest is used')
-    if not 0<a.phases<32:ap.error('--phases must be a bit mask from 1 through 31')
+    if not 0<a.phases<128:ap.error('--phases must be a bit mask from 1 through 127')
     try:report=analyze(a.guest,a.profile,a.phases)
     except (OSError,ValueError) as e:report={'pass':False,'error':str(e),'profile':a.profile,'guest':str(a.guest)}
     out=a.out or a.guest/'MODECHK.json';out.write_text(json.dumps(report,indent=2)+'\n')

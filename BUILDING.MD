@@ -1,277 +1,178 @@
-# rc.5 original fonts and exact qualified package
+# Building and verifying Windows XT
 
-The seven XT Pixels font resources are original MIT grid drawings. Build
-them on a modern Python/Pillow host with tools/XTFONTS/BUILD.PY and TEST.PY;
-see the [font source guide](tools/XTFONTS/README.MD). Windows font media is
-not a generation input. Public CI packages the exact native-tested disk and
-runtime, preserving the qualified zero-SHA/faster START base. No proprietary
-compiler/OS/non-font support resources are fetched or shipped.
+This is developer guidance. Consumers use [WINXT.ZIP and native DOS Setup](docs/DESKTOP.MD),
+or [ordinary Windows Setup with its expanded driver folder](docs/DRIVERS.MD).
+The ZIP root is `SETUP.EXE`, `README.TXT` and one `WINXT` folder of real files.
+No Python or individual font/grabber/logo gathering is part of installation.
+Installed DOS/Windows or original Windows OS media remain required.
 
-After the existing package tests and MAKEIMG build, run
-python3 tools/XTFONTS/HOST.PY PUBLISH.PY --package <dist> --out <new-release-dir> --commit <sha>.
-This verifies qualification/source/runtime pins and produces original-font,
-source and preview downloads. The release workflow verifies the exact tag,
-commit, qualification and complete asset checksums before making a new draft.
-Existing assets/tags are never overwritten. Explicit publication authorization
-promotes that verified draft to a prerelease; it is not a native rebuild.
+## Reproduce the current release
 
-The packaged BUILD.JSON/README are unchanged pre-publication snapshots so the
-disk and toolkit remain byte-identical. Current QUALIFY.JSON and START-HERE
-carry the final qualification and instructions. Native code/binary changes
-still require a separately allocated emulator slot and new qualification.
+Host packaging uses Python and accepted, already qualified binaries. It does
+not launch an emulator or compile native source. Run from this checkout:
 
-# Current Windows XT build and splash default
-
-The accepted independent startup default is the [slow flag wave](examples/WXTSPL/WAVE/README.MD).
-The portable toolkit carries its exact qualified module/wrapper and own-media
-preparation tool. The guarded DOS installer enables that short pre-load wave
-in qualified Color mode; other profiles retain static startup.
-[Installer qualification and exact pins](docs/QUAL/WAVEINS.JSON) cover normal
-Color/static exits, native refusals and byte-verified rollback.
-
-The current public release is built by `tools/FLASHDISK/MAKEIMG.PY` and the
-Windows XT release workflow. Every current Setup display profile selects the
-approved `WXTSPL01.RLE` (SHA-256
-`eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c`).
-The retired Tandy image is not a current installation choice.
-
-```sh
-python3 tools/FLASHDISK/TESTWAVE.PY
-python3 tools/FLASHDISK/TESTFAT.PY
-python3 tools/FLASHDISK/TESTPKG.PY
-python3 tools/FLASHDISK/MAKEIMG.PY --out /new/winxt-public
-python3 tools/FLASHDISK/TESTPKG.PY --verify /new/winxt-public
+```text
+python -B tools/DOSINST/RCPUB.PY --out NEW-CORE --commit CORE_SOURCE_SHA
+python -B tools/DOSINST/RCPUB.PY --verify NEW-CORE --commit CORE_SOURCE_SHA
+python -B tools/CURRENT/CHECK.PY --core NEW-CORE --sound SOUND-PACKETS --report catalog-check.json
+python -B tools/CURRENT/BUNDLE.PY --core NEW-CORE --sound SOUND-PACKETS --commit CATALOG_SOURCE_SHA --out NEW-CATALOG
 ```
 
-These public outputs contain no proprietary WIN.COM or Windows support bytes.
-Use [the current installation guide](tools/FLASHDISK/README.MD) and the
-[approved XT artwork source](examples/WXTSPL/ART/tools/BUILD.PY). The original
-loader is supplied by owned Windows media. The DOS updater privately builds
-the independent loader, changes only guarded starters, and retains exact
-original starter backups. Normal Windows Setup owns display installation.
-Public CI packages the qualified binaries without recompiling the legacy tools.
+Replace `CORE_SOURCE_SHA` with `core_source_commit` in
+`tools/CURRENT/PRODUCTS.JSN`; use the full reviewed checkout commit for
+`CATALOG_SOURCE_SHA`. Reproduction must preserve all four published core
+identities, including metadata, rather than restamping them with a newer commit.
+Use fresh output directories. `--verify` checks the already built directory.
 
-For original helper-source reproduction, use an existing owned Microsoft C 6
-toolchain: CL /nologo /c /G0 /AS /W3, then LINK4 /NOE /NOD /ST:4096 for
-TINST/PREPXT or /ST:8192 for WAVEXT, with SLIBCE.LIB. The checked-in helper
-BUILD.BAT files use an existing T: toolchain. Changed executable bytes require
-new native qualification and complete manifest/helper pin updates.
+`SOUND-PACKETS` holds the exact ZIPs named by the `sound` entries in
+`PRODUCTS.JSN`. Their immutable tracked-source URLs and identities are there;
+[current.yml](.github/workflows/current.yml) shows the explicit retrieval and
+verification. The curator reads these local files; it does not fetch them.
+Original source-build inputs live under `tools/CURRENT/INPUTS` and are emitted
+as developer-only `BUILDIN.ZIP`. See [catalog guidance](tools/CURRENT/README.MD).
 
-## Historical TANDY88 reproduction only
+The core producer emits `WINXT.ZIP`, `WINXTSRC.ZIP`, `WINXT.JSN`, `WINXT.SHA`.
+The catalog adds current hardware/app ZIPs and `CURRENT.JSN`/`CURRENT.SHA`.
+The CLI in `tools/XR1PACK/PUBLISH.PY` forwards to the core producer; its older
+Python helper functions retain historical publisher tests. The standalone
+`tools/XRSYNC/PUBLISH.PY` is a retained installation-kit reproducer, not a
+second current consumer download.
 
-The older OEM builder and the instructions below are retained for archival
-verification. They do not select the current driver or startup picture and
-are retired from current installation guidance. Existing accepted archives,
-artwork and private backups are preserved unchanged.
+## Host checks and CI
 
-Development source update (2026-10-04): the current BUILD88 pipeline produces
-new experimental drivers; existing package binaries and exact packaging pins
-remain unchanged. Read docs/TRIAL4/README.MD for build identities, tested scope,
-trial overlays and rollback. A successful rebuild is not package acceptance.
+Choose the checks matching your changes:
 
-# Developer builds and package verification
+| Area | Commands or workflow |
+| --- | --- |
+| Native core package and preparation boundaries | `python -B tools/DOSINST/TESTPUB.PY`, `python -B tools/XR1PACK/TESTPREP.PY`, `python -B tools/XR1PACK/TESTPUB.PY`; [.github/workflows/xr1pack.yml](.github/workflows/xr1pack.yml) |
+| Native CRC implementation | `python -B tools/DOSINST/TESTCRC.PY` compiles a host C check; it uses the mandatory managed GCC launcher on Windows. |
+| Current HPXY acceptance bindings | `python -B tools/DOSINST/TESTHPXY.PY`; on Windows, `TESTDISP.PY` in the same directory exercises the actual C transaction through the managed GCC launcher. |
+| Current catalog and pinned public products | `tools/CURRENT/CHECK.PY` and `BUNDLE.PY` above; [.github/workflows/current.yml](.github/workflows/current.yml) |
+| External legacy input adapter | `python -B tools/BUILDDEPS/TESTDEPS.PY` |
+| Fixed-profile disk | `python -B tools/FLASHDISK/TESTWAVE.PY`, `TESTFAT.PY`, `TESTPKG.PY`; [.github/workflows/release.yml](.github/workflows/release.yml) |
+| PC1512/ColorPlus packets | `python -B tools/DRVSET/VERIFY.PY`; [.github/workflows/driver-packets.yml](.github/workflows/driver-packets.yml) |
 
-Normal users download the ready-to-use `TANDY88.ZIP`, extract `DISK1`, and follow
-`README.TXT` to run DOS `INSTALL` and Windows Setup's Other display option.
-**Python and media staging are developer rebuild steps, not installation steps.**
+For the fixed-disk row, all three scripts are in `tools/FLASHDISK`. Keep
+`FAT12_DOSBOX` unset for host-only TESTFAT; enabling its emulator cases requires
+the normal coordinated slot. Test success does not imply fresh native execution
+or physical-machine acceptance. Preserve the recorded scope of every receipt.
 
-## Five driver profiles and unchanged reservation helper
+Actions run host checks and assemble pinned artifacts. The historical release
+writers in `release.yml`, `winr1.yml` and `softpan.yml` are retired; these workflows
+must not be described as creating current GitHub releases automatically.
 
-This package targets Windows 3.0 real mode on the accepted 8086/8088 normal-640K
-Tandy configuration. The archived root `TNDY16.DRV` and `build_driver.bat` belong to
-an earlier path and are not package inputs.
+## Native source builds
 
-The builder uses the five pinned drivers in `src/tandysw/bin/` and the shared
-`RESERVE.COM`. The default and reservation identities remain unchanged:
+The [CGA display source](docs/CGA.MD) adds staging, native builders and
+font/control checks under `src/cga/`. With the verified existing display view:
 
-- TANDY88.DRV: `ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee`
-- RESERVE.COM: `644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8`
-
-The four additional driver identities, sizes and their matching build evidence
-are listed in [docs/MODES.MD](docs/MODES.MD#binary-identities).
-
-To reproduce a driver with the pinned external MASM 5.10, LINK and resource tools
-in DOSBox-X, give each profile a fresh output directory:
-
-```sh
-python3 src/tandysw/BUILD88.PY --dosbox /path/to/dosbox-x --out /new/default-build
-python3 src/tandysw/BUILD88.PY --dosbox /path/to/dosbox-x --out /new/6404-build --mode 640x200x4
-python3 src/tandysw/BUILD88.PY --dosbox /path/to/dosbox-x --out /new/160-build --mode 160x200x16
-python3 src/tandysw/BUILD88.PY --dosbox /path/to/dosbox-x --out /new/3204-build --mode 320x200x4
-python3 src/tandysw/BUILD88.PY --dosbox /path/to/dosbox-x --out /new/6402-build --mode 640x200x2
-python3 src/tandysw/RESERVE.PY --dosbox /path/to/dosbox-x --out /new/reserve-build --cpu 8086_prefetch
+```text
+python -B src/cga/TESTCGA.PY --repo DISPLAY-VIEW --out NEW-CGA-HOST
 ```
 
-Omitting `--mode` means `320x200x16`; specifying that value is equivalent.
-Each build stages its changes instead of modifying the source baseline. An
-unsupported profile or existing output directory is rejected. Check `RESULT.json`,
-the 27-object instruction/link audit and the output SHA256; building alone is
-not runtime acceptance. The current development outputs are pinned in
-[docs/TRIAL4/BUILDS.JSN](docs/TRIAL4/BUILDS.JSN). The older five-mode rebuild
-record in [docs/modes/REBUILD.JSON](docs/modes/REBUILD.JSON) verified the
-historical base/package source; it does not describe these updated outputs.
+For a scheduled native build, create a commit-pinned `--profile cga` source view and follow
+[its builder guide](src/cga/README.MD). The CGA access client additionally
+requires exact qualified WDESK/WTPLACE source snapshots through BUILDUI.PY
+--wdesk/--placement; one WDWIN owner handles root placement and recovery.
+The driver build wraps BUILD88 with the shared
+watchdog/lease runner. These commands do not qualify a new runtime. The accepted packet, original
+reviewed source checkpoint and exact member/evidence pins are in
+`tools/CGAPACK/ACCEPT.JSN`; verify them with
+`python -B tools/CGAPACK/VERIFY.PY`. Current catalog CI includes that gate.
 
-See `src/tandysw/README.md`, `STATUS88.TXT` and `RESERVE.MD` for prerequisites,
-provenance and acceptance limits. Packaging never silently rebuilds a missing
-binary or substitutes another driver. Pin changes require separate acceptance.
+CGA-specific integration uses `src/cga/INSTALLT.PY` for managed-host C89
+transaction checks and `PACKCGA.PY` for the expanded packet. Separate native
+`BUILDSET.PY` uses C6 and the existing leased child watchdog, preserving the
+published Windows XT SETUP runtime. The [CGA guide](src/cga/README.MD) lists
+prepare/build/finalize commands and required native installation/GUI gates.
+No consumer Python or support-file gathering is part of that packet.
 
-## Rebuild the complete release ZIP
+Main contains no DDK, legacy compiler or emulator. Use the explicit pinned
+external inputs and source-view commands in [BUILDDEPS](tools/BUILDDEPS/README.MD).
+Only its `fetch` command accesses the network; materialize/verify the locked
+bytes, then create a view from a full source commit. No floating DEV/main input.
+Use the full checkout for current core/catalog packaging. The adapter's retained
+`release` profile is the fixed-profile closure, not the expanded current product;
+its historical cleanup/review stages are not new removal instructions.
 
-Python 3.8+ is needed on the development host; only its standard library is used.
-On Windows, retain the normal `MAKEDISK.BAT` entry point:
+`src/tandysw/BUILD88.PY` is still a real developer entry point. It builds the
+Tandy software-raster driver base (internally called `TR5`), not the complete
+current HPXY/desktop product. From the documented
+`display` source view, an example is:
 
-```cmd
-MAKEDISK.BAT --windows-files C:\WIN30SRC --out C:\RELEASE\TANDY88.ZIP
+```text
+python DISPLAY-VIEW/src/tandysw/BUILD88.PY --repo DISPLAY-VIEW --dosbox DOSBOX-X --out NEW-DISPLAY --mode 640x200x4
+python -B tools/BUILDDEPS/TESTSRC.PY --view DISPLAY-VIEW
 ```
 
-On Linux/macOS:
+Use the actual view/executable paths. The first command runs DOSBox-X and
+therefore needs a coordinated lease/owned watchdog; BUILD88 does not acquire
+that lease itself. It writes `RESULT.json`, emitted listings and the selected
+driver. The second command checks staged source without running a compiler or
+emulator. Omitted `--mode` selects 320x200x16; modes and output names are in
+`src/tandysw/MODEPROF.PY`. PC1512's `src/pc1512/BUILD15.PY` also uses this
+base. Read its explicit `--repo`/`--dosbox`/`--out` interface for that separate build.
+A new native build does not replace a qualified runtime or relax package pins.
 
-```sh
-python3 MAKEDISK.PY --windows-files /your/windows30/source --out /new/TANDY88.ZIP
+For the native expanded installer and DOS wrapper, supply external Open Watcom:
+
+```text
+python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target setup --out NEW-SETUP
+python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target wrapper --out NEW-WRAPPER
 ```
 
-The media directory must contain these eight accepted files. The builder accepts
-the original SZDD mode-A compressed files under the requested filenames or the
-expanded bytes; it checks SHA256 after expansion:
+These use 16-bit DOS tools, not host GCC. The accepted current FIXXT finisher
+was built with Microsoft C6/LINK4, recorded in `tools/DOSINST/FIXBUILD.JSN`:
 
-- CGASYS.FON: `baf8fa607806d949dfb6992113ce93494678abdef07783b22222b62e5de28ef4`
-- CGAFIX.FON: `b0c043a65e2b551bce3c77d25921394dfd2533f50633bc129abd240c7aeb5f89`
-- CGAOEM.FON: `1a86d9e42c73ccefcbc82c822abe8dbcd61cf0116454f213c3a95f4d7436cd0d`
-- EGASYS.FON: `8bd307d7886d0f2fdfc1de3da8253e294233d1c757fd9131a66405fca5825b09`
-- EGAFIX.FON: `6df45a74e5756dd0746bcee593be9ac4df4a35458c26bf4570b748def2d394cb`
-- EGAOEM.FON: `05bd6ef11802bbca20473b0e409116fd8919c5bbcbbbc26b7ee2ea1f33ad23be`
-- CGA.GR2: `1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067`
-- CGALOGO.LGO: `d9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807`
-
-Only those eight Windows files are included. The three CGA fonts are the only
-new Windows dependencies; the original five support files remain unchanged.
-The first-party startup image is read from `src/splash/assets/TNDYLOGO.RLE` and
-pinned separately. No full OS, installation disks,
-emulator or compiler toolchain is added. There is no network fetching or input
-directory globbing. Missing/wrong files fail before an output is created.
-Calling the normal builder without `--windows-files` fails with a developer
-rebuild explanation; users should obtain the complete download instead.
-
-`--out` defaults to `TANDY88.ZIP` beside the scripts. Add `--local-out NEWDISK`
-to write a ready-to-use extracted disk as well. Add `--windows-dir D:\WIN30`
-(quote it on Unix shells) for a nondefault guest Windows path; the helper stays
-at `C:\TANDY88`. Output paths must be new and their parent directories must
-exist. Historical disk1 and old root binaries are preserved in DEV; accepted release archives remain unchanged.
-
-The complete ZIP contains `DISK1/` and a root README. Its disk includes the
-completion marker `LOCAL.TXT` and `MANIFEST.SHA`; Python is not bundled into
-the normal download. File order, timestamps and attributes are fixed, with
-ZIP_STORED for byte-for-byte reproducibility across zlib versions. The extracted
-disk must fit standard 360 KB FAT12 media, including 1 KB allocation rounding,
-112 root entries, both FATs, root directory and reserved-sector overhead.
-
-## Verify the checked-in release without source media
-
-```sh
-python3 MAKEDISK.PY --verify TANDY88.ZIP
+```text
+python tools/SOUNDOWN/FINBUILD.PY --toolchain C6-TOOLCHAIN --dosbox DOSBOX-X --lease SHARED-LEASE --out NEW-FIXXT
 ```
 
-Verification checks exact members (including all five drivers, eight Windows
-support files, the custom splash and completion marker), all 15 binary/support
-pins, the full manifest, canonical ZIP metadata, current source payload, and the 360 KB floppy allocation budget.
-No external media directory is required. This is the tag-release CI path;
-release automation can upload the same verified checked-in ZIP unchanged.
+That command launches a bounded, leased DOSBox-X build. `tools/DOSINST/BUILD.PY`
+also has a `finisher` target, but its Open Watcom output is not the accepted
+C6 binary. Current expanded SETUP source/binary pins are in `SETNAT.JSN`;
+full-install evidence is `docs/QUAL/DOSINST/EXPAND.JSN`, and movable ordinary
+OEM evidence is `tools/XROEM/NATIVE.JSN`. Preserve guards and qualify changed bytes.
 
-The current pre-final-rebuild measurement is 22 disk files, 320,512 bytes of
-1 KB-cluster file allocation plus 6,144 bytes FAT/root/reserved overhead:
-**326,656 / 368,640 bytes used, 41,984 bytes free**. This is the measurement in
-[docs/modes/PACKAGE.JSON](docs/modes/PACKAGE.JSON), not a promise for a later
-archive. Rebuild and reverify after any packaged text change, including
-`README.TXT` or `FILE_ID.DIZ`; allocation rounding can change the total.
+The current HPXY runtime is `tools/DOSINST/BIN/HPXY.DRV`, bound to its
+source/build and focused Windows evidence in `tools/DOSINST/HPXY.JSN`.
+`docs/QUAL/HPXY/PACKAGE.JSN` qualifies the normal expanded package delta;
+older expanded/OEM/panning receipts retain their original byte identities.
+The normal producer overlays this qualified HPXY and regenerates native
+Setup's file/CRC pins. `FIXXT` also includes `HPXYID.H`, so both full setup
+and DISPLAY's optional same-filename refresh use the current driver bytes.
+The 127,531-byte HPXY project budget sums NE segment minimum allocations;
+its remaining 648 bytes are not free DOS conventional RAM. See the focused
+integration report in `experiments/XYSTRIP/INTEGRATION.MD` for actual Windows
+heap measurements and the limits of emulator timing.
 
-## Reproduce the custom startup image
+## Fixed profiles, original fonts and historical sources
 
-The ready disk uses `TNDYLOGO.RLE`, avoiding Setup's cached `CGALOGO.RLE` name.
-The unchanged stock `CGALOGO.LGO` decodes the 640x200 two-color RLE4 stream.
-The image is reproducible without external fonts or image-generation tools:
-
-```sh
-python3 src/splash/tools/BUILD.PY
-python3 src/splash/tools/TEST.PY
-python3 src/splash/tools/VERIFY.PY src/splash/assets/TNDYLOGO.RLE
+```text
+python -B tools/FLASHDISK/MAKEIMG.PY --out NEW-FIXED
+python -B tools/FLASHDISK/TESTPKG.PY --verify NEW-FIXED
 ```
 
-See [the source guide](src/splash/README.MD) and [runtime evidence](docs/SPLASH.MD).
-The normal disk already contains the image; users need none of these tools.
+This produces the complete `WINXT720.IMG`/`WINXT720.ZIP` data-disk packet,
+with the validated grabber, original fonts and startup artwork already included.
+See [fixed-profile producer](tools/FLASHDISK/README.MD). Full Windows itself
+is not redistributed. The current font generator needs host Python/Pillow,
+not vintage Windows font media; [XTFONTS](tools/XTFONTS/README.MD) documents
+its `HOST.PY BUILD.PY`/`TEST.PY` commands. Run the host shim on case-sensitive systems.
 
-## Optional support-free developer toolkit
+Historical `oemdisk/MAKEDISK.BAT` and `oemdisk/MAKEDISK.PY` reproduce the old
+TANDY88 packet. [oemdisk/HISTORY.MD](oemdisk/HISTORY.MD), older font publishers
+and rc.5/rc.6 records retain their original scope; they are not the current
+download or support-dependency contract. Never reinstate their external
+CGA/EGA font gathering in current installation paths.
 
-```sh
-python3 MAKEDISK.PY --toolkit-only --out /new/T88TOOLS.ZIP
-```
+Current packets use `distributions/WINXT/CGA.GR2` and selected XTC/XTE/XTTSYS
+fonts, with `XTSTATIC.LGO`/`WXTSPL01.RLE` and other approved startup assets.
+The current [portable OEM descriptor](tools/XROEM/OEMSETUP.INF) selects XTC3;
+the full package also supplies the remaining font families. Do not restore
+root duplicates, redesign assets or collect stock fonts merely to build a packet.
 
-This deliberately separate toolkit is not install-ready and cannot be named
-`TANDY88.ZIP`. It includes `STAGE.PY`, `TOOLKIT.TXT`, and the base disk payload.
-After extraction, a developer can run:
-
-```sh
-python3 STAGE.PY --windows-files /your/windows30/source --out /new/disk
-```
-
-Normal users do not need this alternative.
-
-## Tests
-
-```sh
-python3 oemdisk/TESTDISK.PY
-python3 src/tandysw/MODECHK.PY --selftest
-python3 oemdisk/TESTDOS.PY --dosbox /path/to/dosbox-x --out /new/dos-helper-tests
-```
-
-Host unit tests use synthetic media with explicit test-only pins and exercise
-complete-release and toolkit contracts, deterministic output, wrong/stale inputs,
-manifest/source integrity, media decoding, output preservation and disk capacity.
-DOS tests use disposable guests, the accepted reservation helper and executable
-sentinels. Those tests establish control flow rather than a real Windows boot;
-actual Setup and GUI results are documented in `docs/OEMDISK.MD`. The current
-mode package passed 71 host checks and 26 DOS checks; repeated complete builds,
-compressed/expanded source media and toolkit staging matched byte for byte.
-The oracle self-test covers six profiles, counting the historical cyan/magenta
-640x200x4 variant separately from the five current selectable drivers.
-
-The four new runtime profiles passed 374 Windows GDI cases and 33,024,000
-pixel comparisons. Follow [docs/MODES.MD](docs/MODES.MD#verification) for the
-per-profile evidence, native applications, reproduction boundaries and limitations.
-
-All five profiles have now been selected through native Windows Setup, with a
-return from the default to 640x200 four-color. Independent Setup-produced clones
-passed 466 cases / 38,912,000 pixels without SYSTEM.INI edits.
-
-**Final emulator acceptance passed:** only-C-drive cold GUI start, installed
-Paintbrush reopen and final rebuilt ZIP verification. See
-[the cold/reopen record](docs/modes/oem/COLD.JSON) and package evidence.
-
-All edited source and generated DOS text uses CRLF. The native Windows wrapper
-was statically reviewed; portable Python and DOS helper execution were tested.
-Physical hardware and genuine MS-DOS variants remain separate acceptance checks.
-
-## External inputs for source rebuilds
-
-Current package commands above run directly from main without the DDK or
-compiler. Native source rebuild recipes run from a fresh external source
-view, prepared with [the pinned dependency adapter](tools/BUILDDEPS/README.MD).
-Use the display, keyboard, shell, examples, tools or textmode profile, then
-run the existing build script from that view with the view as --repo or
---toolchain as documented by the script. Supply an external DOSBox-X path.
-The preserved baseline is documented in [DEV](docs/DEV.MD). Do not restore
-floating toolchain directories into main or change accepted binary pins.
-
-## Current Windows XT rc.6 publication
-
-Run tools/FLASHDISK/MAKEIMG.PY --out NEW-PACKAGE, then TESTPKG.PY --verify
-NEW-PACKAGE. Run tools/FLASHDISK/PUBLISH.PY --package NEW-PACKAGE --out
-NEW-RELEASE --commit EXACT-COMMIT, followed by --verify NEW-RELEASE with the
-same commit. This checks source/runtime/accepted evidence and reproduces
-original fonts plus the documentation pin binding. It does not run a guest.
-
-The original static module uses an explicitly supplied OpenWatcom assembler
-and linker; tools/XTLOGO documents the recipe. XTMODE and the installer use
-the pinned external legacy compiler. No Python runs on the vintage machine.
-The 720 KB disk excludes CGA.GR2 and all Windows/DOS components. The
-refreshed PREPXT differs only in four documentation pin rows from its measured
-native base; code, MZ header and relocation bytes are unchanged.
+The single current release is `windows-xt`. Publication is a separate authorized
+operation after exact-head CI/review and anonymous asset checks. Preserve core
+identities and component notices, update only the qualified affected product,
+and retain old tags/assets; superseded release pages are reversible drafts.

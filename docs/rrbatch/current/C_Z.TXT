@@ -1,0 +1,18 @@
+ 1 roundrect_key      EQUAL 0 px   ref 1153  cand 1153
+ 2 rectangle_key      EQUAL 0 px   ref 604  cand 604
+ 3 roundrect_large    EQUAL 0 px   ref 659  cand 659
+ 4 roundrect_hollow   EQUAL 0 px   ref 549  cand 549
+ 5 roundrect_nopen    EQUAL 0 px   ref 604  cand 604
+ 6 roundrect_xor      EQUAL 0 px   ref 1154  cand 1153
+ 7 roundrect_overlap  EQUAL 0 px   ref 1154  cand 1154
+ 8 roundrect_clipped  EQUAL 0 px   ref 440  cand 440
+ 9 ellipse_12         EQUAL 0 px   ref 220  cand 220
+10 cursor_overlap     EQUAL 0 px   ref 4010  cand 1538
+   14 of 14 per-call frames equal
+11 visible_steps      EQUAL 0 px   ref 2362  cand 1098
+   8 of 8 per-call frames equal
+12 marker_steps       EQUAL 0 px   ref 3405  cand 3350
+13 calc               EQUAL 0 px   ref [2142, 2142, 2142]  cand [2087, 2142, 2087]
+14 reversi            EQUAL 0 px   ref [1098, 1099, 1098]  cand [1099, 1098, 1099]
+15 pbrush             EQUAL 0 px   ref [2362, 2362, 2362]  cand [2361, 2362, 2362]
+ALL FRAMES EQUAL

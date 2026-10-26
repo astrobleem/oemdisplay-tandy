@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "status": "PASS_NATIVE_AUTOMATIC_ENTRIES",
+  "scope": "DeliveredDOSbatchINSTALLandT2WIN;unchangedCOM/DRV/supportbytes;nativeSL2Setupandstartup;insufficientmemoryrefusal",
+  "packet": {
+    "bytes": 94869,
+    "sha256": "c2c5d023c31c912d6e0ab5a7ae946e2faad2c4422a27fc11c6f40ac088f12f3f"
+  },
+  "integration_sources": {
+    "src/tga2/INSTALL.BAT": {
+      "bytes": 721,
+      "sha256": "52ac36db1068e43e286e41a84fe3b4f975bd6935b6e234a6c535a37c69b81212"
+    },
+    "src/tga2/T2WIN.BAT": {
+      "bytes": 717,
+      "sha256": "355bd2052f223179dbb42bcb08eae06f8791658f8d7199aa3f72fa00726d9cd1"
+    },
+    "src/tga2/INSTALL.TXT": {
+      "bytes": 1852,
+      "sha256": "658bdf61bc8288a5cf5a3d5f49ee1cc3c5a2281935d7a7db0c1f5c94b0b91db1"
+    },
+    "src/tga2/PREPINF.BAT": {
+      "bytes": 686,
+      "sha256": "b972cce7d93df8ee58626f6515ecfcaba9c461c1fd3ee0846d23dd2f8c6280b7"
+    },
+    "src/tga2/T2PACK.PY": {
+      "bytes": 8302,
+      "sha256": "3bc088fb85b377a5089711cc22a7bbf45c66e1934feea8601b35674b40d47e49"
+    },
+    "src/tga2/T2PINS.JSN": {
+      "bytes": 1700,
+      "sha256": "e673790fc670037a6a6912d817e014b24744e063ce35519e53ee1c61a2630115"
+    },
+    "src/tga2/T2INF.PY": {
+      "bytes": 3059,
+      "sha256": "7d229f5ba0cf63c2ff47c4744b4a1d82b521cc23c3cbcd2b50f2dfc15fe6f266"
+    }
+  },
+  "native": {
+    "complete": true,
+    "bound_seconds": 180,
+    "actions": [
+      "Display",
+      "Other",
+      "C:\\T2EXP",
+      "TNDYV2 full label",
+      "Complete Changes",
+      "No DOS configuration changes"
+    ],
+    "scope": "Delivered INSTALL and T2WIN batch entries reserve before native Setup/Windows; exact COM/DRV bytes unchanged",
+    "lease_acquired": true,
+    "owned_pid": 3816,
+    "reservation_before_setup": {
+      "mcb": "8FFF",
+      "paragraphs": 3072,
+      "owner": 3523,
+      "resident_id": "TNDYV2R1"
+    },
+    "setup_returned": true,
+    "selected_boot": {
+      "286grabber": "CGA.GR2",
+      "fixedfon.fon": "XTCFIX.FON",
+      "oemfonts.fon": "XTCOEM.FON",
+      "fonts.fon": "XTCSYS.FON",
+      "display.drv": "TNDYV2.DRV"
+    },
+    "installed_support": {
+      "XTCSYS.FON": {
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+      },
+      "XTCFIX.FON": {
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+      },
+      "XTCOEM.FON": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      },
+      "CGA.GR2": {
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+      },
+      "TNDYV2.DRV": {
+        "bytes": 55552,
+        "sha256": "6a8d97b022e0a70e2e508ce48031d62ab35e68abebed3ac72a75d32f754c4a43"
+      }
+    },
+    "startup_logo_in_wincom": {
+      "XTSTATIC.LGO": true,
+      "WXTSPL01.RLE": true
+    },
+    "win_com": {
+      "bytes": 7879,
+      "sha256": "7d00588992559e99f7f0690538425f2cf4c28e771e651327ad243c9d07e32fc7"
+    },
+    "reservation_after_install": {
+      "mcb": "8FFF",
+      "paragraphs": 3072,
+      "owner": 3523,
+      "resident_id": "TNDYV2R1"
+    },
+    "desktop_mode": 10,
+    "desktop_settle_seconds": 40,
+    "seconds": 98.1,
+    "owned_stopped": true,
+    "lease_released": true
+  },
+  "refusal": {
+    "complete": true,
+    "bound_seconds": 35,
+    "actions": [],
+    "scope": "Delivered INSTALL and T2WIN batch entries reserve before native Setup/Windows; exact COM/DRV bytes unchanged",
+    "lease_acquired": true,
+    "owned_pid": 22628,
+    "both_entries_returned": true,
+    "windows_unchanged": true,
+    "negative_condition": "SL2 configured512KB instead of required640KB; unchanged helper must refuse",
+    "seconds": 10.4,
+    "owned_stopped": true,
+    "lease_released": true
+  },
+  "harness": {
+    "DOS": "3.20",
+    "entry_invocation": "COMMAND.COM /C",
+    "manual_T2RESV_calls": 0,
+    "failed_CALL_controls_preserved": true
+  },
+  "capture": {
+    "path": "docs/tga2/T2LAUNCH.PNG",
+    "bytes": 4119,
+    "sha256": "f61f1d7b0ea3dee230e68c301249333ba4596985b9f2996e6719bf270dc46be2"
+  },
+  "source_fixture_unchanged": true,
+  "physical_hardware_qualified": false,
+  "Windows31_qualified": false,
+  "source_relocations": {
+    "src/tga2/T2PACK.PY": {
+      "native_snapshot": {
+        "bytes": 8302,
+        "sha256": "3bc088fb85b377a5089711cc22a7bbf45c66e1934feea8601b35674b40d47e49"
+      },
+      "current_source": {
+        "bytes": 8326,
+        "sha256": "8f21dcc889ea1587ee7c4a0eca9ec14f7cd1fd2737da481310966d5479c40912"
+      },
+      "scope": "Only default grabber location changed to existing expanded support copy; complete current packet remains byte-identical to native-qualified download."
+    }
+  }
+}

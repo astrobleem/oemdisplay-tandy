@@ -1,0 +1,268 @@
+{
+ "reference": "out3_base",
+ "candidate": "out3_mut-lastrow",
+ "runs_complete": true,
+ "problems": {},
+ "all_frames_equal": false,
+ "stages": [
+  {
+   "stage": 1,
+   "name": "roundrect_key",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 220,
+    "differing_pixels": 400,
+    "bbox": [
+     7,
+     18,
+     266,
+     58
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 64317,
+   "cand_ms": 4668
+  },
+  {
+   "stage": 2,
+   "name": "rectangle_key",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 260,
+    "differing_pixels": 520,
+    "bbox": [
+     4,
+     18,
+     269,
+     58
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 20816,
+   "cand_ms": 1922
+  },
+  {
+   "stage": 3,
+   "name": "roundrect_large",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 156,
+    "differing_pixels": 312,
+    "bbox": [
+     8,
+     33,
+     251,
+     69
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 6,
+   "ref_ms": 19938,
+   "cand_ms": 2472
+  },
+  {
+   "stage": 4,
+   "name": "roundrect_hollow",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 220,
+    "differing_pixels": 400,
+    "bbox": [
+     7,
+     18,
+     266,
+     58
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 20926,
+   "cand_ms": 2032
+  },
+  {
+   "stage": 5,
+   "name": "roundrect_nopen",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 43281,
+   "cand_ms": 2581
+  },
+  {
+   "stage": 6,
+   "name": "roundrect_xor",
+   "frame": {
+    "equal": true,
+    "differing_pixels": 0,
+    "differing_bytes": 0
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 63877,
+   "cand_ms": 4284
+  },
+  {
+   "stage": 7,
+   "name": "roundrect_overlap",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 68,
+    "differing_pixels": 134,
+    "bbox": [
+     7,
+     18,
+     140,
+     18
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 63988,
+   "cand_ms": 4339
+  },
+  {
+   "stage": 8,
+   "name": "roundrect_clipped",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 95,
+    "differing_pixels": 174,
+    "bbox": [
+     40,
+     38,
+     266,
+     58
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 51080,
+   "cand_ms": 1813
+  },
+  {
+   "stage": 9,
+   "name": "ellipse_12",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 16,
+    "differing_pixels": 24,
+    "bbox": [
+     7,
+     15,
+     72,
+     15
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 4,
+   "ref_ms": 12688,
+   "cand_ms": 714
+  },
+  {
+   "stage": 10,
+   "name": "cursor_overlap",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 220,
+    "differing_pixels": 400,
+    "bbox": [
+     7,
+     18,
+     266,
+     58
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 20,
+   "ref_ms": 71073,
+   "cand_ms": 9392
+  },
+  {
+   "stage": 11,
+   "name": "calc",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 255,
+    "differing_pixels": 456,
+    "bbox": [
+     11,
+     72,
+     166,
+     160
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 1,
+   "ref_ms": [
+    92549,
+    92548,
+    92604
+   ],
+   "cand_ms": [
+    10216,
+    10216,
+    10216
+   ]
+  },
+  {
+   "stage": 12,
+   "name": "reversi",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 10,
+    "differing_pixels": 10,
+    "bbox": [
+     74,
+     99,
+     93,
+     106
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 1,
+   "ref_ms": [
+    13566,
+    13622,
+    13566
+   ],
+   "cand_ms": [
+    1428,
+    1373,
+    1428
+   ]
+  },
+  {
+   "stage": 13,
+   "name": "pbrush",
+   "frame": {
+    "equal": false,
+    "differing_bytes": 13,
+    "differing_pixels": 24,
+    "bbox": [
+     37,
+     136,
+     61,
+     136
+    ]
+   },
+   "same_name_and_api_results": true,
+   "api_successes": 1,
+   "ref_ms": [
+    36745,
+    36140,
+    36086
+   ],
+   "cand_ms": [
+    4998,
+    4394,
+    4394
+   ]
+  }
+ ]
+}

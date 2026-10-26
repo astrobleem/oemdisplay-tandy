@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-r"""Enable uncompressed DIB conversion and shadow-screen blits in the 8088 stage.
+r"""Enable DIB conversion and shadow-screen blits in the 8088 stage.
 
 Call port(renderer, repo) AFTER build.prepare() and PORT8086.port(). Only
 staged files are changed. The original DDK and frozen V1 remain untouched.
@@ -12,16 +12,18 @@ BMC_ETI/ITE retain the DDK's scan-interleaved small/huge bitmap layouts,
 DIB DWORD pitch and bottom-up scan handling. SDIB88 bounds temporary storage
 to a private 1064-byte header/palette and one four-plane row (at most 16 KiB).
 
-Only BI_RGB (the complete biCompression DWORD == 0) is supported. All RLE
-and other compressed formats return AX=0 before any transfer or output-header
-mutation. No RLEBitBlt import or hardware EGA conversion path is linked.
+BI_RLE4 and BI_RLE8 are accepted only at matching indexed depths and only for
+SetDIBits/SetDIBitsToDevice input. RLE88 validates the bounded stream through
+EOB before writes, then expands one row at a time for the existing palette
+converter. BI_RGB behavior is unchanged; other compression values and
+compressed GetDIBits output fail closed.
 
 CPU audit: every immediate multi-bit shift in these modules uses shiftl/shiftr
 from the already audited, staged MACROS.INC. Direct shifts use count 1 or CL.
 The numeric tables are color thresholds and pixel-expansion data, never code;
 address tables target ordinary audited routines. There is no generated-code
 path. The full MASM listings must still pass AUDIT88, and the integrated build
-must account for all 27 linked objects through the OMF/MAP closure audit.
+must account for all 28 linked objects through the OMF/MAP closure audit.
 """
 from pathlib import Path
 import hashlib
@@ -44,7 +46,7 @@ STAGED_REQUIRED = {
     "MFLAGS.INC": "4b052ddc2d394daf575b8b2950c1f8ed6be2e546fb9066b82746a9d1863b1825",
     "LINES.INC": "9fcfd68bffb0c34c9f54601ded798da6923a3c6ac3f4df7421c00df2e8a0018d",
 }
-MODULES = ("BMC_MAIN", "BMC_ETI", "BMC_ITE", "SDIB88")
+MODULES = ("BMC_MAIN", "BMC_ETI", "BMC_ITE", "SDIB88", "RLE88")
 
 
 def normalized(path):
@@ -81,25 +83,48 @@ def port(renderer: Path, repo: Path):
     for name, expected in STAGED_REQUIRED.items():
         checked(renderer / name, expected)
     changed = {}
+    changed["RLE88.ASM"] = normalized(repo / "src/tandysw/RLE88.ASM")
     changed["SDIB88.ASM"] = normalized(repo / "src/tandysw/SDIB88.ASM")
 
     text = original["BMC_MAIN.ASM"]
-    text = replace(text, "\texternFP\tRLEBitBlt\t\t; in ./rlebm.asm\n", "")
+    text = replace(text, "\texternFP\tRLEBitBlt\t\t; in ./rlebm.asm\n",
+                   "\texternFP\tRLESetDeviceBitmapBits\n")
     text = replace(text, "\tlocalV\tRLEClipRect,8\t\t; clipping rectangle for RLE\n", "")
+    text = replace(text, "\tlocalB\tfbsd\t\t\t; own format mono or color\n",
+                   "\tlocalB\tfbsd\t\t\t; own format mono or color\n\tlocalW\trleDriverDS\t\t; preserve the driver's data segment across PDEVICE setup\n")
+    text = replace(text, "cBegin\n\tcld\n\tlds\tsi,lp_dst_dev\t\t; DS:SI points to internal BM struc\n",
+                   "cBegin\n\tcld\n\tmov\trleDriverDS,ds\t; save driver data segment before loading PDEVICE\n\tlds\tsi,lp_dst_dev\t\t; DS:SI points to internal BM struc\n")
     first = "; if the DIB is RLE encoded or wants the RLE encoding back, call off to"
     start = text.index(first)
     stop = text.index("format_error:", start)
-    # JMP is near; only the local JZ needs a short displacement. AX is scratch
-    # here and is overwritten by the existing set/get paths. DS:SI and ES:DI
-    # still address the same bitmap descriptor and BITMAPINFOHEADER.
-    text = text[:start] + """; Memory-only 8088 driver: reject all non-BI_RGB compression values.
-; Read both WORDs; testing only the original low BYTE would accept 00000100h.
-; No output bits or BITMAPINFOHEADER fields have been changed at this point.
+    text = text[:start] + """; BI_RGB continues through the existing memory converter.
+; Compressed input uses the bounded one-row decoder; compressed GetDIBits fails.
 ;----------------------------------------------------------------------------;
+    mov ax,word ptr es:[di].biCompression+2
+    or ax,ax
+    jnz format_error
     mov ax,word ptr es:[di].biCompression
-    or ax,word ptr es:[di].biCompression+2
+    or ax,ax
     jz short test_color
-    jmp error_detected
+    cmp ax,1
+    je short rle_input
+    cmp ax,2
+    jne format_error
+rle_input:
+    cmp set_or_get,SET_CODE
+    jne format_error
+    arg lp_dst_dev
+    arg set_or_get
+    arg iStart
+    arg num_scans
+    arg lp_bits_ind
+    arg lpbi
+    arg lpDrawMode
+    arg dwColorInfo
+    mov ax,rleDriverDS
+    mov ds,ax
+    cCall RLESetDeviceBitmapBits
+    jmp short xfer_done
 
 """ + text[stop:]
     if re.search(r"^\s*(?:externFP|cCall)\s+RLEBitBlt\b", text, re.M | re.I):
@@ -132,7 +157,7 @@ def port(renderer: Path, repo: Path):
 
     text = normalized(renderer / "EGA/TSOFT.LNK")
     text = replace(text, "fb.obj lodither.obj tcursor.obj\n",
-        "fb.obj lodither.obj tcursor.obj +\nbmc_main.obj bmc_eti.obj bmc_ite.obj sdib88.obj\n")
+        "fb.obj lodither.obj tcursor.obj +\nbmc_main.obj bmc_eti.obj bmc_ite.obj sdib88.obj rle88.obj\n")
     changed["EGA/TSOFT.LNK"] = text
     text = normalized(renderer / "BLDCOR.BAT")
     commands = "".join(
@@ -146,7 +171,7 @@ def port(renderer: Path, repo: Path):
     for name, text in changed.items():
         write_dos(renderer / name, text)
     return {
-        "feature": "uncompressed DIB conversion and shadow-backed screen transfer",
+        "feature": "BI_RGB plus bounded BI_RLE4/8 DIB conversion and shadow-backed screen transfer",
         "pinned_new_ddk_inputs": len(EXPECTED),
         "shared_includes": "all previously pinned by PORT8086; strict staged macros verified",
         "patched_files": sorted(changed),
@@ -154,9 +179,9 @@ def port(renderer: Path, repo: Path):
         "exports": {"19": "DeviceBitmapBits", "20": "CreateBitmap", "21": "DIBScreenBlt"},
         "capability": "RC_DI_BITMAP | RC_DIBTODEV (shadow-only)",
         "screen_bridge_sha256": hashlib.sha256(changed["SDIB88.ASM"].encode("latin1")).hexdigest(),
-        "screen_temporary_storage": "1064-byte private header/palette plus one four-plane row <=16384 bytes",
+        "screen_temporary_storage": "1064-byte private header/palette, one expanded RLE row <=32768 bytes, and one four-plane row <=16384 bytes",
         "screen_mapping": "bottom-up supplied band; signed clipping against 320x200 and caller rectangle; one FlushShadow",
-        "compression": "BI_RGB only; complete nonzero biCompression DWORD returns AX=0",
+        "compression": "BI_RGB plus bounded BI_RLE4/8 SetDIBits and screen-blit input; compressed GetDIBits and unsupported formats return AX=0",
         "raw_data_audit": "pixel/threshold data and routine-address tables only; no code templates",
         "include_path_requirement": "R:\\INC must precede C:\\DDK\\286\\INC",
     }

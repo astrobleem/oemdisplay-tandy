@@ -1,0 +1,30 @@
+PLANTRONICS COLORPLUS - WINDOWS 3.0 DISPLAY
+
+For a ColorPlus card with dedicated video RAM and an installed Windows 3.0.
+The standard desktop is 320x200, 16 colors. The same packet also offers a
+320x400 desktop with software panning through a 320x200 viewport.
+
+INSTALL
+1. Exit Windows to DOS. Run CPPSET to prepare C:\CPPAN.
+2. Run C:\CPPAN\INSTALL.
+3. In Windows Setup choose Display, Other, C:\CPPAN. Select
+   ColorPlus 320x200 fixed for the standard desktop, or
+   EXPERIMENTAL ColorPlus 320x400 panning for the taller desktop.
+4. Complete Setup, return to DOS, then run C:\CPPAN\CPWIN.
+
+The driver, matching fonts, grabber and startup logos are included.
+No SYSTEM.INI editing or Tandy/PCjr memory reservation is needed.
+These entries use Windows in C:\WINDOWS.
+
+PANNING
+After choosing the taller desktop, run C:\CPPAN\PANCFG from Windows File,
+Run. It starts panning and enables it for later sessions. Move the pointer
+past an edge or use Alt+PgDn/Alt+PgUp; Alt+F9 returns to the top.
+This profile uses 32,000 more bytes of shadow memory than the fixed display.
+Run C:\CPPAN\PANCFG SETTINGS for step, edge, dwell and window-follow settings.
+Apply saves changes; Cancel discards edits. Reopening reuses the same helper.
+
+To select the fixed desktop later, run PANCFG OFF in Windows, exit to DOS,
+then run INSTALL and choose the fixed display again. Both profiles are in
+this packet. Detailed emulator results remain in docs/SOFTPAN; physical
+ColorPlus hardware is not newly qualified by this installation package.

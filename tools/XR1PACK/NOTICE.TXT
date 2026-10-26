@@ -1,0 +1,54 @@
+WINDOWS XT XR1 - COMPONENT AND ADAPTATION NOTICE
+
+This package combines project-authored programs with adapted drivers and
+separately licensed original artwork/fonts. It is not blanket MIT software.
+Existing copyright notices in the supplied binaries are retained unchanged.
+Microsoft and Tandy product names identify compatibility, not endorsement.
+
+MICROSOFT DDK ADAPTATIONS
+HPXY.DRV adapts the Microsoft Windows 3.1 DDK's 286/DISPLAY/4PLANE renderer,
+1PLANE/RC_LOW resources and 4PLANE/RC_MED descriptors, with the project's
+8088 Tandy backend, XY viewport and bounded drawing changes.
+TNDYK3.DRV adapts the Microsoft Windows 3.1 DDK's 286/KEYBOARD sample for the
+Tandy keyboard. The sample inputs retain Microsoft copyright notices,
+including the 1983-1992 range recorded in the keyboard adaptation notice.
+The drivers target Windows 3.0 real mode; that target does not change the
+source DDK version. The pinned input tree is identified in PROVENANCE.JSN.
+
+This notice identifies the adaptations. It does not relicense Microsoft's
+implementation or grant a new license to Microsoft's original materials.
+Original DDK/SDK source trees, headers, import libraries, compilers, Windows
+and DOS media, ROMs and emulator/disk images are not bundled.
+
+PROJECT-AUTHORED COMPONENTS
+The Tandy backend/adaptations, TSHELL/TSINPUT, XYCTL, WXTWHL/paired TP,
+installation and reservation helpers, games and sound companions originate
+in the Windows XT and related Tandy projects. PROVENANCE.JSN records the
+component source/binary bindings and known source-snapshot limits. A former
+private integration label is not a different authorship attribution.
+
+WHEEL.DRV is the newly authored COM1/IRQ4 driver. Its original MIT notice and
+provenance are in WHEELLIC.TXT and WHEELPRO.TXT. No clean-room claim is made.
+The original XT Pixels fonts retain PAYLOAD/FONTLIC.TXT. Original static-logo
+artwork retains PAYLOAD/LOGOLIC.TXT; the mode tools retain PAYLOAD/MODELIC.TXT.
+Those notices apply to their components, not to Microsoft-derived drivers.
+
+Some existing Windows apps were built with Microsoft C 6 and Windows import
+libraries. Others use Open Watcom runtime code; OWATCOM.TXT preserves its
+existing notice. Compiler/runtime attribution is separate from the authorship
+of the project C/assembly source. No compiler or SDK implementation is added.
+
+OWNED WINDOWS INPUTS
+Windows installation media and CGA.GR2 come from the user's licensed copy.
+CNF.PIN is WIN.CNF, and XTTEST.COM combines that loader with original XTLOGO
+code. PREPARE.PY constructs these files locally along with modified SETUP.INF.
+The resulting prepared folder is private own-media output, not a public ZIP.
+
+MINESWEEPER
+The separate WINMINE30.ZIP contains a converted Microsoft WinMine application
+and its tested About helper. That packet has its own NOTICE.TXT and test scope.
+
+CANONICAL SOUND DRIVER
+SOUND.DRV is the same canonical driver used by Tandy Winamp and desktop
+alerts. Its corresponding source is SOUNDSRC.ZIP; SOUNDLIC.TXT retains
+the existing source license. No compiler or Windows implementation is included.

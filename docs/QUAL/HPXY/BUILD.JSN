@@ -1,0 +1,29 @@
+{
+  "build": "PASS",
+  "runtime": "NOT_TESTED_BY_BUILD",
+  "candidate": "PRIVATE HPXY bounded Output rows (PR151)",
+  "batching": false,
+  "synchronous_output": false,
+  "logical": [
+    640,
+    256,
+    16
+  ],
+  "viewport": [
+    320,
+    200,
+    16
+  ],
+  "shadow_bands": [
+    64000,
+    17920
+  ],
+  "stage_bytes": 2816,
+  "hardware_default": false,
+  "physical_tested": false,
+  "gross_NE_bytes": 126883,
+  "delta_from_R3_gross_bytes": 23928,
+  "ceiling_delta": 24576,
+  "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9",
+  "baseline_pipeline_report": "BASEPIPE.json describes transformations before the XY overlay; its mode and optimization descriptions are not final XY behavior"
+}

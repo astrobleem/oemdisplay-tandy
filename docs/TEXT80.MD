@@ -1,9 +1,17 @@
 # TEXT80: Windows 3.0 in 80-column text mode (experimental)
 
-Branch `ai/text80` (TXT40 + XTPAN merged in), draft PR. Nothing here
-changes a released driver, an installer default, a package, a pin or a
-release hash. A rebuild is not runtime acceptance: everything below was
-run in emulators, none of it on real hardware yet.
+**[Download TEXT80.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TEXT80.ZIP)**
+([install, rollback and checksums](../downloads/experimental/TEXT80/README.MD)).
+The separate 2026-10-18 packet includes TEXT80 25, compact C25, PAN and VGA,
+original XT Pixels fonts and the DOS setup/rollback helper. Existing Windows
+XT releases, defaults and pins are unchanged.
+
+C25 rebuilds to the exact binary in the recorded Windows GUI session. The
+other three current drivers have fresh audits/presenter checks; their earlier
+GUI sessions used different binary hashes. No fresh Windows boot was run for
+this publication. See BUILD.JSN in the packet for exact evidence and limits.
+All evidence below is emulation; no real hardware is qualified. Branch names
+and session numbers below identify the historical development work.
 
 ## Verdict
 

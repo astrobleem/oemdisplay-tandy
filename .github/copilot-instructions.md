@@ -10,7 +10,7 @@ This repository contains a Windows 3.x display driver for Tandy 1000 series comp
 - All development and building MUST occur inside DOSBox-X - Linux shell builds are unsupported
 - Mount this repository in DOSBox-X and set DOS toolchain paths:
   - Set PATH, LIB, and INCLUDE variables to point at bundled MS C 6.0 directories
-- Use a DOS 6.22 + Windows 3.1 development VM when possible
+- Use a DOS 6.22 + Windows 3.0 development VM when possible
 
 ## Critical Build Constraints
 

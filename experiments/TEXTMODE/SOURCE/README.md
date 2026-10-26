@@ -71,12 +71,12 @@ instruction, raw runtime-generated code, stack bounds and linked-library
 closure. [RESERVE.MD](RESERVE.MD) describes the DOS memory reservation and its
 supported layout/failure cases.
 
-## Install through the completed OEM driver disk
+## Historical candidate05 installation record
 
 Use Windows 3.0 Setup to install the driver and fonts. Do not manually edit
 SYSTEM.INI for a normal installation. Work on a backed-up or disposable guest.
 
-Download the ready-to-use [TANDY88.ZIP](../../TANDY88.ZIP) and extract DISK1.
+Extract DISK1 from the historical TANDY88.ZIP.
 It already includes the exact candidate05 driver, RESERVE, DOS installer/launcher,
 and all six Windows 3.0 Setup dependencies. End users do not need Python or a
 separate media-staging step.
@@ -91,8 +91,8 @@ For an existing stock-CGA Windows 3.0 installation at C:\WINDOWS:
 
 Setup copies the driver/fonts/grabber/logo and updates SYSTEM.INI itself.
 The helper lives outside Windows. Python is only needed for optional developer
-rebuilds described in BUILDING.MD. See [the full instructions](../../README.TXT),
-[packaging details](../../BUILDING.MD) and [OEM acceptance](../../docs/OEMDISK.MD).
+rebuilds described in BUILDING.MD. See [the full instructions](../../../README.TXT),
+[packaging details](../../../BUILDING.MD) and [OEM acceptance](../../../docs/OEMDISK.MD).
 Keep the stock Microsoft mouse driver; emulator tests use COM1 serialmouse.
 
 `RUN88.PY` remains the developer validator/launcher for previously prepared

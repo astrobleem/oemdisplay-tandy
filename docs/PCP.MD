@@ -1,4 +1,63 @@
-# Plantronics ColorPlus 320x200x16 driver (PCP3216): first build
+# Windows 3.0 on Plantronics ColorPlus
+
+**[Download CPPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP)**
+
+1. Extract all files to `C:\CPPAN`. Exit Windows to DOS.
+2. Run `C:\CPPAN\INSTALL`.
+3. Select the display in Setup, complete changes and return to DOS.
+4. Start Windows with `C:\CPPAN\CPWIN`.
+
+For a PC/XT with ColorPlus video, 640 KB, DOS 3.20+ and installed Windows 3.0
+real mode in `C:\WINDOWS`. Ordinary CGA, PC1512 and Tandy/PCjr video use other drivers.
+Fonts, grabber, startup logos and helpers are included.
+
+In Setup choose Display, Other, `C:\CPPAN`, then **ColorPlus 320x200 fixed** or
+**EXPERIMENTAL ColorPlus 320x400 panning** for the taller desktop.
+For panning, run `C:\CPPAN\PANCFG` inside Windows once. Move the pointer past
+an edge or use Alt+PgDn/Alt+PgUp; Alt+F9 returns to the top.
+Panning uses 32,000 additional shadow bytes. To select fixed mode later,
+run `PANCFG OFF`, exit Windows and repeat Setup. No reservation helper is needed.
+Exit Windows before running DOS programs. Native Setup/startup passed in
+emulation; physical ColorPlus clones remain unqualified.
+
+## Fixed-driver redraw qualification
+
+The fixed 320x200 driver is 58,752 bytes, SHA-256
+`6fbee832bde5b8fec958eb654e6fde14a4e6cc8fa6e9749623311cb99049411c`.
+Only the staged TOutput changes: 240 additional code bytes, no additional
+static data or shadow memory. BUILDPCP instruction, REP and link audits pass.
+
+On the same 4.77 MHz 8088/640 KB ColorPlus fixture, all 48 complete 32 KB
+captures match between the shipped control, the matched current-main baseline
+and the candidate. Both hardware planes and all four CGA-style banks are
+captured. Immediate output, edge bounds, cursor restoration, idle markers,
+bounded polylines and fallback pass, followed by normal DOS return.
+
+| Workload | Matched baseline | Candidate | Gain |
+| --- | ---: | ---: | ---: |
+| Calculator redraw, median of three | 69,206 ms | 7,799 ms | 8.87x |
+| Reversi redraw, median of three | 9,886 ms | 1,099 ms | 9.00x |
+| Paintbrush redraw, median of three | 27,133 ms | 4,229 ms | 6.42x |
+| 20,000 full-width scans | 150,000 ms | 150,000 ms | unchanged |
+
+These are emulator measurements. The shipped 54,832-byte driver is retained
+as the consumer reference. The 58,512-byte current-main baseline adds RLE88,
+SDIB88 and BMC_MAIN changes, not diagnostics; its frames and practical redraw
+timings match the shipped control. Windows free memory before the probe was
+340,256 bytes shipped, 336,576 baseline and 336,352 candidate. All runs use
+normal 640 KB and restore the same DOS mode and prompt. The original installer
+and current panning evidence stays unchanged. The flat current ZIP changes
+only PCP3216.DRV; every settings/helper/installer/support member is preserved.
+Physical ColorPlus hardware remains unqualified.
+
+Run `python -B src/pcp/CPVERIFY.PY` to replay the saved native evidence and
+exact package/source bindings. [Qualification](../tools/CPPACK/QUALIFY.JSN)
+and [native records](pcp/OUTPUT) include the raw frames, logs and build audits.
+The source pin includes `CPPOUT.FIX`; archived DISPLAY3 release pins remain
+unchanged, and its source exporter now retains `.FIX` fixtures.
+
+<details>
+<summary>Archived renderer development and test record</summary>
 
 Status: **PCP3216.DRV runs Windows 3.0 real mode on an emulated IBM PC/XT
 with a Plantronics ColorPlus card in 86Box 6.0, and passes all 88 checks of
@@ -61,6 +120,28 @@ in both planes gives exactly the same result as on the Tandy.
 
 No memory reservation is needed. The video RAM is on the card, so there is
 no RESERVE or JRGUARD step.
+
+## Output optimisation (native qualification, 2026-10-25)
+
+`CPPOUT.PY` extends the PC1512 Output optimisations (`src/pc1512/P15OUT.PY`)
+to this driver. `BUILDPCP.PY` applies it once, after `PCPPATCH.patch_staged`
+and before the first assembly, and only the staged `TOutput` changes. It
+reuses `src/rrect/RRPATCH.patch_candidate` unchanged (the markers
+`OS_BEGINNSCAN`/`OS_ENDNSCAN` skip the copy and the cursor work; 3 to 1024
+point polylines are bounded to their rows) and presents narrow drawing through
+the stage's existing `FlushRetainColumns`, rounded outward to eight-pixel
+logical columns. The stage already turns a logical column into the two bytes
+per hardware plane, so the patch passes `x>>3` and `(right+7)>>3` and never
+scales again. Full-width work (`[0,320)`) keeps `FlushRetainRows`. Every call
+still presents before it returns, and rejected cases keep `FlushShadow`.
+ColorPlus has no port-selected planes: nothing from the PC1512 plane scheme is
+used.
+
+`python -B src/pcp/CPPOTEST.PY` runs the host tests on `CPPOUT.FIX`, the real
+`TOutput` of the post-`PCPPATCH` stage, with a ColorPlus model checked against
+`PCPPATCH.model_flush`/`pcp_pixel`. They assemble and run nothing. The
+separate native qualification below uses actual BUILDPCP/MASM/LINK builds
+and the ColorPlus decoder in `CPCMP.PY`.
 
 ## Evidence
 
@@ -297,3 +378,5 @@ skipped) and `python3 src/pcjr/CHKTEST.PY`. Built tools: `pcp/PCPIDB.JSN`,
 - [86Box `src/video/vid_cga_colorplus.c`](https://github.com/86Box/86Box/blob/master/src/video/vid_cga_colorplus.c)
 - [Plantronics ColorPlus notes (seasip.info)](https://www.seasip.info/VintagePC/plantronics.html)
 - [WINPCP repository and hardware notes](https://github.com/cluehawk/WINPCP)
+
+</details>

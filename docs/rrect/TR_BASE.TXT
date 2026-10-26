@@ -1,0 +1,30 @@
+==  1 roundrect_key: 64372 ms, count 20
+   calls 340 (lost 0): {'80/FULL': 20, '81/FULL': 20, 'POLYLINE/FULL': 20, 'SCANLINES/bounded': 280}
+   counts: {'80:0': 20, '81:0': 20, 'POLYLINE:17': 20, 'SCANLINES:2': 280}
+==  2 rectangle_key: 20872 ms, count 20
+   calls 20 (lost 0): {'POLYLINE/FULL': 20}
+   counts: {'POLYLINE:5': 20}
+==  3 roundrect_large: 19937 ms, count 6
+   calls 192 (lost 0): {'80/FULL': 6, '81/FULL': 6, 'POLYLINE/FULL': 6, 'SCANLINES/bounded': 174}
+   counts: {'80:0': 6, '81:0': 6, 'POLYLINE:17': 6, 'SCANLINES:2': 174}
+==  4 roundrect_hollow: 20926 ms, count 20
+   calls 20 (lost 0): {'POLYLINE/FULL': 20}
+   counts: {'POLYLINE:17': 20}
+==  5 roundrect_nopen: 43336 ms, count 20
+   calls 320 (lost 0): {'80/FULL': 20, '81/FULL': 20, 'SCANLINES/bounded': 280}
+   counts: {'80:0': 20, '81:0': 20, 'SCANLINES:2': 280}
+==  6 roundrect_xor: 64042 ms, count 20
+   calls 340 (lost 0): {'80/FULL': 20, '81/FULL': 20, 'POLYLINE/FULL': 20, 'SCANLINES/bounded': 280}
+   counts: {'80:0': 20, '81:0': 20, 'POLYLINE:17': 20, 'SCANLINES:2': 280}
+==  7 roundrect_overlap: 64097 ms, count 20
+   calls 340 (lost 0): {'80/FULL': 20, '81/FULL': 20, 'POLYLINE/FULL': 20, 'SCANLINES/bounded': 280}
+   counts: {'80:0': 20, '81:0': 20, 'POLYLINE:17': 20, 'SCANLINES:2': 280}
+==  8 roundrect_clipped: 51080 ms, count 20
+   calls 127 (lost 0): {'80/FULL': 20, '81/FULL': 20, 'POLYLINE/FULL': 9, 'SCANLINES/bounded': 78}
+   counts: {'80:0': 20, '81:0': 20, 'POLYLINE:17': 9, 'SCANLINES:2': 78}
+==  9 ellipse_12: 12742 ms, count 4
+   calls 56 (lost 0): {'80/FULL': 4, '81/FULL': 4, 'POLYLINE/FULL': 4, 'SCANLINES/bounded': 44}
+   counts: {'80:0': 4, '81:0': 4, 'POLYLINE:17': 4, 'SCANLINES:2': 44}
+== 10 calc: [99085, 99084, 99140] ms, count None
+   calls 526 (lost 0): {'80/FULL': 27, '81/FULL': 27, 'POLYLINE/FULL': 28, 'SCANLINES/bounded': 444}
+   counts: {'80:0': 27, '81:0': 27, 'POLYLINE:5': 1, 'POLYLINE:23': 15, 'POLYLINE:25': 12, 'SCANLINES:2': 444}

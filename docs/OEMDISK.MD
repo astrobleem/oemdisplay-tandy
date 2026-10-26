@@ -1,12 +1,12 @@
 # TANDY88 ready-to-use OEM disk contract
 
 Historical TANDY88 / Tandy-picture record. The old splash is retired from
-current installation choices. Current releases use Windows XT in every profile;
-see [the active guide](../distributions/WINXT/README.MD). The retained source, captures, artifacts and
+current installation choices. For the current XR1 download and installation,
+see [the active guide](RELEASES/RC8.MD). The retained source, captures, artifacts and
 backup/recovery support below preserve historical provenance.
 
 
-## Normal download and developer rebuild
+## Historical download and developer rebuild
 
 `TANDY88.ZIP` is the complete end-user download. Extract `DISK1` and run its
 DOS `INSTALL`, then `C:\TANDY88\TANDY88 SETUP` and Windows Setup's Other display
@@ -16,11 +16,11 @@ flow and a Windows restart. Start with stock-CGA Windows, then select OEM
 for every Windows start. There is no Python or support-file staging requirement
 for normal users.
 
-`MAKEDISK.BAT` remains the Windows developer entry point, invoking the portable
+`oemdisk/MAKEDISK.BAT` remains the Windows developer entry point, invoking the portable
 standard-library Python backend. Rebuilding requires the accepted media inputs:
 
 ```cmd
-MAKEDISK.BAT --windows-files MEDIA --out TANDY88.ZIP
+oemdisk/MAKEDISK.BAT --windows-files MEDIA --out TANDY88.ZIP
 ```
 
 `--local-out NEWDISK` additionally writes the extracted ready-to-use disk.
@@ -70,7 +70,7 @@ allocation plus **6,144 bytes** overhead: **326,656 / 368,640 bytes used**, leav
 **41,984 bytes** free. [The recorded package test](modes/PACKAGE.JSON) includes the
 final packaged-text rebuild and byte-identical repeated packaging.
 
-`python3 MAKEDISK.PY --verify TANDY88.ZIP` verifies the checked-in complete
+`python3 oemdisk/MAKEDISK.PY --verify TANDY88.ZIP` verifies a supplied historical complete
 archive without separately supplied media. It checks the exact member set,
 binary pins, completion marker, manifest, canonical archive metadata, current
 source payload and disk-capacity budget. The release workflow can publish that
@@ -119,8 +119,9 @@ OEM Setup and GUI acceptance evidence is recorded separately after testing the
 complete disk with the exact accepted Windows support files.
 
 This work preserves the default candidate05 driver and reservation bytes while
-adding four separate display drivers. It does not claim Windows 3.1, protected mode, arbitrary Tandy configurations, PCjr, physical
-hardware compatibility, or cycle-accurate 8088 execution.
+adding four separate Windows 3.0 real-mode display drivers. It does not claim
+protected mode, arbitrary Tandy configurations, PCjr, physical hardware
+compatibility, or cycle-accurate 8088 execution.
 
 ## Five-mode package and native acceptance (2026-10-02)
 

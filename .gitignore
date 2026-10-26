@@ -52,11 +52,35 @@ __pycache__/
 !docs/altmodes/CGAWIN.LOG
 !docs/altmodes/CGA-GUI.LOG
 
-# Ready-to-use OEM runtime disk (only the scoped pinned support files)
-!/TANDY88.ZIP
 
 # Verified first-party DOS media staging helper (source/pins beside it)
 !/tools/FLASHDISK/PREPXT.EXE
 # Generated public/private floppy artifacts stay out of source commits.
 /dist/
 *.IMG
+
+# RoundRect investigation: raw probe logs are evidence (docs/RRECT.MD).
+!docs/rrect/*/RRBENCH.LOG
+
+# Explicitly reviewed MIT runtime and sealed R1 component/overlay archives.
+!/tools/WINR1/KIT/mouse/WHEEL.DRV
+!/tools/WINR1/KIT/mouse/WHEEL.LNK
+!/downloads/R1/WINXT-FIRST-PARTY-R1.zip
+!/downloads/R1/WINXT-REDISTRIBUTABLE-OVERLAY-R1.zip
+
+!docs/rrbatch/*/RRBENCH.LOG
+!docs/rrbatch/current/*/RRBENCH.LOG
+!docs/rrbatch/current/RLE_*.LOG
+!docs/rrsync/*/RRBENCH.LOG
+!docs/rrsync/R*.LOG
+
+# Exact qualified ColorPlus payload and native replay logs are release inputs.
+!docs/pcp/OUTPUT/BASELINE/RRBENCH.LOG
+!docs/pcp/OUTPUT/CANDIDATE/RRBENCH.LOG
+!docs/pcp/OUTPUT/SHIPPED/RRBENCH.LOG
+!tools/CPPACK/PAYLOAD/PCP3216.DRV
+
+# Current qualified HPXY runtime and focused native receipts.
+!/tools/DOSINST/BIN/HPXY.DRV
+!/docs/QUAL/HPXY/WINDOWS.ZIP
+!/docs/QUAL/HPXY/INSTALL.ZIP

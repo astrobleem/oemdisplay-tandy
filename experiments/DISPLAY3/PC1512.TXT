@@ -1,60 +1,21 @@
-PC1512.DRV - EXPERIMENTAL AMSTRAD PC1512 DISPLAY
-640x200, 16 colors, Windows 3.0 real mode
+DOWNLOAD
+https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PC1512.ZIP
 
-This ZIP contains a ready-built driver, not Windows or a Setup disk.
-Use a bootable backup/disposable clone of an existing Windows 3.0 install.
-Retain a plain-DOS recovery route. Exit Windows completely before changes.
-Normal hardware use and a fresh Windows Setup installation are unqualified.
+AMSTRAD PC1512 - WINDOWS 3.0 DISPLAY
+640x200, 16 colors
 
-TARGET
-Amstrad PC1512 built-in four-plane 64KB video, 8086, normal 640KB RAM.
-Not ordinary CGA, Tandy, PCjr or the PC1640's different video hardware.
-No RESERVE/JRGUARD step: the PC1512 has dedicated video RAM.
+For PC1512 built-in video, 8086, 640 KB and installed Windows 3.0 real mode.
+Not PC1640 or ordinary CGA. Driver, fonts, grabber and startup logos are included.
 
-INSTALL IN A CLONE
-1. Extract the complete ZIP to a new C:\P15EXP directory. Verify SHA256.SUM
-   on a modern host. Do not reuse an old backup directory.
-2. Back up the complete Windows installation/image before continuing.
-3. At plain DOS: COPY C:\WINDOWS\SYSTEM.INI C:\P15EXP\SYSBACK.INI
-   Stop if SYSBACK.INI already exists. Record the old display.drv setting.
-4. If C:\WINDOWS\SYSTEM\PC1512.DRV already exists, preserve its original
-   bytes separately before copying this package's driver over it.
-5. COPY C:\P15EXP\PC1512.DRV C:\WINDOWS\SYSTEM\PC1512.DRV
-6. With a DOS text editor, change only the [boot] display.drv setting in
-   C:\WINDOWS\SYSTEM.INI to display.drv=PC1512.DRV.
-7. CD \WINDOWS, then WIN /R. Do not use the Tandy WINXT startup/reservation
-   route or its palette animation for this experiment.
+1. Extract all files from PC1512.ZIP to C:\P15EXP. Exit Windows to DOS.
+2. Run C:\P15EXP\INSTALL.
+3. In Windows Setup choose Display, Other, C:\P15EXP, then
+   Amstrad PC1512 640x200 16 colors. Complete Setup and return to DOS.
+4. Start Windows with C:\P15EXP\P15WIN.
 
-These fixed C:\WINDOWS paths describe the qualified cloned-install route.
-For another Windows directory, substitute that directory consistently.
-The original tests reused an AT/EGA install and its EGA fonts/grabber.
-Keep that font/grabber configuration for the first reproduction. Fresh
-CGA-class Setup/fonts/grabber integration and DOS boxes remain untested.
-The driver package does not change keyboard or mouse configuration.
-
-STARTUP LOGO
-This ZIP supplies no startup logo and does not rebuild WIN.COM or run Setup.
-WIN /R retains your existing WIN.COM's startup behavior. A compatible stock
-Windows loader can show its original static logo; a customized loader can
-show different art or no logo. The separate Tandy wave is not invoked.
-There is no automatic logo fallback. Use a nonanimated WIN.COM; logo
-appearance/compatibility on this adapter is not separately qualified.
-
-ROLLBACK FROM PLAIN DOS
-Exit Windows fully, or reboot to DOS if Windows will not start.
-COPY C:\P15EXP\SYSBACK.INI C:\WINDOWS\SYSTEM.INI
-Restore a pre-existing PC1512.DRV if you replaced one. A newly added driver
-may remain inactive after restoring the old setting. Restore the complete
-image/installation backup if any additional configuration was changed.
-Never share a completed guest or backup containing Windows/DOS files.
-
-WHAT WAS TESTED / WHAT WAS NOT
-Exact packaged driver bytes passed recorded Windows 3.0 checks in 86Box
-6.0: 88/88 final checks, 15/16 palette cases first try, one recovery.
-The rejected frame was a crosshair at the correct hotspot; its cursor-state
-cause is unresolved. Host checks reject stale aliases and invalid evidence.
-Physical PC1512 hardware, the native Amstrad mouse port, real timing,
-fresh Setup and DOS/grabber switching are unqualified. Serial input was
-emulated. A release is not a promise of general physical-machine support.
-
-See PINS.JSN, NOTICE.TXT and the companion source/qualification records.
+For Windows outside C:\WINDOWS, pass its drive and directory to both entries,
+for example INSTALL D: \WIN30 and P15WIN D: \WIN30.
+Dedicated video RAM needs no reservation helper. No INI editing is needed.
+The driver was tested in an emulated PC1512; physical hardware, the Amstrad
+mouse port and DOS-box switching remain unqualified. Windows 3.1 is unsupported.
+Technical records: docs/PC1512.MD in the source repository.

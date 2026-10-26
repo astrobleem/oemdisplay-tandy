@@ -1,0 +1,153 @@
+{
+  "scope": "MIT wheel/font components only; no Windows media or combined client",
+  "files": {
+    "QUALIFICATION.json": {
+      "bytes": 3396,
+      "sha256": "0355523532636e20daa7be1769d36ea66026679c53defae8213b8937554da746"
+    },
+    "README.md": {
+      "bytes": 2632,
+      "sha256": "43cb0e58a6139e5c6a82425b975b9aec356b352327be066a1b39a88b10390daa"
+    },
+    "fonts/LICENSE": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "fonts/ORIGINAL-README.MD": {
+      "bytes": 8084,
+      "sha256": "13cb28948005f1d601e563ac09e71d20ced043fe1b19ba895c068d2889419828"
+    },
+    "fonts/PROVENANCE.json": {
+      "bytes": 841,
+      "sha256": "e1ee1ca20517c16cd8b419db3ee1f7ed7c5d6b306e5609cb24eb6c85e6fe5eca"
+    },
+    "fonts/REPRODUCTION.json": {
+      "bytes": 809,
+      "sha256": "4510ad5b1d599173ed25aebd90e7c2c69d319015460b91f89f36b7459eed31cc"
+    },
+    "fonts/XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "fonts/XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "fonts/XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "fonts/generator/BUILD.PY": {
+      "bytes": 15388,
+      "sha256": "45526731d90b9d064a51f32419bd0a9bfd15eef2ea90e01d9160154c0cfdfc54"
+    },
+    "fonts/generator/CONTRACT.JSON": {
+      "bytes": 29949,
+      "sha256": "6b3d51c886e20771b8f6fef9e30e217ba4954354a65eedac589da9f2a9a7ec51"
+    },
+    "fonts/generator/GLYPHS.PY": {
+      "bytes": 15371,
+      "sha256": "0e190483150261089becc796819616e84c65132e08412b44992a17a5260231bf"
+    },
+    "fonts/generator/HOST.PY": {
+      "bytes": 1242,
+      "sha256": "12e5f8e0a4451b6fba08d9ef3e53d65c5484998641be0a4e759875d617802762"
+    },
+    "fonts/generator/HOSTGDI.PY": {
+      "bytes": 7213,
+      "sha256": "958f03ede50be9046309669037c4a62bcb76d708eec8649974c2b66aa0c6c288"
+    },
+    "fonts/generator/INSPECT.PY": {
+      "bytes": 3746,
+      "sha256": "a24244a8864e39e08d14d868981518286e459f47fe767a6a80081c0d15b5eb6b"
+    },
+    "fonts/generator/LICENSE": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "fonts/generator/TEST.PY": {
+      "bytes": 9163,
+      "sha256": "e147085f30477cf90abbe0a91eae00f571617ab21c6ed4dc3274605cd42a46b2"
+    },
+    "mouse/API13.md": {
+      "bytes": 1760,
+      "sha256": "d71f7cca46b62664092396241cb0eb78e1b6658fc39a74970936e53a9f0f269d"
+    },
+    "mouse/DOS-QUALIFICATION.json": {
+      "bytes": 664,
+      "sha256": "9168024ab0885236781074a2d8e9bf21ed73a5f42e487ba8e3dd7bc0274f0b14"
+    },
+    "mouse/HARNESS-REPRODUCTION.json": {
+      "bytes": 521,
+      "sha256": "4569958784c124491a8924601a034731a0d77aeb225775fabe96bec62ee171bf"
+    },
+    "mouse/LICENSE": {
+      "bytes": 1080,
+      "sha256": "27f49ba70ef9ae35e8e5f2797efee9422b387477c3d8fdda31dd9f157db56033"
+    },
+    "mouse/PROVENANCE.md": {
+      "bytes": 4166,
+      "sha256": "8301b3e7e80fcdd8d53e3895b13e257a75f8d0f72de9443f2da226135cdeadaf"
+    },
+    "mouse/README.md": {
+      "bytes": 8509,
+      "sha256": "6e76d18d77efc0637a4783937258431f0d10b597cd046020c51996c08a2ebeca"
+    },
+    "mouse/TIMED-QUALIFICATION.json": {
+      "bytes": 1102,
+      "sha256": "99ed36034e2f4fc7b617ba12ded08c4da60b02a5985dc00ddbc3a069df2b17ab"
+    },
+    "mouse/WHEEL.DRV": {
+      "bytes": 1820,
+      "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+    },
+    "mouse/WHEEL.LNK": {
+      "bytes": 595,
+      "sha256": "2a6c23273fd7fd120d72b6de9de54057e6bfd2fc0025ddb69ad38e5f44a51517"
+    },
+    "mouse/build_decoder_test.py": {
+      "bytes": 1159,
+      "sha256": "4a20df9136a1e279781fb2ca0769014bb99d3efeb2fcdab7a305fc7dbb7729ef"
+    },
+    "mouse/build_driver.py": {
+      "bytes": 2451,
+      "sha256": "3856db48aa1cec7f82979d49e8a975e4df7119cc0b17dadd2248a63f7a8a0e8d"
+    },
+    "mouse/check_candidate_image.py": {
+      "bytes": 6353,
+      "sha256": "c2441a9db6feafa5abc8cc51addd773f7a1a187b5466cd06354f4f12352ef9f0"
+    },
+    "mouse/decoder.asm": {
+      "bytes": 5589,
+      "sha256": "dd1635f38e9c2b4e90b099412d201874ce0dab226a87030cd85944cd6478add9"
+    },
+    "mouse/dostest.asm": {
+      "bytes": 5865,
+      "sha256": "d9fa63e06160f8cee66691926c64a63433d678a53eca77d6dd57faf5b4017c06"
+    },
+    "mouse/driver.asm": {
+      "bytes": 7501,
+      "sha256": "09bcd5d2128a71bdb2070ad8bbdc551755e1e73af6c4cec10b2f7dbcb0235329"
+    },
+    "mouse/make_vectors.py": {
+      "bytes": 3951,
+      "sha256": "46072c7c5bc164cd3c3a3bc62e034a0cf4c4b88f239778b18244d8000abd4ac4"
+    },
+    "mouse/protocol_model.py": {
+      "bytes": 2589,
+      "sha256": "66cd4f08df082253103587e5fff89539f69478449e9deab380e74b4dd1108461"
+    },
+    "mouse/test_vectors.py": {
+      "bytes": 3517,
+      "sha256": "70d8c58f56041e7cda0353474df050e0de9aee2015751db8a970ddc4c37b83b7"
+    },
+    "mouse/timestamp.asm": {
+      "bytes": 387,
+      "sha256": "33d2966b6b9edb83d510ed17eb0c478f83a2742f4d759ccf6c8c8f66537c9d0b"
+    },
+    "mouse/verify_linked_ds.py": {
+      "bytes": 12663,
+      "sha256": "18939f094665e6240c4cc7483b0454ce866f0bee3bd2d9cfd29413b5e54a4352"
+    }
+  }
+}

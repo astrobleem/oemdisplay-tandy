@@ -1,0 +1,19 @@
+XRSYNC COMPONENT NOTICE
+
+XRSYNC.DRV adapts Microsoft Windows 3.1 DDK 286/DISPLAY/4PLANE rendering and
+1PLANE/RC_LOW plus 4PLANE/RC_MED resources, with the project's 8088 Tandy
+backend, XY viewport, merged RLE fixes and synchronous Output/CURKEEP path.
+It targets Windows 3.0 real mode. Existing Microsoft copyright notices remain.
+This notice does not relicense Microsoft's implementation or grant a new
+license to original Microsoft materials. No blanket MIT claim applies.
+
+XYCTL and RESERVE are existing project helpers. XT Pixels fonts and original
+artwork retain FONTLIC.TXT and LOGOLIC.TXT. The DOS-native XSETUP installer and developer
+preparation/publishing tools are project-authored. The native helper uses
+the Open Watcom runtime; retain the supplied OWATCOM.TXT notice.
+
+CGA.GR2 is included from the supplied repository module after bounded SZDD
+expansion and validation against the qualified installed grabber. The packet
+does not include a Windows/DOS installation, DDK source/libraries, compilers,
+ROMs or guest images.
+Tandy and Microsoft names identify compatibility, not endorsement.

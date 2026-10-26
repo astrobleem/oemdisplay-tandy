@@ -1,0 +1,74 @@
+{
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-investigation\\experiments\\XYSTRIP\\MODEL.C": {
+    "bytes": 5419,
+    "sha256": "5744dc4f6c5fee48c5927bd27db258c81031c86299469518eb3ea5594f4b46da"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-investigation\\experiments\\XYSTRIP\\MODEL.JSN": {
+    "bytes": 189,
+    "sha256": "913e9eab718487cc6596ea96b419a7931798fb884a004fc0a61a76937fa1aa4c"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-investigation\\experiments\\XYSTRIP\\SUMMARY.JSN": {
+    "bytes": 32267,
+    "sha256": "5d3ae49513e89e3265a64d0fd37d6f19baa3687c1fba64d08d67717cfbec98ef"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-investigation\\experiments\\XYSTRIP\\COMPARISON.CSV": {
+    "bytes": 8144,
+    "sha256": "169486c5fae9b4feaaf0f56f99d606f19ba0be9a9c8b9eeb51aa674fca6c51bb"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-investigation\\experiments\\XYSTRIP\\PROTOTYPE.PATCH": {
+    "bytes": 6600,
+    "sha256": "ee56bdbae9a4cf479c504254c91c6d7972c1c1fde3a837f344a386ed6dde2299"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-investigation\\experiments\\XYSTRIP\\README.MD": {
+    "bytes": 12956,
+    "sha256": "f82afee97227ca585644077729573a8141d5a15b366502972658dfe95e120d3b"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-investigation\\experiments\\XYSTRIP\\INTEGRATION.MD": {
+    "bytes": 8466,
+    "sha256": "a315d6f5abf4749ab8ba3d3499794afe2beaefb530c5217356b7aa84ef9224b5"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-investigation\\experiments\\XYSTRIP\\PANQA.C": {
+    "bytes": 6206,
+    "sha256": "7038b29302b1284d54c0e74a664876662bab8ad2bc88e4e65bccfe5664a0a782"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-investigation\\experiments\\XYSTRIP\\RUNWIN.PY": {
+    "bytes": 7099,
+    "sha256": "e0894a3e0269625620cb4f746ba12054a3c845db463ae2378b2bd4d235ed7ea5"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-investigation\\experiments\\XYSTRIP\\VERIFYWIN.PY": {
+    "bytes": 3251,
+    "sha256": "108fdba01ee8ea68d5fcffa40bea26b57688b73b56485a4357c45212847d70fe"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-investigation\\experiments\\XYSTRIP\\COLLECT.PY": {
+    "bytes": 4191,
+    "sha256": "32d224b4abef444e4f269ff41dcde78f0f234edbe9e3cf540b037dcc59fae3b2"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-integration\\INTEGRATION.JSN": {
+    "bytes": 56640,
+    "sha256": "6a67841be7e709dc8db580cd84ac6920041d51745491204bce099e00c735cde1"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-integration\\MOVEMENTS.CSV": {
+    "bytes": 945,
+    "sha256": "9c1d2e3533a2f0aa79585190e1e85483cfc125cef9d260d7ff3e5f3e4ac4017a"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-integration\\BUILD-COMPARISON.JSN": {
+    "bytes": 2009,
+    "sha256": "b7cfe1b10b0018d127a17887496339bfb01745e5a1905ec5793b02fcf5dbf711"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-integration\\FILESYSTEM.JSN": {
+    "bytes": 417,
+    "sha256": "0274297bc5239a7d2f21b4e0a005c039a26afc0cf93c3785ae175059ade2ae82"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-integration\\CANDIDATE.SHA": {
+    "bytes": 92,
+    "sha256": "4ceb88e20b66663e6eda947db5601315e93069b1b3182cdc45a6d4d7f24e2b8d"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-integration\\candidate-build\\HPXY.DRV": {
+    "bytes": 61856,
+    "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+  },
+  "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-integration\\baseline-build\\HPXY.DRV": {
+    "bytes": 60400,
+    "sha256": "c418dff91b27940437d03d0143b99d4d0b9185890bb7f6ff76a89d0fae837d30"
+  }
+}

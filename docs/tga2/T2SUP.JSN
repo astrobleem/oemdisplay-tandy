@@ -1,0 +1,204 @@
+{
+  "schema": 1,
+  "status": "PASS_NATIVE_SETUP_SUPPORT",
+  "scope": "SL2 Windows 3.0 maintenance Setup, bundled support selection/copy and guarded real-mode desktop; existing rendering qualification remains separate",
+  "base_commit": "ae5b0cd76d778003a11e09184c2b983d7c315aa2",
+  "packet": {
+    "bytes": 92959,
+    "sha256": "b1a5aa99f0e3ed17e357f4534813bacfe9880127e4fa51d5383c7c45f348b483"
+  },
+  "integration_sources": {
+    "src/tga2/OEMSETUP.INF": {
+      "bytes": 795,
+      "sha256": "5bdc6e13d89ea2cc680e0cc8c429e25f7628648535ba1ad9117e86c312a98e44"
+    },
+    "src/tga2/PREPINF.BAT": {
+      "bytes": 610,
+      "sha256": "8b610b989e16de96c782c34543ed3a6e43937c38bfa7ad279807732e0799816c"
+    },
+    "src/tga2/INSTALL.TXT": {
+      "bytes": 2083,
+      "sha256": "b9ad714fab6d3041856a9c5f531c471ea794690ab625bf81d60ee5ea50e2e2a7"
+    },
+    "src/tga2/NOTICE.TXT": {
+      "bytes": 1146,
+      "sha256": "131f7c2ada3c20f0cd53783e8cb901f7397964cfec507e659a76aae035156b43"
+    },
+    "src/tga2/T2INF.PY": {
+      "bytes": 3059,
+      "sha256": "7d229f5ba0cf63c2ff47c4744b4a1d82b521cc23c3cbcd2b50f2dfc15fe6f266"
+    },
+    "src/tga2/T2PACK.PY": {
+      "bytes": 8137,
+      "sha256": "0ecb716a5b2aa563be9faf369c85017e697f4bfb8d5ac4ed49b0bd6becc56fbf"
+    },
+    "src/tga2/T2PINS.JSN": {
+      "bytes": 1700,
+      "sha256": "e673790fc670037a6a6912d817e014b24744e063ce35519e53ee1c61a2630115"
+    },
+    "tools/XR1PACK/PREPARE.PY": {
+      "bytes": 11110,
+      "sha256": "c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1"
+    }
+  },
+  "support": {
+    "CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    }
+  },
+  "unchanged_runtime": {
+    "TNDYV2.DRV": {
+      "bytes": 55552,
+      "sha256": "6a8d97b022e0a70e2e508ce48031d62ab35e68abebed3ac72a75d32f754c4a43"
+    },
+    "T2RESV.COM": {
+      "bytes": 1502,
+      "sha256": "ff478b9562bc7b392f124ef3263d23a285ae5596fcebf46803ad856de7b40360"
+    },
+    "T2PROBE.COM": {
+      "bytes": 2470,
+      "sha256": "c844192ef549c0f52d359ff3a1005e104ca1ca0b990cb6b7275d70a25ba4acaa"
+    },
+    "T2MODES.COM": {
+      "bytes": 245,
+      "sha256": "f875b99be4df98097668b7b5b76d5521f47c22f50db91a402a9b4d589c81157a"
+    },
+    "T2SHOW.COM": {
+      "bytes": 1962,
+      "sha256": "155a5ea261f38c22912ad3626fe9c7ca8445cfc2478d28106f6f9ac24446570d"
+    }
+  },
+  "source_fixture": {
+    "identity": {
+      "bytes": 21411840,
+      "sha256": "2e452953165397b5115f2d300a5557eb85b0bbbb69161b828dc7b28323b9e357"
+    },
+    "unchanged_after_test": true,
+    "removed_installed_fallbacks": [
+      {
+        "path": "/WINDOWS/SYSTEM/CGA.GR2",
+        "bytes": 1768,
+        "sha256": "11389907999c7bef2bd01eae5d874c79c3b07679ccb146ec095a8e9878496b55"
+      },
+      {
+        "path": "/WINDOWS/SYSTEM/CGASYS.FON",
+        "bytes": 2351,
+        "sha256": "00bfa21cb9cbea93c5556b38da40847abb2aab0a23500ec2cc280ccbb943a17d"
+      },
+      {
+        "path": "/WINDOWS/SYSTEM/CGAFIX.FON",
+        "bytes": 2320,
+        "sha256": "9825a60453e318fc6e2b018d10ec2bc50460f0d580dc3ccd0fcdc8aaecb949c5"
+      },
+      {
+        "path": "/WINDOWS/SYSTEM/CGAOEM.FON",
+        "bytes": 2783,
+        "sha256": "1b9aa47412d9c6165d23f519b8dba48e4cc7431ca94260da7537832d002140de"
+      }
+    ]
+  },
+  "emulator": {
+    "machine": "tandy1000sl2",
+    "cpu": "8086 8 MHz",
+    "memory_kb": 640,
+    "executable": {
+      "bytes": 40974314,
+      "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+    },
+    "configuration": {
+      "bytes": 621,
+      "sha256": "4df7e6aa061de483f5080e530d4c907e2646683e57843cd1cd87bf6401673d93"
+    }
+  },
+  "native": {
+    "complete": true,
+    "bound_seconds": 600,
+    "actions": [
+      "Display",
+      "Other",
+      "C:\\T2EXP",
+      "TNDYV2 full label",
+      "Complete Changes",
+      "No DOS configuration changes"
+    ],
+    "scope": "Native maintenance Setup font/logo selection and guarded real-mode desktop; no driver rebuild or physical hardware claim",
+    "lease_acquired": true,
+    "owned_pid": 16932,
+    "setup_returned": true,
+    "selected_boot": {
+      "286grabber": "CGA.GR2",
+      "fixedfon.fon": "XTCFIX.FON",
+      "oemfonts.fon": "XTCOEM.FON",
+      "fonts.fon": "XTCSYS.FON",
+      "display.drv": "TNDYV2.DRV"
+    },
+    "installed_support": {
+      "XTCSYS.FON": {
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+      },
+      "XTCFIX.FON": {
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+      },
+      "XTCOEM.FON": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      },
+      "CGA.GR2": {
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+      },
+      "TNDYV2.DRV": {
+        "bytes": 55552,
+        "sha256": "6a8d97b022e0a70e2e508ce48031d62ab35e68abebed3ac72a75d32f754c4a43"
+      }
+    },
+    "startup_logo_in_wincom": {
+      "XTSTATIC.LGO": true,
+      "WXTSPL01.RLE": true
+    },
+    "win_com": {
+      "bytes": 7879,
+      "sha256": "7d00588992559e99f7f0690538425f2cf4c28e771e651327ad243c9d07e32fc7"
+    },
+    "reservation_logs": {
+      "RESV1.TXT": "T2RESV: 48K Video II page reserved. Start Windows with WIN /R.\r\n",
+      "RESV2.TXT": "T2RESV: Video II reservation already installed.\r\n"
+    },
+    "desktop_mode": 10,
+    "desktop_settle_seconds": 40,
+    "seconds": 99.7,
+    "owned_stopped": true,
+    "lease_released": true
+  },
+  "capture": {
+    "path": "docs/tga2/T2SUP.PNG",
+    "bytes": 4187,
+    "sha256": "042f20a70bdbbe5751fcb3925248d6a5ff1bff9bb57448f40b8112110e0ffb21"
+  },
+  "physical_hardware_qualified": false,
+  "Windows31_qualified": false,
+  "external_driver_support_inputs": []
+}

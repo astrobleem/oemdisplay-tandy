@@ -1,0 +1,22 @@
+{
+  "SPTEST.EXE": {
+    "bytes": 8447,
+    "sha256": "4871c076f80f93dbf974eb4198d3793bf20633f388e8a6169b3dc97d890817ca"
+  },
+  "XTPAN.EXE": {
+    "bytes": 6415,
+    "sha256": "97abd7664cc58e97c0093aa2246dd14ea95675ed8645ee71080a7e2dd50eed99"
+  },
+  "PANCFG.EXE": {
+    "bytes": 3999,
+    "sha256": "12674b93850a28a4b30cb14214ee7df95b9107de22d519152551e293368dc7f5"
+  },
+  "MEMTEST.EXE": {
+    "bytes": 3487,
+    "sha256": "8d4cb4c180a9d11edbac97c63f2baefe81d80d63f2ea75eca1e974135cac9d3a"
+  },
+  "JRGUARD.COM": {
+    "bytes": 800,
+    "sha256": "10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756"
+  }
+}

@@ -1,0 +1,5 @@
+
+C>ECHO OFF
+XSETUP - DOS-native XRSYNC driver installation (8088 / DOS 3.20+)
+RESERVE: 16K video overlap reserved. Start Windows with WIN /R.
+

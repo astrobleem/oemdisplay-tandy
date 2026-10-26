@@ -1,0 +1,74 @@
+{
+  "status": "PASS_SOURCE_RELOCATION_READBACK",
+  "frozen_test_source_commit": "8320cf2bd9615f915159311cd41fb80ee1e4958c",
+  "all_57_entries_exact": true,
+  "all_remaining_13_frozen_native_source_build_headers_exact": {
+    "CRCFAST.H": true,
+    "DOSCORE.H": true,
+    "FIXXT.C": true,
+    "PACKPINS.H": true,
+    "RCNATIVE.JSN": true,
+    "SOUNDID.H": true,
+    "VARSET.H": true,
+    "XR1PINS.H": true,
+    "XRFILES.H": true,
+    "XRINPUT.H": true,
+    "XRINPUT.JSN": true,
+    "XRPREP.C": true,
+    "XRSTRM.H": true
+  },
+  "only_native_manifest_difference": [
+    {
+      "entry": "PAYLOAD/CGA.GR2",
+      "before": {
+        "source": "CGA.GR2",
+        "source_identity": {
+          "bytes": 1768,
+          "sha256": "11389907999c7bef2bd01eae5d874c79c3b07679ccb146ec095a8e9878496b55"
+        },
+        "encoding": "SZDD",
+        "identity": {
+          "bytes": 2104,
+          "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+        }
+      },
+      "after": {
+        "source": "distributions/WINXT/CGA.GR2",
+        "identity": {
+          "bytes": 2104,
+          "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+        }
+      }
+    }
+  ],
+  "manifest_change_scope": "Former loose SZDD1768 source replaced by tracked expanded2104 source; expanded runtime identity unchanged. No compiled C/H/helper or runtime/archive bytes changed. Publisher report tag metadata is .2.",
+  "assets": {
+    "WINXT.ZIP": {
+      "bytes": 746928,
+      "sha256": "ce7698e0595d2add6e8e8f550b144bcb5dd996c0ee49f8448373f76065f6dbff"
+    },
+    "WINXT.EXE": {
+      "bytes": 830472,
+      "sha256": "292c28c67b97c3fe611ca8c5171a92581153bb6a17924adef7f8cf53f8d16ea4"
+    }
+  },
+  "source_agent_proof_identity": {
+    "bytes": 36546,
+    "sha256": "d46cfe1e9e3b8174a4585ca3b31d7c84617d98c1c742a80c9417fca9d7c5e8d1"
+  },
+  "raw_native_records_unchanged": true,
+  "new_native_run_claimed": false,
+  "observed_head": "f01fcdb1b7f405e8c1208b18a3cd9c1ff037a66f",
+  "current_native_manifest_identity": {
+    "bytes": 13010,
+    "sha256": "27792ba021b45af9e3b249d4db9df603276d859e1762051ff79ad280ea738189"
+  },
+  "current_publisher_identity": {
+    "bytes": 8159,
+    "sha256": "e1a71f68a51e888985cc815d02604eaa60ef5e24dedb8638268b801708a291ae"
+  },
+  "qualification_candidate_identity": {
+    "bytes": 43341,
+    "sha256": "9d67cffd48e2dcf44fc6e6ef050a4547c7312f68feda4051f90e5c1de40791f9"
+  }
+}

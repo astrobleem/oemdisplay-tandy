@@ -1,0 +1,16 @@
+; Experimental Video II. Emulated Tandy SL/2 only; 640 KB, Windows 3.0 /R.
+; Physical hardware and Windows 3.1 are unqualified. Never use on EX/HX.
+; Description is 46 characters; Windows 3.0 OEM descriptions allow 47.
+; Referenced Windows support files must be staged from the owner's install.
+[data]
+Version = "3.0"
+[disks]
+a = C:\T2EXP, "EXPERIMENTAL TANDY SL/2 FAMILY ONLY", OEMSETUP.INF
+[display]
+TNDYV2 = a:TNDYV2.DRV, "EXPERIMENTAL TANDY SL/2 FAMILY ONLY 640x200x16", "200,96,48", a:CGA.GR2, a:CGALOGO.LGO,,,, a:CGALOGO.RLE
+[sysfonts]
+a:CGASYS.FON, "CGA System Font", "200,96,48"
+[fixedfonts]
+a:CGAFIX.FON, "CGA Fixed System Font", "200,96,48"
+[oemfonts]
+a:CGAOEM.FON, "CGA Terminal Font (USA/Europe)", "200,96,48", 1

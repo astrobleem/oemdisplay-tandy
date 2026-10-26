@@ -1,0 +1,57 @@
+{
+  "package": "WINMINE30",
+  "status": "local candidate assembled from existing tested binaries",
+  "artifacts": [
+    {
+      "file": "WINMINE.EXE",
+      "bytes": 30032,
+      "sha256": "52be8bb486d3bad7809c19efc8a3202ef08a458e250634e392fbd127d4046c8a",
+      "source_record": "E handoff package: RUN/WINMINE.EXE",
+      "origin_input_sha256": "633c1328922b4092351e0019b1ba1c6d56c0f0fea83824cc8b7e2e731b15e80b",
+      "converter_entry": "task-2/build_repaired_candidate.py",
+      "converter_source": "task-2/repair-source/NEPUSH/winmine_candidate_writer.py and sibling modules"
+    },
+    {
+      "file": "WMABT.DLL",
+      "bytes": 1998,
+      "sha256": "caf0967644eca52d8c69b5bf83696e78ada52995d9a16dfd10b1a86412e0d893",
+      "source_record": "E handoff package: RUN/WMABT.DLL",
+      "source_project": "not recovered in bounded local filename search"
+    }
+  ],
+  "qualification_records": [
+    {
+      "record": "E handoff package: EVIDENCE/PAN20.JSN",
+      "sha256": "458e812760dfd9a5a3a56dafe47e9d1b50844f08f76f4f695baec3552d3b62a5",
+      "result": "PASS",
+      "coverage": "Windows 3.0 real mode, emulator; game launch, About, Beginner board direct-driver panning, state restoration and DOS return"
+    },
+    {
+      "record": "E handoff package: EVIDENCE/REPAIR.TXT",
+      "sha256": "0c225315946c869f121e37c0745172c00fe6403bee76a243e6bcb9a338aa7fc6",
+      "coverage": "two fresh 8086_prefetch sessions; four game launches; reveal, flag, timer, reset, About, close/relaunch, DOS return; five focused host tests"
+    },
+    {
+      "record": "task-8 package: docs/pan/MINE/CAPTURE.MD",
+      "public_context_link": "https://github.com/astrobleem/oemdisplay-tandy/blob/acc43b29207c75f08c0849693305516cab1852cd/docs/pan/MINE/CAPTURE.MD",
+      "public_link_scope": "Public capture record; the tested combined runtime described there was not public.",
+      "coverage": "MNSN2 emulator capture: four snapshots, zero viewport/display pixel mismatches, reservation canary intact, clean DOS return"
+    }
+  ],
+  "limits": [
+    "No physical Tandy/XT qualification.",
+    "Automatic XTPAN edge dwell/follow with this game is unqualified.",
+    "Beginner-board direct panning only; no complete Expert-board panning claim.",
+    "640x200 monochrome can clip the lower board.",
+    "Shim binary is tested, but source/compiler provenance was not recovered.",
+    "No Windows media, drivers, fonts, or disk images are included."
+  ],
+  "distribution_contents": [
+    "WINMINE.EXE",
+    "WMABT.DLL",
+    "README.TXT",
+    "NOTICE.TXT",
+    "SHA256S.TXT",
+    "QUALIFY.JSN"
+  ]
+}

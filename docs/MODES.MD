@@ -1,8 +1,8 @@
 # Five selectable original-Tandy display modes
 
 Historical TANDY88 / Tandy-picture record. The old splash is retired from
-current installation choices. Current releases use Windows XT in every profile;
-see [the active guide](../distributions/WINXT/README.MD). The retained source, captures, artifacts and
+current installation choices. For the current XR1 download and installation,
+see [the active guide](RELEASES/RC8.MD). The retained source, captures, artifacts and
 backup/recovery support below preserve historical provenance.
 
 
@@ -226,7 +226,7 @@ For oracle self-tests and packaging controls:
 python3 src/tandysw/MODECHK.PY --selftest
 python3 oemdisk/TESTDISK.PY
 python3 oemdisk/TESTDOS.PY --dosbox /path/to/dosbox-x --out /new/dos-checks
-python3 MAKEDISK.PY --verify TANDY88.ZIP
+python3 oemdisk/MAKEDISK.PY --verify TANDY88.ZIP
 ```
 
 `MODECHK.PY` documents how to build MODETEST.EXE and run it in an isolated
@@ -251,8 +251,8 @@ runtime compatibility claim; the actual driver guests use normal 640 KB.
 ## Limits and preserved history
 
 - Physical EX/HX hardware and cycle-exact bus/CPU timing have not been tested
-- Windows 3.0 real mode is the target; Windows 3.1 and standard/enhanced modes
-  are outside acceptance
+- Windows 3.0 real mode is the target; standard/enhanced modes are outside
+  acceptance
 - `GetDIBits` with a NULL bits buffer is unsupported. Actual non-NULL exports
   and imports/readback are tested
 - Current Windows runtime probes cover solid brushes, SRCCOPY and SRCINVERT,

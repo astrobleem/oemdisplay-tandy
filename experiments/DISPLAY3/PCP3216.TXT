@@ -1,56 +1,22 @@
-PCP3216.DRV - EXPERIMENTAL PLANTRONICS COLORPLUS DISPLAY
-320x200, 16 colors, Windows 3.0 real mode
+DOWNLOAD
+https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP
 
-This ZIP contains a ready-built driver, not Windows or a Setup disk.
-Use a bootable backup/disposable clone of an existing Windows 3.0 install.
-Retain a plain-DOS recovery route. Exit Windows completely before changes.
+PLANTRONICS COLORPLUS - WINDOWS 3.0 DISPLAY
 
-TARGET
-Plantronics ColorPlus on an IBM PC/XT with normal 640KB RAM.
-ATI Small Wonder and other ColorPlus-class clones have not been qualified.
-Not ordinary CGA, Tandy/PCjr shared video RAM or PC1512 planar video.
-No RESERVE/JRGUARD step: ColorPlus video RAM is on the card.
+For a ColorPlus card with dedicated video RAM and installed Windows 3.0 real mode.
+The same packet offers a fixed 320x200 sixteen-color desktop and a 320x400 desktop
+viewed through a 320x200 screen. All fonts, grabber and startup artwork are included.
 
-INSTALL IN A CLONE
-1. Extract the complete ZIP to a new C:\PCPEXP. Verify SHA256.SUM on a
-   modern host. Do not reuse an old backup directory.
-2. Back up the complete Windows installation/image before continuing.
-3. At plain DOS: COPY C:\WINDOWS\SYSTEM.INI C:\PCPEXP\SYSBACK.INI
-   Stop if SYSBACK.INI already exists. Record the old display.drv setting.
-4. Preserve an existing C:\WINDOWS\SYSTEM\PCP3216.DRV before replacing it.
-5. COPY C:\PCPEXP\PCP3216.DRV C:\WINDOWS\SYSTEM\PCP3216.DRV
-6. With a DOS text editor, change only [boot] display.drv in SYSTEM.INI to
-   display.drv=PCP3216.DRV.
-7. CD \WINDOWS, then WIN /R. Use plain Windows startup, not the Tandy
-   WINXT reservation/animation route.
+1. Extract all files from CPPAN.ZIP to C:\CPPAN. Exit Windows to DOS.
+2. Run C:\CPPAN\INSTALL.
+3. In Windows Setup choose Display, Other, C:\CPPAN. Select
+   ColorPlus 320x200 fixed, or EXPERIMENTAL ColorPlus 320x400 panning.
+4. Complete Setup, return to DOS, then run C:\CPPAN\CPWIN.
 
-These fixed C:\WINDOWS paths describe the qualified cloned-install route.
-For another Windows directory, substitute that directory consistently.
-The recorded tests reused an AT/EGA install with its EGA fonts/grabber.
-Fresh CGA-class Setup/fonts/grabber integration and DOS boxes are untested.
-The package does not change keyboard or mouse configuration.
-
-STARTUP LOGO
-This ZIP supplies no startup logo and does not rebuild WIN.COM or run Setup.
-WIN /R retains your existing WIN.COM's startup behavior. A compatible stock
-Windows loader can show its original static logo; a customized loader can
-show different art or no logo. The separate Tandy wave is not invoked.
-There is no automatic logo fallback. Use a nonanimated WIN.COM; logo
-appearance/compatibility on this adapter is not separately qualified.
-
-ROLLBACK FROM PLAIN DOS
-Exit Windows fully, or reboot to DOS if Windows will not start.
-COPY C:\PCPEXP\SYSBACK.INI C:\WINDOWS\SYSTEM.INI
-Restore a pre-existing PCP3216.DRV if you replaced one. A newly added driver
-may remain inactive after restoring the old setting. Restore the complete
-image/installation backup if additional configuration was changed.
-Never share a completed guest or backup containing Windows/DOS files.
-
-WHAT WAS TESTED / WHAT WAS NOT
-The exact driver passed 88/88 recorded Windows 3.0 checks on 86Box 6.0's
-IBM XT + ColorPlus model, including save/reopen, cursors and restart.
-Physical ColorPlus/clones, RGB output/timing, real serial/bus mice, XT BIOS
-and keyboard variants, fresh Setup and DOS/grabber switching remain
-unqualified. Fixed emulator cycles do not measure real-machine performance.
-
-See PINS.JSN, NOTICE.TXT and the companion source/qualification records.
+These entries use Windows in C:\WINDOWS. No INI editing or video reservation is needed.
+After choosing panning, run C:\CPPAN\PANCFG inside Windows once to enable the
+viewport controls. Move the pointer past an edge or use Alt+PgDn/Alt+PgUp;
+Alt+F9 returns to the top. Panning uses 32,000 additional shadow bytes.
+To return to fixed mode, run PANCFG OFF, exit Windows and repeat INSTALL.
+Native Setup and startup passed in emulation; physical cards are unqualified.
+Technical records: docs/SOFTPAN in the source repository.

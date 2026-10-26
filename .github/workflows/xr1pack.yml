@@ -1,0 +1,57 @@
+name: Verify current XR1 installer package
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v0.1.0-rc.8-dos.2']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: xr1-package-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact public event commit without credentials
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git sparse-checkout init --no-cone
+          printf '/distributions/WINXT/CGA.GR2\n/tools/XR1PACK/\n/tools/DOSINST/\n/tools/XROEM/\n/tools/SOUNDOWN/\n/docs/QUAL/DOSINST/\n/docs/QUAL/PANUI/\n/docs/QUAL/WDESK/\n/docs/QUAL/HPXY/\n/experiments/XYPAN/\n/experiments/XYRRECT/\n/experiments/XYSTRIP/\n/src/panui/\n/src/wdesk/\n/src/xtpan/\n/src/softpan/\n/experiments/XYOVERVIEW/\n/tools/PANUI/\n/tools/SPPACK/\n/docs/RELEASES/RC8.MD\n/.github/\n/.gitattributes\n/AGENTS.md\n' | git sparse-checkout set --no-cone --stdin
+          git checkout --detach --force FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+
+      - name: Check preparation boundaries and closed release inventory
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python3 tools/XR1PACK/TESTPREP.PY
+          python3 tools/XR1PACK/TESTPUB.PY
+          python3 tools/DOSINST/TESTPUB.PY
+          python3 tools/DOSINST/TESTHPXY.PY
+          python3 tools/DOSINST/TESTCRC.PY
+          python3 tools/XR1PACK/PUBLISH.PY --out release-xr1 --commit "$SOURCE_SHA"
+          python3 tools/XR1PACK/PUBLISH.PY --verify release-xr1 --commit "$SOURCE_SHA"
+          cd release-xr1
+          tr -d '\r' < WINXT.SHA | sha256sum --check -
+
+      - name: Upload verified current package from this exact commit
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: winxt-xr1-${{ github.sha }}
+          path: release-xr1/*
+          if-no-files-found: error
+          retention-days: 30

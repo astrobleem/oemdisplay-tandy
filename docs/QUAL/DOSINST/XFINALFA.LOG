@@ -1,0 +1,18 @@
+XSETUP - DOS-native XRSYNC driver installation (8088 / DOS 3.20+)
+Checking the complete supplied display packet.
+C: free 15751168 bytes; staging requires 290816 bytes including headroom.
+Verified C:\XR155\OEMSETUP.INF
+Verified C:\XR155\RESERVE.COM
+Verified C:\XR155\WXTSPL01.RLE
+Verified C:\XR155\XRSYNC.DRV
+Verified C:\XR155\XTCFIX.FON
+Verified C:\XR155\XTCOEM.FON
+Verified C:\XR155\XTCSYS.FON
+Verified C:\XR155\XTSTATIC.LGO
+Verified C:\XR155\XYCTL.EXE
+Verified C:\XR155\CGA.GR2
+
+REFUSED: Injected helper write failure.
+C:\XR155\XS00000.NEW
+Installation stopped. Correct the error above and rerun the installer.
+The staging folder is incomplete; matching completed files can be reused.

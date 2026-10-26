@@ -1,0 +1,58 @@
+name: PCjr and ColorPlus software panning
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - 'src/softpan/**'
+      - 'src/xtpan/**'
+      - 'src/panui/**'
+      - 'tools/PANUI/**'
+      - 'docs/QUAL/PANUI/**'
+      - 'experiments/XYOVERVIEW/**'
+      - 'tools/SPPACK/**'
+      - 'docs/SOFTPAN/**'
+      - 'downloads/experimental/SOFTPAN/**'
+      - '.github/workflows/softpan.yml'
+      - 'distributions/WINXT/CGA.GR2'
+      - 'tools/XR1PACK/PREPARE.PY'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact public event source without credentials
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Use the repository's pinned image dependency
+        run: |
+          python3 -m venv "$RUNNER_TEMP/softpan-python"
+          "$RUNNER_TEMP/softpan-python/bin/python" -m pip install --disable-pip-version-check Pillow==12.0.0
+          echo "$RUNNER_TEMP/softpan-python/bin" >> "$GITHUB_PATH"
+      - name: Replay qualified frames and verify exact public packages
+        run: |
+          python3 src/panui/HOSTUI.PY
+          python3 src/softpan/TESTUI.PY
+          python3 tools/SPPACK/TESTREL.PY
+          python3 tools/SPPACK/TESTPKG.PY
+          python3 tools/SPPACK/PACKAGE.PY --out release-softpan
+      - name: Upload verified release files
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: software-panning-${{ github.sha }}
+          path: release-softpan/*
+          if-no-files-found: error
+          retention-days: 30
+# Public downloads are published only by the curated Windows XT release.
+# Keep this job as source/payload/oracle verification; do not republish old tags.

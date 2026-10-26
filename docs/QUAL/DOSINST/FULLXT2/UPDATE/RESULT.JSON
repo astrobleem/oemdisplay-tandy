@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "complete": true,
+  "mode": "update",
+  "bound_seconds": 600,
+  "helper": {
+    "bytes": 83544,
+    "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
+  },
+  "public_assets": {
+    "WINXT.ZIP": {
+      "bytes": 746928,
+      "sha256": "ce7698e0595d2add6e8e8f550b144bcb5dd996c0ee49f8448373f76065f6dbff"
+    },
+    "WINXT.EXE": {
+      "bytes": 830472,
+      "sha256": "292c28c67b97c3fe611ca8c5171a92581153bb6a17924adef7f8cf53f8d16ea4"
+    }
+  },
+  "physical_test": false,
+  "actions": [],
+  "scope": null,
+  "controller": {
+    "bytes": 15844,
+    "sha256": "6cf776da679fb877e836697b04360f9c4db4f128a30dfb4010ef6276c4701364"
+  },
+  "owned_stopped": true,
+  "lease_released": true,
+  "process_inventory_before": [],
+  "lease_acquired": true,
+  "managed_sentinel_before": {
+    "bytes": 44,
+    "sha256": "8cf749318db64137816a8ba5e8a0ce5736ea6517b3fccc64d2f6be1bedd693c9"
+  },
+  "emulator": {
+    "identity": {
+      "bytes": 40974314,
+      "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+    }
+  },
+  "pid": 12076,
+  "preparation_seconds_including_boot": 181.6,
+  "prepared_comparison": {
+    "count": 82,
+    "different": []
+  },
+  "installed_files": {
+    "SOUND.DRV": {
+      "path": "WINDOWS/SYSTEM/SOUND.DRV",
+      "identity": {
+        "bytes": 9752,
+        "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+      },
+      "matches_packet": true
+    },
+    "TSHELL.EXE": {
+      "path": "WINDOWS/TSHELL.EXE",
+      "identity": {
+        "bytes": 72323,
+        "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9"
+      },
+      "matches_packet": true
+    },
+    "TSINPUT.DLL": {
+      "path": "WINDOWS/TSINPUT.DLL",
+      "identity": {
+        "bytes": 6281,
+        "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+      },
+      "matches_packet": true
+    },
+    "TCHIME.EXE": {
+      "path": "WINXT/TCHIME.EXE",
+      "identity": {
+        "bytes": 5071,
+        "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61"
+      },
+      "matches_packet": true
+    },
+    "XPCHIME.EXE": {
+      "path": "WINXT/XPCHIME.EXE",
+      "identity": {
+        "bytes": 5103,
+        "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0"
+      },
+      "matches_packet": true
+    },
+    "TEXIT.EXE": {
+      "path": "WINXT/TEXIT.EXE",
+      "identity": {
+        "bytes": 9215,
+        "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148"
+      },
+      "matches_packet": true
+    },
+    "TP.EXE": {
+      "path": "WINXT/TP.EXE",
+      "identity": {
+        "bytes": 12847,
+        "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33"
+      },
+      "matches_packet": true
+    },
+    "FIXXT.EXE": {
+      "path": "WINXT/FIXXT.EXE",
+      "identity": {
+        "bytes": 33001,
+        "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"
+      },
+      "matches_packet": true
+    },
+    "XTCLEAN.COM": {
+      "path": "WINDOWS/XTCLEAN.COM",
+      "identity": {
+        "bytes": 1071,
+        "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
+      },
+      "matches_packet": true
+    },
+    "HPXY.DRV": {
+      "path": "WINDOWS/SYSTEM/HPXY.DRV",
+      "identity": {
+        "bytes": 56704,
+        "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275"
+      },
+      "matches_packet": true
+    },
+    "TNDYK3.DRV": {
+      "path": "WINDOWS/SYSTEM/TNDYK3.DRV",
+      "identity": {
+        "bytes": 7640,
+        "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+      },
+      "matches_packet": true
+    },
+    "WHEEL.DRV": {
+      "path": "WINDOWS/SYSTEM/WHEEL.DRV",
+      "identity": {
+        "bytes": 1820,
+        "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+      },
+      "matches_packet": true
+    }
+  },
+  "desktop_mode": 9,
+  "graphics_observation_seconds": 60,
+  "normal_desktop_visual_review_required": true,
+  "dos_version": "\r\nMS-DOS Version 6.22\r\n\r\n",
+  "system_ini": "[boot]           \r\n286grabber=CGA.GR2\r\nshell=TSHELL.EXE\r\nnetwork.drv=\r\nlanguage.dll=\r\nfixedfon.fon=XTCFIX.FON\r\ncomm.drv=comm.drv\r\nsound.drv=SOUND.DRV\r\noemfonts.fon=XTCOEM.FON\r\nfonts.fon=XTCSYS.FON\r\nmouse.drv=WHEEL.DRV\r\nkeyboard.drv=TNDYK3.DRV\r\ndisplay.drv=HPXY.DRV\r\nsystem.drv=system.drv\r\n386grabber=\r\n[keyboard]\r\nsubtype=\r\ntype=1\r\noemansi.bin=\r\nkeyboard.dll=\r\n[boot.description]\r\n\r\nnetwork.drv=Network not installed\r\nlanguage.dll=English (American)\r\nkeyboard.typ=PC/XT - Type keyboard (84 keys)\r\nmouse.drv=Tandy serial wheel mouse (COM1/IRQ4)\r\ndisplay.drv=Tandy EX/HX accepted HPXY 640x200 wide-font mode\r\nsystem.drv=Tandy 1000 EX/HX (WindowsXT)\r\n[386Enh]\r\nDEVICE=WINDEBUG.386\r\ndisplay=*vddvga\r\nkeyboard=*vkd\r\nmouse=*vmd\r\nnetwork=*vnetbios, *dosnet\r\ndevice=*vpicd\r\ndevice=*vtd\r\ndevice=*reboot\r\ndevice=*vdmad\r\ndevice=*vsd\r\ndevice=*v86mmgr\r\ndevice=*pageswap\r\ndevice=*dosmgr\r\ndevice=*vmpoll\r\ndevice=*wshell\r\ndevice=*vhd\r\ndevice=*vfd\r\ndevice=*vpd\r\ndevice=*parity\r\ndevice=*biosxlat\r\ndevice=*vcd\r\ndevice=*vmcpd\r\ndevice=*combuff\r\ndevice=*cdpscsi\r\nlocal=CON\r\nFileSysChange=off\r\n\r\n[standard]\r\n\r\n[NonWindowsApp]\r\n\r\n[NativeInstallSentinel]\r\npreserve=yes\r\n",
+  "boot_files_unchanged": {
+    "AUTOEXEC.BAT": true,
+    "CONFIG.SYS": true
+  },
+  "staging_temps": [],
+  "installed_wrapper_matches_source": true,
+  "managed_sentinel_after": {
+    "bytes": 44,
+    "sha256": "8cf749318db64137816a8ba5e8a0ce5736ea6517b3fccc64d2f6be1bedd693c9"
+  },
+  "managed_sentinel_preserved": true,
+  "sound_shadow_absent": true,
+  "capture": {
+    "bytes": 3770,
+    "sha256": "cbd036e1dcfd212140ab187ce08dadf911d2dcd96ad2da017ebf87cb15f1a41a"
+  },
+  "seconds": 328.7,
+  "public_projection": {
+    "original_private_record_identity": {
+      "bytes": 6195,
+      "sha256": "ee837f4a3e8ef0fc9f4d2e56f2774003254c3696ba0dfbf31c25ef284ec0100c"
+    },
+    "omitted_fields": [
+      "emulator.path"
+    ],
+    "scope": "Only the emulator host installation path is omitted. Every test value and artifact identity is retained. The unchanged READBACK.JSON raw_result identity references this original private record."
+  }
+}

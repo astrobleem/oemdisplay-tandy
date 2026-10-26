@@ -1,0 +1,22 @@
+{
+  "bad": [],
+  "frames": 48,
+  "fat": {
+    "bytes_per_sector": 512,
+    "fat_count": 2,
+    "sectors_per_fat": 41,
+    "copies_equal": true,
+    "sha256": [
+      "cbb359df84dd8708214f428c5967d9078b9347ebffd309eebd7e8f164c263a4f",
+      "cbb359df84dd8708214f428c5967d9078b9347ebffd309eebd7e8f164c263a4f"
+    ]
+  },
+  "driver_readback": {
+    "bytes": 58512,
+    "sha256": "d60d4ae9342c4d7ce590b99ae552a3418f5cfbce995bb944e7f8182aeb7e930e"
+  },
+  "probe_readback": {
+    "bytes": 14367,
+    "sha256": "d1409021a8afa7a1a9c85fedbd75f0bee2d4bc6807ce7728ae8efe429b12b433"
+  }
+}

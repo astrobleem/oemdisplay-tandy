@@ -1,0 +1,78 @@
+{
+  "consumer_files_to_acquire": {
+    "fonts": [],
+    "grabbers": [],
+    "logos": [],
+    "panning_helpers": []
+  },
+  "consumer_python_required": false,
+  "driver_helper_bytes_changed": false,
+  "external_requirements": [
+    "Existing DOS and Windows 3.0 real-mode installation at C:\\WINDOWS",
+    "Matching adapter with 640 KB configuration",
+    "PCjr: DOS/firmware must already reserve the 32 KB video page; JRGUARD checks it. No memory driver is supplied."
+  ],
+  "hardware_panning": false,
+  "included_colorplus": [
+    "CGA.GR2",
+    "CPWIN.BAT",
+    "CPPAN.DRV",
+    "PCP3216.DRV"
+  ],
+  "included_in_both": [
+    "XTESYS.FON",
+    "XTEFIX.FON",
+    "XTEOEM.FON",
+    "XTSTATIC.LGO",
+    "WXTSPL01.RLE",
+    "XTPAN.EXE",
+    "PANCFG.EXE",
+    "INSTALL.BAT"
+  ],
+  "included_pcjr": [
+    "JRGRAB.GR2",
+    "JRGUARD.COM",
+    "JRSTART.BAT",
+    "JRPAN.DRV",
+    "TNDYJR.DRV"
+  ],
+  "main": "ae5b0cd76d778003a11e09184c2b983d7c315aa2",
+  "native_install": {
+    "actions": 6,
+    "all_owned_children_stopped": true,
+    "frontend": "DOSBox-X, machine=cga, 640 KB; native DOS Windows 3.0 Setup",
+    "installed_driver_sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+    "installed_grabber_sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+    "installer_invoked_from": "Z:",
+    "inventory_after_empty": true,
+    "lease_released": true,
+    "packet": "CPPAN",
+    "phase": 6,
+    "returned_to_dos": true,
+    "trace_identity": {
+      "bytes": 264,
+      "sha256": "bff6f174d48b0a493034627f56f98d267325992d3c710266374eb0a827e2f842"
+    },
+    "windows_root_grabber_present_before": false,
+    "windows_system_grabber_present_before": false
+  },
+  "pass": true,
+  "pcjr_zip_bytes_changed": false,
+  "physical_hardware_qualified": false,
+  "rendering_scope": "Prior Windows/adapter rendering evidence is retained: driver and helper bytes unchanged; expanded CGA.GR2 equals the support file in the tested ColorPlus Windows sessions. This new run checks native installation only.",
+  "schema": 1,
+  "supplied_grabber": {
+    "decoder": "tools/XR1PACK/PREPARE.PY:expanded_file",
+    "expanded_identity": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "matches_previous_qualified_colorplus_support_bytes": true,
+    "source": "CGA.GR2",
+    "source_encoding": "SZDD mode A",
+    "source_identity": {
+      "bytes": 1768,
+      "sha256": "11389907999c7bef2bd01eae5d874c79c3b07679ccb146ec095a8e9878496b55"
+    }
+  }
+}

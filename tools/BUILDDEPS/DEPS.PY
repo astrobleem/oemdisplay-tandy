@@ -12,6 +12,9 @@ import sys
 REMOTE = "https://github.com/astrobleem/oemdisplay-tandy.git"
 ROOTS = ("BIN", "DDK", "INCLUDE", "LIB")
 PROFILES = {
+    "cga": ("src/cga/", "src/tandysw/", "tools/XTFONTS/",
+            "src/text80/T80SET.C", "src/text80/T80FONT.PY", "tools/DOSINST/CRCFAST.H",
+            "tools/SOUNDOWN/RUNDOS.PY", "docs/CGA.MD"),
     "display": ("src/tandysw/", "docs/"),
     "keyboard": ("src/tandyk3/",),
     "shell": ("examples/TSHELL/", "docs/"),

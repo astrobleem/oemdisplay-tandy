@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "status": "PASS_FINAL_SOURCE_AND_CARRIER_RECONCILIATION",
+  "source_head": "a7db9bbd81fdb3173189bd1878f0d63aefbd8650",
+  "preserved_public_main": "745041d21103552e7d564ceb5f2369c58966f56a",
+  "main_is_ancestor": true,
+  "native_test_source": "8320cf2bd9615f915159311cd41fb80ee1e4958c",
+  "previous_source_reconciliation": {
+    "path": "FINALMAP.JSN",
+    "identity": {
+      "bytes": 1681,
+      "sha256": "83baa7a515a0ad348b3c7e8b095999c9480f9597af293d395ef019703f93c8b4"
+    }
+  },
+  "raw_git_native_source_build_input_pins": {
+    "CRCFAST.H": {
+      "bytes": 3941,
+      "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+    },
+    "DOSCORE.H": {
+      "bytes": 24157,
+      "sha256": "4ad0d3e6518406a3a8bbb3ec5bd6a0c5faa8f39d90af4cacf0dfbe7442a6d617"
+    },
+    "FIXXT.C": {
+      "bytes": 24477,
+      "sha256": "355e09ada18bed990dae915df6e837ad3c9f67c434fbac7c5e4625c68517b64b"
+    },
+    "PACKPINS.H": {
+      "bytes": 73,
+      "sha256": "fa96864511f03aed1628668d10c4073314e49e554f965a90db6e44a16ec403ac"
+    },
+    "RCNATIVE.JSN": {
+      "bytes": 3299,
+      "sha256": "782508d61510387272caae5adec19b6f78ddf147137aaf3c6be8c02cd6fd314c"
+    },
+    "SOUNDID.H": {
+      "bytes": 201,
+      "sha256": "c7645359276c478e8609881559a4d252e9ee966161261b255f9b389482610310"
+    },
+    "VARSET.H": {
+      "bytes": 12924,
+      "sha256": "db29b294520099d7221db5403d5637b2cc50b0d811a8366359760a312df7f4b3"
+    },
+    "XR1PINS.H": {
+      "bytes": 5226,
+      "sha256": "e914082d6e00f3c9758c250673f62653d0233e4554d6fd0b19f0000488408208"
+    },
+    "XRFILES.H": {
+      "bytes": 19683,
+      "sha256": "af5c185471490779b92dec550bcd52059637f4264baa8d4d1077ea5ba9bcae96"
+    },
+    "XRINPUT.H": {
+      "bytes": 14525,
+      "sha256": "0b577e38adae31b4c710d9eb109d631b67ae7179598a0f6a31b78cd438afe4f4"
+    },
+    "XRINPUT.JSN": {
+      "bytes": 44820,
+      "sha256": "d7cb54cec5abcdbbc37a01adfc8ad99659e6d96262fd2765596fb136a1c5d00d"
+    },
+    "XRPREP.C": {
+      "bytes": 16983,
+      "sha256": "4cef7d54d3dc46be7b7cf7e3640aa2f16d3997572725543f57cb457d3d5e26eb"
+    },
+    "XRSTRM.H": {
+      "bytes": 1861,
+      "sha256": "8a2720b1b2a1f0ad8e76c6cddcfaf8746709ee14107b41343b4c2dd6ae748020"
+    }
+  },
+  "raw_git_helper": {
+    "bytes": 83544,
+    "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
+  },
+  "companion_raw_git_pins": {
+    "FIXXT.EXE": {
+      "tools/DOSINST/FIXXT.C": {
+        "bytes": 24477,
+        "sha256": "355e09ada18bed990dae915df6e837ad3c9f67c434fbac7c5e4625c68517b64b"
+      },
+      "tools/DOSINST/BIN/FIXXT.EXE": {
+        "bytes": 33001,
+        "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"
+      },
+      "tools/DOSINST/SOUNDID.H": {
+        "bytes": 201,
+        "sha256": "c7645359276c478e8609881559a4d252e9ee966161261b255f9b389482610310"
+      },
+      "tools/DOSINST/FIXBUILD.JSN": {
+        "bytes": 743,
+        "sha256": "08106f2046f3398cb6a305a22b4295cb4d564bfabec4305d8d7eb2204bd78b63"
+      }
+    },
+    "XTCLEAN.COM": {
+      "tools/DOSINST/XTCLEAN.ASM": {
+        "bytes": 4210,
+        "sha256": "6bb9c01e994c881cc0f6c16bdcbb2927b3768adcb23f622b4a2ec6045211d5f9"
+      },
+      "tools/DOSINST/BIN/XTCLEAN.COM": {
+        "bytes": 1071,
+        "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
+      }
+    }
+  },
+  "excluded_original_metadata_pin": "RCPUBLIC.JSN source reference changed; compiled and expanded payload identities stay exact.",
+  "current_metadata": {
+    "RCPUBLIC.JSN": {
+      "bytes": 13010,
+      "sha256": "27792ba021b45af9e3b249d4db9df603276d859e1762051ff79ad280ea738189"
+    },
+    "RCPUB.PY": {
+      "bytes": 8637,
+      "sha256": "9d8cfd0db9fdaf52552c8fc5d3ff022fbbc2c5645e193bf36f7e35cd36e12ed1"
+    },
+    "RCNATIVE.JSN": {
+      "bytes": 3299,
+      "sha256": "782508d61510387272caae5adec19b6f78ddf147137aaf3c6be8c02cd6fd314c"
+    },
+    "WRAP.TXT": {
+      "bytes": 332,
+      "sha256": "ee8119bbf3941c528989695ad07a3d4926af4a7bb738dbc5783fc18de9025677"
+    }
+  },
+  "all_57_entries_match_frozen_packet": true,
+  "core_assets": {
+    "WINXT.ZIP": {
+      "bytes": 746928,
+      "sha256": "ce7698e0595d2add6e8e8f550b144bcb5dd996c0ee49f8448373f76065f6dbff"
+    },
+    "WINXT.EXE": {
+      "bytes": 830472,
+      "sha256": "292c28c67b97c3fe611ca8c5171a92581153bb6a17924adef7f8cf53f8d16ea4"
+    }
+  },
+  "download_carrier": {
+    "name": "WINXTDOS.ZIP",
+    "identity": {
+      "bytes": 831016,
+      "sha256": "fb04354421ba720e5d71a50af5fd11b183020f3bf62e26eb7424fdc3be0d80c1"
+    },
+    "members": {
+      "WINXT.EXE": {
+        "bytes": 830472,
+        "sha256": "292c28c67b97c3fe611ca8c5171a92581153bb6a17924adef7f8cf53f8d16ea4"
+      },
+      "README.TXT": {
+        "bytes": 332,
+        "sha256": "ee8119bbf3941c528989695ad07a3d4926af4a7bb738dbc5783fc18de9025677"
+      }
+    },
+    "reviewed_main_readme_identical": true,
+    "reviewed_main_carrier_function_AST_identical": true,
+    "reviewed_main_six_asset_inventory_preserved": [
+      "WINXTDOS.ZIP",
+      "WINXT.EXE",
+      "WINXT.ZIP",
+      "README.TXT",
+      "RELEASE.JSON",
+      "SHA256SUMS"
+    ],
+    "validation_scope": "Host carrier check only; contained executable is the exact native-qualified SFX. No additional native run."
+  },
+  "public_historical_qualification": {
+    "git_commit": "745041d21103552e7d564ceb5f2369c58966f56a",
+    "path": "docs/QUAL/DOSINST/RC8.JSN",
+    "identity": {
+      "bytes": 24575,
+      "sha256": "d67c18bc7c42486ebd252db9cb0dfd41dc180b33dc0f8d426ee80572161bb5be"
+    }
+  },
+  "native_execution": false,
+  "source_runtime_pins_changed": false
+}

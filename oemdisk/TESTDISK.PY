@@ -13,7 +13,7 @@ from unittest import mock
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-loader = importlib.machinery.SourceFileLoader("makedisk", str(ROOT / "MAKEDISK.PY"))
+loader = importlib.machinery.SourceFileLoader("makedisk", str(ROOT / "oemdisk/MAKEDISK.PY"))
 spec = importlib.util.spec_from_loader(loader.name, loader)
 builder = importlib.util.module_from_spec(spec)
 loader.exec_module(builder)
@@ -47,8 +47,9 @@ class PackageTests(unittest.TestCase):
         self.base = Path(self.tmp.name)
         self.repo = self.base / "repo"
         self.repo.mkdir()
+        (self.repo / "oemdisk").mkdir()
         for name in ("STAGE.PY", "oemsetup.inf", "README.TXT", "FILE_ID.DIZ"):
-            shutil.copyfile(ROOT / name, self.repo / name)
+            shutil.copyfile(ROOT / "oemdisk" / name, self.repo / "oemdisk" / name)
         relatives = ["oemdisk/INSTALL.BAT", "oemdisk/TANDY88.BAT",
                      "src/splash/assets/TNDYLOGO.RLE"]
         relatives += ["src/tandysw/bin/" + name for name in s.BINARY_HASHES]
@@ -59,7 +60,7 @@ class PackageTests(unittest.TestCase):
         self.archive = self.base / "T88TOOLS.ZIP"
         self.fonts = self.base / "owned"
         self.fonts.mkdir()
-        for name in s.inf_support_files((self.repo / "oemsetup.inf").read_bytes()):
+        for name in s.inf_support_files((self.repo / "oemdisk" / "oemsetup.inf").read_bytes()):
             data = font_fixture() if name.endswith(".FON") else b"Synthetic test fixture only"
             (self.fonts / name).write_bytes(data)
         # Unit fixtures never pretend to be accepted Windows media. Replace the
@@ -77,7 +78,7 @@ class PackageTests(unittest.TestCase):
         return target / "DISK1"
 
     def test_five_profiles_have_distinct_files_and_original_default(self):
-        text = (self.repo / "oemsetup.inf").read_text()
+        text = (self.repo / "oemdisk" / "oemsetup.inf").read_text()
         lines = text.split("[display]\n", 1)[1].split("[sysfonts]", 1)[0].splitlines()
         choices = [line for line in lines if line and not line.startswith(";")]
         self.assertEqual(len(choices), 5)
@@ -95,7 +96,7 @@ class PackageTests(unittest.TestCase):
             self.assertIn("a:" + font + ".FON", text)
 
     def test_missing_duplicate_reordered_and_crosswired_profiles_rejected(self):
-        original = (self.repo / "oemsetup.inf").read_bytes()
+        original = (self.repo / "oemdisk" / "oemsetup.inf").read_bytes()
         lines = original.splitlines(keepends=True)
         default = next(line for line in lines if line.startswith(b"TANDY88 ="))
         extra = next(line for line in lines if line.startswith(b"TNDY6404 ="))
@@ -108,14 +109,14 @@ class PackageTests(unittest.TestCase):
                 s.inf_support_files(data)
 
     def test_other_sections_cannot_force_install_unselected_drivers(self):
-        original = (self.repo / "oemsetup.inf").read_bytes()
+        original = (self.repo / "oemdisk" / "oemsetup.inf").read_bytes()
         for name in sorted(s.DRIVER_NAMES):
             extra = s.dos_text("[fonts]\na:" + name + ", unselected, 1\n")
             with self.subTest(name=name), self.assertRaisesRegex(s.DiskError, "Setup selects one"):
                 s.inf_support_files(original + extra)
 
     def test_every_profile_requires_its_font_resolution_and_splash(self):
-        original = (self.repo / "oemsetup.inf").read_bytes()
+        original = (self.repo / "oemdisk" / "oemsetup.inf").read_bytes()
         for key, _, resolution in s.DISPLAY_PROFILES:
             line = next(line for line in original.splitlines() if line.startswith(key.encode() + b" ="))
             for value in (line.replace(resolution.encode(), b"1,2,3"),
@@ -125,7 +126,7 @@ class PackageTests(unittest.TestCase):
                     s.inf_support_files(original.replace(line, value))
 
     def test_font_contract_rejects_missing_swapped_and_wrong_metadata(self):
-        original = (self.repo / "oemsetup.inf").read_bytes()
+        original = (self.repo / "oemdisk" / "oemsetup.inf").read_bytes()
         for font in ("EGASYS", "EGAFIX", "EGAOEM", "CGASYS", "CGAFIX", "CGAOEM"):
             line = next(line for line in original.splitlines(keepends=True)
                         if line.startswith(b"a:" + font.encode() + b".FON"))
@@ -173,7 +174,7 @@ class PackageTests(unittest.TestCase):
             path.write_bytes(original)
 
     def test_completion_paths_reject_cluster_rounded_overflow(self):
-        path = self.repo / "README.TXT"
+        path = self.repo / "oemdisk" / "README.TXT"
         path.write_bytes(b"Large README\r\n" * 30000)
         with self.assertRaisesRegex(s.DiskError, "360 KB"):
             builder.build(self.repo, self.archive, self.fonts, self.base / "local")
@@ -199,7 +200,7 @@ class PackageTests(unittest.TestCase):
             builder.write_zip(changed, path)
             with self.subTest(name=name), self.assertRaises(s.DiskError):
                 builder.verify_toolkit(self.repo, path)
-        (self.repo / "STAGE.PY").write_bytes((self.repo / "STAGE.PY").read_bytes() + b"# changed\r\n")
+        (self.repo / "oemdisk" / "STAGE.PY").write_bytes((self.repo / "oemdisk" / "STAGE.PY").read_bytes() + b"# changed\r\n")
         with self.assertRaisesRegex(s.DiskError, "differs from current source"):
             builder.verify_toolkit(self.repo, self.archive)
 
@@ -344,7 +345,7 @@ class PackageTests(unittest.TestCase):
             self.assertNotIn("DISK1/PRIVATE.TXT", archive.namelist())
 
     def test_extra_inf_dependency_rejected(self):
-        path = self.repo / "oemsetup.inf"
+        path = self.repo / "oemdisk" / "oemsetup.inf"
         path.write_bytes(path.read_bytes() + b"[fonts]\r\na:EXTRA.FON, extra, 1\r\n")
         with self.assertRaisesRegex(s.DiskError, "exactly eight"):
             builder.build(self.repo, self.archive, self.fonts)
@@ -402,7 +403,7 @@ class PackageTests(unittest.TestCase):
 
     def test_verify_source_change_rejected(self):
         builder.build(self.repo, self.archive, self.fonts)
-        path = self.repo / "README.TXT"
+        path = self.repo / "oemdisk" / "README.TXT"
         path.write_bytes(path.read_bytes() + b"New source text\r\n")
         with self.assertRaisesRegex(s.DiskError, "differs from current source"):
             builder.verify_archive(self.repo, self.archive)
@@ -487,39 +488,39 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(self.archive.read_bytes(), b"preserve")
 
     def test_lf_text_rejected(self):
-        path = self.repo / "README.TXT"
+        path = self.repo / "oemdisk" / "README.TXT"
         path.write_bytes(path.read_bytes().replace(b"\r\n", b"\n"))
         with self.assertRaisesRegex(s.DiskError, "CRLF"):
             builder.build_toolkit(self.repo, self.archive)
         self.assertFalse(self.archive.exists())
 
     def test_old_inf_driver_rejected(self):
-        path = self.repo / "oemsetup.inf"
+        path = self.repo / "oemdisk" / "oemsetup.inf"
         path.write_bytes(path.read_bytes().replace(b"TANDY88.DRV", b"TNDY16.DRV"))
         with self.assertRaisesRegex(s.DiskError, "OEM display"):
             builder.build_toolkit(self.repo, self.archive)
 
     def test_stock_logo_name_cannot_reuse_setup_cache(self):
-        path = self.repo / "oemsetup.inf"
+        path = self.repo / "oemdisk" / "oemsetup.inf"
         path.write_bytes(path.read_bytes().replace(b"a:TNDYLOGO.RLE", b"a:CGALOGO.RLE"))
         with self.assertRaisesRegex(s.DiskError, "cached stock splash"):
             builder.build_toolkit(self.repo, self.archive)
         self.assertFalse(self.archive.exists())
 
     def test_omitted_custom_bitmap_rejected(self):
-        path = self.repo / "oemsetup.inf"
+        path = self.repo / "oemdisk" / "oemsetup.inf"
         path.write_bytes(path.read_bytes().replace(b"a:TNDYLOGO.RLE", b""))
         with self.assertRaisesRegex(s.DiskError, "logo"):
             builder.build_toolkit(self.repo, self.archive)
 
     def test_omitted_wincom_logo_rejected(self):
-        path = self.repo / "oemsetup.inf"
+        path = self.repo / "oemdisk" / "oemsetup.inf"
         path.write_bytes(path.read_bytes().replace(b"a:CGALOGO.LGO", b""))
         with self.assertRaisesRegex(s.DiskError, "logo"):
             builder.build_toolkit(self.repo, self.archive)
 
     def test_unsupported_helper_inf_section_rejected(self):
-        path = self.repo / "oemsetup.inf"
+        path = self.repo / "oemdisk" / "oemsetup.inf"
         path.write_bytes(path.read_bytes() + b"[optional]\r\na:RESERVE.COM\r\n")
         with self.assertRaisesRegex(s.DiskError, "optional"):
             builder.build_toolkit(self.repo, self.archive)
@@ -770,9 +771,7 @@ class FormatTests(unittest.TestCase):
                 s.font_ne(data, "TEST.FON")
 
     def test_all_authored_dos_text_is_crlf(self):
-        paths = [ROOT / p for p in ("MAKEDISK.BAT", "MAKEDISK.PY", "STAGE.PY", "README.TXT",
-                                     "FILE_ID.DIZ", "BUILDING.MD", "docs/OEMDISK.MD")]
-        paths += [ROOT / "oemsetup.inf"]
+        paths = [ROOT / "BUILDING.MD", ROOT / "docs/OEMDISK.MD", ROOT / "oemdisk/oemsetup.inf", ROOT / "oemdisk/README.TXT", ROOT / "oemdisk/FILE_ID.DIZ"]
         paths += list((ROOT / "oemdisk").glob("*.BAT")) + list((ROOT / "oemdisk").glob("*.PY"))
         for path in paths:
             with self.subTest(path=path):

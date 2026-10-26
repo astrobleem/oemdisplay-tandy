@@ -1,0 +1,912 @@
+{
+  "parent_candidate": "ff5d5e38ba75973bbd47fd9125166ec2b78b746b",
+  "scope": "LOCAL synchronous follow-up; no pending rows, no publication",
+  "baseline_sha256": "c418dff91b27940437d03d0143b99d4d0b9185890bb7f6ff76a89d0fae837d30",
+  "previous_candidate_sha256": "fcce3ea7c374ea911bbaabdae6fb314b3dfa83bbed07bf7b43cd4b009aeec475",
+  "candidate_sha256": "ae2d06f69ff68e64f099c3e0af79028e40e7dca89bd442de23eb18d36be4dca1",
+  "candidate_bytes": 60800,
+  "delta_from_baseline": {
+    "bytes": 400,
+    "code_allocated_bytes": 382,
+    "data_allocated_bytes": 0
+  },
+  "same_full_frame_pairs": 165,
+  "main_frame_pairs": 114,
+  "cursor_pan_pairs": 51,
+  "independent_marker_oracle_pixels": 3456000,
+  "idle_observation": "raw VRAM immediately and after nine BIOS IRQ clock ticks; no END/GDI/Control/Disable/DOS/message dispatch between reads",
+  "old_gap_reproduced_in_viewports": 3,
+  "RLE_cases_per_driver": 17,
+  "RLE_pixels_per_driver": 1088000,
+  "host_RRTEST_count": 32,
+  "timings": [
+    {
+      "variant": "BASE",
+      "viewport": [
+        0,
+        0
+      ],
+      "hardware": false,
+      "stages": [
+        {
+          "name": "roundrect_key",
+          "elapsed_ms": 1154,
+          "repaint_ms": []
+        },
+        {
+          "name": "rectangle_key",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_large",
+          "elapsed_ms": 659,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_hollow",
+          "elapsed_ms": 605,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_nopen",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_xor",
+          "elapsed_ms": 1153,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_overlap",
+          "elapsed_ms": 1153,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_clipped",
+          "elapsed_ms": 439,
+          "repaint_ms": []
+        },
+        {
+          "name": "ellipse_12",
+          "elapsed_ms": 219,
+          "repaint_ms": []
+        },
+        {
+          "name": "cursor_overlap",
+          "elapsed_ms": 4064,
+          "repaint_ms": []
+        },
+        {
+          "name": "visible_steps",
+          "elapsed_ms": 2581,
+          "repaint_ms": []
+        },
+        {
+          "name": "marker_steps",
+          "elapsed_ms": 4174,
+          "repaint_ms": []
+        },
+        {
+          "name": "calc",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2142,
+            2142,
+            2142
+          ]
+        },
+        {
+          "name": "reversi",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1098,
+            1099,
+            1098
+          ]
+        },
+        {
+          "name": "pbrush",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2362,
+            2361,
+            2307
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "OLD",
+      "viewport": [
+        0,
+        0
+      ],
+      "hardware": false,
+      "stages": [
+        {
+          "name": "roundrect_key",
+          "elapsed_ms": 1154,
+          "repaint_ms": []
+        },
+        {
+          "name": "rectangle_key",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_large",
+          "elapsed_ms": 659,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_hollow",
+          "elapsed_ms": 550,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_nopen",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_xor",
+          "elapsed_ms": 1153,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_overlap",
+          "elapsed_ms": 1098,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_clipped",
+          "elapsed_ms": 439,
+          "repaint_ms": []
+        },
+        {
+          "name": "ellipse_12",
+          "elapsed_ms": 220,
+          "repaint_ms": []
+        },
+        {
+          "name": "cursor_overlap",
+          "elapsed_ms": 1538,
+          "repaint_ms": []
+        },
+        {
+          "name": "visible_steps",
+          "elapsed_ms": 1208,
+          "repaint_ms": []
+        },
+        {
+          "name": "marker_steps",
+          "elapsed_ms": 4175,
+          "repaint_ms": []
+        },
+        {
+          "name": "calc",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2142,
+            2087,
+            2142
+          ]
+        },
+        {
+          "name": "reversi",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1099,
+            1098,
+            1099
+          ]
+        },
+        {
+          "name": "pbrush",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2362,
+            2362,
+            2362
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "NEW",
+      "viewport": [
+        0,
+        0
+      ],
+      "hardware": false,
+      "stages": [
+        {
+          "name": "roundrect_key",
+          "elapsed_ms": 385,
+          "repaint_ms": []
+        },
+        {
+          "name": "rectangle_key",
+          "elapsed_ms": 165,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_large",
+          "elapsed_ms": 220,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_hollow",
+          "elapsed_ms": 164,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_nopen",
+          "elapsed_ms": 220,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_xor",
+          "elapsed_ms": 330,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_overlap",
+          "elapsed_ms": 385,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_clipped",
+          "elapsed_ms": 165,
+          "repaint_ms": []
+        },
+        {
+          "name": "ellipse_12",
+          "elapsed_ms": 55,
+          "repaint_ms": []
+        },
+        {
+          "name": "cursor_overlap",
+          "elapsed_ms": 549,
+          "repaint_ms": []
+        },
+        {
+          "name": "visible_steps",
+          "elapsed_ms": 769,
+          "repaint_ms": []
+        },
+        {
+          "name": "marker_steps",
+          "elapsed_ms": 4175,
+          "repaint_ms": []
+        },
+        {
+          "name": "calc",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1099,
+            1043,
+            1099
+          ]
+        },
+        {
+          "name": "reversi",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            714,
+            714,
+            714
+          ]
+        },
+        {
+          "name": "pbrush",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1538,
+            1483,
+            1538
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "BASE",
+      "viewport": [
+        8,
+        56
+      ],
+      "hardware": true,
+      "stages": [
+        {
+          "name": "roundrect_key",
+          "elapsed_ms": 1154,
+          "repaint_ms": []
+        },
+        {
+          "name": "rectangle_key",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_large",
+          "elapsed_ms": 659,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_hollow",
+          "elapsed_ms": 549,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_nopen",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_xor",
+          "elapsed_ms": 1098,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_overlap",
+          "elapsed_ms": 1098,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_clipped",
+          "elapsed_ms": 439,
+          "repaint_ms": []
+        },
+        {
+          "name": "ellipse_12",
+          "elapsed_ms": 165,
+          "repaint_ms": []
+        },
+        {
+          "name": "cursor_overlap",
+          "elapsed_ms": 4064,
+          "repaint_ms": []
+        },
+        {
+          "name": "visible_steps",
+          "elapsed_ms": 2911,
+          "repaint_ms": []
+        },
+        {
+          "name": "marker_steps",
+          "elapsed_ms": 4229,
+          "repaint_ms": []
+        },
+        {
+          "name": "calc",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2142,
+            2143,
+            2142
+          ]
+        },
+        {
+          "name": "reversi",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1098,
+            1099,
+            1098
+          ]
+        },
+        {
+          "name": "pbrush",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2362,
+            2362,
+            2306
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "OLD",
+      "viewport": [
+        8,
+        56
+      ],
+      "hardware": true,
+      "stages": [
+        {
+          "name": "roundrect_key",
+          "elapsed_ms": 1154,
+          "repaint_ms": []
+        },
+        {
+          "name": "rectangle_key",
+          "elapsed_ms": 549,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_large",
+          "elapsed_ms": 659,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_hollow",
+          "elapsed_ms": 549,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_nopen",
+          "elapsed_ms": 605,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_xor",
+          "elapsed_ms": 1153,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_overlap",
+          "elapsed_ms": 1099,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_clipped",
+          "elapsed_ms": 439,
+          "repaint_ms": []
+        },
+        {
+          "name": "ellipse_12",
+          "elapsed_ms": 165,
+          "repaint_ms": []
+        },
+        {
+          "name": "cursor_overlap",
+          "elapsed_ms": 1538,
+          "repaint_ms": []
+        },
+        {
+          "name": "visible_steps",
+          "elapsed_ms": 1538,
+          "repaint_ms": []
+        },
+        {
+          "name": "marker_steps",
+          "elapsed_ms": 4229,
+          "repaint_ms": []
+        },
+        {
+          "name": "calc",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2087,
+            2087,
+            2087
+          ]
+        },
+        {
+          "name": "reversi",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1099,
+            1098,
+            1099
+          ]
+        },
+        {
+          "name": "pbrush",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2306,
+            2362,
+            2362
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "NEW",
+      "viewport": [
+        8,
+        56
+      ],
+      "hardware": true,
+      "stages": [
+        {
+          "name": "roundrect_key",
+          "elapsed_ms": 330,
+          "repaint_ms": []
+        },
+        {
+          "name": "rectangle_key",
+          "elapsed_ms": 110,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_large",
+          "elapsed_ms": 219,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_hollow",
+          "elapsed_ms": 165,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_nopen",
+          "elapsed_ms": 220,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_xor",
+          "elapsed_ms": 330,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_overlap",
+          "elapsed_ms": 330,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_clipped",
+          "elapsed_ms": 110,
+          "repaint_ms": []
+        },
+        {
+          "name": "ellipse_12",
+          "elapsed_ms": 55,
+          "repaint_ms": []
+        },
+        {
+          "name": "cursor_overlap",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "visible_steps",
+          "elapsed_ms": 1098,
+          "repaint_ms": []
+        },
+        {
+          "name": "marker_steps",
+          "elapsed_ms": 4174,
+          "repaint_ms": []
+        },
+        {
+          "name": "calc",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1099,
+            1043,
+            1099
+          ]
+        },
+        {
+          "name": "reversi",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            714,
+            714,
+            714
+          ]
+        },
+        {
+          "name": "pbrush",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1538,
+            1483,
+            1538
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "BASE",
+      "viewport": [
+        320,
+        56
+      ],
+      "hardware": false,
+      "stages": [
+        {
+          "name": "roundrect_key",
+          "elapsed_ms": 1153,
+          "repaint_ms": []
+        },
+        {
+          "name": "rectangle_key",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_large",
+          "elapsed_ms": 659,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_hollow",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_nopen",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_xor",
+          "elapsed_ms": 1154,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_overlap",
+          "elapsed_ms": 1154,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_clipped",
+          "elapsed_ms": 440,
+          "repaint_ms": []
+        },
+        {
+          "name": "ellipse_12",
+          "elapsed_ms": 220,
+          "repaint_ms": []
+        },
+        {
+          "name": "cursor_overlap",
+          "elapsed_ms": 4010,
+          "repaint_ms": []
+        },
+        {
+          "name": "visible_steps",
+          "elapsed_ms": 2362,
+          "repaint_ms": []
+        },
+        {
+          "name": "marker_steps",
+          "elapsed_ms": 4229,
+          "repaint_ms": []
+        },
+        {
+          "name": "calc",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2143,
+            2142,
+            2142
+          ]
+        },
+        {
+          "name": "reversi",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1098,
+            1099,
+            1098
+          ]
+        },
+        {
+          "name": "pbrush",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2362,
+            2362,
+            2306
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "OLD",
+      "viewport": [
+        320,
+        56
+      ],
+      "hardware": false,
+      "stages": [
+        {
+          "name": "roundrect_key",
+          "elapsed_ms": 1153,
+          "repaint_ms": []
+        },
+        {
+          "name": "rectangle_key",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_large",
+          "elapsed_ms": 659,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_hollow",
+          "elapsed_ms": 549,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_nopen",
+          "elapsed_ms": 604,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_xor",
+          "elapsed_ms": 1153,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_overlap",
+          "elapsed_ms": 1154,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_clipped",
+          "elapsed_ms": 440,
+          "repaint_ms": []
+        },
+        {
+          "name": "ellipse_12",
+          "elapsed_ms": 220,
+          "repaint_ms": []
+        },
+        {
+          "name": "cursor_overlap",
+          "elapsed_ms": 1538,
+          "repaint_ms": []
+        },
+        {
+          "name": "visible_steps",
+          "elapsed_ms": 1098,
+          "repaint_ms": []
+        },
+        {
+          "name": "marker_steps",
+          "elapsed_ms": 4174,
+          "repaint_ms": []
+        },
+        {
+          "name": "calc",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2142,
+            2087,
+            2142
+          ]
+        },
+        {
+          "name": "reversi",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1099,
+            1098,
+            1099
+          ]
+        },
+        {
+          "name": "pbrush",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            2361,
+            2307,
+            2362
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "NEW",
+      "viewport": [
+        320,
+        56
+      ],
+      "hardware": false,
+      "stages": [
+        {
+          "name": "roundrect_key",
+          "elapsed_ms": 384,
+          "repaint_ms": []
+        },
+        {
+          "name": "rectangle_key",
+          "elapsed_ms": 164,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_large",
+          "elapsed_ms": 220,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_hollow",
+          "elapsed_ms": 165,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_nopen",
+          "elapsed_ms": 219,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_xor",
+          "elapsed_ms": 329,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_overlap",
+          "elapsed_ms": 329,
+          "repaint_ms": []
+        },
+        {
+          "name": "roundrect_clipped",
+          "elapsed_ms": 165,
+          "repaint_ms": []
+        },
+        {
+          "name": "ellipse_12",
+          "elapsed_ms": 55,
+          "repaint_ms": []
+        },
+        {
+          "name": "cursor_overlap",
+          "elapsed_ms": 549,
+          "repaint_ms": []
+        },
+        {
+          "name": "visible_steps",
+          "elapsed_ms": 714,
+          "repaint_ms": []
+        },
+        {
+          "name": "marker_steps",
+          "elapsed_ms": 4174,
+          "repaint_ms": []
+        },
+        {
+          "name": "calc",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1099,
+            1043,
+            1099
+          ]
+        },
+        {
+          "name": "reversi",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            769,
+            714,
+            714
+          ]
+        },
+        {
+          "name": "pbrush",
+          "elapsed_ms": null,
+          "repaint_ms": [
+            1538,
+            1483,
+            1538
+          ]
+        }
+      ]
+    }
+  ],
+  "packet_path": "C:\\Users\\chad\\Documents\\Codex\\2026-10-24\\task-2\\native\\SYNC-OEM",
+  "packet_archive_sha256": "e554b00685261c8c8576800f06a7eeca0d5fcade98f92b895d7beb0288d58a93",
+  "packet_alias_runtime": "XRSYNC.DRV loaded and API/pan frame-tested at all three viewports",
+  "native_Setup_wizard_replayed": false,
+  "source_sha256": {
+    "experiments/XYRRECT/XRBATCH.PY": "449a43b7fbf0ac0a9d4f2d47fdfcbabfb03181b43e1fd0a73c769e930ef2ce18",
+    "src/tandysw/CURKEEP.PY": "4e076da4136939ead43dc2997c205bf53929d15bf37256bdd5d6510c69555f01",
+    "src/tandysw/RLE88.ASM": "617e8a5fea847fe1f06a810404232d8f418587e7fd3680b60d9491a38cf131bc"
+  },
+  "limits": [
+    "fixed-cycle DOSBox-X timing is not calibrated physical 8088 speed",
+    "physical hardware/CF untouched",
+    "private OEM packet contains owned CGA.GR2 and is not for publication"
+  ],
+  "private_raw_evidence": "C:\\Users\\chad\\Documents\\Codex\\2026-10-24\\task-2\\native"
+}

@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "status": "PASS_PUBLIC_EVIDENCE_CLOSURE",
+  "sealed_candidate_identity": {
+    "bytes": 43341,
+    "sha256": "9d67cffd48e2dcf44fc6e6ef050a4547c7312f68feda4051f90e5c1de40791f9"
+  },
+  "prior_qualification_identity": {
+    "bytes": 24575,
+    "sha256": "d67c18bc7c42486ebd252db9cb0dfd41dc180b33dc0f8d426ee80572161bb5be"
+  },
+  "files": {
+    "FULLXT2/FINALMAP.JSN": {
+      "bytes": 1681,
+      "sha256": "83baa7a515a0ad348b3c7e8b095999c9480f9597af293d395ef019703f93c8b4"
+    },
+    "FULLXT2/FINALMAP2.JSN": {
+      "bytes": 5826,
+      "sha256": "9e441342259bcdb24c4bbf97995083b59ec14d2b82f658805043617c07e5dd60"
+    },
+    "FULLXT2/HOSTCHECK.JSON": {
+      "bytes": 2468,
+      "sha256": "54fc0ce9e8593b0fe54e341aed09c4d321318d3d85f71667d20c68ea6412a210"
+    },
+    "FULLXT2/PUBAFTER.JSN": {
+      "bytes": 13010,
+      "sha256": "27792ba021b45af9e3b249d4db9df603276d859e1762051ff79ad280ea738189"
+    },
+    "FULLXT2/PUBBEFOR.JSN": {
+      "bytes": 13165,
+      "sha256": "26957890f311c554434dd72d9bdf4a0903c27c3c806e01cd9f7e584901d6b47a"
+    },
+    "FULLXT2/README.MD": {
+      "bytes": 2021,
+      "sha256": "813f4c2d3b4616882ec7e47f1d0f096051912656ba357b44a29dc0fe4ad0c55b"
+    },
+    "FULLXT2/RELOPROF.JSN": {
+      "bytes": 36546,
+      "sha256": "d46cfe1e9e3b8174a4585ca3b31d7c84617d98c1c742a80c9417fca9d7c5e8d1"
+    },
+    "FULLXT2/RELOREAD.JSN": {
+      "bytes": 2511,
+      "sha256": "2a20c14fe2034eb62455666dcffcda25a06738fa5c31970b62eb37859abaabd2"
+    },
+    "FULLXT2/SOURCEPINS.JSON": {
+      "bytes": 2207,
+      "sha256": "a02836099a3407cd3c16afa36723bf5fd0688f541ad97c4a970f4cd1d4b901a4"
+    },
+    "FULLXT2/COLD/COLD.LOG": {
+      "bytes": 113,
+      "sha256": "b53ee31d1885bee564a7231ad344c46c0486248b448924df54f35c2e2296d81f"
+    },
+    "FULLXT2/COLD/DESKTOP.PNG": {
+      "bytes": 3770,
+      "sha256": "cbd036e1dcfd212140ab187ce08dadf911d2dcd96ad2da017ebf87cb15f1a41a"
+    },
+    "FULLXT2/COLD/READBACK.JSON": {
+      "bytes": 2195,
+      "sha256": "5145570a0b71dee4fb8344b82d4a4af28918f7c68c5af41d0342f7f22b295f57"
+    },
+    "FULLXT2/COLD/RESULT.JSON": {
+      "bytes": 6499,
+      "sha256": "bbb5c24cf0a944af6dd0405e3aa1d74ac5ad5d9b6c5510c98de4c99db38368cc"
+    },
+    "FULLXT2/FRESH/DESKTOP.PNG": {
+      "bytes": 3242,
+      "sha256": "0b039dcb4aca28b68faeef031cfd1ed7590d436353520144dec49f458d2bd298"
+    },
+    "FULLXT2/FRESH/INIPRESERVE.JSON": {
+      "bytes": 755,
+      "sha256": "8c5f7a3fab56da1651c2ef4e089365bbdf76506391c12e9d174f208b83bb483b"
+    },
+    "FULLXT2/FRESH/PREP.LOG": {
+      "bytes": 2404,
+      "sha256": "e266132360c51abc30fd5171cf2dda7912c30db95ef579bb7afb5aa922c04497"
+    },
+    "FULLXT2/FRESH/READBACK.JSON": {
+      "bytes": 2299,
+      "sha256": "ba8df800fdad0204bcd407b26f5b3aa34dc36e22dbde0df5526cde02302c688a"
+    },
+    "FULLXT2/FRESH/RESULT.JSON": {
+      "bytes": 6676,
+      "sha256": "740ae77963114bc6a3129dd89930a7a4ce268adf538d660b088e720b5e63abfb"
+    },
+    "FULLXT2/NEGATIVE/BAD.LOG": {
+      "bytes": 305,
+      "sha256": "351d918d6a4ae10b853ae1e6e71e6dab8963245640c9a3b7298c1f5a7b69ac8b"
+    },
+    "FULLXT2/NEGATIVE/CASE.JSON": {
+      "bytes": 853,
+      "sha256": "f26e8d9d424aef9a5e76b1622e7e668eecb7dce71e28383450736615dfec57f5"
+    },
+    "FULLXT2/NEGATIVE/READBACK.JSON": {
+      "bytes": 1936,
+      "sha256": "06917db4640656e614c6dbb0d8b411edbcdb3059dfda5cc6dcf42344c6979882"
+    },
+    "FULLXT2/NEGATIVE/RESULT.JSON": {
+      "bytes": 2045,
+      "sha256": "83a843a60b8c24be2cdc12b8ba9d2baea86ecbeeeee56abac7dede5156232164"
+    },
+    "FULLXT2/NEGATIVE/RESULT.PNG": {
+      "bytes": 4367,
+      "sha256": "45fb99b439d2d788ec3ac94e19fd0286a71c10a3e5f7e10aecf36f942131d5f4"
+    },
+    "FULLXT2/NEGATIVE/RETRY.LOG": {
+      "bytes": 353,
+      "sha256": "d1709c2c14be4456512801b50a7e76bd40b6f4b4fa7b351ee63f0d049b4fe7f0"
+    },
+    "FULLXT2/UPDATE/DESKTOP.PNG": {
+      "bytes": 3770,
+      "sha256": "cbd036e1dcfd212140ab187ce08dadf911d2dcd96ad2da017ebf87cb15f1a41a"
+    },
+    "FULLXT2/UPDATE/INIPRESERVE.JSON": {
+      "bytes": 755,
+      "sha256": "338be8f77f576ee80da5d13db49c423a27c89f6f5be5eef5be2d0f979f62797d"
+    },
+    "FULLXT2/UPDATE/PREP.LOG": {
+      "bytes": 2363,
+      "sha256": "cc109c29090da86f8666edbcc02c3122358772ba674c23b17cf040b2477bcea7"
+    },
+    "FULLXT2/UPDATE/READBACK.JSON": {
+      "bytes": 2199,
+      "sha256": "30e908f58552db58fe1aaefec6ee2414d6fa2ef10fd2dc0c5e30f3ad0c3b23d2"
+    },
+    "FULLXT2/UPDATE/RESULT.JSON": {
+      "bytes": 6550,
+      "sha256": "2dc4f2e20dd42f5070e7bac7104a7d1190f6519e62d43774b7bc6c0ef2b824f3"
+    }
+  },
+  "public_result_projections": {
+    "FRESH": {
+      "public_result": "FULLXT2/FRESH/RESULT.JSON",
+      "original_private_record_identity": {
+        "bytes": 6321,
+        "sha256": "13703612985d86b35ad69a4c5b13c89eed9ca264889c8eeba27ea7defa016e51"
+      },
+      "omitted_fields": [
+        "emulator.path"
+      ]
+    },
+    "UPDATE": {
+      "public_result": "FULLXT2/UPDATE/RESULT.JSON",
+      "original_private_record_identity": {
+        "bytes": 6195,
+        "sha256": "ee837f4a3e8ef0fc9f4d2e56f2774003254c3696ba0dfbf31c25ef284ec0100c"
+      },
+      "omitted_fields": [
+        "emulator.path"
+      ]
+    },
+    "COLD": {
+      "public_result": "FULLXT2/COLD/RESULT.JSON",
+      "original_private_record_identity": {
+        "bytes": 6144,
+        "sha256": "c7b8b853529e9b4b8839a04ce7290c94549a072ef13986da989d387dc055f4a3"
+      },
+      "omitted_fields": [
+        "emulator.path"
+      ]
+    },
+    "NEGATIVE": {
+      "public_result": "FULLXT2/NEGATIVE/RESULT.JSON",
+      "original_private_record_identity": {
+        "bytes": 1690,
+        "sha256": "7aee5eb863f4870887c83fc470bcffd14cfc0e7777bcd864651073f2f92b8454"
+      },
+      "omitted_fields": [
+        "emulator.path"
+      ]
+    }
+  },
+  "contains_private_OS_or_media_bytes": false,
+  "scope": "Logs/screenshots/receipt metadata and hashes only. Original private raw-result hashes are retained beside their public projections. Source/media images and prepared OS trees remain private.",
+  "index_excludes_own_identity": true
+}

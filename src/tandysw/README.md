@@ -1,3 +1,7 @@
+> Historical / development guide. For the current download and installation,
+> use the [XR1 install guide](../../docs/RELEASES/RC8.MD). The commands below describe the
+> earlier package or source checkpoint.
+
 # Tandy 1000 EX/HX Windows 3.0 display driver
 
 Target: **8086/8088 instructions, Windows 3.0 real mode, 320x200 pixels,
@@ -71,12 +75,12 @@ instruction, raw runtime-generated code, stack bounds and linked-library
 closure. [RESERVE.MD](RESERVE.MD) describes the DOS memory reservation and its
 supported layout/failure cases.
 
-## Install through the completed OEM driver disk
+## Historical candidate05 installation record
 
 Use Windows 3.0 Setup to install the driver and fonts. Do not manually edit
 SYSTEM.INI for a normal installation. Work on a backed-up or disposable guest.
 
-Download the ready-to-use [TANDY88.ZIP](../../TANDY88.ZIP) and extract DISK1.
+Extract DISK1 from the historical TANDY88.ZIP.
 It already includes the exact candidate05 driver, RESERVE, DOS installer/launcher,
 and all six Windows 3.0 Setup dependencies. End users do not need Python or a
 separate media-staging step.

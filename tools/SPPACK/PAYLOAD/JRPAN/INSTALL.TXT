@@ -1,0 +1,37 @@
+JRPAN SOFTWARE PANNING - WINDOWS 3.0 REAL MODE
+
+320x400 logical desktop through a 320x200 viewport, 16 colors.
+Software copies present the viewport; this does not add hardware panning.
+The shadow uses 64,000 bytes, 32,000 more than the fixed driver.
+Emulator-tested on DOSBox-X PCjr, 640 KB.
+
+INSTALL
+1. Extract JRPAN.ZIP to C:\ so this folder is C:\JRPAN.
+2. Exit Windows to DOS and run C:\JRPAN\INSTALL.
+3. In Setup choose Display, Other, C:\JRPAN, then
+   EXPERIMENTAL IBM PCjr 320x400 software panning.
+   Return to DOS when Setup finishes.
+4. Start Windows with C:\JRPAN\JRSTART. In File > Run, run
+   C:\JRPAN\PANCFG. It starts the helper and enables later startup.
+The PCjr DOS memory driver must reserve its 32 KB video page.
+INSTALL and JRSTART run JRGUARD before proceeding.
+
+USE
+Move the pointer beyond the viewport or dwell at its upper/lower edge.
+Alt+PgDn pans down; Alt+PgUp pans up; Alt+F9 returns to the top.
+Newly activated windows are brought into view.
+Run C:\JRPAN\PANCFG SETTINGS for step, edge, dwell and window-follow settings.
+Apply saves changes; Cancel discards edits. Reopening reuses the same helper.
+
+RETURN TO FIXED 320x200
+Run C:\JRPAN\PANCFG OFF from Windows File > Run. Exit Windows,
+run C:\JRPAN\INSTALL again, and select Display, Other, C:\JRPAN,
+then IBM PCjr 320x200 fixed (rollback).
+Continue using C:\JRPAN\JRSTART to start Windows.
+
+WINDOW WORKSPACE ON THE FIXED DRIVER
+After selecting the fixed 320x200 driver, run PANCFG SETTINGS from this
+packet inside Windows. The settings offer a 2048x2048 window workspace
+with up to 24 application windows. It moves windows instead of allocating
+a larger display bitmap. Home and PANCFG OFF bring them back into reach.
+Use the larger 320x400 driver for framebuffer panning instead.

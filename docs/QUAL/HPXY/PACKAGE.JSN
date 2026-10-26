@@ -1,0 +1,670 @@
+{
+  "schema": 1,
+  "status": "PASS_CANONICAL_HPXY_PACKAGE",
+  "physical_hardware": false,
+  "archive": {
+    "bytes": 680629,
+    "sha256": "59ee10314c4f6ec3e226df60b24ed6cd0bb98fa71448d8a94942ab73959834ed"
+  },
+  "files": {
+    "README.TXT": {
+      "bytes": 1960,
+      "sha256": "493d8eb3c3eaca75d253cabbd1ebb1d6e0829814239ea8eb4e4812b4e9929237"
+    },
+    "SETUP.EXE": {
+      "bytes": 83142,
+      "sha256": "f1e7f39f29f1e7dfb90f94b8d5902639784dbb9ae4c8553c81bd7c2073130d13"
+    },
+    "WINXT/APPS.TXT": {
+      "bytes": 412,
+      "sha256": "22018a4cc6a6c5edd39d74ad6c4e39058be9ebf629ed460b16d4d385a100400b"
+    },
+    "WINXT/CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "WINXT/CPSET.EXE": {
+      "bytes": 36612,
+      "sha256": "e4fccba25d817f9a07a900a3cf443d9ea8a28cfb82cd39887293e8436589fa4d"
+    },
+    "WINXT/DISPLAY.BAT": {
+      "bytes": 993,
+      "sha256": "db46eb6b22bf3a9d42caf5c180fe9e5b41804d8f1044d683f35426c42458f16d"
+    },
+    "WINXT/DISPLAY.TXT": {
+      "bytes": 1917,
+      "sha256": "1fac3c3915dee890a258dbdc1df525599c4792e52200dd14f2d40a55a5d7af3e"
+    },
+    "WINXT/DISPWIN.BAT": {
+      "bytes": 816,
+      "sha256": "5cf8f16ca715d66bbfc5450793f81c9220c349885212f21c283da86bbbc01588"
+    },
+    "WINXT/FIXXT.BAT": {
+      "bytes": 314,
+      "sha256": "b8a060cdc2d125989379375b8f9dbbb04d0a17f4aa71a6235350291f65f410c8"
+    },
+    "WINXT/FIXXT.EXE": {
+      "bytes": 38645,
+      "sha256": "7e05d43dfd5049f1f30d25733a76a7cd8c605a72fe16c75e3b972acf948842c2"
+    },
+    "WINXT/FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/HPXY.DRV": {
+      "bytes": 61856,
+      "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+    },
+    "WINXT/HPXY.INF": {
+      "bytes": 882,
+      "sha256": "81957f3577522507e896899ad8d6a4fb98177fcd5ca3ff720e19d8e05d47f8d3"
+    },
+    "WINXT/LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/MATRIX.EXE": {
+      "bytes": 14669,
+      "sha256": "854e0692b4a2571b7d53b45f15da7d954137fde9dce079e8a17df753ec94aca8"
+    },
+    "WINXT/MAZE.EXE": {
+      "bytes": 28013,
+      "sha256": "9905abccd267dd229502fad2d7e57375f51c34b2c445fc52ea754508407de389"
+    },
+    "WINXT/MODELIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/MODEXT.BAT": {
+      "bytes": 481,
+      "sha256": "7f9948334d1d7f073326be6c5153e3a24a24ef836fa823fc45667b1a79e2fa5a"
+    },
+    "WINXT/NOTICE.TXT": {
+      "bytes": 1845,
+      "sha256": "33c86c7e8f70c19fb9a942e1f8676556921cd0893388f16036f28af9dc4dfba2"
+    },
+    "WINXT/OEMSETUP.INF": {
+      "bytes": 898,
+      "sha256": "cbbaf65a62dadbc7cd7b2aaaf1a098ab9cd855c6479b5e2bba3225a512fd8f3b"
+    },
+    "WINXT/OWATCOM.TXT": {
+      "bytes": 21128,
+      "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+    },
+    "WINXT/OWNERS.TXT": {
+      "bytes": 10352,
+      "sha256": "a9ac59f348a4a4ee6efb2dea4860966a91cf628493e089d3c55d58cf34e3eae7"
+    },
+    "WINXT/PINBALL.EXE": {
+      "bytes": 15487,
+      "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f"
+    },
+    "WINXT/PROFILES.TXT": {
+      "bytes": 299,
+      "sha256": "c439e1fc0e3ac7a6d0db212b95908699993855bf6135c57ce4b889b5b465215c"
+    },
+    "WINXT/RESERVE.COM": {
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+    },
+    "WINXT/SETAUTO.EXE": {
+      "bytes": 10976,
+      "sha256": "e2908cba3430be2a3b24058061f6b477629305476f8702d6a7c2f7fd81d45e0a"
+    },
+    "WINXT/SETUPXT.BAT": {
+      "bytes": 1726,
+      "sha256": "46baa557d053b704fd6f1d79db1b1a2455cfbdd67901225dca2b86538734eb9a"
+    },
+    "WINXT/SHOOK.COM": {
+      "bytes": 1249,
+      "sha256": "ba35ca3ce5407270e61c0ca15d27c4ca052bcd2a1112c7819fc214b74bd0d211"
+    },
+    "WINXT/SOUND.DRV": {
+      "bytes": 9752,
+      "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+    },
+    "WINXT/SOUNDID.JSN": {
+      "bytes": 152,
+      "sha256": "32cbeaec5be964abf44c3c84bd519a841958eb49cf491d9347a0ed5ff3d8741e"
+    },
+    "WINXT/SOUNDLIC.TXT": {
+      "bytes": 35823,
+      "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809"
+    },
+    "WINXT/STARFLD.EXE": {
+      "bytes": 17295,
+      "sha256": "c615fcd8c18ed740ed051542093e1bd18e26b92e820eef5b1bb4fa69f2ab8ff5"
+    },
+    "WINXT/START.TXT": {
+      "bytes": 837,
+      "sha256": "31b58d7d339c2ad6c55d2be4d7d3fc1be4a954476dc7a61ef21ebd9af00bdf1b"
+    },
+    "WINXT/STARTXT.BAT": {
+      "bytes": 31,
+      "sha256": "2644ccde425aae149e6240db084401aa7ae1ede3610c5daeb34a7234d5081aaa"
+    },
+    "WINXT/TABOUT.EXE": {
+      "bytes": 6479,
+      "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed"
+    },
+    "WINXT/TCHIME.EXE": {
+      "bytes": 5071,
+      "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61"
+    },
+    "WINXT/TEXIT.EXE": {
+      "bytes": 9215,
+      "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148"
+    },
+    "WINXT/TNDYK3.DRV": {
+      "bytes": 7640,
+      "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+    },
+    "WINXT/TP.EXE": {
+      "bytes": 12847,
+      "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33"
+    },
+    "WINXT/TSHELL.EXE": {
+      "bytes": 72323,
+      "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9"
+    },
+    "WINXT/TSHELL.INI": {
+      "bytes": 999,
+      "sha256": "9b0dca9bf1f66bcb5f99cbc347dbf093942ee30c6e0b3d546127e88585cec2f5"
+    },
+    "WINXT/TSINPUT.DLL": {
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+    },
+    "WINXT/WHEEL.DRV": {
+      "bytes": 1820,
+      "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+    },
+    "WINXT/WHEELLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/WINBRDG.EXE": {
+      "bytes": 28656,
+      "sha256": "230a24f8dec830dd8ceb8e11bb6f9694ed9a67b25ef232b9352e5e743cd3d74b"
+    },
+    "WINXT/WINXT.BAT": {
+      "bytes": 332,
+      "sha256": "8b484c67b9896deb2ba281f79a4020e35c7ef238fad5c5055ca63699c87c683b"
+    },
+    "WINXT/WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    },
+    "WINXT/WXTWHL.EXE": {
+      "bytes": 7222,
+      "sha256": "0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6"
+    },
+    "WINXT/XPCHIME.EXE": {
+      "bytes": 5103,
+      "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0"
+    },
+    "WINXT/XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "WINXT/XTCLEAN.COM": {
+      "bytes": 1071,
+      "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
+    },
+    "WINXT/XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "WINXT/XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "WINXT/XTEFIX.FON": {
+      "bytes": 4656,
+      "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+    },
+    "WINXT/XTEOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "WINXT/XTESYS.FON": {
+      "bytes": 5680,
+      "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+    },
+    "WINXT/XTLOGO.LGO": {
+      "bytes": 35971,
+      "sha256": "8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c"
+    },
+    "WINXT/XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "WINXT/XTTSYS.FON": {
+      "bytes": 4208,
+      "sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa"
+    },
+    "WINXT/XYCTL.EXE": {
+      "bytes": 29644,
+      "sha256": "3d3dc2dc72e7772bac6a47c68c35f94ffb8e1729635245ca6c674ca6cf24e79f"
+    }
+  },
+  "driver": {
+    "bytes": 61856,
+    "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+  },
+  "inherited_package": {
+    "bytes": 13702,
+    "sha256": "a3d43bb81091f8caaed0d6014186353e594b1ebdbf287372034f18b882d8d051"
+  },
+  "native": {
+    "drivers_only": {
+      "complete": true,
+      "owned_stopped": true,
+      "lease_released": true,
+      "archive": {
+        "bytes": 680629,
+        "sha256": "59ee10314c4f6ec3e226df60b24ed6cd0bb98fa71448d8a94942ab73959834ed"
+      },
+      "installed_driver": {
+        "bytes": 61856,
+        "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+      },
+      "normal_dos_return": true,
+      "paintbrush_repaint_and_pan": true,
+      "same_basename_replaced_after_explicit_Y": true,
+      "installed_helper_steps_verified": false,
+      "source_folder_exact": true,
+      "original_source_preserved": true,
+      "unrelated_modules_preserved": {
+        "SOUND.DRV": true,
+        "KEYBOARD.DRV": true,
+        "MOUSE.DRV": true,
+        "SYSTEM.DRV": true
+      },
+      "fat_copies_match": true,
+      "application_frames": [
+        {
+          "frame": {
+            "id": 0,
+            "x": 0,
+            "y": 0,
+            "head": 0,
+            "enabled": 1
+          },
+          "compared_bytes": 32000,
+          "result": "PASS"
+        },
+        {
+          "frame": {
+            "id": 1,
+            "x": 16,
+            "y": 8,
+            "head": 164,
+            "enabled": 1
+          },
+          "compared_bytes": 32000,
+          "result": "PASS"
+        },
+        {
+          "frame": {
+            "id": 2,
+            "x": 16,
+            "y": 8,
+            "head": 164,
+            "enabled": 1
+          },
+          "compared_bytes": 32000,
+          "result": "PASS"
+        },
+        {
+          "frame": {
+            "id": 3,
+            "x": 0,
+            "y": 0,
+            "head": 0,
+            "enabled": 1
+          },
+          "compared_bytes": 32000,
+          "result": "PASS"
+        }
+      ],
+      "guest_dos": "IBM PC DOS 3.20",
+      "movement": {
+        "path": "Absolute Escape (0,0)->(16,8), mode1 staged2816",
+        "total_ms": 165,
+        "blackout_ms": null,
+        "timer_resolution_ms": 55,
+        "excludes": "Logging, helper cadence and forced repaint after pan"
+      },
+      "scope": "Actual native DISPLAY/Other/same-name refresh/DISPWIN and Paintbrush",
+      "physical_hardware": false,
+      "seconds": 242.2,
+      "lease_wait_seconds": 469.3,
+      "native_setup_return": 1,
+      "helper_check": {
+        "complete": true,
+        "owned_stopped": true,
+        "lease_released": true,
+        "archive": {
+          "bytes": 680629,
+          "sha256": "59ee10314c4f6ec3e226df60b24ed6cd0bb98fa71448d8a94942ab73959834ed"
+        },
+        "installed_driver": {
+          "bytes": 61856,
+          "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+        },
+        "normal_dos_return": true,
+        "paintbrush_repaint_and_pan": true,
+        "same_basename_replaced_after_explicit_Y": false,
+        "installed_helper_steps_verified": true,
+        "source_folder_exact": true,
+        "original_source_preserved": true,
+        "unrelated_modules_preserved": {
+          "SOUND.DRV": true,
+          "KEYBOARD.DRV": true,
+          "MOUSE.DRV": true,
+          "SYSTEM.DRV": true
+        },
+        "fat_copies_match": true,
+        "application_frames": [
+          {
+            "frame": {
+              "id": 0,
+              "x": 0,
+              "y": 0,
+              "head": 0,
+              "enabled": 1
+            },
+            "compared_bytes": 32000,
+            "result": "PASS"
+          },
+          {
+            "frame": {
+              "id": 1,
+              "x": 16,
+              "y": 8,
+              "head": 164,
+              "enabled": 1
+            },
+            "compared_bytes": 32000,
+            "result": "PASS"
+          },
+          {
+            "frame": {
+              "id": 2,
+              "x": 16,
+              "y": 8,
+              "head": 164,
+              "enabled": 1
+            },
+            "compared_bytes": 32000,
+            "result": "PASS"
+          },
+          {
+            "frame": {
+              "id": 3,
+              "x": 0,
+              "y": 0,
+              "head": 0,
+              "enabled": 1
+            },
+            "compared_bytes": 32000,
+            "result": "PASS"
+          },
+          {
+            "frame": {
+              "id": 10,
+              "x": 8,
+              "y": 0,
+              "head": 2,
+              "enabled": 1
+            },
+            "compared_bytes": 32000,
+            "result": "PASS"
+          },
+          {
+            "frame": {
+              "id": 11,
+              "x": 8,
+              "y": 4,
+              "head": 82,
+              "enabled": 1
+            },
+            "compared_bytes": 32000,
+            "result": "PASS"
+          },
+          {
+            "frame": {
+              "id": 12,
+              "x": 0,
+              "y": 4,
+              "head": 80,
+              "enabled": 1
+            },
+            "compared_bytes": 32000,
+            "result": "PASS"
+          },
+          {
+            "frame": {
+              "id": 13,
+              "x": 0,
+              "y": 0,
+              "head": 0,
+              "enabled": 1
+            },
+            "compared_bytes": 32000,
+            "result": "PASS"
+          }
+        ],
+        "guest_dos": "IBM PC DOS 3.20",
+        "movement": {
+          "path": "Absolute Escape (0,0)->(16,8), mode1 staged2816",
+          "total_ms": 165,
+          "blackout_ms": null,
+          "timer_resolution_ms": 55,
+          "excludes": "Logging, helper cadence and forced repaint after pan"
+        },
+        "scope": "Installed canonical DISPWIN, Paintbrush and actual XYCTL 8/4 menu commands",
+        "physical_hardware": false,
+        "seconds": 199.6,
+        "lease_wait_seconds": 397.1
+      }
+    },
+    "fresh": {
+      "complete": true,
+      "owned_stopped": true,
+      "lease_released": true,
+      "process": {
+        "started": "2026-10-26T19:26:52.709725+00:00",
+        "emulator": "C:\\Program Files\\DOSBox-X\\dosbox-x.exe",
+        "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-integration\\canonical-fresh\\RUN.CNF",
+        "emulator_sha256": "769fb38a5a94475488be2107856d9a9fcca65487df35676188f5c2ccd5a2e964",
+        "timeout": 120,
+        "lease_acquired": true,
+        "inventory": "",
+        "pid": 820,
+        "return": 0,
+        "owned_child_stopped": true,
+        "lease_released": true
+      },
+      "prepared_comparison": {
+        "count": 370,
+        "different": []
+      },
+      "scope": "DOSBox native preparation",
+      "full_finisher_complete": false,
+      "physical_hardware": false,
+      "archive": {
+        "bytes": 680629,
+        "sha256": "59ee10314c4f6ec3e226df60b24ed6cd0bb98fa71448d8a94942ab73959834ed"
+      },
+      "tested_inputs": {
+        "SETUP.EXE": {
+          "bytes": 83142,
+          "sha256": "f1e7f39f29f1e7dfb90f94b8d5902639784dbb9ae4c8553c81bd7c2073130d13"
+        },
+        "WINXT/FIXXT.EXE": {
+          "bytes": 38645,
+          "sha256": "7e05d43dfd5049f1f30d25733a76a7cd8c605a72fe16c75e3b972acf948842c2"
+        },
+        "WINXT/HPXY.DRV": {
+          "bytes": 61856,
+          "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+        }
+      }
+    },
+    "update": {
+      "complete": true,
+      "owned_stopped": true,
+      "lease_released": true,
+      "process": {
+        "started": "2026-10-26T19:13:52.917993+00:00",
+        "emulator": "C:\\Program Files\\DOSBox-X\\dosbox-x.exe",
+        "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task\\tandy-pan-integration\\canonical-update\\RUN.CNF",
+        "emulator_sha256": "769fb38a5a94475488be2107856d9a9fcca65487df35676188f5c2ccd5a2e964",
+        "timeout": 120,
+        "lease_acquired": true,
+        "inventory": "",
+        "pid": 17992,
+        "return": 0,
+        "owned_child_stopped": true,
+        "lease_released": true
+      },
+      "prepared_comparison": {
+        "count": 83,
+        "different": []
+      },
+      "scope": "DOSBox native preparation plus full INSTALL/CPSET/CHECK finisher",
+      "full_finisher_complete": true,
+      "physical_hardware": false,
+      "archive": {
+        "bytes": 680629,
+        "sha256": "59ee10314c4f6ec3e226df60b24ed6cd0bb98fa71448d8a94942ab73959834ed"
+      },
+      "tested_inputs": {
+        "SETUP.EXE": {
+          "bytes": 83142,
+          "sha256": "f1e7f39f29f1e7dfb90f94b8d5902639784dbb9ae4c8553c81bd7c2073130d13"
+        },
+        "WINXT/FIXXT.EXE": {
+          "bytes": 38645,
+          "sha256": "7e05d43dfd5049f1f30d25733a76a7cd8c605a72fe16c75e3b972acf948842c2"
+        },
+        "WINXT/HPXY.DRV": {
+          "bytes": 61856,
+          "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+        }
+      },
+      "installed_driver": {
+        "bytes": 61856,
+        "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+      },
+      "installed_helper": {
+        "bytes": 29644,
+        "sha256": "3d3dc2dc72e7772bac6a47c68c35f94ffb8e1729635245ca6c674ca6cf24e79f"
+      }
+    }
+  },
+  "sources": {
+    "tools/DOSINST/FIXXT.C": {
+      "bytes": 30644,
+      "sha256": "84ff9425ae0fbe808d3a92989e7d74f3501becf1323c27655d8f6f3bbbcc245a"
+    },
+    "tools/DOSINST/HPXYID.H": {
+      "bytes": 230,
+      "sha256": "76e620ec77e12972b7ac40e4560a68b37b1c9f8f58b9d040860c56634bd2b96c"
+    },
+    "tools/DOSINST/HPXY.PY": {
+      "bytes": 6449,
+      "sha256": "1be379ea36a52f92fb65ad665c17ea2ee7228e23535df135c4bcc97fbb496453"
+    },
+    "tools/DOSINST/PANUI.PY": {
+      "bytes": 6991,
+      "sha256": "6338c2d5822b341cebf8db64c521972c2c276ed44e5f719d6dd3123c8e8dec24"
+    },
+    "tools/DOSINST/RCPUB.PY": {
+      "bytes": 15255,
+      "sha256": "494c53937671b7bda4a64b3aa12fac822717fd550e4989b617b7b46e54c2af4f"
+    },
+    "tools/DOSINST/SETPINS.H": {
+      "bytes": 5330,
+      "sha256": "55092ffe03bb66951951745087c176f5723ad92695681343aafaa78834ba52d6"
+    },
+    "tools/DOSINST/SETFILES.H": {
+      "bytes": 19726,
+      "sha256": "0cd6fd6118504ca77bef07983141a2ce982638e309fd888640e7cd72855ba821"
+    },
+    "tools/DOSINST/SETINPUT.H": {
+      "bytes": 14562,
+      "sha256": "7114a59bb3df6a5db65e2536296ac28e4e9f1477783c6004845dd898110a3c5a"
+    },
+    "tools/DOSINST/SETNAT.JSN": {
+      "bytes": 2801,
+      "sha256": "9f1fdd9dd3a04e0fbd5aef0f655a70663b065ce09ef752df134d8bd1a086b565"
+    },
+    "tools/DOSINST/RCNATIVE.JSN": {
+      "bytes": 3461,
+      "sha256": "3623f0602d2e2e0f4b00f63170c98403c6979dd9b63c43a9da512ecebad820bb"
+    },
+    "tools/DOSINST/FIXBUILD.JSN": {
+      "bytes": 875,
+      "sha256": "a65d8b5c7f42f7dfcdbb9bfab4cafed58e819abf26361d1d285551e4f9049e92"
+    },
+    "tools/SOUNDOWN/FINBUILD.PY": {
+      "bytes": 2623,
+      "sha256": "634fca02357244318966190086dd6636b6e10a3a6a6c6ef3ec74e0d96fe512b3"
+    },
+    "tools/XROEM/DISPLAY.BAT": {
+      "bytes": 993,
+      "sha256": "db46eb6b22bf3a9d42caf5c180fe9e5b41804d8f1044d683f35426c42458f16d"
+    },
+    "tools/XROEM/DISPLAY.TXT": {
+      "bytes": 1917,
+      "sha256": "1fac3c3915dee890a258dbdc1df525599c4792e52200dd14f2d40a55a5d7af3e"
+    },
+    "tools/DOSINST/TESTDISP.PY": {
+      "bytes": 13723,
+      "sha256": "a10045b6ec8b19f5af5ae8a1c612d2cee06c53c7d44a49a797915947537918cd"
+    },
+    "tools/DOSINST/TESTHPXY.PY": {
+      "bytes": 4335,
+      "sha256": "98ca0e00a7d6b60ee511d61513281dadec03390335e115d128ee52f104c13cbe"
+    },
+    "experiments/XYSTRIP/CANINST.PY": {
+      "bytes": 6690,
+      "sha256": "7348dafdfc184e617b103aed4141b7758117df383ac83e07f13d913e5938acbd"
+    },
+    "experiments/XYSTRIP/CANPREP.PY": {
+      "bytes": 5048,
+      "sha256": "fcdc381309986eb4f28534aeab784f8fd9496517b27d56b376252edadd22d837"
+    },
+    "experiments/XYSTRIP/CANVERIFY.PY": {
+      "bytes": 6020,
+      "sha256": "e687c9232ba4df6ea9f830131377a95c311f3143e72d4c94089db037567ac6f8"
+    },
+    "experiments/XYSTRIP/APPQA.C": {
+      "bytes": 4021,
+      "sha256": "0329edfc469251bfc1d1b71ae3a418fc63a142a3e9b82010ccdddf2a377953cf"
+    },
+    "experiments/XYSTRIP/CANHELP.PY": {
+      "bytes": 4249,
+      "sha256": "e1dff86b6010629ca5341bd3ca7d186449f17229868b40e44311ad020e0f4e0b"
+    },
+    "experiments/XYSTRIP/CANAPP.C": {
+      "bytes": 5282,
+      "sha256": "f47bc2cfe20ef4da0b13e0b3e1f9d85342387916623362b960a5a9c0747f0296"
+    }
+  },
+  "evidence": {
+    "docs/QUAL/HPXY/INSTALL.ZIP": {
+      "bytes": 115771,
+      "sha256": "e6cfc8e5e52bb2342720c88fd38098cd5b8d31cca2853e974f7c1279c70cd8ad"
+    }
+  },
+  "scope": "Normal expanded package; native fresh/update preparation, full update finisher, PC DOS3.20 Other/same-name refresh/DISPWIN, Paintbrush repaint/pan. Prior full Windows fresh recipe retained with unchanged OS inputs.",
+  "remaining_gaps": [
+    "Physical EX scanout/blackout timing",
+    "Native cancellation and alternate-display variants are covered by host transaction tests, not a separate guest campaign",
+    "No deliberately exhausted-memory or natural retrace-timeout testing"
+  ]
+}

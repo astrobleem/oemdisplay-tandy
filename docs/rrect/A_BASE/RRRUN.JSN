@@ -1,0 +1,44 @@
+{
+ "vm": "vm_base",
+ "test_configuration": "SYSTEM.INI shell=C:\\RRECT\\RRBENCH.EXE (set by RRRUN)",
+ "complete": true,
+ "host_seconds_win_to_complete": 810.3,
+ "files": {
+  "RB01.BIN": "ab9c37f77fe0487dc2c9ad9836ef22e19c526cd2143bf5baef4ed8c6c8575a8e",
+  "RB02.BIN": "ec9bfc5c157d81487864dcf698205c44e9afd22ee4c203a91e9a798c29b4b9ca",
+  "RB03.BIN": "4e8c4b07a87fe07f18b198fbfb6ac721cac21ad1d5367dfc2abd9bcdd3a4ca02",
+  "RB04.BIN": "e7e8fcefca7163daf1b1032c00bbf72d2bdcd08714e91b6f0a5bc2b9e5119b43",
+  "RB05.BIN": "31d7394c29c01de3891dd2c2faf49deb0421e6117d8d68765fcb63033bed5d5c",
+  "RB06.BIN": "8f5b22269482471efd2aeb4a10644c38f823fec996e7ed77de891c086d40b278",
+  "RB07.BIN": "6a8e3ad5f8fcd1547421e5d3262d7eb6d373f72e413040b08e9d5bafbe4cc2d3",
+  "RB08.BIN": "e3f356dac0cbed96bb4e8194be1df9528e30f29aee1f1a69ea152baabd3fd50f",
+  "RB09.BIN": "3fc41fda33edf57bd0be9df3525e66f43449052644c9db7a97886ab3c6ea12e4",
+  "RB10.BIN": "ae453ed200377a4341a42819e4903e6f1ceb41f1a3af9ad8e1a402986472d6d6",
+  "RRBENCH.LOG": "f1ea664d885be1721f9d5bd70f1c5d16ecd54634ddb4fd896a84a9f8a7e3a4d1"
+ },
+ "prep": {
+  "target": "rrect",
+  "pristine_sha256": "f55fe24baf83d9557e6c16612fbf8b4af5b175bf6b9b6d876e5784222e117561",
+  "driver": "TR53216.DRV",
+  "driver_sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61",
+  "tools": {
+   "RESERVE.COM": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+   "MSTEST.COM": "51dd0966a76cbc6349f1685ef65bbdeb4883897679d5426168d8f9c5a9f462bc",
+   "RRBENCH.EXE": "74a1c7e9246bce1d183e3225e96bf7cbec11cdcfa3febfcc54f6bc29cdd78f14"
+  },
+  "control_ega": false,
+  "mouse": "msserial",
+  "fonts": null,
+  "grid": 0,
+  "tv": false,
+  "only_8x8": false,
+  "changes": [
+   "CONFIG.SYS: only files=30, buffers=30 (removed HIMEM, SMARTDRV, EGA.SYS: an XT has no XMS and no EGA)",
+   "AUTOEXEC.BAT: PATH/TEMP as before, run C:\\RRECT\\RESERVE, stay at the DOS prompt (no automatic WIN)",
+   "SYSTEM.INI: display.drv=TR53216.DRV; [keyboard] type=1 (PC/XT 83-key instead of AT)",
+   "WIN.INI: MouseSpeed=0 (no pointer acceleration, so test moves are exact); Wallpaper=BARS16.BMP (a full-screen 16-colour bar test image, centred)",
+   "added WINDOWS/BARS16.BMP: 320x200 4-bit, 16 bars of 20 pixels, palette = the driver's colour table (generated, sha256 42c3959625954073173f743ed2b432c68a75385135dafa1d643c70f93ce38fbe)",
+   "added WINDOWS/SYSTEM/TR53216.DRV and RRECT/RESERVE.COM, MSTEST.COM, RRBENCH.EXE"
+  ]
+ }
+}

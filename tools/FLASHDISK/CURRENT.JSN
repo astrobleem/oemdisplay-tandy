@@ -1,0 +1,320 @@
+{
+  "schema": 1,
+  "complete": true,
+  "scope": "Native component qualification of the current support-complete fixed packet; no physical hardware claim",
+  "runtime": {
+    "XTMODE.EXE": {
+      "bytes": 49867,
+      "sha256": "34ff85d216a7c0233066aedc27c2199c2772e278438e627ce548d07909de4160"
+    },
+    "MODELIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "MODEINFO.TXT": {
+      "bytes": 3390,
+      "sha256": "ae1f7f5ef59342d47707b4208c10127c6b1a591fa64022f8d05ba4368b1b92fe"
+    },
+    "XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "LOGOINFO.TXT": {
+      "bytes": 886,
+      "sha256": "7ccfd313de28970f2b9b8e0f9c0c5c420a945f6b2654398784148e5c34467dbf"
+    },
+    "XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "XTESYS.FON": {
+      "bytes": 5680,
+      "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+    },
+    "XTEFIX.FON": {
+      "bytes": 4656,
+      "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+    },
+    "XTEOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "XTTSYS.FON": {
+      "bytes": 4208,
+      "sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa"
+    },
+    "FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "FONTINFO.TXT": {
+      "bytes": 451,
+      "sha256": "5a558123562bdc78ddae4ce3c7182b1a27a246c394481e3f5f56be82f8f9dc4b"
+    },
+    "CPSET.EXE": {
+      "bytes": 38115,
+      "sha256": "2be80e6dbfd0108939f0d1cf278efd2947f234d231d930e06d865d72f28dd713"
+    },
+    "CPSET.TXT": {
+      "bytes": 4775,
+      "sha256": "796108f7051585ffd6863fb407b050e995a2dcefacec2c803dfe3999c38993a6"
+    },
+    "HOLD14.TXT": {
+      "bytes": 3597,
+      "sha256": "4404f44d263c16930cb45795ef9f269f412f7db2a2f8c825cf236811b710ba57"
+    },
+    "HOLD160.PNG": {
+      "bytes": 3776,
+      "sha256": "f0c39aa91ed39850599051a1c798077751dd92857ac705973e55fae1ae035ef2"
+    },
+    "HOLD640.PNG": {
+      "bytes": 3532,
+      "sha256": "ee45f1403cebd9cf388aaf99140cc16790174b07c41d390548840087506481ff"
+    },
+    "INSTALL.BAT": {
+      "bytes": 490,
+      "sha256": "6cef76ab550280f71191742f6d2f83090faa47a2b250bd73722e2d9c0c18d23c"
+    },
+    "MATRIX.EXE": {
+      "bytes": 14157,
+      "sha256": "0987936c3b80eb9fc5718f3022996514f6885adbdf83cd05128d01bc19de17c8"
+    },
+    "MAZE.EXE": {
+      "bytes": 23215,
+      "sha256": "c8dac5dd6c8b6c9c0c6fb8727dd56919e9c0fd5a71fa63b30c429f4be2c3598a"
+    },
+    "PINBALL.EXE": {
+      "bytes": 15487,
+      "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f"
+    },
+    "NAMES11.TXT": {
+      "bytes": 3660,
+      "sha256": "e8e00a31169272ce94d1118b374f1f284913019e1e5e5efd997523161f50a163"
+    },
+    "OEMSETUP.INF": {
+      "bytes": 1432,
+      "sha256": "54f1e0a2639ca1420d3842002655df940cc66647e90cf8e4542a40ad7489652e"
+    },
+    "README.TXT": {
+      "bytes": 1929,
+      "sha256": "4181f47f3ca6ebf4be9aa4efb7733c21450c90e742b458840ef5586afe69b09e"
+    },
+    "RESERVE.COM": {
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+    },
+    "SHELL14.TXT": {
+      "bytes": 7211,
+      "sha256": "6c9385ecfaff6367fdb4fc6cca158e22f7213781b061dfd124adbec3bb1930b1"
+    },
+    "SHELLSEL.EXE": {
+      "bytes": 24081,
+      "sha256": "7bca056b88ee5fa0dc30f802bd4696bb8d7bc776653c59ce29a07b0ecb7676ed"
+    },
+    "SHFULL.TXT": {
+      "bytes": 4911,
+      "sha256": "ca8f28a734d4557750557cf74261cd3e028b1670647aa65bac721ef908111461"
+    },
+    "STARFLD.EXE": {
+      "bytes": 16783,
+      "sha256": "e06c9d80f977e1bda1db2d13be8af5f7d8b6f00285daa4f0e0159af00211b8d0"
+    },
+    "TABOUT.EXE": {
+      "bytes": 6479,
+      "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed"
+    },
+    "TCHIME.EXE": {
+      "bytes": 3999,
+      "sha256": "c5fb46eaa1967b68d6769cb5e948496b8aeabaa09e8656a2afb07a1426432121"
+    },
+    "TESTS.TXT": {
+      "bytes": 4950,
+      "sha256": "0d0f21c5fbc63ac1fca74b57b4e40fe5eb7446e81098f58ebdb74076b8441223"
+    },
+    "TESTS14.TXT": {
+      "bytes": 6319,
+      "sha256": "16bd35e15dabcedde2dfb02654a743f5d60842e5e87b6735d7c7c0f2ac075165"
+    },
+    "TEXIT.EXE": {
+      "bytes": 8687,
+      "sha256": "78d22200c4164732902330685e8ca03a7e0ff8f961d7086f86dd4b44ae3bfe99"
+    },
+    "TEXTMODE.TXT": {
+      "bytes": 2722,
+      "sha256": "031a074a8653d60f07aa0c6de0aa4f7a5f50b8036e9b32f4d994f0c9ac2a6984"
+    },
+    "TINST.EXE": {
+      "bytes": 32177,
+      "sha256": "cc0036bbb82c89cef6dfbe025c10f7d61732d1271f9805031070d4b515517df1"
+    },
+    "TR51616.DRV": {
+      "bytes": 54880,
+      "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d"
+    },
+    "TR53204.DRV": {
+      "bytes": 54032,
+      "sha256": "707dabdd83dafcf80b3f9e2fe07ca785662d3358d08f366cb2ed6b45b2804744"
+    },
+    "TR53216.DRV": {
+      "bytes": 54896,
+      "sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61"
+    },
+    "TR56402.DRV": {
+      "bytes": 53632,
+      "sha256": "3c002227b7b01579787d10c452ae9b3f216a4fd53a8aa5c2190c6bab67d880a2"
+    },
+    "TR56404.DRV": {
+      "bytes": 53808,
+      "sha256": "50969051a462bbada0be684c247de5c4bde6f51a3d0b9db22bf46d58592e3ca9"
+    },
+    "TSCHECK.EXE": {
+      "bytes": 3311,
+      "sha256": "53f5fe88e099ccd37826e23a191c803313ad5ae70dee9c04b3ff19bc95705cbe"
+    },
+    "TSHELL.EXE": {
+      "bytes": 71251,
+      "sha256": "c1c0ae1f7b919f58ef4d7a34cec045f313206409a21955ffff09f63aced8e167"
+    },
+    "TSHELL.INI": {
+      "bytes": 905,
+      "sha256": "56931fdffa6f4b167a60c2cce893a969968348eaab7650b660aff09c0a3e50c2"
+    },
+    "TSINPUT.DLL": {
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+    },
+    "TSREADY.TXT": {
+      "bytes": 81,
+      "sha256": "ad84cbe02cd8771af516632286b91cc05a2f4581be81e47e6e247b85062e645b"
+    },
+    "TSSETUP.BAT": {
+      "bytes": 3876,
+      "sha256": "24cdfd7f90d89acf10f2f1ed6341691634f46bb5a5331e19ce1b10cab703e96f"
+    },
+    "TSTART.BAT": {
+      "bytes": 2408,
+      "sha256": "3bc503876eadab2d13ebdd960f13c30023bb1726efddbe6edbfaa8d8a7ac22bb"
+    },
+    "TXTMODE.DRV": {
+      "bytes": 72960,
+      "sha256": "943a455baa475071a190b26e69b92a477178b5ced231edef19882abb2a8d2646"
+    },
+    "WAVEXT.EXE": {
+      "bytes": 34593,
+      "sha256": "b0c524dd71a61786190bc8b31e14481930d713bdbc6fbdfcb6af9f8e79cff342"
+    },
+    "XTCLEAN.COM": {
+      "bytes": 1071,
+      "sha256": "a59b3ee294d95f152b17ed20fe9d1e090c1d5ca966476c6433cc532a5b938376"
+    },
+    "XTWAVE.DAT": {
+      "bytes": 6200,
+      "sha256": "f7217d3bbfb0ded0f9699a69d82ba16c7dcc76c7ac1d7d54748ca910928a9a1b"
+    },
+    "WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    },
+    "XPCHIME.EXE": {
+      "bytes": 4543,
+      "sha256": "63e19800e0bae1c8f604431a183fac87a29ae1e2c8a0a4812281037b66f8e07f"
+    },
+    "CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "MANIFEST.SHA": {
+      "bytes": 4554,
+      "sha256": "f1d3c01f689d6286ee1d9c207f17c1d4329f6dc12de360b44bc183774ac1ffac"
+    }
+  },
+  "helper": {
+    "bytes": 33253,
+    "sha256": "e8f991c1dcaa02b23df5fd9c171e2a89a829e55db5c3d288f59acb7cf614a235"
+  },
+  "checks": {
+    "bundled_grabber_prepared_with_both_Windows_copies_absent": true,
+    "all59_prepared_files_exact": true,
+    "Windows_unchanged_during_preparation": true,
+    "five_disk_native_CPSET_and_Setup_and_320x200": true,
+    "original_metadata_native_CPSET_and_Setup_and_320x200": true,
+    "current_wrapper_alternate_directory_child42": true,
+    "current_wrapper_normal_cold_Windows_and_DOS_return": true,
+    "all_owned_processes_stopped_and_lease_released": true
+  },
+  "preparation_scope": {
+    "actual_preparation": "FIVE.JSON,126.8s; same PREPXT executable code, current CPSET already included",
+    "final_helper_resource_data_refreshed_not_rerun": true,
+    "native_preparation_to_final_resource_differences": [
+      "WAVEXT.EXE",
+      "XTCLEAN.COM",
+      "MANIFEST.SHA"
+    ],
+    "final_wrapper_native_proof": "COLD.JSON and ORIG.JSON; absolute child from current Windows directory",
+    "first_five_disk_harness": "Setup/metrics succeeded, then private /EXIT token was interpreted as another app. That failed harness result remains intact. Corrected cold continuation passed without repeating preparation or Setup."
+  },
+  "inputs": {
+    "five_disk": {
+      "bytes": 49095,
+      "sha256": "aa4a92022c88750d9dee4a8c4b003de295d44f82f70f2d5430023f1984e6d84c"
+    },
+    "original": {
+      "bytes": 49046,
+      "sha256": "4f4b65bdc0ce2d4a23859494f8936376296e857872a554b0037ceb068f2202f2"
+    }
+  },
+  "seconds": {
+    "current_cold_and_alternate": 83.9,
+    "original_native_install_and_launch": 305.6
+  },
+  "evidence": {
+    "COLD.JSON": {
+      "bytes": 3251,
+      "sha256": "4fe49c565cf0e280207dfaf0fb58f1a3c69073d863040c4b7dd8216ade79a459"
+    },
+    "COLD.PNG": {
+      "bytes": 2885,
+      "sha256": "44e3bec6900135c68cda3bfc53dfeb0cb63c2db12c9f2e489273b5e0a34c5ace"
+    },
+    "COLD.PY": {
+      "bytes": 9146,
+      "sha256": "658087e3adc663578fe542f1407ebb00a9413c433821f07dd39d2c8c6c65ab3c"
+    },
+    "FIVE.JSON": {
+      "bytes": 9152,
+      "sha256": "da470aa2ecc070b9d7b7fdcd8162f9eb27f6088bb77ea031d8bcd82af10ae6fd"
+    },
+    "FIVE.PY": {
+      "bytes": 8147,
+      "sha256": "61613134a8ac3d642850ee3846d47035031fa4236cc5fd6fe4611a94efbf6c54"
+    },
+    "INPUT.JSN": {
+      "bytes": 307,
+      "sha256": "c168d512a20c3d64b334582ee1116ef7e6e4b55b1ffe6905cdd7c43ea8bec1ec"
+    },
+    "ORIG.JSON": {
+      "bytes": 3219,
+      "sha256": "a3324e62360bb8f268124675d41a9a6825672c88dd2a9e1f67e6eddcbcf1b317"
+    },
+    "ORIG.PNG": {
+      "bytes": 2885,
+      "sha256": "44e3bec6900135c68cda3bfc53dfeb0cb63c2db12c9f2e489273b5e0a34c5ace"
+    },
+    "ORIG.PY": {
+      "bytes": 8764,
+      "sha256": "eb554088ea112c0bb164eb4455432cd68617fecb6f4d926184f8c214632ec67d"
+    }
+  }
+}

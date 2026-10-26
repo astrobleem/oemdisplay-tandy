@@ -1,0 +1,396 @@
+{
+  "schema": 1,
+  "integration_status": "MERGED_HISTORICAL_RUN41_PLUS_NONZERO_X_DELTA_FOLLOWUP",
+  "canonical_repository": "https://github.com/astrobleem/oemdisplay-tandy.git",
+  "base_commit": "fcfb74825001a5ba1888b82b1fbbddf037356015",
+  "base_tree": "79e44cb578b04a1179542174447e2650876ec606",
+  "accepted_baseline": {
+    "path": "tools/XR1PACK/PAYLOAD/HPXY.DRV",
+    "bytes": 56704,
+    "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275",
+    "git_blob": "cb19de359421b83cf5257a1b279572879841e0d4",
+    "source_commit": "3521f93a3647c5937e4f8a77c6c1d371473e06c5",
+    "source_record": "tools/XR1PACK/PROVENANCE.JSN and QUALIFY.JSN; companion SOURCE-MANIFEST.json"
+  },
+  "tested_candidate": {
+    "bytes": 60400,
+    "sha256": "cb12b6b8ecb657b44b2b5122895dcaabca84fbc15c9b9f1a542e14d9f935629d",
+    "build_result": "native-rle-build-20261022-retn-fix/RESULT.json",
+    "runtime_run": "native-rle-win3-run-41",
+    "source_tree_used": "build-root",
+    "build_result_role": "Historical run41 build receipt from build-root; it is not the current-main rebuild receipt.",
+    "source_tree_role": "Historical run41 candidate source tree; current-main reproduction is recorded separately below."
+  },
+  "runtime": {
+    "status": "PASS",
+    "modechk": "15/15",
+    "pixels_compared": 960000,
+    "framebuffer_bytes": 491520,
+    "duration_seconds": 180.05,
+    "profile": "Windows 3.0 real mode, emulator original 8088 core, 640KB, Tandy 1000 HX surrogate, logical 640x256x16, visible 320x200",
+    "entry_observer": "UNARMED_INCONCLUSIVE"
+  },
+  "reproduction_status": {
+    "exact_candidate_binary_available_as_external_evidence_only": true,
+    "canonical_head_rebuild_verified": true,
+    "reason": "A fresh isolated build from canonical main 4d9dc402c30fd398f10742b4eed3d78d420cea59 plus the complete integration overlay reproduced the exact 60,400-byte run41 candidate cb12b6b8ecb657b44b2b5122895dcaabca84fbc15c9b9f1a542e14d9f935629d. The 31 first-party driver inputs were compared against current main: 17 already match, 3 differ and are supplied by the reviewed overlay, and 11 are absent from main and supplied as first-party private build overlays. External DDK/toolchain inputs are identified by file hashes in RLE-EXTERNAL-DEPENDENCIES-4D9DC.json. This does not create a deterministic source-to-binary receipt for the separate accepted 9db7 payload; its source-lineage binding remains unverified at the binary-rebuild level.",
+    "verified_commit": "4d9dc402c30fd398f10742b4eed3d78d420cea59",
+    "verified_tree": "523075e94d83a53b2c980c59a961e9949d4e23f4",
+    "local_rebuild_candidate_bytes": 60400,
+    "local_rebuild_candidate_sha256": "cb12b6b8ecb657b44b2b5122895dcaabca84fbc15c9b9f1a542e14d9f935629d",
+    "local_rebuild_output": "native-rle-closure-repro-20261022/HPXY.DRV"
+  },
+  "staged_files": {
+    "docs/RLE-RUN41-QUALIFICATION.md": {
+      "bytes": 1857,
+      "sha256": "6570acf86c9d838dc79f1da6f4bf2b9e7e92425b67e1ab5de89083f094bac5a2",
+      "staged_from": "generated local integration document"
+    },
+    "docs/RUN41-MODECHK-RECHECK.json": {
+      "bytes": 23175,
+      "sha256": "2cea78ca2a98284d766b3f90b8cebc379afae7a1a45df86b78603db0aae45ddd"
+    },
+    "docs/STAGING-TESTS.md": {
+      "bytes": 1755,
+      "sha256": "16c8bc6232bb7522b2bff15529905fbd7480e9dd3bc3198cd869af3e694d0449"
+    },
+    "experiments/HPAN/HFLUSH.ASM": {
+      "bytes": 2745,
+      "sha256": "d18f5fbcd882f7873b058c64f7c9308670e19282eb97a0040850c226640e5186",
+      "staged_from": "source/experiments/HPAN/HFLUSH.ASM"
+    },
+    "experiments/HPAN/HPAN.ASM": {
+      "bytes": 7929,
+      "sha256": "17421c06d9362cf4c96d0d4c565f5c2e2603a6e1da0a691b1f5226c30a9362fe",
+      "staged_from": "source/experiments/HPAN/HPAN.ASM"
+    },
+    "experiments/HPAN/HPATCH.PY": {
+      "bytes": 3744,
+      "sha256": "269c856b6fc3d50ac74d5cb79f6bfdc17bb36972f0e9c1b3e8926d38a9e428b2",
+      "staged_from": "source/experiments/HPAN/HPATCH.PY"
+    },
+    "experiments/XYPAN/XYCOPY.ASM": {
+      "bytes": 5167,
+      "sha256": "523fb1bb1a230f00e2f5dbce983e458cb58f7f4208b609ef9f145a1bf38608bb",
+      "staged_from": "source/experiments/XYPAN/XYCOPY.ASM"
+    },
+    "experiments/XYPAN/XYPAN.ASM": {
+      "bytes": 5308,
+      "sha256": "cc0ea1316903be5b596c9626eeb94c4094be4ad48a1f920a65c9b64c27fccbb8",
+      "staged_from": "source/experiments/XYPAN/XYPAN.ASM"
+    },
+    "experiments/XYPAN/XYPATCH.PY": {
+      "bytes": 5337,
+      "sha256": "7060b86de749f5b15da586e0d96edd44cd5cdee661ce23f8a0a1e556ea1a28e5",
+      "staged_from": "source/experiments/XYPAN/XYPATCH.PY"
+    },
+    "experiments/XYRRECT/RRPATCH.PY": {
+      "bytes": 13179,
+      "sha256": "bb71ae5e7521e4a40a9218ada40e85012c17cda338c36a8ab93d8d38d52c6e7a",
+      "staged_from": "source/experiments/XYRRECT/RRPATCH.PY"
+    },
+    "experiments/XYRRECT/XRBUILD.PY": {
+      "bytes": 3595,
+      "sha256": "a680fc9bba398a5f1bbc5087c533119a777f06e720ea71a6fb2bb7c391a5ba6f",
+      "staged_from": "source/experiments/XYRRECT/XRBUILD.PY"
+    },
+    "experiments/XYRRECT/XRPATCH.PY": {
+      "bytes": 4023,
+      "sha256": "ca8ec86578f8128ee8f6d3ce06943edc241de052869278fa30d5e0c6534ddfb0",
+      "staged_from": "source/experiments/XYRRECT/XRPATCH.PY"
+    },
+    "src/tandysw/BUILD88.PY": {
+      "bytes": 8409,
+      "sha256": "5a6938d6b86758ccf34bea7c67efb10713477929c2e49f100900b789ed271a55",
+      "staged_from": "build-root/src/tandysw/BUILD88.PY"
+    },
+    "src/tandysw/DIB88.MD": {
+      "bytes": 5693,
+      "sha256": "e928283e97092e86355b63ceb8c9aa314ed7b5b2c1dd9932d2f5fb2a693c5872",
+      "staged_from": "canonical HEAD DIB88.MD plus reviewed RLE section"
+    },
+    "src/tandysw/MODECHK.PY": {
+      "bytes": 47520,
+      "sha256": "a944f5387b7cadf396bdab9c89aac26677df6b5dc2a8d1b9a05ef0685665556d",
+      "staged_from": "RLE-ABI-RETURN-FIX-REVIEW/source/matrix/MODECHK.PY"
+    },
+    "src/tandysw/MODETEST.C": {
+      "bytes": 39568,
+      "sha256": "11f60ec6149a2575f6595426b46e35d11481265d8a8bae6e403ab0fa3c89802e",
+      "staged_from": "RLE-ABI-RETURN-FIX-REVIEW/source/matrix/MODETEST.C"
+    },
+    "src/tandysw/PORTDIB.PY": {
+      "bytes": 9619,
+      "sha256": "d794e470f7870635557a3c9f38e97b94ee62cc4094ec7c1cface8b7120a4a2b3",
+      "staged_from": "build-root/src/tandysw/PORTDIB.PY"
+    },
+    "src/tandysw/RLE-INTEGRATION.md": {
+      "bytes": 3604,
+      "sha256": "5d9a8b38919fd0debd52f87578e4ea56589d27faea506fbec40d7a0e8f33b04b",
+      "staged_from": "generated local integration document"
+    },
+    "src/tandysw/RLE-PROVENANCE.md": {
+      "bytes": 828,
+      "sha256": "e9025aa75acd0b1d2df960f3b012155777cb9ff27a445799f8d18429d93024c3",
+      "staged_from": "generated local integration document"
+    },
+    "src/tandysw/RLE88.ASM": {
+      "bytes": 23308,
+      "sha256": "617e8a5fea847fe1f06a810404232d8f418587e7fd3680b60d9491a38cf131bc",
+      "staged_from": "build-root/src/tandysw/RLE88.ASM"
+    },
+    "src/tandysw/RLEABITEST.PY": {
+      "bytes": 5692,
+      "sha256": "52a955615d289434674c56a88c7d0e1e16ff139f8f3390132397355b5dc29ec6",
+      "staged_from": "build-root/src/tandysw/RLEABITEST.PY",
+      "source_sha256": "769d28bd5b3a3e1f071613fdfa9143992bc69658132febbdab70ddf12fe2edfa",
+      "staging_transform": "CRLF normalized per repository AGENTS.md"
+    },
+    "src/tandysw/RLETEST.PY": {
+      "bytes": 15587,
+      "sha256": "51cac63e157d80542802362dd13202f16fe7d386b9d01b1c09ac77fcd4edc840",
+      "staged_from": "build-root/src/tandysw/RLETEST.PY"
+    },
+    "src/tandysw/SDIB88.ASM": {
+      "bytes": 15882,
+      "sha256": "6d042d1bd2e9b620e4e062c81845330a40b26da18f235dc033d251d10e5d44d9",
+      "staged_from": "build-root/src/tandysw/SDIB88.ASM"
+    },
+    "src/tandysw/test_rle_abi.py": {
+      "bytes": 4004,
+      "sha256": "29593db7a74303b4936f498234fa36da8f604f18dfcf0fb33bb79588ab23e97b",
+      "staged_from": "build-root/src/tandysw/test_rle_abi.py",
+      "source_sha256": "15e98f5fa9711701ba55087a607e2adc35ca669bf9b6bd1fd573c87b0f0a01f4",
+      "staging_transform": "CRLF normalized per repository AGENTS.md"
+    },
+    "src/tandysw/COMPACT.PY": {
+      "bytes": 7121,
+      "sha256": "d4f950e6aeab03ec52e23d915d3f74eea8938f278dd384f5d4c9cf1b105557c0",
+      "staged_from": "build-root/src/tandysw/COMPACT.PY",
+      "closure_note": "First-party helper required by XRBUILD compact320 and BUILD88.PY; added to close the current-main reproduction."
+    }
+  },
+  "forbidden_payloads_included": false,
+  "public_writes": false,
+  "verification": {
+    "host_decoder_oracle_tests": {
+      "status": "PASS",
+      "count": 13,
+      "command": "python -B RLETEST.PY"
+    },
+    "rle_abi_regressions": {
+      "status": "PASS",
+      "count": 6,
+      "command": "python -B -m unittest discover -s src/tandysw -p test_rle_abi.py -v"
+    },
+    "emitted_listing_audit": {
+      "status": "PASS",
+      "listing_source": "native-rle-build-20261022-retn-fix/renderer/EGA/RLE88.LST",
+      "near_call_sites": [
+        "0360",
+        "0438",
+        "0460",
+        "049A"
+      ],
+      "both_helper_returns": "C3 RETN",
+      "delta_skip": "byte [ES:DI+27]"
+    },
+    "modechk_selftest": {
+      "status": "PASS"
+    },
+    "saved_run41_guest_recheck": {
+      "status": "PASS",
+      "cases": 15,
+      "pixels_compared": 960000,
+      "profile": "640x256x16-rle-pan",
+      "phases": 40,
+      "report": "docs/RUN41-MODECHK-RECHECK.json"
+    },
+    "native_rebuild_for_this_integration": {
+      "status": "PASS",
+      "reason": "Fresh isolated native build from current canonical main plus the complete 26-path integration overlay reproduced the exact run41 candidate. This supersedes the historical fcfb748 staging record; it was a compiler/build run only, with no Windows guest launched.",
+      "commit": "4d9dc402c30fd398f10742b4eed3d78d420cea59",
+      "tree": "523075e94d83a53b2c980c59a961e9949d4e23f4",
+      "candidate_bytes": 60400,
+      "candidate_sha256": "cb12b6b8ecb657b44b2b5122895dcaabca84fbc15c9b9f1a542e14d9f935629d",
+      "candidate_path": "native-rle-closure-repro-20261022/HPXY.DRV",
+      "build_receipt": "native-rle-closure-repro-20261022/RESULT.json",
+      "pipeline_receipt": "native-rle-closure-repro-20261022/BASEPIPE.json",
+      "runtime": "NOT_RUN_BY_THIS_REBUILD"
+    }
+  },
+  "candidate_build_closure": {
+    "base_source_snapshot": "3521f93a3647c5937e4f8a77c6c1d371473e06c5",
+    "adopted_merge": "fc7b09bdbe7e37dc9d562bdb746cf435b0628ba0",
+    "candidate_builder": "experiments/XYRRECT/XRBUILD.PY",
+    "candidate_builder_sha256": "a680fc9bba398a5f1bbc5087c533119a777f06e720ea71a6fb2bb7c391a5ba6f",
+    "private_overlay_files": [
+      "experiments/XYRRECT/XRPATCH.PY",
+      "experiments/XYRRECT/RRPATCH.PY",
+      "experiments/XYPAN/XYPATCH.PY",
+      "experiments/XYPAN/XYCOPY.ASM",
+      "experiments/XYPAN/XYPAN.ASM",
+      "experiments/HPAN/HPATCH.PY",
+      "experiments/HPAN/HPAN.ASM",
+      "experiments/HPAN/HFLUSH.ASM"
+    ],
+    "helper_inputs_hashed_from_build_root": [
+      {
+        "path": "src/tandysw/build.py",
+        "bytes": 7590,
+        "sha256": "57584f5cf15055ccd29691c208ae66a719a73ab856864c765f045ea4cb082cf0",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/PORT8086.PY",
+        "bytes": 20953,
+        "sha256": "3f12375dc621327fc953b84b249fb27b9f51f5684713a2ccbdf5a34812e5c338",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/MODEPROF.PY",
+        "bytes": 8373,
+        "sha256": "a8fed6daf827518ebbe3cda10e028cd6a9d3e77dd6ccefc3812b8b346b1e5507",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/REPCOPY88.PY",
+        "bytes": 11381,
+        "sha256": "62fde9f6c0f97b76d097bcd6ce55e362a06af227982a04933754df0aff4ee215",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/BYTECOL.PY",
+        "bytes": 7639,
+        "sha256": "2801ba449f3906bd6df208dce5e323538862289f859dc4e391bf39ef289a9337",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/CURKEEP.PY",
+        "bytes": 12418,
+        "sha256": "4e076da4136939ead43dc2997c205bf53929d15bf37256bdd5d6510c69555f01",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/OUTROWS.PY",
+        "bytes": 10422,
+        "sha256": "ec783c4b0cbf4dfaca5fd245ce6dab0b40f16732937e4563873fcf50b51c6ef8",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/WIDESCAN.PY",
+        "bytes": 3780,
+        "sha256": "0575a6a953683768909b2ab23d413c30ede5b4dd6a3c9890553a66a960c06592",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/COMPACT.PY",
+        "bytes": 7121,
+        "sha256": "d4f950e6aeab03ec52e23d915d3f74eea8938f278dd384f5d4c9cf1b105557c0",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "ABSENT"
+      },
+      {
+        "path": "src/tandysw/AUDIT88.PY",
+        "bytes": 3506,
+        "sha256": "aabc3d8393281e5d7bc2dcd4e57fbcb75e509c587d139ce8210032fbf8835c37",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/PACKRES.PY",
+        "bytes": 10238,
+        "sha256": "666001544fb26f4c27d8cfe1c89bb33ce35dd10920267f888bad83f30007870b",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/BLDCOR.BAT",
+        "bytes": 2422,
+        "sha256": "195372c7b4ab130971dfab32553fe71a6785b7e0c43c488381f6ce708361bd58",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/BLDCUR.BAT",
+        "bytes": 232,
+        "sha256": "f48637bedf4a6eb8eeef0f1cbbb360b33b361d8d2e1294049ddf39a7cf9ebd94",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      },
+      {
+        "path": "src/tandysw/BLDRES.BAT",
+        "bytes": 426,
+        "sha256": "0646ef05e6a2bb10ca6a3eb0987691ebb4ad7737a0ec0785d01102cda089b9d7",
+        "candidate_build_root": "build-root",
+        "canonical_head_status": "MATCH"
+      }
+    ],
+    "known_head_differences": {
+      "src/tandysw/BUILD88.PY": {
+        "head_sha256": "d43fd4a7560e3f7b4bdd3a1459607d3208bef40098e03bde967fe4ceacb5ff00",
+        "candidate_sha256": "5a6938d6b86758ccf34bea7c67efb10713477929c2e49f100900b789ed271a55"
+      },
+      "src/tandysw/PORTDIB.PY": {
+        "head_sha256": "591e48c34892d8056eab7fae52e15e26e560dc42feeb88096446b1a411cc74f9",
+        "candidate_sha256": "d794e470f7870635557a3c9f38e97b94ee62cc4094ec7c1cface8b7120a4a2b3"
+      },
+      "src/tandysw/SDIB88.ASM": {
+        "head_sha256": "438e605e33d2f42c6f9bef0a9d5d7ca95a89282bccfaf17db0bde7a177e04175",
+        "candidate_sha256": "6d042d1bd2e9b620e4e062c81845330a40b26da18f235dc033d251d10e5d44d9"
+      }
+    },
+    "exact_clean_rebuild_from_canonical_head": "VERIFIED: isolated build at canonical main 4d9dc402c30fd398f10742b4eed3d78d420cea59 plus the 26-path integration patch produced exact run41 candidate cb12b6b8ecb657b44b2b5122895dcaabca84fbc15c9b9f1a542e14d9f935629d.",
+    "profile_stage_transform": {
+      "profile_tool": "src/tandysw/MODEPROF.PY",
+      "profile_tool_sha256": "a8fed6daf827518ebbe3cda10e028cd6a9d3e77dd6ccefc3812b8b346b1e5507",
+      "effect": "For the XY logical 640x256 build, staged SDIB88 source limits change from width 320/height 200 to width 640/height 256 before assembly.",
+      "source_sdibb88_sha256": "6d042d1bd2e9b620e4e062c81845330a40b26da18f235dc033d251d10e5d44d9",
+      "assembled_renderer_sdibb88_sha256": "7788005590ea3216a1337bf492135431e889a17b4ce224bc857be5d50122d50f",
+      "diff_reviewed": true
+    }
+  },
+  "current_main_rebuild": {
+    "commit": "4d9dc402c30fd398f10742b4eed3d78d420cea59",
+    "tree": "523075e94d83a53b2c980c59a961e9949d4e23f4",
+    "candidate_bytes": 60400,
+    "candidate_sha256": "cb12b6b8ecb657b44b2b5122895dcaabca84fbc15c9b9f1a542e14d9f935629d",
+    "run41_byte_identical": true,
+    "runtime_rerun_this_turn": false,
+    "qualification_reference": "The saved run41 guest qualification remains limited to its documented profile and observer caveats.",
+    "status": "PASS",
+    "build_receipt": "native-rle-closure-repro-20261022/RESULT.json",
+    "pipeline_receipt": "native-rle-closure-repro-20261022/BASEPIPE.json",
+    "candidate_path": "native-rle-closure-repro-20261022/HPXY.DRV",
+    "link_audit": "PASS",
+    "explicit_linked_objects": 28,
+    "emitted_instruction_rows": 16563,
+    "unsupported_opcodes": 0
+  },
+  "base_commit_role": "Historical base for the original 25-file staging only; it is not current canonical main.",
+  "canonical_head": {
+    "commit": "4d9dc402c30fd398f10742b4eed3d78d420cea59",
+    "tree": "523075e94d83a53b2c980c59a961e9949d4e23f4",
+    "subject": "Add experimental Windows XT overview and recovery helper (#165)",
+    "role": "current canonical main used for the verified closure rebuild"
+  },
+  "staged_files_role": "Current exact file bytes; historical run41/reproduction candidate hashes retain their original scope.",
+  "delta_followup": {
+    "record": "docs/RLE-DELTA.JSON",
+    "sha256": "3281dbd0463e20a838fc67fc5e5b2d33e7f1c7870e546117c20acfc990f29d5f",
+    "candidate": "5a845c8f735206b3f479e06d4afd25ec7bf1e8f81484dd57c5bffba76690508e",
+    "bytes": 58592,
+    "profile": "320x200x16; development output only; accepted payload unchanged",
+    "actual_assembly_cases": 8,
+    "before_failed": 8,
+    "after_passed": 8
+  }
+}

@@ -1,0 +1,73 @@
+Windows XT wheel bridge contract and implementation notes
+
+The unchanged driver is loaded as MOUSE. Resolve named FAR PASCAL no-argument
+exports: WheelApiVersion (@10) returns WORD 0100h; WheelReadDelta (@11) returns a
+signed int -8..7 and destructively pops a nonzero packet (0 means empty/disabled);
+WheelLostPackets (@12) returns a saturated WORD loss count without clearing it.
+The driver's 32-slot ring holds 31 packets and drops newest on overflow. Its
+short flag-preserving critical section protects a task-time pop. No USER call
+or Windows message is made by the ISR. Pointer/button handling is unchanged.
+Packets contain no recipient, timestamp, coordinates, modifiers or second axis.
+The helper maps a negative API delta to up and a positive delta to down. That
+matches the raw signed-nibble convention used by Microsoft serial-wheel mouse
+decoders (Linux sermouse maps the same nibble to the opposite REL_WHEEL sign).
+Physical direction remains part of acceptance because TP unrolls both ways.
+Decoder reference: https://raw.githubusercontent.com/torvalds/linux/master/drivers/input/mouse/sermouse.c .
+
+The hidden WindowsXTWheelBridge window publishes WindowsXT.WheelBridge.v1 with
+value 0100h. Cooperating clients publish WindowsXT.WheelClient.v1 with that value
+on their window and skip ALL raw driver reads while the bridge marker exists.
+The paired TP checks the marker on every polling turn, including in background.
+The bridge gives a marked client the registered WindowsXT.Wheel.v1 message:
+signed 16-bit wParam detents, nonzero -8..8 per dispatch; entire lParam=1L. TP
+already accepts -15..15. It returns zero, so this is not an acknowledgment API.
+An opted-in active application owns its focused child controls too, and receives
+no generic scroll notification for the same input.
+An unmodified TP is detected by class and suspends the bridge before raw reads.
+
+The bridge resolves the module once and owns one 100 ms window timer. A turn
+performs at most 32 raw reads (including the empty sentinel), and keeps a second
+32-byte ring with 31 effective slots. It drops newest on overflow and preserves
+reversals. Focus ancestry is limited to 16 windows, with no sibling, owner or
+desktop enumeration on the timer. A busy flag prevents reentrant timer work.
+Loss is sampled once per second. All Windows/DOS calls are task-time operations.
+
+Windows 3.0 parameter layouts are used, with no Win32 WM_MOUSEWHEEL assumption:
+WM_VSCROLL wParam is SB_LINEUP/SB_LINEDOWN. lParam=0 for a window-owned bar;
+MAKELONG(0, childBarHWND) for a scrollbar control's parent. One line plus one
+SB_ENDSCROLL is posted per turn (at most two queued messages). A rejected line
+post leaves the local unit pending for retry. A post already accepted cannot be
+withdrawn after a subsequent focus change. App-owned custom scrolling must
+handle these ordinary notifications itself. Native USER controls are called
+synchronously: EM_LINESCROLL wParam=0, signed vertical lines in LOWORD(lParam),
+horizontal characters zero in HIWORD. A list uses GETTOPINDEX/GETCOUNT/SETTOPINDEX
+and keeps selection. Edit/list/native-client work has an eight-detent budget.
+
+Native USER 3.0 clears SBS_VERT in the focused scrollbar's retrieved style in
+the fixture. A conservative public GetWindowRect guard accepts only a tall
+standard scrollbar; horizontal/square bars are skipped. Odd-shaped or custom
+controls are outside this scope. Combo drop-state helpers that require 3.1 and
+undocumented EM_SCROLL are not used. Subclassing and global hooks are not used.
+
+The raw protocol cannot retain the original focus from interrupt time. Routing
+uses focus/active at consumption, drops a changed-focus turn, and checks context
+again before delivery. Any capture or system-modal window blocks delivery.
+Clock gaps over 500 ms, backward DOS time, or DOS/Windows clock divergence also
+discard queued work. Windows 3.0 cooperative scheduling and synchronous control
+callbacks can delay work; this program is not a hard real-time guarantee.
+
+Each queued packet can hold several detents. A full bridge ring can therefore
+take appreciable time to drain on ordinary window bars (10 lines per second).
+Rapid physical bursts and slow-machine gaps are explicit acceptance cases;
+driver/helper loss counters distinguish bounded loss from ordinary delivery.
+Further speed/page support and unknown wheel-reader cooperation need separate
+design and qualification. The initial candidate does not promise every custom
+scrollable application or unchanged third-party raw consumer will work.
+
+Primary period API reference: Microsoft Windows 3.0 SDK Programmer's Reference
+Volume 1, preserved at https://www.pcjs.org/documents/books/mspl13/win/w3sdkr1/ .
+Check WM_VSCROLL, EM_LINESCROLL, LB_GETTOPINDEX/LB_SETTOPINDEX, GetFocus and
+GetFreeSpace. The last reports available global-heap bytes, not a contiguous
+block size. Compile uses MSC6 /G0 /Gw /AS /W3 /Od and the private Win16 libraries.
+LINK4 /NOE /NOD uses SLIBCEW before LIBW. MakeProcInstance callbacks are exported
+and their thunks are freed after task shutdown. There are no new runtime DLLs.

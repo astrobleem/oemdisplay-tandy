@@ -64,3 +64,158 @@ docs/QUAL/** -text
 # Experimental packet pins include the exact native-qualified launcher source.
 experiments/DISPLAY3/** -text
 .github/workflows/display3.yml -text
+
+# RoundRect evidence keeps the probe's exact CRLF log bytes.
+docs/rrect/** -text
+tools/WHEEL/WIN16/** -text
+downloads/experimental/WINWHL/** -text
+docs/pan/MINE/** -text
+
+# Qualified R1 source/archive bytes are immutable snapshots.
+tools/WINR1/** -text
+downloads/R1/** -text
+docs/RELEASES/RC7.MD -text
+.github/workflows/winr1.yml -text
+
+# Current own-media package and release evidence preserve reviewed bytes.
+tools/XR1PACK/** -text
+docs/RELEASES/RC8.MD -text
+.github/workflows/xr1pack.yml -text
+
+docs/SHOWCASE.MD -text
+# Preserve exact Watcom source and review evidence bytes.
+experiments/XYOVERVIEW/** -text
+
+# Original compact160 sources and evidence keep reviewed bytes.
+experiments/COMPACT/** -text
+
+# RLE follow-up preserves mandatory CRLF and exact test evidence bytes.
+docs/RLE-RUN41-QUALIFICATION.md -text
+docs/STAGING-TESTS.md -text
+src/tandysw/RLE-CANDIDATE-MANIFEST.json -text
+src/tandysw/RLE-INTEGRATION.md -text
+src/tandysw/RLE88.ASM -text
+src/tandysw/MODETEST.C -text
+src/tandysw/MODECHK.PY -text
+docs/RLEDELTA.MD -text
+docs/RLE-DELTA.JSON -text
+docs/RLEDELTA.ZIP -text
+
+
+# TGA2 font integration and historical receipts keep exact CRLF bytes.
+src/tga2/** -text
+docs/tga2/** -text
+tools/YAMPACK/** -text
+downloads/experimental/yamaha/** -text
+docs/yamaha/SUPPORT.MD -text
+.github/workflows/yampack.yml -text
+docs/yamaha/SUPPORT.JSN -text
+
+# Native DOS compiler inputs and payload pins retain reviewed CRLF bytes.
+tools/DOSINST/** -text
+
+# Scoped portable app sources and candidate identities preserve exact CRLF bytes.
+tools/APPSET/** -text
+tools/APPSET/BIN/*.ZIP -export-ignore
+tools/MINEAPP/** -text
+examples/COOKIE/INSTALL.TXT -text
+.github/workflows/app-packets.yml -text
+
+# Preserve actual DOS echo output in the pinned native execution receipt.
+tools/APPSET/QA/DONEAPP.TXT whitespace=-blank-at-eol
+
+tools/FLASHDISK/HISTORY/** -text
+tools/FLASHDISK/CPBIND.PY -text
+tools/FLASHDISK/CPBUILD.JSN -text
+tools/FLASHDISK/CPSET.EXE -text
+tools/FLASHDISK/LAUNCH/** -text
+
+tools/FLASHDISK/CURRENT.JSN -text
+tools/FLASHDISK/QA/** -text
+
+.github/workflows/cpset.yml -text
+
+tools/P15PACK/** -text
+tools/DRVSET/** -text
+tools/DRVSET/QA/** -text
+downloads/experimental/PC1512/** -text
+downloads/experimental/CPPAN/** -text
+docs/PC1512.MD -text
+docs/PCP.MD -text
+docs/FIXED.MD -text
+downloads/experimental/FIXED/README.MD -text
+docs/DOWNLOADS.MD -text
+
+.github/workflows/driver-packets.yml -text
+src/pc1512/** -text
+
+# Retained OEM development sources and relocated-source CI retain CRLF.
+oemdisk/** -text
+.github/workflows/rrect.yml -text
+.github/workflows/tga2.yml -text
+.github/workflows/softpan.yml -text
+
+.github/workflows/root-layout.yml -text
+# Native shared-sound consumer source and exact build receipts.
+tools/SOUNDOWN/** -text
+
+# PC1512 generated video captures and native qualification records.
+docs/pc1512/OUTPUT/** -text
+.github/workflows/pc1512.yml -text
+tools/CURRENT/** -text
+tools/CURRENT/INPUTS/*.ZIP -export-ignore
+tools/XROEM/** -text
+
+docs/DRIVERS.MD -text
+
+.github/workflows/current.yml -text
+
+examples/TANDYLAB/README.MD -text
+
+examples/COOKIE/README.MD -text
+
+examples/COOKIE/INSTALL.TXT -text
+
+tools/MINEAPP/INSTALL.TXT -text
+
+# Contributor guidance retains the mandated CRLF bytes.
+CLAUDE.md -text
+
+# CGA staged assembly, tools and source guide retain required CRLF bytes.
+src/cga/** -text
+docs/CGA.MD -text
+# Shared native/helper source and byte-pinned host verification retain exact bytes.
+src/panui/** -text
+
+# Preserve exact imported Win16 workspace source bytes.
+src/wdesk/** -text
+
+# Fixed ColorPlus Output and native evidence preserve exact reviewed bytes.
+src/pcp/CPPOUT.FIX -text
+src/pcp/BUILDPCP.PY -text
+src/pcp/CPPOUT.PY -text
+src/pcp/CPPOTEST.PY -text
+src/pcp/CPBENCH.PY -text
+src/pcp/CPCMP.PY -text
+src/pcp/CPCTEST.PY -text
+src/pcp/CPVERIFY.PY -text
+docs/pcp/OUTPUT/** -text
+docs/pcp/INTERIM-CARRIER.JSN -text
+tools/CPPACK/** -text
+.github/workflows/colorplus.yml -text
+docs/pcp/OUTPUT/PROFILE.CFG whitespace=cr-at-eol,-blank-at-eof
+
+# Qualified HPXY sources and host/native acceptance retain exact CRLF bytes.
+experiments/XYPAN/** -text
+experiments/XYRRECT/** -text
+experiments/XYSTRIP/** -text
+# Unified patches retain the space prefix on empty context lines.
+experiments/XYSTRIP/PROTOTYPE.PATCH whitespace=cr-at-eol,-blank-at-eol
+
+# Qualified CGA packet and evidence retain exact bytes.
+tools/CGAPACK/** -text
+downloads/experimental/CGA/** -text
+docs/QUAL/CGA/** -text
+
+# CGA recorded VRAM, image metadata and capture notes retain exact bytes.
+docs/CGA/** -text

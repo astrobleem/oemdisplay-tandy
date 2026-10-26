@@ -1,3 +1,9 @@
+HISTORICAL RC6 TEST SUMMARY
+
+The following retained results describe the earlier own-media packet. Current
+bundled-support/metadata/startup qualification is in CURRENT.JSN beside this
+file. It retains the earlier failed harness results with their exact scope.
+
 PREPXT - QUALIFIED PRIVATE STATIC-LOGO / MODE-SWITCHER CANDIDATE
 
 DOS 3.3+, 8086/8088, 640 KB. Exit Windows before preparation.

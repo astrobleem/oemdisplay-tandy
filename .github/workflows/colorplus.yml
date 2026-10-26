@@ -1,0 +1,191 @@
+name: ColorPlus Output qualification
+
+on:
+  pull_request:
+    paths:
+      - 'src/pcp/**'
+      - 'src/rrect/**'
+      - 'src/tandysw/**'
+      - 'tools/BUILDDEPS/LOCK.JSON'
+      - 'tools/APPSET/**'
+      - 'tools/YAMPACK/SUPPORT.JSN'
+      - 'tools/XR1PACK/PREPARE.PY'
+      - 'tools/XR1PACK/OWATCOM.TXT'
+      - 'distributions/WINXT/**'
+      - 'downloads/experimental/CPPAN/**'
+      - 'tools/CPPACK/**'
+      - 'tools/SPPACK/**'
+      - 'tools/PANUI/**'
+      - 'src/panui/**'
+      - 'src/softpan/PACKCP.PY'
+      - 'tools/CURRENT/PRODUCTS.JSN'
+      - 'tools/CURRENT/GUIDES/CPPAN.TXT'
+      - 'tools/CURRENT/BUNDLE.PY'
+      - 'tools/DRVSET/**'
+      - 'docs/pcp/OUTPUT/**'
+      - '.github/workflows/colorplus.yml'
+  push:
+    branches: [main, feat/colorplus-output]
+    paths:
+      - 'src/pcp/**'
+      - 'src/rrect/**'
+      - 'src/tandysw/**'
+      - 'tools/BUILDDEPS/LOCK.JSON'
+      - 'tools/APPSET/**'
+      - 'tools/YAMPACK/SUPPORT.JSN'
+      - 'tools/XR1PACK/PREPARE.PY'
+      - 'tools/XR1PACK/OWATCOM.TXT'
+      - 'distributions/WINXT/**'
+      - 'downloads/experimental/CPPAN/**'
+      - 'tools/CPPACK/**'
+      - 'tools/SPPACK/**'
+      - 'tools/PANUI/**'
+      - 'src/panui/**'
+      - 'src/softpan/PACKCP.PY'
+      - 'tools/CURRENT/PRODUCTS.JSN'
+      - 'tools/CURRENT/GUIDES/CPPAN.TXT'
+      - 'tools/CURRENT/BUNDLE.PY'
+      - 'tools/DRVSET/**'
+      - 'docs/pcp/OUTPUT/**'
+      - '.github/workflows/colorplus.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - name: Confirm exact reviewed head
+        run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: ColorPlus source and planar models
+        run: |
+          python3 -B src/pcp/PCPPATCH.PY --check
+          python3 -B src/pcp/CPPOTEST.PY
+          python3 -B src/pcp/CPCTEST.PY
+      - name: Replay saved native captures and exact packet bindings
+        run: |
+          python3 -B src/pcp/CPVERIFY.PY
+          python3 -B tools/DRVSET/VERIFY.PY
+          python3 -B tools/CPPACK/TESTSCP.PY
+          python3 -B tools/CPPACK/TESTPUB.PY
+          python3 -B tools/CPPACK/TESTPKG.PY
+
+  publication-check:
+    needs: exact-source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      colorplus_changed: ${{ steps.scope.outputs.changed }}
+      driver_only: ${{ steps.scope.outputs.driver_only }}
+    env:
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - name: Build from existing native-qualified core and pinned catalog inputs
+        run: |
+          python3 - <<'PYCODE'
+          import hashlib,json,urllib.request
+          from pathlib import Path
+          spec=json.loads(Path('tools/CURRENT/PRODUCTS.JSN').read_bytes())
+          Path('sound-inputs').mkdir()
+          for name,row in spec['sound'].items():
+              data=urllib.request.urlopen(row['source'],timeout=60).read()
+              assert {'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}==row['identity'],name
+              (Path('sound-inputs')/name).write_bytes(data)
+          PYCODE
+          CORE_SHA=$(python3 -c "import json; print(json.load(open('tools/CURRENT/PRODUCTS.JSN'))['core_source_commit'])")
+          python3 -B tools/DOSINST/RCPUB.PY --out core --commit "$CORE_SHA"
+          python3 -B tools/CURRENT/CHECK.PY --core core --sound sound-inputs --report catalog-check.json
+          python3 -B tools/CURRENT/BUNDLE.PY --core core --sound sound-inputs --commit "$SOURCE_SHA" --out current
+      - name: Determine whether this catalog changes the ColorPlus packet
+        id: scope
+        run: |
+          python3 - <<'PYCODE'
+          import hashlib,importlib.machinery,json,os,urllib.request
+          from pathlib import Path
+          url='https://api.github.com/repos/astrobleem/oemdisplay-tandy/releases/tags/windows-xt'
+          request=urllib.request.Request(url,headers={'User-Agent':'colorplus-publication-scope','Cache-Control':'no-cache'})
+          release=json.loads(urllib.request.urlopen(request,timeout=60).read())
+          rows=[row for row in release['assets'] if row['name']=='CPPAN.ZIP']
+          if len(rows)>1:raise ValueError('Duplicate current ColorPlus assets')
+          live_packet=rows[0] if rows else None
+          data=Path('current/CPPAN.ZIP').read_bytes()
+          wanted={'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}
+          actual=({'bytes':rows[0]['size'],'sha256':rows[0]['digest'].removeprefix('sha256:')} if rows else None)
+          changed=actual!=wanted
+          if not changed:
+              catalogs={name:[row for row in release['assets'] if row['name']==name] for name in ['CURRENT.JSN','CURRENT.SHA']}
+              if any(len(rows)>1 for rows in catalogs.values()):raise ValueError('Duplicate current catalog assets')
+              changed=any(not rows for rows in catalogs.values())
+              if not changed:
+                  bodies={}
+                  for name,rows in catalogs.items():
+                      req=urllib.request.Request(rows[0]['browser_download_url'],headers={'User-Agent':'colorplus-publication-scope','Cache-Control':'no-cache'})
+                      bodies[name]=urllib.request.urlopen(req,timeout=60).read()
+                      if hashlib.sha256(bodies[name]).hexdigest()!=rows[0]['digest'].removeprefix('sha256:'):raise ValueError('Current catalog download differs')
+                  record=json.loads(bodies['CURRENT.JSN'])
+                  sums={name:digest for digest,name in (line.split('  ',1) for line in bodies['CURRENT.SHA'].decode('ascii').splitlines())}
+                  changed=(record['assets'].get('CPPAN.ZIP')!=wanted or
+                           sums.get('CPPAN.ZIP')!=wanted['sha256'] or
+                           sums.get('CURRENT.JSN')!=hashlib.sha256(bodies['CURRENT.JSN']).hexdigest())
+          driver_only=True
+          if changed and live_packet:
+              req=urllib.request.Request(live_packet['browser_download_url'],headers={'User-Agent':'colorplus-publication-scope','Cache-Control':'no-cache'})
+              previous=urllib.request.urlopen(req,timeout=60).read()
+              if {'bytes':len(previous),'sha256':hashlib.sha256(previous).hexdigest()}!=actual:raise ValueError('Current ColorPlus download differs')
+              publisher=importlib.machinery.SourceFileLoader('scope','tools/CPPACK/CPPUB.PY').load_module()
+              driver_only=publisher.driver_only(publisher.P.zip_files(previous),publisher.P.zip_files(data))
+          with open(os.environ['GITHUB_OUTPUT'],'a') as out:
+              out.write('changed='+str(changed).lower()+'\n')
+              out.write('driver_only='+str(driver_only).lower()+'\n')
+          print('ColorPlus packet changed:',changed)
+          print('Within fixed-driver-only publisher scope:',driver_only)
+          if not driver_only:print('Shared helper/support update: native package checks apply; aggregate current-release publication required')
+          PYCODE
+      - name: Check the exact ColorPlus candidate against current release without writes
+        if: steps.scope.outputs.changed == 'true' && steps.scope.outputs.driver_only == 'true'
+        run: |
+          python3 -B tools/CPPACK/CPPUB.PY --folder current --commit "$SOURCE_SHA" --prepare
+          python3 -B tools/CPPACK/CPPUB.PY --folder current --commit "$SOURCE_SHA"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: colorplus-current-${{ env.SOURCE_SHA }}
+          path: current/*
+          if-no-files-found: error
+
+  publish-colorplus:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.publication-check.outputs.colorplus_changed == 'true' && needs.publication-check.outputs.driver_only == 'true'
+    needs: publication-check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      actions: read
+    concurrency:
+      group: current-colorplus-publication
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Read back this run's verified catalog artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download "${{ github.run_id }}" --repo "${{ github.repository }}" --name "colorplus-current-${{ github.sha }}" --dir current
+      - name: Publish only the qualified ColorPlus ZIP and catalog records, then read back
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -B tools/CPPACK/CPPUB.PY --folder current --commit "${{ github.sha }}" --publish

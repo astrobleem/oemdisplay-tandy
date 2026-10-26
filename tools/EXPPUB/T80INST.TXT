@@ -1,0 +1,80 @@
+EXPERIMENTAL TEXT80 / COMPACT C25 - WINDOWS 3.0 REAL MODE
+
+This is the current-source 2026-10-18 experimental build. It is separate
+from Windows XT rc.6 and does not change any existing release or its pins.
+No real hardware has been qualified.
+
+WHAT YOU NEED
+- Your own installed Windows 3.0 and DOS, 640 KB conventional RAM.
+- A CGA-compatible color 80-column text adapter. The earlier GUI sessions
+  cover an emulated IBM XT/CGA and Tandy HX; VGA 80x50 was shown in
+  DOSBox-X only. Other adapters and physical machines remain unqualified.
+- Extract the TEXT80 folder to C:\TEXT80. Python is not used on the XT.
+
+INSTALL - FROM PLAIN DOS, AFTER EXITING WINDOWS
+1. Select the extracted folder:
+   C:
+   CD \TEXT80
+2. Start with compact 80x25 controls:
+   T80ON C:\WINDOWS C25
+   Use your actual Windows folder if different.
+3. Read the result; start Windows only after setup succeeds. For
+   C:\WINDOWS, select its drive and change to its folder first:
+   C:
+   CD \WINDOWS
+   WIN /R
+   If Windows is elsewhere, select that drive and CD to the selected
+   Windows installation folder before running WIN /R.
+   On a machine with an existing required memory guard/launcher, continue
+   to use that guard before every Windows start. This packet reserves no
+   RAM and does not replace machine-specific safeguards.
+4. Switch profiles only after exiting Windows and running T80OFF first.
+
+OPTIONAL PROFILES
+T80ON C:\WINDOWS 25: ordinary 80x25 controls, 640x200 desktop.
+T80ON C:\WINDOWS PAN: an 80x25 view of a 640x400 desktop, about 100 KB more
+Windows memory than 25. XTPAN.EXE is added to load= without removing other
+entries. Alt+PgDn / Alt+PgUp or moving the pointer to the edge pans it.
+T80ON C:\WINDOWS VGA: VGA-only 80x50, 640x400 desktop. Do not select this
+on CGA/Tandy/EGA. If Windows refuses to start, return to DOS and T80OFF.
+
+UNDO / RECOVERY - FROM DOS
+C:
+CD \TEXT80
+T80OFF C:\WINDOWS
+This restores only recorded settings still at the values T80ON wrote.
+Unrelated changes, load= entries and the existing font list are preserved.
+SYSTEM.T80 and WIN.T80 are original-file backups; T80SET.STA records edits.
+Keep them intact until T80OFF succeeds. The copied driver/fonts remain
+unused in SYSTEM after removal. No manual INI edits are needed normally.
+If the state record is damaged, OFF refuses without changing anything.
+Only if you want to discard ALL INI changes made since installation:
+  T80SET RESTORE C:\WINDOWS
+That explicit recovery restores the two WHOLE original INI files.
+
+LIMITS AND EVIDENCE
+Text is exact only for supported 8-pixel-high glyphs. Larger text and
+all graphics are block/shade approximations. Scrolling is slow. Real CGA
+snow, machine timing and physical keyboard/mouse behavior are untested.
+C25 controls are exact only on the text-cell grid; dialogs can still use
+partial cells. This packet targets Windows 3.0 real mode.
+
+The current drivers passed fresh 8086/REP-prefix/link audits and exact
+presenter tests in DOSBox-X. C25 matches the exact binary in the recorded
+54/54 Windows GUI session. The other three current driver hashes differ
+from the earlier GUI sessions. No fresh Windows boot was run here; those
+earlier sessions do not qualify the new binary identities.
+T80SET.EXE is checked against its recorded DOS-tested hash and is rerun
+on synthetic DOS INI fixtures, including compact setup and rollback.
+
+CONTENTS / LICENSING
+TEXT80.DRV, T80CMP.DRV, T80PAN.DRV, T80VGA.DRV; T80SET.EXE; XTPAN.EXE;
+T80ON.BAT, T80OFF.BAT; original XT Pixels XTTSYS/XTCFIX/XTCOEM fonts and
+T80HELV/T80COUR faces. FONTLIC.TXT covers those original font drawings.
+NOTICE.TXT describes the DDK-derived renderer; LICENSE.TXT does not
+relicense that Microsoft material. No Microsoft font, retail grabber,
+Windows/DOS file, ROM, compiler, emulator or toolchain is included.
+SHA256.SUM binds every file. BUILD.JSN gives source/evidence identities.
+
+Source and measured limitations:
+https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/TEXT80.MD

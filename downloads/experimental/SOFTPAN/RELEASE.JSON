@@ -1,0 +1,409 @@
+{
+  "additional_shadow_bytes": 32000,
+  "assets": {
+    "CPPAN.ZIP": {
+      "bytes": 91915,
+      "sha256": "2d1f4ca8dd22680a98108079a8706870cb2560844f8d6658a8d2623f935c267e"
+    },
+    "JRPAN.ZIP": {
+      "bytes": 91867,
+      "sha256": "04e5a8658d46050cece20b25026497f3c90bc3c69cc7829ccddf61de17e99fca"
+    },
+    "README.TXT": {
+      "bytes": 1331,
+      "sha256": "8f3ffd4dea3946ec8de63a403d0f4ac0dddbc5f915d5fab435b7e1b0d72a3941"
+    }
+  },
+  "bundled_windows_support_files": {
+    "CPPAN": [
+      "CGA.GR2"
+    ],
+    "JRPAN": []
+  },
+  "hardware_panning": false,
+  "logical": [
+    320,
+    400
+  ],
+  "profiles": {
+    "CPPAN": {
+      "driver": "CPPAN.DRV",
+      "files": {
+        "CGA.GR2": {
+          "bytes": 2104,
+          "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+        },
+        "CPPAN.DRV": {
+          "bytes": 58864,
+          "sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f"
+        },
+        "CPWIN.BAT": {
+          "bytes": 35,
+          "sha256": "8d40f405422e12b6aa8b6c8875688d545d3184b429365a91caf5f4f90382fa7c"
+        },
+        "FONTLIC.TXT": {
+          "bytes": 1101,
+          "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+        },
+        "INSTALL.BAT": {
+          "bytes": 550,
+          "sha256": "8140d9b0f2ae5a47f8ef58c12d58047543d283b54ebae2f2119d7677816f892f"
+        },
+        "INSTALL.TXT": {
+          "bytes": 1835,
+          "sha256": "f5ce8e210bb6b389a8bc12e1293b1dc2d93f691a25cde1ce50acbefe5f10949b"
+        },
+        "LICENSE.TXT": {
+          "bytes": 1399,
+          "sha256": "5e550565afe576f23423d7b9c02f9f35af119b8d7ac87edbc94b98da4d04ddf0"
+        },
+        "LOGOLIC.TXT": {
+          "bytes": 1101,
+          "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+        },
+        "NOTICE.TXT": {
+          "bytes": 1327,
+          "sha256": "adee88f4b348d0e0943f0acf6a807cbee3893219bc0f6431d76c0323c5020448"
+        },
+        "OEMSETUP.INF": {
+          "bytes": 568,
+          "sha256": "b4f1066a065bc1873eedfd201c037509da5e1f2f9c9f6220b0be7efae2e40dcc"
+        },
+        "PANCFG.EXE": {
+          "bytes": 10191,
+          "sha256": "8960e0d49653b2b252049cd200ac5f8f0280951e264df31e761213cb53bafc4c"
+        },
+        "PCP3216.DRV": {
+          "bytes": 54832,
+          "sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406"
+        },
+        "WXTSPL01.RLE": {
+          "bytes": 4062,
+          "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+        },
+        "XTEFIX.FON": {
+          "bytes": 4656,
+          "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+        },
+        "XTEOEM.FON": {
+          "bytes": 4560,
+          "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+        },
+        "XTESYS.FON": {
+          "bytes": 5680,
+          "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+        },
+        "XTPAN.EXE": {
+          "bytes": 29199,
+          "sha256": "1be552fa6022f736da6a97676daf5741eb3d29e90277d5d75dc5de11adefe862"
+        },
+        "XTSTATIC.LGO": {
+          "bytes": 361,
+          "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+        }
+      },
+      "fixed_driver": "PCP3216.DRV",
+      "logical": [
+        320,
+        400
+      ],
+      "viewport": [
+        320,
+        200
+      ]
+    },
+    "JRPAN": {
+      "driver": "JRPAN.DRV",
+      "files": {
+        "FONTLIC.TXT": {
+          "bytes": 1101,
+          "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+        },
+        "INSTALL.BAT": {
+          "bytes": 476,
+          "sha256": "21709e12067f966cfe829986954841348fd8454ba2fb89d16e8923980c879232"
+        },
+        "INSTALL.TXT": {
+          "bytes": 1801,
+          "sha256": "d0f041fdbe560927feb61b52ef313b39bf2f0d7bb2bd3ea7fe789ac26adbf5dc"
+        },
+        "JRGRAB.GR2": {
+          "bytes": 2159,
+          "sha256": "2453cd1eba68e580b68b2d232a5dfa5285fd703cd75b2b4edacc203c3d741dec"
+        },
+        "JRGUARD.COM": {
+          "bytes": 800,
+          "sha256": "10e6f01e28a4da32bb80596f8743b02cd367d7619b167b96c962f3eb65eed756"
+        },
+        "JRPAN.DRV": {
+          "bytes": 59008,
+          "sha256": "a0d5f44d5663420dde4bae364e43149fc3f284b9f6318206a925101cd474207d"
+        },
+        "JRSTART.BAT": {
+          "bytes": 173,
+          "sha256": "7054a13dc9255c1cd46f1c53fd101f779c9649e7c8d93c29bf1f0199486a9681"
+        },
+        "LICENSE.TXT": {
+          "bytes": 1399,
+          "sha256": "5e550565afe576f23423d7b9c02f9f35af119b8d7ac87edbc94b98da4d04ddf0"
+        },
+        "LOGOLIC.TXT": {
+          "bytes": 1101,
+          "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+        },
+        "NOTICE.TXT": {
+          "bytes": 1268,
+          "sha256": "cbc6e2df864fff86f5e1aea225913155dff18a8a86b6ec472bfaae5e8875ba6f"
+        },
+        "OEMSETUP.INF": {
+          "bytes": 953,
+          "sha256": "817bec236c5164f218065e978def24b4182a1347ad646ab622f69476cf148b36"
+        },
+        "PANCFG.EXE": {
+          "bytes": 10191,
+          "sha256": "8960e0d49653b2b252049cd200ac5f8f0280951e264df31e761213cb53bafc4c"
+        },
+        "TNDYJR.DRV": {
+          "bytes": 54976,
+          "sha256": "a29cabbaa28b447893cd25d4cf9cf37435332697312fd4fcfcf6f4cddb8a23c4"
+        },
+        "WXTSPL01.RLE": {
+          "bytes": 4062,
+          "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+        },
+        "XTEFIX.FON": {
+          "bytes": 4656,
+          "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+        },
+        "XTEOEM.FON": {
+          "bytes": 4560,
+          "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+        },
+        "XTESYS.FON": {
+          "bytes": 5680,
+          "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+        },
+        "XTPAN.EXE": {
+          "bytes": 29199,
+          "sha256": "1be552fa6022f736da6a97676daf5741eb3d29e90277d5d75dc5de11adefe862"
+        },
+        "XTSTATIC.LGO": {
+          "bytes": 361,
+          "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+        }
+      },
+      "fixed_driver": "TNDYJR.DRV",
+      "logical": [
+        320,
+        400
+      ],
+      "viewport": [
+        320,
+        200
+      ]
+    }
+  },
+  "publication_allowed": true,
+  "qualification": {
+    "manifest": {
+      "bytes": 40814,
+      "sha256": "b3ac990ae69d2f068efa81789b7e6db2c1a5c983ba63c91fddb6fec5159a570c"
+    },
+    "path": "docs/SOFTPAN/PUBLISH/QUALIFY.JSON",
+    "support_update": {
+      "manifest": {
+        "bytes": 2623,
+        "sha256": "072faff3d60999d84073bbe574d77c64481830e4862ed58ea576a47375b9ce23"
+      },
+      "path": "docs/SOFTPAN/SUPPORT.JSON"
+    },
+    "ui_update": {
+      "manifest": {
+        "bytes": 32591,
+        "sha256": "9aa2bf8a655bab448fa3c6a1a5e27f401dd8e0a03138f16cef4d7cfbf3adced8"
+      },
+      "path": "docs/QUAL/WDESK/NATIVE.JSN"
+    }
+  },
+  "schema": 2,
+  "shadow_bytes": 64000,
+  "source": {
+    "distributions/WINXT/CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "src/panui/HOSTUI.PY": {
+      "bytes": 28983,
+      "sha256": "1a79c4d5d10603897ebec63565b987b13f93ff116a4ee815463927a9ba89e12d"
+    },
+    "src/panui/PANDLG.C": {
+      "bytes": 18381,
+      "sha256": "1f95d50074001bbc25f080dcea3b12c3e44b70e11202728a980d13f01e04b2f8"
+    },
+    "src/panui/PANDLG.H": {
+      "bytes": 2437,
+      "sha256": "d5f76a9614c68f03c12c9b5bd520983aff725e29c575010123462f974be14e9d"
+    },
+    "src/panui/PANSET.C": {
+      "bytes": 13256,
+      "sha256": "e21a9c1f76858a774bb106cdde8d674a2132c839ccde06e8329da500e8f72ba0"
+    },
+    "src/panui/PANSET.H": {
+      "bytes": 8856,
+      "sha256": "53688c9ee518f36bfcfd6bf5a1c965ecc27bbc8fb5e4a2b301b02db901be812b"
+    },
+    "src/panui/SETTEST.C": {
+      "bytes": 19439,
+      "sha256": "8faa7e312823b27a85ef127fa8a2bb890740e612c0fb1ac517b8d6739cb3c301"
+    },
+    "src/panui/VERIFY.PY": {
+      "bytes": 6693,
+      "sha256": "13a80c8875fd3ecdb0563ff2d6a53e56c00495eb9945ffd328ba65dfa10bfc77"
+    },
+    "src/panui/XYAPPLY.C": {
+      "bytes": 2077,
+      "sha256": "58afd44551025d31d76065b0d4a04eacaf6715f2dc5b1c70e49b7cf4117f6233"
+    },
+    "src/softpan/BLDTEST.BAT": {
+      "bytes": 1592,
+      "sha256": "5b0965e9c8a3cf1fce7aa1c3becbabf590d8087f101fb022ef0cb7230d2e0302"
+    },
+    "src/softpan/BUILDAPP.PY": {
+      "bytes": 3670,
+      "sha256": "10fb7a5f58ee8392ee36126a16ff52d11ea87eee2c18f6f549a1d11c08b3d4e2"
+    },
+    "src/softpan/BUILDSP.PY": {
+      "bytes": 3347,
+      "sha256": "784fa29a7a0e95618079a11c04426a3a816a4326c3e136f1208c4a87f6999995"
+    },
+    "src/softpan/MEMTEST.C": {
+      "bytes": 555,
+      "sha256": "5067f64d1425b468f7a80dbb3f7d2cf46140ba57896a29362bdbb60634a37523"
+    },
+    "src/softpan/NATSET.PY": {
+      "bytes": 3674,
+      "sha256": "dc0958659e27dcd86d52f502e11b2e70c0dc7130e3790f4009742391cd6f3f94"
+    },
+    "src/softpan/PACKCP.PY": {
+      "bytes": 4291,
+      "sha256": "a83e2ad32c0ee5bf5d3867cc815fd9ee9e1cc78372dedef7738320a1d4613077"
+    },
+    "src/softpan/PACKSP.PY": {
+      "bytes": 3991,
+      "sha256": "09c66a35934c33c6e6384b99ab7ea78e08aba745f14f672569a38cad91bc5267"
+    },
+    "src/softpan/PANCFG.C": {
+      "bytes": 4068,
+      "sha256": "7c425b29ec9f62091c63bb079b30ab06489ee4274a041e28c5d6ce6702883b33"
+    },
+    "src/softpan/PANCFG.DEF": {
+      "bytes": 207,
+      "sha256": "0d745f5571d436e6ef71bc29e38229721526db32bc41845fc63889f2f4824700"
+    },
+    "src/softpan/PANCFG.RSP": {
+      "bytes": 95,
+      "sha256": "b018469c5bbf6e3933b3af963aa8d10c9b707c5d240e64e49b41bc0ed94aab45"
+    },
+    "src/softpan/RAMTEST.PY": {
+      "bytes": 5900,
+      "sha256": "814e51bbd4e314ba11cb5853efb2516da5e8ac7ab93f84410f25cbdb5e44a6ec"
+    },
+    "src/softpan/REPLAY86.PY": {
+      "bytes": 5652,
+      "sha256": "b1349d8efdefe9c69b15b81665da2ae2dd23066abd26b667b0719c1f6db3aabc"
+    },
+    "src/softpan/RUN86.PY": {
+      "bytes": 7945,
+      "sha256": "9c84a7a9817c03a61e15ca363bf1da3296b53b2e8f57e8c6221678a45c1058e4"
+    },
+    "src/softpan/RUNTEST.PY": {
+      "bytes": 4433,
+      "sha256": "efae8e438561e3aeaeb7d0b93f0ca3c470c86554472d5fe9232010619a6eea29"
+    },
+    "src/softpan/RUNUI86.PY": {
+      "bytes": 7008,
+      "sha256": "39fa43d78a467d1cfa03a4177d8c566c0fa5602d52f00723bc4a38cadd15802b"
+    },
+    "src/softpan/RUNUIJR.PY": {
+      "bytes": 3544,
+      "sha256": "62d4b7ffab13b775e5dd79c450ddfcb2e54df45008833701ba2284c97c8aea4d"
+    },
+    "src/softpan/SPCHK.PY": {
+      "bytes": 7664,
+      "sha256": "2e933fb134df326e7549c42429007f1620dc5811073bc014273cc3d0061f98be"
+    },
+    "src/softpan/SPPATCH.PY": {
+      "bytes": 2771,
+      "sha256": "823bd3c5e940caeeba34e76a0ef456f9a92b66a7e92b4307fe1c9eda0f3a732b"
+    },
+    "src/softpan/SPTEST.C": {
+      "bytes": 7737,
+      "sha256": "4842b2abd1c620c03a6ecb91a17771614c656396e47e00389ce46362c814fdf4"
+    },
+    "src/softpan/SPTEST.DEF": {
+      "bytes": 178,
+      "sha256": "ce226ac04be069d689e4d680e4b2e9c378822469e9c74fe71a19b5c37209dbae"
+    },
+    "src/softpan/SPTEST.RSP": {
+      "bytes": 84,
+      "sha256": "293cd5ab96283a3d38ba732be15074deb52d79d07461ea94b5d04cb3a38d501b"
+    },
+    "src/softpan/TESTUI.PY": {
+      "bytes": 2305,
+      "sha256": "9564df5177b883231808ad5b9d23989974b0fa78658afa799ca81475a3c9f5d0"
+    },
+    "src/softpan/UIFLOW.PY": {
+      "bytes": 2270,
+      "sha256": "1cd42273837ae176239243f96132778f50d02f3c4b03352b9c3c5e2fce0f459e"
+    },
+    "src/softpan/UITEST.C": {
+      "bytes": 7813,
+      "sha256": "897f9d63cfe1c3e340adf38027c7d2d96d1d6ded858f69adb78f915a93c7f6ad"
+    },
+    "src/softpan/UITEST.DEF": {
+      "bytes": 210,
+      "sha256": "52401e7134bc424110b425fba4859135dbedab676c78bc2ad859ab436434c170"
+    },
+    "src/softpan/UITEST.RSP": {
+      "bytes": 84,
+      "sha256": "f09bd37ae75156532640ffdfcd4808409c62a1ab44eccaccc7cbf01e69fa0bc5"
+    },
+    "src/softpan/WINRUN.PY": {
+      "bytes": 5276,
+      "sha256": "e970f8f83cbd651ad1a6f2beac397c8f2496ae8e9119d9761e30f6d404e9ec89"
+    },
+    "src/xtpan/XTPAN.C": {
+      "bytes": 17840,
+      "sha256": "7193de6275150e86cac668202d282c1ca22191ce4bdd2a5d50f4173a4aa355fe"
+    },
+    "src/xtpan/XTPAN.DEF": {
+      "bytes": 236,
+      "sha256": "1ac236b056c469d7bfd0cc1190916bbd5029eec137309539b9a6e4a725f21afc"
+    },
+    "src/xtpan/XTPAN.RSP": {
+      "bytes": 135,
+      "sha256": "1c2dc71f4d41d0e712e2bf4ed40509871cd5b5c27cd3f8c3517ff48f9ff774b6"
+    },
+    "tools/SPPACK/PACKAGE.PY": {
+      "bytes": 4151,
+      "sha256": "5c6b79d0c753cfa8a39f04bf84ebed0ed1e741b17808b4de991922750563a710"
+    },
+    "tools/SPPACK/README.TXT": {
+      "bytes": 1331,
+      "sha256": "8f3ffd4dea3946ec8de63a403d0f4ac0dddbc5f915d5fab435b7e1b0d72a3941"
+    },
+    "tools/SPPACK/TESTPKG.PY": {
+      "bytes": 3125,
+      "sha256": "cffe1398db784e6a61ef32e31373e7169b5bad8bade5ffecb70287be319a83b4"
+    },
+    "tools/XR1PACK/PREPARE.PY": {
+      "bytes": 11110,
+      "sha256": "c8308c7252402ff0f179b4c0110b455690138535a3bd4ac0d8f2c8414562aeb1"
+    }
+  },
+  "tag": "experimental-softpan-2026-10-24",
+  "viewport": [
+    320,
+    200
+  ]
+}

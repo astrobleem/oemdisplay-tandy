@@ -15,7 +15,7 @@ This completes a bounded experimental version of the existing repository's
 previously silent MIDI handler. It is a direct-driver test harness, not
 system-wide MIDI installation or an MMSYSTEM/midiOut device. Vanilla Windows
 3.0 in this project has no multimedia MIDI dispatcher. Media Player, general
-MIDI files, Win3.1 multimedia compatibility and physical MIDI interfaces are
+MIDI files, multimedia API compatibility and physical MIDI interfaces are
 not provided. The accepted SOUND driver is not modified.
 
 ## Running safely

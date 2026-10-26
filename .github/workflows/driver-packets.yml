@@ -1,0 +1,42 @@
+name: Verify native display downloads
+
+on:
+  pull_request:
+    paths:
+      - 'tools/P15PACK/**'
+      - 'tools/DRVSET/**'
+      - 'downloads/experimental/PC1512/**'
+      - 'downloads/experimental/CPPAN/**'
+      - '.github/workflows/driver-packets.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/P15PACK/**'
+      - 'tools/DRVSET/**'
+      - 'downloads/experimental/PC1512/**'
+      - 'downloads/experimental/CPPAN/**'
+      - '.github/workflows/driver-packets.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Check out exact public source without credentials
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
+          git checkout --detach --force FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Verify actual carriers, support files, guides and native evidence
+        run: python3 -B tools/DRVSET/VERIFY.PY

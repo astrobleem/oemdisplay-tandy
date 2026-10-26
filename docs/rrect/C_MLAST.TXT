@@ -1,0 +1,14 @@
+ 1 roundrect_key      DIFFERS 400 px [7, 18, 266, 58]  ref 64317  cand 4668
+ 2 rectangle_key      DIFFERS 520 px [4, 18, 269, 58]  ref 20816  cand 1922
+ 3 roundrect_large    DIFFERS 312 px [8, 33, 251, 69]  ref 19938  cand 2472
+ 4 roundrect_hollow   DIFFERS 400 px [7, 18, 266, 58]  ref 20926  cand 2032
+ 5 roundrect_nopen    EQUAL 0 px   ref 43281  cand 2581
+ 6 roundrect_xor      EQUAL 0 px   ref 63877  cand 4284
+ 7 roundrect_overlap  DIFFERS 134 px [7, 18, 140, 18]  ref 63988  cand 4339
+ 8 roundrect_clipped  DIFFERS 174 px [40, 38, 266, 58]  ref 51080  cand 1813
+ 9 ellipse_12         DIFFERS 24 px [7, 15, 72, 15]  ref 12688  cand 714
+10 cursor_overlap     DIFFERS 400 px [7, 18, 266, 58]  ref 71073  cand 9392
+11 calc               DIFFERS 456 px [11, 72, 166, 160]  ref [92549, 92548, 92604]  cand [10216, 10216, 10216]
+12 reversi            DIFFERS 10 px [74, 99, 93, 106]  ref [13566, 13622, 13566]  cand [1428, 1373, 1428]
+13 pbrush             DIFFERS 24 px [37, 136, 61, 136]  ref [36745, 36140, 36086]  cand [4998, 4394, 4394]
+FRAMES DIFFER

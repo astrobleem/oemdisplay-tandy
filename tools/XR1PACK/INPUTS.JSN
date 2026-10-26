@@ -1,0 +1,2392 @@
+{
+  "schema": 1,
+  "profile": "XR1",
+  "status": "CANDIDATE_NEW_PREPARATION_ROUTE_QA_PENDING",
+  "qualified_private_reference": "Oct19 R1; 84df wheel / 0bd bridge / 24c8 finisher",
+  "adapted_driver_notice": "HPXY and TNDYK3 adapt Microsoft Windows 3.1 DDK code. Preserve Microsoft notices. No new license grant is asserted for Microsoft-derived code.",
+  "files": [
+    {
+      "path": "FIXXT.BAT",
+      "bytes": 314,
+      "sha256": "b8a060cdc2d125989379375b8f9dbbb04d0a17f4aa71a6235350291f65f410c8",
+      "origin": "components"
+    },
+    {
+      "path": "MODEXT.BAT",
+      "bytes": 481,
+      "sha256": "7f9948334d1d7f073326be6c5153e3a24a24ef836fa823fc45667b1a79e2fa5a",
+      "origin": "components"
+    },
+    {
+      "path": "SETUPXT.BAT",
+      "bytes": 1726,
+      "sha256": "46baa557d053b704fd6f1d79db1b1a2455cfbdd67901225dca2b86538734eb9a",
+      "origin": "components"
+    },
+    {
+      "path": "START.TXT",
+      "bytes": 1396,
+      "sha256": "9c5ca7f0e989e8e19deefe47aacf18ca4477cabbac94615d0e6c37b589bd9d2d",
+      "origin": "components"
+    },
+    {
+      "path": "STARTXT.BAT",
+      "bytes": 31,
+      "sha256": "2644ccde425aae149e6240db084401aa7ae1ede3610c5daeb34a7234d5081aaa",
+      "origin": "components"
+    },
+    {
+      "path": "W30/123.PIF",
+      "bytes": 545,
+      "sha256": "dade3d5ecd0ca988c3169fa60b14b3e89de02fc767661dbbdb2d26f7a69069cc",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/3270.TXT",
+      "bytes": 9058,
+      "sha256": "08b1e76550a659a859c09ac25f93183047a3e759b66f4f2a25564f57b77bf094",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/8514.DRV",
+      "bytes": 78368,
+      "sha256": "6436e0d291acf9d434961b413c319c4df4d1dbcb65ec177fee26af1a82b60724",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/8514.GR3",
+      "bytes": 13824,
+      "sha256": "01e90984a2dcc236001ae9a19532ed98ba77ecb1fa884bdc54314d634564f709",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/8514FIX.FON",
+      "bytes": 11408,
+      "sha256": "21941bd64cc075b5892f004b42517e90ed184415b1439a23d8f5a00984025dc9",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/8514OEM.FON",
+      "bytes": 12720,
+      "sha256": "fe5eb787020ea997b1ac519b04c7df0c155fe268b4d9c85d7f89e289fb3df46c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/8514SYS.FON",
+      "bytes": 9136,
+      "sha256": "dd9d0de1b254916619b8c4c14cdced8c31a127d65661160c55ba5a90eba90cf8",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/BANINST.386",
+      "bytes": 4758,
+      "sha256": "d7f973c393c877e6bce5db4736d46f8ca79a5b3ec101526f296100f5f775a765",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/BOXES.BMP",
+      "bytes": 630,
+      "sha256": "c8fc48b6115028be861b212c39ec69b00f78a96558abb0a8ea7757ae08d2a8d7",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CALC.EXE",
+      "bytes": 40480,
+      "sha256": "9c40900db8c38db0644bbea7ee80451aa677c4cb2d8467473f25de4c2bce084c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CALC.HLP",
+      "bytes": 22506,
+      "sha256": "b470a1b7f6fb297dd8ccddf8f7728661cfa39e9acedd8b105188f76024499341",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CALENDAR.EXE",
+      "bytes": 64352,
+      "sha256": "424740e492c6fa827e179c66e1cd8e80429890ff0258d64b3bb7577c8d77e292",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CALENDAR.HLP",
+      "bytes": 33214,
+      "sha256": "33d1deea9233583814bf5f619683cff93038b1b7f36be3dfac50f8cdb18b0105",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CANONIII.DRV",
+      "bytes": 137216,
+      "sha256": "14bfac25238a09ccc0b923a2fa7cd42b5de399a3acbf97871a438ffc8bb347ec",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CARDFILE.EXE",
+      "bytes": 53952,
+      "sha256": "499b59d71f72c29786e3f92f1be37e237e37c8b1483cb45174763f24d696cb81",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CARDFILE.HLP",
+      "bytes": 31569,
+      "sha256": "a6de71c408e5bef262044cf676585b46a54ac99b46b974bd6f2c1afe622bf05a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGA.DRV",
+      "bytes": 45680,
+      "sha256": "373ea3517afeda94249761f667129be6164bb739a00f3459adc45a4f72b69de5",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGA.GR2",
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGA.GR3",
+      "bytes": 9728,
+      "sha256": "7ecba616ba3d144b22c7d5301ba2c894d1625df2f2c60220be6cab63a3d5caa1",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGA40850.FON",
+      "bytes": 6704,
+      "sha256": "7f5715d3709fdc6812fa62cfa13492c40f406627ca83e3abca7f4f9d0dfc9a7a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGA40WOA.FON",
+      "bytes": 6704,
+      "sha256": "80a6cd27e2a3d9ac11912b8c70cbf9f83505bbd692b949978488154b80ff2041",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGA80850.FON",
+      "bytes": 4672,
+      "sha256": "1b1f9f16a659f1fcadb6a329b12bef36a3790037d43cb74c03276306f5632ae3",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGA80WOA.FON",
+      "bytes": 4672,
+      "sha256": "09ac9618c00ad24b86b7577104dad06653c7bd63ea5e783c5819fe138d990623",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGAFIX.FON",
+      "bytes": 4208,
+      "sha256": "b0c043a65e2b551bce3c77d25921394dfd2533f50633bc129abd240c7aeb5f89",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGALOGO.LGO",
+      "bytes": 880,
+      "sha256": "d9609adff83a63fda7a67e5e8cd7ed3dfb73f42e4d9971697fd43465231da807",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGALOGO.RLE",
+      "bytes": 6782,
+      "sha256": "f31392cac25d3433f22a4500e5f42aaa29fc1ac188a1e2525441b759bef21735",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGAOEM.FON",
+      "bytes": 4576,
+      "sha256": "1a86d9e42c73ccefcbc82c822abe8dbcd61cf0116454f213c3a95f4d7436cd0d",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CGASYS.FON",
+      "bytes": 4368,
+      "sha256": "baf8fa607806d949dfb6992113ce93494678abdef07783b22222b62e5de28ef4",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CHESS.BMP",
+      "bytes": 153718,
+      "sha256": "d76695f2b27f33ccd78f04ba257165d480ea47780e11aa30e2e1a971c3e3168f",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CITOH.DRV",
+      "bytes": 19456,
+      "sha256": "43190aa77647271430acad3c46d8c33f6b188e92c874af9461a9bb6851fb783d",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CLIPBRD.EXE",
+      "bytes": 20512,
+      "sha256": "9830f27d02b8a7bb743aa44910905f26b5ae54c1ccf7267b35772cf0a5f4f2a7",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CLIPBRD.HLP",
+      "bytes": 15940,
+      "sha256": "c6214b1d92a148c97bf1dd3c739f739fdaeaabe2669e114541f7164502242c1a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CLOCK.EXE",
+      "bytes": 11136,
+      "sha256": "e18fac9fbdbfa044ad409865eb0b107df57ccadf2002749516b07f415162f6d3",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/COMM.DRV",
+      "bytes": 7088,
+      "sha256": "dee1aae7c01ea70e906d2c89a78a4bd325eec900423e5274bda0ef6e9f1eca80",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CONTROL.EXE",
+      "bytes": 161488,
+      "sha256": "ba33951fcfe28c0bd73178027b4b2226ea054f121ed50c1a594bf569ff424ddd",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CONTROL.HLP",
+      "bytes": 70459,
+      "sha256": "e426c777b6ee1365ff0903b22397b6a40c8f975aedcfbcd8ece118b3c617ee9b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CONTROL.INI",
+      "bytes": 1578,
+      "sha256": "f6c0f624eb6c79bbde04cb1286a3560a6eeb0c8222040da9ab7efc94eea12a98",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/COURA.FON",
+      "bytes": 12960,
+      "sha256": "251c4089ec184b2087195fb74347bb2efdcf2d69e0705e2c51d534a1f8e1f00b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/COURB.FON",
+      "bytes": 17248,
+      "sha256": "77f7e12a1a49d1944e51776041135df8e5d00bb55b69f80eec02a7a50829f7e9",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/COURC.FON",
+      "bytes": 12016,
+      "sha256": "6429a22b0ef80e6aece3e2379559bcafa0fce1cba600c9d17f8d7e98b1a8f760",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/COURD.FON",
+      "bytes": 19184,
+      "sha256": "30ca78b6ccdcc007f5e09d0267410b2bfaa54bbbecd2fc1a2ebc383ec784f3f6",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/COURE.FON",
+      "bytes": 21360,
+      "sha256": "210ffad247372692200e443f97d59eba6e27e87723e6865bd45fc56256059d8e",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/COURF.FON",
+      "bytes": 30032,
+      "sha256": "24c4fc4811fd7a07f09b1ad118c1f60fb919637565d5225d91521fd13f6a90fb",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/CR12RPA.PJF",
+      "bytes": 16228,
+      "sha256": "ea62bc360e153f17eff52a833375b315bc9fd7270d09d194098a46145e73cf91",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/DESKJET.DRV",
+      "bytes": 150528,
+      "sha256": "b577958ef91c268540cc0930f0b78b3e2be348793a6a66a040be713cd5f25b7b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/DESKJET.HLP",
+      "bytes": 13002,
+      "sha256": "1c063d63c7a56c495f294165e2ffb3709dd5630e199dab0108a1545643fb3537",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/DIGITAL.FON",
+      "bytes": 1712,
+      "sha256": "c1d719d8850f7ac5e6b2b0c534810d2d77ba0f9c5dd1fa7dcfc721b956e1e852",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/DM600.DRV",
+      "bytes": 32736,
+      "sha256": "73f5c1d205797f464c5399ea8d256b13252b8c95dbe9b2a87a9cdd1c6521280a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/DOSX.EXE",
+      "bytes": 36352,
+      "sha256": "d5ac0fa5249c7f3fbe82fcad9c8f77599fb80ac4093ca854c70035cac04deadc",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGA.DRV",
+      "bytes": 71344,
+      "sha256": "03d772c6fa0ef49e38a9f09640d50ad8a1a3538dee46fb8bb19d17db99c88182",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGA.GR3",
+      "bytes": 14336,
+      "sha256": "7b5fc117cee6e6da9dca04fbee959105b43307300bd5c562774fa990471b0dcd",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGA.SY$",
+      "bytes": 4872,
+      "sha256": "47b0eec89c93666faba182b5f77001738fed77d05a5dfa960eee3aa1e73799ce",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGA40850.FON",
+      "bytes": 8736,
+      "sha256": "285db70f4127abe2d2b5d7c3a0bba7b48d041bad18bb8380a9d02c994b19d4e4",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGA40WOA.FON",
+      "bytes": 8736,
+      "sha256": "2774c76545c308962ca8de8279ac69697835b3c48bed172e15efbaaad3f531bc",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGA80850.FON",
+      "bytes": 5680,
+      "sha256": "59a3a7ec62521b30bc25171a85e97c6182bd744f09f3840f5e4c51a43e81e305",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGA80WOA.FON",
+      "bytes": 5680,
+      "sha256": "71e80aea9b83af02d764f2293b5548844ff3d0d04c08b7c90887777acf2aa482",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGACOLOR.GR2",
+      "bytes": 3241,
+      "sha256": "10f4764578991a231f770f1056d2dc2313ff7e6e1f45fc4e4227ac9ee8e87671",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGAFIX.FON",
+      "bytes": 4656,
+      "sha256": "6df45a74e5756dd0746bcee593be9ac4df4a35458c26bf4570b748def2d394cb",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGAHIBW.DRV",
+      "bytes": 45824,
+      "sha256": "fbbc13300edb529a4d666712e314f53e9cc594e4251759973f65872eb702f33d",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGALOGO.LGO",
+      "bytes": 1072,
+      "sha256": "fb9b115571058ba231bad5869a6f8cbc332ca67c768d5d562eb309e159830c31",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGALOGO.RLE",
+      "bytes": 11486,
+      "sha256": "a529d7c9cf30653033d93ec7adc1401cd9d8f253b396a7d8a1d655cc0d8a5fbe",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGAMONO.DRV",
+      "bytes": 45920,
+      "sha256": "d2a0916d439ecc74c707208aace4f48be19fd5adedd6ed979b2421514fc42c10",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGAMONO.GR2",
+      "bytes": 3011,
+      "sha256": "eed235ddfe245584ee6c15051a84970bae1e5973d076b67e8ff0273e2a23b82b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGAMONO.LGO",
+      "bytes": 1024,
+      "sha256": "77aefe4be1e30f62a6eed7c5327766653ec471b2f60e3e991c76889566d42b2d",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGAMONO.RLE",
+      "bytes": 10846,
+      "sha256": "a5aeec2d146ad68dad92bfe8755cc7c83e600e48b0cc515fd596484009152e52",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGAOEM.FON",
+      "bytes": 4576,
+      "sha256": "05bd6ef11802bbca20473b0e409116fd8919c5bbcbbbc26b7ee2ea1f33ad23be",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EGASYS.FON",
+      "bytes": 5328,
+      "sha256": "8bd307d7886d0f2fdfc1de3da8253e294233d1c757fd9131a66405fca5825b09",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EMM386.SY$",
+      "bytes": 60994,
+      "sha256": "060081674b1c3cdd150e5363945f975cd6c2e2f913c9db1f4c40067add22255d",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EPSON24.DRV",
+      "bytes": 49952,
+      "sha256": "32e32b152f3a2fa976c2ac2e80889348a442b0add63f859cbd5c6b53e32d5542",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EPSON9.DRV",
+      "bytes": 44960,
+      "sha256": "4b7139221a8fc76a279f5d3bc369a1a658f7a85e77bf7ad288608f7629819c65",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/EXPAND.EXE",
+      "bytes": 18377,
+      "sha256": "c2bdabc541c08156c4f3a89025c6d3c84afb0fa55817a488fa1a09293dea3fab",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/FINSTALL.DLL",
+      "bytes": 104128,
+      "sha256": "e94f677e399108381bf81a021b240b2910959569c0118ae33c97e9027b7bb10b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/FINSTALL.HLP",
+      "bytes": 16770,
+      "sha256": "b779b1805040b047765e65403989ba85354f8e4b282d1100c907f9403ef8a33c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/FUJIMTRX.DRV",
+      "bytes": 62416,
+      "sha256": "a53f8e3002e9ba36c017ea06def553f33348f072d5248aabe02709600ae728a0",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/GDI.EXE",
+      "bytes": 129691,
+      "sha256": "48956cb3948f06209ac3b22293ceb49106bac9a39aa30d7fb2744ed0267672e2",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HELVA.FON",
+      "bytes": 34240,
+      "sha256": "51b5019a89220b48c002628fc2f854f682b8502ebb5cf271cc3cb73e6e1b680a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HELVB.FON",
+      "bytes": 47056,
+      "sha256": "1cdf4c88f2904bd1cd4ebd71ea0aff87fdcf1687d3bcb60919e19a32aa1fc93b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HELVC.FON",
+      "bytes": 36032,
+      "sha256": "1918001bb05a0f43c6544204b286e073c79daa2b510012c0c53a568f6b7651a1",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HELVD.FON",
+      "bytes": 53728,
+      "sha256": "9af1bee5944a6e4de19c9a46decc449a35337f8cc4af3e4a5b22a05b6d2549f3",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HELVE.FON",
+      "bytes": 59696,
+      "sha256": "d84bd9652614021a359c5b72f738a8af465be0bb1bdfbe0aec298a2ba5e16571",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HELVF.FON",
+      "bytes": 83632,
+      "sha256": "8c55c78fd20bbfc17fae2a88ec252591a9f4b953215d300f2b009dafe7d6b43a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HERC.GR3",
+      "bytes": 9216,
+      "sha256": "d28e80fa524523f15d62b0530f2a6aaf0bd71c6ee34d3178725b287e9a816da0",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HERC850.FON",
+      "bytes": 9248,
+      "sha256": "a5e3843912e303de2a0baf891c774f379c033c46330635425e96a5030919a7ae",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HERCLOGO.LGO",
+      "bytes": 976,
+      "sha256": "e475421935b221d52be9170b2621dc66485fdb8553e755cfe36c354d9a596e90",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HERCLOGO.RLE",
+      "bytes": 11518,
+      "sha256": "eac3242ecbeb7601cc38a9696b6e15a6a940e52f9dc20da8913a86fb42da6fed",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HERCULES.DRV",
+      "bytes": 47792,
+      "sha256": "8c3d4f6904e275ab04e3c44bd78b2e946fa9315ce1f8c2eaa7273215f44e047b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HERCULES.GR2",
+      "bytes": 2155,
+      "sha256": "dfd03db9702ec098f2fa9490cabb85b22db6d4e2104237a99cadea4f7afc49a4",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HERCWOA.FON",
+      "bytes": 9248,
+      "sha256": "1b80424a377b12c9ef50eaf14390eccd050d7af9fa902cbf6e95c62d4a2303d3",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HIMEM.SY$",
+      "bytes": 11304,
+      "sha256": "f53aba211c5c473f961739fa9ec84db4fd42d55c5bcf93958c3221935022055f",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HPEBIOS.386",
+      "bytes": 9348,
+      "sha256": "13ba3b2c3ed3b0050bfee18ffb49436c69ef2b7ecc9d1ecd9b00a1c9b3330d6d",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HPMOUSE.DRV",
+      "bytes": 5760,
+      "sha256": "f4b14a30664be277a9b57a76827e2a66a5dbfc8649c9aabc9c1d8965499c41e2",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HPPCL.DRV",
+      "bytes": 271776,
+      "sha256": "b6ed58f87c861f59fe36941035259cbe026616bf2ed214520bdb6e179318a9fb",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HPPCL.HLP",
+      "bytes": 12193,
+      "sha256": "d5de2363813bb907bcab3c123cc27aba862445192c4dd110ada65f86352e7de4",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HPPCL5A.DRV",
+      "bytes": 206448,
+      "sha256": "7f40ec341b1bff02040cf85e05543a2b82f58114131e5de140effbec030ba98a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HPPLOT.DRV",
+      "bytes": 64656,
+      "sha256": "42cefcea3956e078b90141521556173564f506a46152b9c85552e605011c0f2c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/HPSYSTEM.DRV",
+      "bytes": 3328,
+      "sha256": "67759ccc468e577a654a3ae714608286bc9d5be0eff764e6bccb052f4a1de2dc",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/IBM4019.DRV",
+      "bytes": 124768,
+      "sha256": "262263678cdbdb6f49d50cfcb3a3b29b248c1a3895d329b1dd69de7d1ae2e4d1",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/IBMCOLOR.DRV",
+      "bytes": 38176,
+      "sha256": "df9c9f23c4c3ff992c073900d539e0e9474b7bc3e85bf5da89e7d43b6496c6ce",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/IBMGRX.DRV",
+      "bytes": 19760,
+      "sha256": "b2aa63929d87bf4c6fad7ea7075ca79fb4ebf7fac4acbf47a08ce0665368f93e",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDBE.DLL",
+      "bytes": 2461,
+      "sha256": "f9a8dc302e7b9d565d0e277ce53e7a587614ef6ef4ca97891b3e948e5a6c8833",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDCA.DLL",
+      "bytes": 2653,
+      "sha256": "7e0173fbba8594ed02c632e3891195c0e3825cc01072903f001a989130257766",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDDA.DLL",
+      "bytes": 2356,
+      "sha256": "cc10458ed6024c3af480ff4d9afe11bd0936ce7bb03eac77bff409cc87b58ab9",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDDV.DLL",
+      "bytes": 1332,
+      "sha256": "4cca4719eba0c53d619c22ef7d77b288883d3d57ea47004fb175303f057d9c7b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDFI.DLL",
+      "bytes": 2409,
+      "sha256": "036095267b91dfc1ca16686a4d797137422858be6f5eff56799b652cf12f36f7",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDFR.DLL",
+      "bytes": 2365,
+      "sha256": "10e5ac4bc518150ad5346eb9efadc8b53ec29ec171c50745f054e798beca4784",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDGR.DLL",
+      "bytes": 2522,
+      "sha256": "4848aa3763cb4cac9fea4935f4c1b6b1c4170d183ed6f99524175294d48d94c7",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDHP.DRV",
+      "bytes": 7937,
+      "sha256": "2b714afdb6886387d935403c0bb76795fec30b9bae6baf957916f519f0df92ec",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDIC.DLL",
+      "bytes": 1724,
+      "sha256": "28817f7c22c5feed1456fd4b844b80184423ff416acf8b65307a533f905146fa",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDIT.DLL",
+      "bytes": 2269,
+      "sha256": "4ed2e06bf63a3c0c24ec76c6462af9216220fde18592ac719909a3afbc1c61a4",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDLA.DLL",
+      "bytes": 2449,
+      "sha256": "69a9fa9692de9a10306973756b1f4798cb7b1698046dd8235619ca512e75c8c5",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDMOUSE.DRV",
+      "bytes": 2304,
+      "sha256": "31a0acc2885061ca000d594aa7e91a807d81719b45e6419c92e772b5794f0055",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDNE.DLL",
+      "bytes": 2331,
+      "sha256": "132253f5b563545365d6c01807226484657cd936cb97ec2c9dea172c9852128f",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDNO.DLL",
+      "bytes": 2379,
+      "sha256": "0524636f07d1720b84fc3297e05cfb4c137518cf1a3b20dfdc037d2c75f70f9d",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDOLI.DRV",
+      "bytes": 7105,
+      "sha256": "5c02ba311a84c98930c37dc75a64762f8527371a70d78e3508e1edc263481827",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDPO.DLL",
+      "bytes": 2331,
+      "sha256": "343e464967b8873292621575d7acc458b0e92eef659f45fc2705b0b5616dc581",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDSF.DLL",
+      "bytes": 2469,
+      "sha256": "d02fe96a9302604bf940f1d676087ab0a3fc40f4632c6391f783cdd815a6cdfe",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDSG.DLL",
+      "bytes": 1653,
+      "sha256": "c4254cdbd31dd051200c1d33155f4c0f5de05318f0f741e3a3c15b2c99f009c8",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDSP.DLL",
+      "bytes": 2417,
+      "sha256": "0c84ecda7dbed40167f2ec03b77c61b844fd0a4f0b4d334a059712e27ea228bd",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDSW.DLL",
+      "bytes": 2382,
+      "sha256": "2d4f54402d66426677134a6da89dc01b94dbeb15d9b80a566ecb4b81aab71d60",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDUK.DLL",
+      "bytes": 1428,
+      "sha256": "f7cb190d447d0c9fe1720607ce49fd54c58ecf200b775342c356622e7384058c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDUS.DLL",
+      "bytes": 1300,
+      "sha256": "2737315a68695edc1bdaf199f068242222b0fc21f0c6a1aec9762be52e440e44",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KBDUSX.DLL",
+      "bytes": 1641,
+      "sha256": "4e6698ec04e5152f71caf9637837d56a9067b9756d2c88e99d51c195bdf74f2c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KERNEL.EXE",
+      "bytes": 68928,
+      "sha256": "114675d9854bc96c50eaf2460ec048bad39438aaace42c3c41c6407c1ec4b7b3",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KEYBOARD.DRV",
+      "bytes": 7041,
+      "sha256": "2554384b3da7f9925e56d9b0063e240d65c619cb2089819e4eaf3964e3eb769f",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KRNL286.EXE",
+      "bytes": 59568,
+      "sha256": "4bb4af7e0aa0ff83ddb0409644ce198b1eccc4270253ee10d8b8a125be367afc",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/KRNL386.EXE",
+      "bytes": 60336,
+      "sha256": "7510811cb7e98fc3926c031665d46e59244093830b8a4188b85b56ccd3d448fb",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LANGDUT.DLL",
+      "bytes": 3072,
+      "sha256": "b0e8fb8f022e9100112391f745818797fadca1e60f5da18b495007bb64a9f70f",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LANGENG.DLL",
+      "bytes": 2560,
+      "sha256": "9a75c5dc8ab63bb8f6f54bc9979e80466df944cfbad156f3bc6252449de42351",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LANGFRN.DLL",
+      "bytes": 3072,
+      "sha256": "b67334d181ac7bd688b8d5d50265e5bae5c53cd250353bbdff130deb5c5fb65a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LANGGER.DLL",
+      "bytes": 3072,
+      "sha256": "e97699c05a1b11f83bcef8d73cb9784962aa8916932179bd6e314ce5e6af1494",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LANGSCA.DLL",
+      "bytes": 2560,
+      "sha256": "1fe93807b8d7a44b94bee017ee57d7e4d78fc460b28370c132df86e43d822f0d",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LANGSPA.DLL",
+      "bytes": 3072,
+      "sha256": "4bbfa3b95f39a911fb7c5b7e170546aac4f9ca0b08a80551d52769eed0ee06a1",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LANMAN.DRV",
+      "bytes": 57344,
+      "sha256": "1ba900e7a88003d4cdb5f769b41152e56efb96cfe11dc4126ed4d0ed25bed097",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LANMAN.HLP",
+      "bytes": 28908,
+      "sha256": "bea82796ae53dc7b10af9a7315e27ca611ee1baffc4a06a8f69a995f2beb12b0",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LANMAN10.386",
+      "bytes": 8786,
+      "sha256": "76a95e9e762c787617c051140b1524a390c257b8d4d643eacd27787069781dfc",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LBP8II.DRV",
+      "bytes": 80032,
+      "sha256": "ecc9258ae607a6291b7bcb51f3b356b8469d1d12236b190642ed145318fc8965",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LG08RPA.PJF",
+      "bytes": 10563,
+      "sha256": "7e3ce7013f876ba183d096723404fc27f05daa257e8d5bc050ad5fd85c9dc737",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LG12RPA.PJF",
+      "bytes": 13007,
+      "sha256": "f2cc9bce105fd12642bfeb56a650a3eb28157c3a5331a7eff5aef75e288d0178",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LMOUSE.DRV",
+      "bytes": 3584,
+      "sha256": "ca3db304072402b625cac9d4be0facc8acf74914290d76449805fbe35c0e8e79",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/LZEXPAND.DLL",
+      "bytes": 6016,
+      "sha256": "fadff127b4923bbe28e87aef1d09a282c5c3815e23946778230068a3f07deae9",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/MODERN.FON",
+      "bytes": 9728,
+      "sha256": "ff393a886f5695314c03dd1e9a9f511109194b9573ec46a1d08c1895c2f85a79",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/MOUSE.COM",
+      "bytes": 31833,
+      "sha256": "4d8bbb10a4169b8b0a414bda29ad35c72903e85eb2e908b0c51fd6505d3258cd",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/MOUSE.DRV",
+      "bytes": 4896,
+      "sha256": "7db7b3010c285ab753cd42278633a6791126dd41a7ba3ccbf6db72949310e1e9",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/MOUSE.SY$",
+      "bytes": 31701,
+      "sha256": "4ac67558f9bb2731844aca3339d47928d13e82f5b003b6b264c825119f05efde",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/MOUSEHP.COM",
+      "bytes": 32864,
+      "sha256": "e3a56257292a8dff48bfd826afff7bdc1d510c8316215090e92d617610b4487a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/MOUSEHP.SY$",
+      "bytes": 32730,
+      "sha256": "3b529e5289732fb4d7e495b0bde3748acd26675e7e6619e20dcd2efa8792addd",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/MSDOS.EXE",
+      "bytes": 46640,
+      "sha256": "fd9037f39f35bd1ed26bbfba7f754b66485e95396692c3f185c21098d08625c1",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/MSMOUSE1.DRV",
+      "bytes": 2176,
+      "sha256": "f78b35f3b3c0a0a5ddedb00eaf4f05614b5ae23216ad2b1a455d6a585f9785ee",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/MSMOUSE2.DRV",
+      "bytes": 2176,
+      "sha256": "019380252865f51518a9043ee40bb7546cfab76ee302755784cf49b9b09bccf2",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/MSNET.DRV",
+      "bytes": 6912,
+      "sha256": "3a24c22c8dfafc2426d88b1a06fc0f326f10ed2493f39e7d6091badec25890ae",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/NEC24PIN.DRV",
+      "bytes": 45264,
+      "sha256": "c6046e8947f4ef0dc38d69a64f0960eccc045ca78e414e9edb31699b020292a5",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/NETWARE.DRV",
+      "bytes": 45936,
+      "sha256": "ee2def3a2b17bb757f9eae5eee72d578df7d7a25b540aacb38e5be095b804efe",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/NETWARE.HLP",
+      "bytes": 26574,
+      "sha256": "e2c32155db79a4705e271bb1677d061b4e0c4efdc0bdd1bb1e34745cb8aa14b5",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/NETWORKS.TXT",
+      "bytes": 30665,
+      "sha256": "b47e43219d24f8d87712e557c61e26bcf8320263400f258c87507858d3705309",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/NOMOUSE.DRV",
+      "bytes": 1312,
+      "sha256": "3e54061ac6e5e74dd284e42b6e7e25ff7cf0d7b0957181b722c90e3203ee565e",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/NOTEPAD.EXE",
+      "bytes": 31936,
+      "sha256": "bace902375ec5bc88490724a13e49860f1bd938fca5ba97ef13115b1a0dd107e",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/NOTEPAD.HLP",
+      "bytes": 26169,
+      "sha256": "740693e23137523f1cb4c4f12f6dc95f67269534f2bcff39dc13e0b0797adab9",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/NWPOPUP.EXE",
+      "bytes": 3814,
+      "sha256": "18b714c1f128832201ece03257ca7d1537b92e0637e883f18b273198e3c3dd80",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/OKI24.DRV",
+      "bytes": 47008,
+      "sha256": "0f4a05f6bb2f688bb17eee39f3c22dc35d25014798f8c8e3dec9ad40106ebe87",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/OKI9.DRV",
+      "bytes": 38480,
+      "sha256": "a278503af22c23d4699b89169a93bb3ae69328301990cbda75b2aa491f0f46ac",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/OKI9IBM.DRV",
+      "bytes": 36976,
+      "sha256": "c7bfc993576dea4c94a05d04afd5517a7f67f3ad3601f7653c6406e1b70e21f2",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/OLIBW.DRV",
+      "bytes": 48272,
+      "sha256": "9d3100bb09d029d9970a44bf42ea1539e06e798edeeb115bb713d46d0932f2f1",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/OLIGRAB.GR2",
+      "bytes": 3714,
+      "sha256": "32238a7927601672039770d36f59fdee8c2d1b420b89dbb27e841fa7827bb452",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/OLIPRIN2.DRV",
+      "bytes": 38880,
+      "sha256": "baaaa757ce72c10da05ad87f6fcce5c6fefdc4041ae3207bb772516c17c37743",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/OLIPRINT.DRV",
+      "bytes": 38176,
+      "sha256": "1652460c83d98b9995de277dbc40d910aaa3a3cb37e8657f81d45a1571722e55",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PAINTJET.DRV",
+      "bytes": 173184,
+      "sha256": "859a53675e2ed7a6df199af8509e955f5cadef26493ab2b44449234a81561ae9",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PAINTJET.HLP",
+      "bytes": 17372,
+      "sha256": "de772201f6f41b6847866c7e365d5e3a76c7d8c1ed0ac2dd89a1ac31b006e8d5",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PAPER.BMP",
+      "bytes": 9662,
+      "sha256": "0fac77807c1e95e60bf9685b350159fb732f7cc7703266f68a1e5dc701d56e66",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PARTY.BMP",
+      "bytes": 38518,
+      "sha256": "e7eea5d38c435365208d906282ec563f8318bf5ce289183e3bbfe37b69133460",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PBRUSH.DLL",
+      "bytes": 7724,
+      "sha256": "4c644aae4e1b02a6bdf19833417ae2cd04e22c6d9053497692ad5c1a50370262",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PBRUSH.EXE",
+      "bytes": 161200,
+      "sha256": "ff9f708e94c2f072011a214d43c3f9fecf37d2869bccf39c25d0b1ef360f8472",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PBRUSH.HLP",
+      "bytes": 60122,
+      "sha256": "99a8feaba09d4cdce167408a5e0ef82bc69ae0ba3a2e02e00fcd6e3c3dc6429b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PIFEDIT.EXE",
+      "bytes": 40124,
+      "sha256": "d728239e5abd007b1c9369eccda969da3ee6837438bac02c98624477029cc8ff",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PIFEDIT.HLP",
+      "bytes": 43039,
+      "sha256": "decebc4801050c4efca27edc9e4b6c308ce65a187368556dd97c4a331af7c561",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PLASMA.DRV",
+      "bytes": 47776,
+      "sha256": "a83592f444350890d33a95a19659293021ad6b5934547f511bd76a5cd85c9c4c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PLASMA.GR3",
+      "bytes": 9728,
+      "sha256": "4ca0cfdd55a15bffbe6f5c84c9fd8eb56ee8066a770cf50d06493df3a863428e",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PRINTERS.TXT",
+      "bytes": 20558,
+      "sha256": "e58d6fe9060388069f6a938bfe6057f3999a6344f6b16c7436e82fedab8544a5",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PRINTMAN.EXE",
+      "bytes": 33968,
+      "sha256": "8fdd0d11b14e61d846b316d517594cd4c5864550d70b5a11cb4bc4e53ea2db40",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PRINTMAN.HLP",
+      "bytes": 23857,
+      "sha256": "95ad513cbac32dff78ef6e3c7abbf15c2e3e3c3370865c1f291bc9002901f2af",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PROGMAN.EXE",
+      "bytes": 55200,
+      "sha256": "7375eba584f248d57d604e5563885c4fa0f0cd148d5033b988942ad3ecd8ef15",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PROGMAN.HLP",
+      "bytes": 94692,
+      "sha256": "86d71a0d56d7d4a961a9f6e4be5eb107f4dbd6c8fece85a1a25d1b730c972265",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PROPRINT.DRV",
+      "bytes": 36352,
+      "sha256": "8ae88fa3cfbf9bc3ea23a6c06e731dea230f33105181cc9651ca3eaefae2e49f",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PROPRN24.DRV",
+      "bytes": 34992,
+      "sha256": "2dd12a90e435be4b303e1c4e87321b12fa12c4169ff7f1ff328010eb81f74d6e",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PSCRIPT.DRV",
+      "bytes": 261511,
+      "sha256": "312961f83395213330c6f945916b93c8a9f800756b19b0f2f8446a2167b6d6ba",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PSCRIPT.HLP",
+      "bytes": 20898,
+      "sha256": "1cd79bf2d60977958aa58eaca809f526019b806dd9e9014b8d645a974fd99fb4",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/PYRAMID.BMP",
+      "bytes": 630,
+      "sha256": "29ba8023fd4708bb352dceb5a7f98737bfa7c51f32d830ad62f3ee79078468a7",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/QWIII.DRV",
+      "bytes": 48736,
+      "sha256": "271c6cbd842ca85c7983d615f322b8beeee9f4b68d35f7cf121188f5ae355978",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/RAMDRIVE.SY$",
+      "bytes": 5719,
+      "sha256": "2ca9fad51b519939a2c3dfa08546f10f40a25e9736db4015e05df3e26414fd69",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/README.TXT",
+      "bytes": 33407,
+      "sha256": "2969a07a5228965e02a951bbdfbafbb8f9642f979fea70911f21559fb495bc0c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/RECORDER.DLL",
+      "bytes": 11774,
+      "sha256": "56c1546a26b78e48271eef5877004cad76655afbf3c89fe91fc8f03306d7d3cf",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/RECORDER.EXE",
+      "bytes": 40096,
+      "sha256": "aba68331ee13e3c0709fc145b8b2f8666eba95f28d27e47fb21fd51703349049",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/RECORDER.HLP",
+      "bytes": 28075,
+      "sha256": "651d0476bec8fe68898b57c807b62c5ff52f18f3c29d8cc0d4b7fbe649416a89",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/REVERSI.EXE",
+      "bytes": 16688,
+      "sha256": "a9e319c8f479d1568beec03858fdbb27c71747b2bbed6cd7c9f5e2daa23b40e9",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/REVERSI.HLP",
+      "bytes": 11984,
+      "sha256": "1ca3d770ecc7dd11ba251179fade9fa084c3b692b8bec5337d4433ba0597ce2a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/RIBBONS.BMP",
+      "bytes": 38518,
+      "sha256": "68321e872fe7c33709cfe4b97b1fb8d3e6448fe5ee9961a5719618b3879cb91b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/ROMAN.FON",
+      "bytes": 14336,
+      "sha256": "90a244974a2bd04ab477993c4677a9bb186244e8006870e4d347bf987208b964",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SCRIPT.FON",
+      "bytes": 13312,
+      "sha256": "dfc65a50b48881208bd367fbfd45661408a3be602f9c3b1c94d2461ba1f9edb2",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SETUP.EXE",
+      "bytes": 202432,
+      "sha256": "dc370d5611f4e5a275fa3a86ff514ea0c5e8749906e34a25f1c3af7ae6b73421",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SETUP.HLP",
+      "bytes": 71981,
+      "sha256": "e038b3a8f30f587ccea2155362292e693fe7b526ad3b0cb58b36aad88809106d",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SETUP.INF",
+      "bytes": 49840,
+      "sha256": "b0d08a677638715125175d3a11550fe48c71f74aef1f5c107ed74ba28bdabc02",
+      "origin": "generated"
+    },
+    {
+      "path": "W30/SF4019.EXE",
+      "bytes": 57792,
+      "sha256": "a252093678adec450b5c3db4d69f5bbf86da8e75a096cdb983f26d69b921587a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SMARTDRV.SY$",
+      "bytes": 6866,
+      "sha256": "0bb063eb229bff23087353d5bcd73eeb62872d768ea16fc46b8a8941a4b3701a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SOL.EXE",
+      "bytes": 180880,
+      "sha256": "b5b3d6feb0ef1de98cdc6744a794adffe24c6ead5063413609b629a964c2cd15",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SOL.HLP",
+      "bytes": 15388,
+      "sha256": "65b900912ed39ca64c10d4b8f2c0630a03a87b58898f50efe4a3c778761e12d9",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SOUND.DRV",
+      "bytes": 3622,
+      "sha256": "965f3ad22295baea6efad0fc755eb1fc73481c2d88a8c38e325535f51001cd1e",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SV400A.DRV",
+      "bytes": 71216,
+      "sha256": "7acef82cd6a794669558a26101f019320ddd7cb6d6b2520b7ba4703b8cc5c766",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SV400A.GR2",
+      "bytes": 3241,
+      "sha256": "2647f6e59d0b147f37fc35aa7e2f9287147b3691fb81ba6d04183a279077fd13",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SWAPFILE.EXE",
+      "bytes": 38848,
+      "sha256": "d74486e766aca5aee69a773be096c53f732ad04992a7bfe0d9b2246a4e71f306",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SYMBOLA.FON",
+      "bytes": 33280,
+      "sha256": "5f6985d06200e41edb314bc8007363caa23112ccafaa402f2f85baa879f39d46",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SYMBOLB.FON",
+      "bytes": 44848,
+      "sha256": "d5ffe4e9268928318b6d58b8221b9046d89407353fc980d47c060e830fdeacd5",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SYMBOLE.FON",
+      "bytes": 56912,
+      "sha256": "661a96c64f69e9db2e9e166adada96bfefbd35be06941c8154a70d84319105b3",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SYMBOLF.FON",
+      "bytes": 81504,
+      "sha256": "6449d252e1f53292da2e8ae6c2c8fa2e5699d2bbab89a3614bdc33a426b2a638",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SYSEDIT.EXE",
+      "bytes": 17344,
+      "sha256": "73dc8177d18148f8d306debc761a72c6bc7aaae455e08c00b773ced1fbf569fa",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SYSINI.TXT",
+      "bytes": 21573,
+      "sha256": "05df994d1ec418ab3aae336d3b4e0515dec656ac5c8423f4829bf1c25121551b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SYSINI2.TXT",
+      "bytes": 21991,
+      "sha256": "4682f992cc8095bc541c8d9ec3fedc8d3442e93b09fbe516401d675ffceb49cb",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SYSINI3.TXT",
+      "bytes": 27602,
+      "sha256": "0daea85a88fba85e2c98aa00e7bc507767d90046af2a773128665c20583d94f5",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SYSTEM.DRV",
+      "bytes": 2784,
+      "sha256": "f9eca86a90c9c5ae3fb4c89cd481cbd6e71142799cd41fa3f541b6d7c46d39ed",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/SYSTEM.SRC",
+      "bytes": 791,
+      "sha256": "6460fd907112f4875653e16840b15c574621499357a1e1d0c5093fb58825f249",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TASKMAN.EXE",
+      "bytes": 3296,
+      "sha256": "ea6cedb1b33ac13ae9eb5f01f171d171b6ec46dbbc603300467b41dfda1f7eb7",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TERMINAL.EXE",
+      "bytes": 141696,
+      "sha256": "6b258dc6d28449c8e906dea01e502aefecaf4d33dbcae3fa89491a7a3d0ffeb3",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TERMINAL.HLP",
+      "bytes": 49954,
+      "sha256": "f5a228ba02ae759417ba245380963192b6d40d21a91241b843dff086707c4e38",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TH760.DRV",
+      "bytes": 55568,
+      "sha256": "e0d3c467f37058429498df2e2300ee5483f5e825fa8acb4d69bb23de72be7195",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/THINKJET.DRV",
+      "bytes": 19184,
+      "sha256": "f7dac10b755a13c0e940eab1858bd5f46404e8ba146679584db535c3d620cb68",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TI850.DRV",
+      "bytes": 18416,
+      "sha256": "49203081467f148b36d00fc1e52858e16a6ffc05b23aaef1e595ba3fe9ba7474",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TMSRA.FON",
+      "bytes": 32784,
+      "sha256": "745b1d44ae2dfe38e5bb8344be9631094ce80c92423e9c9bd3b90769c6cfb86c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TMSRB.FON",
+      "bytes": 42320,
+      "sha256": "23564d5006624646a5187ed4e60370bc40f4800a295ec6b5aa490e9a5d0497f0",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TMSRC.FON",
+      "bytes": 34736,
+      "sha256": "ac11b3ac00d12aa9df30dd82c87f91c74f3b76381ffb586ded9ccc5685f0816e",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TMSRD.FON",
+      "bytes": 52592,
+      "sha256": "0c4bfa3d70919119c5c4e8d7b3291809adf137b75a1dd81075d9605bd86dc710",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TMSRE.FON",
+      "bytes": 53520,
+      "sha256": "b0790bdbd297654ed61ba327acade644605c3faf908bc6ba287d7a2541360dbd",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TMSRF.FON",
+      "bytes": 76160,
+      "sha256": "b69fcbe26614a62f164bcccdc5e8245e2b27ec1f4e1243301d77bf0e60c0a258",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TOSHIBA.DRV",
+      "bytes": 22528,
+      "sha256": "eabcab67621c31dc40c3a9ef70ca1c0a554ef088f3c3d6ea74e1ae39a03ee316",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TOSHWIN.VCD",
+      "bytes": 74,
+      "sha256": "0bb2bb697dbee788f37676fc7f1174a1c0fb933795754b0cc2e0d6bd828618b7",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TTY.DRV",
+      "bytes": 30352,
+      "sha256": "436f0a6677ee1f46986518938af853cda2331712fd09260828886a71bdfb330e",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/TTY.HLP",
+      "bytes": 14484,
+      "sha256": "faf7f6978f73257384a43ea454df7671df2bd8e8eb7c4f49ff27f8a5f08cd07c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/USER.EXE",
+      "bytes": 231680,
+      "sha256": "609f8945fd73e084851f99b515c534eb68a1db8dc0c1b556d81c105dccef666c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/V7VGA.DRV",
+      "bytes": 74080,
+      "sha256": "b1060ff0482384423a03d30fc39d04451c85082045ecb80738c3c6ac6cccae88",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/V7VGA.GR3",
+      "bytes": 13824,
+      "sha256": "a01ce84f46b31719c6f677f2973e4d24a838e0f1a55239e8acb61823cf920757",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VDD8514.386",
+      "bytes": 39997,
+      "sha256": "4527bbf938dc39cd3641b74d7d73deafb47fd164c6bd855543f019b3a857c8cb",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VDDCGA.386",
+      "bytes": 15131,
+      "sha256": "f3a619651ac9efd7d7c196d93a33afef008d12bf91714ba51e5654c8942760f3",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VDDCT441.386",
+      "bytes": 39998,
+      "sha256": "47c9c769b67a15cf9e5a1a67e24b91c8a321f16e3f91531c6ce47c90570a21fd",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VDDHERC.386",
+      "bytes": 10329,
+      "sha256": "9ad61b8ef48f7d9fa45ce79c7ee92cf957770f7451f0ca217b02054e9aa2f023",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGA.DRV",
+      "bytes": 72144,
+      "sha256": "b7d9400c50228fda4e3701cf8a0155118cd92ef7788446c8cb71f0f919ad150c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGA.GR3",
+      "bytes": 14848,
+      "sha256": "af7ce163f1f21c1baafa06100d2e8610a0ddc18f723d68778e2369d5f858eade",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGA850.FON",
+      "bytes": 5616,
+      "sha256": "c0ec6bb05f1f84e82073e8427eb82acda036766173ba9f9e62a587d8152001a9",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGA860.FON",
+      "bytes": 5584,
+      "sha256": "5ad492c88141018d094115c8991aea974bb29c46ba4f8861fe71a5b50b2c8ab9",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGA861.FON",
+      "bytes": 5584,
+      "sha256": "8456349dd8e79de0ff86f077c783c1cb6180d36ded2c5391b8b4813c635a4b49",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGA863.FON",
+      "bytes": 5584,
+      "sha256": "8f3c4e975bbed7cf17cd95d4a7bc0de0b2707be89173dd0e49397d4ba63491e0",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGA865.FON",
+      "bytes": 5584,
+      "sha256": "7353a90a649cbd75730b5dbe6993a47d3d6f6c359d53e6823b2180f8383b6802",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGACOLOR.GR2",
+      "bytes": 4326,
+      "sha256": "1e5f3ebee935b3536e850b7018b244dade105b501c7fddcf2edbd5af8bfc4608",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGAFIX.FON",
+      "bytes": 5776,
+      "sha256": "dc8624021fa95f91423bffd41a9e3b5db821aeb315ad9976017e3028340861cb",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGALOGO.LGO",
+      "bytes": 1120,
+      "sha256": "a201c7c6ec5ac6dba2898908de615b7b8eeef7ca2f919e37450dfa902bc848f3",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGALOGO.RLE",
+      "bytes": 14782,
+      "sha256": "2a267e75e243e45010f6ac4f2b45f53ea6db708b043ecc5717eab08a5b5682ff",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGAMONO.DRV",
+      "bytes": 45616,
+      "sha256": "2aab44e1847c81e2e2f463cd56cbafa258dc39be31913f4211a452403c135a6b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGAMONO.GR2",
+      "bytes": 4322,
+      "sha256": "b50fe16a6b9a36d5772923823f6d5372a4237b6f0f6d8654bba555cbc0abdb36",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGAMONO.GR3",
+      "bytes": 11776,
+      "sha256": "17726abc32ab992fec913cebb15b866e65d327ffcbb29158908a3fabe4f08d80",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGAOEM.FON",
+      "bytes": 5584,
+      "sha256": "019ce0139eccebdfb77a1d6e70ba08581096e34b0c041df6175159d75d40b8b5",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VGASYS.FON",
+      "bytes": 6368,
+      "sha256": "e6c68db7e47c40dee2c3951f25f5acffca85b1324aecedaf7323dc1cc9cfeef0",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VIPX.386",
+      "bytes": 14084,
+      "sha256": "60a8e86d6025b2881ba2263af096bba79619ea80ba0d1a94bfad300e90e903e6",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/VNETWARE.386",
+      "bytes": 10013,
+      "sha256": "c728798e1f640734e98ab0b60511f67488204f4259df55e5f660b196f613ed5c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WEAVE.BMP",
+      "bytes": 190,
+      "sha256": "1820ca5a0c70ea0b28508ce83ed99d6e48bc36a2b82f0e1a84c204f3f6c1e344",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WIN.CNF",
+      "bytes": 3456,
+      "sha256": "371bd1935f84505d61873f1e08a17b858d667a5149d71995d4285c6f17782bdb",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WIN.SRC",
+      "bytes": 948,
+      "sha256": "243bc73c1d6ab6d0155dee68ffcaaa3208ee876fa22fd15940aa75c69b3a77b6",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WIN30DIS.K01",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WIN30DIS.K02",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WIN30DIS.K03",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WIN30DIS.K04",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WIN386.EXE",
+      "bytes": 516728,
+      "sha256": "79af4532d1a7f0c439e3b4ec586de23723fd8735d866feff511d631e90b91f9a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WIN386.PS2",
+      "bytes": 582,
+      "sha256": "088677138689be58f43f90ee38d97860dc04975d15e55fc1bd3c4500f936fc9e",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WIN87EM.DLL",
+      "bytes": 12800,
+      "sha256": "d2039952b25e2d43e3e01358b74bb1cf852aaa7e6ab91bef3f9b698ab977c694",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WINFILE.EXE",
+      "bytes": 106288,
+      "sha256": "113c86204a3d7430fc3707ab0d27bc3391b9638e204d2edea2bc0f55f89ddb8c",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WINFILE.HLP",
+      "bytes": 64187,
+      "sha256": "3d13755d0e0d341180a7e52fe7fb87f86d76080051b0a1e754a5cece13144cb3",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WINHELP.EXE",
+      "bytes": 193552,
+      "sha256": "ebf0bc0326ee2a0e9fc3a2abf6c014d3c3697521a462badf5172b4aea82fe0ab",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WINHELP.HLP",
+      "bytes": 48465,
+      "sha256": "9407f6180f74a29ecc26ab521a9440c2099f7b252f8058314cd582ff0e5b1596",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WININI.TXT",
+      "bytes": 25099,
+      "sha256": "f0170cf1a392432b61b38834d327d6b3878d7ef0ce57a9a706b459b26612c01d",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WININI2.TXT",
+      "bytes": 18466,
+      "sha256": "6dfb6a01ac915fe15d0455959238c04876af5593a7047a636f27971714b41640",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WINOA286.MOD",
+      "bytes": 41520,
+      "sha256": "187eb79feba0cd6662b3547ed145146906601d4bd272c22c852258e76ec81ac5",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WINOA386.MOD",
+      "bytes": 29520,
+      "sha256": "ad82229e43c19436190c23b3c84698e281717d05ca0ab5665e6c316a710bb38a",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WINOLDAP.MOD",
+      "bytes": 41904,
+      "sha256": "39e8ae182dad94f0d7987e6c0b7620fd3bcd2a4bfcaff8e685dc1568c0188b8b",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WINVER",
+      "bytes": 8704,
+      "sha256": "94880a214962e2d8f8309a2f1ba4ae084db99e72353757f712e47943f690da91",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WRITE.EXE",
+      "bytes": 211168,
+      "sha256": "5a32c49c4451b85177e640db42fcf1b575df0fd4eaa7ebf2f255984fd49ffda1",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/WRITE.HLP",
+      "bytes": 50885,
+      "sha256": "1a506f3e2f9c36f1d2eb3418df16edc0ac310cd32bf2693d8b8436346ded0032",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/XLAT850.BIN",
+      "bytes": 343,
+      "sha256": "9f6bde98d9c2eeb7dc67e1d75152d19750a1f4f51d85367d4bfc26e2eb19b35d",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/XLAT860.BIN",
+      "bytes": 343,
+      "sha256": "f01e88ce9f948c835d0907028e6c0b97a216e704ec6065684873d88d37df3c86",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/XLAT861.BIN",
+      "bytes": 343,
+      "sha256": "d55b3d6a1d8f6487165dd1d5c46d5810d6fcc80c9816d408f5715eda15247fe2",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/XLAT863.BIN",
+      "bytes": 343,
+      "sha256": "320346078c6480890b268f7979f8fac86e7e0f6cbe1061b1af51d6adffd24114",
+      "origin": "windows"
+    },
+    {
+      "path": "W30/XLAT865.BIN",
+      "bytes": 343,
+      "sha256": "40ea8a69e7b9ea79f61d2e2bd37b835d4895902e4021b43712677ac4fc3888b9",
+      "origin": "windows"
+    },
+    {
+      "path": "WINXT/APPS.TXT",
+      "bytes": 412,
+      "sha256": "22018a4cc6a6c5edd39d74ad6c4e39058be9ebf629ed460b16d4d385a100400b",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/CGA.GR2",
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+      "origin": "windows"
+    },
+    {
+      "path": "WINXT/CNF.PIN",
+      "bytes": 3456,
+      "sha256": "371bd1935f84505d61873f1e08a17b858d667a5149d71995d4285c6f17782bdb",
+      "origin": "generated"
+    },
+    {
+      "path": "WINXT/CPSET.EXE",
+      "bytes": 36612,
+      "sha256": "e4fccba25d817f9a07a900a3cf443d9ea8a28cfb82cd39887293e8436589fa4d",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/CGA.GR2",
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+      "origin": "windows"
+    },
+    {
+      "path": "WINXT/FILES/CPSET.EXE",
+      "bytes": 36612,
+      "sha256": "e4fccba25d817f9a07a900a3cf443d9ea8a28cfb82cd39887293e8436589fa4d",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/FIXXT.EXE",
+      "bytes": 33001,
+      "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/HPXY.DRV",
+      "bytes": 56704,
+      "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275",
+      "origin": "drivers"
+    },
+    {
+      "path": "WINXT/FILES/MATRIX.EXE",
+      "bytes": 14669,
+      "sha256": "854e0692b4a2571b7d53b45f15da7d954137fde9dce079e8a17df753ec94aca8",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/MAZE.EXE",
+      "bytes": 28013,
+      "sha256": "9905abccd267dd229502fad2d7e57375f51c34b2c445fc52ea754508407de389",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/PINBALL.EXE",
+      "bytes": 15487,
+      "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/RESERVE.COM",
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/SETAUTO.EXE",
+      "bytes": 10976,
+      "sha256": "e2908cba3430be2a3b24058061f6b477629305476f8702d6a7c2f7fd81d45e0a",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/SETUP.INF",
+      "bytes": 49840,
+      "sha256": "b0d08a677638715125175d3a11550fe48c71f74aef1f5c107ed74ba28bdabc02",
+      "origin": "generated"
+    },
+    {
+      "path": "WINXT/FILES/SHOOK.COM",
+      "bytes": 1249,
+      "sha256": "ba35ca3ce5407270e61c0ca15d27c4ca052bcd2a1112c7819fc214b74bd0d211",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/STARFLD.EXE",
+      "bytes": 17295,
+      "sha256": "c615fcd8c18ed740ed051542093e1bd18e26b92e820eef5b1bb4fa69f2ab8ff5",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/TABOUT.EXE",
+      "bytes": 6479,
+      "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/TCHIME.EXE",
+      "bytes": 5071,
+      "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/TEXIT.EXE",
+      "bytes": 9215,
+      "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/TNDYK3.DRV",
+      "bytes": 7640,
+      "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5",
+      "origin": "drivers"
+    },
+    {
+      "path": "WINXT/FILES/TP.EXE",
+      "bytes": 12847,
+      "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/TSHELL.EXE",
+      "bytes": 72323,
+      "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/TSHELL.INI",
+      "bytes": 999,
+      "sha256": "9b0dca9bf1f66bcb5f99cbc347dbf093942ee30c6e0b3d546127e88585cec2f5",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/TSINPUT.DLL",
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/WHEEL.DRV",
+      "bytes": 1820,
+      "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/WINBRDG.EXE",
+      "bytes": 28656,
+      "sha256": "230a24f8dec830dd8ceb8e11bb6f9694ed9a67b25ef232b9352e5e743cd3d74b",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/WINXT.BAT",
+      "bytes": 332,
+      "sha256": "8b484c67b9896deb2ba281f79a4020e35c7ef238fad5c5055ca63699c87c683b",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/WXTWHL.EXE",
+      "bytes": 7222,
+      "sha256": "0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/XPCHIME.EXE",
+      "bytes": 5103,
+      "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/XTCFIX.FON",
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/XTCLEAN.COM",
+      "bytes": 1071,
+      "sha256": "be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/XTCOEM.FON",
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/XTCSYS.FON",
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FILES/XTTEST.COM",
+      "bytes": 39427,
+      "sha256": "d144918d757536b625b8ce04dc9b543ffd5592989d1d49855d4f832218e5fc5b",
+      "origin": "generated"
+    },
+    {
+      "path": "WINXT/FILES/XYCTL.EXE",
+      "bytes": 9679,
+      "sha256": "7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FIXXT.EXE",
+      "bytes": 33001,
+      "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/FONTLIC.TXT",
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/HPXY.DRV",
+      "bytes": 56704,
+      "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275",
+      "origin": "drivers"
+    },
+    {
+      "path": "WINXT/LOGOLIC.TXT",
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/MATRIX.EXE",
+      "bytes": 14669,
+      "sha256": "854e0692b4a2571b7d53b45f15da7d954137fde9dce079e8a17df753ec94aca8",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/MAZE.EXE",
+      "bytes": 28013,
+      "sha256": "9905abccd267dd229502fad2d7e57375f51c34b2c445fc52ea754508407de389",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/MODELIC.TXT",
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/OEMSETUP.INF",
+      "bytes": 882,
+      "sha256": "81957f3577522507e896899ad8d6a4fb98177fcd5ca3ff720e19d8e05d47f8d3",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/OWNERS.TXT",
+      "bytes": 10369,
+      "sha256": "3be16666dd35e2509a8fdeb437d249a74afcd5b77ed961a8efd0c162753460c6",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/PINBALL.EXE",
+      "bytes": 15487,
+      "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/PROFILES.TXT",
+      "bytes": 522,
+      "sha256": "883b21b861c9243c48258bb9bee0684fc93007bd134f0a6849c860d9ea2132a0",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/RESERVE.COM",
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/SETAUTO.EXE",
+      "bytes": 10976,
+      "sha256": "e2908cba3430be2a3b24058061f6b477629305476f8702d6a7c2f7fd81d45e0a",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/SHOOK.COM",
+      "bytes": 1249,
+      "sha256": "ba35ca3ce5407270e61c0ca15d27c4ca052bcd2a1112c7819fc214b74bd0d211",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/STARFLD.EXE",
+      "bytes": 17295,
+      "sha256": "c615fcd8c18ed740ed051542093e1bd18e26b92e820eef5b1bb4fa69f2ab8ff5",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/TABOUT.EXE",
+      "bytes": 6479,
+      "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/TCHIME.EXE",
+      "bytes": 5071,
+      "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/TEXIT.EXE",
+      "bytes": 9215,
+      "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/TNDYK3.DRV",
+      "bytes": 7640,
+      "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5",
+      "origin": "drivers"
+    },
+    {
+      "path": "WINXT/TP.EXE",
+      "bytes": 12847,
+      "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/TSHELL.EXE",
+      "bytes": 72323,
+      "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/TSHELL.INI",
+      "bytes": 999,
+      "sha256": "9b0dca9bf1f66bcb5f99cbc347dbf093942ee30c6e0b3d546127e88585cec2f5",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/TSINPUT.DLL",
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/WHEEL.DRV",
+      "bytes": 1820,
+      "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/WINBRDG.EXE",
+      "bytes": 28656,
+      "sha256": "230a24f8dec830dd8ceb8e11bb6f9694ed9a67b25ef232b9352e5e743cd3d74b",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/WINXT.BAT",
+      "bytes": 332,
+      "sha256": "8b484c67b9896deb2ba281f79a4020e35c7ef238fad5c5055ca63699c87c683b",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/WXTSPL01.RLE",
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/WXTWHL.EXE",
+      "bytes": 7222,
+      "sha256": "0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/XPCHIME.EXE",
+      "bytes": 5103,
+      "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/XTCFIX.FON",
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/XTCLEAN.COM",
+      "bytes": 1071,
+      "sha256": "be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/XTCOEM.FON",
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/XTCSYS.FON",
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/XTEFIX.FON",
+      "bytes": 4656,
+      "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/XTEOEM.FON",
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/XTESYS.FON",
+      "bytes": 5680,
+      "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/XTSTATIC.LGO",
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/XTTEST.COM",
+      "bytes": 39427,
+      "sha256": "d144918d757536b625b8ce04dc9b543ffd5592989d1d49855d4f832218e5fc5b",
+      "origin": "generated"
+    },
+    {
+      "path": "WINXT/XTTSYS.FON",
+      "bytes": 4208,
+      "sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/XYCTL.EXE",
+      "bytes": 9679,
+      "sha256": "7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055",
+      "origin": "components"
+    },
+    {
+      "path": "W30/WHEEL.DRV",
+      "bytes": 1820,
+      "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0",
+      "origin": "components"
+    },
+    {
+      "path": "WINXT/SOUND.DRV",
+      "origin": "components",
+      "bytes": 9752,
+      "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+    },
+    {
+      "path": "WINXT/FILES/SOUND.DRV",
+      "origin": "components",
+      "bytes": 9752,
+      "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+    }
+  ],
+  "output_counts": {
+    "fresh": 369,
+    "update": 82
+  },
+  "win_cnf": {
+    "bytes": 3456,
+    "sha256": "371bd1935f84505d61873f1e08a17b858d667a5149d71995d4285c6f17782bdb"
+  },
+  "xtlogo": {
+    "bytes": 35971,
+    "sha256": "8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c"
+  },
+  "setup_recipe": {
+    "input": {
+      "bytes": 49046,
+      "sha256": "4f4b65bdc0ce2d4a23859494f8936376296e857872a554b0037ceb068f2202f2"
+    },
+    "output": {
+      "bytes": 49840,
+      "sha256": "b0d08a677638715125175d3a11550fe48c71f74aef1f5c107ed74ba28bdabc02"
+    },
+    "operations": [
+      {
+        "copy": [
+          0,
+          2136
+        ]
+      },
+      {
+        "insert": "    a = C:\\WINXT,\"Windows XT source\",OEMSETUP.INF\r\n"
+      },
+      {
+        "copy": [
+          2136,
+          3258
+        ]
+      },
+      {
+        "insert": "cga = a:HPXY.DRV, \"Tandy EX/HX HPXY 640x256 hardware pan\", \"200,96,48\", a:CGA.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE\r\n"
+      },
+      {
+        "copy": [
+          3434,
+          5520
+        ]
+      },
+      {
+        "insert": "\r\nhpxy = a:HPXY.DRV, \"Tandy EX/HX HPXY 640x256 hardware pan\", \"200,96,48\", a:CGA.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE\r\n"
+      },
+      {
+        "copy": [
+          5520,
+          6504
+        ]
+      },
+      {
+        "insert": "\r\nxtkbd = a:TNDYK3.DRV\r\n"
+      },
+      {
+        "copy": [
+          6504,
+          10207
+        ]
+      },
+      {
+        "insert": "xtwheel = a:WHEEL.DRV, \"Tandy serial wheel mouse (COM1/IRQ4)\"\r\n\r\n"
+      },
+      {
+        "copy": [
+          10207,
+          12304
+        ]
+      },
+      {
+        "insert": "a:XTESYS.FON,\"XT EGA System Font\", \"133,96,72\"\r\na:XTCSYS.FON, \"XT CGA System\", \"200,96,48\"\r\n"
+      },
+      {
+        "copy": [
+          12436,
+          12644
+        ]
+      },
+      {
+        "insert": "\r\n"
+      },
+      {
+        "copy": [
+          12644,
+          12658
+        ]
+      },
+      {
+        "insert": "a:XTEFIX.FON,\"XT EGA Fixed System Font\", \"133,96,72\"\r\na:XTCFIX.FON, \"XT CGA Fixed\", \"200,96,48\"\r\n"
+      },
+      {
+        "copy": [
+          12802,
+          13029
+        ]
+      },
+      {
+        "insert": "\r\n"
+      },
+      {
+        "copy": [
+          13029,
+          13041
+        ]
+      },
+      {
+        "insert": "a:XTEOEM.FON,\"XT EGA Terminal Font\", \"133,96,72\",1\r\na:XTCOEM.FON, \"XT CGA Terminal\", \"200,96,48\",1\r\n"
+      },
+      {
+        "copy": [
+          13207,
+          13750
+        ]
+      },
+      {
+        "insert": "\r\n"
+      },
+      {
+        "copy": [
+          13750,
+          30163
+        ]
+      },
+      {
+        "insert": "\r\n"
+      },
+      {
+        "copy": [
+          30163,
+          30174
+        ]
+      },
+      {
+        "insert": "    \"Tandy 1000 EX/HX (WindowsXT)\",\"78\"\r\n        system\r\n        xtkbd\r\n        t1s0pcxt\r\n        xtwheel\r\n        hpxy\r\n        sound\r\n        comm\r\n        nohimemswitch\r\n        ebios\r\n\r\n"
+      },
+      {
+        "copy": [
+          30174,
+          33247
+        ]
+      },
+      {
+        "insert": "\r\n"
+      },
+      {
+        "copy": [
+          33247,
+          48994
+        ]
+      },
+      {
+        "insert": "; XR1-only package. Other profiles remain in their separate downloads.\r\n; XR1-only package. Other profiles remain in their separate downloads.\r\n; XR1-only package. Other profiles remain in their separate downloads.\r\n; XR1-only package. Other profiles remain in their separate downloads.\r\n; XR1-only package. Other profiles remain in their separate downloads.\r\n; XR1-only package. Other profiles remain in their separate downloads.\r\n; XR1-only package. Other profiles remain in their separate downloads.\r\n;                                   \r\n"
+      },
+      {
+        "copy": [
+          48994,
+          49046
+        ]
+      },
+      {
+        "insert": "\r\n"
+      }
+    ],
+    "fixed_length_reason": "Unchanged qualified CPSET/FIXXT data contract requires 49840 bytes. Removed legacy rows are replaced by inert authored comments before the final language row and all seven DOS EOF markers; original edge bytes are preserved."
+  }
+}

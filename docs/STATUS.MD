@@ -165,8 +165,8 @@ driver observations. Historical documentation can correctly say that its
 older checkpoint lacked hardware testing; that does not describe every later
 trial. Reports without post-install hash readback do not certify exact binaries.
 
-Windows 3.0 real mode and normal 640 KB shared memory are the target. Windows
-3.1, standard/enhanced modes, PCjr, other memory layouts and an unexpanded
+Windows 3.0 real mode and normal 640 KB shared memory are the target.
+Standard/enhanced modes, PCjr, other memory layouts and an unexpanded
 256 KB EX are outside acceptance. Bitmap/ROP coverage is bounded; large redraws
 can remain slow. Emulator cycle settings do not establish physical 8088 speed.
 
@@ -181,10 +181,10 @@ source builds and scoped driver verification. Preserve the separately tried
 TRIAL 3 monochrome fallback; it is not the new TR5 monochrome binary.
 
 For **historical OEM package reproduction**, start with backed-up stock-CGA
-Windows 3.0, extract [TANDY88.ZIP](../TANDY88.ZIP), run `INSTALL` from `DISK1`,
+Windows 3.0, extract the historical TANDY88.ZIP, run `INSTALL` from `DISK1`,
 then `C:\TANDY88\TANDY88 SETUP`. Select Display > Other display and the profile.
 Launch through `C:\TANDY88\TANDY88` on every boot. Never bypass a failed memory
-reservation with a direct `WIN` command. [Full installation instructions](../README.TXT).
+reservation with a direct `WIN` command. [Historical producer instructions](../oemdisk/HISTORY.MD).
 
 Developer builds use Python 3 to orchestrate DOSBox-X and the existing licensed
 period assembler/linker/DDK inputs. Every output directory must be new:

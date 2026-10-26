@@ -1,0 +1,3 @@
+JRGUARD: video page 18000h-1FFFFh is not reserved by DOS.
+         Load a PCjr memory driver that reserves it, see PCJR.MD.
+JRWIN: guard refused/failed. Windows not started.

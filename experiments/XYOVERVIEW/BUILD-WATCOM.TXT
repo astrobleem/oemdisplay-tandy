@@ -1,0 +1,54 @@
+INTEGRATED SOURCE / BUILD EVIDENCE - OPEN WATCOM
+
+SCOPE
+This source-only candidate adds XYCTL.C and EDGEQA.C under
+experiments/XYOVERVIEW. Their source hashes match the reviewed R17/R19
+candidates, with CRLF line endings preserved. No accepted HPXY driver source or
+installed driver was changed.
+
+TOOLCHAIN AND COMMANDS
+Existing host installation: Open Watcom C16 1.9 and Open Watcom Linker 1.9.
+No compiler was installed for this task. The build used a fresh external output
+directory and the following exact source names and linker directives:
+
+  C:\WATCOM\BINNT\WCC.EXE -zW -0 -ms -IC:\WATCOM\H -IC:\WATCOM\H\WIN XYCTL.C
+  C:\WATCOM\BINNT\WCC.EXE -zW -0 -ms -od -IC:\WATCOM\H -IC:\WATCOM\H\WIN EDGEQA-OD.C
+  C:\WATCOM\BINNT\WLINK.EXE @XYCTL.LNK
+  C:\WATCOM\BINNT\WLINK.EXE @EDGEQA-R19.LNK
+
+The -od option and EDGEQA-OD.C filename are required for the reviewed R19
+build. Both compiles completed with 0 warnings and 0 errors. The outputs are
+16-bit Windows MZ/NE executables and match the tested candidate binaries.
+The executable and object files are not included.
+
+INTEGRATED SOURCE AND EXECUTABLE SHA-256
+XYCTL.C       a7ac274a2248518954d02376a917afcd92ccfd5f9fc11cfa0f0d3149fc4df6ef
+XYCTL.EXE     b1456c14bee9bc3abb267f3d9c87b710180b0ea41935b70036e65432ee56a4f9 (12,884 bytes; R17 exact match)
+EDGEQA.C      b478b8aac2274e7549931260d90c8b8813649acc7f64e99eb53a090c7b8fee9a
+EDGEQA-R19.EXE fea3b349145aa90290e5aa515cec68f235a997cb45180cc4cdf9c64452b13ea3 (21,754 bytes; R19 exact match)
+
+Run 08 results apply to these exact source and executable hashes. The runtime
+used the accepted HPXY profile on a Tandy 1000 HX emulator surrogate, not
+physical Tandy 1000EX hardware. No new emulator run was made during this
+integration step. See RUN08-STATUS.TXT for accepted assertions and remaining
+qualification limits. The machine-readable hash record accompanies this source
+set; no binaries or guest disk are included.
+
+SETTINGS UI ADDITION (compile- and link-checked only; not run or qualified)
+
+The settings UI adds two shared modules under src/panui: PANSET.C/H (pure
+logic) and PANDLG.C/H (Win16 window). With Open Watcom wcc/wlink (flags below)
+XYCTL.C, PANSET.C and PANDLG.C compile with 0 warnings and 0 errors and
+XYCTL.LNK links a 16-bit Windows XYCTL.EXE. It has not been run on Windows
+3.0 or on a Tandy and is not qualified. XYCTL.LNK now links PANSET.obj and
+PANDLG.obj after XYCTL.obj.
+
+Additional compile commands (PANSET.H and PANDLG.H must sit in the flat copy
+folder named by -I, next to the copied sources):
+
+  C:\WATCOM\BINNT\WCC.EXE -zW -0 -ms -IC:\WATCOM\H -IC:\WATCOM\H\WIN -I<flat-dir> PANSET.C
+  C:\WATCOM\BINNT\WCC.EXE -zW -0 -ms -IC:\WATCOM\H -IC:\WATCOM\H\WIN -I<flat-dir> PANDLG.C
+
+XYCTL.C now needs PANSET.C and PANDLG.C copied beside it, and XYCTL.C must be
+recompiled before XYCTL.LNK is linked. The source and executable hashes listed
+above describe the pre-change source only; they do not cover this addition.

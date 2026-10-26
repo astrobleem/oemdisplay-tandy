@@ -1,0 +1,11 @@
+native-*/
+native-base/
+native-candidate/
+MODEL.EXE
+NATIVE5504.LOG
+integration/
+# Preserved private-name packet comparison; not a current product builder.
+PACKET.PY
+INSTALL.PY
+VERIFYINSTALL.PY
+HANDOFF.MD

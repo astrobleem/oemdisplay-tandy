@@ -1,0 +1,38 @@
+TANDY VIDEO II - WINDOWS 3.0 REAL MODE, 640x200, 16 COLORS
+
+For the Tandy 1000 SL/2 family with normal 640 KB RAM and an existing
+Windows 3.0 installation. Do not use on EX/HX: they have no Video II.
+Testing covers the emulated SL/2; physical machines and related SL/TL/RL
+models remain unqualified. The reservation helper checks memory, not model.
+
+INSTALL
+1. Extract the entire packet to C:\T2EXP. Exit Windows to plain DOS text
+   mode 3 and run:
+     C:\T2EXP\INSTALL
+   INSTALL reserves video memory and opens Windows Setup only if that
+   succeeds. Fonts, grabber and startup logo are included.
+2. Choose Display / Other (disk supplied by a hardware manufacturer), enter
+   C:\T2EXP and select:
+     EXPERIMENTAL TANDY SL/2 FAMILY ONLY 640x200x16
+   Choose Complete Changes. Keep your existing keyboard and mouse choices.
+3. Start Windows with this command on every launch, including after reboot:
+     C:\T2EXP\T2WIN
+   T2WIN reserves video memory automatically, then runs WIN /R. If the
+   reservation fails, it stops without starting Windows. Run it from plain
+   DOS, outside a Windows DOS box.
+
+These commands use C:\WINDOWS. For Windows elsewhere, give its drive and
+directory separately, for example:
+  C:\T2EXP\INSTALL D: \WIN30
+  C:\T2EXP\T2WIN D: \WIN30
+Keep the packet at C:\T2EXP; Setup's source path uses that location.
+
+OPTIONAL TROUBLESHOOTING
+PREPINF checks packet completeness; it copies and installs nothing. If a
+packet file is missing, extract the complete packet again.
+
+Use INSTALL to reopen Setup or select another display. Reboot afterward
+to remove the resident reservation. T2PROBE /W, T2MODES and T2SHOW are
+optional hardware diagnostics. Technical records:
+https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/TGA2.MD
+Component notices are in NOTICE.TXT and FONTLIC.TXT.

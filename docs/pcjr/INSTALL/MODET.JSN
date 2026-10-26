@@ -1,0 +1,88 @@
+{
+ "source_commit": "c7144d1ec808eff012d0e5ac2b44e24489e7442d",
+ "source_tree_dirty": false,
+ "jrmode_sha256": "476dc8d1db715c910194cad478a4d42d8ff2f95921960117acc0cb1ae47e2278",
+ "results": {
+  "0": {
+   "file": "MODE 0 OK",
+   "as_required": true
+  },
+  "0 X": {
+   "file": "MODE 0 BAD 0001",
+   "as_required": true
+  },
+  "1": {
+   "file": "MODE 1 OK",
+   "as_required": true
+  },
+  "1 X": {
+   "file": "MODE 1 BAD 0001",
+   "as_required": true
+  },
+  "2": {
+   "file": "MODE 2 OK",
+   "as_required": true
+  },
+  "2 X": {
+   "file": "MODE 2 BAD 0001",
+   "as_required": true
+  },
+  "3": {
+   "file": "MODE 3 OK",
+   "as_required": true
+  },
+  "3 X": {
+   "file": "MODE 3 BAD 0001",
+   "as_required": true
+  },
+  "4": {
+   "file": "MODE 4 OK",
+   "as_required": true
+  },
+  "4 X": {
+   "file": "MODE 4 BAD 0001",
+   "as_required": true
+  },
+  "5": {
+   "file": "MODE 5 OK",
+   "as_required": true
+  },
+  "5 X": {
+   "file": "MODE 5 BAD 0001",
+   "as_required": true
+  },
+  "6": {
+   "file": "MODE 6 OK",
+   "as_required": true
+  },
+  "6 X": {
+   "file": "MODE 6 BAD 0001",
+   "as_required": true
+  },
+  "8": {
+   "file": "MODE 8 OK",
+   "as_required": true
+  },
+  "8 X": {
+   "file": "MODE 8 BAD 0001",
+   "as_required": true
+  },
+  "9": {
+   "file": "MODE 9 OK",
+   "as_required": true
+  },
+  "9 X": {
+   "file": "MODE 9 BAD 0001",
+   "as_required": true
+  },
+  "A": {
+   "file": "MODE A OK READ 1900",
+   "as_required": true
+  },
+  "A X": {
+   "file": "MODE A BAD 0001 READ 1900",
+   "as_required": true
+  }
+ },
+ "verdict": "PASS"
+}

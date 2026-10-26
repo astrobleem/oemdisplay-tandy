@@ -33,7 +33,7 @@ affect animation; physical Tandy smoothness remains unmeasured.
 /S consumes the wake gesture and drains held/repeated input. Focus, capture,
 task-switch, cancellation and shutdown paths end the saver. Final build 10
 preserves a new owner's cursor during handoff and deselects its own blank
-cursor before destruction. It uses Win3.0 SetCursor, not Win3.1 GetCursor.
+cursor before destruction. It uses Windows 3.0 SetCursor; GetCursor is not imported.
 Restoration checks are sampled where documented, not universal byte proofs.
 
 ## Build and verification

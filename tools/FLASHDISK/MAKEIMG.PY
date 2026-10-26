@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Build reproducible 720 KB WINXT data disks from the accepted runtime.
 
-Public builds exclude Windows support files. The complete private own-media
-payload does not fit 720 KB; --windows-files is refused. Use PREPXT to prepare
-the complete folder on your DOS hard disk from your own matching media.
+The data disk bundles the validated expanded CGA grabber and original fonts
+and startup assets. Existing DOS/Windows remains required; no OS media is
+included and no consumer support-file gathering is needed.
 This packages pinned binaries. It does not compile or qualify new drivers.
 """
 import argparse
@@ -89,9 +89,15 @@ def verify_default_splash(payload):
     if profiles != {'TR53216', 'TR56404', 'TR51616', 'TR53204', 'TR56402', 'TXTMODE'}:
         raise PackageError('Expected all six current Windows XT display profiles')
 
-def verify_dos_wave(payload):
+def verify_dos_wave(payload, historical=False):
     """The DOS updater must expand the exact already-qualified original module."""
     expected_wrapper = 'be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad'
+    if not historical:
+        current = load('verify_current_launch', HERE / 'LAUNCH/BIND.PY')
+        launch, unused = current.resources()
+        expected_wrapper = sha(launch['XTCLEAN.COM'])
+        if payload.get('WAVEXT.EXE') != launch['WAVEXT.EXE']:
+            raise PackageError('Current wave updater differs')
     expected_logo = '8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c'
     if sha(payload.get('XTCLEAN.COM', b'')) != expected_wrapper:
         raise PackageError('Qualified DOS wrapper changed')
@@ -124,69 +130,75 @@ def public_payload(runtime):
     if set(manifest) != set(PUBLIC_NAMES) | set(WINDOWS_NAMES):
         raise PackageError('Runtime manifest changed; review the explicit publication allowlist')
     payload = {}
-    for name in PUBLIC_NAMES:
+    for name in PUBLIC_NAMES + WINDOWS_NAMES:
         data = read_file(runtime / name)
         if sha(data) != manifest[name]:
             raise PackageError('Runtime hash mismatch: ' + name)
         payload[name] = data
+    grabber = payload['CGA.GR2']
+    if len(grabber) != 2104 or sha(grabber) != '1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067':
+        raise PackageError('Bundled CGA grabber differs from accepted expanded bytes')
     verify_default_splash(payload)
+    # The repository starts from the frozen runtime; the portable toolkit
+    # carries the already overlaid current runtime. Both are closed pin sets.
+    historical = sha(payload['XTCLEAN.COM']) == 'be8daca3153969921238b04307cdb4f75698086d12f74a024e4c198e95ce43ad'
+    verify_dos_wave(payload, historical=historical)
+    # Preserve the historical runtime directory and its qualification snapshots.
+    # Only the generated packet guide and its manifest row are refreshed.
+    current_cp = load('current_cpset_resource', HERE / 'CPBIND.PY')
+    payload['CPSET.EXE'], unused_build = current_cp.resource()
+    current_launch = load('current_launch_resources', HERE / 'LAUNCH/BIND.PY')
+    launch, unused_build = current_launch.resources()
+    payload.update(launch)
     verify_dos_wave(payload)
-    payload['MANIFEST.SHA'] = raw
+    payload['README.TXT'] = readme(False)
+    payload['MANIFEST.SHA'] = dos(''.join(sha(data) + '  ' + name + '\n'
+                                       for name, data in sorted(payload.items())))
     return payload
 
 
 def readme(private):
-    return dos(r"""WINDOWS XT - DOS MODE SWITCHER TEST CANDIDATE - NOT PUBLISHED
+    return dos(r"""WINDOWS XT - FIXED DISPLAY PROFILES
 
-This is a 720 KB DATA disk, not a DOS boot disk or a Windows installation.
-Requires DOS 3.3+, Windows 3.0 real mode, a compatible Tandy and writable CF.
-Back up Windows first. No Python/compiler is required on the vintage machine.
-Fonts are original XT Pixels, MIT licensed: WINXT\FONTLIC.TXT and FONTINFO.TXT.
-Only CGA.GR2 requires a matching owned support file. Static logo and fonts are original.
-This does not remove Windows itself or other non-font Windows dependencies.
+For Tandy 1000 EX/HX, 640 KB, DOS 3.3+ and an existing Windows 3.0 real-mode
+installation. This is a 720 KB data disk, not a DOS boot disk or Windows media.
+Its grabber, seven original fonts and startup logos are included.
 
-1. At plain DOS with the disk selected, run INSTALL from the disk root.
-2. PREPXT searches Windows and SYSTEM for the owned non-font grabber.
-   If missing, supply a media directory: INSTALL D:\WIN30SRC
-   Seven original fonts, four drivers, XTMODE and the unchanged shell are expanded
-   by the bounded DOS helper. No Windows font files or local derivation are
-   needed. Up to four owned-media directories may be supplied.
-3. After source checks, confirm the helper prompt. It creates fresh C:\WINXT.
-   It refuses existing output, wrong sizes, malformed compression, missing
-   inputs and insufficient free space. Source Windows/media remain read-only.
-   Default uses size/I/O/structural checks. Source-coupled diagnostic default
-   measured zero SHA blocks in both phases and zero output readback. Production
-   default separately passed exact native output checks. Emulator times were
-   about 42 seconds default and 139 seconds /VERIFY, not hardware estimates.
-   /VERIFY stays explicit, expensive developer diagnostics.
-4. C: then CD \WINXT then INSTALL. In Windows Setup select Display -> Other
-   display and source C:\WINXT; choose the mode and Complete Changes.
-   For CONFIG.SYS choose option 3 (no changes). The optional Computer choice
-   preserves the active Computer/keyboard. Read CPSET.TXT before changing it.
-5. Start with C:\WINXT\WINXT. Its video/recovery guards remain mandatory.
-   Optional desktop: C:\WINXT\TSSETUP. Existing Program Manager groups remain
-   read-only. To switch later, exit Windows fully and use C:\WINXT\MODES.
-   Run MODES and choose U to undo one prior mode. Read MODEINFO.TXT for recovery/limits.
-   Windows Setup remains available via WINXT SETUP.
+INSTALL
+1. Use WINXT720.IMG as a 720 KB data floppy, GoTek or emulator disk. A
+   physical 360 KB-only drive cannot read it. Boot your normal DOS system.
+2. Exit Windows completely. With the data disk in A:, run:
+     A:
+     CD \
+     INSTALL
+   PREPXT uses the included grabber. No support-media directory is needed.
+   After its source checks, type Y to prepare C:\WINXT.
+3. After preparation succeeds, run:
+     C:
+     CD \WINXT
+     INSTALL
+   In Windows Setup choose Display / Other, enter C:\WINXT, select your
+   display profile and Complete Changes. Keep your keyboard and mouse choices.
+   For CONFIG.SYS, choose No Changes.
+4. Start every session from plain DOS with:
+     C:\WINXT\WINXT
+   Its video-memory and recovery checks must succeed before Windows starts.
 
-160-pixel menus can wrap and wide dialogs clip. Preserved font metrics do not
-make every Windows dialog fit. Full native font and installation/rollback
-acceptance passed; docs/QUAL/RC6.JSON binds native evidence and this release.
-Documentation pins were refreshed on the host; measured executable code is unchanged.
-Experimental TXTMODE is opt-in and retains its known renderer limitations.
-The fixed TXTSYS font is original; font and renderer tests are separate.
+To select another profile, exit Windows and run C:\WINXT\MODES. Choose
+32016, 6404, 16016, 3204 or 6402; U undoes the previous mode selection.
+At 160 pixels, standard dialogs may clip. The separate TEXT choice retains
+known character-rendering limits; read TEXTMODE.TXT before choosing it.
 
-The IMG is FAT12 720 KB: 737280 bytes, 80 cylinders, 2 heads, 9 sectors/track.
-Use compatible GoTek/emulator/physical double-density media. A 360 KB-only
-physical drive cannot read it. DOSBox-X: IMGMOUNT A WINXT720.IMG -T FLOPPY.
-Do not run WINXT\INSTALL directly from a small/read-only floppy; PREPXT stages
-it to writable C:\WINXT. Keep the source mounted throughout Setup.
+For the optional Tandy Start desktop, run C:\WINXT\TSSETUP once from DOS.
+Later launches use the same guarded WINXT command.
 
-Rollback: exit Windows and run the numbered WINXT\BACKUP\B001\RESTORE YES
-path printed by INSTALL. It restores Computer metadata, disables the wave,
-restores prior Windows files and verifies the restored originals. Added driver
-files/helpers remain inactive. Do not redistribute a completed owned-media
-folder containing CGA.GR2.
+OPTIONAL DETAILS
+Use your actual Windows path with PREPXT WINXT D:\WINDOWS, then pass that
+same path to the second INSTALL. PREPXT checks existing output, free space,
+source structure and I/O before staging; /VERIFY enables deeper diagnostics.
+It never starts Setup itself. MODEINFO.TXT describes mode controls/recovery;
+Windows' own Setup, loader, kernel and
+other OS components remain required and are read from your installation.
 """)
 
 
@@ -206,7 +218,7 @@ def helper_payload():
         if sha(data[name]) != digest:
             raise PackageError('Helper source/binary mismatch: ' + name)
     # Replay the document binding before carrying forward native acceptance.
-    rebinder = load('verified_document_rebinding', HERE / 'DOCPINS' / 'REBIND.PY')
+    rebinder = load('verified_resource_rebinding', HERE / 'CPBIND.PY')
     rebuilt, proof = rebinder.bind(HERE / 'XTPINS.H')
     if rebuilt != data['PREPXT.EXE']:
         raise PackageError('Document binding differs from helper binary')
@@ -222,7 +234,39 @@ def helper_payload():
 def document_pin_source_payload():
     """Include the reproducible host data binding and its measured base."""
     names = ('REBIND.PY', 'BASE.EXE', 'BASEPINS.H', 'BASE.MAP', 'BIND.JSON', 'NATIVE.BIND.JSON')
-    return {'DOCPINS/' + n: read_file(HERE / 'DOCPINS' / n) for n in names}
+    files = {'DOCPINS/' + n: read_file(HERE / 'DOCPINS' / n) for n in names}
+    files.update({n:read_file(HERE / n) for n in ('CPBIND.PY','CPBUILD.JSN','CPSET.EXE')})
+    launch = load('current_launch_source', HERE / 'LAUNCH/BIND.PY')
+    files.update(launch.source_payload())
+    if (HERE / 'CURRENT.JSN').is_file():
+        files['CURRENT.JSN'] = read_file(HERE / 'CURRENT.JSN')
+        record = json.loads(files['CURRENT.JSN'])
+        files.update({'QA/' + n: read_file(HERE / 'QA' / n) for n in record['evidence']})
+    return files
+
+
+def native_receipt(payload, helper):
+    """Carry native component evidence only for the exact current resources."""
+    path = HERE / 'CURRENT.JSN'
+    if not path.is_file():
+        return False, None
+    record = json.loads(read_file(path))
+    identity = lambda data: {'bytes': len(data), 'sha256': sha(data)}
+    if (record.get('complete') is not True or
+            record.get('runtime') != {n: identity(b) for n, b in payload.items()} or
+            record.get('helper') != identity(helper['PREPXT.EXE']) or
+            len(record.get('checks', {})) != 8 or
+            not all(value is True for value in record['checks'].values())):
+        return False, None
+    names = {'FIVE.JSON', 'COLD.JSON', 'ORIG.JSON', 'INPUT.JSN',
+             'FIVE.PY', 'COLD.PY', 'ORIG.PY', 'COLD.PNG', 'ORIG.PNG'}
+    if set(record.get('evidence', {})) != names:
+        raise PackageError('Current native evidence allowlist differs')
+    for name, expected in record['evidence'].items():
+        if identity(read_file(HERE / 'QA' / name)) != expected:
+            raise PackageError('Current native evidence differs: ' + name)
+    return True, {'path': 'CURRENT.JSN', 'sha256': sha(read_file(path)),
+                  'scope': record['scope']}
 
 
 def validate_helper_pins(payload, helper):
@@ -308,7 +352,7 @@ def wave_payload():
     return {'WAVE/' + n: b for n,b in data.items()}
 
 
-CP_SOURCE_NAMES = {'BUILD.BAT', 'BUILD.TXT', 'CPSET.C', 'CPSET.TXT'}
+CP_SOURCE_NAMES = {'BUILD.BAT', 'BUILD.TXT', 'CPSET.C', 'CPSET.TXT', 'METATEST.C', 'TESTMETA.PY'}
 
 def computer_source_payload():
     source = HERE / 'CPSET' if (HERE / 'CPSET').is_dir() else HERE.parent / 'CPSET'
@@ -374,10 +418,9 @@ def font_source_payload():
 
 def build(runtime, out, windows_files=None):
     if windows_files is not None:
-        raise PackageError('Complete own-media payload does not fit the 720 KB disk; '
-                           '--windows-files is unsupported. Build the public image and '
-                           'use PREPXT with your matching Windows media to prepare C:\\WINXT '
-                           'on the DOS hard disk. No output was created.')
+        raise PackageError('--windows-files is unnecessary and unsupported: the packet bundles '
+                           'its driver support. Use PREPXT with the included runtime and '
+                           'an installed Windows directory. No output was created.')
     if out.exists():
         raise PackageError('Output exists; choose a fresh directory')
     wave = wave_payload()
@@ -428,13 +471,15 @@ def build(runtime, out, windows_files=None):
             entries['HELPER.SHA'] = read_file(HERE / 'HELPER.SHA')
             entries['README.TXT'] = guide
             write_zip(out / 'WXTTOOLS.ZIP', entries)
-        metadata = {'schema': 1, 'fonts_are_original': True, 'native_package_qualified': False, 'publication_allowed': False,
+        qualified, receipt = native_receipt(public, helper)
+        metadata = {'schema': 1, 'fonts_are_original': True, 'native_package_qualified': qualified, 'publication_allowed': qualified,
             'native_implementation_qualified': True, 'documentation_pin_refresh_verified': True,
             'refreshed_binary_rerun_in_guest': False,
-            'qualification_scope': 'Measured native implementation; host-verified document pin refresh. See QUALIFICATION.JSON.',
+            'qualification_scope': 'Native component evidence is carried only for exact current resources. PREPXT resource-data binding preserves its measured code; the refreshed helper was not separately rerun.',
+            'native_receipt': receipt,
             'documentation_binding_sha256': sha(read_file(HERE / 'DOCPINS' / 'BIND.JSON')),
-            'kind': 'private-own-media' if private else 'dos-mode-switcher-test-candidate',
-            'binary_policy': 'accepted base payloads plus reviewed rebuilt helper/installer and original fonts',
+            'kind': 'private-own-media' if private else 'dos-fixed-profiles',
+            'binary_policy': 'accepted drivers/support, current CPSET and absolute-child wrapper; unchanged PREPXT code',
             'independent_startup_default': 'slow-flag-wave',
             'disk_setup_startup': 'guarded-color-wave-static-fallback',
             'wave_payload_sha256': {n: sha(b) for n,b in wave.items()},
@@ -444,7 +489,7 @@ def build(runtime, out, windows_files=None):
             'runtime_manifest_sha256': sha(public['MANIFEST.SHA']),
             'packed_transport': transport_report(public, payload),
             'helper_sha256': sha(helper['PREPXT.EXE']),
-            'windows_support_included': private, 'image_bytes': image.stat().st_size,
+            'windows_support_included': True, 'operating_system_included': False, 'driver_support_complete': True, 'image_bytes': image.stat().st_size,
             'geometry': {'cylinders': 80, 'heads': 2, 'sectors_per_track': 9,
                          'sector_bytes': 512}, 'fat_verification': report}
         (out / 'BUILD.JSON').write_bytes((json.dumps(metadata, indent=2, sort_keys=True) + '\n').encode('ascii'))

@@ -1,0 +1,332 @@
+{
+  "adapter": "colorplus",
+  "assertions": {
+    "complete": true,
+    "config_reenabled": true,
+    "cursor_show_counts": true,
+    "dib_scans": true,
+    "frame_sequence": true,
+    "geometry": true,
+    "helper_and_config": true,
+    "helper_reset_sync": true,
+    "initial_top": true,
+    "no_failed_calls": true,
+    "pan_sequence": true,
+    "stable_pan_memory": true,
+    "text_bytes": true,
+    "text_reference": true,
+    "video_segment": true
+  },
+  "driver_sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f",
+  "frames": 32,
+  "free_after": [
+    314336
+  ],
+  "free_clean": [
+    314336
+  ],
+  "free_delta": [
+    -128
+  ],
+  "free_start": [
+    314464
+  ],
+  "limits": [
+    "raw VRAM screenshots are decoded captures, not host window grabs",
+    "text glyph uses separately rendered memory bitmap reference",
+    "no physical hardware qualification or performance claim"
+  ],
+  "padding_bytes_per_frame": 768,
+  "pass": true,
+  "pixels_compared": 2048000,
+  "results": [
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 0,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 0
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 1,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 1
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 2,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 99
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 3,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 4,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 199
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 5,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 200
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 6,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 0
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 7,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 200
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 8,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 200
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 9,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 10,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 0
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 11,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 200
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 12,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 200
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 13,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 0
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 14,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 1,
+      "first": [],
+      "frame": 15,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 16,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 1,
+      "first": [],
+      "frame": 17,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 18,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 1,
+      "first": [],
+      "frame": 19,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 20,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 1,
+      "first": [],
+      "frame": 21,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 22,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 1,
+      "first": [],
+      "frame": 23,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 24,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 1,
+      "first": [],
+      "frame": 25,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 26,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 1,
+      "first": [],
+      "frame": 27,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 100
+    },
+    {
+      "cursor_visible": 1,
+      "first": [],
+      "frame": 28,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 199
+    },
+    {
+      "cursor_visible": 1,
+      "first": [],
+      "frame": 29,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 200
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 30,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 200
+    },
+    {
+      "cursor_visible": 0,
+      "first": [],
+      "frame": 31,
+      "mismatches": 0,
+      "padding_mismatches": 0,
+      "pass": true,
+      "top": 0
+    }
+  ]
+}

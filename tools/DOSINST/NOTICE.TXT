@@ -1,0 +1,32 @@
+WINDOWS XT - COMPONENT NOTICE
+
+HPXY.DRV adapts the Microsoft Windows 3.1 DDK 286/DISPLAY/4PLANE renderer
+and its display resources with the project's 8088 Tandy backend and viewport.
+TNDYK3.DRV adapts the DDK keyboard sample. Both target Windows 3.0 real mode.
+Existing Microsoft copyright notices remain; this packet does not grant a
+new license to Microsoft's implementation or apply a blanket MIT license.
+
+The shell, viewport controls, reservation/installation helpers, games and
+companions are project-authored or retain their existing component notices.
+The current native preparer and guarded-wrapper corrections are project code.
+Open Watcom runtime notices are in OWATCOM.TXT. WHEELLIC.TXT covers the
+project COM1/IRQ4 wheel driver. Original fonts, artwork and mode tools retain
+PAYLOAD/FONTLIC.TXT, LOGOLIC.TXT and MODELIC.TXT respectively.
+
+CGA.GR2 is included from the supplied repository module after bounded SZDD
+expansion and verification against the qualified grabber. Fonts, logos,
+drivers and required project helpers are also supplied in this packet.
+
+Your Windows 3.0 OS installation or original Setup disks provide Windows.
+The native preparer automatically reads its Setup metadata and loader and
+constructs SETUP.INF, CNF.PIN and XTTEST.COM on the DOS computer. There is no
+individual support-file collection, Python or modern-computer preparation.
+The packet does not include a Windows/DOS installation, compiler, SDK/DDK,
+ROM, emulator or disk image. Original Windows files remain on the target.
+
+The separate Minesweeper download retains its own component notices.
+
+CANONICAL SOUND DRIVER
+The desktop and Tandy Winamp use the same SOUND.DRV. The finisher installs
+it automatically. SOUNDSRC.ZIP contains its corresponding source; the
+existing source license is retained in SOUNDLIC.TXT.

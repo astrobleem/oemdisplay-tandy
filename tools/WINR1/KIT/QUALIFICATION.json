@@ -1,0 +1,81 @@
+{
+  "status": "PASS_WITH_STATED_SCOPE",
+  "driver_sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0",
+  "clean_room_claim": false,
+  "license_scope": "MIT wheel/font component notices retained; no blanket combined-media grant",
+  "target": {
+    "machine": "Tandy1000HX emulator surrogate",
+    "hz": 7159092,
+    "ram_kb": 640,
+    "original_8088_core": true,
+    "emulator_modified": false
+  },
+  "decoder": {
+    "status": "PASS",
+    "actual_dos_records": 263967
+  },
+  "timed_api": {
+    "status": "PASS",
+    "run_id": "639c70a9258846c1a7e8b9634ebb40c9",
+    "actual_age_returns": 38,
+    "api_version_unchanged": "0100h",
+    "same_day_monotonic_clock_required": true,
+    "full_day_alias_requires_caller_date_epoch_guard": true
+  },
+  "private_bridge_recovery": {
+    "status": "PASS",
+    "run_id": "12254d2243bc4702a781fde9765f8721",
+    "scope": "separate controlled cooperative busy gap; capture-to-deadline36ticks, actual recovery age9..18ticks",
+    "observation": "Pinned readaged caller returned delta4 with age9..18 during separate controlled busy-gap EDIT test",
+    "maximum_recovery_ingestion_age_bios_ticks": 18,
+    "delivery_latency_guaranteed": false,
+    "code_policy": "FIXED PRELOAD;5398bytesresident",
+    "instrumented": true,
+    "fixture_warmup_calls_per_target": 2
+  },
+  "integration": {
+    "status": "PASS",
+    "run_id": "59e08544551f42a18848856e5761cc61",
+    "normal_shell": "accepted R8 TSHELL",
+    "cycles": 2,
+    "exact_frames": 8,
+    "frame_comparison_scope": "Every 320x200 active-viewport pixel; actual CRTC, visible VRAM fetch and decoded monitor capture",
+    "actual_uart_pointer_buttons_keyboard": true,
+    "actual_uart_edit_and_notepad_scroll": true,
+    "wheel_scope": "normal bridge, two pre-input WM_TIMER warm-up calls per target, one UART packet, exact calibrated wait",
+    "wheel_readiness_acknowledgment": false,
+    "wheel_fixture_handshake": "Source-bound QA memory receipts; publication armed after file handles close; checks logged after natural scroll",
+    "software_xy_focused_helper_keyboard_pan_and_home": true,
+    "hardware_xy_extreme_and_cursor": true,
+    "clean_dos_returns": 2,
+    "exact_uart_irq_bda_pic_restorations": 2
+  },
+  "private_install_tests": {
+    "XT-FRESH2": {
+      "status": "PASS",
+      "run_id": "443ccfccc60c44a183eac4714b4653a3",
+      "seconds": 692.0
+    },
+    "XT-UPDATE2": {
+      "status": "PASS",
+      "run_id": "562987d0519046fbbe15537726236c0c",
+      "seconds": 213.34
+    },
+    "SHELL-R8": {
+      "status": "PASS",
+      "run_id": "59e08544551f42a18848856e5761cc61",
+      "seconds": 707.41
+    }
+  },
+  "limits": [
+    "COM1/IRQ4 1200baud7N1 serial contract only",
+    "UART loopback injection; physical serial mouse not tested",
+    "Windows3.0 real mode; protected mode/Windows3.1/other ports not implemented",
+    "Combined default XR1 profile qualified; inherited alternate profiles not requalified",
+    "Wheel targets synchronized with normal timer warm-up; no unassisted readiness claim",
+    "Earlier intermittent Notepad loss was not definitively attributed; the timestamp recovery change has separate host and native evidence",
+    "Windows, display/keyboard derivatives and wheel client are separate dependencies"
+  ],
+  "cf_access": false,
+  "publication": false
+}

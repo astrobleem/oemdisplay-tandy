@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "WIN_INI_exact_preserved": true,
+  "SYSTEM_INI_only_sound_case_change": true,
+  "identities": {
+    "WINDOWS/WIN.INI": {
+      "before": {
+        "bytes": 1317,
+        "sha256": "860d713109375834c4526dc4885347b816c1b32f3501d7c323cb1ae568ea9c48"
+      },
+      "after": {
+        "bytes": 1317,
+        "sha256": "860d713109375834c4526dc4885347b816c1b32f3501d7c323cb1ae568ea9c48"
+      }
+    },
+    "WINDOWS/SYSTEM.INI": {
+      "before": {
+        "bytes": 1145,
+        "sha256": "379c7c594a6d4df9b5570fa2adf8506b59adba9abd87dac7444ff6bf9d5bde10"
+      },
+      "after": {
+        "bytes": 1145,
+        "sha256": "9be4b2431b7bf010b8e953b927cf7db230d3b18892469d81e8a000426aca8da2"
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+WINDOWS XT XR1 - OWN-MEDIA INSTALL
+Copy DOS-CROOT contents to C:\; preserve your working DOS boot files.
+From plain DOS run C:\SETUPXT. A new C:\WINDOWS runs Windows Setup;
+an existing Windows 3.0 installation uses the update/finisher route.
+Fresh Setup: Enter at Welcome and directory. Select the first Computer:
+Tandy 1000 EX/HX (WindowsXT). Confirm HPXY, PC/XT Hold and COM1 mouse.
+Accept No Changes. Setup and the DOS finisher complete automatically.
+Next starts: C:\STARTXT. Repair from plain DOS: C:\FIXXT.
+The XR1 desktop is 640x256 logical space in a 320x200, sixteen-color viewport.
+XYCTL starts in Software mode. Select Hardware in its menu or Ctrl+Alt+H.
+Ctrl+Alt+arrows pan; Ctrl+Alt+Home returns home. The helper menu has Help.
+WXTWHL starts once for wheel scrolling in supported ordinary Windows controls.
+WHEEL.DRV uses COM1/IRQ4, 1200 baud, 7N1, ordinary three-byte movement/buttons
+and the optional signed wheel nibble.
+This package supplies XR1. MODEXT /XR1 restores that profile from plain DOS.
+Other display profiles remain in their separately preserved packages.
+The updater preserves unrelated startup entries and your shell customization.
+Healthy repair copies nothing; /VERIFY requests full comparison.
+Keep the prepared output private: it contains your Windows media/loader.
+See the supplied README.TXT for preparation, installation and tested scope.

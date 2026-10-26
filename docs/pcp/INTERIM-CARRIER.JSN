@@ -1,0 +1,124 @@
+{
+  "complete": true,
+  "scope": "Actual new DOS SFX refusal/default/case retry and byte-exact extraction. Fixed ColorPlus runtime is separately qualified; original native OEM Setup, panning and support evidence is unchanged.",
+  "owned_child_stopped": true,
+  "lease_released": true,
+  "checks": {
+    "target_refusal_before_writes": true,
+    "exact_native_extraction": true,
+    "case_retry_preserved_user_file": true,
+    "normal_transaction_exit": true
+  },
+  "process": {
+    "started": "2026-10-25T20:27:19.111021+00:00",
+    "emulator": "C:\\Program Files\\DOSBox-X\\dosbox-x.exe",
+    "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-25\\task-2\\cp-native\\carrier-native\\TEST.CNF",
+    "emulator_sha256": "769fb38a5a94475488be2107856d9a9fcca65487df35676188f5c2ccd5a2e964",
+    "timeout": 60,
+    "lease_acquired": true,
+    "inventory": "",
+    "pid": 17280,
+    "return": 0,
+    "owned_child_stopped": true,
+    "lease_released": true
+  },
+  "batch_source": "@ECHO OFF\nCPPSET C:\\OTHER > C:\\BAD.LOG\nIF NOT ERRORLEVEL 1 GOTO BAD\nIF EXIST C:\\OTHER GOTO BAD\nIF EXIST C:\\CPPAN GOTO BAD\nCPPSET > C:\\EXTRACT.LOG\nIF ERRORLEVEL 1 GOTO BAD\nECHO KEEP>C:\\CPPAN\\USER.TXT\nCPPSET c:\\cppan > C:\\RETRY.LOG\nIF ERRORLEVEL 1 GOTO BAD\nECHO PASS>C:\\DONE.TXT\nGOTO END\n:BAD\nECHO FAIL>C:\\DONE.TXT\n:END\nEXIT\n",
+  "native_logs": {
+    "BAD.LOG": "",
+    "EXTRACT.LOG": "ColorPlus files are ready. From plain DOS run C:\\CPPAN\\INSTALL.\n",
+    "RETRY.LOG": "ColorPlus files are ready. From plain DOS run C:\\CPPAN\\INSTALL.\n",
+    "DONE.TXT": "PASS\n"
+  },
+  "outputs": {
+    "CPPSET.EXE": {
+      "bytes": 212375,
+      "sha256": "bd72a573d3023fb62eeb22e23efaccc304c8a9d4286a653e14df631d84d84a10"
+    },
+    "CPPAN.ZIP": {
+      "bytes": 179929,
+      "sha256": "f280772239c91ead6c9ac37e00b5095311e0daef65b524b6a5b82f609c39438c"
+    },
+    "INSTALL.TXT": {
+      "bytes": 1391,
+      "sha256": "d2e2a20d4f65e21a981235ae4ee0454e44a223356200687fef97edcd5d6155e9"
+    }
+  },
+  "runtime": {
+    "CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "CPPAN.DRV": {
+      "bytes": 58864,
+      "sha256": "af32878ca8cd62e765b140f9cbf604dd00b120ec9e21f89c0f8420626f98e54f"
+    },
+    "CPWIN.BAT": {
+      "bytes": 35,
+      "sha256": "8d40f405422e12b6aa8b6c8875688d545d3184b429365a91caf5f4f90382fa7c"
+    },
+    "FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "INSTALL.BAT": {
+      "bytes": 550,
+      "sha256": "8140d9b0f2ae5a47f8ef58c12d58047543d283b54ebae2f2119d7677816f892f"
+    },
+    "INSTALL.TXT": {
+      "bytes": 1391,
+      "sha256": "d2e2a20d4f65e21a981235ae4ee0454e44a223356200687fef97edcd5d6155e9"
+    },
+    "LICENSE.TXT": {
+      "bytes": 1399,
+      "sha256": "5e550565afe576f23423d7b9c02f9f35af119b8d7ac87edbc94b98da4d04ddf0"
+    },
+    "LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "NOTICE.TXT": {
+      "bytes": 1327,
+      "sha256": "adee88f4b348d0e0943f0acf6a807cbee3893219bc0f6431d76c0323c5020448"
+    },
+    "OEMSETUP.INF": {
+      "bytes": 568,
+      "sha256": "b4f1066a065bc1873eedfd201c037509da5e1f2f9c9f6220b0be7efae2e40dcc"
+    },
+    "OWATCOM.TXT": {
+      "bytes": 21128,
+      "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+    },
+    "PANCFG.EXE": {
+      "bytes": 4015,
+      "sha256": "e67238948079683788e626ad54a11b89e28a515da97632724bc394e2637a1442"
+    },
+    "PCP3216.DRV": {
+      "bytes": 58752,
+      "sha256": "6fbee832bde5b8fec958eb654e6fde14a4e6cc8fa6e9749623311cb99049411c"
+    },
+    "WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    },
+    "XTEFIX.FON": {
+      "bytes": 4656,
+      "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+    },
+    "XTEOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "XTESYS.FON": {
+      "bytes": 5680,
+      "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+    },
+    "XTPAN.EXE": {
+      "bytes": 6415,
+      "sha256": "ea81c0b2e880f28a3f8bf9b8b24d7d9ab7363660036cc382ef6e28c48b690f9b"
+    },
+    "XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    }
+  }
+}

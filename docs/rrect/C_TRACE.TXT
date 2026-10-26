@@ -1,0 +1,11 @@
+ 1 roundrect_key      EQUAL 0 px   ref 64262  cand 64372
+ 2 rectangle_key      EQUAL 0 px   ref 20871  cand 20872
+ 3 roundrect_large    EQUAL 0 px   ref 19883  cand 19937
+ 4 roundrect_hollow   EQUAL 0 px   ref 20926  cand 20926
+ 5 roundrect_nopen    EQUAL 0 px   ref 43226  cand 43336
+ 6 roundrect_xor      EQUAL 0 px   ref 63932  cand 64042
+ 7 roundrect_overlap  EQUAL 0 px   ref 63988  cand 64097
+ 8 roundrect_clipped  EQUAL 0 px   ref 51080  cand 51080
+ 9 ellipse_12         EQUAL 0 px   ref 12743  cand 12742
+10 calc               EQUAL 0 px   ref [98975, 98975, 99029]  cand [99085, 99084, 99140]
+ALL FRAMES EQUAL

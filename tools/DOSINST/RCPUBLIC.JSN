@@ -1,0 +1,404 @@
+{
+  "schema": 1,
+  "files": {
+    "NOTICE.TXT": {
+      "source": "tools/DOSINST/NOTICE.TXT",
+      "identity": {
+        "bytes": 1845,
+        "sha256": "33c86c7e8f70c19fb9a942e1f8676556921cd0893388f16036f28af9dc4dfba2"
+      }
+    },
+    "OWATCOM.TXT": {
+      "source": "tools/XR1PACK/OWATCOM.TXT",
+      "identity": {
+        "bytes": 21128,
+        "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+      }
+    },
+    "PAYLOAD/APPS.TXT": {
+      "source": "tools/XR1PACK/PAYLOAD/APPS.TXT",
+      "identity": {
+        "bytes": 412,
+        "sha256": "22018a4cc6a6c5edd39d74ad6c4e39058be9ebf629ed460b16d4d385a100400b"
+      }
+    },
+    "PAYLOAD/CPSET.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/CPSET.EXE",
+      "identity": {
+        "bytes": 36612,
+        "sha256": "e4fccba25d817f9a07a900a3cf443d9ea8a28cfb82cd39887293e8436589fa4d"
+      }
+    },
+    "PAYLOAD/FIXXT.BAT": {
+      "source": "tools/XR1PACK/PAYLOAD/FIXXT.BAT",
+      "identity": {
+        "bytes": 314,
+        "sha256": "b8a060cdc2d125989379375b8f9dbbb04d0a17f4aa71a6235350291f65f410c8"
+      }
+    },
+    "PAYLOAD/FIXXT.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/FIXXT.EXE",
+      "identity": {
+        "bytes": 33001,
+        "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"
+      }
+    },
+    "PAYLOAD/FONTLIC.TXT": {
+      "source": "tools/XR1PACK/PAYLOAD/FONTLIC.TXT",
+      "identity": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      }
+    },
+    "PAYLOAD/HPXY.DRV": {
+      "source": "tools/XR1PACK/PAYLOAD/HPXY.DRV",
+      "identity": {
+        "bytes": 56704,
+        "sha256": "9db7bbd8b1e9c30aa0cd766a89ff35abf42697aa3d342c7d7906b3d98f767275"
+      }
+    },
+    "PAYLOAD/LOGOLIC.TXT": {
+      "source": "tools/XR1PACK/PAYLOAD/LOGOLIC.TXT",
+      "identity": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      }
+    },
+    "PAYLOAD/MATRIX.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/MATRIX.EXE",
+      "identity": {
+        "bytes": 14669,
+        "sha256": "854e0692b4a2571b7d53b45f15da7d954137fde9dce079e8a17df753ec94aca8"
+      }
+    },
+    "PAYLOAD/MAZE.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/MAZE.EXE",
+      "identity": {
+        "bytes": 28013,
+        "sha256": "9905abccd267dd229502fad2d7e57375f51c34b2c445fc52ea754508407de389"
+      }
+    },
+    "PAYLOAD/MODELIC.TXT": {
+      "source": "tools/XR1PACK/PAYLOAD/MODELIC.TXT",
+      "identity": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      }
+    },
+    "PAYLOAD/MODEXT.BAT": {
+      "source": "tools/XR1PACK/PAYLOAD/MODEXT.BAT",
+      "identity": {
+        "bytes": 481,
+        "sha256": "7f9948334d1d7f073326be6c5153e3a24a24ef836fa823fc45667b1a79e2fa5a"
+      }
+    },
+    "PAYLOAD/OEMSETUP.INF": {
+      "source": "tools/XR1PACK/PAYLOAD/OEMSETUP.INF",
+      "identity": {
+        "bytes": 882,
+        "sha256": "81957f3577522507e896899ad8d6a4fb98177fcd5ca3ff720e19d8e05d47f8d3"
+      }
+    },
+    "PAYLOAD/OWNERS.TXT": {
+      "source": "tools/DOSINST/OWNERS.TXT",
+      "identity": {
+        "bytes": 10352,
+        "sha256": "a9ac59f348a4a4ee6efb2dea4860966a91cf628493e089d3c55d58cf34e3eae7"
+      }
+    },
+    "PAYLOAD/PINBALL.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/PINBALL.EXE",
+      "identity": {
+        "bytes": 15487,
+        "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f"
+      }
+    },
+    "PAYLOAD/PROFILES.TXT": {
+      "source": "tools/DOSINST/PROFILES.TXT",
+      "identity": {
+        "bytes": 299,
+        "sha256": "c439e1fc0e3ac7a6d0db212b95908699993855bf6135c57ce4b889b5b465215c"
+      }
+    },
+    "PAYLOAD/RESERVE.COM": {
+      "source": "tools/XR1PACK/PAYLOAD/RESERVE.COM",
+      "identity": {
+        "bytes": 1512,
+        "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+      }
+    },
+    "PAYLOAD/SETAUTO.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/SETAUTO.EXE",
+      "identity": {
+        "bytes": 10976,
+        "sha256": "e2908cba3430be2a3b24058061f6b477629305476f8702d6a7c2f7fd81d45e0a"
+      }
+    },
+    "PAYLOAD/SETUPXT.BAT": {
+      "source": "tools/XR1PACK/PAYLOAD/SETUPXT.BAT",
+      "identity": {
+        "bytes": 1726,
+        "sha256": "46baa557d053b704fd6f1d79db1b1a2455cfbdd67901225dca2b86538734eb9a"
+      }
+    },
+    "PAYLOAD/SHOOK.COM": {
+      "source": "tools/XR1PACK/PAYLOAD/SHOOK.COM",
+      "identity": {
+        "bytes": 1249,
+        "sha256": "ba35ca3ce5407270e61c0ca15d27c4ca052bcd2a1112c7819fc214b74bd0d211"
+      }
+    },
+    "PAYLOAD/STARFLD.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/STARFLD.EXE",
+      "identity": {
+        "bytes": 17295,
+        "sha256": "c615fcd8c18ed740ed051542093e1bd18e26b92e820eef5b1bb4fa69f2ab8ff5"
+      }
+    },
+    "PAYLOAD/START.TXT": {
+      "source": "tools/DOSINST/START.TXT",
+      "identity": {
+        "bytes": 837,
+        "sha256": "31b58d7d339c2ad6c55d2be4d7d3fc1be4a954476dc7a61ef21ebd9af00bdf1b"
+      }
+    },
+    "PAYLOAD/STARTXT.BAT": {
+      "source": "tools/XR1PACK/PAYLOAD/STARTXT.BAT",
+      "identity": {
+        "bytes": 31,
+        "sha256": "2644ccde425aae149e6240db084401aa7ae1ede3610c5daeb34a7234d5081aaa"
+      }
+    },
+    "PAYLOAD/TABOUT.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/TABOUT.EXE",
+      "identity": {
+        "bytes": 6479,
+        "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed"
+      }
+    },
+    "PAYLOAD/TCHIME.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/TCHIME.EXE",
+      "identity": {
+        "bytes": 5071,
+        "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61"
+      }
+    },
+    "PAYLOAD/TEXIT.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/TEXIT.EXE",
+      "identity": {
+        "bytes": 9215,
+        "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148"
+      }
+    },
+    "PAYLOAD/TNDYK3.DRV": {
+      "source": "tools/XR1PACK/PAYLOAD/TNDYK3.DRV",
+      "identity": {
+        "bytes": 7640,
+        "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+      }
+    },
+    "PAYLOAD/TP.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/TP.EXE",
+      "identity": {
+        "bytes": 12847,
+        "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33"
+      }
+    },
+    "PAYLOAD/TSHELL.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/TSHELL.EXE",
+      "identity": {
+        "bytes": 72323,
+        "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9"
+      }
+    },
+    "PAYLOAD/TSHELL.INI": {
+      "source": "tools/XR1PACK/PAYLOAD/TSHELL.INI",
+      "identity": {
+        "bytes": 999,
+        "sha256": "9b0dca9bf1f66bcb5f99cbc347dbf093942ee30c6e0b3d546127e88585cec2f5"
+      }
+    },
+    "PAYLOAD/TSINPUT.DLL": {
+      "source": "tools/XR1PACK/PAYLOAD/TSINPUT.DLL",
+      "identity": {
+        "bytes": 6281,
+        "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+      }
+    },
+    "PAYLOAD/WHEEL.DRV": {
+      "source": "tools/XR1PACK/PAYLOAD/WHEEL.DRV",
+      "identity": {
+        "bytes": 1820,
+        "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+      }
+    },
+    "PAYLOAD/WINBRDG.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/WINBRDG.EXE",
+      "identity": {
+        "bytes": 28656,
+        "sha256": "230a24f8dec830dd8ceb8e11bb6f9694ed9a67b25ef232b9352e5e743cd3d74b"
+      }
+    },
+    "PAYLOAD/WINXT.BAT": {
+      "source": "tools/XR1PACK/PAYLOAD/WINXT.BAT",
+      "identity": {
+        "bytes": 332,
+        "sha256": "8b484c67b9896deb2ba281f79a4020e35c7ef238fad5c5055ca63699c87c683b"
+      }
+    },
+    "PAYLOAD/WXTSPL01.RLE": {
+      "source": "tools/XR1PACK/PAYLOAD/WXTSPL01.RLE",
+      "identity": {
+        "bytes": 4062,
+        "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+      }
+    },
+    "PAYLOAD/WXTWHL.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/WXTWHL.EXE",
+      "identity": {
+        "bytes": 7222,
+        "sha256": "0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6"
+      }
+    },
+    "PAYLOAD/XPCHIME.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/XPCHIME.EXE",
+      "identity": {
+        "bytes": 5103,
+        "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0"
+      }
+    },
+    "PAYLOAD/XTCFIX.FON": {
+      "source": "tools/XR1PACK/PAYLOAD/XTCFIX.FON",
+      "identity": {
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+      }
+    },
+    "PAYLOAD/XTCLEAN.COM": {
+      "source": "tools/DOSINST/BIN/XTCLEAN.COM",
+      "identity": {
+        "bytes": 1071,
+        "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
+      }
+    },
+    "PAYLOAD/XTCOEM.FON": {
+      "source": "tools/XR1PACK/PAYLOAD/XTCOEM.FON",
+      "identity": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      }
+    },
+    "PAYLOAD/XTCSYS.FON": {
+      "source": "tools/XR1PACK/PAYLOAD/XTCSYS.FON",
+      "identity": {
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+      }
+    },
+    "PAYLOAD/XTEFIX.FON": {
+      "source": "tools/XR1PACK/PAYLOAD/XTEFIX.FON",
+      "identity": {
+        "bytes": 4656,
+        "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+      }
+    },
+    "PAYLOAD/XTEOEM.FON": {
+      "source": "tools/XR1PACK/PAYLOAD/XTEOEM.FON",
+      "identity": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+      }
+    },
+    "PAYLOAD/XTESYS.FON": {
+      "source": "tools/XR1PACK/PAYLOAD/XTESYS.FON",
+      "identity": {
+        "bytes": 5680,
+        "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+      }
+    },
+    "PAYLOAD/XTLOGO.LGO": {
+      "source": "tools/XR1PACK/PAYLOAD/XTLOGO.LGO",
+      "identity": {
+        "bytes": 35971,
+        "sha256": "8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c"
+      }
+    },
+    "PAYLOAD/XTSTATIC.LGO": {
+      "source": "tools/XR1PACK/PAYLOAD/XTSTATIC.LGO",
+      "identity": {
+        "bytes": 361,
+        "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+      }
+    },
+    "PAYLOAD/XTTSYS.FON": {
+      "source": "tools/XR1PACK/PAYLOAD/XTTSYS.FON",
+      "identity": {
+        "bytes": 4208,
+        "sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa"
+      }
+    },
+    "PAYLOAD/XYCTL.EXE": {
+      "source": "tools/XR1PACK/PAYLOAD/XYCTL.EXE",
+      "identity": {
+        "bytes": 9679,
+        "sha256": "7098d4037a852f5f3d2b55bf62acd01811352c32a5be4a0be80e9f6c2d3e9055"
+      }
+    },
+    "PREPXR.EXE": {
+      "source": "tools/DOSINST/BIN/PREPXR.EXE",
+      "identity": {
+        "bytes": 83544,
+        "sha256": "98f0a5b0fa42670109138e1bc7d313a1804786768e4e550861cdd0a462915b69"
+      }
+    },
+    "README.TXT": {
+      "source": "tools/XR1PACK/README.TXT",
+      "identity": {
+        "bytes": 2909,
+        "sha256": "a50fbff5f37b18242b911230dd93ac365bc72a2fd2aeee80b5bf06a0cfdb2bdb"
+      }
+    },
+    "WHEELLIC.TXT": {
+      "source": "tools/XR1PACK/WHEELLIC.TXT",
+      "identity": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+      }
+    },
+    "PAYLOAD/CGA.GR2": {
+      "source": "distributions/WINXT/CGA.GR2",
+      "identity": {
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+      }
+    },
+    "PAYLOAD/SOUND.DRV": {
+      "source": "tools/XR1PACK/PAYLOAD/SOUND.DRV",
+      "identity": {
+        "bytes": 9752,
+        "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+      }
+    },
+    "SOUNDID.JSN": {
+      "source": "tools/XR1PACK/SOUNDID.JSN",
+      "identity": {
+        "bytes": 152,
+        "sha256": "32cbeaec5be964abf44c3c84bd519a841958eb49cf491d9347a0ed5ff3d8741e"
+      }
+    },
+    "SOUNDSRC.ZIP": {
+      "source": "tools/XR1PACK/SOUNDSRC.ZIP",
+      "identity": {
+        "bytes": 100529,
+        "sha256": "9e32793d07820154d627cdcf147bbfc7086d5db7addf76f5c66d310ff9ff220a"
+      }
+    },
+    "SOUNDLIC.TXT": {
+      "source": "tools/XR1PACK/SOUNDLIC.TXT",
+      "identity": {
+        "bytes": 35823,
+        "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809"
+      }
+    }
+  }
+}

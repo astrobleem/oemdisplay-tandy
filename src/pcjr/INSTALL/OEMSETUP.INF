@@ -1,0 +1,17 @@
+; IBM PCjr 320x200x16 (TNDYJR.DRV), Windows 3.0 real mode. EXPERIMENTAL.
+; Start Windows only with C:\PCJREXP\JRWIN, which runs JRGUARD first.
+; All files are first-party: TNDYJR.DRV, JRGRAB.GR2 (PCjr-safe grabber built
+; from the DDK CGA grabber), XTE*.FON fonts, XTSTATIC.LGO + WXTSPL01.RLE logo.
+; Setup copies from the absolute path below; keep the folder at C:\PCJREXP.
+[data]
+Version = "3.0"
+[disks]
+a = C:\PCJREXP, "IBM PCjr experimental display (C:\PCJREXP)", OEMSETUP.INF
+[display]
+TNDYJR = a:TNDYJR.DRV, "EXPERIMENTAL IBM PCjr 320x200 16 colors", "133,96,72", a:JRGRAB.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE
+[sysfonts]
+a:XTESYS.FON, "EGA System Font", "133,96,72"
+[fixedfonts]
+a:XTEFIX.FON, "EGA Fixed System Font", "133,96,72"
+[oemfonts]
+a:XTEOEM.FON, "EGA Terminal Font (USA/Europe)", "133,96,72", 1

@@ -1,92 +1,125 @@
-# Project: Tandy 1000 EX/HX Display Driver (Windows 3.0)
+# Contributor instructions: Windows XT
 
-## 1. Environment & Tools
-- **Host OS:** Windows packaging entry point; portable Python backend also tested on Linux.
-- **Emulator:** separately supplied DOSBox-X; pass its explicit path via `--dosbox`.
-- **Assembler:** pinned external MASM 5.10; see tools/BUILDDEPS/README.MD.
-- **Linker:** LINK4 (Segmented Executable Linker v5.x).
-- **Current Build:** `python3 src/tandysw/BUILD88.PY --dosbox <dosbox-x> --out <new-path> [--mode <profile>]`; five profiles are in `docs/MODES.MD`. Omitted mode selects 320x200x16 in the current development pipeline; see docs/TRIAL4/README.MD.
-- **Legacy Build:** old TNDY16 source/builders are preserved in [DEV](docs/DEV.MD); use current external source views.
-- **Packaging:** current public Windows XT uses `tools/FLASHDISK/MAKEIMG.PY`; test with `TESTFAT.PY` and `TESTPKG.PY`. Root `MAKEDISK` is historical TANDY88 reproduction only. See `BUILDING.MD`.
-- **Install:** current own-media WINXT disk, six Windows Setup Other display choices, and guarded `C:\WINXT\WINXT` launcher. Every profile selects approved `WXTSPL01.RLE`; the old Tandy picture is retired. Never use manual INI edits as normal install instructions.
+## Current product and entry points
 
-## 2. File Handling Rules
-- **Line Endings:** **CRLF** (Windows style) is MANDATORY.
-    - *Reason:* MASM 5.10 and the `multi_replace_file_content` tool can fail with mixed or LF-only line endings.
-    - *Action:* Ensure all edits preserve `\r\n`.
-- **Filenames:** 8.3 format, uppercase preferred for DOS compatibility (e.g., `TANDY16.DRV`).
+Windows XT targets Windows 3.0 real mode on an original Tandy 1000 EX/HX
+with normal 640 KB. Other hardware uses its matching packet in
+[current downloads](docs/DOWNLOADS.MD). See [BUILDING.MD](BUILDING.MD) for commands.
 
-## 3. Coding Standards
-- **Language:** 8086 Assembly (MASM 5.1 syntax).
-- **Calling Convention:** Pascal (`?PLM=1`) for Windows API compliance (Uppercase exports).
-- **Segments:** Use `cmacros.inc` macros (`sBegin`, `sEnd`, `cProc`) to ensure correct segment ordering (`_TEXT`, `_DATA`, etc.).
+- **Consumer layout:** current `WINXT.ZIP` contains root `SETUP.EXE`,
+  `README.TXT` and one expanded `WINXT` folder. Full installation runs native
+  DOS `SETUP UPDATE C:\WINDOWS` or `SETUP FRESH A:\`; later use `C:\STARTXT`.
+  Drivers only use ordinary Windows Setup against the same movable folder,
+  with its guarded `DISPLAY` and `DISPWIN` entries. See [desktop setup](docs/DESKTOP.MD)
+  and [driver setup](docs/DRIVERS.MD). Full preparation needs DOS 3.3+;
+  the installed-Windows driver route supports DOS 3.20+.
+- **Current core producer:** `tools/DOSINST/RCPUB.PY`; the CLI in
+  `tools/XR1PACK/PUBLISH.PY` forwards to it. Current download curation is
+  `tools/CURRENT/BUNDLE.PY`, checked by `tools/CURRENT/CHECK.PY` and pinned
+  in `tools/CURRENT/PRODUCTS.JSN`.
+- **Developer display build:** `src/tandysw/BUILD88.PY` exists and builds
+  the five-profile Tandy software-raster driver base (internally called `TR5`)
+  from an explicit external DDK/toolchain view.
+  It is not a build of the complete current HPXY desktop packet. Supply
+  `--repo`, `--dosbox`, a fresh `--out` and the intended `--mode`.
+  `src/pc1512/BUILD15.PY` also uses BUILD88 as its base; successful compilation
+  does not accept a new driver into any packet.
+- **Native helper builds:** `tools/DOSINST/BUILD.PY` uses external Open Watcom
+  for expanded SETUP and the DOS wrapper. The accepted current FIXXT build
+  uses external Microsoft C6 through `tools/SOUNDOWN/FINBUILD.PY`.
+- **Fixed-profile producer:** `tools/FLASHDISK/MAKEIMG.PY` builds the complete
+  fixed-profile data disk. `oemdisk/MAKEDISK.BAT` and `oemdisk/MAKEDISK.PY`
+  are historical TANDY88 reproduction tools, not current product builders.
 
-## 4. Development builds and historical OEM package preservation
+Developer Python is allowed. Consumer preparation must never require Python,
+a modern-host conversion, manual INI edits or collection of driver support files.
+Do not invent automatic hardware detection, installer behavior or qualification.
 
-The updated BUILD88 source produces the experimental Output-row family recorded
-in docs/TRIAL4/BUILDS.JSN. Existing packaged payloads and exact MAKEDISK pins
-remain historical accepted artifacts. Do not replace those payloads or relax
-pins merely because a development rebuild succeeds. Trial overlays live only
-in experiments/TRIAL4 and require owned support files. REPCOPY88.PY is a
-retained, host-only nine-character filename; DOS payload names stay 8.3.
+## Bundled support and preserved identities
 
-1. Preserve the accepted candidate05 `src/tandysw/bin/TANDY88.DRV` (SHA256 `ac1aadce894058ab6dbdeab2d2a3fd8673a8b4e78d8798198d295f61f32dafee`), `RESERVE.COM`, shared launcher and custom `TNDYLOGO.RLE` unless explicitly in scope. Main commit `54fdd714` and the custom-splash work have been merged locally; do not regress them.
-2. Rebuild with `BUILD88.PY` and review `RESULT.json`; run the documented CPU, memory and framebuffer tests.
-3. Package through `MAKEDISK.BAT` on Windows or `MAKEDISK.PY` elsewhere. Exact binary pins deliberately reject an unaccepted rebuild.
-4. Use `--windows-files <owned-media-files> --local-out <new-disk-directory>` for a complete installable disk. The normal TANDY88.ZIP includes all five pinned drivers, eight pinned Windows 3.0 OEM support files and the pinned first-party TNDYLOGO.RLE. Only CGASYS.FON, CGAFIX.FON and CGAOEM.FON are new Windows dependencies.
-5. Test Windows Setup and the resulting installation without manually editing SYSTEM.INI. Keep full OS media, guest installations and unrelated toolchains out of publication. Only the eight pinned Windows OEM dependencies and first-party TNDYLOGO.RLE belong alongside the drivers/helpers and documented text/metadata in the complete runtime ZIP.
-6. Rebuild/reverify the package after changing a payload source such as FILE_ID.DIZ. The current measured FAT12 total is 326,656/368,640 bytes, including allocation/overhead, with 41,984 bytes free; remeasure after final edits.
-7. See `docs/MODES.MD` and `docs/OEMDISK.MD` for acceptance, failure checks and limits. All five native Setup switches and cloned-install GDI checks have passed; the final only-C-drive cold GUI/reopen and rebuilt-package acceptance also passed (docs/modes/oem/COLD.JSON). Native Windows host-wrapper execution and physical Tandy hardware remain separate verification requirements.
+- Current packets include their selected original XT Pixels fonts:
+  `XTCSYS.FON`, `XTCFIX.FON`, `XTCOEM.FON`; `XTESYS.FON`, `XTEFIX.FON`,
+  `XTEOEM.FON`; and `XTTSYS.FON` where required. The HPXY OEM descriptor
+  `tools/XROEM/OEMSETUP.INF` selects the three XTC fonts with `200,96,48`.
+  Stock `CGASYS.FON`, `CGAFIX.FON` and `CGAOEM.FON` are not consumer inputs.
+- The authoritative expanded grabber is `distributions/WINXT/CGA.GR2`.
+  Do not restore a loose root duplicate or ask consumers to find one.
+  Current driver sources also bundle their selected `XTSTATIC.LGO` and
+  `WXTSPL01.RLE`; the full/fixed packets carry their additional startup assets.
+  Keep the approved artwork selection and each packet's closed support inventory.
+- Installed DOS/Windows and normal OS installation media remain prerequisites.
+  The full installer gathers OS files from that media; fonts, grabber and logos
+  supplied by our driver packets are a separate set. Historical media-gathering
+  contracts in [oemdisk](oemdisk/HISTORY.MD), [MODES](docs/MODES.MD) and
+  [OEMDISK](docs/OEMDISK.MD) must not be reapplied to current packets.
+- Preserve accepted runtime binaries, source/evidence pins, component notices
+  and original test records. Never relax pins or replace accepted bytes merely
+  because a developer rebuild or oracle passes. Runtime changes need separate
+  qualification and complete affected manifest/recipe updates.
+  This also preserves `src/tandysw/bin/` and the older OEM pins; BUILD88
+  development outputs must not overwrite those frozen accepted binaries.
+- Source rebuilds use explicit commit-pinned external views from
+  [BUILDDEPS](tools/BUILDDEPS/README.MD). Main does not bundle the DDK/compiler
+  or emulator. Keep OS media, installed/prepared guest trees and unrelated
+  toolchains out of public artifacts. Preserve each component's actual notices;
+  do not apply a blanket project license to adapted components.
 
-## 5. Selectable-Mode Contracts
-- Target original EX/HX, Windows 3.0 real mode, normal 640 KB and enforced 8086/8088 semantics. Do not introduce 386, expanded-memory, EMS/XMS or UMB workarounds.
-- Setup choices: TANDY88.DRV = 320x200x16; TNDY6404.DRV = 640x200x4 black/red/green/white; TNDY160.DRV = 160x200x16; TNDY3204.DRV = 320x200x4 black/cyan/magenta/white; TNDY6402.DRV = 640x200x2 black/white.
-- BIOS 0Ah is four colors on original EX/HX. Never describe it as 640x200x16.
-- Keep four logical DDB planes; NUMCOLORS reports actual physical colors. Logical planes do not increase physical depth. Shadow buffers are exactly 16,000/32,000/64,000 bytes by width; hardware buffers are 16,384 bytes except modes 09h/0Ah at 32,768 bytes.
-- New modes use eight-pixel CGASYS/CGAFIX/CGAOEM fonts and resource/Setup tuple 200,96,48. Default keeps EGA fonts and 133,96,72.
-- The shared RESERVE helper conservatively protects the extra 16 KB overlap for every mode. Lower-color modes do not permit bypassing the launcher.
-- Retain historical evidence. docs/modes/6404 is the experimental cyan/magenta checkpoint; docs/modes/6404rg is the current red/green profile.
-- Do not turn oracle self-tests or mathematical color/ROP proofs into claims of complete Windows/hardware coverage. Current Windows probes cover solid brushes, SRCCOPY and SRCINVERT; NULL-buffer GetDIBits is unsupported.
-- Recommend stock-CGA Windows installation first, then Setup's Other display selection of 640x200x4. At 160/320 pixels, desktop and Setup dialogs can clip.
+## File handling and native code
 
-## 6. Common Pitfalls
-- **Syntax Errors:** `?PLM=1` ensures Pascal calling convention (uppercase symbols). Mixing calls with C-style functions (`externNP`) without `externFP` or aliases can cause link errors.
-- **Fixup Overflows:** `NEAR` calls to distant segments. Use `FAR` calls or rearrange segments.
-- **Linker Errors:** `L2022` (undefined) or `L2023` (alias import conflict) often relate to DEF file export naming vs. source code mangling.
+- Preserve CRLF. DOS payload names must fit 8.3; uppercase is preferred.
+  Existing host-only names such as `REPCOPY88.PY` are not DOS payloads.
+- Target 8086/8088 instructions. MASM source uses MASM 5.1 syntax, Pascal
+  calling convention (`?PLM=1`), uppercase exports and `cmacros.inc` segment
+  macros. Native C code uses the target toolchain's C89-compatible conventions.
+- Preserve NEAR/FAR linkage. For L2022/L2023 or fixup overflows, inspect the
+  emitted listings, DEF/export aliases and existing `externNP`/`externFP`
+  contracts rather than changing the calling convention globally.
+- Windows host GCC/G++ and their compiler children must use the managed
+  `%USERPROFILE%\Documents\Codex\toolchains\gcc-ucrt64.py` launcher.
+  This is separate from the native Open Watcom and DOS MSC6 routes. Do not
+  change global PATH or substitute raw host GCC for a 16-bit DOS compiler.
 
-## 7. Milestones
-- **[x] Milestone 1: First Successful Build (2025-12-02)**
-    - `TNDY16.DRV` builds and links successfully without stubs.
-- **[x] Milestone 2: Linker Error Resolution (2025-12-05)**
-    - Switched to `LINK4.EXE` for Windows 3.x compatibility.
-    - Standardized on Pascal (`?PLM=1`) convention.
-    - Resolved export conflicts (Enable/Disable renamed).
-- **[x] Milestone 3: Packaging (2025-12-05)**
-    - `makedisk.bat` updated for Windows/PowerShell.
-    - Produces `TNDY16.ZIP` ready for distribution.
+## Hardware and fixed-profile contracts
 
-Source rebuilds use a fresh pinned external workspace; pass that workspace
-through each script's --repo or --toolchain parameter. Main contains no
-bundled DDK/compiler/emulator. Current package CI uses accepted binaries
-and runs host checks, including the current lowercase TSHELL idle/Hold tests.
+- Preserve normal 640 KB and real-mode operation; no 386, expanded-memory,
+  EMS/XMS or UMB workaround. Never bypass a failed reservation/ownership guard.
+- The fixed profiles are 320x200x16, 640x200x4 black/red/green/white,
+  160x200x16, 320x200x4 black/cyan/magenta/white and 640x200x2 black/white.
+  `src/tandysw/MODEPROF.PY` maps these source-build outputs to
+  `TANDY88.DRV`, `TNDY6404.DRV`, `TNDY160.DRV`, `TNDY3204.DRV`, `TNDY6402.DRV`.
+- BIOS 0Ah is four colors on original EX/HX, never 640x200x16. Keep four
+  logical DDB planes and report the actual palette through NUMCOLORS.
+  Fixed-profile shadow sizes are 16,000/32,000/64,000 bytes by width;
+  video buffers are 16,384 bytes except modes 09h/0Ah at 32,768 bytes.
+- Fixed 320x200x16 uses XTE font metrics `133,96,72`; the other graphics
+  profiles use XTC metrics `200,96,48`. Preserve font resource metrics and
+  Setup selection, not historical stock-font filenames as external dependencies.
+- The shared RESERVE helper protects video overlap before Setup/startup.
+  Lower-color modes do not authorize bypassing the launcher. Fixed-profile
+  tests can start from stock CGA and select 640x200x4 for a wider Setup;
+  low-resolution dialogs can clip.
+- Keep historical cyan/magenta `docs/modes/6404` evidence distinct from
+  current red/green `docs/modes/6404rg`. Mathematical/oracle checks do not
+  establish full Windows or physical-hardware coverage. NULL-buffer
+  GetDIBits remains unsupported; use each packet's recorded native scope.
 
-## 8. Original XT Pixels fonts / rc.5
+## Tests, emulator use and publication
 
-Current runtime fonts use XTC*/XTE*/XTTSYS filenames; NE identities, every
-advance and required system/dialog metrics remain compatible. tools/XTFONTS
-contains original MIT grids and reproducible host generation. Never clone
-Microsoft/ROM glyph bitmaps. docs/QUAL/FONTSR10.JSON binds the qualified disk,
-helper/source/runtime/font bytes. Historical BUILD/ZERO records retain their
-snapshot scope. Publication uses PUBLISH.PY and the guarded release workflow,
-with no old asset/tag overwrite. Keep DOS/Windows and non-font owned resources
-out of new public payloads. An emulator launch still requires an explicit slot.
+Run the checks for the changed producer; [BUILDING.MD](BUILDING.MD) maps them
+to current workflows. Actions package pinned bytes and run host checks;
+they do not assemble/link new DOS driver binaries. Use the current lowercase
+TSHELL idle/Hold suite; do not recreate its historical case collision.
 
-## Current rc.6 release
+An emulator requires an explicit coordinated slot, the shared lease, private
+image/config, owned-process watchdog and verified stop/release. Older build
+scripts' timeouts do not acquire the shared lease. Never launch concurrently,
+stop an unknown process, use CF hardware or turn a harness timeout into PASS.
+Use headless controls; retain failed receipts and distinguish software checks
+from physical scanout. Choose a bound that accommodates measured preparation.
 
-Use tools/FLASHDISK/PUBLISH.PY for rc.6. Keep the rc.5 font publisher and
-qualification historical. docs/QUAL/RC6.JSON binds the current source/runtime
-and accepted native records. PREPXT code is the measured native implementation;
-DOCPINS reproduces a bounded documentation-data refresh. The refreshed helper
-was not rerun in the guest. Preserve that distinction. New source archives
-exclude historical binary ZIP bundles via export-ignore. No owned Windows
-resources, compiler or emulator bytes belong in new downloads.
+The current release is `windows-xt`. Current workflows verify and upload
+Actions artifacts; retired milestone release writers must stay retired.
+Follow the current publication authorization, exact-head review and CI gates.
+Preserve the four pinned core assets when curating other products, retain
+source/build-input access, and never move/delete old tags or release assets.
+Superseded release visibility is managed reversibly, not by deleting history.

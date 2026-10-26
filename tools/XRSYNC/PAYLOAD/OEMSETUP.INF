@@ -1,0 +1,13 @@
+; PR155 synchronous XR1 OEM display choice.
+[data]
+Version="3.0"
+[disks]
+a = C:\XR155, "XRSYNC synchronous XR1", OEMSETUP.INF
+[display]
+xrsync = a:XRSYNC.DRV, "Tandy XR1 640x256 synchronous Output", "200,96,48", a:CGA.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE
+[sysfonts]
+a:XTCSYS.FON, "XT CGA System", "200,96,48"
+[fixedfonts]
+a:XTCFIX.FON, "XT CGA Fixed", "200,96,48"
+[oemfonts]
+a:XTCOEM.FON, "XT CGA Terminal", "200,96,48",1

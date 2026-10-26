@@ -1,0 +1,14 @@
+{
+  "fixed_accepted_free_bytes": [
+    339488,
+    339488
+  ],
+  "panned_free_bytes": [
+    303456,
+    303456
+  ],
+  "observed_difference_bytes": 36032,
+  "shadow_difference_bytes": 32000,
+  "fixture": "same MEMTEST.EXE; 640 KB PCjr; two returns each; accepted fixed driver versus current panned source build",
+  "limit": "36032 includes code/data and build-generation differences; not all is framebuffer allocation"
+}

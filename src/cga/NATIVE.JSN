@@ -1,0 +1,1264 @@
+{
+  "status": "PARTIAL_NATIVE_QUALIFICATION_CGA100_PASS",
+  "source_commit": "8cc53057dc53dbcee0a2fdbcb7e257099d33e142",
+  "consumer_packet": {
+    "bytes": 124035,
+    "sha256": "0dfd429e13f6ec47628e29cb842771ecb309efe36045277ab356bad32854002a"
+  },
+  "installer": {
+    "build": "PASS",
+    "sources": {
+      "CGAPINS.H": "1e8c3aee9304215238a4d51d7b7563a95b6c907280a2c5d77bc6fb95f8bd9948",
+      "CRCFAST.H": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8",
+      "INICGA.C": "1edfafc4a3e58843060d56d4ffde5ee188e3762381fcc8863dce66946452c635",
+      "SETUP.C": "a6b59b5af6ea91b701d2063abccaabeea6e96c5a470bc40cf5360dfa87486843"
+    },
+    "binary": {
+      "bytes": 30595,
+      "sha256": "066bf458813c9879c3f73bd0a5ab8d51c2b94a5a830677ae87038d42fe602f7d",
+      "crc32": "e9c4497d"
+    },
+    "data_budget": {
+      "data_and_stack_bytes": 59968,
+      "data_group_headroom_bytes": 5568
+    },
+    "runtime": "NOT_TESTED",
+    "source_commit": "8cc53057dc53dbcee0a2fdbcb7e257099d33e142",
+    "process": "PROCESS.JSON"
+  },
+  "native_driver": {
+    "bytes": 58208,
+    "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3"
+  },
+  "runtime_driver_core": "All eleven NE code/data segment payloads byte-identical to native-cga100-01; native-cga100-03/SEGMENTS.JSON",
+  "consumer_install": "Complete actual native SETUP in native-cga-gui100-03; continuation uses verified identical installed payload, no font/INI changes or AddFontResource test call",
+  "fixture": {
+    "source_image": {
+      "bytes": 84341760,
+      "sha256": "37d831fe15f1df18313b496e5a168a5516d81f532eb492a2f9d2b46fb99bdf35"
+    },
+    "mode": "100",
+    "config": {
+      "bytes": 694,
+      "sha256": "02fc78f698874a0c89517db8cf3aa239708cd6ffa14ec278b38ec0eba26f78b7"
+    },
+    "probe": {
+      "bytes": 8399,
+      "sha256": "8466e40eab987ba22493b87e4750c8eb57fb02864ff22b18c8b1b0f36b0da9d8"
+    },
+    "packet": "C:\\Users\\chad\\Documents\\Codex\\2026-10-25\\task-4\\native-cga-packet-03"
+  },
+  "mode100": {
+    "native_data": "PASS",
+    "mode": "100",
+    "palette": "PASS",
+    "memory_blt": "PASS",
+    "all_256_pairs": "PASS",
+    "draw_under_odd_cursor": "PASS",
+    "edges_and_hide": "PASS",
+    "padding": "PASS",
+    "saved_file_exact": "PASS",
+    "dos_mode": 3,
+    "source_captures": {
+      "009.VRM": "61a3fda65d5aa5f5f12923ce444769e44c6eda82f53e430a4631a6d7e3134d02",
+      "012.VRM": "3cd30f01f17733953667b060fe1b64341334e076d71a98c5f31297c7e2ad38b4"
+    },
+    "physical_hardware": "UNQUALIFIED",
+    "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification",
+    "draw_guest_ms": 3185,
+    "draw_clock_resolution_ms": 55,
+    "speedup_comparison": "NO BASELINE; includes added256pair grid, excludes log I/O"
+  },
+  "dialogs": [
+    {
+      "title": "Run",
+      "rect": [
+        0,
+        15,
+        168,
+        64
+      ],
+      "controls": 5,
+      "all_controls_within_screen": true
+    },
+    {
+      "title": "File Open",
+      "rect": [
+        0,
+        0,
+        154,
+        98
+      ],
+      "controls": 10,
+      "all_controls_within_screen": true
+    },
+    {
+      "title": "File Save As",
+      "rect": [
+        0,
+        10,
+        153,
+        96
+      ],
+      "controls": 8,
+      "all_controls_within_screen": true
+    },
+    {
+      "title": "Find",
+      "rect": [
+        0,
+        25,
+        159,
+        83
+      ],
+      "controls": 8,
+      "all_controls_within_screen": true
+    }
+  ],
+  "native_log": {
+    "bytes": 28998,
+    "sha256": "1db7e85c0ad6c33afaade8b1c57e9b771b2588db169cf6f57994889733ab23bb"
+  },
+  "native_plan": {
+    "bytes": 7416,
+    "sha256": "5d92a9de8e44af2ebe0b95ec37a0df5f2cb81a165e0415f8bb5103cbfa6b83f1"
+  },
+  "owned_process": {
+    "complete": true,
+    "bound_seconds": 900,
+    "lease_acquired": true,
+    "owned_pid": 26592,
+    "emulator": {
+      "bytes": 40974314,
+      "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+    },
+    "rom_floppy_prompt_acknowledged": true,
+    "owned_stopped": true,
+    "lease_released": true,
+    "seconds": 386.9539999999106
+  },
+  "capture_limitation": "Headless FRAME reads row zero rather than CGA firstline; retained raw PNGs are not complete monitor screenshots. VRAM/API/file checks are separate. Decoded native VRAM images are labeled, never scanout proof.",
+  "remaining": [
+    "Native final SETUP build from prepared07, preserving exact runtime-tested helper05",
+    "Final native23file mode/switch/UNDO exact delivery",
+    "Native320/640short-lived startup contrast pass and final consumer boot/exit using already prepared images",
+    "Physical original IBM CGA scanout, snow/flicker and mouse qualification"
+  ],
+  "publication": "NOT_AUTHORIZED",
+  "installer_mode_switch_undo": {
+    "complete": true,
+    "modes": [
+      "100",
+      "320",
+      "640",
+      "100"
+    ],
+    "undo_exact": true,
+    "created_payload_removed": true,
+    "original": {
+      "SYSTEM.INI": {
+        "bytes": 1058,
+        "sha256": "53d91a6dd6485079b332387319a2e8197249292d614cd227a3fe8cb71b8e93c8"
+      },
+      "WIN.INI": {
+        "bytes": 1301,
+        "sha256": "67ae933f4d719ae482378e156faf72d1f117c2211ad86f164a503f18cae5c090"
+      }
+    }
+  },
+  "control_panel_gate": {
+    "status": "USABILITY_GATE_FAILED",
+    "consumer_driver_and_fonts_unchanged": true,
+    "control_panel_main": {
+      "window": [
+        0,
+        0,
+        164,
+        68
+      ],
+      "last_icon_cells": [
+        [
+          149,
+          15,
+          186,
+          41
+        ],
+        [
+          149,
+          41,
+          186,
+          67
+        ]
+      ],
+      "maximize_reflow": false
+    },
+    "Desktop": "Native VRAM shows 200x158-DU stock Desktop extending below100 rows; native 004.VRM retained. Complete API tree while Desktop active was not captured, so exact control bounds are not claimed.",
+    "native_move": "Control Panel main moves only to y=-8 with tested upward sequence; no acceptance of complete dialog reachability.",
+    "dos_return": "RETURNED, BIOS3,640KB",
+    "followup": "Evaluate software viewport using existing XTPAN/HPXY sources, preserving fixed100 and normal320/640 options. Do not shrink letters below readable size or replace shared panning branch.",
+    "physical_hardware": "UNQUALIFIED"
+  },
+  "mode320_UI": {
+    "status": "FAIL_ORIGINAL_FONT_SELECTION",
+    "Run_edit_right": 356,
+    "screen_width": 320,
+    "candidate_fix": "Original4x6 System/dialog fonts, retaining existing normal-mode renderer bytes"
+  },
+  "host_integration_revision": {
+    "host": "PASS",
+    "native": "NOT_RUN",
+    "windows": "NOT_TESTED",
+    "tests": [
+      "install/undo 100",
+      "install/undo 320",
+      "install/undo 640",
+      "three modes/repeated switch/undo",
+      "identical preexisting font retained",
+      "collision refusal, no writes",
+      "all mutating commands refuse Windows context",
+      "damaged packet refusal before copying",
+      "CGAFAULT_WOPEN every single failure position",
+      "CGAFAULT_RENAME every single failure position",
+      "every interrupted owned-copy position",
+      "owned pending copy plan cancelled without touching payload files",
+      "damaged INI record refuses, explicit whole restore",
+      "damaged copy record refuses without cleanup",
+      "later edits and their referenced driver retained",
+      "changed installed file retained",
+      "failed INI rollback recovered through owned safety copies",
+      "interrupted cleanup can be retried",
+      "undo write/marker failures can be retried",
+      "interrupted completion marker uses explicit safety restore",
+      "17000-byte INI installs and restores exactly",
+      "small-model INI size limit refuses without residue",
+      "closed expanded packet inventory rejects extras",
+      "synthetic fixtures cannot finalize a consumer packet"
+    ],
+    "host_invocations": 185,
+    "fixtures": 100,
+    "packet_payload_files": 21,
+    "installed_files": 15,
+    "managed_gcc": true,
+    "c_source_sha256": "7eeb5ab8604178bf6b55caf1e758c38d54952a77dd5b172c0c37491e81094031",
+    "host_executable": "SETUPHOST.EXE (modern host test only)"
+  },
+  "access_prototype": {
+    "kind": "NATIVE_UNIT_NOT_CONSUMER_SHARED_CLIENT",
+    "helper_build": {
+      "build": "PASS",
+      "kind": "CGA_WINDOW_ACCESS_CANDIDATE",
+      "flags": "/G0 /Gw /AS /W3 /Od",
+      "source_sha256": "9618de5d26852232826c38ace1a33c4c299a0b4cbbd2bc0c82c7b94d249e7c55",
+      "bytes": 5535,
+      "sha256": "4087300129a159c688fcdcfecc679e7ef2e2870034be1f256275b1be75653150",
+      "windows": "NOT_TESTED"
+    },
+    "grid_end_cells": [
+      {
+        "handle": "14b0",
+        "class": "CtlChildClass",
+        "rect": [
+          122,
+          15,
+          159,
+          41
+        ],
+        "text": "08",
+        "style": 1342177280,
+        "enabled": 1,
+        "hit": "14b0"
+      },
+      {
+        "handle": "14f4",
+        "class": "CtlChildClass",
+        "rect": [
+          122,
+          41,
+          159,
+          67
+        ],
+        "text": "09",
+        "style": 1342177280,
+        "enabled": 1,
+        "hit": "14f4"
+      }
+    ],
+    "desktop_home": [
+      0,
+      0,
+      160,
+      116
+    ],
+    "stable_Desktop_End": [
+      0,
+      -16,
+      160,
+      100
+    ],
+    "automatic_check": "Initial End saw a stale Home snapshot; stable follow-up confirmed the actual end position. No unobserved state is accepted.",
+    "unit_receipts": {
+      "ACCESS.JSON": {
+        "bytes": 22843,
+        "sha256": "8790f2817b4c88837e8eeee692306666a1b28341ef86bcf406ec861d0aa930fd"
+      },
+      "ASSESSMENT.JSON": {
+        "bytes": 23332,
+        "sha256": "013a21b0aae35ad9b5ba34b4d45b515df31f41168c98b298a3c89e1df40c49ed"
+      },
+      "RESULT.JSON": {
+        "bytes": 356,
+        "sha256": "7dfea2bdb3d96e430f29dab9c5311669e8cd727783cbe78514a6c966fa46ff00"
+      },
+      "CGAMET.LOG": {
+        "bytes": 32463,
+        "sha256": "2b269f032b106402ad2f54e51e86294cdd085acc45c998d05b2b67de91eb0936"
+      },
+      "001.VRM": {
+        "bytes": 16384,
+        "sha256": "cee4a724d1a273dae3fa8e26a8fb7280b636fdcebf1ff25ced907c8ca9439958"
+      },
+      "002.VRM": {
+        "bytes": 16384,
+        "sha256": "26073d58a2f3d7d437306be7bb9ea9cb02c9b568c6f6650d11d8312c75dcf7a0"
+      },
+      "005.VRM": {
+        "bytes": 16384,
+        "sha256": "db6f1cfcf44b05f5f5f80fbd39b43d059328b56a3370226bdf726b6c68f94c6f"
+      }
+    },
+    "consumer_integration": "PENDING_SHARED_WDWIN_CLIENT_BUILD_NATIVE_STARTUP_SHUTDOWN",
+    "physical_mouse_and_hardware": "UNQUALIFIED"
+  },
+  "access_prototype_process": {
+    "complete": true,
+    "bound_seconds": 900,
+    "lease_acquired": true,
+    "owned_pid": 6536,
+    "emulator": {
+      "bytes": 40974314,
+      "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+    },
+    "rom_floppy_prompt_acknowledged": true,
+    "owned_stopped": true,
+    "lease_released": true,
+    "seconds": 698.7039999999106
+  },
+  "mode320_graphics": {
+    "mode": "320",
+    "gdi_capture": "003.VRM",
+    "under_hidden_capture": "006.VRM",
+    "UI_gate": "FAILED with original XTC fonts; Run edit right356>320",
+    "dos_return": "NOT_OBSERVED; owned process stopped with BIOS4, do not accept ordinary DOS return",
+    "bios_mode": 4,
+    "graphics": "PASS_PALETTE_UNDER_CURSOR_EDGE_RESTORE_PADDING",
+    "captures": {
+      "003.VRM": "4e65d3fbfc3cfe057620f78a4d44d25625868f1013c8dadca68501d4f9185e5d",
+      "006.VRM": "dbdb54b2a7161286929394ebf7009e116517d90ecc89cfb7edceb5ab1046f5b2"
+    },
+    "physical_hardware": "UNQUALIFIED"
+  },
+  "integration_gate": "Shared WDESK/WTPLACE CGA client source only; no competing root table, no native shared-client build yet; waiting parent-coordinated slot after WDESK probe",
+  "shared_client_cross_compile": {
+    "build": "PASS",
+    "kind": "CGA_WINDOW_ACCESS_CANDIDATE",
+    "flags": [
+      "-bt=windows",
+      "-ms",
+      "-0",
+      "-os",
+      "-zq",
+      "-w4",
+      "-we",
+      "-zw"
+    ],
+    "source_sha256": "b7588e6b0aa6f4994eb692ca72a5bb5ee6d5b25d3705e0f8441314874f24f3c1",
+    "shared_source_sha256": {
+      "WDCORE.C": "66e20b18a618b18ccca0ede3daa706e6ecfc36efdd88c1625796a581bbaa7723",
+      "WDCORE.H": "30969b4c4314e718391200330ddd4f13b6b6adeb237f6ad5a6ddf8ee0c7d4739",
+      "WDWIN.C": "ed7ff4035c99280999de3c52c6bd178a754e20011425b71663c83094e5ad2bd5",
+      "WDWIN.H": "8d009036884444dfdb66b76c6cbc1e6beb2e5e869c511b0c447069534b9edfbf",
+      "WTPLACE.C": "fcf8e226b17ea8217a68c6a8e3f88eefca3e444d8de145d3a3b59f6e3fb2cec7",
+      "WTPLACE.H": "af77584f4676029813a6e39e172b4362f0ef79dcae42df5303a2c857b3564ce1"
+    },
+    "placement_owner": "shared WDWIN only",
+    "bytes": 24450,
+    "sha256": "58714a5b3363f269da6894369ebbd0a69af2347e6334457436ab080dc6730ab4",
+    "windows": "NOT_TESTED",
+    "emulator": "NOT_LAUNCHED_HOST_CROSS_COMPILER",
+    "compiler_sha256": "d88049384eb428005c590af82e7cf63f48c14ed09af23f9572cf5dd579244d2d",
+    "linker_sha256": "d58013821bfd77b6b68b56ab6582419a1a33ab7839709c5b973a992cd499b4e8",
+    "gates": [
+      [
+        3,
+        "WIN16",
+        "PASS",
+        "WIN16 COMPILE/LINK",
+        "wcc clean for CGACTL, WDCORE, WDWIN, WTPLACE (0 warnings, 0 errors)"
+      ],
+      [
+        6,
+        "NE",
+        "PASS",
+        "WIN16 COMPILE/LINK",
+        "NE 3.00, target OS 2, autodata present"
+      ],
+      [
+        7,
+        "IMPORT",
+        "PASS",
+        "WIN16 COMPILE/LINK",
+        "49 imports from 3 modules, all exported by the real Windows 3.00 modules"
+      ]
+    ],
+    "qualification": "Compiler/link/NE/real-Windows3 import gates only; no runtime or consumer acceptance"
+  },
+  "medium_font_refinement": {
+    "independent_font_contracts": "PASS",
+    "CGA100_five_fonts": "BYTE_IDENTICAL_QUALIFIED_PACKET",
+    "medium_label_targets": "Filename and Directory within35 pixels; native fit still pending",
+    "fonts": {
+      "CG1SYS.FON": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40",
+      "CG1FIX.FON": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52",
+      "CG1OEM.FON": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06",
+      "CG1HELV.FON": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d",
+      "CG1COUR.FON": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa",
+      "CG2SYS.FON": "1c5c985e0b1bf84fbb5a9ca0e3768b8c6e235bed427750872cdbecc5df7191fa",
+      "CG2HELV.FON": "eb7064a3d26118e757dc0853f727bc3749b43d959e9bb1ebbd6918ca7ae733a0"
+    }
+  },
+  "pending_observer_revision": {
+    "source_sha256": "a830199cfc9a891b5bbf2c4884dad6bd574aef385a993048a1636c123b30b3a2",
+    "native_build": "NOT_RUN",
+    "runtime": "NOT_TESTED",
+    "developer_enable": "FontDiag=1 passive40cases;2 explicitlyaddsselectedmodefont after limitedpassivecases;neverconsumerINI"
+  },
+  "mode640_font_unit": {
+    "status": "PASS_NATIVE_API_GRAPHICS_FILE_AND_DOS",
+    "kind": "FONT_BOOT_SELECTION_UNIT_NOT_NEW23FILE_INSTALL",
+    "font_derivation": {
+      "source": "distributions/WINXT/XTTSYS.FON",
+      "source_sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa",
+      "fonts": {
+        "T80HELV.FON": {
+          "face": "Helv",
+          "pitch": "variable (all glyphs 8 wide)",
+          "weight": 700,
+          "bytes": 4208,
+          "sha256": "9bd5153d11f26e340b0385d9adba756351c0f41e8915a4d16c333d342b4057fd"
+        },
+        "T80COUR.FON": {
+          "face": "Courier",
+          "pitch": "fixed",
+          "weight": 400,
+          "bytes": 4224,
+          "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6"
+        }
+      }
+    },
+    "driver_sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1",
+    "assessment": {
+      "native_data": "PASS",
+      "mode": "640",
+      "palette": "PASS",
+      "memory_blt": "PASS",
+      "all_256_pairs": "PASS",
+      "draw_under_odd_cursor": "PASS",
+      "edges_and_hide": "PASS",
+      "padding": "PASS",
+      "saved_file_exact": "PASS",
+      "dos_mode": 3,
+      "source_captures": {
+        "009.VRM": "8b56003b02ee9dae04ac8312d2c351a9e33f279e5b74edecd5e3a02e8b715868",
+        "012.VRM": "95383235fe492bd5094a6413487a2e8eb9d5d7986e1a89c4111c0e582f5ca4d9"
+      },
+      "physical_hardware": "UNQUALIFIED",
+      "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification",
+      "consumer_install": "New23file packet not native installed: this font-selection unit reuses actual earlier18file installation",
+      "dialog_render_evidence": "API bounds/control workflow passed; 004.VRM was a transition before complete modal paint, so its labeled decode is not accepted visual font evidence. Final23file native run must wait for complete TREE END then idle before visual capture.",
+      "draw_guest_ms": 3076,
+      "draw_clock_resolution_ms": 55,
+      "speedup_comparison": "NO_BASELINE"
+    },
+    "dialogs": [
+      {
+        "title": "Run",
+        "rect": [
+          32,
+          30,
+          472,
+          106
+        ]
+      },
+      {
+        "title": "File Open",
+        "rect": [
+          96,
+          41,
+          500,
+          196
+        ]
+      },
+      {
+        "title": "File Save As",
+        "rect": [
+          96,
+          44,
+          496,
+          179
+        ]
+      },
+      {
+        "title": "Find",
+        "rect": [
+          32,
+          48,
+          450,
+          138
+        ]
+      }
+    ],
+    "owned_stopped": true,
+    "lease_released": true
+  },
+  "mode320_CG2_trial": {
+    "status": "DIALOG_FONT_SELECTION_FAILED",
+    "stock_font_selection": "System/Fixed/OEM/ANSI all6rows/average4 PASS",
+    "Run": "Helv h=-5 maps to10rows; editright356>320",
+    "driver_unchanged": true,
+    "owned_stopped": true,
+    "lease_released": true,
+    "next": "Passive signed-height/pitch/fullLOGFONT diagnostic; no AddFontResource"
+  },
+  "host_font_reuse_revision": {
+    "host": "PASS",
+    "native": "NOT_RUN",
+    "windows": "NOT_TESTED",
+    "tests": [
+      "install/undo 100",
+      "install/undo 320",
+      "install/undo 640",
+      "three modes/repeated switch/undo",
+      "identical preexisting font retained",
+      "collision refusal, no writes",
+      "all mutating commands refuse Windows context",
+      "damaged packet refusal before copying",
+      "CGAFAULT_WOPEN every single failure position",
+      "CGAFAULT_RENAME every single failure position",
+      "every interrupted owned-copy position",
+      "owned pending copy plan cancelled without touching payload files",
+      "damaged INI record refuses, explicit whole restore",
+      "damaged copy record refuses without cleanup",
+      "later edits and their referenced driver retained",
+      "changed installed file retained",
+      "failed INI rollback recovered through owned safety copies",
+      "interrupted cleanup can be retried",
+      "undo write/marker failures can be retried",
+      "interrupted completion marker uses explicit safety restore",
+      "17000-byte INI installs and restores exactly",
+      "small-model INI size limit refuses without residue",
+      "closed expanded packet inventory rejects extras",
+      "synthetic fixtures cannot finalize a consumer packet"
+    ],
+    "host_invocations": 193,
+    "fixtures": 106,
+    "packet_payload_files": 23,
+    "installed_files": 17,
+    "managed_gcc": true,
+    "c_source_sha256": "7eeb5ab8604178bf6b55caf1e758c38d54952a77dd5b172c0c37491e81094031",
+    "host_executable": "SETUPHOST.EXE (modern host test only)"
+  },
+  "mode320_passive_mapper": {
+    "status": "PASS_DIAGNOSTIC_NOT_UI_ACCEPTANCE",
+    "cases": 40,
+    "mapped_heights": [
+      10
+    ],
+    "ADDFONT_present": false,
+    "CG2_profile": "CG2HELV.FON",
+    "actual_Run_LOGFONT": "h=-5,w=0,weight700,pitch0,charset0,quality0,out0,clip0,Helv",
+    "actual_Run": "378wide; editright356>320; textheight10",
+    "excluded_hypotheses": [
+      "signed height alone",
+      "default versus Swiss pitch",
+      "quality/precision/charset mismatch"
+    ],
+    "next": "ExplicitAddCG2HELValreadyonimage; compareh=-5and+6 before/after; diagnostic only",
+    "owned_process": {
+      "complete": true,
+      "bound_seconds": 900,
+      "lease_acquired": true,
+      "owned_pid": 32468,
+      "emulator": {
+        "bytes": 40974314,
+        "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+      },
+      "rom_floppy_prompt_acknowledged": true,
+      "owned_stopped": true,
+      "lease_released": true,
+      "seconds": 339.01599999982864
+    }
+  },
+  "shared_source_pair_final": {
+    "display_commit": "1449b9e4cebe482be5f1a8bf7729fa3d320a0796",
+    "libwintandy_commit": "35f142dcd366ab9fc037b3eb20fc6ffebc3e1931",
+    "runtime_source": "All six blobs byte-identical to previous parent-qualified pair57f76a3/fed2d6a; exact Git exports retained",
+    "helper_native_build": {
+      "build": "PASS",
+      "kind": "CGA_WINDOW_ACCESS_CANDIDATE",
+      "flags": "/G0 /Gw /AS /W3 /Od",
+      "source_sha256": "b7588e6b0aa6f4994eb692ca72a5bb5ee6d5b25d3705e0f8441314874f24f3c1",
+      "shared_source_sha256": {
+        "WDCORE.C": "66e20b18a618b18ccca0ede3daa706e6ecfc36efdd88c1625796a581bbaa7723",
+        "WDCORE.H": "30969b4c4314e718391200330ddd4f13b6b6adeb237f6ad5a6ddf8ee0c7d4739",
+        "WDWIN.C": "98a17659e534e50e29fc6b0905591e057a2f461108d865a0adc5bf3d93010ad4",
+        "WDWIN.H": "8d009036884444dfdb66b76c6cbc1e6beb2e5e869c511b0c447069534b9edfbf",
+        "WTPLACE.C": "30e822766219f1d6bea9ef5b86fc625dac2828502076adef192903f976f34f56",
+        "WTPLACE.H": "af77584f4676029813a6e39e172b4362f0ef79dcae42df5303a2c857b3564ce1"
+      },
+      "placement_owner": "shared WDWIN only",
+      "bytes": 15343,
+      "sha256": "8f4ece354f5030d83f083ee5849dc5b3dd19cf1f077cbc1d3c59caded820414e",
+      "windows": "NOT_TESTED"
+    },
+    "helper_runtime": "NOT_TESTED_CGA_CLIENT"
+  },
+  "mode320_aspect_and_spacing_candidate": {
+    "font_source_sha256": "2a2e85a3ba73a129cbe8f8c0de1c125dc75e3c0cc13cf1f9bdb46daa421a81f8",
+    "source_fonts": "All seven produced FON files byte-identical to native-cga-gui320-width-02 candidate; all five CGA100 fonts byte-identical to qualified packet",
+    "resource_dpi": [
+      48,
+      40
+    ],
+    "resource_points": 11,
+    "gdi_logical_dpi": "96,48 unchanged",
+    "aspect": "5/6 matches ASPECTX10/ASPECTY12; old96x48 resource aspect prevented compact Helv selection",
+    "glyphs": "M/W/m/w gain five ink columns and six-pixel advance; measured alphabet average4.019",
+    "native": "Run/Open/SaveAs/Find text/control fit PASS in ongoing native width02; file/graphics/cursor/DOS pending",
+    "independent_FNT_NE_bitmap_bounds": "PASS",
+    "host_installer": {
+      "host": "PASS",
+      "native": "NOT_RUN",
+      "windows": "NOT_TESTED",
+      "tests": [
+        "install/undo 100",
+        "install/undo 320",
+        "install/undo 640",
+        "three modes/repeated switch/undo",
+        "identical preexisting font retained",
+        "collision refusal, no writes",
+        "all mutating commands refuse Windows context",
+        "damaged packet refusal before copying",
+        "CGAFAULT_WOPEN every single failure position",
+        "CGAFAULT_RENAME every single failure position",
+        "every interrupted owned-copy position",
+        "owned pending copy plan cancelled without touching payload files",
+        "damaged INI record refuses, explicit whole restore",
+        "damaged copy record refuses without cleanup",
+        "later edits and their referenced driver retained",
+        "changed installed file retained",
+        "failed INI rollback recovered through owned safety copies",
+        "interrupted cleanup can be retried",
+        "undo write/marker failures can be retried",
+        "interrupted completion marker uses explicit safety restore",
+        "17000-byte INI installs and restores exactly",
+        "small-model INI size limit refuses without residue",
+        "closed expanded packet inventory rejects extras",
+        "synthetic fixtures cannot finalize a consumer packet"
+      ],
+      "host_invocations": 193,
+      "fixtures": 106,
+      "packet_payload_files": 23,
+      "installed_files": 17,
+      "managed_gcc": true,
+      "c_source_sha256": "7eeb5ab8604178bf6b55caf1e758c38d54952a77dd5b172c0c37491e81094031",
+      "host_executable": "SETUPHOST.EXE (modern host test only)"
+    }
+  },
+  "mode320_spacing_native": {
+    "assessment": {
+      "native_data": "PASS",
+      "mode": "320",
+      "palette": "PASS",
+      "memory_blt": "PASS",
+      "all_256_pairs": "PASS",
+      "draw_under_odd_cursor": "PASS",
+      "edges_and_hide": "PASS",
+      "padding": "PASS",
+      "saved_file_exact": "PASS",
+      "dos_mode": 3,
+      "source_captures": {
+        "014.VRM": "4e65d3fbfc3cfe057620f78a4d44d25625868f1013c8dadca68501d4f9185e5d",
+        "017.VRM": "dbdb54b2a7161286929394ebf7009e116517d90ecc89cfb7edceb5ab1046f5b2"
+      },
+      "physical_hardware": "UNQUALIFIED",
+      "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification"
+    },
+    "dialogs": [
+      {
+        "title": "Run",
+        "rect": [
+          16,
+          25,
+          236,
+          88
+        ],
+        "settled_vram": "003.VRM"
+      },
+      {
+        "title": "File Open",
+        "rect": [
+          56,
+          37,
+          258,
+          160
+        ],
+        "settled_vram": "006.VRM"
+      },
+      {
+        "title": "File Save As",
+        "rect": [
+          56,
+          37,
+          256,
+          145
+        ],
+        "settled_vram": "009.VRM"
+      },
+      {
+        "title": "Find",
+        "rect": [
+          24,
+          40,
+          233,
+          114
+        ],
+        "settled_vram": "011.VRM"
+      }
+    ],
+    "source": "All7fontfilesmatchsource2e06f21;5qualifiedCGA100fontfilesunchanged",
+    "controller_correction": "Same native image continued after explicit fresh snapshot for reused dialog HWND; original failed controller receipt retained",
+    "remaining_visual_defect": "Disabled OK label maps white onto white in four-color mode; fixed by pending startup color pass, not yet native accepted"
+  },
+  "pending_startup_contrast": {
+    "native": "C6_BUILD_PASS; normal-mode Windows acceptance pending",
+    "helper_source_sha256": "114c41f576485157416f26ad041147f8634eb5e2a28944aa03bc4a0ad9b37063",
+    "policy": "320/640 set session COLOR_GRAYTEXT black and immediately exit;100 retains shared placement service; no palette/renderer change",
+    "host": {
+      "host": "PASS",
+      "native": "NOT_RUN",
+      "windows": "NOT_TESTED",
+      "tests": [
+        "install/undo 100",
+        "install/undo 320",
+        "install/undo 640",
+        "three modes/repeated switch/undo",
+        "identical preexisting font retained",
+        "collision refusal, no writes",
+        "all mutating commands refuse Windows context",
+        "damaged packet refusal before copying",
+        "CGAFAULT_WOPEN every single failure position",
+        "CGAFAULT_RENAME every single failure position",
+        "every interrupted owned-copy position",
+        "owned pending copy plan cancelled without touching payload files",
+        "damaged INI record refuses, explicit whole restore",
+        "damaged copy record refuses without cleanup",
+        "later edits and their referenced driver retained",
+        "changed installed file retained",
+        "failed INI rollback recovered through owned safety copies",
+        "interrupted cleanup can be retried",
+        "undo write/marker failures can be retried",
+        "interrupted completion marker uses explicit safety restore",
+        "17000-byte INI installs and restores exactly",
+        "small-model INI size limit refuses without residue",
+        "closed expanded packet inventory rejects extras",
+        "synthetic fixtures cannot finalize a consumer packet"
+      ],
+      "host_invocations": 193,
+      "fixtures": 106,
+      "packet_payload_files": 23,
+      "installed_files": 17,
+      "managed_gcc": true,
+      "c_source_sha256": "afe205a8f9a1a2252f4ddac6de659d74370ecbeb3afdadb68dbff5dcbe19db09",
+      "host_executable": "SETUPHOST.EXE (modern host test only)"
+    },
+    "helper_sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d"
+  },
+  "consumer100_actual_setup": {
+    "status": "PASS_API_INSTALL_HOME_AND_SHUTDOWN",
+    "packet_sha256": "5f3712a1717539e815dc7ad8fa7d55f94f1c91b0e37bad1eded93aab61e146a3",
+    "installed_files": 17,
+    "autoload": "CGASlide present; competing owners absent",
+    "Desktop_tab_controls": 10,
+    "DOS": "mode3 and640KB; FAT mirrors equal after stop",
+    "visual_gate": "Separate steady continuation found stale child painting; not complete visual acceptance"
+  },
+  "pending_child_redraw_fix": {
+    "observed": "Settled native003.VRM shows old icon positions after child hit targets move",
+    "source_sha256": "114c41f576485157416f26ad041147f8634eb5e2a28944aa03bc4a0ad9b37063",
+    "change": "Invalidate each moved child after SWP_NOREDRAW; root placement remains solely shared WDWIN",
+    "runtime": "PASS_FOCUSED_NATIVE_UNIT; see child_redraw_native",
+    "retained_evidence": "native-cga-consumer100-steady-01"
+  },
+  "child_redraw_native": {
+    "status": "PASS_FOCUSED_NATIVE_UNIT",
+    "old_matching_cells": 0,
+    "new_matching_cells": 5,
+    "scope": "Actual native VRAM End/Home cells aligned by the same child handles; five of six compared cells match exactly; sixth not counted. This is not monitor scanout or physical mouse qualification.",
+    "helper": {
+      "build": "PASS",
+      "kind": "CGA_WINDOW_ACCESS_CANDIDATE",
+      "flags": "/G0 /Gw /AS /W3 /Od",
+      "source_sha256": "114c41f576485157416f26ad041147f8634eb5e2a28944aa03bc4a0ad9b37063",
+      "shared_source_sha256": {
+        "WDCORE.C": "66e20b18a618b18ccca0ede3daa706e6ecfc36efdd88c1625796a581bbaa7723",
+        "WDCORE.H": "30969b4c4314e718391200330ddd4f13b6b6adeb237f6ad5a6ddf8ee0c7d4739",
+        "WDWIN.C": "98a17659e534e50e29fc6b0905591e057a2f461108d865a0adc5bf3d93010ad4",
+        "WDWIN.H": "8d009036884444dfdb66b76c6cbc1e6beb2e5e869c511b0c447069534b9edfbf",
+        "WTPLACE.C": "30e822766219f1d6bea9ef5b86fc625dac2828502076adef192903f976f34f56",
+        "WTPLACE.H": "af77584f4676029813a6e39e172b4362f0ef79dcae42df5303a2c857b3564ce1"
+      },
+      "placement_owner": "shared WDWIN only",
+      "bytes": 15855,
+      "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d",
+      "windows": "NOT_TESTED"
+    },
+    "consumer_delivery": "Updated helper in prior actual23file consumer image; final new packet native delivery still pending",
+    "Home_and_DOS": "PASS_mode3_640KB",
+    "owned_stopped": true,
+    "lease_released": true,
+    "runtime_seconds": 257.359,
+    "pointer_overlay_followup": {
+      "bounding_rect": [
+        80,
+        50,
+        86,
+        55
+      ],
+      "same_pixels_in_both_captures": true,
+      "all_translated_differences_accounted_for": true,
+      "interpretation": "Matches the visible stationary black pointer. This is offline analysis, not a new cursor-hide native run.",
+      "evidence": "native-cga-redraw-unit-02/GRID-MISMATCH.JSON",
+      "raw_difference_count": 34,
+      "scope": "Five whole unobstructed cells match exactly; sixth matches outside the stationary pointer rectangle. No new native run or monitor-scanout claim."
+    }
+  },
+  "current_remaining_gates": [
+    "Physical IBM CGA/CRTC/monitor qualification remains separate",
+    "Push/merge/publication require separate approval; none performed"
+  ],
+  "consumer320_final_packet05": {
+    "status": "PASS",
+    "evidence": "native-cga-consumer320-01",
+    "actual_installed_files": 17,
+    "startup_GrayText": "00000000",
+    "disabled_label_black_pixels": 7,
+    "GUI_text_and_bounds": "Run/Open/SaveAs/Find PASS",
+    "DOS_command_return_and_post_return_GDI": "PASS exactD320.TXT; palette/blits/256pairs/cursor/padding",
+    "normal_exit": "mode3/640KB",
+    "controller_correction": "Confirmed File Manager exit; same unchanged guest continued; failed controller receipt retained",
+    "FileManager_scope": "launch/menu/confirmed exit API smoke; first frame transitional",
+    "owned_stopped": true,
+    "lease_released": true
+  },
+  "consumer640_final_attempt1": {
+    "status": "FAIL_TEXT_CLIPPING",
+    "evidence": "native-cga-consumer640-01/PLAN.JSON",
+    "Directory_pixels": 80,
+    "control_pixels": 70,
+    "Filename_pixels": 72,
+    "probe_strips_accelerator_marks": true,
+    "normal_exit": "mode3/640KB",
+    "owned_stopped": true,
+    "lease_released": true
+  },
+  "CGA640_proportional_font_candidate": {
+    "file": "CG6HELV.FON",
+    "host": "PASS all224originalink matrices, bitmapbounds and metadata",
+    "metrics": {
+      "source_sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa",
+      "contract": {
+        "type": 0,
+        "points": 12,
+        "vert_res": 48,
+        "horiz_res": 96,
+        "ascent": 7,
+        "internal": 0,
+        "external": 1,
+        "italic": 0,
+        "underline": 0,
+        "strikeout": 0,
+        "weight": 700,
+        "charset": 0,
+        "pix_width": 0,
+        "height": 8,
+        "pitch_family": 33,
+        "avg_width": 7,
+        "max_width": 9,
+        "first": 32,
+        "last": 255,
+        "default": 96,
+        "break": 0,
+        "widths": [
+          4,
+          3,
+          8,
+          8,
+          8,
+          8,
+          8,
+          3,
+          8,
+          8,
+          8,
+          8,
+          3,
+          8,
+          3,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          3,
+          3,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          5,
+          8,
+          8,
+          8,
+          9,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          9,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          7,
+          7,
+          7,
+          7,
+          7,
+          5,
+          7,
+          7,
+          3,
+          5,
+          6,
+          3,
+          9,
+          7,
+          7,
+          7,
+          7,
+          5,
+          7,
+          5,
+          7,
+          7,
+          9,
+          7,
+          7,
+          7,
+          8,
+          3,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "face": "Helv"
+      },
+      "alphabet_average": 7.230769230769231,
+      "label_limit": 61,
+      "label_widths": {
+        "Filename:": 54,
+        "Directory:": 57
+      },
+      "ink": "Exact existing XT Pixels glyphs; horizontal blank bearings removed, no resampling"
+    },
+    "native": "PASS final consumer64002 all dialog text/control bounds, exact save, graphics/cursor/DOS",
+    "other_font_and_driver_bytes": "UNCHANGED"
+  },
+  "final_local_status": "NATIVE_EMULATION_RUNTIME_PASS; PHYSICAL_HARDWARE_UNQUALIFIED; NOT_PUBLISHED",
+  "final_runtime_source_commit": "e2bf87b0214db50d9bc4e6b6fa1062bf837ec307",
+  "final_cases": {
+    "100": {
+      "path": "native-cga-filemgr100-02",
+      "assessment": {
+        "native_data": "PASS",
+        "mode": "100",
+        "palette": "PASS",
+        "memory_blt": "PASS",
+        "all_256_pairs": "PASS",
+        "draw_under_odd_cursor": "PASS",
+        "edges_and_hide": "PASS",
+        "padding": "PASS",
+        "saved_file_exact": "PASS",
+        "dos_mode": 3,
+        "source_captures": {
+          "005.VRM": "61a3fda65d5aa5f5f12923ce444769e44c6eda82f53e430a4631a6d7e3134d02",
+          "008.VRM": "3cd30f01f17733953667b060fe1b64341334e076d71a98c5f31297c7e2ad38b4"
+        },
+        "physical_hardware": "UNQUALIFIED",
+        "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification"
+      }
+    },
+    "320": {
+      "path": "native-cga-consumer320-01",
+      "assessment": {
+        "native_data": "PASS",
+        "mode": "320",
+        "palette": "PASS",
+        "memory_blt": "PASS",
+        "all_256_pairs": "PASS",
+        "draw_under_odd_cursor": "PASS",
+        "edges_and_hide": "PASS",
+        "padding": "PASS",
+        "saved_file_exact": "PASS",
+        "dos_mode": 3,
+        "source_captures": {
+          "019.VRM": "4e65d3fbfc3cfe057620f78a4d44d25625868f1013c8dadca68501d4f9185e5d",
+          "022.VRM": "dbdb54b2a7161286929394ebf7009e116517d90ecc89cfb7edceb5ab1046f5b2"
+        },
+        "physical_hardware": "UNQUALIFIED",
+        "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification"
+      }
+    },
+    "640": {
+      "path": "native-cga-consumer640-02",
+      "assessment": {
+        "native_data": "PASS",
+        "mode": "640",
+        "palette": "PASS",
+        "memory_blt": "PASS",
+        "all_256_pairs": "PASS",
+        "draw_under_odd_cursor": "PASS",
+        "edges_and_hide": "PASS",
+        "padding": "PASS",
+        "saved_file_exact": "PASS",
+        "dos_mode": 3,
+        "source_captures": {
+          "017.VRM": "8b56003b02ee9dae04ac8312d2c351a9e33f279e5b74edecd5e3a02e8b715868",
+          "020.VRM": "95383235fe492bd5094a6413487a2e8eb9d5d7986e1a89c4111c0e582f5ca4d9"
+        },
+        "physical_hardware": "UNQUALIFIED",
+        "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification"
+      }
+    }
+  },
+  "final_FileManager": {
+    "100": {
+      "kind": "FOCUSED_FILE_MANAGER_DOS_GDI",
+      "mode": "100",
+      "complete": true,
+      "directory_windows": [
+        {
+          "handle": "1c84",
+          "class": "WFS_Dir",
+          "rect": "10,22,140,77",
+          "title": "C:\\*.*"
+        }
+      ],
+      "filemgr_capture": "001.VRM",
+      "DOS_command_exact": true,
+      "gdi_capture": "005.VRM",
+      "under_hidden_capture": "008.VRM",
+      "dos_mode": 3
+    },
+    "640": {
+      "kind": "FOCUSED_FILE_MANAGER_DOS_GDI",
+      "mode": "640",
+      "complete": true,
+      "directory_windows": [
+        {
+          "handle": "1c7c",
+          "class": "WFS_Dir",
+          "rect": "35,48,605,172",
+          "title": "C:\\*.*"
+        }
+      ],
+      "filemgr_capture": "001.VRM",
+      "dos_mode": 3
+    }
+  },
+  "final_native_DOS_switch_undo": {
+    "complete": true,
+    "modes": [
+      "100",
+      "320",
+      "640",
+      "100"
+    ],
+    "undo_exact": true,
+    "created_payload_removed": true,
+    "complete_original_tree_restored": true,
+    "original": {
+      "SYSTEM.INI": {
+        "bytes": 1058,
+        "sha256": "53d91a6dd6485079b332387319a2e8197249292d614cd227a3fe8cb71b8e93c8"
+      },
+      "WIN.INI": {
+        "bytes": 1301,
+        "sha256": "67ae933f4d719ae482378e156faf72d1f117c2211ad86f164a503f18cae5c090"
+      }
+    }
+  }
+}

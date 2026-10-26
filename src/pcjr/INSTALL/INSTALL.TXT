@@ -1,0 +1,76 @@
+EXPERIMENTAL IBM PCjr DISPLAY - WINDOWS 3.0 SETUP
+TNDYJR.DRV 320x200 16 colors, Windows 3.0 real mode only (WIN /R)
+
+Tested only in emulation (DOSBox-X, machine=pcjr). It has not run on a real
+PCjr.
+
+WHAT YOU NEED
+- An IBM PCjr with memory expansion, DOS 3.x and a hard disk as drive C:.
+- The 32 KB video page (segments 1800h-1FFFh) must already be kept out of
+  DOS allocations. C:\PCJREXP\JRGUARD checks this; it does NOT reserve RAM.
+- Your own Windows 3.0 disks. A PCjr drive cannot read the 1.2 MB or 720 KB
+  disks: copy the files of all disks into one folder on C:, for example
+  C:\WIN30SRC, using another PC. A 360 KB disk set can be used from A:.
+- This folder, copied to C:\PCJREXP exactly (Setup and JRWIN use that path).
+  The display support files are included; supply your own Windows media.
+- Optional: a Microsoft serial mouse. Without one, use the keyboard.
+
+NEW INSTALLATION
+1. Boot plain DOS (no TSRs). Type C:\PCJREXP\JRGUARD
+   Continue only if it says OK. If it refuses, do not install or start
+   Windows on this machine configuration.
+2. CD \WIN30SRC (or put Disk 1 in A:), then SETUP. Keep C:\WINDOWS.
+3. In the list "Setup has determined that your system includes":
+   Display:  choose Other (Requires disk provided by a hardware
+             manufacturer), type C:\PCJREXP, choose
+             EXPERIMENTAL IBM PCjr 320x200 16 colors
+   Keyboard: PC/XT - Type keyboard (84 keys)
+   Mouse:    Microsoft, or IBM PS/2 for a serial mouse; otherwise
+             No mouse or other pointing device
+   Network:  No Network Installed
+   Then press ENTER on "The above list matches my computer".
+4. Windows Setup continues on the PCjr screen. Some Setup dialogs are wider
+   than 320 pixels; use the keyboard. Untick the three optional procedures
+   (ALT+P, ALT+A, ALT+D) and press ENTER.
+5. CONFIG.SYS/AUTOEXEC.BAT: choose "make the modifications later" (DOWN,
+   DOWN, ENTER), then Don't Save (ALT+D). HIMEM and SMARTDRV do not apply.
+6. At "Exit Windows Setup" choose Return to DOS (ALT+D).
+   Do NOT choose Restart Windows: it would skip the memory guard.
+
+CHANGING AN EXISTING WINDOWS 3.0 INSTALLATION
+Exit Windows. Run C:\PCJREXP\JRGUARD; stop unless it says OK. Then
+CD \WINDOWS and SETUP, and change only Display (and Keyboard if needed) as
+in step 3. If Setup asks about CONFIG.SYS, keep "Setup can make NO
+changes for you". Setup rewrites only its own display, font and grabber
+entries; your other settings and groups stay. Windows keeps its old window
+positions, so Program Manager may start partly off the 320x200 screen:
+maximize it (ALT+SPACE, X) or move it once. To go back, run SETUP the same
+way and choose your previous display.
+
+STARTING WINDOWS - EVERY TIME
+   C:\PCJREXP\JRWIN
+JRWIN runs JRGUARD and starts C:\WINDOWS\WIN.COM /R only if the guard says
+OK. Never start Windows another way, from a DOS box, or after a refusal.
+
+WHAT IS INCLUDED
+TNDYJR.DRV   display driver, 320x200 16 colors (PCjr physical video page)
+JRGRAB.GR2   screen grabber for DOS programs, built from the Windows 3.0
+             DDK CGA grabber: on a PCjr it takes the mode from the BIOS, and
+             it refuses to switch away from PCjr-only modes 8, 9 and 0Ah
+JRGUARD.COM  checks the video page reservation (does not reserve RAM)
+JRWIN.COM    guarded launcher
+XTESYS.FON, XTEFIX.FON, XTEOEM.FON  XT Pixels fonts (MIT, FONTLIC.TXT)
+XTSTATIC.LGO, WXTSPL01.RLE  static startup logo (MIT, LOGOLIC.TXT)
+OEMSETUP.INF; optional checksum list SHA256.SUM
+
+KNOWN LIMITS
+- DOS programs in text modes 0-3 and CGA graphics modes 4, 5 and 6 can
+  be switched away from (ALT+TAB) and back. A program in PCjr modes 8, 9
+  or 0Ah cannot: ALT+TAB leaves it running as it was. Finish it to return
+  to Windows. (Tested in the emulator for every PCjr BIOS mode.)
+- Dialogs wider than 320 pixels (Setup, File Save As) are partly off
+  screen; the keyboard still works.
+- Paintbrush 3.0 does not open a file named with a drive on its command
+  line; use File > Open.
+- Real PCjr keyboard, serial port, memory expansions and timing are not
+  qualified. This packet targets Windows 3.0 real mode.

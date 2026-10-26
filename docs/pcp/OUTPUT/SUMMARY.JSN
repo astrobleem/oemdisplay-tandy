@@ -1,0 +1,282 @@
+{
+  "native_qualified": true,
+  "qualified_utc": "2026-10-25T20:14:37.697826+00:00",
+  "pr": 196,
+  "head": "079d53b86ae3095c922ea7e27b8e9591392e09db",
+  "base": "09238b7dbada62047601138291fa940b77426752",
+  "source_worktree_clean": true,
+  "ci_workflows_pass": 8,
+  "scope": "Fixed ColorPlus320x200x16,4.772728MHz8088,normal640KB,Windows3.0real mode; emulator evidence only",
+  "source_changes_by_native_worker": false,
+  "build_scope": {
+    "native_builds_pass": true,
+    "only_changed_staged_source": [
+      "EGA/TSOFT.ASM"
+    ],
+    "code_delta": 240,
+    "data_bytes": 930,
+    "data_delta": 0,
+    "shadow_bytes": 32000,
+    "baseline_bytes": 58512,
+    "candidate_bytes": 58752,
+    "same_resources": true,
+    "shipped_to_main_file_delta": 3680,
+    "shipped_to_main_object_deltas": [
+      {
+        "object": "BMC_MAIN.OBJ",
+        "segment": "_DIMAPS",
+        "delta": 73
+      },
+      {
+        "object": "RLE88.OBJ",
+        "segment": "_TEXT",
+        "delta": 2933
+      },
+      {
+        "object": "SDIB88.OBJ",
+        "segment": "_TEXT",
+        "delta": 646
+      }
+    ]
+  },
+  "candidate_driver": {
+    "bytes": 58752,
+    "sha256": "6fbee832bde5b8fec958eb654e6fde14a4e6cc8fa6e9749623311cb99049411c"
+  },
+  "instruction_rep_link_audits_pass": true,
+  "host_checks": {
+    "CPPOTEST": 55,
+    "P15OTEST": 29,
+    "private_capture_negative_control_tests": 3,
+    "actual_capture_host_C_validation": true,
+    "RRTEST_native_evidence": "RUNS INCOMPLETE; not counted"
+  },
+  "capture": {
+    "bytes_per_frame": 32768,
+    "hardware_planes": 2,
+    "banks": 4,
+    "pixels_per_frame": 64000,
+    "frames_per_comparison": 48,
+    "shipped_to_baseline_byte_equal": true,
+    "baseline_to_candidate_byte_equal": true,
+    "marker_and_scan_independent_pixel_oracles_pass": true,
+    "per_call_visibility_pass": true,
+    "cursor_edge_fallback_checks_pass": true,
+    "all_stopped_image_fat_copies_equal": true
+  },
+  "runs": {
+    "accepted": {
+      "seconds": 1303.4840000001714,
+      "free_before_probe": 340256,
+      "driver": {
+        "bytes": 54832,
+        "sha256": "67f8a3d77574f8f78d2751f68b9c303fc59fcacd93325b9aa4aaf10288c7c406"
+      },
+      "receipt": {
+        "bytes": 8546,
+        "sha256": "fe26d7666dc15ca350bd5aaa0daf9c15e16adf74403e257b039d197aab7de29b"
+      }
+    },
+    "baseline": {
+      "seconds": 1304.8289999999106,
+      "free_before_probe": 336576,
+      "driver": {
+        "bytes": 58512,
+        "sha256": "d60d4ae9342c4d7ce590b99ae552a3418f5cfbce995bb944e7f8182aeb7e930e"
+      },
+      "receipt": {
+        "bytes": 8436,
+        "sha256": "0ee769334528b0d24c6deca9bf0d18382804f3b0cbe4d8df2ced5178e817b186"
+      }
+    },
+    "candidate": {
+      "seconds": 512.9530000002123,
+      "free_before_probe": 336352,
+      "driver": {
+        "bytes": 58752,
+        "sha256": "6fbee832bde5b8fec958eb654e6fde14a4e6cc8fa6e9749623311cb99049411c"
+      },
+      "receipt": {
+        "bytes": 8434,
+        "sha256": "c14c291d0bbcc590e453918e43e6243a8c663875967ed91f3af30847106ed1d6"
+      }
+    }
+  },
+  "timings": [
+    {
+      "stage": "roundrect_key",
+      "baseline_ms": 46632,
+      "candidate_ms": 3350,
+      "speedup": 13.92,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "rectangle_key",
+      "baseline_ms": 14884,
+      "candidate_ms": 824,
+      "speedup": 18.0631,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "roundrect_large",
+      "baseline_ms": 14610,
+      "candidate_ms": 1538,
+      "speedup": 9.4993,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "roundrect_hollow",
+      "baseline_ms": 15105,
+      "candidate_ms": 1098,
+      "speedup": 13.7568,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "roundrect_nopen",
+      "baseline_ms": 31308,
+      "candidate_ms": 2032,
+      "speedup": 15.4075,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "roundrect_xor",
+      "baseline_ms": 46027,
+      "candidate_ms": 2746,
+      "speedup": 16.7615,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "roundrect_overlap",
+      "baseline_ms": 46137,
+      "candidate_ms": 2856,
+      "speedup": 16.1544,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "roundrect_clipped",
+      "baseline_ms": 36471,
+      "candidate_ms": 1483,
+      "speedup": 24.5927,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "ellipse_12",
+      "baseline_ms": 9118,
+      "candidate_ms": 494,
+      "speedup": 18.4575,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "full_width",
+      "baseline_ms": 16203,
+      "candidate_ms": 3461,
+      "speedup": 4.6816,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "scan_full",
+      "baseline_ms": 150000,
+      "candidate_ms": 150000,
+      "speedup": 1.0,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "scan_narrow",
+      "baseline_ms": 145331,
+      "candidate_ms": 82936,
+      "speedup": 1.7523,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "cursor_overlap",
+      "baseline_ms": 57891,
+      "candidate_ms": 4723,
+      "speedup": 12.2573,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "visible_steps",
+      "baseline_ms": 40589,
+      "candidate_ms": 13292,
+      "speedup": 3.0536,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "marker_steps",
+      "baseline_ms": 24277,
+      "candidate_ms": 14995,
+      "speedup": 1.619,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "polylines",
+      "baseline_ms": 7580,
+      "candidate_ms": 6316,
+      "speedup": 1.2001,
+      "app_repaint_statistic": null
+    },
+    {
+      "stage": "calc",
+      "baseline_ms": 69206,
+      "candidate_ms": 7799,
+      "speedup": 8.8737,
+      "app_repaint_statistic": "median of3"
+    },
+    {
+      "stage": "reversi",
+      "baseline_ms": 9886,
+      "candidate_ms": 1099,
+      "speedup": 8.9955,
+      "app_repaint_statistic": "median of3"
+    },
+    {
+      "stage": "pbrush",
+      "baseline_ms": 27133,
+      "candidate_ms": 4229,
+      "speedup": 6.4159,
+      "app_repaint_statistic": "median of3"
+    }
+  ],
+  "full_width_delta_ms": 0,
+  "full_width_limit_ms": 55,
+  "normal_return": {
+    "bios_mode": 6,
+    "conventional_kb": 640,
+    "post_win_marker": "RETURNED\r\n",
+    "all_terminal_pngs_byte_identical": true,
+    "png": {
+      "bytes": 1172,
+      "sha256": "f399be7a70b1ca8882700461d2875d977d09ef4a5624af56a46af50ab024b772"
+    },
+    "nonblack_pixels": 720,
+    "preview_concern": "Black image preview was not the file contents; readback proves original candidate terminal PNG identical to control. No native display failure.",
+    "targeted_Notepad_case_seconds": 109.90599999995902,
+    "targeted_case_repeated_benchmarks": false,
+    "targeted_early_and_settled_raw_dos_frame_identical": true
+  },
+  "preserved_unqualified_attempts": [
+    "accepted-bound1200-attempt1: watchdog before final Paintbrush; not a pass",
+    "return-check-native/BLOCKED-LEASE-02.JSON: no child launched while another owner held lease"
+  ],
+  "consumer_files_or_release_pins_changed": false,
+  "publication_authorized": false,
+  "publication_status": "Awaiting separate explicit approval; no merge or release attempted",
+  "release": {
+    "checked_utc": "2026-10-25T20:14:37.696826+00:00",
+    "owned_processes_stopped": true,
+    "inventory_count": 0,
+    "byte0_independently_acquired_released": true
+  },
+  "supporting_files": [
+    "EXACT-HEAD.JSON",
+    "NATIVE-SCOPE.JSON",
+    "baseline-build-receipt.json",
+    "candidate-build-receipt.json",
+    "SHIPPED-COMPARE.JSON",
+    "CANDIDATE-COMPARE.JSON",
+    "accepted-native/FINAL-POSTCHECK.JSON",
+    "baseline-native/FINAL-POSTCHECK.JSON",
+    "candidate-native/FINAL-POSTCHECK.JSON",
+    "return-check-native/RESULT.JSON"
+  ]
+}

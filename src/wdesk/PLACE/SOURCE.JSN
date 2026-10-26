@@ -1,0 +1,31 @@
+{
+  "repository": "astrobleem/libwintandy",
+  "commit": "c3c57780d1e605191b1dd61aabc06b79c221a263",
+  "path": "libtandywin/PLACE",
+  "files": {
+    "README.TXT": {
+      "bytes": 3266,
+      "sha256": "e2d64d6f31a4567fa0a2091abf65e21d8ae3a01a5c7dbc11baaf574b130200a2"
+    },
+    "WTPLACE.C": {
+      "bytes": 6192,
+      "sha256": "30e822766219f1d6bea9ef5b86fc625dac2828502076adef192903f976f34f56"
+    },
+    "WTPLACE.H": {
+      "bytes": 1843,
+      "sha256": "af77584f4676029813a6e39e172b4362f0ef79dcae42df5303a2c857b3564ce1"
+    },
+    "TESTS/RUN.PY": {
+      "bytes": 1664,
+      "sha256": "ae673a5376480cc0325c115f3f7df2f1d3878e152a9b593b746337f6e8c08176"
+    },
+    "TESTS/windows.h": {
+      "bytes": 1954,
+      "sha256": "85568a0e0199daf4cbeaf29fc200026ffa29e12207658ddc9e38f83feb17f474"
+    },
+    "TESTS/WTTEST.C": {
+      "bytes": 6302,
+      "sha256": "762ac9b696754c70115ea0a99921f23e8dca5e03dbf0f9c241c582d2b1ea4a50"
+    }
+  }
+}

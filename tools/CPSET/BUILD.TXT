@@ -25,3 +25,18 @@ Computer selection, guarded Windows startup/normal exit and final rollback
 also passed.
 Historical large-static-buffer kit evidence is not this candidate's result.
 Physical Tandy qualification remains separate from emulator tests.
+
+Installed metadata support
+--------------------------
+The original49,046-byte and five-disk49,095-byte Windows3.0 SETUP.INF inputs
+are accepted automatically. A defaultCRC32 identity check plus real section
+ordering and disk-table validation bounds these two layouts. /VERIFY retains
+the corresponding fullSHA256 check. Original input bytes remain the basis
+for the inserted Computer entry and exact rollback; no canonical INF is
+substituted. The existing CPINF01 journalCRC is unchanged; its implementation
+shares the byte-table routine used for input checks.
+
+METATEST.C and TESTMETA.PY test the actual parser/CRC source on the host.
+Private input arguments exercise CHECK/APPLY/RESTORE against both concrete
+Windows files without including those files in the repository or toolkit.
+Native build/install qualification is recorded separately from these tests.

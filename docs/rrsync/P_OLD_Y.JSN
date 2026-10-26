@@ -1,0 +1,105 @@
+{
+  "reference": "PAN-BASE-Y",
+  "candidate": "PAN-OLD-Y",
+  "runs_complete": true,
+  "problems": {},
+  "all_frames_equal": true,
+  "stages": [
+    {
+      "stage": 1,
+      "name": "visible_steps",
+      "frame": {
+        "equal": true,
+        "differing_pixels": 0,
+        "differing_bytes": 0
+      },
+      "same_name_and_api_results": true,
+      "api_successes": 16,
+      "ref_ms": 3021,
+      "cand_ms": 1648,
+      "steps": [
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        },
+        {
+          "equal": true,
+          "differing_pixels": 0,
+          "differing_bytes": 0
+        }
+      ]
+    }
+  ],
+  "marker_oracle": {}
+}

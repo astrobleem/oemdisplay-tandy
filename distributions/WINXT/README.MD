@@ -1,4 +1,11 @@
+> Historical / development guide. For the current download and installation,
+> use the [current downloads](../../docs/DOWNLOADS.MD). The commands below describe the
+> earlier package or source checkpoint.
+
 # Unpublished combined source revision
+
+The neighboring README.TXT is a frozen input of the historical rc.6 disk.
+Use the current installation guides linked above for new installations.
 
 Seven original MIT fonts remove Windows font-media and vintage Python needs.
 Original XTSTATIC.LGO replaces the owned CGALOGO.LGO source resource. Matching

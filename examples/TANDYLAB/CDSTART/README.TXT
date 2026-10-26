@@ -36,6 +36,6 @@ child activity. Use full paths for later file operations if needed.
 
 This corrects a Windows 3.0 loader issue: supplying a full CDTEST path
 alone did not make its directory part of static COMMDLG import lookup.
-This remains a bounded experimental dialog demo, not a general Windows
-3.1 common-dialog replacement. Emulator checks are not physical hardware
+This remains a bounded Windows 3.0 real-mode dialog demo, not a general
+common-dialog replacement. Emulator checks are not physical hardware
 qualification, manual input qualification, or cycle-accurate speed claims.

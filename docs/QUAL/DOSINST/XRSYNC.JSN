@@ -1,0 +1,237 @@
+{
+  "schema": 1,
+  "status": "PASS_NATIVE_AND_HOST",
+  "target": {
+    "cpu": "8088",
+    "mhz": 7.159092,
+    "ram_kb": 640,
+    "DOS": "IBM PC DOS 3.20",
+    "Windows": "3.0 real mode",
+    "machine": "Tandy 1000HX emulator surrogate"
+  },
+  "physical_test": false,
+  "public_assets": {
+    "XRSYNC.EXE": {
+      "bytes": 221147,
+      "sha256": "7ace03b94d564fe6d795b8353336b728c3a55c801db3d336f0254955716df431"
+    },
+    "XRSYNC.ZIP": {
+      "bytes": 172043,
+      "sha256": "d3e8d6491da4c7a38873cf77d5dbe9f6ff9c394a3d7a0759a57b62a5e19d0703"
+    }
+  },
+  "native_source_manifest": "tools/DOSINST/XSNATIVE.JSN",
+  "runtime_driver_sha256": "ae2d06f69ff68e64f099c3e0af79028e40e7dca89bd442de23eb18d36be4dca1",
+  "install": {
+    "complete": true,
+    "actions": [
+      "Display",
+      "Other",
+      "C:\\XR155",
+      "XRSYNC",
+      "Complete Changes",
+      "No DOS configuration changes"
+    ],
+    "bound_seconds": 600,
+    "pid": 4496,
+    "space_checks": {
+      "SPACE.OK": true,
+      "OLD.OK": true,
+      "REPAIR.OK": true,
+      "FAULT.OK": true,
+      "RETRY.OK": true
+    },
+    "dos_version": "\r\nIBM Personal Computer DOS Version  3.20 \r\n",
+    "probe_complete": true,
+    "setup_done": true,
+    "owned_stopped": true,
+    "lease_released": true
+  },
+  "install_seconds_including_boot_and_controller": 315.3,
+  "checks": {
+    "frames_equal_to_qualified_reference": true,
+    "installed_driver_exact": true,
+    "helper_exact": true,
+    "DOS320_launcher_syntax": true,
+    "no_python_or_host_preparation": true,
+    "supplied_grabber": true,
+    "nearly_full_refused_before_staging": true,
+    "partial_helper_removed": true,
+    "retry_complete": true,
+    "started_from_B_drive_with_C_Windows": true,
+    "Setup_from_packet_with_Windows_grabber_absent": true,
+    "reservation_reuse": true,
+    "DOS_system_files_unchanged": true,
+    "config_unchanged": true,
+    "embedded_packet_precedes_neighboring_inputs": true
+  },
+  "frame_hashes": {
+    "RV01.BIN": "37a4b9be607cfd597758e1fcbf7e0f435f1d78c84d7c50bc76bafd32d16a47b3",
+    "RV02.BIN": "84820c2f5b7de8074ba7216ddc96c3d47a32d1553885a211e9d121faeadd5a52",
+    "RV03.BIN": "facf456bacd066cf4e15fe323bafd208493e374d20b18fa5431b338c5df1ed6e",
+    "RV04.BIN": "52636c6dfcce236d2ed6483dfaa2cd9306c991d31477a7e61e90b7dac6f5038b",
+    "RV05.BIN": "3ae5fbecca7e7c408096a69ccd08e2d6dcaecc39687d62a59db83a02b13d496e",
+    "RV06.BIN": "52485328e47df3e53eef10f68565cd2985801ddeaca32cac50ae3bb74bcf0b30",
+    "RV07.BIN": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7",
+    "RV08.BIN": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7",
+    "RV09.BIN": "fa1ee2906ee6964c72eee70c031f2500ab13a551d13c259cff73c40d0ee4d4a7",
+    "RV10.BIN": "c432a5a08da1fe0cae13196b22356d3cb841385f7fb5ace0ac695f858cdff458",
+    "RV11.BIN": "9d2aac6dd2d1cdbf20b520d4734ead135da7d845c047526ddfe5eea27fe31c5e",
+    "RV12.BIN": "9c8bbcb59ff47033d740139a5966c021be52e60a6a22a1280d8639bcf4860f59",
+    "RV13.BIN": "ef706f43aca4c3dabafd4f2d63dbd2a3ee6e1f895ecf21848fc995a6db5b0d91",
+    "RV14.BIN": "1f931683805b119234114ff9bdf1179f8e41f101f59b03f4ad7ac0b060a98990",
+    "RV15.BIN": "16bf3b9ddacea7e1655dee14c9bc06c010ae47f31f553a66c7f138c376ebdddc",
+    "RV16.BIN": "1f931683805b119234114ff9bdf1179f8e41f101f59b03f4ad7ac0b060a98990",
+    "RB01.BIN": "6e764c5a5c9a23ddefe531f5946bbe41ac427a4a07d58d8598c92d519f373c12"
+  },
+  "host_checks": {
+    "XRSYNC_package_tests": 7,
+    "RoundRect_tests": 32,
+    "XR1_preparation_tests": 24
+  },
+  "selected_boot_values": {
+    "286grabber": "CGA.GR2",
+    "fixedfon.fon": "XTCFIX.FON",
+    "oemfonts.fon": "XTCOEM.FON",
+    "fonts.fon": "XTCSYS.FON",
+    "display.drv": "Tandy XR1 640x256 synchronous Output",
+    "mouse.drv": "Microsoft, or IBM PS/2",
+    "shell": "RRBENCH.EXE",
+    "keyboard.drv": "keyboard.drv"
+  },
+  "cold": {
+    "complete": true,
+    "actions": [],
+    "bound_seconds": 180,
+    "pid": 9532,
+    "dos_version": "\r\nIBM Personal Computer DOS Version  3.20 \r\n",
+    "probe_complete": true,
+    "setup_done": true,
+    "owned_stopped": true,
+    "lease_released": true,
+    "note": "Independent cold boot; current exact packet prepared from ownSFX beside invalid adjacent ZIP/PAYLOAD, then guardedWindows start; earlier qualifiedSetup retained."
+  },
+  "cold_seconds_including_boot": 84.2,
+  "evidence": {
+    "XCONFIG.PNG": {
+      "bytes": 5329,
+      "sha256": "d8fa3e04af0aff31fa532c52cc278c325e6e65a91b793165f1f2e6e255a4f00e"
+    },
+    "XFINISH.PNG": {
+      "bytes": 1735,
+      "sha256": "9e08ef74f4c65d13076d11dc58f6059e4ae001549f6d955f7c4dbc01cc874169"
+    },
+    "XNOCGA.LOG": {
+      "bytes": 390,
+      "sha256": "981dbe34ff4de151d2953412e80aabf3a7677251155fc2097d186e5de183af8e"
+    },
+    "XNOWIN.LOG": {
+      "bytes": 256,
+      "sha256": "e412041a608a4449559bdf7cb1787a022c5c9e3a5a289f68abc7c7c409001627"
+    },
+    "XPROBE.LOG": {
+      "bytes": 1094,
+      "sha256": "653f31af866faa40da0109fac1c56507130de79884727d1d2f4dc3fad3cea0d9"
+    },
+    "XRSV.LOG": {
+      "bytes": 47,
+      "sha256": "8e42648c3458e13df6e196b8b7b6915feaba1f453fee5031fab380f74c61594a"
+    },
+    "XRUN.LOG": {
+      "bytes": 301,
+      "sha256": "13df048118d8a035d5bce5b3f5a303e129e886766dde136e13ba35777d2146eb"
+    },
+    "XSELECT.PNG": {
+      "bytes": 7339,
+      "sha256": "75f9bc0c1279cd461631e74dd9600fb168b8be38884c47ef040a4701c945f780"
+    },
+    "XFINALSP.LOG": {
+      "bytes": 352,
+      "sha256": "d54f34f7da1cd870eab6020085f9602cd55f10ef82bc17847089a9db2e56914f"
+    },
+    "XFINALFA.LOG": {
+      "bytes": 705,
+      "sha256": "712d145413e873c6db7961d265c3d14c2814d8be0e236204780efe4e23bc795c"
+    },
+    "XFINALRE.LOG": {
+      "bytes": 240,
+      "sha256": "18f2b93dd26bab29f981dcd6a33d8786bb1d2c0a2bcb60486bed58fc9732e03d"
+    },
+    "XFINALRU.LOG": {
+      "bytes": 148,
+      "sha256": "629cff3f25b67cddd4300ea6daf0458fda776cfd72e5abb42d1aba2629749e8d"
+    },
+    "XFINALPR.LOG": {
+      "bytes": 1094,
+      "sha256": "1e2524f08ed702517c5de30cdf68aa1f2ca6046786beb9865014ab1fa71c8d2a"
+    },
+    "XFINAL.PNG": {
+      "bytes": 1237,
+      "sha256": "7a74e93cb57a4737cd2a3ddef3477dcc16f1721d3fb7725913bbc6d6b8c9e66e"
+    },
+    "XFINALT.BAT": {
+      "bytes": 643,
+      "sha256": "9f13104fbabff42799a4ac06ec13942463a7411a8198a5c5a18d2cc9df6f5346"
+    },
+    "XSELF.LOG": {
+      "bytes": 240,
+      "sha256": "438a27ee0e69568b6487011a05005b4f7bf36b9547e3b13c16f97a25812718e9"
+    },
+    "XSELFRUN.LOG": {
+      "bytes": 148,
+      "sha256": "629cff3f25b67cddd4300ea6daf0458fda776cfd72e5abb42d1aba2629749e8d"
+    },
+    "XSELFPR.LOG": {
+      "bytes": 1094,
+      "sha256": "1e2524f08ed702517c5de30cdf68aa1f2ca6046786beb9865014ab1fa71c8d2a"
+    },
+    "XSELF.PNG": {
+      "bytes": 1001,
+      "sha256": "af44443498bef11034517f160095d54684c139724950f0888e131e21b77a5398"
+    }
+  },
+  "qualification_delta": {
+    "Setup_packet": "973342c7f458472cf3281bd4a38310d8e1c03ba7f26ac35390cc4dd7ace11a9e",
+    "final_packet": "7ace03b94d564fe6d795b8353336b728c3a55c801db3d336f0254955716df431",
+    "change_after_Setup_test": "Generated launcher uses DOS3.20-compatible ECHO OFF. Self-contained EXE now prefers its embedded packet. Final native recovery controls and source-selection/cold-start replays passed; Setup and rendering code are unchanged.",
+    "independent_empty_PATH_cold": "XS-COLD7: passed; no Windows directory PATH prerequisite.",
+    "early_harness_failure": "Nested COMMAND.COM from empty-PATH B: asked for B disk before product batch began; preserved in local XS-COLD5/6 and isolated from normal C: cold launch.",
+    "final_recovery_controls_packet": "3ff316000266f24ed28f0b8b75491b3a7c1c923d8922f66344b3bd415129b007"
+  },
+  "boot_files_final_unchanged": {
+    "AUTOEXEC.BAT": true,
+    "CONFIG.SYS": true
+  },
+  "recovery_report": "XSPACE.JSN",
+  "DOS_system_files": {
+    "COMMAND.COM": {
+      "sha256": "77402f36394f77fa8270f0563068f7f75949ce030dd28ec9fee7383f1e0b64db",
+      "unchanged": true
+    },
+    "IBMBIO.COM": {
+      "sha256": "841bf028620d0867293d7ba7613772f07e2681f36442182d2fa439133343fd8f",
+      "unchanged": true
+    },
+    "IBMDOS.COM": {
+      "sha256": "bbe0ad857e91f1f077af287d2f6748bd868983be9585a6cb0bba7c52dd42f789",
+      "unchanged": true
+    }
+  },
+  "final_recovery_controls": {
+    "complete": true,
+    "actions": [],
+    "bound_seconds": 300,
+    "pid": 22500,
+    "dos_version": "\r\nIBM Personal Computer DOS Version  3.20 \r\n",
+    "probe_complete": true,
+    "previous_Setup_retained": true,
+    "space_checks": {
+      "SPACE.OK": true,
+      "FAULT.OK": true,
+      "RETRY.OK": true
+    },
+    "owned_stopped": true,
+    "lease_released": true,
+    "note": "Cold boot; final exact packet preflight/failure/retry replay; existing qualified Setup retained; no Windows session before guarded launch."
+  }
+}

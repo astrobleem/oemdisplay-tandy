@@ -1,0 +1,133 @@
+XY OVERVIEW / RECOVERY QUALIFICATION PLAN
+
+STATUS
+Run 08 completed the focused overview/recovery guest checks with the accepted
+HPXY profile. The integrated XYCTL.C and EDGEQA.C hashes match reviewed R17/R19,
+and the fresh Open Watcom rebuild produced executables byte-identical to those
+used in that run. The guest assertions passed for queried geometry, Home query,
+map click/drag alignment and boundaries, release-time external-pan cancellation,
+non-home recovery, preservation skips, titlebar reachability after helper close,
+two-instance restart/log boundaries, and DOS mode/page shutdown. Map messages
+were scripted Win16 messages, not physical mouse input.
+
+Visual review accepted the settled Drag, Recovery-Close, and DOS prompt
+frames. The Run 08 Home frame does not show a usable overview image: Home is asserted
+by the guest query/markers, but is not visually verified by that frame. Recovery means titlebar reachability,
+not full-window visibility. Keyboard accessibility, physical mouse input,
+unsupported-driver behavior, and physical Tandy EX overview qualification are
+NOT RUN. The unrelated legacy modal-dialog test was explicitly skipped in
+focused mode. See RUN08-STATUS.TXT for exact scope. Do not treat the older
+EDGE_E1 qualification as a pass for this candidate.
+
+AUTOMATED CASES (BUILD WITH BUILD.PY --qa)
+1. Startup: helper reports queried 640x256 / 320x200 geometry, software mode,
+   and origin 0,0. No other geometry is synthesized.
+2. Map click: from Home, click well right of the viewport and release. Expect
+   X=320,Y=0; query the driver's returned origin, not the preview.
+3. Bottom-right boundary: click the map's last interior pixel. Expect X=320,
+   Y=56, with X divisible by 8 and Y divisible by 4. After every large pan,
+   verify that the helper stays in the physical view and ordinary application
+   windows keep their positions.
+4. Home: issue the Home command from the menu and verify driver origin 0,0.
+5. Drag/release: drag the viewport by 20 map pixels horizontally and 4
+   vertically. Expect one final requested origin X=80,Y=16.
+6. Drag cancel: move a preview, send WM_CANCELMODE, then release. Expect the
+   origin to remain 0,0. Repeat with Escape; it must discard the preview.
+   Also change the driver origin from another process after a preview but
+   immediately before mouse-up, without pumping a helper timer. Mouse-up must
+   requery the driver's origin and cancel the stale preview.
+7. Recovery from a nonzero pan: create a visible titled top-level window at
+   (700,280) outside the logical desk and pan to (160,28). Explicit recovery
+   must first home the viewport, then move the window caption into Home view
+   without resizing, activation, or z-order change.
+8. Recovery preservation: an ordinary titled window already inside the desk
+   must retain its exact rectangle. Hidden, minimized, and maximized fixtures
+   must remain hidden/iconic/zoomed. Destroy all fixtures after the checks.
+9. Recovery then close: from a nonzero pan, recover a window outside the
+   logical desk, close the helper normally, and query software mode and
+   origin 0,0. Confirm the recovered titlebar remains inside Home view after
+   close cleanup.
+10. Shutdown/restart: close the helper, query software mode and origin 0,0,
+   start it again, verify software/Home startup, close normally, and query the
+    same clean state. The focused fixture does not claim edge, follow, or mode
+    qualification; those checks remain in the broader EDGEQA source.
+
+FOCUSED OVERVIEW MODE AND DIALOG DIAGNOSTICS
+For a bounded overview/recovery evidence run, stage C:\XYOVIEW.TXT (an 8.3
+name) with exactly the eight bytes "OVERVIEW" and no newline on the fresh guest
+disk; leave C:\XYRUN.TXT absent. WIN.INI still starts EDGEQA without arguments.
+A missing or malformed selector fails closed before UI tests, so this fixture
+cannot fall through into the unrelated modal-dialog path that stalls here.
+The focused mode runs overview, non-home recovery, recovery-close, and the
+ordinary restart checks, then records
+"FOCUSED_OVERVIEW_BEGIN selector=XYOVIEW.TXT bytes=8" and
+"LEGACY_DIALOG status=SKIPPED_FOCUSED" before returning. The runtime adapter
+requires the durable focused-mode marker before accepting a run as focused;
+this fixture never enters the legacy modal-dialog path.
+
+Map input records each Win16 message and client coordinate as MAPMSG, followed
+by PAN expected/actual coordinates after the driver query. Recovery records
+expected and actual RECT values for the moved, preserved, hidden, minimized,
+and maximized fixtures, including the rectangle before and after helper close.
+The two offscreen recovery cases assert that the actual starting rectangle has
+no intersection with the queried logical desktop, compare the exact expected
+clamped rectangle, and verify width/height remain unchanged through recovery
+and helper close.
+XYHOME is written only after the helper is invalidated and synchronously
+updated for paint, and OVERVIEW_VISIBLE is checked before capture.
+
+The previous full run stopped after DIALOG_ALLOC, immediately before
+DialogBoxIndirect. That dialog's intended completion path depends on a
+250-ms WM_TIMER, then calls EndDialog after at most 20 delivered ticks. The
+previous log had no markers for WM_INITDIALOG, timer setup/delivery, or return,
+so the exact stopping point is unresolved. The updated QA logs its lock,
+thunk, timer, initialization, first timer, and auto-close milestones, checks
+timer/thunk setup failures, and does not extend any timeout. The test dialog is
+owned by EDGEQA while XYCTL's Follow path queries its own active window; this
+cross-task setup is a separate concern and does not by itself explain why the
+dialog's own timer did not close it.
+
+MANUAL UNSUPPORTED-DRIVER CASE
+Use a separate test profile with a display that does not expose the supported
+ESC_XY geometry; do not edit or substitute an accepted driver. Starting
+XYCTL.EXE should show the unavailable message and start no pan controls. For a
+runtime loss simulation, only use an existing test driver/profile that
+returns an unsupported query; the helper must label the overview unavailable,
+gray pan/recovery controls, discard any drag, and avoid claiming a move.
+No direct hardware or fabricated Escape implementation is acceptable.
+
+MANUAL UI/SAFETY CASES
+1. At 320x200 physical view, confirm the full fixed helper and map are usable.
+   Use Tab, Shift+Tab, Enter, and menu mnemonics. Ctrl+Alt+arrows and
+   Ctrl+Alt+Home/R must remain usable without a mouse. Pan to each corner; the
+   helper should stay at a 4x2-pixel inset in the physical view. User-window
+   motion must still come only from explicit recovery.
+2. Verify a map click inside the current viewport keeps its anchor; clicking
+   outside centers the view. Test each map corner and verify clamping/alignment
+   from ESC_XY query results.
+3. Begin a drag, cancel with Escape, WM_CANCELMODE/capture loss, then an
+   external pan-origin change. Each cancellation must discard its preview.
+   Change the origin between preview and mouse-up without allowing a timer
+   tick; verify release requery cancels rather than committing the stale map
+   target. Release a separate unchanged-origin drag and verify one set-pan.
+4. Create offscreen windows from another ordinary app. Recovery may move only
+   visible captioned top-level windows whose titlebar intersection with the
+   logical desk is under 24x8 pixels. Recovery first homes the viewport;
+   confirm the titlebar appears in Home view and remains there after normal
+   helper close. Windows merely outside Home but still within the logical
+   desk must remain untouched; navigate to them with the map.
+5. Confirm hidden, minimized, maximized, child, untitled, Program Manager,
+   shell, and popup-menu windows are not changed. Confirm normal visible
+   windows retain position, size, z-order, and activation when recovery runs.
+6. Close normally, verify software mode and origin 0,0 in the driver query,
+   restart helper and verify the clean state. Repeat a forced termination
+   only in a disposable profile; do not assume cleanup runs after a crash.
+7. Review XYCTL.LOG and console/test records. The logger is capped at 512
+   entries. Capture one screenshot showing the overview map and viewport, plus
+   a second showing the recovered titlebar before/after if practical.
+
+EVIDENCE TO RETAIN
+Record exact XYCTL.C and EDGEQA.C SHA-256 values, MSC6/LINK4 build logs,
+output EXE hashes, emulator identity, driver/profile identity, EDGEQA log,
+XYCTL.LOG, and screenshots. Keep accepted driver/package hashes unchanged.
+Do not use unrelated driver evidence as proof of overview qualification.

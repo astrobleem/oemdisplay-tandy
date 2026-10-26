@@ -1,0 +1,15 @@
+NOTICE
+
+WINMINE.EXE is a modified/converted Microsoft Windows Minesweeper (WinMine)
+application, derived from an owner-supplied original executable. Copyright
+and other rights in the original application remain with Microsoft and/or
+its applicable rights holders. The conversion does not make the application
+first-party work and does not imply Microsoft endorsement.
+
+WMABT.DLL is the tested About helper included with this build. Its source
+and build project were not recovered in the reviewed package materials; no
+source-level reproducibility claim is made.
+
+This notice records provenance and attribution only. It does not grant a
+license to the original Microsoft application or to third-party components.
+See SHA256S.TXT and QUALIFY.JSN for artifact identity and test scope.
