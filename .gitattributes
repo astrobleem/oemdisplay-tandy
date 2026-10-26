@@ -209,3 +209,6 @@ docs/pcp/OUTPUT/PROFILE.CFG whitespace=cr-at-eol,-blank-at-eof
 tools/CGAPACK/** -text
 downloads/experimental/CGA/** -text
 docs/QUAL/CGA/** -text
+
+# CGA recorded VRAM, image metadata and capture notes retain exact bytes.
+docs/CGA/** -text
