@@ -10,10 +10,17 @@ normal 640 KB and DOS 3.20+.
    path. If Setup asks for the Windows XT driver disk, enter the same path.
 3. Select Tandy EX/HX HPXY 640x256 hardware pan and Complete Changes.
    Keep your keyboard, mouse and DOS configuration choices unchanged.
+   If HPXY was already selected, Setup may retain its old driver bytes.
+   DISPLAY then asks before replacing only SYSTEM\HPXY.DRV. Type Y only
+   to accept that update; Enter, N or end of input leaves it unchanged.
+   This prompt can also follow a canceled Setup with HPXY still selected.
 4. For each Windows session, change to the WINXT folder and run DISPWIN.
    Inside Windows run XYCTL.EXE from that folder for viewport controls.
 
 DISPLAY and DISPWIN reserve shared video memory and stop if that fails.
+DISPLAY uses the included FIXXT only to launch Windows Setup and check the
+selected HPXY driver; this route does not repair shell, keyboard, mouse,
+sound, startup commands or INI settings. It also supports DOS 3.20.
 They start Windows at C:\WINDOWS. For another Windows directory, pass
 its drive and path, for example DISPLAY D: \WIN30 or DISPWIN D: \WIN30.
 

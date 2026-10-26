@@ -42,7 +42,9 @@ def runtimes():
     for name, pin in fix['source_dependencies'].items():
         require(identity((ROOT / name).read_bytes()) == pin,
                 'Finisher dependency differs: ' + name)
-    return {'XYCTL.EXE': binaries['XYCTL.EXE'],
+    hp = importlib.machinery.SourceFileLoader(
+        'current_hpxy_runtime', str(HERE / 'HPXY.PY')).load_module()
+    return {'HPXY.DRV': hp.runtime(), 'XYCTL.EXE': binaries['XYCTL.EXE'],
             'FIXXT.EXE': (HERE / 'BIN/FIXXT.EXE').read_bytes()}
 
 
@@ -65,6 +67,10 @@ def qualify(entries, archive, baseline):
     helpers()
     path = ROOT / 'docs/QUAL/WDESK/PACKAGE.JSN'
     q = json.loads(path.read_bytes())
+    if q['archive'] != identity(archive):
+        hp = importlib.machinery.SourceFileLoader(
+            'current_hpxy_package', str(HERE / 'HPXY.PY')).load_module()
+        return hp.qualify(entries, archive, q, baseline)
     require(q['status'] == 'PASS_NATIVE_PACKAGE' and
             q['physical_qualification'] is False, 'Panning package incomplete')
     require(q['baseline_expanded'] == identity(

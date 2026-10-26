@@ -79,3 +79,8 @@ __pycache__/
 !docs/pcp/OUTPUT/CANDIDATE/RRBENCH.LOG
 !docs/pcp/OUTPUT/SHIPPED/RRBENCH.LOG
 !tools/CPPACK/PAYLOAD/PCP3216.DRV
+
+# Current qualified HPXY runtime and focused native receipts.
+!/tools/DOSINST/BIN/HPXY.DRV
+!/docs/QUAL/HPXY/WINDOWS.ZIP
+!/docs/QUAL/HPXY/INSTALL.ZIP

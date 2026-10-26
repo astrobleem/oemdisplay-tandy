@@ -58,7 +58,9 @@ def main():
     sound_header = (canonical/'SOUNDID.H').read_text()
     sound_bytes = int(re.search(r'#define SOUND_BYTES (\d+)U', sound_header).group(1))
     sound_crc = int(re.search(r'#define SOUND_CRC 0x([0-9a-f]+)UL', sound_header).group(1), 16)
-    sizes = [sound_bytes if n == 'SOUND_BYTES' else int(n[:-2]) for n in re.search(
+    hpxy_header = (canonical/'HPXYID.H').read_text()
+    hpxy_bytes = int(re.search(r'#define HPXY_BYTES (\d+)UL', hpxy_header).group(1))
+    sizes = [sound_bytes if n == 'SOUND_BYTES' else hpxy_bytes if n == 'HPXY_BYTES' else int(n[:-2]) for n in re.search(
         r'static unsigned long sizes\[\]=\{([^}]+)\};', source).group(1).split(',')]
     targets = [int(n) for n in re.search(
         r'static int target\[\]=\{([^}]+)\};', source).group(1).split(',')]

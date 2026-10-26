@@ -48,6 +48,17 @@ Keep your keyboard, mouse and DOS configuration choices unchanged.
 *Check the Display line before accepting. Setup copies the included fonts,
 grabber and startup artwork along with the driver.*
 
+If HPXY was already selected, Windows Setup can retain its existing driver
+bytes. After Setup returns, `DISPLAY` checks the selected HPXY driver and
+asks before replacing only `SYSTEM\HPXY.DRV` from this folder. Type **Y**
+to accept; Enter, **N** or end of input leaves it unchanged. The prompt can
+also appear after canceling Setup while HPXY remains selected. No replacement
+is offered when another display is selected.
+
+This use of the included `FIXXT` does not repair shell, keyboard, mouse, sound,
+startup commands or INI settings. It supports DOS 3.20 through checked close
+and driver readback; the full desktop installer still requires DOS 3.3+.
+
 ## 5. Launch Windows
 
 For every session, return to the expanded `WINXT` folder and run `DISPWIN`.

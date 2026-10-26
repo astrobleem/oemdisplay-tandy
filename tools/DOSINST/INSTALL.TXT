@@ -16,6 +16,8 @@ DRIVERS ONLY (DOS 3.20+; existing Windows)
 From the expanded WINXT folder, run DISPLAY from DOS. In Windows Setup
 choose Display, Other, enter that folder and select Tandy EX/HX HPXY.
 Complete Changes, giving the same folder when Setup requests its disk.
+If Setup keeps an older HPXY, DISPLAY offers to refresh it. Answer Y to
+install this packet's driver, or N to leave the installed driver unchanged.
 Start later sessions with DISPWIN from the expanded WINXT folder.
 See WINXT\DISPLAY.TXT for another Windows directory and viewport controls.
 

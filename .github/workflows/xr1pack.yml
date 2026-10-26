@@ -30,7 +30,7 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/distributions/WINXT/CGA.GR2\n/tools/XR1PACK/\n/tools/DOSINST/\n/tools/XROEM/\n/tools/SOUNDOWN/\n/docs/QUAL/DOSINST/\n/docs/QUAL/PANUI/\n/docs/QUAL/WDESK/\n/src/panui/\n/src/wdesk/\n/src/xtpan/\n/src/softpan/\n/experiments/XYOVERVIEW/\n/tools/PANUI/\n/tools/SPPACK/\n/docs/RELEASES/RC8.MD\n/.github/\n/.gitattributes\n/AGENTS.md\n' | git sparse-checkout set --no-cone --stdin
+          printf '/distributions/WINXT/CGA.GR2\n/tools/XR1PACK/\n/tools/DOSINST/\n/tools/XROEM/\n/tools/SOUNDOWN/\n/docs/QUAL/DOSINST/\n/docs/QUAL/PANUI/\n/docs/QUAL/WDESK/\n/docs/QUAL/HPXY/\n/experiments/XYPAN/\n/experiments/XYRRECT/\n/experiments/XYSTRIP/\n/src/panui/\n/src/wdesk/\n/src/xtpan/\n/src/softpan/\n/experiments/XYOVERVIEW/\n/tools/PANUI/\n/tools/SPPACK/\n/docs/RELEASES/RC8.MD\n/.github/\n/.gitattributes\n/AGENTS.md\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
 
@@ -41,6 +41,7 @@ jobs:
           python3 tools/XR1PACK/TESTPREP.PY
           python3 tools/XR1PACK/TESTPUB.PY
           python3 tools/DOSINST/TESTPUB.PY
+          python3 tools/DOSINST/TESTHPXY.PY
           python3 tools/DOSINST/TESTCRC.PY
           python3 tools/XR1PACK/PUBLISH.PY --out release-xr1 --commit "$SOURCE_SHA"
           python3 tools/XR1PACK/PUBLISH.PY --verify release-xr1 --commit "$SOURCE_SHA"
