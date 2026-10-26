@@ -87,6 +87,7 @@ def main():
         # Startup helpers live in the Windows directory, never in SYSTEM.
         helper='PANCTL.EXE' if mode=='PAN' else 'CGACTL.EXE'
         assert (w/helper).is_file() and not (w/'SYSTEM'/helper).exists()
+        assert (w/'SYSTEM'/'PANKEY.DLL').is_file() and not (w/'PANKEY.DLL').exists()
         if mode in ('100','PAN'):
             # PAN keeps mode 100's compact fonts, border and settings.
             assert b'Helv 3x5 (CGA100)=CG1HELV.FON' in ini and b'BorderWidth=1' in ini

@@ -48,10 +48,12 @@ def steps_from_log(text):
     return result
 
 
-def load_frames(run, steps):
+def load_frames(run, steps, paired=False):
+    """Capture NNN.VRM of each step; paired runs send the key, wait for the
+    probe's DONE line, then capture, so step n is capture 2n+1."""
     frames = {}
     for step in sorted(steps):
-        path = run / ('%03d.VRM' % (step + 1))
+        path = run / ('%03d.VRM' % ((2 * step + 1) if paired else (step + 1)))
         if path.exists():
             frames[step] = M.decode(bytearray(path.read_bytes()))
     return frames
@@ -98,10 +100,11 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--run', type=Path, required=True)
     ap.add_argument('--out', type=Path, required=True)
+    ap.add_argument('--paired', action='store_true', help='captures follow each DONE line')
     a = ap.parse_args()
     a.out.mkdir(parents=True, exist_ok=False)
     steps = steps_from_log((a.run / 'PANMET.LOG').read_text(errors='replace'))
-    frames = load_frames(a.run, steps)
+    frames = load_frames(a.run, steps, a.paired)
     report = {'frames': {}, 'conflicts': 0, 'pattern_errors': 0, 'roundtrip': None,
               'rendering': 'host rendering of decoded VRAM; not scanout, not a composite'}
     canvas = [[None] * LOGICAL_W for _ in range(LOGICAL_H)]
