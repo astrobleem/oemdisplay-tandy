@@ -1,66 +1,82 @@
-/* CGA100 window access. No rendering, video ports, hooks or geometry switch.
- * Ctrl+Alt+arrows slide the foreground window by five pixels; Home restores
- * its top/left, End exposes its bottom/right. Only explicit chords act.
- * Direct visible child bounds repair a fixed window initially capped by USER
- * (the stock Control Panel icon grid is wider than its capped client).
+/* CGA100 access client of shared WDESK/WTPLACE; no second root tracker,
+ * enumerator, saved-position implementation, bitmap or video-port owner.
+ * Ctrl+Alt+arrows pan window positions; Home recovers, End exposes the active
+ * frame's bottom/right. The unique CGA operation slides an existing visible
+ * child group when its fixed client clips it (stock Control Panel icons).
  */
 #define WINVER 0x0300
 #include <windows.h>
-static HWND mainWindow,target;
-static HINSTANCE instance;
+#include "WDWIN.H"
+static HWND mainWindow;
 static DWORD lastMove;
 static int held;
 static int Clamp(int n,int low,int high)
 {return n<low?low:n>high?high:n;}
-BOOL FAR PASCAL __export Pick(HWND w,LPARAM unused)
+static int Limit(long n,int high)
+{return n<0?0:n>high?high:(int)n;}
+static HWND Active(void)
 {
- LONG style;char cls[32],title[2];
- if(w==mainWindow || !IsWindowVisible(w) || !IsWindowEnabled(w) || IsIconic(w))return TRUE;
+ HWND w=GetActiveWindow();char cls[32];LONG style;
+ if(!w || w==mainWindow || !IsWindowVisible(w) || !IsWindowEnabled(w) || IsIconic(w))return 0;
  style=GetWindowLong(w,GWL_STYLE);
- if((style&WS_CHILD) || (style&WS_CAPTION)!=WS_CAPTION)return TRUE;
- if(!GetWindowText(w,title,sizeof(title)))return TRUE;
+ if((style&WS_CHILD) || (style&WS_CAPTION)!=WS_CAPTION)return 0;
  GetClassName(w,cls,sizeof(cls));
- if(!lstrcmp(cls,"Progman") || !lstrcmp(cls,"#32768"))return TRUE;
- target=w;return FALSE;
+ return !lstrcmp(cls,"Progman") || !lstrcmp(cls,"#32768") ? 0 : w;
 }
-static void FitChildren(HWND w)
+static void SlideChildren(HWND w,int key)
 {
- HWND child;RECT r,c,b;POINT origin;int needX,needY;
- if(GetWindowLong(w,GWL_STYLE)&WS_THICKFRAME)return;
- GetWindowRect(w,&r);GetClientRect(w,&c);origin.x=origin.y=0;ClientToScreen(w,&origin);
- needX=c.right;needY=c.bottom;
+ HWND child;RECT c,b;POINT origin;int first=1,minX=0,minY=0,maxX=0,maxY=0;
+ int dx=0,dy=0,lo,hi,t;
+ GetClientRect(w,&c);origin.x=origin.y=0;ClientToScreen(w,&origin);
+ for(child=GetWindow(w,GW_CHILD);child;child=GetWindow(child,GW_HWNDNEXT)){
+  if(!IsWindowVisible(child) || !(GetWindowLong(child,GWL_STYLE)&WS_CHILD))continue;
+  GetWindowRect(child,&b);OffsetRect(&b,-origin.x,-origin.y);
+  if(first){minX=b.left;maxX=b.right;minY=b.top;maxY=b.bottom;first=0;}
+  else{if(b.left<minX)minX=b.left;if(b.right>maxX)maxX=b.right;
+       if(b.top<minY)minY=b.top;if(b.bottom>maxY)maxY=b.bottom;}
+ }
+ if(first || minX < -1024 || minY < -1024 || maxX > 2048 || maxY > 2048 ||
+    maxX-minX>1024 || maxY-minY>1024)return;
+ if(minX<0 || maxX>c.right){
+  lo=-minX;hi=c.right-maxX;if(lo>hi){t=lo;lo=hi;hi=t;}
+  if(key==VK_HOME)dx=-minX;else if(key==VK_END)dx=c.right-maxX;
+  else if(key==VK_LEFT)dx=-5;else if(key==VK_RIGHT)dx=5;
+  dx=Clamp(dx,lo,hi);
+ }
+ if(minY<0 || maxY>c.bottom){
+  lo=-minY;hi=c.bottom-maxY;if(lo>hi){t=lo;lo=hi;hi=t;}
+  if(key==VK_HOME)dy=-minY;else if(key==VK_END)dy=c.bottom-maxY;
+  else if(key==VK_UP)dy=-5;else if(key==VK_DOWN)dy=5;
+  dy=Clamp(dy,lo,hi);
+ }
+ if(!dx && !dy)return;
  for(child=GetWindow(w,GW_CHILD);child;child=GetWindow(child,GW_HWNDNEXT)){
   if(!IsWindowVisible(child) || !(GetWindowLong(child,GWL_STYLE)&WS_CHILD))continue;
   GetWindowRect(child,&b);
-  if(b.right-origin.x>needX)needX=b.right-origin.x;
-  if(b.bottom-origin.y>needY)needY=b.bottom-origin.y;
+  SetWindowPos(child,0,b.left-origin.x+dx,b.top-origin.y+dy,0,0,
+               SWP_NOSIZE|SWP_NOZORDER|SWP_NOACTIVATE|SWP_NOREDRAW);
  }
- if(needX>1024 || needY>1024)return;
- if(needX>c.right || needY>c.bottom)
-  SetWindowPos(w,0,0,0,r.right-r.left+needX-c.right,r.bottom-r.top+needY-c.bottom,
-               SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE);
+ InvalidateRect(w,0,TRUE);UpdateWindow(w);
 }
 static void Slide(int key)
 {
- FARPROC callback;RECT r;int x,y,w,h,loX,hiX,loY,hiY;
- target=0;callback=MakeProcInstance((FARPROC)Pick,instance);
- if(!callback)return;
- EnumWindows((WNDENUMPROC)callback,0L);FreeProcInstance(callback);
- if(!target)return;
- FitChildren(target);GetWindowRect(target,&r);
- w=r.right-r.left;h=r.bottom-r.top;x=r.left;y=r.top;
- loX=160-w;hiX=loX;if(loX>0)loX=0;else hiX=0;
- loY=100-h;hiY=loY;if(loY>0)loY=0;else hiY=0;
- if(key==VK_HOME){x=0;y=0;}
- else if(key==VK_END){x=loX;y=loY;}
- else if(key==VK_LEFT)x-=5;
- else if(key==VK_RIGHT)x+=5;
- else if(key==VK_UP)y-=5;
- else if(key==VK_DOWN)y+=5;
- x=Clamp(x,loX,hiX);y=Clamp(y,loY,hiY);
- SetWindowPos(target,0,x,y,0,0,SWP_NOSIZE|SWP_NOZORDER|SWP_NOACTIVATE);
+ HWND w=Active();RECT r;int x,y,childKey=key;
+ /* Window workspace movement and fixed-client movement share one chord. */
+ if(key==VK_LEFT)childKey=VK_RIGHT;else if(key==VK_RIGHT)childKey=VK_LEFT;
+ else if(key==VK_UP)childKey=VK_DOWN;else if(key==VK_DOWN)childKey=VK_UP;
+ if(w)SlideChildren(w,childKey);
+ if(key==VK_HOME){(void)WDWinHome();return;}
+ if(key==VK_END){
+  if(!w)return;
+  GetWindowRect(w,&r);WDWinViewport(&x,&y);
+  (void)WDWinPan(Limit((long)x+r.right-160,160),Limit((long)y+r.bottom-100,100));return;
+ }
+ if(key==VK_LEFT)(void)WDWinPanBy(-5,0);
+ else if(key==VK_RIGHT)(void)WDWinPanBy(5,0);
+ else if(key==VK_UP)(void)WDWinPanBy(0,-5);
+ else if(key==VK_DOWN)(void)WDWinPanBy(0,5);
 }
-long FAR PASCAL __export WndProc(HWND w,unsigned m,WORD wp,LONG lp)
+long FAR PASCAL WndProc(HWND w,unsigned m,WORD wp,LONG lp)
 {
  int keys[6],i,key=0;DWORD now;
  if(m==WM_TIMER){
@@ -69,11 +85,22 @@ long FAR PASCAL __export WndProc(HWND w,unsigned m,WORD wp,LONG lp)
   }
   keys[0]=VK_HOME;keys[1]=VK_END;keys[2]=VK_LEFT;keys[3]=VK_RIGHT;keys[4]=VK_UP;keys[5]=VK_DOWN;
   for(i=0;i<6;i++)if(GetAsyncKeyState(keys[i])&0x8000){key=keys[i];break;}
+  if(!key){
+   if(GetAsyncKeyState(VK_NUMPAD7)&0x8000)key=VK_HOME;
+   else if(GetAsyncKeyState(VK_NUMPAD1)&0x8000)key=VK_END;
+   else if(GetAsyncKeyState(VK_NUMPAD4)&0x8000)key=VK_LEFT;
+   else if(GetAsyncKeyState(VK_NUMPAD6)&0x8000)key=VK_RIGHT;
+   else if(GetAsyncKeyState(VK_NUMPAD8)&0x8000)key=VK_UP;
+   else if(GetAsyncKeyState(VK_NUMPAD2)&0x8000)key=VK_DOWN;
+  }
   now=GetTickCount();
   if(key && (key!=held || now-lastMove>=200L)){Slide(key);lastMove=now;}
   held=key;return 0;
  }
- if(m==WM_DESTROY){KillTimer(w,1);PostQuitMessage(0);return 0;}
+ if(m==WM_QUERYENDSESSION)return WDWinPrepareShutdown()>=0;
+ if(m==WM_ENDSESSION){if(wp)(void)WDWinShutdown();return 0;}
+ if(m==WM_CLOSE){if(WDWinShutdown()<0)return 0;DestroyWindow(w);return 0;}
+ if(m==WM_DESTROY){(void)WDWinShutdown();KillTimer(w,1);PostQuitMessage(0);return 0;}
  return DefWindowProc(w,m,wp,lp);
 }
 int PASCAL WinMain(HANDLE hi,HANDLE previous,LPSTR cmd,int show)
@@ -82,11 +109,15 @@ int PASCAL WinMain(HANDLE hi,HANDLE previous,LPSTR cmd,int show)
  if(previous)return 0;
  dc=GetDC(NULL);ok=GetDeviceCaps(dc,HORZRES)==160 && GetDeviceCaps(dc,VERTRES)==100 && GetDeviceCaps(dc,NUMCOLORS)==16;ReleaseDC(NULL,dc);
  if(!ok)return 0;
- instance=hi;wc.style=0;wc.lpfnWndProc=WndProc;wc.cbClsExtra=wc.cbWndExtra=0;wc.hInstance=hi;
+ /* Existing panning owners never run concurrently with this fixed-mode client. */
+ if(FindWindow("XTPan",0) || FindWindow("XYOverviewControl",0))return 0;
+ if(WDWinInitView(320,200,160,100)<0)return 1;
+ (void)WDWinExclude("Progman");
+ wc.style=0;wc.lpfnWndProc=WndProc;wc.cbClsExtra=wc.cbWndExtra=0;wc.hInstance=hi;
  wc.hIcon=0;wc.hCursor=0;wc.hbrBackground=0;wc.lpszMenuName=0;wc.lpszClassName="CGASlide";
- if(!RegisterClass(&wc))return 1;
+ if(!RegisterClass(&wc)){(void)WDWinShutdown();return 1;}
  mainWindow=CreateWindow("CGASlide","CGA window access",WS_POPUP,0,0,0,0,0,0,hi,0);
- if(!mainWindow || !SetTimer(mainWindow,1,100,0))return 1;
+ if(!mainWindow || !SetTimer(mainWindow,1,100,0)){(void)WDWinShutdown();return 1;}
  while(GetMessage(&msg,0,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);}
  return msg.wParam;
 }

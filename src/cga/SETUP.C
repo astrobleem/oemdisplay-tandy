@@ -17,7 +17,7 @@ typedef char cga_u32_check[sizeof(U32)==4?1:-1];
 #include "CRCFAST.H"
 typedef struct {const char *name,*target;U32 size,crc;} CGAFILE;
 #include "CGAPINS.H"
-static int cga_small;
+static int cga_small,cga_medium;
 static int cga_discard(void);
 #ifdef HOST_TEST
 #include "HOSTTEST.H"
@@ -58,7 +58,9 @@ static void paths(unsigned i)
 {
     char *dot;
     join(srcpath,payload,cga_files[i].name);
-    join(dstpath,systemdir,cga_files[i].target);
+    /* Startup executables live in Windows; support stays in SYSTEM. This
+     * also keeps the existing INI journal's helper token a DOS basename. */
+    join(dstpath,!strcmp(cga_files[i].target,"CGACTL.EXE") ? dir : systemdir,cga_files[i].target);
     strcpy(tmppath,dstpath);dot=strrchr(tmppath,'.');
     if(!dot)dot=tmppath+strlen(tmppath);
     strcpy(dot,".CGT");
@@ -242,7 +244,7 @@ static int payload_location(const char *exe)
 
 int main(int argc,char **argv)
 {
-    unsigned i;int rc,whole=0;const char *mode;char *args[6];
+    unsigned i;int rc,whole=0;const char *mode;char *args[7];
     if(argc!=3){
         puts("IBM CGA / Windows 3.0 real-mode display setup (existing Windows required).");
         puts("SETUP C:\\WINDOWS 100|320|640   (select mode; start WIN /R afterward)");
@@ -285,6 +287,7 @@ int main(int argc,char **argv)
     if(readfile(in("SYSTEM.INI"))<0 || readfile(in("WIN.INI"))<0)
         return fail("Cannot read Windows INIs, or an INI exceeds 18000 bytes; nothing copied.");
     cga_small=!strcmp(mode,"100");
+    cga_medium=!strcmp(mode,"320");
     if(!payload_location(argv[0]))return fail("Packet path too long.");
     if(exists(in("CGACOPY.NEW")))return fail("Incomplete copy record; no files changed. Keep it for diagnosis.");
     if(exists(in("CGADONE.STA")))return fail("Prior undo cleanup pending. Run SETUP UNDO first.");
@@ -309,8 +312,10 @@ int main(int argc,char **argv)
     }
     args[0]="CGASET";args[1]="ON";args[2]=(char *)dir;
     args[3]=cga_small ? "CGA100.DRV" : !strcmp(mode,"320") ? "CGA320.DRV" : "CGA640.DRV";
-    args[4]="/C";args[5]=NULL;
-    rc=cga_ini_main(cga_small ? 5 : 4,args);
+    if(cga_small){
+        args[4]="CGACTL.EXE";args[5]="/C";args[6]=NULL;
+    }else args[4]=NULL;
+    rc=cga_ini_main(cga_small ? 6 : 4,args);
     if(rc){if(!ini_state())cleanup();return 1;}
     puts("SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.");
     puts("Mode changes require exiting Windows and rerunning SETUP. Keep this packet for UNDO.");

@@ -122,7 +122,9 @@ FACES = {'CG1SYS.FON': ('System','FONTS',27,0,True,700,0x20),
          'CG1FIX.FON': ('Courier','FIXFONTS',27,0,False,400,0x30),
          'CG1OEM.FON': ('Terminal','OEMFONTS',29,255,False,400,0x30),
          'CG1HELV.FON': ('Helv','CG1HELV',27,0,True,700,0x20),
-         'CG1COUR.FON': ('Courier','CG1COUR',27,0,False,400,0x30)}
+         'CG1COUR.FON': ('Courier','CG1COUR',27,0,False,400,0x30),
+         'CG2SYS.FON': ('System','FONTS',27,0,True,700,0x20),
+         'CG2HELV.FON': ('Helv','CG2HELV',27,0,True,700,0x20)}
 
 
 def ui_width(char):
@@ -143,18 +145,19 @@ def build(out):
            'provenance':'Original CGA100 ASCII grids and XT Pixels box/block algorithm; MIT',
            'limits':'ASCII plus OEM box/block primitives. Other extended bytes show a fallback box.'}
     for filename,(face,mod,rid,charset,variable,weight,family) in FACES.items():
+        medium = filename.startswith('CG2')
         ui = filename in ('CG1SYS.FON','CG1HELV.FON')
         small = ui or filename=='CG1COUR.FON'
         width,height = (3 if ui else 4,5) if small else (4,6)
         first,last = (32,255) if charset == 0 else (1,254)
         widths=[ui_width(B.decode_code(c,charset)) if ui else width for c in range(first,last+1)]
-        contract = dict(type=0,points=9 if small else 11,vert_res=40,horiz_res=48,ascent=5,internal=0,external=0,
+        contract = dict(type=0,points=9 if small or medium else 11,vert_res=48 if medium else 40,horiz_res=96 if medium else 48,ascent=5,internal=0,external=0,
                         italic=0,underline=0,strikeout=0,weight=weight,charset=charset,
                         pix_width=0 if variable else width,height=height,pitch_family=family|int(variable),
                         avg_width=width,max_width=8,first=first,last=last,default=ord('?')-first,
                         **{'break':32-first}, widths=widths,face=face)
         raw,_ = B.fnt(contract)
-        data = B.fon(raw,mod,rid,'CGA100 original %dx%d %s; native unqualified'%(width,height,face))
+        data = B.fon(raw,mod,rid,('CGA320' if medium else 'CGA100')+' original %dx%d %s; native unqualified'%(width,height,face))
         (out/filename).write_bytes(data)
         fallback = []
         for code in range(first,last+1):

@@ -101,6 +101,10 @@ static void Tree(HWND w,int depth)
   if(!IsWindowVisible(w)||w==hidden)continue;
   cls[0]=title[0]=0;GetClassName(w,cls,sizeof(cls));GetWindowText(w,title,sizeof(title));GetWindowRect(w,&r);
   wsprintf(line,"W %d %04x %s [%d,%d,%d,%d] %s\r\n",depth,w,(LPSTR)cls,r.left,r.top,r.right,r.bottom,(LPSTR)title);Log(line);
+  if(depth==1){
+   pt.x=(r.left+r.right)/2;pt.y=(r.top+r.bottom)/2;hit=WindowFromPoint(pt);
+   wsprintf(line,"META %04x style=%08lx enabled=%d hit=%04x\r\n",w,GetWindowLong(w,GWL_STYLE),IsWindowEnabled(w),hit);Log(line);
+  }
   if(depth<2){
    f=(HFONT)SendMessage(w,WM_GETFONT,0,0L);
    if(f&&GetObject(f,sizeof(lf),(LPSTR)&lf)){

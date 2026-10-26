@@ -28,7 +28,7 @@ ASSETS={
  'WXTSPL01.RLE':('WXTSPL01.RLE','eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c'),
  'LOGOLIC.TXT':('LOGOLIC.TXT','b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80'),
 }
-COPY=set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2'}
+COPY=set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE'}
 ALL_FILES=COPY|{'XTSTATIC.LGO','WXTSPL01.RLE','LOGOLIC.TXT','OEMSETUP.INF','FONTLIC.TXT','NOTICE.TXT'}
 
 
@@ -61,8 +61,27 @@ def read_drivers(builds):
     return result
 
 
-def payload(repo,support,drivers,fontout):
+def read_helper(folder):
+    record=json.loads((folder/'HELPER.JSN').read_bytes())
+    data=(folder/'CGACTL.EXE').read_bytes()
+    if record.get('build')!='PASS' or record.get('kind')!='CGA_WINDOW_ACCESS_CANDIDATE':
+        raise ValueError('Missing native CGACTL build receipt')
+    if record.get('sha256')!=hashlib.sha256(data).hexdigest() or record.get('bytes')!=len(data):
+        raise ValueError('Changed CGACTL executable')
+    if record.get('source_sha256')!=hashlib.sha256((HERE/'CGACTL.C').read_bytes()).hexdigest():
+        raise ValueError('CGACTL build/source mismatch')
+    shared=record.get('shared_source_sha256',{})
+    if set(shared)!={'WDCORE.C','WDCORE.H','WDWIN.C','WDWIN.H','WTPLACE.C','WTPLACE.H'} or record.get('placement_owner')!='shared WDWIN only':
+        raise ValueError('Shared WDESK placement ownership/source receipt required')
+    if any(not re.fullmatch('[0-9a-f]{64}',sha) for sha in shared.values()):
+        raise ValueError('Invalid shared placement source pin')
+    dos_exe(data,driver=True)
+    return data
+
+
+def payload(repo,support,drivers,fontout,helper):
     result=dict(drivers)
+    result['CGACTL.EXE']=helper
     CGAFONT.build(fontout)
     for name in CGAFONT.FACES:result[name]=(fontout/name).read_bytes()
     for target,(source,sha) in ASSETS.items():
@@ -85,7 +104,9 @@ def emit(repo,out,files,source_commit,fixture=False):
     for name,data in sorted(files.items()):
         if not re.fullmatch(r'[A-Z0-9_]{1,8}\.[A-Z0-9]{1,3}',name):raise ValueError('Non-DOS payload name: '+name)
         (folder/name).write_bytes(data)
-    pin={name:dict(identity(data),installed=name if name in COPY else '') for name,data in sorted(files.items())}
+    pin={name:dict(identity(data),installed=name if name in COPY else '',
+                   destination='WINDOWS' if name=='CGACTL.EXE' else 'SYSTEM' if name in COPY else '')
+         for name,data in sorted(files.items())}
     token=hashlib.sha256(json.dumps(pin,sort_keys=True).encode()).hexdigest()
     header='#define CGA_PACKET_ID "'+token+'"\n#define CGA_COUNT '+str(len(pin))+'\nstatic CGAFILE cga_files[CGA_COUNT]={\n'
     for name,row in pin.items():
@@ -152,6 +173,7 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__);sub=ap.add_subparsers(dest='command',required=True)
     p=sub.add_parser('prepare');p.add_argument('--repo',type=Path,required=True);p.add_argument('--support',type=Path,required=True)
     p.add_argument('--build-100',type=Path,required=True);p.add_argument('--build-320',type=Path,required=True);p.add_argument('--build-640',type=Path,required=True)
+    p.add_argument('--helper-build',type=Path,required=True)
     p.add_argument('--source-commit',required=True);p.add_argument('--out',type=Path,required=True)
     p=sub.add_parser('finish');p.add_argument('--prepared',type=Path,required=True);p.add_argument('--build',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
     args=ap.parse_args()
@@ -161,7 +183,7 @@ def main():
         # Generated font work is private developer output, outside the packet.
         fonts=args.out.parent/(args.out.name+'-fonts')
         if fonts.exists():raise ValueError('Fresh font output required: '+str(fonts))
-        files=payload(args.repo,args.support,drivers,fonts)
+        files=payload(args.repo,args.support,drivers,fonts,read_helper(args.helper_build))
         emit(args.repo,args.out,files,args.source_commit)
         print('CGA expanded packet/source prepared; native helper build and Windows qualification remain queued')
     else:

@@ -25,19 +25,19 @@ def ini_source(repo):
            'const char *sset[5], *fadd[2], *wset[2];')
     for old,new in (
         ('strcpy(sysset[1], "fonts.fon=XTTSYS.FON");',
-         'strcpy(sysset[1], cga_small ? "fonts.fon=CG1SYS.FON" : "fonts.fon=XTCSYS.FON");'),
+         'strcpy(sysset[1], cga_small ? "fonts.fon=CG1SYS.FON" : cga_medium ? "fonts.fon=CG2SYS.FON" : "fonts.fon=XTCSYS.FON");'),
         ('strcpy(sysset[2], "fixedfon.fon=XTCFIX.FON");',
-         'strcpy(sysset[2], cga_small ? "fixedfon.fon=CG1FIX.FON" : "fixedfon.fon=XTCFIX.FON");'),
+         'strcpy(sysset[2], (cga_small || cga_medium) ? "fixedfon.fon=CG1FIX.FON" : "fixedfon.fon=XTCFIX.FON");'),
         ('strcpy(sysset[3], "oemfonts.fon=XTCOEM.FON");',
-         'strcpy(sysset[3], cga_small ? "oemfonts.fon=CG1OEM.FON" : "oemfonts.fon=XTCOEM.FON");\n'
+         'strcpy(sysset[3], (cga_small || cga_medium) ? "oemfonts.fon=CG1OEM.FON" : "oemfonts.fon=XTCOEM.FON");\n'
          '        strcpy(sysset[4], "286grabber=CGAGRAB.GR2");'),
         ('sset[3] = sysset[3];','sset[3] = sysset[3];\n        sset[4] = sysset[4];'),
         ('edit(\'S\', "[boot]", sset, 4, NULL, 0, NULL)',
          'edit(\'S\', "[boot]", sset, 5, NULL, 0, NULL)'),
-        ('"Helv 8x8 (TEXT80)=T80HELV.FON"','"Helv 3x5 (CGA100)=CG1HELV.FON"'),
-        ('"Courier 8x8 (TEXT80)=T80COUR.FON"','"Courier 4x5 (CGA100)=CG1COUR.FON"'),
+        ('"Helv 8x8 (TEXT80)=T80HELV.FON"','cga_small ? "Helv 3x5 (CGA100)=CG1HELV.FON" : "Helv 4x6 (CGA320)=CG2HELV.FON"'),
+        ('"Courier 8x8 (TEXT80)=T80COUR.FON"','cga_small ? "Courier 4x5 (CGA100)=CG1COUR.FON" : "Courier 4x6 (CGA320)=CG1FIX.FON"'),
         ('edit(\'W\', "[fonts]", NULL, 0, fadd, 2, NULL)',
-         'edit(\'W\', "[fonts]", NULL, 0, fadd, cga_small ? 2 : 0, NULL)'),
+         'edit(\'W\', "[fonts]", NULL, 0, fadd, (cga_small || cga_medium) ? 2 : 0, NULL)'),
     ): s=once(s,old,new)
     s=s.replace('SYSTEM.T80','SYSTEM.CG0').replace('WIN.T80','WIN.CG0')
     s=s.replace('.T8N','.CGN').replace('.T8O','.CGO')

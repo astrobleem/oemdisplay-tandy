@@ -1,8 +1,8 @@
 # CGA source candidate
 
-This is host-checked development source, not an installable/qualified packet.
-See [the coverage audit and native gates](../../docs/CGA.MD). No emulator was
-launched for this candidate. No accepted binary, packet or publication pin changes.
+This is development source with partial native qualification, not a released
+packet. See [coverage, evidence and remaining gates](../../docs/CGA.MD) and
+NATIVE.JSN. Accepted binaries, packets and publication pins stay unchanged.
 
 ## Host work
 
@@ -61,7 +61,10 @@ accepted grabber uses private `CGAGRAB.GR2`, preserving stock `CGA.GR2`.
 `CGASET.PY` stages the exact existing T80SET transaction with private CGA
 backup/state names. It selects display, System/Fixed/OEM fonts and 286grabber;
 160x100 also registers the small Helv/Courier faces and one-pixel borders.
-Normal profiles keep XTC fonts and existing font-list entries.
+320x200 selects the original 4x6 CG2 System/Helv faces and 4x6 fixed/OEM.
+640x200 keeps XTC fonts and existing font-list entries. CGA100 installs its
+access client in Windows and adds its basename to load=; UNDO removes only
+that added token and its own unchanged created file.
 
 UNDO preserves unrelated later INI edits, changed payloads and files still
 referenced by those INIs. Interrupted copies and cleanup are retryable through
@@ -81,10 +84,23 @@ startup assets and notices to the developer producer. Consumers receive them
 bundled. Synthetic driver fixtures and modern SETUPHOST.EXE are host tests
 only; the packet finalizer refuses those fixtures.
 
-After the three scheduled driver builds:
+After the three scheduled driver builds, build the access client from the
+shared owner's qualified, immutable source snapshots (not its active checkout):
 
 ```text
-python CGA-VIEW/src/cga/PACKCGA.PY prepare --repo CGA-VIEW --support FULL-SUPPORT-CHECKOUT --build-100 BUILD100 --build-320 BUILD320 --build-640 BUILD640 --source-commit FULL_CGA_SOURCE_COMMIT --out NEW-CGA-PREP
+python CGA-VIEW/src/cga/BUILDUI.PY --repo CGA-VIEW --wdesk WDESK-SOURCE/src/wdesk --placement LIBWINTANDY-SOURCE/libtandywin/PLACE --dosbox DOSBOX-X --lease SHARED-LEASE --out CGA-ACCESS-BUILD
+```
+
+BUILDUI links WDCORE/WDWIN and WTPLACE with the CGA client. Its receipt pins
+all six shared sources. The same WDWIN table owns root observation, movement,
+Home and shutdown; CGACTL has no second root enumerator/tracker. Its CGA-only
+child-group access is separate from that shared root-placement service.
+Native qualification of the shared service and this client remains required.
+
+Then prepare the complete expanded packet:
+
+```text
+python CGA-VIEW/src/cga/PACKCGA.PY prepare --repo CGA-VIEW --support FULL-SUPPORT-CHECKOUT --build-100 BUILD100 --build-320 BUILD320 --build-640 BUILD640 --helper-build CGA-ACCESS-BUILD --source-commit FULL_CGA_SOURCE_COMMIT --out NEW-CGA-PREP
 ```
 
 Preparation checks all MZ/NE drivers against CGABUILD receipts, generates the
@@ -117,8 +133,8 @@ CGAFONT generates proportional five-row System/Helv faces averaging three
 pixels, 4x6 fixed/OEM faces and a 4x5 Courier strike, at 48x40 logical dpi.
 Capitals/digits retain spacing; narrower lower case reduces dialog base units.
 The native Run dialog used System 4x6 despite the available small Helv face.
-The new System strike is a candidate fix requiring native fit/legibility
-checks. CGAUI's ANSI variable-font descriptor follows the new 5x3 metrics;
+The five-row System strike passes the recorded native basic-dialog and
+Notepad checks. The 320-mode six-row faces still need native selection/fit. CGAUI's ANSI variable-font descriptor follows the new 5x3 metrics;
 renderer code and normal-mode drivers remain unchanged. The drawings are original; extended unsupported
 characters visibly fall back. OEM box/block primitives reuse XT Pixels.
 Retain `tools/XTFONTS/LICENSE` with generated fonts. FNT/FON serialization uses
@@ -157,9 +173,10 @@ F6 appends a fresh window/control snapshot without changing the test scene.
 A command beginning F additionally tests font mapping and AddFontResource;
 that diagnostic mode changes the session font table and is not consumer proof.
 
-CGACTL.C / BUILDUI.PY stage a separate window-access candidate for the large
-Control Panel failure. It has no renderer/video-port code. It is not yet
-installed or included in the qualified development packet; modal-dialog
-reachability must pass natively before consumer integration. It responds
-only to explicit Ctrl+Alt+arrow/Home/End chords. The fixed renderer checkpoint
-and its proof remain unchanged.
+The standalone access prototypes are retained as unit evidence only. Current
+CGACTL is a WDESK/WTPLACE client; packet preparation rejects their old receipts.
+Ctrl+Alt+arrows pan window positions, Home recovers, End exposes the active
+frame's bottom/right. A clipped fixed-client child group can move as well.
+No GDI geometry or video timing changes. Existing panning-owner classes are
+refused, and only the 160x100x16 fixed mode starts this client. Fonts and six-row
+controls remain separate required components, with their native evidence intact.

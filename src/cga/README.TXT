@@ -67,3 +67,10 @@ and performance must be measured on the target. No speedup is promised.
 An INI larger than 18,000 bytes is refused before any files are copied.
 
 Component notices are in CGA\NOTICE.TXT and CGA\FONTLIC.TXT.
+
+320x200 uses original 4x6 System/Helv and fixed/OEM faces. 640x200 retains
+its XTC selection. Mode100 also loads the shared WDESK-based CGACTL access
+client automatically. Ctrl+Alt+arrows move the window workspace; Home recovers
+its origin and End exposes the active frame's bottom/right. It can expose a
+visible control group clipped inside a fixed client. It does not change the
+Windows display geometry. This integration still needs native acceptance.

@@ -139,10 +139,11 @@
   },
   "capture_limitation": "Headless FRAME reads row zero rather than CGA firstline; retained raw PNGs are not complete monitor screenshots. VRAM/API/file checks are separate. Decoded native VRAM images are labeled, never scanout proof.",
   "remaining": [
-    "Large Control Panel dialogs and File Manager",
-    "320x200x4 and 640x200x2 native IBM GUI",
-    "Revised SETUP mode-switch/UNDO native regression",
-    "Original IBM physical hardware, CRT scanout, flicker/snow and serial mouse"
+    "Shared WDESK/WTPLACE native placement qualification and pinned source snapshot",
+    "Shared CGACTL consumer build/autoload/normal shutdown with160x100 fonts and controls",
+    "320-mode native4x6 font selection/complete GUI/DOS return",
+    "640x200x2 native IBM GUI/graphics/cursor/DOS return",
+    "Physical original IBM CGA scanout, snow/flicker and mouse qualification"
   ],
   "publication": "NOT_AUTHORIZED",
   "installer_mode_switch_undo": {
@@ -203,5 +204,159 @@
     "Run_edit_right": 356,
     "screen_width": 320,
     "candidate_fix": "Original4x6 System/dialog fonts, retaining existing normal-mode renderer bytes"
-  }
+  },
+  "host_integration_revision": {
+    "host": "PASS",
+    "native": "NOT_RUN",
+    "windows": "NOT_TESTED",
+    "tests": [
+      "install/undo 100",
+      "install/undo 320",
+      "install/undo 640",
+      "three modes/repeated switch/undo",
+      "identical preexisting font retained",
+      "collision refusal, no writes",
+      "all mutating commands refuse Windows context",
+      "damaged packet refusal before copying",
+      "CGAFAULT_WOPEN every single failure position",
+      "CGAFAULT_RENAME every single failure position",
+      "every interrupted owned-copy position",
+      "owned pending copy plan cancelled without touching payload files",
+      "damaged INI record refuses, explicit whole restore",
+      "damaged copy record refuses without cleanup",
+      "later edits and their referenced driver retained",
+      "changed installed file retained",
+      "failed INI rollback recovered through owned safety copies",
+      "interrupted cleanup can be retried",
+      "undo write/marker failures can be retried",
+      "interrupted completion marker uses explicit safety restore",
+      "17000-byte INI installs and restores exactly",
+      "small-model INI size limit refuses without residue",
+      "closed expanded packet inventory rejects extras",
+      "synthetic fixtures cannot finalize a consumer packet"
+    ],
+    "host_invocations": 185,
+    "fixtures": 100,
+    "packet_payload_files": 21,
+    "installed_files": 15,
+    "managed_gcc": true,
+    "c_source_sha256": "7eeb5ab8604178bf6b55caf1e758c38d54952a77dd5b172c0c37491e81094031",
+    "host_executable": "SETUPHOST.EXE (modern host test only)"
+  },
+  "access_prototype": {
+    "kind": "NATIVE_UNIT_NOT_CONSUMER_SHARED_CLIENT",
+    "helper_build": {
+      "build": "PASS",
+      "kind": "CGA_WINDOW_ACCESS_CANDIDATE",
+      "flags": "/G0 /Gw /AS /W3 /Od",
+      "source_sha256": "9618de5d26852232826c38ace1a33c4c299a0b4cbbd2bc0c82c7b94d249e7c55",
+      "bytes": 5535,
+      "sha256": "4087300129a159c688fcdcfecc679e7ef2e2870034be1f256275b1be75653150",
+      "windows": "NOT_TESTED"
+    },
+    "grid_end_cells": [
+      {
+        "handle": "14b0",
+        "class": "CtlChildClass",
+        "rect": [
+          122,
+          15,
+          159,
+          41
+        ],
+        "text": "08",
+        "style": 1342177280,
+        "enabled": 1,
+        "hit": "14b0"
+      },
+      {
+        "handle": "14f4",
+        "class": "CtlChildClass",
+        "rect": [
+          122,
+          41,
+          159,
+          67
+        ],
+        "text": "09",
+        "style": 1342177280,
+        "enabled": 1,
+        "hit": "14f4"
+      }
+    ],
+    "desktop_home": [
+      0,
+      0,
+      160,
+      116
+    ],
+    "stable_Desktop_End": [
+      0,
+      -16,
+      160,
+      100
+    ],
+    "automatic_check": "Initial End saw a stale Home snapshot; stable follow-up confirmed the actual end position. No unobserved state is accepted.",
+    "unit_receipts": {
+      "ACCESS.JSON": {
+        "bytes": 22843,
+        "sha256": "8790f2817b4c88837e8eeee692306666a1b28341ef86bcf406ec861d0aa930fd"
+      },
+      "ASSESSMENT.JSON": {
+        "bytes": 23332,
+        "sha256": "013a21b0aae35ad9b5ba34b4d45b515df31f41168c98b298a3c89e1df40c49ed"
+      },
+      "RESULT.JSON": {
+        "bytes": 356,
+        "sha256": "7dfea2bdb3d96e430f29dab9c5311669e8cd727783cbe78514a6c966fa46ff00"
+      },
+      "CGAMET.LOG": {
+        "bytes": 32463,
+        "sha256": "2b269f032b106402ad2f54e51e86294cdd085acc45c998d05b2b67de91eb0936"
+      },
+      "001.VRM": {
+        "bytes": 16384,
+        "sha256": "cee4a724d1a273dae3fa8e26a8fb7280b636fdcebf1ff25ced907c8ca9439958"
+      },
+      "002.VRM": {
+        "bytes": 16384,
+        "sha256": "26073d58a2f3d7d437306be7bb9ea9cb02c9b568c6f6650d11d8312c75dcf7a0"
+      },
+      "005.VRM": {
+        "bytes": 16384,
+        "sha256": "db6f1cfcf44b05f5f5f80fbd39b43d059328b56a3370226bdf726b6c68f94c6f"
+      }
+    },
+    "consumer_integration": "PENDING_SHARED_WDWIN_CLIENT_BUILD_NATIVE_STARTUP_SHUTDOWN",
+    "physical_mouse_and_hardware": "UNQUALIFIED"
+  },
+  "access_prototype_process": {
+    "complete": true,
+    "bound_seconds": 900,
+    "lease_acquired": true,
+    "owned_pid": 6536,
+    "emulator": {
+      "bytes": 40974314,
+      "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+    },
+    "rom_floppy_prompt_acknowledged": true,
+    "owned_stopped": true,
+    "lease_released": true,
+    "seconds": 698.7039999999106
+  },
+  "mode320_graphics": {
+    "mode": "320",
+    "gdi_capture": "003.VRM",
+    "under_hidden_capture": "006.VRM",
+    "UI_gate": "FAILED with original XTC fonts; Run edit right356>320",
+    "dos_return": "NOT_OBSERVED; owned process stopped with BIOS4, do not accept ordinary DOS return",
+    "bios_mode": 4,
+    "graphics": "PASS_PALETTE_UNDER_CURSOR_EDGE_RESTORE_PADDING",
+    "captures": {
+      "003.VRM": "4e65d3fbfc3cfe057620f78a4d44d25625868f1013c8dadca68501d4f9185e5d",
+      "006.VRM": "dbdb54b2a7161286929394ebf7009e116517d90ecc89cfb7edceb5ab1046f5b2"
+    },
+    "physical_hardware": "UNQUALIFIED"
+  },
+  "integration_gate": "Shared WDESK/WTPLACE CGA client source only; no competing root table, no native shared-client build yet; waiting parent-coordinated slot after WDESK probe"
 }

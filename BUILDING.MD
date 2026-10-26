@@ -70,7 +70,10 @@ python -B src/cga/TESTCGA.PY --repo DISPLAY-VIEW --out NEW-CGA-HOST
 ```
 
 For a scheduled native build, create a commit-pinned `--profile cga` source view and follow
-[its builder guide](src/cga/README.MD). It wraps BUILD88 with the shared
+[its builder guide](src/cga/README.MD). The CGA access client additionally
+requires exact qualified WDESK/WTPLACE source snapshots through BUILDUI.PY
+--wdesk/--placement; one WDWIN owner handles root placement and recovery.
+The driver build wraps BUILD88 with the shared
 watchdog/lease runner. No new CGA runtime or consumer packet is qualified by
 these commands; current accepted binaries and package pins remain unchanged.
 

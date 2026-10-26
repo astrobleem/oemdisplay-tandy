@@ -41,7 +41,7 @@ def main():
     # Small complete MZ/NE-shaped buffers are copy fixtures, not driver builds.
     drivers={v[1]:b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([i])*126
              for i,v in enumerate(P.MODES.values())}
-    files=P.payload(args.repo,args.support,drivers,out/'font-fixture')
+    files=P.payload(args.repo,args.support,drivers,out/'font-fixture',b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes(126))
     rec=P.emit(args.repo,out/'prepared',files,'0'*40,fixture=True)
     P.verify(out/'prepared')
     src=out/'host-src';shutil.copytree(out/'prepared/native-src',src);write(src/'HOSTTEST.H',SHIM)
@@ -83,6 +83,12 @@ def main():
         if mode=='100':
             assert b'Helv 3x5 (CGA100)=CG1HELV.FON' in ini and b'BorderWidth=1' in ini
             assert b'fonts.fon=CG1SYS.FON' in (w/'SYSTEM.INI').read_bytes()
+            assert b'CGACTL.EXE' in ini
+        elif mode=='320':
+            assert b'Helv 4x6 (CGA320)=CG2HELV.FON' in ini
+            assert b'fonts.fon=CG2SYS.FON' in (w/'SYSTEM.INI').read_bytes()
+            assert b'BorderWidth=3' in ini and b'CG1HELV.FON' not in ini
+            assert b'CGACTL.EXE' not in ini
         else:assert ini==WIN
         run(w,'UNDO');assert snapshot(w)==before;passed('install/undo '+mode)
 

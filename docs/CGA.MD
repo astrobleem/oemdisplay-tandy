@@ -255,3 +255,29 @@ mode 3 with 640 KB. The owned process stops and releases the shared lease.
 See src/cga/NATIVE.JSN for exact packet, build, probe/run and evidence pins.
 Larger desktop dialogs, normal-mode IBM GUI and physical hardware remain
 separate gates; this is still an unpublished development candidate.
+
+The revised21-file source adds 4x6 CG2 System/Helv strikes for 320x200 after
+its inherited XTC System made Run's command field end at x356. Independent
+FNT/NE checks pass, and all five qualified CGA100 font files stay byte-identical.
+The 320 renderer passes native four-color palette, draw-under-cursor, edge/hide
+and VRAM-padding checks; its ordinary DOS return was not observed in that run.
+640-mode GUI qualification remains pending. Renderer bytes stay unchanged.
+
+Window-access unit tests bring the fixed Control Panel grid's final two cells
+inside the screen with matching native center hit-test handles, and move the
+Desktop panel from [0,0,160,116] to [0,-16,160,100]. Home/normal DOS return and
+owned stop/release are retained. The standalone prototypes are not accepted
+consumer runtime. The current source instead calls the shared WDESK WDWIN
+owner and WTPLACE service for root placement, Home and shutdown; it has no
+second root tracker/enumerator. Only fixed-client child-group movement is
+CGA-specific. Its native integration waits for the shared owner's qualification
+and a coordinated slot. Fonts and six-row controls remain required, independently
+validated parts of this option.
+
+Host tests caught the original long load-path being truncated by the retained
+64-byte journal value field. The mode-specific fix installs CGACTL in Windows
+and records its short DOS basename. It preserves the shared transaction format
+and data budget. The complete21-file source now passes24 host groups,185
+invocations and100 fixtures, including exact undo and all modes. No old
+consumer packet is relabeled with this evidence; the new shared-client native
+build, consumer startup and remaining GUI gates must finish before acceptance.
