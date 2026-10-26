@@ -9,8 +9,8 @@ spec=json.loads((HERE/'PUBLIC.JSN').read_bytes())
 qpath=ROOT/'docs/SOFTPAN/PUBLISH/QUALIFY.JSON';q=json.loads(qpath.read_bytes())
 U=importlib.machinery.SourceFileLoader('sp_native_settings',str(ROOT/'src/panui/VERIFY.PY')).load_module()
 ui,binaries=U.verify()
-assert spec['qualification']['ui_update']=={'path':'docs/QUAL/PANUI/NATIVE.JSN',
-    'manifest':P.identity((ROOT/'docs/QUAL/PANUI/NATIVE.JSN').read_bytes())}
+assert spec['qualification']['ui_update']=={'path':'docs/QUAL/WDESK/NATIVE.JSN',
+    'manifest':P.identity((ROOT/'docs/QUAL/WDESK/NATIVE.JSN').read_bytes())}
 assert q['pass'] and q['main']=='d12ba426faba8b79575f44a9b48e241420944590'
 assert P.identity(qpath.read_bytes())==spec['qualification']['manifest']
 support_pin=spec['qualification']['support_update']
