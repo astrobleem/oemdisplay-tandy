@@ -3,6 +3,9 @@
 Use [current downloads](DOWNLOADS.MD) for one current packet per hardware or
 display profile. These drivers target Windows 3.0 real mode.
 
+[Panning settings](PANNING.MD) describes each display's available viewport or
+window workspace and its Home recovery control.
+
 | Hardware or profile | Driver and install guide | Required distinction |
 | --- | --- | --- |
 | Tandy 1000 EX/HX, panning desktop | [Windows XT](DRIVERS.MD) | 640 KB; DISPLAY and DISPWIN reserve video memory automatically. |

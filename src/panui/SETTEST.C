@@ -645,6 +645,28 @@ static void RouteTests(void)
     }
 }
 
+static void WindowModeTests(void)
+{
+    PANCAPS c = CapsOf(PS_BACK_VERT, 0);
+    PANSET s;
+    PanSetDefaults(PS_BACK_VERT, &s);
+    c.caps |= PS_CAP_MODE | PS_CAP_DESK;
+    c.workW = c.workH = 2048;
+    s.mode = PS_MODE_DESK;
+    R("desk.valid", PanSetValidate(&c, &s));
+    StoreReset();
+    R("desk.save", PanSetSave(&c, &s, &store));
+    T("desk.save.log", putLog);
+    R("desk.mode.unsaved", StoreVal(PS_SEC_VERT, "Mode") == NOVAL);
+    s.mode = PS_MODE_HARD;
+    R("desk.nohardware", PanSetValidate(&c, &s));
+    s.mode = 2;
+    R("desk.reserved", PanSetValidate(&c, &s));
+    s.mode = PS_MODE_DESK;
+    c.caps &= ~PS_CAP_DESK;
+    R("desk.absent", PanSetValidate(&c, &s));
+}
+
 int main(void)
 {
     DefaultsTests();
@@ -655,5 +677,6 @@ int main(void)
     PersistTests();
     ModelTests();
     RouteTests();
+    WindowModeTests();
     return 0;
 }

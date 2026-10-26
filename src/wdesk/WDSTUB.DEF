@@ -1,0 +1,11 @@
+; WDSTUB.DEF - module definition for the WDSTUB link/size check.
+; NOT SHIPPED.  Open Watcom wlink does not read a .DEF file; the same
+; settings are given to wlink as directives (see the build notes in
+; the WDWIN report).  This file records the intended module attributes.
+NAME        WDSTUB
+EXETYPE     WINDOWS
+STUB        'WINSTUB.EXE'
+CODE        MOVEABLE
+DATA        MOVEABLE MULTIPLE
+HEAPSIZE    1024
+STACKSIZE   5120

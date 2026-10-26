@@ -196,7 +196,7 @@ def build(output, commit, verify=False):
     # the consumer tree contains only expanded runtime, notices and licences.
     source = pub.read_file(REPO, "tools/XR1PACK/SOUNDSRC.ZIP")
     report = {"schema": 2, "tag": "windows-xt", "source_commit": commit,
-              "native_report": ("docs/QUAL/PANUI/PACKAGE.JSN" if
+              "native_report": ("docs/QUAL/WDESK/PACKAGE.JSN" if
                                 qualification["status"] == "PASS_NATIVE_PACKAGE" else
                                 "docs/QUAL/DOSINST/EXPAND.JSN"), "physical_qualification": False,
               "archive": pub.identity(archive), "sound_source": pub.identity(source),

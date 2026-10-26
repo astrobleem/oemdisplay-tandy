@@ -5,6 +5,7 @@ r=Path(__file__).resolve().parents[3]
 ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('stage',nargs='?',default='PREPARE');ap.add_argument('--prepare',action='store_true');ap.add_argument('--out',type=Path,default=r/'cp-native-install-01')
 for name in ('deps','control','emulator','roms'):ap.add_argument('--'+name,type=Path)
 ap.add_argument('--guest-log',help='Optional guest helper log to collect with UI evidence')
+ap.add_argument('--no-auto-captures',action='store_true',help='Keep state/return evidence without per-command PNG captures')
 ap.add_argument('--seconds',type=int,default=600,help='Owned native session bound (30..1800 seconds)')
 args=ap.parse_args()
 if not 30<=args.seconds<=1800:ap.error('--seconds must be 30..1800')
@@ -93,7 +94,7 @@ def owned_session():
          done=fresh and b' EXIT' in b and g.read_memory(0x449,1)==b'\x03'
         if fresh:
          state=(c/'UISTATE.TXT').read_text(errors='replace');seq=state.split(' ',3)[1]
-         if seq not in captures and len(captures)<80:
+         if not args.no_auto_captures and seq not in captures and len(captures)<80:
           (out/(stage+'-'+seq.replace('=','')+'.PNG')).write_bytes(base64.b64decode(ctl.capture_frame_png_b64()));captures.add(seq)
         if done:
          g.run_while(lambda:None,settle_seconds=4,start_delay=.01)
@@ -105,6 +106,9 @@ def owned_session():
        except (OSError,ValueError,PyFATException):pass
       else:raise TimeoutError('ColorPlus UI bound')
      finally:
+      if ctl and stop.exists():
+       try:(out/(stage+'-STOP.PNG')).write_bytes(base64.b64decode(ctl.capture_frame_png_b64()))
+       except OSError:pass
       if ctl:ctl.close()
       if g:g.close()
       if p.poll() is None:p.kill();p.wait(timeout=10)

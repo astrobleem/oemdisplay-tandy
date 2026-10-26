@@ -27,7 +27,9 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 WCC = Path(r"C:\WATCOM\BINNT\wcc.exe")
-CC = shlex.split(os.environ.get("CC", "cc"))
+CC = ([sys.executable,
+       str(Path.home() / "Documents/Codex/toolchains/gcc-ucrt64.py"), "--"]
+      if os.name == "nt" else shlex.split(os.environ.get("CC", "cc")))
 fails = []
 
 VERT_DEF = {"step": 50, "dwell": 400, "edge": 3, "follow": 1}
@@ -108,6 +110,12 @@ def keys_of(T, name):
 
 
 def harness_checks(R, T):
+    for key, value in {"desk.valid": 0, "desk.save": 0,
+                       "desk.mode.unsaved": 1, "desk.nohardware": 9,
+                       "desk.reserved": 9, "desk.absent": 9}.items():
+        eq("window choice: " + key, R.get(key), value)
+    eq("window choice persists only the exposed owner settings",
+       keys_of(T, "desk.save.log"), VERT_KEYS)
     for k, d in VERT_DEF.items():
         eq(f"defaults VERT {k} = {d}", R.get("def.v." + k), d)
     for k, d in XY_DEF.items():
@@ -369,6 +377,7 @@ def hostpan_check():
         return
     r = subprocess.run([sys.executable, str(REPO / "src/xtpan/HOSTPAN.PY")],
                        cwd=str(REPO), capture_output=True, text=True,
+                       env=dict(os.environ, CC=shlex.join(CC)),
                        timeout=900)
     expect("src/xtpan/HOSTPAN.PY exits 0 (FollowTop still found in XTPAN.C)",
            r.returncode == 0)
@@ -378,7 +387,7 @@ def hostpan_check():
 
 def xy_apply_checks(tmp):
     source = text_of(REPO / "experiments/XYOVERVIEW/XYCTL.C")
-    found = re.search(r"(static int XyApply\(.*?)(?=static int XyHome\()",
+    found = re.search(r"(static int WindowApply\(.*?)(?=static int XyHome\()",
                       source, re.S)
     expect("XYCTL Apply glue can be extracted", found is not None)
     if found is None:
@@ -477,8 +486,8 @@ def dialog_checks():
     expect("PANDLG.C: PanDlgOpen has an already-open check (IsWindow)",
            i >= 0 and "IsWindow" in dl)
     modes = set(re.findall(r"PS_MODE_(\w+)", dl))
-    expect("PANDLG.C: only PS_MODE_SOFT and PS_MODE_HARD are offered",
-           modes <= {"SOFT", "HARD"})
+    expect("PANDLG.C: only the three owner modes are offered",
+           modes <= {"SOFT", "HARD", "DESK"})
     expect("PANDLG.C: no 'mode = 2' literal",
            re.search(r"mode\s*=\s*2", dl, re.I) is None)
 
@@ -553,7 +562,9 @@ def wcc_checks(tmp):
         obj = Path(tmp) / (p.stem + "_wcc.obj")
         r = subprocess.run([str(WCC), "-zW", "-0", "-ms",
                             r"-IC:\WATCOM\H", r"-IC:\WATCOM\H\WIN",
-                            "-I" + str(REPO / "src" / "panui"), f"-fo={obj}", str(p)],
+                            "-I" + str(REPO / "src" / "panui"),
+                            "-I" + str(REPO / "src" / "wdesk"),
+                            f"-fo={obj}", str(p)],
                            cwd=str(tmp), capture_output=True, text=True)
         out = r.stdout + r.stderr
         errors = out.count("Error!")
@@ -575,7 +586,7 @@ def wcc_checks(tmp):
     sp.write_text(synced, encoding="latin-1")
     r = subprocess.run([str(WCC), "-zW", "-0", "-ms",
                         r"-IC:\WATCOM\H", r"-IC:\WATCOM\H\WIN",
-                        "-I" + str(REPO / "src" / "panui"),
+                        "-I" + str(REPO / "src" / "panui"), "-I" + str(REPO / "src" / "wdesk"),
                         "-fo=" + str(Path(tmp) / "XTPAN_SYNC.obj"), str(sp)],
                        cwd=str(tmp), capture_output=True, text=True)
     expect("wcc: sync_helper-transformed XTPAN.C compiles without errors",

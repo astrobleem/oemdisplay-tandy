@@ -19,3 +19,10 @@ Apply saves changes; Cancel discards edits. Reopening reuses the same helper.
 To return to fixed mode, run PANCFG OFF, exit Windows and repeat INSTALL.
 Native Setup and startup passed in emulation; physical cards are unqualified.
 Technical records: docs/SOFTPAN in the source repository.
+
+WINDOW WORKSPACE ON THE FIXED DRIVER
+After selecting the fixed 320x200 driver, run PANCFG SETTINGS from this
+packet inside Windows. The settings offer a 2048x2048 window workspace
+with up to 24 application windows. It moves windows instead of allocating
+a larger display bitmap. Home and PANCFG OFF bring them back into reach.
+Use the larger 320x400 driver for framebuffer panning instead.

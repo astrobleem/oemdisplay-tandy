@@ -4,6 +4,7 @@ import copy
 import importlib.machinery
 import io
 import json
+import re
 import shutil
 import tempfile
 import unittest
@@ -18,6 +19,16 @@ C = importlib.machinery.SourceFileLoader('ui_core', str(ROOT / 'tools/DOSINST/RC
 
 
 class Bindings(unittest.TestCase):
+    def test_finisher_runtime_size_matches_current_xy_helper(self):
+        text = (ROOT / 'tools/DOSINST/FIXXT.C').read_text()
+        names = re.findall(r'"([^"]+)"', re.search(
+            r'static const char \*names\[\]=\{([^}]+)\}', text)[1])
+        sizes = re.search(r'static unsigned long sizes\[\]=\{([^}]+)\}', text)[1].split(',')
+        self.assertEqual(len(names), len(sizes))
+        _, binaries = U.verify()
+        self.assertEqual(int(sizes[names.index('XYCTL.EXE')].replace('UL', '')),
+                         len(binaries['XYCTL.EXE']))
+
     def test_actual_native_helpers_and_source_closure(self):
         q, binaries = U.verify()
         self.assertEqual(set(q['cases']), {'PCJR', 'COLORPLUS', 'TANDYXY'})
@@ -31,6 +42,32 @@ class Bindings(unittest.TestCase):
             p.write_text(json.dumps(q))
             with patch.object(U, 'QUAL', p):
                 with self.assertRaisesRegex(ValueError, 'source inventory'):
+                    U.verify()
+
+    def test_window_run_cannot_be_rebound_to_different_helpers(self):
+        q = json.loads(U.QUAL.read_bytes())
+        row = q['window_backend']
+        with zipfile.ZipFile(io.BytesIO((ROOT / row['path']).read_bytes())) as z:
+            members = {n: z.read(n) for n in z.namelist()}
+        name = 'EVIDENCE/PCJR/RESULT.JSON'
+        result = json.loads(members[name])
+        result['binaries']['XTPAN.EXE']['sha256'] = '0' * 64
+        members[name] = json.dumps(result).encode('ascii')
+        stream = io.BytesIO()
+        with zipfile.ZipFile(stream, 'w') as z:
+            for name, data in members.items():
+                z.writestr(name, data)
+        data = stream.getvalue()
+        row['identity'] = U.identity(data)
+        row['members'] = {n: U.identity(b) for n, b in members.items()}
+        original_exact = U.exact
+        def exact(name, pin):
+            return data if name == row['path'] else original_exact(name, pin)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'NATIVE.JSN'
+            path.write_text(json.dumps(q))
+            with patch.object(U, 'QUAL', path), patch.object(U, 'exact', exact):
+                with self.assertRaisesRegex(ValueError, 'Window run used different helper'):
                     U.verify()
 
     def test_declared_ui_manifest_must_match_native_receipt(self):
@@ -47,7 +84,7 @@ class Bindings(unittest.TestCase):
             root = Path(tmp)
             for folder in ('docs/QUAL/DOSINST', 'tools/XROEM'):
                 shutil.copytree(ROOT / folder, root / folder)
-            qdir = root / 'docs/QUAL/PANUI'
+            qdir = root / 'docs/QUAL/WDESK'
             qdir.mkdir()
             shutil.copyfile(U.QUAL, qdir / 'NATIVE.JSN')
             files = {n: P.identity(b) for n, b in entries.items()}
@@ -74,7 +111,7 @@ class Bindings(unittest.TestCase):
                     z.writestr('RESULT.JSN', json.dumps(record['native']))
                 data = raw.getvalue()
                 (qdir / 'INSTALL.ZIP').write_bytes(data)
-                record['evidence'] = {'docs/QUAL/PANUI/INSTALL.ZIP': P.identity(data)}
+                record['evidence'] = {'docs/QUAL/WDESK/INSTALL.ZIP': P.identity(data)}
                 (qdir / 'PACKAGE.JSN').write_text(json.dumps(record))
                 with patch.object(P, 'ROOT', root), patch.object(P, 'helpers'), patch.object(P, 'runtimes',
                         return_value={n: entries['WINXT/' + n] for n in ('FIXXT.EXE', 'XYCTL.EXE')}):

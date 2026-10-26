@@ -23,12 +23,12 @@
   },
   "outputs": {
     "CPPAN.ZIP": {
-      "bytes": 197119,
-      "sha256": "946f2aa4f59da8bdadfbd4745c6d425eff6d2a1e44609c8b3759de4b3b930114"
+      "bytes": 209181,
+      "sha256": "3d90027451731b6ab23edce9377721eff657fe452c0decba18adcdd65e09f4df"
     },
     "INSTALL.TXT": {
-      "bytes": 1285,
-      "sha256": "4c112cbec7339f645a8093f96f1634ba921b56a81b03f08cedc72d8948a128a5"
+      "bytes": 1683,
+      "sha256": "8f8c7bcea641a83c3d5ffe14071c2e05282912bdc32e7f45b267487f138bf210"
     }
   },
   "runtime": {
@@ -53,8 +53,8 @@
       "sha256": "8140d9b0f2ae5a47f8ef58c12d58047543d283b54ebae2f2119d7677816f892f"
     },
     "INSTALL.TXT": {
-      "bytes": 1285,
-      "sha256": "4c112cbec7339f645a8093f96f1634ba921b56a81b03f08cedc72d8948a128a5"
+      "bytes": 1683,
+      "sha256": "8f8c7bcea641a83c3d5ffe14071c2e05282912bdc32e7f45b267487f138bf210"
     },
     "LICENSE.TXT": {
       "bytes": 1399,
@@ -78,7 +78,7 @@
     },
     "PANCFG.EXE": {
       "bytes": 10191,
-      "sha256": "2c846db18df382d3130847df025ad444510d677cb67f2233fecc237b5faeeb2d"
+      "sha256": "8960e0d49653b2b252049cd200ac5f8f0280951e264df31e761213cb53bafc4c"
     },
     "PCP3216.DRV": {
       "bytes": 58752,
@@ -101,8 +101,8 @@
       "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
     },
     "XTPAN.EXE": {
-      "bytes": 17535,
-      "sha256": "3bece11924d4a29a3d49612fb32e1c264bcb6e26767a50657b4d142cf3e09ea9"
+      "bytes": 29199,
+      "sha256": "1be552fa6022f736da6a97676daf5741eb3d29e90277d5d75dc5de11adefe862"
     },
     "XTSTATIC.LGO": {
       "bytes": 361,
@@ -111,8 +111,8 @@
   },
   "sources": {
     "src/panui/VERIFY.PY": {
-      "bytes": 4363,
-      "sha256": "de409657c30ec15d3cd9c89c25b777030d1fb66d426d595f5b4e0214d85174bb"
+      "bytes": 6693,
+      "sha256": "13a80c8875fd3ecdb0563ff2d6a53e56c00495eb9945ffd328ba65dfa10bfc77"
     },
     "src/pcp/BUILDPCP.PY": {
       "bytes": 4237,
@@ -143,8 +143,8 @@
       "sha256": "7bdb33b34e40d3373b3bcb10f26d30ce3fffc820973195b89732dd4c95da3239"
     },
     "src/pcp/CPVERIFY.PY": {
-      "bytes": 11753,
-      "sha256": "0d4b293eb8d684672cfc116b5d5d20b68f5cb686a59809c2817076a6808961b6"
+      "bytes": 11751,
+      "sha256": "9cf698e0c3c7b50a05ab46dba9a7462ba96aea72754384fdfcc3f932403d1f07"
     },
     "src/pcp/PCPPATCH.PY": {
       "bytes": 13023,
@@ -307,8 +307,8 @@
       "sha256": "7c4bd8b879a42d9be5d371d9c565e39dedd7a885dd749debb604c86e9dd97d6a"
     },
     "tools/CURRENT/GUIDES/CPPAN.TXT": {
-      "bytes": 1285,
-      "sha256": "4c112cbec7339f645a8093f96f1634ba921b56a81b03f08cedc72d8948a128a5"
+      "bytes": 1683,
+      "sha256": "8f8c7bcea641a83c3d5ffe14071c2e05282912bdc32e7f45b267487f138bf210"
     },
     "tools/DRVSET/NATIVE.PY": {
       "bytes": 2688,
@@ -328,11 +328,11 @@
     },
     "tools/SPPACK/PACKAGE.PY": {
       "bytes": 4151,
-      "sha256": "9847d139080556e7fcedaeb8be21c2d115471448e3c590795b0d18de2123d54e"
+      "sha256": "5c6b79d0c753cfa8a39f04bf84ebed0ed1e741b17808b4de991922750563a710"
     },
     "tools/SPPACK/PUBLIC.JSN": {
       "bytes": 19555,
-      "sha256": "56905dcdf159128455f00faf7ac63b92cd0d03a67dd659f569b000661e179b50"
+      "sha256": "31f8db98150f2471a5101b70ab69a634273bacfc5df2c38aa5c89db45a3240db"
     },
     "tools/XR1PACK/OWATCOM.TXT": {
       "bytes": 21128,
@@ -1010,19 +1010,22 @@
     }
   },
   "panning_reference": {
-    "source_commit": "3408373d603b98d432b0ecf119fe80dac1e97881",
     "packet": {
-      "bytes": 193199,
-      "sha256": "75a52587907b0f127102e600fdac01af9326c665f191445fc83196d1eb1e8a6c"
+      "bytes": 205261,
+      "sha256": "fc3d5385f069d77c6a378e8645bf9619ebb19c5b45ea12114d1a174866d1dc6a"
     },
     "settings": {
-      "bytes": 32816,
-      "sha256": "798dbe741c2662a2e5e7ce5111c134346c0a1f0469824f9d852754f1fa44bce5"
+      "bytes": 32591,
+      "sha256": "9aa2bf8a655bab448fa3c6a1a5e27f401dd8e0a03138f16cef4d7cfbf3adced8"
     },
-    "anonymous_readback_verified": true
+    "scope": "Current native-qualified helper package; public download verification is recorded separately by the release catalog"
   },
   "source_text_lf": [
     "tools/PANUI/BASE.JSN",
     "tools/PANUI/PACKAGE.PY"
-  ]
+  ],
+  "helper_update": {
+    "scope": "Exact new helpers and guide on unchanged optimized fixed driver, native installer/support and original fixed-driver frame evidence",
+    "qualification": "docs/QUAL/WDESK/NATIVE.JSN"
+  }
 }

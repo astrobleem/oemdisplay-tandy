@@ -115,11 +115,12 @@ unsigned PanCapsFor(int backend, int modeReadback)
     caps = 0;
     if (backend == PS_BACK_VERT) {
         caps = PS_CAP_STEP | PS_CAP_EDGE | PS_CAP_DWELL | PS_CAP_FOLLOW |
-               PS_CAP_HOME;
+               PS_CAP_HOME | PS_CAP_SOFT;
     } else if (backend == PS_BACK_XY) {
-        caps = PS_CAP_EDGEON | PS_CAP_REPEAT | PS_CAP_FOLLOWD | PS_CAP_HOME;
+        caps = PS_CAP_EDGEON | PS_CAP_REPEAT | PS_CAP_FOLLOWD | PS_CAP_HOME |
+               PS_CAP_SOFT;
         if (modeReadback) {
-            caps |= PS_CAP_MODE;
+            caps |= PS_CAP_MODE | PS_CAP_HARD;
         }
     }
     return caps;
@@ -175,7 +176,13 @@ int PanSetValidate(const PANCAPS *c, const PANSET *s)
         }
     }
     if (c->caps & PS_CAP_MODE) {
-        if (s->mode != PS_MODE_SOFT && s->mode != PS_MODE_HARD) {
+        if (s->mode != PS_MODE_SOFT && s->mode != PS_MODE_HARD &&
+            s->mode != PS_MODE_DESK) {
+            return PS_E_MODE;
+        }
+        if ((s->mode == PS_MODE_SOFT && !(c->caps & PS_CAP_SOFT)) ||
+            (s->mode == PS_MODE_HARD && !(c->caps & PS_CAP_HARD)) ||
+            (s->mode == PS_MODE_DESK && !(c->caps & PS_CAP_DESK))) {
             return PS_E_MODE;
         }
     }
@@ -204,7 +211,7 @@ const char *PanSetErrorText(int code)
     case PS_E_FOLLOWD:
         return "Follow dialogs must be 0 or 1.";
     case PS_E_MODE:
-        return "Mode must be software or hardware.";
+        return "Choose an available movement mode.";
     case PS_E_TEXT:
         return "Enter a plain decimal number.";
     case PS_E_STORE:

@@ -4,7 +4,7 @@
   "compiler": "Open Watcom 16-bit DOS; -bt=dos -0 -ml -os",
   "binary": {
     "bytes": 83142,
-    "sha256": "f28363fcc40f2273ff38db0134f63a86db9c52408cc3fb8a43d5c2f78b3b6b36"
+    "sha256": "dd2e7bd658b0c994881477c1be4a83ce7450c093e0b6b2ce0d2f2b0811556ed7"
   },
   "sources": {
     "SETUP.C": {
@@ -49,11 +49,11 @@
     },
     "SETPINS.H": {
       "bytes": 5330,
-      "sha256": "dff953d359de1075d94b69744c7bbd0692795d758477f9cb4495925263b2e222"
+      "sha256": "11a6164bf2f39ab4a99f0c36bba827acea79e1c056b3fbbc72d5b9b8ca25b17e"
     },
     "SETFILES.H": {
       "bytes": 19726,
-      "sha256": "d7098857100d5126359aa0592f76a29f5edfd5793c7468926bcd44325b9e3293"
+      "sha256": "f9a3fbde4981fd1aebe13347424bdb545fc193fef5b3467717e18af177248fd8"
     },
     "MAKESET.PY": {
       "bytes": 1774,
@@ -69,7 +69,7 @@
     },
     "PANUI.PY": {
       "bytes": 6620,
-      "sha256": "7ce55443418910f9b1f48f2194f83866ba28e9e33daff057f13140cd7ad90e3e"
+      "sha256": "98ae498f734d6f325be73c1480971d8a1d5a67ae9c25b1b2e05e398bd08ebe73"
     }
   }
 }

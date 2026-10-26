@@ -89,7 +89,7 @@ def verify():
     actual={n:identity(b) for n,b in packet().items()}
     if q['runtime']!=actual or actual['PCP3216.DRV']!=q['driver']:raise ValueError('Current ColorPlus runtime closure differs')
     p=package();base=p.P.outputs()['CPPAN.ZIP'];before=p.members(base)
-    if identity(base)!=q['panning_reference']['packet'] or q['panning_reference']['settings']!=identity((ROOT/'docs/QUAL/PANUI/NATIVE.JSN').read_bytes()):raise ValueError('Qualified published panning reference differs')
+    if identity(base)!=q['panning_reference']['packet'] or q['panning_reference']['settings']!=identity((ROOT/'docs/QUAL/WDESK/NATIVE.JSN').read_bytes()):raise ValueError('Qualified current panning reference differs')
     if identity(before['PCP3216.DRV'])!=runs['SHIPPED']['fixture']['driver'] or set(actual)!=set(before) or any(actual[n]!=identity(before[n]) for n in actual if n!='PCP3216.DRV'):raise ValueError('Fixed update changed current panning/installer/support inputs')
     if identity((ROOT/'downloads/experimental/CPPAN/CPPSET.EXE').read_bytes())!=old['outputs']['ColorPlus']['CPPSET.EXE']:raise ValueError('Original ColorPlus carrier evidence changed')
     if set(q['outputs'])!={'CPPAN.ZIP','INSTALL.TXT'} or any(identity((ROOT/'downloads/experimental/CPPAN'/n).read_bytes())!=pin for n,pin in q['outputs'].items()):raise ValueError('Current ColorPlus downloads differ from qualified ZIP composition')
