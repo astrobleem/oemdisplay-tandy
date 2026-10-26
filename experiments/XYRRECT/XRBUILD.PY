@@ -47,7 +47,7 @@ def main():
     gross=sum(struct.unpack_from('<H',raw,off+i*8+6)[0] or 65536 for i in range(count))
     assert gross-102955<=24576,('incremental budget',gross)
     baseline=out/'RESULT.json';baseline.rename(out/'BASEPIPE.json')
-    report=dict(build='PASS',runtime='NOT_TESTED_BY_BUILD',candidate=('PRIVATE HPXY PR155 synchronous narrow Output' if a.batch else 'PRIVATE HPXY bounded Output rows (PR151)'),batching=False,synchronous_output=a.batch,logical=[640,256,16],viewport=[320,200,16],shadow_bands=[64000,17920],stage_bytes=1440,hardware_default=False,physical_tested=False,gross_NE_bytes=gross,delta_from_R3_gross_bytes=gross-102955,ceiling_delta=24576,sha256=hashlib.sha256(raw).hexdigest(),baseline_pipeline_report='BASEPIPE.json describes transformations before the XY overlay; its mode and optimization descriptions are not final XY behavior')
+    report=dict(build='PASS',runtime='NOT_TESTED_BY_BUILD',candidate=('PRIVATE HPXY PR155 synchronous narrow Output' if a.batch else 'PRIVATE HPXY bounded Output rows (PR151)'),batching=False,synchronous_output=a.batch,logical=[640,256,16],viewport=[320,200,16],shadow_bands=[64000,17920],stage_bytes=2816,hardware_default=False,physical_tested=False,gross_NE_bytes=gross,delta_from_R3_gross_bytes=gross-102955,ceiling_delta=24576,sha256=hashlib.sha256(raw).hexdigest(),baseline_pipeline_report='BASEPIPE.json describes transformations before the XY overlay; its mode and optimization descriptions are not final XY behavior')
     baseline.write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report))
 if __name__=='__main__':main()

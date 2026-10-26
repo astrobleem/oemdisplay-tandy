@@ -1,6 +1,6 @@
 ; Task-time rectangle conversion. AX/BX = logical Y endpoints,
 ; CX/DX = logical eight-pixel columns. All registers preserved.
-; xy_copy_mode=0 presents; =1 appends to the private 1440-byte stage.
+; xy_copy_mode=0 presents; =1 appends to the private 2816-byte stage.
 xy_need macro condition,failed
 local accepted
     condition accepted

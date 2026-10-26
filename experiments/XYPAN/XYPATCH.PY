@@ -21,7 +21,7 @@ sEnd XYTailSeg
     for typ in (0,1):
         s=one(s,f'BITMAP <{typ},640,200,80,4,1,0,16000,0,0,0,0,0,0>',f'BITMAP <{typ},640,256,80,4,1,0,20480,0,0,0,0,0,0>')
     s=one(s,'dw 0300h,DT_RASDISPLAY,480,180,640,200,1,4','dw 0300h,DT_RASDISPLAY,480,230,640,256,1,4')
-    s=one(s,'hp_stage db 800 dup (0)','''hp_stage db 1440 dup (0)
+    s=one(s,'hp_stage db 800 dup (0)','''hp_stage db 2816 dup (0)
 public hp_top,hp_old,hp_oldtop,hp_dy,hp_stage_count,hp_stage_read
 public hp_enabled,hp_start,hp_reason,hp_fault,xy_copy_mode
 hp_top dw 0
