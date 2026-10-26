@@ -46,6 +46,7 @@ Choose the checks matching your changes:
 | --- | --- |
 | Native core package and preparation boundaries | `python -B tools/DOSINST/TESTPUB.PY`, `python -B tools/XR1PACK/TESTPREP.PY`, `python -B tools/XR1PACK/TESTPUB.PY`; [.github/workflows/xr1pack.yml](.github/workflows/xr1pack.yml) |
 | Native CRC implementation | `python -B tools/DOSINST/TESTCRC.PY` compiles a host C check; it uses the mandatory managed GCC launcher on Windows. |
+| Tandy grabber installer transaction | `python -B tools/DOSINST/TESTGRAB.PY`; native clipboard and normal-package qualification remain separate. |
 | Current HPXY acceptance bindings | `python -B tools/DOSINST/TESTHPXY.PY`; on Windows, `TESTDISP.PY` in the same directory exercises the actual C transaction through the managed GCC launcher. |
 | Current catalog and pinned public products | `tools/CURRENT/CHECK.PY` and `BUNDLE.PY` above; [.github/workflows/current.yml](.github/workflows/current.yml) |
 | External legacy input adapter | `python -B tools/BUILDDEPS/TESTDEPS.PY` |

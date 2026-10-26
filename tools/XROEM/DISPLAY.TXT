@@ -30,3 +30,10 @@ directory; no custom SETUP.EXE run, separate download or INI editing is needed.
 
 For the full desktop and applications, run the main ZIP's SETUP.EXE instead.
 The display is for EX/HX; other video hardware uses its matching driver.
+
+TANDY DOS CLIPBOARD
+After Setup, DISPLAY installs TANDYGR.GR2 and TGCLIP.EXE only if a supported
+Tandy display remains selected. DISPWIN performs the same check before starting
+Windows, including after a display change made inside Windows Setup. TGCLIP
+starts from WIN.INI load=; other startup programs are preserved. No separate
+TGSETUP step is needed. Keep the complete expanded folder together.

@@ -4,6 +4,7 @@ import copy
 import importlib.machinery
 import json
 import unittest
+import zipfile
 from unittest.mock import patch
 
 HERE = Path(__file__).resolve().parent
@@ -14,18 +15,39 @@ P = importlib.machinery.SourceFileLoader('test_hpxy_publisher', str(HERE / 'RCPU
 class CurrentHPXY(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.entries = P.expanded_entries()
-        cls.archive = P.pub.zip_bytes(cls.entries)
         cls.inherited = json.loads((M.ROOT / 'docs/QUAL/WDESK/PACKAGE.JSN').read_bytes())
         cls.expanded = json.loads((M.ROOT / 'docs/QUAL/DOSINST/EXPAND.JSN').read_bytes())
         cls.receipt = M.QUAL / 'PACKAGE.JSN'
         cls.q = json.loads(cls.receipt.read_bytes())
+        # PR203 remains an immutable acceptance baseline. The current package
+        # adds Tandy clipboard support, tested separately by TESTGRAB/TGRAB.
+        # This bounded fixture preserves the seven superseded public members and
+        # exact source bytes named by PR203's original receipt.
+        cls.entries = P.expanded_entries()
+        cls.entries.pop('WINXT/TANDYGR.GR2')
+        cls.entries.pop('WINXT/TGCLIP.EXE')
+        cls.sources = {}
+        with zipfile.ZipFile(M.QUAL / 'BASELINE.ZIP') as z:
+            for name in z.namelist():
+                data = z.read(name)
+                if name.startswith('files/'):
+                    leaf = name[6:]
+                    assert M.identity(data) == cls.q['files'][leaf]
+                    cls.entries[leaf] = data
+                else:
+                    leaf = name[8:]
+                    assert M.identity(data) == cls.q['sources'][leaf]
+                    cls.sources[M.ROOT/leaf] = data
+        cls.archive = P.pub.zip_bytes(cls.entries)
+        assert M.identity(cls.archive) == cls.q['archive']
 
     def qualify(self, q=None, entries=None, archive=None):
         read = Path.read_bytes
         def patched(path):
             if path == self.receipt and q is not None:
                 return json.dumps(q).encode('ascii')
+            if path in self.sources:
+                return self.sources[path]
             return read(path)
         with patch.object(Path, 'read_bytes', patched):
             return M.qualify(entries or self.entries,

@@ -1,11 +1,23 @@
-# Clipboard and DOS programs on the Tandy 1000 (test candidate)
+# Clipboard and DOS programs on the Tandy 1000
 
-Status: emulator evidence only (86Box 6.0, Tandy 1000 HX machine). Not run
-on real hardware. Nothing in `distributions/WINXT` changes: the shipped
-drivers, RESERVE, launcher and accepted hashes are as released. The
-candidate is a separate packet (`src/tgrab/TGPACK.PY`) installed from DOS.
+Status: emulator evidence only; physical hardware remains untested.
+The normal Windows XT candidate now includes TANDYGR.GR2 and TGCLIP.EXE.
+Full DOS Setup installs both and owns only TGCLIP's token in WIN.INI load=.
+The guarded DISPLAY and DISPWIN entries install the same support for a selected
+Tandy display, preserving other applications and startup commands. Ordinary
+Windows Setup selects TANDYGR through the supplied OEM descriptor. TGSETUP
+remains a historical standalone test-packet tool, not a consumer prerequisite.
+Current integration acceptance is recorded in docs/QUAL/TGRAB; the earlier
+FA/FB/FC records below retain their original separate-packet scope.
 
-## Install and use
+## Normal installation
+
+Use the expanded WINXT folder with native DOS SETUP UPDATE or SETUP FRESH,
+then the normal installed launcher. For drivers only, use DISPLAY and DISPWIN
+from the expanded folder as described in docs/DRIVERS.MD. These entries install
+and start the clipboard helper; consumers need no INI edits or Python.
+
+## Historical standalone test packet
 
 At a plain DOS prompt, with the packet on a floppy (or any folder):
 
@@ -232,8 +244,10 @@ All FAIL lines are test-harness faults fixed in later runs (pointer corner count
 4. Without TGCLIP running (for example after removing it from `load=`), a
    graphics Print Screen leaves the line `TANDYGR <path>` on the Clipboard
    and the BMP in TEMP.
-5. XTMODE (MODES) and Windows Setup select CGA.GR2 again when they change
-   the display. Run TGSETUP again afterwards.
+5. The historical standalone packet was reset by XTMODE (MODES) or Setup.
+   The current expanded package uses DISPLAY and DISPWIN to retain the Tandy
+   grabber/helper through normal display selection. MODES belongs to the older
+   fixed-profile kit and is not a current expanded-package prerequisite.
 6. Switching away from a graphics program needs room for a 16 or 32 KB
    temporary file. Without it WINOLDAP stays in the program (beep), as
    with the EGA grabbers.

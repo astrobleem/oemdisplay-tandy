@@ -22,3 +22,8 @@ Default SHA verification is disabled by design; counters for the corrected
 helper revision are not yet measured. /VERIFY stays explicit and optional.
 The guarded WINXT/TSTART launchers and numbered rollback remain mandatory.
 160-pixel dialogs can clip; experimental TEXT retains renderer corruption.
+
+The Tandy clipboard candidate adds TANDYGR.GR2 and TGCLIP.EXE beside this
+unchanged original CGA grabber. The canonical Tandy installer selects the
+named Tandy grabber; packets for other hardware retain their original module.
+See docs/GRABBER.MD and the bounded native integration acceptance record.

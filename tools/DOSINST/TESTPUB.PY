@@ -156,7 +156,7 @@ class ExpandedPublisherTests(unittest.TestCase):
                                "archive": self.qual["archive"]}
             if mode != "drivers_only":
                 self.qual[mode].update(helper=M.pub.identity(self.entries["SETUP.EXE"]),
-                    prepared_comparison={"count":370 if mode=="fresh" else 83,"different":[]})
+                    prepared_comparison={"count":375 if mode=="fresh" else 87,"different":[]})
         self.qual["drivers_only"].update(custom_setup_executed=False,
            descriptor_unchanged=True,alternate_source="C:\\EXTRACT\\WINXT")
         self.receipt = self.root / "docs/QUAL/DOSINST/EXPAND.JSN"
@@ -187,7 +187,7 @@ class ExpandedPublisherTests(unittest.TestCase):
     def test_actual_expanded_tree_and_plain_executable(self):
         import struct
         self.assertEqual({n.split('/')[0] for n in self.entries},{"SETUP.EXE","README.TXT","WINXT"})
-        self.assertEqual(len(self.entries),60)
+        self.assertEqual(len(self.entries),62)
         self.assertFalse(any(n.endswith((".ZIP",".PY")) for n in self.entries))
         exe=self.entries['SETUP.EXE'];last,pages=struct.unpack_from('<HH',exe,2)
         self.assertEqual(len(exe),pages*512-(512-last if last else 0))
@@ -198,7 +198,7 @@ class ExpandedPublisherTests(unittest.TestCase):
         for n,b in core.items():
             if n.startswith('PAYLOAD/'):
                 self.assertEqual(self.entries['WINXT/'+('HPXY.INF' if n[8:]=='OEMSETUP.INF' else n[8:])],b)
-        for n in ('OEMSETUP.INF','CGA.GR2','HPXY.DRV','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','XTSTATIC.LGO','WXTSPL01.RLE','DISPLAY.BAT','DISPWIN.BAT'):
+        for n in ('OEMSETUP.INF','CGA.GR2','TANDYGR.GR2','TGCLIP.EXE','HPXY.DRV','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','XTSTATIC.LGO','WXTSPL01.RLE','DISPLAY.BAT','DISPWIN.BAT'):
             self.assertIn('WINXT/'+n,self.entries)
         M.pub.check_zip(self.archive,self.entries,'expanded')
 
@@ -207,8 +207,8 @@ class ExpandedPublisherTests(unittest.TestCase):
         rows=re.findall(r'{"([^"\n]+)","([^"\n]+)",(\d+)UL,(\d+)}',(M.HERE/'SETFILES.H').read_text())
         crcs=re.findall(r'0x([0-9a-f]{8})UL, /\* ([^*]+) \*/',(M.HERE/'SETINPUT.H').read_text())
         expected=json.loads((M.HERE/'XRINPUT.JSN').read_bytes())
-        self.assertEqual(len(rows),370)
-        self.assertEqual(len(crcs),370)
+        self.assertEqual(len(rows),375)
+        self.assertEqual(len(crcs),375)
         actual={}
         for (path,source,size,kind),(crc,label) in zip(rows,crcs):
             self.assertEqual(path,label)

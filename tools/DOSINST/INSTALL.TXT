@@ -32,6 +32,13 @@ On fixed 320x200 or 640x200 drivers, explicit /SETTINGS offers a window
 workspace. Home or closing the helper brings its windows back into reach.
 The HPXY virtual display keeps its existing Software/Hardware choices.
 
+DOS CLIPBOARD
+Full Setup installs TANDYGR.GR2 and starts TGCLIP with Windows. The guarded
+DISPLAY and DISPWIN entries keep this support when selecting a Tandy display;
+there is no separate TGSETUP step. Shift + PRINT in a DOS text program copies
+text. In a DOS graphics program it copies a bitmap for Paintbrush. BIOS palette
+changes are followed; direct OUT palette writes cannot be observed.
+
 Fonts, grabber and logos are included. Original Windows/DOS are required.
 Component notices and licences are in WINXT. SOUND source: WINXTSRC.ZIP
 beside the download at https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt
