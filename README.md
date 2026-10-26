@@ -28,6 +28,8 @@ It contains `SETUP.EXE`, `README.TXT` and an expanded `WINXT` folder.
   without running the custom installer.
 
 Follow [installation](docs/DESKTOP.MD) for the normal Setup and launch entries.
+See [Panning settings](docs/PANNING.MD) for the available viewport approaches
+and the window workspace on fixed-resolution drivers.
 
 Other hardware profiles and apps are in [current downloads](docs/DOWNLOADS.MD).
 Each product has one current packet and a short install guide.

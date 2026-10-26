@@ -14,7 +14,8 @@
  *             Follow dialogs (class #32770 only, continuous while active),
  *             and the Software/Hardware mode (session only, never saved).
  * Mode 2 of the HPXY mode escape is fault injection: it does not exist here
- * and no value other than 0 (software) or 1 (hardware) is ever accepted.
+ * and is never accepted. Mode 3 selects a linked window workspace locally;
+ * only 0 (software) or 1 (hardware) may reach a driver mode escape.
  */
 #ifndef PANSET_H
 #define PANSET_H
@@ -32,9 +33,13 @@
 #define PS_CAP_FOLLOWD 0x0040u  /* XY: follow active dialogs only */
 #define PS_CAP_MODE    0x0080u  /* XY: Software/Hardware, with read-back */
 #define PS_CAP_HOME    0x0100u  /* viewport can be sent Home */
+#define PS_CAP_DESK    0x0200u  /* caller linked the window-moving alternative */
+#define PS_CAP_HARD    0x0400u  /* a readable hardware mode is available */
+#define PS_CAP_SOFT    0x0800u  /* an existing framebuffer software pan exists */
 
 #define PS_MODE_SOFT 0
 #define PS_MODE_HARD 1
+#define PS_MODE_DESK 3          /* owner-local choice; never a driver escape */
 
 #define PS_OK        0
 #define PS_E_BACKEND 1   /* no usable backend */

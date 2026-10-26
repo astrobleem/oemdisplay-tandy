@@ -54,6 +54,9 @@ settings** to change the available movement and follow options; Apply saves
 changes and Cancel leaves them unchanged. Ctrl+Alt+arrows move the view and
 Ctrl+Alt+Home returns home. Ctrl+Alt+Down brings the Start bar into view.
 
+See [Panning settings](PANNING.MD) for the available approaches, including the
+window workspace on fixed-resolution drivers and its Home recovery control.
+
 ## Drivers only
 
 For drivers only, use the same expanded folder as an ordinary Windows Setup

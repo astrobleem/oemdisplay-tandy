@@ -63,7 +63,7 @@ def aliases(pins, files):
 
 def qualify(entries, archive, baseline):
     helpers()
-    path = ROOT / 'docs/QUAL/PANUI/PACKAGE.JSN'
+    path = ROOT / 'docs/QUAL/WDESK/PACKAGE.JSN'
     q = json.loads(path.read_bytes())
     require(q['status'] == 'PASS_NATIVE_PACKAGE' and
             q['physical_qualification'] is False, 'Panning package incomplete')
@@ -81,7 +81,7 @@ def qualify(entries, archive, baseline):
         require(identity((ROOT / 'docs/QUAL/DOSINST' / name).read_bytes()) == pin,
                 'Expanded baseline evidence differs: ' + name)
     require(q['helper_qualification'] == identity(
-        (ROOT / 'docs/QUAL/PANUI/NATIVE.JSN').read_bytes()),
+        (ROOT / 'docs/QUAL/WDESK/NATIVE.JSN').read_bytes()),
         'Different settings qualification used')
     require(q['archive'] == identity(archive) and q['files'] ==
             {n: identity(b) for n, b in sorted(entries.items())},
@@ -123,7 +123,7 @@ def qualify(entries, archive, baseline):
                     row['installed_helper'] == q['files']['WINXT/XYCTL.EXE']
                     and row['guarded_windows_return'],
                     'Installed helper/Windows return not verified')
-    require(set(q['evidence']) == {'docs/QUAL/PANUI/INSTALL.ZIP'},
+    require(set(q['evidence']) == {'docs/QUAL/WDESK/INSTALL.ZIP'},
             'Native package evidence inventory differs')
     for name, pin in q['evidence'].items():
         data = (ROOT / name).read_bytes()

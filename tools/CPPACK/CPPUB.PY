@@ -10,16 +10,20 @@ P=importlib.machinery.SourceFileLoader('p15_catalog',str(ROOT/'tools/CURRENT/BUN
 V=importlib.machinery.SourceFileLoader('p15_release_proof',str(ROOT/'src/pcp/CPVERIFY.PY')).load_module()
 ORDER=('CPPAN.ZIP','CURRENT.SHA','CURRENT.JSN')
 CHANGED=set(ORDER)
-# The panning core update intentionally left the accepted collection alone.
-# A broad BUNDLE rebuild derives a newer collection from that core; this
-# driver-only publication must preserve the exact already-public collection.
-PRESERVE_CURRENT={'TANDYLAB.ZIP':{'bytes':939983,'sha256':'e9420280a2149f5c12eaf5ef2adaa726609076d09f447201c0581db5a8ac1384'}}
+# This driver-only publisher preserves the current accepted collection.
+# Shared helper/core updates use aggregate current-release publication.
+PRESERVE_CURRENT={'TANDYLAB.ZIP':{'bytes':959948,'sha256':'8c6a7d016293658a84ba71c2ec633b8845bd4e81d09dadcad95436e76b5694cd'}}
 REPOSITORY='astrobleem/oemdisplay-tandy'
 URL='https://github.com/'+REPOSITORY+'/releases/download/windows-xt/'
 
 def download(url):
     request=urllib.request.Request(url,headers={'User-Agent':'qualified-colorplus-publisher','Cache-Control':'no-cache'})
     return urllib.request.urlopen(request,timeout=60).read()
+
+def driver_only(previous,current):
+    return (set(previous)==set(current) and
+            all(previous[n]==current[n] for n in current if n!='PCP3216.DRV'))
+
 
 def prepare(folder,release):
     """Prepare local catalog artifacts, never mutate the release."""
@@ -73,7 +77,7 @@ def check(folder,release):
         if P.identity(data)!=actual['CPPAN.ZIP']:
             raise ValueError('Anonymous current ColorPlus ZIP differs from release metadata')
         previous=P.zip_files(data)
-        if set(previous)!=set(current) or any(previous[n]!=current[n] for n in current if n!='PCP3216.DRV'):
+        if not driver_only(previous,current):
             raise ValueError('Fixed ColorPlus update would replace panning/installer/support members')
     return expected,actual
 

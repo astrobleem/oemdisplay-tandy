@@ -27,6 +27,7 @@
 #define ID_FOLLOWD  224
 #define ID_SOFT     225
 #define ID_HARD     226
+#define ID_DESK     227
 #define ID_STATUS   230
 #define ID_HOME     240
 
@@ -156,6 +157,11 @@ static void SetViewLine(HWND hwnd)
     wsprintf(buf, "View %dx%d of %dx%d at %d,%d", c->viewW, c->viewH,
              c->workW, c->workH, c->viewX, c->viewY);
     SetDlgItemText(hwnd, ID_VIEW, (LPSTR)buf);
+    if (pHost && pHost->backend) {
+        GetDlgItemText(hwnd, ID_BACKEND, buf, sizeof(buf));
+        if (lstrcmp((LPSTR)buf, (LPSTR)pHost->backend))
+            SetDlgItemText(hwnd, ID_BACKEND, (LPSTR)pHost->backend);
+    }
 }
 
 /* With the driver lost, Apply and Home stay disabled; Cancel always works. */
@@ -192,7 +198,8 @@ static void FillControls(HWND hwnd)
     if (caps & PS_CAP_FOLLOWD)
         CheckDlgButton(hwnd, ID_FOLLOWD, w->followDlg != 0);
     if (caps & PS_CAP_MODE)
-        CheckRadioButton(hwnd, ID_SOFT, ID_HARD,
+        CheckRadioButton(hwnd, ID_SOFT, ID_DESK,
+                         w->mode == PS_MODE_DESK ? ID_DESK :
                          w->mode == PS_MODE_HARD ? ID_HARD : ID_SOFT);
 }
 
@@ -234,8 +241,8 @@ static int ReadControls(HWND hwnd)
     if (caps & PS_CAP_FOLLOWD)
         w->followDlg = IsDlgButtonChecked(hwnd, ID_FOLLOWD) ? 1 : 0;
     if (caps & PS_CAP_MODE)
-        w->mode = IsDlgButtonChecked(hwnd, ID_HARD) ? PS_MODE_HARD
-                                                    : PS_MODE_SOFT;
+        w->mode = IsDlgButtonChecked(hwnd, ID_DESK) ? PS_MODE_DESK :
+                  IsDlgButtonChecked(hwnd, ID_HARD) ? PS_MODE_HARD : PS_MODE_SOFT;
     return PS_OK;
 }
 
@@ -254,13 +261,15 @@ static void BuildControls(HWND hwnd)
     MakeChild(hwnd, "STATIC", "", SS_LEFT, PAN_X, 16, PAN_W, TXT_H, ID_VIEW);
 
     if (caps & PS_CAP_STEP) {
-        MakeChild(hwnd, "STATIC", "Step (rows)", SS_LEFT, PAN_X, y, 180,
+        MakeChild(hwnd, "STATIC", (caps & PS_CAP_DESK) ? "Step (pixels)" : "Step (rows)",
+                  SS_LEFT, PAN_X, y, 180,
                   step, 0);
         EditItem(hwnd, ID_STEP, y, step);
         y += step;
     }
     if (caps & PS_CAP_EDGE) {
-        MakeChild(hwnd, "STATIC", "Edge band width (rows)", SS_LEFT, PAN_X,
+        MakeChild(hwnd, "STATIC", (caps & PS_CAP_DESK) ?
+                  "Edge band width (pixels)" : "Edge band width (rows)", SS_LEFT, PAN_X,
                   y, 180, step, 0);
         EditItem(hwnd, ID_EDGE, y, step);
         y += step;
@@ -301,11 +310,18 @@ static void BuildControls(HWND hwnd)
         y += step;
     }
     if (caps & PS_CAP_MODE) {
-        MakeChild(hwnd, "BUTTON", "Software",
-                  BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP, PAN_X, y, 90,
-                  step, ID_SOFT);
-        MakeChild(hwnd, "BUTTON", "Hardware", BS_AUTORADIOBUTTON, 100, y, 90,
-                  step, ID_HARD);
+        if (caps & PS_CAP_SOFT)
+            MakeChild(hwnd, "BUTTON", "Software",
+                      BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP, PAN_X, y, 90,
+                      step, ID_SOFT);
+        if (caps & PS_CAP_HARD)
+            MakeChild(hwnd, "BUTTON", "Hardware", BS_AUTORADIOBUTTON, 100, y, 90,
+                      step, ID_HARD);
+        if (caps & PS_CAP_DESK)
+            MakeChild(hwnd, "BUTTON", "Windows", BS_AUTORADIOBUTTON |
+                      ((caps & PS_CAP_SOFT) ? 0L : WS_GROUP | WS_TABSTOP),
+                      (caps & (PS_CAP_SOFT | PS_CAP_HARD)) ? 194 : PAN_X, y, 86,
+                      step, ID_DESK);
         y += step;
     }
 
@@ -326,7 +342,8 @@ static void BuildControls(HWND hwnd)
 /* Moves the window to the viewport origin; the size is never changed. */
 static void Reposition(HWND hwnd)
 {
-    SetWindowPos(hwnd, NULL, model.caps.viewX + 4, model.caps.viewY + 2,
+    SetWindowPos(hwnd, NULL, (model.live.mode == PS_MODE_DESK ? 0 : model.caps.viewX) + 4,
+                 (model.live.mode == PS_MODE_DESK ? 0 : model.caps.viewY) + 2,
                  0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
@@ -370,9 +387,11 @@ void PanDlgTrack(void)
     if (x != model.caps.viewX || y != model.caps.viewY) {
         SetViewLine(hDlg);
         GetWindowRect(hDlg, &r);
-        if (r.left < model.caps.viewX || r.top < model.caps.viewY ||
-            r.right > model.caps.viewX + model.caps.viewW ||
-            r.bottom > model.caps.viewY + model.caps.viewH)
+        x = model.live.mode == PS_MODE_DESK ? 0 : model.caps.viewX;
+        y = model.live.mode == PS_MODE_DESK ? 0 : model.caps.viewY;
+        if (r.left < x || r.top < y ||
+            r.right > x + model.caps.viewW ||
+            r.bottom > y + model.caps.viewH)
             Reposition(hDlg);
     }
 }
@@ -488,7 +507,8 @@ HWND PanDlgOpen(HINSTANCE inst, const PANHOST *host)
     h = WinHeight(n, step);
     hDlg = CreateWindow((LPSTR)DLG_CLASS, (LPSTR)title,
                         WS_POPUP | WS_CAPTION | WS_SYSMENU,
-                        model.caps.viewX + 4, model.caps.viewY + 2,
+                        (model.live.mode == PS_MODE_DESK ? 0 : model.caps.viewX) + 4,
+                        (model.live.mode == PS_MODE_DESK ? 0 : model.caps.viewY) + 2,
                         DLG_W, h, NULL, NULL, inst, NULL);
     if (!hDlg)
         return NULL;

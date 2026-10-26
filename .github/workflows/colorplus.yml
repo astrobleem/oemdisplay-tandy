@@ -85,6 +85,7 @@ jobs:
     timeout-minutes: 10
     outputs:
       colorplus_changed: ${{ steps.scope.outputs.changed }}
+      driver_only: ${{ steps.scope.outputs.driver_only }}
     env:
       SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
@@ -112,13 +113,14 @@ jobs:
         id: scope
         run: |
           python3 - <<'PYCODE'
-          import hashlib,json,os,urllib.request
+          import hashlib,importlib.machinery,json,os,urllib.request
           from pathlib import Path
           url='https://api.github.com/repos/astrobleem/oemdisplay-tandy/releases/tags/windows-xt'
           request=urllib.request.Request(url,headers={'User-Agent':'colorplus-publication-scope','Cache-Control':'no-cache'})
           release=json.loads(urllib.request.urlopen(request,timeout=60).read())
           rows=[row for row in release['assets'] if row['name']=='CPPAN.ZIP']
           if len(rows)>1:raise ValueError('Duplicate current ColorPlus assets')
+          live_packet=rows[0] if rows else None
           data=Path('current/CPPAN.ZIP').read_bytes()
           wanted={'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}
           actual=({'bytes':rows[0]['size'],'sha256':rows[0]['digest'].removeprefix('sha256:')} if rows else None)
@@ -138,11 +140,22 @@ jobs:
                   changed=(record['assets'].get('CPPAN.ZIP')!=wanted or
                            sums.get('CPPAN.ZIP')!=wanted['sha256'] or
                            sums.get('CURRENT.JSN')!=hashlib.sha256(bodies['CURRENT.JSN']).hexdigest())
-          with open(os.environ['GITHUB_OUTPUT'],'a') as out:out.write('changed='+str(changed).lower()+'\n')
+          driver_only=True
+          if changed and live_packet:
+              req=urllib.request.Request(live_packet['browser_download_url'],headers={'User-Agent':'colorplus-publication-scope','Cache-Control':'no-cache'})
+              previous=urllib.request.urlopen(req,timeout=60).read()
+              if {'bytes':len(previous),'sha256':hashlib.sha256(previous).hexdigest()}!=actual:raise ValueError('Current ColorPlus download differs')
+              publisher=importlib.machinery.SourceFileLoader('scope','tools/CPPACK/CPPUB.PY').load_module()
+              driver_only=publisher.driver_only(publisher.P.zip_files(previous),publisher.P.zip_files(data))
+          with open(os.environ['GITHUB_OUTPUT'],'a') as out:
+              out.write('changed='+str(changed).lower()+'\n')
+              out.write('driver_only='+str(driver_only).lower()+'\n')
           print('ColorPlus packet changed:',changed)
+          print('Within fixed-driver-only publisher scope:',driver_only)
+          if not driver_only:print('Shared helper/support update: native package checks apply; aggregate current-release publication required')
           PYCODE
       - name: Check the exact ColorPlus candidate against current release without writes
-        if: steps.scope.outputs.changed == 'true'
+        if: steps.scope.outputs.changed == 'true' && steps.scope.outputs.driver_only == 'true'
         run: |
           python3 -B tools/CPPACK/CPPUB.PY --folder current --commit "$SOURCE_SHA" --prepare
           python3 -B tools/CPPACK/CPPUB.PY --folder current --commit "$SOURCE_SHA"
@@ -153,7 +166,7 @@ jobs:
           if-no-files-found: error
 
   publish-colorplus:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.publication-check.outputs.colorplus_changed == 'true'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.publication-check.outputs.colorplus_changed == 'true' && needs.publication-check.outputs.driver_only == 'true'
     needs: publication-check
     runs-on: ubuntu-24.04
     timeout-minutes: 5

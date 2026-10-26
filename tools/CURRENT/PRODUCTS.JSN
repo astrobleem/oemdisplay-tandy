@@ -20,15 +20,15 @@
     "CPPAN.ZIP": {
       "source": "downloads/experimental/CPPAN/CPPAN.ZIP",
       "identity": {
-        "bytes": 197119,
-        "sha256": "946f2aa4f59da8bdadfbd4745c6d425eff6d2a1e44609c8b3759de4b3b930114"
+        "bytes": 209181,
+        "sha256": "3d90027451731b6ab23edce9377721eff657fe452c0decba18adcdd65e09f4df"
       }
     },
     "JRPAN.ZIP": {
       "source": "downloads/experimental/SOFTPAN/JRPAN.ZIP",
       "identity": {
-        "bytes": 86130,
-        "sha256": "2ed0bd1862c7a91158ff1686ed72970fe7aaaecd255d6871ff659c18d5aa13b1"
+        "bytes": 91867,
+        "sha256": "04e5a8658d46050cece20b25026497f3c90bc3c69cc7829ccddf61de17e99fca"
       }
     },
     "TNDYV2.ZIP": {
@@ -167,11 +167,11 @@
       "sha256": "ac825b9e38d6fc636cbf33960e2e55eb00693dc92de49d8d04adf093bcb13881"
     }
   },
-  "core_source_commit": "81ec17cb5df292dde5cf82f12f82018f28156769",
+  "core_source_commit": "030992acd24c18cbdd50ebad31c1bdd90ee8104d",
   "core_identities": {
     "WINXT.ZIP": {
-      "bytes": 660289,
-      "sha256": "c93d2310a8121785979a614df15c7a5d2f9bfbf335e9d85fe79bbdfd7fbdc614"
+      "bytes": 668993,
+      "sha256": "ab35b48468d480490c9487dedd85c4f7a3ee4122bdca5a65be52d21a0a548b8f"
     },
     "WINXTSRC.ZIP": {
       "bytes": 100529,
@@ -179,11 +179,11 @@
     },
     "WINXT.JSN": {
       "bytes": 8670,
-      "sha256": "10b06f9c8d3af5cf646714488a8f5ed3c53568bdffaccadf77dc2e41b79aa757"
+      "sha256": "07966ebec20cde0f7e92400123be846ed1c328043fa79376c695f449917f66fa"
     },
     "WINXT.SHA": {
       "bytes": 234,
-      "sha256": "b1ef0146fa3e964163ff54b2a8ef1a228ccb72926c4c5698f127cecdd7e8eb41"
+      "sha256": "cec6d53f1f801ea2eeeb5971f7d5b5e2b4de38cdf1e65d58f81490d8d4f0b7db"
     }
   }
 }

@@ -4,6 +4,7 @@
 #include "PANSET.H"
 #define FALSE 0
 static int live, hardware, statsProc = 1;
+static int windowOnly;
 static int edge, edgePolled, edgeRepeat, follow, window;
 static int available, reported, refuse, modes, resets;
 
@@ -57,6 +58,13 @@ int main(void)
     bad += !Test(1, 1, 0, 0, PS_OK, 1, 0);
     bad += !Test(1, 0, 1, 1, PS_OK, 1, 0);
     bad += !Test(1, 0, 0, 0, PS_OK, 0, 0);
+    bad += !Test(1, 0, 2, 0, PS_E_APPLY, 0, 0);
+    bad += !Test(1, 0, PS_MODE_DESK, 0, PS_E_APPLY, 0, 0);
+    windowOnly = 1;
+    bad += !Test(1, 0, PS_MODE_DESK, 0, PS_OK, 0, PS_MODE_DESK);
+    bad += !Test(1, 0, PS_MODE_SOFT, 0, PS_E_APPLY, 0, 0);
+    bad += !Test(1, 0, PS_MODE_HARD, 0, PS_E_APPLY, 0, 0);
+    bad += !Test(1, 0, 2, 0, PS_E_APPLY, 0, 0);
     printf("XY Apply driver-state cases: %d failures\n", bad);
     return bad;
 }

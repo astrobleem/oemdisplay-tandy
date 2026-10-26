@@ -41,7 +41,7 @@ def colorplus(folder,archive):
     settings.verify()
     fixed=importlib.machinery.SourceFileLoader('verify_fixed_colorplus',str(ROOT/'src/pcp/CPVERIFY.PY')).load_module()
     fixed.verify()
-    q=ROOT/'docs/QUAL/PANUI/NATIVE.JSN'
+    q=ROOT/'docs/QUAL/WDESK/NATIVE.JSN'
     return {'outputs':{archive:native.identity(data),'INSTALL.TXT':native.identity(guide)},
             'native_receipt':receipt,
             'settings_receipt':{'path':q.relative_to(ROOT).as_posix(),**native.identity(q.read_bytes())},

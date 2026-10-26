@@ -15,7 +15,7 @@ def supplied_grabber():
 def payload(kind,spec):
     ui=importlib.machinery.SourceFileLoader('sp_qualified_settings',str(ROOT/'src/panui/VERIFY.PY')).load_module()
     qualification,binaries=ui.verify()
-    native_path='docs/QUAL/PANUI/NATIVE.JSN'
+    native_path='docs/QUAL/WDESK/NATIVE.JSN'
     if spec['qualification']['ui_update']!={'path':native_path,'manifest':identity((ROOT/native_path).read_bytes())}:
         raise ValueError('Changed native settings qualification manifest')
     base=HERE/'PAYLOAD'/kind

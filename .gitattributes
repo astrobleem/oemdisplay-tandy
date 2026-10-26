@@ -184,6 +184,9 @@ CLAUDE.md -text
 # Shared native/helper source and byte-pinned host verification retain exact bytes.
 src/panui/** -text
 
+# Preserve exact imported Win16 workspace source bytes.
+src/wdesk/** -text
+
 # Fixed ColorPlus Output and native evidence preserve exact reviewed bytes.
 src/pcp/CPPOUT.FIX -text
 src/pcp/BUILDPCP.PY -text
