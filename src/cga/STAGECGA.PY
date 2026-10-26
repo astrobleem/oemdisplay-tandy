@@ -16,7 +16,8 @@ HERE = Path(__file__).resolve().parent
 BASE = HERE.parent / 'tandysw'
 MODES = {'160x100x16': ('160x200x16', 'CGA100.DRV'),
          '320x200x4': ('320x200x4', 'CGA320.DRV'),
-         '640x200x2': ('640x200x2', 'CGA640.DRV')}
+         '640x200x2': ('640x200x2', 'CGA640.DRV'),
+         '160x100x16pan': ('160x200x16', 'CGAPAN.DRV')}
 
 
 def module(name):
@@ -54,13 +55,23 @@ def pipeline(repo, out, mode):
     return renderer, resources, audits
 
 
+def finish(mode, renderer, resources):
+    """CGA adapters on top of the staged base; normal modes get none."""
+    audits = {}
+    if mode in ('160x100x16', '160x100x16pan'):
+        patch = importlib.machinery.SourceFileLoader('cga100', str(HERE / 'CGA100.PY')).load_module()
+        audits['CGA100'] = patch.stage(renderer, resources)
+    if mode == '160x100x16pan':
+        patch = importlib.machinery.SourceFileLoader('cgapan', str(HERE / 'CGAPAN.PY')).load_module()
+        audits['CGAPAN'] = patch.stage(renderer, resources)
+    return audits
+
+
 def stage(repo, out, mode):
     renderer, resources, audits = pipeline(repo, out, mode)
     # The normal-mode source and resource bytes remain exactly the upstream
     # staged result. IBM CGA qualification is separate from Tandy evidence.
-    if mode == '160x100x16':
-        patch = importlib.machinery.SourceFileLoader('cga100', str(HERE / 'CGA100.PY')).load_module()
-        audits['CGA100'] = patch.stage(renderer, resources)
+    audits.update(finish(mode, renderer, resources))
     paths = [p for root in (renderer, resources) for p in root.rglob('*') if p.is_file()]
     return dict(mode=mode, driver=MODES[mode][1], base_profile=MODES[mode][0],
                 build='NOT_RUN', runtime='NOT_TESTED', audits=audits,
