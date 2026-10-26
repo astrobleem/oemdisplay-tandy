@@ -103,8 +103,7 @@ static void Tick(void)
         if(FindWindow("PanSetDlg",NULL))dlg_seen=1;
         else if(dlg_seen&&!dlg_fired&&++dlg_wait>=32){
             dlg_fired=1;SetCursorPos(view_x+VIEW_W-2,view_y+50);
-            wsprintf(line,"EDGE after settings view=%d,%d
-",view_x,view_y);
+            wsprintf(line,"EDGE after settings view=%d,%d\r\n",view_x,view_y);
             Log(line);
         }
     }
