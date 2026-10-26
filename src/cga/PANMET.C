@@ -6,7 +6,7 @@
 #define ESC_XY 0x5860
 #define ESC_MODE 0x5861
 static HWND win;
-static int step;
+static int step,focused;
 static char line[256];
 static COLORREF colors[16]={RGB(0,0,0),RGB(0,0,128),RGB(0,128,0),RGB(0,128,128),
  RGB(128,0,0),RGB(128,0,128),RGB(128,128,0),RGB(128,128,128),
@@ -128,6 +128,12 @@ long FAR PASCAL WndProc(HWND w,WORD m,WORD wp,LONG lp)
  switch(m){
  case WM_PAINT:PaintPattern(w);return 0L;
  case WM_CHAR:if(wp==' '){step++;Run();}return 0L;
+ case WM_TIMER:
+  /* The shell starts after load= programs and takes the activation. */
+  if(GetActiveWindow()!=w)SetActiveWindow(w);
+  if(GetFocus()!=w)SetFocus(w);
+  if(!focused && GetActiveWindow()==w && GetFocus()==w){focused=1;Log("FOCUS held\r\n");}
+  return 0L;
  case WM_DESTROY:PostQuitMessage(0);return 0L;
  }
  return DefWindowProc(w,m,wp,lp);
@@ -144,7 +150,7 @@ int PASCAL WinMain(HANDLE inst,HANDLE prev,LPSTR cmd,int show)
  win=CreateWindow("PanMet","PANMET",WS_POPUP|WS_VISIBLE,0,0,320,200,NULL,NULL,inst,NULL);
  if(!win)return 1;
  ShowCursor(FALSE);
- ShowWindow(win,SW_SHOW);UpdateWindow(win);SetFocus(win);
+ ShowWindow(win,SW_SHOW);UpdateWindow(win);SetFocus(win);SetTimer(win,1,500,NULL);
  Log("PANMET START\r\n");Caps();Log("STEP 0 DONE\r\n");
  while(GetMessage(&msg,NULL,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);}
  return msg.wParam;
