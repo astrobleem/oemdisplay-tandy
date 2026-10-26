@@ -31,7 +31,8 @@ ASSETS={
  'LOGOLIC.TXT':('LOGOLIC.TXT','b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80'),
 }
 T80_PINS={'T80COUR.FON':'fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6'}
-COPY=set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE'}
+COPY=set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE','PANCTL.EXE'}
+HELPERS={'CGACTL.EXE','PANCTL.EXE'}
 ALL_FILES=COPY|{'XTSTATIC.LGO','WXTSPL01.RLE','LOGOLIC.TXT','OEMSETUP.INF','FONTLIC.TXT','NOTICE.TXT'}
 
 
@@ -60,7 +61,7 @@ def read_drivers(builds):
             raise ValueError('Changed CGA build: '+name)
         dos_exe(data,driver=True)
         result[name]=data
-    if set(result)!={v[1] for v in MODES.values()}:raise ValueError('All three CGA modes are required')
+    if set(result)!={v[1] for v in MODES.values()}:raise ValueError('All four CGA drivers are required')
     return result
 
 
@@ -82,9 +83,24 @@ def read_helper(folder):
     return data
 
 
-def payload(repo,support,drivers,fontout,helper):
+def read_owner(folder):
+    """The CGAPAN viewport owner: its own receipt, no shared placement source."""
+    record=json.loads((folder/'HELPER.JSN').read_bytes())
+    data=(folder/'PANCTL.EXE').read_bytes()
+    if record.get('build')!='PASS' or record.get('kind')!='CGA_PAN_OWNER_CANDIDATE':
+        raise ValueError('Missing native PANCTL build receipt')
+    if record.get('sha256')!=hashlib.sha256(data).hexdigest() or record.get('bytes')!=len(data):
+        raise ValueError('Changed PANCTL executable')
+    if record.get('source_sha256')!=hashlib.sha256((HERE/'PANCTL.C').read_bytes()).hexdigest():
+        raise ValueError('PANCTL build/source mismatch')
+    dos_exe(data,driver=True)
+    return data
+
+
+def payload(repo,support,drivers,fontout,helper,owner):
     result=dict(drivers)
     result['CGACTL.EXE']=helper
+    result['PANCTL.EXE']=owner
     CGAFONT.build(fontout)
     for name in CGAFONT.FACES:result[name]=(fontout/name).read_bytes()
     # Retain TEXT80 Courier exactly. CGA's proportional Helv preserves the
@@ -123,7 +139,7 @@ def emit(repo,out,files,source_commit,fixture=False):
         if not re.fullmatch(r'[A-Z0-9_]{1,8}\.[A-Z0-9]{1,3}',name):raise ValueError('Non-DOS payload name: '+name)
         (folder/name).write_bytes(data)
     pin={name:dict(identity(data),installed=name if name in COPY else '',
-                   destination='WINDOWS' if name=='CGACTL.EXE' else 'SYSTEM' if name in COPY else '')
+                   destination='WINDOWS' if name in HELPERS else 'SYSTEM' if name in COPY else '')
          for name,data in sorted(files.items())}
     token=hashlib.sha256(json.dumps(pin,sort_keys=True).encode()).hexdigest()
     header='#define CGA_PACKET_ID "'+token+'"\n#define CGA_COUNT '+str(len(pin))+'\nstatic CGAFILE cga_files[CGA_COUNT]={\n'
@@ -136,7 +152,9 @@ def emit(repo,out,files,source_commit,fixture=False):
     rec=dict(kind='CGA_DEVELOPMENT_PACKET',source_commit=source_commit,fixture=fixture,
              native_build='NOT_RUN',windows='NOT_TESTED',hardware='UNQUALIFIED',
              payload=pin,packet_id=token,installer_sources=sources,readme=identity(readme),
-             helper_autoload_modes=['100','320','640'],helper_normal_modes='Set disabled text black, then exit; no resident placement owner')
+             helper_autoload_modes=['100','320','640','PAN'],
+             helper_by_mode={'100':'CGACTL.EXE','320':'CGACTL.EXE','640':'CGACTL.EXE','PAN':'PANCTL.EXE'},
+             helper_normal_modes='Set disabled text black, then exit; no resident placement owner')
     write(out/'PREPARED.JSN',json.dumps(rec,indent=2)+'\n')
     return rec
 
@@ -192,17 +210,20 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__);sub=ap.add_subparsers(dest='command',required=True)
     p=sub.add_parser('prepare');p.add_argument('--repo',type=Path,required=True);p.add_argument('--support',type=Path,required=True)
     p.add_argument('--build-100',type=Path,required=True);p.add_argument('--build-320',type=Path,required=True);p.add_argument('--build-640',type=Path,required=True)
+    p.add_argument('--build-pan',type=Path,required=True)
     p.add_argument('--helper-build',type=Path,required=True)
+    p.add_argument('--owner-build',type=Path,required=True)
     p.add_argument('--source-commit',required=True);p.add_argument('--out',type=Path,required=True)
     p=sub.add_parser('finish');p.add_argument('--prepared',type=Path,required=True);p.add_argument('--build',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
     args=ap.parse_args()
     if args.command=='prepare':
         if args.out.exists():raise ValueError('Choose a fresh prepared directory')
-        drivers=read_drivers({'160x100x16':args.build_100,'320x200x4':args.build_320,'640x200x2':args.build_640})
+        drivers=read_drivers({'160x100x16':args.build_100,'320x200x4':args.build_320,'640x200x2':args.build_640,
+                              '160x100x16pan':args.build_pan})
         # Generated font work is private developer output, outside the packet.
         fonts=args.out.parent/(args.out.name+'-fonts')
         if fonts.exists():raise ValueError('Fresh font output required: '+str(fonts))
-        files=payload(args.repo,args.support,drivers,fonts,read_helper(args.helper_build))
+        files=payload(args.repo,args.support,drivers,fonts,read_helper(args.helper_build),read_owner(args.owner_build))
         emit(args.repo,args.out,files,args.source_commit)
         print('CGA expanded packet/source prepared; native helper build and Windows qualification remain queued')
     else:

@@ -244,10 +244,11 @@ static int payload_location(const char *exe)
 
 int main(int argc,char **argv)
 {
-    unsigned i;int rc,whole=0;const char *mode;char *args[7];
+    unsigned i;int rc,whole=0,pan=0;const char *mode;char *args[7];
     if(argc!=3){
         puts("IBM CGA / Windows 3.0 real-mode display setup (existing Windows required).");
-        puts("SETUP C:\\WINDOWS 100|320|640   (select mode; start WIN /R afterward)");
+        puts("SETUP C:\\WINDOWS 100|320|640|PAN   (select mode; start WIN /R afterward)");
+        puts("PAN = 160x100 view of a 320x200 desktop (Ctrl+Alt+arrows, Home, End)");
         puts("SETUP UNDO C:\\WINDOWS         (undo this packet's changes)");
         puts("SETUP RESTORE C:\\WINDOWS      (saved INIs whole; loses later INI edits)");
         return 1;
@@ -283,10 +284,11 @@ int main(int argc,char **argv)
         if(!cleanup())return fail("Owned-copy cleanup incomplete; record kept for another UNDO.");
         puts("SETUP: CGA changes undone. Start Windows normally.");return 0;
     }
-    if(strcmp(mode,"100") && strcmp(mode,"320") && strcmp(mode,"640"))return fail("Choose 100, 320 or 640.");
+    pan=!stricmp(mode,"PAN");
+    if(strcmp(mode,"100") && strcmp(mode,"320") && strcmp(mode,"640") && !pan)return fail("Choose 100, 320, 640 or PAN.");
     if(readfile(in("SYSTEM.INI"))<0 || readfile(in("WIN.INI"))<0)
         return fail("Cannot read Windows INIs, or an INI exceeds 18000 bytes; nothing copied.");
-    cga_small=!strcmp(mode,"100");
+    cga_small=!strcmp(mode,"100") || pan;   /* PAN keeps mode 100's compact fonts and settings */
     cga_medium=!strcmp(mode,"320");
     if(!payload_location(argv[0]))return fail("Packet path too long.");
     if(exists(in("CGACOPY.NEW")))return fail("Incomplete copy record; no files changed. Keep it for diagnosis.");
@@ -311,8 +313,8 @@ int main(int argc,char **argv)
         if(!rc){cleanup();return fail("Payload copy failed; configuration unchanged.");}
     }
     args[0]="CGASET";args[1]="ON";args[2]=(char *)dir;
-    args[3]=cga_small ? "CGA100.DRV" : !strcmp(mode,"320") ? "CGA320.DRV" : "CGA640.DRV";
-    args[4]="CGACTL.EXE";args[5]=cga_small ? "/C" : NULL;args[6]=NULL;
+    args[3]=pan ? "CGAPAN.DRV" : cga_small ? "CGA100.DRV" : !strcmp(mode,"320") ? "CGA320.DRV" : "CGA640.DRV";
+    args[4]=pan ? "PANCTL.EXE" : "CGACTL.EXE";args[5]=cga_small ? "/C" : NULL;args[6]=NULL;
     rc=cga_ini_main(cga_small ? 6 : 5,args);
     if(rc){if(!ini_state())cleanup();return 1;}
     puts("SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.");

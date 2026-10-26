@@ -120,10 +120,11 @@ def font_checks(out):
 
 def inventory_checks():
     inf=S.read(HERE/'OEMSETUP.INF')
-    choices=re.findall(r'^(cga\d+) = a:([^,]+),"([^"]+)","([^"]+)"',inf,re.M)
-    assert len(choices)==3
-    # The pan driver joins the OEM choices with the installer integration.
-    assert {v[1] for v in choices}=={v[1] for m,v in S.MODES.items() if m!='160x100x16pan'}
+    choices=re.findall(r'^(cga[0-9a-z]+) = a:([^,]+),"([^"]+)","([^"]+)"',inf,re.M)
+    assert len(choices)==4
+    # PAN keeps mode 100's compact fonts and dpi descriptor.
+    assert {v[0]:v[3] for v in choices}['cgapan']=='100,48,40'
+    assert {v[1] for v in choices}=={v[1] for v in S.MODES.values()}
     assert all(len(v[2])<=47 for v in choices)
     assert choices[0][3]=='100,48,40'
     for name in list(F.FACES)+[v[1] for v in choices]:
