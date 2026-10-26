@@ -167,7 +167,7 @@
       "sha256": "ac825b9e38d6fc636cbf33960e2e55eb00693dc92de49d8d04adf093bcb13881"
     }
   },
-  "core_source_commit": "17e1479ffc9242545737b70bf6fe2b82c513b1a4",
+  "core_source_commit": "030992acd24c18cbdd50ebad31c1bdd90ee8104d",
   "core_identities": {
     "WINXT.ZIP": {
       "bytes": 668993,
@@ -179,11 +179,11 @@
     },
     "WINXT.JSN": {
       "bytes": 8670,
-      "sha256": "61fa7fd2d6007b3792dda9f6f82f3cd434a51433be2b0bdd746d5ab585268a9a"
+      "sha256": "07966ebec20cde0f7e92400123be846ed1c328043fa79376c695f449917f66fa"
     },
     "WINXT.SHA": {
       "bytes": 234,
-      "sha256": "2b2e5a50ac8d29f8a56fa38ec26d726f1ff20f7acb1ef45ef6359e62bfd2e179"
+      "sha256": "cec6d53f1f801ea2eeeb5971f7d5b5e2b4de38cdf1e65d58f81490d8d4f0b7db"
     }
   }
 }
