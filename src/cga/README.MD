@@ -174,7 +174,10 @@ window/control bounds. Developer command `D` also compares signed font heights
 and default/Swiss pitch without loading additional font resources; a private
 `[CGAProbe] FontDiag=1` INI flag enables the same passive diagnostic at startup.
 Do not append bare diagnostic arguments to Win3 `load=`; it treats them as
-additional startup programs. `F` retains
+additional startup programs. `FontDiag=2` or `F` explicitly adds the selected
+mode font only after limited passive cases, to separate resource loading from
+font matching. These are diagnostic tests, never consumer installation or
+startup workarounds. `F` retains
 the explicitly marked AddFontResource diagnostic. F9 toggles its palette/BitBlt/pair test window; each
 F8 advances a custom 32x32 cursor through odd-origin/edge/hide checks.
 F7 with that cursor at its first position draws a pixel and a checkerboard

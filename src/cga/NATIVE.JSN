@@ -428,11 +428,10 @@
     }
   },
   "pending_observer_revision": {
-    "source_sha256": "a07f73ede4afc0130e84b2f4f81dbc5c3e791539080311a38a7d13b894e5a812",
+    "source_sha256": "a830199cfc9a891b5bbf2c4884dad6bd574aef385a993048a1636c123b30b3a2",
     "native_build": "NOT_RUN",
     "runtime": "NOT_TESTED",
-    "developer_enable": "Private [CGAProbe] FontDiag=1 enables passive signed-height/pitch cases; do not pass unquoted arguments through Win3 load=",
-    "consumer": "Excluded; no diagnostic flag in consumer installer"
+    "developer_enable": "FontDiag=1 passive40cases;2 explicitlyaddsselectedmodefont after limitedpassivecases;neverconsumerINI"
   },
   "mode640_font_unit": {
     "status": "PASS_NATIVE_API_GRAPHICS_FILE_AND_DOS",
@@ -568,5 +567,36 @@
     "managed_gcc": true,
     "c_source_sha256": "7eeb5ab8604178bf6b55caf1e758c38d54952a77dd5b172c0c37491e81094031",
     "host_executable": "SETUPHOST.EXE (modern host test only)"
+  },
+  "mode320_passive_mapper": {
+    "status": "PASS_DIAGNOSTIC_NOT_UI_ACCEPTANCE",
+    "cases": 40,
+    "mapped_heights": [
+      10
+    ],
+    "ADDFONT_present": false,
+    "CG2_profile": "CG2HELV.FON",
+    "actual_Run_LOGFONT": "h=-5,w=0,weight700,pitch0,charset0,quality0,out0,clip0,Helv",
+    "actual_Run": "378wide; editright356>320; textheight10",
+    "excluded_hypotheses": [
+      "signed height alone",
+      "default versus Swiss pitch",
+      "quality/precision/charset mismatch"
+    ],
+    "next": "ExplicitAddCG2HELValreadyonimage; compareh=-5and+6 before/after; diagnostic only",
+    "owned_process": {
+      "complete": true,
+      "bound_seconds": 900,
+      "lease_acquired": true,
+      "owned_pid": 32468,
+      "emulator": {
+        "bytes": 40974314,
+        "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+      },
+      "rom_floppy_prompt_acknowledged": true,
+      "owned_stopped": true,
+      "lease_released": true,
+      "seconds": 339.01599999982864
+    }
   }
 }
