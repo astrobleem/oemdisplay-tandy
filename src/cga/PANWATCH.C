@@ -97,12 +97,13 @@ static void Tick(void)
     }
     ticks++;
     if(edge&&have_view&&ticks%160==0&&ticks<=640){
-        /* One edge per 40 s: right, left, top, bottom of the current view. */
+        /* One edge per 40 s, one pixel in: right, bottom, left, top. Each
+         * scrolls away from the previous corner so the move is possible. */
         switch(ticks/160){
         case 1:SetCursorPos(view_x+VIEW_W-2,view_y+50);break;
-        case 2:SetCursorPos(view_x+2,view_y+50);break;
-        case 3:SetCursorPos(view_x+80,view_y+1);break;
-        case 4:SetCursorPos(view_x+80,view_y+VIEW_H-2);break;
+        case 2:SetCursorPos(view_x+80,view_y+VIEW_H-2);break;
+        case 3:SetCursorPos(view_x+1,view_y+50);break;
+        case 4:SetCursorPos(view_x+80,view_y+1);break;
         }
         wsprintf(line,"EDGE test %d view=%d,%d\r\n",ticks/160,view_x,view_y);
         Log(line);
@@ -112,10 +113,30 @@ static void Tick(void)
         last_free=fr;wsprintf(line,"FREE %08lx\r\n",fr);Log(line);
     }
 }
+/* Async key states of the chord keys, logged only when they change. */
+static void KeyLog(void)
+{
+    static int vk[14]={VK_CONTROL,VK_MENU,VK_HOME,VK_END,VK_LEFT,VK_RIGHT,
+        VK_UP,VK_DOWN,VK_NUMPAD7,VK_NUMPAD1,VK_NUMPAD4,VK_NUMPAD6,
+        VK_NUMPAD8,VK_NUMPAD2};
+    static unsigned last;
+    unsigned mask=0;
+    int i;
+    for(i=0;i<14;i++)if(GetAsyncKeyState(vk[i])&0x8000)mask|=1u<<i;
+    if(mask!=last){
+        last=mask;
+        wsprintf(line,"KEYS %04x ctl=%d alt=%d home=%d end=%d left=%d right=%d up=%d down=%d pad=%d%d%d%d%d%d t=%lu\r\n",
+            mask,mask&1,(mask>>1)&1,(mask>>2)&1,(mask>>3)&1,(mask>>4)&1,
+            (mask>>5)&1,(mask>>6)&1,(mask>>7)&1,(mask>>8)&1,(mask>>9)&1,
+            (mask>>10)&1,(mask>>11)&1,(mask>>12)&1,(mask>>13)&1,
+            GetTickCount());
+        Log(line);
+    }
+}
 long FAR PASCAL WndProc(HWND w,WORD m,WORD wp,LONG lp)
 {
     switch(m){
-    case WM_TIMER:Tick();return 0L;
+    case WM_TIMER:if(wp==2)KeyLog();else Tick();return 0L;
     case WM_DESTROY:PostQuitMessage(0);return 0L;
     }
     return DefWindowProc(w,m,wp,lp);
@@ -132,7 +153,7 @@ int PASCAL WinMain(HANDLE inst,HANDLE prev,LPSTR cmd,int show)
     win=CreateWindow("PanWatch","PANWATCH",WS_POPUP,0,0,1,1,NULL,NULL,inst,NULL);
     if(!win)return 1;
     edge=GetProfileInt("PanWatch","Edge",0);
-    SetTimer(win,1,250,NULL);
+    SetTimer(win,1,250,NULL);SetTimer(win,2,55,NULL);
     wsprintf(line,"PANWATCH START screen=%dx%d\r\n",
         GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN));
     Log(line);

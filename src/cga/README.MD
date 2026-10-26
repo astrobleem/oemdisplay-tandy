@@ -227,3 +227,46 @@ Open command. It identifies the File menu by caption because a maximized MDI
 child inserts its system menu before File. This is developer instrumentation,
 excluded from consumer contents. It loads no fonts and changes no driver.
 See NATIVE.JSN and the local review QUALIFY.JSON for exact evidence scopes.
+
+## CGAPAN: 160x100 view of a 320x200 desktop
+
+`SETUP <windows> PAN` installs CGAPAN.DRV with mode 100's compact fonts and
+controls and starts PANCTL instead of CGACTL (the two never run together;
+PANCTL refuses to start beside XTPan, XYOverviewControl or CGASlide). Windows
+sees 320x200x16; the CRT shows a 160x100 window of it, same DEh/attribute
+encoding and timing as mode 100.
+
+- `CGAPAN.PY` patches the CGA100 stage (BUILDCGA/STAGECGA mode `160x100x16pan`;
+  CGA100.PY and the accepted binaries are unchanged). The four shadow-to-CRT
+  converters clip to the viewport; TCURSOR draws relative to it; Enable and
+  Disable reset it. Escape 5860h reads/sets the origin (x is 8-aligned,
+  clamped to 0..160 and 0..100), 5861h reports panning support.
+- `PANMODEL.PY` is the host model; `TESTCGA.PY` checks that dirty flushes plus
+  pans equal a full repaint and that only the four converters differ.
+- `PANCTL.C` is the single owner: Ctrl+Alt+arrows (40x25 steps), Home, End
+  (exposes the active window's bottom/right), edge dwell scrolling that carries
+  the pointer, and follow of the active window, focus control and pointer.
+  A key chord must be held across one 100 ms poll; a busy 4.77 MHz machine can
+  miss a very short tap.
+- Developer tools (never in the packet): `PANMET.C` (stepped probe),
+  `PANWATCH.C` (observer: origin, focus rects, edge self-test, key states,
+  free heap), `PANVIEW.PY` (decodes VRAM captures; host rendering, not scanout),
+  built with `BUILDPROB.PY --probe`; `BUILDPAN.PY` builds PANCTL.
+- Packet: `PACKCGA.PY prepare` takes `--build-pan` and `--owner-build`, then
+  BUILDSET and `finish` as for the other modes. The packet id covers all four
+  drivers; undo a previous packet before installing a different one.
+
+Measured in the IBM XT/CGA emulator (86Box, 4.77 MHz 8088, 640 KB; not
+physical hardware): DOS reports 579K (593,072 bytes) free after SETUP in every
+mode. `GetFreeSpace(0)` at Windows start: mode 100 346,336; 320 333,888; 640
+301,984; PAN 326,464 bytes (19,872 less than mode 100). With Paintbrush and
+PARTY.BMP open 195,072 remained at the lowest point; with Control Panel and
+its Desktop dialog 274,624. Nothing below 640 KB was tried. A full-view pan takes about
+0.55 s (20 pans in 11,040 ms); edge scrolling moves 8x5 pixels per step.
+
+Native checks passed: all four corners and the middle, clamping, drawing made
+off-screen and revealed later, copies and fills across the view edge, pointer
+hide/restore/carry, Paintbrush across the desktop, the 160x116 Control Panel
+Desktop dialog with every Tab stop brought into view, and 100/320/640 installs
+with their own helper. Not tested: real mouse input (the harness cannot inject
+it), physical hardware, less than 640 KB.
