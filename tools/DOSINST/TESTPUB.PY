@@ -181,8 +181,16 @@ class ExpandedPublisherTests(unittest.TestCase):
 
     def run_build(self, out, verify=False):
         self.receipt.write_text(json.dumps(self.qual), encoding="ascii")
-        with patch.object(M,"REPO",self.root),patch.object(M,"HERE",self.here),patch.object(M,"expanded_entries",return_value=self.entries):
+        # These synthetic receipts exercise the retained native container gate.
+        # The current Tandy-specific dispatch has its own anti-bypass check below.
+        with patch.object(M,"REPO",self.root),patch.object(M,"HERE",self.here),patch.object(M,"expanded_entries",return_value=self.entries),patch.object(M,"expanded_qualification",M.legacy_expanded_qualification):
             return M.build(out,COMMIT,verify)
+
+    def test_current_grabber_cannot_use_restamped_legacy_acceptance(self):
+        self.receipt.write_text(json.dumps(self.qual), encoding="ascii")
+        with patch.object(M,"REPO",self.root),patch.object(M,"HERE",self.here):
+            with self.assertRaisesRegex(ValueError,"Grabber native acceptance missing"):
+                M.expanded_qualification(self.entries,self.archive)
 
     def test_actual_expanded_tree_and_plain_executable(self):
         import struct

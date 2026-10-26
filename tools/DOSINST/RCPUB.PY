@@ -140,14 +140,19 @@ def expanded_entries():
     return entries
 
 def expanded_qualification(entries, archive):
-    q = json.loads((REPO / "docs/QUAL/DOSINST/EXPAND.JSN").read_bytes())
-    if q["archive"] != pub.identity(archive) and "WINXT/TANDYGR.GR2" in entries:
+    if "WINXT/TANDYGR.GR2" in entries:
         try:
             grab = importlib.machinery.SourceFileLoader(
                 "current_grabber_package", str(HERE / "TGRAB.PY")).load_module()
             return grab.qualify(entries, archive)
         except FileNotFoundError as exc:
             raise ValueError("Grabber native acceptance missing") from exc
+    return legacy_expanded_qualification(entries, archive)
+
+
+def legacy_expanded_qualification(entries, archive):
+    """Retained pre-grabber qualification; current Tandy packages cannot use it."""
+    q = json.loads((REPO / "docs/QUAL/DOSINST/EXPAND.JSN").read_bytes())
     if q["archive"] != pub.identity(archive):
         try:
             panui = importlib.machinery.SourceFileLoader(

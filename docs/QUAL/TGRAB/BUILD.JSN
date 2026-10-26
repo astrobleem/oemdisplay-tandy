@@ -87,7 +87,7 @@
   "host_checks": {
     "TESTDISP.PY": 30,
     "TESTGRAB.PY": 7,
-    "TESTPUB.PY": 15,
+    "TESTPUB.PY": 16,
     "TESTHPXY.PY": 8
   },
   "native_candidate": {
