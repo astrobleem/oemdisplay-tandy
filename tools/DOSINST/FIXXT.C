@@ -12,21 +12,25 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <direct.h>
+#include <process.h>
 #ifndef HOST_TEST
 #include <dos.h>
 #else
 #include <windows.h>
 #endif
 #include "SOUNDID.H"
+#include "HPXYID.H"
 #define PTH 200
 #define CAP 14000
 static char win[PTH],home[PTH],sys[PTH],savepath[PTH];
 static char oldini[CAP+1],newini[CAP+1];
 static unsigned char io[2048],other[2048];
 static int backup,verify,checking,fresh,last=-1;
+static int display_route,display_legacy;
+static int pinned_file(const char *,unsigned long,unsigned long);
 static unsigned long total,done;
 static const char *names[]={"TSHELL.EXE","TSINPUT.DLL","TSHELL.INI","XTTEST.COM","XTCLEAN.COM","TNDYK3.DRV","WHEEL.DRV","C216N6.DRV","C23216.DRV","XTS6SYS.FON","XTS6FIX.FON","XTCSYS.FON","XTCFIX.FON","XTCOEM.FON","CGA.GR2","SETUP.INF","TABOUT.EXE","MATRIX.EXE","MAZE.EXE","STARFLD.EXE","PINBALL.EXE","XPCHIME.EXE","TCHIME.EXE","TEXIT.EXE","RESERVE.COM","WINXT.BAT","CPSET.EXE","WINBRDG.EXE","SHOOK.COM","SETAUTO.EXE","PANCMP2.DRV","XTPAN.EXE","TP.EXE","HPXY.DRV","XYCTL.EXE","WXTWHL.EXE","SOUND.DRV"};
-static unsigned long sizes[]={72323UL,6281UL,999UL,39427UL,1071UL,7640UL,1820UL,54752UL,54768UL,4240UL,4240UL,4592UL,4208UL,4560UL,2104UL,49840UL,6479UL,14669UL,28013UL,17295UL,15487UL,5103UL,5071UL,9215UL,1512UL,332UL,36612UL,28656UL,1249UL,10976UL,55104UL,6415UL,12847UL,56704UL,29644UL,7222UL,SOUND_BYTES};
+static unsigned long sizes[]={72323UL,6281UL,999UL,39427UL,1071UL,7640UL,1820UL,54752UL,54768UL,4240UL,4240UL,4592UL,4208UL,4560UL,2104UL,49840UL,6479UL,14669UL,28013UL,17295UL,15487UL,5103UL,5071UL,9215UL,1512UL,332UL,36612UL,28656UL,1249UL,10976UL,55104UL,6415UL,12847UL,HPXY_BYTES,29644UL,7222UL,SOUND_BYTES};
 static int target[]={0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,1};
 #define COUNT 37
 #define KEEP_XRSYNC 4
@@ -54,10 +58,17 @@ static void writeall(int h,const unsigned char *b,unsigned n,const char *p){
 }
 static int create(const char *p){int h=open(p,O_WRONLY|O_CREAT|O_EXCL|O_BINARY,S_IREAD|S_IWRITE);if(h<0)stop("Cannot create new file",p);return h;}
 static int flush_handle(int h){
+#if !defined(HOST_TEST) && defined(_MSC_VER)
+ union REGS r;
+#endif
+ /* DOS 3.20 has checked close, but not the DOS 3.3 commit service. */
+ if(display_route&&display_legacy)return 0;
+#ifdef HOST_TEST
+ if(getenv("TINYXT_FAIL_FLUSH"))return 1;
+#endif
 #ifndef HOST_TEST
 #ifdef _MSC_VER
  /* C6 lacks Watcom's wrapper for this same DOS 3.3 commit service. */
- union REGS r;
  r.h.ah=0x68;r.x.bx=h;intdos(&r,&r);return r.x.cflag!=0;
 #else
  return _dos_commit(h);
@@ -85,7 +96,7 @@ static void begin(const char *dir,const char *leaf,char *n,char *o,char *j){char
  if(backup&&kind(p)){path(b,savepath,!stricmp(leaf,"SYSTEM.INI")?"SYSTEM.INI":leaf);copy_new(p,b,0);}
  sprintf(line,"TINYXT1 %s %d\r\n",leaf,kind(p)?1:0);h=create(j);writeall(h,(unsigned char *)line,(unsigned)strlen(line),j);closeout(h,j);
 }
-static void commit(const char *dir,const char *leaf,const char *n,const char *o,const char *j){char p[PTH];path(p,dir,leaf);if(kind(p)&&rename(p,o))stop("Cannot rename original",p);if(rename(n,p))stop("Cannot commit complete new file",p);if(kind(o)&&remove(o))stop("Cannot remove temporary original",o);if(remove(j))stop("Cannot finish journal",j);}
+static void commit(const char *dir,const char *leaf,const char *n,const char *o,const char *j){char p[PTH];path(p,dir,leaf);if(kind(p)&&rename(p,o))stop("Cannot rename original",p);if(rename(n,p))stop("Cannot commit complete new file",p);if(display_route&&!pinned_file(p,HPXY_BYTES,HPXY_CRC))stop("Committed HPXY readback failed; original retained",p);if(kind(o)&&remove(o))stop("Cannot remove temporary original",o);if(remove(j))stop("Cannot finish journal",j);}
 static void replace_file(const char *a,const char *dir,const char *leaf){char n[PTH],o[PTH],j[PTH];begin(dir,leaf,n,o,j);copy_new(a,n,1);commit(dir,leaf,n,o,j);}
 static void trim(char *s){char *p=s;size_t n;while(*p==' '||*p=='\t')p++;if(p!=s)memmove(s,p,strlen(p)+1);n=strlen(s);while(n&&isspace((unsigned char)s[n-1]))s[--n]=0;}
 static void loadini(void){char p[PTH];FILE *f;unsigned n;path(p,win,inifile);if(length(p)>CAP)stop("SYSTEM.INI exceeds bounded limit",p);f=fopen(p,"rb");if(!f)stop("Cannot read SYSTEM.INI",p);n=(unsigned)fread(oldini,1,CAP,f);if(ferror(f)||fclose(f))stop("INI read failed",p);oldini[n]=0;if(strlen(oldini)!=n)stop("INI contains binary data",p);}
@@ -184,7 +195,8 @@ static int current(const char *source,const char *dest){
  if(verify||!stricmp(leaf,"XTCLEAN.COM")||
     !stricmp(leaf,SOUND_FILE)||!stricmp(leaf,"TSHELL.EXE")||
     !stricmp(leaf,"TCHIME.EXE")||!stricmp(leaf,"XPCHIME.EXE")||
-    !stricmp(leaf,"TEXIT.EXE")||!stricmp(leaf,"TP.EXE"))
+    !stricmp(leaf,"TEXIT.EXE")||!stricmp(leaf,"TP.EXE")||
+     !stricmp(leaf,HPXY_FILE))
   return equal(source,dest);
  a=open(source,O_RDONLY|O_BINARY);b=open(dest,O_RDONLY|O_BINARY);
  if(a<0||b<0)stop("Cannot sample payload",dest);
@@ -215,9 +227,16 @@ static int profile(void){char v[300],p[PTH],*comment;FILE *f;
  stop("Choose a packaged display in Setup; repair retains saved profile",v);return 3;
 }
 static void not_windows(void){
+ unsigned major=3,minor=30;
 #ifndef HOST_TEST
- union REGS r;r.x.ax=0x1600;int86(0x2f,&r,&r);if(r.h.al&&r.h.al!=0x80)stop("Exit Windows fully to plain DOS","");r.x.ax=0x4680;int86(0x2f,&r,&r);if(!r.x.ax)stop("Exit Windows real mode fully to DOS","");r.x.ax=0x3000;int86(0x21,&r,&r);if(r.h.al<3||(r.h.al==3&&r.h.ah<30))stop("DOS 3.3 or later required","");
+ union REGS r;r.x.ax=0x1600;int86(0x2f,&r,&r);if(r.h.al&&r.h.al!=0x80)stop("Exit Windows fully to plain DOS","");r.x.ax=0x4680;int86(0x2f,&r,&r);if(!r.x.ax)stop("Exit Windows real mode fully to DOS","");r.x.ax=0x3000;int86(0x21,&r,&r);major=r.h.al;minor=r.h.ah;
+#else
+ const char *version=getenv("TINYXT_DOS_VERSION");
+ if(version){major=(unsigned)atoi(version)/100;minor=(unsigned)atoi(version)%100;}
 #endif
+ if(major<3||(major==3&&minor<(display_route?20:30)))
+  stop(display_route?"DOS 3.20 or later required":"DOS 3.3 or later required","");
+ display_legacy=display_route&&major==3&&minor<30;
 }
 static void marker(char *out){sprintf(out,"Windows XT simple R1\r\n%s\r\n%s\r\n",win,home);}
 static int ready(void){char p[PTH],want[2*PTH+50],got[2*PTH+50];FILE *f;unsigned n;path(p,home,"SIMPLE.OK");if(kind(p)!=1)return 0;marker(want);f=fopen(p,"rb");if(!f)return 0;n=(unsigned)fread(got,1,sizeof(got)-1,f);if(ferror(f)||fclose(f))return 0;got[n]=0;return !strcmp(want,got);}
@@ -242,6 +261,7 @@ static void checkfiles(int mode){char p[PTH],a[PTH];unsigned i;
   if(mode==KEEP_XRSYNC&&display_payload(names[i])){needs[i]=0;continue;}
   if((!stricmp(names[i],"C216N6.DRV")&&mode!=0)||(!stricmp(names[i],"C23216.DRV")&&mode!=1)||(!stricmp(names[i],"PANCMP2.DRV")&&mode!=2)||(!stricmp(names[i],"XTPAN.EXE")&&mode!=2)||(!stricmp(names[i],"HPXY.DRV")&&mode!=3)||(!stricmp(names[i],"XYCTL.EXE")&&mode!=3)||((!stricmp(names[i],"XTS6SYS.FON")||!stricmp(names[i],"XTS6FIX.FON"))&&mode!=0)||((!stricmp(names[i],"XTCSYS.FON")||!stricmp(names[i],"XTCFIX.FON"))&&mode==0)){needs[i]=0;continue;}
   path(p,media,names[i]);if((unsigned long)length(p)!=sizes[i])stop("Repair source size differs",p);
+   if(!stricmp(names[i],HPXY_FILE)&&!pinned_file(p,HPXY_BYTES,HPXY_CRC))stop("HPXY source identity differs",p);
   path(a,target[i]==2?home:target[i]?sys:win,names[i]);regular_or_missing(a);
   if(i==2&&kind(a)==1){if(length(a)>CAP)stop("Existing shell settings too large",a);needs[i]=0;continue;}
   needs[i]=!current(p,a);if(needs[i])total+=sizes[i];
@@ -307,10 +327,120 @@ static void panini(int mode){
  if(checking)stop("Owned panning startup token/BorderWidth needs repair","");
  begin(win,"WIN.INI",n,o,j);h=create(n);writeall(h,(unsigned char*)oldini,(unsigned)strlen(oldini),n);closeout(h,n);commit(win,"WIN.INI",n,o,j);puts("WIN.INI optional panning entries updated; other startup commands preserved.");inifile="SYSTEM.INI";
 }
+/* The ordinary Other route owns only HPXY.DRV after Windows Setup returns.
+ * No profile, sound, keyboard, shell or INI repair is part of this route. */
+static void display_absolute(char *out,const char *input){
+ unsigned n;
+#ifndef HOST_TEST
+ if(strlen(input)>63)stop("DOS directory path exceeds 63 characters",input);
+#endif
+ if(!_fullpath(out,input,PTH))stop("Cannot resolve directory",input);
+ strupr(out);n=(unsigned)strlen(out);
+ while(n>3&&out[n-1]=='\\')out[--n]=0;
+ if(n<3||out[1]!=':'||out[2]!='\\'||kind(out)!=2)
+  stop("An existing absolute DOS directory is required",out);
+}
+static int display_chdir(const char *dir){
+#ifndef HOST_TEST
+ unsigned count,drive,want=(unsigned)(toupper(dir[0])-'A'+1);
+ _dos_setdrive(want,&count);_dos_getdrive(&drive);
+ if(drive!=want)return -1;
+#endif
+ return chdir(dir);
+}
+static int display_pending(void){
+ char j[PTH],n[PTH],o[PTH],leaf[20],extra;FILE *f;int had,parsed,closed;
+ path(j,sys,"SIMPLE.JRN");path(n,sys,"SIMPLE.NEW");path(o,sys,"SIMPLE.OLD");
+ if(!kind(j)){
+  if(kind(n)||kind(o))stop("Unowned temporary file; HPXY was not replaced",sys);
+  return 0;
+ }
+ if(kind(j)!=1)stop("HPXY journal is not a regular file",j);
+ f=fopen(j,"rt");if(!f)stop("Cannot inspect pending replacement",j);
+ parsed=fscanf(f,"TINYXT1 %19s %d %c",leaf,&had,&extra);closed=fclose(f);
+ if(parsed!=2||closed||stricmp(leaf,HPXY_FILE)||(had!=0&&had!=1))
+  stop("Pending replacement is outside the DISPLAY route",j);
+ return 1;
+}
+static int display_selected(void){
+ char value[300],*comment;
+ inifile="SYSTEM.INI";loadini();
+ if(inivalue("display.drv",value)!=1)return 0;
+ comment=strchr(value,';');if(comment)*comment=0;trim(value);
+ return !stricmp(value,HPXY_FILE);
+}
+static int display_install(const char *requested){
+ char source[PTH],saved[PTH],setup[PTH],input[PTH],dest[PTH],rootdrv[PTH];
+ char n[PTH],o[PTH],j[PTH],answer[80];int status,pending;
+ display_route=1;not_windows();
+ if(!getcwd(saved,PTH))stop("Cannot save source directory","");
+ display_absolute(source,saved);display_absolute(win,requested);path(sys,win,"SYSTEM");
+ if(kind(sys)!=2)stop("Windows SYSTEM directory is missing",sys);
+ path(setup,win,"SETUP.EXE");if(kind(setup)!=1)stop("Windows Setup is missing",setup);
+ path(input,source,HPXY_FILE);
+ if(!pinned_file(input,HPXY_BYTES,HPXY_CRC))stop("HPXY source is missing or damaged",input);
+ if(display_chdir(win)){
+  if(display_chdir(source))stop("Cannot restore source directory",source);
+  stop("Cannot enter Windows directory",win);
+ }
+#ifdef HOST_TEST
+ if(getenv("TINYXT_DISPLAY_MISSING_SETUP")){
+  char absent[PTH];path(absent,win,"NOSETUP.EXE");
+  status=spawnl(P_WAIT,absent,absent,NULL);
+ }else
+#endif
+ status=spawnl(P_WAIT,setup,setup,NULL);
+ if(display_chdir(source))stop("Cannot restore source directory",source);
+ printf("Windows Setup returned status %d.\n",status);
+ if(status<0)stop("Windows Setup could not be launched; no HPXY replacement",setup);
+ if(!display_selected()){
+  puts("Windows Setup left another display selected; no HPXY replacement.");return 0;
+ }
+ path(rootdrv,win,HPXY_FILE);
+ if(kind(rootdrv))stop("A root HPXY.DRV shadows the supported SYSTEM target",rootdrv);
+ path(dest,sys,HPXY_FILE);pending=display_pending();
+ if(!pending&&pinned_file(dest,HPXY_BYTES,HPXY_CRC)){
+  puts("The selected HPXY driver already matches; no replacement needed.");return 0;
+ }
+ if(!pinned_file(input,HPXY_BYTES,HPXY_CRC))stop("HPXY source changed during Setup",input);
+ puts("Windows Setup left HPXY selected, but its installed bytes need updating.");
+ puts("This also applies if you canceled Setup with HPXY already selected.");
+ printf("Replace only SYSTEM\\HPXY.DRV from this source? [y/N] ");
+ if(!fgets(answer,sizeof(answer),stdin)){
+  puts("No replacement requested.");return 0;
+ }
+ trim(answer);
+ if(stricmp(answer,"Y")){puts("No replacement requested.");return 0;}
+ if(!display_selected())stop("Display selection changed; no HPXY replacement","");
+ if(kind(rootdrv))stop("A root HPXY.DRV shadows the supported SYSTEM target",rootdrv);
+ if(!pinned_file(input,HPXY_BYTES,HPXY_CRC))stop("HPXY source changed before replacement",input);
+ pending=display_pending();
+ if(pending){
+  path(o,sys,"SIMPLE.OLD");
+  if(kind(o)&&kind(dest)&&!pinned_file(dest,HPXY_BYTES,HPXY_CRC))
+   stop("Pending HPXY target is ambiguous; original retained",o);
+  recover(sys);
+ }
+ if(pinned_file(dest,HPXY_BYTES,HPXY_CRC)){
+  puts("The selected HPXY driver matches; pending HPXY cleanup completed.");return 0;
+ }
+ regular_or_missing(dest);total=HPXY_BYTES;done=0;last=-1;
+ begin(sys,HPXY_FILE,n,o,j);copy_new(input,n,1);
+#ifdef HOST_TEST
+ if(getenv("TINYXT_DISPLAY_CORRUPT_STAGE")){
+  FILE *f=fopen(n,"r+b");if(!f||fputc(0x55,f)==EOF||fclose(f))stop("Host corruption injection failed",n);
+ }
+#endif
+ if(!pinned_file(n,HPXY_BYTES,HPXY_CRC))stop("Staged HPXY readback failed; installed driver unchanged",n);
+ commit(sys,HPXY_FILE,n,o,j);
+ puts("\nHPXY updated. Other installed files and INI settings were not repaired.");return 0;
+}
+
 int main(int argc,char **argv){char p[PTH],a[PTH],v[300],n[PTH],o[PTH],j[PTH],m[2*PTH+50];unsigned i;int mode,h,rep;
  setbuf(stdout,NULL);
+ if(argc==3&&!stricmp(argv[1],"DISPLAY"))return display_install(argv[2]);
  if(argc==2&&!stricmp(argv[1],"/FAIL"))return 2;
- if(argc<4||argc>7){puts("FIXXT INSTALL|REPAIR|CHECK C:\\WINDOWS C:\\WINXT [/VERIFY] [/FRESH]");return 2;}
+ if(argc<4||argc>7){puts("FIXXT INSTALL|REPAIR|CHECK C:\\WINDOWS C:\\WINXT [/VERIFY] [/FRESH]\nFIXXT DISPLAY C:\\WINDOWS");return 2;}
  checking=!stricmp(argv[1],"CHECK");rep=!stricmp(argv[1],"REPAIR");
  if(!checking&&!rep&&stricmp(argv[1],"INSTALL"))return 2;
  if(strlen(argv[2])>=PTH-30||strlen(argv[3])>=PTH-30)stop("Path too long","");strcpy(win,argv[2]);strcpy(home,argv[3]);strupr(win);strupr(home);

@@ -4,7 +4,7 @@
   "compiler": "Open Watcom 16-bit DOS; -bt=dos -0 -ml -os",
   "binary": {
     "bytes": 83142,
-    "sha256": "dd2e7bd658b0c994881477c1be4a83ce7450c093e0b6b2ce0d2f2b0811556ed7"
+    "sha256": "f1e7f39f29f1e7dfb90f94b8d5902639784dbb9ae4c8553c81bd7c2073130d13"
   },
   "sources": {
     "SETUP.C": {
@@ -49,11 +49,11 @@
     },
     "SETPINS.H": {
       "bytes": 5330,
-      "sha256": "11a6164bf2f39ab4a99f0c36bba827acea79e1c056b3fbbc72d5b9b8ca25b17e"
+      "sha256": "55092ffe03bb66951951745087c176f5723ad92695681343aafaa78834ba52d6"
     },
     "SETFILES.H": {
       "bytes": 19726,
-      "sha256": "f9a3fbde4981fd1aebe13347424bdb545fc193fef5b3467717e18af177248fd8"
+      "sha256": "0cd6fd6118504ca77bef07983141a2ce982638e309fd888640e7cd72855ba821"
     },
     "MAKESET.PY": {
       "bytes": 1774,
@@ -68,8 +68,20 @@
       "sha256": "7690592160e58565081ebe8e2c1ae813791d720baaa51265578898a68e400512"
     },
     "PANUI.PY": {
-      "bytes": 6620,
-      "sha256": "98ae498f734d6f325be73c1480971d8a1d5a67ae9c25b1b2e05e398bd08ebe73"
+      "bytes": 6991,
+      "sha256": "6338c2d5822b341cebf8db64c521972c2c276ed44e5f719d6dd3123c8e8dec24"
+    },
+    "HPXY.PY": {
+      "bytes": 6449,
+      "sha256": "1be379ea36a52f92fb65ad665c17ea2ee7228e23535df135c4bcc97fbb496453"
+    },
+    "HPXY.JSN": {
+      "bytes": 1628,
+      "sha256": "52afa09eec04e411e827ca23dd1a63610262acc5be8ccbbb90747b341bd2ba31"
+    },
+    "HPXYID.H": {
+      "bytes": 230,
+      "sha256": "76e620ec77e12972b7ac40e4560a68b37b1c9f8f58b9d040860c56634bd2b96c"
     }
   }
 }

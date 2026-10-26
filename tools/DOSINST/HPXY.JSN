@@ -1,0 +1,50 @@
+{
+  "status": "PASS_FOCUSED_WINDOWS_EMULATOR",
+  "physical_hardware": false,
+  "source_base": "8d48aa04560a4730c9ee3d946bed865ca9be0c43",
+  "sources": {
+    "experiments/XYPAN/XYPAN.ASM": {
+      "bytes": 6302,
+      "sha256": "32444a631bb79105b13c1ef621223dce8cfb463ae39afc81e1a918b126066089"
+    },
+    "experiments/XYPAN/XYCOPY.ASM": {
+      "bytes": 5167,
+      "sha256": "5600dde700ee23ebf9491546b17ec2d9b25fe5f0bc0cf03b977069c5369769d3"
+    },
+    "experiments/XYPAN/XYPATCH.PY": {
+      "bytes": 5337,
+      "sha256": "4a0c7fe1d95940bb8525986b2ec9fcab91c0733c05d111af3b82ea36ca9ae67d"
+    },
+    "experiments/XYRRECT/XRBUILD.PY": {
+      "bytes": 3878,
+      "sha256": "962972909d7b2a09b6cc6d4d75611378a29ecc4662b58ff022ebf6efd9644b37"
+    }
+  },
+  "driver": {
+    "bytes": 61856,
+    "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+  },
+  "evidence": {
+    "docs/QUAL/HPXY/BUILD.JSN": {
+      "bytes": 748,
+      "sha256": "438dd4ccca1596e2f9b8ba7a5563ac6c6b7849ae02a2ca3ead3b500bf1767e51"
+    },
+    "docs/QUAL/HPXY/WINDOWS.ZIP": {
+      "bytes": 203381,
+      "sha256": "55509bb1b0cedeb2d5eb7537b8db2fc5b0e20c67413ebbe221a000c0b3f2ada0"
+    }
+  },
+  "project_budget": {
+    "gross_NE_bytes": 126883,
+    "ceiling": 127531,
+    "margin": 648,
+    "interpretation": "Sum of NE segment minimum allocations; not free conventional RAM"
+  },
+  "measured_windows_memory": {
+    "additional_allocated_bytes": 1472,
+    "free_warm_bytes": 154592,
+    "largest_free_block": 149280
+  },
+  "verified_frames": 152,
+  "compared_packed_bytes": 4864000
+}

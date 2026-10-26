@@ -2,8 +2,8 @@
   "target": "DOS3+, MSC6 /G0 /AS, LINK4, 8086, 8KB stack",
   "sources": {
     "FIXXT.C": {
-      "bytes": 24478,
-      "sha256": "3c1338c38dc433282b4366bcdb5f9e4f235530abb84102e007c90475810e26fb"
+      "bytes": 30644,
+      "sha256": "84ff9425ae0fbe808d3a92989e7d74f3501becf1323c27655d8f6f3bbbcc245a"
     },
     "FIXXT.RSP": {
       "bytes": 55,
@@ -16,10 +16,14 @@
     "SOUNDID.H": {
       "bytes": 201,
       "sha256": "c7645359276c478e8609881559a4d252e9ee966161261b255f9b389482610310"
+    },
+    "HPXYID.H": {
+      "bytes": 230,
+      "sha256": "76e620ec77e12972b7ac40e4560a68b37b1c9f8f58b9d040860c56634bd2b96c"
     }
   },
   "runtime": {
-    "bytes": 33001,
-    "sha256": "f2235d3df2c43c5dcc079ac3bd61373f856c510905b876cac146ef3653242f06"
+    "bytes": 38645,
+    "sha256": "7e05d43dfd5049f1f30d25733a76a7cd8c605a72fe16c75e3b972acf948842c2"
   }
 }

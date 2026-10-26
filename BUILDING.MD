@@ -46,6 +46,7 @@ Choose the checks matching your changes:
 | --- | --- |
 | Native core package and preparation boundaries | `python -B tools/DOSINST/TESTPUB.PY`, `python -B tools/XR1PACK/TESTPREP.PY`, `python -B tools/XR1PACK/TESTPUB.PY`; [.github/workflows/xr1pack.yml](.github/workflows/xr1pack.yml) |
 | Native CRC implementation | `python -B tools/DOSINST/TESTCRC.PY` compiles a host C check; it uses the mandatory managed GCC launcher on Windows. |
+| Current HPXY acceptance bindings | `python -B tools/DOSINST/TESTHPXY.PY`; on Windows, `TESTDISP.PY` in the same directory exercises the actual C transaction through the managed GCC launcher. |
 | Current catalog and pinned public products | `tools/CURRENT/CHECK.PY` and `BUNDLE.PY` above; [.github/workflows/current.yml](.github/workflows/current.yml) |
 | External legacy input adapter | `python -B tools/BUILDDEPS/TESTDEPS.PY` |
 | Fixed-profile disk | `python -B tools/FLASHDISK/TESTWAVE.PY`, `TESTFAT.PY`, `TESTPKG.PY`; [.github/workflows/release.yml](.github/workflows/release.yml) |
@@ -132,6 +133,18 @@ also has a `finisher` target, but its Open Watcom output is not the accepted
 C6 binary. Current expanded SETUP source/binary pins are in `SETNAT.JSN`;
 full-install evidence is `docs/QUAL/DOSINST/EXPAND.JSN`, and movable ordinary
 OEM evidence is `tools/XROEM/NATIVE.JSN`. Preserve guards and qualify changed bytes.
+
+The current HPXY runtime is `tools/DOSINST/BIN/HPXY.DRV`, bound to its
+source/build and focused Windows evidence in `tools/DOSINST/HPXY.JSN`.
+`docs/QUAL/HPXY/PACKAGE.JSN` qualifies the normal expanded package delta;
+older expanded/OEM/panning receipts retain their original byte identities.
+The normal producer overlays this qualified HPXY and regenerates native
+Setup's file/CRC pins. `FIXXT` also includes `HPXYID.H`, so both full setup
+and DISPLAY's optional same-filename refresh use the current driver bytes.
+The 127,531-byte HPXY project budget sums NE segment minimum allocations;
+its remaining 648 bytes are not free DOS conventional RAM. See the focused
+integration report in `experiments/XYSTRIP/INTEGRATION.MD` for actual Windows
+heap measurements and the limits of emulator timing.
 
 ## Fixed profiles, original fonts and historical sources
 

@@ -175,6 +175,8 @@ class ExpandedPublisherTests(unittest.TestCase):
         oem = json.loads((M.HERE.parent / "XROEM/NATIVE.JSN").read_bytes())
         oem["packet"] = self.qual["archive"]
         oem["members"] = self.qual["files"]
+        oem["sources"] = {n: M.pub.identity(self.entries['WINXT/' + n])
+                          for n in oem["sources"]}
         (oem_root / "NATIVE.JSN").write_text(json.dumps(oem))
 
     def run_build(self, out, verify=False):

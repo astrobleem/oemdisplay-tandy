@@ -205,6 +205,13 @@ tools/CPPACK/** -text
 .github/workflows/colorplus.yml -text
 docs/pcp/OUTPUT/PROFILE.CFG whitespace=cr-at-eol,-blank-at-eof
 
+# Qualified HPXY sources and host/native acceptance retain exact CRLF bytes.
+experiments/XYPAN/** -text
+experiments/XYRRECT/** -text
+experiments/XYSTRIP/** -text
+# Unified patches retain the space prefix on empty context lines.
+experiments/XYSTRIP/PROTOTYPE.PATCH whitespace=cr-at-eol,-blank-at-eol
+
 # Qualified CGA packet and evidence retain exact bytes.
 tools/CGAPACK/** -text
 downloads/experimental/CGA/** -text

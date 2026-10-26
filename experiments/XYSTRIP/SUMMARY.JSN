@@ -1,0 +1,1013 @@
+{
+  "baseline_commit": "8d48aa04560a4730c9ee3d946bed865ca9be0c43",
+  "host": {
+    "cases": 96196,
+    "compared_bytes": 3078272000,
+    "bank_end_groups": 29612,
+    "offscreen_prewrite_bytes": 60383840,
+    "blanked_bytes": 273708896,
+    "result": "PASS",
+    "scope": "host content/address model only"
+  },
+  "native": {
+    "base": {
+      "status": "PASS",
+      "case_count": 20,
+      "pans": 340,
+      "compared_frame_bytes": 640000,
+      "cases": [
+        {
+          "dx": 8,
+          "dy": 0,
+          "bytes": 800,
+          "mean": {
+            "total_ms": 16.368741574368677,
+            "before_blank_ms": 1.4364461207812067,
+            "commit_or_full_ms": 0.29096698372689994,
+            "wait_ms": 14.620721184330606,
+            "blank_ms": 14.923421502880789
+          },
+          "min_blank_ms": 9.843429821387913,
+          "max_blank_ms": 15.255011460953835
+        },
+        {
+          "dx": 16,
+          "dy": 0,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.84325127421303,
+            "before_blank_ms": 0.009662746325054622,
+            "commit_or_full_ms": 46.91302780594938,
+            "wait_ms": 3.900347834217838,
+            "blank_ms": 50.825010375538206
+          },
+          "min_blank_ms": 50.039320639913726,
+          "max_blank_ms": 63.38598900139542
+        },
+        {
+          "dx": 24,
+          "dy": 0,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.836152113647685,
+            "before_blank_ms": 0.009761345777351098,
+            "commit_or_full_ms": 46.907210438263895,
+            "wait_ms": 3.8987209432549474,
+            "blank_ms": 50.81761541661598
+          },
+          "min_blank_ms": 50.039320639913726,
+          "max_blank_ms": 63.26195089040646
+        },
+        {
+          "dx": 32,
+          "dy": 0,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.83082774322368,
+            "before_blank_ms": 0.009909244955795812,
+            "commit_or_full_ms": 46.91273200759249,
+            "wait_ms": 3.887924303228482,
+            "blank_ms": 50.81219244673966
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.171436593198294
+        },
+        {
+          "dx": 0,
+          "dy": 4,
+          "bytes": 640,
+          "mean": {
+            "total_ms": 16.469953912151006,
+            "before_blank_ms": 0.9338847124260696,
+            "commit_or_full_ms": 0.07128740401035195,
+            "wait_ms": 15.444273109636924,
+            "blank_ms": 15.5272445487444
+          },
+          "min_blank_ms": 12.144001542095433,
+          "max_blank_ms": 15.740268665430941
+        },
+        {
+          "dx": 0,
+          "dy": 8,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.8133756401672,
+            "before_blank_ms": 0.010057144134240524,
+            "commit_or_full_ms": 46.9123376097833,
+            "wait_ms": 3.8704722001720056,
+            "blank_ms": 50.79449384505244
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 62.874750841238196
+        },
+        {
+          "dx": 0,
+          "dy": 12,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.82851065609471,
+            "before_blank_ms": 0.010057144134240524,
+            "commit_or_full_ms": 46.90799923388226,
+            "wait_ms": 3.8900934911790066,
+            "blank_ms": 50.80972746043225
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.13456039803941
+        },
+        {
+          "dx": 0,
+          "dy": 16,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.84325127421304,
+            "before_blank_ms": 0.010007844408092286,
+            "commit_or_full_ms": 46.91228831005714,
+            "wait_ms": 3.900643632574729,
+            "blank_ms": 50.824566678002874
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.3851509060509
+        },
+        {
+          "dx": 8,
+          "dy": 4,
+          "bytes": 1440,
+          "mean": {
+            "total_ms": 16.477546069977834,
+            "before_blank_ms": 2.3589425964670343,
+            "commit_or_full_ms": 0.3536269356613101,
+            "wait_ms": 13.744418552045678,
+            "blank_ms": 14.109778822530268
+          },
+          "min_blank_ms": 10.845791853433886,
+          "max_blank_ms": 14.315506579746867
+        },
+        {
+          "dx": 16,
+          "dy": 4,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.828116258285526,
+            "before_blank_ms": 0.009662746325054622,
+            "commit_or_full_ms": 46.912534808687894,
+            "wait_ms": 3.8856072160995163,
+            "blank_ms": 50.8097767601584
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.12953182597229
+        },
+        {
+          "dx": 8,
+          "dy": 8,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.81362213879794,
+            "before_blank_ms": 0.010007844408092286,
+            "commit_or_full_ms": 46.90735833744233,
+            "wait_ms": 3.8758458703221654,
+            "blank_ms": 50.79488824286163
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 62.87977941330532
+        },
+        {
+          "dx": 16,
+          "dy": 8,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.81332634044105,
+            "before_blank_ms": 0.009761345777351096,
+            "commit_or_full_ms": 46.9124362092356,
+            "wait_ms": 3.8706693990766,
+            "blank_ms": 50.79483894313549
+          },
+          "min_blank_ms": 50.039320639913726,
+          "max_blank_ms": 62.874750841238196
+        },
+        {
+          "dx": 8,
+          "dy": 12,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.82836275691626,
+            "before_blank_ms": 0.010007844408092286,
+            "commit_or_full_ms": 46.90785133470382,
+            "wait_ms": 3.8900441914528576,
+            "blank_ms": 50.80962886097995
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.13456039803941
+        },
+        {
+          "dx": 32,
+          "dy": 16,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.84320197448688,
+            "before_blank_ms": 0.009564146872758146,
+            "commit_or_full_ms": 46.912041811426406,
+            "wait_ms": 3.901284529014656,
+            "blank_ms": 50.824961075812055
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.3851509060509
+        },
+        {
+          "dx": 48,
+          "dy": 0,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.836152113647685,
+            "before_blank_ms": 0.00971204605120286,
+            "commit_or_full_ms": 46.90716113853774,
+            "wait_ms": 3.898868842433392,
+            "blank_ms": 50.817664716342115
+          },
+          "min_blank_ms": 50.039320639913726,
+          "max_blank_ms": 63.2636270810955
+        },
+        {
+          "dx": 64,
+          "dy": 0,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.82821485773782,
+            "before_blank_ms": 0.009810645503499337,
+            "commit_or_full_ms": 46.91287990677093,
+            "wait_ms": 3.88521281829033,
+            "blank_ms": 50.809579561253805
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.12953182597229
+        },
+        {
+          "dx": 32,
+          "dy": 8,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.82851065609471,
+            "before_blank_ms": 0.009613446598906384,
+            "commit_or_full_ms": 46.90765413579921,
+            "wait_ms": 3.8908822867973782,
+            "blank_ms": 50.81017115796758
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.13456039803941
+        },
+        {
+          "dx": 48,
+          "dy": 16,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.81332634044105,
+            "before_blank_ms": 0.009613446598906382,
+            "commit_or_full_ms": 46.91194321197411,
+            "wait_ms": 3.871359595242675,
+            "blank_ms": 50.79498684231392
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 62.878941317960795
+        },
+        {
+          "dx": 0,
+          "dy": 32,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.82865855527316,
+            "before_blank_ms": 0.010057144134240524,
+            "commit_or_full_ms": 46.909034528131365,
+            "wait_ms": 3.88915679638219,
+            "blank_ms": 50.80982605988454
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.13456039803941
+        },
+        {
+          "dx": 64,
+          "dy": 32,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.85084343203986,
+            "before_blank_ms": 0.009613446598906382,
+            "commit_or_full_ms": 46.91145021471262,
+            "wait_ms": 3.909320384376819,
+            "blank_ms": 50.83245463418658
+          },
+          "min_blank_ms": 50.039320639913726,
+          "max_blank_ms": 63.51505568445151
+        }
+      ],
+      "fault_recovery": "PASS",
+      "scope": "Standalone DOSBox-X 8086_prefetch fixed 20000; not 7.16MHz 8088, Windows, real cursor or hardware timing",
+      "caveat": "PIT probes add overhead; blank interval measured from entry probes immediately around mode-control routines"
+    },
+    "2816": {
+      "status": "PASS",
+      "case_count": 20,
+      "pans": 340,
+      "compared_frame_bytes": 640000,
+      "cases": [
+        {
+          "dx": 8,
+          "dy": 0,
+          "bytes": 800,
+          "mean": {
+            "total_ms": 16.00865637458195,
+            "before_blank_ms": 1.4373828155780237,
+            "commit_or_full_ms": 0.29101628345304814,
+            "wait_ms": 14.259847188925507,
+            "blank_ms": 14.562596807201833
+          },
+          "min_blank_ms": 3.798248101364838,
+          "max_blank_ms": 15.236573363374394
+        },
+        {
+          "dx": 16,
+          "dy": 0,
+          "bytes": 1600,
+          "mean": {
+            "total_ms": 16.454720296771207,
+            "before_blank_ms": 2.5830098518107745,
+            "commit_or_full_ms": 0.3614655921188801,
+            "wait_ms": 13.489884065942327,
+            "blank_ms": 13.862935093706044
+          },
+          "min_blank_ms": 10.234820347278774,
+          "max_blank_ms": 14.090897027415494
+        },
+        {
+          "dx": 24,
+          "dy": 0,
+          "bytes": 2400,
+          "mean": {
+            "total_ms": 16.492681085905346,
+            "before_blank_ms": 3.7183332452785436,
+            "commit_or_full_ms": 0.4315205029755259,
+            "wait_ms": 12.32231865157361,
+            "blank_ms": 12.765523189646263
+          },
+          "min_blank_ms": 9.743696475390028,
+          "max_blank_ms": 12.955277835590836
+        },
+        {
+          "dx": 32,
+          "dy": 0,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 49.88787188118633,
+            "before_blank_ms": 0.010550141395722901,
+            "commit_or_full_ms": 46.91278130731864,
+            "wait_ms": 2.9442782450250613,
+            "blank_ms": 49.86864498798853
+          },
+          "min_blank_ms": 47.142025033907935,
+          "max_blank_ms": 50.039320639913726
+        },
+        {
+          "dx": 0,
+          "dy": 4,
+          "bytes": 640,
+          "mean": {
+            "total_ms": 16.48878640753964,
+            "before_blank_ms": 0.9978264572403345,
+            "commit_or_full_ms": null,
+            "wait_ms": 15.470549863673932,
+            "blank_ms": 0.0
+          },
+          "min_blank_ms": 0.0,
+          "max_blank_ms": 0.0
+        },
+        {
+          "dx": 0,
+          "dy": 8,
+          "bytes": 1280,
+          "mean": {
+            "total_ms": 16.473454192707532,
+            "before_blank_ms": 1.8529302072815206,
+            "commit_or_full_ms": 0.13143306991120213,
+            "wait_ms": 14.468730128615592,
+            "blank_ms": 14.611797933897774
+          },
+          "min_blank_ms": 11.282439527928828,
+          "max_blank_ms": 14.820878072492453
+        },
+        {
+          "dx": 0,
+          "dy": 12,
+          "bytes": 1920,
+          "mean": {
+            "total_ms": 16.470003211877156,
+            "before_blank_ms": 2.77113760679245,
+            "commit_or_full_ms": 0.19172663499049702,
+            "wait_ms": 13.48672888346884,
+            "blank_ms": 13.690188853282617
+          },
+          "min_blank_ms": 10.306058451562977,
+          "max_blank_ms": 13.903163670243005
+        },
+        {
+          "dx": 0,
+          "dy": 16,
+          "bytes": 2560,
+          "mean": {
+            "total_ms": 16.4548188962235,
+            "before_blank_ms": 3.6895915049341226,
+            "commit_or_full_ms": 0.25197090034364367,
+            "wait_ms": 12.492846404320364,
+            "blank_ms": 12.756550639487287
+          },
+          "min_blank_ms": 9.129372587856835,
+          "max_blank_ms": 12.984611172649037
+        },
+        {
+          "dx": 8,
+          "dy": 4,
+          "bytes": 1424,
+          "mean": {
+            "total_ms": 16.492483887000756,
+            "before_blank_ms": 2.331581248454761,
+            "commit_or_full_ms": 0.3479574671542629,
+            "wait_ms": 13.792584384492507,
+            "blank_ms": 14.15227518647005
+          },
+          "min_blank_ms": 11.12822998453714,
+          "max_blank_ms": 14.342325630771509
+        },
+        {
+          "dx": 16,
+          "dy": 4,
+          "bytes": 2208,
+          "mean": {
+            "total_ms": 16.477102372442502,
+            "before_blank_ms": 3.454678309837768,
+            "commit_or_full_ms": 0.417026383487944,
+            "wait_ms": 12.585036892217566,
+            "blank_ms": 13.013796610528795
+          },
+          "min_blank_ms": 9.744534570734547,
+          "max_blank_ms": 13.219277869114649
+        },
+        {
+          "dx": 8,
+          "dy": 8,
+          "bytes": 2048,
+          "mean": {
+            "total_ms": 16.470151111055603,
+            "before_blank_ms": 3.2216878040611956,
+            "commit_or_full_ms": 0.40297596153569626,
+            "wait_ms": 12.824929359654897,
+            "blank_ms": 13.239540056561578
+          },
+          "min_blank_ms": 9.855163156211194,
+          "max_blank_ms": 13.452268374891222
+        },
+        {
+          "dx": 16,
+          "dy": 8,
+          "bytes": 2816,
+          "mean": {
+            "total_ms": 16.455114694580388,
+            "before_blank_ms": 4.321761893332975,
+            "commit_or_full_ms": 0.4701714882757446,
+            "wait_ms": 11.642623327167854,
+            "blank_ms": 12.124478850540733
+          },
+          "min_blank_ms": 8.501639174811324,
+          "max_blank_ms": 12.352687282880924
+        },
+        {
+          "dx": 8,
+          "dy": 12,
+          "bytes": 2672,
+          "mean": {
+            "total_ms": 16.49627996591417,
+            "before_blank_ms": 4.111892959119928,
+            "commit_or_full_ms": 0.4574028592033508,
+            "wait_ms": 11.90652476123937,
+            "blank_ms": 12.375611655539855
+          },
+          "min_blank_ms": 9.41097262361557,
+          "max_blank_ms": 12.562211119010936
+        },
+        {
+          "dx": 32,
+          "dy": 16,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.83945519529962,
+            "before_blank_ms": 0.010254343038833477,
+            "commit_or_full_ms": 46.91189391224796,
+            "wait_ms": 3.8968475536613143,
+            "blank_ms": 50.82042550100641
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.32145565986738
+        },
+        {
+          "dx": 48,
+          "dy": 0,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.828461356368564,
+            "before_blank_ms": 0.010303642764981713,
+            "commit_or_full_ms": 46.90725973799004,
+            "wait_ms": 3.8904878889881926,
+            "blank_ms": 50.80943166207536
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.13456039803941
+        },
+        {
+          "dx": 64,
+          "dy": 0,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.82831345719012,
+            "before_blank_ms": 0.010402242217278188,
+            "commit_or_full_ms": 46.91287990677093,
+            "wait_ms": 3.884522622124252,
+            "blank_ms": 50.80908656399232
+          },
+          "min_blank_ms": 50.037644449224686,
+          "max_blank_ms": 63.128693730627774
+        },
+        {
+          "dx": 32,
+          "dy": 8,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.8135728390718,
+            "before_blank_ms": 0.010254343038833477,
+            "commit_or_full_ms": 46.90760483607307,
+            "wait_ms": 3.8751063744299423,
+            "blank_ms": 50.79439524560014
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 62.87977941330532
+        },
+        {
+          "dx": 48,
+          "dy": 16,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.8133756401672,
+            "before_blank_ms": 0.010303642764981713,
+            "commit_or_full_ms": 46.912189710604856,
+            "wait_ms": 3.870472200172007,
+            "blank_ms": 50.79439524560014
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 62.877265127271755
+        },
+        {
+          "dx": 0,
+          "dy": 32,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.82865855527316,
+            "before_blank_ms": 0.010451541943426427,
+            "commit_or_full_ms": 46.90903452813137,
+            "wait_ms": 3.8887130988468557,
+            "blank_ms": 50.80938236234921
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.13372230269489
+        },
+        {
+          "dx": 64,
+          "dy": 32,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.84325127421303,
+            "before_blank_ms": 0.010303642764981713,
+            "commit_or_full_ms": 46.91130231553418,
+            "wait_ms": 3.9013831284669522,
+            "blank_ms": 50.824418778824416
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.38682709673994
+        }
+      ],
+      "fault_recovery": "PASS",
+      "scope": "Standalone DOSBox-X 8086_prefetch fixed 20000; not 7.16MHz 8088, Windows, real cursor or hardware timing",
+      "caveat": "PIT probes add overhead; blank interval measured from entry probes immediately around mode-control routines"
+    },
+    "5504": {
+      "status": "PASS",
+      "case_count": 20,
+      "pans": 340,
+      "compared_frame_bytes": 640000,
+      "cases": [
+        {
+          "dx": 8,
+          "dy": 0,
+          "bytes": 800,
+          "mean": {
+            "total_ms": 16.39851860896221,
+            "before_blank_ms": 1.437284216125727,
+            "commit_or_full_ms": 0.2911148829053446,
+            "wait_ms": 14.649808022758064,
+            "blank_ms": 14.952656240486693
+          },
+          "min_blank_ms": 10.35382988620062,
+          "max_blank_ms": 15.253335270264795
+        },
+        {
+          "dx": 16,
+          "dy": 0,
+          "bytes": 1600,
+          "mean": {
+            "total_ms": 16.457234582804766,
+            "before_blank_ms": 2.583157750989219,
+            "commit_or_full_ms": 0.36126839321428716,
+            "wait_ms": 13.49239835197589,
+            "blank_ms": 13.865400080013455
+          },
+          "min_blank_ms": 10.277563209849296,
+          "max_blank_ms": 14.090897027415494
+        },
+        {
+          "dx": 24,
+          "dy": 0,
+          "bytes": 2400,
+          "mean": {
+            "total_ms": 16.470052511603303,
+            "before_blank_ms": 3.7185304441831364,
+            "commit_or_full_ms": 0.431323304070933,
+            "wait_ms": 12.299739376997717,
+            "blank_ms": 12.742796015891926
+          },
+          "min_blank_ms": 9.358172616910808,
+          "max_blank_ms": 12.955277835590836
+        },
+        {
+          "dx": 32,
+          "dy": 0,
+          "bytes": 3200,
+          "mean": {
+            "total_ms": 16.48084915162977,
+            "before_blank_ms": 4.864995575760409,
+            "commit_or_full_ms": 0.5016247135583205,
+            "wait_ms": 11.093769475959522,
+            "blank_ms": 11.607127524341124
+          },
+          "min_blank_ms": 8.398553447435358,
+          "max_blank_ms": 11.808763404287415
+        },
+        {
+          "dx": 0,
+          "dy": 4,
+          "bytes": 640,
+          "mean": {
+            "total_ms": 16.470003211877156,
+            "before_blank_ms": 0.9978264572403345,
+            "commit_or_full_ms": null,
+            "wait_ms": 15.451618768833006,
+            "blank_ms": 0.0
+          },
+          "min_blank_ms": 0.0,
+          "max_blank_ms": 0.0
+        },
+        {
+          "dx": 0,
+          "dy": 8,
+          "bytes": 1280,
+          "mean": {
+            "total_ms": 16.469806012972565,
+            "before_blank_ms": 1.8528809075553723,
+            "commit_or_full_ms": 0.13148236963735038,
+            "wait_ms": 14.464934049702176,
+            "blank_ms": 14.60810045443666
+          },
+          "min_blank_ms": 11.219582377089825,
+          "max_blank_ms": 14.820878072492453
+        },
+        {
+          "dx": 0,
+          "dy": 12,
+          "bytes": 1920,
+          "mean": {
+            "total_ms": 16.470101811329453,
+            "before_blank_ms": 2.771088307066302,
+            "commit_or_full_ms": 0.191726634990497,
+            "wait_ms": 13.486827482921134,
+            "blank_ms": 13.690287452734916
+          },
+          "min_blank_ms": 10.306058451562977,
+          "max_blank_ms": 13.903163670243005
+        },
+        {
+          "dx": 0,
+          "dy": 16,
+          "bytes": 2560,
+          "mean": {
+            "total_ms": 16.484793129721623,
+            "before_blank_ms": 3.6895915049341226,
+            "commit_or_full_ms": 0.2520202000697919,
+            "wait_ms": 12.52257413918775,
+            "blank_ms": 12.786327674080823
+          },
+          "min_blank_ms": 9.638096461980503,
+          "max_blank_ms": 12.984611172649037
+        },
+        {
+          "dx": 8,
+          "dy": 4,
+          "bytes": 1424,
+          "mean": {
+            "total_ms": 16.473947189969017,
+            "before_blank_ms": 2.3319263465377986,
+            "commit_or_full_ms": 0.3479574671542629,
+            "wait_ms": 13.773653289651584,
+            "blank_ms": 14.133344091629127
+          },
+          "min_blank_ms": 10.809753753619523,
+          "max_blank_ms": 14.342325630771509
+        },
+        {
+          "dx": 16,
+          "dy": 4,
+          "bytes": 2208,
+          "mean": {
+            "total_ms": 16.469855312698712,
+            "before_blank_ms": 3.4549248084685087,
+            "commit_or_full_ms": 0.4168784843094993,
+            "wait_ms": 12.577592633569184,
+            "blank_ms": 13.006204452701965
+          },
+          "min_blank_ms": 9.6171440783675,
+          "max_blank_ms": 13.219277869114649
+        },
+        {
+          "dx": 8,
+          "dy": 8,
+          "bytes": 2048,
+          "mean": {
+            "total_ms": 16.455163994306538,
+            "before_blank_ms": 3.2216878040611956,
+            "commit_or_full_ms": 0.4028773620833998,
+            "wait_ms": 12.810139441810424,
+            "blank_ms": 13.224651539264809
+          },
+          "min_blank_ms": 9.6003821714771,
+          "max_blank_ms": 13.452268374891222
+        },
+        {
+          "dx": 16,
+          "dy": 8,
+          "bytes": 2816,
+          "mean": {
+            "total_ms": 16.488441309456594,
+            "before_blank_ms": 4.321761893332975,
+            "commit_or_full_ms": 0.47027008772804113,
+            "wait_ms": 11.675802042865616,
+            "blank_ms": 12.157805465416942
+          },
+          "min_blank_ms": 9.069867818395913,
+          "max_blank_ms": 12.351849187536404
+        },
+        {
+          "dx": 8,
+          "dy": 12,
+          "bytes": 2672,
+          "mean": {
+            "total_ms": 16.47384859051672,
+            "before_blank_ms": 4.111843659393779,
+            "commit_or_full_ms": 0.45760005810794374,
+            "wait_ms": 11.884044086115773,
+            "blank_ms": 12.353328179320853
+          },
+          "min_blank_ms": 9.02963924185895,
+          "max_blank_ms": 12.562211119010936
+        },
+        {
+          "dx": 32,
+          "dy": 16,
+          "bytes": 5504,
+          "mean": {
+            "total_ms": 16.469756713246415,
+            "before_blank_ms": 8.155209999167655,
+            "commit_or_full_ms": 0.7054790811812838,
+            "wait_ms": 7.588706845998254,
+            "blank_ms": 8.30586996227667
+          },
+          "min_blank_ms": 4.917943481643617,
+          "max_blank_ms": 8.519239177046245
+        },
+        {
+          "dx": 48,
+          "dy": 0,
+          "bytes": 4800,
+          "mean": {
+            "total_ms": 16.45526259375883,
+            "before_blank_ms": 7.141656929286036,
+            "commit_or_full_ms": 0.6415373363670194,
+            "wait_ms": 8.651510342301963,
+            "blank_ms": 9.304781013492265
+          },
+          "min_blank_ms": 5.680610245156856,
+          "max_blank_ms": 9.532496448570978
+        },
+        {
+          "dx": 64,
+          "dy": 0,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.850843432039866,
+            "before_blank_ms": 0.010451541943426427,
+            "commit_or_full_ms": 46.912584108414045,
+            "wait_ms": 3.907446994783183,
+            "blank_ms": 50.83161653884206
+          },
+          "min_blank_ms": 50.037644449224686,
+          "max_blank_ms": 63.51254139841795
+        },
+        {
+          "dx": 32,
+          "dy": 8,
+          "bytes": 4352,
+          "mean": {
+            "total_ms": 16.48494102890007,
+            "before_blank_ms": 6.507908949650437,
+            "commit_or_full_ms": 0.6044146425773962,
+            "wait_ms": 9.35220735004687,
+            "blank_ms": 9.968355327447547
+          },
+          "min_blank_ms": 6.824610390426716,
+          "max_blank_ms": 10.16609652902813
+        },
+        {
+          "dx": 48,
+          "dy": 16,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.82836275691626,
+            "before_blank_ms": 0.010402242217278188,
+            "commit_or_full_ms": 46.912091111152556,
+            "wait_ms": 3.8854593169210707,
+            "blank_ms": 50.80923446317076
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 63.13036992131681
+        },
+        {
+          "dx": 0,
+          "dy": 32,
+          "bytes": 5120,
+          "mean": {
+            "total_ms": 16.470101811329453,
+            "before_blank_ms": 7.364146593393029,
+            "commit_or_full_ms": 0.4929972614823786,
+            "wait_ms": 8.592498570102528,
+            "blank_ms": 9.097179866682037
+          },
+          "min_blank_ms": 5.710781677559578,
+          "max_blank_ms": 9.311239277617686
+        },
+        {
+          "dx": 64,
+          "dy": 32,
+          "bytes": 32000,
+          "mean": {
+            "total_ms": 50.81362213879794,
+            "before_blank_ms": 0.010550141395722901,
+            "commit_or_full_ms": 46.91135161526033,
+            "wait_ms": 3.8712609957903794,
+            "blank_ms": 50.79419804669555
+          },
+          "min_blank_ms": 50.038482544569206,
+          "max_blank_ms": 62.877265127271755
+        }
+      ],
+      "fault_recovery": "PASS",
+      "scope": "Standalone DOSBox-X 8086_prefetch fixed 20000; not 7.16MHz 8088, Windows, real cursor or hardware timing",
+      "caveat": "PIT probes add overhead; blank interval measured from entry probes immediately around mode-control routines"
+    }
+  },
+  "chunks": {
+    "base": [
+      {
+        "target": [
+          32,
+          16
+        ],
+        "transactions": 4,
+        "total_staged_bytes": 5696,
+        "repeated_moves": {
+          "(8, 4)": 4
+        },
+        "model_seconds_at_60hz": 0.06666666666666667,
+        "caveat": "Address/step-count model, not measured travel time or a helper implementation"
+      },
+      {
+        "target": [
+          320,
+          56
+        ],
+        "transactions": 40,
+        "total_staged_bytes": 40736,
+        "repeated_moves": {
+          "(8, 0)": 26,
+          "(8, 4)": 14
+        },
+        "model_seconds_at_60hz": 0.6666666666666666,
+        "caveat": "Address/step-count model, not measured travel time or a helper implementation"
+      }
+    ],
+    "2816": [
+      {
+        "target": [
+          32,
+          16
+        ],
+        "transactions": 2,
+        "total_staged_bytes": 5632,
+        "repeated_moves": {
+          "(16, 8)": 2
+        },
+        "model_seconds_at_60hz": 0.03333333333333333,
+        "caveat": "Address/step-count model, not measured travel time or a helper implementation"
+      },
+      {
+        "target": [
+          320,
+          56
+        ],
+        "transactions": 16,
+        "total_staged_bytes": 40512,
+        "repeated_moves": {
+          "(16, 0)": 1,
+          "(16, 8)": 7,
+          "(24, 0)": 8
+        },
+        "model_seconds_at_60hz": 0.26666666666666666,
+        "caveat": "Address/step-count model, not measured travel time or a helper implementation"
+      }
+    ],
+    "5504": [
+      {
+        "target": [
+          32,
+          16
+        ],
+        "transactions": 1,
+        "total_staged_bytes": 5504,
+        "repeated_moves": {
+          "(32, 16)": 1
+        },
+        "model_seconds_at_60hz": 0.016666666666666666,
+        "caveat": "Address/step-count model, not measured travel time or a helper implementation"
+      },
+      {
+        "target": [
+          320,
+          56
+        ],
+        "transactions": 8,
+        "total_staged_bytes": 39840,
+        "repeated_moves": {
+          "(32, 4)": 1,
+          "(40, 8)": 6,
+          "(48, 4)": 1
+        },
+        "model_seconds_at_60hz": 0.13333333333333333,
+        "caveat": "Address/step-count model, not measured travel time or a helper implementation"
+      }
+    ]
+  },
+  "memory": {
+    "base": {
+      "stage": 1440,
+      "scratch_delta": 0,
+      "procedure_bytes": {
+        "HP_SET": 414,
+        "XY_RECTANGLES": 121
+      }
+    },
+    "2816": {
+      "stage": 2816,
+      "scratch_delta": 1376,
+      "procedure_bytes": {
+        "HP_SET": 452,
+        "XY_RECTANGLES": 169
+      },
+      "code_delta": 86,
+      "code_plus_scratch_delta": 1462
+    },
+    "5504": {
+      "stage": 5504,
+      "scratch_delta": 4064,
+      "procedure_bytes": {
+        "HP_SET": 452,
+        "XY_RECTANGLES": 169
+      },
+      "code_delta": 86,
+      "code_plus_scratch_delta": 4150
+    }
+  },
+  "source_hashes": {
+    "experiments\\XYPAN\\XYCOPY.ASM": "5600dde700ee23ebf9491546b17ec2d9b25fe5f0bc0cf03b977069c5369769d3",
+    "experiments\\XYPAN\\XYPAN.ASM": "32444a631bb79105b13c1ef621223dce8cfb463ae39afc81e1a918b126066089",
+    "experiments\\XYPAN\\XYPATCH.PY": "4a0c7fe1d95940bb8525986b2ec9fcab91c0733c05d111af3b82ea36ca9ae67d"
+  }
+}
