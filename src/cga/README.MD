@@ -62,7 +62,8 @@ accepted grabber uses private `CGAGRAB.GR2`, preserving stock `CGA.GR2`.
 backup/state names. It selects display, System/Fixed/OEM fonts and 286grabber;
 160x100 also registers the small Helv/Courier faces and one-pixel borders.
 320x200 selects the original 4x6 CG2 System/Helv faces and 4x6 fixed/OEM.
-640x200 keeps XTC fonts and existing font-list entries. CGA100 installs its
+640x200 keeps its XTC System/fixed/OEM selection and registers the existing
+TEXT80 8x8 Helv/Courier faces from XT Pixels; unrelated font entries remain. CGA100 installs its
 access client in Windows and adds its basename to load=; UNDO removes only
 that added token and its own unchanged created file.
 
@@ -104,7 +105,8 @@ python CGA-VIEW/src/cga/PACKCGA.PY prepare --repo CGA-VIEW --support FULL-SUPPOR
 ```
 
 Preparation checks all MZ/NE drivers against CGABUILD receipts, generates the
-small fonts and includes the pinned XTC fonts, grabber, startup assets and
+small fonts, derives the exact pinned T80 Helv/Courier faces with T80FONT,
+and includes the pinned XTC fonts, grabber, startup assets and
 notices. It emits `packet/README.TXT`, one `packet/CGA` folder, PREPARED.JSN
 and private native-src files. Headers and manifests are generated, never
 consumer edits. Extra packet/helper-source files are rejected.
@@ -169,7 +171,10 @@ accepting a previous or partial dialog snapshot. Build with explicit
 --repo, --dosbox, --lease
 and fresh --out. Without arguments the probe records screen/stock-font and
 window/control bounds. Developer command `D` also compares signed font heights
-and default/Swiss pitch without loading additional font resources; `F` retains
+and default/Swiss pitch without loading additional font resources; a private
+`[CGAProbe] FontDiag=1` INI flag enables the same passive diagnostic at startup.
+Do not append bare diagnostic arguments to Win3 `load=`; it treats them as
+additional startup programs. `F` retains
 the explicitly marked AddFontResource diagnostic. F9 toggles its palette/BitBlt/pair test window; each
 F8 advances a custom 32x32 cursor through odd-origin/edge/hide checks.
 F7 with that cursor at its first position draws a pixel and a checkerboard

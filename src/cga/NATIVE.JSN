@@ -139,10 +139,10 @@
   },
   "capture_limitation": "Headless FRAME reads row zero rather than CGA firstline; retained raw PNGs are not complete monitor screenshots. VRAM/API/file checks are separate. Decoded native VRAM images are labeled, never scanout proof.",
   "remaining": [
-    "Shared WDESK/WTPLACE native placement qualification and pinned source snapshot",
+    "Shared WDESK/WTPLACE native placement qualification and final pinned source snapshot",
     "Shared CGACTL consumer build/autoload/normal shutdown with160x100 fonts and controls",
-    "320-mode native4x6 font selection/complete GUI/DOS return",
-    "640x200x2 native IBM GUI/graphics/cursor/DOS return",
+    "320 dialog font-selection fix and complete native GUI/DOS return",
+    "New23file native SETUP build/install and settled640font/dialog capture; existing640API/graphics/cursor/save/DOS unit evidence retained",
     "Physical original IBM CGA scanout, snow/flicker and mouse qualification"
   ],
   "publication": "NOT_AUTHORIZED",
@@ -428,14 +428,145 @@
     }
   },
   "pending_observer_revision": {
-    "source_sha256": "6198c0f9b8080eb64831484552deb2015282fbd9c7c7c54ffe3b129f92301543",
-    "changes": [
-      "Passive hidden-owner handles and complete TREE END marker",
-      "D command compares signed font heights and default/Swiss pitch without AddFontResource",
-      "Full dialog LOGFONT charset/quality/precision/pitch fields"
-    ],
+    "source_sha256": "a07f73ede4afc0130e84b2f4f81dbc5c3e791539080311a38a7d13b894e5a812",
     "native_build": "NOT_RUN",
     "runtime": "NOT_TESTED",
-    "prior_native_evidence": "Unchanged; recorded older probe binaries retained"
+    "developer_enable": "Private [CGAProbe] FontDiag=1 enables passive signed-height/pitch cases; do not pass unquoted arguments through Win3 load=",
+    "consumer": "Excluded; no diagnostic flag in consumer installer"
+  },
+  "mode640_font_unit": {
+    "status": "PASS_NATIVE_API_GRAPHICS_FILE_AND_DOS",
+    "kind": "FONT_BOOT_SELECTION_UNIT_NOT_NEW23FILE_INSTALL",
+    "font_derivation": {
+      "source": "distributions/WINXT/XTTSYS.FON",
+      "source_sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa",
+      "fonts": {
+        "T80HELV.FON": {
+          "face": "Helv",
+          "pitch": "variable (all glyphs 8 wide)",
+          "weight": 700,
+          "bytes": 4208,
+          "sha256": "9bd5153d11f26e340b0385d9adba756351c0f41e8915a4d16c333d342b4057fd"
+        },
+        "T80COUR.FON": {
+          "face": "Courier",
+          "pitch": "fixed",
+          "weight": 400,
+          "bytes": 4224,
+          "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6"
+        }
+      }
+    },
+    "driver_sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1",
+    "assessment": {
+      "native_data": "PASS",
+      "mode": "640",
+      "palette": "PASS",
+      "memory_blt": "PASS",
+      "all_256_pairs": "PASS",
+      "draw_under_odd_cursor": "PASS",
+      "edges_and_hide": "PASS",
+      "padding": "PASS",
+      "saved_file_exact": "PASS",
+      "dos_mode": 3,
+      "source_captures": {
+        "009.VRM": "8b56003b02ee9dae04ac8312d2c351a9e33f279e5b74edecd5e3a02e8b715868",
+        "012.VRM": "95383235fe492bd5094a6413487a2e8eb9d5d7986e1a89c4111c0e582f5ca4d9"
+      },
+      "physical_hardware": "UNQUALIFIED",
+      "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification",
+      "consumer_install": "New23file packet not native installed: this font-selection unit reuses actual earlier18file installation",
+      "dialog_render_evidence": "API bounds/control workflow passed; 004.VRM was a transition before complete modal paint, so its labeled decode is not accepted visual font evidence. Final23file native run must wait for complete TREE END then idle before visual capture.",
+      "draw_guest_ms": 3076,
+      "draw_clock_resolution_ms": 55,
+      "speedup_comparison": "NO_BASELINE"
+    },
+    "dialogs": [
+      {
+        "title": "Run",
+        "rect": [
+          32,
+          30,
+          472,
+          106
+        ]
+      },
+      {
+        "title": "File Open",
+        "rect": [
+          96,
+          41,
+          500,
+          196
+        ]
+      },
+      {
+        "title": "File Save As",
+        "rect": [
+          96,
+          44,
+          496,
+          179
+        ]
+      },
+      {
+        "title": "Find",
+        "rect": [
+          32,
+          48,
+          450,
+          138
+        ]
+      }
+    ],
+    "owned_stopped": true,
+    "lease_released": true
+  },
+  "mode320_CG2_trial": {
+    "status": "DIALOG_FONT_SELECTION_FAILED",
+    "stock_font_selection": "System/Fixed/OEM/ANSI all6rows/average4 PASS",
+    "Run": "Helv h=-5 maps to10rows; editright356>320",
+    "driver_unchanged": true,
+    "owned_stopped": true,
+    "lease_released": true,
+    "next": "Passive signed-height/pitch/fullLOGFONT diagnostic; no AddFontResource"
+  },
+  "host_font_reuse_revision": {
+    "host": "PASS",
+    "native": "NOT_RUN",
+    "windows": "NOT_TESTED",
+    "tests": [
+      "install/undo 100",
+      "install/undo 320",
+      "install/undo 640",
+      "three modes/repeated switch/undo",
+      "identical preexisting font retained",
+      "collision refusal, no writes",
+      "all mutating commands refuse Windows context",
+      "damaged packet refusal before copying",
+      "CGAFAULT_WOPEN every single failure position",
+      "CGAFAULT_RENAME every single failure position",
+      "every interrupted owned-copy position",
+      "owned pending copy plan cancelled without touching payload files",
+      "damaged INI record refuses, explicit whole restore",
+      "damaged copy record refuses without cleanup",
+      "later edits and their referenced driver retained",
+      "changed installed file retained",
+      "failed INI rollback recovered through owned safety copies",
+      "interrupted cleanup can be retried",
+      "undo write/marker failures can be retried",
+      "interrupted completion marker uses explicit safety restore",
+      "17000-byte INI installs and restores exactly",
+      "small-model INI size limit refuses without residue",
+      "closed expanded packet inventory rejects extras",
+      "synthetic fixtures cannot finalize a consumer packet"
+    ],
+    "host_invocations": 193,
+    "fixtures": 106,
+    "packet_payload_files": 23,
+    "installed_files": 17,
+    "managed_gcc": true,
+    "c_source_sha256": "7eeb5ab8604178bf6b55caf1e758c38d54952a77dd5b172c0c37491e81094031",
+    "host_executable": "SETUPHOST.EXE (modern host test only)"
   }
 }

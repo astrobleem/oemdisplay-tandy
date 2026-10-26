@@ -161,7 +161,7 @@ int PASCAL WinMain(HANDLE hi,HANDLE prev,LPSTR cmd,int show)
  dc=GetDC(NULL);wsprintf(line,"CAPS width=%d height=%d colors=%d dpi=%d,%d caption=%d menu=%d scroll=%d,%d\r\n",GetDeviceCaps(dc,HORZRES),GetDeviceCaps(dc,VERTRES),GetDeviceCaps(dc,NUMCOLORS),GetDeviceCaps(dc,LOGPIXELSX),GetDeviceCaps(dc,LOGPIXELSY),GetSystemMetrics(SM_CYCAPTION),GetSystemMetrics(SM_CYMENU),GetSystemMetrics(SM_CXVSCROLL),GetSystemMetrics(SM_CYHSCROLL));Log(line);
  Font(dc,SYSTEM_FONT,"SYSTEM");Font(dc,SYSTEM_FIXED_FONT,"FIXED");Font(dc,OEM_FIXED_FONT,"OEM");
  Font(dc,ANSI_VAR_FONT,"ANSI_VAR");
- if(cmd[0]=='F'||cmd[0]=='D')FontProbe(dc,cmd[0]=='F');
+ if(cmd[0]=='F'||cmd[0]=='D'||GetProfileInt("CGAProbe","FontDiag",0))FontProbe(dc,cmd[0]=='F');
  ReleaseDC(NULL,dc);
  SetTimer(hidden,1,1000,NULL);
  while(GetMessage(&msg,NULL,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);}

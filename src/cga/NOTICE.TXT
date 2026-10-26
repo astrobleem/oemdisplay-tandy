@@ -8,7 +8,9 @@ Windows/DOS, compiler, DDK and emulator installations are not included.
 
 CG1SYS/FIX/OEM/HELV/COUR and CG2SYS/HELV are original CGA ASCII grid drawings using the
 existing XT Pixels FNT/FON writer and original OEM box/block algorithm.
-XTC fonts are the accepted XT Pixels originals. FONTLIC.TXT carries their
+XTC fonts are the accepted XT Pixels originals. T80HELV/COUR reuse the
+existing TEXT80 derivation of the original XT Pixels 8x8 strike; only face,
+family, pitch and weight metadata differ from that original strike. FONTLIC.TXT carries their
 MIT license. That license does not cover the Microsoft-derived components.
 
 XTSTATIC.LGO and WXTSPL01.RLE are the existing selected Windows XT startup

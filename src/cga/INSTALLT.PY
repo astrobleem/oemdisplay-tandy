@@ -89,7 +89,10 @@ def main():
             assert b'fonts.fon=CG2SYS.FON' in (w/'SYSTEM.INI').read_bytes()
             assert b'BorderWidth=3' in ini and b'CG1HELV.FON' not in ini
             assert b'CGACTL.EXE' not in ini
-        else:assert ini==WIN
+        else:
+            assert b'Helv 8x8 (CGA640)=T80HELV.FON' in ini and b'Courier 8x8 (CGA640)=T80COUR.FON' in ini
+            assert b'fonts.fon=XTCSYS.FON' in (w/'SYSTEM.INI').read_bytes()
+            assert b'BorderWidth=3' in ini and b'CGACTL.EXE' not in ini
         run(w,'UNDO');assert snapshot(w)==before;passed('install/undo '+mode)
 
     w,before=fixture('switch')
@@ -107,7 +110,7 @@ def main():
     w,before=fixture('bad packet');run(w,'100',ok=1);assert snapshot(w)==before;target.write_bytes(saved)
     passed('damaged packet refusal before copying')
 
-    for var,bound in (('CGAFAULT_WOPEN',23),('CGAFAULT_RENAME',22)):
+    for var,bound in (('CGAFAULT_WOPEN',len(P.COPY)+8),('CGAFAULT_RENAME',len(P.COPY)+7)):
         for n in range(1,bound):
             w,before=fixture(var);p=run(w,'100',{var:str(n)},ok=None)
             if p.returncode==0:run(w,'UNDO')

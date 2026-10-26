@@ -281,3 +281,21 @@ and data budget. The complete21-file source now passes24 host groups,185
 invocations and100 fixtures, including exact undo and all modes. No old
 consumer packet is relabeled with this evidence; the new shared-client native
 build, consumer startup and remaining GUI gates must finish before acceptance.
+
+## Normal-mode font follow-up
+
+The revised 320-mode System/fixed/OEM/ANSI fonts select six rows and an average
+width of four natively, but Run still selects a ten-row Helv face. Its edit
+field ends at x=356 on the 320-pixel screen. Signed-height font mapping remains
+a blocking usability test. The renderer is unchanged.
+
+For 640 mode, the existing TEXT80 T80FONT derivation supplies 8x8 Helv/Courier
+at 96x48 dpi. It fixes the observed 703-pixel-wide Run dialog. The private
+native font-selection unit passes Run/Open/Save As/Find, exact file save,
+palette, blits, all 256 pairs, cursor restoration, padding and ordinary DOS
+return to mode 3 with 640 KB. The CGA producer bundles those exact existing
+faces and registers its own two font entries; XTC System/fixed/OEM stays
+selected. The expanded 23-file consumer installer still needs a native
+build/install. The initial Open VRAM capture is a paint transition, not
+settled visual font proof. Wait for complete TREE END plus idle before a
+later diagnostic capture.
