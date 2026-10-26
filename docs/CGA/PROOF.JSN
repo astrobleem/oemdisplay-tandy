@@ -1,0 +1,895 @@
+{
+  "kind": "RECORDED_NATIVE_EMULATOR_VRAM_IMAGES",
+  "published_packet": {
+    "bytes": 139135,
+    "sha256": "57f2e9e10c1c2feb9d0fa545d040674f10caae7a6360a4e2e55dd9365e0217d7"
+  },
+  "method": "Decode saved native VRAM without retouching or composited UI. Enlargements repeat pixels with nearest-neighbor sampling. The new Paintbrush picture is an original BMP opened and rendered by the native app.",
+  "physical_hardware": false,
+  "images": {
+    "DESK100": {
+      "scene": "Program Manager desktop",
+      "mode": "100",
+      "source": "native-cga-consumer100-02/001.VRM",
+      "raw": {
+        "bytes": 16384,
+        "sha256": "d113ac86429c689568496b2ddc42b667a6f6369deae234401156423540505a4e"
+      },
+      "original_png": {
+        "bytes": 1436,
+        "sha256": "4ebc509e9910c52f87a8cabbb9df942555037ae5fd686dcbf4569edccee0350a"
+      },
+      "enlarged_png": {
+        "bytes": 3155,
+        "sha256": "00da0c9dda55c04c19eff3e98adcaa1ccbc48b83b2fea48ca18e7c6a18e96581"
+      },
+      "logical_pixels": [
+        160,
+        100
+      ],
+      "enlargement": [
+        4,
+        4
+      ],
+      "distinct_colors": 4,
+      "RGBI_index_counts": {
+        "0": 2036,
+        "1": 1655,
+        "7": 971,
+        "15": 11338
+      }
+    },
+    "OPEN100": {
+      "scene": "Notepad File Open with compact fonts and controls",
+      "mode": "100",
+      "source": "native-cga-consumer100-02/006.VRM",
+      "raw": {
+        "bytes": 16384,
+        "sha256": "3bb90ed36d586633f41c9895bcdb9e95817fd9e5682b5b0d6e62eb21efce4d75"
+      },
+      "original_png": {
+        "bytes": 1903,
+        "sha256": "5fa2822a6b850f8b93eb40e9efd85ae8d7378a9a9bfef59d763577e307ab065f"
+      },
+      "enlarged_png": {
+        "bytes": 3920,
+        "sha256": "ca96bff13008c4365427720da6075939adba52f3d651613d65a47e51d8760965"
+      },
+      "logical_pixels": [
+        160,
+        100
+      ],
+      "enlargement": [
+        4,
+        4
+      ],
+      "distinct_colors": 4,
+      "RGBI_index_counts": {
+        "0": 3063,
+        "1": 2598,
+        "7": 527,
+        "15": 9812
+      }
+    },
+    "FILE100": {
+      "scene": "File Manager populated directory view",
+      "mode": "100",
+      "source": "native-cga-filemgr100-02/001.VRM",
+      "raw": {
+        "bytes": 16384,
+        "sha256": "42cbfada9920730b5f9d34fd336637d0316045a51fbb89e65e74245ae7cb50c0"
+      },
+      "original_png": {
+        "bytes": 1822,
+        "sha256": "ed00c9dc2ccdcac62c3ad9cc0c2a680206697a7ce5a6e7ff64ecbda721ef4ae9"
+      },
+      "enlarged_png": {
+        "bytes": 3640,
+        "sha256": "525944fbbb59a69589c08a8497fda750f447f8a5feacdb2ca7f5af528e1f8d12"
+      },
+      "logical_pixels": [
+        160,
+        100
+      ],
+      "enlargement": [
+        4,
+        4
+      ],
+      "distinct_colors": 5,
+      "RGBI_index_counts": {
+        "0": 3223,
+        "1": 1954,
+        "7": 555,
+        "14": 81,
+        "15": 10187
+      }
+    },
+    "PAL100": {
+      "scene": "Windows GDI palette and adjacent-color-pair test",
+      "mode": "100",
+      "source": "native-cga-filemgr100-02/005.VRM",
+      "raw": {
+        "bytes": 16384,
+        "sha256": "61a3fda65d5aa5f5f12923ce444769e44c6eda82f53e430a4631a6d7e3134d02"
+      },
+      "original_png": {
+        "bytes": 779,
+        "sha256": "13a3fc8983e385da57c19345d6a1c9e241415d83157ad8e77fbd7edae9b47de1"
+      },
+      "enlarged_png": {
+        "bytes": 2446,
+        "sha256": "0d422b9ed4f1f797d9100ff1d74d78fe8e1fb8e8d3b59f26caca00b6a3ca4d72"
+      },
+      "logical_pixels": [
+        160,
+        100
+      ],
+      "enlargement": [
+        4,
+        4
+      ],
+      "distinct_colors": 16,
+      "RGBI_index_counts": {
+        "0": 1000,
+        "1": 1008,
+        "2": 1036,
+        "3": 1036,
+        "4": 1037,
+        "5": 1036,
+        "6": 956,
+        "7": 876,
+        "8": 876,
+        "9": 924,
+        "10": 1036,
+        "11": 1036,
+        "12": 1036,
+        "13": 1036,
+        "14": 1036,
+        "15": 1035
+      }
+    },
+    "OPEN320": {
+      "scene": "Notepad File Open in four-color mode",
+      "mode": "320",
+      "source": "native-cga-consumer320-01/006.VRM",
+      "raw": {
+        "bytes": 16384,
+        "sha256": "28f991f9e1ee3446cddc2c327e4815b5a6964d52b080ea11108359b26f2e2bca"
+      },
+      "original_png": {
+        "bytes": 3373,
+        "sha256": "064b25c2e9a5b9674ab7a4a881f5cc4ef5d5f22683caddf7bd5917f7dba053c9"
+      },
+      "enlarged_png": {
+        "bytes": 4787,
+        "sha256": "1e51ce5139cd0a17dbde2011e7cb279cf2ef34738c7cc1ed95c6287deb30532b"
+      },
+      "logical_pixels": [
+        320,
+        200
+      ],
+      "enlargement": [
+        2,
+        2
+      ],
+      "distinct_colors": 3,
+      "RGBI_index_counts": {
+        "0": 12854,
+        "11": 28,
+        "15": 51118
+      }
+    },
+    "OPEN640": {
+      "scene": "Notepad File Open in monochrome mode",
+      "mode": "640",
+      "source": "native-cga-consumer640-02/006.VRM",
+      "raw": {
+        "bytes": 16384,
+        "sha256": "166e0224e3cc6fd70e4790ff0f4dec08b8e9e8e255df9c73d9936cf6b709ae26"
+      },
+      "original_png": {
+        "bytes": 4145,
+        "sha256": "6d8db2db2814d32227a245c995587f924256d19ae26ffcc7df18b1d0d8538f14"
+      },
+      "enlarged_png": {
+        "bytes": 5161,
+        "sha256": "34626e194337fdec9a9fbe68c8f24516bebc9b91ec93ee5f94f4a0060c13d7c8"
+      },
+      "logical_pixels": [
+        640,
+        200
+      ],
+      "enlargement": [
+        1,
+        2
+      ],
+      "distinct_colors": 2,
+      "RGBI_index_counts": {
+        "0": 20403,
+        "15": 107597
+      }
+    },
+    "PAINT100": {
+      "scene": "Paintbrush displaying original Twilight Cove",
+      "mode": "100",
+      "source": "native-cga-paint100-02/002.VRM",
+      "raw": {
+        "bytes": 16384,
+        "sha256": "dec6d08acbe17309ae28d3b928f1eb32da628bed645572e3bf66f285ff36dc6b"
+      },
+      "original_png": {
+        "bytes": 2576,
+        "sha256": "ba435d9e3f248f687369c93a5e1da39b938b16b64eb35a8a04f85876ceca1194"
+      },
+      "enlarged_png": {
+        "bytes": 4552,
+        "sha256": "0ef57e9c9b562b18f81c7c03f88823e3bd2b9aaf89ce789d95f819436aab79ee"
+      },
+      "logical_pixels": [
+        160,
+        100
+      ],
+      "enlargement": [
+        4,
+        4
+      ],
+      "distinct_colors": 16,
+      "RGBI_index_counts": {
+        "0": 2106,
+        "1": 2427,
+        "2": 267,
+        "3": 321,
+        "4": 92,
+        "5": 385,
+        "6": 116,
+        "7": 81,
+        "8": 36,
+        "9": 337,
+        "10": 130,
+        "11": 71,
+        "12": 101,
+        "13": 169,
+        "14": 65,
+        "15": 9296
+      },
+      "picture": {
+        "input_file": "COVE16.BMP",
+        "input": {
+          "bytes": 2038,
+          "sha256": "aaf326b4e47bbee38b6c43e45ea0926ca19c4569975e1199fc285d039bd6cb69"
+        },
+        "logical_pixels": [
+          80,
+          48
+        ],
+        "screen_rectangle": [
+          20,
+          24,
+          100,
+          72
+        ],
+        "full_picture_indices_exact": true,
+        "distinct_colors": 16,
+        "RGBI_index_counts": {
+          "0": 187,
+          "1": 1758,
+          "2": 260,
+          "3": 271,
+          "4": 86,
+          "5": 375,
+          "6": 107,
+          "7": 35,
+          "8": 30,
+          "9": 303,
+          "10": 101,
+          "11": 44,
+          "12": 85,
+          "13": 146,
+          "14": 40,
+          "15": 12
+        },
+        "palette_note": "BMP entry6 is logical RGB(128,128,0); the IBM RGBI display renders that index brown. The source art previews physical RGBI colors."
+      }
+    },
+    "PAINTPAL": {
+      "scene": "Paintbrush after Ctrl+Alt+End exposes the lower palette",
+      "mode": "100",
+      "source": "native-cga-paint100-02/004.VRM",
+      "raw": {
+        "bytes": 16384,
+        "sha256": "22d2473147b5d3dc3c288d32142a9e4f50f7e72b1a470abdf2ccd7be7ef76b2d"
+      },
+      "original_png": {
+        "bytes": 2508,
+        "sha256": "5706497771cce17a5af3732392b0d34f9f0a31e17f77ca56f4056dc3cbccc05d"
+      },
+      "enlarged_png": {
+        "bytes": 4705,
+        "sha256": "daf59161be78149499c2b6f01a88f8860a677a60eb4b769252fcd21cab175924"
+      },
+      "enlarged_file": "PAINTPLX.PNG",
+      "logical_pixels": [
+        160,
+        100
+      ],
+      "enlargement": [
+        4,
+        4
+      ],
+      "distinct_colors": 16,
+      "RGBI_index_counts": {
+        "0": 2303,
+        "1": 2445,
+        "2": 273,
+        "3": 333,
+        "4": 104,
+        "5": 397,
+        "6": 125,
+        "7": 90,
+        "8": 42,
+        "9": 346,
+        "10": 130,
+        "11": 74,
+        "12": 113,
+        "13": 175,
+        "14": 68,
+        "15": 8982
+      },
+      "picture": {
+        "screen_rectangle": [
+          20,
+          21,
+          100,
+          69
+        ],
+        "distinct_colors": 16,
+        "matching_input_pixels": 3834,
+        "total_pixels": 3840,
+        "visible_brush_cursor_differences": [
+          {
+            "x": 80,
+            "y": 50,
+            "input": 6,
+            "captured": 9
+          },
+          {
+            "x": 81,
+            "y": 50,
+            "input": 6,
+            "captured": 9
+          },
+          {
+            "x": 82,
+            "y": 50,
+            "input": 6,
+            "captured": 9
+          },
+          {
+            "x": 80,
+            "y": 51,
+            "input": 6,
+            "captured": 9
+          },
+          {
+            "x": 81,
+            "y": 51,
+            "input": 6,
+            "captured": 9
+          },
+          {
+            "x": 82,
+            "y": 51,
+            "input": 6,
+            "captured": 9
+          }
+        ],
+        "interpretation": "Six differing pixels form the visible Paintbrush brush cursor; no masking or image correction applied. PAINT100 contains all3840 original picture pixels exactly."
+      }
+    }
+  },
+  "runs": {
+    "native-cga-consumer100-02": {
+      "install_receipt": {
+        "bytes": 2897,
+        "sha256": "4dcdc22c0fa7dd1889d9b2570cd573cb66773ee92b434939a0aa2ac0657150cc"
+      },
+      "install_receipt_file": "INS100A.JSN",
+      "same_published_installed_files": {
+        "CG1COUR.FON": {
+          "bytes": 3536,
+          "sha256": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa"
+        },
+        "CG1FIX.FON": {
+          "bytes": 3776,
+          "sha256": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52"
+        },
+        "CG1HELV.FON": {
+          "bytes": 3536,
+          "sha256": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d"
+        },
+        "CG1OEM.FON": {
+          "bytes": 4080,
+          "sha256": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06"
+        },
+        "CG1SYS.FON": {
+          "bytes": 3536,
+          "sha256": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40"
+        },
+        "CG2HELV.FON": {
+          "bytes": 3760,
+          "sha256": "d1f6878faaf8abd06f425d7672277d6eb6d1097f9994c738ba753655d125afc3"
+        },
+        "CG2SYS.FON": {
+          "bytes": 3760,
+          "sha256": "c0ac9e8753e6b13b5bf0faa5384c85daf94427d813485a47270a62333bbfd222"
+        },
+        "CG6HELV.FON": {
+          "bytes": 4256,
+          "sha256": "d3bccab5f5daea935ca568923d5274315301f93caffd50e2cdcdd4d59735842d"
+        },
+        "CGA100.DRV": {
+          "bytes": 58208,
+          "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3"
+        },
+        "CGA320.DRV": {
+          "bytes": 57728,
+          "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4"
+        },
+        "CGA640.DRV": {
+          "bytes": 57312,
+          "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1"
+        },
+        "CGACTL.EXE": {
+          "bytes": 15855,
+          "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d"
+        },
+        "CGAGRAB.GR2": {
+          "bytes": 2104,
+          "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+        },
+        "T80COUR.FON": {
+          "bytes": 4224,
+          "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6"
+        },
+        "XTCFIX.FON": {
+          "bytes": 4208,
+          "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+        },
+        "XTCOEM.FON": {
+          "bytes": 4560,
+          "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+        },
+        "XTCSYS.FON": {
+          "bytes": 4592,
+          "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+        }
+      },
+      "capabilities": "CAPS width=160 height=100 colors=16 dpi=48,40 caption=8 menu=6 scroll=6,6",
+      "machine": {
+        "cpu_family": "8088",
+        "cpu_multi": "1",
+        "cpu_speed": "4772728",
+        "cpu_use_dynarec": "0",
+        "machine": "ibmxt86",
+        "mem_size": "640",
+        "time_sync": "disabled"
+      },
+      "video": {
+        "gfxcard": "cga"
+      },
+      "scope": "All17 installed payload files match the published packet.",
+      "IBM_CGA_adapter": {
+        "display_type": "0",
+        "composite_type": "1",
+        "rgb_type": "0",
+        "snow_enabled": "1",
+        "double_type": "1"
+      },
+      "run_scope": "These desktop/Open frames precede the later private-controller File Manager timeout retained in PLAN.JSON. Completed File Manager/GDI continuation is native-cga-filemgr100-02; no whole-run PASS is inferred from these two frames."
+    },
+    "native-cga-filemgr100-02": {
+      "install_receipt": {
+        "bytes": 2897,
+        "sha256": "4dcdc22c0fa7dd1889d9b2570cd573cb66773ee92b434939a0aa2ac0657150cc"
+      },
+      "install_receipt_file": "INS100B.JSN",
+      "same_published_installed_files": {
+        "CG1COUR.FON": {
+          "bytes": 3536,
+          "sha256": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa"
+        },
+        "CG1FIX.FON": {
+          "bytes": 3776,
+          "sha256": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52"
+        },
+        "CG1HELV.FON": {
+          "bytes": 3536,
+          "sha256": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d"
+        },
+        "CG1OEM.FON": {
+          "bytes": 4080,
+          "sha256": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06"
+        },
+        "CG1SYS.FON": {
+          "bytes": 3536,
+          "sha256": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40"
+        },
+        "CG2HELV.FON": {
+          "bytes": 3760,
+          "sha256": "d1f6878faaf8abd06f425d7672277d6eb6d1097f9994c738ba753655d125afc3"
+        },
+        "CG2SYS.FON": {
+          "bytes": 3760,
+          "sha256": "c0ac9e8753e6b13b5bf0faa5384c85daf94427d813485a47270a62333bbfd222"
+        },
+        "CG6HELV.FON": {
+          "bytes": 4256,
+          "sha256": "d3bccab5f5daea935ca568923d5274315301f93caffd50e2cdcdd4d59735842d"
+        },
+        "CGA100.DRV": {
+          "bytes": 58208,
+          "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3"
+        },
+        "CGA320.DRV": {
+          "bytes": 57728,
+          "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4"
+        },
+        "CGA640.DRV": {
+          "bytes": 57312,
+          "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1"
+        },
+        "CGACTL.EXE": {
+          "bytes": 15855,
+          "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d"
+        },
+        "CGAGRAB.GR2": {
+          "bytes": 2104,
+          "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+        },
+        "T80COUR.FON": {
+          "bytes": 4224,
+          "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6"
+        },
+        "XTCFIX.FON": {
+          "bytes": 4208,
+          "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+        },
+        "XTCOEM.FON": {
+          "bytes": 4560,
+          "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+        },
+        "XTCSYS.FON": {
+          "bytes": 4592,
+          "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+        }
+      },
+      "capabilities": "CAPS width=160 height=100 colors=16 dpi=48,40 caption=8 menu=6 scroll=6,6",
+      "machine": {
+        "cpu_family": "8088",
+        "cpu_multi": "1",
+        "cpu_speed": "4772728",
+        "cpu_use_dynarec": "0",
+        "machine": "ibmxt86",
+        "mem_size": "640",
+        "time_sync": "disabled"
+      },
+      "video": {
+        "gfxcard": "cga"
+      },
+      "scope": "All17 installed payload files match the published packet.",
+      "IBM_CGA_adapter": {
+        "display_type": "0",
+        "composite_type": "1",
+        "rgb_type": "0",
+        "snow_enabled": "1",
+        "double_type": "1"
+      }
+    },
+    "native-cga-consumer320-01": {
+      "install_receipt": {
+        "bytes": 2897,
+        "sha256": "eeae1f375d98c06450261abfeb9d32efdcaf28e42b7691960753528d75297047"
+      },
+      "install_receipt_file": "INS320.JSN",
+      "same_published_installed_files": {
+        "CG1COUR.FON": {
+          "bytes": 3536,
+          "sha256": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa"
+        },
+        "CG1FIX.FON": {
+          "bytes": 3776,
+          "sha256": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52"
+        },
+        "CG1HELV.FON": {
+          "bytes": 3536,
+          "sha256": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d"
+        },
+        "CG1OEM.FON": {
+          "bytes": 4080,
+          "sha256": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06"
+        },
+        "CG1SYS.FON": {
+          "bytes": 3536,
+          "sha256": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40"
+        },
+        "CG2HELV.FON": {
+          "bytes": 3760,
+          "sha256": "d1f6878faaf8abd06f425d7672277d6eb6d1097f9994c738ba753655d125afc3"
+        },
+        "CG2SYS.FON": {
+          "bytes": 3760,
+          "sha256": "c0ac9e8753e6b13b5bf0faa5384c85daf94427d813485a47270a62333bbfd222"
+        },
+        "CGA100.DRV": {
+          "bytes": 58208,
+          "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3"
+        },
+        "CGA320.DRV": {
+          "bytes": 57728,
+          "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4"
+        },
+        "CGA640.DRV": {
+          "bytes": 57312,
+          "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1"
+        },
+        "CGACTL.EXE": {
+          "bytes": 15855,
+          "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d"
+        },
+        "CGAGRAB.GR2": {
+          "bytes": 2104,
+          "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+        },
+        "T80COUR.FON": {
+          "bytes": 4224,
+          "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6"
+        },
+        "XTCFIX.FON": {
+          "bytes": 4208,
+          "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+        },
+        "XTCOEM.FON": {
+          "bytes": 4560,
+          "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+        },
+        "XTCSYS.FON": {
+          "bytes": 4592,
+          "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+        }
+      },
+      "capabilities": "CAPS width=320 height=200 colors=4 dpi=96,48 caption=16 menu=14 scroll=18,9",
+      "machine": {
+        "cpu_family": "8088",
+        "cpu_multi": "1",
+        "cpu_speed": "4772728",
+        "cpu_use_dynarec": "0",
+        "machine": "ibmxt86",
+        "mem_size": "640",
+        "time_sync": "disabled"
+      },
+      "video": {
+        "gfxcard": "cga"
+      },
+      "scope": "Recorded 320 run predates replacement of unused T80HELV by CG6HELV; every selected 320 runtime/support byte matches published packet.",
+      "IBM_CGA_adapter": {
+        "display_type": "0",
+        "composite_type": "1",
+        "rgb_type": "0",
+        "snow_enabled": "1",
+        "double_type": "1"
+      }
+    },
+    "native-cga-consumer640-02": {
+      "install_receipt": {
+        "bytes": 2897,
+        "sha256": "76193e40157edbcbd153c88a2c5e1ea1d66e0e44463f4cddfda940963343f595"
+      },
+      "install_receipt_file": "INS640.JSN",
+      "same_published_installed_files": {
+        "CG1COUR.FON": {
+          "bytes": 3536,
+          "sha256": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa"
+        },
+        "CG1FIX.FON": {
+          "bytes": 3776,
+          "sha256": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52"
+        },
+        "CG1HELV.FON": {
+          "bytes": 3536,
+          "sha256": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d"
+        },
+        "CG1OEM.FON": {
+          "bytes": 4080,
+          "sha256": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06"
+        },
+        "CG1SYS.FON": {
+          "bytes": 3536,
+          "sha256": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40"
+        },
+        "CG2HELV.FON": {
+          "bytes": 3760,
+          "sha256": "d1f6878faaf8abd06f425d7672277d6eb6d1097f9994c738ba753655d125afc3"
+        },
+        "CG2SYS.FON": {
+          "bytes": 3760,
+          "sha256": "c0ac9e8753e6b13b5bf0faa5384c85daf94427d813485a47270a62333bbfd222"
+        },
+        "CG6HELV.FON": {
+          "bytes": 4256,
+          "sha256": "d3bccab5f5daea935ca568923d5274315301f93caffd50e2cdcdd4d59735842d"
+        },
+        "CGA100.DRV": {
+          "bytes": 58208,
+          "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3"
+        },
+        "CGA320.DRV": {
+          "bytes": 57728,
+          "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4"
+        },
+        "CGA640.DRV": {
+          "bytes": 57312,
+          "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1"
+        },
+        "CGACTL.EXE": {
+          "bytes": 15855,
+          "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d"
+        },
+        "CGAGRAB.GR2": {
+          "bytes": 2104,
+          "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+        },
+        "T80COUR.FON": {
+          "bytes": 4224,
+          "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6"
+        },
+        "XTCFIX.FON": {
+          "bytes": 4208,
+          "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+        },
+        "XTCOEM.FON": {
+          "bytes": 4560,
+          "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+        },
+        "XTCSYS.FON": {
+          "bytes": 4592,
+          "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+        }
+      },
+      "capabilities": "CAPS width=640 height=200 colors=2 dpi=96,48 caption=16 menu=14 scroll=18,9",
+      "machine": {
+        "cpu_family": "8088",
+        "cpu_multi": "1",
+        "cpu_speed": "4772728",
+        "cpu_use_dynarec": "0",
+        "machine": "ibmxt86",
+        "mem_size": "640",
+        "time_sync": "disabled"
+      },
+      "video": {
+        "gfxcard": "cga"
+      },
+      "scope": "All17 installed payload files match the published packet.",
+      "IBM_CGA_adapter": {
+        "display_type": "0",
+        "composite_type": "1",
+        "rgb_type": "0",
+        "snow_enabled": "1",
+        "double_type": "1"
+      }
+    },
+    "native-cga-paint100-02": {
+      "install_receipt": {
+        "bytes": 2897,
+        "sha256": "ca207622a8af26656db49b1f3949152bfb0659866ee965c2d31dba5f6db9f560"
+      },
+      "install_receipt_file": "INSP100.JSN",
+      "same_published_installed_files": {
+        "CG1COUR.FON": {
+          "bytes": 3536,
+          "sha256": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa"
+        },
+        "CG1FIX.FON": {
+          "bytes": 3776,
+          "sha256": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52"
+        },
+        "CG1HELV.FON": {
+          "bytes": 3536,
+          "sha256": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d"
+        },
+        "CG1OEM.FON": {
+          "bytes": 4080,
+          "sha256": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06"
+        },
+        "CG1SYS.FON": {
+          "bytes": 3536,
+          "sha256": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40"
+        },
+        "CG2HELV.FON": {
+          "bytes": 3760,
+          "sha256": "d1f6878faaf8abd06f425d7672277d6eb6d1097f9994c738ba753655d125afc3"
+        },
+        "CG2SYS.FON": {
+          "bytes": 3760,
+          "sha256": "c0ac9e8753e6b13b5bf0faa5384c85daf94427d813485a47270a62333bbfd222"
+        },
+        "CG6HELV.FON": {
+          "bytes": 4256,
+          "sha256": "d3bccab5f5daea935ca568923d5274315301f93caffd50e2cdcdd4d59735842d"
+        },
+        "CGA100.DRV": {
+          "bytes": 58208,
+          "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3"
+        },
+        "CGA320.DRV": {
+          "bytes": 57728,
+          "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4"
+        },
+        "CGA640.DRV": {
+          "bytes": 57312,
+          "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1"
+        },
+        "CGACTL.EXE": {
+          "bytes": 15855,
+          "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d"
+        },
+        "CGAGRAB.GR2": {
+          "bytes": 2104,
+          "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+        },
+        "T80COUR.FON": {
+          "bytes": 4224,
+          "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6"
+        },
+        "XTCFIX.FON": {
+          "bytes": 4208,
+          "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+        },
+        "XTCOEM.FON": {
+          "bytes": 4560,
+          "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+        },
+        "XTCSYS.FON": {
+          "bytes": 4592,
+          "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+        }
+      },
+      "capabilities": "CAPS width=160 height=100 colors=16 dpi=48,40 caption=8 menu=6 scroll=6,6",
+      "machine": {
+        "cpu_family": "8088",
+        "cpu_multi": "1",
+        "cpu_speed": "4772728",
+        "cpu_use_dynarec": "0",
+        "machine": "ibmxt86",
+        "mem_size": "640",
+        "time_sync": "disabled"
+      },
+      "video": {
+        "gfxcard": "cga"
+      },
+      "scope": "Fresh illustration only. All17 installed payload files match published CGA.ZIP; only input BMP and startup test logs changed.",
+      "completion": {
+        "complete": true,
+        "bound_seconds": 900,
+        "minimum_free_bytes": 536870912,
+        "capture_bound_bytes": 33554432,
+        "host_log_bound_bytes": 33554432,
+        "lease_acquired": true,
+        "queue_seconds": 0.0,
+        "owned_pid": 9404,
+        "emulator": {
+          "bytes": 40974314,
+          "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+        },
+        "rom_floppy_prompt_acknowledged": true,
+        "owned_stopped": true,
+        "lease_released": true,
+        "seconds": 555.6099999998696
+      },
+      "normal_DOS_return": {
+        "marker": "RETURNED",
+        "BIOS_mode": 3,
+        "conventional_kb": 640
+      }
+    }
+  }
+}
