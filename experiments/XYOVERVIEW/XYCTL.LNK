@@ -2,3 +2,8 @@ system windows
 name XYCTL.EXE
 option map=XYCTL.MAP
 file XYCTL.obj
+file PANSET.obj
+file PANDLG.obj
+file WDCORE.obj
+file WDWIN.obj
+file WTPLACE.obj

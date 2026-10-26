@@ -1,0 +1,115 @@
+{
+  "status": "LOCAL_WINDOW_SERVICE_AND_BACKEND_QUALIFIED_FOR_REVIEW",
+  "publication": "Approved for source/package publication; public identities recorded by release catalog",
+  "display": {
+    "producer": "57f76a3e2615fd6ebcb8e0e9cdd164f5d52d81e3",
+    "main_base": "d9b5093ce11a070e8846d7761cc6877f1f718e38",
+    "pr198": "204787446d5d7ee24c2752749f594caeb4803fe1"
+  },
+  "library": {
+    "producer": "fed2d6a32a0f08db44c50f01f4d1c9f157b3e44b",
+    "main_snapshot": "825257605dda5948347617c694683c0aa9418d0c",
+    "module": "libtandywin/PLACE",
+    "published_commit": "c3c57780d1e605191b1dd61aabc06b79c221a263"
+  },
+  "api": [
+    "WTPlaceAvailable",
+    "WTPlaceInit",
+    "WTPlaceGet",
+    "WTPlaceSetNormal"
+  ],
+  "contract": {
+    "windows": "3.0 real mode, 8086/8088 instructions",
+    "record_bytes": 20,
+    "window_entry_bytes": 24,
+    "window_limit": 24,
+    "workspace": [
+      2048,
+      2048
+    ],
+    "adapter_static_bytes": 1404,
+    "new_trackers": 0,
+    "new_timers": 0,
+    "new_hooks": 0,
+    "desktop_bitmap_allocations": 0,
+    "USER_modifications": false,
+    "drop_in_placement_backport": false
+  },
+  "shared_source": {
+    "WDCORE.C": {
+      "bytes": 10060,
+      "sha256": "66e20b18a618b18ccca0ede3daa706e6ecfc36efdd88c1625796a581bbaa7723"
+    },
+    "WDCORE.H": {
+      "bytes": 4934,
+      "sha256": "30969b4c4314e718391200330ddd4f13b6b6adeb237f6ad5a6ddf8ee0c7d4739"
+    },
+    "WDWIN.C": {
+      "bytes": 13520,
+      "sha256": "98a17659e534e50e29fc6b0905591e057a2f461108d865a0adc5bf3d93010ad4"
+    },
+    "WDWIN.H": {
+      "bytes": 2651,
+      "sha256": "8d009036884444dfdb66b76c6cbc1e6beb2e5e869c511b0c447069534b9edfbf"
+    },
+    "WTPLACE.C": {
+      "bytes": 6192,
+      "sha256": "30e822766219f1d6bea9ef5b86fc625dac2828502076adef192903f976f34f56"
+    },
+    "WTPLACE.H": {
+      "bytes": 1843,
+      "sha256": "af77584f4676029813a6e39e172b4362f0ef79dcae42df5303a2c857b3564ce1"
+    }
+  },
+  "binaries": {
+    "XTPAN.EXE": {
+      "bytes": 29199,
+      "sha256": "1be552fa6022f736da6a97676daf5741eb3d29e90277d5d75dc5de11adefe862"
+    },
+    "PANCFG.EXE": {
+      "bytes": 10191,
+      "sha256": "8960e0d49653b2b252049cd200ac5f8f0280951e264df31e761213cb53bafc4c"
+    },
+    "XYCTL.EXE": {
+      "bytes": 29644,
+      "sha256": "3d3dc2dc72e7772bac6a47c68c35f94ffb8e1729635245ca6c674ca6cf24e79f"
+    }
+  },
+  "checks": {
+    "placement_host": 393,
+    "adapter_host": 425,
+    "core_host": 30705,
+    "core_negative_controls": 3,
+    "build_gates": "7/7 PASS",
+    "HOSTUI": "PASS, real managed GCC with -x c",
+    "native_pcjr_seconds": 417.62,
+    "native_maximized_seconds": 37.34,
+    "independent_review": "no findings"
+  },
+  "native_scope": {
+    "PCjr": "DOSBox-X PCjr, 8086_prefetch, normal640KiB, existing JRGUARD, fixed TNDYJR.DRV320x200; both helper frontends in window mode",
+    "CGA": "DOSBox-X stock CGA640x200,8086_prefetch, real USER3.0; visible maximized recovery",
+    "physical_qualification": false,
+    "hardware_panning_claim": false,
+    "XYCTL_native_backend": "window workspace on fixed PCjr profile"
+  },
+  "memory": {
+    "includes_test_observer": true,
+    "pcjr_observations": "UITEST_ENTRY=314176\nUITEST_TIMER=314176\nBEFORE_HELPER=313024\nHELPER_OPEN=294112\nHELPER_OFF=269280\nFINAL_NO_HELPER=310592\n",
+    "helper_open_delta": 18912,
+    "post_app_and_two_helper_cycle_residual": 2432,
+    "residual_attribution": "not measured; no exact-return or leak claim"
+  },
+  "preservation": {
+    "accepted_packages_and_drivers": "byte-identical to main base",
+    "library_audio_paths": "unchanged",
+    "existing_current_installers": "unchanged"
+  },
+  "corrections": [
+    "Earlier probe03 PASS invalidated: WDHOME -4 was not asserted. Replaced by strict first-Home/current UI checks.",
+    "Hidden-anchor rejection diagnosis superseded: original Win30 SDK specifies void SetWindowPos and EndDeferWindowPos; undefined returns caused false errors.",
+    "Transient icon-title creation still requires unrelated owned-group anchor/readback; no class-number assumption.",
+    "Test-only trace builds are excluded from all candidate identities.",
+    "Optional Calculator startup probe on accepted CPPAN exceeded 90 seconds with and without XTPAN; partial paint was observed. Retained separately from focused Notepad helper acceptance, no new-helper regression or physical performance claim."
+  ]
+}

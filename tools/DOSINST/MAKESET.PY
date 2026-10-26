@@ -1,6 +1,7 @@
 """Generate expanded input aliases and the portable OEM metadata output."""
 from pathlib import Path
 import hashlib
+import importlib.machinery
 import zlib
 HERE = Path(__file__).resolve().parent
 
@@ -24,6 +25,9 @@ def generate():
     crcs = crcs.replace(b'/* WINXT\\\\OEMSETUP.INF */', b'/* WINXT\\\\HPXY.INF */')
     assert crcs.count(b'};') == 1
     crcs = crcs.replace(b'};',b'0x00000000UL, /* WINXT\\\\OEMSETUP.INF */\r\n};')
+    panui = importlib.machinery.SourceFileLoader(
+        "current_panui_aliases", str(HERE / "PANUI.PY")).load_module()
+    pins, files = panui.aliases(pins, files)
     return {"SETPINS.H":pins,"SETFILES.H":files,"SETINPUT.H":crcs}
 
 if __name__ == "__main__":

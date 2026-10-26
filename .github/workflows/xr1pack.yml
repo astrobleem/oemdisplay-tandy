@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Check out exact public event commit without credentials
         env:
-          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           SOURCE_REPOSITORY: ${{ github.repository }}
           GIT_TERMINAL_PROMPT: '0'
         run: |
@@ -30,13 +30,13 @@ jobs:
           git remote add origin "https://github.com/${SOURCE_REPOSITORY}.git"
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git sparse-checkout init --no-cone
-          printf '/distributions/WINXT/CGA.GR2\n/tools/XR1PACK/\n/tools/DOSINST/\n/tools/XROEM/\n/tools/SOUNDOWN/\n/docs/QUAL/DOSINST/\n/docs/RELEASES/RC8.MD\n/.github/\n/.gitattributes\n/AGENTS.md\n' | git sparse-checkout set --no-cone --stdin
+          printf '/distributions/WINXT/CGA.GR2\n/tools/XR1PACK/\n/tools/DOSINST/\n/tools/XROEM/\n/tools/SOUNDOWN/\n/docs/QUAL/DOSINST/\n/docs/QUAL/PANUI/\n/docs/QUAL/WDESK/\n/src/panui/\n/src/wdesk/\n/src/xtpan/\n/src/softpan/\n/experiments/XYOVERVIEW/\n/tools/PANUI/\n/tools/SPPACK/\n/docs/RELEASES/RC8.MD\n/.github/\n/.gitattributes\n/AGENTS.md\n' | git sparse-checkout set --no-cone --stdin
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
 
       - name: Check preparation boundaries and closed release inventory
         env:
-          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           python3 tools/XR1PACK/TESTPREP.PY
           python3 tools/XR1PACK/TESTPUB.PY

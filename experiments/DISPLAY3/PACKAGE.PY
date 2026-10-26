@@ -24,7 +24,7 @@ SOURCE_FILES = (
     "src/pcjr/BUILDCOM.PY", "src/pcjr/PCJSIMG.PY",
     "docs/PC1512.MD", "docs/PCP.MD", "docs/PCJR.MD", "src/tandysw/PROVENANCE.md",
     "tools/BUILDDEPS/DEPS.PY", "tools/BUILDDEPS/LOCK.JSON", "tools/BUILDDEPS/README.MD")
-SOURCE_SUFFIXES = {".PY", ".ASM", ".MD", ".TXT", ".JSN", ".JSON", ".BAT", ".PNG", ".BMP"}
+SOURCE_SUFFIXES = {".PY", ".ASM", ".MD", ".TXT", ".JSN", ".JSON", ".BAT", ".PNG", ".BMP", ".FIX"}
 
 
 def sha(data):

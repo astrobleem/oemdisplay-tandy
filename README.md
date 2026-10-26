@@ -28,6 +28,8 @@ It contains `SETUP.EXE`, `README.TXT` and an expanded `WINXT` folder.
   without running the custom installer.
 
 Follow [installation](docs/DESKTOP.MD) for the normal Setup and launch entries.
+See [Panning settings](docs/PANNING.MD) for the available viewport approaches
+and the window workspace on fixed-resolution drivers.
 
 Other hardware profiles and apps are in [current downloads](docs/DOWNLOADS.MD).
 Each product has one current packet and a short install guide.
@@ -92,7 +94,7 @@ Try [Pinball](examples/PINBALL/README.MD), [Cookie Clicker](examples/COOKIE/READ
 The [desktop bundle](docs/DESKTOP.MD) includes Maze, Pinball, Starfield and Matrix.
 
 The separate [Tandy sound companion](https://github.com/astrobleem/oemsound-tandy)
-includes Winamp's playlist player, PSG music and Beats/Fiddle tools.
+includes Winamp's playlist player, PSG music and Tandy Beats Lab/Fiddle tools.
 [Download Tandy Winamp](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TWXT2.ZIP) ·
 [App and sound details](docs/SHOWCASE.MD#apps-input-and-sound)
 

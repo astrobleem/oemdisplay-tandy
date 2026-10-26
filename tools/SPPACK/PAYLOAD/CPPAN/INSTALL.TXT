@@ -20,9 +20,18 @@ USE
 Move the pointer beyond the viewport or dwell at its upper/lower edge.
 Alt+PgDn pans down; Alt+PgUp pans up; Alt+F9 returns to the top.
 Newly activated windows are brought into view.
+Run C:\CPPAN\PANCFG SETTINGS for step, edge, dwell and window-follow settings.
+Apply saves changes; Cancel discards edits. Reopening reuses the same helper.
 
 RETURN TO FIXED 320x200
 Run C:\CPPAN\PANCFG OFF from Windows File > Run. Exit Windows,
 run C:\CPPAN\INSTALL again, and select Display, Other, C:\CPPAN,
 then ColorPlus 320x200 fixed (rollback).
 Continue using C:\CPPAN\CPWIN to start Windows.
+
+WINDOW WORKSPACE ON THE FIXED DRIVER
+After selecting the fixed 320x200 driver, run PANCFG SETTINGS from this
+packet inside Windows. The settings offer a 2048x2048 window workspace
+with up to 24 application windows. It moves windows instead of allocating
+a larger display bitmap. Home and PANCFG OFF bring them back into reach.
+Use the larger 320x400 driver for framebuffer panning instead.

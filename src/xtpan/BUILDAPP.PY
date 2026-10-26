@@ -7,25 +7,29 @@ pinned DOS toolchain (CL /G0 /Gw /AS, LINK4), as examples/MAZE does.
 """
 import argparse
 import hashlib
+import importlib.machinery
 import json
 import os
 import shutil
-import subprocess
-import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 FILES = ("XTPAN.C", "XTPAN.DEF", "XTPAN.RSP", "PANTEST.C", "PANTEST.DEF", "PANTEST.RSP", "BUILD.BAT")
+PANUI_FILES = ("PANSET.C", "PANSET.H", "PANDLG.C", "PANDLG.H")
 CONF = """[sdl]
 fullscreen=false
 output=surface
 [dosbox]
 machine=tandy
-memsize=16
+memsize=1
 [cpu]
 core=normal
 cputype=8086_prefetch
 cycles=fixed 200000
+[dos]
+xms=false
+ems=false
+umb=false
 [mixer]
 nosound=true
 [midi]
@@ -44,6 +48,8 @@ def main():
     ap.add_argument("--dosbox", type=Path, required=True)
     ap.add_argument("--repo", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--placement", type=Path, default=HERE.parent / "wdesk/PLACE",
+                    help="explicit libwintandy/libtandywin/PLACE source directory")
     a = ap.parse_args()
     repo, out = a.repo.resolve(), a.out.resolve()
     if out.exists():
@@ -51,31 +57,30 @@ def main():
     for n in ("BIN/CL.EXE", "BIN/LINK4.EXE", "LIB/SLIBCEW.LIB", "LIB/LIBW.LIB"):
         if not (repo / n).is_file():
             ap.error("missing toolchain input: " + n)
+    for n in ("WTPLACE.C", "WTPLACE.H"):
+        if not (a.placement / n).is_file():
+            ap.error("missing placement source: " + n)
     out.mkdir(parents=True)
     for n in FILES:
         data = (HERE / n).read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
         (out / n).write_bytes(data)
+    for n in PANUI_FILES:
+        data = (HERE.parent / "panui" / n).read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
+        (out / n).write_bytes(data)
+    for n in ("WDCORE.C", "WDCORE.H", "WDWIN.C", "WDWIN.H"):
+        shutil.copyfile(HERE.parent / "wdesk" / n, out / n)
+    for n in ("WTPLACE.C", "WTPLACE.H"):
+        shutil.copyfile(a.placement / n, out / n)
     (out / "BUILD.CNF").write_text(CONF.format(repo=repo, out=out))
     env = dict(os.environ, SDL_VIDEODRIVER="dummy", SDL_AUDIODRIVER="dummy")
-    passed = False
-    with (out / "HOST.LOG").open("wb") as log:
-        proc = subprocess.Popen([str(a.dosbox.resolve()), "-nopromptfolder", "-conf", str(out / "BUILD.CNF")],
-                                stdout=log, stderr=subprocess.STDOUT, env=env)
-        deadline = time.monotonic() + 240
-        try:
-            while time.monotonic() < deadline:
-                text = (out / "BUILD.LOG").read_text(errors="replace") if (out / "BUILD.LOG").exists() else ""
-                if "PASS" in text:
-                    passed = True
-                    break
-                if "FAIL" in text or proc.poll() is not None:
-                    break
-                time.sleep(0.2)
-        finally:
-            if proc.poll() is None:
-                proc.kill()
-            proc.wait()
-    if not passed:
+    module = importlib.machinery.SourceFileLoader(
+        'xt_run', str(HERE.parent / 'softpan' / 'WINRUN.PY')).load_module()
+    runner = module.Runner(out / 'LEASE.JSON')
+    with runner.lease():
+        runner.run([a.dosbox.resolve(), '-nopromptfolder', '-conf', out / 'BUILD.CNF'],
+                   env, out / 'HOST.LOG', timeout=240)
+    text = (out / "BUILD.LOG").read_text(errors="replace") if (out / "BUILD.LOG").exists() else ""
+    if "PASS" not in text or "FAIL" in text or "error " in text.lower():
         print((out / "BUILD.LOG").read_text(errors="replace") if (out / "BUILD.LOG").exists() else "no BUILD.LOG")
         raise SystemExit("BUILDAPP: build failed; inspect BUILD.LOG and HOST.LOG")
     res = {}

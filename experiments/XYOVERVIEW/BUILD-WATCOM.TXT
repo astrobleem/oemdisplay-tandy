@@ -33,3 +33,22 @@ physical Tandy 1000EX hardware. No new emulator run was made during this
 integration step. See RUN08-STATUS.TXT for accepted assertions and remaining
 qualification limits. The machine-readable hash record accompanies this source
 set; no binaries or guest disk are included.
+
+SETTINGS UI ADDITION (compile- and link-checked only; not run or qualified)
+
+The settings UI adds two shared modules under src/panui: PANSET.C/H (pure
+logic) and PANDLG.C/H (Win16 window). With Open Watcom wcc/wlink (flags below)
+XYCTL.C, PANSET.C and PANDLG.C compile with 0 warnings and 0 errors and
+XYCTL.LNK links a 16-bit Windows XYCTL.EXE. It has not been run on Windows
+3.0 or on a Tandy and is not qualified. XYCTL.LNK now links PANSET.obj and
+PANDLG.obj after XYCTL.obj.
+
+Additional compile commands (PANSET.H and PANDLG.H must sit in the flat copy
+folder named by -I, next to the copied sources):
+
+  C:\WATCOM\BINNT\WCC.EXE -zW -0 -ms -IC:\WATCOM\H -IC:\WATCOM\H\WIN -I<flat-dir> PANSET.C
+  C:\WATCOM\BINNT\WCC.EXE -zW -0 -ms -IC:\WATCOM\H -IC:\WATCOM\H\WIN -I<flat-dir> PANDLG.C
+
+XYCTL.C now needs PANSET.C and PANDLG.C copied beside it, and XYCTL.C must be
+recompiled before XYCTL.LNK is linked. The source and executable hashes listed
+above describe the pre-change source only; they do not cover this addition.

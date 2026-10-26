@@ -37,7 +37,7 @@
       }
     },
     "PAYLOAD/FIXXT.EXE": {
-      "source": "tools/DOSINST/BIN/FIXXT.EXE",
+      "source": "tools/XR1PACK/PAYLOAD/FIXXT.EXE",
       "identity": {
         "bytes": 33001,
         "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"

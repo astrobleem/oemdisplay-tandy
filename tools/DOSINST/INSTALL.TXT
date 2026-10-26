@@ -19,6 +19,17 @@ Complete Changes, giving the same folder when Setup requests its disk.
 Start later sessions with DISPWIN from the expanded WINXT folder.
 See WINXT\DISPLAY.TXT for another Windows directory and viewport controls.
 
+PANNING SETTINGS
+In the XY overview choose Options, Panning settings. Apply saves the
+available edge, repeat and dialog-follow settings; Cancel discards edits.
+Software/Hardware shows the effective mode reported by the driver.
+Each new XYCTL session starts in software mode. Reopening settings reuses
+the running owner. For drivers-only, run XYCTL /SETTINGS from this packet's
+expanded WINXT folder using Windows File, Run.
+On fixed 320x200 or 640x200 drivers, explicit /SETTINGS offers a window
+workspace. Home or closing the helper brings its windows back into reach.
+The HPXY virtual display keeps its existing Software/Hardware choices.
+
 Fonts, grabber and logos are included. Original Windows/DOS are required.
 Component notices and licences are in WINXT. SOUND source: WINXTSRC.ZIP
 beside the download at https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt

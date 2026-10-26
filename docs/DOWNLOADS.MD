@@ -16,8 +16,8 @@ Choose your hardware or application. You supply DOS and Windows 3.0.
 | Standalone Yamaha B800h | [YAMAHA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/YAMAHA.ZIP) | [Yamaha](../experiments/YAMAHA/README.MD) |
 | Text-mode Windows, starting with compact C25 | [TEXT80.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TEXT80.ZIP) | [Text mode](../downloads/experimental/TEXT80/README.MD) |
 | Tandy Winamp and sound driver | [TWXT2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TWXT2.ZIP) | [Sound setup](https://github.com/astrobleem/oemsound-tandy/blob/main/experimental/WINAMP30/INSTALL.TXT) |
-| MML/Beats music tools | [MML3AUTH.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/MML3AUTH.ZIP) | [Included INSTALL.TXT](https://github.com/astrobleem/oemsound-tandy/blob/main/docs/DOWNLOADS.MD) |
-| PIT speaker tools | [PITEXPR.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PITEXPR.ZIP) | [Included INSTALL.TXT](https://github.com/astrobleem/oemsound-tandy/blob/main/docs/DOWNLOADS.MD) |
+| Tandy Beats Lab + Fiddle | [MML3AUTH.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/MML3AUTH.ZIP) | [Included INSTALL.TXT](https://github.com/astrobleem/oemsound-tandy/blob/main/docs/DOWNLOADS.MD) |
+| Tandy Beats Lab + instruments | [PITEXPR.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PITEXPR.ZIP) | [Included INSTALL.TXT](https://github.com/astrobleem/oemsound-tandy/blob/main/docs/DOWNLOADS.MD) |
 | DOS PSG sound test | [PITDOS.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PITDOS.ZIP) | Included README |
 | Minesweeper with app-local About helper | [MINESET.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/MINESET.ZIP) | [Minesweeper](../tools/CURRENT/GUIDES/MINESET.TXT) |
 | Cookie Clicker | [COOKSET.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/COOKSET.ZIP) | [Cookie](../tools/CURRENT/GUIDES/COOKSET.TXT) |
@@ -26,3 +26,7 @@ Choose your hardware or application. You supply DOS and Windows 3.0.
 Full installation and drivers only use the same WINXT.ZIP. Other rows are
 hardware or application choices, rather than a sequence of software versions.
 Developer source and build inputs are grouped separately in the release.
+
+Both sound-app kits include the same Tandy Beats Lab with five editable lanes,
+pattern Save/Load and original demos. Choose Fiddle or the Mini Piano/JoyMIDI/
+MiniMIDI companions. Beats needs a desktop at least 320 pixels wide.

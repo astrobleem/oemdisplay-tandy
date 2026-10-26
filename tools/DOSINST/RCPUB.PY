@@ -100,6 +100,10 @@ def qualified_core(entries):
 
 def expanded_entries():
     core = qualified_core(collect())
+    panui = importlib.machinery.SourceFileLoader(
+        "current_panui_inputs", str(HERE / "PANUI.PY")).load_module()
+    core = dict(core)
+    core.update({"PAYLOAD/" + n: b for n, b in panui.runtimes().items()})
     native = json.loads((HERE / "SETNAT.JSN").read_bytes())
     helper = pub.read_file(HERE, "BIN/SETUP.EXE")
     pub.require(pub.identity(helper) == native["binary"], "Expanded Setup binary differs")
@@ -135,6 +139,13 @@ def expanded_entries():
 
 def expanded_qualification(entries, archive):
     q = json.loads((REPO / "docs/QUAL/DOSINST/EXPAND.JSN").read_bytes())
+    if q["archive"] != pub.identity(archive):
+        try:
+            panui = importlib.machinery.SourceFileLoader(
+                "current_panui_package", str(HERE / "PANUI.PY")).load_module()
+            return panui.qualify(entries, archive, q)
+        except FileNotFoundError as exc:
+            raise ValueError("Current panning package qualification missing") from exc
     pub.require(q["status"] == "PASS_EXPANDED_NATIVE" and q["physical_test"] is False,
                 "Expanded installer qualification incomplete")
     pub.require(q["archive"] == pub.identity(archive), "Expanded archive differs from native test input")
@@ -180,12 +191,14 @@ def build(output, commit, verify=False):
     entries = expanded_entries()
     archive = pub.zip_bytes(entries)
     pub.check_zip(archive, entries, "WINXT.ZIP")
-    expanded_qualification(entries, archive)
+    qualification = expanded_qualification(entries, archive)
     # Complete corresponding SOUND source is a separate developer asset;
     # the consumer tree contains only expanded runtime, notices and licences.
     source = pub.read_file(REPO, "tools/XR1PACK/SOUNDSRC.ZIP")
     report = {"schema": 2, "tag": "windows-xt", "source_commit": commit,
-              "native_report": "docs/QUAL/DOSINST/EXPAND.JSN", "physical_qualification": False,
+              "native_report": ("docs/QUAL/WDESK/PACKAGE.JSN" if
+                                qualification["status"] == "PASS_NATIVE_PACKAGE" else
+                                "docs/QUAL/DOSINST/EXPAND.JSN"), "physical_qualification": False,
               "archive": pub.identity(archive), "sound_source": pub.identity(source),
               "files": {n: pub.identity(d) for n, d in sorted(entries.items())}}
     assets = {"WINXT.ZIP": archive, "WINXTSRC.ZIP": source, "WINXT.JSN": pub.json_bytes(report)}

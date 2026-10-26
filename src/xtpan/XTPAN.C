@@ -17,10 +17,14 @@
  *     brought into view with the smallest exact move (FollowTop; dialogs
  *     are centred on the 400-row desktop).
  * Settings: WIN.INI [XTPan]. Enabled=0 makes the helper exit at once.
+ * "PANCFG SETTINGS" (or XTPAN /SETTINGS) opens the shared panning settings
+ * window of the running helper (PANDLG.C); it adds no timer and no hook.
  * With any other display driver the escape is unsupported and the helper
  * exits quietly. C89, /G0 /Gw /AS.
  */
 #include <windows.h>
+#include "PANDLG.H"
+#include "WDWIN.H"
 
 #define XTPAN_ESC 0x5850
 #define QUERYESC 8
@@ -35,6 +39,15 @@ static int bLogKeys;
 static DWORD dwSeen[3];         /* last time Ctrl, Alt, Shift was seen down */
 static HWND hLastActive;
 static char szLog[80];
+static HANDLE hInstance;
+static UINT uOpenMsg;
+static PANHOST host;
+static int bDesk, nDeskX, nDeskW, nDeskArrow;
+
+static void DeskRefresh(void)
+{
+    WDWinViewport(&nDeskX, &nTop);
+}
 
 static void LogLine(LPSTR text)
 {
@@ -84,7 +97,17 @@ static int PanEscape(int want)
 static void KeepPointer(void)
 {
     POINT pt;
+    int x, y;
     GetCursorPos(&pt);
+    if (bDesk) {
+        x = pt.x;y = pt.y;
+        if (pt.x < 0) pt.x = 0;
+        if (pt.x >= nDeskW) pt.x = nDeskW - 1;
+        if (pt.y < 0) pt.y = 0;
+        if (pt.y >= nView) pt.y = nView - 1;
+        if (x != pt.x || y != pt.y) SetCursorPos(pt.x, pt.y);
+        return;
+    }
     if (pt.y < nTop)
         SetCursorPos(pt.x, nTop + nEdge);
     else if (pt.y >= nTop + nView)
@@ -96,6 +119,11 @@ static void PanTo(int want, LPSTR why)
     char buf[96];
     int from = nTop;
     DWORD t0, t1;
+    if (bDesk) {
+        (void)WDWinPan(nDeskX, want);
+        DeskRefresh();
+        return;
+    }
     if (want < 0)
         want = 0;
     if (want > nLogical - nView)
@@ -169,7 +197,10 @@ static void Keys(void)
             PanTo(nTop + nStep, "key-down");
         else if (which == 2)
             PanTo(nTop - nStep, "key-up");
-        else
+        else if (bDesk) {
+            (void)WDWinHome();
+            DeskRefresh();
+        } else
             PanTo(0, "key-top");
         KeepPointer();
     }
@@ -221,7 +252,7 @@ static void Follow(void)
     KeepPointer();
 }
 
-static void Tick(void)
+static void FrameTick(void)
 {
     POINT pt;
     int dir = 0;
@@ -254,13 +285,161 @@ static void Tick(void)
     }
 }
 
+/* One existing timer, one selected engine. The framebuffer timer above is
+ * left intact, including the exact softpan sync_helper transformation. */
+static void Tick(void)
+{
+    POINT pt;
+    int dx = 0, dy = 0, dir, arrows;
+    DWORD now;
+    if (!bDesk) { FrameTick(); return; }
+    DeskRefresh();
+    (void)WDWinPan(nDeskX, nTop); /* reconcile restores/open/close, no new timer */
+    Keys();
+    arrows = Held(VK_CONTROL) && Held(VK_MENU);
+    if (arrows) {
+        dx = Held(VK_RIGHT) - Held(VK_LEFT);
+        dy = Held(VK_DOWN) - Held(VK_UP);
+    }
+    if ((dx || dy) && !nDeskArrow) {
+        (void)WDWinPanBy(dx * nStep, dy * nStep);
+        DeskRefresh();
+    }
+    nDeskArrow = dx || dy;
+    KeepPointer();GetCursorPos(&pt);dx = dy = 0;
+    if (pt.x < nEdge && nDeskX > 0) dx = -1;
+    else if (pt.x >= nDeskW - nEdge && nDeskX < 2048 - nDeskW) dx = 1;
+    if (pt.y < nEdge && nTop > 0) dy = -1;
+    else if (pt.y >= nView - nEdge && nTop < 2048 - nView) dy = 1;
+    dir = dx + 3 * dy;now = GetCurrentTime();
+    if (dir != nEdgeDir) { nEdgeDir = dir;dwEdgeSince = now;return; }
+    if (dir && now - dwEdgeSince >= (DWORD)nDwell) {
+        (void)WDWinPanBy(dx * nStep, dy * nStep);DeskRefresh();dwEdgeSince = now;
+    }
+}
+
+/* Settings window glue: the dialog edits what Tick() already uses. */
+/* The command line is far; PANSET takes near strings. */
+static void CopyArg(char *d, LPSTR s, int cap)
+{
+    int i = 0;
+    while (s[i] && i < cap - 1) {
+        d[i] = s[i];
+        i++;
+    }
+    d[i] = 0;
+}
+
+static int IniGet(void *ctx, const char *sec, const char *key, int def)
+{
+    return (int)GetProfileInt(sec, key, def);
+}
+
+static int IniPut(void *ctx, const char *sec, const char *key, int value)
+{
+    char buf[12];
+    wsprintf(buf, "%d", value);
+    return WriteProfileString(sec, key, buf);
+}
+
+static int XtQuery(void *ctx, PANCAPS *c, PANSET *s)
+{
+    if (!bDesk && PanEscape(-1) < 0) {
+        c->backend = PS_BACK_NONE;
+        c->caps = 0;
+        return 0;
+    }
+    c->backend = PS_BACK_VERT;
+    c->caps = PanCapsFor(PS_BACK_VERT, 0);
+    if (bDesk) {
+        DeskRefresh();
+        host.backend = WDWinDropped() ? "Window limit: close windows or use Home" :
+                                        "Window workspace (24 windows)";
+        c->caps = (c->caps & ~(PS_CAP_SOFT | PS_CAP_FOLLOW)) |
+                  PS_CAP_MODE | PS_CAP_DESK;
+    }
+    c->viewX = bDesk ? nDeskX : 0;
+    c->viewY = nTop;
+    c->viewW = c->workW = GetSystemMetrics(SM_CXSCREEN);
+    c->viewH = nView;
+    c->workH = nLogical;
+    if (bDesk) c->workW = 2048;
+    PanSetDefaults(PS_BACK_VERT, s);
+    s->step = nStep;
+    s->dwell = nDwell;
+    s->edge = nEdge;
+    s->follow = bFollow != 0;
+    if (bDesk) s->mode = PS_MODE_DESK;
+    return 1;
+}
+
+static int XtApply(void *ctx, const PANSET *w, PANSET *actual, char *note, int cap)
+{
+    if (bDesk && w->mode != PS_MODE_DESK)
+        return PS_E_APPLY;
+    if (!bDesk && PanEscape(-1) < 0)
+        return PS_E_LOST;
+    nStep = w->step;
+    nDwell = w->dwell;
+    nEdge = w->edge;
+    bFollow = w->follow;
+    /* a pending edge dwell was timed with the old band and delay */
+    nEdgeDir = 0;
+    dwEdgeSince = GetCurrentTime();
+    PanSetDefaults(PS_BACK_VERT, actual);
+    actual->step = nStep;
+    actual->dwell = nDwell;
+    actual->edge = nEdge;
+    actual->follow = bFollow;
+    if (bDesk) actual->mode = PS_MODE_DESK;
+    note[0] = 0;
+    return PS_OK;
+}
+
+static int XtHome(void *ctx)
+{
+    if (bDesk) {
+        int ok = WDWinHome() >= 0;
+        DeskRefresh();KeepPointer();return ok;
+    }
+    if (PanEscape(-1) < 0)
+        return 0;
+    PanTo(0, "home");
+    KeepPointer();
+    return PanEscape(-1) >= 0 && nTop == 0;
+}
+
+static void OpenSettings(void)
+{
+    PanDlgOpen(hInstance, &host);
+}
+
 long FAR PASCAL WndProc(HWND hwnd, unsigned msg, WORD wParam, LONG lParam)
 {
+    if (uOpenMsg && msg == uOpenMsg) {
+        OpenSettings();
+        return 0;
+    }
     switch (msg) {
+    case WM_QUERYENDSESSION:
+        return !bDesk || WDWinPrepareShutdown() >= 0;
+    case WM_ENDSESSION:
+        if (wParam && bDesk) (void)WDWinShutdown();
+        return 0;
+    case WM_CLOSE:
+        if (bDesk && WDWinShutdown() < 0) {
+            MessageBox(hwnd, "Windows could not finish recovering a window. Use Home before closing the workspace.",
+                       "Window workspace", MB_OK | MB_ICONEXCLAMATION);
+            return 0;
+        }
+        DestroyWindow(hwnd);return 0;
     case WM_TIMER:
         Tick();
+        PanDlgTrack();
         return 0;
     case WM_DESTROY:
+        if (bDesk) (void)WDWinShutdown();
+        PanDlgClose();
         KillTimer(hwnd, 1);
         PostQuitMessage(0);
         return 0;
@@ -273,10 +452,31 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
     WNDCLASS wc;
     MSG msg;
     int esc = XTPAN_ESC;
-    char buf[96];
+    char buf[96], arg[24];
+    int settings;
+    HWND hOwner;
 
-    if (hPrev)
+    /* One owner: a second copy only asks the first to open its settings. */
+    CopyArg(arg, lpCmd, sizeof(arg));
+    settings = PanCmdParse(arg) == PS_CMD_SETTINGS;
+    uOpenMsg = RegisterWindowMessage(PS_MSG_VERT);
+    /* A fixed display can use either helper's linked window workspace.
+     * Forward to its existing owner before starting a second tracker. */
+    hOwner = FindWindow("XYOverviewControl", NULL);
+    if (hOwner) {
+        if (settings)
+            PostMessage(hOwner, RegisterWindowMessage(PS_MSG_XY), 0, 0L);
         return 0;
+    }
+    switch (PanOwnerStart(hPrev != 0, settings)) {
+    case PS_OWN_FORWARD:
+        hOwner = FindWindow("XTPan", NULL);
+        if (hOwner)
+            PostMessage(hOwner, uOpenMsg, 0, 0L);
+        return 0;
+    case PS_OWN_EXIT:
+        return 0;
+    }
     if (!GetProfileInt("XTPan", "Enabled", 1))
         return 0;
     nStep = GetProfileInt("XTPan", "Step", 50);
@@ -296,7 +496,24 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
 
     if (ScreenEscape(QUERYESC, sizeof(int), (LPSTR)&esc, NULL) <= 0 || PanEscape(-1) < 0) {
         LogLine("START no XTPAN driver: helper exits");
-        return 0;
+        /* Explicit Settings is the opt-in entry on a fixed graphics mode.
+         * Never treat the larger logical screen of a pan driver as visible. */
+        nDeskW = GetSystemMetrics(SM_CXSCREEN);
+        nView = GetSystemMetrics(SM_CYSCREEN);
+        if (!settings) return 0;
+        if ((nDeskW != 320 && nDeskW != 640) || nView != 200 ||
+            WDWinInit(2048, 2048) != WD_OK) {
+            MessageBox(NULL, "Window workspace needs a fixed 320x200 or 640x200 display.",
+                       "Panning settings", MB_OK | MB_ICONINFORMATION);
+            return 0;
+        }
+        bDesk = 1;nLogical = 2048;nTop = 0;
+        if (nStep > 2048) nStep = 2048;
+        if (nEdge > nView / 2) nEdge = nView / 2;
+        if (nDwell < 0) nDwell = 0;
+        if (nDwell > 10000) nDwell = 10000;
+        (void)WDWinExclude((LPCSTR)"Progman");
+        (void)WDWinExclude((LPCSTR)"TandyStart");
     }
     wsprintf(buf, "START top=%d view=%d logical=%d step=%d dwell=%d edge=%d free=%lu",
              nTop, nView, nLogical, nStep, nDwell, nEdge, GetFreeSpace(0));
@@ -317,7 +534,19 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
     hMain = CreateWindow("XTPan", "XTPan", WS_POPUP, 0, 0, 0, 0, NULL, NULL, hInst, NULL);
     if (!hMain || !SetTimer(hMain, 1, 55, NULL))
         return 0;
+    hInstance = hInst;
+    host.ops.query = XtQuery;
+    host.ops.apply = XtApply;
+    host.ops.home = XtHome;
+    host.store.get = IniGet;
+    host.store.put = IniPut;
+    host.title = "XTPAN panning settings";
+    host.backend = bDesk ? "Window workspace (24 windows)" : "Vertical software pan";
+    if (settings)
+        PostMessage(hMain, uOpenMsg, 0, 0L);
     while (GetMessage(&msg, NULL, 0, 0)) {
+        if (PanDlgMessage(&msg))
+            continue;
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }

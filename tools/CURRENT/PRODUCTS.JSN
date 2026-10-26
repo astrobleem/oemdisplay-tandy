@@ -20,15 +20,15 @@
     "CPPAN.ZIP": {
       "source": "downloads/experimental/CPPAN/CPPAN.ZIP",
       "identity": {
-        "bytes": 176009,
-        "sha256": "230825e137e93795328125fba36d4e196c2456abb09372502ca47b56b1be2826"
+        "bytes": 209181,
+        "sha256": "3d90027451731b6ab23edce9377721eff657fe452c0decba18adcdd65e09f4df"
       }
     },
     "JRPAN.ZIP": {
       "source": "downloads/experimental/SOFTPAN/JRPAN.ZIP",
       "identity": {
-        "bytes": 77913,
-        "sha256": "279ac9f0b48bd644d2d6a6110a185231da3f18abcf1aba0ee7e7aff2b20935d7"
+        "bytes": 91867,
+        "sha256": "04e5a8658d46050cece20b25026497f3c90bc3c69cc7829ccddf61de17e99fca"
       }
     },
     "TNDYV2.ZIP": {
@@ -91,24 +91,24 @@
   "sound": {
     "TWXT2.ZIP": {
       "identity": {
-        "bytes": 2157594,
-        "sha256": "40d00a49ecb4dc177274042c5084a5a3b5ee3d4e59eca81003af8c6c083f72db"
+        "bytes": 2420622,
+        "sha256": "fed4fdec0bb5652a6da4c987b6b8e7a4f860f92f4a8e34aad30ac26b49fb3486"
       },
-      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/68f829739d9f9721e9739add8834fbceeeff7e33/artifacts/win30/TWXT2.ZIP"
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/877c8f877af346b6076595bd2d4bde6b78dd60f2/artifacts/win30/TWXT2.ZIP"
     },
     "MML3AUTH.ZIP": {
       "identity": {
-        "bytes": 2901496,
-        "sha256": "96f9ce17cf92840956b96366df855256a9ad903d383894d19b9b01d78b7de855"
+        "bytes": 3467832,
+        "sha256": "c0bf425a8b4fb8da4be238413fe4a4eca75e106ce1ff9535c351baefcca536b5"
       },
-      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/68f829739d9f9721e9739add8834fbceeeff7e33/artifacts/win30/MML3AUTH.ZIP"
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/1c1d06662128c6285ee3a9e0163b5b28a757f6d0/artifacts/win30/MML3AUTH.ZIP"
     },
     "PITEXPR.ZIP": {
       "identity": {
-        "bytes": 2942533,
-        "sha256": "17345caf47f1c740925dd8f1bd8a05e522a1be54468456d0428574a0a3198866"
+        "bytes": 3560729,
+        "sha256": "295c064bb140e20058469d8348b5e02443922d4a6e5d839eb62be76cae5e7be7"
       },
-      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/68f829739d9f9721e9739add8834fbceeeff7e33/artifacts/win30/PITEXPR.ZIP"
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/1c1d06662128c6285ee3a9e0163b5b28a757f6d0/artifacts/win30/PITEXPR.ZIP"
     }
   },
   "developer_inputs": {
@@ -167,11 +167,11 @@
       "sha256": "ac825b9e38d6fc636cbf33960e2e55eb00693dc92de49d8d04adf093bcb13881"
     }
   },
-  "core_source_commit": "1a29ce3ff3b16a6fe97194dde3edebbbd21ee10a",
+  "core_source_commit": "030992acd24c18cbdd50ebad31c1bdd90ee8104d",
   "core_identities": {
     "WINXT.ZIP": {
-      "bytes": 648375,
-      "sha256": "dac91c866628f71d14d6fa52a930339fac5bf07546e79a43f03e6f3ead5b49e8"
+      "bytes": 668993,
+      "sha256": "ab35b48468d480490c9487dedd85c4f7a3ee4122bdca5a65be52d21a0a548b8f"
     },
     "WINXTSRC.ZIP": {
       "bytes": 100529,
@@ -179,11 +179,11 @@
     },
     "WINXT.JSN": {
       "bytes": 8670,
-      "sha256": "f5a3eee8ea1f81d9d57326df37c69e632dd9379a033b3841bee883ae4fd00aa8"
+      "sha256": "07966ebec20cde0f7e92400123be846ed1c328043fa79376c695f449917f66fa"
     },
     "WINXT.SHA": {
       "bytes": 234,
-      "sha256": "0784ef6d7ff276bdc4fab33025b4bee5a5494babe31ab0bfeb5dc02ed00fa4f2"
+      "sha256": "cec6d53f1f801ea2eeeb5971f7d5b5e2b4de38cdf1e65d58f81490d8d4f0b7db"
     }
   }
 }

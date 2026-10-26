@@ -2,8 +2,8 @@
   "target": "DOS3+, MSC6 /G0 /AS, LINK4, 8086, 8KB stack",
   "sources": {
     "FIXXT.C": {
-      "bytes": 24477,
-      "sha256": "355e09ada18bed990dae915df6e837ad3c9f67c434fbac7c5e4625c68517b64b"
+      "bytes": 24478,
+      "sha256": "3c1338c38dc433282b4366bcdb5f9e4f235530abb84102e007c90475810e26fb"
     },
     "FIXXT.RSP": {
       "bytes": 55,
@@ -20,6 +20,6 @@
   },
   "runtime": {
     "bytes": 33001,
-    "sha256": "016d53ab4a77a120577fdd7ecf69399ab51559a53101bc00fdb2c4ebd24dc66a"
+    "sha256": "f2235d3df2c43c5dcc079ac3bd61373f856c510905b876cac146ef3653242f06"
   }
 }
