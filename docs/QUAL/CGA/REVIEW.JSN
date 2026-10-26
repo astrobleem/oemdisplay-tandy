@@ -1,0 +1,33 @@
+{
+  "reviewer": "Separate delegated code/package reviewer /root/cga_final_review",
+  "completed_UTC": "2026-10-26T06:43:18.332533+00:00",
+  "reviewed_source_base": "37f17a93901a81762c6189a32781f1a4944a1843",
+  "reviewed_final_source": "6ba8a8551d56e5a15fccf3a9f3c893e7a148236c",
+  "outcome": "NO_RESIDUAL_FINDINGS",
+  "resolved_findings": [
+    {
+      "priority": "low",
+      "path": "src/cga/OEMSETUP.INF",
+      "finding": "Stale native-acceptance comment and inaccurate 4x6 System description",
+      "resolution": "Qualification scope corrected; System described as proportional3x5. Sole source delta in6ba8a855."
+    }
+  ],
+  "independent_checks": [
+    "Driver/helper/SETUP source and binary receipt bindings, manifest/evidence/review-member hashes",
+    "All12 font resources bounded; all224 CG6 glyph ink matrices match pinned original",
+    "Independent saved-VRAM decode for all3modes: palettes,256adjacent pairs,final pixels and padding",
+    "100mode cursor display count hidden-1 restored to original1",
+    "Final SETUP code and linker map identical to prior build; complete binary delta explained by four packet-ID strings, one OEM size/CRC row and MZ checksum",
+    "Packet08 23payload/17installed identities and generated sources match receipts; DOS06 uses exact packet bytes"
+  ],
+  "native_review_scope": "Existing GUI qualification retained; only focused DOS checksum/install/switch/UNDO rerun for descriptor correction",
+  "consumer": {
+    "bytes": 139175,
+    "sha256": "97377649eff6520daed6d1f48b2539b6159a057f07e8a350487e191df471e86a"
+  },
+  "limitations": [
+    "Physical hardware remains unqualified",
+    "Clone/composite and broad DOS/PrintScreen compatibility not inferred",
+    "Publication not authorized or performed"
+  ]
+}

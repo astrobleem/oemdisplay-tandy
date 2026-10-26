@@ -34,6 +34,15 @@ and the window workspace on fixed-resolution drivers.
 Other hardware profiles and apps are in [current downloads](docs/DOWNLOADS.MD).
 Each product has one current packet and a short install guide.
 
+## IBM CGA graphics
+
+**[Download CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP)**
+for 160x100 with 16 RGBI colors and compact fonts/controls, 320x200 four-color,
+or 640x200 monochrome. One native DOS installer includes the fonts and support
+files for an existing Windows 3.0 real-mode installation with normal 640 KB.
+[Installation and emulator qualification scope](docs/CGA.MD). Physical hardware
+and composite output remain unqualified.
+
 ## PCjr and ColorPlus software panning
 
 A **320x400 desktop through a 320x200, 16-color viewport** is now available

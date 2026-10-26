@@ -84,6 +84,16 @@ DDK, INCLUDE and LIB retain their expected DOS paths, so existing mounts and
 linker/include contracts remain unchanged. PREPXT's build batch uses drive T;
 mount the workspace as T for that separately allocated build.
 
+The additional `cga` profile retains `src/cga`, the unchanged TR5 base, the
+original XT Pixels kit and `tools/SOUNDOWN/RUNDOS.PY`. It supplies the bounded
+CGA source candidate, not a qualified consumer packet. See
+[CGA build/test guidance](../../src/cga/README.MD). Existing profiles and locked
+external inputs are unchanged. Native build execution still needs an explicit
+coordinated slot and the existing shared lease.
+Its consumer-integration closure also retains the exact `src/text80/T80SET.C`
+INI transaction and `tools/DOSINST/CRCFAST.H`; CGA stages private adaptations
+without changing either shared source or published installer runtimes.
+
 This compatibility approach copies about 88 MB of dependency bytes into each
 fresh external workspace. It avoids duplicating toolchains on main and avoids
 editing every historical builder. The initial lock retains the full four

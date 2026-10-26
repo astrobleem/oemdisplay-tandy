@@ -181,6 +181,9 @@ tools/MINEAPP/INSTALL.TXT -text
 # Contributor guidance retains the mandated CRLF bytes.
 CLAUDE.md -text
 
+# CGA staged assembly, tools and source guide retain required CRLF bytes.
+src/cga/** -text
+docs/CGA.MD -text
 # Shared native/helper source and byte-pinned host verification retain exact bytes.
 src/panui/** -text
 
@@ -201,3 +204,8 @@ docs/pcp/INTERIM-CARRIER.JSN -text
 tools/CPPACK/** -text
 .github/workflows/colorplus.yml -text
 docs/pcp/OUTPUT/PROFILE.CFG whitespace=cr-at-eol,-blank-at-eof
+
+# Qualified CGA packet and evidence retain exact bytes.
+tools/CGAPACK/** -text
+downloads/experimental/CGA/** -text
+docs/QUAL/CGA/** -text

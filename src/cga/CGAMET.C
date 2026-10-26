@@ -1,0 +1,238 @@
+#include <windows.h>
+static HWND hidden,last;
+static int ticks;
+static char line[256];
+static HWND pattern;
+static HCURSOR testcursor,oldcursor;
+static int cursorphase;
+static int sceneCursorCount;
+static BYTE cmask[128],xmask[128];
+static void Log(LPSTR s)
+{
+ OFSTRUCT of;int f=OpenFile("C:\\CGAMET.LOG",&of,OF_WRITE);
+ if(f==-1)f=OpenFile("C:\\CGAMET.LOG",&of,OF_CREATE|OF_WRITE);
+ if(f==-1)return;
+ _llseek(f,0L,2);_lwrite(f,s,lstrlen(s));_lclose(f);
+}
+static void Font(HDC dc,int stock,LPSTR name)
+{
+ HFONT old;TEXTMETRIC tm;
+ old=SelectObject(dc,GetStockObject(stock));GetTextMetrics(dc,&tm);
+ wsprintf(line,"FONT %s height=%d ascent=%d ave=%d max=%d weight=%d\r\n",name,tm.tmHeight,tm.tmAscent,tm.tmAveCharWidth,tm.tmMaxCharWidth,tm.tmWeight);Log(line);
+ SelectObject(dc,old);
+}
+static void FontProbe(HDC dc,int add)
+{
+ HFONT f,old;TEXTMETRIC tm;char face[40],value[100];int h,bold,n,pitch,wide=GetDeviceCaps(dc,HORZRES);LPSTR helv,cour;
+ GetProfileString("fonts","Helv 3x5 (CGA100)","MISSING",value,sizeof(value));
+ wsprintf(line,"PROFILE CG1HELV=%s\r\n",(LPSTR)value);Log(line);
+ GetProfileString("fonts","Helv 4x6 (CGA320)","MISSING",value,sizeof(value));
+ wsprintf(line,"PROFILE CG2HELV=%s\r\n",(LPSTR)value);Log(line);
+ for(n=0;n<(add?2:1);n++){
+  if(n){
+   helv=wide==320 ? "C:\\WINDOWS\\SYSTEM\\CG2HELV.FON" : wide==640 ? "C:\\WINDOWS\\SYSTEM\\CG6HELV.FON" : "C:\\WINDOWS\\SYSTEM\\CG1HELV.FON";
+   cour=wide==320 ? "C:\\WINDOWS\\SYSTEM\\CG1FIX.FON" : wide==640 ? "C:\\WINDOWS\\SYSTEM\\T80COUR.FON" : "C:\\WINDOWS\\SYSTEM\\CG1COUR.FON";
+   wsprintf(line,"ADDFONT file=%s result=%d Courier=%d\r\n",helv,AddFontResource(helv),AddFontResource(cour));Log(line);
+  }
+  for(h=-8;h<=8;h++)if(h<=-4||h>=4)for(bold=0;bold<2;bold++)for(pitch=0;pitch<2;pitch++){
+   if(add && ((h!=-5 && h!=6) || bold!=1 || pitch!=0))continue;
+   f=CreateFont(h,0,0,0,bold?700:400,0,0,0,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,pitch ? VARIABLE_PITCH|FF_SWISS : 0,"Helv");
+   old=SelectObject(dc,f);GetTextMetrics(dc,&tm);GetTextFace(dc,sizeof(face),face);
+   wsprintf(line,"MAP added=%d request=%d weight=%d pitchreq=%d face=%s height=%d ave=%d pitch=%d\r\n",n,h,bold?700:400,pitch,(LPSTR)face,tm.tmHeight,tm.tmAveCharWidth,tm.tmPitchAndFamily);Log(line);
+   SelectObject(dc,old);DeleteObject(f);
+  }
+ }
+}
+static COLORREF colors[16]={RGB(0,0,0),RGB(0,0,128),RGB(0,128,0),RGB(0,128,128),
+ RGB(128,0,0),RGB(128,0,128),RGB(128,128,0),RGB(128,128,128),
+ RGB(64,64,64),RGB(0,0,255),RGB(0,255,0),RGB(0,255,255),
+ RGB(255,0,0),RGB(255,0,255),RGB(255,255,0),RGB(255,255,255)};
+static void PaintPattern(HWND w)
+{
+ PAINTSTRUCT ps;HDC dc,mem;HBITMAP bmp,old;HBRUSH brush;RECT r;
+ int x,y,c,wide=GetSystemMetrics(SM_CXSCREEN),high=GetSystemMetrics(SM_CYSCREEN);
+ DWORD begin=GetTickCount(),elapsed;COLORREF got[16],lastpixel;
+ dc=BeginPaint(w,&ps);
+ for(c=0;c<16;c++){
+  SetRect(&r,c*wide/16,0,(c+1)*wide/16,high);
+  brush=CreateSolidBrush(colors[c]);FillRect(dc,&r,brush);DeleteObject(brush);
+  got[c]=GetPixel(dc,(2*c+1)*wide/32,high/2);
+ }
+ mem=CreateCompatibleDC(dc);bmp=CreateCompatibleBitmap(dc,32,16);old=SelectObject(mem,bmp);
+ for(y=0;y<4;y++)for(x=0;x<16;x++)SetPixel(mem,x,y,colors[(x+y)&15]);
+ BitBlt(dc,1,1,16,4,mem,0,0,SRCCOPY);
+ for(y=0;y<16;y++)for(x=0;x<16;x++){
+  SetPixel(mem,2*x,y,colors[y]);SetPixel(mem,2*x+1,y,colors[x]);
+ }
+ BitBlt(dc,65,30,32,16,mem,0,0,SRCCOPY);
+ SelectObject(mem,old);DeleteObject(bmp);DeleteDC(mem);
+ SetPixel(dc,wide-1,high-1,colors[4]);
+ lastpixel=GetPixel(dc,wide-1,high-1);EndPaint(w,&ps);elapsed=GetTickCount()-begin;
+ for(c=0;c<16;c++){wsprintf(line,"BAR %d RGB=%08lx\r\n",c,got[c]);Log(line);}
+ wsprintf(line,"DRAW width=%d height=%d last=%08lx ms=%lu\r\n",wide,high,lastpixel,elapsed);Log(line);Log("PATTERN READY\r\n");
+}
+static void CursorStep(void)
+{
+ int i,wide=GetSystemMetrics(SM_CXSCREEN),high=GetSystemMetrics(SM_CYSCREEN);
+ if(!pattern)return;
+ if(!cursorphase){
+  for(i=0;i<128;i++){cmask[i]=0xaa;xmask[i]=0x66;}
+  testcursor=CreateCursor(GetWindowWord(hidden,GWW_HINSTANCE),1,1,32,32,(LPSTR)cmask,(LPSTR)xmask);
+  wsprintf(line,"CURSOR created=%04x size=32,32 hotspot=1,1\r\n",testcursor);Log(line);
+  if(!testcursor){Log("CURSOR FAIL\r\n");return;}
+  oldcursor=SetCursor(testcursor);SetCursorPos(2,2);ShowCursor(TRUE);
+ }else if(cursorphase==1)SetCursorPos(wide-1,high-1);
+ else if(cursorphase==2)SetCursorPos(0,high-1);
+ else if(cursorphase==3)SetCursorPos(wide-1,0);
+ else if(cursorphase==4){ShowCursor(FALSE);SetCursor(oldcursor);DestroyCursor(testcursor);}
+ wsprintf(line,"CURSOR phase=%d\r\n",++cursorphase);Log(line);
+}
+static void DrawUnder(void)
+{
+ HDC dc,mem;HBITMAP bmp,old;int x,y;
+ if(!pattern||cursorphase!=1)return;
+ dc=GetDC(pattern);SetPixel(dc,2,2,colors[15]);
+ mem=CreateCompatibleDC(dc);bmp=CreateCompatibleBitmap(dc,16,4);old=SelectObject(mem,bmp);
+ for(y=0;y<4;y++)for(x=0;x<16;x++)SetPixel(mem,x,y,colors[((x+y)&1)?0:15]);
+ BitBlt(dc,8,8,16,4,mem,0,0,SRCCOPY);
+ SelectObject(mem,old);DeleteObject(bmp);DeleteDC(mem);
+ wsprintf(line,"UNDER pixel=%08lx\r\n",GetPixel(dc,2,2));Log(line);
+ ReleaseDC(pattern,dc);Log("UNDER READY\r\n");
+}
+/* Optional developer-only launch/ordinary MDI commands. No font installation,
+ * driver changes or consumer startup dependency. Avoid ambiguous Run-dialog
+ * argument parsing and record the actual native menu command used. */
+static int useStage,useTicks;
+static void FileManagerUse(void)
+{
+ HWND frame,mdi,child;HMENU menu,bar;char cls[40],text[80];UINT command,flags;RECT r;int item;
+ if(!useStage || useStage==9 || ++useTicks<3)return;
+ useTicks=0;
+ if(useStage==1){
+  useStage=2;
+  command=WinExec("C:\\WINDOWS\\WINFILE.EXE",SW_SHOWNORMAL);
+  wsprintf(line,"USE WINEXEC result=%u free=%08lx\r\n",command,GetFreeSpace(0));Log(line);return;
+ }
+ frame=FindWindow("WFS_Frame",NULL);if(!frame)return;
+ if(useStage==2){
+  useStage=3;ShowWindow(frame,SW_RESTORE);ShowWindow(frame,SW_SHOWMAXIMIZED);
+  BringWindowToTop(frame);SetActiveWindow(frame);GetWindowRect(frame,&r);
+  wsprintf(line,"USE FRAME %04x [%d,%d,%d,%d] iconic=%d\r\n",frame,r.left,r.top,r.right,r.bottom,IsIconic(frame));Log(line);return;
+ }
+ mdi=GetWindow(frame,GW_CHILD);
+ for(;mdi;mdi=GetWindow(mdi,GW_HWNDNEXT)){
+  cls[0]=0;GetClassName(mdi,cls,sizeof(cls));if(!lstrcmp(cls,"MDIClient"))break;
+ }
+ if(useStage==3){
+  if(!mdi)return;child=GetWindow(mdi,GW_CHILD);if(!child)return;
+  useStage=4;SendMessage(mdi,WM_MDIMAXIMIZE,(WORD)child,0L);
+  GetWindowRect(child,&r);wsprintf(line,"USE MDI %04x [%d,%d,%d,%d]\r\n",child,r.left,r.top,r.right,r.bottom);Log(line);return;
+ }
+ if(useStage==4){
+  /* A maximized MDI child inserts its system menu before File. */
+  bar=GetMenu(frame);menu=NULL;
+  for(item=0;item<GetMenuItemCount(bar);item++){
+   text[0]=0;GetMenuString(bar,item,text,sizeof(text),MF_BYPOSITION);
+   if(!lstrcmp(text,"&File")||!lstrcmp(text,"File")){menu=GetSubMenu(bar,item);break;}
+  }
+  if(!menu){Log("USE FILE MENU NOT FOUND\r\n");useStage=9;return;}
+  text[0]=0;
+  GetMenuString(menu,0,text,sizeof(text),MF_BYPOSITION);
+  command=GetMenuItemID(menu,0);flags=GetMenuState(menu,0,MF_BYPOSITION);
+  wsprintf(line,"USE MENU command=%u flags=%04x text=%s\r\n",command,flags,(LPSTR)text);Log(line);
+  useStage=5;if(!(flags&(MF_DISABLED|MF_GRAYED)))PostMessage(frame,WM_COMMAND,command,0L);return;
+ }
+ useStage=9;last=(HWND)-1;Log("USE FILE MANAGER COMMANDS COMPLETE\r\n");
+}
+static void HideSceneCursor(void)
+{
+ int count,n=0;
+ count=ShowCursor(FALSE);sceneCursorCount=count+1;
+ while(count>=0 && n++<32)count=ShowCursor(FALSE);
+ while(count< -1 && n++<32)count=ShowCursor(TRUE);
+ wsprintf(line,"CURSOR scene original_count=%d hidden_count=%d\r\n",sceneCursorCount,count);Log(line);
+}
+static void RestoreSceneCursor(void)
+{
+ int count,n=0;
+ count=ShowCursor(FALSE);
+ while(count<sceneCursorCount && n++<32)count=ShowCursor(TRUE);
+ while(count>sceneCursorCount && n++<32)count=ShowCursor(FALSE);
+ wsprintf(line,"CURSOR scene restored_count=%d\r\n",count);Log(line);
+}
+static void Tree(HWND w,int depth)
+{
+ char cls[40],title[70],clean[70];RECT r,client;POINT pt;HWND child,hit;
+ int n=0,i,j;HFONT f,old;LOGFONT lf;HDC dc;DWORD extent;
+ for(;w && n++<60;w=GetWindow(w,GW_HWNDNEXT)){
+  if(!IsWindowVisible(w)||w==hidden)continue;
+  cls[0]=title[0]=0;GetClassName(w,cls,sizeof(cls));GetWindowText(w,title,sizeof(title));GetWindowRect(w,&r);
+  wsprintf(line,"W %d %04x %s [%d,%d,%d,%d] %s\r\n",depth,w,(LPSTR)cls,r.left,r.top,r.right,r.bottom,(LPSTR)title);Log(line);
+  if(depth==1){
+   pt.x=(r.left+r.right)/2;pt.y=(r.top+r.bottom)/2;hit=WindowFromPoint(pt);
+   wsprintf(line,"META %04x style=%08lx enabled=%d hit=%04x\r\n",w,GetWindowLong(w,GWL_STYLE),IsWindowEnabled(w),hit);Log(line);
+  }
+  if(depth<2){
+   f=(HFONT)SendMessage(w,WM_GETFONT,0,0L);
+   if(f&&GetObject(f,sizeof(lf),(LPSTR)&lf)){
+    wsprintf(line,"LF %04x h=%d w=%d weight=%d pitch=%d charset=%d quality=%d out=%d clip=%d face=%s\r\n",w,lf.lfHeight,lf.lfWidth,lf.lfWeight,lf.lfPitchAndFamily,lf.lfCharSet,lf.lfQuality,lf.lfOutPrecision,lf.lfClipPrecision,(LPSTR)lf.lfFaceName);Log(line);
+   }
+   if(depth==1&&f&&title[0]&&(!lstrcmp(cls,"Static")||!lstrcmp(cls,"Button"))){
+    for(i=j=0;title[i]&&j<69;i++){
+     if(title[i]=='&'&&title[i+1]!='&')continue;
+     if(title[i]=='&')i++;
+     clean[j++]=title[i];
+    }
+    clean[j]=0;dc=GetDC(w);old=SelectObject(dc,f);
+    extent=GetTextExtent(dc,clean,j);SelectObject(dc,old);ReleaseDC(w,dc);
+    GetClientRect(w,&client);pt.x=(r.left+r.right)/2;pt.y=(r.top+r.bottom)/2;hit=WindowFromPoint(pt);
+    wsprintf(line,"TEXT %04x width=%d height=%d client=%d,%d checked=%d hit=%04x\r\n",w,LOWORD(extent),HIWORD(extent),client.right,client.bottom,(int)SendMessage(w,BM_GETCHECK,0,0L),hit);Log(line);
+   }
+  }
+  child=GetWindow(w,GW_CHILD);if(child&&depth<4)Tree(child,depth+1);
+ }
+}
+long FAR PASCAL WndProc(HWND w,unsigned m,WORD wp,LONG lp)
+{
+ HWND active;
+ if(m==WM_PAINT&&w==pattern){PaintPattern(w);return 0;}
+ if(m==WM_TIMER){
+  FileManagerUse();
+  active=GetActiveWindow();
+  if(GetAsyncKeyState(VK_F9)&1){
+   if(pattern){DestroyWindow(pattern);pattern=NULL;RestoreSceneCursor();Log("PATTERN CLOSED\r\n");}
+   else{HideSceneCursor();cursorphase=0;pattern=CreateWindow("CGAMET","CGA GDI",WS_POPUP|WS_VISIBLE,0,0,GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN),NULL,NULL,GetWindowWord(hidden,GWW_HINSTANCE),NULL);UpdateWindow(pattern);}
+  }
+  if(GetAsyncKeyState(VK_F8)&1)CursorStep();
+  if(GetAsyncKeyState(VK_F7)&1)DrawUnder();
+  if(active!=last||(GetAsyncKeyState(VK_SCROLL)&1)||(GetAsyncKeyState(VK_F6)&1)){
+   last=active;Log("SNAP\r\n");
+   wsprintf(line,"OWNER CGASlide=%04x XTPan=%04x XYOverviewControl=%04x\r\n",
+    FindWindow("CGASlide",NULL),FindWindow("XTPan",NULL),FindWindow("XYOverviewControl",NULL));Log(line);
+   wsprintf(line,"SYSCOLOR GrayText=%08lx\r\n",GetSysColor(COLOR_GRAYTEXT));Log(line);
+   Tree(GetWindow(GetDesktopWindow(),GW_CHILD),0);Log("TREE END\r\n");
+  }
+  return 0;
+ }
+ if(m==WM_DESTROY&&w==hidden){PostQuitMessage(0);return 0;}
+ return DefWindowProc(w,m,wp,lp);
+}
+int PASCAL WinMain(HANDLE hi,HANDLE prev,LPSTR cmd,int show)
+{
+ WNDCLASS wc;MSG msg;HDC dc;int diag;
+ if(prev)return 0;
+ wc.style=0;wc.lpfnWndProc=WndProc;wc.cbClsExtra=wc.cbWndExtra=0;wc.hInstance=hi;
+ wc.hIcon=NULL;wc.hCursor=NULL;wc.hbrBackground=NULL;wc.lpszMenuName=NULL;wc.lpszClassName="CGAMET";
+ if(!RegisterClass(&wc))return 1;
+ hidden=CreateWindow("CGAMET","CGA metrics",WS_POPUP,0,0,0,0,NULL,NULL,hi,NULL);
+ dc=GetDC(NULL);wsprintf(line,"CAPS width=%d height=%d colors=%d dpi=%d,%d caption=%d menu=%d scroll=%d,%d\r\n",GetDeviceCaps(dc,HORZRES),GetDeviceCaps(dc,VERTRES),GetDeviceCaps(dc,NUMCOLORS),GetDeviceCaps(dc,LOGPIXELSX),GetDeviceCaps(dc,LOGPIXELSY),GetSystemMetrics(SM_CYCAPTION),GetSystemMetrics(SM_CYMENU),GetSystemMetrics(SM_CXVSCROLL),GetSystemMetrics(SM_CYHSCROLL));Log(line);
+ Font(dc,SYSTEM_FONT,"SYSTEM");Font(dc,SYSTEM_FIXED_FONT,"FIXED");Font(dc,OEM_FIXED_FONT,"OEM");
+ Font(dc,ANSI_VAR_FONT,"ANSI_VAR");
+ diag=GetProfileInt("CGAProbe","FontDiag",0);
+ useStage=GetProfileInt("CGAProbe","FileMgr",0)?1:0;useTicks=0;
+ if(cmd[0]=='F'||cmd[0]=='D'||diag)FontProbe(dc,cmd[0]=='F'||diag>1);
+ ReleaseDC(NULL,dc);
+ SetTimer(hidden,1,1000,NULL);
+ while(GetMessage(&msg,NULL,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);}
+ return msg.wParam;
+}

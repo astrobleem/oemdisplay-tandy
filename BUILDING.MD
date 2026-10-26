@@ -62,6 +62,30 @@ must not be described as creating current GitHub releases automatically.
 
 ## Native source builds
 
+The [CGA display source](docs/CGA.MD) adds staging, native builders and
+font/control checks under `src/cga/`. With the verified existing display view:
+
+```text
+python -B src/cga/TESTCGA.PY --repo DISPLAY-VIEW --out NEW-CGA-HOST
+```
+
+For a scheduled native build, create a commit-pinned `--profile cga` source view and follow
+[its builder guide](src/cga/README.MD). The CGA access client additionally
+requires exact qualified WDESK/WTPLACE source snapshots through BUILDUI.PY
+--wdesk/--placement; one WDWIN owner handles root placement and recovery.
+The driver build wraps BUILD88 with the shared
+watchdog/lease runner. These commands do not qualify a new runtime. The accepted packet, original
+reviewed source checkpoint and exact member/evidence pins are in
+`tools/CGAPACK/ACCEPT.JSN`; verify them with
+`python -B tools/CGAPACK/VERIFY.PY`. Current catalog CI includes that gate.
+
+CGA-specific integration uses `src/cga/INSTALLT.PY` for managed-host C89
+transaction checks and `PACKCGA.PY` for the expanded packet. Separate native
+`BUILDSET.PY` uses C6 and the existing leased child watchdog, preserving the
+published Windows XT SETUP runtime. The [CGA guide](src/cga/README.MD) lists
+prepare/build/finalize commands and required native installation/GUI gates.
+No consumer Python or support-file gathering is part of that packet.
+
 Main contains no DDK, legacy compiler or emulator. Use the explicit pinned
 external inputs and source-view commands in [BUILDDEPS](tools/BUILDDEPS/README.MD).
 Only its `fetch` command accesses the network; materialize/verify the locked
