@@ -19,6 +19,9 @@ from pathlib import Path
 import CGAMODEL as M
 
 VIEW_W, VIEW_H, LOGICAL_W, LOGICAL_H = 160, 100, 320, 200
+# Windows parks its pointer at the desktop centre (the startup hourglass, then
+# the arrow), so frames legitimately differ there; cursor tests cover it.
+POINTER_ZONE = (148, 88, 172, 112)
 # CGA RGBI as displayed by an RGB monitor (color 6 is brown).
 PALETTE = [(0, 0, 0), (0, 0, 170), (0, 170, 0), (0, 170, 170), (170, 0, 0), (170, 0, 170), (170, 85, 0),
            (170, 170, 170), (85, 85, 85), (85, 85, 255), (85, 255, 85), (85, 255, 255), (255, 85, 85),
@@ -72,6 +75,8 @@ def stamp(canvas, frame, left, top):
     bad = []
     for y in range(VIEW_H):
         for x in range(VIEW_W):
+            if POINTER_ZONE[0] <= left + x < POINTER_ZONE[2] and POINTER_ZONE[1] <= top + y < POINTER_ZONE[3]:
+                continue
             cell, v = canvas[top + y][left + x], frame[y][x]
             if cell is None:
                 canvas[top + y][left + x] = v
