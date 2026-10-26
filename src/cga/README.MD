@@ -98,7 +98,9 @@ python CGA-VIEW/src/cga/BUILDUI.PY --repo CGA-VIEW --wdesk WDESK-SOURCE/src/wdes
 BUILDUI links WDCORE/WDWIN and WTPLACE with the CGA client. Its receipt pins
 all six shared sources. The same WDWIN table owns root observation, movement,
 Home and shutdown; CGACTL has no second root enumerator/tracker. Its CGA-only
-child-group access is separate from that shared root-placement service.
+child-group access is separate from that shared root-placement service. Moved
+children are invalidated individually after the batched no-redraw moves;
+invalidating only their parent leaves stale icon pictures on Windows 3.0.
 Native qualification of the shared service and this client remains required.
 
 Then prepare the complete expanded packet:

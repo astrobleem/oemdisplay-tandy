@@ -782,5 +782,21 @@
       "c_source_sha256": "afe205a8f9a1a2252f4ddac6de659d74370ecbeb3afdadb68dbff5dcbe19db09",
       "host_executable": "SETUPHOST.EXE (modern host test only)"
     }
+  },
+  "consumer100_actual_setup": {
+    "status": "PASS_API_INSTALL_HOME_AND_SHUTDOWN",
+    "packet_sha256": "5f3712a1717539e815dc7ad8fa7d55f94f1c91b0e37bad1eded93aab61e146a3",
+    "installed_files": 17,
+    "autoload": "CGASlide present; competing owners absent",
+    "Desktop_tab_controls": 10,
+    "DOS": "mode3 and640KB; FAT mirrors equal after stop",
+    "visual_gate": "Separate steady continuation found stale child painting; not complete visual acceptance"
+  },
+  "pending_child_redraw_fix": {
+    "observed": "Settled native003.VRM shows old icon positions after child hit targets move",
+    "source_sha256": "114c41f576485157416f26ad041147f8634eb5e2a28944aa03bc4a0ad9b37063",
+    "change": "Invalidate each moved child after SWP_NOREDRAW; root placement remains solely shared WDWIN",
+    "runtime": "NOT_TESTED",
+    "retained_evidence": "native-cga-consumer100-steady-01"
   }
 }

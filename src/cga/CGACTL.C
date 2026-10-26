@@ -60,6 +60,7 @@ static void SlideChildren(HWND w,int key)
   GetWindowRect(child,&b);
   SetWindowPos(child,0,b.left-origin.x+dx,b.top-origin.y+dy,0,0,
                SWP_NOSIZE|SWP_NOZORDER|SWP_NOACTIVATE|SWP_NOREDRAW);
+  InvalidateRect(child,0,TRUE);
  }
  InvalidateRect(w,0,TRUE);UpdateWindow(w);
 }
