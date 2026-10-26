@@ -299,3 +299,10 @@ selected. The expanded 23-file consumer installer still needs a native
 build/install. The initial Open VRAM capture is a paint transition, not
 settled visual font proof. Wait for complete TREE END plus idle before a
 later diagnostic capture.
+
+The 320 follow-up separates font-resource aspect from logical DPI. A 48x40
+font resource matches the driver's ASPECTX=10, ASPECTY=12 and makes Windows
+select the six-row Helv face; the driver's 96x48 logical DPI stays unchanged.
+Original wider M/W/m/w forms keep the measured alphabet average at four so
+Run/Open/Save As/Find reserve enough label width. The five qualified CGA100
+font files remain byte-identical. See NATIVE.JSN for the pending native gates.

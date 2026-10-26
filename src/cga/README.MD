@@ -136,7 +136,10 @@ pixels, 4x6 fixed/OEM faces and a 4x5 Courier strike, at 48x40 logical dpi.
 Capitals/digits retain spacing; narrower lower case reduces dialog base units.
 The native Run dialog used System 4x6 despite the available small Helv face.
 The five-row System strike passes the recorded native basic-dialog and
-Notepad checks. The 320-mode six-row faces still need native selection/fit. CGAUI's ANSI variable-font descriptor follows the new 5x3 metrics;
+Notepad checks. The 320-mode six-row faces use 48x40 resource dpi for the 5:6 pixel aspect,
+while the driver keeps its existing 96x48 logical dpi. M/W/m/w have wider
+original forms so the measured alphabet average stays at four and dialog
+labels fit their templates. Final native consumer acceptance remains pending. CGAUI's ANSI variable-font descriptor follows the new 5x3 metrics;
 renderer code and normal-mode drivers remain unchanged. The drawings are original; extended unsupported
 characters visibly fall back. OEM box/block primitives reuse XT Pixels.
 Retain `tools/XTFONTS/LICENSE` with generated fonts. FNT/FON serialization uses

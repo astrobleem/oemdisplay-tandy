@@ -598,5 +598,81 @@
       "lease_released": true,
       "seconds": 339.01599999982864
     }
+  },
+  "shared_source_pair_final": {
+    "display_commit": "1449b9e4cebe482be5f1a8bf7729fa3d320a0796",
+    "libwintandy_commit": "35f142dcd366ab9fc037b3eb20fc6ffebc3e1931",
+    "runtime_source": "All six blobs byte-identical to previous parent-qualified pair57f76a3/fed2d6a; exact Git exports retained",
+    "helper_native_build": {
+      "build": "PASS",
+      "kind": "CGA_WINDOW_ACCESS_CANDIDATE",
+      "flags": "/G0 /Gw /AS /W3 /Od",
+      "source_sha256": "b7588e6b0aa6f4994eb692ca72a5bb5ee6d5b25d3705e0f8441314874f24f3c1",
+      "shared_source_sha256": {
+        "WDCORE.C": "66e20b18a618b18ccca0ede3daa706e6ecfc36efdd88c1625796a581bbaa7723",
+        "WDCORE.H": "30969b4c4314e718391200330ddd4f13b6b6adeb237f6ad5a6ddf8ee0c7d4739",
+        "WDWIN.C": "98a17659e534e50e29fc6b0905591e057a2f461108d865a0adc5bf3d93010ad4",
+        "WDWIN.H": "8d009036884444dfdb66b76c6cbc1e6beb2e5e869c511b0c447069534b9edfbf",
+        "WTPLACE.C": "30e822766219f1d6bea9ef5b86fc625dac2828502076adef192903f976f34f56",
+        "WTPLACE.H": "af77584f4676029813a6e39e172b4362f0ef79dcae42df5303a2c857b3564ce1"
+      },
+      "placement_owner": "shared WDWIN only",
+      "bytes": 15343,
+      "sha256": "8f4ece354f5030d83f083ee5849dc5b3dd19cf1f077cbc1d3c59caded820414e",
+      "windows": "NOT_TESTED"
+    },
+    "helper_runtime": "NOT_TESTED_CGA_CLIENT"
+  },
+  "mode320_aspect_and_spacing_candidate": {
+    "font_source_sha256": "2a2e85a3ba73a129cbe8f8c0de1c125dc75e3c0cc13cf1f9bdb46daa421a81f8",
+    "source_fonts": "All seven produced FON files byte-identical to native-cga-gui320-width-02 candidate; all five CGA100 fonts byte-identical to qualified packet",
+    "resource_dpi": [
+      48,
+      40
+    ],
+    "resource_points": 11,
+    "gdi_logical_dpi": "96,48 unchanged",
+    "aspect": "5/6 matches ASPECTX10/ASPECTY12; old96x48 resource aspect prevented compact Helv selection",
+    "glyphs": "M/W/m/w gain five ink columns and six-pixel advance; measured alphabet average4.019",
+    "native": "Run/Open/SaveAs/Find text/control fit PASS in ongoing native width02; file/graphics/cursor/DOS pending",
+    "independent_FNT_NE_bitmap_bounds": "PASS",
+    "host_installer": {
+      "host": "PASS",
+      "native": "NOT_RUN",
+      "windows": "NOT_TESTED",
+      "tests": [
+        "install/undo 100",
+        "install/undo 320",
+        "install/undo 640",
+        "three modes/repeated switch/undo",
+        "identical preexisting font retained",
+        "collision refusal, no writes",
+        "all mutating commands refuse Windows context",
+        "damaged packet refusal before copying",
+        "CGAFAULT_WOPEN every single failure position",
+        "CGAFAULT_RENAME every single failure position",
+        "every interrupted owned-copy position",
+        "owned pending copy plan cancelled without touching payload files",
+        "damaged INI record refuses, explicit whole restore",
+        "damaged copy record refuses without cleanup",
+        "later edits and their referenced driver retained",
+        "changed installed file retained",
+        "failed INI rollback recovered through owned safety copies",
+        "interrupted cleanup can be retried",
+        "undo write/marker failures can be retried",
+        "interrupted completion marker uses explicit safety restore",
+        "17000-byte INI installs and restores exactly",
+        "small-model INI size limit refuses without residue",
+        "closed expanded packet inventory rejects extras",
+        "synthetic fixtures cannot finalize a consumer packet"
+      ],
+      "host_invocations": 193,
+      "fixtures": 106,
+      "packet_payload_files": 23,
+      "installed_files": 17,
+      "managed_gcc": true,
+      "c_source_sha256": "7eeb5ab8604178bf6b55caf1e758c38d54952a77dd5b172c0c37491e81094031",
+      "host_executable": "SETUPHOST.EXE (modern host test only)"
+    }
   }
 }

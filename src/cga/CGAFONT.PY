@@ -86,7 +86,16 @@ for ch, rows in DATA.items(): put(ch, rows)
 put('0', '.#./#.#/#.#/#.#/.#./.#.')
 
 
+WIDE_MEDIUM = {'M':'#...#/##.##/#.#.#/#...#/#...#/.....',
+               'W':'#...#/#...#/#.#.#/##.##/.#.#./.....',
+               'm':'...../##.#./#.#.#/#.#.#/#.#.#/.....',
+               'w':'...../#...#/#...#/#.#.#/.#.#./.....'}
+
+
 def drawing(char, width, height, fixed=False):
+    if height==6 and width==6 and char in WIDE_MEDIUM:
+        rows=WIDE_MEDIUM[char].split('/')
+        return [[int(x<5 and rows[y][x]=='#') for x in range(width)] for y in range(height)]
     if height == 5:
         # The stock Notepad Open template is 192x130 dialog units. A true
         # 3x5 UI strike targets its layout; fixed/OEM text stays 4x6.
@@ -139,8 +148,9 @@ def ui_width(char):
 
 
 def medium_width(char):
-    # Preserve the six-row face's four-pixel base unit while fitting stock
-    # 320-mode labels (Directory: has35 pixels in the Open template).
+    # Keep the measured alphabet average at four, so Win3's dialog units
+    # reserve enough room for labels. Wide M/W forms also gain real ink.
+    if char in WIDE_MEDIUM:return 6
     if not char:return 4
     if char in " il.,:;'|!":return 2
     if char in 'jrt':return 3
@@ -160,7 +170,7 @@ def build(out):
         width,height = (3 if ui else 4,5) if small else (4,6)
         first,last = (32,255) if charset == 0 else (1,254)
         widths=[medium_width(B.decode_code(c,charset)) if medium else ui_width(B.decode_code(c,charset)) if ui else width for c in range(first,last+1)]
-        contract = dict(type=0,points=9 if small or medium else 11,vert_res=48 if medium else 40,horiz_res=96 if medium else 48,ascent=5,internal=0,external=0,
+        contract = dict(type=0,points=9 if small else 11,vert_res=40,horiz_res=48,ascent=5,internal=0,external=0,
                         italic=0,underline=0,strikeout=0,weight=weight,charset=charset,
                         pix_width=0 if variable else width,height=height,pitch_family=family|int(variable),
                         avg_width=width,max_width=8,first=first,last=last,default=ord('?')-first,
