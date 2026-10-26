@@ -1,7 +1,7 @@
 IBM CGA DISPLAY FOR WINDOWS 3.0 - DEVELOPMENT CANDIDATE
 
-This packet is awaiting native Windows and IBM CGA qualification. Do not
-mistake host checks or a successful native build for tested usability.
+Local development candidate, tested in Windows 3.0 real mode on IBM XT/CGA
+emulation. Physical IBM CGA/CRTC/monitor qualification remains separate.
 Target: IBM CGA RGBI, normal 640 KB, existing Windows 3.0 real mode.
 Clone CRTCs, PCjr, Tandy, EGA/VGA and Windows 3.1 are not qualified targets.
 
@@ -17,7 +17,7 @@ Exit Windows completely to DOS. Use your actual Windows directory:
   SETUP C:\WINDOWS 100
 
 Choose 100 for 160x100 in 16 colors, 320 for 320x200 in four colors
-(bright cyan/magenta/white), or 640 for 640x200 monochrome. Continue only
+(black/bright cyan/magenta/white), or 640 for 640x200 monochrome. Continue only
 after the setup success message. Then change to Windows and start:
 
   C:
@@ -59,8 +59,8 @@ overwriting them. Keep any reported failure receipt for diagnosis.
 4x6 fixed/OEM text and a 4x5 Courier strike, with six-row
 controls. SETUP prints progress while checking and installing files; allow
 several minutes on a 4.77 MHz 8088. Unsupported
-extended characters currently show a fallback box. Native dialog fit,
-font selection and control hit testing still require acceptance. Report
+extended characters currently show a fallback box. The recorded native
+Run/Open/Save/Find and control checks pass in the target emulation. Report
 clipping or unreachable controls as failures. The initial VRAM policy
 blanks video during access to avoid unsynchronized writes; visible blanking
 and performance must be measured on the target. No speedup is promised.
@@ -75,4 +75,7 @@ makes disabled labels readable in the reduced palette, then exits. At 100 it
 runs the shared WDESK-based window-access client. Ctrl+Alt+arrows move the window workspace; Home recovers
 its origin and End exposes the active frame's bottom/right. It can expose a
 visible control group clipped inside a fixed client. It does not change the
-Windows display geometry. This integration still needs native acceptance.
+Windows display geometry. Native integration, Home/recovery and ordinary DOS exit are recorded.
+Use normal File Manager window/MDI maximize and File Open commands for its
+directory views on this short screen. The recorded DOS-command return test
+is a smoke check; it does not qualify every DOS program or PrintScreen.

@@ -5,6 +5,7 @@ static char line[256];
 static HWND pattern;
 static HCURSOR testcursor,oldcursor;
 static int cursorphase;
+static int sceneCursorCount;
 static BYTE cmask[128],xmask[128];
 static void Log(LPSTR s)
 {
@@ -98,6 +99,67 @@ static void DrawUnder(void)
  wsprintf(line,"UNDER pixel=%08lx\r\n",GetPixel(dc,2,2));Log(line);
  ReleaseDC(pattern,dc);Log("UNDER READY\r\n");
 }
+/* Optional developer-only launch/ordinary MDI commands. No font installation,
+ * driver changes or consumer startup dependency. Avoid ambiguous Run-dialog
+ * argument parsing and record the actual native menu command used. */
+static int useStage,useTicks;
+static void FileManagerUse(void)
+{
+ HWND frame,mdi,child;HMENU menu,bar;char cls[40],text[80];UINT command,flags;RECT r;int item;
+ if(!useStage || useStage==9 || ++useTicks<3)return;
+ useTicks=0;
+ if(useStage==1){
+  useStage=2;
+  command=WinExec("C:\\WINDOWS\\WINFILE.EXE",SW_SHOWNORMAL);
+  wsprintf(line,"USE WINEXEC result=%u free=%08lx\r\n",command,GetFreeSpace(0));Log(line);return;
+ }
+ frame=FindWindow("WFS_Frame",NULL);if(!frame)return;
+ if(useStage==2){
+  useStage=3;ShowWindow(frame,SW_RESTORE);ShowWindow(frame,SW_SHOWMAXIMIZED);
+  BringWindowToTop(frame);SetActiveWindow(frame);GetWindowRect(frame,&r);
+  wsprintf(line,"USE FRAME %04x [%d,%d,%d,%d] iconic=%d\r\n",frame,r.left,r.top,r.right,r.bottom,IsIconic(frame));Log(line);return;
+ }
+ mdi=GetWindow(frame,GW_CHILD);
+ for(;mdi;mdi=GetWindow(mdi,GW_HWNDNEXT)){
+  cls[0]=0;GetClassName(mdi,cls,sizeof(cls));if(!lstrcmp(cls,"MDIClient"))break;
+ }
+ if(useStage==3){
+  if(!mdi)return;child=GetWindow(mdi,GW_CHILD);if(!child)return;
+  useStage=4;SendMessage(mdi,WM_MDIMAXIMIZE,(WORD)child,0L);
+  GetWindowRect(child,&r);wsprintf(line,"USE MDI %04x [%d,%d,%d,%d]\r\n",child,r.left,r.top,r.right,r.bottom);Log(line);return;
+ }
+ if(useStage==4){
+  /* A maximized MDI child inserts its system menu before File. */
+  bar=GetMenu(frame);menu=NULL;
+  for(item=0;item<GetMenuItemCount(bar);item++){
+   text[0]=0;GetMenuString(bar,item,text,sizeof(text),MF_BYPOSITION);
+   if(!lstrcmp(text,"&File")||!lstrcmp(text,"File")){menu=GetSubMenu(bar,item);break;}
+  }
+  if(!menu){Log("USE FILE MENU NOT FOUND\r\n");useStage=9;return;}
+  text[0]=0;
+  GetMenuString(menu,0,text,sizeof(text),MF_BYPOSITION);
+  command=GetMenuItemID(menu,0);flags=GetMenuState(menu,0,MF_BYPOSITION);
+  wsprintf(line,"USE MENU command=%u flags=%04x text=%s\r\n",command,flags,(LPSTR)text);Log(line);
+  useStage=5;if(!(flags&(MF_DISABLED|MF_GRAYED)))PostMessage(frame,WM_COMMAND,command,0L);return;
+ }
+ useStage=9;last=(HWND)-1;Log("USE FILE MANAGER COMMANDS COMPLETE\r\n");
+}
+static void HideSceneCursor(void)
+{
+ int count,n=0;
+ count=ShowCursor(FALSE);sceneCursorCount=count+1;
+ while(count>=0 && n++<32)count=ShowCursor(FALSE);
+ while(count< -1 && n++<32)count=ShowCursor(TRUE);
+ wsprintf(line,"CURSOR scene original_count=%d hidden_count=%d\r\n",sceneCursorCount,count);Log(line);
+}
+static void RestoreSceneCursor(void)
+{
+ int count,n=0;
+ count=ShowCursor(FALSE);
+ while(count<sceneCursorCount && n++<32)count=ShowCursor(TRUE);
+ while(count>sceneCursorCount && n++<32)count=ShowCursor(FALSE);
+ wsprintf(line,"CURSOR scene restored_count=%d\r\n",count);Log(line);
+}
 static void Tree(HWND w,int depth)
 {
  char cls[40],title[70],clean[70];RECT r,client;POINT pt;HWND child,hit;
@@ -135,10 +197,11 @@ long FAR PASCAL WndProc(HWND w,unsigned m,WORD wp,LONG lp)
  HWND active;
  if(m==WM_PAINT&&w==pattern){PaintPattern(w);return 0;}
  if(m==WM_TIMER){
+  FileManagerUse();
   active=GetActiveWindow();
   if(GetAsyncKeyState(VK_F9)&1){
-   if(pattern){DestroyWindow(pattern);pattern=NULL;ShowCursor(TRUE);Log("PATTERN CLOSED\r\n");}
-   else{ShowCursor(FALSE);cursorphase=0;pattern=CreateWindow("CGAMET","CGA GDI",WS_POPUP|WS_VISIBLE,0,0,GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN),NULL,NULL,GetWindowWord(hidden,GWW_HINSTANCE),NULL);UpdateWindow(pattern);}
+   if(pattern){DestroyWindow(pattern);pattern=NULL;RestoreSceneCursor();Log("PATTERN CLOSED\r\n");}
+   else{HideSceneCursor();cursorphase=0;pattern=CreateWindow("CGAMET","CGA GDI",WS_POPUP|WS_VISIBLE,0,0,GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN),NULL,NULL,GetWindowWord(hidden,GWW_HINSTANCE),NULL);UpdateWindow(pattern);}
   }
   if(GetAsyncKeyState(VK_F8)&1)CursorStep();
   if(GetAsyncKeyState(VK_F7)&1)DrawUnder();
@@ -166,6 +229,7 @@ int PASCAL WinMain(HANDLE hi,HANDLE prev,LPSTR cmd,int show)
  Font(dc,SYSTEM_FONT,"SYSTEM");Font(dc,SYSTEM_FIXED_FONT,"FIXED");Font(dc,OEM_FIXED_FONT,"OEM");
  Font(dc,ANSI_VAR_FONT,"ANSI_VAR");
  diag=GetProfileInt("CGAProbe","FontDiag",0);
+ useStage=GetProfileInt("CGAProbe","FileMgr",0)?1:0;useTicks=0;
  if(cmd[0]=='F'||cmd[0]=='D'||diag)FontProbe(dc,cmd[0]=='F'||diag>1);
  ReleaseDC(NULL,dc);
  SetTimer(hidden,1,1000,NULL);

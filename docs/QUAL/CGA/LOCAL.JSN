@@ -1,0 +1,609 @@
+{
+  "scope": "Local emulation qualification; physical hardware unqualified; no publication",
+  "archive": {
+    "bytes": 134802,
+    "sha256": "31c30e05c9d76df651b630b103e0bc606d5ba5fd2e70b74bfdd38fd6aefd87b5"
+  },
+  "files": {
+    "BASIC100/001.VRM": {
+      "bytes": 16384,
+      "sha256": "d113ac86429c689568496b2ddc42b667a6f6369deae234401156423540505a4e"
+    },
+    "BASIC100/002.VRM": {
+      "bytes": 16384,
+      "sha256": "81387637e3a92b84ba67a18fb2f81d470d6a209abe6ca79ef4aae27867fd9714"
+    },
+    "BASIC100/003.VRM": {
+      "bytes": 16384,
+      "sha256": "f98032f49ab232f7a8c6d23cdbd266cc3fdd84fc34d4112ca6d5b11f055f4020"
+    },
+    "BASIC100/005.VRM": {
+      "bytes": 16384,
+      "sha256": "d06f3dd807f46566df9f6ce740b62292e165859904a525bf8b0b228c6c95b0b0"
+    },
+    "BASIC100/006.VRM": {
+      "bytes": 16384,
+      "sha256": "3bb90ed36d586633f41c9895bcdb9e95817fd9e5682b5b0d6e62eb21efce4d75"
+    },
+    "BASIC100/007.VRM": {
+      "bytes": 16384,
+      "sha256": "81a5ff191c8ec6b88960d7396e84550f52e6ee5704c704b2984268995dd011f2"
+    },
+    "BASIC100/008.VRM": {
+      "bytes": 16384,
+      "sha256": "6fc01e95b478a5b4acdd3bdb7d9de8a82df9f74379d9028258274f4b26e822c6"
+    },
+    "BASIC100/009.VRM": {
+      "bytes": 16384,
+      "sha256": "74d1a85c79a7a4c4fb65dfe9871ce9a320f98e9142568aacb2c7cc4379efdeb6"
+    },
+    "BASIC100/010.VRM": {
+      "bytes": 16384,
+      "sha256": "42b71658dac613fc560eef1636d968f940c1caf6f8e47ab2476e1a5ec01508aa"
+    },
+    "BASIC100/011.VRM": {
+      "bytes": 16384,
+      "sha256": "4848f927d68fd9d17f0e0d1abadc1bd5ba9fcd1c776a6a90ecf2d279cd36b452"
+    },
+    "BASIC100/013.VRM": {
+      "bytes": 16384,
+      "sha256": "4d16175d20b4e328c6fef2021160c39881183f7ce144e092e84feb916d0e9f86"
+    },
+    "BASIC100/014.VRM": {
+      "bytes": 16384,
+      "sha256": "97e7e70e337d6a7cef57ad0007f58defaa872b5c5d4a04531129fc5dc22bbde2"
+    },
+    "BASIC100/015.VRM": {
+      "bytes": 16384,
+      "sha256": "63fc36f94dd778c00c34538b550da04ac6097f8fc77e77be00488143cae84286"
+    },
+    "BASIC100/016.VRM": {
+      "bytes": 16384,
+      "sha256": "3b800cf65c6fc2af00d843ed78d97cd9d5b610c677788838a408000a86a0c979"
+    },
+    "BASIC100/017.VRM": {
+      "bytes": 16384,
+      "sha256": "83e62606d04b35a8b9855e8ea69c4cbcb2ca0092085f93f7e2dbecbc5459cdaf"
+    },
+    "BASIC100/BOUNDED-END.JSON": {
+      "bytes": 210,
+      "sha256": "5b26e5c6fe7b501a45c8ea1e165587b54016f2bd97f64716f8f771b1b1f00875"
+    },
+    "BASIC100/CGAMET.LOG": {
+      "bytes": 43905,
+      "sha256": "fbe1da74c6c11009efdbd2602ee97f9ae0a0cbe751a1329e582d3743d22912b1"
+    },
+    "BASIC100/INSTALL.LOG": {
+      "bytes": 1419,
+      "sha256": "c5d6583a8d8ee74b3faa8db71a7c84f51d52cd177a961d9d3567816407f881e0"
+    },
+    "BASIC100/INSTALLVERIFY.JSON": {
+      "bytes": 2897,
+      "sha256": "4dcdc22c0fa7dd1889d9b2570cd573cb66773ee92b434939a0aa2ac0657150cc"
+    },
+    "BASIC100/OWNED.JSON": {
+      "bytes": 319,
+      "sha256": "b2dd93d8862c846bce91f04fdf85648cbaec5c2e391520da95842c9e297406c2"
+    },
+    "BASIC100/PLAN.JSON": {
+      "bytes": 12595,
+      "sha256": "7bf179499b15c237f22c9dc7e857f409060ffdbd16997976cd528b1b1629d66a"
+    },
+    "BASIC100/PREPARE.JSON": {
+      "bytes": 832,
+      "sha256": "ccfbcc3b6899087c22c2c2eadc0514328e8ac2d0cb9d15ed00954a5033152bef"
+    },
+    "BASIC100/REQUEST.JSON": {
+      "bytes": 28,
+      "sha256": "bed903c73cec18333e66cfc656b799a2553c1e6be3e9670bba8065c53ef280d7"
+    },
+    "BASIC100/RESULT.JSON": {
+      "bytes": 493,
+      "sha256": "3c41e4082aa28b05908df08e6c1a4b1cc80a4ecca558877d4c69762ef6d002a2"
+    },
+    "BASIC100/STARTED.JSN": {
+      "bytes": 31,
+      "sha256": "9a45584947c7b85dc95d1d4f84ae22f475a7317166a75d1dcd4ce5927291da6b"
+    },
+    "BASIC100/STATUS.JSON": {
+      "bytes": 4848,
+      "sha256": "a8d9b0f93329564cd5b8560480b84609def8889f027b68a9d992d80ea651e1c4"
+    },
+    "FOCUSED100/001.VRM": {
+      "bytes": 16384,
+      "sha256": "42cbfada9920730b5f9d34fd336637d0316045a51fbb89e65e74245ae7cb50c0"
+    },
+    "FOCUSED100/002.VRM": {
+      "bytes": 16384,
+      "sha256": "d113ac86429c689568496b2ddc42b667a6f6369deae234401156423540505a4e"
+    },
+    "FOCUSED100/003.VRM": {
+      "bytes": 16384,
+      "sha256": "b64d273c8392516793d8760f827a86a81d4b567592107cfc8d2bc0d68cdb94d0"
+    },
+    "FOCUSED100/004.VRM": {
+      "bytes": 16384,
+      "sha256": "61a3fda65d5aa5f5f12923ce444769e44c6eda82f53e430a4631a6d7e3134d02"
+    },
+    "FOCUSED100/005.VRM": {
+      "bytes": 16384,
+      "sha256": "61a3fda65d5aa5f5f12923ce444769e44c6eda82f53e430a4631a6d7e3134d02"
+    },
+    "FOCUSED100/006.VRM": {
+      "bytes": 16384,
+      "sha256": "f0eb2f74b62f69ad37660e5a57849816d919102158a50f86186924df187a66c2"
+    },
+    "FOCUSED100/007.VRM": {
+      "bytes": 16384,
+      "sha256": "bce57ca89e8398c87dfc90d49a3fdfe6fc641c691ea12141ffa02c9462db292b"
+    },
+    "FOCUSED100/008.VRM": {
+      "bytes": 16384,
+      "sha256": "3cd30f01f17733953667b060fe1b64341334e076d71a98c5f31297c7e2ad38b4"
+    },
+    "FOCUSED100/009.VRM": {
+      "bytes": 16384,
+      "sha256": "6017d93730c4a912cddd5da18dba5ef9e54914dc114c8d707d03b8c852c94db5"
+    },
+    "FOCUSED100/010.VRM": {
+      "bytes": 16384,
+      "sha256": "c12f2ea0e3c528e64a8d46c5c14e45d7da29492f5d8edfd4f1df974605a7325c"
+    },
+    "FOCUSED100/ASSESSMENT.JSON": {
+      "bytes": 612,
+      "sha256": "b63ee5bcdb203ae68ec95cdd5ad577c260cca115e81a7fc92cf4b3a6b1f937d0"
+    },
+    "FOCUSED100/CGAMET.LOG": {
+      "bytes": 15394,
+      "sha256": "013b8c01e04f653f42e3deceea0f36d23b51fbc4a6edbaba8cac777e3cda0386"
+    },
+    "FOCUSED100/INSTALL.LOG": {
+      "bytes": 1419,
+      "sha256": "c5d6583a8d8ee74b3faa8db71a7c84f51d52cd177a961d9d3567816407f881e0"
+    },
+    "FOCUSED100/INSTALLVERIFY.JSON": {
+      "bytes": 2897,
+      "sha256": "4dcdc22c0fa7dd1889d9b2570cd573cb66773ee92b434939a0aa2ac0657150cc"
+    },
+    "FOCUSED100/OWNED.JSON": {
+      "bytes": 317,
+      "sha256": "3d036ebec40f508a665e36addee29d83c74f791fbf0a4870ba570afbfe61376a"
+    },
+    "FOCUSED100/PLAN.JSON": {
+      "bytes": 13059,
+      "sha256": "9cf650e28a86be3a3a978f698a5e0124d2b59423eb0232c2570768f83cb849b4"
+    },
+    "FOCUSED100/PREPARE.JSON": {
+      "bytes": 2556,
+      "sha256": "1bc01962401d859f400b8d5c2f5f5a5d51665f4bcf92a27a21187fb9631d2abf"
+    },
+    "FOCUSED100/REQUEST.JSON": {
+      "bytes": 28,
+      "sha256": "6169dfaaa3d915aa94825c8ba4754c2ba0579b0b7a8a9d534b0c4a2297919502"
+    },
+    "FOCUSED100/RESULT.JSON": {
+      "bytes": 491,
+      "sha256": "5e229968ac23eced2cf60c0574f54c3e6171e3f4170c481fcbe72971cfaa0bbb"
+    },
+    "FOCUSED100/STARTED.JSN": {
+      "bytes": 31,
+      "sha256": "7debd6e6b16942845bcd0018a2fec79a30ac5941c07f716812023d8314013afa"
+    },
+    "FOCUSED100/STATUS.JSON": {
+      "bytes": 4890,
+      "sha256": "ac88b73802c47a92a200e0a354dbce2cd1766064a0a31309438688b2fbea04d1"
+    },
+    "FOCUSED100/USE.JSON": {
+      "bytes": 390,
+      "sha256": "272d9a4e107dfc3a3ae0062c4317e9edeb58e73467c4aecea5c0b325bfc75741"
+    },
+    "NORMAL320/001.VRM": {
+      "bytes": 16384,
+      "sha256": "76b226dba4670085089678cc1705b0236c2528e4b19eee9a16b6dd5c911cfccf"
+    },
+    "NORMAL320/002.VRM": {
+      "bytes": 16384,
+      "sha256": "1b513f77cb9b3c6f233053a47cd205e228e57876a2a97c57af8fb6a04edb48d5"
+    },
+    "NORMAL320/003.VRM": {
+      "bytes": 16384,
+      "sha256": "ce07aa0e7c65efa793bbd856493cab9b77cdd02aeda6c511a35db35c032b051a"
+    },
+    "NORMAL320/005.VRM": {
+      "bytes": 16384,
+      "sha256": "5a6b99c936873159177ec851fea43ffa753e4397554da9853f1da41ed9f6406f"
+    },
+    "NORMAL320/006.VRM": {
+      "bytes": 16384,
+      "sha256": "28f991f9e1ee3446cddc2c327e4815b5a6964d52b080ea11108359b26f2e2bca"
+    },
+    "NORMAL320/007.VRM": {
+      "bytes": 16384,
+      "sha256": "3606b3d1e633b156ff0c4c59b518825c439c874a3d69c3e532690608333758c2"
+    },
+    "NORMAL320/008.VRM": {
+      "bytes": 16384,
+      "sha256": "c360014c7c56449fa7172d5a08261e2a7f50723e5e2ea435547d6615b8c39dde"
+    },
+    "NORMAL320/009.VRM": {
+      "bytes": 16384,
+      "sha256": "10320026ab7346e2dcf290b3e9f3d29cc7163ac6f2544cb4e6085edd62e0f0a4"
+    },
+    "NORMAL320/010.VRM": {
+      "bytes": 16384,
+      "sha256": "384578f4066e62a4422f2eef88c16be1859983073e5eae6c32cf0313a8c334e7"
+    },
+    "NORMAL320/011.VRM": {
+      "bytes": 16384,
+      "sha256": "db40dbd8f0f4f7d2f2d16b485fd4b3d9745869f0b8a0cb1164fd2e4c12f18aa2"
+    },
+    "NORMAL320/013.VRM": {
+      "bytes": 16384,
+      "sha256": "9eaa3afa3a25535e895e96b524d2fe5703954ff24e852963fb2e2499dc078c7c"
+    },
+    "NORMAL320/014.VRM": {
+      "bytes": 16384,
+      "sha256": "214c99fd2b146c72d9653af1b1e1309e8d56d1857a6d4849cfc55d7b664abb12"
+    },
+    "NORMAL320/015.VRM": {
+      "bytes": 16384,
+      "sha256": "731a7ad1f142cc76b3f85a781f8d7dab352261c3b52a9a7e9686342be5c8a8c9"
+    },
+    "NORMAL320/016.VRM": {
+      "bytes": 16384,
+      "sha256": "07facf72660517f7ed7615bf96c00ac8e3587a86ecf2455b0afee56a7dd3d150"
+    },
+    "NORMAL320/017.VRM": {
+      "bytes": 16384,
+      "sha256": "0b1ea56ff4c4354d35c2e0ddaac51816a275d06d01e80b03384869644f3d8efb"
+    },
+    "NORMAL320/018.VRM": {
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    "NORMAL320/019.VRM": {
+      "bytes": 16384,
+      "sha256": "4e65d3fbfc3cfe057620f78a4d44d25625868f1013c8dadca68501d4f9185e5d"
+    },
+    "NORMAL320/020.VRM": {
+      "bytes": 16384,
+      "sha256": "1cad0c95b1ed4758d33d0ca032aeadf6f344ebf8eb4960827e39c4c92d454e6c"
+    },
+    "NORMAL320/021.VRM": {
+      "bytes": 16384,
+      "sha256": "0f3a61b8af6c4a2bb9ba7e3b7befa6e1b40eb31a1609c7a6e34dc141c5c6d546"
+    },
+    "NORMAL320/022.VRM": {
+      "bytes": 16384,
+      "sha256": "dbdb54b2a7161286929394ebf7009e116517d90ecc89cfb7edceb5ab1046f5b2"
+    },
+    "NORMAL320/023.VRM": {
+      "bytes": 16384,
+      "sha256": "c12f2ea0e3c528e64a8d46c5c14e45d7da29492f5d8edfd4f1df974605a7325c"
+    },
+    "NORMAL320/ASSESSMENT.JSON": {
+      "bytes": 612,
+      "sha256": "17136b3719430b96960044bc6ea09560cf8dd2fc40acfb4f8f5cd238eac82341"
+    },
+    "NORMAL320/CGAMET.LOG": {
+      "bytes": 52913,
+      "sha256": "c948764e9f453ddb2a6602437081d9a037d9ff72592eef0dcc0a6854a1a3a468"
+    },
+    "NORMAL320/CONTRAST.JSON": {
+      "bytes": 573,
+      "sha256": "917879cdbf05dfa1d3228365b95b595f646e8278a952ee615b19802adb2bc427"
+    },
+    "NORMAL320/FAT-OFFLINE.JSON": {
+      "bytes": 192,
+      "sha256": "18ee95f9aae4d441411f1b3af92065b0f7af78107f3fb9e750e50bd7bd873ee1"
+    },
+    "NORMAL320/INSTALL.LOG": {
+      "bytes": 1385,
+      "sha256": "df1c2ebfcda8b1a6cbcb9622bf625f3416ada51b87076002b540806deb33ae6a"
+    },
+    "NORMAL320/INSTALLVERIFY.JSON": {
+      "bytes": 2897,
+      "sha256": "eeae1f375d98c06450261abfeb9d32efdcaf28e42b7691960753528d75297047"
+    },
+    "NORMAL320/OWNED.JSON": {
+      "bytes": 319,
+      "sha256": "b1eae1934c50905f7202eb3a41c8befba5ea79bf4cc084641fa36ee1f2956cdf"
+    },
+    "NORMAL320/PLAN-CONTROLLER-FAILED.JSON": {
+      "bytes": 12724,
+      "sha256": "f27b8f664d42ef178bfc04f66efcf77c0d1929c2e54a27c3ce3169adfd20a95a"
+    },
+    "NORMAL320/PLAN.JSON": {
+      "bytes": 13241,
+      "sha256": "366a12a90075558c5924f240d29057dfc2de2b701bf8ee2c83f3a12c49507b8f"
+    },
+    "NORMAL320/PREPARE.JSON": {
+      "bytes": 760,
+      "sha256": "e3d866786c2a0dda7390c0fad1aefccd7f442180717443eeed1ab707bf77a122"
+    },
+    "NORMAL320/REQUEST.JSON": {
+      "bytes": 28,
+      "sha256": "c0f5e99b7f6220a0af0b9a72ecd371fdc20217077ea57e979a27b26c60e25100"
+    },
+    "NORMAL320/RESULT.JSON": {
+      "bytes": 492,
+      "sha256": "d7abd9dee4124a1bffa2270a6331467fc2c73d30f503679a5075ccd40d4a919a"
+    },
+    "NORMAL320/STARTED.JSN": {
+      "bytes": 30,
+      "sha256": "000ad8e189943b7e95b9965e19161521f5b31c0c1690fadaf08936f8fa72206c"
+    },
+    "NORMAL320/STATUS.JSON": {
+      "bytes": 4866,
+      "sha256": "64266ab5638e8ae4513aea44353335fd76b711bc8a1db5cc64937aed9f217525"
+    },
+    "NORMAL640/001.VRM": {
+      "bytes": 16384,
+      "sha256": "c295398615005b0ac2809b7f910e3e8c73a537b457372372408ad5f442bd0d91"
+    },
+    "NORMAL640/002.VRM": {
+      "bytes": 16384,
+      "sha256": "7052d692f152b34258fe695eb1fedb7721f41429dfb5cbacec379b9504db7d5c"
+    },
+    "NORMAL640/003.VRM": {
+      "bytes": 16384,
+      "sha256": "44859e44810bb5a3d99154bf9287ddb9a0240e0c860e8dbf74e17c047c9553c5"
+    },
+    "NORMAL640/005.VRM": {
+      "bytes": 16384,
+      "sha256": "148f1f46ad8079b7318ddaefed8815b5e3fe64a0b46ea550629c27225478183f"
+    },
+    "NORMAL640/006.VRM": {
+      "bytes": 16384,
+      "sha256": "166e0224e3cc6fd70e4790ff0f4dec08b8e9e8e255df9c73d9936cf6b709ae26"
+    },
+    "NORMAL640/007.VRM": {
+      "bytes": 16384,
+      "sha256": "e0da25b58ddc2ba3318e598c1cc6e502d0798693205aa037ced3d9436adc53df"
+    },
+    "NORMAL640/008.VRM": {
+      "bytes": 16384,
+      "sha256": "e0da25b58ddc2ba3318e598c1cc6e502d0798693205aa037ced3d9436adc53df"
+    },
+    "NORMAL640/009.VRM": {
+      "bytes": 16384,
+      "sha256": "1206a92f87aca494eba44d534beed01a6aa0e197b655ef43f433e3cf7635d6d9"
+    },
+    "NORMAL640/010.VRM": {
+      "bytes": 16384,
+      "sha256": "1206a92f87aca494eba44d534beed01a6aa0e197b655ef43f433e3cf7635d6d9"
+    },
+    "NORMAL640/011.VRM": {
+      "bytes": 16384,
+      "sha256": "adf53fedf1f26df177b6a05f5117fe755561955754ef226ac774e27b093f1dfc"
+    },
+    "NORMAL640/013.VRM": {
+      "bytes": 16384,
+      "sha256": "9026d087c38ebc61e135b1fa93f992ea3ca004896ca2654b42f0b0e452add118"
+    },
+    "NORMAL640/014.VRM": {
+      "bytes": 16384,
+      "sha256": "474fb493b8dff84532a2073aaca36e981019f9afbbbcd69fc5f614f20b133d3d"
+    },
+    "NORMAL640/015.VRM": {
+      "bytes": 16384,
+      "sha256": "ad6c0c5325d6d53812c820a7cedcd24d1935c20e8860594e1fd41fee4bd75499"
+    },
+    "NORMAL640/016.VRM": {
+      "bytes": 16384,
+      "sha256": "b64d273c8392516793d8760f827a86a81d4b567592107cfc8d2bc0d68cdb94d0"
+    },
+    "NORMAL640/017.VRM": {
+      "bytes": 16384,
+      "sha256": "8b56003b02ee9dae04ac8312d2c351a9e33f279e5b74edecd5e3a02e8b715868"
+    },
+    "NORMAL640/018.VRM": {
+      "bytes": 16384,
+      "sha256": "404dfd354f8adfc8884e79e957714288858a9951e4ad4f633c7b80a95fa6244e"
+    },
+    "NORMAL640/019.VRM": {
+      "bytes": 16384,
+      "sha256": "154e6fe728307868f6a6d2b3aba6cb999ee5e0696307ffc451bd69f6a403b05e"
+    },
+    "NORMAL640/020.VRM": {
+      "bytes": 16384,
+      "sha256": "95383235fe492bd5094a6413487a2e8eb9d5d7986e1a89c4111c0e582f5ca4d9"
+    },
+    "NORMAL640/021.VRM": {
+      "bytes": 16384,
+      "sha256": "c12f2ea0e3c528e64a8d46c5c14e45d7da29492f5d8edfd4f1df974605a7325c"
+    },
+    "NORMAL640/ASSESSMENT.JSON": {
+      "bytes": 612,
+      "sha256": "50c33d41ca698a30adf2f511d561452433ec763fd105820413e5f0bdba79dbd3"
+    },
+    "NORMAL640/CGAMET.LOG": {
+      "bytes": 49090,
+      "sha256": "0984cc8a7e46c166367ba48938d5c651a1b74297c2a08f9b71f1f0b543a1274c"
+    },
+    "NORMAL640/CONTRAST.JSON": {
+      "bytes": 577,
+      "sha256": "e759312a57ebf85f035613acfb6cc8e8bfe1bd110dc4e48a2f340e0fe19a54bf"
+    },
+    "NORMAL640/INSTALL.LOG": {
+      "bytes": 1385,
+      "sha256": "988ab80ab2de6ddba1d64a28bafb6098566fd739b87cb8576fb7291ed6f177db"
+    },
+    "NORMAL640/INSTALLVERIFY.JSON": {
+      "bytes": 2897,
+      "sha256": "76193e40157edbcbd153c88a2c5e1ea1d66e0e44463f4cddfda940963343f595"
+    },
+    "NORMAL640/OWNED.JSON": {
+      "bytes": 319,
+      "sha256": "d895fb09d34564ce2d3446f92efb697afb9c44b0d713c03d43bf9d1378886c1c"
+    },
+    "NORMAL640/PLAN.JSON": {
+      "bytes": 13111,
+      "sha256": "2833fab2eb32b26ab5099a24743043d0da90a7f8201dd72aba46da7fa5868eee"
+    },
+    "NORMAL640/PREPARE.JSON": {
+      "bytes": 490,
+      "sha256": "0cbfb730254c6eba8dbbea52c604e58e661505892053c9bcc8a15e40943973a7"
+    },
+    "NORMAL640/REQUEST.JSON": {
+      "bytes": 28,
+      "sha256": "44d9bc9e992f85955475f20f9beafdf37e199b5882556363b8424cb4bafac5b7"
+    },
+    "NORMAL640/RESULT.JSON": {
+      "bytes": 491,
+      "sha256": "2dfea7cdb5f82ffaf47a236e6dc15a2ce4961d1f6fab61501cacb0855317b803"
+    },
+    "NORMAL640/STARTED.JSN": {
+      "bytes": 31,
+      "sha256": "611b6070753de5266b6da911969cafd95bf57791be10d690fe2be29a8fa824cf"
+    },
+    "NORMAL640/STATUS.JSON": {
+      "bytes": 4867,
+      "sha256": "28f09e693544f95e0c681e9db6b3d7354dca416b3777f74075c706193553ae1f"
+    },
+    "FILEMGR640/001.VRM": {
+      "bytes": 16384,
+      "sha256": "6e0d0acf91d7d9fce4cad6bbbf97d0e4c5bb9b92224ab9b1560becca0ea793ab"
+    },
+    "FILEMGR640/002.VRM": {
+      "bytes": 16384,
+      "sha256": "60ce34223e313aa103af940f5ce2ade03a942518cf2cc2de3a316a6cb1b48499"
+    },
+    "FILEMGR640/003.VRM": {
+      "bytes": 16384,
+      "sha256": "c12f2ea0e3c528e64a8d46c5c14e45d7da29492f5d8edfd4f1df974605a7325c"
+    },
+    "FILEMGR640/CGAMET.LOG": {
+      "bytes": 5831,
+      "sha256": "3e0eede332ae91b5966546a2340cd45c2f83190284cbb05f78ae5b8e97f858af"
+    },
+    "FILEMGR640/INSTALL.LOG": {
+      "bytes": 1385,
+      "sha256": "988ab80ab2de6ddba1d64a28bafb6098566fd739b87cb8576fb7291ed6f177db"
+    },
+    "FILEMGR640/INSTALLVERIFY.JSON": {
+      "bytes": 2897,
+      "sha256": "76193e40157edbcbd153c88a2c5e1ea1d66e0e44463f4cddfda940963343f595"
+    },
+    "FILEMGR640/OWNED.JSON": {
+      "bytes": 317,
+      "sha256": "2e1619b88001b723013c9605440a3a3e6fb3fc34f3467a95ba2cdcff99a7c67c"
+    },
+    "FILEMGR640/PREPARE.JSON": {
+      "bytes": 2557,
+      "sha256": "cfcc43a796198a60215c4b569c52fe6ab09c2bbb667854ea5985d66047237e97"
+    },
+    "FILEMGR640/REQUEST.JSON": {
+      "bytes": 27,
+      "sha256": "828b65fadf9950793158ebc7884d3db8ceeb01e8e290870cfb27a6057df135b6"
+    },
+    "FILEMGR640/RESULT.JSON": {
+      "bytes": 491,
+      "sha256": "73bdabba583ad834f3e47bdf27690ddff1f1fd6f507535da85eea2228a29e8c5"
+    },
+    "FILEMGR640/STARTED.JSN": {
+      "bytes": 31,
+      "sha256": "15c8edc93aab85dcdaf87b290610abe7a92fb6dbb6dd78865e7cb29026471dff"
+    },
+    "FILEMGR640/STATUS.JSON": {
+      "bytes": 4842,
+      "sha256": "135a93d534250859bb8b4ada18f58582b3808905c0c28313f9365c19f048869c"
+    },
+    "FILEMGR640/USE.JSON": {
+      "bytes": 294,
+      "sha256": "9b07e2d688b50426a82b6626f091a92ed62808906f31748033773a94da7f89d8"
+    },
+    "DOS/DOS.LOG": {
+      "bytes": 2641,
+      "sha256": "23d24c4576e72d22e0515673cd4e6a6e787be1b3ff1dd3c58550d157d9ad8043"
+    },
+    "DOS/PROCESS.JSON": {
+      "bytes": 462,
+      "sha256": "ab272d2dddd2c61c6019a4e1bd61c73449490a1ec4a39c0b063cbffaa5b2425e"
+    },
+    "DOS/RESULT.JSON": {
+      "bytes": 483,
+      "sha256": "cdc08cee627fff4c24d0664d47f86dcc497224582dad9ca19d72c7089ba3c8a7"
+    },
+    "CHILDREN/001.VRM": {
+      "bytes": 16384,
+      "sha256": "49ab6b1524156ca6283f8160720d629bef40b3089464218b50c230b5fee372c3"
+    },
+    "CHILDREN/002.VRM": {
+      "bytes": 16384,
+      "sha256": "47dd9e9fec75dbb78ac625db68c3889ab4bfa10f592f026c7990238cd38c9787"
+    },
+    "CHILDREN/003.VRM": {
+      "bytes": 16384,
+      "sha256": "47dd9e9fec75dbb78ac625db68c3889ab4bfa10f592f026c7990238cd38c9787"
+    },
+    "CHILDREN/004.VRM": {
+      "bytes": 16384,
+      "sha256": "10b6af984ab69641d1296fea424cdc521cf073c54acf31b3ef4e8d4f5ce98547"
+    },
+    "CHILDREN/005.VRM": {
+      "bytes": 16384,
+      "sha256": "10b6af984ab69641d1296fea424cdc521cf073c54acf31b3ef4e8d4f5ce98547"
+    },
+    "CHILDREN/006.VRM": {
+      "bytes": 16384,
+      "sha256": "c12f2ea0e3c528e64a8d46c5c14e45d7da29492f5d8edfd4f1df974605a7325c"
+    },
+    "CHILDREN/ACCESS.JSON": {
+      "bytes": 8710,
+      "sha256": "fedf3e878cd787669823a653579d12c0ae78713f25ace196071549bcdf95d90d"
+    },
+    "CHILDREN/ASSESSMENT.JSON": {
+      "bytes": 1053,
+      "sha256": "9a8c5a7dcc18bc471093adc3f8cbacf4e6615565addbd8b67ae1466fe2614d27"
+    },
+    "CHILDREN/CGAMET.LOG": {
+      "bytes": 11599,
+      "sha256": "902979536d2efa3b4c5b4275d93ffbfff07f34aaf5be6645123a8bc10dfd9c9c"
+    },
+    "CHILDREN/GRID-MISMATCH.JSON": {
+      "bytes": 9455,
+      "sha256": "916a8af8f3abd9aebd7572cb1d93dcda174a83f5393bd53fb7227da15080e741"
+    },
+    "CHILDREN/GRID-VISUAL.JSON": {
+      "bytes": 1873,
+      "sha256": "2ba4c2caf52779e2cfbd241563c0ea2d0f6514264eff8f76d5e61fc12419e99f"
+    },
+    "CHILDREN/INSTALL.LOG": {
+      "bytes": 1419,
+      "sha256": "87e85f4ebb6a767194914ca59999b499060649a734528c0a75fd32e0e6a36839"
+    },
+    "CHILDREN/OWNED.JSON": {
+      "bytes": 318,
+      "sha256": "ffb8679386a563f143abd5f376e058f498e7c978925e7f4fb64ae1cd7b96d6c4"
+    },
+    "CHILDREN/PREPARE.JSON": {
+      "bytes": 1442,
+      "sha256": "fdc68b0eb9569097d57896a61f4faf3d19c4019df128a6989687c2bf282a9e41"
+    },
+    "CHILDREN/REQUEST.JSON": {
+      "bytes": 27,
+      "sha256": "b0c022c599d19b1bd4dd44c5faca3aac220959def89aaf9a0a6268a395b30ef9"
+    },
+    "CHILDREN/RESULT.JSON": {
+      "bytes": 492,
+      "sha256": "cb8ac60fc2a8b73973704fc632e2063753589a299bdde8862f2d94d72c0064eb"
+    },
+    "CHILDREN/STARTED.JSN": {
+      "bytes": 30,
+      "sha256": "35e36876322889da4efbb18e33041c984df7d6c6a88659d5e143a5720373e999"
+    },
+    "CHILDREN/STATUS.JSON": {
+      "bytes": 4844,
+      "sha256": "3b196ddff079d4ae9b5738088effc75293574aac710e36c4ab3c412cc1eb4020"
+    },
+    "FONT640/CG6FONT.JSN": {
+      "bytes": 3042,
+      "sha256": "f7ec535a6ab6781192bb9538518823861a2ba8b2131192cdf34cc600c8ebc9e9"
+    },
+    "FONT640/INDEPENDENT.JSON": {
+      "bytes": 4989,
+      "sha256": "7779b179df19e9fdd4331b5463011872e8a9a816c27fab4468469240c48f8a16"
+    }
+  }
+}

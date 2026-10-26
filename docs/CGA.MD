@@ -44,7 +44,7 @@ vertical sync at line 224. The
 [Motorola MC6845 data sheet](https://bitsavers.trailing-edge.com/components/motorola/_dataSheets/6845.pdf),
 register descriptions/table 2, establishes the row/scanline and total-adjust
 units used in that calculation. No zero-width timing or exploratory port
-sweeping is used. This combination still needs native scanout verification.
+sweeping is used. Physical scanout qualification remains separate from the emulator results.
 
 Target is explicitly IBM CGA with the documented MC6845 behavior and RGBI.
 No clone/CRTC-variant, EGA/VGA, composite-video, PCjr or Tandy compatibility is
@@ -149,83 +149,63 @@ Do not promise speed from reduced shadow size or host script timings.
    full manifests/recipes/notices. Preserve other modes, current release
    identities and old assets. Push, merge and publication need authorization.
 
-## Current native checkpoint
+## Final local native checkpoint
 
-This is an unpublished development candidate with partial acceptance. The
-preserved basic-dialog/graphics checkpoint is `8cc53057`; runtime source for
-the latest access client is `e30579b7623039fc3fe2dff1decce236adb5ae67`.
-Exact binary hashes, earlier failed attempts and component receipts remain in
-`src/cga/NATIVE.JSN` and the private native evidence directories.
+Runtime source is e2bf87b0214db50d9bc4e6b6fa1062bf837ec307. The preserved
+basic-dialog/renderer checkpoint `8cc53057` remains unchanged. All three native
+drivers pass C6/MASM/link/resource and 8086/REP audits. Normal renderer bytes
+remain unchanged. Exact binaries, failed attempts and evidence pins are in
+src/cga/NATIVE.JSN and the local review QUALIFY.JSON.
 
-All three drivers passed C6/MASM/link/resource and 8086/REP audits. The normal
-320/640 renderer bytes remain unchanged. The current 58,208-byte CGA100 driver
-has SHA-256 `75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3`.
-On the IBM XT 4.77 MHz, 640 KB, IBM CGA snow-enabled emulator fixture, the
-160x100 driver passes all 16 palette indices, all 256 adjacent color pairs,
-memory BitBlt, immediate drawing beneath an odd-origin 32x32 cursor, three
-edges, hide/restoration and untouched VRAM padding. Ordinary Windows exit
-returns to DOS mode 3 with 640 KB. These are emulator results, not physical
-card, snow-free scanout, clone, composite or real-mouse qualification.
+The expanded 23-file packet installs 17 files. Native DOS switches 100/320/640/100
+and exact original fixture-tree UNDO pass. The managed-host transaction suite
+passes 24 groups, 193 invocations and 106 fixtures. The native SETUP map leaves
+5,200 bytes beyond its data/stack reservation. Consumers receive native SETUP,
+README and one expanded CGA folder, with no support gathering or Python.
 
-The five-row proportional System/Helv and six-row fixed/OEM faces are selected
-without explicit font loading in the accepted basic-dialog run. Run's outer
-frame is 168 pixels wide, but its controls fit; Open is 154x98, Save As 153x86,
-Find 159x58 and the tested message box 98x46. Native checkbox/radio states,
-text extents and center hit-test handles are recorded. Notepad saves the exact
-expected two-line file. All five qualified CGA100 font files remain unchanged.
+All three modes pass Run/Open/Save As/Find control and text bounds, an exact
+Notepad save, palettes/blits/all 256 logical pairs, odd 32x32 cursor restoration,
+draw-under, edges, padding and normal DOS exit to mode 3 with 640 KB in the IBM
+XT 4.77 MHz/IBM CGA emulator. CGA100 System/Helv are five rows averaging three;
+320-mode proportional faces are six rows averaging four. CG6 Helv preserves
+all 224 original XT Pixels glyph ink matrices with proportional advances; its
+Directory label is 57 pixels against a 61-pixel allowance, resolving the actual
+640-mode clipping. Other font and renderer bytes stay unchanged.
 
-The 320-mode font-selection unit now passes Run/Open/Save As/Find text and
-control bounds, exact file save, palette/blits/cursor/padding and DOS exit.
-Its CG2 System/Helv resources use 48x40 dpi and 11 points while driver logical
-DPI remains 96x48. Wider original M/W/m/w forms retain an alphabet average of
-four, preventing the truncated dialog-unit width from clipping static labels.
-An earlier 96x48/9-point resource loaded successfully but mapped to a ten-row
-Helv face; the rejected attempts remain evidence. The metadata experiment
-changed several fields, so it does not isolate one field as the sole cause.
+Actual consumer startup loads one shared WDWIN/WTPLACE access owner in 100 mode.
+The exact shared source pair is display 1449b9e4 and libwintandy 35f142dc; all
+six runtime blobs match the earlier qualified pair. Child-group movement now
+invalidates each moved child, fixing stale Control Panel icon pictures. Home,
+Desktop controls, normal shutdown and pixel-following-hit-target evidence are
+retained. In 320/640 the helper sets COLOR_GRAYTEXT black and exits; native
+Find captures show visible disabled labels without a resident placement owner.
 
-The first 640-mode unit passed dialog rectangles, file/graphics/cursor and
-DOS checks using TEXT80 faces. The final consumer text check then caught a
-real failure: Directory: is 80 pixels in a 70-pixel label. CG6FONT now preserves
-the same original eight-row XT Pixels ink with proportional advances; its
-host widths are 57 pixels for Directory: and 54 for Filename: against a
-conservative 61-pixel template allowance. Independent FNT/NE checks preserve
-all 224 glyph ink matrices and bitmap bounds. TEXT80 Courier and XTC
-System/fixed/OEM remain unchanged. The new CGA640 face awaits native retest.
+File Manager displays populated directory windows at [10,22,140,77] in 160x100
+and [35,48,605,172] in 640x200, using ordinary maximize/MDI/File Open operations.
+A DOS command writes the exact expected file and returns to Windows. The
+following 100-mode graphics/cursor comparison establishes display count -1;
+an earlier 26-pixel difference was exactly a still-visible pointer at its two
+positions, not discarded evidence. The corrected complete VRAM comparison
+passes with no excluded regions and matches the earlier qualified scene hashes.
+The probe records original count 1 and hidden count -1, then restores count 1.
 
-The 23-file expanded packet's actual native SETUP installs all 17 selected
-files in the 160x100 consumer fixture, including autoloaded CGACTL. It uses
-the final shared source pair display `1449b9e4` and libwintandy `35f142dc`;
-all six runtime source blobs match the earlier qualified shared pair. WDWIN
-remains the only root-placement owner. Grid End/Home and Desktop controls
-have native bounds/hit-test, traversal, recovery and DOS-exit evidence.
+The final qualification composes the preserved basic 100 dialogs with its
+unchanged 17-file focused continuation. The 320 GUI was tested in packet 05;
+the 640-only follow-up changes only an unused font and notice for that mode.
+Every selected 320 runtime byte is identical, and revised native DOS delivery
+is separately checked. Final README-only packaging preserves every tested
+payload and SETUP byte. These scopes are explicit in QUALIFY.JSON.
 
-A settled follow-up caught a real defect: child hit rectangles moved while
-icon pictures stayed behind. CGACTL now invalidates each child after
-SWP_NOREDRAW. The focused native updated-helper unit changes the same pixel
-comparison from zero matching cells to five exact unobstructed matches.
-All 34 differences in the sixth cell are accounted for by the same stationary
-6x5 pointer image in both captures; this supplemental finding is offline VRAM
-analysis. The unit also passes Home and DOS exit. It updates only the helper
-in the previously installed consumer image; final new packet delivery is a
-separate gate. The owned process stopped and released the shared lease.
+The private probe launches stock WINFILE.EXE normally and locates its File
+menu by caption because maximized MDI children insert a system menu before it.
+It loads no fonts and is excluded from consumer contents. Earlier controller
+launch/menu/timing failures and the visible-pointer comparison remain preserved.
 
-The current host transaction suite passes 24 groups, 193 invocations and 106
-fixtures for the closed 23-file/17-installed inventory, including all modes,
-collisions, interrupted copies, rollback/retry, INI limits and exact undo.
-The latest native SETUP map leaves 5,216 bytes beyond data/stack. The final
-helper is built; prepared07 contains its exact bytes. Its native SETUP build
-and final packet assembly wait for the coordinated slot after WDESK.
+Physical IBM cards/CRTCs, snow/blanking, monitor scanout, clones and composite
+remain separate qualifications. One DOS-command smoke test does not establish
+general DOS-program or PrintScreen/grabber compatibility. No product has been
+published or replaced; push/merge/publication require separate approval.
 
-Still pending are final normal-mode consumer startup and the reduced-color
-disabled-label fix, plus final native delivery/mode-switch/exact-tree UNDO.
-The new helper sets session COLOR_GRAYTEXT black and exits in 320/640 modes;
-that branch has compiled but has no accepted Windows runtime check yet.
-File Manager reachability and full-screen DOS/grabber/re-entry have no accepted
-evidence here. Physical IBM CGA acceptance remains a separate hardware gate.
-No push, merge, release or accepted product replacement has occurred.
-
-The headless FRAME API reads row zero while CGA scanout begins at firstline;
-raw PNGs can include blanking and omit lower rows. Native control/file/VRAM
-checks are separate evidence. Decoded VRAM illustrations are labeled as such
-and are not presented as complete monitor screenshots. Retain failed receipts
-and wait for a complete TREE END plus idle before diagnostic captures.
+The headless FRAME API can include blanking and omit lower scanout rows.
+Native control/file/VRAM checks are separate evidence. Decoded VRAM images are
+labeled as such and are not presented as complete monitor screenshots.

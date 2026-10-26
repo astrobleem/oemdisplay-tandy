@@ -1,7 +1,7 @@
 # CGA source candidate
 
-This is development source with partial native qualification, not a released
-packet. See [coverage, evidence and remaining gates](../../docs/CGA.MD) and
+This is locally qualified native-emulation source, not a released packet.
+Physical hardware qualification remains separate. See [coverage, evidence and remaining gates](../../docs/CGA.MD) and
 NATIVE.JSN. Accepted binaries, packets and publication pins stay unchanged.
 
 ## Host work
@@ -145,7 +145,7 @@ The five-row System strike passes the recorded native basic-dialog and
 Notepad checks. The 320-mode six-row faces use 48x40 resource dpi for the 5:6 pixel aspect,
 while the driver keeps its existing 96x48 logical dpi. M/W/m/w have wider
 original forms so the measured alphabet average stays at four and dialog
-labels fit their templates. Final native consumer acceptance remains pending. CGAUI's ANSI variable-font descriptor follows the new 5x3 metrics;
+labels fit their templates. The recorded native consumer gates pass; physical hardware remains unqualified. CGAUI's ANSI variable-font descriptor follows the new 5x3 metrics;
 renderer code and normal-mode drivers remain unchanged. The drawings are original; extended unsupported
 characters visibly fall back. OEM box/block primitives reuse XT Pixels.
 Retain `tools/XTFONTS/LICENSE` with generated fonts. FNT/FON serialization uses
@@ -155,12 +155,12 @@ the font license is not a license for the DDK, compiler or Windows.
 CGAUI reuses COMPACT's BMP writer for six-row caption/system/scroll controls,
 checkbox/radio atlas, combo button and menu marks. FONTS.ASM descriptions and
 compression metrics are staged with the driver. User/system-control behavior,
-OEM atlas interpretation and clickable footprints need native validation.
+The recorded OEM atlas and clickable-footprint checks pass in target emulation.
 
 OEMSETUP.INF is a qualification descriptor for three ordinary Windows Setup
 choices. The complete consumer route is the adjacent native SETUP, which also
-registers dialog faces. CGA binaries and CGAGRAB/return-from-DOS behavior still
-need native qualification. Do not direct users to the descriptor alone, gather
+registers dialog faces. The recorded binaries and ordinary DOS-command return pass; broader
+DOS/grabber compatibility remains separate. Do not direct users to the descriptor alone, gather
 files, edit INIs or run developer font tools. Mode changes occur while Windows
 is closed and take effect on the next start.
 
@@ -204,3 +204,26 @@ frame's bottom/right. A clipped fixed-client child group can move as well.
 No GDI geometry or video timing changes. Existing panning-owner classes are
 refused, and only the 160x100x16 fixed mode starts this client. Fonts and six-row
 controls remain separate required components, with their native evidence intact.
+
+## Local runtime qualification
+
+The final runtime payload from e2bf87b passes native DOS switches 100/320/640/100
+and exact fixture-tree UNDO. Actual17-file consumer installs are recorded for
+all three modes. The 320 GUI uses identical selected runtime bytes across the
+640-only proportional-font follow-up. Native Run/Open/Save As/Find text and
+control bounds, file save, palettes/blits, odd cursor/draw-under/edges/hide and
+DOS exit pass in the IBM XT/CGA emulator. Physical hardware is unqualified.
+
+File Manager populated directory views pass at160x100 and640x200 using its
+ordinary maximize/Open commands. A DOS command produces an exact file and
+returns to Windows; the following 100-mode graphics test explicitly calibrates
+and records the Windows cursor display count before comparing hidden scenes.
+Early controller/menu and cursor-counter failures remain in the private record;
+no consumer driver/font changes were made to conceal them.
+
+CGAMET optionally reads the private[CGAProbe]FileMgr=1 flag to launch stock
+WINFILE.EXE normally, maximize its frame/MDI child and select its native File
+Open command. It identifies the File menu by caption because a maximized MDI
+child inserts its system menu before File. This is developer instrumentation,
+excluded from consumer contents. It loads no fonts and changes no driver.
+See NATIVE.JSN and the local review QUALIFY.JSON for exact evidence scopes.

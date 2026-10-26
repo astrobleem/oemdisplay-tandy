@@ -843,10 +843,8 @@
     }
   },
   "current_remaining_gates": [
-    "New SETUP/packet with proportional CG6Helv; native640text/contrast/FileManager/DOSreturn/GDI",
-    "Final100consumer delivery and practicalFileManager/DOSreturn",
-    "New packet native DOS mode-switch/exact-treeUNDO; preserve completed320GUI evidence",
-    "Physical IBM CGA remains separately unqualified; noPrintScreencampaign"
+    "Physical IBM CGA/CRTC/monitor qualification remains separate",
+    "Push/merge/publication require separate approval; none performed"
   ],
   "consumer320_final_packet05": {
     "status": "PASS",
@@ -1136,7 +1134,131 @@
       },
       "ink": "Exact existing XT Pixels glyphs; horizontal blank bearings removed, no resampling"
     },
-    "native": "PENDING",
+    "native": "PASS final consumer64002 all dialog text/control bounds, exact save, graphics/cursor/DOS",
     "other_font_and_driver_bytes": "UNCHANGED"
+  },
+  "final_local_status": "NATIVE_EMULATION_RUNTIME_PASS; PHYSICAL_HARDWARE_UNQUALIFIED; NOT_PUBLISHED",
+  "final_runtime_source_commit": "e2bf87b0214db50d9bc4e6b6fa1062bf837ec307",
+  "final_cases": {
+    "100": {
+      "path": "native-cga-filemgr100-02",
+      "assessment": {
+        "native_data": "PASS",
+        "mode": "100",
+        "palette": "PASS",
+        "memory_blt": "PASS",
+        "all_256_pairs": "PASS",
+        "draw_under_odd_cursor": "PASS",
+        "edges_and_hide": "PASS",
+        "padding": "PASS",
+        "saved_file_exact": "PASS",
+        "dos_mode": 3,
+        "source_captures": {
+          "005.VRM": "61a3fda65d5aa5f5f12923ce444769e44c6eda82f53e430a4631a6d7e3134d02",
+          "008.VRM": "3cd30f01f17733953667b060fe1b64341334e076d71a98c5f31297c7e2ad38b4"
+        },
+        "physical_hardware": "UNQUALIFIED",
+        "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification"
+      }
+    },
+    "320": {
+      "path": "native-cga-consumer320-01",
+      "assessment": {
+        "native_data": "PASS",
+        "mode": "320",
+        "palette": "PASS",
+        "memory_blt": "PASS",
+        "all_256_pairs": "PASS",
+        "draw_under_odd_cursor": "PASS",
+        "edges_and_hide": "PASS",
+        "padding": "PASS",
+        "saved_file_exact": "PASS",
+        "dos_mode": 3,
+        "source_captures": {
+          "019.VRM": "4e65d3fbfc3cfe057620f78a4d44d25625868f1013c8dadca68501d4f9185e5d",
+          "022.VRM": "dbdb54b2a7161286929394ebf7009e116517d90ecc89cfb7edceb5ab1046f5b2"
+        },
+        "physical_hardware": "UNQUALIFIED",
+        "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification"
+      }
+    },
+    "640": {
+      "path": "native-cga-consumer640-02",
+      "assessment": {
+        "native_data": "PASS",
+        "mode": "640",
+        "palette": "PASS",
+        "memory_blt": "PASS",
+        "all_256_pairs": "PASS",
+        "draw_under_odd_cursor": "PASS",
+        "edges_and_hide": "PASS",
+        "padding": "PASS",
+        "saved_file_exact": "PASS",
+        "dos_mode": 3,
+        "source_captures": {
+          "017.VRM": "8b56003b02ee9dae04ac8312d2c351a9e33f279e5b74edecd5e3a02e8b715868",
+          "020.VRM": "95383235fe492bd5094a6413487a2e8eb9d5d7986e1a89c4111c0e582f5ca4d9"
+        },
+        "physical_hardware": "UNQUALIFIED",
+        "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification"
+      }
+    }
+  },
+  "final_FileManager": {
+    "100": {
+      "kind": "FOCUSED_FILE_MANAGER_DOS_GDI",
+      "mode": "100",
+      "complete": true,
+      "directory_windows": [
+        {
+          "handle": "1c84",
+          "class": "WFS_Dir",
+          "rect": "10,22,140,77",
+          "title": "C:\\*.*"
+        }
+      ],
+      "filemgr_capture": "001.VRM",
+      "DOS_command_exact": true,
+      "gdi_capture": "005.VRM",
+      "under_hidden_capture": "008.VRM",
+      "dos_mode": 3
+    },
+    "640": {
+      "kind": "FOCUSED_FILE_MANAGER_DOS_GDI",
+      "mode": "640",
+      "complete": true,
+      "directory_windows": [
+        {
+          "handle": "1c7c",
+          "class": "WFS_Dir",
+          "rect": "35,48,605,172",
+          "title": "C:\\*.*"
+        }
+      ],
+      "filemgr_capture": "001.VRM",
+      "dos_mode": 3
+    }
+  },
+  "final_native_DOS_switch_undo": {
+    "complete": true,
+    "modes": [
+      "100",
+      "320",
+      "640",
+      "100"
+    ],
+    "undo_exact": true,
+    "created_payload_removed": true,
+    "complete_original_tree_restored": true,
+    "original": {
+      "SYSTEM.INI": {
+        "bytes": 1058,
+        "sha256": "53d91a6dd6485079b332387319a2e8197249292d614cd227a3fe8cb71b8e93c8"
+      },
+      "WIN.INI": {
+        "bytes": 1301,
+        "sha256": "67ae933f4d719ae482378e156faf72d1f117c2211ad86f164a503f18cae5c090"
+      }
+    }
   }
 }
