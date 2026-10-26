@@ -77,8 +77,8 @@
       },
       "build_record": "tools/DOSINST/FIXBUILD.JSN",
       "build_record_identity": {
-        "bytes": 962,
-        "sha256": "45df0e638a5e7c188c0a5bc869a5a25d3791975d1c12e1a0a8befd03d09e34ca"
+        "bytes": 1028,
+        "sha256": "f98056a7137f27a7cf6263936f583f4bc30a03503441d40abd57331740c051ba"
       }
     },
     "XTCLEAN.COM": {

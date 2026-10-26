@@ -1,6 +1,6 @@
 {
-  "status": "PASS_BUILD_AND_HOST_ONLY",
-  "native_integration": "PENDING_SHARED_EMULATOR_SLOT",
+  "status": "PASS_BUILD_HOST_AND_NATIVE_INTEGRATION",
+  "native_integration": "PASS_FOCUSED_NORMAL_PACKAGE",
   "physical_hardware": false,
   "source_base": "2750698",
   "pr_head": "030bdd90d1fe85f94cf251569769f1725facee4a",
@@ -98,13 +98,20 @@
     "bytes": 61856,
     "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
   },
-  "blocked_native_preparation": {
-    "started": "2026-10-26T21:09:44.928921+00:00",
-    "emulator": "C:\\Program Files\\DOSBox-X\\dosbox-x.exe",
-    "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task-3\\native-prep-1\\fresh\\RUN.CNF",
-    "emulator_sha256": "769fb38a5a94475488be2107856d9a9fcca65487df35676188f5c2ccd5a2e964",
-    "timeout": 180,
-    "error": "Shared lease remains busy; no child launched"
-  },
-  "scope_note": "Exact grabber/TGCLIP reproduction reuses FA/FB/FC bytes. Host checks and compiler reproduction do not establish native installation or clipboard acceptance."
+  "scope_note": "Emulated Tandy EX/HX 8088, normal 640 KB. Exact prior FA/FB/FC runtime bytes preserved. Focused normal installation, display selection, text and graphics Clipboard, independently verified visible Paintbrush paste, and separate normal DOS return passed. Save As automation failed and is preserved separately. Physical hardware not tested.",
+  "native_cases": {
+    "fresh_files": 375,
+    "update_files": 87,
+    "exact_prepared_comparison": true,
+    "display_selection": "native-gui-1",
+    "text_clipboard": "native-gui-4",
+    "graphics_paintbrush": "native-gui-5",
+    "normal_dos_return": "native-exit-1",
+    "clipboard_pixels": 64000,
+    "clipboard_mismatches": 0,
+    "paintbrush_verified_region": [
+      250,
+      169
+    ]
+  }
 }

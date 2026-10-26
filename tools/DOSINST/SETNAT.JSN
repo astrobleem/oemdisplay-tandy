@@ -96,6 +96,6 @@
       "sha256": "1e65e515a3bdfef977c7117d4d05c5f6dbf63e648d21e207078ff156521ec57a"
     }
   },
-  "native_execution": false,
-  "qualification": "Pending focused Tandy grabber native acceptance; historical receipts are unchanged."
+  "native_execution": true,
+  "qualification": "Focused normal-package Tandy grabber acceptance: docs/QUAL/TGRAB/PACKAGE.JSN and INSTALL.ZIP; historical receipts retain their original scope."
 }

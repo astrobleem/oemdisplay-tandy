@@ -1,7 +1,7 @@
 {
   "target": "8086 / DOS / small model / 8KB stack",
   "compiler": "Open Watcom -bt=dos -0 -ms -s -k8192",
-  "native_execution": false,
+  "native_execution": true,
   "sources": {
     "FIXXT.C": {
       "bytes": 31141,
@@ -28,5 +28,6 @@
     "bytes": 47846,
     "sha256": "60263b9f241ccc7630034e8cd065a72a0aae32e12f09a00e4f39f8c92e24d2e5"
   },
-  "log": ""
+  "log": "",
+  "qualification": "docs/QUAL/TGRAB/PACKAGE.JSN and INSTALL.ZIP"
 }
