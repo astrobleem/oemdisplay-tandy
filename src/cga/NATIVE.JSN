@@ -428,13 +428,14 @@
     }
   },
   "pending_observer_revision": {
-    "source_sha256": "1f579326f8fcdb4ab7199b3521e2eac3cc0201fd2d7c41fbd9332b8719e5a7e5",
+    "source_sha256": "6198c0f9b8080eb64831484552deb2015282fbd9c7c7c54ffe3b129f92301543",
     "changes": [
-      "Passive hidden helper-owner handles; does not launch helper",
-      "TREE END marks completed native window tree for fresh-snapshot assertions"
+      "Passive hidden-owner handles and complete TREE END marker",
+      "D command compares signed font heights and default/Swiss pitch without AddFontResource",
+      "Full dialog LOGFONT charset/quality/precision/pitch fields"
     ],
     "native_build": "NOT_RUN",
     "runtime": "NOT_TESTED",
-    "prior_native_evidence": "Unchanged; qualified receipts above still use their recorded older probe binaries"
+    "prior_native_evidence": "Unchanged; recorded older probe binaries retained"
   }
 }

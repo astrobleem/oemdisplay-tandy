@@ -20,19 +20,21 @@ static void Font(HDC dc,int stock,LPSTR name)
  wsprintf(line,"FONT %s height=%d ascent=%d ave=%d max=%d weight=%d\r\n",name,tm.tmHeight,tm.tmAscent,tm.tmAveCharWidth,tm.tmMaxCharWidth,tm.tmWeight);Log(line);
  SelectObject(dc,old);
 }
-static void FontProbe(HDC dc)
+static void FontProbe(HDC dc,int add)
 {
- HFONT f,old;TEXTMETRIC tm;char face[40],value[100];int h,bold,n;
+ HFONT f,old;TEXTMETRIC tm;char face[40],value[100];int h,bold,n,pitch;
  GetProfileString("fonts","Helv 3x5 (CGA100)","MISSING",value,sizeof(value));
  wsprintf(line,"PROFILE CG1HELV=%s\r\n",(LPSTR)value);Log(line);
- for(n=0;n<2;n++){
+ GetProfileString("fonts","Helv 4x6 (CGA320)","MISSING",value,sizeof(value));
+ wsprintf(line,"PROFILE CG2HELV=%s\r\n",(LPSTR)value);Log(line);
+ for(n=0;n<(add?2:1);n++){
   if(n){
    wsprintf(line,"ADDFONT Helv=%d Courier=%d\r\n",AddFontResource("C:\\WINDOWS\\SYSTEM\\CG1HELV.FON"),AddFontResource("C:\\WINDOWS\\SYSTEM\\CG1COUR.FON"));Log(line);
   }
-  for(h=4;h<=8;h++)for(bold=0;bold<2;bold++){
-   f=CreateFont(h,0,0,0,bold?700:400,0,0,0,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,VARIABLE_PITCH|FF_SWISS,"Helv");
+  for(h=-8;h<=8;h++)if(h<=-4||h>=4)for(bold=0;bold<2;bold++)for(pitch=0;pitch<2;pitch++){
+   f=CreateFont(h,0,0,0,bold?700:400,0,0,0,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,pitch ? VARIABLE_PITCH|FF_SWISS : 0,"Helv");
    old=SelectObject(dc,f);GetTextMetrics(dc,&tm);GetTextFace(dc,sizeof(face),face);
-   wsprintf(line,"MAP added=%d request=%d weight=%d face=%s height=%d ave=%d pitch=%d\r\n",n,h,bold?700:400,(LPSTR)face,tm.tmHeight,tm.tmAveCharWidth,tm.tmPitchAndFamily);Log(line);
+   wsprintf(line,"MAP added=%d request=%d weight=%d pitchreq=%d face=%s height=%d ave=%d pitch=%d\r\n",n,h,bold?700:400,pitch,(LPSTR)face,tm.tmHeight,tm.tmAveCharWidth,tm.tmPitchAndFamily);Log(line);
    SelectObject(dc,old);DeleteObject(f);
   }
  }
@@ -108,7 +110,7 @@ static void Tree(HWND w,int depth)
   if(depth<2){
    f=(HFONT)SendMessage(w,WM_GETFONT,0,0L);
    if(f&&GetObject(f,sizeof(lf),(LPSTR)&lf)){
-    wsprintf(line,"LF %04x h=%d w=%d weight=%d face=%s\r\n",w,lf.lfHeight,lf.lfWidth,lf.lfWeight,(LPSTR)lf.lfFaceName);Log(line);
+    wsprintf(line,"LF %04x h=%d w=%d weight=%d pitch=%d charset=%d quality=%d out=%d clip=%d face=%s\r\n",w,lf.lfHeight,lf.lfWidth,lf.lfWeight,lf.lfPitchAndFamily,lf.lfCharSet,lf.lfQuality,lf.lfOutPrecision,lf.lfClipPrecision,(LPSTR)lf.lfFaceName);Log(line);
    }
    if(depth==1&&f&&title[0]&&(!lstrcmp(cls,"Static")||!lstrcmp(cls,"Button"))){
     for(i=j=0;title[i]&&j<69;i++){
@@ -159,7 +161,7 @@ int PASCAL WinMain(HANDLE hi,HANDLE prev,LPSTR cmd,int show)
  dc=GetDC(NULL);wsprintf(line,"CAPS width=%d height=%d colors=%d dpi=%d,%d caption=%d menu=%d scroll=%d,%d\r\n",GetDeviceCaps(dc,HORZRES),GetDeviceCaps(dc,VERTRES),GetDeviceCaps(dc,NUMCOLORS),GetDeviceCaps(dc,LOGPIXELSX),GetDeviceCaps(dc,LOGPIXELSY),GetSystemMetrics(SM_CYCAPTION),GetSystemMetrics(SM_CYMENU),GetSystemMetrics(SM_CXVSCROLL),GetSystemMetrics(SM_CYHSCROLL));Log(line);
  Font(dc,SYSTEM_FONT,"SYSTEM");Font(dc,SYSTEM_FIXED_FONT,"FIXED");Font(dc,OEM_FIXED_FONT,"OEM");
  Font(dc,ANSI_VAR_FONT,"ANSI_VAR");
- if(cmd[0]=='F')FontProbe(dc);
+ if(cmd[0]=='F'||cmd[0]=='D')FontProbe(dc,cmd[0]=='F');
  ReleaseDC(NULL,dc);
  SetTimer(hidden,1,1000,NULL);
  while(GetMessage(&msg,NULL,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);}

@@ -168,7 +168,9 @@ with `TREE END`; controllers must wait for a fresh complete tree rather than
 accepting a previous or partial dialog snapshot. Build with explicit
 --repo, --dosbox, --lease
 and fresh --out. Without arguments the probe records screen/stock-font and
-window/control bounds. F9 toggles its palette/BitBlt/pair test window; each
+window/control bounds. Developer command `D` also compares signed font heights
+and default/Swiss pitch without loading additional font resources; `F` retains
+the explicitly marked AddFontResource diagnostic. F9 toggles its palette/BitBlt/pair test window; each
 F8 advances a custom 32x32 cursor through odd-origin/edge/hide checks.
 F7 with that cursor at its first position draws a pixel and a checkerboard
 BitBlt underneath it; the final hidden capture must preserve the new pixels.
