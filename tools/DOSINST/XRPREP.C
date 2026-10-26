@@ -20,6 +20,9 @@
 #define INPUT_HEADER "XRINPUT.H"
 #endif
 #include INPUT_HEADER
+#ifndef SETUP_BYTES
+#define SETUP_BYTES 49840U
+#endif
 #ifndef FRESH_COUNT
 #define FRESH_COUNT 369
 #define UPDATE_COUNT 82
@@ -124,19 +127,22 @@ static void setup_generate(void)
  setup_used=0;
  for(i=0;i<NOPS;i++){
   if(operations[i].text){n=strlen(operations[i].text);
-   if(n>49840U-setup_used)stop("Setup insertion overflow.","");
+   if(n>SETUP_BYTES-setup_used)stop("Setup insertion overflow.","");
    memcpy(setup_result+setup_used,operations[i].text,n);
   }else{
    if(operations[i].end<operations[i].start||operations[i].end>49046U)stop("Setup copy range invalid.","");
    n=operations[i].end-operations[i].start;
-   if(n>49840U-setup_used)stop("Setup copy overflow.","");
+   if(n>SETUP_BYTES-setup_used)stop("Setup copy overflow.","");
    memcpy(setup_result+setup_used,setup_bytes+operations[i].start,n);
   }
   setup_used+=n;
  }
- if(setup_used!=49840U)stop("Generated Setup length differs.","");
+ if(setup_used!=SETUP_BYTES)stop("Generated Setup length differs.","");
  if((crc_add(0xffffffffUL,setup_result,setup_used)^0xffffffffUL)!=SETUP_OUTPUT_CRC)stop("Generated Setup CRC differs.","");
 }
+#ifdef EXPANDED_SETUP
+#include "TGUPSET.H"
+#endif
 static void payload(unsigned i,struct sink *sink)
 {
  struct file_record *r=&files[i];char path[PTH];unsigned left,n,k;
@@ -301,14 +307,29 @@ int main(int argc,char **argv)
  absolute(roots[0],argv[2]);
  if(!stricmp(roots[0],"C:\\WINXT")||!strnicmp(roots[0],"C:\\WINXT\\",9)||(fresh&&(!stricmp(roots[0],"C:\\W30")||!strnicmp(roots[0],"C:\\W30\\",7))))stop("Windows input must be separate from the installer output folders.",roots[0]);
  if(fresh&&!media_complete(roots[0])){collect_media(roots[0],path);strcpy(roots[0],path);}root_count=1;join(path,roots[0],"SYSTEM");if(attr(path,&a)){directory(path);strcpy(roots[root_count++],path);}
- setup_bytes=malloc(49095U);setup_result=malloc(49840U);cnf_bytes=malloc(3456U);
+ setup_bytes=malloc(
+#ifdef EXPANDED_SETUP
+  49840U
+#else
+  49095U
+#endif
+ );setup_result=malloc(SETUP_BYTES);cnf_bytes=malloc(3456U);
  if(!setup_bytes||!setup_result||!cnf_bytes)stop("Not enough conventional memory for preparation.","");
- if(!locate_input("SETUP.INF",49046UL,path)&&!locate_input("SETUP.INF",49095UL,path)&&locate_input("SETUP.INF",49840UL,path)){
-  memset(&setup_sink,0,sizeof(setup_sink));setup_sink.memory=setup_result;setup_sink.limit=49840UL;
+ if(!locate_input("SETUP.INF",49046UL,path)&&!locate_input("SETUP.INF",49095UL,path)&&locate_input("SETUP.INF",((unsigned long)SETUP_BYTES),path)){
+  memset(&setup_sink,0,sizeof(setup_sink));setup_sink.memory=setup_result;setup_sink.limit=((unsigned long)SETUP_BYTES);
+  read_stream(path,((unsigned long)SETUP_BYTES),&setup_sink);
+  if((crc_add(0xffffffffUL,setup_result,SETUP_BYTES)^0xffffffffUL)!=SETUP_OUTPUT_CRC)stop("Installed XR1 Setup metadata differs.",path);
+  setup_used=SETUP_BYTES;ready_setup=1;
+ }
+#ifdef EXPANDED_SETUP
+ else if(!locate_input("SETUP.INF",49046UL,path)&&!locate_input("SETUP.INF",49095UL,path)&&locate_input("SETUP.INF",49840UL,path)){
+  memset(&setup_sink,0,sizeof(setup_sink));setup_sink.memory=setup_bytes;setup_sink.limit=49840UL;
   read_stream(path,49840UL,&setup_sink);
-  if((crc_add(0xffffffffUL,setup_result,49840U)^0xffffffffUL)!=SETUP_OUTPUT_CRC)stop("Installed XR1 Setup metadata differs.",path);
-  setup_used=49840U;ready_setup=1;
- }else critical("SETUP.INF",49046U,SETUP_INPUT_SHA,setup_bytes,original);
+  if((crc_add(0xffffffffUL,setup_bytes,49840U)^0xffffffffUL)!=0x0cf60179UL)stop("Prior canonical Setup metadata differs.",path);
+  grabber_setup();ready_setup=1;
+ }
+#endif
+ else critical("SETUP.INF",49046U,SETUP_INPUT_SHA,setup_bytes,original);
  critical("WIN.CNF",3456U,CNF_SHA,cnf_bytes,loader);
  if(!ready_setup)setup_generate();
  puts("Checking the supplied runtime and required Windows files before output.");

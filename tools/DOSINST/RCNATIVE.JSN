@@ -8,8 +8,8 @@
   },
   "sources": {
     "XRPREP.C": {
-      "bytes": 17719,
-      "sha256": "67a6f720956cf5bda08397afa8a876c3e3397a2bd3e63fd072b4b1159b73e79e"
+      "bytes": 18454,
+      "sha256": "bcb7e848b781a69c0163e98448de2b501f4a356ec22fa0c76b715c60e6618311"
     },
     "XR1PINS.H": {
       "bytes": 5226,
@@ -48,16 +48,24 @@
     "FIXXT.EXE": {
       "source": "tools/DOSINST/FIXXT.C",
       "source_identity": {
-        "bytes": 30644,
-        "sha256": "84ff9425ae0fbe808d3a92989e7d74f3501becf1323c27655d8f6f3bbbcc245a"
+        "bytes": 31141,
+        "sha256": "eaff02133d231dcd7f1b08cf3b886ecb9cfd011c79df1641e6d0221bc5a477cb"
       },
       "binary": "tools/DOSINST/BIN/FIXXT.EXE",
       "binary_identity": {
-        "bytes": 38645,
-        "sha256": "7e05d43dfd5049f1f30d25733a76a7cd8c605a72fe16c75e3b972acf948842c2"
+        "bytes": 47846,
+        "sha256": "60263b9f241ccc7630034e8cd065a72a0aae32e12f09a00e4f39f8c92e24d2e5"
       },
-      "compiler": "Microsoft C6 /G0 /AS /W3 /Od; LINK4 8KB stack",
+      "compiler": "Open Watcom -bt=dos -0 -ms -s -k8192",
       "source_dependencies": {
+        "tools/DOSINST/TGINT.H": {
+          "bytes": 4312,
+          "sha256": "8988b3bf86590d6af5d94a85a3e8e468f18f603f5e6f7c177fbabbd6f5079dd1"
+        },
+        "tools/DOSINST/TGID.H": {
+          "bytes": 112,
+          "sha256": "1d2077d5f8f928d24c58b7fbdb51568b98b5150b25cb7deb4d57ed28813a3c4d"
+        },
         "tools/DOSINST/SOUNDID.H": {
           "bytes": 201,
           "sha256": "c7645359276c478e8609881559a4d252e9ee966161261b255f9b389482610310"
@@ -69,8 +77,8 @@
       },
       "build_record": "tools/DOSINST/FIXBUILD.JSN",
       "build_record_identity": {
-        "bytes": 875,
-        "sha256": "a65d8b5c7f42f7dfcdbb9bfab4cafed58e819abf26361d1d285551e4f9049e92"
+        "bytes": 1028,
+        "sha256": "f98056a7137f27a7cf6263936f583f4bc30a03503441d40abd57331740c051ba"
       }
     },
     "XTCLEAN.COM": {
@@ -99,5 +107,6 @@
       "bytes": 59,
       "sha256": "7b43d5ffc9c233d540a5a6d7bb8662c30bc5595b06a59ce6e36ee005fc2b217f"
     }
-  }
+  },
+  "source_note": "XRPREP SETUP_BYTES defaults to historical 49840; only EXPANDED_SETUP enables Tandy metadata conversion."
 }

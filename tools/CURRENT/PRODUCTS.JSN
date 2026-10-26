@@ -174,23 +174,23 @@
       "sha256": "ac825b9e38d6fc636cbf33960e2e55eb00693dc92de49d8d04adf093bcb13881"
     }
   },
-  "core_source_commit": "b8de9e34e90f47550edcbcf1a335c2ed2e86b99e",
+  "core_source_commit": "930e32f212be1bf4b8533fb0f3572056e4772a36",
   "core_identities": {
     "WINXT.ZIP": {
-      "bytes": 680629,
-      "sha256": "59ee10314c4f6ec3e226df60b24ed6cd0bb98fa71448d8a94942ab73959834ed"
+      "bytes": 702651,
+      "sha256": "979377135f87375b4f64709b4d98532eb49278ef0fb34a57296e73941974d0d8"
     },
     "WINXTSRC.ZIP": {
       "bytes": 100529,
       "sha256": "9e32793d07820154d627cdcf147bbfc7086d5db7addf76f5c66d310ff9ff220a"
     },
     "WINXT.JSN": {
-      "bytes": 8669,
-      "sha256": "b7b1e685b8bcefdffe12ae1c1cdf06faad4e52a5f5aae4708bb673d58aa71617"
+      "bytes": 8946,
+      "sha256": "a5b7d7026eac48558ef18b267cffec4308f4cead66a17d92ec509075d32e8025"
     },
     "WINXT.SHA": {
       "bytes": 234,
-      "sha256": "d9ae8d00881f3ec52f80d2a132e72c7a45838406465e2267eb845916f441db78"
+      "sha256": "a6cdc8ffea76fedb4df87913f23c800bc1a6cf8ff454d7cca5a294096cb50ca0"
     }
   }
 }

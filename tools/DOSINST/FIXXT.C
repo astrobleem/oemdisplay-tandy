@@ -20,6 +20,7 @@
 #endif
 #include "SOUNDID.H"
 #include "HPXYID.H"
+#include "TGID.H"
 #define PTH 200
 #define CAP 14000
 static char win[PTH],home[PTH],sys[PTH],savepath[PTH];
@@ -29,10 +30,10 @@ static int backup,verify,checking,fresh,last=-1;
 static int display_route,display_legacy;
 static int pinned_file(const char *,unsigned long,unsigned long);
 static unsigned long total,done;
-static const char *names[]={"TSHELL.EXE","TSINPUT.DLL","TSHELL.INI","XTTEST.COM","XTCLEAN.COM","TNDYK3.DRV","WHEEL.DRV","C216N6.DRV","C23216.DRV","XTS6SYS.FON","XTS6FIX.FON","XTCSYS.FON","XTCFIX.FON","XTCOEM.FON","CGA.GR2","SETUP.INF","TABOUT.EXE","MATRIX.EXE","MAZE.EXE","STARFLD.EXE","PINBALL.EXE","XPCHIME.EXE","TCHIME.EXE","TEXIT.EXE","RESERVE.COM","WINXT.BAT","CPSET.EXE","WINBRDG.EXE","SHOOK.COM","SETAUTO.EXE","PANCMP2.DRV","XTPAN.EXE","TP.EXE","HPXY.DRV","XYCTL.EXE","WXTWHL.EXE","SOUND.DRV"};
-static unsigned long sizes[]={72323UL,6281UL,999UL,39427UL,1071UL,7640UL,1820UL,54752UL,54768UL,4240UL,4240UL,4592UL,4208UL,4560UL,2104UL,49840UL,6479UL,14669UL,28013UL,17295UL,15487UL,5103UL,5071UL,9215UL,1512UL,332UL,36612UL,28656UL,1249UL,10976UL,55104UL,6415UL,12847UL,HPXY_BYTES,29644UL,7222UL,SOUND_BYTES};
-static int target[]={0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,1};
-#define COUNT 37
+static const char *names[]={"TSHELL.EXE","TSINPUT.DLL","TSHELL.INI","XTTEST.COM","XTCLEAN.COM","TNDYK3.DRV","WHEEL.DRV","C216N6.DRV","C23216.DRV","XTS6SYS.FON","XTS6FIX.FON","XTCSYS.FON","XTCFIX.FON","XTCOEM.FON","CGA.GR2","SETUP.INF","TABOUT.EXE","MATRIX.EXE","MAZE.EXE","STARFLD.EXE","PINBALL.EXE","XPCHIME.EXE","TCHIME.EXE","TEXIT.EXE","RESERVE.COM","WINXT.BAT","CPSET.EXE","WINBRDG.EXE","SHOOK.COM","SETAUTO.EXE","PANCMP2.DRV","XTPAN.EXE","TP.EXE","HPXY.DRV","XYCTL.EXE","WXTWHL.EXE","SOUND.DRV","TANDYGR.GR2","TGCLIP.EXE"};
+static unsigned long sizes[]={72323UL,6281UL,999UL,39427UL,1071UL,7640UL,1820UL,54752UL,54768UL,4240UL,4240UL,4592UL,4208UL,4560UL,2104UL,49848UL,6479UL,14669UL,28013UL,17295UL,15487UL,5103UL,5071UL,9215UL,1512UL,332UL,36612UL,28656UL,1249UL,10976UL,55104UL,6415UL,12847UL,HPXY_BYTES,29644UL,7222UL,SOUND_BYTES,5480UL,4991UL};
+static int target[]={0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,1,1,0};
+#define COUNT 39
 #define KEEP_XRSYNC 4
 static char media[PTH];
 static int changed,needs[COUNT],ini_changed,forced=-1;
@@ -96,7 +97,7 @@ static void begin(const char *dir,const char *leaf,char *n,char *o,char *j){char
  if(backup&&kind(p)){path(b,savepath,!stricmp(leaf,"SYSTEM.INI")?"SYSTEM.INI":leaf);copy_new(p,b,0);}
  sprintf(line,"TINYXT1 %s %d\r\n",leaf,kind(p)?1:0);h=create(j);writeall(h,(unsigned char *)line,(unsigned)strlen(line),j);closeout(h,j);
 }
-static void commit(const char *dir,const char *leaf,const char *n,const char *o,const char *j){char p[PTH];path(p,dir,leaf);if(kind(p)&&rename(p,o))stop("Cannot rename original",p);if(rename(n,p))stop("Cannot commit complete new file",p);if(display_route&&!pinned_file(p,HPXY_BYTES,HPXY_CRC))stop("Committed HPXY readback failed; original retained",p);if(kind(o)&&remove(o))stop("Cannot remove temporary original",o);if(remove(j))stop("Cannot finish journal",j);}
+static void commit(const char *dir,const char *leaf,const char *n,const char *o,const char *j){char p[PTH];path(p,dir,leaf);if(kind(p)&&rename(p,o))stop("Cannot rename original",p);if(rename(n,p))stop("Cannot commit complete new file",p);if(display_route==1&&!pinned_file(p,HPXY_BYTES,HPXY_CRC))stop("Committed HPXY readback failed; original retained",p);if(kind(o)&&remove(o))stop("Cannot remove temporary original",o);if(remove(j))stop("Cannot finish journal",j);}
 static void replace_file(const char *a,const char *dir,const char *leaf){char n[PTH],o[PTH],j[PTH];begin(dir,leaf,n,o,j);copy_new(a,n,1);commit(dir,leaf,n,o,j);}
 static void trim(char *s){char *p=s;size_t n;while(*p==' '||*p=='\t')p++;if(p!=s)memmove(s,p,strlen(p)+1);n=strlen(s);while(n&&isspace((unsigned char)s[n-1]))s[--n]=0;}
 static void loadini(void){char p[PTH];FILE *f;unsigned n;path(p,win,inifile);if(length(p)>CAP)stop("SYSTEM.INI exceeds bounded limit",p);f=fopen(p,"rb");if(!f)stop("Cannot read SYSTEM.INI",p);n=(unsigned)fread(oldini,1,CAP,f);if(ferror(f)||fclose(f))stop("INI read failed",p);oldini[n]=0;if(strlen(oldini)!=n)stop("INI contains binary data",p);}
@@ -254,6 +255,7 @@ static int display_payload(const char *name){
   !stricmp(name,"XTS6SYS.FON")||!stricmp(name,"XTS6FIX.FON")||
   !stricmp(name,"XTCSYS.FON")||!stricmp(name,"XTCFIX.FON")||
   !stricmp(name,"XTCOEM.FON")||!stricmp(name,"CGA.GR2")||
+  !stricmp(name,"TANDYGR.GR2")||!stricmp(name,"TGCLIP.EXE")||
   !stricmp(name,"SETUP.INF");
 }
 static void checkfiles(int mode){char p[PTH],a[PTH];unsigned i;
@@ -262,6 +264,8 @@ static void checkfiles(int mode){char p[PTH],a[PTH];unsigned i;
   if((!stricmp(names[i],"C216N6.DRV")&&mode!=0)||(!stricmp(names[i],"C23216.DRV")&&mode!=1)||(!stricmp(names[i],"PANCMP2.DRV")&&mode!=2)||(!stricmp(names[i],"XTPAN.EXE")&&mode!=2)||(!stricmp(names[i],"HPXY.DRV")&&mode!=3)||(!stricmp(names[i],"XYCTL.EXE")&&mode!=3)||((!stricmp(names[i],"XTS6SYS.FON")||!stricmp(names[i],"XTS6FIX.FON"))&&mode!=0)||((!stricmp(names[i],"XTCSYS.FON")||!stricmp(names[i],"XTCFIX.FON"))&&mode==0)){needs[i]=0;continue;}
   path(p,media,names[i]);if((unsigned long)length(p)!=sizes[i])stop("Repair source size differs",p);
    if(!stricmp(names[i],HPXY_FILE)&&!pinned_file(p,HPXY_BYTES,HPXY_CRC))stop("HPXY source identity differs",p);
+  if(!stricmp(names[i],"TANDYGR.GR2")&&!pinned_file(p,TG_BYTES,TG_CRC))stop("Tandy grabber source identity differs",p);
+  if(!stricmp(names[i],"TGCLIP.EXE")&&!pinned_file(p,CLIP_BYTES,CLIP_CRC))stop("TGCLIP source identity differs",p);
   path(a,target[i]==2?home:target[i]?sys:win,names[i]);regular_or_missing(a);
   if(i==2&&kind(a)==1){if(length(a)>CAP)stop("Existing shell settings too large",a);needs[i]=0;continue;}
   needs[i]=!current(p,a);if(needs[i])total+=sizes[i];
@@ -436,8 +440,11 @@ static int display_install(const char *requested){
  puts("\nHPXY updated. Other installed files and INI settings were not repaired.");return 0;
 }
 
+#include "TGINT.H"
+
 int main(int argc,char **argv){char p[PTH],a[PTH],v[300],n[PTH],o[PTH],j[PTH],m[2*PTH+50];unsigned i;int mode,h,rep;
  setbuf(stdout,NULL);
+ if(argc==3&&!stricmp(argv[1],"GRABBER"))return grabber_install(argv[2]);
  if(argc==3&&!stricmp(argv[1],"DISPLAY"))return display_install(argv[2]);
  if(argc==2&&!stricmp(argv[1],"/FAIL"))return 2;
  if(argc<4||argc>7){puts("FIXXT INSTALL|REPAIR|CHECK C:\\WINDOWS C:\\WINXT [/VERIFY] [/FRESH]\nFIXXT DISPLAY C:\\WINDOWS");return 2;}
@@ -458,14 +465,14 @@ int main(int argc,char **argv){char p[PTH],a[PTH],v[300],n[PTH],o[PTH],j[PTH],m[
  changeini("boot","display.drv",mode==3?"HPXY.DRV":mode==2?"PANCMP2.DRV":mode?"C23216.DRV":"C216N6.DRV");
  changeini("boot","fonts.fon",mode?"XTCSYS.FON":"XTS6SYS.FON");
  changeini("boot","fixedfon.fon",mode?"XTCFIX.FON":"XTS6FIX.FON");
- changeini("boot","oemfonts.fon","XTCOEM.FON");changeini("boot","286grabber","CGA.GR2");
+ changeini("boot","oemfonts.fon","XTCOEM.FON");changeini("boot","286grabber","TANDYGR.GR2");
  }
  changeini("boot.description","system.drv","Tandy 1000 EX/HX (WindowsXT)");
  changeini("boot.description","keyboard.typ","PC/XT - Type keyboard (84 keys)");
  changeini("boot.description","mouse.drv","Tandy serial wheel mouse (COM1/IRQ4)");
  if(mode!=KEEP_XRSYNC)changeini("boot.description","display.drv",mode==3?"Tandy EX/HX accepted HPXY 640x200 wide-font mode":mode==2?"Tandy EX/HX optional compact panning 320x400":mode?"Tandy EX/HX 320x200 compact 16 colors":"Tandy EX/HX 160x200 small fonts (accepted narrow160)");
  if(ini_changed)total+=(unsigned long)strlen(oldini);for(i=0;i<COUNT;i++)changed+=needs[i];
- if(checking){if(ini_changed||changed)stop("Owned entries or payloads need FIXXT REPAIR","");panini(mode);puts("Owned entries and cheap payload samples match.");return 0;}
+ if(checking){if(ini_changed||changed)stop("Owned entries or payloads need FIXXT REPAIR","");panini(mode);clipini(mode);puts("Owned entries and cheap payload samples match.");return 0;}
  if(changed||ini_changed){space();puts("Repair/copy only missing or outdated payloads and owned INI keys.");progress("");
   for(i=0;i<COUNT;i++)if(needs[i]){path(p,media,names[i]);replace_file(p,target[i]==2?home:target[i]?sys:win,names[i]);}putchar('\n');
   if(ini_changed){begin(win,"SYSTEM.INI",n,o,j);h=create(n);writeall(h,(unsigned char*)oldini,(unsigned)strlen(oldini),n);closeout(h,n);commit(win,"SYSTEM.INI",n,o,j);done+=(unsigned long)strlen(oldini);progress("SYSTEM.INI");putchar('\n');}
@@ -473,5 +480,5 @@ int main(int argc,char **argv){char p[PTH],a[PTH],v[300],n[PTH],o[PTH],j[PTH],m[
  path(p,home,"PROFILE.TXT");sprintf(v,"%s\r\n",mode==KEEP_XRSYNC?"XRSYNC.DRV":mode==3?"HPXY.DRV":mode==2?"PANCMP2.DRV":mode==1?"C23216.DRV":"C216N6.DRV");
  if(!textmatches(p,v)){begin(home,"PROFILE.TXT",n,o,j);h=create(n);writeall(h,(unsigned char*)v,(unsigned)strlen(v),n);closeout(h,n);commit(home,"PROFILE.TXT",n,o,j);}
  path(p,home,"SIMPLE.OK");if(!kind(p)){marker(m);h=create(p);writeall(h,(unsigned char*)m,(unsigned)strlen(m),p);closeout(h,p);}
- printf("Complete: %d payloads copied, SYSTEM.INI %s. No WIN.COM/wave rebuild.\n",changed,ini_changed?"updated":"unchanged");panini(mode);return 0;
+ printf("Complete: %d payloads copied, SYSTEM.INI %s. No WIN.COM/wave rebuild.\n",changed,ini_changed?"updated":"unchanged");panini(mode);clipini(mode);return 0;
 }

@@ -1,0 +1,326 @@
+{
+ "steps": [
+  {
+   "step": "A:TGSETUP ",
+   "t": 1792891952.8
+  },
+  {
+   "step": "C:\\WINXT\\WINXT (l1)",
+   "t": 1792892056.7
+  },
+  {
+   "step": "Shift+PRINT in Windows, the whole screen pasted and saved",
+   "t": 1792892278.6
+  },
+  {
+   "step": "Paintbrush: Image Attributes 320x200, Zoom Out, Paste, Save As WINPRT.BMP",
+   "t": 1792892327.8
+  },
+  {
+   "step": "TGMODES 9 0: Shift+PRINT",
+   "t": 1792892988.6
+  },
+  {
+   "step": "TGMODES 9 1: Shift+PRINT, ALT+TAB away and back",
+   "t": 1792893173.1
+  },
+  {
+   "step": "Paintbrush: Image Attributes 320x200, Zoom Out, Paste, Save As DOS9P1.BMP",
+   "t": 1792893483.8
+  },
+  {
+   "step": "TGMODES A 0: Shift+PRINT",
+   "t": 1792894144.6
+  },
+  {
+   "step": "TGMODES A 1: Shift+PRINT, ALT+TAB away and back",
+   "t": 1792894329.4
+  },
+  {
+   "step": "Paintbrush: Image Attributes 640x200, Zoom Out, Paste, Save As DOSAP1.BMP",
+   "t": 1792894640.3
+  },
+  {
+   "step": "memory: 3 DOS sessions from Windows (TANDYGR.GR2)",
+   "t": 1792895301.2
+  },
+  {
+   "step": "exit Windows (l1)",
+   "t": 1792895598.3
+  }
+ ],
+ "checks": [
+  {
+   "good": 0,
+   "bad": 1,
+   "check": "self-test: the Clipboard comparison passes an equal bitmap and fails one changed pixel",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "clip_lines": [
+    "CLIP 002 formats=2, bitmap=320x200x4x1 free=230208"
+   ],
+   "check": "Windows Print Screen: the Clipboard holds a 320x200 bitmap equal to the screen (pointer corner excluded)",
+   "ok": true
+  },
+  {
+   "file": "WINPRT.BMP",
+   "size": [
+    320,
+    200
+   ],
+   "mismatches": 0,
+   "check": "Paintbrush pastes the whole 320x200 picture and saves WINPRT.BMP with every pixel in the reference colour of the screen",
+   "ok": true
+  },
+  {
+   "mode": 9,
+   "palette": 0,
+   "colours_on_screen": 9,
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 9h palette 0: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)",
+   "ok": false
+  },
+  {
+   "mode": 9,
+   "palette": 1,
+   "colours_on_screen": 9,
+   "restore_mismatches": 0,
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode 9h palette 1: Print Screen puts a 320x200 bitmap on the Clipboard equal to the DOS screen in every pixel (16 colours shown)",
+   "ok": false
+  },
+  {
+   "mismatches": 0,
+   "check": "mode 9h palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly",
+   "ok": true
+  },
+  {
+   "file": "DOS9P1.BMP",
+   "size": [
+    320,
+    200
+   ],
+   "mismatches": 0,
+   "check": "Paintbrush pastes the whole 320x200 picture and saves DOS9P1.BMP with every pixel in the reference colour of the screen",
+   "ok": true
+  },
+  {
+   "mode": 10,
+   "palette": 0,
+   "colours_on_screen": 4,
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode Ah palette 0: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)",
+   "ok": true
+  },
+  {
+   "mode": 10,
+   "palette": 1,
+   "colours_on_screen": 4,
+   "restore_mismatches": 0,
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0,
+   "check": "mode Ah palette 1: Print Screen puts a 640x200 bitmap on the Clipboard equal to the DOS screen in every pixel (4 colours shown)",
+   "ok": true
+  },
+  {
+   "mismatches": 0,
+   "check": "mode Ah palette 1: ALT+TAB to Windows and back restores the screen and its palette exactly",
+   "ok": true
+  },
+  {
+   "file": "DOSAP1.BMP",
+   "size": [
+    640,
+    200
+   ],
+   "mismatches": 0,
+   "check": "Paintbrush pastes the whole 640x200 picture and saves DOSAP1.BMP with every pixel in the reference colour of the screen",
+   "ok": true
+  },
+  {
+   "dos_free": [
+    503328,
+    503328,
+    503328
+   ],
+   "windows_free": [
+    [
+     196096,
+     158560
+    ],
+    [
+     196096,
+     163712
+    ],
+    [
+     196096,
+     185440
+    ]
+   ],
+   "check": "TANDYGR.GR2: every DOS session gets the same memory and Windows' free memory is the same after each closed session",
+   "ok": true
+  }
+ ],
+ "clips": [
+  {
+   "after": "winprt",
+   "lines": [
+    "CLIP 002 formats=2, bitmap=320x200x4x1 free=230208"
+   ]
+  },
+  {
+   "after": "m9p0",
+   "lines": [
+    "CLIP 003 formats=7,1, bitmap=none text=yes free=260224",
+    "CLIP 004 formats=2, bitmap=320x200x4x1 free=228224"
+   ]
+  },
+  {
+   "after": "m9p1",
+   "lines": [
+    "CLIP 005 formats=7,1, bitmap=none text=yes free=260224",
+    "CLIP 006 formats=2, bitmap=320x200x4x1 free=228224"
+   ]
+  },
+  {
+   "after": "mAp0",
+   "lines": [
+    "CLIP 007 formats=7,1, bitmap=none text=yes free=260224",
+    "CLIP 008 formats=2, bitmap=640x200x4x1 free=196224"
+   ]
+  },
+  {
+   "after": "mAp1",
+   "lines": [
+    "CLIP 009 formats=7,1, bitmap=none text=yes free=260224",
+    "CLIP 010 formats=2, bitmap=640x200x4x1 free=196224"
+   ]
+  }
+ ],
+ "memory": [
+  {
+   "what": "TANDYGR.GR2 session 1",
+   "dos_free_in_session": 503328,
+   "windows": [
+    196096,
+    158560
+   ]
+  },
+  {
+   "what": "TANDYGR.GR2 session 2",
+   "dos_free_in_session": 503328,
+   "windows": [
+    196096,
+    163712
+   ]
+  },
+  {
+   "what": "TANDYGR.GR2 session 3",
+   "dos_free_in_session": 503328,
+   "windows": [
+    196096,
+    185440
+   ]
+  },
+  {
+   "what": "DOS prompt after Windows exit 1",
+   "dos_free": 555872
+  }
+ ],
+ "modes": [
+  {
+   "mode": 9,
+   "palette": 0,
+   "colours_on_screen": 9,
+   "clip_lines": [
+    "CLIP 003 formats=7,1, bitmap=none text=yes free=260224",
+    "CLIP 004 formats=2, bitmap=320x200x4x1 free=228224"
+   ],
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 9,
+   "palette": 1,
+   "colours_on_screen": 9,
+   "restore_mismatches": 0,
+   "clip_lines": [
+    "CLIP 005 formats=7,1, bitmap=none text=yes free=260224",
+    "CLIP 006 formats=2, bitmap=320x200x4x1 free=228224"
+   ],
+   "bitmap": [
+    320,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 10,
+   "palette": 0,
+   "colours_on_screen": 4,
+   "clip_lines": [
+    "CLIP 007 formats=7,1, bitmap=none text=yes free=260224",
+    "CLIP 008 formats=2, bitmap=640x200x4x1 free=196224"
+   ],
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  },
+  {
+   "mode": 10,
+   "palette": 1,
+   "colours_on_screen": 4,
+   "restore_mismatches": 0,
+   "clip_lines": [
+    "CLIP 009 formats=7,1, bitmap=none text=yes free=260224",
+    "CLIP 010 formats=2, bitmap=640x200x4x1 free=196224"
+   ],
+   "bitmap": [
+    640,
+    200,
+    4,
+    1
+   ],
+   "clip_vs_screen_mismatches": 0
+  }
+ ],
+ "memory_note": "windows = [GetFreeSpace(0), GlobalCompact(0)]; the largest block moves with compaction, the check uses the free total",
+ "dos_free_session_tandygr": 503328,
+ "verdict": "FAIL"
+}

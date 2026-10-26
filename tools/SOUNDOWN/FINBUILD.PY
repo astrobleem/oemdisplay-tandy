@@ -8,7 +8,7 @@ import json
 import shutil
 
 HERE = Path(__file__).resolve().parent
-SOURCES = ('FIXXT.C', 'FIXXT.RSP', 'BLDFIX.BAT', 'SOUNDID.H', 'HPXYID.H')
+SOURCES = ('FIXXT.C', 'FIXXT.RSP', 'BLDFIX.BAT', 'SOUNDID.H', 'HPXYID.H', 'TGINT.H', 'TGID.H')
 
 
 def identity(path):
@@ -29,7 +29,7 @@ def main():
             parser.error('Missing external toolchain file: ' + name)
     out.mkdir(parents=True, exist_ok=False)
     for name in SOURCES:
-        source = HERE.parent/'DOSINST'/name if name in ('FIXXT.C', 'SOUNDID.H', 'HPXYID.H') else HERE/name
+        source = HERE.parent/'DOSINST'/name if name in ('FIXXT.C', 'SOUNDID.H', 'HPXYID.H', 'TGINT.H', 'TGID.H') else HERE/name
         shutil.copyfile(source, out/name)
     config = f'''[sdl]
 fullscreen=false

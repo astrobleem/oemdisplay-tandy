@@ -4,7 +4,7 @@ Version="3.0"
 [disks]
 a = .,"Windows XT XR1",OEMSETUP.INF
 [display]
-hpxy = a:HPXY.DRV, "Tandy EX/HX HPXY 640x256 hardware pan", "200,96,48", a:CGA.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE
+hpxy = a:HPXY.DRV, "Tandy EX/HX HPXY 640x256 hardware pan", "200,96,48", a:TANDYGR.GR2, a:XTSTATIC.LGO,,,, a:WXTSPL01.RLE
 [sysfonts]
 a:XTCSYS.FON, "XT CGA System", "200,96,48"
 [fixedfonts]

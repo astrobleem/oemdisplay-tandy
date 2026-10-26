@@ -46,6 +46,7 @@ Choose the checks matching your changes:
 | --- | --- |
 | Native core package and preparation boundaries | `python -B tools/DOSINST/TESTPUB.PY`, `python -B tools/XR1PACK/TESTPREP.PY`, `python -B tools/XR1PACK/TESTPUB.PY`; [.github/workflows/xr1pack.yml](.github/workflows/xr1pack.yml) |
 | Native CRC implementation | `python -B tools/DOSINST/TESTCRC.PY` compiles a host C check; it uses the mandatory managed GCC launcher on Windows. |
+| Tandy grabber installer transaction | `python -B tools/DOSINST/TESTGRAB.PY`; native clipboard and normal-package qualification remain separate. |
 | Current HPXY acceptance bindings | `python -B tools/DOSINST/TESTHPXY.PY`; on Windows, `TESTDISP.PY` in the same directory exercises the actual C transaction through the managed GCC launcher. |
 | Current catalog and pinned public products | `tools/CURRENT/CHECK.PY` and `BUNDLE.PY` above; [.github/workflows/current.yml](.github/workflows/current.yml) |
 | External legacy input adapter | `python -B tools/BUILDDEPS/TESTDEPS.PY` |
@@ -121,18 +122,20 @@ python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target setup --out NEW-SETUP
 python tools/DOSINST/BUILD.PY --watcom C:\WATCOM --target wrapper --out NEW-WRAPPER
 ```
 
-These use 16-bit DOS tools, not host GCC. The accepted current FIXXT finisher
-was built with Microsoft C6/LINK4, recorded in `tools/DOSINST/FIXBUILD.JSN`:
+These use 16-bit DOS tools, not host GCC. The Tandy-integrated FIXXT candidate
+uses the same Open Watcom builder with `--target finisher`. Its exact source
+and binary pins are in `tools/DOSINST/FIXBUILD.JSN`; focused package acceptance
+is recorded under `docs/QUAL/TGRAB`. Historical Microsoft C6/LINK4 builds
+remain reproducible through:
 
 ```text
 python tools/SOUNDOWN/FINBUILD.PY --toolchain C6-TOOLCHAIN --dosbox DOSBOX-X --lease SHARED-LEASE --out NEW-FIXXT
 ```
 
-That command launches a bounded, leased DOSBox-X build. `tools/DOSINST/BUILD.PY`
-also has a `finisher` target, but its Open Watcom output is not the accepted
-C6 binary. Current expanded SETUP source/binary pins are in `SETNAT.JSN`;
-full-install evidence is `docs/QUAL/DOSINST/EXPAND.JSN`, and movable ordinary
-OEM evidence is `tools/XROEM/NATIVE.JSN`. Preserve guards and qualify changed bytes.
+That command launches a bounded, leased DOSBox-X build. Expanded SETUP pins
+are in `SETNAT.JSN`. Earlier `docs/QUAL/DOSINST/EXPAND.JSN` and
+`tools/XROEM/NATIVE.JSN` receipts retain their original byte identities.
+Preserve guards and qualify changed bytes.
 
 The current HPXY runtime is `tools/DOSINST/BIN/HPXY.DRV`, bound to its
 source/build and focused Windows evidence in `tools/DOSINST/HPXY.JSN`.
@@ -166,8 +169,10 @@ and rc.5/rc.6 records retain their original scope; they are not the current
 download or support-dependency contract. Never reinstate their external
 CGA/EGA font gathering in current installation paths.
 
-Current packets use `distributions/WINXT/CGA.GR2` and selected XTC/XTE/XTTSYS
-fonts, with `XTSTATIC.LGO`/`WXTSPL01.RLE` and other approved startup assets.
+The expanded Tandy packet uses `distributions/WINXT/TANDYGR.GR2` and
+`TGCLIP.EXE`; older packets retain `CGA.GR2`. Packets include selected
+XTC/XTE/XTTSYS fonts, with `XTSTATIC.LGO`/`WXTSPL01.RLE` and other approved
+startup assets.
 The current [portable OEM descriptor](tools/XROEM/OEMSETUP.INF) selects XTC3;
 the full package also supplies the remaining font families. Do not restore
 root duplicates, redesign assets or collect stock fonts merely to build a packet.

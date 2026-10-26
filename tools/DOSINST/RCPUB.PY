@@ -104,6 +104,8 @@ def expanded_entries():
         "current_panui_inputs", str(HERE / "PANUI.PY")).load_module()
     core = dict(core)
     core.update({"PAYLOAD/" + n: b for n, b in panui.runtimes().items()})
+    for name in ("TANDYGR.GR2", "TGCLIP.EXE"):
+        core["PAYLOAD/" + name] = pub.read_file(REPO / "distributions/WINXT", name)
     native = json.loads((HERE / "SETNAT.JSN").read_bytes())
     helper = pub.read_file(HERE, "BIN/SETUP.EXE")
     pub.require(pub.identity(helper) == native["binary"], "Expanded Setup binary differs")
@@ -138,6 +140,18 @@ def expanded_entries():
     return entries
 
 def expanded_qualification(entries, archive):
+    if "WINXT/TANDYGR.GR2" in entries:
+        try:
+            grab = importlib.machinery.SourceFileLoader(
+                "current_grabber_package", str(HERE / "TGRAB.PY")).load_module()
+            return grab.qualify(entries, archive)
+        except FileNotFoundError as exc:
+            raise ValueError("Grabber native acceptance missing") from exc
+    return legacy_expanded_qualification(entries, archive)
+
+
+def legacy_expanded_qualification(entries, archive):
+    """Retained pre-grabber qualification; current Tandy packages cannot use it."""
     q = json.loads((REPO / "docs/QUAL/DOSINST/EXPAND.JSN").read_bytes())
     if q["archive"] != pub.identity(archive):
         try:
@@ -158,7 +172,7 @@ def expanded_qualification(entries, archive):
         pub.require(case["archive"] == q["archive"], "Different archive tested: " + name)
         if name != "drivers_only":
             pub.require(case["helper"] == pub.identity(entries["SETUP.EXE"]), "Different Setup tested: " + name)
-            pub.require(case["prepared_comparison"] == {"count": 370 if name == "fresh" else 83, "different": []},
+            pub.require(case["prepared_comparison"] == {"count": (375 if name == "fresh" else 87) if "WINXT/TANDYGR.GR2" in entries else (370 if name == "fresh" else 83), "different": []},
                         "Expanded prepared files differ: " + name)
     evidence_root = REPO / "docs/QUAL/DOSINST"
     required = {"EXUP.LOG", "EXUP.PNG", "EXMISS.LOG", "EXBAD.LOG", "EXBAD.PNG", "EXCASE.JSN", "EXFRESH.LOG", "EXFRESH.PNG"}
@@ -196,7 +210,9 @@ def build(output, commit, verify=False):
     # the consumer tree contains only expanded runtime, notices and licences.
     source = pub.read_file(REPO, "tools/XR1PACK/SOUNDSRC.ZIP")
     report = {"schema": 2, "tag": "windows-xt", "source_commit": commit,
-              "native_report": ("docs/QUAL/HPXY/PACKAGE.JSN" if
+              "native_report": ("docs/QUAL/TGRAB/PACKAGE.JSN" if
+                                qualification["status"] == "PASS_CANONICAL_TGRAB_PACKAGE" else
+                                "docs/QUAL/HPXY/PACKAGE.JSN" if
                                 qualification["status"] == "PASS_CANONICAL_HPXY_PACKAGE" else
                                 "docs/QUAL/WDESK/PACKAGE.JSN" if
                                 qualification["status"] == "PASS_NATIVE_PACKAGE" else

@@ -1,0 +1,29 @@
+{
+ "files": {
+  "README.TXT": {
+   "bytes": 2426,
+   "sha256": "aabbdc1b7380629a001d2ed5e16e77b83349c4747100bc24b8485bc02b6a511c"
+  },
+  "TANDYGR.GR2": {
+   "bytes": 5480,
+   "sha256": "e3d03d6299e6a0a5a288f799c3fe4687dc1fabf96c2304030e8ae7d6547999af"
+  },
+  "TGCLIP.EXE": {
+   "bytes": 4991,
+   "sha256": "18b32919194c313966fb62a4a984af0875bd67db1bb9e4342dd66518f0681267"
+  },
+  "TGMODES.COM": {
+   "bytes": 2478,
+   "sha256": "7cf3b04f694372c53939e66e4ddc85f07fba0457be82a4ead4ad23f0d2281df4"
+  },
+  "TGSETUP.EXE": {
+   "bytes": 20607,
+   "sha256": "3d40751f3d75108fca0cf4d8dcc137e4609db42a033ade86ca02de372f774850"
+  },
+  "TGSETUP.LST": {
+   "bytes": 195,
+   "sha256": "a303620aee0b52c6c1773dd4c90761e932381f9cb78d7e74db0d9e62faebfeee"
+  }
+ },
+ "bytes": 36177
+}

@@ -28,6 +28,9 @@ def generate():
     panui = importlib.machinery.SourceFileLoader(
         "current_panui_aliases", str(HERE / "PANUI.PY")).load_module()
     pins, files = panui.aliases(pins, files)
+    grab = importlib.machinery.SourceFileLoader(
+        "current_grabber_aliases", str(HERE / "TGALIAS.PY")).load_module()
+    pins, files, crcs = grab.aliases(pins, files, crcs)
     return {"SETPINS.H":pins,"SETFILES.H":files,"SETINPUT.H":crcs}
 
 if __name__ == "__main__":

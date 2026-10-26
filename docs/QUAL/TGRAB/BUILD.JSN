@@ -1,0 +1,117 @@
+{
+  "status": "PASS_BUILD_HOST_AND_NATIVE_INTEGRATION",
+  "native_integration": "PASS_FOCUSED_NORMAL_PACKAGE",
+  "physical_hardware": false,
+  "source_base": "2750698",
+  "pr_head": "030bdd90d1fe85f94cf251569769f1725facee4a",
+  "runtime": {
+    "TANDYGR.GR2": {
+      "bytes": 5480,
+      "sha256": "e3d03d6299e6a0a5a288f799c3fe4687dc1fabf96c2304030e8ae7d6547999af"
+    },
+    "TGCLIP.EXE": {
+      "bytes": 4991,
+      "sha256": "18b32919194c313966fb62a4a984af0875bd67db1bb9e4342dd66518f0681267"
+    }
+  },
+  "grabber_build": {
+    "tandygr": {
+      "file": "TANDYGR.GR2",
+      "bytes": 5480,
+      "sha256": "e3d03d6299e6a0a5a288f799c3fe4687dc1fabf96c2304030e8ae7d6547999af"
+    },
+    "control": {
+      "file": "CONTROL.GR2",
+      "bytes": 2106,
+      "sha256": "310988d7963017988300479aea0b504febb7e4eeb71caff61c5abdc2ab7afb0f",
+      "what": "unmodified DDK 286 CGA grabber, same build"
+    },
+    "patched_sources_sha256": {
+      "CGAHERC/TGTANDY.ASM": "e268d9b8221e0b2416034bfd638d1a12717eb8bc6000d02f920c83025947c4f7",
+      "CGAHERC/TGSRSCR.ASM": "72ce9fc94231478d660abb1d3fb2b8b87820ac5c7efb09559f4ba5733bc6fea0",
+      "CGAHERC/TGBMP.ASM": "8c5be9c31d984536f47123ac1ff2eccb114e527e1a05fc2cbe42c97bffb9c94d",
+      "CGAHERC/CGA/CGA.ASM": "8561fa88da17d7946c629792da74ae537f3b1cef7420ca60b46c665f6b5e1568",
+      "CGAHERC/GSMODE.ASM": "7e64ba1ffd2a345548122f6ac504f235f4096bd911ec5983bfc5ef28cd466093",
+      "BLOCK.ASM": "d5168d8494112f10ff05abed0e7e2dccfceabf5c0a525dd453bde830e8080e5c",
+      "GETINFO.ASM": "f3f758c1fe85c2279904b45de3c4f752bc61228551b7b374cc10e604c50fa7ea",
+      "GRABBITS.ASM": "72a11e12f2658505e61ebfa4f44d2e0740020dde01569e1597b6e4cd37bba0d8",
+      "CGAHERC/CGA/CGA.LNK": "3e112fd63ce1b28d0f2d9530d2888906746626fe19ec9d4bbf2de6d007082c55"
+    },
+    "edits": 18
+  },
+  "grabber_process": {
+    "started": "2026-10-26T20:41:15.901751+00:00",
+    "lease_acquired": true,
+    "inventory": "",
+    "owned_children": [
+      {
+        "pid": 30240,
+        "stopped": true
+      },
+      {
+        "pid": 19864,
+        "stopped": true
+      },
+      {
+        "pid": 32536,
+        "stopped": true
+      },
+      {
+        "pid": 11620,
+        "stopped": true
+      },
+      {
+        "pid": 28568,
+        "stopped": true
+      },
+      {
+        "pid": 14884,
+        "stopped": true
+      }
+    ],
+    "complete": true,
+    "lease_released": true
+  },
+  "compiler": "Open Watcom 16-bit DOS; FIXXT -0 -ms -s -k8192; SETUP -0 -ml -os",
+  "installer_binaries": {
+    "FIXXT.EXE": {
+      "bytes": 47846,
+      "sha256": "60263b9f241ccc7630034e8cd065a72a0aae32e12f09a00e4f39f8c92e24d2e5"
+    },
+    "SETUP.EXE": {
+      "bytes": 84140,
+      "sha256": "188276edd554facea936b969c513943a61023b792e544de8ce977658d4426faa"
+    }
+  },
+  "reproduced_from_final_sources": true,
+  "host_checks": {
+    "TESTDISP.PY": 30,
+    "TESTGRAB.PY": 7,
+    "TESTPUB.PY": 16,
+    "TESTHPXY.PY": 8
+  },
+  "native_candidate": {
+    "bytes": 702651,
+    "sha256": "979377135f87375b4f64709b4d98532eb49278ef0fb34a57296e73941974d0d8"
+  },
+  "preserved_hpxy": {
+    "bytes": 61856,
+    "sha256": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+  },
+  "scope_note": "Emulated Tandy EX/HX 8088, normal 640 KB. Exact prior FA/FB/FC runtime bytes preserved. Focused normal installation, display selection, text and graphics Clipboard, independently verified visible Paintbrush paste, and separate normal DOS return passed. Save As automation failed and is preserved separately. Physical hardware not tested.",
+  "native_cases": {
+    "fresh_files": 375,
+    "update_files": 87,
+    "exact_prepared_comparison": true,
+    "display_selection": "native-gui-1",
+    "text_clipboard": "native-gui-4",
+    "graphics_paintbrush": "native-gui-5",
+    "normal_dos_return": "native-exit-1",
+    "clipboard_pixels": 64000,
+    "clipboard_mismatches": 0,
+    "paintbrush_verified_region": [
+      250,
+      169
+    ]
+  }
+}

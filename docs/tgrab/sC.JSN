@@ -1,0 +1,16 @@
+{
+ "steps": [
+  {
+   "step": "COMMAND.COM, ECHO, Shift+PRINT, EXIT",
+   "t": 1792843543.8
+  }
+ ],
+ "checks": [
+  {
+   "saved": false,
+   "check": "after the DOS text grab Windows still answers and the Clipboard holds the ECHO line (saved as C:\\TEXT.CLP)",
+   "ok": false
+  }
+ ],
+ "verdict": "FAIL"
+}

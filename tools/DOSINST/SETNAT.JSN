@@ -3,17 +3,17 @@
   "target": "8088 / DOS 3.3+",
   "compiler": "Open Watcom 16-bit DOS; -bt=dos -0 -ml -os",
   "binary": {
-    "bytes": 83142,
-    "sha256": "f1e7f39f29f1e7dfb90f94b8d5902639784dbb9ae4c8553c81bd7c2073130d13"
+    "bytes": 84140,
+    "sha256": "188276edd554facea936b969c513943a61023b792e544de8ce977658d4426faa"
   },
   "sources": {
     "SETUP.C": {
-      "bytes": 343,
-      "sha256": "b1891eab01bccc5adacc36d784b1b24b739abe1b5bb1074fcb5100223b3a7ae0"
+      "bytes": 371,
+      "sha256": "b5a7dd6c06034052f0e5ef30003e7d03b6453bc32ee71c1a372b9624838948e9"
     },
     "XRPREP.C": {
-      "bytes": 17719,
-      "sha256": "67a6f720956cf5bda08397afa8a876c3e3397a2bd3e63fd072b4b1159b73e79e"
+      "bytes": 18454,
+      "sha256": "bcb7e848b781a69c0163e98448de2b501f4a356ec22fa0c76b715c60e6618311"
     },
     "DOSCORE.H": {
       "bytes": 24157,
@@ -48,20 +48,20 @@
       "sha256": "fa96864511f03aed1628668d10c4073314e49e554f965a90db6e44a16ec403ac"
     },
     "SETPINS.H": {
-      "bytes": 5330,
-      "sha256": "55092ffe03bb66951951745087c176f5723ad92695681343aafaa78834ba52d6"
+      "bytes": 5543,
+      "sha256": "dfb5f2013714203a9fdf45b9bfc6207e2cf4b5de5f06d7afb87f172be4fe5c48"
     },
     "SETFILES.H": {
-      "bytes": 19726,
-      "sha256": "0cd6fd6118504ca77bef07983141a2ce982638e309fd888640e7cd72855ba821"
+      "bytes": 19982,
+      "sha256": "082948c97f0b47ee5def99b603bd89638a7cf9958cc8b5c0210569b983b9cfcf"
     },
     "MAKESET.PY": {
-      "bytes": 1774,
-      "sha256": "83be4ee591afe7b13415a7aaed036ee11665d5f77c98eb3673f9d419db589f3e"
+      "bytes": 1957,
+      "sha256": "67bed185f19f2246db411f75530c223977d2ce37b9ebb8c02765202c6688e430"
     },
     "SETINPUT.H": {
-      "bytes": 14562,
-      "sha256": "7114a59bb3df6a5db65e2536296ac28e4e9f1477783c6004845dd898110a3c5a"
+      "bytes": 14772,
+      "sha256": "fa153fabdf4f4495fa214f34e74d2068f3c1819b0b73d7d1a72b99a9ffc05cbc"
     },
     "BUILD.PY": {
       "bytes": 3155,
@@ -82,6 +82,20 @@
     "HPXYID.H": {
       "bytes": 230,
       "sha256": "76e620ec77e12972b7ac40e4560a68b37b1c9f8f58b9d040860c56634bd2b96c"
+    },
+    "TGUPSET.H": {
+      "bytes": 711,
+      "sha256": "3dbb48a6cf942a114a38dd66a49417d981edf641621e658eb52cc6bc58ed4638"
+    },
+    "TGSETID.H": {
+      "bytes": 124,
+      "sha256": "26f94d205c8041b28b22418a6e7c73237c2c46eb1023b40834b5d1153e31f992"
+    },
+    "TGALIAS.PY": {
+      "bytes": 1733,
+      "sha256": "1e65e515a3bdfef977c7117d4d05c5f6dbf63e648d21e207078ff156521ec57a"
     }
-  }
+  },
+  "native_execution": true,
+  "qualification": "Focused normal-package Tandy grabber acceptance: docs/QUAL/TGRAB/PACKAGE.JSN and INSTALL.ZIP; historical receipts retain their original scope."
 }

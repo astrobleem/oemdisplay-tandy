@@ -25,8 +25,9 @@ with normal 640 KB. Other hardware uses its matching packet in
   `src/pc1512/BUILD15.PY` also uses BUILD88 as its base; successful compilation
   does not accept a new driver into any packet.
 - **Native helper builds:** `tools/DOSINST/BUILD.PY` uses external Open Watcom
-  for expanded SETUP and the DOS wrapper. The accepted current FIXXT build
-  uses external Microsoft C6 through `tools/SOUNDOWN/FINBUILD.PY`.
+  for expanded SETUP, the DOS wrapper and the Tandy-integrated FIXXT candidate.
+  Historical Microsoft C6 builds use `tools/SOUNDOWN/FINBUILD.PY`; preserve
+  their original receipts. Current candidate pins are in `FIXBUILD.JSN`.
 - **Fixed-profile producer:** `tools/FLASHDISK/MAKEIMG.PY` builds the complete
   fixed-profile data disk. `oemdisk/MAKEDISK.BAT` and `oemdisk/MAKEDISK.PY`
   are historical TANDY88 reproduction tools, not current product builders.
@@ -42,7 +43,9 @@ Do not invent automatic hardware detection, installer behavior or qualification.
   `XTEOEM.FON`; and `XTTSYS.FON` where required. The HPXY OEM descriptor
   `tools/XROEM/OEMSETUP.INF` selects the three XTC fonts with `200,96,48`.
   Stock `CGASYS.FON`, `CGAFIX.FON` and `CGAOEM.FON` are not consumer inputs.
-- The authoritative expanded grabber is `distributions/WINXT/CGA.GR2`.
+- The expanded Tandy grabber is `distributions/WINXT/TANDYGR.GR2`,
+  with `TGCLIP.EXE` installed and started by the normal installer.
+  `distributions/WINXT/CGA.GR2` retains its original bytes for older packets.
   Do not restore a loose root duplicate or ask consumers to find one.
   Current driver sources also bundle their selected `XTSTATIC.LGO` and
   `WXTSPL01.RLE`; the full/fixed packets carry their additional startup assets.

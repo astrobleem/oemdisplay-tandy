@@ -1,17 +1,19 @@
 {
-  "target": "DOS3+, MSC6 /G0 /AS, LINK4, 8086, 8KB stack",
+  "target": "8086 / DOS / small model / 8KB stack",
+  "compiler": "Open Watcom -bt=dos -0 -ms -s -k8192",
+  "native_execution": true,
   "sources": {
     "FIXXT.C": {
-      "bytes": 30644,
-      "sha256": "84ff9425ae0fbe808d3a92989e7d74f3501becf1323c27655d8f6f3bbbcc245a"
+      "bytes": 31141,
+      "sha256": "eaff02133d231dcd7f1b08cf3b886ecb9cfd011c79df1641e6d0221bc5a477cb"
     },
-    "FIXXT.RSP": {
-      "bytes": 55,
-      "sha256": "452d093e9f80a45570f36abac6416430ea5722a380828087bb121027f59852b1"
+    "TGINT.H": {
+      "bytes": 4312,
+      "sha256": "8988b3bf86590d6af5d94a85a3e8e468f18f603f5e6f7c177fbabbd6f5079dd1"
     },
-    "BLDFIX.BAT": {
-      "bytes": 310,
-      "sha256": "8342383329c376faf52e185ba7abe91b51b04d23bc76116842d5f8ebed1d3b31"
+    "TGID.H": {
+      "bytes": 112,
+      "sha256": "1d2077d5f8f928d24c58b7fbdb51568b98b5150b25cb7deb4d57ed28813a3c4d"
     },
     "SOUNDID.H": {
       "bytes": 201,
@@ -22,8 +24,10 @@
       "sha256": "76e620ec77e12972b7ac40e4560a68b37b1c9f8f58b9d040860c56634bd2b96c"
     }
   },
-  "runtime": {
-    "bytes": 38645,
-    "sha256": "7e05d43dfd5049f1f30d25733a76a7cd8c605a72fe16c75e3b972acf948842c2"
-  }
+  "binary": {
+    "bytes": 47846,
+    "sha256": "60263b9f241ccc7630034e8cd065a72a0aae32e12f09a00e4f39f8c92e24d2e5"
+  },
+  "log": "",
+  "qualification": "docs/QUAL/TGRAB/PACKAGE.JSN and INSTALL.ZIP"
 }
