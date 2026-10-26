@@ -138,7 +138,10 @@ long FAR PASCAL WndProc(HWND w,unsigned m,WORD wp,LONG lp)
   if(GetAsyncKeyState(VK_F8)&1)CursorStep();
   if(GetAsyncKeyState(VK_F7)&1)DrawUnder();
   if(active!=last||(GetAsyncKeyState(VK_SCROLL)&1)||(GetAsyncKeyState(VK_F6)&1)){
-   last=active;Log("SNAP\r\n");Tree(GetWindow(GetDesktopWindow(),GW_CHILD),0);
+   last=active;Log("SNAP\r\n");
+   wsprintf(line,"OWNER CGASlide=%04x XTPan=%04x XYOverviewControl=%04x\r\n",
+    FindWindow("CGASlide",NULL),FindWindow("XTPan",NULL),FindWindow("XYOverviewControl",NULL));Log(line);
+   Tree(GetWindow(GetDesktopWindow(),GW_CHILD),0);Log("TREE END\r\n");
   }
   return 0;
  }

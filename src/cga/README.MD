@@ -161,7 +161,12 @@ is a separately qualified viewport using existing panning work, not a new
 general renderer or per-application driver.
 
 `CGAMET.C` and `BUILDPROB.PY` are private developer instrumentation, excluded
-from the consumer inventory. Build with explicit --repo, --dosbox, --lease
+from the consumer inventory. Passive snapshots also log hidden CGASlide/XTPan/
+XYOverviewControl owner handles, so actual installed helper startup can be
+checked without launching a helper from the probe. Each completed tree ends
+with `TREE END`; controllers must wait for a fresh complete tree rather than
+accepting a previous or partial dialog snapshot. Build with explicit
+--repo, --dosbox, --lease
 and fresh --out. Without arguments the probe records screen/stock-font and
 window/control bounds. F9 toggles its palette/BitBlt/pair test window; each
 F8 advances a custom 32x32 cursor through odd-origin/edge/hide checks.

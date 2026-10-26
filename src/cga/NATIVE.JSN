@@ -426,5 +426,15 @@
       "CG2SYS.FON": "1c5c985e0b1bf84fbb5a9ca0e3768b8c6e235bed427750872cdbecc5df7191fa",
       "CG2HELV.FON": "eb7064a3d26118e757dc0853f727bc3749b43d959e9bb1ebbd6918ca7ae733a0"
     }
+  },
+  "pending_observer_revision": {
+    "source_sha256": "1f579326f8fcdb4ab7199b3521e2eac3cc0201fd2d7c41fbd9332b8719e5a7e5",
+    "changes": [
+      "Passive hidden helper-owner handles; does not launch helper",
+      "TREE END marks completed native window tree for fresh-snapshot assertions"
+    ],
+    "native_build": "NOT_RUN",
+    "runtime": "NOT_TESTED",
+    "prior_native_evidence": "Unchanged; qualified receipts above still use their recorded older probe binaries"
   }
 }
