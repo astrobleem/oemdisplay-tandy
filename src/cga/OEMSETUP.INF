@@ -1,4 +1,5 @@
-; Source candidate ONLY. No CGA packet has passed native acceptance.
+; Native IBM CGA emulation qualified; physical hardware remains unqualified.
+; Use adjacent native SETUP for complete font/control installation.
 ; Separate Setup entries fix logical geometry before Windows starts.
 [data]
 Version="3.0"
@@ -9,7 +10,7 @@ cga100 = a:CGA100.DRV,"IBM CGA 160x100 16 colors (experimental)","100,48,40",a:C
 cga320 = a:CGA320.DRV,"IBM CGA 320x200 4 colors (experimental)","200,96,48",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
 cga640 = a:CGA640.DRV,"IBM CGA 640x200 mono (experimental)","200,96,48",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
 [sysfonts]
-a:CG1SYS.FON,"CGA100 original 4x6 System","100,48,40"
+a:CG1SYS.FON,"CGA100 original proportional 3x5 System","100,48,40"
 a:XTCSYS.FON,"XT CGA System","200,96,48"
 [fixedfonts]
 a:CG1FIX.FON,"CGA100 original 4x6 Fixed","100,48,40"
