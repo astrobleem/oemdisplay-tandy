@@ -31,7 +31,7 @@ ASSETS={
  'LOGOLIC.TXT':('LOGOLIC.TXT','b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80'),
 }
 T80_PINS={'T80COUR.FON':'fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6'}
-COPY=set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE','PANCTL.EXE'}
+COPY=set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE','PANCTL.EXE','PANKEY.DLL'}
 HELPERS={'CGACTL.EXE','PANCTL.EXE'}
 ALL_FILES=COPY|{'XTSTATIC.LGO','WXTSPL01.RLE','LOGOLIC.TXT','OEMSETUP.INF','FONTLIC.TXT','NOTICE.TXT'}
 
@@ -94,13 +94,25 @@ def read_owner(folder):
     if record.get('source_sha256')!=hashlib.sha256((HERE/'PANCTL.C').read_bytes()).hexdigest():
         raise ValueError('PANCTL build/source mismatch')
     dos_exe(data,driver=True)
-    return data
+    key=(folder/'PANKEY.DLL').read_bytes()
+    row=record.get('key_dll',{})
+    if row.get('sha256')!=hashlib.sha256(key).hexdigest() or row.get('bytes')!=len(key):
+        raise ValueError('Changed PANKEY.DLL')
+    for name in ('PANKEY.C','PANKEY.DEF','PKENTRY.ASM'):
+        if record.get('sources',{}).get(name)!=hashlib.sha256((HERE/name).read_bytes()).hexdigest():
+            raise ValueError('PANKEY build/source mismatch: '+name)
+    for name in ('PANSET.C','PANSET.H','PANDLG.H','PANDLGC.C'):
+        if record.get('sources',{}).get(name)!=hashlib.sha256((HERE.parent/'panui'/name).read_bytes()).hexdigest():
+            raise ValueError('PANCTL shared settings source mismatch: '+name)
+    dos_exe(key,driver=True)
+    return data,key
 
 
-def payload(repo,support,drivers,fontout,helper,owner):
+def payload(repo,support,drivers,fontout,helper,owner,key):
     result=dict(drivers)
     result['CGACTL.EXE']=helper
     result['PANCTL.EXE']=owner
+    result['PANKEY.DLL']=key
     CGAFONT.build(fontout)
     for name in CGAFONT.FACES:result[name]=(fontout/name).read_bytes()
     # Retain TEXT80 Courier exactly. CGA's proportional Helv preserves the
@@ -223,7 +235,8 @@ def main():
         # Generated font work is private developer output, outside the packet.
         fonts=args.out.parent/(args.out.name+'-fonts')
         if fonts.exists():raise ValueError('Fresh font output required: '+str(fonts))
-        files=payload(args.repo,args.support,drivers,fonts,read_helper(args.helper_build),read_owner(args.owner_build))
+        owner,key=read_owner(args.owner_build)
+        files=payload(args.repo,args.support,drivers,fonts,read_helper(args.helper_build),owner,key)
         emit(args.repo,args.out,files,args.source_commit)
         print('CGA expanded packet/source prepared; native helper build and Windows qualification remain queued')
     else:
