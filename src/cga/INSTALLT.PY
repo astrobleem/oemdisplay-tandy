@@ -83,6 +83,9 @@ def main():
         assert b'load=CLOCK.EXE' in ini and b'Modern=MODERN.FON' in ini
         # Exactly one viewport/placement helper is autoloaded, by mode.
         assert (b'PANCTL.EXE' in ini)==(mode=='PAN') and (b'CGACTL.EXE' in ini)==(mode!='PAN')
+        # Startup helpers live in the Windows directory, never in SYSTEM.
+        helper='PANCTL.EXE' if mode=='PAN' else 'CGACTL.EXE'
+        assert (w/helper).is_file() and not (w/'SYSTEM'/helper).exists()
         if mode in ('100','PAN'):
             # PAN keeps mode 100's compact fonts, border and settings.
             assert b'Helv 3x5 (CGA100)=CG1HELV.FON' in ini and b'BorderWidth=1' in ini

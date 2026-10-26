@@ -60,7 +60,9 @@ static void paths(unsigned i)
     join(srcpath,payload,cga_files[i].name);
     /* Startup executables live in Windows; support stays in SYSTEM. This
      * also keeps the existing INI journal's helper token a DOS basename. */
-    join(dstpath,!strcmp(cga_files[i].target,"CGACTL.EXE") ? dir : systemdir,cga_files[i].target);
+    join(dstpath,(!strcmp(cga_files[i].target,"CGACTL.EXE") ||
+        !strcmp(cga_files[i].target,"PANCTL.EXE")) ? dir : systemdir,
+        cga_files[i].target);
     strcpy(tmppath,dstpath);dot=strrchr(tmppath,'.');
     if(!dot)dot=tmppath+strlen(tmppath);
     strcpy(dot,".CGT");

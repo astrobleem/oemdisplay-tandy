@@ -14,7 +14,7 @@ from STAGECGA import read,write
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     for n in ('repo','dosbox','lease','out'):ap.add_argument('--'+n,type=Path,required=True)
-    ap.add_argument('--probe',choices=('CGAMET','PANMET'),default='CGAMET')
+    ap.add_argument('--probe',choices=('CGAMET','PANMET','PANWATCH'),default='CGAMET')
     a=ap.parse_args();repo=a.repo.resolve();out=a.out.resolve();out.mkdir(parents=True,exist_ok=False)
     name=a.probe;source=Path(__file__).resolve().with_name(name+'.C').read_bytes()
     (out/(name+'.C')).write_bytes(source)
