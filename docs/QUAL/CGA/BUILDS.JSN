@@ -1,0 +1,544 @@
+{
+  "manifest": {
+    "kind": "CGA_DEVELOPMENT_PACKET",
+    "source_commit": "6ba8a8551d56e5a15fccf3a9f3c893e7a148236c",
+    "fixture": false,
+    "native_build": "PASS",
+    "windows": "NOT_TESTED",
+    "hardware": "UNQUALIFIED",
+    "payload": {
+      "CG1COUR.FON": {
+        "bytes": 3536,
+        "sha256": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa",
+        "crc32": "85b96c8b",
+        "installed": "CG1COUR.FON",
+        "destination": "SYSTEM"
+      },
+      "CG1FIX.FON": {
+        "bytes": 3776,
+        "sha256": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52",
+        "crc32": "20dff0d7",
+        "installed": "CG1FIX.FON",
+        "destination": "SYSTEM"
+      },
+      "CG1HELV.FON": {
+        "bytes": 3536,
+        "sha256": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d",
+        "crc32": "556af1b9",
+        "installed": "CG1HELV.FON",
+        "destination": "SYSTEM"
+      },
+      "CG1OEM.FON": {
+        "bytes": 4080,
+        "sha256": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06",
+        "crc32": "060c76c1",
+        "installed": "CG1OEM.FON",
+        "destination": "SYSTEM"
+      },
+      "CG1SYS.FON": {
+        "bytes": 3536,
+        "sha256": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40",
+        "crc32": "b8133066",
+        "installed": "CG1SYS.FON",
+        "destination": "SYSTEM"
+      },
+      "CG2HELV.FON": {
+        "bytes": 3760,
+        "sha256": "d1f6878faaf8abd06f425d7672277d6eb6d1097f9994c738ba753655d125afc3",
+        "crc32": "f7ccaeab",
+        "installed": "CG2HELV.FON",
+        "destination": "SYSTEM"
+      },
+      "CG2SYS.FON": {
+        "bytes": 3760,
+        "sha256": "c0ac9e8753e6b13b5bf0faa5384c85daf94427d813485a47270a62333bbfd222",
+        "crc32": "e928d79e",
+        "installed": "CG2SYS.FON",
+        "destination": "SYSTEM"
+      },
+      "CG6HELV.FON": {
+        "bytes": 4256,
+        "sha256": "d3bccab5f5daea935ca568923d5274315301f93caffd50e2cdcdd4d59735842d",
+        "crc32": "456e2a18",
+        "installed": "CG6HELV.FON",
+        "destination": "SYSTEM"
+      },
+      "CGA100.DRV": {
+        "bytes": 58208,
+        "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3",
+        "crc32": "dd22f51b",
+        "installed": "CGA100.DRV",
+        "destination": "SYSTEM"
+      },
+      "CGA320.DRV": {
+        "bytes": 57728,
+        "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4",
+        "crc32": "7ca95cde",
+        "installed": "CGA320.DRV",
+        "destination": "SYSTEM"
+      },
+      "CGA640.DRV": {
+        "bytes": 57312,
+        "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1",
+        "crc32": "02a304cf",
+        "installed": "CGA640.DRV",
+        "destination": "SYSTEM"
+      },
+      "CGACTL.EXE": {
+        "bytes": 15855,
+        "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d",
+        "crc32": "473c3734",
+        "installed": "CGACTL.EXE",
+        "destination": "WINDOWS"
+      },
+      "CGAGRAB.GR2": {
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+        "crc32": "3c3033a4",
+        "installed": "CGAGRAB.GR2",
+        "destination": "SYSTEM"
+      },
+      "FONTLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+        "crc32": "df30a25d",
+        "installed": "",
+        "destination": ""
+      },
+      "LOGOLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+        "crc32": "df30a25d",
+        "installed": "",
+        "destination": ""
+      },
+      "NOTICE.TXT": {
+        "bytes": 3025,
+        "sha256": "d0b64ce9ccad9692484ad81c951922f7d54461d6795a3cc4cd05fd70c127f7e9",
+        "crc32": "45a02834",
+        "installed": "",
+        "destination": ""
+      },
+      "OEMSETUP.INF": {
+        "bytes": 1020,
+        "sha256": "96abec962aeaa7495e739a7e0749e8de7365645e03f0ad870752ee50c8ffa3e2",
+        "crc32": "12d4ed52",
+        "installed": "",
+        "destination": ""
+      },
+      "T80COUR.FON": {
+        "bytes": 4224,
+        "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6",
+        "crc32": "eeb309ef",
+        "installed": "T80COUR.FON",
+        "destination": "SYSTEM"
+      },
+      "WXTSPL01.RLE": {
+        "bytes": 4062,
+        "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+        "crc32": "86daba43",
+        "installed": "",
+        "destination": ""
+      },
+      "XTCFIX.FON": {
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+        "crc32": "a9e5a6fe",
+        "installed": "XTCFIX.FON",
+        "destination": "SYSTEM"
+      },
+      "XTCOEM.FON": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+        "crc32": "0824b6da",
+        "installed": "XTCOEM.FON",
+        "destination": "SYSTEM"
+      },
+      "XTCSYS.FON": {
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326",
+        "crc32": "221afeae",
+        "installed": "XTCSYS.FON",
+        "destination": "SYSTEM"
+      },
+      "XTSTATIC.LGO": {
+        "bytes": 361,
+        "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef",
+        "crc32": "87f1a97b",
+        "installed": "",
+        "destination": ""
+      }
+    },
+    "packet_id": "6c034230ec9416fb317c14dccf9aa2e0c24469bf8c0546656600dd93d4b89ce1",
+    "installer_sources": {
+      "CGAPINS.H": "a957146f66676753f8716be56aa378162d93baa4148e5c515bf56783662a138c",
+      "CRCFAST.H": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8",
+      "INICGA.C": "5fde5e1b419a3f8013efdb2753ff2167b502690d05fbcb5c76c2c75a2fe3b06b",
+      "SETUP.C": "afe205a8f9a1a2252f4ddac6de659d74370ecbeb3afdadb68dbff5dcbe19db09"
+    },
+    "readme": {
+      "bytes": 4312,
+      "sha256": "cd338afad96f6de2dae402a4676d4a15dd4fd76a3984a4afc6958cd79dbb00ac",
+      "crc32": "e53d23cf"
+    },
+    "helper_autoload_modes": [
+      "100",
+      "320",
+      "640"
+    ],
+    "helper_normal_modes": "Set disabled text black, then exit; no resident placement owner",
+    "installer_binary": {
+      "bytes": 31119,
+      "sha256": "1352512bd5440253bd871056b31ac1342192c1a30e41c9ad519d44d5e0482c00",
+      "crc32": "304f67e0"
+    }
+  },
+  "prepared": {
+    "kind": "CGA_DEVELOPMENT_PACKET",
+    "source_commit": "6ba8a8551d56e5a15fccf3a9f3c893e7a148236c",
+    "fixture": false,
+    "native_build": "NOT_RUN",
+    "windows": "NOT_TESTED",
+    "hardware": "UNQUALIFIED",
+    "payload": {
+      "CG1COUR.FON": {
+        "bytes": 3536,
+        "sha256": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa",
+        "crc32": "85b96c8b",
+        "installed": "CG1COUR.FON",
+        "destination": "SYSTEM"
+      },
+      "CG1FIX.FON": {
+        "bytes": 3776,
+        "sha256": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52",
+        "crc32": "20dff0d7",
+        "installed": "CG1FIX.FON",
+        "destination": "SYSTEM"
+      },
+      "CG1HELV.FON": {
+        "bytes": 3536,
+        "sha256": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d",
+        "crc32": "556af1b9",
+        "installed": "CG1HELV.FON",
+        "destination": "SYSTEM"
+      },
+      "CG1OEM.FON": {
+        "bytes": 4080,
+        "sha256": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06",
+        "crc32": "060c76c1",
+        "installed": "CG1OEM.FON",
+        "destination": "SYSTEM"
+      },
+      "CG1SYS.FON": {
+        "bytes": 3536,
+        "sha256": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40",
+        "crc32": "b8133066",
+        "installed": "CG1SYS.FON",
+        "destination": "SYSTEM"
+      },
+      "CG2HELV.FON": {
+        "bytes": 3760,
+        "sha256": "d1f6878faaf8abd06f425d7672277d6eb6d1097f9994c738ba753655d125afc3",
+        "crc32": "f7ccaeab",
+        "installed": "CG2HELV.FON",
+        "destination": "SYSTEM"
+      },
+      "CG2SYS.FON": {
+        "bytes": 3760,
+        "sha256": "c0ac9e8753e6b13b5bf0faa5384c85daf94427d813485a47270a62333bbfd222",
+        "crc32": "e928d79e",
+        "installed": "CG2SYS.FON",
+        "destination": "SYSTEM"
+      },
+      "CG6HELV.FON": {
+        "bytes": 4256,
+        "sha256": "d3bccab5f5daea935ca568923d5274315301f93caffd50e2cdcdd4d59735842d",
+        "crc32": "456e2a18",
+        "installed": "CG6HELV.FON",
+        "destination": "SYSTEM"
+      },
+      "CGA100.DRV": {
+        "bytes": 58208,
+        "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3",
+        "crc32": "dd22f51b",
+        "installed": "CGA100.DRV",
+        "destination": "SYSTEM"
+      },
+      "CGA320.DRV": {
+        "bytes": 57728,
+        "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4",
+        "crc32": "7ca95cde",
+        "installed": "CGA320.DRV",
+        "destination": "SYSTEM"
+      },
+      "CGA640.DRV": {
+        "bytes": 57312,
+        "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1",
+        "crc32": "02a304cf",
+        "installed": "CGA640.DRV",
+        "destination": "SYSTEM"
+      },
+      "CGACTL.EXE": {
+        "bytes": 15855,
+        "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d",
+        "crc32": "473c3734",
+        "installed": "CGACTL.EXE",
+        "destination": "WINDOWS"
+      },
+      "CGAGRAB.GR2": {
+        "bytes": 2104,
+        "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+        "crc32": "3c3033a4",
+        "installed": "CGAGRAB.GR2",
+        "destination": "SYSTEM"
+      },
+      "FONTLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+        "crc32": "df30a25d",
+        "installed": "",
+        "destination": ""
+      },
+      "LOGOLIC.TXT": {
+        "bytes": 1101,
+        "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+        "crc32": "df30a25d",
+        "installed": "",
+        "destination": ""
+      },
+      "NOTICE.TXT": {
+        "bytes": 3025,
+        "sha256": "d0b64ce9ccad9692484ad81c951922f7d54461d6795a3cc4cd05fd70c127f7e9",
+        "crc32": "45a02834",
+        "installed": "",
+        "destination": ""
+      },
+      "OEMSETUP.INF": {
+        "bytes": 1020,
+        "sha256": "96abec962aeaa7495e739a7e0749e8de7365645e03f0ad870752ee50c8ffa3e2",
+        "crc32": "12d4ed52",
+        "installed": "",
+        "destination": ""
+      },
+      "T80COUR.FON": {
+        "bytes": 4224,
+        "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6",
+        "crc32": "eeb309ef",
+        "installed": "T80COUR.FON",
+        "destination": "SYSTEM"
+      },
+      "WXTSPL01.RLE": {
+        "bytes": 4062,
+        "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+        "crc32": "86daba43",
+        "installed": "",
+        "destination": ""
+      },
+      "XTCFIX.FON": {
+        "bytes": 4208,
+        "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+        "crc32": "a9e5a6fe",
+        "installed": "XTCFIX.FON",
+        "destination": "SYSTEM"
+      },
+      "XTCOEM.FON": {
+        "bytes": 4560,
+        "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+        "crc32": "0824b6da",
+        "installed": "XTCOEM.FON",
+        "destination": "SYSTEM"
+      },
+      "XTCSYS.FON": {
+        "bytes": 4592,
+        "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326",
+        "crc32": "221afeae",
+        "installed": "XTCSYS.FON",
+        "destination": "SYSTEM"
+      },
+      "XTSTATIC.LGO": {
+        "bytes": 361,
+        "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef",
+        "crc32": "87f1a97b",
+        "installed": "",
+        "destination": ""
+      }
+    },
+    "packet_id": "6c034230ec9416fb317c14dccf9aa2e0c24469bf8c0546656600dd93d4b89ce1",
+    "installer_sources": {
+      "CGAPINS.H": "a957146f66676753f8716be56aa378162d93baa4148e5c515bf56783662a138c",
+      "CRCFAST.H": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8",
+      "INICGA.C": "5fde5e1b419a3f8013efdb2753ff2167b502690d05fbcb5c76c2c75a2fe3b06b",
+      "SETUP.C": "afe205a8f9a1a2252f4ddac6de659d74370ecbeb3afdadb68dbff5dcbe19db09"
+    },
+    "readme": {
+      "bytes": 4312,
+      "sha256": "cd338afad96f6de2dae402a4676d4a15dd4fd76a3984a4afc6958cd79dbb00ac",
+      "crc32": "e53d23cf"
+    },
+    "helper_autoload_modes": [
+      "100",
+      "320",
+      "640"
+    ],
+    "helper_normal_modes": "Set disabled text black, then exit; no resident placement owner"
+  },
+  "setup": {
+    "build": "PASS",
+    "sources": {
+      "CGAPINS.H": "a957146f66676753f8716be56aa378162d93baa4148e5c515bf56783662a138c",
+      "CRCFAST.H": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8",
+      "INICGA.C": "5fde5e1b419a3f8013efdb2753ff2167b502690d05fbcb5c76c2c75a2fe3b06b",
+      "SETUP.C": "afe205a8f9a1a2252f4ddac6de659d74370ecbeb3afdadb68dbff5dcbe19db09"
+    },
+    "binary": {
+      "bytes": 31119,
+      "sha256": "1352512bd5440253bd871056b31ac1342192c1a30e41c9ad519d44d5e0482c00",
+      "crc32": "304f67e0"
+    },
+    "data_budget": {
+      "data_and_stack_bytes": 60336,
+      "data_group_headroom_bytes": 5200
+    },
+    "runtime": "NOT_TESTED",
+    "source_commit": "6ba8a8551d56e5a15fccf3a9f3c893e7a148236c",
+    "process": "PROCESS.JSON"
+  },
+  "helper": {
+    "build": "PASS",
+    "kind": "CGA_WINDOW_ACCESS_CANDIDATE",
+    "flags": "/G0 /Gw /AS /W3 /Od",
+    "source_sha256": "114c41f576485157416f26ad041147f8634eb5e2a28944aa03bc4a0ad9b37063",
+    "shared_source_sha256": {
+      "WDCORE.C": "66e20b18a618b18ccca0ede3daa706e6ecfc36efdd88c1625796a581bbaa7723",
+      "WDCORE.H": "30969b4c4314e718391200330ddd4f13b6b6adeb237f6ad5a6ddf8ee0c7d4739",
+      "WDWIN.C": "98a17659e534e50e29fc6b0905591e057a2f461108d865a0adc5bf3d93010ad4",
+      "WDWIN.H": "8d009036884444dfdb66b76c6cbc1e6beb2e5e869c511b0c447069534b9edfbf",
+      "WTPLACE.C": "30e822766219f1d6bea9ef5b86fc625dac2828502076adef192903f976f34f56",
+      "WTPLACE.H": "af77584f4676029813a6e39e172b4362f0ef79dcae42df5303a2c857b3564ce1"
+    },
+    "placement_owner": "shared WDWIN only",
+    "bytes": 15855,
+    "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d",
+    "windows": "NOT_TESTED"
+  },
+  "probe": {
+    "build": "PASS",
+    "kind": "DEVELOPER_PROBE",
+    "flags": "/G0 /Gw /AS /W3 /Od",
+    "source_sha256": "50ae13c4c7c0db03d0e5270e5828e23affe4cf4010c5bf1376775a09bf58bc16",
+    "bytes": 10719,
+    "sha256": "d01ac2cf6353fb97449a7e962736a7639c3e4774410c3f97620505442a2f76f5",
+    "windows": "NOT_TESTED"
+  },
+  "drivers": {
+    "100": {
+      "mode": "160x100x16",
+      "driver": "CGA100.DRV",
+      "hardware": "ibm-cga",
+      "build": "PASS",
+      "runtime": "NOT_TESTED",
+      "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3",
+      "bytes": 58208,
+      "adapter": {
+        "shadow_bytes": 8000,
+        "vram_bytes": 16384,
+        "visible_vram_bytes": 16000,
+        "physical_row_bytes": 160,
+        "character": 222,
+        "crtc": [
+          113,
+          80,
+          90,
+          10,
+          127,
+          6,
+          100,
+          112,
+          2,
+          1,
+          32,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "timing": "DERIVED_IBM_TABLE_COMBINATION; MC6845 only; native verification pending",
+        "pixel_aspect_width_over_height": "5/6 at a 4:3 active picture",
+        "snow_policy": "video disabled around every converter/cursor VRAM access; may visibly blank",
+        "input_sha256": {
+          "EGA/TSOFT.ASM": "a48c21357a162203294b48c746f1e61417d0d2191991835c768127d89fe35075",
+          "EGA/TCURSOR.ASM": "6ca256ce21fa6215d50a6bc23bd316c4b15c2eceaf1f8136165eec6fe4437bae",
+          "SDIB88.ASM": "5996635c37ea448f24db5a066cc4b914171c4761b53bed04190d2d5565ba3aac",
+          "EGA/TSOFT.DEF": "64a2e0d4f1bc3e2a3ba6f45d19dfff9208d2eef092073017cb4056d2dcc7feaf"
+        },
+        "runtime": "NOT_TESTED"
+      },
+      "build88_audits": "RESULT.json",
+      "native_process_receipts": "native-*/PROCESS.JSON"
+    },
+    "320": {
+      "mode": "320x200x4",
+      "driver": "CGA320.DRV",
+      "hardware": "ibm-cga",
+      "build": "PASS",
+      "runtime": "NOT_TESTED",
+      "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4",
+      "bytes": 57728,
+      "adapter": {
+        "normal_mode": "upstream staged bytes unchanged"
+      },
+      "build88_audits": "RESULT.json",
+      "native_process_receipts": "native-*/PROCESS.JSON"
+    },
+    "640": {
+      "mode": "640x200x2",
+      "driver": "CGA640.DRV",
+      "hardware": "ibm-cga",
+      "build": "PASS",
+      "runtime": "NOT_TESTED",
+      "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1",
+      "bytes": 57312,
+      "adapter": {
+        "normal_mode": "upstream staged bytes unchanged"
+      },
+      "build88_audits": "RESULT.json",
+      "native_process_receipts": "native-*/PROCESS.JSON"
+    }
+  },
+  "native_DOS": {
+    "complete": true,
+    "modes": [
+      "100",
+      "320",
+      "640",
+      "100"
+    ],
+    "undo_exact": true,
+    "created_payload_removed": true,
+    "complete_original_tree_restored": true,
+    "original": {
+      "SYSTEM.INI": {
+        "bytes": 1058,
+        "sha256": "53d91a6dd6485079b332387319a2e8197249292d614cd227a3fe8cb71b8e93c8"
+      },
+      "WIN.INI": {
+        "bytes": 1301,
+        "sha256": "67ae933f4d719ae482378e156faf72d1f117c2211ad86f164a503f18cae5c090"
+      }
+    }
+  },
+  "native_DOS_process": {
+    "started": "2026-10-26T06:38:37.356717+00:00",
+    "emulator": "C:\\Program Files\\DOSBox-X\\dosbox-x.exe",
+    "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-25\\task-4\\native-cga-dos-06\\TEST.CNF",
+    "emulator_sha256": "769fb38a5a94475488be2107856d9a9fcca65487df35676188f5c2ccd5a2e964",
+    "timeout": 120,
+    "lease_acquired": true,
+    "inventory": "",
+    "pid": 12712,
+    "return": 0,
+    "owned_child_stopped": true,
+    "lease_released": true
+  }
+}

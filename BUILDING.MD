@@ -62,7 +62,7 @@ must not be described as creating current GitHub releases automatically.
 
 ## Native source builds
 
-The [CGA source candidate](docs/CGA.MD) adds staging, native builders and
+The [CGA display source](docs/CGA.MD) adds staging, native builders and
 font/control checks under `src/cga/`. With the verified existing display view:
 
 ```text
@@ -74,8 +74,10 @@ For a scheduled native build, create a commit-pinned `--profile cga` source view
 requires exact qualified WDESK/WTPLACE source snapshots through BUILDUI.PY
 --wdesk/--placement; one WDWIN owner handles root placement and recovery.
 The driver build wraps BUILD88 with the shared
-watchdog/lease runner. No new CGA runtime or consumer packet is qualified by
-these commands; current accepted binaries and package pins remain unchanged.
+watchdog/lease runner. These commands do not qualify a new runtime. The accepted packet, original
+reviewed source checkpoint and exact member/evidence pins are in
+`tools/CGAPACK/ACCEPT.JSN`; verify them with
+`python -B tools/CGAPACK/VERIFY.PY`. Current catalog CI includes that gate.
 
 CGA-specific integration uses `src/cga/INSTALLT.PY` for managed-host C89
 transaction checks and `PACKCGA.PY` for the expanded packet. Separate native

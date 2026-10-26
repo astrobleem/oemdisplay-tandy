@@ -1,4 +1,52 @@
-# CGA 160x100 and normal graphics: coverage and bounded candidate
+# IBM CGA display for Windows 3.0
+
+
+**[Download CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP)**
+
+Three fixed display choices share one native DOS installer: **160x100 in 16
+RGBI colors**, **320x200 in black/bright cyan/magenta/white**, and **640x200
+monochrome**. The packet includes compact fonts, controls and dialog faces.
+It targets IBM CGA RGBI, an existing Windows 3.0 real-mode installation,
+DOS 3.3+ and normal 640 KB. Physical IBM cards/CRTCs/monitor scanout remain
+unqualified; clones, composite, PCjr, Tandy and EGA/VGA are separate targets.
+
+Extract the whole ZIP. Keep root `SETUP.EXE`, `README.TXT` and the expanded
+`CGA` folder together. Exit Windows completely, then run:
+
+```text
+SETUP C:\WINDOWS 100
+```
+
+Use your actual Windows path. Choose `100`, `320` or `640`; wait for success,
+change to the Windows directory and run `WIN /R`. Changing mode requires exit
+and SETUP again. The root installer registers all selected dialog fonts and
+controls; the OEM descriptor alone does not complete this installation.
+No Python, manual INI changes, extra font media or support-file gathering is
+required. Windows itself is not included.
+
+At 160x100, Ctrl+Alt+arrows moves the window workspace, Ctrl+Alt+Home recovers
+its origin and Ctrl+Alt+End exposes the active frame's bottom/right. The shared
+placement helper also exposes clipped control groups; it does not change
+Windows logical geometry. Five-row proportional ASCII faces and six-row
+controls reduce the space needed. Unsupported extended characters use boxes.
+320/640 startup makes disabled labels readable, then the helper exits.
+
+Keep the packet for `SETUP UNDO C:\WINDOWS`. UNDO restores this installer's
+settings while preserving unrelated edits and changed/referenced files.
+`SETUP RESTORE C:\WINDOWS` explicitly restores whole saved INIs and discards
+later INI edits; use it only for that intended recovery. See the included
+[full DOS instructions](../downloads/experimental/CGA/README.TXT).
+
+All three modes passed actual native SETUP, mode switching, dialogs, exact
+file saves, palette/drawing/cursor tests and ordinary DOS return in IBM XT/CGA
+emulation. Populated File Manager views passed at 160x100 and 640x200.
+A DOS-command return is a smoke check, not general DOS/PrintScreen coverage.
+The 160x100 access policy blanks video around VRAM writes; physical snow,
+flicker and performance remain to be measured. No CGA speedup is promised.
+[Final qualification and independent review](QUAL/CGA/README.MD) and
+[source/build guide](../src/cga/README.MD) retain the exact evidence scope.
+
+## Original coverage audit and implementation record
 
 Audit base: oemdisplay-tandy main `09238b7dbada62047601138291fa940b77426752`,
 including the current-guidance correction `679d363d`. The companion
@@ -203,8 +251,8 @@ launch/menu/timing failures and the visible-pointer comparison remain preserved.
 
 Physical IBM cards/CRTCs, snow/blanking, monitor scanout, clones and composite
 remain separate qualifications. One DOS-command smoke test does not establish
-general DOS-program or PrintScreen/grabber compatibility. No product has been
-published or replaced; push/merge/publication require separate approval.
+general DOS-program or PrintScreen/grabber compatibility. The original local checkpoint predates publication approval; the current
+public packet and evidence pins are recorded in tools/CGAPACK/ACCEPT.JSN.
 
 The headless FRAME API can include blanking and omit lower scanout rows.
 Native control/file/VRAM checks are separate evidence. Decoded VRAM images are

@@ -86,6 +86,13 @@
         "bytes": 42927,
         "sha256": "765c81678f9655f3805fc348ebe444eb919adc47915f27e92eb6816cb18d324f"
       }
+    },
+    "CGA.ZIP": {
+      "source": "downloads/experimental/CGA/CGA.ZIP",
+      "identity": {
+        "bytes": 139135,
+        "sha256": "57f2e9e10c1c2feb9d0fa545d040674f10caae7a6360a4e2e55dd9365e0217d7"
+      }
     }
   },
   "sound": {

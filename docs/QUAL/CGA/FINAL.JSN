@@ -1,0 +1,555 @@
+{
+  "kind": "LOCAL_CGA_REVIEW_PACKET",
+  "updated_UTC": "2026-10-26T06:43:18.332533+00:00",
+  "runtime_source_commit": "e2bf87b0214db50d9bc4e6b6fa1062bf837ec307",
+  "source_documentation_commit": "6ba8a8551d56e5a15fccf3a9f3c893e7a148236c",
+  "packet": {
+    "bytes": 139175,
+    "sha256": "97377649eff6520daed6d1f48b2539b6159a057f07e8a350487e191df471e86a"
+  },
+  "layout": "SETUP.EXE, README.TXT, expanded CGA folder; no consumer Python or support gathering",
+  "modes": [
+    "160x100x16 IBM CGA RGBI",
+    "320x200x4 bright palette1",
+    "640x200x2 monochrome"
+  ],
+  "native_emulation": {
+    "100": {
+      "path": "native-cga-filemgr100-02",
+      "runtime": {
+        "complete": true,
+        "bound_seconds": 900,
+        "minimum_free_bytes": 536870912,
+        "capture_bound_bytes": 33554432,
+        "host_log_bound_bytes": 33554432,
+        "lease_acquired": true,
+        "queue_seconds": 0.0,
+        "owned_pid": 2424,
+        "emulator": {
+          "bytes": 40974314,
+          "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+        },
+        "rom_floppy_prompt_acknowledged": true,
+        "owned_stopped": true,
+        "lease_released": true,
+        "seconds": 340.01599999982864
+      },
+      "installed_files": 17,
+      "dialogs": [
+        {
+          "title": "Run",
+          "rect": [
+            0,
+            15,
+            168,
+            64
+          ]
+        },
+        {
+          "title": "File Open",
+          "rect": [
+            0,
+            0,
+            154,
+            98
+          ]
+        },
+        {
+          "title": "File Save As",
+          "rect": [
+            0,
+            10,
+            153,
+            96
+          ]
+        },
+        {
+          "title": "Find",
+          "rect": [
+            0,
+            25,
+            159,
+            83
+          ]
+        }
+      ],
+      "normal_use": {
+        "kind": "FOCUSED_FILE_MANAGER_DOS_GDI",
+        "mode": "100",
+        "complete": true,
+        "directory_windows": [
+          {
+            "handle": "1c84",
+            "class": "WFS_Dir",
+            "rect": "10,22,140,77",
+            "title": "C:\\*.*"
+          }
+        ],
+        "filemgr_capture": "001.VRM",
+        "DOS_command_exact": true,
+        "gdi_capture": "005.VRM",
+        "under_hidden_capture": "008.VRM",
+        "dos_mode": 3
+      },
+      "graphics": {
+        "native_data": "PASS",
+        "mode": "100",
+        "palette": "PASS",
+        "memory_blt": "PASS",
+        "all_256_pairs": "PASS",
+        "draw_under_odd_cursor": "PASS",
+        "edges_and_hide": "PASS",
+        "padding": "PASS",
+        "saved_file_exact": "PASS",
+        "dos_mode": 3,
+        "source_captures": {
+          "005.VRM": "61a3fda65d5aa5f5f12923ce444769e44c6eda82f53e430a4631a6d7e3134d02",
+          "008.VRM": "3cd30f01f17733953667b060fe1b64341334e076d71a98c5f31297c7e2ad38b4"
+        },
+        "physical_hardware": "UNQUALIFIED",
+        "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification"
+      },
+      "receipts": {
+        "RESULT.JSON": {
+          "bytes": 491,
+          "sha256": "5e229968ac23eced2cf60c0574f54c3e6171e3f4170c481fcbe72971cfaa0bbb"
+        },
+        "PLAN.JSON": {
+          "bytes": 13059,
+          "sha256": "9cf650e28a86be3a3a978f698a5e0124d2b59423eb0232c2570768f83cb849b4"
+        },
+        "ASSESSMENT.JSON": {
+          "bytes": 612,
+          "sha256": "b63ee5bcdb203ae68ec95cdd5ad577c260cca115e81a7fc92cf4b3a6b1f937d0"
+        },
+        "INSTALLVERIFY.JSON": {
+          "bytes": 2897,
+          "sha256": "4dcdc22c0fa7dd1889d9b2570cd573cb66773ee92b434939a0aa2ac0657150cc"
+        }
+      },
+      "FileManager_focused": {
+        "kind": "FOCUSED_FILE_MANAGER_DOS_GDI",
+        "mode": "100",
+        "complete": true,
+        "directory_windows": [
+          {
+            "handle": "1c84",
+            "class": "WFS_Dir",
+            "rect": "10,22,140,77",
+            "title": "C:\\*.*"
+          }
+        ],
+        "filemgr_capture": "001.VRM",
+        "DOS_command_exact": true,
+        "gdi_capture": "005.VRM",
+        "under_hidden_capture": "008.VRM",
+        "dos_mode": 3
+      }
+    },
+    "320": {
+      "path": "native-cga-consumer320-01",
+      "runtime": {
+        "complete": true,
+        "bound_seconds": 1200,
+        "minimum_free_bytes": 536870912,
+        "capture_bound_bytes": 33554432,
+        "host_log_bound_bytes": 33554432,
+        "lease_acquired": true,
+        "queue_seconds": 0.0,
+        "owned_pid": 14896,
+        "emulator": {
+          "bytes": 40974314,
+          "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+        },
+        "rom_floppy_prompt_acknowledged": true,
+        "owned_stopped": true,
+        "lease_released": true,
+        "seconds": 913.9529999997467
+      },
+      "installed_files": 17,
+      "dialogs": [
+        {
+          "title": "Run",
+          "rect": [
+            16,
+            25,
+            236,
+            88
+          ]
+        },
+        {
+          "title": "File Open",
+          "rect": [
+            56,
+            37,
+            258,
+            160
+          ]
+        },
+        {
+          "title": "File Save As",
+          "rect": [
+            56,
+            37,
+            256,
+            145
+          ]
+        },
+        {
+          "title": "Find",
+          "rect": [
+            24,
+            40,
+            233,
+            114
+          ]
+        }
+      ],
+      "normal_use": {
+        "file_manager": {
+          "handle": "1a68",
+          "class": "WFS_Frame",
+          "rect": "0,0,320,168",
+          "title": "File Manager"
+        },
+        "file_menu_keyboard": "PASS",
+        "DOS_command_file": "D320.TXT",
+        "DOS_command_bytes": "CGA320\\r\\n",
+        "returned_to_Program_Manager": "PASS",
+        "post_return_graphics": "Checked by following GDI/cursor suite"
+      },
+      "graphics": {
+        "native_data": "PASS",
+        "mode": "320",
+        "palette": "PASS",
+        "memory_blt": "PASS",
+        "all_256_pairs": "PASS",
+        "draw_under_odd_cursor": "PASS",
+        "edges_and_hide": "PASS",
+        "padding": "PASS",
+        "saved_file_exact": "PASS",
+        "dos_mode": 3,
+        "source_captures": {
+          "019.VRM": "4e65d3fbfc3cfe057620f78a4d44d25625868f1013c8dadca68501d4f9185e5d",
+          "022.VRM": "dbdb54b2a7161286929394ebf7009e116517d90ecc89cfb7edceb5ab1046f5b2"
+        },
+        "physical_hardware": "UNQUALIFIED",
+        "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification"
+      },
+      "receipts": {
+        "RESULT.JSON": {
+          "bytes": 492,
+          "sha256": "d7abd9dee4124a1bffa2270a6331467fc2c73d30f503679a5075ccd40d4a919a"
+        },
+        "PLAN.JSON": {
+          "bytes": 13241,
+          "sha256": "366a12a90075558c5924f240d29057dfc2de2b701bf8ee2c83f3a12c49507b8f"
+        },
+        "ASSESSMENT.JSON": {
+          "bytes": 612,
+          "sha256": "17136b3719430b96960044bc6ea09560cf8dd2fc40acfb4f8f5cd238eac82341"
+        },
+        "INSTALLVERIFY.JSON": {
+          "bytes": 2897,
+          "sha256": "eeae1f375d98c06450261abfeb9d32efdcaf28e42b7691960753528d75297047"
+        },
+        "CONTRAST.JSON": {
+          "bytes": 573,
+          "sha256": "917879cdbf05dfa1d3228365b95b595f646e8278a952ee615b19802adb2bc427"
+        }
+      },
+      "disabled_label": {
+        "status": "PASS",
+        "disabled_button": {
+          "handle": "1af8",
+          "class": "Button",
+          "rect": [
+            179,
+            76,
+            214,
+            87
+          ],
+          "text": "OK",
+          "style": 1476591617,
+          "enabled": 0,
+          "hit": "1834",
+          "text_metrics": [
+            8,
+            6,
+            35,
+            11
+          ]
+        },
+        "label_interior_box": [
+          191,
+          78,
+          202,
+          85
+        ],
+        "black_label_pixels": 7,
+        "system_GrayText": "00000000",
+        "capture": "010.VRM",
+        "scope": "Actual native VRAM and API state; decoded PNG is not monitor scanout proof"
+      },
+      "qualification_composition": "Packet05 actual320 GUI; packet06 changes only unused640 Helv plus notice. All320 selected runtime bytes identical. Packet06 native DOS switch/delivery/UNDO separately passes."
+    },
+    "640": {
+      "path": "native-cga-consumer640-02",
+      "runtime": {
+        "complete": true,
+        "bound_seconds": 1200,
+        "minimum_free_bytes": 536870912,
+        "capture_bound_bytes": 33554432,
+        "host_log_bound_bytes": 33554432,
+        "lease_acquired": true,
+        "queue_seconds": 0.0,
+        "owned_pid": 12916,
+        "emulator": {
+          "bytes": 40974314,
+          "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+        },
+        "rom_floppy_prompt_acknowledged": true,
+        "owned_stopped": true,
+        "lease_released": true,
+        "seconds": 730.780999999959
+      },
+      "installed_files": 17,
+      "dialogs": [
+        {
+          "title": "Run",
+          "rect": [
+            24,
+            30,
+            412,
+            106
+          ]
+        },
+        {
+          "title": "File Open",
+          "rect": [
+            88,
+            41,
+            444,
+            196
+          ]
+        },
+        {
+          "title": "File Save As",
+          "rect": [
+            88,
+            44,
+            441,
+            179
+          ]
+        },
+        {
+          "title": "Find",
+          "rect": [
+            32,
+            48,
+            400,
+            138
+          ]
+        }
+      ],
+      "normal_use": {
+        "file_manager": {
+          "handle": "1cbc",
+          "class": "WFS_Frame",
+          "rect": "-8,-4,648,204",
+          "title": "File Manager"
+        },
+        "file_menu_keyboard": "PASS",
+        "DOS_command_file": "D640.TXT",
+        "DOS_command_bytes": "CGA640\\r\\n",
+        "returned_to_Program_Manager": "PASS",
+        "post_return_graphics": "Checked by following GDI/cursor suite"
+      },
+      "graphics": {
+        "native_data": "PASS",
+        "mode": "640",
+        "palette": "PASS",
+        "memory_blt": "PASS",
+        "all_256_pairs": "PASS",
+        "draw_under_odd_cursor": "PASS",
+        "edges_and_hide": "PASS",
+        "padding": "PASS",
+        "saved_file_exact": "PASS",
+        "dos_mode": 3,
+        "source_captures": {
+          "017.VRM": "8b56003b02ee9dae04ac8312d2c351a9e33f279e5b74edecd5e3a02e8b715868",
+          "020.VRM": "95383235fe492bd5094a6413487a2e8eb9d5d7986e1a89c4111c0e582f5ca4d9"
+        },
+        "physical_hardware": "UNQUALIFIED",
+        "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification"
+      },
+      "receipts": {
+        "RESULT.JSON": {
+          "bytes": 491,
+          "sha256": "2dfea7cdb5f82ffaf47a236e6dc15a2ce4961d1f6fab61501cacb0855317b803"
+        },
+        "PLAN.JSON": {
+          "bytes": 13111,
+          "sha256": "2833fab2eb32b26ab5099a24743043d0da90a7f8201dd72aba46da7fa5868eee"
+        },
+        "ASSESSMENT.JSON": {
+          "bytes": 612,
+          "sha256": "50c33d41ca698a30adf2f511d561452433ec763fd105820413e5f0bdba79dbd3"
+        },
+        "INSTALLVERIFY.JSON": {
+          "bytes": 2897,
+          "sha256": "76193e40157edbcbd153c88a2c5e1ea1d66e0e44463f4cddfda940963343f595"
+        },
+        "CONTRAST.JSON": {
+          "bytes": 577,
+          "sha256": "e759312a57ebf85f035613acfb6cc8e8bfe1bd110dc4e48a2f340e0fe19a54bf"
+        }
+      },
+      "disabled_label": {
+        "status": "PASS",
+        "disabled_button": {
+          "handle": "1ae8",
+          "class": "Button",
+          "rect": [
+            305,
+            89,
+            366,
+            103
+          ],
+          "text": "OK",
+          "style": 1476591617,
+          "enabled": 0,
+          "hit": "1824",
+          "text_metrics": [
+            16,
+            8,
+            61,
+            14
+          ]
+        },
+        "label_interior_box": [
+          326,
+          91,
+          345,
+          101
+        ],
+        "black_label_pixels": 15,
+        "system_GrayText": "00000000",
+        "capture": "010.VRM",
+        "scope": "Actual native VRAM and API state; decoded PNG is not monitor scanout proof"
+      },
+      "FileManager_focused": {
+        "kind": "FOCUSED_FILE_MANAGER_DOS_GDI",
+        "mode": "640",
+        "complete": true,
+        "directory_windows": [
+          {
+            "handle": "1c7c",
+            "class": "WFS_Dir",
+            "rect": "35,48,605,172",
+            "title": "C:\\*.*"
+          }
+        ],
+        "filemgr_capture": "001.VRM",
+        "dos_mode": 3
+      }
+    }
+  },
+  "native_DOS_switch_undo": {
+    "complete": true,
+    "modes": [
+      "100",
+      "320",
+      "640",
+      "100"
+    ],
+    "undo_exact": true,
+    "created_payload_removed": true,
+    "complete_original_tree_restored": true,
+    "original": {
+      "SYSTEM.INI": {
+        "bytes": 1058,
+        "sha256": "53d91a6dd6485079b332387319a2e8197249292d614cd227a3fe8cb71b8e93c8"
+      },
+      "WIN.INI": {
+        "bytes": 1301,
+        "sha256": "67ae933f4d719ae482378e156faf72d1f117c2211ad86f164a503f18cae5c090"
+      }
+    }
+  },
+  "host_installer": {
+    "host": "PASS",
+    "native": "NOT_RUN",
+    "windows": "NOT_TESTED",
+    "tests": [
+      "install/undo 100",
+      "install/undo 320",
+      "install/undo 640",
+      "three modes/repeated switch/undo",
+      "identical preexisting font retained",
+      "collision refusal, no writes",
+      "all mutating commands refuse Windows context",
+      "damaged packet refusal before copying",
+      "CGAFAULT_WOPEN every single failure position",
+      "CGAFAULT_RENAME every single failure position",
+      "every interrupted owned-copy position",
+      "owned pending copy plan cancelled without touching payload files",
+      "damaged INI record refuses, explicit whole restore",
+      "damaged copy record refuses without cleanup",
+      "later edits and their referenced driver retained",
+      "changed installed file retained",
+      "failed INI rollback recovered through owned safety copies",
+      "interrupted cleanup can be retried",
+      "undo write/marker failures can be retried",
+      "interrupted completion marker uses explicit safety restore",
+      "17000-byte INI installs and restores exactly",
+      "small-model INI size limit refuses without residue",
+      "closed expanded packet inventory rejects extras",
+      "synthetic fixtures cannot finalize a consumer packet"
+    ],
+    "host_invocations": 193,
+    "fixtures": 106,
+    "packet_payload_files": 23,
+    "installed_files": 17,
+    "managed_gcc": true,
+    "c_source_sha256": "afe205a8f9a1a2252f4ddac6de659d74370ecbeb3afdadb68dbff5dcbe19db09",
+    "host_executable": "SETUPHOST.EXE (modern host test only)"
+  },
+  "physical_hardware": "UNQUALIFIED",
+  "publication": "NOT_AUTHORIZED_NOT_PERFORMED",
+  "scope": "Win3.0 real mode, IBM XT 4.77MHz/640KB/IBM CGA emulation. File Manager and one DOS command-return smoke check; no PrintScreen campaign or general DOS-program compatibility claim.",
+  "independent_review": {
+    "reviewer": "Separate delegated code/package reviewer /root/cga_final_review",
+    "completed_UTC": "2026-10-26T06:43:18.332533+00:00",
+    "reviewed_source_base": "37f17a93901a81762c6189a32781f1a4944a1843",
+    "reviewed_final_source": "6ba8a8551d56e5a15fccf3a9f3c893e7a148236c",
+    "outcome": "NO_RESIDUAL_FINDINGS",
+    "resolved_findings": [
+      {
+        "priority": "low",
+        "path": "src/cga/OEMSETUP.INF",
+        "finding": "Stale native-acceptance comment and inaccurate 4x6 System description",
+        "resolution": "Qualification scope corrected; System described as proportional3x5. Sole source delta in6ba8a855."
+      }
+    ],
+    "independent_checks": [
+      "Driver/helper/SETUP source and binary receipt bindings, manifest/evidence/review-member hashes",
+      "All12 font resources bounded; all224 CG6 glyph ink matrices match pinned original",
+      "Independent saved-VRAM decode for all3modes: palettes,256adjacent pairs,final pixels and padding",
+      "100mode cursor display count hidden-1 restored to original1",
+      "Final SETUP code and linker map identical to prior build; complete binary delta explained by four packet-ID strings, one OEM size/CRC row and MZ checksum",
+      "Packet08 23payload/17installed identities and generated sources match receipts; DOS06 uses exact packet bytes"
+    ],
+    "native_review_scope": "Existing GUI qualification retained; only focused DOS checksum/install/switch/UNDO rerun for descriptor correction",
+    "consumer": {
+      "bytes": 139175,
+      "sha256": "97377649eff6520daed6d1f48b2539b6159a057f07e8a350487e191df471e86a"
+    },
+    "limitations": [
+      "Physical hardware remains unqualified",
+      "Clone/composite and broad DOS/PrintScreen compatibility not inferred",
+      "Publication not authorized or performed"
+    ]
+  },
+  "descriptor_metadata_followup": "Only OEM descriptor comments/font label and regenerated SETUP packet checksum data differ from reviewed packet07. Every installed driver/font/helper/grabber byte is identical; SETUP code unchanged. Original source37f17a9 and packet07 remain preserved."
+}

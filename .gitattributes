@@ -204,3 +204,8 @@ docs/pcp/INTERIM-CARRIER.JSN -text
 tools/CPPACK/** -text
 .github/workflows/colorplus.yml -text
 docs/pcp/OUTPUT/PROFILE.CFG whitespace=cr-at-eol,-blank-at-eof
+
+# Qualified CGA packet and evidence retain exact bytes.
+tools/CGAPACK/** -text
+downloads/experimental/CGA/** -text
+docs/QUAL/CGA/** -text

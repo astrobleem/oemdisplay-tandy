@@ -8,8 +8,10 @@ def check(sound,core):
  config=P.spec();
  for n,pin in config['core_identities'].items():assert P.identity((core/n).read_bytes())==pin,n
  assets=P.ancillary(sound,(core/'WINXT.ZIP').read_bytes());checks=[];references=[]
+ cga=importlib.machinery.SourceFileLoader('current_qualified_cga',str(P.ROOT/'tools/CGAPACK/VERIFY.PY')).load_module()
+ cga.verify(assets['CGA.ZIP']);checks.append('CGA exact reviewed payload and public README derivation verified')
  checks.append('All4 live core identities pinned; supplied producer commit remains original')
- checks.append('All16 ancillary ZIPs match qualified inputs and deterministic build-input archive')
+ checks.append('All17 ancillary ZIPs match qualified inputs and deterministic build-input archive')
  assert assets['BUILDIN.ZIP']==P.input_archive(config)
  inputs=P.zip_files(assets['BUILDIN.ZIP'])
  for n,pin in config['developer_inputs'].items():assert P.identity(inputs[n])==pin,n
