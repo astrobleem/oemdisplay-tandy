@@ -63,7 +63,10 @@ backup/state names. It selects display, System/Fixed/OEM fonts and 286grabber;
 160x100 also registers the small Helv/Courier faces and one-pixel borders.
 320x200 selects the original 4x6 CG2 System/Helv faces and 4x6 fixed/OEM.
 640x200 keeps its XTC System/fixed/OEM selection and registers the existing
-TEXT80 8x8 Helv/Courier faces from XT Pixels; unrelated font entries remain. CGA100 installs its
+TEXT80 8x8 Helv/Courier faces from XT Pixels; unrelated font entries remain.
+All three profiles load CGACTL. At 320/640 it sets disabled text to black and
+exits immediately, so labels do not disappear into a white button face. It
+does not change the driver palette or leave a resident placement owner. CGA100 installs its
 access client in Windows and adds its basename to load=; UNDO removes only
 that added token and its own unchanged created file.
 

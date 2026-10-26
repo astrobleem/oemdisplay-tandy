@@ -110,11 +110,18 @@ long FAR PASCAL CGA_ENTRY WndProc(HWND w,unsigned m,UINT wp,LONG lp)
 }
 int PASCAL WinMain(HANDLE hi,HANDLE previous,LPSTR cmd,int show)
 {
- WNDCLASS wc;MSG msg;HDC dc;int ok;
+ WNDCLASS wc;MSG msg;HDC dc;int wide,high,colors,index;COLORREF black;
  (void)cmd;(void)show;
  if(previous)return 0;
- dc=GetDC(NULL);ok=GetDeviceCaps(dc,HORZRES)==160 && GetDeviceCaps(dc,VERTRES)==100 && GetDeviceCaps(dc,NUMCOLORS)==16;ReleaseDC(NULL,dc);
- if(!ok)return 0;
+ dc=GetDC(NULL);wide=GetDeviceCaps(dc,HORZRES);high=GetDeviceCaps(dc,VERTRES);
+ colors=GetDeviceCaps(dc,NUMCOLORS);ReleaseDC(NULL,dc);
+ /* Gray128 maps to the same white as the button face in reduced palettes.
+  * Fix only the session's disabled-text color; no palette/renderer change
+  * and no resident window or placement service in these normal modes. */
+ if(high==200 && ((wide==320 && colors==4) || (wide==640 && colors==2))){
+  index=COLOR_GRAYTEXT;black=RGB(0,0,0);SetSysColors(1,&index,&black);return 0;
+ }
+ if(wide!=160 || high!=100 || colors!=16)return 0;
  /* Existing panning owners never run concurrently with this fixed-mode client. */
  if(FindWindow("XTPan",0) || FindWindow("XYOverviewControl",0))return 0;
  if(WDWinInitView(320,200,160,100)<0)return 1;

@@ -131,7 +131,8 @@ def emit(repo,out,files,source_commit,fixture=False):
     (root/'README.TXT').write_bytes(readme)
     rec=dict(kind='CGA_DEVELOPMENT_PACKET',source_commit=source_commit,fixture=fixture,
              native_build='NOT_RUN',windows='NOT_TESTED',hardware='UNQUALIFIED',
-             payload=pin,packet_id=token,installer_sources=sources,readme=identity(readme))
+             payload=pin,packet_id=token,installer_sources=sources,readme=identity(readme),
+             helper_autoload_modes=['100','320','640'],helper_normal_modes='Set disabled text black, then exit; no resident placement owner')
     write(out/'PREPARED.JSN',json.dumps(rec,indent=2)+'\n')
     return rec
 

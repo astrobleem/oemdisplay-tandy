@@ -312,10 +312,8 @@ int main(int argc,char **argv)
     }
     args[0]="CGASET";args[1]="ON";args[2]=(char *)dir;
     args[3]=cga_small ? "CGA100.DRV" : !strcmp(mode,"320") ? "CGA320.DRV" : "CGA640.DRV";
-    if(cga_small){
-        args[4]="CGACTL.EXE";args[5]="/C";args[6]=NULL;
-    }else args[4]=NULL;
-    rc=cga_ini_main(cga_small ? 6 : 4,args);
+    args[4]="CGACTL.EXE";args[5]=cga_small ? "/C" : NULL;args[6]=NULL;
+    rc=cga_ini_main(cga_small ? 6 : 5,args);
     if(rc){if(!ini_state())cleanup();return 1;}
     puts("SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.");
     puts("Mode changes require exiting Windows and rerunning SETUP. Keep this packet for UNDO.");

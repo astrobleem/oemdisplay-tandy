@@ -146,6 +146,7 @@ long FAR PASCAL WndProc(HWND w,unsigned m,WORD wp,LONG lp)
    last=active;Log("SNAP\r\n");
    wsprintf(line,"OWNER CGASlide=%04x XTPan=%04x XYOverviewControl=%04x\r\n",
     FindWindow("CGASlide",NULL),FindWindow("XTPan",NULL),FindWindow("XYOverviewControl",NULL));Log(line);
+   wsprintf(line,"SYSCOLOR GrayText=%08lx\r\n",GetSysColor(COLOR_GRAYTEXT));Log(line);
    Tree(GetWindow(GetDesktopWindow(),GW_CHILD),0);Log("TREE END\r\n");
   }
   return 0;

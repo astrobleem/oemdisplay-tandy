@@ -674,5 +674,113 @@
       "c_source_sha256": "7eeb5ab8604178bf6b55caf1e758c38d54952a77dd5b172c0c37491e81094031",
       "host_executable": "SETUPHOST.EXE (modern host test only)"
     }
+  },
+  "mode320_spacing_native": {
+    "assessment": {
+      "native_data": "PASS",
+      "mode": "320",
+      "palette": "PASS",
+      "memory_blt": "PASS",
+      "all_256_pairs": "PASS",
+      "draw_under_odd_cursor": "PASS",
+      "edges_and_hide": "PASS",
+      "padding": "PASS",
+      "saved_file_exact": "PASS",
+      "dos_mode": 3,
+      "source_captures": {
+        "014.VRM": "4e65d3fbfc3cfe057620f78a4d44d25625868f1013c8dadca68501d4f9185e5d",
+        "017.VRM": "dbdb54b2a7161286929394ebf7009e116517d90ecc89cfb7edceb5ab1046f5b2"
+      },
+      "physical_hardware": "UNQUALIFIED",
+      "scope": "Native emulation data and API checks; not complete monitor screenshots or physical mouse qualification"
+    },
+    "dialogs": [
+      {
+        "title": "Run",
+        "rect": [
+          16,
+          25,
+          236,
+          88
+        ],
+        "settled_vram": "003.VRM"
+      },
+      {
+        "title": "File Open",
+        "rect": [
+          56,
+          37,
+          258,
+          160
+        ],
+        "settled_vram": "006.VRM"
+      },
+      {
+        "title": "File Save As",
+        "rect": [
+          56,
+          37,
+          256,
+          145
+        ],
+        "settled_vram": "009.VRM"
+      },
+      {
+        "title": "Find",
+        "rect": [
+          24,
+          40,
+          233,
+          114
+        ],
+        "settled_vram": "011.VRM"
+      }
+    ],
+    "source": "All7fontfilesmatchsource2e06f21;5qualifiedCGA100fontfilesunchanged",
+    "controller_correction": "Same native image continued after explicit fresh snapshot for reused dialog HWND; original failed controller receipt retained",
+    "remaining_visual_defect": "Disabled OK label maps white onto white in four-color mode; fixed by pending startup color pass, not yet native accepted"
+  },
+  "pending_startup_contrast": {
+    "native": "NOT_BUILT_NOT_TESTED",
+    "helper_source_sha256": "4c4f23c6e781c6a4fef31653b8af3b561dd51ec7c0f2f0ea04cd25f02a44544b",
+    "policy": "320/640 set session COLOR_GRAYTEXT black and immediately exit;100 retains shared placement service; no palette/renderer change",
+    "host": {
+      "host": "PASS",
+      "native": "NOT_RUN",
+      "windows": "NOT_TESTED",
+      "tests": [
+        "install/undo 100",
+        "install/undo 320",
+        "install/undo 640",
+        "three modes/repeated switch/undo",
+        "identical preexisting font retained",
+        "collision refusal, no writes",
+        "all mutating commands refuse Windows context",
+        "damaged packet refusal before copying",
+        "CGAFAULT_WOPEN every single failure position",
+        "CGAFAULT_RENAME every single failure position",
+        "every interrupted owned-copy position",
+        "owned pending copy plan cancelled without touching payload files",
+        "damaged INI record refuses, explicit whole restore",
+        "damaged copy record refuses without cleanup",
+        "later edits and their referenced driver retained",
+        "changed installed file retained",
+        "failed INI rollback recovered through owned safety copies",
+        "interrupted cleanup can be retried",
+        "undo write/marker failures can be retried",
+        "interrupted completion marker uses explicit safety restore",
+        "17000-byte INI installs and restores exactly",
+        "small-model INI size limit refuses without residue",
+        "closed expanded packet inventory rejects extras",
+        "synthetic fixtures cannot finalize a consumer packet"
+      ],
+      "host_invocations": 193,
+      "fixtures": 106,
+      "packet_payload_files": 23,
+      "installed_files": 17,
+      "managed_gcc": true,
+      "c_source_sha256": "afe205a8f9a1a2252f4ddac6de659d74370ecbeb3afdadb68dbff5dcbe19db09",
+      "host_executable": "SETUPHOST.EXE (modern host test only)"
+    }
   }
 }

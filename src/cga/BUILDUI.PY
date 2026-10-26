@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the CGA100 Win3/8086 window-access candidate in a leased slot.
+"""Build the CGA Win3/8086 UI/window-access candidate in a leased slot.
 
 Native build is not runtime acceptance; only CGA-specific installation may load it.
 """
@@ -23,7 +23,7 @@ def main():
         for name in names:
             data=(directory/name).read_bytes();(out/name).write_bytes(data)
             shared[name]=hashlib.sha256(data).hexdigest()
-    write(out/'CGACTL.DEF',"NAME CGACTL\nDESCRIPTION 'CGA100 shared WDESK access client'\nEXETYPE WINDOWS\nCODE PRELOAD MOVEABLE DISCARDABLE\nDATA PRELOAD MOVEABLE MULTIPLE\nHEAPSIZE 1024\nSTACKSIZE 5120\nEXPORTS\n WndProc @1\n")
+    write(out/'CGACTL.DEF',"NAME CGACTL\nDESCRIPTION 'CGA UI and shared WDESK access'\nEXETYPE WINDOWS\nCODE PRELOAD MOVEABLE DISCARDABLE\nDATA PRELOAD MOVEABLE MULTIPLE\nHEAPSIZE 1024\nSTACKSIZE 5120\nEXPORTS\n WndProc @1\n")
     write(out/'CGACTL.RSP','CGACTL.OBJ WDCORE.OBJ WDWIN.OBJ WTPLACE.OBJ\nCGACTL.EXE\nCGACTL.MAP\nT:\\LIB\\SLIBCEW.LIB T:\\LIB\\LIBW.LIB\nCGACTL.DEF\n')
     write(out/'BUILD.BAT','@ECHO OFF\nSET PATH=T:\\BIN;Z:\\;Z:\\SYSTEM\nSET INCLUDE=T:\\DDK\\286\\INC;T:\\INCLUDE\nSET LIB=T:\\LIB\nC:\nCL /nologo /c /G0 /Gw /AS /W3 /Od CGACTL.C WDCORE.C WDWIN.C WTPLACE.C > BUILD.LOG\nIF ERRORLEVEL 1 GOTO FAIL\nLINK4 /NOE /NOD @CGACTL.RSP >> BUILD.LOG\nIF ERRORLEVEL 1 GOTO FAIL\nECHO PASS >> BUILD.LOG\nGOTO END\n:FAIL\nECHO FAIL >> BUILD.LOG\n:END\nEXIT\n')
     config='''[sdl]

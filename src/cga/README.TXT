@@ -70,8 +70,9 @@ Component notices are in CGA\NOTICE.TXT and CGA\FONTLIC.TXT.
 
 320x200 uses original 4x6 System/Helv and fixed/OEM faces. 640x200 retains
 its XTC System/fixed/OEM selection and adds the existing XT Pixels 8x8
-Helv/Courier dialog faces. Mode100 also loads the shared WDESK-based CGACTL access
-client automatically. Ctrl+Alt+arrows move the window workspace; Home recovers
+Helv/Courier dialog faces. All modes start CGACTL automatically. At 320/640 it
+makes disabled labels readable in the reduced palette, then exits. At 100 it
+runs the shared WDESK-based window-access client. Ctrl+Alt+arrows move the window workspace; Home recovers
 its origin and End exposes the active frame's bottom/right. It can expose a
 visible control group clipped inside a fixed client. It does not change the
 Windows display geometry. This integration still needs native acceptance.
