@@ -12,6 +12,7 @@
 static HWND win,last_focus,last_active;
 static int view_x,view_y,have_view,settle,last_owners=-1,edge,ticks;
 static POINT last_cur;
+static int dlg_seen,dlg_fired,dlg_wait;
 static DWORD last_free;
 static char line[256],cls[40],txt[40];
 static void Log(LPSTR s)
@@ -96,7 +97,18 @@ static void Tick(void)
         Log(line);
     }
     ticks++;
-    if(edge&&have_view&&ticks%160==0&&ticks<=640){
+    if(edge==2){
+        /* After the settings window has come and gone, push the pointer to
+         * the right edge once; whether the view scrolls shows the setting. */
+        if(FindWindow("PanSetDlg",NULL))dlg_seen=1;
+        else if(dlg_seen&&!dlg_fired&&++dlg_wait>=32){
+            dlg_fired=1;SetCursorPos(view_x+VIEW_W-2,view_y+50);
+            wsprintf(line,"EDGE after settings view=%d,%d
+",view_x,view_y);
+            Log(line);
+        }
+    }
+    if(edge==1&&have_view&&ticks%160==0&&ticks<=640){
         /* One edge per 40 s, one pixel in: right, bottom, left, top. Each
          * scrolls away from the previous corner so the move is possible. */
         switch(ticks/160){

@@ -54,6 +54,13 @@ static DWORD edgeSince,lastKey;
 static int held;
 static int Clamp(int n,int low,int high)
 {return n<low?low:n>high?high:n;}
+/* Bounded copy: lstrcpyn is a Windows 3.1 call. */
+static void Copy(char *dst,const char FAR *src,int cap)
+{
+ int i;
+ for(i=0;i<cap-1 && src[i];i++)dst[i]=src[i];
+ dst[i]=0;
+}
 static int Query(void)
 {
  HDC dc;int in[2],out[6],ok;
@@ -210,7 +217,7 @@ static int OpApply(void *ctx,const PANSET *want,PANSET *actual,char *note,int ca
  *actual=*want;
  actual->step=StepAcross(want->step);
  UseSettings(actual);
- if(actual->step!=want->step)lstrcpyn((LPSTR)note,"Step rounded to a multiple of 8.",cap);
+ if(actual->step!=want->step)Copy(note,"Step rounded to a multiple of 8.",cap);
  return PS_OK;
 }
 static int OpHome(void *ctx)
@@ -289,7 +296,7 @@ int PASCAL WinMain(HANDLE hi,HANDLE previous,LPSTR cmd,int show)
  char line[24];
  (void)show;
  instance=hi;
- lstrcpyn((LPSTR)line,cmd,sizeof(line));settings=PanCmdParse(line)==PS_CMD_SETTINGS;
+ Copy(line,cmd,sizeof(line));settings=PanCmdParse(line)==PS_CMD_SETTINGS;
  settingsMessage=RegisterWindowMessage("CGAPanSettings");
  /* A second copy only asks the running owner for its settings. */
  other=FindWindow("CGAPan",0);
