@@ -71,8 +71,8 @@ disables video around every converter/cursor VRAM access; nested access keeps
 video blank until the outer end. Only bounded depth/port changes mask
 interrupts; conversion has no polling loop or long CLI region. Blanking can
 flicker and is not a proven fast path. BIOS mode restoration additionally
-restores the prior text page, cursor shape and position. Ordinary DOS return,
-Windows re-entry and full-screen DOS/grabber interactions need actual tests.
+restores the prior text page, cursor shape and position. Ordinary DOS exit has the native evidence below; Windows re-entry and
+full-screen DOS/grabber interactions remain separate tests.
 
 `CGAFONT.PY` reuses XT Pixels' FNT/FON writer for original five-row
 proportional System/Helv, 4x6 fixed/OEM and 4x5 Courier ASCII faces;
@@ -104,8 +104,9 @@ INI buffers use a 18,000-byte limit for small-model data/stack headroom.
 These host C89 results do not establish native DOS or GUI acceptance.
 
 PACKCGA.PY prepares a closed payload from actual driver receipts, generated
-small fonts and pinned support. It automatically stages the helper source and
-header. BUILDSET.PY compiles that CGA-only helper in a coordinated leased slot.
+small fonts and pinned support. It requires a matching native CGACTL
+receipt and stages the DOS installer sources/headers. BUILDSET.PY compiles
+that CGA-only SETUP in a coordinated leased slot.
 Finalization rejects host executables, extra files and synthetic fixtures,
 then emits a development ZIP with root SETUP.EXE/README.TXT and one CGA folder.
 Current core products, published installers and renderer profiles are unchanged.
@@ -148,169 +149,79 @@ Do not promise speed from reduced shadow size or host script timings.
    full manifests/recipes/notices. Preserve other modes, current release
    identities and old assets. Push, merge and publication need authorization.
 
-## Native development results
+## Current native checkpoint
 
-All three drivers passed native C6/MASM/link/resource and 8086 audits from
-source checkpoint 5e1c8cde. The 58,208-byte CGA100 driver SHA-256 is
-3c204d3515f94893750c2352d9089977a4e675de582a4128828ae7bbf1f035bd.
-Native DOS SETUP installed/switched 100, 320, 640, 100 and UNDO restored both
-INIs exactly. These tests used the normal shared lease and owned watchdog.
+This is an unpublished development candidate with partial acceptance. The
+preserved basic-dialog/graphics checkpoint is `8cc53057`; runtime source for
+the latest access client is `e30579b7623039fc3fe2dff1decce236adb5ae67`.
+Exact binary hashes, earlier failed attempts and component receipts remain in
+`src/cga/NATIVE.JSN` and the private native evidence directories.
 
-The first IBM XT 4.77 MHz / 640 KB / IBM CGA snow-enabled Windows run loaded
-160x100x16, 48x40 dpi and 4x6 System/Fixed/OEM fonts. Program Manager menus
-and Notepad worked. Notepad's actual File Open dialog clipped its right and
-bottom controls: its stock Helv 8 template is 192x130 dialog units. The
-first six-row dialog face is rejected for fit. A 3x5 dialog-only strike is
-now staged for retest; desktop fonts/driver bytes are unchanged. SETUP now
-prints per-file checking/copy progress for slow 8088 installation.
+All three drivers passed C6/MASM/link/resource and 8086/REP audits. The normal
+320/640 renderer bytes remain unchanged. The current 58,208-byte CGA100 driver
+has SHA-256 `75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3`.
+On the IBM XT 4.77 MHz, 640 KB, IBM CGA snow-enabled emulator fixture, the
+160x100 driver passes all 16 palette indices, all 256 adjacent color pairs,
+memory BitBlt, immediate drawing beneath an odd-origin 32x32 cursor, three
+edges, hide/restoration and untouched VRAM padding. Ordinary Windows exit
+returns to DOS mode 3 with 640 KB. These are emulator results, not physical
+card, snow-free scanout, clone, composite or real-mouse qualification.
 
-Windows exited to an ordinary C:\\WINDOWS prompt with BIOS mode 3 / 640 KB.
-This is an initial native smoke check, not complete palette/cursor/GDI,
-re-entry, other-mode GUI or physical-hardware acceptance. The first helper's
-window-text measurements had a varargs pointer bug and are not evidence;
-its screen/font metrics and actual captured frames are retained. The private
-86Box capture fixture will use simple line doubling for the next run, avoiding
-the raw unscaled framebuffer's stale lower rows. No image editing supplies
-native proof. No publication has occurred.
+The five-row proportional System/Helv and six-row fixed/OEM faces are selected
+without explicit font loading in the accepted basic-dialog run. Run's outer
+frame is 168 pixels wide, but its controls fit; Open is 154x98, Save As 153x86,
+Find 159x58 and the tested message box 98x46. Native checkbox/radio states,
+text extents and center hit-test handles are recorded. Notepad saves the exact
+expected two-line file. All five qualified CGA100 font files remain unchanged.
 
-Native slots remain coordinated through the parent and normal shared lease.
+The 320-mode font-selection unit now passes Run/Open/Save As/Find text and
+control bounds, exact file save, palette/blits/cursor/padding and DOS exit.
+Its CG2 System/Helv resources use 48x40 dpi and 11 points while driver logical
+DPI remains 96x48. Wider original M/W/m/w forms retain an alphabet average of
+four, preventing the truncated dialog-unit width from clipping static labels.
+An earlier 96x48/9-point resource loaded successfully but mapped to a ten-row
+Helv face; the rejected attempts remain evidence. The metadata experiment
+changed several fields, so it does not isolate one field as the sole cause.
 
-The next candidate's progress output exposed tight C6 small-model memory:
-its native map leaves 1,568 bytes after the data/stack reservation. Its file
-copy ran much slower and was stopped with the private image/records intact.
-Stream-buffer allocation is the working cause, pending the next native
-comparison. The INI buffers now cap each input at 18,000 bytes, freeing
-4,000 bytes. BUILDSET rejects maps with less than 4,096 bytes of remaining
-data-group address space. The shared INI source and published SETUP remain
-unchanged. A separate native font/GDI fixture may reuse the first complete
-install; it is explicitly not proof of the revised consumer transaction.
+The 640-mode font-selection unit passes the same dialog/file/graphics/cursor
+and DOS checks using the existing TEXT80 8x8 Helv/Courier derivation. XTC
+System/fixed/OEM selection stays unchanged. These normal-mode font units are
+not final consumer-packet installation acceptance.
 
-That font/GDI fixture confirmed a 32x32 custom cursor restores the captured
-16 KB scene exactly after four tested positions, with unchanged VRAM padding.
-It exercised immediate pixels, RGB brush fills and a 16x4 memory BitBlt.
-The fill colors dithered against the inherited Windows logical palette;
-the helper's draw time included logging and is not a speed benchmark.
-Native window measurements still show Run at 220 pixels wide and File Open
-at 202x115 after the smaller dialog files were supplied. The new strike is
-not being selected as intended. Registration/mapping remains under diagnosis;
-neither font fit nor this packet's usability is accepted yet.
+The 23-file expanded packet's actual native SETUP installs all 17 selected
+files in the 160x100 consumer fixture, including autoloaded CGACTL. It uses
+the final shared source pair display `1449b9e4` and libwintandy `35f142dc`;
+all six runtime source blobs match the earlier qualified shared pair. WDWIN
+remains the only root-placement owner. Grid End/Home and Desktop controls
+have native bounds/hit-test, traversal, recovery and DOS-exit evidence.
 
-A subsequent native probe confirms Helv is available at startup and maps to
-5x3 before explicit AddFontResource (which also succeeds). Run and its
-controls instead report a System 6x4 LOGFONT. The next font candidate makes
-System/Helv proportional five-row UI faces with average width three, retaining
-spacing for capitals/digits. Fixed/OEM remain 4x6; Courier is 4x5. The ANSI
-variable descriptor follows 5x3. Native acceptance remains pending.
+A settled follow-up caught a real defect: child hit rectangles moved while
+icon pictures stayed behind. CGACTL now invalidates each child after
+SWP_NOREDRAW. The focused native updated-helper unit changes the same pixel
+comparison from zero matching cells to five exact unobstructed matches.
+All 34 differences in the sixth cell are accounted for by the same stationary
+6x5 pointer image in both captures; this supplemental finding is offline VRAM
+analysis. The unit also passes Home and DOS exit. It updates only the helper
+in the previously installed consumer image; final new packet delivery is a
+separate gate. The owned process stopped and released the shared lease.
 
-Using exact inherited Windows logical-palette RGBs, the second GDI probe
-produced native bar codes 0..15 and all four expected 16-pixel BitBlt rows.
-The last pixel was code 4. A 32x32 cursor at odd origin (1,1), then three
-edges, restored all 16 KB exactly and left padding unchanged. The draw suite
-measured 1,978 guest milliseconds excluding log writes; it is one workload,
-not a speedup claim or a physical-hardware timing result.
+The current host transaction suite passes 24 groups, 193 invocations and 106
+fixtures for the closed 23-file/17-installed inventory, including all modes,
+collisions, interrupted copies, rollback/retry, INI limits and exact undo.
+The latest native SETUP map leaves 5,216 bytes beyond data/stack. The final
+helper is built; prepared07 contains its exact bytes. Its native SETUP build
+and final packet assembly wait for the coordinated slot after WDESK.
 
-The proportional System prototype reports System height 5 / average width 3,
-with fixed/OEM still 4x6. Native File Open now fits at 154x98; Save As is
-153x86; Find is 159x58; a message box is 98x46. An actual Notepad open/new/save
-workflow produced the exact expected two-line file. Checkbox and radio
-accelerators changed their native states. Run's frame is 168 pixels wide,
-but its command field and all buttons fit (rightmost control edge 156).
-The bounded exploratory run ended before its final DOS-exit check. A rebuilt
-consumer packet with passive instrumentation still needs acceptance.
+Still pending are final normal-mode consumer startup and the reduced-color
+disabled-label fix, plus final native delivery/mode-switch/exact-tree UNDO.
+The new helper sets session COLOR_GRAYTEXT black and exits in 320/640 modes;
+that branch has compiled but has no accepted Windows runtime check yet.
+File Manager reachability and full-screen DOS/grabber/re-entry have no accepted
+evidence here. Physical IBM CGA acceptance remains a separate hardware gate.
+No push, merge, release or accepted product replacement has occurred.
 
-The current headless FRAME API returns target_buffer from row zero, while
-CGA's scanout blits from firstline. Its raw PNGs retain upper blanking and
-can omit lower scanout rows; they are raw-buffer records, not complete monitor
-screenshots. Native control bounds, saved-file bytes and complete VRAM captures
-are separate evidence. No reconstructed image is presented as native scanout.
-
-Offline follow-up tightens lower-case r/t so Directory: fits its observed
-26-pixel static control; the actual five-row glyphs and label widths pass
-the independent font checks. The passive probe now records text extents,
-check states and center hit-test handles, plus an explicit draw-under-cursor
-test. These changes await their scheduled native run. The native rebuilt
-driver is 58,208 bytes, SHA-256
-75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3;
-all eleven NE code/data segment payloads match the earlier tested driver.
-
-A host-only audit flags larger stock Control Panel templates for native
-confirmation. It is not a fit verdict: applications can hide or resize those
-controls. Basic Run/Open/Save/Find results do not qualify every desktop dialog.
-If native controls remain unreachable, evaluate the existing software viewport
-and task-time helper contracts in src/softpan/SPPATCH.PY and src/xtpan/XTPAN.C
-before proposing another renderer. No viewport or peer branch is changed here.
-
-The complete revised consumer packet now installs natively on the IBM XT
-fixture and passively selects System/ANSI variable fonts at height 5 / average
-width 3. SETUP's C6 map leaves 5,568 bytes after data/stack, passing its gate.
-The native GUI continuation verifies identical installed payloads and performs
-no explicit font registration. Run/Open/Save As/Find controls fit; Directory:
-measures exactly its 26-pixel control width. Checkbox/radio states and center
-hit tests are recorded. Notepad's saved two-line file matches exactly.
-
-The current native VRAM oracle passes all 16 palette indices, all 256 adjacent
-color pairs, memory BitBlt, drawing beneath an odd-origin cursor, three edges,
-hide/restoration and untouched bank padding. Windows returns normally to DOS
-mode 3 with 640 KB. The owned process stops and releases the shared lease.
-See src/cga/NATIVE.JSN for exact packet, build, probe/run and evidence pins.
-Larger desktop dialogs, normal-mode IBM GUI and physical hardware remain
-separate gates; this is still an unpublished development candidate.
-
-The revised21-file source adds 4x6 CG2 System/Helv strikes for 320x200 after
-its inherited XTC System made Run's command field end at x356. Independent
-FNT/NE checks pass, and all five qualified CGA100 font files stay byte-identical.
-The 320 renderer passes native four-color palette, draw-under-cursor, edge/hide
-and VRAM-padding checks; its ordinary DOS return was not observed in that run.
-640-mode GUI qualification remains pending. Renderer bytes stay unchanged.
-
-Window-access unit tests bring the fixed Control Panel grid's final two cells
-inside the screen with matching native center hit-test handles, and move the
-Desktop panel from [0,0,160,116] to [0,-16,160,100]. Home/normal DOS return and
-owned stop/release are retained. The standalone prototypes are not accepted
-consumer runtime. The current source instead calls the shared WDESK WDWIN
-owner and WTPLACE service for root placement, Home and shutdown; it has no
-second root tracker/enumerator. Only fixed-client child-group movement is
-CGA-specific. Its native integration waits for the shared owner's qualification
-and a coordinated slot. Fonts and six-row controls remain required, independently
-validated parts of this option.
-
-Host tests caught the original long load-path being truncated by the retained
-64-byte journal value field. The mode-specific fix installs CGACTL in Windows
-and records its short DOS basename. It preserves the shared transaction format
-and data budget. The complete21-file source now passes24 host groups,185
-invocations and100 fixtures, including exact undo and all modes. No old
-consumer packet is relabeled with this evidence; the new shared-client native
-build, consumer startup and remaining GUI gates must finish before acceptance.
-
-## Normal-mode font follow-up
-
-The revised 320-mode System/fixed/OEM/ANSI fonts select six rows and an average
-width of four natively, but Run still selects a ten-row Helv face. Its edit
-field ends at x=356 on the 320-pixel screen. Signed-height font mapping remains
-a blocking usability test. The renderer is unchanged.
-
-For 640 mode, the existing TEXT80 T80FONT derivation supplies 8x8 Helv/Courier
-at 96x48 dpi. It fixes the observed 703-pixel-wide Run dialog. The private
-native font-selection unit passes Run/Open/Save As/Find, exact file save,
-palette, blits, all 256 pairs, cursor restoration, padding and ordinary DOS
-return to mode 3 with 640 KB. The CGA producer bundles those exact existing
-faces and registers its own two font entries; XTC System/fixed/OEM stays
-selected. The expanded 23-file consumer installer still needs a native
-build/install. The initial Open VRAM capture is a paint transition, not
-settled visual font proof. Wait for complete TREE END plus idle before a
-later diagnostic capture.
-
-The 320 follow-up separates font-resource aspect from logical DPI. A 48x40
-font resource matches the driver's ASPECTX=10, ASPECTY=12 and makes Windows
-select the six-row Helv face; the driver's 96x48 logical DPI stays unchanged.
-Original wider M/W/m/w forms keep the measured alphabet average at four so
-Run/Open/Save As/Find reserve enough label width. The five qualified CGA100
-font files remain byte-identical. See NATIVE.JSN for the pending native gates.
-
-A settled native grid check caught a real child repaint failure: hit targets
-moved, but icon pictures remained at their old positions. CGACTL now
-invalidates each moved child after SWP_NOREDRAW. The same native VRAM
-comparison changes from zero matching cells to five matching unobstructed
-cells, with Home and ordinary DOS exit passing. This focused helper test
-retains the prior actual installer/driver/font image; final packet delivery
-remains a separate gate. Shared WDWIN remains the only root-placement owner.
+The headless FRAME API reads row zero while CGA scanout begins at firstline;
+raw PNGs can include blanking and omit lower rows. Native control/file/VRAM
+checks are separate evidence. Decoded VRAM illustrations are labeled as such
+and are not presented as complete monitor screenshots. Retain failed receipts
+and wait for a complete TREE END plus idle before diagnostic captures.

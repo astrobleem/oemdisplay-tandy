@@ -740,8 +740,8 @@
     "remaining_visual_defect": "Disabled OK label maps white onto white in four-color mode; fixed by pending startup color pass, not yet native accepted"
   },
   "pending_startup_contrast": {
-    "native": "NOT_BUILT_NOT_TESTED",
-    "helper_source_sha256": "4c4f23c6e781c6a4fef31653b8af3b561dd51ec7c0f2f0ea04cd25f02a44544b",
+    "native": "C6_BUILD_PASS; normal-mode Windows acceptance pending",
+    "helper_source_sha256": "114c41f576485157416f26ad041147f8634eb5e2a28944aa03bc4a0ad9b37063",
     "policy": "320/640 set session COLOR_GRAYTEXT black and immediately exit;100 retains shared placement service; no palette/renderer change",
     "host": {
       "host": "PASS",
@@ -780,7 +780,8 @@
       "managed_gcc": true,
       "c_source_sha256": "afe205a8f9a1a2252f4ddac6de659d74370ecbeb3afdadb68dbff5dcbe19db09",
       "host_executable": "SETUPHOST.EXE (modern host test only)"
-    }
+    },
+    "helper_sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d"
   },
   "consumer100_actual_setup": {
     "status": "PASS_API_INSTALL_HOME_AND_SHUTDOWN",
@@ -795,7 +796,7 @@
     "observed": "Settled native003.VRM shows old icon positions after child hit targets move",
     "source_sha256": "114c41f576485157416f26ad041147f8634eb5e2a28944aa03bc4a0ad9b37063",
     "change": "Invalidate each moved child after SWP_NOREDRAW; root placement remains solely shared WDWIN",
-    "runtime": "NOT_TESTED",
+    "runtime": "PASS_FOCUSED_NATIVE_UNIT; see child_redraw_native",
     "retained_evidence": "native-cga-consumer100-steady-01"
   },
   "child_redraw_native": {
@@ -825,6 +826,26 @@
     "Home_and_DOS": "PASS_mode3_640KB",
     "owned_stopped": true,
     "lease_released": true,
-    "runtime_seconds": 257.359
-  }
+    "runtime_seconds": 257.359,
+    "pointer_overlay_followup": {
+      "bounding_rect": [
+        80,
+        50,
+        86,
+        55
+      ],
+      "same_pixels_in_both_captures": true,
+      "all_translated_differences_accounted_for": true,
+      "interpretation": "Matches the visible stationary black pointer. This is offline analysis, not a new cursor-hide native run.",
+      "evidence": "native-cga-redraw-unit-02/GRID-MISMATCH.JSON",
+      "raw_difference_count": 34,
+      "scope": "Five whole unobstructed cells match exactly; sixth matches outside the stationary pointer rectangle. No new native run or monitor-scanout claim."
+    }
+  },
+  "current_remaining_gates": [
+    "After WDESK handoff: native SETUP build from prepared07 and finalize new packet with helper05",
+    "Actual final normal-mode consumer installation/startup; disabled OK contrast, no placement owner, graphics/cursor/DOS checks",
+    "Native final SETUP mode100/320/640/100 plus exact original-tree UNDO",
+    "File Manager reachability and full-screen DOS/grabber/re-entry have no accepted evidence in this record; physical IBM CGA qualification is separate"
+  ]
 }
