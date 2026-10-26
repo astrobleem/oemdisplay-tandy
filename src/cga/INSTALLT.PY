@@ -90,7 +90,7 @@ def main():
             assert b'BorderWidth=3' in ini and b'CG1HELV.FON' not in ini
             assert b'CGACTL.EXE' in ini
         else:
-            assert b'Helv 8x8 (CGA640)=T80HELV.FON' in ini and b'Courier 8x8 (CGA640)=T80COUR.FON' in ini
+            assert b'Helv proportional 8-row (CGA640)=CG6HELV.FON' in ini and b'Courier 8x8 (CGA640)=T80COUR.FON' in ini
             assert b'fonts.fon=XTCSYS.FON' in (w/'SYSTEM.INI').read_bytes()
             assert b'BorderWidth=3' in ini and b'CGACTL.EXE' in ini
         run(w,'UNDO');assert snapshot(w)==before;passed('install/undo '+mode)

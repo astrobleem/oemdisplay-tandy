@@ -183,10 +183,14 @@ An earlier 96x48/9-point resource loaded successfully but mapped to a ten-row
 Helv face; the rejected attempts remain evidence. The metadata experiment
 changed several fields, so it does not isolate one field as the sole cause.
 
-The 640-mode font-selection unit passes the same dialog/file/graphics/cursor
-and DOS checks using the existing TEXT80 8x8 Helv/Courier derivation. XTC
-System/fixed/OEM selection stays unchanged. These normal-mode font units are
-not final consumer-packet installation acceptance.
+The first 640-mode unit passed dialog rectangles, file/graphics/cursor and
+DOS checks using TEXT80 faces. The final consumer text check then caught a
+real failure: Directory: is 80 pixels in a 70-pixel label. CG6FONT now preserves
+the same original eight-row XT Pixels ink with proportional advances; its
+host widths are 57 pixels for Directory: and 54 for Filename: against a
+conservative 61-pixel template allowance. Independent FNT/NE checks preserve
+all 224 glyph ink matrices and bitmap bounds. TEXT80 Courier and XTC
+System/fixed/OEM remain unchanged. The new CGA640 face awaits native retest.
 
 The 23-file expanded packet's actual native SETUP installs all 17 selected
 files in the 160x100 consumer fixture, including autoloaded CGACTL. It uses

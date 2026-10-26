@@ -63,7 +63,7 @@ backup/state names. It selects display, System/Fixed/OEM fonts and 286grabber;
 160x100 also registers the small Helv/Courier faces and one-pixel borders.
 320x200 selects the original 4x6 CG2 System/Helv faces and 4x6 fixed/OEM.
 640x200 keeps its XTC System/fixed/OEM selection and registers the existing
-TEXT80 8x8 Helv/Courier faces from XT Pixels; unrelated font entries remain.
+XT Pixels 8-row proportional Helv and retained TEXT80 Courier faces; unrelated font entries remain.
 All three profiles load CGACTL. At 320/640 it sets disabled text to black and
 exits immediately, so labels do not disappear into a white button face. It
 does not change the driver palette or leave a resident placement owner. CGA100 installs its
@@ -110,7 +110,8 @@ python CGA-VIEW/src/cga/PACKCGA.PY prepare --repo CGA-VIEW --support FULL-SUPPOR
 ```
 
 Preparation checks all MZ/NE drivers against CGABUILD receipts, generates the
-small fonts, derives the exact pinned T80 Helv/Courier faces with T80FONT,
+small fonts, derives proportional CG6 Helv from the original XT Pixels ink and retains
+the exact T80 Courier face,
 and includes the pinned XTC fonts, grabber, startup assets and
 notices. It emits `packet/README.TXT`, one `packet/CGA` folder, PREPARED.JSN
 and private native-src files. Headers and manifests are generated, never

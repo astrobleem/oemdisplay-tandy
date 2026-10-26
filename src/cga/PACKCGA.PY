@@ -16,6 +16,7 @@ import zipfile
 import zlib
 from pathlib import Path
 import CGAFONT
+import CG6FONT
 import CGASET
 from STAGECGA import MODES, read, write
 
@@ -29,9 +30,8 @@ ASSETS={
  'WXTSPL01.RLE':('WXTSPL01.RLE','eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c'),
  'LOGOLIC.TXT':('LOGOLIC.TXT','b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80'),
 }
-T80_PINS={'T80HELV.FON':'9bd5153d11f26e340b0385d9adba756351c0f41e8915a4d16c333d342b4057fd',
-          'T80COUR.FON':'fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6'}
-COPY=set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE'}
+T80_PINS={'T80COUR.FON':'fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6'}
+COPY=set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE'}
 ALL_FILES=COPY|{'XTSTATIC.LGO','WXTSPL01.RLE','LOGOLIC.TXT','OEMSETUP.INF','FONTLIC.TXT','NOTICE.TXT'}
 
 
@@ -87,17 +87,21 @@ def payload(repo,support,drivers,fontout,helper):
     result['CGACTL.EXE']=helper
     CGAFONT.build(fontout)
     for name in CGAFONT.FACES:result[name]=(fontout/name).read_bytes()
-    # Reuse TEXT80's existing 640x200/96x48 faces, including its exact
-    # variable-pitch/bold Helv metadata. No second glyph/serializer engine.
+    # Retain TEXT80 Courier exactly. CGA's proportional Helv preserves the
+    # same original 8-row ink with dialog-appropriate advances.
     t80=importlib.machinery.SourceFileLoader('cga_t80font',str(repo/'src/text80/T80FONT.PY')).load_module()
     origin=(support/'distributions/WINXT/XTTSYS.FON').read_bytes()
     if hashlib.sha256(origin).hexdigest()!=t80.XTTSYS_SHA:raise ValueError('Wrong XT Pixels T80 strike')
     fnt,rid=t80.strike(origin)
     for name,(face,family,module,variable,weight) in t80.FACES.items():
+        if name not in T80_PINS:continue
         data=CGAFONT.B.fon(t80.renamed(fnt,face,family,variable,weight),module,rid,
                           'TEXT80 %s 8x8 (XT Pixels strike), 96x48'%face)
         if hashlib.sha256(data).hexdigest()!=T80_PINS[name]:raise ValueError('Changed accepted T80 font derivation: '+name)
         result[name]=data;(fontout/name).write_bytes(data)
+    data,metrics=CG6FONT.build(repo,support)
+    result['CG6HELV.FON']=data;(fontout/'CG6HELV.FON').write_bytes(data)
+    write(fontout/'CG6FONT.JSN',json.dumps(metrics,indent=2)+'\n')
     for target,(source,sha) in ASSETS.items():
         data=(support/'distributions/WINXT'/source).read_bytes()
         if hashlib.sha256(data).hexdigest()!=sha:raise ValueError('Wrong accepted support input: '+source)

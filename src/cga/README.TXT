@@ -69,8 +69,8 @@ An INI larger than 18,000 bytes is refused before any files are copied.
 Component notices are in CGA\NOTICE.TXT and CGA\FONTLIC.TXT.
 
 320x200 uses original 4x6 System/Helv and fixed/OEM faces. 640x200 retains
-its XTC System/fixed/OEM selection and adds the existing XT Pixels 8x8
-Helv/Courier dialog faces. All modes start CGACTL automatically. At 320/640 it
+its XTC System/fixed/OEM selection and adds the XT Pixels 8-row proportional
+Helv and existing 8x8 Courier dialog faces. All modes start CGACTL automatically. At 320/640 it
 makes disabled labels readable in the reduced palette, then exits. At 100 it
 runs the shared WDESK-based window-access client. Ctrl+Alt+arrows move the window workspace; Home recovers
 its origin and End exposes the active frame's bottom/right. It can expose a

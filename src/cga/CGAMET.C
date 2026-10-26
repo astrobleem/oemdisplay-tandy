@@ -29,7 +29,7 @@ static void FontProbe(HDC dc,int add)
  wsprintf(line,"PROFILE CG2HELV=%s\r\n",(LPSTR)value);Log(line);
  for(n=0;n<(add?2:1);n++){
   if(n){
-   helv=wide==320 ? "C:\\WINDOWS\\SYSTEM\\CG2HELV.FON" : wide==640 ? "C:\\WINDOWS\\SYSTEM\\T80HELV.FON" : "C:\\WINDOWS\\SYSTEM\\CG1HELV.FON";
+   helv=wide==320 ? "C:\\WINDOWS\\SYSTEM\\CG2HELV.FON" : wide==640 ? "C:\\WINDOWS\\SYSTEM\\CG6HELV.FON" : "C:\\WINDOWS\\SYSTEM\\CG1HELV.FON";
    cour=wide==320 ? "C:\\WINDOWS\\SYSTEM\\CG1FIX.FON" : wide==640 ? "C:\\WINDOWS\\SYSTEM\\T80COUR.FON" : "C:\\WINDOWS\\SYSTEM\\CG1COUR.FON";
    wsprintf(line,"ADDFONT file=%s result=%d Courier=%d\r\n",helv,AddFontResource(helv),AddFontResource(cour));Log(line);
   }

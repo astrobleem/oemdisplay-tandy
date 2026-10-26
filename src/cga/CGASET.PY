@@ -34,7 +34,7 @@ def ini_source(repo):
         ('sset[3] = sysset[3];','sset[3] = sysset[3];\n        sset[4] = sysset[4];'),
         ('edit(\'S\', "[boot]", sset, 4, NULL, 0, NULL)',
          'edit(\'S\', "[boot]", sset, 5, NULL, 0, NULL)'),
-        ('"Helv 8x8 (TEXT80)=T80HELV.FON"','cga_small ? "Helv 3x5 (CGA100)=CG1HELV.FON" : cga_medium ? "Helv 4x6 (CGA320)=CG2HELV.FON" : "Helv 8x8 (CGA640)=T80HELV.FON"'),
+        ('"Helv 8x8 (TEXT80)=T80HELV.FON"','cga_small ? "Helv 3x5 (CGA100)=CG1HELV.FON" : cga_medium ? "Helv 4x6 (CGA320)=CG2HELV.FON" : "Helv proportional 8-row (CGA640)=CG6HELV.FON"'),
         ('"Courier 8x8 (TEXT80)=T80COUR.FON"','cga_small ? "Courier 4x5 (CGA100)=CG1COUR.FON" : cga_medium ? "Courier 4x6 (CGA320)=CG1FIX.FON" : "Courier 8x8 (CGA640)=T80COUR.FON"'),
     ): s=once(s,old,new)
     s=s.replace('SYSTEM.T80','SYSTEM.CG0').replace('WIN.T80','WIN.CG0')
