@@ -139,10 +139,9 @@
   },
   "capture_limitation": "Headless FRAME reads row zero rather than CGA firstline; retained raw PNGs are not complete monitor screenshots. VRAM/API/file checks are separate. Decoded native VRAM images are labeled, never scanout proof.",
   "remaining": [
-    "Shared WDESK/WTPLACE native placement qualification and final pinned source snapshot",
-    "Shared CGACTL consumer build/autoload/normal shutdown with160x100 fonts and controls",
-    "320 dialog font-selection fix and complete native GUI/DOS return",
-    "New23file native SETUP build/install and settled640font/dialog capture; existing640API/graphics/cursor/save/DOS unit evidence retained",
+    "Native final SETUP build from prepared07, preserving exact runtime-tested helper05",
+    "Final native23file mode/switch/UNDO exact delivery",
+    "Native320/640short-lived startup contrast pass and final consumer boot/exit using already prepared images",
     "Physical original IBM CGA scanout, snow/flicker and mouse qualification"
   ],
   "publication": "NOT_AUTHORIZED",
@@ -798,5 +797,34 @@
     "change": "Invalidate each moved child after SWP_NOREDRAW; root placement remains solely shared WDWIN",
     "runtime": "NOT_TESTED",
     "retained_evidence": "native-cga-consumer100-steady-01"
+  },
+  "child_redraw_native": {
+    "status": "PASS_FOCUSED_NATIVE_UNIT",
+    "old_matching_cells": 0,
+    "new_matching_cells": 5,
+    "scope": "Actual native VRAM End/Home cells aligned by the same child handles; one cell contains cursor differences; not monitor scanout proof",
+    "helper": {
+      "build": "PASS",
+      "kind": "CGA_WINDOW_ACCESS_CANDIDATE",
+      "flags": "/G0 /Gw /AS /W3 /Od",
+      "source_sha256": "114c41f576485157416f26ad041147f8634eb5e2a28944aa03bc4a0ad9b37063",
+      "shared_source_sha256": {
+        "WDCORE.C": "66e20b18a618b18ccca0ede3daa706e6ecfc36efdd88c1625796a581bbaa7723",
+        "WDCORE.H": "30969b4c4314e718391200330ddd4f13b6b6adeb237f6ad5a6ddf8ee0c7d4739",
+        "WDWIN.C": "98a17659e534e50e29fc6b0905591e057a2f461108d865a0adc5bf3d93010ad4",
+        "WDWIN.H": "8d009036884444dfdb66b76c6cbc1e6beb2e5e869c511b0c447069534b9edfbf",
+        "WTPLACE.C": "30e822766219f1d6bea9ef5b86fc625dac2828502076adef192903f976f34f56",
+        "WTPLACE.H": "af77584f4676029813a6e39e172b4362f0ef79dcae42df5303a2c857b3564ce1"
+      },
+      "placement_owner": "shared WDWIN only",
+      "bytes": 15855,
+      "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d",
+      "windows": "NOT_TESTED"
+    },
+    "consumer_delivery": "Updated helper in prior actual23file consumer image; final new packet native delivery still pending",
+    "Home_and_DOS": "PASS_mode3_640KB",
+    "owned_stopped": true,
+    "lease_released": true,
+    "runtime_seconds": 257.359
   }
 }

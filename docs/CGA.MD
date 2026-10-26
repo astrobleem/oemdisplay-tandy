@@ -306,3 +306,11 @@ select the six-row Helv face; the driver's 96x48 logical DPI stays unchanged.
 Original wider M/W/m/w forms keep the measured alphabet average at four so
 Run/Open/Save As/Find reserve enough label width. The five qualified CGA100
 font files remain byte-identical. See NATIVE.JSN for the pending native gates.
+
+A settled native grid check caught a real child repaint failure: hit targets
+moved, but icon pictures remained at their old positions. CGACTL now
+invalidates each moved child after SWP_NOREDRAW. The same native VRAM
+comparison changes from zero matching cells to five matching unobstructed
+cells, with Home and ordinary DOS exit passing. This focused helper test
+retains the prior actual installer/driver/font image; final packet delivery
+remains a separate gate. Shared WDWIN remains the only root-placement owner.
