@@ -802,7 +802,7 @@
     "status": "PASS_FOCUSED_NATIVE_UNIT",
     "old_matching_cells": 0,
     "new_matching_cells": 5,
-    "scope": "Actual native VRAM End/Home cells aligned by the same child handles; one cell contains cursor differences; not monitor scanout proof",
+    "scope": "Actual native VRAM End/Home cells aligned by the same child handles; five of six compared cells match exactly; sixth not counted. This is not monitor scanout or physical mouse qualification.",
     "helper": {
       "build": "PASS",
       "kind": "CGA_WINDOW_ACCESS_CANDIDATE",
