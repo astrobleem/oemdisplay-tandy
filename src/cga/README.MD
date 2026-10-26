@@ -243,18 +243,33 @@ encoding and timing as mode 100.
   clamped to 0..160 and 0..100), 5861h reports panning support.
 - `PANMODEL.PY` is the host model; `TESTCGA.PY` checks that dirty flushes plus
   pans equal a full repaint and that only the four converters differ.
-- `PANCTL.C` is the single owner: Ctrl+Alt+arrows (40x25 steps), Home, End
-  (exposes the active window's bottom/right), edge dwell scrolling that carries
-  the pointer, and follow of the active window, focus control and pointer.
-  A key chord must be held across one 100 ms poll; a busy 4.77 MHz machine can
-  miss a very short tap.
+- `PANCTL.C` is the single owner: Ctrl+Alt+arrows (step 40x25 by default),
+  Home, End (exposes the active window's bottom/right), edge dwell scrolling
+  that carries the pointer, and follow of the active window, focus control and
+  pointer. Input never pans: `PANKEY.C` (PANKEY.DLL, fixed-code, TSINPUT
+  recipe) is a WH_KEYBOARD hook that only records each Ctrl+Alt command in a
+  32-entry ring and posts one wake-up message. PANCTL drains the ring in order
+  into one pending target and pans from its timer, so commands sent while a
+  4.77 MHz machine is busy are kept and applied afterwards. Keys are observed,
+  never swallowed. Without the DLL PANCTL falls back to polling the chord.
+- Settings reuse the shared panning model: `PANDLGC.C` is the 160x100 layout of
+  the `src/panui` window (same class, `PANSET.H` model and `PANDLG.H`
+  interface as `PANDLG.C`; PANSET.C and PANDLG.C are unchanged because their
+  bytes are pinned by the XTPAN/XYCTL qualification). PANCTL describes itself
+  through `PANHOSTOPS`: Step (multiple of 8, rounded and reported on Apply),
+  Dwell, Follow and Edge panning, plus Home, stored under `[CGAPan]` through a
+  store adapter. Ctrl+Alt+S or `PANCTL /SETTINGS` opens it; a second copy only
+  forwards the request. The cga build view profile now includes `src/panui`.
 - Developer tools (never in the packet): `PANMET.C` (stepped probe),
-  `PANWATCH.C` (observer: origin, focus rects, edge self-test, key states,
-  free heap), `PANVIEW.PY` (decodes VRAM captures; host rendering, not scanout),
-  built with `BUILDPROB.PY --probe`; `BUILDPAN.PY` builds PANCTL.
+  `PANWATCH.C` (observer: origin, focus rects, edge self-tests, key states,
+  free heap), `PANVIEW.PY` (decodes VRAM captures; host rendering, not scanout;
+  `--paired` for runs that capture after each DONE line), built with
+  `BUILDPROB.PY --probe`; `BUILDPAN.PY` builds PANKEY.DLL and PANCTL.EXE.
 - Packet: `PACKCGA.PY prepare` takes `--build-pan` and `--owner-build`, then
   BUILDSET and `finish` as for the other modes. The packet id covers all four
-  drivers; undo a previous packet before installing a different one.
+  drivers and both owner files; undo a previous packet before installing a
+  different one. PANKEY.DLL installs in SYSTEM, PANCTL.EXE in the Windows
+  directory.
 
 Measured in the IBM XT/CGA emulator (86Box, 4.77 MHz 8088, 640 KB; not
 physical hardware): DOS reports 579K (593,072 bytes) free after SETUP in every

@@ -88,5 +88,12 @@ arrows move the view, Home returns to the top left and End shows the bottom
 right of the active window. Moving the pointer to the edge of the view and
 holding it there scrolls the view; a new window or a control reached with Tab
 is brought into view. Drawing outside the view appears when it is scrolled in.
+Movement commands are kept while Windows is busy loading or drawing and are
+carried out in order afterwards (PANKEY.DLL, installed with PANCTL).
+
+Ctrl+Alt+S opens Panning settings, a window that fits the 160x100 view: step
+size, dwell before an edge scroll, follow the active window, and pan at the
+screen edge. Apply saves them in WIN.INI under [CGAPan]; Cancel changes
+nothing. The step is a multiple of 8 across (down is five eighths of it).
 Native emulation results for PAN are in the development record; physical IBM
 CGA hardware is unqualified.
