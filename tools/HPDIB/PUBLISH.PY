@@ -21,6 +21,7 @@ def qualification():
  for name,pin in q['sources'].items():exact(dict(path=name,identity=pin))
  required={'src/hpxydib/DIB.PY','tools/HPDIB/BUILD.PY','tools/HPDIB/PREPARE.PY','tools/HPDIB/PUBLISH.PY','tools/HPDIB/CHECKREP.PY','tools/HPDIB/PROBE.PY','experiments/SOLPERF/ORACLE.PY','experiments/SOLPERF/DIBTEST.C','experiments/SOLPERF/SCENE.C'}
  required.update('tools/HPDIB/'+n for n in ('APPTEST.PY','RUNUI.PY','SETUPIO.PY','VERIFYINST.PY','TESTGATE.PY','TESTPUB.PY'))
+ required.update(('tools/UPAN/UICTRL.PY','tools/PAN/EMU86.PY','src/softpan/WINRUN.PY'))
  require(required<=set(q['sources']),'Incomplete source inventory')
  review=json.loads(exact(q['review']));require(review.get('outcome')=='NO_RESIDUAL_FINDINGS' and review.get('reviewed_commit')==q['reviewed_source_commit'] and review.get('sources')==q['sources'],'Independent exact-source review missing')
  runtime={n:exact(row) for n,row in q['runtime'].items()};require(set(runtime)=={'HPXY.DRV','FIXXT.EXE','SETUP.EXE'},'Unexpected native runtime inventory')

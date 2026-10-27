@@ -2,6 +2,7 @@
 from pathlib import Path
 import sys,json,hashlib,struct,importlib.machinery,argparse
 root=Path(__file__).resolve().parents[2]
+if not __debug__:raise RuntimeError('Native acceptance requires enabled assertions')
 ap=argparse.ArgumentParser(description=__doc__)
 for n in ('out','driver','packet','deps'):ap.add_argument('--'+n,type=Path,required=True)
 ap.add_argument('--case',choices=('full_finisher','ordinary_setup','combined'),required=True)
