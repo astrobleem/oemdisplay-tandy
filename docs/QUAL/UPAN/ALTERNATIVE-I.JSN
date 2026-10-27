@@ -1,0 +1,23 @@
+{
+  "group": "alternative",
+  "installers": {
+    "PANINST.EXE": {
+      "bytes": 50516,
+      "sha256": "174cb4747af76e724304b5d46262d3182480efd4c957dd7dd986211b4f1be44d"
+    }
+  },
+  "installed_helpers": {
+    "XTPAN.EXE": {
+      "bytes": 27359,
+      "sha256": "297569e8f38ce6114c0842e5b00026920ab8d4c3b232088febbcd866939e1f9e"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11281,
+      "sha256": "bd984a24d4b795fb85c7f97e08beb9f0a790fa58a2210cbe2c87ec5e3c302ddc"
+    },
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    }
+  }
+}

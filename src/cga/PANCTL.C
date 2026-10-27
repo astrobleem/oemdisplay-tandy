@@ -15,6 +15,9 @@
 #include <windows.h>
 #include "PANSET.H"
 #include "PANDLG.H"
+#include "PANKEY.H"
+#include "PANOWN.H"
+#include "PANTGT.H"
 #define ESC_XY 0x5860
 #define ESC_MODE 0x5861
 #define VIEW_W 160
@@ -28,21 +31,10 @@
 #define KEY_REPEAT 200L
 #define DEF_STEP 40
 #define DEF_DWELL 400
-#define CMD_HOME 1
-#define CMD_END 2
-#define CMD_LEFT 3
-#define CMD_RIGHT 4
-#define CMD_UP 5
-#define CMD_DOWN 6
-#define CMD_SETTINGS 7
 #define PAN_ENTRY
-typedef BOOL (FAR PASCAL *KEYINSTALL)(HWND,WORD);
-typedef BOOL (FAR PASCAL *KEYREMOVE)(void);
-typedef int (FAR PASCAL *KEYNEXT)(void);
 static HWND mainWindow;
-static HANDLE instance,keyLibrary;
-static KEYREMOVE keyRemove;
-static KEYNEXT keyNext;
+static HANDLE instance;
+static int closing;
 static WORD wakeMessage,settingsMessage;
 static HWND lastActive,lastFocus;
 static int left,top,live;
@@ -50,8 +42,7 @@ static int pending,pendX,pendY,wantSettings;
 static int edgeArmed,edgeKey;
 static int stepX=DEF_STEP,stepY=25,dwell=DEF_DWELL,edgeOn=1,follow=1;
 static POINT lastPoint;
-static DWORD edgeSince,lastKey;
-static int held;
+static DWORD edgeSince;
 static int Clamp(int n,int low,int high)
 {return n<low?low:n>high?high:n;}
 /* Bounded copy: lstrcpyn is a Windows 3.1 call. */
@@ -121,37 +112,6 @@ static HWND Active(void)
  HWND w=GetActiveWindow();
  if(!w || w==mainWindow || !IsWindowVisible(w) || IsIconic(w))return 0;
  return w;
-}
-/* A command only moves the pending target: later commands build on earlier
- * ones, so a backlog is applied as one pan and no command is lost. */
-static void Queue(int cmd)
-{
- HWND w;RECT r;int x=pending?pendX:left,y=pending?pendY:top;
- switch(cmd){
- case CMD_HOME:x=0;y=0;break;
- case CMD_END:
-  w=Active();if(!w)return;
-  GetWindowRect(w,&r);x=(r.right-VIEW_W+7)&~7;y=r.bottom-VIEW_H;break;
- case CMD_LEFT:x-=stepX;break;
- case CMD_RIGHT:x+=stepX;break;
- case CMD_UP:y-=stepY;break;
- case CMD_DOWN:y+=stepY;break;
- case CMD_SETTINGS:wantSettings=1;return;
- default:return;
- }
- pendX=Clamp(x,0,LOGICAL_W-VIEW_W)&~7;pendY=Clamp(y,0,LOGICAL_H-VIEW_H);pending=1;
-}
-/* Without the hook: poll the chord, as before. */
-static int ChordCommand(void)
-{
- static int keys[6]={VK_HOME,VK_END,VK_LEFT,VK_RIGHT,VK_UP,VK_DOWN};
- static int pad[6]={VK_NUMPAD7,VK_NUMPAD1,VK_NUMPAD4,VK_NUMPAD6,VK_NUMPAD8,VK_NUMPAD2};
- int i;
- if(!(GetAsyncKeyState(VK_CONTROL)&0x8000) || !(GetAsyncKeyState(VK_MENU)&0x8000))return 0;
- if(GetAsyncKeyState('S')&0x8000)return CMD_SETTINGS;
- for(i=0;i<6;i++)if(GetAsyncKeyState(keys[i])&0x8000)return i+1;
- for(i=0;i<6;i++)if(GetAsyncKeyState(pad[i])&0x8000)return i+1;
- return 0;
 }
 /* The pointer is the user's own view: never leave it where it cannot be seen. */
 static void FollowPointer(DWORD now)
@@ -231,7 +191,7 @@ static int OpHome(void *ctx)
  return Query();
 }
 static PANHOST host={{0,OpQuery,OpApply,OpHome},{0,StoreGet,StorePut},
- "CGAPAN panning","CGAPAN software view"};
+ "Panning settings","CGAPAN software view"};
 static void LoadSettings(void)
 {
  PANCAPS c;PANSET s;PANSTORE st;
@@ -240,24 +200,28 @@ static void LoadSettings(void)
 }
 static void DrainKeys(void)
 {
- int cmd;
- while((cmd=keyNext())!=0)Queue(cmd);
+ int cmd,ex=0,ey=0;HWND active;RECT frame;PANTARGET target;
+ PanTargetInit(&target,left,top,160,100,stepX,stepY,8,1);
+ while((cmd=PanInputNext())!=0){
+  if(cmd==PK_SETTINGS){wantSettings=1;continue;}
+  if(cmd==PK_END){
+   active=Active();if(!active)continue;GetWindowRect(active,&frame);
+   ex=frame.right-VIEW_W;ey=frame.bottom-VIEW_H;
+  }
+  (void)PanTargetCommand(&target,cmd,ex,ey);
+ }
+ if(target.moved){pendX=target.x;pendY=target.y;pending=1;}
 }
 long FAR PASCAL PAN_ENTRY WndProc(HWND w,unsigned m,UINT wp,LONG lp)
 {
- int key,dx,dy,moved=0;DWORD now;HWND a,f;
- if(m==wakeMessage && keyNext){DrainKeys();return 0;}
+ int dx,dy,moved=0;DWORD now;HWND a,f;
+ if(m==wakeMessage)return 0;
  if(m==settingsMessage){wantSettings=1;return 0;}
  if(m==WM_TIMER){
+  if(closing){if(PanInputStop())DestroyWindow(w);return 0;}
   if(!Query())return 0;
-  /* Retry a failed hook wake-up from our own timer as well. */
-  if(keyNext)DrainKeys();
+  DrainKeys();
   now=GetTickCount();
-  if(!keyNext){
-   key=ChordCommand();
-   if(key && (key!=held || now-lastKey>=KEY_REPEAT)){Queue(key);lastKey=now;}
-   held=key;
-  }
   /* The pan runs here, never in the input path. */
   if(pending){
    pending=0;
@@ -274,28 +238,21 @@ long FAR PASCAL PAN_ENTRY WndProc(HWND w,unsigned m,UINT wp,LONG lp)
   PanDlgTrack();
   return 0;
  }
- if(m==WM_CLOSE){DestroyWindow(w);return 0;}
+ if(m==WM_CLOSE){closing=1;pending=wantSettings=0;PanDlgClose();
+  if(PanInputStop())DestroyWindow(w);return 0;}
  /* A cancelled session end must leave the viewport owner running. */
  if(m==WM_ENDSESSION && !wp)return 0;
  if(m==WM_ENDSESSION || m==WM_DESTROY){
   PanDlgClose();
-  if(keyRemove){if(keyRemove() && keyLibrary){FreeLibrary(keyLibrary);keyLibrary=0;}keyRemove=0;keyNext=0;}
+  (void)PanInputStop();
   if(m==WM_DESTROY){KillTimer(w,1);PostQuitMessage(0);return 0;}
  }
  return DefWindowProc(w,m,wp,lp);
 }
-/* The hook is optional: any failure leaves the polling fallback in place. */
 static void StartKeys(void)
 {
- KEYINSTALL install;
- keyLibrary=LoadLibrary("PANKEY.DLL");
- if(keyLibrary<(HANDLE)32){keyLibrary=0;return;}    /* 0..31 are load errors */
- install=(KEYINSTALL)GetProcAddress(keyLibrary,"PanKeyInstall");
- keyRemove=(KEYREMOVE)GetProcAddress(keyLibrary,"PanKeyRemove");
- keyNext=(KEYNEXT)GetProcAddress(keyLibrary,"PanKeyNext");
- if(!install || !keyRemove || !keyNext || !install(mainWindow,wakeMessage)){
-  keyRemove=0;keyNext=0;FreeLibrary(keyLibrary);keyLibrary=0;
- }
+ PANBIND map[PK_BIND_MAX];int n=PanInputDefaults(map,PK_X|PK_Y);
+ (void)PanInputStart(mainWindow,wakeMessage,map,n);
 }
 int PASCAL WinMain(HANDLE hi,HANDLE previous,LPSTR cmd,int show)
 {
@@ -304,7 +261,8 @@ int PASCAL WinMain(HANDLE hi,HANDLE previous,LPSTR cmd,int show)
  (void)show;
  instance=hi;
  Copy(line,cmd,sizeof(line));settings=PanCmdParse(line)==PS_CMD_SETTINGS;
- settingsMessage=RegisterWindowMessage("CGAPanSettings");
+ settingsMessage=PanOwnerMessage(PN_CGA);
+ if(PanOwnerRoute(settings))return 0;
  /* A second copy only asks the running owner for its settings. */
  other=FindWindow("CGAPan",0);
  if(other || previous){
@@ -319,12 +277,13 @@ int PASCAL WinMain(HANDLE hi,HANDLE previous,LPSTR cmd,int show)
  /* One owner: no other panning client may run beside this one. */
  if(FindWindow("XTPan",0) || FindWindow("XYOverviewControl",0) || FindWindow("CGASlide",0))return 0;
  SetMessageQueue(32);       /* a larger queue retains more while busy */
- wakeMessage=RegisterWindowMessage("CGAPanKey");
+ wakeMessage=RegisterWindowMessage(PK_WAKE);
  wc.style=0;wc.lpfnWndProc=WndProc;wc.cbClsExtra=wc.cbWndExtra=0;wc.hInstance=hi;
  wc.hIcon=0;wc.hCursor=0;wc.hbrBackground=0;wc.lpszMenuName=0;wc.lpszClassName="CGAPan";
  if(!RegisterClass(&wc))return 1;
  mainWindow=CreateWindow("CGAPan","CGA viewport",WS_POPUP,0,0,0,0,0,0,hi,0);
- if(!mainWindow || !SetTimer(mainWindow,1,100,0))return 1;
+ if(!mainWindow)return 1;
+ if(!SetTimer(mainWindow,1,100,0)){DestroyWindow(mainWindow);return 1;}
  LoadSettings();
  StartKeys();
  if(settings)wantSettings=1;

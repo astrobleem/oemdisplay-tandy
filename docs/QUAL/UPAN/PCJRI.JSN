@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "case": "pcjr",
+  "observation": "Actual installed files read from stopped owned fixture",
+  "fixture": null,
+  "helpers": {
+    "XTPAN.EXE": {
+      "bytes": 27359,
+      "sha256": "297569e8f38ce6114c0842e5b00026920ab8d4c3b232088febbcd866939e1f9e"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11281,
+      "sha256": "bd984a24d4b795fb85c7f97e08beb9f0a790fa58a2210cbe2c87ec5e3c302ddc"
+    },
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    }
+  },
+  "destinations": {
+    "XTPAN.EXE": "WINDOWS/XTPAN.EXE",
+    "PANCFG.EXE": "WINDOWS/PANCFG.EXE",
+    "PANKEY.DLL": "WINDOWS/SYSTEM/PANKEY.DLL"
+  },
+  "win_ini": {
+    "bytes": 1379,
+    "sha256": "8d726718f906a27bf6fd3558ba33de2cd5a80b48c8db1ffe1a41af7f00ffa14d"
+  },
+  "system_ini": {
+    "bytes": 1056,
+    "sha256": "ab662aabbd841cc9baa7b05214e5555b4343b85823929abeffb3783f142a888f"
+  }
+}

@@ -18,17 +18,17 @@
       }
     },
     "CPPAN.ZIP": {
-      "source": "downloads/experimental/CPPAN/CPPAN.ZIP",
+      "source": "downloads/UNIPAN/CPPAN.ZIP",
       "identity": {
-        "bytes": 209181,
-        "sha256": "3d90027451731b6ab23edce9377721eff657fe452c0decba18adcdd65e09f4df"
+        "bytes": 261492,
+        "sha256": "e61e07157459ac6ead2488374a85995137e57f6e27c6fac72a003c5e87d48901"
       }
     },
     "JRPAN.ZIP": {
-      "source": "downloads/experimental/SOFTPAN/JRPAN.ZIP",
+      "source": "downloads/UNIPAN/JRPAN.ZIP",
       "identity": {
-        "bytes": 91867,
-        "sha256": "04e5a8658d46050cece20b25026497f3c90bc3c69cc7829ccddf61de17e99fca"
+        "bytes": 259460,
+        "sha256": "6ae2118ed70e3fd913cb4abb195f87fb1f7103a6bcb46818d5e046ca21d28095"
       }
     },
     "TNDYV2.ZIP": {
@@ -88,10 +88,10 @@
       }
     },
     "CGA.ZIP": {
-      "source": "downloads/experimental/CGA/CGA.ZIP",
+      "source": "downloads/UNIPAN/CGA.ZIP",
       "identity": {
-        "bytes": 178591,
-        "sha256": "0db0c85f349b3246cc8a262b22083297445353421b83a5f835d4ff995f2330a5"
+        "bytes": 414463,
+        "sha256": "f66bca3c0708923e2ecd9e56fddee5d092149831d68d535e866be212d30dafe9"
       }
     }
   },
@@ -156,7 +156,7 @@
     },
     "CPPAN.ZIP": {
       "member": "INSTALL.TXT",
-      "source": "tools/CURRENT/GUIDES/CPPAN.TXT"
+      "source": "tools/UPAN/GUIDES/CPPAN.TXT"
     },
     "MINESET.ZIP": {
       "member": "INSTALL.TXT",
@@ -174,23 +174,23 @@
       "sha256": "ac825b9e38d6fc636cbf33960e2e55eb00693dc92de49d8d04adf093bcb13881"
     }
   },
-  "core_source_commit": "930e32f212be1bf4b8533fb0f3572056e4772a36",
+  "core_source_commit": "38497b48303faaea50b9472d7ae19e341bfaa135",
   "core_identities": {
     "WINXT.ZIP": {
-      "bytes": 702651,
-      "sha256": "979377135f87375b4f64709b4d98532eb49278ef0fb34a57296e73941974d0d8"
+      "bytes": 751081,
+      "sha256": "3dcdfc9052c2878298e0e14b15c2a3f694dac33d8f067d0b97007e6d3e24b4db"
     },
     "WINXTSRC.ZIP": {
       "bytes": 100529,
       "sha256": "9e32793d07820154d627cdcf147bbfc7086d5db7addf76f5c66d310ff9ff220a"
     },
     "WINXT.JSN": {
-      "bytes": 8946,
-      "sha256": "a5b7d7026eac48558ef18b267cffec4308f4cead66a17d92ec509075d32e8025"
+      "bytes": 9703,
+      "sha256": "757ca379bcf9d72e41376e20c2bb348cbdd821bf203ecd5471f81b5667667139"
     },
     "WINXT.SHA": {
       "bytes": 234,
-      "sha256": "a6cdc8ffea76fedb4df87913f23c800bc1a6cf8ff454d7cca5a294096cb50ca0"
+      "sha256": "a83d4067e5572fc4085ec068fd9fe72da2d10a2e6c398a2fe2e7bf2130c7f606"
     }
   }
 }

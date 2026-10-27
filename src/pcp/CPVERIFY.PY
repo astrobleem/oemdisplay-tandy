@@ -8,6 +8,7 @@ from pathlib import Path
 import configparser,hashlib,importlib.machinery,json,tempfile
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
+L=importlib.machinery.SourceFileLoader('cpp_historical_sources',str(ROOT/'tools/LEGACY/SOURCE.PY')).load_module()
 QUAL=ROOT/'tools/CPPACK/QUALIFY.JSN'
 EVIDENCE=ROOT/'docs/pcp/OUTPUT'
 CMP=importlib.machinery.SourceFileLoader('cpp_verify_cmp',str(HERE/'CPCMP.PY')).load_module()
@@ -30,6 +31,8 @@ def identity(data):return {'bytes':len(data),'sha256':hashlib.sha256(data).hexdi
 # Windows autocrlf checkout. Native build/probe/evidence bytes stay exact.
 SOURCE_TEXT_LF={'tools/PANUI/BASE.JSN','tools/PANUI/PACKAGE.PY'}
 def source_identity(name,data):
+    pin=json.loads(QUAL.read_bytes())['sources'][name]
+    data=L.source(name,data,pin,name in SOURCE_TEXT_LF)
     return identity(data.replace(b'\r\n',b'\n') if name in SOURCE_TEXT_LF else data)
 
 def recorded_files(folder,run,frames):
@@ -94,7 +97,14 @@ def verify():
     if identity((ROOT/'downloads/experimental/CPPAN/CPPSET.EXE').read_bytes())!=old['outputs']['ColorPlus']['CPPSET.EXE']:raise ValueError('Original ColorPlus carrier evidence changed')
     if set(q['outputs'])!={'CPPAN.ZIP','INSTALL.TXT'} or any(identity((ROOT/'downloads/experimental/CPPAN'/n).read_bytes())!=pin for n,pin in q['outputs'].items()):raise ValueError('Current ColorPlus downloads differ from qualified ZIP composition')
     catalog=json.loads((ROOT/'tools/CURRENT/PRODUCTS.JSN').read_bytes())['local']['CPPAN.ZIP']
-    if catalog!={'source':'downloads/experimental/CPPAN/CPPAN.ZIP','identity':q['outputs']['CPPAN.ZIP']}:raise ValueError('Current ColorPlus catalog binding differs')
+    if catalog!={'source':'downloads/experimental/CPPAN/CPPAN.ZIP','identity':q['outputs']['CPPAN.ZIP']}:
+        unified=importlib.machinery.SourceFileLoader('cpp_unified_catalog',str(ROOT/'tools/UPAN/PUBLISH.PY')).load_module()
+        accepted,products=unified.products()
+        data=products['CPPAN.ZIP']
+        if catalog!={'source':'downloads/UNIPAN/CPPAN.ZIP','identity':identity(data)} or (ROOT/catalog['source']).read_bytes()!=data:
+            raise ValueError('Current ColorPlus catalog binding differs')
+        if identity(unified.C.members(data)['PCP3216.DRV'])!=q['driver']:
+            raise ValueError('Unified ColorPlus driver differs from native qualification')
     builds={}
     for label,n in [('BASELINE','BUILD-B.JSN'),('CANDIDATE','BUILD-C.JSN')]:
         b=json.loads((EVIDENCE/n).read_bytes());builds[label]=b;a=b['build88']

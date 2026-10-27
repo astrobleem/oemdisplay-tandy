@@ -124,3 +124,5 @@ components retain their own [notices](tools/XR1PACK/NOTICE.TXT).
 [Provenance](tools/XR1PACK/PROVENANCE.JSN) ·
 [Build guide](BUILDING.MD) · [Development notes](docs/STATUS.MD) ·
 [Canonical source](https://github.com/astrobleem/oemdisplay-tandy)
+
+Shared panning controls and adapter capabilities: [Panning](docs/PANNING.MD).

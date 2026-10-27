@@ -44,7 +44,10 @@ def main():
         write(out / ('MEMTEST.' + ext), (HERE / ('SPTEST.' + ext)).read_text().replace('SPTEST', 'MEMTEST'))
     for n in ('XTPAN.C', 'XTPAN.DEF', 'XTPAN.RSP'):
         shutil.copyfile(HERE.parent / 'xtpan' / n, out / n)
-    for n in ('PANSET.C', 'PANSET.H', 'PANDLG.C', 'PANDLG.H'):
+    for n in ('PANSET.C', 'PANSET.H', 'PANDLG.C', 'PANDLG.H',
+              'PANKEY.C', 'PANKEY.H', 'PANKEY.DEF', 'PKENTRY.ASM', 'PANCMD.H',
+              'PANKCL.C', 'PANOWN.C', 'PANOWN.H', 'PANTGT.C', 'PANTGT.H',
+              'PANSTART.C', 'PANSTART.H'):
         shutil.copyfile(HERE.parent / 'panui' / n, out / n)
     for n in ('WDCORE.C', 'WDCORE.H', 'WDWIN.C', 'WDWIN.H'):
         shutil.copyfile(HERE.parent / 'wdesk' / n, out / n)

@@ -7,14 +7,18 @@
 #define WINVER 0x0300
 #include <windows.h>
 #include "WDWIN.H"
+#include "PANDLG.H"
+#include "PANKEY.H"
+#include "PANOWN.H"
 #ifdef __WATCOMC__
 #define CGA_ENTRY __export
 #else
 #define CGA_ENTRY
 #endif
 static HWND mainWindow;
-static DWORD lastMove;
-static int held;
+static HINSTANCE instance;
+static WORD keyWake,openMsg;
+static int closing;
 static int Clamp(int n,int low,int high)
 {return n<low?low:n>high?high:n;}
 static int Limit(long n,int high)
@@ -82,56 +86,77 @@ static void Slide(int key)
  else if(key==VK_UP)(void)WDWinPanBy(0,-5);
  else if(key==VK_DOWN)(void)WDWinPanBy(0,5);
 }
+static int CgaQuery(void *ctx,PANCAPS *caps,PANSET *settings)
+{
+ int x,y;(void)ctx;WDWinViewport(&x,&y);
+ caps->backend=PS_BACK_VERT;caps->caps=PS_CAP_HOME|PS_CAP_MODE|PS_CAP_DESK;
+ caps->viewX=x;caps->viewY=y;caps->viewW=160;caps->viewH=100;
+ caps->workW=320;caps->workH=200;PanSetDefaults(PS_BACK_VERT,settings);
+ settings->mode=PS_MODE_DESK;return 1;
+}
+static int CgaApply(void *ctx,const PANSET *want,PANSET *actual,char *note,int cap)
+{
+ (void)ctx;(void)cap;if(want->mode!=PS_MODE_DESK)return PS_E_APPLY;
+ *actual=*want;note[0]=0;return PS_OK;
+}
+static int CgaHome(void *ctx){(void)ctx;return WDWinHome()>=0;}
+static int NoStore(void *c,const char *s,const char *k,int v)
+{(void)c;(void)s;(void)k;(void)v;return 1;}
+static PANHOST host={{0,CgaQuery,CgaApply,CgaHome},{0,0,NoStore},
+ "Panning settings","CGA window access (5 pixel steps)"};
 long FAR PASCAL CGA_ENTRY WndProc(HWND w,unsigned m,UINT wp,LONG lp)
 {
- int keys[6],i,key=0;DWORD now;
+ int cmd;
+ if(m==keyWake)return 0;
+ if(m==openMsg){if(!closing)PanDlgOpen(instance,&host);return 0;}
  if(m==WM_TIMER){
-  if(!(GetAsyncKeyState(VK_CONTROL)&0x8000) || !(GetAsyncKeyState(VK_MENU)&0x8000)){
-   held=0;return 0;
+  if(closing){if(PanInputStop())DestroyWindow(w);return 0;}
+  while((cmd=PanInputNext())!=0){
+   if(cmd==PK_SETTINGS)PanDlgOpen(instance,&host);
+   else Slide(cmd==PK_HOME?VK_HOME:cmd==PK_END?VK_END:cmd==PK_LEFT?VK_LEFT:
+              cmd==PK_RIGHT?VK_RIGHT:cmd==PK_UP?VK_UP:VK_DOWN);
   }
-  keys[0]=VK_HOME;keys[1]=VK_END;keys[2]=VK_LEFT;keys[3]=VK_RIGHT;keys[4]=VK_UP;keys[5]=VK_DOWN;
-  for(i=0;i<6;i++)if(GetAsyncKeyState(keys[i])&0x8000){key=keys[i];break;}
-  if(!key){
-   if(GetAsyncKeyState(VK_NUMPAD7)&0x8000)key=VK_HOME;
-   else if(GetAsyncKeyState(VK_NUMPAD1)&0x8000)key=VK_END;
-   else if(GetAsyncKeyState(VK_NUMPAD4)&0x8000)key=VK_LEFT;
-   else if(GetAsyncKeyState(VK_NUMPAD6)&0x8000)key=VK_RIGHT;
-   else if(GetAsyncKeyState(VK_NUMPAD8)&0x8000)key=VK_UP;
-   else if(GetAsyncKeyState(VK_NUMPAD2)&0x8000)key=VK_DOWN;
-  }
-  now=GetTickCount();
-  if(key && (key!=held || now-lastMove>=200L)){Slide(key);lastMove=now;}
-  held=key;return 0;
+  PanDlgTrack();return 0;
  }
  if(m==WM_QUERYENDSESSION)return WDWinPrepareShutdown()>=0;
- if(m==WM_ENDSESSION){if(wp)(void)WDWinShutdown();return 0;}
- if(m==WM_CLOSE){if(WDWinShutdown()<0)return 0;DestroyWindow(w);return 0;}
- if(m==WM_DESTROY){(void)WDWinShutdown();KillTimer(w,1);PostQuitMessage(0);return 0;}
+ if(m==WM_ENDSESSION){if(wp){(void)PanInputStop();(void)WDWinShutdown();}return 0;}
+ if(m==WM_CLOSE){
+  if(WDWinShutdown()<0)return 0;closing=1;PanDlgClose();
+  if(PanInputStop())DestroyWindow(w);return 0;
+ }
+ if(m==WM_DESTROY){PanDlgClose();(void)PanInputStop();(void)WDWinShutdown();KillTimer(w,1);PostQuitMessage(0);return 0;}
  return DefWindowProc(w,m,wp,lp);
 }
 int PASCAL WinMain(HANDLE hi,HANDLE previous,LPSTR cmd,int show)
 {
  WNDCLASS wc;MSG msg;HDC dc;int wide,high,colors,index;COLORREF black;
- (void)cmd;(void)show;
- if(previous)return 0;
+ char arg[24];int n,settings;PANBIND map[PK_BIND_MAX];
+ (void)show;instance=hi;
+ for(n=0;n<23 && cmd[n];n++)arg[n]=cmd[n];arg[n]=0;
+ settings=PanCmdParse(arg)==PS_CMD_SETTINGS;
+ openMsg=PanOwnerMessage(PN_FIXED);keyWake=RegisterWindowMessage(PK_WAKE);
  dc=GetDC(NULL);wide=GetDeviceCaps(dc,HORZRES);high=GetDeviceCaps(dc,VERTRES);
  colors=GetDeviceCaps(dc,NUMCOLORS);ReleaseDC(NULL,dc);
  /* Gray128 maps to the same white as the button face in reduced palettes.
   * Fix only the session's disabled-text color; no palette/renderer change
   * and no resident window or placement service in these normal modes. */
  if(high==200 && ((wide==320 && colors==4) || (wide==640 && colors==2))){
-  index=COLOR_GRAYTEXT;black=RGB(0,0,0);SetSysColors(1,&index,&black);return 0;
+  index=COLOR_GRAYTEXT;black=RGB(0,0,0);SetSysColors(1,&index,&black);if(settings)(void)PanOwnerRoute(1);return 0;
  }
+ if(PanOwnerRoute(settings) || previous)return 0;
  if(wide!=160 || high!=100 || colors!=16)return 0;
  /* Existing panning owners never run concurrently with this fixed-mode client. */
  if(FindWindow("XTPan",0) || FindWindow("XYOverviewControl",0))return 0;
  if(WDWinInitView(320,200,160,100)<0)return 1;
- (void)WDWinExclude("Progman");
+ (void)WDWinExclude("Progman");(void)WDWinExclude("PanSetDlg");
  wc.style=0;wc.lpfnWndProc=WndProc;wc.cbClsExtra=wc.cbWndExtra=0;wc.hInstance=hi;
  wc.hIcon=0;wc.hCursor=0;wc.hbrBackground=0;wc.lpszMenuName=0;wc.lpszClassName="CGASlide";
  if(!RegisterClass(&wc)){(void)WDWinShutdown();return 1;}
  mainWindow=CreateWindow("CGASlide","CGA window access",WS_POPUP,0,0,0,0,0,0,hi,0);
- if(!mainWindow || !SetTimer(mainWindow,1,100,0)){(void)WDWinShutdown();return 1;}
- while(GetMessage(&msg,0,0,0)){TranslateMessage(&msg);DispatchMessage(&msg);}
+ if(!mainWindow){(void)WDWinShutdown();return 1;}
+ if(!SetTimer(mainWindow,1,100,0)){DestroyWindow(mainWindow);return 1;}
+ n=PanInputDefaults(map,PK_X|PK_Y);(void)PanInputStart(mainWindow,keyWake,map,n);
+ if(settings)PostMessage(mainWindow,openMsg,0,0L);
+ while(GetMessage(&msg,0,0,0)){if(PanDlgMessage(&msg))continue;TranslateMessage(&msg);DispatchMessage(&msg);}
  return msg.wParam;
 }

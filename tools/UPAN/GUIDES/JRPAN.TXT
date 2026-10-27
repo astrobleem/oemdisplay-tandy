@@ -1,0 +1,30 @@
+IBM PCjr - WINDOWS3.0 PANNING
+
+Normal 640 KB and Windows 3.0 real mode in C:\WINDOWS are required.
+1. Extract JRPAN.ZIP to C:\, keeping the complete C:\JRPAN folder.
+2. Exit Windows and run C:\JRPAN\INSTALL.
+3. In Windows Setup choose Display, Other, C:\JRPAN. Select the
+   IBM PCjr 320x400 software-panning display, or the 320x200 fixed rollback.
+4. Complete Setup and use C:\JRPAN\JRSTART for every Windows session.
+The guard reserves the video page before Setup/startup. Do not bypass it.
+Fonts, grabber, artwork and the matching helpers are included and installed
+through these normal entries. There is no separate PANCFG enable step.
+
+On 320x400, the viewport owner starts automatically. Ctrl+Alt+Up/Down
+move the view; Home returns to the top; End reveals the active window.
+The existing Alt+PgDn, Alt+PgUp and Alt+F9 bindings still work.
+Ctrl+Alt+S or PANCFG /SETTINGS in Windows File, Run opens Panning settings.
+Step, edge band, dwell and active-window follow retain their existing
+meanings. Apply saves supported values; Cancel discards unapplied edits.
+Reopening settings reuses the owner and preserves unfinished edits.
+PANCFG OFF closes the owner and disables its startup entry; PANCFG enables
+it again with the saved settings. A later normal launch preserves OFF.
+
+On the fixed 320x200 driver, PANCFG /SETTINGS offers the window-moving
+workspace. PANCFG enables its next-session startup. Arrows move supported
+windows; Home or PANCFG OFF brings them back. This alternative does not
+allocate a larger framebuffer. The driver choice remains Windows Setup's.
+
+Illustrated guide: docs/PANNING.MD in the source repository.
+Native real-mode emulation was tested; physical PCjr qualification remains
+separate. Keep the complete packet for its guarded startup entry.

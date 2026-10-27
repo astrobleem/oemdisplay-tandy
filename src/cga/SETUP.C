@@ -24,7 +24,7 @@ static int cga_discard(void);
 #endif
 #include "INICGA.C"
 
-static unsigned char copybuf[1024],owned[CGA_COUNT];
+static unsigned char copybuf[1024],owned[CGA_MAX_COUNT];
 static char payload[160],systemdir[160],srcpath[160],dstpath[160],tmppath[160];
 
 static int plain_dos(void)
@@ -61,7 +61,9 @@ static void paths(unsigned i)
     /* Startup executables live in Windows; support stays in SYSTEM. This
      * also keeps the existing INI journal's helper token a DOS basename. */
     join(dstpath,(!strcmp(cga_files[i].target,"CGACTL.EXE") ||
-        !strcmp(cga_files[i].target,"PANCTL.EXE")) ? dir : systemdir,
+        !strcmp(cga_files[i].target,"PANCTL.EXE") ||
+        !strcmp(cga_files[i].target,"PANCFG.EXE") ||
+        !strcmp(cga_files[i].target,"XTPAN.EXE")) ? dir : systemdir,
         cga_files[i].target);
     strcpy(tmppath,dstpath);dot=strrchr(tmppath,'.');
     if(!dot)dot=tmppath+strlen(tmppath);
@@ -84,8 +86,12 @@ static int load_plan_file(const char *file)
 {
     unsigned i,flag;char *line,*end,extra;static char name[16],header[100];U32 crc,want;
     if(readfile(in(file))<0)return 0;
+    cga_select(0);
     sprintf(header,"CGA COPY 1 %s\r\n",CGA_PACKET_ID);
-    if(strncmp(inbuf,header,strlen(header)))return 0;
+    if(strncmp(inbuf,header,strlen(header))){
+        cga_select(1);sprintf(header,"CGA COPY 1 %s\r\n",CGA_PACKET_ID);
+        if(strncmp(inbuf,header,strlen(header))){cga_select(0);return 0;}
+    }
     end=strstr(inbuf,"CRC ");if(!end)return 0;
     if(sscanf(end,"CRC %lx%c",&want,&extra)!=2 || extra!='\r')return 0;
     if(strlen(end)!=14 || strcmp(end+12,"\r\n"))return 0;
@@ -294,6 +300,22 @@ int main(int argc,char **argv)
     cga_medium=!strcmp(mode,"320");
     if(!payload_location(argv[0]))return fail("Packet path too long.");
     if(exists(in("CGACOPY.NEW")))return fail("Incomplete copy record; no files changed. Keep it for diagnosis.");
+    /* Upgrade an exact recognized prior packet through its normal undo path.
+     * The old sealed inventory and CRCs stay active until cleanup completes. */
+    if(exists(in("CGACOPY.STA"))){
+        if(!load_plan())return fail("Copy record damaged/different packet; files kept.");
+        if(cga_legacy){
+            for(i=0;i<CGA_COUNT;i++)if(cga_files[i].target[0]){
+                paths(i);
+                if(!matches(dstpath,&cga_files[i]) || exists(tmppath))
+                    return fail("Prior installed file changed; upgrade stopped before configuration changes.");
+            }
+            if(ini_state() && undo_ini(0))return 1;
+            if(done_valid() && !discard_ini_leftovers())return fail("Prior INI cleanup incomplete; retry SETUP.");
+            if(!cleanup())return fail("Prior payload cleanup incomplete; retry SETUP.");
+            cga_select(0);
+        }
+    }
     if(exists(in("CGADONE.STA")))return fail("Prior undo cleanup pending. Run SETUP UNDO first.");
     if(exists(in("CGACOPY.STA"))){
         if(!load_plan())return fail("Copy record damaged/different packet; files kept.");

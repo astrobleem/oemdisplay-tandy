@@ -1,0 +1,35 @@
+{
+  "group": "core",
+  "installers": {
+    "SETUP.EXE": {
+      "bytes": 84712,
+      "sha256": "e1dd79d587093d551b2eaf8936c07c9c20d2d94eb37542cdef6d1af9e12f1c19"
+    },
+    "FIXXT.EXE": {
+      "bytes": 50576,
+      "sha256": "1aae3a0c08fae0a2c2559d6737e5eabd979ea331884183dad468d772f04282ab"
+    },
+    "CPSET.EXE": {
+      "bytes": 36846,
+      "sha256": "878503555c3db2e41b08d9a6d5d215866243b117cb309f231582afee09785dfc"
+    }
+  },
+  "installed_helpers": {
+    "XTPAN.EXE": {
+      "bytes": 27359,
+      "sha256": "297569e8f38ce6114c0842e5b00026920ab8d4c3b232088febbcd866939e1f9e"
+    },
+    "XYCTL.EXE": {
+      "bytes": 32934,
+      "sha256": "362a9d85646dcd92efc34372cf15119c6ff7d2466f7bdc580c62117249548cb2"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11281,
+      "sha256": "bd984a24d4b795fb85c7f97e08beb9f0a790fa58a2210cbe2c87ec5e3c302ddc"
+    },
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    }
+  }
+}

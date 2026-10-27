@@ -1,0 +1,79 @@
+{
+  "physical_hardware": false,
+  "preceding_helper_disk_bytes": {
+    "JRPAN": {
+      "PANCFG.EXE": 10191,
+      "XTPAN.EXE": 29199
+    },
+    "CPPAN": {
+      "PANCFG.EXE": 10191,
+      "XTPAN.EXE": 29199
+    },
+    "CGA": {
+      "CGACTL.EXE": 15855,
+      "PANCTL.EXE": 14031,
+      "PANKEY.DLL": 1546,
+      "SETUP.EXE": 31431
+    }
+  },
+  "queue": {
+    "slots": 32,
+    "usable_commands": 31,
+    "bindings": 24,
+    "fixed_code_bytes": 1301,
+    "fixed_data_bytes": 288
+  },
+  "pcjr_resident_bytes": 26336,
+  "fixed_workspace_resident_bytes": 26336,
+  "measurement": "same native fixture ON/OFF snapshots after settings/window allocations settled; PANCFG transient; only one appropriate owner plus small DLL loaded",
+  "pcjr_free_owner_on": 256736,
+  "pcjr_free_owner_off": 283072,
+  "fixed_free_owner_on": 287968,
+  "fixed_free_owner_off": 314304,
+  "artifacts": {
+    "CGACTL.EXE": {
+      "bytes": 24703,
+      "sha256": "ea26b76b4914faa7d06edd9b395f19221424d68f45aacbaf1068cc88e85432b3"
+    },
+    "CPSET.EXE": {
+      "bytes": 36846,
+      "sha256": "878503555c3db2e41b08d9a6d5d215866243b117cb309f231582afee09785dfc"
+    },
+    "CSETUP.EXE": {
+      "bytes": 32265,
+      "sha256": "a02e7ae5f2e3ee7c417fdb47e0b339abd99596c5fd40ebf35013f9ead0c49de5"
+    },
+    "FIXXT.EXE": {
+      "bytes": 50576,
+      "sha256": "1aae3a0c08fae0a2c2559d6737e5eabd979ea331884183dad468d772f04282ab"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11281,
+      "sha256": "bd984a24d4b795fb85c7f97e08beb9f0a790fa58a2210cbe2c87ec5e3c302ddc"
+    },
+    "PANCTL.EXE": {
+      "bytes": 18543,
+      "sha256": "566600896f7519e583c0d65a827b1e51ff199745903a42fa56580f1767860d60"
+    },
+    "PANINST.EXE": {
+      "bytes": 50516,
+      "sha256": "174cb4747af76e724304b5d46262d3182480efd4c957dd7dd986211b4f1be44d"
+    },
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    },
+    "SETUP.EXE": {
+      "bytes": 84712,
+      "sha256": "e1dd79d587093d551b2eaf8936c07c9c20d2d94eb37542cdef6d1af9e12f1c19"
+    },
+    "XTPAN.EXE": {
+      "bytes": 27359,
+      "sha256": "297569e8f38ce6114c0842e5b00026920ab8d4c3b232088febbcd866939e1f9e"
+    },
+    "XYCTL.EXE": {
+      "bytes": 32934,
+      "sha256": "362a9d85646dcd92efc34372cf15119c6ff7d2466f7bdc580c62117249548cb2"
+    }
+  }
+}

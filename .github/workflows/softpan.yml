@@ -42,6 +42,7 @@ jobs:
           echo "$RUNNER_TEMP/softpan-python/bin" >> "$GITHUB_PATH"
       - name: Replay qualified frames and verify exact public packages
         run: |
+          python3 tools/LEGACY/TEST.PY
           python3 src/panui/HOSTUI.PY
           python3 src/softpan/TESTUI.PY
           python3 tools/SPPACK/TESTREL.PY

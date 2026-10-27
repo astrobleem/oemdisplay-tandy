@@ -25,6 +25,9 @@
 #include <windows.h>
 #include "PANDLG.H"
 #include "WDWIN.H"
+#include "PANKEY.H"
+#include "PANOWN.H"
+#include "PANTGT.H"
 
 #define XTPAN_ESC 0x5850
 #define QUERYESC 8
@@ -34,15 +37,15 @@ static int nStep, nDwell, nEdge, nMods, vkDown, vkUp, vkTop, bFollow;
 static int nTop, nView = 200, nLogical = 400;
 static int nEdgeDir;
 static DWORD dwEdgeSince;
-static int bKeyWasDown;
 static int bLogKeys;
-static DWORD dwSeen[3];         /* last time Ctrl, Alt, Shift was seen down */
 static HWND hLastActive;
 static char szLog[80];
 static HANDLE hInstance;
 static UINT uOpenMsg;
 static PANHOST host;
-static int bDesk, nDeskX, nDeskW, nDeskArrow;
+static int bDesk, nDeskX, nDeskW;
+static int keyMoved,wantSettings,closing;
+static WORD keyWake;
 
 static void DeskRefresh(void)
 {
@@ -153,59 +156,38 @@ static int StepUp(int y)
     return t;
 }
 
-/* Bit 15: down now; bit 0: pressed since the previous call. A short tap
- * between two 55 ms ticks shows only in bit 0. Every key is read on every
- * tick so that bit 0 never carries over from an older press. */
-static int Hit(int vk)
-{
-    return (GetAsyncKeyState(vk) & 0x8001) != 0;
-}
-
-static int Held(int vk)
-{
-    return (GetAsyncKeyState(vk) & 0x8000) != 0;
-}
-
-/* A modifier counts if it was seen down within the last 250 ms: keyboard
- * paths that wrap grey navigation keys in transient "Shift up" codes, or a
- * modifier pressed one tick before the key, must not lose the press. */
-static int Recent(int i, int now_down, DWORD now)
-{
-    if (now_down)
-        dwSeen[i] = now;
-    return dwSeen[i] && now - dwSeen[i] <= 250;
-}
-
 static void Keys(void)
 {
-    DWORD now = GetCurrentTime();
-    int ctl = Hit(VK_CONTROL), alt = Hit(VK_MENU), sh = Hit(VK_SHIFT);
-    int dn = Hit(vkDown), up = Hit(vkUp), tp = Hit(vkTop);
-    int mods = (!(nMods & 1) || Recent(0, ctl, now)) && (!(nMods & 2) || Recent(1, alt, now)) &&
-               (!(nMods & 4) || Recent(2, sh, now));
-    int which = 0;
-    if (bLogKeys && (ctl || alt || sh || dn || up || tp)) {
-        char buf[64];
-        wsprintf(buf, "KEYS t=%lu ctl=%d alt=%d sh=%d dn=%d up=%d tp=%d was=%d",
-                 GetCurrentTime(), ctl, alt, sh, dn, up, tp, bKeyWasDown);
-        LogLine(buf);
-    }
-    if (mods)
-        which = dn ? 1 : up ? 2 : tp ? 3 : 0;
-    if (which && !bKeyWasDown) {
-        if (which == 1)
-            PanTo(nTop + nStep, "key-down");
-        else if (which == 2)
-            PanTo(nTop - nStep, "key-up");
-        else if (bDesk) {
-            (void)WDWinHome();
-            DeskRefresh();
-        } else
-            PanTo(0, "key-top");
-        KeepPointer();
-    }
-    /* a key still held down does not repeat the pan */
-    bKeyWasDown = which && Held(which == 1 ? vkDown : which == 2 ? vkUp : vkTop);
+ int cmd,ex=0,ey=0;HWND active;RECT frame;PANTARGET target;
+ keyMoved=0;
+ if(bDesk)DeskRefresh();else if(PanEscape(-1)<0)return;
+ PanTargetInit(&target,nDeskX,nTop,bDesk?2048-nDeskW:0,nLogical-nView,nStep,nStep,1,1);
+ while((cmd=PanInputNext())!=0){
+  if(bLogKeys){char trace[64];wsprintf(trace,"KEYS command=%d t=%lu",cmd,GetTickCount());LogLine(trace);}
+  if(cmd==PK_SETTINGS){wantSettings=1;continue;}
+  if(cmd==PK_END){
+   active=GetActiveWindow();if(!active)continue;GetWindowRect(active,&frame);
+   ex=bDesk?nDeskX+frame.right-nDeskW:0;ey=(bDesk?nTop:0)+frame.bottom-nView;
+  }
+  (void)PanTargetCommand(&target,cmd,ex,ey);
+ }
+ if(!target.moved)return;
+ if(bDesk){
+  if(target.home && WDWinHome()<0)return;
+  (void)WDWinPan(target.x,target.y);DeskRefresh();
+ }else PanTo(target.y,"queued-key");
+ KeepPointer();keyMoved=1;nEdgeDir=0;hLastActive=GetActiveWindow();
+}
+static void StartKeys(void)
+{
+ PANBIND map[PK_BIND_MAX];int i,n=0;int keys[3];
+ keys[0]=vkDown;keys[1]=vkUp;keys[2]=vkTop;
+ for(i=0;i<3;i++)if(keys[i]>0 && keys[i]<256){
+  map[n].key=keys[i];map[n].command=i==0?PK_DOWN:i==1?PK_UP:PK_HOME;
+  map[n].mods=nMods&7;map[n++].flags=PK_ONCE;
+ }
+ n+=PanInputDefaults(map+n,bDesk?PK_X|PK_Y:PK_Y);
+ (void)PanInputStart(hMain,keyWake,map,n);
 }
 
 /* The viewport top that brings window rows [wtop, wbot) into view with the
@@ -258,6 +240,7 @@ static void FrameTick(void)
     int dir = 0;
     DWORD now = GetCurrentTime();
     Keys();
+    if(keyMoved)return;
     Follow();
     GetCursorPos(&pt);
     if (pt.y >= nTop + nView) {
@@ -290,22 +273,12 @@ static void FrameTick(void)
 static void Tick(void)
 {
     POINT pt;
-    int dx = 0, dy = 0, dir, arrows;
+    int dx = 0, dy = 0, dir;
     DWORD now;
     if (!bDesk) { FrameTick(); return; }
     DeskRefresh();
     (void)WDWinPan(nDeskX, nTop); /* reconcile restores/open/close, no new timer */
     Keys();
-    arrows = Held(VK_CONTROL) && Held(VK_MENU);
-    if (arrows) {
-        dx = Held(VK_RIGHT) - Held(VK_LEFT);
-        dy = Held(VK_DOWN) - Held(VK_UP);
-    }
-    if ((dx || dy) && !nDeskArrow) {
-        (void)WDWinPanBy(dx * nStep, dy * nStep);
-        DeskRefresh();
-    }
-    nDeskArrow = dx || dy;
     KeepPointer();GetCursorPos(&pt);dx = dy = 0;
     if (pt.x < nEdge && nDeskX > 0) dx = -1;
     else if (pt.x >= nDeskW - nEdge && nDeskX < 2048 - nDeskW) dx = 1;
@@ -416,15 +389,16 @@ static void OpenSettings(void)
 
 long FAR PASCAL WndProc(HWND hwnd, unsigned msg, WORD wParam, LONG lParam)
 {
+    if(msg==keyWake)return 0;
     if (uOpenMsg && msg == uOpenMsg) {
-        OpenSettings();
+        if(!closing)OpenSettings();
         return 0;
     }
     switch (msg) {
     case WM_QUERYENDSESSION:
         return !bDesk || WDWinPrepareShutdown() >= 0;
     case WM_ENDSESSION:
-        if (wParam && bDesk) (void)WDWinShutdown();
+        if (wParam) {PanDlgClose();(void)PanInputStop();if(bDesk)(void)WDWinShutdown();}
         return 0;
     case WM_CLOSE:
         if (bDesk && WDWinShutdown() < 0) {
@@ -432,14 +406,18 @@ long FAR PASCAL WndProc(HWND hwnd, unsigned msg, WORD wParam, LONG lParam)
                        "Window workspace", MB_OK | MB_ICONEXCLAMATION);
             return 0;
         }
-        DestroyWindow(hwnd);return 0;
+        closing=1;PanDlgClose();
+        if(PanInputStop())DestroyWindow(hwnd);return 0;
     case WM_TIMER:
+        if(closing){if(PanInputStop())DestroyWindow(hwnd);return 0;}
         Tick();
+        if(wantSettings){wantSettings=0;OpenSettings();}
         PanDlgTrack();
         return 0;
     case WM_DESTROY:
         if (bDesk) (void)WDWinShutdown();
         PanDlgClose();
+        (void)PanInputStop();
         KillTimer(hwnd, 1);
         PostQuitMessage(0);
         return 0;
@@ -453,13 +431,15 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
     MSG msg;
     int esc = XTPAN_ESC;
     char buf[96], arg[24];
-    int settings;
+    int settings, fixed;
     HWND hOwner;
 
     /* One owner: a second copy only asks the first to open its settings. */
     CopyArg(arg, lpCmd, sizeof(arg));
     settings = PanCmdParse(arg) == PS_CMD_SETTINGS;
-    uOpenMsg = RegisterWindowMessage(PS_MSG_VERT);
+    uOpenMsg = PanOwnerMessage(PN_VERT);
+    keyWake=RegisterWindowMessage(PK_WAKE);
+    if(PanOwnerRoute(settings))return 0;
     /* A fixed display can use either helper's linked window workspace.
      * Forward to its existing owner before starting a second tracker. */
     hOwner = FindWindow("XYOverviewControl", NULL);
@@ -500,11 +480,16 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
          * Never treat the larger logical screen of a pan driver as visible. */
         nDeskW = GetSystemMetrics(SM_CXSCREEN);
         nView = GetSystemMetrics(SM_CYSCREEN);
-        if (!settings) return 0;
-        if ((nDeskW != 320 && nDeskW != 640) || nView != 200 ||
-            WDWinInit(2048, 2048) != WD_OK) {
-            MessageBox(NULL, "Window workspace needs a fixed 320x200 or 640x200 display.",
-                       "Panning settings", MB_OK | MB_ICONINFORMATION);
+        if (!settings && !GetProfileInt("XTPan","WindowWorkspace",0)) return 0;
+        /* A retained startup token on another display must exit quietly.
+         * A loader-time message box could be outside that display's view. */
+        if (PanOwnerDetect(&fixed) != PN_VERT || !fixed ||
+            (nDeskW != 320 && nDeskW != 640) || nView != 200)
+            return 0;
+        if (WDWinInit(2048, 2048) != WD_OK) {
+            if (settings)
+                MessageBox(NULL, "Window workspace could not start.",
+                           "Panning settings", MB_OK | MB_ICONINFORMATION);
             return 0;
         }
         bDesk = 1;nLogical = 2048;nTop = 0;
@@ -513,6 +498,7 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
         if (nDwell < 0) nDwell = 0;
         if (nDwell > 10000) nDwell = 10000;
         (void)WDWinExclude((LPCSTR)"Progman");
+        (void)WDWinExclude((LPCSTR)"PanSetDlg");
         (void)WDWinExclude((LPCSTR)"TandyStart");
     }
     wsprintf(buf, "START top=%d view=%d logical=%d step=%d dwell=%d edge=%d free=%lu",
@@ -529,19 +515,22 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
     wc.hbrBackground = NULL;
     wc.lpszMenuName = NULL;
     wc.lpszClassName = "XTPan";
-    if (!RegisterClass(&wc))
-        return 0;
+    if (!RegisterClass(&wc)) {
+        if(bDesk)(void)WDWinShutdown();
+        return 1;
+    }
     hMain = CreateWindow("XTPan", "XTPan", WS_POPUP, 0, 0, 0, 0, NULL, NULL, hInst, NULL);
-    if (!hMain || !SetTimer(hMain, 1, 55, NULL))
-        return 0;
+    if(!hMain){if(bDesk)(void)WDWinShutdown();return 1;}
+    if(!SetTimer(hMain,1,55,NULL)){DestroyWindow(hMain);return 1;}
     hInstance = hInst;
     host.ops.query = XtQuery;
     host.ops.apply = XtApply;
     host.ops.home = XtHome;
     host.store.get = IniGet;
     host.store.put = IniPut;
-    host.title = "XTPAN panning settings";
+    host.title = "Panning settings";
     host.backend = bDesk ? "Window workspace (24 windows)" : "Vertical software pan";
+    StartKeys();
     if (settings)
         PostMessage(hMain, uOpenMsg, 0, 0L);
     while (GetMessage(&msg, NULL, 0, 0)) {

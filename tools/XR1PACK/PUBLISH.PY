@@ -427,7 +427,7 @@ def main(argv=None):
     # retain the historical publisher's synthetic boundary tests.
     import importlib.machinery
     module = importlib.machinery.SourceFileLoader(
-        "current_xr1_native", str(HERE.parent / "DOSINST/RCPUB.PY")).load_module()
+        "current_xr1_native", str(HERE.parent / "UPAN/PUBLISH.PY")).load_module()
     module.main(argv)
 
 

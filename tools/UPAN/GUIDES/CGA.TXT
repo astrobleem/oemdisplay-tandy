@@ -1,0 +1,38 @@
+IBM CGA DISPLAY FOR WINDOWS 3.0 REAL MODE
+
+Keep SETUP.EXE, README.TXT and the complete CGA folder together.
+Installed Windows 3.0 and DOS 3.3 or later are required.
+Exit Windows completely, then run one command:
+  SETUP C:\WINDOWS PAN   160x100 view of a 320x200, 16-color desktop
+  SETUP C:\WINDOWS 100   fixed 160x100, 16 colors with window access
+  SETUP C:\WINDOWS 320   fixed 320x200, 4 colors
+  SETUP C:\WINDOWS 640   fixed 640x200, 2 colors
+Use PAN for applications that need more room, such as Paintbrush.
+Start Windows with WIN /R. Fonts, grabber, artwork and helpers install
+with the selected mode. Keep this folder for later mode changes/undo.
+The preceding current packet upgrades through this same SETUP command.
+
+PANNING
+The matching owner starts automatically; no helper-copy or enable step.
+Ctrl+Alt+arrows move the view; Home returns home; End reveals the active
+window's far edge. Ctrl+Alt+S opens Panning settings. In Windows File, Run,
+PANCFG /SETTINGS opens the same window and preserves any unfinished edits.
+Apply saves supported settings; Cancel discards edits since the last Apply.
+PAN has Step, Dwell, Follow and Edge controls. Horizontal steps round up to
+8 pixels; for example20 becomes 24. Its settings fit the 160x100 screen.
+Mode 100 moves windows/active clients in 5-pixel steps and offers Windows
+mode and Home. The fixed 320/640 modes can opt into a window workspace
+through PANCFG; their ordinary color setup still exits without a resident
+panning owner. Only the modes/settings supported by the current driver
+are shown. PANCFG enables automatic startup; PANCFG OFF disables it.
+
+MODE CHANGES AND UNDO
+Exit Windows and rerun SETUP with 100, 320, 640 or PAN. To undo this packet:
+  SETUP UNDO C:\WINDOWS
+Unrelated settings survive. SETUP RESTORE C:\WINDOWS explicitly restores
+whole saved INIs and loses later INI edits. Do not delete recovery files
+if SETUP reports an incomplete or changed installation.
+
+Illustrated guide: docs/PANNING.MD in the source repository.
+Tested in native Windows 3.0 real-mode emulation on an IBM XT/CGA with
+normal 640 KB. Physical hardware qualification is separate.

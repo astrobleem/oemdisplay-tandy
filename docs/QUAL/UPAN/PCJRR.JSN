@@ -1,0 +1,20 @@
+{
+  "outcome": "PASS_NATIVE_PCJR",
+  "physical_hardware": false,
+  "checks": [
+    "guarded automatic helper installation/startup on 640KiB PCjr",
+    "repeated settings forwards without resetting typed edits or owner",
+    "Apply persists vertical step; Cancel preserves applied state; native viewport and Home work",
+    "OFF closes the owner and removes startup token",
+    "ON restarts one owner with persisted settings",
+    "normal Windows shutdown and DOS return"
+  ],
+  "installed_receipt": {
+    "bytes": 966,
+    "sha256": "c4c8b9f0b24abca09037e222820dc5c62a207d3734bba322c74b9c49c2de1773"
+  },
+  "raw_result": {
+    "bytes": 487,
+    "sha256": "e7c975b3d47bcfc8bb7496e3c49de200b9b533f278434faa0b54b715f8ae66c1"
+  }
+}

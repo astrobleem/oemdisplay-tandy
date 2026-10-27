@@ -7,3 +7,6 @@ file PANDLG.obj
 file WDCORE.obj
 file WDWIN.obj
 file WTPLACE.obj
+file PANKCL.obj
+file PANOWN.obj
+file PANTGT.obj
