@@ -1,5 +1,5 @@
 {
-  "status": "REVIEWED_NATIVE_COMPACT_CGA",
+  "status": "PENDING_INTEGRATION_REVIEW",
   "physical_hardware": false,
   "runtime_source": "a88f81e94bc6cd9cd957397733abebbea1549fe9",
   "packet": {
@@ -59,8 +59,8 @@
       "sha256": "8d9acffbfd6afe67cd869a046b03524c254cabce13dc763be4bc0cd4bdd5be07"
     },
     "tools/PAN/PUBLISH.PY": {
-      "bytes": 9034,
-      "sha256": "f85d41b0e17652e1b607db415dd3acfd8657130ae558cced5c45ccd55f8029f0"
+      "bytes": 9262,
+      "sha256": "de81ee9ccf51751184744797f9515b3a3d857faf525ff6b5b7d53cbf9d9edc59"
     },
     "tools/PAN/COMPOSE.PY": {
       "bytes": 3021,
@@ -528,11 +528,7 @@
     }
   },
   "review": {
-    "path": "docs/QUAL/CGACMP/REVIEW.JSN",
-    "identity": {
-      "bytes": 5374,
-      "sha256": "78e76ad67d6e9a3e35c5810ce1e553e41f713a18eb6a4ee583606467f2a18ffe"
-    }
-  },
-  "reviewed_commit": "902526cff929ac84049d84ff70fb36e50f2bd006"
+    "path": "docs/QUAL/CGACMP/REVIEW02.JSN",
+    "identity": null
+  }
 }

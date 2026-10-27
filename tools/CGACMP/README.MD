@@ -24,9 +24,11 @@ The current alternative boundary sends a changed CGA ZIP through `VERIFY.PY`.
 That gate requires exact native build/heap, menu/switch/UNDO, actual installed
 payload, both Windows applications/save/normal-DOS-return, lease cleanup and
 independent source/packet review evidence. A catalog checksum or a successful
-host test cannot accept a new runtime. `ACCEPT.JSN` seals the exact completed
-native candidate with the clear independent re-review of `902526c`. Its review
-and all 18 producer/runtime source identities remain bound to the packet.
+host test cannot accept a new runtime. `ACCEPT01.JSN` in the qualification
+folder retains the acceptance sealed from the clear re-review of `902526c`.
+Integration with current main changes only its producer-history dispatch;
+active `ACCEPT.JSN` is pending final integration review of that source change.
+All 18 source identities and the unchanged native packet remain bound.
 
 ```text
 python tools/PAN/GATETEST.PY --out NEW-PRIOR-GATE.JSN
@@ -35,9 +37,9 @@ python tools/CGACMP/VERIFY.PY --candidate docs/QUAL/CGACMP/CANDIDATE.JSN
 python tools/CGACMP/VERIFY.PY
 ```
 
-The candidate command retains the original pending-review checkpoint. The
-normal verifier checks the separate sealed acceptance and independent review;
-that accepted record now authorizes the local catalog alternative boundary.
+The candidate command checks completed native evidence and exact current
+source bindings. The normal verifier also requires sealed independent review;
+the local catalog remains refused until the final integration review is sealed.
 
 The gate parses the exact launch configuration rather than trusting its
 machine declaration. Its closed recorded fixture requires the 8088 at
@@ -49,5 +51,7 @@ XT/640 KB declaration unchanged, reproducing the first independent finding.
 
 Do not replace `downloads/PAN/CGA.ZIP`: it remains the immutable preceding
 packet. A qualified compact alternative uses a separate tracked path and an
-updated local catalog entry, as now prepared here. Publication still requires explicit approval,
+updated local catalog entry, as prepared here. The new HPDIB core from main
+is reproduced exactly; each historical snapshot keeps its own closed names
+and original identities. See `docs/QUAL/CGACMP/INTEG.JSN`. Publication requires explicit approval,
 exact-source review and current CI. Physical hardware remains unqualified.

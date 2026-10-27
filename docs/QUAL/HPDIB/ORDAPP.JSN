@@ -1,0 +1,166 @@
+{
+  "status": "PASS_NATIVE_INSTALLED_HPXY_DIB",
+  "route": "ordinary_setup",
+  "normal_dos_return": true,
+  "installed_driver": {
+    "bytes": 62096,
+    "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c"
+  },
+  "installed_helpers": {
+    "XTPAN.EXE": {
+      "bytes": 27407,
+      "sha256": "bd33843a1fd456446b8935f69aa74605b82010e9c4345b4a186870b47c52213d"
+    },
+    "XYCTL.EXE": {
+      "bytes": 33220,
+      "sha256": "aa405b11e5b0f82cc4499bda54897b937ffee9305017788065c1bcb283097bbf"
+    },
+    "PANCTL.EXE": {
+      "bytes": 18591,
+      "sha256": "a13f1e676b8d71a20643a6b82646ba1f7066e726b88e1c2e482df2ba812f2015"
+    },
+    "CGACTL.EXE": {
+      "bytes": 25247,
+      "sha256": "fa1bc19c9f0301b4ea2f91116a0cfb1f3db0864d1f794edf5e7bdd70cfc5a2d0"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "PAN.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    }
+  },
+  "driver_not_injected": true,
+  "normal_packet_path": true,
+  "pan_controls_pass": true,
+  "full_repair_invoked": false,
+  "repair_complete": null,
+  "paintbrush_tested": false,
+  "paintbrush_rgb_equal": null,
+  "native_controls": {
+    "outcome": "PASS_NATIVE_HPXY_SINGLE_APP",
+    "physical_hardware": false,
+    "normal_dos_return": true,
+    "checks": [
+      "Normal guarded packet launcher starts installed PAN owner",
+      "Ordinary driver route boots640x256 and native Home/Right/Down obey8x4 constraints"
+    ]
+  },
+  "physical_hardware": false,
+  "setup_ui_observations": {
+    "status": "OBSERVED_WINDOWS_SETUP_COMPLETE_CHANGES_FLOW",
+    "observer": "Codex visual inspection of native framebuffer captures",
+    "frames": {
+      "FINAL-RAW61.PNG": {
+        "identity": {
+          "bytes": 7557,
+          "sha256": "fb3d017129cd4b5c75074fa933ce0d5765d94e69d128efc5aa4e67fd22f1b3b9"
+        },
+        "observation": "HPXY640x256 selected; Complete Changes highlighted"
+      },
+      "FINAL-RAW62.PNG": {
+        "identity": {
+          "bytes": 5406,
+          "sha256": "0eee58c01cfdfab9cd58c5cd13d4b0db09e5944e6c327b20c0c04cc218ef8b4e"
+        },
+        "observation": "No CONFIG.SYS changes selected"
+      },
+      "FINAL-RAW63.PNG": {
+        "identity": {
+          "bytes": 3022,
+          "sha256": "c6224b53e985f52bef09facc510e2d44cacd83474a1c73d363b62e7e3e70294f"
+        },
+        "observation": "Setup applying requested changes; no F3 cancellation sent"
+      }
+    },
+    "raw_keys": {
+      "bytes": 6073,
+      "sha256": "a564ce6777fa7a2c3e67d9b1fdfebbb66d94ba25503d8d77705aa19344f3f5f3"
+    },
+    "setup_return_status": 1,
+    "interpretation": "Observed return code only; not treated alone as success. Documented DISPLAY replacement and independent Windows boot/readback determine route acceptance."
+  },
+  "ordinary_boot_without_full_repair": true,
+  "installation_lease": {
+    "lock": "C:\\Users\\chad\\Documents\\Codex\\2026-10-06\\tandy-emulator.lock",
+    "children": [
+      {
+        "pid": 32104,
+        "bound_seconds": 1200,
+        "stopped": true
+      }
+    ],
+    "status": "PASS",
+    "inventory_before": [],
+    "lease_acquired": true,
+    "lease_released": true,
+    "inventory_after": [],
+    "seconds": 957.797
+  },
+  "boot_input": {
+    "status": "PREPARED_NOT_BOOTED",
+    "native_setup_image": {
+      "bytes": 21411840,
+      "sha256": "4de321512ecc6372984b767482519fe2c8202f8698dcf59382b8353ea78b304e"
+    },
+    "boot_image": {
+      "bytes": 21411840,
+      "sha256": "ce26368701264eb128e2757c1b5cd54764ddb86a7e3f2ac073a2b4986b8b6599"
+    },
+    "only_host_changed_guest_file": "AUTOEXEC.BAT",
+    "launcher": "@ECHO OFF\r\nPATH C:\\;C:\\WINDOWS;C:\\DOS\r\nC:\r\nCD \\DIBPKT\\WINXT\r\nCOMMAND /C DISPWIN.BAT > C:\\DISPWIN.LOG\r\nECHO RETURNED>C:\\RETURN1.TXT\r\n",
+    "full_repair_invoked": false,
+    "protected_windows_files": {
+      "WINDOWS/SYSTEM.INI": {
+        "bytes": 1122,
+        "sha256": "f67a8767d467187027ec181e8c26ffead0cd20c65c70b5790933abc61d43fe84"
+      },
+      "WINDOWS/WIN.INI": {
+        "bytes": 1458,
+        "sha256": "063985e65416e5d4b63ce3f96252a3a571fe0c434babb02199b09cd9a15d2766"
+      },
+      "WINDOWS/SYSTEM/HPXY.DRV": {
+        "bytes": 62096,
+        "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c"
+      }
+    },
+    "setup_checkpoint": {
+      "bytes": 572,
+      "sha256": "551ef2603ed4a40933e260273c1b1f61c520230f8a6a4b7afdabd17c3b08595c"
+    },
+    "setup_lease": {
+      "bytes": 333,
+      "sha256": "89286a110adc0005cfc7c44a6b1d40e198c77fceb24655990785ae9b63dd38c7"
+    },
+    "documented_driver_launcher": "DIBPKT/WINXT/DISPWIN.BAT",
+    "prior_wrong_launcher_refusal_preserved": true
+  },
+  "native_windows_setup_completed": true,
+  "setup_return_status": 1,
+  "display_helper_replacement": true,
+  "setup_witness": {
+    "status": "PASS_NATIVE_DISPLAY_ROUTE_BEFORE_REPAIR",
+    "installed_driver": {
+      "bytes": 62096,
+      "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c"
+    },
+    "pause_before_full_repair": true,
+    "setup_status": 1,
+    "helper_replacement_used": true,
+    "setup_log": {
+      "bytes": 2609,
+      "sha256": "d5a5e8ba2fbdcc28daa1e798f22395bc824ebbcd7bd4d9352539ba9b174c8c2e"
+    },
+    "system_ini": {
+      "bytes": 1122,
+      "sha256": "f67a8767d467187027ec181e8c26ffead0cd20c65c70b5790933abc61d43fe84"
+    },
+    "physical_hardware": false
+  }
+}

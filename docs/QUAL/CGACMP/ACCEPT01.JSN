@@ -1,0 +1,538 @@
+{
+  "status": "REVIEWED_NATIVE_COMPACT_CGA",
+  "physical_hardware": false,
+  "runtime_source": "a88f81e94bc6cd9cd957397733abebbea1549fe9",
+  "packet": {
+    "path": "downloads/COMPACT/CGA.ZIP",
+    "identity": {
+      "bytes": 297312,
+      "sha256": "84a1992803d1bd022318ddb001490b66494aba1e61ca09eef2fbc445fb469cc4"
+    }
+  },
+  "sources": {
+    "src/cga/SETUP.C": {
+      "bytes": 16794,
+      "sha256": "f503a11d8322d1a5f0d3564037b480e30b14a86ea760cef72cb3dc14d78a1779"
+    },
+    "src/cga/PACKCGA.PY": {
+      "bytes": 19710,
+      "sha256": "0c90fa180f752b961894b3210711e6ae8a0ede79aeedeb964c9bc443b7f6d745"
+    },
+    "src/cga/CGASET.PY": {
+      "bytes": 4829,
+      "sha256": "39b0d7944b113e80c8e8be3caa1cd78b6c34dfc7fcf191ed93340063109cf8ea"
+    },
+    "src/cga/CMPPACK.PY": {
+      "bytes": 2488,
+      "sha256": "740c01ead19f6156bb88aecc1e32694395ba7879d2ac77b0b7714265582ecb41"
+    },
+    "src/cga/CMPRSC.PY": {
+      "bytes": 5150,
+      "sha256": "74b84a531b5f57635ca251b4277e74999c5f0ef66276eb17f27bddf353654ec0"
+    },
+    "src/cga/CMPINST.PY": {
+      "bytes": 4170,
+      "sha256": "230db43bd1f97052f0493921953fb36303bc34dd304063bb4e569986c919ae01"
+    },
+    "src/cga/CMPTEST.PY": {
+      "bytes": 2270,
+      "sha256": "1fea3caee457765e6a47cffe6cf0bd438865ecbb9417cc44c0cdb62f1dee466b"
+    },
+    "src/cga/INSTALLT.PY": {
+      "bytes": 13976,
+      "sha256": "0bce0cbd081458f9229eca236ecccfb1518e2d19b1a78f276f89df4dfaf70e6e"
+    },
+    "src/cga/OEMSETUP.INF": {
+      "bytes": 1535,
+      "sha256": "6d7e34414bc96d0e5a416a6414bc2a3da250119c535199a0f0a63c172e55f705"
+    },
+    "tools/PAN/CGASTAGE.PY": {
+      "bytes": 2275,
+      "sha256": "92f0cb95f7d55ea71056afeef706965c36fd541852bbf20eabfe1591e8a1900e"
+    },
+    "tools/PAN/GUIDES/CGA.TXT": {
+      "bytes": 2732,
+      "sha256": "c91e12bed1c1a1b944c849f4708200a256c6e48916d557822e54842c8b5834cd"
+    },
+    "tools/PAN/PREPCGA.PY": {
+      "bytes": 2497,
+      "sha256": "8d9acffbfd6afe67cd869a046b03524c254cabce13dc763be4bc0cd4bdd5be07"
+    },
+    "tools/PAN/PUBLISH.PY": {
+      "bytes": 9034,
+      "sha256": "f85d41b0e17652e1b607db415dd3acfd8657130ae558cced5c45ccd55f8029f0"
+    },
+    "tools/PAN/COMPOSE.PY": {
+      "bytes": 3021,
+      "sha256": "038346212a18d02f532e1092d528cb010895af628159e5d30411a216c899df8a"
+    },
+    "tools/CGACMP/HISTORY.PY": {
+      "bytes": 1348,
+      "sha256": "dc8cb7335045024d8d58f08acf5fa89b4621eed136d887ad817463c27806b647"
+    },
+    "tools/CGACMP/VERIFY.PY": {
+      "bytes": 11810,
+      "sha256": "c0afba9a1a98cd18007fecf7b976260cf51d73481979270bdff37cc3610269a4"
+    },
+    "tools/CGACMP/TEST.PY": {
+      "bytes": 6797,
+      "sha256": "129817ac720c1d0ef58c78d5977472a3d41d6412bdb2f1b467814e4b8a6788e4"
+    },
+    "docs/QUAL/CGACMP/TESTSRC.ZIP": {
+      "bytes": 30461,
+      "sha256": "759f5736008ead2fa01a26b979bfc2cf7bc804dfa1473f2961712e4f880b2ed3"
+    }
+  },
+  "windows": {
+    "320C": {
+      "result": {
+        "path": "docs/QUAL/CGACMP/WINDOWS/320C/RESULT.JSN",
+        "identity": {
+          "bytes": 1387,
+          "sha256": "5ad656ddc4c6d55ce6a4313b8e37c49ad0ae599f12c3176fd53c7fdec6a64090"
+        }
+      },
+      "installed": {
+        "path": "docs/QUAL/CGACMP/WINDOWS/320C/INSTALLED.JSN",
+        "identity": {
+          "bytes": 4347,
+          "sha256": "ec43f6c20f3d0b5f63cb9dcc34f17957d532cefa977678e79eeb9669133b1b0b"
+        }
+      },
+      "lease": {
+        "path": "docs/QUAL/CGACMP/WINDOWS/LEASE.JSN",
+        "identity": {
+          "bytes": 465,
+          "sha256": "3d2134bddbab36410c6806ab15978a4f05d559b6d3025eb0530dca06c95663b3"
+        }
+      },
+      "config": {
+        "path": "docs/QUAL/CGACMP/WINDOWS/320C/LAUNCH.CFG",
+        "identity": {
+          "bytes": 819,
+          "sha256": "a16ad9b6bcc7094b4958660cc453f1783fa7dc97c88b1373d253cf2456417e9a"
+        }
+      },
+      "captures": {
+        "BOOT": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/BOOT-NATIVE.PNG",
+          "identity": {
+            "bytes": 871,
+            "sha256": "8d490c28f24a5be0a3a1a58a2e06e92d013caa12512d42430d48d19ce8f2e15e"
+          }
+        },
+        "BOOT-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/BOOT.PNG",
+          "identity": {
+            "bytes": 1354,
+            "sha256": "7bdd652c99a386ef607e49dc70a0faffa9dea489a01dc2c743f7e63e8428e19b"
+          }
+        },
+        "DESKTOP": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/DESKTOP-NATIVE.PNG",
+          "identity": {
+            "bytes": 2142,
+            "sha256": "ca4054b117503bdc1868f594673156fda958b39fac5c2c2df8a622d27434a356"
+          }
+        },
+        "DESKTOP-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/DESKTOP.PNG",
+          "identity": {
+            "bytes": 2516,
+            "sha256": "767b4b2c87eb061a5d559e5d720b9dc1bc20fe2291b9c0c629c853a4daab4c9a"
+          }
+        },
+        "NOTEPAD": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/NOTEPAD-NATIVE.PNG",
+          "identity": {
+            "bytes": 2699,
+            "sha256": "cbdef20bd74793e9a51e76f0bc3b770907284bec49327a17ecdf3346ee8c6100"
+          }
+        },
+        "NOTEPAD-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/NOTEPAD.PNG",
+          "identity": {
+            "bytes": 4571,
+            "sha256": "5c73ce6a834bdd0ea12ddd31b9b9109944fe4db983b5a189f797b12b30aff190"
+          }
+        },
+        "OPEN": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/OPEN-NATIVE.PNG",
+          "identity": {
+            "bytes": 3826,
+            "sha256": "a4c316dd8e728abe954ecc472d7a27e07451423161816ef1f443786d2ca57a0e"
+          }
+        },
+        "OPEN-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/OPEN.PNG",
+          "identity": {
+            "bytes": 5286,
+            "sha256": "4b2679a6069e11ded27f8830184140acf9d733e4ba60dcde31dbc9f4ce20e6ac"
+          }
+        },
+        "SAVE-AS": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/SAVE-AS-NATIVE.PNG",
+          "identity": {
+            "bytes": 2193,
+            "sha256": "ecd3b879d77c516441cab476da41cd20f68f48c998e58686609be95b26d5e462"
+          }
+        },
+        "SAVE-AS-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/SAVE-AS.PNG",
+          "identity": {
+            "bytes": 3249,
+            "sha256": "b2db3ac775faaca7b171935ec36a798a925927af16f59e106870ef079d2967c7"
+          }
+        },
+        "SAVED": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/SAVED-NATIVE.PNG",
+          "identity": {
+            "bytes": 1244,
+            "sha256": "ff288c319056380761db365476ed35ecc87d63af30d253fa40f2187e0f3682e1"
+          }
+        },
+        "SAVED-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/SAVED.PNG",
+          "identity": {
+            "bytes": 1873,
+            "sha256": "c213fbee69aea3b817095a31d54ff710e8551d1ba0885548f97799946e93a290"
+          }
+        },
+        "PAN-SETTINGS": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/PAN-SETTINGS-NATIVE.PNG",
+          "identity": {
+            "bytes": 2528,
+            "sha256": "c17f974d960ffe2b5838230fff6c9cbc9ca593c51b3fe05e2867bc414e8197f0"
+          }
+        },
+        "PAN-SETTINGS-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/320C/PAN-SETTINGS.PNG",
+          "identity": {
+            "bytes": 3267,
+            "sha256": "b0d013f8483943293d85adbbc4bfcbc1d5fec2d29da3223c6ace34699b482f65"
+          }
+        }
+      }
+    },
+    "640C": {
+      "result": {
+        "path": "docs/QUAL/CGACMP/WINDOWS/640C/RESULT.JSN",
+        "identity": {
+          "bytes": 1389,
+          "sha256": "1f72545dab44626c21477385792d8fe2962ba309d2d9b97c04f308be3c3f660e"
+        }
+      },
+      "installed": {
+        "path": "docs/QUAL/CGACMP/WINDOWS/640C/INSTALLED.JSN",
+        "identity": {
+          "bytes": 4377,
+          "sha256": "630057f613d21e718f1fce090373a654a21d9f8d011c22750812f884ebaf140f"
+        }
+      },
+      "lease": {
+        "path": "docs/QUAL/CGACMP/WINDOWS/LEASE.JSN",
+        "identity": {
+          "bytes": 465,
+          "sha256": "3d2134bddbab36410c6806ab15978a4f05d559b6d3025eb0530dca06c95663b3"
+        }
+      },
+      "config": {
+        "path": "docs/QUAL/CGACMP/WINDOWS/640C/LAUNCH.CFG",
+        "identity": {
+          "bytes": 819,
+          "sha256": "4ad4382fe01ed7bd4a7f59818482753033b2ddc975b9f72936de5146264bf975"
+        }
+      },
+      "captures": {
+        "BOOT": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/BOOT-NATIVE.PNG",
+          "identity": {
+            "bytes": 1070,
+            "sha256": "b30ac2fddd99d746e4f3768d13ac0a738c76b735e4a7703952a74371fcee6eec"
+          }
+        },
+        "BOOT-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/BOOT.PNG",
+          "identity": {
+            "bytes": 1358,
+            "sha256": "5f62671118a8da56b6980cbbe0f5ae0472477099c7b20ef984822ae794cb0f8f"
+          }
+        },
+        "DESKTOP": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/DESKTOP-NATIVE.PNG",
+          "identity": {
+            "bytes": 2189,
+            "sha256": "cff9c0fabe3066608d04006ac672254ad19c67683baa65a121363458cccb99ea"
+          }
+        },
+        "DESKTOP-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/DESKTOP.PNG",
+          "identity": {
+            "bytes": 2635,
+            "sha256": "f98158de364226a63d4e7d2c295999514e613ddefd412d581c4677615257d732"
+          }
+        },
+        "NOTEPAD": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/NOTEPAD-NATIVE.PNG",
+          "identity": {
+            "bytes": 3567,
+            "sha256": "fb40a20d6cc2bdb9eca7b38991ab70adf53b7792f862d66cfa032726abb52265"
+          }
+        },
+        "NOTEPAD-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/NOTEPAD.PNG",
+          "identity": {
+            "bytes": 3491,
+            "sha256": "974dea5dfeaaa40344474e37a67d941ddca06e0d6d32cd95ab497b91204b4467"
+          }
+        },
+        "OPEN": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/OPEN-NATIVE.PNG",
+          "identity": {
+            "bytes": 4811,
+            "sha256": "29fbfb860aeaffaef102d93c5d2dd02e8a29e89b90a164929abad3c4aa8c786f"
+          }
+        },
+        "OPEN-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/OPEN.PNG",
+          "identity": {
+            "bytes": 5138,
+            "sha256": "8fe78bc746d17e8e2c59a0804b4fdbce518fe2b705d32f00ce16ebcf354b7e1f"
+          }
+        },
+        "SAVE-AS": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/SAVE-AS-NATIVE.PNG",
+          "identity": {
+            "bytes": 2530,
+            "sha256": "116efa9304cdd5b7d685bc3c929ed8f9b747b86032bc49d1e0d88292c58dcc6f"
+          }
+        },
+        "SAVE-AS-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/SAVE-AS.PNG",
+          "identity": {
+            "bytes": 3219,
+            "sha256": "b31330fc953036fc57efb224ef0c0fd034027cb786ac0aa35a13e5f6ef29fddf"
+          }
+        },
+        "SAVED": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/SAVED-NATIVE.PNG",
+          "identity": {
+            "bytes": 1468,
+            "sha256": "e749372a911e0acf1c99efdc14f3f7904c295cd897b6466b0185c1f37cd9e111"
+          }
+        },
+        "SAVED-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/SAVED.PNG",
+          "identity": {
+            "bytes": 1834,
+            "sha256": "5a7cbcd5d2b270f60bf39cf60fc2e27562d8adbd477e12d89a180d5ab60ef3bb"
+          }
+        },
+        "PAN-SETTINGS": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/PAN-SETTINGS-NATIVE.PNG",
+          "identity": {
+            "bytes": 2964,
+            "sha256": "0e5850f8ef16f64e6bbac29dc32406cc199d8ecf664477784b81e4fd145d62f9"
+          }
+        },
+        "PAN-SETTINGS-RAW": {
+          "path": "docs/QUAL/CGACMP/WINDOWS/640C/PAN-SETTINGS.PNG",
+          "identity": {
+            "bytes": 3775,
+            "sha256": "05595bae23173a161f2014e4d0eebfc504c8cecbdb6820f78ce6198054ace672"
+          }
+        }
+      }
+    }
+  },
+  "host": {
+    "install": {
+      "path": "docs/QUAL/CGACMP/HOST/INSTALL.JSN",
+      "identity": {
+        "bytes": 1809,
+        "sha256": "a3eb3e059214eb8b9c2ebcc40aa0292ace3749333c5c521fdae1088674228c0b"
+      }
+    },
+    "legacy": {
+      "path": "docs/QUAL/CGACMP/HOST/LEGACY.JSN",
+      "identity": {
+        "bytes": 858,
+        "sha256": "9dc9289206f8a89ff24e3e56a1d41867de149d9e2285b5d049b621ed0a1aa6e1"
+      }
+    },
+    "resources": {
+      "path": "docs/QUAL/CGACMP/HOST/RESOURCES.JSN",
+      "identity": {
+        "bytes": 30450,
+        "sha256": "6b1e2371cd3f0e89ffca0504e38d4f40b501b10110416c36e4e2df7a50a02879"
+      }
+    }
+  },
+  "members": {
+    "CGA/CG1COUR.FON": {
+      "bytes": 3536,
+      "sha256": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa"
+    },
+    "CGA/CG1FIX.FON": {
+      "bytes": 3776,
+      "sha256": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52"
+    },
+    "CGA/CG1HELV.FON": {
+      "bytes": 3536,
+      "sha256": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d"
+    },
+    "CGA/CG1OEM.FON": {
+      "bytes": 4080,
+      "sha256": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06"
+    },
+    "CGA/CG1SYS.FON": {
+      "bytes": 3536,
+      "sha256": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40"
+    },
+    "CGA/CG2HELV.FON": {
+      "bytes": 3760,
+      "sha256": "d1f6878faaf8abd06f425d7672277d6eb6d1097f9994c738ba753655d125afc3"
+    },
+    "CGA/CG2SYS.FON": {
+      "bytes": 3760,
+      "sha256": "c0ac9e8753e6b13b5bf0faa5384c85daf94427d813485a47270a62333bbfd222"
+    },
+    "CGA/CG6HELV.FON": {
+      "bytes": 4256,
+      "sha256": "d3bccab5f5daea935ca568923d5274315301f93caffd50e2cdcdd4d59735842d"
+    },
+    "CGA/CGA100.DRV": {
+      "bytes": 58208,
+      "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3"
+    },
+    "CGA/CGA320.DRV": {
+      "bytes": 57728,
+      "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4"
+    },
+    "CGA/CGA32C.DRV": {
+      "bytes": 72368,
+      "sha256": "e4acacc170460f9e351cda46e4e4cc9af883c52d8ff1a9d091157beb86fc33e3"
+    },
+    "CGA/CGA640.DRV": {
+      "bytes": 57312,
+      "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1"
+    },
+    "CGA/CGA64C.DRV": {
+      "bytes": 71952,
+      "sha256": "0deee79c45e9d3cbece8cd350a4eec01fe9c0d67eae82a15b43e10da28f2b86c"
+    },
+    "CGA/CGACTL.EXE": {
+      "bytes": 25247,
+      "sha256": "fa1bc19c9f0301b4ea2f91116a0cfb1f3db0864d1f794edf5e7bdd70cfc5a2d0"
+    },
+    "CGA/CGAGRAB.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "CGA/CGAPAN.DRV": {
+      "bytes": 58928,
+      "sha256": "28eae7e0bd1ef57c00707f17a5272da259201fee026b6d75ce7f5cf735a563b5"
+    },
+    "CGA/FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "CGA/LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "CGA/NOTICE.TXT": {
+      "bytes": 3025,
+      "sha256": "d0b64ce9ccad9692484ad81c951922f7d54461d6795a3cc4cd05fd70c127f7e9"
+    },
+    "CGA/OEMSETUP.INF": {
+      "bytes": 1535,
+      "sha256": "6d7e34414bc96d0e5a416a6414bc2a3da250119c535199a0f0a63c172e55f705"
+    },
+    "CGA/PAN.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "CGA/PANCFG.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "CGA/PANCTL.EXE": {
+      "bytes": 18591,
+      "sha256": "a13f1e676b8d71a20643a6b82646ba1f7066e726b88e1c2e482df2ba812f2015"
+    },
+    "CGA/PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    },
+    "CGA/T80COUR.FON": {
+      "bytes": 4224,
+      "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6"
+    },
+    "CGA/WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    },
+    "CGA/XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "CGA/XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "CGA/XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "CGA/XTPAN.EXE": {
+      "bytes": 27407,
+      "sha256": "bd33843a1fd456446b8935f69aa74605b82010e9c4345b4a186870b47c52213d"
+    },
+    "CGA/XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "CGA/XYCTL.EXE": {
+      "bytes": 33220,
+      "sha256": "aa405b11e5b0f82cc4499bda54897b937ffee9305017788065c1bcb283097bbf"
+    },
+    "README.TXT": {
+      "bytes": 2732,
+      "sha256": "c91e12bed1c1a1b944c849f4708200a256c6e48916d557822e54842c8b5834cd"
+    },
+    "SETUP.EXE": {
+      "bytes": 34337,
+      "sha256": "59441c52a6df1608c3fc414991bde8b6c6c4669ff785bbf0b4a3c6f54cbfb6ba"
+    }
+  },
+  "prepared": {
+    "path": "docs/QUAL/CGACMP/PREPARED.JSN",
+    "identity": {
+      "bytes": 8507,
+      "sha256": "fce343a5213f17f99859ce0defc606d5fb0de051206cf69fbb38d16551aa1949"
+    }
+  },
+  "build": {
+    "path": "docs/QUAL/CGACMP/BUILD.JSN",
+    "identity": {
+      "bytes": 760,
+      "sha256": "fa9bbdbbe912f4069f6a07ea185dac7000638d165a0b4af1c20d94cc7b5cef39"
+    }
+  },
+  "native_dos": {
+    "path": "docs/QUAL/CGACMP/DOS.JSN",
+    "identity": {
+      "bytes": 2921,
+      "sha256": "9738a9bb9e7ac921a7714e7e781ea624c467d73597da38865c4bf79ead799ae8"
+    }
+  },
+  "review": {
+    "path": "docs/QUAL/CGACMP/REVIEW.JSN",
+    "identity": {
+      "bytes": 5374,
+      "sha256": "78e76ad67d6e9a3e35c5810ce1e553e41f713a18eb6a4ee583606467f2a18ffe"
+    }
+  },
+  "reviewed_commit": "902526cff929ac84049d84ff70fb36e50f2bd006"
+}

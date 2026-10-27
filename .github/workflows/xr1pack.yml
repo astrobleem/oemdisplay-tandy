@@ -41,6 +41,12 @@ jobs:
           python3 tools/DOSINST/TESTPUB.PY
           python3 tools/DOSINST/TESTHPXY.PY
           python3 tools/DOSINST/TESTCRC.PY
+          python3 -c "import zipfile; zipfile.ZipFile('docs/QUAL/HPDIB/MATRIX.ZIP').extractall('hpdib-matrix')"
+          python3 tools/HPDIB/TESTGATE.PY --fixture hpdib-matrix/baseline
+          python3 tools/HPDIB/TESTPUB.PY --lease hpdib-matrix/candidate/LEASE.JSN
+          python3 tools/HPDIB/TESTPREP.PY --driver tools/HPDIB/BIN/HPXY.DRV --build docs/QUAL/HPDIB/BUILD2.JSN
+          python3 tools/HPDIB/TESTSET.PY
+          python3 tools/HPDIB/TESTHIST.PY
           python3 tools/XR1PACK/PUBLISH.PY --out release-xr1 --commit "$SOURCE_SHA"
           python3 tools/XR1PACK/PUBLISH.PY --verify release-xr1 --commit "$SOURCE_SHA"
           cd release-xr1

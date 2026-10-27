@@ -1,0 +1,68 @@
+{
+  "status": "PASS_NATIVE_INSTALLED_HPXY_DIB",
+  "route": "full_finisher",
+  "normal_dos_return": true,
+  "installed_driver": {
+    "bytes": 62096,
+    "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c"
+  },
+  "installed_helpers": {
+    "XTPAN.EXE": {
+      "bytes": 27407,
+      "sha256": "bd33843a1fd456446b8935f69aa74605b82010e9c4345b4a186870b47c52213d"
+    },
+    "XYCTL.EXE": {
+      "bytes": 33220,
+      "sha256": "aa405b11e5b0f82cc4499bda54897b937ffee9305017788065c1bcb283097bbf"
+    },
+    "PANCTL.EXE": {
+      "bytes": 18591,
+      "sha256": "a13f1e676b8d71a20643a6b82646ba1f7066e726b88e1c2e482df2ba812f2015"
+    },
+    "CGACTL.EXE": {
+      "bytes": 25247,
+      "sha256": "fa1bc19c9f0301b4ea2f91116a0cfb1f3db0864d1f794edf5e7bdd70cfc5a2d0"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "PAN.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    }
+  },
+  "driver_not_injected": true,
+  "normal_packet_path": true,
+  "pan_controls_pass": true,
+  "full_repair_invoked": true,
+  "repair_complete": true,
+  "paintbrush_tested": true,
+  "paintbrush_rgb_equal": true,
+  "native_controls": {
+    "outcome": "PASS_NATIVE_HPXY_SINGLE_APP",
+    "physical_hardware": false,
+    "normal_dos_return": true,
+    "checks": [
+      "Normal guarded packet launcher starts installed PAN owner",
+      "Installed SOFTWARE owner handles native Home/Right/Down with8x4 constraints",
+      "Installed HARDWARE owner handles native Home/Right/Down with8x4 constraints",
+      "Real Paintbrush import/save/pan/close completed; RGB readback remains separate"
+    ]
+  },
+  "physical_hardware": false,
+  "bitmap_width": 160,
+  "bitmap_height": 96,
+  "input_bitmap": {
+    "bytes": 7798,
+    "sha256": "9ab7bfcc0b5a0307ff9ffc5486a8f125cac8725610b98319fe66ef69792bf581"
+  },
+  "output_bitmap": {
+    "bytes": 7798,
+    "sha256": "0915356828fb6268c3df25891f4329f2070bed8e8463bdc5a18b4ccc48dfdde0"
+  }
+}

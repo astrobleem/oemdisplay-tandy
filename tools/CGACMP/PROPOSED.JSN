@@ -1,5 +1,5 @@
 {
-  "status": "INTEGRATED_LOCALLY_PENDING_PUBLICATION_APPROVAL",
+  "status": "INTEGRATED_WITH_CURRENT_MAIN_PENDING_FINAL_INTEGRATION_REVIEW_AND_PUBLICATION_APPROVAL",
   "product": "CGA.ZIP",
   "current": {
     "source": "downloads/PAN/CGA.ZIP",
@@ -17,6 +17,28 @@
   },
   "preserve_core": {
     "WINXT.ZIP": {
+      "bytes": 809353,
+      "sha256": "b323a9b10ed100c8f68568708272673a4781b96ae2554b1603ca05527cc2ed41"
+    },
+    "WINXTSRC.ZIP": {
+      "bytes": 100529,
+      "sha256": "9e32793d07820154d627cdcf147bbfc7086d5db7addf76f5c66d310ff9ff220a"
+    },
+    "WINXT.JSN": {
+      "bytes": 10127,
+      "sha256": "7fda63988169f557ebb64d8a0cccd329ebc575ae819988743a318bcc904874dc"
+    },
+    "WINXT.SHA": {
+      "bytes": 234,
+      "sha256": "ff8cb0336e733d5e2efc0bb40312e4d6fb1a1d71140b82845e5fcfd638bde6cf"
+    }
+  },
+  "candidate": "docs/QUAL/CGACMP/CANDIDATE.JSN",
+  "gate": "tools/CGACMP/VERIFY.PY",
+  "accepted": "tools/CGACMP/ACCEPT.JSN",
+  "review": "docs/QUAL/CGACMP/REVIEW02.JSN",
+  "previous_core_checkpoint": {
+    "WINXT.ZIP": {
       "bytes": 809113,
       "sha256": "f8eeb452a532695c7a8c7c5bfee334d089093d1f991e276cba3bc5136f0e9f17"
     },
@@ -33,8 +55,5 @@
       "sha256": "9c9f41b6181cdf81b672a7bf15cf7f4f33664c318f23f34de54f86f74ab926e8"
     }
   },
-  "candidate": "docs/QUAL/CGACMP/CANDIDATE.JSN",
-  "gate": "tools/CGACMP/VERIFY.PY",
-  "accepted": "tools/CGACMP/ACCEPT.JSN",
-  "review": "docs/QUAL/CGACMP/REVIEW.JSN"
+  "integrated_main": "f169a7798e23583dd4535e2e6d1debdbbbdbe95b"
 }

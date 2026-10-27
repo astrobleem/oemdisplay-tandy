@@ -13,10 +13,13 @@ with normal 640 KB. Other hardware uses its matching packet in
   with its guarded `DISPLAY` and `DISPWIN` entries. See [desktop setup](docs/DESKTOP.MD)
   and [driver setup](docs/DRIVERS.MD). Full preparation needs DOS 3.3+;
   the installed-Windows driver route supports DOS 3.20+.
-- **Current core producer:** `tools/PAN/PUBLISH.PY`; the CLI in
+- **Current core producer:** `tools/HPDIB/PUBLISH.PY`; the CLI in
   `tools/XR1PACK/PUBLISH.PY` forwards to it. Current download curation is
   `tools/CURRENT/BUNDLE.PY`, checked by `tools/CURRENT/CHECK.PY` and pinned
   in `tools/CURRENT/PRODUCTS.JSN`.
+  `tools/PAN/PUBLISH.PY` remains the preceding exact-byte reproducer; its
+  source pins are replayed from the closed HPDIB historical snapshot when
+  current catalog entry points change. Never relax the earlier native pins.
 - **Developer display build:** `src/tandysw/BUILD88.PY` exists and builds
   the five-profile Tandy software-raster driver base (internally called `TR5`)
   from an explicit external DDK/toolchain view.

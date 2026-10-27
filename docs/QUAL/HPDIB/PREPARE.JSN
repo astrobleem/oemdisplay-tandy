@@ -1,0 +1,479 @@
+{
+  "status": "PREPARED_NOT_QUALIFIED",
+  "source_commit": "96a1e936bc868138ced298ded7a3046cd094122d",
+  "baseline_runtime_source": "5b3a79fded9e2b00b4e5f75d161e73f1eb685c04",
+  "baseline_archive": {
+    "bytes": 809113,
+    "sha256": "f8eeb452a532695c7a8c7c5bfee334d089093d1f991e276cba3bc5136f0e9f17"
+  },
+  "archive": {
+    "bytes": 809353,
+    "sha256": "b323a9b10ed100c8f68568708272673a4781b96ae2554b1603ca05527cc2ed41"
+  },
+  "files": {
+    "README.TXT": {
+      "bytes": 2700,
+      "sha256": "9195e55761d9f703c47ebf7a149647f0fdb82d8b4103c4a43d7d62310d7c04c1"
+    },
+    "SETUP.EXE": {
+      "bytes": 85228,
+      "sha256": "6cac24397f126e95f9b9e70dee429c79895bdefc48f0f0512edd346511622941"
+    },
+    "WINXT/APPS.TXT": {
+      "bytes": 412,
+      "sha256": "22018a4cc6a6c5edd39d74ad6c4e39058be9ebf629ed460b16d4d385a100400b"
+    },
+    "WINXT/CGA.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "WINXT/CGACTL.EXE": {
+      "bytes": 25247,
+      "sha256": "fa1bc19c9f0301b4ea2f91116a0cfb1f3db0864d1f794edf5e7bdd70cfc5a2d0"
+    },
+    "WINXT/CPSET.EXE": {
+      "bytes": 36846,
+      "sha256": "878503555c3db2e41b08d9a6d5d215866243b117cb309f231582afee09785dfc"
+    },
+    "WINXT/DISPLAY.BAT": {
+      "bytes": 1242,
+      "sha256": "c07b44044f14969d7a8ffb8fba2e355789116bc0c4af416bc81139a0a6a8fe36"
+    },
+    "WINXT/DISPLAY.TXT": {
+      "bytes": 2323,
+      "sha256": "99ea956fc1699fa43d3cba3928e560583dfdc7aeedd5f945556b91990337ff1c"
+    },
+    "WINXT/DISPWIN.BAT": {
+      "bytes": 1093,
+      "sha256": "614bf6d15b7f679525c69d82c9ccde90479cac4559fa87f54a1b6bcf49abcc44"
+    },
+    "WINXT/FIXXT.BAT": {
+      "bytes": 314,
+      "sha256": "b8a060cdc2d125989379375b8f9dbbb04d0a17f4aa71a6235350291f65f410c8"
+    },
+    "WINXT/FIXXT.EXE": {
+      "bytes": 50928,
+      "sha256": "75626d84650743a266e2250ac0b9f01604062f9ca47355a1944184bc693eac73"
+    },
+    "WINXT/FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/HPXY.DRV": {
+      "bytes": 62096,
+      "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c"
+    },
+    "WINXT/HPXY.INF": {
+      "bytes": 882,
+      "sha256": "81957f3577522507e896899ad8d6a4fb98177fcd5ca3ff720e19d8e05d47f8d3"
+    },
+    "WINXT/LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/MATRIX.EXE": {
+      "bytes": 14669,
+      "sha256": "854e0692b4a2571b7d53b45f15da7d954137fde9dce079e8a17df753ec94aca8"
+    },
+    "WINXT/MAZE.EXE": {
+      "bytes": 28013,
+      "sha256": "9905abccd267dd229502fad2d7e57375f51c34b2c445fc52ea754508407de389"
+    },
+    "WINXT/MODELIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/MODEXT.BAT": {
+      "bytes": 481,
+      "sha256": "7f9948334d1d7f073326be6c5153e3a24a24ef836fa823fc45667b1a79e2fa5a"
+    },
+    "WINXT/NOTICE.TXT": {
+      "bytes": 1845,
+      "sha256": "33c86c7e8f70c19fb9a942e1f8676556921cd0893388f16036f28af9dc4dfba2"
+    },
+    "WINXT/OEMSETUP.INF": {
+      "bytes": 902,
+      "sha256": "a1bbcaf2efbd59939fd67ccfb70bc0f49e4aa44f3fec54307aa489719d782be4"
+    },
+    "WINXT/OWATCOM.TXT": {
+      "bytes": 21128,
+      "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+    },
+    "WINXT/OWNERS.TXT": {
+      "bytes": 10352,
+      "sha256": "a9ac59f348a4a4ee6efb2dea4860966a91cf628493e089d3c55d58cf34e3eae7"
+    },
+    "WINXT/PAN.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "WINXT/PANCFG.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "WINXT/PANCTL.EXE": {
+      "bytes": 18591,
+      "sha256": "a13f1e676b8d71a20643a6b82646ba1f7066e726b88e1c2e482df2ba812f2015"
+    },
+    "WINXT/PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    },
+    "WINXT/PINBALL.EXE": {
+      "bytes": 15487,
+      "sha256": "af4b434d8eb3b720b5b2490ec8cfbffd69d434f34f9c6ecea9ba3f098e78f89f"
+    },
+    "WINXT/PROFILES.TXT": {
+      "bytes": 299,
+      "sha256": "c439e1fc0e3ac7a6d0db212b95908699993855bf6135c57ce4b889b5b465215c"
+    },
+    "WINXT/RESERVE.COM": {
+      "bytes": 1512,
+      "sha256": "644290e234cab9a6ac3799fa32959bb493d82d566501a8925720bb5a28c6afa8"
+    },
+    "WINXT/SETAUTO.EXE": {
+      "bytes": 10976,
+      "sha256": "e2908cba3430be2a3b24058061f6b477629305476f8702d6a7c2f7fd81d45e0a"
+    },
+    "WINXT/SETUPXT.BAT": {
+      "bytes": 1726,
+      "sha256": "46baa557d053b704fd6f1d79db1b1a2455cfbdd67901225dca2b86538734eb9a"
+    },
+    "WINXT/SHOOK.COM": {
+      "bytes": 1249,
+      "sha256": "ba35ca3ce5407270e61c0ca15d27c4ca052bcd2a1112c7819fc214b74bd0d211"
+    },
+    "WINXT/SOUND.DRV": {
+      "bytes": 9752,
+      "sha256": "ef501c64b80559ab8cc729c32bd36647a3c041bcf08ccf50cd958bb60065eccd"
+    },
+    "WINXT/SOUNDID.JSN": {
+      "bytes": 152,
+      "sha256": "32cbeaec5be964abf44c3c84bd519a841958eb49cf491d9347a0ed5ff3d8741e"
+    },
+    "WINXT/SOUNDLIC.TXT": {
+      "bytes": 35823,
+      "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809"
+    },
+    "WINXT/STARFLD.EXE": {
+      "bytes": 17295,
+      "sha256": "c615fcd8c18ed740ed051542093e1bd18e26b92e820eef5b1bb4fa69f2ab8ff5"
+    },
+    "WINXT/START.TXT": {
+      "bytes": 837,
+      "sha256": "31b58d7d339c2ad6c55d2be4d7d3fc1be4a954476dc7a61ef21ebd9af00bdf1b"
+    },
+    "WINXT/STARTXT.BAT": {
+      "bytes": 31,
+      "sha256": "2644ccde425aae149e6240db084401aa7ae1ede3610c5daeb34a7234d5081aaa"
+    },
+    "WINXT/TABOUT.EXE": {
+      "bytes": 6479,
+      "sha256": "b13fb3cf53cabe28692c1902417768e4cf87de3fa34d6d05212a00d8d9c171ed"
+    },
+    "WINXT/TANDYGR.GR2": {
+      "bytes": 5480,
+      "sha256": "e3d03d6299e6a0a5a288f799c3fe4687dc1fabf96c2304030e8ae7d6547999af"
+    },
+    "WINXT/TCHIME.EXE": {
+      "bytes": 5071,
+      "sha256": "6de8cf5c0e00b78a1df0a52d912afdb376b2ef2a8516a2d3ca1303a751603e61"
+    },
+    "WINXT/TEXIT.EXE": {
+      "bytes": 9215,
+      "sha256": "5756639dbb979c758642663ba724f4951be5e2ff658611afd638c808edf39148"
+    },
+    "WINXT/TGCLIP.EXE": {
+      "bytes": 4991,
+      "sha256": "18b32919194c313966fb62a4a984af0875bd67db1bb9e4342dd66518f0681267"
+    },
+    "WINXT/TNDYK3.DRV": {
+      "bytes": 7640,
+      "sha256": "e2abb52ec3f148ccfda49ae39a6d56e38d93e1431986cd2a94d26a404120b3a5"
+    },
+    "WINXT/TP.EXE": {
+      "bytes": 12847,
+      "sha256": "e0be284acf93ca6d1ccfe7150fe5ebdd5f16cf18c3c5a02a7aa779841be79a33"
+    },
+    "WINXT/TSHELL.EXE": {
+      "bytes": 72323,
+      "sha256": "b024e8f715bd33cb94ab86718a3723e1cf70686187b96bbbf1ce383d606c93b9"
+    },
+    "WINXT/TSHELL.INI": {
+      "bytes": 999,
+      "sha256": "9b0dca9bf1f66bcb5f99cbc347dbf093942ee30c6e0b3d546127e88585cec2f5"
+    },
+    "WINXT/TSINPUT.DLL": {
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+    },
+    "WINXT/WHEEL.DRV": {
+      "bytes": 1820,
+      "sha256": "84df334cfc34af2dc8785676e92cfe428e0288cb21e2c6e94dbc16baba6d12f0"
+    },
+    "WINXT/WHEELLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "WINXT/WINBRDG.EXE": {
+      "bytes": 28656,
+      "sha256": "230a24f8dec830dd8ceb8e11bb6f9694ed9a67b25ef232b9352e5e743cd3d74b"
+    },
+    "WINXT/WINXT.BAT": {
+      "bytes": 332,
+      "sha256": "8b484c67b9896deb2ba281f79a4020e35c7ef238fad5c5055ca63699c87c683b"
+    },
+    "WINXT/WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    },
+    "WINXT/WXTWHL.EXE": {
+      "bytes": 7222,
+      "sha256": "0bd206d58e155f3fb517f74775977b45eeba425af1414aace78f9c02cd5912f6"
+    },
+    "WINXT/XPCHIME.EXE": {
+      "bytes": 5103,
+      "sha256": "83533e67e9f804668520a7ac5fcb1546bac9c3e58a6cd57c651ca16735374cc0"
+    },
+    "WINXT/XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "WINXT/XTCLEAN.COM": {
+      "bytes": 1071,
+      "sha256": "1e1ab8140f39e91eb7a3036cc1a1971c721a9f102c0512242ba980bbfeca506c"
+    },
+    "WINXT/XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "WINXT/XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "WINXT/XTEFIX.FON": {
+      "bytes": 4656,
+      "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+    },
+    "WINXT/XTEOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "WINXT/XTESYS.FON": {
+      "bytes": 5680,
+      "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+    },
+    "WINXT/XTLOGO.LGO": {
+      "bytes": 35971,
+      "sha256": "8b2fc40b8c6cc3a231686f8c1337943450a1a976a5fc47dd02ed8859cbe72b2c"
+    },
+    "WINXT/XTPAN.EXE": {
+      "bytes": 27407,
+      "sha256": "bd33843a1fd456446b8935f69aa74605b82010e9c4345b4a186870b47c52213d"
+    },
+    "WINXT/XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "WINXT/XTTSYS.FON": {
+      "bytes": 4208,
+      "sha256": "dbc26ad717340070b4da1948d97eb5ba24528e0a5cd0853199884d6cca8d51aa"
+    },
+    "WINXT/XYCTL.EXE": {
+      "bytes": 33220,
+      "sha256": "aa405b11e5b0f82cc4499bda54897b937ffee9305017788065c1bcb283097bbf"
+    }
+  },
+  "changed": [
+    "SETUP.EXE",
+    "WINXT/FIXXT.EXE",
+    "WINXT/HPXY.DRV"
+  ],
+  "driver": {
+    "bytes": 62096,
+    "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c"
+  },
+  "gross_NE_bytes": 127133,
+  "build": {
+    "build": "PASS",
+    "runtime": "NOT_TESTED_BY_BUILD",
+    "candidate": "PRIVATE HPXY fixed-group DIB unroll",
+    "batching": false,
+    "synchronous_output": false,
+    "logical": [
+      640,
+      256,
+      16
+    ],
+    "viewport": [
+      320,
+      200,
+      16
+    ],
+    "shadow_bands": [
+      64000,
+      17920
+    ],
+    "stage_bytes": 2816,
+    "hardware_default": false,
+    "physical_tested": false,
+    "gross_NE_bytes": 127133,
+    "delta_from_R3_gross_bytes": 24178,
+    "ceiling_delta": 24576,
+    "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c",
+    "baseline_pipeline_report": "BASEPIPE.json describes transformations before the XY overlay; its mode and optimization descriptions are not final XY behavior",
+    "dib_overlay_sha256": "fd43363b728e7c133025225818a7de1b6d23fe4a04e9d2c68f2958e93fab56a1",
+    "source_base": "c40e380e13b6e7cc6201b1958c580fd287cf4374",
+    "presentation": "Unchanged released converter; no solid predicate",
+    "accepted_runtime_replaced": false
+  },
+  "native_sources": {
+    "CRCFAST.H": {
+      "bytes": 3941,
+      "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+    },
+    "DOSCORE.H": {
+      "bytes": 24157,
+      "sha256": "4ad0d3e6518406a3a8bbb3ec5bd6a0c5faa8f39d90af4cacf0dfbe7442a6d617"
+    },
+    "FIXXT.C": {
+      "bytes": 31363,
+      "sha256": "b2196fc691a446759597521e9524ad3449c2d21ad3141600b800ae2de1f4cf06"
+    },
+    "HPXYID.H": {
+      "bytes": 133,
+      "sha256": "793c2d63b2c8c9f11bfb7ec6efd450191253764bef31f844f30d5e2b2572017c"
+    },
+    "PACKPINS.H": {
+      "bytes": 73,
+      "sha256": "fa96864511f03aed1628668d10c4073314e49e554f965a90db6e44a16ec403ac"
+    },
+    "PANINT.H": {
+      "bytes": 4182,
+      "sha256": "66f60aa1665f5dcc33d49c8b982426b3e4de079ff40c6dae7a09214d007da2a7"
+    },
+    "PANPINS.H": {
+      "bytes": 424,
+      "sha256": "970e99fc5f75b0e61d49e98f62303275cdcf81b6c30680e4bbf07e6720c7611d"
+    },
+    "PANSTART.C": {
+      "bytes": 1340,
+      "sha256": "ded8934ea25ef8b21450c597c8d4b85d8dc8c0a1656ad06f1a55f33453ac6c4c"
+    },
+    "PANSTART.H": {
+      "bytes": 189,
+      "sha256": "040f2f083f2ce43e7636c7fcf4746898e9b7bc04277d70b7af01d5125880d17c"
+    },
+    "SETFILES.H": {
+      "bytes": 20570,
+      "sha256": "4b715be5517f6521d52d95e658936af83b9fdbf65554ed106d12fd7149bbf18e"
+    },
+    "SETINPUT.H": {
+      "bytes": 15286,
+      "sha256": "f2db4edd59db4e48121c707a95e7b50e8d4e76e35647adfc410f103d4dee3cf1"
+    },
+    "SETPINS.H": {
+      "bytes": 6180,
+      "sha256": "522810066f96c5a1302b4f004c414f7faf782637c2e089cace50be77dcfd76ea"
+    },
+    "SETUP.C": {
+      "bytes": 371,
+      "sha256": "b7738328fdab97209b8419f20a666e6924cf4cc02806115c684883d007b2c33c"
+    },
+    "SOUNDID.H": {
+      "bytes": 201,
+      "sha256": "c7645359276c478e8609881559a4d252e9ee966161261b255f9b389482610310"
+    },
+    "SZSTREAM.H": {
+      "bytes": 1867,
+      "sha256": "e0b51848fe0bc98b4d95b24c9c0d40a692cbfefcc764277f64f822bc62c0fd68"
+    },
+    "TGID.H": {
+      "bytes": 112,
+      "sha256": "1d2077d5f8f928d24c58b7fbdb51568b98b5150b25cb7deb4d57ed28813a3c4d"
+    },
+    "TGINT.H": {
+      "bytes": 4480,
+      "sha256": "ba490888625e159bea2f38649833ec27fce52edf1711946d65b55eb16be21fd5"
+    },
+    "TGSETID.H": {
+      "bytes": 124,
+      "sha256": "26f94d205c8041b28b22418a6e7c73237c2c46eb1023b40834b5d1153e31f992"
+    },
+    "TGUPSET.H": {
+      "bytes": 711,
+      "sha256": "3dbb48a6cf942a114a38dd66a49417d981edf641621e658eb52cc6bc58ed4638"
+    },
+    "VARSET.H": {
+      "bytes": 12924,
+      "sha256": "db29b294520099d7221db5403d5637b2cc50b0d811a8366359760a312df7f4b3"
+    },
+    "XR1PINS.H": {
+      "bytes": 5226,
+      "sha256": "e914082d6e00f3c9758c250673f62653d0233e4554d6fd0b19f0000488408208"
+    },
+    "XRFILES.H": {
+      "bytes": 19683,
+      "sha256": "af5c185471490779b92dec550bcd52059637f4264baa8d4d1077ea5ba9bcae96"
+    },
+    "XRINPUT.H": {
+      "bytes": 14525,
+      "sha256": "0b577e38adae31b4c710d9eb109d631b67ae7179598a0f6a31b78cd438afe4f4"
+    },
+    "XRPREP.C": {
+      "bytes": 18454,
+      "sha256": "bcb7e848b781a69c0163e98448de2b501f4a356ec22fa0c76b715c60e6618311"
+    },
+    "XRSTRM.H": {
+      "bytes": 1861,
+      "sha256": "8a2720b1b2a1f0ad8e76c6cddcfaf8746709ee14107b41343b4c2dd6ae748020"
+    },
+    "XSETUP.C": {
+      "bytes": 9282,
+      "sha256": "b0fe464b63ab8358351afb6a2ba805cd9029b7ccf09e16aad5cd5c03f573c869"
+    },
+    "XSPINS.H": {
+      "bytes": 1091,
+      "sha256": "ed226db543daf43a753fa37f40db675d21b943e3c15a8cfe02f5fd68c14f723a"
+    },
+    "XTCLEAN.ASM": {
+      "bytes": 4210,
+      "sha256": "6bb9c01e994c881cc0f6c16bdcbb2927b3768adcb23f622b4a2ec6045211d5f9"
+    }
+  },
+  "installers": {
+    "SETUP.EXE": {
+      "bytes": 85228,
+      "sha256": "6cac24397f126e95f9b9e70dee429c79895bdefc48f0f0512edd346511622941"
+    },
+    "FIXXT.EXE": {
+      "bytes": 50928,
+      "sha256": "75626d84650743a266e2250ac0b9f01604062f9ca47355a1944184bc693eac73"
+    }
+  },
+  "inherited_packets": {
+    "JRPAN.ZIP": {
+      "bytes": 352144,
+      "sha256": "c043681a2ca3645e1a3f9b0d03af0935bff62594565545da0d622d00d7349ee0"
+    },
+    "CPPAN.ZIP": {
+      "bytes": 354565,
+      "sha256": "bfc55baf6bf862c0775d2d6d2728705f7d9c53b85469c38e443ea688f8724a98"
+    },
+    "CGA.ZIP": {
+      "bytes": 460460,
+      "sha256": "1768cffab6a770ee01494fb493c9ffe4e3caf2a41a9617b2ccec7bc9909e37d2"
+    },
+    "PAN.ZIP": {
+      "bytes": 429623,
+      "sha256": "e020e8c71d132bb89a65ff1dde096be25e437fc70a6d976cf004895b98ccfcd0"
+    }
+  },
+  "gaps": [
+    "Independent review",
+    "Repeated native DIB/raster checks",
+    "Native FRESH, UPDATE and ordinary Windows Setup transactions",
+    "Installed PAN and Windows application acceptance",
+    "Final catalog and publication approval"
+  ]
+}

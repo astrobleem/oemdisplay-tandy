@@ -1,0 +1,15 @@
+{
+  "status": "REVIEW_FINDING_FIXED_TESTED_REVIEW_PENDING",
+  "original_review": "REVIEW0.JSN",
+  "first_fix_commit": "d278719f016f7a853c23425659b47bc96a93fbd0",
+  "negative_tests": 21,
+  "positive_native_matrix_replays": 2,
+  "changes": [
+    "Exact41FRAME IDs in native order",
+    "Complete native run and successful DOS return",
+    "Owned stop, acquired/released PASS lease, empty inventory",
+    "Installed/prepared driver binding and checked/native log equality",
+    "Missing or malformed evidence cannot retain stale PASS"
+  ],
+  "review_followup_pending": true
+}
