@@ -1,0 +1,103 @@
+{
+  "status": "IMPLEMENTED_AWAITING_INDEPENDENT_REREVIEW",
+  "review_finding": "REVIEW01.JSN",
+  "action": "Parse the exact 86Box launch config and compare its hardware with the native declaration.",
+  "target": "tools/CGACMP/VERIFY.PY",
+  "hardware": {
+    "cpu_family": "8088",
+    "cpu_speed": "4772728",
+    "cpu_multi": "1",
+    "cpu_use_dynarec": "0",
+    "machine": "ibmxt86",
+    "mem_size": "640",
+    "gfxcard": "cga"
+  },
+  "refused": "Other config sections/options, inherited defaults, duplicate options, malformed config and mismatched CPU/clock/RAM/video/dynarec values.",
+  "regression": "12 restamped actual-config mutations keep the valid machine declaration unchanged; all refused.",
+  "host_checks": 24,
+  "sources": {
+    "src/cga/SETUP.C": {
+      "bytes": 16794,
+      "sha256": "f503a11d8322d1a5f0d3564037b480e30b14a86ea760cef72cb3dc14d78a1779"
+    },
+    "src/cga/PACKCGA.PY": {
+      "bytes": 19710,
+      "sha256": "0c90fa180f752b961894b3210711e6ae8a0ede79aeedeb964c9bc443b7f6d745"
+    },
+    "src/cga/CGASET.PY": {
+      "bytes": 4829,
+      "sha256": "39b0d7944b113e80c8e8be3caa1cd78b6c34dfc7fcf191ed93340063109cf8ea"
+    },
+    "src/cga/CMPPACK.PY": {
+      "bytes": 2488,
+      "sha256": "740c01ead19f6156bb88aecc1e32694395ba7879d2ac77b0b7714265582ecb41"
+    },
+    "src/cga/CMPRSC.PY": {
+      "bytes": 5150,
+      "sha256": "74b84a531b5f57635ca251b4277e74999c5f0ef66276eb17f27bddf353654ec0"
+    },
+    "src/cga/CMPINST.PY": {
+      "bytes": 4170,
+      "sha256": "230db43bd1f97052f0493921953fb36303bc34dd304063bb4e569986c919ae01"
+    },
+    "src/cga/CMPTEST.PY": {
+      "bytes": 2270,
+      "sha256": "1fea3caee457765e6a47cffe6cf0bd438865ecbb9417cc44c0cdb62f1dee466b"
+    },
+    "src/cga/INSTALLT.PY": {
+      "bytes": 13976,
+      "sha256": "0bce0cbd081458f9229eca236ecccfb1518e2d19b1a78f276f89df4dfaf70e6e"
+    },
+    "src/cga/OEMSETUP.INF": {
+      "bytes": 1535,
+      "sha256": "6d7e34414bc96d0e5a416a6414bc2a3da250119c535199a0f0a63c172e55f705"
+    },
+    "tools/PAN/CGASTAGE.PY": {
+      "bytes": 2275,
+      "sha256": "92f0cb95f7d55ea71056afeef706965c36fd541852bbf20eabfe1591e8a1900e"
+    },
+    "tools/PAN/GUIDES/CGA.TXT": {
+      "bytes": 2732,
+      "sha256": "c91e12bed1c1a1b944c849f4708200a256c6e48916d557822e54842c8b5834cd"
+    },
+    "tools/PAN/PREPCGA.PY": {
+      "bytes": 2497,
+      "sha256": "8d9acffbfd6afe67cd869a046b03524c254cabce13dc763be4bc0cd4bdd5be07"
+    },
+    "tools/PAN/PUBLISH.PY": {
+      "bytes": 9034,
+      "sha256": "f85d41b0e17652e1b607db415dd3acfd8657130ae558cced5c45ccd55f8029f0"
+    },
+    "tools/PAN/COMPOSE.PY": {
+      "bytes": 3021,
+      "sha256": "038346212a18d02f532e1092d528cb010895af628159e5d30411a216c899df8a"
+    },
+    "tools/CGACMP/HISTORY.PY": {
+      "bytes": 1348,
+      "sha256": "dc8cb7335045024d8d58f08acf5fa89b4621eed136d887ad817463c27806b647"
+    },
+    "tools/CGACMP/VERIFY.PY": {
+      "bytes": 11810,
+      "sha256": "c0afba9a1a98cd18007fecf7b976260cf51d73481979270bdff37cc3610269a4"
+    },
+    "tools/CGACMP/TEST.PY": {
+      "bytes": 6797,
+      "sha256": "129817ac720c1d0ef58c78d5977472a3d41d6412bdb2f1b467814e4b8a6788e4"
+    },
+    "docs/QUAL/CGACMP/TESTSRC.ZIP": {
+      "bytes": 30461,
+      "sha256": "759f5736008ead2fa01a26b979bfc2cf7bc804dfa1473f2961712e4f880b2ed3"
+    }
+  },
+  "packet": {
+    "bytes": 297312,
+    "sha256": "84a1992803d1bd022318ddb001490b66494aba1e61ca09eef2fbc445fb469cc4"
+  },
+  "runtime_changed": false,
+  "native_rerun": false,
+  "emulator_started": false,
+  "ci": "compact-cga.yml runs the compact evidence/refusal suite and retains its receipt; current.yml retains its original accepted identity.",
+  "independent_review": "PENDING",
+  "catalog_promotion": "PENDING_REVIEW",
+  "publication": "NOT_AUTHORIZED_OR_ATTEMPTED"
+}

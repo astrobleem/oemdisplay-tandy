@@ -5,7 +5,7 @@ accept only its CGA alternative after exact native installation, application,
 cleanup and independent-review evidence is supplied. No emulator runs here.
 """
 from pathlib import Path
-import argparse,hashlib,importlib.machinery,io,json,re,struct,sys,zipfile
+import argparse,configparser,hashlib,importlib.machinery,io,json,re,struct,sys,zipfile
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
 
@@ -29,6 +29,38 @@ def lease(q):
          q.get('children') and q.get('inventory_after')==[] and
          all(c.get('pid',0)>0 and c.get('stopped') for c in q['children']),
          'Compact Windows owned-process cleanup incomplete')
+
+def native_machine(raw):
+ # This acceptance covers the recorded XT fixture only. Close its sections
+ # and options as well as the hardware values, so an added memory board or
+ # override cannot hide behind an unchanged self-reported machine dictionary.
+ expected={
+  'General':dict(confirm_exit='0',confirm_reset='0',confirm_save='0',
+                 enable_overscan='1',host_cpu='Unknown',video_filter_method='0'),
+  'Machine':dict(cpu_family='8088',cpu_multi='1',cpu_speed='4772728',
+                 cpu_use_dynarec='0',machine='ibmxt86',mem_size='640',time_sync='disabled'),
+  'Video':dict(gfxcard='cga'),
+  'IBM CGA #1':dict(display_type='0',composite_type='1',rgb_type='0',snow_enabled='1',double_type='1'),
+  'Input devices':dict(keyboard_type='keyboard_pc_xt',mouse_type='msserial'),
+  'Storage controllers':dict(hdc_1='xtide'),
+  'Hard disks':dict(hdd_01_ide_channel='0:0',hdd_01_parameters='34, 5, 969, 0, ide',hdd_01_speed='ramdisk'),
+  'PC/XT XTIDE #1':dict(bios='xt'),
+  'Floppy and CD-ROM drives':dict(fdd_01_turbo='1',fdd_02_type='none')}
+ config=configparser.ConfigParser(interpolation=None,strict=True,empty_lines_in_values=False)
+ try:config.read_string(raw.decode('ascii'))
+ except (UnicodeError,configparser.Error) as e:
+  raise ValueError('Native IBM XT/CGA configuration invalid: '+str(e)) from e
+ require(not config.defaults() and set(config.sections())==set(expected),
+         'Native IBM XT/CGA configuration differs: sections/default overrides')
+ for section,values in expected.items():
+  actual=dict(config.items(section,raw=True))
+  if section=='Hard disks':
+   image=actual.pop('hdd_01_fn','')
+   require(bool(image) and '\n' not in image,'Native IBM XT/CGA configuration differs: disk image')
+  require(actual==values,'Native IBM XT/CGA configuration differs: '+section)
+ return dict(cpu_family=config['Machine']['cpu_family'],cpu_speed=config['Machine']['cpu_speed'],
+             machine=config['Machine']['machine'],mem_size=config['Machine']['mem_size'],gfxcard=config['Video']['gfxcard'])
+
 
 def validate_candidate(q,data=None):
  require(q.get('physical_hardware') is False,'Physical hardware remains unqualified')
@@ -93,8 +125,9 @@ def validate_candidate(q,data=None):
           result.get('installed_receipt')==row['installed']['identity'],'Different actual native-installed compact files: '+mode)
   require(observed.get('boot_settings')=={'display.drv':'CGA32C.DRV' if mode=='320C' else 'CGA64C.DRV',
           'fonts.fon':'CG1SYS.FON','fixedfon.fon':'CG1FIX.FON','oemfonts.fon':'CG1OEM.FON','286grabber':'CGAGRAB.GR2'},'Actual compact INI selection differs: '+mode)
-  require(result.get('machine')=={'cpu_family':'8088','cpu_speed':'4772728','machine':'ibmxt86','mem_size':'640','gfxcard':'cga'} and
-          result.get('config')==identity(exact(row['config'])),'Native IBM XT/CGA fixture differs: '+mode)
+  config=exact(row['config']);machine=native_machine(config)
+  require(result.get('machine')==machine and result.get('config')==identity(config),
+          'Native IBM XT/CGA fixture differs: '+mode)
   lease(json.loads(exact(row['lease'])))
   require(bool(row.get('captures')),'Compact native captures missing')
   for capture in row['captures'].values():exact(capture)

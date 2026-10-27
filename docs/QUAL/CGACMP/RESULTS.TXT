@@ -36,3 +36,11 @@ unqualified. Native DOS SETUP is the complete supported installation route.
 
 Independent review, catalog promotion and explicit publication approval
 remain pending. Nothing has been pushed, merged or published.
+
+Independent review of 6c8fe170 found that the gate trusted the machine
+declaration without parsing actual config fields. REVIEW01.JSN retains
+that finding. GATEFIX.JSN records the parser correction; HOST/GATE02.JSN
+passes 24 checks including 12 restamped actual-config refusals. Both
+recorded XT configurations still pass. No runtime/native evidence changed,
+and no emulator was started for this host-only correction. The separate compact-cga
+workflow now runs these regression checks. Re-review remains pending.

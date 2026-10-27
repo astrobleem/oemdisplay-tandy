@@ -71,12 +71,12 @@
       "sha256": "dc8cb7335045024d8d58f08acf5fa89b4621eed136d887ad817463c27806b647"
     },
     "tools/CGACMP/VERIFY.PY": {
-      "bytes": 9777,
-      "sha256": "931a11d5f02d3ec72e5493ebf1ceb357c83a7c6ab862ef96977d5d9b0a607c59"
+      "bytes": 11810,
+      "sha256": "c0afba9a1a98cd18007fecf7b976260cf51d73481979270bdff37cc3610269a4"
     },
     "tools/CGACMP/TEST.PY": {
-      "bytes": 5025,
-      "sha256": "ea769a329ec79848c46de67d38c1e95c41db6c6727898ad8f0ebecfa4446c361"
+      "bytes": 6797,
+      "sha256": "129817ac720c1d0ef58c78d5977472a3d41d6412bdb2f1b467814e4b8a6788e4"
     },
     "docs/QUAL/CGACMP/TESTSRC.ZIP": {
       "bytes": 30461,

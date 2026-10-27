@@ -49,7 +49,10 @@ def main():
   checks.append('Exact completed native candidate validates without accepting review/publication')
   def refuses_bad(candidate,needle,substitutions=None):
    old=V.exact
-   def exact(row):return substitutions[row['path']] if substitutions and row['path'] in substitutions else old(row)
+   def exact(row):
+    if substitutions and row['path'] in substitutions:
+     raw=substitutions[row['path']];assert V.identity(raw)==row['identity'];return raw
+    return old(row)
    V.exact=exact
    try:
     try:V.validate_candidate(candidate)
@@ -63,6 +66,28 @@ def main():
   bad=copy.deepcopy(native);result=json.loads(V.exact(bad['windows']['640C']['result']));result['machine']['mem_size']='1024';raw=json.dumps(result).encode()
   bad['windows']['640C']['result']=dict(path='TEST-WRONG-RAM',identity=V.identity(raw));refuses_bad(bad,'Native IBM XT/CGA fixture differs',{'TEST-WRONG-RAM':raw})
   checks.append('A larger-RAM native declaration cannot qualify normal640KB')
+  # Reproduce the review finding: change actual config bytes and refresh all
+  # identities, keeping the plausible XT/640KB declaration untouched.
+  for label,old,new in [
+   ('386 with1MB','cpu_family = 8088\r\n','cpu_family = 386\r\nmem_size = 1024\r\n'),
+   ('largerRAM','mem_size = 640','mem_size = 1024'),
+   ('otherCPU','cpu_family = 8088','cpu_family = 386'),
+   ('otherclock','cpu_speed = 4772728','cpu_speed = 8000000'),
+   ('othermachine','machine = ibmxt86','machine = ibmat'),
+   ('othergraphics','gfxcard = cga','gfxcard = vga'),
+   ('dynarec','cpu_use_dynarec = 0','cpu_use_dynarec = 1'),
+   ('CPUmultiplier','cpu_multi = 1','cpu_multi = 2'),
+   ('memoryoverride','mem_size = 640','mem_size = 640\r\nmem_size_ext = 1024'),
+   ('memoryboard','[Video]','[ISA memory expansion #1]\r\nsize = 2048\r\n\r\n[Video]'),
+   ('defaults','[General]','[DEFAULT]\r\ncpu_use_dynarec = 1\r\n\r\n[General]'),
+   ('duplicateoption','mem_size = 640','mem_size = 640\r\nmem_size = 1024')]:
+   bad=copy.deepcopy(native);row=bad['windows']['640C'];raw=V.exact(row['config']);assert old.encode() in raw
+   changed=raw.replace(old.encode(),new.encode())
+   if label=='386 with1MB':changed=changed.replace(b'mem_size = 640\r\n',b'')
+   result=json.loads(V.exact(row['result']));result['config']=V.identity(changed);raw_result=json.dumps(result).encode()
+   row['config']=dict(path='TEST-CONFIG',identity=V.identity(changed));row['result']=dict(path='TEST-RESULT',identity=V.identity(raw_result))
+   refuses_bad(bad,'Native IBM XT/CGA configuration',{'TEST-CONFIG':changed,'TEST-RESULT':raw_result})
+   checks.append('Restamped actual configuration refused with unchanged declaration: '+label)
   bad=copy.deepcopy(native);lease=json.loads(V.exact(bad['windows']['320C']['lease']));lease['status']='FAILED';raw=json.dumps(lease).encode()
   bad['windows']['320C']['lease']=dict(path='TEST-FAILED-RUN',identity=V.identity(raw));refuses_bad(bad,'cleanup incomplete',{'TEST-FAILED-RUN':raw})
   checks.append('A retained failed run cannot qualify a Windows profile')

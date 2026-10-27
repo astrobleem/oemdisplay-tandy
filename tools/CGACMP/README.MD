@@ -38,6 +38,14 @@ The candidate command checks completed native evidence and reports review
 pending. It cannot authorize the current catalog alternative boundary, which
 always requires the separate accepted review record.
 
+The gate parses the exact launch configuration rather than trusting its
+machine declaration. Its closed recorded fixture requires the 8088 at
+4,772,728 Hz, multiplier 1, IBM XT, 640 KB and CGA, with dynarec disabled.
+Additional sections/options (including memory boards and memory overrides),
+inherited defaults, duplicate options and malformed configurations are refused.
+Host negative checks restamp changed config/result hashes while keeping the
+XT/640 KB declaration unchanged, reproducing the first independent finding.
+
 Do not replace `downloads/PAN/CGA.ZIP`: it remains the immutable preceding
 packet. A qualified compact alternative uses a separate tracked path and an
 updated current catalog entry. Publication still requires explicit approval,
