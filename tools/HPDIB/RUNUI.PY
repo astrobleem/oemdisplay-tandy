@@ -25,9 +25,12 @@ raw='''        if (c/'RAWKEYS.JSON').exists():
            for scan in taps:
             ctl.key(True,scan);time.sleep(.15);ctl.key(False,scan);time.sleep(.15)
           g.run_while(raw_input,settle_seconds=2,start_delay=.05)
-          rawserial=request['id'];(c/'RAWACK.JSON').write_text(json.dumps({'id':rawserial}))
+          rawserial=request['id']
           keytimes.append(dict(raw_id=rawserial,text=text,taps=taps,bios_ticks=int.from_bytes(g.read_memory(0x46c,4),'little')));(out/'RAWKEYS-LOG.JSON').write_text(json.dumps(keytimes,indent=2))
           (out/(stage+'-RAW'+str(rawserial)+'.PNG')).write_bytes(base64.b64decode(ctl.capture_frame_png_b64()))
+          if g.read_memory(0x449,1)==b'\\x03':
+           rawtext=g.read_memory(0xb8000,4000);(out/'DOS-RAW.BIN').write_bytes(rawtext);(out/'DOS-CURRENT.TXT').write_text(rawtext[::2].decode('cp437'),encoding='utf-8')
+          (c/'RAWACK.JSON').write_text(json.dumps({'id':rawserial}))
 '''
 raw=''.join(line[1:] if line.startswith(' ') else line for line in raw.splitlines(keepends=True))
 once(anchor,raw+anchor)
