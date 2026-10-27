@@ -33,10 +33,10 @@ ASSETS={
 }
 T80_PINS={'T80COUR.FON':'fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6'}
 COMPACT_DRIVERS={'320C':'CGA32C.DRV','640C':'CGA64C.DRV'}
-COPY=set(COMPACT_DRIVERS.values())|set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE','PANCTL.EXE','PANKEY.DLL','PANCFG.EXE','XTPAN.EXE'}
-HELPERS={'CGACTL.EXE','PANCTL.EXE','PANCFG.EXE','XTPAN.EXE'}
+COPY=set(COMPACT_DRIVERS.values())|set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE','PANCTL.EXE','PANKEY.DLL','PANCFG.EXE','XTPAN.EXE','PAN.EXE','XYCTL.EXE'}
+HELPERS={'CGACTL.EXE','PANCTL.EXE','PANCFG.EXE','XTPAN.EXE','PAN.EXE','XYCTL.EXE'}
 ALL_FILES=COPY|{'XTSTATIC.LGO','WXTSPL01.RLE','LOGOLIC.TXT','OEMSETUP.INF','FONTLIC.TXT','NOTICE.TXT'}
-COMPACT_FILES=ALL_FILES-{'PANCFG.EXE','XTPAN.EXE'}
+COMPACT_FILES=ALL_FILES
 
 
 def ROOT_CGA_BASE(repo):
@@ -148,6 +148,12 @@ def payload(repo,support,drivers,fontout,helper,owner,key,config,window,fixture=
     result['PANKEY.DLL']=key
     result['PANCFG.EXE']=config
     result['XTPAN.EXE']=window
+    accepted=json.loads((repo/'tools/PAN/ACCEPT.JSN').read_bytes())
+    for name in ('PAN.EXE','XYCTL.EXE'):
+        data=(repo/'tools/PAN/BIN'/name).read_bytes()
+        if {k:identity(data)[k] for k in ('bytes','sha256')}!=accepted['helpers'][name]['identity']:
+            raise ValueError('Changed current panning helper: '+name)
+        result[name]=data
     CGAFONT.build(fontout)
     for name in CGAFONT.FACES:result[name]=(fontout/name).read_bytes()
     # Retain TEXT80 Courier exactly. CGA's proportional Helv preserves the
@@ -195,7 +201,11 @@ def emit(repo,out,files,source_commit,fixture=False,compact_only=False):
         current={n[4:]:z.read(n) for n in z.namelist() if n.startswith('CGA/')}
     with zipfile.ZipFile(repo/'docs/QUAL/CGAPAN/BASE.ZIP') as z:
         previous={n[4:]:z.read(n) for n in z.namelist() if n.startswith('CGA/')}
-    baselines=[current,previous]
+    with zipfile.ZipFile(repo/'tools/PAN/BASE/CGA.ZIP') as z:
+        unified={n[4:]:z.read(n) for n in z.namelist() if n.startswith('CGA/')}
+    with zipfile.ZipFile(repo/'tools/UPAN/BASE/CGA.ZIP') as z:
+        older={n[4:]:z.read(n) for n in z.namelist() if n.startswith('CGA/')}
+    baselines=[current,unified,older,previous]
     olds=[]
     for baseline in baselines:
         oldpin={name:dict(identity(data),installed=name if name in COPY else '',

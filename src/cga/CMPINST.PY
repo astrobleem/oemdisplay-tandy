@@ -27,7 +27,17 @@ def main():
   write(folder/'HOSTCC.LOG',p.stdout+p.stderr);assert p.returncode==0,p.stderr
   return exe
  new=compile(packet);tests=[]
- for version,zpath in ((1,repo/'docs/QUAL/CGACMP/BASE.ZIP'),(2,repo/'docs/QUAL/CGAPAN/BASE.ZIP')):
+ for mode,helper in (('100',b'PAN.EXE'),('PAN',b'PAN.EXE'),('320',b'CGACTL.EXE'),('320C',b'CGACTL.EXE'),('640',b'CGACTL.EXE'),('640C',b'CGACTL.EXE')):
+  w=root/('fresh'+mode);(w/'SYSTEM').mkdir(parents=True)
+  (w/'WIN.COM').write_bytes(b'host transaction fixture');(w/'SYSTEM.INI').write_bytes(SYSTEM);(w/'WIN.INI').write_bytes(WIN)
+  before=snapshot(w)
+  p=subprocess.run([str(new),str(w),mode],env=env,capture_output=True);assert p.returncode==0,p.stdout
+  ini=(w/'WIN.INI').read_bytes();assert b'load=CLOCK.EXE' in ini and helper in ini
+  assert (b'PAN.EXE' in ini)==(mode in ('100','PAN'))
+  assert all((w/n).is_file() for n in ('PAN.EXE','XTPAN.EXE','PANCFG.EXE','XYCTL.EXE'))
+  p=subprocess.run([str(new),'UNDO',str(w)],env=env,capture_output=True);assert p.returncode==0,p.stdout
+  assert snapshot(w)==before;tests.append('current panning defaults and exact undo '+mode)
+ for version,zpath in ((1,repo/'docs/QUAL/CGACMP/BASE.ZIP'),(2,repo/'tools/PAN/BASE/CGA.ZIP'),(3,repo/'tools/UPAN/BASE/CGA.ZIP'),(4,repo/'docs/QUAL/CGAPAN/BASE.ZIP')):
   old=root/('legacy'+str(version));old.mkdir()
   with zipfile.ZipFile(zpath) as z:z.extractall(old)
   exe=compile(old,version)

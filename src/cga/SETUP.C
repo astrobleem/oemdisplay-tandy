@@ -63,7 +63,7 @@ static void paths(unsigned i)
     join(dstpath,(!strcmp(cga_files[i].target,"CGACTL.EXE") ||
         !strcmp(cga_files[i].target,"PANCTL.EXE") ||
         !strcmp(cga_files[i].target,"PANCFG.EXE") ||
-        !strcmp(cga_files[i].target,"XTPAN.EXE")) ? dir : systemdir,
+        !strcmp(cga_files[i].target,"XTPAN.EXE") || !strcmp(cga_files[i].target,"PAN.EXE") || !strcmp(cga_files[i].target,"XYCTL.EXE")) ? dir : systemdir,
         cga_files[i].target);
     strcpy(tmppath,dstpath);dot=strrchr(tmppath,'.');
     if(!dot)dot=tmppath+strlen(tmppath);

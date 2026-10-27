@@ -1,26 +1,9 @@
 {
-  "schema": 2,
-  "status": "NATIVE_EMULATION_QUALIFIED_REVIEWED",
-  "source_checkpoint": "ba43008164f651977a06d287bdcfe193abfdd229",
-  "path": "downloads/experimental/CGA/CGA.ZIP",
+  "status": "REVIEWED_NATIVE_SINGLE_APP",
   "packet": {
-    "bytes": 178591,
-    "sha256": "0db0c85f349b3246cc8a262b22083297445353421b83a5f835d4ff995f2330a5"
+    "bytes": 460460,
+    "sha256": "1768cffab6a770ee01494fb493c9ffe4e3caf2a41a9617b2ccec7bc9909e37d2"
   },
-  "modes": [
-    "160x100x16 RGBI",
-    "160x100x16 view over320x200",
-    "320x200x4",
-    "640x200x2"
-  ],
-  "layout": [
-    "SETUP.EXE",
-    "README.TXT",
-    "CGA/"
-  ],
-  "physical_hardware": "UNQUALIFIED",
-  "previous_acceptance": "docs/QUAL/CGAPAN/BASE.JSN",
-  "previous_packet": "docs/QUAL/CGAPAN/BASE.ZIP",
   "members": {
     "CGA/CG1COUR.FON": {
       "bytes": 3536,
@@ -67,8 +50,8 @@
       "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1"
     },
     "CGA/CGACTL.EXE": {
-      "bytes": 15855,
-      "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d"
+      "bytes": 25247,
+      "sha256": "fa1bc19c9f0301b4ea2f91116a0cfb1f3db0864d1f794edf5e7bdd70cfc5a2d0"
     },
     "CGA/CGAGRAB.GR2": {
       "bytes": 2104,
@@ -94,13 +77,21 @@
       "bytes": 1151,
       "sha256": "33368f0736c538e2a9f8cbf0aba85b494473a6bbc2b69ee43a6ef933541f7b99"
     },
+    "CGA/PAN.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "CGA/PANCFG.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
     "CGA/PANCTL.EXE": {
-      "bytes": 14031,
-      "sha256": "c1a257cc50c8497a53c60836d54c80ebf1db82aad05022f96394184cfbe8c3d4"
+      "bytes": 18591,
+      "sha256": "a13f1e676b8d71a20643a6b82646ba1f7066e726b88e1c2e482df2ba812f2015"
     },
     "CGA/PANKEY.DLL": {
-      "bytes": 1546,
-      "sha256": "908b08871b9af1fb60bbd5f44e18d6a9b7829b157fab643ac59528174998250c"
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
     },
     "CGA/T80COUR.FON": {
       "bytes": 4224,
@@ -122,35 +113,27 @@
       "bytes": 4592,
       "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
     },
+    "CGA/XTPAN.EXE": {
+      "bytes": 27407,
+      "sha256": "bd33843a1fd456446b8935f69aa74605b82010e9c4345b4a186870b47c52213d"
+    },
     "CGA/XTSTATIC.LGO": {
       "bytes": 361,
       "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
     },
+    "CGA/XYCTL.EXE": {
+      "bytes": 33220,
+      "sha256": "aa405b11e5b0f82cc4499bda54897b937ffee9305017788065c1bcb283097bbf"
+    },
     "README.TXT": {
-      "bytes": 5449,
-      "sha256": "6ad33b96c21beb0ce7bf6c7504929954b04caa58644424df937dd532a43a73ba"
+      "bytes": 1254,
+      "sha256": "7f9a6183f0e59e4d33f16bbeb22060c287390a7474e7d37d6d2783bb4199688a"
     },
     "SETUP.EXE": {
-      "bytes": 31431,
-      "sha256": "1c48e840ddac57b4adaf76dbafcf7116c87e7b9f589170f0895ecdf81705e2b2"
+      "bytes": 32431,
+      "sha256": "dbc90a15bb137a691d95360a03838aaaac838d09065d8e738ef63033784bbedb"
     }
   },
-  "evidence": {
-    "docs/QUAL/CGAPAN/BASE.JSN": {
-      "bytes": 5088,
-      "sha256": "0e563fcfad75490775d512b42a7afa67bd1df75192e795a114f2721edc25d164"
-    },
-    "docs/QUAL/CGAPAN/BASE.ZIP": {
-      "bytes": 139135,
-      "sha256": "57f2e9e10c1c2feb9d0fa545d040674f10caae7a6360a4e2e55dd9365e0217d7"
-    },
-    "docs/QUAL/CGAPAN/EVIDENCE.ZIP": {
-      "bytes": 204439,
-      "sha256": "065c7df243c87f6a8208a96affa172c2de0ccba6580e75edf1daff90ceb02797"
-    },
-    "docs/QUAL/CGAPAN/FINAL.JSN": {
-      "bytes": 4685,
-      "sha256": "3318f1873abb0049ae496c2bcf526dd70c320f3e1e3e4d61fd1c992f7c6547df"
-    }
-  }
+  "runtime_source": "5b3a79fded9e2b00b4e5f75d161e73f1eb685c04",
+  "source_acceptance": "tools/PAN/ACCEPT.JSN"
 }

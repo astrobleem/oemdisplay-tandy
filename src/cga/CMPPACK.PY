@@ -4,7 +4,7 @@
 Retain existing runtime bytes and defaults. Only two resource-derived drivers,
 the visible OEM choices and the native installer are new. No emulator runs.
 """
-import argparse,hashlib,json,zipfile
+import argparse,hashlib,json,zipfile,importlib.machinery
 from pathlib import Path
 import PACKCGA as P
 import CMPRSC
@@ -25,7 +25,11 @@ def prepare(repo,out,commit):
         b,a=CMPRSC.compact(files[driver],files['CGA100.DRV'])
         files[P.COMPACT_DRIVERS[mode]]=b;audits[mode]=a
     files['OEMSETUP.INF']=(P.HERE/'OEMSETUP.INF').read_bytes()
-    result=P.emit(repo,out,files,commit,compact_only=True)
+    base_stage=P.CGASET.stage
+    composer=importlib.machinery.SourceFileLoader('compact_pan_stage',str(repo/'tools/PAN/CGASTAGE.PY')).load_module()
+    staged=composer.module({n[4:]:b for n,b in original.items() if n.startswith('CGA/')})
+    try:result=staged.emit(repo,out,files,commit,compact_only=True)
+    finally:P.CGASET.stage=base_stage
     write(out/'COMPACT.JSN',json.dumps(dict(source_packet=record['packet'],profiles=audits,
           retained_runtime=[n for n,b in files.items() if n!='OEMSETUP.INF' and original.get('CGA/'+n)==b],
           windows='NOT_TESTED_NEW_INSTALLER',physical_hardware='UNQUALIFIED'),indent=2)+'\n')

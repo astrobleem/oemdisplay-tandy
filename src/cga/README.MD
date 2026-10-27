@@ -304,8 +304,9 @@ ordinary Win16 drivers and fonts. `CMPTEST.PY` checks real resource identities,
 renderer preservation and corruption refusals.
 
 The focused producer preserves the current accepted helper bytes and includes
-both existing sealed inventories for upgrade/undo. It does not require adopting
-other pending helper builds. `docs/QUAL/CGACMP/BASE.*` freezes the original
+four existing sealed inventories for upgrade/undo. It does not require adopting
+a helper rebuild. The actual current downloads/PAN/CGA.ZIP helpers and
+public PAN entry are retained byte-for-byte. `docs/QUAL/CGACMP/BASE.*` freezes the original
 current packet; the older fixed packet remains under `docs/QUAL/CGAPAN/BASE.*`.
 Current published packets and acceptance records are unchanged until separate
 native qualification and publication approval.

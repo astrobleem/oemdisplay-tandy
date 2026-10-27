@@ -1,22 +1,53 @@
-CGA DISPLAY + PANNING
+CGA DISPLAY, TEXT SIZE AND PANNING
 
-Use SETUP from DOS with your normal CGA display choice. The packet installs
-PAN automatically; no helper program selection or copying is required.
-The large-desktop 160x100 view pans over 320x200 in software. Fixed 160x100
-uses window movement. Ordinary 320x200 and 640x200 display paths retain their
-existing driver bytes and color fix; PAN /SETTINGS offers their optional
-window workspace. Use WIN /R after Setup as usual.
+For an existing Windows 3.0 real-mode installation, exit Windows and run
+this package's SETUP from plain DOS. Use your actual Windows directory:
+
+  SETUP C:\WINDOWS
+
+The menu lists standard and compact choices side by side. Enter cancels
+without changing files. You can also select directly:
+
+  SETUP C:\WINDOWS 100     Fixed 160x100, 16 RGBI colors, compact UI
+  SETUP C:\WINDOWS PAN     320x200 desktop in a movable 160x100 view
+  SETUP C:\WINDOWS 320     320x200 four colors, standard controls
+  SETUP C:\WINDOWS 320C    Same four colors, compact UI and controls
+  SETUP C:\WINDOWS 640     640x200 mono, standard controls
+  SETUP C:\WINDOWS 640C    Same monochrome resolution, compact UI
+
+320C and 640C use 3x5 UI text, 4x6 fixed/OEM text and six-row controls.
+Smaller text leaves more room; choose the size you prefer. Commands 320
+and 640 keep their existing fonts and controls. Use the same command
+without C to restore that resolution's standard UI. Fonts are included;
+no manual INI editing or separate helper copying is needed.
+
+Wait for Setup's success message. Change to Windows and run WIN /R.
+Exit Windows before every mode change. Keep SETUP.EXE, README.TXT and the
+complete CGA folder together. Windows and DOS remain prerequisites.
+
+PANNING
+
+The packet includes the current unified PAN entry and helpers. The large
+160x100 view pans over 320x200 in software; fixed 160x100 uses window
+movement. These two modes start panning automatically. Standard and compact
+320x200/640x200 keep their nonresident color fix; a window workspace is
+optional through PAN. Existing panning configuration remains available.
 
 In Windows run PAN /SETTINGS or press Ctrl+Alt+S. Ctrl+Alt+arrows pan;
 Ctrl+Alt+Home returns home and Ctrl+Alt+End finds the active window. Apply
 saves and Cancel discards edits. PAN OFF disables panning startup; PAN
 starts it again. Reopening settings keeps the existing owner and edits.
+The dialog shows only methods supported by the selected display.
 
-The shared dialog fits 160x100. Settings show only the current display's
-supported method. Hardware panning is not advertised for CGA. Use the
-normal SETUP UNDO operation to restore the configuration recorded by this
-packet. Keep the whole expanded folder and its notices.
+UNDO
 
-Requires DOS, Windows 3.0 real mode and normal 640 KB. No Python, separate
-helper installation or Windows/DOS redistribution. Native emulator tests
-are not physical-machine qualification. Common guide: docs/PANNING.MD.
+Exit Windows and run SETUP UNDO C:\WINDOWS to restore settings recorded by
+this installer. Unrelated later INI edits and changed/referenced files are
+kept. Do not delete the safety INIs or journals while cleanup is pending.
+Keep this packet for future changes and undo. RESTORE is a separate recovery
+command that replaces whole saved INIs and loses later edits.
+
+Requires DOS 3.3+, Windows 3.0 real mode, IBM CGA RGBI and normal 640 KB.
+No Python, modern-host preparation or Windows/DOS redistribution is needed.
+Native emulator tests do not qualify physical cards, CRTCs or composite.
+Common panning guide: docs/PANNING.MD. Component notices remain in CGA/.

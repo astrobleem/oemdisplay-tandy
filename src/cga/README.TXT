@@ -118,5 +118,5 @@ OPTIONAL COMPACT PROFILES
 Use SETUP C:\WINDOWS 320 or 640 to return to the corresponding standard UI.
 Exit Windows first, then start WIN /R after Setup reports success.
 These choices include the fonts; no manual INI editing is needed. The
-current accepted packet and its immediately preceding fixed-mode packet
-can be upgraded through this SETUP; unchanged defaults and UNDO remain.
+recognized current and earlier CGA packets can be upgraded through this
+SETUP; unchanged defaults and UNDO remain.
