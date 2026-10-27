@@ -1,29 +1,26 @@
 {
-  "schema": 1,
-  "status": "NATIVE_EMULATION_QUALIFIED_INDEPENDENTLY_REVIEWED",
-  "source_checkpoint": "6ba8a8551d56e5a15fccf3a9f3c893e7a148236c",
-  "runtime_source": "e2bf87b0214db50d9bc4e6b6fa1062bf837ec307",
-  "source_packet": {
-    "bytes": 139175,
-    "sha256": "97377649eff6520daed6d1f48b2539b6159a057f07e8a350487e191df471e86a"
-  },
-  "packet": {
-    "bytes": 139135,
-    "sha256": "57f2e9e10c1c2feb9d0fa545d040674f10caae7a6360a4e2e55dd9365e0217d7"
-  },
+  "schema": 2,
+  "status": "NATIVE_EMULATION_QUALIFIED_REVIEWED",
+  "source_checkpoint": "ba43008164f651977a06d287bdcfe193abfdd229",
   "path": "downloads/experimental/CGA/CGA.ZIP",
+  "packet": {
+    "bytes": 178591,
+    "sha256": "0db0c85f349b3246cc8a262b22083297445353421b83a5f835d4ff995f2330a5"
+  },
   "modes": [
     "160x100x16 RGBI",
-    "320x200x4 black/bright cyan/magenta/white",
-    "640x200x2 black/white"
+    "160x100x16 view over320x200",
+    "320x200x4",
+    "640x200x2"
   ],
   "layout": [
     "SETUP.EXE",
     "README.TXT",
     "CGA/"
   ],
-  "derivation": "Only README.TXT publication wording and CRLF normalized; all other 24 members byte-identical to the independently reviewed packet. Original packet remains in docs/QUAL/CGA/REVIEW.ZIP.",
   "physical_hardware": "UNQUALIFIED",
+  "previous_acceptance": "docs/QUAL/CGAPAN/BASE.JSN",
+  "previous_packet": "docs/QUAL/CGAPAN/BASE.ZIP",
   "members": {
     "CGA/CG1COUR.FON": {
       "bytes": 3536,
@@ -77,6 +74,10 @@
       "bytes": 2104,
       "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
     },
+    "CGA/CGAPAN.DRV": {
+      "bytes": 58928,
+      "sha256": "28eae7e0bd1ef57c00707f17a5272da259201fee026b6d75ce7f5cf735a563b5"
+    },
     "CGA/FONTLIC.TXT": {
       "bytes": 1101,
       "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
@@ -90,8 +91,16 @@
       "sha256": "d0b64ce9ccad9692484ad81c951922f7d54461d6795a3cc4cd05fd70c127f7e9"
     },
     "CGA/OEMSETUP.INF": {
-      "bytes": 1020,
-      "sha256": "96abec962aeaa7495e739a7e0749e8de7365645e03f0ad870752ee50c8ffa3e2"
+      "bytes": 1151,
+      "sha256": "33368f0736c538e2a9f8cbf0aba85b494473a6bbc2b69ee43a6ef933541f7b99"
+    },
+    "CGA/PANCTL.EXE": {
+      "bytes": 14031,
+      "sha256": "c1a257cc50c8497a53c60836d54c80ebf1db82aad05022f96394184cfbe8c3d4"
+    },
+    "CGA/PANKEY.DLL": {
+      "bytes": 1546,
+      "sha256": "908b08871b9af1fb60bbd5f44e18d6a9b7829b157fab643ac59528174998250c"
     },
     "CGA/T80COUR.FON": {
       "bytes": 4224,
@@ -118,30 +127,30 @@
       "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
     },
     "README.TXT": {
-      "bytes": 4259,
-      "sha256": "734a9eddf4e7c8ee9d5b669c6be2d5095bf3723369c141693c937f41a21848a3"
+      "bytes": 5449,
+      "sha256": "6ad33b96c21beb0ce7bf6c7504929954b04caa58644424df937dd532a43a73ba"
     },
     "SETUP.EXE": {
-      "bytes": 31119,
-      "sha256": "1352512bd5440253bd871056b31ac1342192c1a30e41c9ad519d44d5e0482c00"
+      "bytes": 31431,
+      "sha256": "1c48e840ddac57b4adaf76dbafcf7116c87e7b9f589170f0895ecdf81705e2b2"
     }
   },
   "evidence": {
-    "docs/QUAL/CGA/BUILDS.JSN": {
-      "bytes": 19007,
-      "sha256": "e9ce2a581bb6b3f6fd3756cd4965521b83c540b825bf7acc370d3b3923088971"
+    "docs/QUAL/CGAPAN/BASE.JSN": {
+      "bytes": 5088,
+      "sha256": "0e563fcfad75490775d512b42a7afa67bd1df75192e795a114f2721edc25d164"
     },
-    "docs/QUAL/CGA/FINAL.JSN": {
-      "bytes": 17960,
-      "sha256": "a536b34bd84a9af9629c81d44936f428a334626724c9bcefb39414256fc0c4d0"
+    "docs/QUAL/CGAPAN/BASE.ZIP": {
+      "bytes": 139135,
+      "sha256": "57f2e9e10c1c2feb9d0fa545d040674f10caae7a6360a4e2e55dd9365e0217d7"
     },
-    "docs/QUAL/CGA/REVIEW.JSN": {
-      "bytes": 1792,
-      "sha256": "cf7867f7ba7409da94b0d440e8e080abd469780d310dcc6433d6a31a05d91442"
+    "docs/QUAL/CGAPAN/EVIDENCE.ZIP": {
+      "bytes": 204439,
+      "sha256": "065c7df243c87f6a8208a96affa172c2de0ccba6580e75edf1daff90ceb02797"
     },
-    "docs/QUAL/CGA/REVIEW.ZIP": {
-      "bytes": 453222,
-      "sha256": "d8e68d9ba4de4c0e568c3b29e96addd0e648ce06d4f90f9d22b274ceff101db4"
+    "docs/QUAL/CGAPAN/FINAL.JSN": {
+      "bytes": 4685,
+      "sha256": "3318f1873abb0049ae496c2bcf526dd70c320f3e1e3e4d61fd1c992f7c6547df"
     }
   }
 }

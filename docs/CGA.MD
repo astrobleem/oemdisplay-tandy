@@ -31,6 +31,7 @@ Use your actual Windows path. Replace `100` to choose another mode:
 
 | Choice | Resolution and colors |
 | --- | --- |
+| `PAN` | 320x200 desktop in 16 colors, viewed through a movable 160x100 screen |
 | `100` | 160x100, 16 RGBI colors, smallest fonts and controls |
 | `320` | 320x200, black / bright cyan / magenta / white |
 | `640` | 640x200, black and white |
@@ -46,7 +47,7 @@ Change to your Windows directory and run `WIN /R`.
 *Notepad File Open at 160x100, enlarged 4x.
 [Original image](CGA/OPEN100.PNG).*
 
-At 160x100, **Ctrl+Alt+arrows** moves the window workspace;
+In mode `100`, **Ctrl+Alt+arrows** moves the window workspace;
 **Ctrl+Alt+Home** returns home and **Ctrl+Alt+End** exposes the active window's
 bottom/right. File Manager's maximize and File Open commands help on this
 short screen. Extended characters currently use fallback boxes.
@@ -56,9 +57,37 @@ short screen. Extended characters currently use fallback boxes.
 *File Manager at 160x100, enlarged 4x; this frame uses five colors.
 [Original image](CGA/FILE100.PNG).*
 
+## A larger desktop on the same CGA screen
+
+Choose `SETUP C:\WINDOWS PAN` in DOS, then start `WIN /R`. Setup installs
+and starts the viewport helper automatically. Windows gets a 320x200 desktop;
+the physical screen still shows 160x100 pixels in 16 colors.
+
+**Ctrl+Alt+arrows** moves the view, **Ctrl+Alt+Home** returns to the top left,
+and **Ctrl+Alt+End** shows the active window's bottom/right. Moving the pointer
+to an edge scrolls after a short dwell. New windows and controls reached with
+Tab are brought into view. Commands sent while Windows is loading an app are
+retained in a bounded queue and applied afterward.
+
+**Ctrl+Alt+S** opens Panning settings; `PANCTL /SETTINGS` from Run also works.
+Change Step, Dwell, Follow active window or Pan at screen edge, then Apply.
+Apply saves in WIN.INI; Cancel discards un-applied edits. Step rounds to a
+multiple of 8 across: entering 20 gives 24. Home moves the view without
+changing the settings.
+
+![Panning settings on the actual 160x100 CGA viewport](CGA/PANSET.PNG)
+
+*Native IBM XT/CGA emulator screen capture; the complete settings window fits
+the 160x100 viewport. [Applied settings](CGA/PANAPPLY.PNG) and [capture details](CGA/CAPTURES.MD).*
+
+![Paintbrush in the panning desktop](CGA/PANPAINT.PNG)
+
+*Paintbrush on the same 160x100 viewport of the larger desktop.
+[Another part of the picture](CGA/PANPAL.PNG). These are emulator captures.*
+
 ## Other modes and undo
 
-Exit Windows and rerun SETUP with `320` or `640` to change mode. To undo:
+Exit Windows and rerun SETUP with `100`, `PAN`, `320` or `640` to change mode. To undo:
 
 ```bat
 SETUP UNDO C:\WINDOWS

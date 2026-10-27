@@ -37,7 +37,7 @@ Each product has one current packet and a short install guide.
 ## IBM CGA graphics
 
 **[Download CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP)**
-for 160x100 with 16 RGBI colors and compact fonts/controls, 320x200 four-color,
+for fixed or panning 160x100 with 16 RGBI colors and compact fonts/controls, 320x200 four-color,
 or 640x200 monochrome. One native DOS installer includes the fonts and support
 files for an existing Windows 3.0 real-mode installation with normal 640 KB.
 [Installation and emulator qualification scope](docs/CGA.MD). Physical hardware

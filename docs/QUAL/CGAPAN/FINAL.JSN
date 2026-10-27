@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "outcome": "PASS",
+  "packet": {
+    "bytes": 178591,
+    "sha256": "0db0c85f349b3246cc8a262b22083297445353421b83a5f835d4ff995f2330a5"
+  },
+  "runtime_source": "ba43008164f651977a06d287bdcfe193abfdd229",
+  "review": {
+    "outcome": "NO_RESIDUAL_FINDINGS",
+    "reviewer": "Codex",
+    "scope": "Reviewed Claude source independently, merged onto cc15eba, reviewed native hook linkage, callback lifetime, queue, settings and installer paths; fixed cancelled session end, failed wake, stale target, reentrant callback unload and right-edge alignment.",
+    "checks": "TESTCGA, INSTALLT, TESTKEY, TESTDEPS, native settings and final busy-input/install/exit"
+  },
+  "checks": {
+    "settings": {
+      "outcome": "PASS",
+      "packet": {
+        "bytes": 178591,
+        "sha256": "0db0c85f349b3246cc8a262b22083297445353421b83a5f835d4ff995f2330a5"
+      },
+      "exact_final_members": [
+        "CGA/CG1COUR.FON",
+        "CGA/CG1FIX.FON",
+        "CGA/CG1HELV.FON",
+        "CGA/CG1OEM.FON",
+        "CGA/CG1SYS.FON",
+        "CGA/CG2HELV.FON",
+        "CGA/CG2SYS.FON",
+        "CGA/CG6HELV.FON",
+        "CGA/CGA100.DRV",
+        "CGA/CGA320.DRV",
+        "CGA/CGA640.DRV",
+        "CGA/CGACTL.EXE",
+        "CGA/CGAGRAB.GR2",
+        "CGA/CGAPAN.DRV",
+        "CGA/FONTLIC.TXT",
+        "CGA/LOGOLIC.TXT",
+        "CGA/NOTICE.TXT",
+        "CGA/OEMSETUP.INF",
+        "CGA/PANCTL.EXE",
+        "CGA/PANKEY.DLL",
+        "CGA/T80COUR.FON",
+        "CGA/WXTSPL01.RLE",
+        "CGA/XTCFIX.FON",
+        "CGA/XTCOEM.FON",
+        "CGA/XTCSYS.FON",
+        "CGA/XTSTATIC.LGO",
+        "README.TXT",
+        "SETUP.EXE"
+      ],
+      "scope": "Final integrated packet: complete160x100 settings, full Tab cycle, Apply20 rounds24, WIN.INI saved, next view24,0, Cancel and normal DOS exit; all final bytes. Earlier settings-reviewed proves edge off honored after toggling it in the UI, with prior PANCTL/PANKEY; retained as supporting history only."
+    },
+    "busy_paint_exit": {
+      "outcome": "PASS",
+      "packet": {
+        "bytes": 178591,
+        "sha256": "0db0c85f349b3246cc8a262b22083297445353421b83a5f835d4ff995f2330a5"
+      },
+      "scope": "Native SETUP installed and verified all20 owned files at correct destinations, PAN selected and owner auto-started; seven chords during Paintbrush load yielded40,50, unmaximized End reaches160,79 so the right edge is visible, top-left/bottom-right captures, normal app and Windows exit to DOS with final DLL"
+    }
+  },
+  "reused": {
+    "claude_packet": {
+      "bytes": 178530,
+      "sha256": "de35e0ffa9a09e73fde924e3e90eba71242b405aeba5cc6fc30f4e47ef7ee3ac"
+    },
+    "exact_final_members": [
+      "CGA/CG1COUR.FON",
+      "CGA/CG1FIX.FON",
+      "CGA/CG1HELV.FON",
+      "CGA/CG1OEM.FON",
+      "CGA/CG1SYS.FON",
+      "CGA/CG2HELV.FON",
+      "CGA/CG2SYS.FON",
+      "CGA/CG6HELV.FON",
+      "CGA/CGA100.DRV",
+      "CGA/CGA320.DRV",
+      "CGA/CGA640.DRV",
+      "CGA/CGACTL.EXE",
+      "CGA/CGAGRAB.GR2",
+      "CGA/CGAPAN.DRV",
+      "CGA/FONTLIC.TXT",
+      "CGA/LOGOLIC.TXT",
+      "CGA/NOTICE.TXT",
+      "CGA/OEMSETUP.INF",
+      "CGA/T80COUR.FON",
+      "CGA/WXTSPL01.RLE",
+      "CGA/XTCFIX.FON",
+      "CGA/XTCOEM.FON",
+      "CGA/XTCSYS.FON",
+      "CGA/XTSTATIC.LGO"
+    ],
+    "driver_roundtrip": "Replayed paired native VRAM captures: zero conflicts/pattern errors, identical return; exact CGAPAN driver",
+    "edge_scope": "API pointer on all four edges, no physical input claim",
+    "paint_capture": "pan-paint-4/003.PNG has identical driver/fonts and all18 non-owner installed files; earlier owner; clear settled native frame reused for the guide. Fresh busy-final2 detail frame and final settings screenshots retained. Early fresh top-left capture caught blanked redraw and is preserved only in evidence."
+  },
+  "host": {
+    "model": "5 tests, 4 stages PASS",
+    "installer": "212 invocations / 117 fixtures PASS",
+    "hook": "API-stub queue, chain, wake failure, reentrant close and unhook failure/retry PASS",
+    "dependencies": "14 tests PASS"
+  },
+  "preserved": {
+    "previous_packet": {
+      "bytes": 139135,
+      "sha256": "57f2e9e10c1c2feb9d0fa545d040674f10caae7a6360a4e2e55dd9365e0217d7"
+    },
+    "ordinary_runtime": [
+      "CGA100.DRV",
+      "CGA320.DRV",
+      "CGA640.DRV",
+      "CGACTL.EXE"
+    ],
+    "common_members_unchanged": 22
+  },
+  "physical_hardware": "UNQUALIFIED",
+  "physical_mouse": "NOT_TESTED",
+  "evidence": {
+    "bytes": 204439,
+    "sha256": "065c7df243c87f6a8208a96affa172c2de0ccba6580e75edf1daff90ceb02797"
+  }
+}

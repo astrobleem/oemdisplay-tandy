@@ -1,6 +1,6 @@
-IBM CGA DISPLAY FOR WINDOWS 3.0 - DEVELOPMENT CANDIDATE
+IBM CGA DISPLAY FOR WINDOWS 3.0
 
-Local development candidate, tested in Windows 3.0 real mode on IBM XT/CGA
+Tested in Windows 3.0 real mode on IBM XT/CGA
 emulation. Physical IBM CGA/CRTC/monitor qualification remains separate.
 Target: IBM CGA RGBI, normal 640 KB, existing Windows 3.0 real mode.
 Clone CRTCs, PCjr, Tandy, EGA/VGA and Windows 3.1 are not qualified targets.
@@ -72,7 +72,7 @@ Component notices are in CGA\NOTICE.TXT and CGA\FONTLIC.TXT.
 
 320x200 uses original 4x6 System/Helv and fixed/OEM faces. 640x200 retains
 its XTC System/fixed/OEM selection and adds the XT Pixels 8-row proportional
-Helv and existing 8x8 Courier dialog faces. All modes start CGACTL automatically. At 320/640 it
+Helv and existing 8x8 Courier dialog faces. Modes 100/320/640 start CGACTL automatically. At 320/640 it
 makes disabled labels readable in the reduced palette, then exits. At 100 it
 runs the shared WDESK-based window-access client. Ctrl+Alt+arrows move the window workspace; Home recovers
 its origin and End exposes the active frame's bottom/right. It can expose a
@@ -84,14 +84,15 @@ is a smoke check; it does not qualify every DOS program or PrintScreen.
 
 PAN starts PANCTL instead of CGACTL; the two never run together. Windows
 sees a 320x200 desktop and the screen shows a 160x100 part of it. Ctrl+Alt+
-arrows move the view, Home returns to the top left and End shows the bottom
+arrows move the view, Ctrl+Alt+Home returns to the top left and
+Ctrl+Alt+End shows the bottom
 right of the active window. Moving the pointer to the edge of the view and
 holding it there scrolls the view; a new window or a control reached with Tab
 is brought into view. Drawing outside the view appears when it is scrolled in.
 Movement commands are kept while Windows is busy loading or drawing and are
 carried out in order afterwards (PANKEY.DLL, installed with PANCTL).
 
-Ctrl+Alt+S opens Panning settings, a window that fits the 160x100 view: step
+Ctrl+Alt+S (or PANCTL /SETTINGS from Run) opens Panning settings, a window that fits the 160x100 view: step
 size, dwell before an edge scroll, follow the active window, and pan at the
 screen edge. Apply saves them in WIN.INI under [CGAPan]; Cancel changes
 nothing. The step is a multiple of 8 across (down is five eighths of it).

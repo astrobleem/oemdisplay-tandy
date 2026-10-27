@@ -248,7 +248,7 @@ encoding and timing as mode 100.
   that carries the pointer, and follow of the active window, focus control and
   pointer. Input never pans: `PANKEY.C` (PANKEY.DLL, fixed-code, TSINPUT
   recipe) is a WH_KEYBOARD hook that only records each Ctrl+Alt command in a
-  32-entry ring and posts one wake-up message. PANCTL drains the ring in order
+  32-entry ring (31 retained commands) and posts one wake-up message. PANCTL drains the ring in order
   into one pending target and pans from its timer, so commands sent while a
   4.77 MHz machine is busy are kept and applied afterwards. Keys are observed,
   never swallowed. Without the DLL PANCTL falls back to polling the chord.
@@ -274,10 +274,11 @@ encoding and timing as mode 100.
 Measured in the IBM XT/CGA emulator (86Box, 4.77 MHz 8088, 640 KB; not
 physical hardware): DOS reports 579K (593,072 bytes) free after SETUP in every
 mode. `GetFreeSpace(0)` at Windows start: mode 100 346,336; 320 333,888; 640
-301,984; PAN 326,464 bytes (19,872 less than mode 100). With Paintbrush and
-PARTY.BMP open 195,072 remained at the lowest point; with Control Panel and
-its Desktop dialog 274,624. Nothing below 640 KB was tried. A full-view pan takes about
-0.55 s (20 pans in 11,040 ms); edge scrolling moves 8x5 pixels per step.
+301,984. The initial standalone PAN settings run retained 322,784 bytes;
+the final integrated Paintbrush/PARTY.BMP run reached 191,008 at its lowest.
+The earlier Control Panel/Desktop run retained 274,624. Nothing below 640 KB
+was tried. The earlier driver timing was about 0.55 s per full-view pan
+(20 pans in 11,040 ms); edge scrolling moves 8x5 pixels per step.
 
 Native checks passed: all four corners and the middle, clamping, drawing made
 off-screen and revealed later, copies and fills across the view edge, pointer
