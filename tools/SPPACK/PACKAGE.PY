@@ -3,6 +3,7 @@ from pathlib import Path
 import argparse,hashlib,io,json,zipfile,importlib.machinery
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
+L=importlib.machinery.SourceFileLoader('sp_historical_sources',str(ROOT/'tools/LEGACY/SOURCE.PY')).load_module()
 STAMP=(2026,10,24,0,0,0)
 ASSETS={'JRPAN.ZIP','CPPAN.ZIP','README.TXT','RELEASE.JSON','SHA256SUMS'}
 def identity(b):return {'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
@@ -39,7 +40,7 @@ def outputs():
     spec=json.loads((HERE/'PUBLIC.JSN').read_bytes())
     if not spec['publication_allowed'] or spec['hardware_panning']:raise ValueError('Wrong publication state')
     for n,pin in spec['source'].items():
-        if identity((ROOT/n).read_bytes())!=pin:raise ValueError('Changed qualified source '+n)
+        if identity(L.source(n,(ROOT/n).read_bytes(),pin))!=pin:raise ValueError('Changed qualified source '+n)
     files={kind+'.ZIP':archive(kind,payload(kind,spec)) for kind in ('JRPAN','CPPAN')}
     files['README.TXT']=(HERE/'README.TXT').read_bytes()
     release={'schema':2,'tag':spec['tag'],'publication_allowed':True,'hardware_panning':False,
