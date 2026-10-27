@@ -240,3 +240,5 @@ experiments/SOLPERF/** -text whitespace=cr-at-eol
 # Exact HPXY DIB production candidate sources.
 src/hpxydib/** -text whitespace=cr-at-eol
 tools/HPDIB/** -text whitespace=cr-at-eol
+
+docs/QUAL/HPDIB/** -text whitespace=cr-at-eol

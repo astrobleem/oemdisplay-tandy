@@ -1,0 +1,16 @@
+{
+  "status": "GENERATED_NOT_RUN",
+  "dib_cases": 61,
+  "benchmark_batches": 18,
+  "patterns": [
+    "uniform eight-pixel groups",
+    "checkerboard",
+    "dense"
+  ],
+  "trials_per_pattern": 3,
+  "frames": 41,
+  "sources": {
+    "SCENE.C": "1330f537d1dfe1171edc1f9e75bedadc911417a7edc07966d7be58b506b56eb7",
+    "DIBTEST.C": "a5bc279b63aec6fce905b6b7c229599dc277edd7f0e7bb93cfac675f910c4a4b"
+  }
+}
