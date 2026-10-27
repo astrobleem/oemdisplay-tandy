@@ -1,0 +1,18 @@
+COLORPLUS DISPLAY + PANNING
+
+This packet installs the ColorPlus display and the common PAN application.
+Use INSTALL.BAT from DOS and ordinary Windows Setup to select the panning
+640x400 desktop or the existing fixed 320x200 display. Use CPWIN afterward;
+it installs the appropriate common helpers automatically before Windows.
+No separate panning application choice or manual helper copying is needed.
+
+In Windows use PAN /SETTINGS or Ctrl+Alt+S. Ctrl+Alt+arrows pan horizontally
+and vertically; Ctrl+Alt+Home returns home. Apply saves; Cancel discards
+edits. PAN OFF disables panning startup; PAN enables it again.
+
+The software framebuffer is 640x400 through a 320x200 view with 128,000 bytes shadow.
+The fixed display keeps its framebuffer and uses window movement. Hardware
+panning is not advertised for ColorPlus. Normal 640 KB and Windows 3.0 real
+mode are required. Existing fixed-driver and grabber bytes remain intact.
+Keep the whole packet and its notices. Native emulator qualification is not
+physical-hardware qualification. See docs/PANNING.MD for the common guide.

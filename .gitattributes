@@ -226,3 +226,10 @@ docs/QUAL/UPAN/** -text
 downloads/UNIPAN/** -text
 docs/panning/** -text
 tools/LEGACY/** -text
+
+# Single PAN application and two-axis software desktop inputs.
+src/panxy/** -text
+tools/PAN/** -text
+downloads/PAN/** -text
+docs/QUAL/PAN/** -text
+docs/PANNING.MD -text

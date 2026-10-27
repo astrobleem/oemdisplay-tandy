@@ -15,7 +15,7 @@ static int Owned(const char *p,unsigned n)
  for(i=0;i<n;i++)if(p[i]=='\\'||p[i]=='/')k=i+1;
  p+=k;n-=k;
  return Same(p,n,"XTPAN.EXE")||Same(p,n,"XYCTL.EXE")||Same(p,n,"PANCTL.EXE")||
-  Same(p,n,"CGACTL.EXE")||Same(p,n,"PANCFG.EXE");
+  Same(p,n,"CGACTL.EXE")||Same(p,n,"PANCFG.EXE")||Same(p,n,"PAN.EXE");
 }
 int PanStartupEdit(const char *old,const char *add,char *out,unsigned cap)
 {

@@ -98,10 +98,12 @@ def verify():
     if set(q['outputs'])!={'CPPAN.ZIP','INSTALL.TXT'} or any(identity((ROOT/'downloads/experimental/CPPAN'/n).read_bytes())!=pin for n,pin in q['outputs'].items()):raise ValueError('Current ColorPlus downloads differ from qualified ZIP composition')
     catalog=json.loads((ROOT/'tools/CURRENT/PRODUCTS.JSN').read_bytes())['local']['CPPAN.ZIP']
     if catalog!={'source':'downloads/experimental/CPPAN/CPPAN.ZIP','identity':q['outputs']['CPPAN.ZIP']}:
-        unified=importlib.machinery.SourceFileLoader('cpp_unified_catalog',str(ROOT/'tools/UPAN/PUBLISH.PY')).load_module()
+        current_source=catalog['source']
+        current_producer='tools/PAN/PUBLISH.PY' if current_source=='downloads/PAN/CPPAN.ZIP' else 'tools/UPAN/PUBLISH.PY'
+        unified=importlib.machinery.SourceFileLoader('cpp_unified_catalog',str(ROOT/current_producer)).load_module()
         accepted,products=unified.products()
         data=products['CPPAN.ZIP']
-        if catalog!={'source':'downloads/UNIPAN/CPPAN.ZIP','identity':identity(data)} or (ROOT/catalog['source']).read_bytes()!=data:
+        if current_source not in ('downloads/UNIPAN/CPPAN.ZIP','downloads/PAN/CPPAN.ZIP') or catalog!={'source':current_source,'identity':identity(data)} or (ROOT/catalog['source']).read_bytes()!=data:
             raise ValueError('Current ColorPlus catalog binding differs')
         if identity(unified.C.members(data)['PCP3216.DRV'])!=q['driver']:
             raise ValueError('Unified ColorPlus driver differs from native qualification')

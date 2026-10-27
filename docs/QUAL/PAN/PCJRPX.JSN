@@ -1,0 +1,133 @@
+{
+  "driver": {
+    "bytes": 60528,
+    "sha256": "02dab8ed0f1350869cae5ee4ebde46d0b1fe95854660c2885045d73100e587cf"
+  },
+  "outcome": "PASS",
+  "adapter": "pcjr",
+  "frames": [
+    {
+      "shot": 0,
+      "viewport": [
+        0,
+        0
+      ],
+      "pixels": 64000,
+      "mismatches": 0,
+      "first": [],
+      "vram_sha256": "cbae68f77e0e3c6202d5af8475a00adefd1f44c68e8cb8b9820043c0c21e51fc"
+    },
+    {
+      "shot": 1,
+      "viewport": [
+        8,
+        0
+      ],
+      "pixels": 64000,
+      "mismatches": 0,
+      "first": [],
+      "vram_sha256": "5bd1a8d5f0b58b55b0b2f51915f347a128b268b0b17089a87b25f4dde02931f5"
+    },
+    {
+      "shot": 2,
+      "viewport": [
+        320,
+        0
+      ],
+      "pixels": 64000,
+      "mismatches": 0,
+      "first": [],
+      "vram_sha256": "0603e1a211b73bd450b17f637b5a71b548641f96c66cadc47512fb8c27410ab0"
+    },
+    {
+      "shot": 3,
+      "viewport": [
+        320,
+        4
+      ],
+      "pixels": 64000,
+      "mismatches": 0,
+      "first": [],
+      "vram_sha256": "5740929852a600bee8f26d06b1b938750f97c3370c7e58a51fad78121a464258"
+    },
+    {
+      "shot": 4,
+      "viewport": [
+        320,
+        200
+      ],
+      "pixels": 64000,
+      "mismatches": 0,
+      "first": [],
+      "vram_sha256": "c020f29aa73c5841fc9bcc112a13b493f6bc358bb545d55b6b5d630e3163a1a4"
+    },
+    {
+      "shot": 5,
+      "viewport": [
+        0,
+        200
+      ],
+      "pixels": 64000,
+      "mismatches": 0,
+      "first": [],
+      "vram_sha256": "4fc5085966e4a04e8a628314435d39470b9b3bfc8810aaae82d1540958c09b45"
+    },
+    {
+      "shot": 6,
+      "viewport": [
+        160,
+        100
+      ],
+      "pixels": 64000,
+      "mismatches": 0,
+      "first": [],
+      "vram_sha256": "e47c32287c5ef3256df0c86d6a5a381f98bdd67ce575255d87bd9c1a8eb1dc46"
+    },
+    {
+      "shot": 7,
+      "viewport": [
+        0,
+        0
+      ],
+      "pixels": 64000,
+      "mismatches": 0,
+      "first": [],
+      "vram_sha256": "cbae68f77e0e3c6202d5af8475a00adefd1f44c68e8cb8b9820043c0c21e51fc"
+    },
+    {
+      "shot": 8,
+      "viewport": [
+        304,
+        192
+      ],
+      "pixels": 64000,
+      "mismatches": 0,
+      "first": [],
+      "vram_sha256": "820e5296466aeef505ee2e9e5f9bf3f08f83b2690eee7452371873c40e90baf1"
+    },
+    {
+      "shot": 9,
+      "viewport": [
+        304,
+        192
+      ],
+      "pixels": 64000,
+      "mismatches": 0,
+      "first": [],
+      "vram_sha256": "7e5e85752730a7a29090204c3c940cfcdef1f8c7325c89db6d369dafb888232d"
+    },
+    {
+      "shot": 10,
+      "viewport": [
+        304,
+        192
+      ],
+      "pixels": 64000,
+      "mismatches": 0,
+      "first": [],
+      "vram_sha256": "820e5296466aeef505ee2e9e5f9bf3f08f83b2690eee7452371873c40e90baf1"
+    }
+  ],
+  "pixels_checked": 704000,
+  "physical_hardware": false
+}

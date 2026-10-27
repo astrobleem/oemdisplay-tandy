@@ -7,12 +7,13 @@ static char path[128];
 static HINSTANCE noticeInst;
 static HWND noticeButton;
 static int smallNotice;
+static const char *noticeText;
 static void CopyArg(char *d,LPSTR s,int cap){int i=0;while(s[i] && i<cap-1){d[i]=s[i];i++;}d[i]=0;}
 long FAR PASCAL NoticeProc(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 {
  switch(msg){
  case WM_CREATE:
-  CreateWindow("STATIC","Panning is off or unavailable. Run PANCFG to enable a supported owner.",WS_CHILD|WS_VISIBLE|SS_LEFT,smallNotice?4:12,8,smallNotice?140:256,smallNotice?44:44,hwnd,NULL,noticeInst,NULL);
+  CreateWindow("STATIC",(LPSTR)noticeText,WS_CHILD|WS_VISIBLE|SS_LEFT,smallNotice?4:12,8,smallNotice?140:256,smallNotice?44:44,hwnd,NULL,noticeInst,NULL);
   noticeButton=CreateWindow("BUTTON","OK",WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_DEFPUSHBUTTON,smallNotice?56:110,smallNotice?58:62,smallNotice?40:60,smallNotice?10:20,hwnd,(HMENU)1,noticeInst,NULL);return 0;
  case WM_SETFOCUS:if(noticeButton)SetFocus(noticeButton);return 0;
  case WM_COMMAND:if(wp==1){DestroyWindow(hwnd);return 0;}break;
@@ -21,9 +22,10 @@ long FAR PASCAL NoticeProc(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
  }
  return DefWindowProc(hwnd,msg,wp,lp);
 }
-static void OffNotice(HINSTANCE inst)
+static void OffNotice(HINSTANCE inst,const char *text)
 {
  HDC dc;HWND owner;WNDCLASS wc;MSG msg;int x=0,y=0,w,h,q=-1,in[2],out[6];
+ noticeText=text;
  owner=FindWindow("PanCfgNotice",NULL);if(owner){BringWindowToTop(owner);SetFocus(owner);return;}
  w=GetSystemMetrics(SM_CXSCREEN);h=GetSystemMetrics(SM_CYSCREEN);dc=GetDC(NULL);
  if(Escape(dc,0x5850,2,(LPSTR)&q,(LPSTR)out)>0 && out[0]>=0 && out[1]>0){y=out[0];h=out[1];}
@@ -40,27 +42,42 @@ static void OffNotice(HINSTANCE inst)
 }
 int PASCAL WinMain(HINSTANCE inst,HINSTANCE prev,LPSTR cmd,int show)
 {
- char old[512],out[512],oldRun[512],runOut[512],arg[24],run[176];
+ char old[512],out[512],oldRun[512],runOut[512],arg[24],run[176],startup[160];
  char oldEnabled[24],oldWindow[24];
- int kind,ownerKind,fixed=0,started=0,failure=4,changedRun=0;HWND owner;
+ int kind,ownerKind,fixed=0,started=0,failure=4,changedRun=0,colorFix=0;HWND owner;
+ {HDC dc=GetDC(0);int w,h,c,index;COLORREF black;
+  if(dc){w=GetDeviceCaps(dc,HORZRES);h=GetDeviceCaps(dc,VERTRES);c=GetDeviceCaps(dc,NUMCOLORS);ReleaseDC(0,dc);
+   if(h==200 && ((w==320 && c==4)||(w==640 && c==2))){colorFix=1;index=COLOR_GRAYTEXT;black=RGB(0,0,0);SetSysColors(1,&index,&black);}}
+ }
  CopyArg(arg,cmd,sizeof(arg));kind=PanCmdParse(arg);
  owner=PanOwnerFind(&ownerKind);
  if(kind==PS_CMD_SETTINGS&&owner){PanOwnerRoute(1);return 0;}
  if(kind!=PS_CMD_OFF){
   if(!owner)ownerKind=PanOwnerDetect(&fixed);
   else if(ownerKind==PN_VERT&&PanOwnerDetect(&fixed)!=PN_VERT)fixed=0;
-  if(!ownerKind){OffNotice(inst);return 8;}
-  if(!PanOwnerPath(owner?(HINSTANCE)GetWindowWord(owner,GWW_HINSTANCE):inst,ownerKind,path,sizeof(path))){OffNotice(inst);return 5;}
+  if(!ownerKind){if(kind==PS_CMD_SETTINGS)OffNotice(inst,"This display has no supported panning backend.");return 8;}
+  if(!PanOwnerPath(owner?(HINSTANCE)GetWindowWord(owner,GWW_HINSTANCE):inst,ownerKind,path,sizeof(path))){OffNotice(inst,"Panning files are missing. Run Setup again.");return 5;}
   if(kind==PS_CMD_SETTINGS){
-   if(PanRoute(0,ownerKind!=PN_VERT||GetProfileInt("XTPan","Enabled",1))==PS_ROUTE_OFF){OffNotice(inst);return 7;}
+   if(PanRoute(0,ownerKind!=PN_VERT||GetProfileInt("XTPan","Enabled",1))==PS_ROUTE_OFF){OffNotice(inst,"Panning is off. Run PAN to enable it.");return 7;}
    lstrcpy(run,path);lstrcat(run," " PS_ARG_SETTINGS);
-   if(WinExec(run,SW_SHOWNORMAL)<32 || !PanOwnerFind(0)){OffNotice(inst);return 4;}
+   if(WinExec(run,SW_SHOWNORMAL)<32 || !PanOwnerFind(0)){OffNotice(inst,"Panning could not start. Close applications and retry.");return 4;}
    return 0;
   }
  }
  if(GetProfileString("windows","load","",old,sizeof(old))>=sizeof(old)-1 ||
     GetProfileString("windows","run","",oldRun,sizeof(oldRun))>=sizeof(oldRun)-1)return 1;
- if(!PanStartupEdit(old,kind==PS_CMD_OFF?0:path,out,sizeof(out)) ||
+ /* The public application detects the current display on every startup.
+  * Legacy direct owner tokens are migrated by the same bounded editor. */
+ startup[0]=0;
+ if(kind==PS_CMD_OFF && colorFix)(void)PanOwnerPath(inst,PN_FIXED,startup,sizeof(startup));
+ if(kind!=PS_CMD_OFF){
+  OFSTRUCT of;int i,n;
+  lstrcpy(startup,path);n=GetModuleFileName(inst,startup,sizeof(startup));
+  for(i=n-1;i>=0 && startup[i]!='\\';i--);
+  if(!n || n>=sizeof(startup) || i<0 || i+8>=sizeof(startup))lstrcpy(startup,path);
+  else{startup[i+1]=0;lstrcat(startup,"PAN.EXE");if(OpenFile(startup,&of,OF_EXIST)==HFILE_ERROR)lstrcpy(startup,path);}
+ }
+ if(!PanStartupEdit(old,startup[0]?startup:0,out,sizeof(out)) ||
     !PanStartupEdit(oldRun,0,runOut,sizeof(runOut)))return 2;
  if(kind==PS_CMD_OFF){
   if(!WriteProfileString("windows","run",runOut))return 3;
@@ -90,6 +107,6 @@ failed:
   (void)WriteProfileString("XTPan","Enabled",oldEnabled[0]=='\1'?NULL:oldEnabled);
   (void)WriteProfileString("XTPan","WindowWorkspace",oldWindow[0]=='\1'?NULL:oldWindow);
  }
- if(failure==4)OffNotice(inst);
+ if(failure==4)OffNotice(inst,"Panning could not start. Close applications and retry.");
  return failure;
 }

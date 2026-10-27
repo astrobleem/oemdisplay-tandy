@@ -70,14 +70,15 @@ CD \ALT\WINXT
 DISPWIN
 ```
 
-In Windows, run `XYCTL.EXE` from that folder for viewport controls.
+In Windows, run `PAN /SETTINGS` for viewport controls. The normal launcher
+installs it automatically.
 
 `DISPLAY` and `DISPWIN` reserve shared video memory automatically and stop
 if reservation fails. They use Windows in `C:\WINDOWS`; for another directory,
 pass its drive and path, such as `DISPLAY D: \WIN30` and `DISPWIN D: \WIN30`.
 
 Ctrl+Alt+arrows pan the 320x200 view over the 640x256 desktop;
-Ctrl+Alt+Home returns home. XYCTL or Ctrl+Alt+H switches software/hardware
+Ctrl+Alt+Home returns home. PAN or Ctrl+Alt+H switches software/hardware
 presentation. Exit Windows before changing display drivers through Setup.
 
 [Other hardware](PLATFORM.MD) uses its matching packet. [Native installation

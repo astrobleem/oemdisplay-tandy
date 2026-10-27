@@ -1,0 +1,25 @@
+PANNING
+
+One application selects the appropriate backend for your installed display.
+
+Exit Windows. From this extracted root run SETUP C:\WINDOWS, using your
+actual Windows directory. It installs PAN automatically and keeps unrelated
+startup programs. For the exact preceding PCjr/ColorPlus vertical panning
+driver it also installs the new 640x400 two-axis software desktop. Fixed,
+Tandy HPXY and CGA display driver bytes remain unchanged by this installer.
+
+Start Windows with your existing normal guarded launcher. Use PAN /SETTINGS
+or Ctrl+Alt+S. Ctrl+Alt+arrows pan; Home returns home; End finds the active
+window. Apply saves; Cancel discards edits. PAN OFF disables startup; PAN
+enables it again. Repeated settings launches retain the active owner.
+
+PCjr/ColorPlus: software 640x400 desktop, 320x200 view, 128,000 bytes shadow.
+Tandy extended display: existing software/hardware choices.
+CGA large desktop: software 320x200 desktop, 160x100 view.
+Fixed graphics displays: existing two-axis window workspace.
+Hardware controls appear only when supported. No physical hardware claim.
+
+Normal 640 KB, Windows 3.0 real mode and an installed supported display driver
+are required. No Windows or DOS files are included. No manual helper copies,
+Python or modern-PC conversion is needed. Keep the entire PAN folder.
+See https://github.com/astrobleem/oemdisplay-tandy/blob/main/docs/PANNING.MD

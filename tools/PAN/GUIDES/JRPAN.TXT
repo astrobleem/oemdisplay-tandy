@@ -1,0 +1,19 @@
+PCjr DISPLAY + PANNING
+
+This packet installs the PCjr display and the common PAN application.
+Use INSTALL.BAT from DOS and select its PCjr panning desktop in ordinary
+Windows Setup. The desktop is 640x400 through the normal 320x200 screen.
+Use the packet's JRSTART launcher: it checks the reserved 32 KB video page
+and automatically installs the common application before Windows starts.
+No separate helper copying or second application installation is required.
+
+In Windows use PAN /SETTINGS or Ctrl+Alt+S. Ctrl+Alt+arrows pan horizontally
+and vertically; Ctrl+Alt+Home returns home. Apply saves; Cancel discards
+edits. PAN OFF disables panning startup; PAN enables it again.
+
+The software framebuffer uses 128,000 bytes of shadow RAM, 64,000 bytes more than the
+former vertical-only desktop. Normal 640 KB and Windows 3.0 real mode are
+required. The existing PCjr memory driver must reserve the 32 KB video page;
+the launcher checks that reservation and never bypasses it. Keep the full
+packet and its notices. Native emulator qualification is not physical-PCjr
+qualification. See docs/PANNING.MD on the project site for the common guide.

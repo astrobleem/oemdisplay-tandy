@@ -327,7 +327,7 @@ static int XtQuery(void *ctx, PANCAPS *c, PANSET *s)
     if (bDesk) {
         DeskRefresh();
         host.backend = WDWinDropped() ? "Window limit: close windows or use Home" :
-                                        "Window workspace (24 windows)";
+                                        nDeskW < 280 ? "Window workspace" : "Window workspace (24 windows)";
         c->caps = (c->caps & ~(PS_CAP_SOFT | PS_CAP_FOLLOW)) |
                   PS_CAP_MODE | PS_CAP_DESK;
     }
@@ -484,7 +484,7 @@ int PASCAL WinMain(HANDLE hInst, HANDLE hPrev, LPSTR lpCmd, int nShow)
         /* A retained startup token on another display must exit quietly.
          * A loader-time message box could be outside that display's view. */
         if (PanOwnerDetect(&fixed) != PN_VERT || !fixed ||
-            (nDeskW != 320 && nDeskW != 640) || nView != 200)
+            (nDeskW != 160 && nDeskW != 320 && nDeskW != 640) || nView != 200)
             return 0;
         if (WDWinInit(2048, 2048) != WD_OK) {
             if (settings)

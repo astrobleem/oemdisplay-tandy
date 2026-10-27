@@ -9,7 +9,7 @@ small controls. You need installed Windows 3.0 real mode, DOS 3.3+ and 640 KB.
 
 *Windows 3.0 Paintbrush at 160x100, enlarged 4x. The picture itself uses all
 16 RGBI colors, verified pixel for pixel against the opened BMP.
-[Original 160x100 image](CGA/PAINT100.PNG) · [Palette view](CGA/PAINTPLX.PNG) ·
+[Original 160x100 image](CGA/PAINT100.PNG) Â· [Palette view](CGA/PAINTPLX.PNG) Â·
 [Try the picture](CGA/COVE16.BMP).
 Captured from native IBM XT/CGA emulation; not a real-hardware photograph.*
 
@@ -69,8 +69,7 @@ to an edge scrolls after a short dwell. New windows and controls reached with
 Tab are brought into view. Commands sent while Windows is loading an app are
 retained in a bounded queue and applied afterward.
 
-**Ctrl+Alt+S** opens Panning settings; `PANCFG /SETTINGS` from Run is the common entry.
-`PANCTL /SETTINGS` remains compatible.
+**Ctrl+Alt+S** opens Panning settings; `PAN /SETTINGS` from Run is the common entry.
 Change Step, Dwell, Follow active window or Pan at screen edge, then Apply.
 Apply saves in WIN.INI; Cancel discards un-applied edits. Step rounds to a
 multiple of 8 across: entering 20 gives 24. Home moves the view without
@@ -96,15 +95,15 @@ SETUP UNDO C:\WINDOWS
 | --- | --- |
 | [![Notepad File Open in CGA four-color mode](CGA/OPEN320X.PNG)](CGA/OPEN320.PNG) | [![Notepad File Open in CGA monochrome mode](CGA/OPEN640X.PNG)](CGA/OPEN640.PNG) |
 
-*[Original 320x200 image](CGA/OPEN320.PNG) ·
+*[Original 320x200 image](CGA/OPEN320.PNG) Â·
 [Original 640x200 image](CGA/OPEN640.PNG). The 320 frame uses three of its
 four available colors; the 640 frame uses both.*
 
 These modes were tested in IBM CGA emulation. Physical cards, clone CRTCs,
 composite, PCjr/Tandy and EGA/VGA remain separate targets.
-[Image sources and capture details](CGA/CAPTURES.MD) ·
+[Image sources and capture details](CGA/CAPTURES.MD) Â·
 [Text instructions and recovery](../downloads/experimental/CGA/README.TXT).
 
 The compact settings use the same implementation as the other current panning
-helpers. `PANCFG /SETTINGS` is the common entry; see [Panning](PANNING.MD)
+helpers. `PAN /SETTINGS` is the common entry; see [Panning](PANNING.MD)
 for controls, supported approaches and current native screenshots.

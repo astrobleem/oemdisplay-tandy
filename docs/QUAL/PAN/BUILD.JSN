@@ -1,0 +1,235 @@
+{
+  "status": "BUILT_NOT_RUNTIME_QUALIFIED",
+  "target": "Win3 real mode 8086",
+  "binaries": {
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    },
+    "PANCTL.EXE": {
+      "bytes": 18591,
+      "sha256": "a13f1e676b8d71a20643a6b82646ba1f7066e726b88e1c2e482df2ba812f2015"
+    },
+    "CGACTL.EXE": {
+      "bytes": 25247,
+      "sha256": "fa1bc19c9f0301b4ea2f91116a0cfb1f3db0864d1f794edf5e7bdd70cfc5a2d0"
+    },
+    "XTPAN.EXE": {
+      "bytes": 27407,
+      "sha256": "bd33843a1fd456446b8935f69aa74605b82010e9c4345b4a186870b47c52213d"
+    },
+    "XYCTL.EXE": {
+      "bytes": 33220,
+      "sha256": "aa405b11e5b0f82cc4499bda54897b937ffee9305017788065c1bcb283097bbf"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    }
+  },
+  "sources": {
+    "CGACTL.C": {
+      "bytes": 7543,
+      "sha256": "89bb46547708538049ed73975eaf5e80d8314599b0162d56f5add7aa5050559d"
+    },
+    "CGACTL.DEF": {
+      "bytes": 166,
+      "sha256": "d920cb237104df86e1dd8c22231ce0fd34994d4631a2b3f86bcdfb2ef49bc589"
+    },
+    "PANCFG.C": {
+      "bytes": 6453,
+      "sha256": "fb9f23142ecb6715ab43de57407af984d0a64014033bb004e0184b455cc49586"
+    },
+    "PANCFG.DEF": {
+      "bytes": 153,
+      "sha256": "b494bd3534aa33fb482af7dff9518f06118336d8599bb97d85ef645bd003dfb7"
+    },
+    "PANCMD.H": {
+      "bytes": 471,
+      "sha256": "5e46ae41dbd2123b4fc774cabd3791320ccb43cb085dea0b50f7b6b67741d46e"
+    },
+    "PANCTL.C": {
+      "bytes": 11050,
+      "sha256": "e8752b3932047d9709c7f827a1f1dcc4050c620fe8014087c6c92f8be35a3b85"
+    },
+    "PANCTL.DEF": {
+      "bytes": 166,
+      "sha256": "c53ef97a836d4e6bc2f7a9f01531c2f0445c13363aa72c7eef375c4171ddec27"
+    },
+    "PANDLG.C": {
+      "bytes": 19433,
+      "sha256": "fca7e9f6e4ed5eda48678bacf6c633eb2f0bec0c0ab69bf73436f8d11ad227a4"
+    },
+    "PANDLG.H": {
+      "bytes": 2437,
+      "sha256": "d5f76a9614c68f03c12c9b5bd520983aff725e29c575010123462f974be14e9d"
+    },
+    "PANKCL.C": {
+      "bytes": 3436,
+      "sha256": "6ff4c10b5fe0628d293b0343d19d327e838c2844f0634871d8abcf15aa650e2f"
+    },
+    "PANKEY.C": {
+      "bytes": 4613,
+      "sha256": "b3d77f9d5202d849012c11fd99ccbbda4bc6e9e851e20204398af6e2adc90c6a"
+    },
+    "PANKEY.DEF": {
+      "bytes": 266,
+      "sha256": "9cf3ddf0fbcf5e27d4f0a5093fe4cfd02d5909d7159fed78d9e83585413541da"
+    },
+    "PANKEY.H": {
+      "bytes": 710,
+      "sha256": "92d90e752e89f03a7208739687d3604b26369e56fb814d6001e6d10124a88b96"
+    },
+    "PANOWN.C": {
+      "bytes": 2458,
+      "sha256": "0a0e42af5c9c121184117c2bb3afe3855a0a65290c34b786c2c02f6f5cddecd6"
+    },
+    "PANOWN.H": {
+      "bytes": 423,
+      "sha256": "dfe54c4065abb3b1a667ba27472f9cc9bd121c3e221fd142ae31fd1b3bd93e02"
+    },
+    "PANSET.C": {
+      "bytes": 13256,
+      "sha256": "e21a9c1f76858a774bb106cdde8d674a2132c839ccde06e8329da500e8f72ba0"
+    },
+    "PANSET.H": {
+      "bytes": 8856,
+      "sha256": "53688c9ee518f36bfcfd6bf5a1c965ecc27bbc8fb5e4a2b301b02db901be812b"
+    },
+    "PANSTART.C": {
+      "bytes": 1340,
+      "sha256": "ded8934ea25ef8b21450c597c8d4b85d8dc8c0a1656ad06f1a55f33453ac6c4c"
+    },
+    "PANSTART.H": {
+      "bytes": 189,
+      "sha256": "040f2f083f2ce43e7636c7fcf4746898e9b7bc04277d70b7af01d5125880d17c"
+    },
+    "PANTGT.C": {
+      "bytes": 908,
+      "sha256": "a3f3560ca9b3db401062f5bf5f0e4e60c6d14038c9e08977d7d67879b36559c1"
+    },
+    "PANTGT.H": {
+      "bytes": 345,
+      "sha256": "dd8d4089209b6e24951cd4e1090125799baf6f7d13f4e665c7e95af1cc7c5fcc"
+    },
+    "PKENTRY.ASM": {
+      "bytes": 336,
+      "sha256": "ac38a89a9035060029829ea2063e14370bcf7c9b2f43cc5858d562abe4431b79"
+    },
+    "WDCORE.C": {
+      "bytes": 10060,
+      "sha256": "66e20b18a618b18ccca0ede3daa706e6ecfc36efdd88c1625796a581bbaa7723"
+    },
+    "WDCORE.H": {
+      "bytes": 4934,
+      "sha256": "30969b4c4314e718391200330ddd4f13b6b6adeb237f6ad5a6ddf8ee0c7d4739"
+    },
+    "WDWIN.C": {
+      "bytes": 13520,
+      "sha256": "98a17659e534e50e29fc6b0905591e057a2f461108d865a0adc5bf3d93010ad4"
+    },
+    "WDWIN.H": {
+      "bytes": 2651,
+      "sha256": "8d009036884444dfdb66b76c6cbc1e6beb2e5e869c511b0c447069534b9edfbf"
+    },
+    "WTPLACE.C": {
+      "bytes": 6192,
+      "sha256": "30e822766219f1d6bea9ef5b86fc625dac2828502076adef192903f976f34f56"
+    },
+    "WTPLACE.H": {
+      "bytes": 1843,
+      "sha256": "af77584f4676029813a6e39e172b4362f0ef79dcae42df5303a2c857b3564ce1"
+    },
+    "XTPAN.C": {
+      "bytes": 17806,
+      "sha256": "63c255a1ac5871668098989243b06b1bfc7f6084f28850ed29d288cfedc63c20"
+    },
+    "XTPAN.DEF": {
+      "bytes": 165,
+      "sha256": "4f3ca36c10852df8c35f5b66c647f92f14ff314494efd7e0b99bf656e43cfce0"
+    }
+  },
+  "xy_sources": {
+    "PANCMD.H": {
+      "bytes": 471,
+      "sha256": "5e46ae41dbd2123b4fc774cabd3791320ccb43cb085dea0b50f7b6b67741d46e"
+    },
+    "PANDLG.C": {
+      "bytes": 19433,
+      "sha256": "fca7e9f6e4ed5eda48678bacf6c633eb2f0bec0c0ab69bf73436f8d11ad227a4"
+    },
+    "PANDLG.H": {
+      "bytes": 2437,
+      "sha256": "d5f76a9614c68f03c12c9b5bd520983aff725e29c575010123462f974be14e9d"
+    },
+    "PANKCL.C": {
+      "bytes": 3436,
+      "sha256": "6ff4c10b5fe0628d293b0343d19d327e838c2844f0634871d8abcf15aa650e2f"
+    },
+    "PANKEY.H": {
+      "bytes": 710,
+      "sha256": "92d90e752e89f03a7208739687d3604b26369e56fb814d6001e6d10124a88b96"
+    },
+    "PANOWN.C": {
+      "bytes": 2458,
+      "sha256": "0a0e42af5c9c121184117c2bb3afe3855a0a65290c34b786c2c02f6f5cddecd6"
+    },
+    "PANOWN.H": {
+      "bytes": 423,
+      "sha256": "dfe54c4065abb3b1a667ba27472f9cc9bd121c3e221fd142ae31fd1b3bd93e02"
+    },
+    "PANSET.C": {
+      "bytes": 13256,
+      "sha256": "e21a9c1f76858a774bb106cdde8d674a2132c839ccde06e8329da500e8f72ba0"
+    },
+    "PANSET.H": {
+      "bytes": 8856,
+      "sha256": "53688c9ee518f36bfcfd6bf5a1c965ecc27bbc8fb5e4a2b301b02db901be812b"
+    },
+    "PANSTART.C": {
+      "bytes": 1340,
+      "sha256": "ded8934ea25ef8b21450c597c8d4b85d8dc8c0a1656ad06f1a55f33453ac6c4c"
+    },
+    "PANSTART.H": {
+      "bytes": 189,
+      "sha256": "040f2f083f2ce43e7636c7fcf4746898e9b7bc04277d70b7af01d5125880d17c"
+    },
+    "PANTGT.C": {
+      "bytes": 908,
+      "sha256": "a3f3560ca9b3db401062f5bf5f0e4e60c6d14038c9e08977d7d67879b36559c1"
+    },
+    "PANTGT.H": {
+      "bytes": 345,
+      "sha256": "dd8d4089209b6e24951cd4e1090125799baf6f7d13f4e665c7e95af1cc7c5fcc"
+    },
+    "WDCORE.C": {
+      "bytes": 10060,
+      "sha256": "66e20b18a618b18ccca0ede3daa706e6ecfc36efdd88c1625796a581bbaa7723"
+    },
+    "WDCORE.H": {
+      "bytes": 4934,
+      "sha256": "30969b4c4314e718391200330ddd4f13b6b6adeb237f6ad5a6ddf8ee0c7d4739"
+    },
+    "WDWIN.C": {
+      "bytes": 13520,
+      "sha256": "98a17659e534e50e29fc6b0905591e057a2f461108d865a0adc5bf3d93010ad4"
+    },
+    "WDWIN.H": {
+      "bytes": 2651,
+      "sha256": "8d009036884444dfdb66b76c6cbc1e6beb2e5e869c511b0c447069534b9edfbf"
+    },
+    "WTPLACE.C": {
+      "bytes": 6192,
+      "sha256": "30e822766219f1d6bea9ef5b86fc625dac2828502076adef192903f976f34f56"
+    },
+    "WTPLACE.H": {
+      "bytes": 1843,
+      "sha256": "af77584f4676029813a6e39e172b4362f0ef79dcae42df5303a2c857b3564ce1"
+    },
+    "XYCTL.C": {
+      "bytes": 31592,
+      "sha256": "ca087d5e0de7e71b8083ce235b68c5696a249296a632acc6672d0afd7444524b"
+    }
+  },
+  "flags": "MSC6 /G0 /Gw /AS /W3 /Os; DLL /Gsw /ASw /Zp /Od; XY Watcom -zW -0 -ms -os"
+}

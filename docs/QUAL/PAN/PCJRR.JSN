@@ -1,0 +1,22 @@
+{
+  "outcome": "PASS_NATIVE_PCJR_SINGLE_APP",
+  "physical_hardware": false,
+  "checks": [
+    "Normal guarded launcher upgrades exact old vertical driver and installs the common PAN application automatically; one owner and one PAN startup token",
+    "One public PAN settings entry fits physical320x200; no hardware choice on software-only PCjr; repeated launch preserves edits; Apply/Cancel persist correctly",
+    "Native two-axis desktop reaches320,200; active dialog at420,300 is brought into view at the independently calculated aligned viewport, beyond the former vertical bound",
+    "OFF/ON uses the same public application, preserves settings and installs no resident broker",
+    "Normal Windows shutdown and DOS return"
+  ],
+  "installed_receipt": {
+    "bytes": 1788,
+    "sha256": "9c0bf86f0388156636127f4902bd3ec29e2e8190320ffd942cca71ffa1a76f48"
+  },
+  "raw_result": {
+    "path": "docs/QUAL/PAN/PCJRRAW.JSN",
+    "identity": {
+      "bytes": 746,
+      "sha256": "eeb62530abc0b5a914ead428e695267b7d2f0079e35db750bd505e8b12e816ec"
+    }
+  }
+}

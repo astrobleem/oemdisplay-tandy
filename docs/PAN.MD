@@ -1,3 +1,5 @@
+> Historical prototype record. For current installation and controls, see [Panning](PANNING.MD).
+
 # Edge-panning desktop for Windows XT (experimental): investigation
 
 **Summary.** XTPAN.DRV gives Windows 3.0 a 320x400 desktop on the Tandy

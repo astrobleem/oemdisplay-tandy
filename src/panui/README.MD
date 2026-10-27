@@ -1,10 +1,13 @@
-# Shared panning settings (src/panui)
+# Shared Panning application settings
 
-One "Panning settings" window for the two existing panning helpers. It
-exposes only what the detected backend supports. It is not a new panning
-engine: each helper keeps its own timer and pan code, and the window adds no
-timer, hook or second process. "Hybrid" here means selectable approaches
-under one interface; only the two existing framebuffer helpers are covered.
+The current public application is PAN. Its transient dispatcher detects the
+installed driver and starts one internal presentation owner. This directory
+provides the shared settings model, adaptive160x100/320x200 window, bounded
+queued-key input and owner routing. The owner keeps its own timer and rendering
+backend; the dialog adds no hook or extra process. Hardware/software means a
+choice of existing supported methods, never running both engines at once.
+See [the consumer guide](../../docs/PANNING.MD) and
+[the current producer](../../tools/PAN/README.MD).
 
 ## Files
 
@@ -14,7 +17,7 @@ under one interface; only the two existing framebuffer helpers are covered.
 - `PANDLG.H/C` - the window, built in code from STATIC, BUTTON and EDIT
   children (no resources, no Windows 3.1 controls, no CPL interface).
   `PanDlgOpen(inst, host)` runs inside the owning helper only. A later
-  Control Panel wrapper must route like `PANCFG SETTINGS` does: find the
+  Control Panel wrapper must route like `PAN /SETTINGS` does: find the
   owner window and post `PS_MSG_VERT` or `PS_MSG_XY` to it.
 - `HOSTUI.PY`, `SETTEST.C`, `XYAPPLY.C` - strict C89 tests, including the
   actual XY Apply glue. `VERIFY.PY` binds native builds and saved UI evidence.
@@ -45,7 +48,7 @@ Settings are not merged by name.
 
 ## Invoking
 
-- `PANCFG SETTINGS` (or `/SETTINGS`): posts a registered message to the
+- `PAN /SETTINGS` (or `/SETTINGS`): posts a registered message to the
   running XTPAN, or to a running XYCTL if there is no XTPAN window. If XTPAN is stopped but enabled it is started with
   `/SETTINGS`; if it is disabled PANCFG says so and starts nothing. It never
   edits `load=` or `Enabled`. `PANCFG` alone still enables and `PANCFG OFF`

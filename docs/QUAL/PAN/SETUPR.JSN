@@ -1,0 +1,65 @@
+{
+  "outcome": "PASS_NATIVE_SETUP_SINGLE_APP",
+  "physical_hardware": false,
+  "installed_receipt": {
+    "bytes": 1782,
+    "sha256": "b9c88fff134954baddbea72eb6d89550306ed4e5c4b4ef03a9cf77c5c9382a7b"
+  },
+  "transactions": {
+    "FRESH": {
+      "files_verified": 387,
+      "log": {
+        "path": "docs/QUAL/PAN/FRESH.LOG",
+        "identity": {
+          "bytes": 13210,
+          "sha256": "77a79a3e20e098898663c0f6bf8846dd298fe2902b9f4deddb35e6f9483333b4"
+        }
+      },
+      "lease": {
+        "path": "docs/QUAL/PAN/FRESHL.JSN",
+        "identity": {
+          "bytes": 579,
+          "sha256": "048166dec72d0a36425d989bd042b49e7c7c6be74e9096b23736233088630eb9"
+        }
+      }
+    },
+    "UPDATE": {
+      "files_verified": 99,
+      "log": {
+        "path": "docs/QUAL/PAN/UPDATE.LOG",
+        "identity": {
+          "bytes": 5083,
+          "sha256": "d8d311e4e9904abac161f1445fa8cce871cb509f73f2be4cc0dfdb13188dc455"
+        }
+      },
+      "lease": {
+        "path": "docs/QUAL/PAN/UPDATEL.JSN",
+        "identity": {
+          "bytes": 579,
+          "sha256": "cb7c993461ca602115d2e986e4a46e06b6c49a7f25769e81ee4dbb2ad9b9c30d"
+        }
+      }
+    },
+    "PANINIT": {
+      "log": {
+        "path": "docs/QUAL/PAN/REPAIR.LOG",
+        "identity": {
+          "bytes": 1792,
+          "sha256": "2dad2d4489b786bdeefa444a8e96206428cc30b9e165df24a0db7253397a2297"
+        }
+      },
+      "native_start": {
+        "path": "docs/QUAL/PAN/HPXYR.JSN",
+        "identity": {
+          "bytes": 1002,
+          "sha256": "6513a4cd8218fbdcbc0023d93df778b50f27d1b6a46be1d0dee6def292378481"
+        }
+      }
+    }
+  },
+  "checks": [
+    "Native FRESH387 and UPDATE99 closed preparation",
+    "Normal FIXXT repair and Computer registration",
+    "Guarded STARTXT installs and detects PAN; actual Windows run with TSHELL/input/wheel/clipboard; normal DOS return"
+  ]
+}

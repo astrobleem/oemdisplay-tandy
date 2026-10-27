@@ -191,7 +191,7 @@ static int OpHome(void *ctx)
  return Query();
 }
 static PANHOST host={{0,OpQuery,OpApply,OpHome},{0,StoreGet,StorePut},
- "Panning settings","CGAPAN software view"};
+ "Panning settings","Software viewport"};
 static void LoadSettings(void)
 {
  PANCAPS c;PANSET s;PANSTORE st;

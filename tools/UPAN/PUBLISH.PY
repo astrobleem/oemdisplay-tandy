@@ -53,8 +53,9 @@ def qualification():
  except FileNotFoundError as e:raise ValueError('Unified panning native acceptance is not installed') from e
  require(q['schema']==1 and q['status']=='NATIVE_EMULATION_QUALIFIED_REVIEWED','Unified panning acceptance pending')
  require(q['physical_hardware'] is False,'Unsubstantiated hardware claim')
+ history=importlib.machinery.SourceFileLoader('preceding_unified_sources',str(ROOT/'tools/PAN/HISTORY.PY')).load_module()
  for name,pin in q['sources'].items():
-  exact(dict(path=name,identity=pin))
+  history.previous_source(name,pin)
  require(set(q['native'])==REQUIRED,'Native backend/installation coverage incomplete')
  helpers={n:exact(row) for n,row in q['helpers'].items()}
  require(set(helpers)=={'XTPAN.EXE','XYCTL.EXE','PANCTL.EXE','CGACTL.EXE','PANCFG.EXE','PANKEY.DLL'},'Helper inventory incomplete')

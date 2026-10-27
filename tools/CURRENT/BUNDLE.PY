@@ -43,7 +43,7 @@ def ancillary(sound,main_zip):
   if {n:b for n,b in updated.items() if n!=row['member']}!={n:b for n,b in original.items() if n!=row['member']}:raise ValueError('Documentation refresh changed runtime')
   files[name]=archive(updated)
  for name,row in config['sound'].items():files[name]=exact(sound/name,row['identity'])
- panning=importlib.machinery.SourceFileLoader('current_composed_colorplus',str(ROOT/'tools/UPAN/PUBLISH.PY')).load_module()
+ panning=importlib.machinery.SourceFileLoader('current_composed_colorplus',str(ROOT/'tools/PAN/PUBLISH.PY')).load_module()
  panning.verify_alternatives(files)
  files['BUILDIN.ZIP']=input_archive(config)
  files['TANDYLAB.ZIP']=collection(config,main_zip)
@@ -83,7 +83,7 @@ def main_product(data):
   if 'WINXT/'+name.decode('ascii') not in files:raise ValueError('OEM support missing: '+name.decode('ascii'))
  native=json.loads((ROOT/'tools/XROEM/NATIVE.JSN').read_bytes())
  if native['packet']!=identity(data):
-  core=importlib.machinery.SourceFileLoader('current_panui_gate',str(ROOT/'tools/UPAN/PUBLISH.PY')).load_module()
+  core=importlib.machinery.SourceFileLoader('current_panui_gate',str(ROOT/'tools/PAN/PUBLISH.PY')).load_module()
   core.verify_core(data)
   return files
  if native['complete'] is not True or native['packet']!=identity(data) or not all(native['checks'].values()):raise ValueError('Exact ordinary OEM qualification missing')
@@ -93,7 +93,7 @@ def main_product(data):
 def build(output,sound,core_input,commit):
  if not re.fullmatch('[0-9a-f]{40}',commit):raise ValueError('Full source commit required')
  config=spec()
- core=importlib.machinery.SourceFileLoader('current_native_producer',str(ROOT/'tools/UPAN/PUBLISH.PY')).load_module()
+ core=importlib.machinery.SourceFileLoader('current_native_producer',str(ROOT/'tools/PAN/PUBLISH.PY')).load_module()
  if set(core.ASSETS)!=set(config['core_assets']):raise ValueError('Expanded native producer is not installed in this source snapshot')
  supplied={n:exact(core_input/n,config['core_identities'][n]) for n in config['core_assets']}
  producer_commit=json.loads(supplied['WINXT.JSN'])['source_commit']

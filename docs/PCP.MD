@@ -12,13 +12,16 @@ real mode in `C:\WINDOWS`. Ordinary CGA, PC1512 and Tandy/PCjr video use other d
 Fonts, grabber, startup logos and helpers are included.
 
 In Setup choose Display, Other, `C:\CPPAN`, then **ColorPlus 320x200 fixed** or
-**EXPERIMENTAL ColorPlus 320x400 panning** for the taller desktop.
-For panning, run `C:\CPPAN\PANCFG` inside Windows once. Move the pointer past
-an edge or use Alt+PgDn/Alt+PgUp; Alt+F9 returns to the top.
-Panning uses 32,000 additional shadow bytes. To select fixed mode later,
-run `PANCFG OFF`, exit Windows and repeat Setup. No reservation helper is needed.
-Exit Windows before running DOS programs. Native Setup/startup passed in
-emulation; physical ColorPlus clones remain unqualified.
+the **640x400 software-panning** desktop. The normal `CPWIN` launcher installs
+the common Panning application automatically. Run `PAN /SETTINGS` inside
+Windows to change its controls; Ctrl+Alt+arrows pans and Ctrl+Alt+Home returns home.
+The same application detects the selected driver and offers its supported controls.
+
+The 640x400 desktop uses a 128,000-byte shadow in normal 640 KB memory.
+ColorPlus presentation is software only. To select fixed mode, exit Windows and
+repeat Setup. No reservation helper is needed. Exit Windows before DOS programs.
+See the [one application guide](PANNING.MD) for controls and limits.
+Native checks use emulation; physical ColorPlus clones remain unqualified.
 
 ## Fixed-driver redraw qualification
 
@@ -46,8 +49,9 @@ SDIB88 and BMC_MAIN changes, not diagnostics; its frames and practical redraw
 timings match the shipped control. Windows free memory before the probe was
 340,256 bytes shipped, 336,576 baseline and 336,352 candidate. All runs use
 normal 640 KB and restore the same DOS mode and prompt. The original installer
-and current panning evidence stays unchanged. The flat current ZIP changes
-only PCP3216.DRV; every settings/helper/installer/support member is preserved.
+and fixed-driver evidence stays unchanged. That earlier fixed-driver update changed
+only PCP3216.DRV. The current package also includes the common Panning application
+and the separately qualified two-axis software-panning driver.
 Physical ColorPlus hardware remains unqualified.
 
 Run `python -B src/pcp/CPVERIFY.PY` to replay the saved native evidence and

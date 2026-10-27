@@ -1,0 +1,22 @@
+{
+  "outcome": "PASS_NATIVE_FIXED_WORKSPACE_SINGLE_APP",
+  "physical_hardware": false,
+  "checks": [
+    "normal fixed-display launcher installs configuration/input helpers without forcing a workspace owner",
+    "one owner and shared settings preserve typed edits on repeat launch; fixed display offers only Windows mode",
+    "shared queued arrows move a real Clock window; Home restores the workspace and window",
+    "enable persists fixed-workspace opt-in even when the owner already exists; OFF/ON restores state",
+    "normal Windows shutdown and DOS return with window workspace active; opt-in saved in WIN.INI"
+  ],
+  "installed_receipt": {
+    "bytes": 1783,
+    "sha256": "81b92eb4432b8439aa638e3974f4df5d7bf4ec3e77aee8bc9aff58c52823b105"
+  },
+  "raw_result": {
+    "path": "docs/QUAL/PAN/FIXEDRAW.JSN",
+    "identity": {
+      "bytes": 635,
+      "sha256": "fff842c1e9f66a8a293429a0e9a391842167f9042d8b7dae78104fe30ba7f3fd"
+    }
+  }
+}

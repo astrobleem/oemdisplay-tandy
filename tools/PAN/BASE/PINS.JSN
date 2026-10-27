@@ -1,0 +1,18 @@
+{
+  "WINXT.ZIP": {
+    "bytes": 751081,
+    "sha256": "3dcdfc9052c2878298e0e14b15c2a3f694dac33d8f067d0b97007e6d3e24b4db"
+  },
+  "CGA.ZIP": {
+    "bytes": 414463,
+    "sha256": "f66bca3c0708923e2ecd9e56fddee5d092149831d68d535e866be212d30dafe9"
+  },
+  "JRPAN.ZIP": {
+    "bytes": 259460,
+    "sha256": "6ae2118ed70e3fd913cb4abb195f87fb1f7103a6bcb46818d5e046ca21d28095"
+  },
+  "CPPAN.ZIP": {
+    "bytes": 261492,
+    "sha256": "e61e07157459ac6ead2488374a85995137e57f6e27c6fac72a003c5e87d48901"
+  }
+}

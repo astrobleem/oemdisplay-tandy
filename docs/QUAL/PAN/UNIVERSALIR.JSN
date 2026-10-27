@@ -1,0 +1,19 @@
+{
+  "outcome": "PASS_NATIVE_INSTALLER_TRANSACTION",
+  "installed_receipt": {
+    "bytes": 1638,
+    "sha256": "ec18f477d1550e48f747b60c0679b3e575d4117395a88a5ee0812c032c318231"
+  },
+  "installer_observation": "Exact installer bytes read from native mounted source or stopped fixture; all match qualified BIN",
+  "log": {
+    "path": "docs/QUAL/PAN/UNIVERSAL.LOG",
+    "identity": {
+      "bytes": 2119,
+      "sha256": "e4a0b095be37d7822a7873064ad47237f6f863c90c3e6bf99aa8824577fcc8d0"
+    }
+  },
+  "upgraded_driver": {
+    "bytes": 60528,
+    "sha256": "02dab8ed0f1350869cae5ee4ebde46d0b1fe95854660c2885045d73100e587cf"
+  }
+}
