@@ -164,3 +164,22 @@ logs, final logical PNGs and lifecycle receipts outside the repository. See the
 evidence_root in RESULT.JSN. Separate reviewer signoff, repeated-trial confidence,
 consumer installer/package qualification and physical EX/HX/CF testing remain
 open. No push, merge, publication or physical-media writes were performed.
+
+
+## DIB-only follow-on (host preparation)
+
+DIBBLD.PY applies DIB.PY after the normal HPXY overlay and does not apply the
+older solid-group predicate. It unrolls the fixed four-source-byte import and
+four-destination-byte export groups. Palette translation, every pixel operation,
+partial-byte routines, segment-crossing dispatch, stack frames, presentation,
+cursor and panning code remain unchanged. No data table or allocation is added.
+The original AH and temp_bit_count postconditions are explicitly retained.
+
+DIBHOST.JSN records the source-stream proof: the repeated bodies are identical
+to the originals, and all text outside the two full-group routines is identical.
+This establishes source structure only; assembly and native results are pending.
+DIBSCN.C combines the prior scene with DIBTEST.C checks for palette permutations,
+widths1/7/8/9/15/16/17/37, a high-offset64KB crossing, RLE4, guard bytes and
+64-call GetDIBits/SetDIBits timing batches. It compiles with the same Open Watcom
+8086 Windows flags. DIBORCL.PY adds11 DIB-case and native-assertion requirements
+to the independent scene oracle.

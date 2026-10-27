@@ -1,0 +1,22 @@
+{
+  "status": "PASS_SOURCE_STREAM_PROOF",
+  "native_execution": false,
+  "groups": [
+    {
+      "module": "BMC_ETI.ASM",
+      "outside_full_group_identical": true,
+      "replicated_body_identical": true,
+      "stack_frame_identical": true,
+      "source_sha256": "f877dbc7dbb1cb3c697adba5fb1c8be7df412d6d81f7ea5e34195cabf8d969b7"
+    },
+    {
+      "module": "BMC_ITE.ASM",
+      "outside_full_group_identical": true,
+      "replicated_body_identical": true,
+      "stack_frame_identical": true,
+      "source_sha256": "80351645e7cbeb4ccf22ccec7c80e544b0cdc2ee56a7aba6289b4c2d8f33dd8e"
+    }
+  ],
+  "presentation_sha256": "43e7e2c9a9404396fccd72cb9d04b4074fa260425425d675cc301696ac3673c3",
+  "limits": "Native assembly, timing, data/segment-boundary and cursor/pan qualification pending"
+}
