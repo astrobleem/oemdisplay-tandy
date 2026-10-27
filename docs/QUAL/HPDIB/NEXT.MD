@@ -14,10 +14,21 @@ lease was released with empty inventory after 949.984 seconds. INSTAPP.JSN and
 INSTAPP.ZIP contain the receipt and closed raw evidence.
 
 Ordinary Windows Setup is not qualified. The attempted batch navigation was
-canceled with Escape, Setup returned status 1 and retained the old driver.
+not fully observed, Setup returned status 1 and retained the old driver.
 The optional helper replacement fallback was declined. SETUPFAIL.JSN and the
 raw archive retain that failure. Retry on a fresh private fixture with observed
 single-step navigation and exact new-driver readback before any full repair.
+
+The single-step retry subsequently reached Other, read the actual OEM folder,
+selected HPXY and completed the UI changes while retaining DOS configuration.
+It also returned status 1. That return value alone therefore does not establish
+failure; DISPLAY's existing contract checks the selected driver and supports a
+prompted replacement. The documented replacement copied the exact candidate.
+The run stopped at the native DOS checkpoint before full repair, with clean
+process/lease release. It does not claim a Windows boot or Windows DOS return.
+A direct guarded STARTXT boot of that same image is prepared, with only the
+private AUTOEXEC test launcher changed; no Windows files or driver were edited.
+This follow-up must pass before the ordinary route is accepted.
 
 Independent review found no assembly defect and one real checker defect. The
 checker now requires all expected frames, matching native log, successful DOS

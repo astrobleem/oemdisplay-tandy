@@ -42,3 +42,11 @@ normal DOS return with clean stop/release in 950 seconds. INSTAPP.JSN/ZIP retain
 that evidence. Its preceding ordinary Setup attempt returned status 1 and kept
 the old driver; SETUPFAIL.JSN preserves that separate failure. Ordinary Windows
 Setup acceptance and final independent review remain pending.
+
+The later single-step Setup test selected Other and the actual OEM folder,
+completed the UI flow and also observed status 1. DISPLAY's documented prompt
+then installed the exact candidate through its narrow replacement. DRVINST.JSN
+and ZIP preserve this installation checkpoint and matching seven-helper readback.
+The controlled DOS stop is not a Windows-return acceptance. A direct guarded
+boot of that same installed image, without full repair, remains pending.
+CHECKSET/TESTSET distinguish this checkpoint from the final installed verdict.

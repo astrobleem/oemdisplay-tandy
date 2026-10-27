@@ -20,8 +20,9 @@ def qualification():
  require(q.get('status')=='REVIEWED_NATIVE_HPXY_DIB' and q.get('physical_hardware') is False,'DIB qualification pending')
  for name,pin in q['sources'].items():exact(dict(path=name,identity=pin))
  required={'src/hpxydib/DIB.PY','tools/HPDIB/BUILD.PY','tools/HPDIB/PREPARE.PY','tools/HPDIB/PUBLISH.PY','tools/HPDIB/CHECKREP.PY','tools/HPDIB/PROBE.PY','experiments/SOLPERF/ORACLE.PY','experiments/SOLPERF/DIBTEST.C','experiments/SOLPERF/SCENE.C'}
- required.update('tools/HPDIB/'+n for n in ('APPTEST.PY','RUNUI.PY','SETUPIO.PY','VERIFYINST.PY','TESTGATE.PY','TESTPUB.PY'))
+ required.update('tools/HPDIB/'+n for n in ('APPTEST.PY','RUNUI.PY','SETUPIO.PY','CHECKSET.PY','VERIFYINST.PY','TESTGATE.PY','TESTPUB.PY'))
  required.update(('tools/UPAN/UICTRL.PY','tools/PAN/EMU86.PY','src/softpan/WINRUN.PY'))
+ required.add('tools/HPDIB/TESTSET.PY')
  require(required<=set(q['sources']),'Incomplete source inventory')
  review=json.loads(exact(q['review']));require(review.get('outcome')=='NO_RESIDUAL_FINDINGS' and review.get('reviewed_commit')==q['reviewed_source_commit'] and review.get('sources')==q['sources'],'Independent exact-source review missing')
  runtime={n:exact(row) for n,row in q['runtime'].items()};require(set(runtime)=={'HPXY.DRV','FIXXT.EXE','SETUP.EXE'},'Unexpected native runtime inventory')
@@ -54,7 +55,7 @@ def qualification():
   require(result['status']=='PASS_NATIVE_INSTALLED_HPXY_DIB' and result['normal_dos_return'] is True and result['installed_driver']==identity(runtime['HPXY.DRV']) and result['installed_helpers']=={n:identity(P.exact(r)) for n,r in base['helpers'].items()},'Installed Windows/helper readback incomplete: '+case)
   require(result['driver_not_injected'] is True and result['normal_packet_path'] is True,'Native route was bypassed: '+case)
   if case=='full_finisher':require(result['paintbrush_rgb_equal'] is True and result['pan_controls_pass'] is True and result['repair_complete'] is True,'Application/finisher coverage incomplete')
-  else:require(result['native_windows_setup_completed'] is True,'Ordinary Windows Setup missing')
+  else:require(result['native_windows_setup_completed'] is True and result['ordinary_boot_without_full_repair'] is True,'Ordinary driver route boot without full repair missing')
  return q,archive,packets
 def products():
  q,archive,packets=qualification();result=dict(packets);result['WINXT.ZIP']=archive;return q,result

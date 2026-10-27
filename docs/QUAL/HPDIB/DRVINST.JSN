@@ -1,0 +1,152 @@
+{
+  "status": "NATIVE_DISPLAY_INSTALLATION_WINDOWS_BOOT_PENDING",
+  "checkpoint": {
+    "status": "PASS_NATIVE_DISPLAY_ROUTE_BEFORE_REPAIR",
+    "installed_driver": {
+      "bytes": 62096,
+      "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c"
+    },
+    "pause_before_full_repair": true,
+    "setup_status": 1,
+    "helper_replacement_used": true,
+    "setup_log": {
+      "bytes": 2609,
+      "sha256": "d5a5e8ba2fbdcc28daa1e798f22395bc824ebbcd7bd4d9352539ba9b174c8c2e"
+    },
+    "system_ini": {
+      "bytes": 1122,
+      "sha256": "f67a8767d467187027ec181e8c26ffead0cd20c65c70b5790933abc61d43fe84"
+    },
+    "physical_hardware": false
+  },
+  "lease": {
+    "lock": "C:\\Users\\chad\\Documents\\Codex\\2026-10-06\\tandy-emulator.lock",
+    "children": [
+      {
+        "pid": 32104,
+        "bound_seconds": 1200,
+        "stopped": true
+      }
+    ],
+    "status": "PASS",
+    "inventory_before": [],
+    "lease_acquired": true,
+    "lease_released": true,
+    "inventory_after": [],
+    "seconds": 957.797
+  },
+  "installed_helpers": {
+    "XTPAN.EXE": {
+      "bytes": 27407,
+      "sha256": "bd33843a1fd456446b8935f69aa74605b82010e9c4345b4a186870b47c52213d"
+    },
+    "XYCTL.EXE": {
+      "bytes": 33220,
+      "sha256": "aa405b11e5b0f82cc4499bda54897b937ffee9305017788065c1bcb283097bbf"
+    },
+    "PANCTL.EXE": {
+      "bytes": 18591,
+      "sha256": "a13f1e676b8d71a20643a6b82646ba1f7066e726b88e1c2e482df2ba812f2015"
+    },
+    "CGACTL.EXE": {
+      "bytes": 25247,
+      "sha256": "fa1bc19c9f0301b4ea2f91116a0cfb1f3db0864d1f794edf5e7bdd70cfc5a2d0"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "PAN.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    }
+  },
+  "archive": {
+    "bytes": 37753,
+    "sha256": "1476cdad66510769264a5f634d2411271a813f40f18ac90c05258fd135668d16"
+  },
+  "members": {
+    "CHECKPOINT.JSN": {
+      "bytes": 576,
+      "sha256": "92e05fe04b16ba5b1c4d209fc6a349f083358bec13b886aafb772568a4e01adf"
+    },
+    "DISPLAY-CHECKPOINT.LOG": {
+      "bytes": 2609,
+      "sha256": "d5a5e8ba2fbdcc28daa1e798f22395bc824ebbcd7bd4d9352539ba9b174c8c2e"
+    },
+    "FINAL-RAW59.PNG": {
+      "bytes": 3734,
+      "sha256": "92cd72528acb38272da2b16f1a5ac5c0522924546e2fc7d372a032c4f4c41ede"
+    },
+    "FINAL-RAW60.PNG": {
+      "bytes": 5161,
+      "sha256": "f83fed197834fe5e7ea7bed5a03b1212099f1319fc24c96aeb5e2d6f25aeacb4"
+    },
+    "FINAL-RAW61.PNG": {
+      "bytes": 7557,
+      "sha256": "fb3d017129cd4b5c75074fa933ce0d5765d94e69d128efc5aa4e67fd22f1b3b9"
+    },
+    "FINAL-RAW62.PNG": {
+      "bytes": 5406,
+      "sha256": "0eee58c01cfdfab9cd58c5cd13d4b0db09e5944e6c327b20c0c04cc218ef8b4e"
+    },
+    "FINAL-RAW63.PNG": {
+      "bytes": 3022,
+      "sha256": "c6224b53e985f52bef09facc510e2d44cacd83474a1c73d363b62e7e3e70294f"
+    },
+    "INSTALL-INPUT.JSN": {
+      "bytes": 9429,
+      "sha256": "5bb262b6a84296ed02289fcf743b88778a087c1af032f50e6336bf7a9faac10a"
+    },
+    "ORDINARY-BOOT-INPUT.JSN": {
+      "bytes": 1264,
+      "sha256": "505575f4c0848f5444be9bd443ea04d91a2dc7a453a0b8122a653cde306d98be"
+    },
+    "PREPARE.JSN": {
+      "bytes": 14186,
+      "sha256": "1d74377eb2cffbbc006bc9a0bfca25f9012ecff477160f7bc8f2ea35f5640856"
+    },
+    "RAWKEYS-LOG.JSON": {
+      "bytes": 6073,
+      "sha256": "a564ce6777fa7a2c3e67d9b1fdfebbb66d94ba25503d8d77705aa19344f3f5f3"
+    },
+    "SETUP-DOS.TXT": {
+      "bytes": 2000,
+      "sha256": "fd7b5ab486fc54a58837143e21901bce76c87258d72d980274d12adb7fdcc3d3"
+    },
+    "SETUP-INPUT.JSN": {
+      "bytes": 7086,
+      "sha256": "f7c27ba1eeef687493fffaf14d682a7a5bb4302ed4487eff96fe95eeaee6b279"
+    },
+    "SETUP-LEASE.JSON": {
+      "bytes": 333,
+      "sha256": "89286a110adc0005cfc7c44a6b1d40e198c77fceb24655990785ae9b63dd38c7"
+    },
+    "SETUP-PASS.LOG": {
+      "bytes": 2609,
+      "sha256": "d5a5e8ba2fbdcc28daa1e798f22395bc824ebbcd7bd4d9352539ba9b174c8c2e"
+    },
+    "SETUP-RUNTIME.JSON": {
+      "bytes": 942,
+      "sha256": "b71599efd59a196cbb1f610817c6277b24a0fa3bda2781ceecd0c19220117260"
+    },
+    "SETUP-STOP.PNG": {
+      "bytes": 1552,
+      "sha256": "a7aca8f207fc128f20e59d729ebdcd589e6d0f4cfb7f899f73a823b84eef5263"
+    },
+    "SETUP-UI.JSN": {
+      "bytes": 1226,
+      "sha256": "caa4deb3a316f0223e5c88999d4ec8699148bd0d17bdf13fe93d983a2f884b48"
+    },
+    "SETUP-WITNESS.JSN": {
+      "bytes": 572,
+      "sha256": "551ef2603ed4a40933e260273c1b1f61c520230f8a6a4b7afdabd17c3b08595c"
+    }
+  },
+  "physical_hardware": false,
+  "normal_windows_dos_return_claimed": false
+}
