@@ -233,3 +233,6 @@ tools/PAN/** -text
 downloads/PAN/** -text
 docs/QUAL/PAN/** -text
 docs/PANNING.MD -text
+
+# Private HPXY performance source and evidence keep exact CRLF bytes.
+experiments/SOLPERF/** -text whitespace=cr-at-eol

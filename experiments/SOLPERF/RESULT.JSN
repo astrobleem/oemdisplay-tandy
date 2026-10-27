@@ -1,0 +1,442 @@
+{
+  "status": "PASS_FOCUSED_CORRECTNESS_WITH_PERFORMANCE_TRADEOFF",
+  "recommendation": "Retain experimental; 3% Solitaire benefit with up to12% mixed-fill regression in these samples. No package promotion.",
+  "base_commit": "c40e380e13b6e7cc6201b1958c580fd287cf4374",
+  "driver_build": {
+    "build": "PASS",
+    "runtime": "NOT_TESTED_BY_BUILD",
+    "candidate": "PRIVATE HPXY solid eight-pixel conversion",
+    "batching": false,
+    "synchronous_output": false,
+    "logical": [
+      640,
+      256,
+      16
+    ],
+    "viewport": [
+      320,
+      200,
+      16
+    ],
+    "shadow_bands": [
+      64000,
+      17920
+    ],
+    "stage_bytes": 2816,
+    "hardware_default": false,
+    "physical_tested": false,
+    "gross_NE_bytes": 126953,
+    "delta_from_R3_gross_bytes": 23998,
+    "ceiling_delta": 24576,
+    "sha256": "e3fa0eec6fdd176cf87f583d1c592ec9ad52908cd3e84603ef0402156ff55c08",
+    "baseline_pipeline_report": "BASEPIPE.json describes transformations before the XY overlay; its mode and optimization descriptions are not final XY behavior",
+    "solid_overlay_sha256": "1ba3d6157d08fee817264e5216afb7b69391258a193ccc6de903e17e9f3a3c7e",
+    "source_base": "c40e380e13b6e7cc6201b1958c580fd287cf4374",
+    "accepted_runtime_replaced": false
+  },
+  "trials": [
+    {
+      "name": "baseline",
+      "start_bios": 1450,
+      "start_ms": 60033,
+      "winexec_ms": 37788,
+      "ready_ms": 37898,
+      "bios_elapsed_ticks": 690,
+      "rect": [
+        0,
+        0,
+        640,
+        224
+      ],
+      "stable_card_region": true,
+      "owned_stopped": true,
+      "lease_released": true
+    },
+    {
+      "name": "candidate",
+      "start_bios": 1450,
+      "start_ms": 60033,
+      "winexec_ms": 36635,
+      "ready_ms": 36744,
+      "bios_elapsed_ticks": 669,
+      "rect": [
+        0,
+        0,
+        640,
+        224
+      ],
+      "stable_card_region": true,
+      "owned_stopped": true,
+      "lease_released": true
+    }
+  ],
+  "ready_reduction_ms": 1154,
+  "ready_reduction_percent": 3.0450155681038575,
+  "whole_shadow_equal": true,
+  "whole_shadow_bytes": 81920,
+  "regressions": {
+    "baseline": {
+      "status": "PASS",
+      "frames": 41,
+      "compared_bytes": 1312000,
+      "cursor_pixels_checked": 1472,
+      "extra_pixel_checks": 144,
+      "native_failures": 0,
+      "normal_dos_return": true,
+      "owned_stopped": true,
+      "lease_released": true,
+      "benchmarks": {
+        "0": 6481,
+        "1": 6481,
+        "2": 6426
+      },
+      "memory": [
+        {
+          "label": "ENTRY",
+          "free": 160096,
+          "largest": 145152
+        },
+        {
+          "label": "WARM",
+          "free": 153728,
+          "largest": 149152
+        },
+        {
+          "label": "AFTER_PANS",
+          "free": 153728,
+          "largest": 149152
+        },
+        {
+          "label": "CLOSED",
+          "free": 153888,
+          "largest": 149152
+        }
+      ],
+      "fat_copies_equal_after_stop": true
+    },
+    "candidate": {
+      "status": "PASS",
+      "frames": 41,
+      "compared_bytes": 1312000,
+      "cursor_pixels_checked": 1472,
+      "extra_pixel_checks": 144,
+      "native_failures": 0,
+      "normal_dos_return": true,
+      "owned_stopped": true,
+      "lease_released": true,
+      "benchmarks": {
+        "0": 6317,
+        "1": 6646,
+        "2": 7196
+      },
+      "memory": [
+        {
+          "label": "ENTRY",
+          "free": 160032,
+          "largest": 145152
+        },
+        {
+          "label": "WARM",
+          "free": 153664,
+          "largest": 149120
+        },
+        {
+          "label": "AFTER_PANS",
+          "free": 153664,
+          "largest": 149120
+        },
+        {
+          "label": "CLOSED",
+          "free": 153824,
+          "largest": 149120
+        }
+      ],
+      "fat_copies_equal_after_stop": true
+    }
+  },
+  "baseline_profile": {
+    "samples": 217,
+    "self_time_samples": {
+      "GDI.EXE": 66,
+      "KERNEL.EXE": 38,
+      "HPXY.DRV: DIB bitmap conversion": 33,
+      "HPXY.DRV: presentation/conversion": 27,
+      "UNKNOWN": 22,
+      "XT-IDE ROM (XUB signature)": 14,
+      "SOL.EXE": 8,
+      "HPXY.DRV: bitmap/raster/other text code": 6,
+      "HPXY.DRV: cursor": 2,
+      "USER.EXE": 1
+    },
+    "flush_owner_samples": {
+      "BitBlt wrapper": 19,
+      "presentation/conversion": 7,
+      "bitmap/raster/other text code": 1
+    },
+    "resolved_segments": {
+      "53248": [
+        "UNKNOWN",
+        0,
+        0
+      ],
+      "4173": [
+        "UNKNOWN",
+        0,
+        0
+      ],
+      "11": [
+        "UNKNOWN",
+        0,
+        0
+      ],
+      "10239": [
+        "UNKNOWN",
+        0,
+        0
+      ],
+      "7877": [
+        "HPXY.DRV",
+        1,
+        20062
+      ],
+      "30207": [
+        "UNKNOWN",
+        0,
+        0
+      ],
+      "16859": [
+        "UNKNOWN",
+        0,
+        0
+      ],
+      "36343": [
+        "SOL.EXE",
+        5,
+        4753
+      ],
+      "35253": [
+        "GDI.EXE",
+        30,
+        5606
+      ],
+      "35965": [
+        "SOL.EXE",
+        10,
+        2572
+      ],
+      "18619": [
+        "UNKNOWN",
+        0,
+        0
+      ],
+      "36977": [
+        "SOL.EXE",
+        4,
+        6746
+      ]
+    },
+    "most_sampled": [
+      {
+        "module": "KERNEL.EXE",
+        "segment": 1,
+        "offset": "0x20b9",
+        "samples": 8
+      },
+      {
+        "module": "GDI.EXE",
+        "segment": 30,
+        "offset": "0x14ea",
+        "samples": 6
+      },
+      {
+        "module": "GDI.EXE",
+        "segment": 30,
+        "offset": "0x150d",
+        "samples": 5
+      },
+      {
+        "module": "GDI.EXE",
+        "segment": 30,
+        "offset": "0x1507",
+        "samples": 5
+      },
+      {
+        "module": "HPXY.DRV",
+        "segment": 1,
+        "offset": "0x266",
+        "samples": 4
+      },
+      {
+        "module": "GDI.EXE",
+        "segment": 30,
+        "offset": "0x14ef",
+        "samples": 4
+      },
+      {
+        "module": "GDI.EXE",
+        "segment": 30,
+        "offset": "0x14eb",
+        "samples": 4
+      },
+      {
+        "module": "KERNEL.EXE",
+        "segment": 1,
+        "offset": "0x3a3e",
+        "samples": 3
+      },
+      {
+        "module": "HPXY.DRV",
+        "segment": 8,
+        "offset": "0x4d0",
+        "samples": 3
+      },
+      {
+        "module": "GDI.EXE",
+        "segment": 30,
+        "offset": "0x12a3",
+        "samples": 3
+      },
+      {
+        "module": "HPXY.DRV",
+        "segment": 8,
+        "offset": "0xcaa",
+        "samples": 3
+      },
+      {
+        "module": "GDI.EXE",
+        "segment": 30,
+        "offset": "0x12b5",
+        "samples": 3
+      },
+      {
+        "module": "GDI.EXE",
+        "segment": 30,
+        "offset": "0x14ed",
+        "samples": 3
+      },
+      {
+        "module": "SOL.EXE",
+        "segment": 4,
+        "offset": "0x1034",
+        "samples": 3
+      },
+      {
+        "module": "UNKNOWN",
+        "segment": 0,
+        "offset": "0xcb9",
+        "samples": 2
+      },
+      {
+        "module": "UNKNOWN",
+        "segment": 0,
+        "offset": "0x121a",
+        "samples": 2
+      },
+      {
+        "module": "UNKNOWN",
+        "segment": 0,
+        "offset": "0x1228",
+        "samples": 2
+      },
+      {
+        "module": "HPXY.DRV",
+        "segment": 1,
+        "offset": "0x1a1",
+        "samples": 2
+      },
+      {
+        "module": "HPXY.DRV",
+        "segment": 8,
+        "offset": "0x49a",
+        "samples": 2
+      },
+      {
+        "module": "GDI.EXE",
+        "segment": 30,
+        "offset": "0x12ba",
+        "samples": 2
+      },
+      {
+        "module": "GDI.EXE",
+        "segment": 30,
+        "offset": "0x1e4",
+        "samples": 2
+      },
+      {
+        "module": "HPXY.DRV",
+        "segment": 8,
+        "offset": "0xcc0",
+        "samples": 2
+      },
+      {
+        "module": "HPXY.DRV",
+        "segment": 8,
+        "offset": "0xcb2",
+        "samples": 2
+      },
+      {
+        "module": "GDI.EXE",
+        "segment": 30,
+        "offset": "0x150f",
+        "samples": 2
+      },
+      {
+        "module": "HPXY.DRV",
+        "segment": 8,
+        "offset": "0xcb0",
+        "samples": 2
+      }
+    ],
+    "scope": "Random-interval stopped-PC sampling during native phase1/2. Counts estimate CPU self-time, not GDI call counts or separately measured disk latency; no claim of exact per-call cost."
+  },
+  "controls": {
+    "WINDOWS/WIN.INI": "6723e9efd00fea92c00a02d1b3d1f600ef90b90730affe09e48877f2b4c78f7c",
+    "WINDOWS/SYSTEM.INI": "2e741e95fb2198e3c56acd05f4714705738929d2fe985e7d0dc8991dd01aca63",
+    "WINDOWS/SOLPROF.EXE": "1352d273da5629ed7de8aa2f39baf6836fd817c24932ac4a0c2b54a9a4f2374f",
+    "WINDOWS/SOL.EXE": "b5b3d6feb0ef1de98cdc6744a794adffe24c6ead5063413609b629a964c2cd15",
+    "WINDOWS/SYSTEM/GDI.EXE": "48956cb3948f06209ac3b22293ceb49106bac9a39aa30d7fb2744ed0267672e2",
+    "WINDOWS/SYSTEM/USER.EXE": "609f8945fd73e084851f99b515c534eb68a1db8dc0c1b556d81c105dccef666c",
+    "WINDOWS/SYSTEM/KERNEL.EXE": "114675d9854bc96c50eaf2460ec048bad39438aaace42c3c41c6407c1ec4b7b3",
+    "WINDOWS/SYSTEM/HPXY.DRV": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+  },
+  "source_images_unchanged": {
+    "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task-6\\unified-full-06\\DISK.IMG": {
+      "bytes": 21411840,
+      "sha256": "c2dc067620db5365e35296f7e3ac3c3f6dd66ac37ab8f6ed05cc75db9730a1f3"
+    },
+    "C:\\Users\\chad\\Documents\\Codex\\2026-10-24\\task\\panui-xy-native-02\\DISK.IMG": {
+      "bytes": 21411840,
+      "sha256": "5a9c2696629446afcc5a8237d6d69bbd51528a68f72720f07eebee38655a5c52"
+    }
+  },
+  "oracle_correction": [
+    {
+      "label": "palette_6",
+      "expected": 6,
+      "actual": 4
+    },
+    {
+      "label": "palette_8",
+      "expected": 8,
+      "actual": 0
+    }
+  ],
+  "evidence_root": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-3",
+  "probe_sources": {
+    "MARK.C": {
+      "bytes": 2054,
+      "sha256": "023feda531c59993021e4bade9bcc5dc2799ad175bd9e84a217a8bd5e79165e3"
+    },
+    "SCENE.C": {
+      "bytes": 7730,
+      "sha256": "1330f537d1dfe1171edc1f9e75bedadc911417a7edc07966d7be58b506b56eb7"
+    }
+  },
+  "gaps": [
+    "Single fresh matched startup pair, not a statistical distribution",
+    "Ready marker is a visible-window/no-pending-invalidation upper bound; three-second card-region stability and full logical shadow capture verify completed scene",
+    "CPU samples are self-time estimates, not per-GDI-call counts or inclusive function times",
+    "Disk uses XT-IDE ramdisk timing; no physical EX/HX or CF timing claim",
+    "Native installer/package acceptance and separate reviewer signoff not performed"
+  ]
+}
