@@ -45,7 +45,7 @@ def main():
                     b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([7])*126,
                     b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([8])*126,
                     b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([9])*126,
-                    b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([10])*126)
+                    b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([10])*126,fixture=True)
     rec=P.emit(args.repo,out/'prepared',files,'0'*40,fixture=True)
     P.verify(out/'prepared')
     src=out/'host-src';shutil.copytree(out/'prepared/native-src',src);write(src/'HOSTTEST.H',SHIM)
@@ -67,18 +67,18 @@ def main():
         (w/'SYSTEM/EXIST.DRV').write_bytes(b'prior unrelated driver')
         return w,snapshot(w)
 
-    def run(w,mode,extra=None,ok=0):
+    def run(w,mode,extra=None,ok=0,input=None):
         nonlocal runserial
         e=env.copy();e.update(extra or {})
-        argv=[str(exe),mode,str(w)] if mode in ('UNDO','RESTORE') else [str(exe),str(w),mode]
-        p=subprocess.run(argv,cwd=out,env=e,capture_output=True,text=True)
+        argv=([str(exe),str(w)] if mode is None else [str(exe),mode,str(w)] if mode in ('UNDO','RESTORE') else [str(exe),str(w),mode])
+        p=subprocess.run(argv,cwd=out,env=e,capture_output=True,text=True,input=input)
         write(out/('RUN%03d.TXT'%runserial),p.stdout+p.stderr);runserial+=1
         if ok is not None and p.returncode!=ok:raise AssertionError((w.name,mode,p.returncode,p.stdout,p.stderr))
         return p
 
     def passed(name):cases.append(name)
 
-    for mode,driver in (('100',b'CGA100.DRV'),('320',b'CGA320.DRV'),('640',b'CGA640.DRV'),('PAN',b'CGAPAN.DRV')):
+    for mode,driver in (('100',b'CGA100.DRV'),('320',b'CGA320.DRV'),('640',b'CGA640.DRV'),('PAN',b'CGAPAN.DRV'),('320C',b'CGA32C.DRV'),('640C',b'CGA64C.DRV')):
         w,before=fixture(mode);run(w,mode)
         assert b'display.drv='+driver in (w/'SYSTEM.INI').read_bytes()
         assert b'286grabber=CGAGRAB.GR2' in (w/'SYSTEM.INI').read_bytes()
@@ -90,7 +90,7 @@ def main():
         helper='PANCTL.EXE' if mode=='PAN' else 'CGACTL.EXE'
         assert (w/helper).is_file() and not (w/'SYSTEM'/helper).exists()
         assert (w/'SYSTEM'/'PANKEY.DLL').is_file() and not (w/'PANKEY.DLL').exists()
-        if mode in ('100','PAN'):
+        if mode in ('100','PAN','320C','640C'):
             # PAN keeps mode 100's compact fonts, border and settings.
             assert b'Helv 3x5 (CGA100)=CG1HELV.FON' in ini and b'BorderWidth=1' in ini
             assert b'fonts.fon=CG1SYS.FON' in (w/'SYSTEM.INI').read_bytes()
@@ -106,8 +106,20 @@ def main():
             assert b'BorderWidth=3' in ini and b'CGACTL.EXE' in ini
         run(w,'UNDO');assert snapshot(w)==before;passed('install/undo '+mode)
 
+    for answer,driver in (('4\n',b'CGA32C.DRV'),('6\n',b'CGA64C.DRV'),('3\n',b'CGA320.DRV'),('5\n',b'CGA640.DRV')):
+        w,before=fixture('visible menu');p=run(w,None,input=answer)
+        assert '3x5 UI, 4x6 fixed text, 6-row controls' in p.stdout
+        assert b'display.drv='+driver in (w/'SYSTEM.INI').read_bytes()
+        run(w,'UNDO');assert snapshot(w)==before
+    for answer in ('\n','bad\n\n'):
+        w,before=fixture('menu cancel');run(w,None,input=answer);assert snapshot(w)==before
+    passed('visible menu compact/standard choices and cancel without writes')
+    for mode in ('320c','640c'):
+        w,before=fixture('case-insensitive compact');run(w,mode);run(w,'UNDO');assert snapshot(w)==before
+    passed('case-insensitive compact commands')
+
     w,before=fixture('switch')
-    for mode in ('100','320','640','100'):run(w,mode)
+    for mode in ('100','320','320C','640','640C','320C','100'):run(w,mode)
     run(w,'UNDO');assert snapshot(w)==before;passed('three modes/repeated switch/undo')
     w,before=fixture('pan switch')
     for mode,helper,other in (('PAN',b'PANCTL.EXE',b'CGACTL.EXE'),('100',b'CGACTL.EXE',b'PANCTL.EXE'),

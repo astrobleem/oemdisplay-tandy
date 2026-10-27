@@ -18,6 +18,7 @@ from pathlib import Path
 import CGAFONT
 import CG6FONT
 import CGASET
+import CMPRSC
 from STAGECGA import MODES, read, write
 
 HERE=Path(__file__).resolve().parent
@@ -31,9 +32,11 @@ ASSETS={
  'LOGOLIC.TXT':('LOGOLIC.TXT','b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80'),
 }
 T80_PINS={'T80COUR.FON':'fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6'}
-COPY=set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE','PANCTL.EXE','PANKEY.DLL','PANCFG.EXE','XTPAN.EXE'}
+COMPACT_DRIVERS={'320C':'CGA32C.DRV','640C':'CGA64C.DRV'}
+COPY=set(COMPACT_DRIVERS.values())|set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE','PANCTL.EXE','PANKEY.DLL','PANCFG.EXE','XTPAN.EXE'}
 HELPERS={'CGACTL.EXE','PANCTL.EXE','PANCFG.EXE','XTPAN.EXE'}
 ALL_FILES=COPY|{'XTSTATIC.LGO','WXTSPL01.RLE','LOGOLIC.TXT','OEMSETUP.INF','FONTLIC.TXT','NOTICE.TXT'}
+COMPACT_FILES=ALL_FILES-{'PANCFG.EXE','XTPAN.EXE'}
 
 
 def ROOT_CGA_BASE(repo):
@@ -135,8 +138,11 @@ def read_owner(folder):
     return data,key
 
 
-def payload(repo,support,drivers,fontout,helper,owner,key,config,window):
+def payload(repo,support,drivers,fontout,helper,owner,key,config,window,fixture=False):
     result=dict(drivers)
+    for mode,base in (('320C','CGA320.DRV'),('640C','CGA640.DRV')):
+        result[COMPACT_DRIVERS[mode]]=(drivers[base]+b'COMPACT FIXTURE' if fixture else
+                                      CMPRSC.compact(drivers[base],drivers['CGA100.DRV'])[0])
     result['CGACTL.EXE']=helper
     result['PANCTL.EXE']=owner
     result['PANKEY.DLL']=key
@@ -169,11 +175,11 @@ def payload(repo,support,drivers,fontout,helper,owner,key,config,window):
     return result
 
 
-def emit(repo,out,files,source_commit,fixture=False):
+def emit(repo,out,files,source_commit,fixture=False,compact_only=False):
     """Shared serializer, also used on explicitly marked synthetic fixtures."""
     if out.exists():raise ValueError('Choose a fresh prepared directory')
     if not re.fullmatch('[0-9a-f]{40}',source_commit):raise ValueError('Use the full source commit')
-    if set(files)!=ALL_FILES:raise ValueError('Incomplete or unexpected CGA packet inventory')
+    if set(files)!=(COMPACT_FILES if compact_only else ALL_FILES):raise ValueError('Incomplete or unexpected CGA packet inventory')
     out.mkdir(parents=True)
     root=out/'packet';folder=root/'CGA';folder.mkdir(parents=True)
     for name,data in sorted(files.items()):
@@ -183,41 +189,50 @@ def emit(repo,out,files,source_commit,fixture=False):
                    destination='WINDOWS' if name in HELPERS else 'SYSTEM' if name in COPY else '')
          for name,data in sorted(files.items())}
     token=hashlib.sha256(json.dumps(pin,sort_keys=True).encode()).hexdigest()
-    # Current and immediately preceding accepted packets share one checked
-    # upgrade/undo implementation, with each sealed inventory kept exact.
-    baseline=ROOT_CGA_BASE(repo)
-    oldpin={name:dict(identity(data),installed=name if name in COPY else '',
-                    destination='WINDOWS' if name in HELPERS else 'SYSTEM' if name in COPY else '')
-            for name,data in sorted(baseline.items())}
-    oldtoken=hashlib.sha256(json.dumps(oldpin,sort_keys=True).encode()).hexdigest()
-    header='#define CGA_MAX_COUNT '+str(max(len(pin),len(oldpin)))+'\n'
-    if not set(oldpin)<set(pin) or set(pin)-set(oldpin)!={'PANCFG.EXE','XTPAN.EXE'}:
-        raise ValueError('Review the prior-packet upgrade inventory')
+    # Keep both previously recognized sealed inventories. A single scratch
+    # table serves all legacy versions without multiplying C6 data-group use.
+    with zipfile.ZipFile(repo/'docs/QUAL/CGACMP/BASE.ZIP') as z:
+        current={n[4:]:z.read(n) for n in z.namelist() if n.startswith('CGA/')}
+    with zipfile.ZipFile(repo/'docs/QUAL/CGAPAN/BASE.ZIP') as z:
+        previous={n[4:]:z.read(n) for n in z.namelist() if n.startswith('CGA/')}
+    baselines=[current,previous]
+    olds=[]
+    for baseline in baselines:
+        oldpin={name:dict(identity(data),installed=name if name in COPY else '',
+                         destination='WINDOWS' if name in HELPERS else 'SYSTEM' if name in COPY else '')
+                for name,data in sorted(baseline.items())}
+        if not set(oldpin)<set(pin):raise ValueError('Review prior compact upgrade inventory')
+        olds.append((oldpin,hashlib.sha256(json.dumps(oldpin,sort_keys=True).encode()).hexdigest()))
+    header='#define CGA_MAX_COUNT '+str(max([len(pin)]+[len(p) for p,t in olds]))+'\n'
+    header+='#define CGA_VERSIONS '+str(1+len(olds))+'\n'
     header+='static CGAFILE cga_new_files[]={\n'
     for name,row in pin.items():
         header+=' {"%s","%s",%dUL,0x%sUL},\n'%(name,row['installed'],row['bytes'],row['crc32'])
-    header+='};\nstatic CGAFILE cga_old_files['+str(len(oldpin))+'];\n'
+    header+='};\nstatic CGAFILE cga_old_files[CGA_MAX_COUNT];\n'
     header+='static CGAFILE *cga_files=cga_new_files;\n'
     header+='static unsigned cga_count='+str(len(pin))+';\nstatic int cga_legacy;\n'
     header+='static const char *cga_packet_id="'+token+'";\n'
     header+='#define CGA_COUNT cga_count\n#define CGA_PACKET_ID cga_packet_id\n'
-    header+='static void cga_select(int old){unsigned i,j=0;\nif(old){\n'
-    header+='for(i=0;i<'+str(len(pin))+';i++)if(i!='+str(list(pin).index('PANCFG.EXE'))+' && i!='+str(list(pin).index('XTPAN.EXE'))+')cga_old_files[j++]=cga_new_files[i];\n'
-    for i,(name,row) in enumerate(oldpin.items()):
-        if row['installed']!=pin[name]['installed']:raise ValueError('Prior destination changed')
-        if row['bytes']!=pin[name]['bytes'] or row['crc32']!=pin[name]['crc32']:
-            header+='cga_old_files[%d].size=%dUL;cga_old_files[%d].crc=0x%sUL;\n'%(i,row['bytes'],i,row['crc32'])
-    header+='}\ncga_legacy=old;cga_files=old?cga_old_files:cga_new_files;'
-    header+='cga_count=old?'+str(len(oldpin))+':'+str(len(pin))+';'
-    header+='cga_packet_id=old?"'+oldtoken+'":"'+token+'";}\n'
+    header+='static void cga_select(int old){unsigned i,j=0;cga_legacy=old;\n'
+    header+='cga_files=cga_new_files;cga_count='+str(len(pin))+';cga_packet_id="'+token+'";\n'
+    for version,(oldpin,oldtoken) in enumerate(olds,1):
+        omitted=[str(i) for i,n in enumerate(pin) if n not in oldpin]
+        condition=' && '.join('i!='+i for i in omitted)
+        header+='if(old=='+str(version)+'){\nfor(i=0;i<'+str(len(pin))+';i++)if('+condition+')cga_old_files[j++]=cga_new_files[i];\n'
+        for i,(name,row) in enumerate(oldpin.items()):
+            if row['installed']!=pin[name]['installed']:raise ValueError('Prior destination changed')
+            if row['bytes']!=pin[name]['bytes'] or row['crc32']!=pin[name]['crc32']:
+                header+='cga_old_files[%d].size=%dUL;cga_old_files[%d].crc=0x%sUL;\n'%(i,row['bytes'],i,row['crc32'])
+        header+='cga_files=cga_old_files;cga_count='+str(len(oldpin))+';cga_packet_id="'+oldtoken+'";return;}\n'
+    header+='}\n'
     sources=CGASET.stage(repo,out/'native-src',header)
     readme=(HERE/'README.TXT').read_bytes()
     (root/'README.TXT').write_bytes(readme)
-    rec=dict(kind='CGA_DEVELOPMENT_PACKET',source_commit=source_commit,fixture=fixture,
+    rec=dict(kind='CGA_DEVELOPMENT_PACKET',source_commit=source_commit,fixture=fixture,compact_only=compact_only,
              native_build='NOT_RUN',windows='NOT_TESTED',hardware='UNQUALIFIED',
              payload=pin,packet_id=token,installer_sources=sources,readme=identity(readme),
-             helper_autoload_modes=['100','320','640','PAN'],
-             helper_by_mode={'100':'CGACTL.EXE','320':'CGACTL.EXE','640':'CGACTL.EXE','PAN':'PANCTL.EXE'},
+             helper_autoload_modes=['100','320','320C','640','640C','PAN'],
+             helper_by_mode={'100':'CGACTL.EXE','320':'CGACTL.EXE','640':'CGACTL.EXE','320C':'CGACTL.EXE','640C':'CGACTL.EXE','PAN':'PANCTL.EXE'},
              helper_normal_modes='Set disabled text black, then exit; no resident placement owner')
     write(out/'PREPARED.JSN',json.dumps(rec,indent=2)+'\n')
     return rec
@@ -228,7 +243,7 @@ def verify(out):
     root=out/'packet';files={p.name:p for p in (root/'CGA').iterdir() if p.is_file()}
     paths=list(root.rglob('*'))
     if any(p.is_symlink() for p in paths):raise ValueError('Linked packet content refused')
-    expected={'README.TXT'}|{'CGA/'+name for name in ALL_FILES}
+    expected={'README.TXT'}|{'CGA/'+name for name in (COMPACT_FILES if rec.get('compact_only') else ALL_FILES)}
     if {p.relative_to(root).as_posix() for p in paths if p.is_file()}!=expected:
         raise ValueError('Expanded packet inventory changed')
     if {p.relative_to(root).as_posix() for p in paths if p.is_dir()}!={'CGA'}:

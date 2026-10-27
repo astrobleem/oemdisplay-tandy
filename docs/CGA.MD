@@ -49,15 +49,24 @@ fonts and support files.
 
 ## 2. Choose a mode
 
-Choose **one** command from this table. `100` is the small fixed desktop;
-`PAN` gives applications such as Paintbrush more room.
+Run `SETUP C:\WINDOWS` to choose from a menu, or use one direct command
+from this table. Standard and compact text sizes are listed side by side.
+Press Enter at the menu to cancel without changes. `PAN` gives applications
+such as Paintbrush a larger desktop through a movable view.
 
 | Run from `C:\CGAKIT` | Result |
 | --- | --- |
 | `SETUP C:\WINDOWS 100` | Fixed 160×100 desktop, 16 RGBI colors, compact fonts and controls |
 | `SETUP C:\WINDOWS PAN` | 320×200 desktop in 16 colors, seen through a movable 160×100 view |
-| `SETUP C:\WINDOWS 320` | Fixed 320×200: black, bright cyan, magenta and white |
-| `SETUP C:\WINDOWS 640` | Fixed 640×200: black and white |
+| `SETUP C:\WINDOWS 320` | Standard UI; fixed 320×200: black, bright cyan, magenta and white |
+| `SETUP C:\WINDOWS 320C` | Same four colors; compact UI and controls, 4×6 fixed text |
+| `SETUP C:\WINDOWS 640` | Standard UI; fixed 640×200: black and white |
+| `SETUP C:\WINDOWS 640C` | Same monochrome resolution; compact UI and controls, 4×6 fixed text |
+
+The compact choices use 3×5 UI text and six-row controls to leave more
+room. Standard choices keep larger UI text. Let your eyes decide: `320` and
+`640` retain their existing defaults, and dropping the `C` restores that
+resolution's standard fonts and controls. Both styles include their fonts.
 
 ## 3. Install the selected driver
 
@@ -129,7 +138,7 @@ show fallback boxes for extended characters.
 ## Change mode or undo
 
 Exit Windows, return to `C:\CGAKIT`, and rerun the chosen Setup command with
-`100`, `PAN`, `320` or `640`. To remove this packet's changes:
+`100`, `PAN`, `320`, `320C`, `640` or `640C`. To remove this packet's changes:
 
 ```bat
 C:
@@ -156,7 +165,7 @@ CRTCs and composite output remain unqualified. PCjr, Tandy and EGA/VGA are
 separate targets.
 
 The DOS screenshots use the preceding public package. The current download
-retains the same layout, mode commands and success message; file sizes and
+retains the same layout and success message and adds the optional compact choices; file sizes and
 helper-copy lines differ. The current settings entry is `PAN /SETTINGS`.
 [Original captures and exact version scope](CGA/INSTALL/CAPTURES.MD).
 
