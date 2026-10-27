@@ -1,0 +1,68 @@
+"""Read back stopped native installation, real BMP round trip and clean lifecycle."""
+from pathlib import Path
+import sys,json,hashlib,struct,importlib.machinery,argparse
+root=Path(__file__).resolve().parents[2]
+ap=argparse.ArgumentParser(description=__doc__)
+for n in ('out','driver','packet','deps'):ap.add_argument('--'+n,type=Path,required=True)
+ap.add_argument('--case',choices=('full_finisher','ordinary_setup','combined'),required=True)
+v=ap.parse_args();out=v.out.resolve();case=v.case;sys.path.insert(0,str(v.deps.resolve()))
+# Invalidate any prior verdict before imports/readback can fail.
+(out/'INSTALLED.JSN').write_text(json.dumps(dict(status='FAIL',reason='Native installation verification incomplete')))
+from pyfatfs.PyFatFS import PyFatFS
+P=importlib.machinery.SourceFileLoader('installed_pan_reference',str(root/'tools/PAN/PUBLISH.PY')).load_module()
+def pin(b):return dict(bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+def bmp(b):
+ assert b[:2]==b'BM';off=struct.unpack_from('<I',b,10)[0];size=struct.unpack_from('<I',b,14)[0]
+ if size==12:w,h,planes,bits=struct.unpack_from('<HHHH',b,18);compression=0;colors=1<<bits;palstart=26;psize=3
+ else:
+  assert size>=40;w,h,planes,bits,compression=struct.unpack_from('<iiHHI',b,18);colors=struct.unpack_from('<I',b,46)[0] or (1<<bits);palstart=14+size;psize=4
+ assert planes==1 and 0<w<=4096 and 0<abs(h)<=4096 and bits in (1,4,8,24)
+ palette=[tuple(reversed(b[palstart+i*psize:palstart+i*psize+3])) for i in range(colors)] if bits<24 else []
+ height=abs(h);pitch=((w*bits+31)//32)*4;rgb=[]
+ if compression==0:
+  for y in range(height):
+   row=(height-1-y if h>0 else y)*pitch+off
+   for x in range(w):
+    if bits==24:rgb.append(tuple(reversed(b[row+x*3:row+x*3+3])))
+    else:
+     v=(b[row+x] if bits==8 else (b[row+x//2]>>(0 if x&1 else 4))&15 if bits==4 else (b[row+x//8]>>(7-x%8))&1);rgb.append(palette[v])
+ else:
+  assert compression in (1,2) and bits==(8 if compression==1 else 4);indices=[[0]*w for _ in range(height)];x=y=0;i=off
+  def put(v):
+   nonlocal x;assert 0<=x<w and 0<=y<height;indices[y][x]=v;x+=1
+  while i<len(b):
+   n,v=b[i:i+2];i+=2
+   if n:
+    for j in range(n):put(v if bits==8 else ((v&15) if j&1 else v>>4))
+   elif v==0:x=0;y+=1
+   elif v==1:break
+   elif v==2:x+=b[i];y+=b[i+1];i+=2
+   else:
+    length=v if bits==8 else (v+1)//2
+    for j in range(v):put(b[i+j] if bits==8 else ((b[i+j//2]&15) if j&1 else b[i+j//2]>>4))
+    i+=length+(length&1)
+  rgb=[palette[v] for row in reversed(indices) for v in row]
+ return w,height,rgb
+lease=json.loads((out/'FINAL-LEASE.JSON').read_text())
+children=lease.get('children')
+if not (lease.get('status')=='PASS' and lease.get('lease_acquired') is True and lease.get('lease_released') is True and lease.get('inventory_after')==[] and isinstance(children,list) and children and all(type(c.get('pid')) is int and c['pid']>0 and c.get('stopped') is True for c in children)):
+ raise ValueError('Native installation lifecycle incomplete')
+assert json.loads((out/'RUNTIME.JSON').read_text())['mode']==3
+assert (out/'CROOT/RETURN1.TXT').read_text().strip()=='RETURNED'
+control=json.loads((out/'RESULT.JSN').read_text());assert control['outcome']=='PASS_NATIVE_HPXY_SINGLE_APP' and not control.get('error')
+before=json.loads((out/'INSTALL-INPUT.JSN').read_text());assert before['driver_not_injected'] and before['previous_installed_driver_sha256']=='c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9'
+base,_=P.products();observed={}
+with PyFatFS(str(out/'DISK.IMG'),offset=8704,read_only=True) as fs:
+ driver=fs.readbytes('WINDOWS/SYSTEM/HPXY.DRV');assert driver==(v.driver).read_bytes()
+ for n,row in base['helpers'].items():
+  b=fs.readbytes('WINDOWS/'+('SYSTEM/' if n.endswith('.DLL') else '')+n);assert b==P.exact(row),n;observed[n]=pin(b)
+ repair=fs.readbytes('REPAIR.LOG').decode('latin1');assert 'Repair complete. Run C:\\STARTXT' in repair
+ source=fs.readbytes('DIBTEST.BMP');saved=fs.readbytes('DIBOUT.BMP');assert bmp(source)==bmp(saved),'Paintbrush RGB round trip differs'
+ (out/'DIBTEST.BMP').write_bytes(source);(out/'DIBOUT.BMP').write_bytes(saved);(out/'REPAIR.LOG').write_text(repair)
+ assert fs.readbytes('WINXT/FIXXT.EXE')==(v.packet/'WINXT/FIXXT.EXE').read_bytes()
+r=dict(status='PASS_NATIVE_INSTALLED_HPXY_DIB',route=case,normal_dos_return=True,installed_driver=pin(driver),installed_helpers=observed,driver_not_injected=True,normal_packet_path=True,pan_controls_pass=True,repair_complete=True,paintbrush_rgb_equal=True,bitmap_width=bmp(saved)[0],bitmap_height=bmp(saved)[1],input_bitmap=pin(source),output_bitmap=pin(saved),native_controls=control,physical_hardware=False)
+if case in ('ordinary_setup','combined'):
+ witness=json.loads((out/'SETUP-WITNESS.JSN').read_text())
+ assert witness['status']=='PASS_NATIVE_SETUP_BEFORE_REPAIR' and witness['installed_driver']==pin(driver) and witness['pause_before_full_repair'] is True
+ r['native_windows_setup_completed']=True;r['setup_witness']=witness
+(out/'INSTALLED.JSN').write_text(json.dumps(r,indent=2));print(json.dumps(r,indent=2))

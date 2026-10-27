@@ -19,3 +19,21 @@ manual INI edits, compiler/OS/ROM inputs, or nested archives enter the packet.
 Independent review, repeated native DIB checks, actual FRESH/UPDATE/ordinary
 Setup installation, installed PAN/application tests and final catalog checks
 must pass before a publication proposal. Publication requires separate approval.
+
+Current evidence in docs/QUAL/HPDIB records an exact current-base driver rebuild,
+61 native DIB cases, 18 timing batches and 41 raster frames per driver. Both
+drivers returned normally to DOS. Imports improved 12%; exports improved
+9-11%. Native FRESH preparation matched 387 files and UPDATE matched 99.
+These preparation checks do not establish completed Windows installation.
+
+CHECKREP.PY requires exact frame coverage, the matching native log, a successful
+DOS return and verified process/lease cleanup. TESTGATE.PY covers missing and
+corrupt evidence, including the independent review's zero-frame reproduction.
+PUBLISH.PY refuses output without exact-source independent review and completed
+native installation acceptance. No ACCEPT.JSN is present yet.
+
+The first installed application session rendered and saved the test bitmap
+with equal RGB pixels, but timed out before confirmed DOS return. APPFAIL.JSN
+retains that failed outcome. RUNUI.PY, SETUPIO.PY and APPTEST.PY prepare a bounded
+follow-up through ordinary Windows Setup, the normal finisher and actual PAN
+controls/Paintbrush. Final installed acceptance and final review remain pending.

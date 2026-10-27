@@ -34,7 +34,17 @@ class Gate(unittest.TestCase):
  def test_missing_receipt(self):(self.out/'LEASE.JSN').unlink();self.reject()
  def test_non_object_receipt(self):(self.out/'RESULT.JSN').write_text('[]');self.reject()
  def test_wrong_installed_driver(self):self.change('RESULT.JSN','installed_driver',{'bytes':1,'sha256':'0'*64});self.reject()
+ def test_log_tampering(self):self.log(lambda s:s+'\nCHECK FORGED=1\n');self.reject()
  def test_review_reproduction(self):
   self.log(lambda s:re.sub(r'^FRAME .*\n?','',s,flags=re.M));self.change('RESULT.JSN','normal_dos_return',False);self.reject()
+ def test_missing_raster_cannot_retain_stale_pass(self):
+  (self.out/'VERIFIED.JSN').write_text('{"status":"PASS"}')
+  with self.assertRaises(OSError):M.verify(self.out)
+  self.assertEqual(json.loads((self.out/'VERIFIED.JSN').read_text())['status'],'FAIL')
+ def test_malformed_dib_cannot_retain_stale_pass(self):
+  self.log(lambda s:s+'\nDIB w=37 h=3\n');self.change('RESULT.JSN','log',(self.out/'PANQA.LOG').read_text());(self.out/'VERIFIED.JSN').write_text('{"status":"PASS"}')
+  with patch.object(M.O,'verify',return_value={'status':'PASS'}):
+   with self.assertRaises(KeyError):M.verify(self.out)
+  self.assertEqual(json.loads((self.out/'VERIFIED.JSN').read_text())['status'],'FAIL')
 if __name__=='__main__':
  a=argparse.ArgumentParser();a.add_argument('--fixture',type=Path,required=True);v=a.parse_args();Gate.fixture=v.fixture;unittest.main(argv=['TESTGATE.PY'])

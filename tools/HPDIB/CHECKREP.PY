@@ -13,6 +13,7 @@ def preflight(out,log):
   r=json.loads((out/'RESULT.JSN').read_text());life=json.loads((out/'LEASE.JSN').read_text());prep=json.loads((out/'PREPARE.JSN').read_text())
   if not all(isinstance(x,dict) for x in (r,life,prep)):raise ValueError('Receipt must be an object')
   if not all(r.get(k) is True for k in ('complete','normal_dos_return','owned_stopped')) or r.get('error'):errors.append('Native completion/DOS return/owned stop failed')
+  if not isinstance(r.get('log'),str) or r['log'].replace('\r\n','\n')!=log:errors.append('Native result log differs from checked log')
   if not (life.get('status')=='PASS' and life.get('lease_acquired') is True and life.get('lease_released') is True and life.get('inventory_after')==[]):errors.append('Successful lease release/inventory missing')
   children=life.get('children')
   if not (isinstance(children,list) and children and all(isinstance(c,dict) and type(c.get('pid')) is int and c['pid']>0 and c.get('stopped') is True for c in children)):errors.append('Owned child stop evidence missing')
@@ -20,7 +21,7 @@ def preflight(out,log):
  except (OSError,ValueError,TypeError,AttributeError) as e:errors.append('Missing or invalid lifecycle/input receipt: '+str(e))
  if not isinstance(r,dict):r={}
  return dict(status='FAIL' if errors else 'PREFLIGHT_PASS',frames=len(ids),frame_ids=ids,expected_frame_ids=FRAME_IDS,frame_coverage_pass=ids==FRAME_IDS,normal_dos_return=r.get('normal_dos_return') is True,lifecycle_pass=not any('FRAME' not in e for e in errors),evidence_errors=errors)
-def verify(out):
+def checked(out):
  log=(out/'PANQA.LOG').read_text();gate=preflight(out,log)
  if gate['status']!='PREFLIGHT_PASS':
   (out/'VERIFIED.JSN').write_text(json.dumps(gate,indent=2)+'\n');return gate
@@ -38,5 +39,10 @@ def verify(out):
  if not passed:result['status']='FAIL'
  result['benchmark_summary']={d:{str(p):dict(median_ms=statistics.median([int(ms) for dd,pp,t,ms in batch if dd==d and int(pp)==p]),trials_ms=[int(ms) for dd,pp,t,ms in batch if dd==d and int(pp)==p]) for p in range(3)} for d in ('SET','GET')} if keys==expected else {}
  (out/'VERIFIED.JSN').write_text(json.dumps(result,indent=2)+'\n');return result
+def verify(out):
+ try:return checked(out)
+ except BaseException as e:
+  (out/'VERIFIED.JSN').write_text(json.dumps(dict(status='FAIL',evidence_errors=['Incomplete verification: '+repr(e)]),indent=2)+'\n')
+  raise
 if __name__=='__main__':
  r=verify(Path(sys.argv[1]));print(r['status']);raise SystemExit(0 if r['status']=='PASS' else 1)
