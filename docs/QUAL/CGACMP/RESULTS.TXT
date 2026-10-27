@@ -1,4 +1,4 @@
-COMPACT CGA CANDIDATE - PRIVATE REVIEW
+COMPACT CGA - LOCAL ACCEPTANCE; PUBLICATION PENDING
 
 The DOS installer visibly offers 320C and 640C alongside the unchanged
 standard choices. It installs the real CGA100 3x5 UI, 4x6 fixed/OEM fonts
@@ -34,8 +34,10 @@ No OS media, compiler or emulator is included. Physical hardware, real mouse
 input and ordinary Windows Setup selection for the new profiles remain
 unqualified. Native DOS SETUP is the complete supported installation route.
 
-Independent review, catalog promotion and explicit publication approval
-remain pending. Nothing has been pushed, merged or published.
+Independent re-review of 902526c is clear. ACCEPT.JSN seals its exact source
+and packet identities; the local catalog selects downloads/COMPACT/CGA.ZIP.
+Publication approval and remote exact-head CI/review remain pending. Nothing
+has been pushed, merged or published.
 
 Independent review of 6c8fe170 found that the gate trusted the machine
 declaration without parsing actual config fields. REVIEW01.JSN retains
@@ -44,3 +46,7 @@ passes 24 checks including 12 restamped actual-config refusals. Both
 recorded XT configurations still pass. No runtime/native evidence changed,
 and no emulator was started for this host-only correction. The separate compact-cga
 workflow now runs these regression checks. Re-review remains pending.
+
+REVIEW.JSN retains the clear independent re-review. The earlier finding and
+its implementation response remain verbatim historical checkpoints. Runtime
+and native evidence are unchanged by acceptance/catalog integration.

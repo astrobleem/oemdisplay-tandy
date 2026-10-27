@@ -88,10 +88,10 @@
       }
     },
     "CGA.ZIP": {
-      "source": "downloads/PAN/CGA.ZIP",
+      "source": "downloads/COMPACT/CGA.ZIP",
       "identity": {
-        "bytes": 460460,
-        "sha256": "1768cffab6a770ee01494fb493c9ffe4e3caf2a41a9617b2ccec7bc9909e37d2"
+        "bytes": 297312,
+        "sha256": "84a1992803d1bd022318ddb001490b66494aba1e61ca09eef2fbc445fb469cc4"
       }
     },
     "PAN.ZIP": {

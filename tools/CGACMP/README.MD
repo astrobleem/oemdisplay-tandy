@@ -24,8 +24,9 @@ The current alternative boundary sends a changed CGA ZIP through `VERIFY.PY`.
 That gate requires exact native build/heap, menu/switch/UNDO, actual installed
 payload, both Windows applications/save/normal-DOS-return, lease cleanup and
 independent source/packet review evidence. A catalog checksum or a successful
-host test cannot accept a new runtime. `ACCEPT.JSN` is deliberately absent
-until the required evidence is complete; the new candidate is refused meanwhile.
+host test cannot accept a new runtime. `ACCEPT.JSN` seals the exact completed
+native candidate with the clear independent re-review of `902526c`. Its review
+and all 18 producer/runtime source identities remain bound to the packet.
 
 ```text
 python tools/PAN/GATETEST.PY --out NEW-PRIOR-GATE.JSN
@@ -34,9 +35,9 @@ python tools/CGACMP/VERIFY.PY --candidate docs/QUAL/CGACMP/CANDIDATE.JSN
 python tools/CGACMP/VERIFY.PY
 ```
 
-The candidate command checks completed native evidence and reports review
-pending. It cannot authorize the current catalog alternative boundary, which
-always requires the separate accepted review record.
+The candidate command retains the original pending-review checkpoint. The
+normal verifier checks the separate sealed acceptance and independent review;
+that accepted record now authorizes the local catalog alternative boundary.
 
 The gate parses the exact launch configuration rather than trusting its
 machine declaration. Its closed recorded fixture requires the 8088 at
@@ -48,5 +49,5 @@ XT/640 KB declaration unchanged, reproducing the first independent finding.
 
 Do not replace `downloads/PAN/CGA.ZIP`: it remains the immutable preceding
 packet. A qualified compact alternative uses a separate tracked path and an
-updated current catalog entry. Publication still requires explicit approval,
+updated local catalog entry, as now prepared here. Publication still requires explicit approval,
 exact-source review and current CI. Physical hardware remains unqualified.

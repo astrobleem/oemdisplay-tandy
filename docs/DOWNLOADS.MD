@@ -10,7 +10,7 @@ Choose your hardware or application. You supply DOS and Windows 3.0.
 | EX/HX drivers only, using the same expanded folder | [WINXT.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT.ZIP) | [Windows Setup](DRIVERS.MD) |
 | Tandy EX/HX fixed-resolution profiles | [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT720.ZIP) | [Fixed profiles](FIXED.MD) |
 | Tandy SL/2 Video II; not EX/HX | [TNDYV2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TNDYV2.ZIP) | [Video II](tga2/INSTALL.TXT) |
-| IBM CGA RGBI: fixed or panning 160x100x16, 320x200x4, 640x200 mono | [CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP) | [CGA installation](CGA.MD) |
+| IBM CGA RGBI: fixed/panning 160x100x16; standard/compact 320x200x4 and 640x200 mono | [CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP) | [CGA installation](CGA.MD) |
 | IBM PCjr display, including two-axis software desktop | [JRPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/JRPAN.ZIP) | [PCjr and common PAN](PANNING.MD) |
 | Amstrad PC1512 built-in video; not PC1640 | [PC1512.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PC1512.ZIP) | [PC1512](PC1512.MD) |
 | Plantronics ColorPlus, fixed or software-panning desktop | [CPPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP) | [ColorPlus](PCP.MD) |

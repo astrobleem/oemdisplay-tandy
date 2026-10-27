@@ -1,5 +1,5 @@
 {
-  "status": "PENDING_INDEPENDENT_REVIEW_AND_PUBLICATION_APPROVAL",
+  "status": "INTEGRATED_LOCALLY_PENDING_PUBLICATION_APPROVAL",
   "product": "CGA.ZIP",
   "current": {
     "source": "downloads/PAN/CGA.ZIP",
@@ -34,5 +34,7 @@
     }
   },
   "candidate": "docs/QUAL/CGACMP/CANDIDATE.JSN",
-  "gate": "tools/CGACMP/VERIFY.PY"
+  "gate": "tools/CGACMP/VERIFY.PY",
+  "accepted": "tools/CGACMP/ACCEPT.JSN",
+  "review": "docs/QUAL/CGACMP/REVIEW.JSN"
 }

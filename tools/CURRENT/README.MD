@@ -35,11 +35,14 @@ The retired softpan auto-publisher must remain disabled. Its source/payload
 and oracle verification continue in Actions, without moving the old tag.
 
 The current CGA choice is one expanded `CGA.ZIP` for fixed or panning 160x100x16 RGBI,
-320x200x4 and 640x200 monochrome. `tools/PAN/PUBLISH.PY` gates the current
-native-qualified payload, installed-byte evidence and independent review before
-catalog output. All four CGA display drivers retain their accepted bytes; shared
-PAN controls and automatic helper installation use the same native SETUP and
-expanded folder.
+320x200x4 and 640x200 monochrome. Native DOS SETUP visibly offers standard
+and compact text/control choices at 320 and 640; standard defaults stay unchanged.
+`tools/PAN/PUBLISH.PY` delegates the compact alternative to
+`tools/CGACMP/VERIFY.PY`, which binds native installation/application evidence,
+actual XT/640 KB configuration and independent source/packet review. The
+four preceding display drivers and all helper/font binaries retain their
+accepted bytes; the two compact resource variants use the same native SETUP
+and complete expanded folder. See [compact qualification](../CGACMP/README.MD).
 
 The current catalog includes standalone PAN.ZIP for an existing supported display
 installation. PCjr and ColorPlus now expose a two-axis 640x400 software desktop
