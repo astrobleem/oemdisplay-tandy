@@ -80,7 +80,7 @@ if case in ('ordinary_setup','combined'):
   assert 'FIXXT' not in boot['launcher'].upper() and 'STARTXT.BAT' in boot['launcher'].upper()
   assert boot['protected_windows_files']['WINDOWS/SYSTEM/HPXY.DRV']==pin(driver)
   assert boot['setup_checkpoint']==pin((out/'SETUP-WITNESS.JSN').read_bytes()) and boot['setup_lease']==pin((out/'SETUP-LEASE.JSON').read_bytes())
-  prior=json.loads((out/'SETUP-LEASE.JSON').read_text());assert prior['status']=='PASS' and prior['lease_released'] is True and prior['inventory_after']==[] and prior['children'] and all(c['stopped'] is True for c in prior['children'])
+  prior=json.loads((out/'SETUP-LEASE.JSON').read_text());assert prior['status']=='PASS' and prior['lease_acquired'] is True and prior['lease_released'] is True and prior['inventory_after']==[] and prior['children'] and all(isinstance(c,dict) and type(c.get('pid')) is int and c['pid']>0 and c.get('stopped') is True for c in prior['children'])
   ui=json.loads((out/'SETUP-UI.JSN').read_text());assert ui['status']=='OBSERVED_WINDOWS_SETUP_COMPLETE_CHANGES_FLOW' and ui['raw_keys']==pin((out/'RAWKEYS-LOG.JSON').read_bytes())
   for name,row in ui['frames'].items():assert row['identity']==pin((out/name).read_bytes())
   assert len(ui['frames'])==3
