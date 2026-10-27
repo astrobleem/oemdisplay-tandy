@@ -1,6 +1,7 @@
 """Send bounded physical keyboard input only to this fixture's owned UI runner."""
 from pathlib import Path
-import argparse,json,time,collections
+import argparse,json,time,collections,sys
+sys.stdout.reconfigure(errors='backslashreplace')
 ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--text',default='');ap.add_argument('--taps',default='');ap.add_argument('--seconds',type=int,default=90);v=ap.parse_args();out=v.out.resolve();c=out/'CROOT'
 assert 1<=v.seconds<=120
 if v.text or v.taps:
@@ -15,7 +16,7 @@ if v.text or v.taps:
   if (c/'RAWACK.JSON').exists() and json.loads((c/'RAWACK.JSON').read_text())['id']==req['id']:break
   time.sleep(.2)
  else:raise TimeoutError('Owned Setup input acknowledgement')
-text=(out/'DOS-CURRENT.TXT').read_text(errors='replace') if (out/'DOS-CURRENT.TXT').exists() else ''
+text=(out/'DOS-CURRENT.TXT').read_text(encoding='utf-8',errors='replace') if (out/'DOS-CURRENT.TXT').exists() else ''
 raw=(out/'DOS-RAW.BIN').read_bytes() if (out/'DOS-RAW.BIN').exists() else b''
 for y in range(25):
  line=text[y*80:(y+1)*80].rstrip()
