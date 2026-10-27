@@ -1,6 +1,6 @@
 """Check preservation and refusal boundaries without claiming native coverage."""
 from pathlib import Path
-import argparse,importlib.machinery,json
+import argparse,copy,importlib.machinery,json
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
 P=importlib.machinery.SourceFileLoader('compact_prior_gate_test',str(ROOT/'tools/PAN/PUBLISH.PY')).load_module()
 V=importlib.machinery.SourceFileLoader('compact_gate_test',str(HERE/'VERIFY.PY')).load_module()
@@ -43,7 +43,30 @@ def main():
  except (ValueError,FileNotFoundError):pass
  else:raise AssertionError('Unqualified alternate CGA packet accepted')
  checks.append('Current alternative boundary rejects unqualified compact packet')
- result=dict(outcome='PASS_HOST_COMPACT_PUBLICATION_GUARDS',checks=checks,native='NOT_EXERCISED',review='NOT_PROVIDED_BY_THIS_TEST')
+ pending=ROOT/'docs/QUAL/CGACMP/CANDIDATE.JSN'
+ if pending.exists():
+  native=json.loads(pending.read_bytes());V.validate_candidate(native)
+  checks.append('Exact completed native candidate validates without accepting review/publication')
+  def refuses_bad(candidate,needle,substitutions=None):
+   old=V.exact
+   def exact(row):return substitutions[row['path']] if substitutions and row['path'] in substitutions else old(row)
+   V.exact=exact
+   try:
+    try:V.validate_candidate(candidate)
+    except ValueError as e:assert needle in str(e),str(e)
+    else:raise AssertionError('Incomplete native candidate accepted')
+   finally:V.exact=old
+  bad=copy.deepcopy(native);bad['windows'].pop('640C');refuses_bad(bad,'Both compact Windows')
+  checks.append('Missing second native Windows profile refused')
+  bad=copy.deepcopy(native);bad['windows']['320C']['result']=native['windows']['640C']['result'];refuses_bad(bad,'application coverage incomplete')
+  checks.append('Other-resolution application receipt cannot substitute for320C')
+  bad=copy.deepcopy(native);result=json.loads(V.exact(bad['windows']['640C']['result']));result['machine']['mem_size']='1024';raw=json.dumps(result).encode()
+  bad['windows']['640C']['result']=dict(path='TEST-WRONG-RAM',identity=V.identity(raw));refuses_bad(bad,'Native IBM XT/CGA fixture differs',{'TEST-WRONG-RAM':raw})
+  checks.append('A larger-RAM native declaration cannot qualify normal640KB')
+  bad=copy.deepcopy(native);lease=json.loads(V.exact(bad['windows']['320C']['lease']));lease['status']='FAILED';raw=json.dumps(lease).encode()
+  bad['windows']['320C']['lease']=dict(path='TEST-FAILED-RUN',identity=V.identity(raw));refuses_bad(bad,'cleanup incomplete',{'TEST-FAILED-RUN':raw})
+  checks.append('A retained failed run cannot qualify a Windows profile')
+ result=dict(outcome='PASS_HOST_COMPACT_PUBLICATION_GUARDS',checks=checks,native='RECORDED_EVIDENCE_CHECKED' if pending.exists() else 'NOT_EXERCISED',review='NOT_PROVIDED_BY_THIS_TEST')
  (a.out/'RESULT.JSN').write_text(json.dumps(result,indent=2)+'\n',encoding='ascii')
  print(json.dumps(result,indent=2))
 

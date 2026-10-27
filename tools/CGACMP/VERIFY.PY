@@ -37,7 +37,7 @@ def validate_candidate(q,data=None):
   'src/cga/CMPPACK.PY','src/cga/CMPRSC.PY','src/cga/CMPINST.PY','src/cga/CMPTEST.PY',
   'src/cga/INSTALLT.PY','src/cga/OEMSETUP.INF','tools/PAN/CGASTAGE.PY','tools/PAN/GUIDES/CGA.TXT',
   'tools/PAN/PREPCGA.PY','tools/PAN/PUBLISH.PY','tools/PAN/COMPOSE.PY',
-  'tools/CGACMP/HISTORY.PY','tools/CGACMP/VERIFY.PY'}
+  'tools/CGACMP/HISTORY.PY','tools/CGACMP/VERIFY.PY','docs/QUAL/CGACMP/TESTSRC.ZIP'}
  require(required_sources<=set(q.get('sources',{})),'Compact source binding incomplete')
  for name,pin in q['sources'].items():exact(dict(path=name,identity=pin))
  raw=exact(q['packet'])
@@ -91,6 +91,10 @@ def validate_candidate(q,data=None):
           result.get('dialog_text_height')==5,'Compact Windows application coverage incomplete: '+mode)
   require(observed.get('files')==installed and observed.get('installer')==identity(exe) and
           result.get('installed_receipt')==row['installed']['identity'],'Different actual native-installed compact files: '+mode)
+  require(observed.get('boot_settings')=={'display.drv':'CGA32C.DRV' if mode=='320C' else 'CGA64C.DRV',
+          'fonts.fon':'CG1SYS.FON','fixedfon.fon':'CG1FIX.FON','oemfonts.fon':'CG1OEM.FON','286grabber':'CGAGRAB.GR2'},'Actual compact INI selection differs: '+mode)
+  require(result.get('machine')=={'cpu_family':'8088','cpu_speed':'4772728','machine':'ibmxt86','mem_size':'640','gfxcard':'cga'} and
+          result.get('config')==identity(exact(row['config'])),'Native IBM XT/CGA fixture differs: '+mode)
   lease(json.loads(exact(row['lease'])))
   require(bool(row.get('captures')),'Compact native captures missing')
   for capture in row['captures'].values():exact(capture)
