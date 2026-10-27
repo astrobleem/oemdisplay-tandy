@@ -1,0 +1,25 @@
+SETUP: installing CG2SYS.FON                                                    
+SETUP: installing CG6HELV.FON                                                   
+SETUP: installing CGA100.DRV                                                    
+SETUP: installing CGA320.DRV                                                    
+SETUP: installing CGA640.DRV                                                    
+SETUP: installing CGACTL.EXE                                                    
+SETUP: installing CGAGRAB.GR2                                                   
+SETUP: installing CGAPAN.DRV                                                    
+SETUP: installing PANCFG.EXE                                                    
+SETUP: installing PANCTL.EXE                                                    
+SETUP: installing PANKEY.DLL                                                    
+SETUP: installing T80COUR.FON                                                   
+SETUP: installing XTPAN.EXE                                                     
+SETUP: display.drv=CGA100.DRV, selected system/fixed/OEM fonts, load= +CGACTL.EX
+E; [fonts] +2 lines; BorderWidth=1, GridGranularity=1                           
+SETUP: undo with SETUP UNDO C:\WINDOWS                                          
+SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.        
+Mode changes require exiting Windows and rerunning SETUP. Keep this packet for U
+NDO.                                                                            
+                                                                                
+C:\CGAKIT>IF ERRORLEVEL 1 GOTO FAILED                                           
+                                                                                
+C:\CGAKIT>PAUSE                                                                 
+Press any key to continue . . .                                                 
+                                                                                

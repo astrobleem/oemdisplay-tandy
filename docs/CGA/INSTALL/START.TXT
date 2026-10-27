@@ -1,0 +1,25 @@
+                                                                                
+C:\>C:                                                                          
+                                                                                
+C:\>CD \WINDOWS                                                                 
+                                                                                
+C:\WINDOWS>PAUSE                                                                
+Press any key to continue . . .                                                 
+                                                                                
+                                                                                
+C:\WINDOWS>WIN /R                                                               
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                

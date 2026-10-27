@@ -1,0 +1,25 @@
+Booting C»C                                                                     
+Starting MS-DOS...                                                              
+                                                                                
+                                                                                
+C:\>C:                                                                          
+                                                                                
+C:\>CD \CGAKIT                                                                  
+                                                                                
+C:\CGAKIT>DIR                                                                   
+                                                                                
+ Volume in drive C is B                                                         
+ Volume Serial Number is 0463-07BD                                              
+ Directory of C:\CGAKIT                                                         
+                                                                                
+.            <DIR>         10-27-26   1:12p                                     
+..           <DIR>                                                              
+CGA          <DIR>         10-27-26   1:12p                                     
+README   TXT         2,172 10-27-26   1:12p                                     
+SETUP    EXE        32,265 10-27-26   1:12p                                     
+        5 file(s)         34,437 bytes                                          
+                      36,104,192 bytes free                                     
+                                                                                
+C:\CGAKIT>PAUSE                                                                 
+Press any key to continue . . .                                                 
+                                                                                

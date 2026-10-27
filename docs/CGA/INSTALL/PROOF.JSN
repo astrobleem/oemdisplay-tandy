@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "capture_kind": "native IBM XT/CGA emulation; DOS B800 video-memory captures, not physical hardware",
+  "capture_package": {
+    "bytes": 414463,
+    "sha256": "f66bca3c0708923e2ecd9e56fddee5d092149831d68d535e866be212d30dafe9"
+  },
+  "current_package": {
+    "bytes": 460460,
+    "sha256": "1768cffab6a770ee01494fb493c9ffe4e3caf2a41a9617b2ccec7bc9909e37d2"
+  },
+  "capture_setup_exe": {
+    "bytes": 32265,
+    "sha256": "a02e7ae5f2e3ee7c417fdb47e0b339abd99596c5fd40ebf35013f9ead0c49de5"
+  },
+  "current_setup_exe": {
+    "bytes": 32431,
+    "sha256": "dbc90a15bb137a691d95360a03838aaaac838d09065d8e738ef63033784bbedb"
+  },
+  "commands": [
+    "C:",
+    "CD \\CGAKIT",
+    "DIR",
+    "SETUP C:\\WINDOWS 100",
+    "C:",
+    "CD \\WINDOWS",
+    "WIN /R"
+  ],
+  "current_driver_bytes_preserved": [
+    "CGA/CGA100.DRV",
+    "CGA/CGAPAN.DRV",
+    "CGA/CGA320.DRV",
+    "CGA/CGA640.DRV"
+  ],
+  "source_delivery": {
+    "bytes": 54918,
+    "sha256": "a1e65d152efbc2d1196abc681e5f49844327eefdc685b7fb962ba160389baf26"
+  },
+  "font": {
+    "format": "80 columns by 25 rows; 8x8 CGA thick font from the emulator font ROM; 16 RGBI attributes",
+    "font_sha256": "37527f661580e5a09710051cec67422abfadf31c61b841537a91e7f27be19304",
+    "font_offset": 6144,
+    "font_rom_redistributed": false
+  },
+  "transforms": {
+    "native_PNG": "lossless decode of corresponding captured VRM; no retouching",
+    "2X_PNG": "nearest-neighbor 2x pixel repetition",
+    "TXT": "captured DOS text projection retained from delivery"
+  },
+  "screen_scope": {
+    "FILES": "root directory after extraction; preceding package file sizes",
+    "SETUP": "completed SETUP C:/WINDOWS 100; success and selected CGA100.DRV visible; earlier helper names",
+    "START": "WIN /R in continuation boot of same completed installation; no installed payload/INI changes"
+  },
+  "harness_text": "PAUSE and IF ERRORLEVEL are capture harness commands, not consumer installation steps",
+  "completion": {
+    "source_session_complete": true,
+    "owned_stopped": true,
+    "lease_released": true
+  },
+  "current_compatibility": "same layout, four mode commands, success string and WIN /R; current common settings entry PAN /SETTINGS; current packet/helper bytes were not rerun in this capture",
+  "files": {
+    "FILES.PNG": {
+      "bytes": 4228,
+      "sha256": "5c57b759e023f5a8b92025f46be412bddae76e7d4d120c19094625cc3dfd0686"
+    },
+    "FILES2X.PNG": {
+      "bytes": 6725,
+      "sha256": "87b329ab5c41fff9fb1915e1a8878d6f1551540717887ac5efb1a8231ee9811e"
+    },
+    "FILES.VRM": {
+      "bytes": 16384,
+      "sha256": "2e3bf19838989f3c1249fe94d4befc089ace7f991b9c8995a942d6086977225c"
+    },
+    "FILES.TXT": {
+      "bytes": 2049,
+      "sha256": "ce7bcb67251d2825e134bea8fcfb9e89a81fcf126d6b388331f3ddeff03d390a"
+    },
+    "SETUP.PNG": {
+      "bytes": 6767,
+      "sha256": "64f62aa3f33c558adc45250d64bb97bd3d0ec828eb5400122bf34b4cc151a228"
+    },
+    "SETUP2X.PNG": {
+      "bytes": 11725,
+      "sha256": "41b6bff7450cd3f0fb2244622bb2e299d70ddcfb9cae19a0997bef7e464717b9"
+    },
+    "SETUP.VRM": {
+      "bytes": 16384,
+      "sha256": "ea1b15376d1459a8099b3a679e35e0cd11c423c4c474dcc9d0f3e51402275d52"
+    },
+    "SETUP.TXT": {
+      "bytes": 2048,
+      "sha256": "32a8216af5902ee5b6b01694702b5c3a8a9a394acb859e2b5c537625aaab3324"
+    },
+    "START.PNG": {
+      "bytes": 1435,
+      "sha256": "1fdf1b0da91253367304636aa3ed16df88537e1380edfa7162d9635d6841f434"
+    },
+    "START2X.PNG": {
+      "bytes": 2934,
+      "sha256": "612cae484765d6e22eeb4e4f92e8123311b51d32c1752571ce0721c64f05fab2"
+    },
+    "START.VRM": {
+      "bytes": 16384,
+      "sha256": "536ec2278352530fc6d7f1db7401be26fd21fe04188747a51827621498807623"
+    },
+    "START.TXT": {
+      "bytes": 2048,
+      "sha256": "1d9adb00aca69fceee22fae96049b41d03cd17a2a342c785c47a26b2c6ad76a7"
+    }
+  }
+}
