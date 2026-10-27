@@ -1,0 +1,11 @@
+{
+  "outcome": "PASS_HOST_PUBLICATION_GUARDS",
+  "checks": [
+    "qualified inputs and all four closed member inventories accepted",
+    "missing backend acceptance refused",
+    "unrelated passing native result cannot stand in for the required run",
+    "installer declarations without owned clean native leases refused",
+    "internally matched installer records with empty output observations refused",
+    "changed pinned source/runtime input refused"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "outcome": "PASS_NATIVE_INSTALLER_TRANSACTION",
+  "physical_hardware": false,
+  "receipt": {
+    "bytes": 1026,
+    "sha256": "3a14800bb392788f1b493196d4d62b0eac572373763e649fb423976ccd0dd252"
+  }
+}

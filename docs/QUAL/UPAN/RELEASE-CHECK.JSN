@@ -1,0 +1,30 @@
+{
+  "outcome": "PASS_CURRENT_ASSEMBLY",
+  "assets": 23,
+  "changed": [
+    "CGA.ZIP",
+    "CPPAN.ZIP",
+    "JRPAN.ZIP",
+    "TANDYLAB.ZIP",
+    "WINXT.JSN",
+    "WINXT.SHA",
+    "WINXT.ZIP"
+  ],
+  "unchanged_assets": [
+    "BUILDIN.ZIP",
+    "COOKSET.ZIP",
+    "MINESET.ZIP",
+    "MML3AUTH.ZIP",
+    "PC1.ZIP",
+    "PC1512.ZIP",
+    "PITDOS.ZIP",
+    "PITEXPR.ZIP",
+    "TEXT80.ZIP",
+    "TNDYV2.ZIP",
+    "TWXT2.ZIP",
+    "WINXT720.ZIP",
+    "WINXTSRC.ZIP",
+    "YAMAHA.ZIP"
+  ],
+  "publication": false
+}

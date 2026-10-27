@@ -1,0 +1,18 @@
+{
+  "complete": true,
+  "bound_seconds": 1200,
+  "minimum_free_bytes": 536870912,
+  "capture_bound_bytes": 33554432,
+  "host_log_bound_bytes": 33554432,
+  "lease_acquired": true,
+  "queue_seconds": 0.0,
+  "owned_pid": 26608,
+  "emulator": {
+    "bytes": 40974314,
+    "sha256": "047477bb6f5d8681e08d6d5587aaab4285800c2f4efbb41549ccf75285974b1c"
+  },
+  "rom_floppy_prompt_acknowledged": true,
+  "owned_stopped": true,
+  "lease_released": true,
+  "seconds": 591.7969999997877
+}

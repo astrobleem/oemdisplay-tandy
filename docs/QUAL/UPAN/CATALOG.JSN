@@ -1,0 +1,85 @@
+{
+  "checks": [
+    "CGA exact qualified packet and preserved earlier runtime verified",
+    "All4 live core identities pinned; supplied producer commit remains original",
+    "All17 ancillary ZIPs match qualified inputs and deterministic build-input archive",
+    "All3 original developer inputs preserved under their original builder names",
+    "All4 guide refreshes preserve every driver/app/helper/support byte",
+    "No promoted raw EXE or obsolete desktop wrapper in asset set",
+    "Wrong packet bytes refused before assembly",
+    "Incomplete main layout refused",
+    "TANDYLAB app bytes unchanged; complete qualified movable OEM folder replaces Python toolkit"
+  ],
+  "assets": {
+    "PC1512.ZIP": {
+      "bytes": 108500,
+      "sha256": "643696495503ccfa9212d805630ffb58ec83234296dcea24edf0caacdc1a4e6d"
+    },
+    "CPPAN.ZIP": {
+      "bytes": 261492,
+      "sha256": "e61e07157459ac6ead2488374a85995137e57f6e27c6fac72a003c5e87d48901"
+    },
+    "JRPAN.ZIP": {
+      "bytes": 259460,
+      "sha256": "6ae2118ed70e3fd913cb4abb195f87fb1f7103a6bcb46818d5e046ca21d28095"
+    },
+    "TNDYV2.ZIP": {
+      "bytes": 94869,
+      "sha256": "c2c5d023c31c912d6e0ab5a7ae946e2faad2c4422a27fc11c6f40ac088f12f3f"
+    },
+    "PC1.ZIP": {
+      "bytes": 83655,
+      "sha256": "2c61c2a1a1ec7fc62f5b0bd38b8444450b209fe5bb91e161977329c02259ebd9"
+    },
+    "YAMAHA.ZIP": {
+      "bytes": 83694,
+      "sha256": "cc750be92fad3e57ee87879d361c154881f56aa7bb10de6400f8e1e26339bb1c"
+    },
+    "TEXT80.ZIP": {
+      "bytes": 389855,
+      "sha256": "1ea8fc1444520633b671a4fcd760a903aafd33a12789d4a4ed623197c2246e03"
+    },
+    "WINXT720.ZIP": {
+      "bytes": 739427,
+      "sha256": "8b3b07d788c665c926a60e0beb9152627d920894d572bdfa4730af58d0ec8440"
+    },
+    "MINESET.ZIP": {
+      "bytes": 57955,
+      "sha256": "54631c742a4ef100e6605648d8c02578487af69b9a2d4cb5d6a01b9fee5bae73"
+    },
+    "COOKSET.ZIP": {
+      "bytes": 30689,
+      "sha256": "470b9f90d9d0f7e990baaf3818c70d540d61f3fde4c142c9d6c99036a9a47a28"
+    },
+    "PITDOS.ZIP": {
+      "bytes": 42927,
+      "sha256": "765c81678f9655f3805fc348ebe444eb919adc47915f27e92eb6816cb18d324f"
+    },
+    "CGA.ZIP": {
+      "bytes": 414463,
+      "sha256": "f66bca3c0708923e2ecd9e56fddee5d092149831d68d535e866be212d30dafe9"
+    },
+    "TWXT2.ZIP": {
+      "bytes": 2420622,
+      "sha256": "fed4fdec0bb5652a6da4c987b6b8e7a4f860f92f4a8e34aad30ac26b49fb3486"
+    },
+    "MML3AUTH.ZIP": {
+      "bytes": 3467832,
+      "sha256": "c0bf425a8b4fb8da4be238413fe4a4eca75e106ce1ff9535c351baefcca536b5"
+    },
+    "PITEXPR.ZIP": {
+      "bytes": 3560729,
+      "sha256": "295c064bb140e20058469d8348b5e02443922d4a6e5d839eb62be76cae5e7be7"
+    },
+    "BUILDIN.ZIP": {
+      "bytes": 447655,
+      "sha256": "f32e94cd2d8917484727e246b98181661d262fc54673f109fdc43831d14479f9"
+    },
+    "TANDYLAB.ZIP": {
+      "bytes": 1040191,
+      "sha256": "0314b8f918979db2551801babb34852d550eb7b87382c207f5999d2867f6343a"
+    }
+  },
+  "packaged_release_references": [],
+  "main_native_gate": "Not exercised by this ancillary check; BUNDLE always calls the gated native producer before output."
+}

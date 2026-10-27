@@ -1,0 +1,31 @@
+{
+  "group": "cga",
+  "installers": {
+    "CSETUP.EXE": {
+      "bytes": 32265,
+      "sha256": "a02e7ae5f2e3ee7c417fdb47e0b339abd99596c5fd40ebf35013f9ead0c49de5"
+    }
+  },
+  "installed_helpers": {
+    "PANCTL.EXE": {
+      "bytes": 18543,
+      "sha256": "566600896f7519e583c0d65a827b1e51ff199745903a42fa56580f1767860d60"
+    },
+    "CGACTL.EXE": {
+      "bytes": 24703,
+      "sha256": "ea26b76b4914faa7d06edd9b395f19221424d68f45aacbaf1068cc88e85432b3"
+    },
+    "XTPAN.EXE": {
+      "bytes": 27359,
+      "sha256": "297569e8f38ce6114c0842e5b00026920ab8d4c3b232088febbcd866939e1f9e"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11281,
+      "sha256": "bd984a24d4b795fb85c7f97e08beb9f0a790fa58a2210cbe2c87ec5e3c302ddc"
+    },
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    }
+  }
+}

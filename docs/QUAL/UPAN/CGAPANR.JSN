@@ -1,0 +1,20 @@
+{
+  "outcome": "PASS_NATIVE_CGA_PAN",
+  "physical_hardware": false,
+  "installed_receipt": {
+    "bytes": 1431,
+    "sha256": "32abe3eb820e9bbfd9b670dd625281b3e04b582129128b22937f38fba1f33af3"
+  },
+  "raw_result": {
+    "bytes": 817,
+    "sha256": "9813958646fe6375493fc1b9de01473cabe4b9fdd6db55df5efbd478ec31add7"
+  },
+  "checks": [
+    "native SETUP installed exact current helper bytes and CGAPAN selection",
+    "stale XTPAN startup quietly yields to correct PANCTL owner",
+    "seven queued chords during busy Paintbrush load resolve to40,50",
+    "End reveals unmaximized right edge160,79",
+    "shared compact152x90 settings fits160x100, seven-tab keyboard traversal, Step20 rounded24, Apply and Cancel",
+    "normal Windows shutdown, DOS return, owned emulator stop and lease release"
+  ]
+}

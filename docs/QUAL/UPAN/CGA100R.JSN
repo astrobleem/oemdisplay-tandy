@@ -1,0 +1,17 @@
+{
+  "outcome": "PASS_NATIVE_CGA_FIXED",
+  "physical_hardware": false,
+  "checks": [
+    "normal Setup selects CGA100 and one CGACTL; common compact settings fits 160x100, shows fixed capability and no fake step/engine control",
+    "queued arrows retain ordinary CGA five-pixel real-window movement; Home restores position",
+    "normal Windows shutdown and DOS return with CGACTL/shared DLL active"
+  ],
+  "installed_receipt": {
+    "bytes": 1433,
+    "sha256": "40e221c78e27e11ab6742ee39a6924ede916d585b3728a78255dcbaec07ea959"
+  },
+  "raw_result": {
+    "bytes": 413,
+    "sha256": "b814363b77c03cba3dce764623adf3450a4858936001d3fe72608edd79d690f2"
+  }
+}

@@ -37,14 +37,15 @@ fixed CGA window access; that backend retains its five-pixel step and offers
 only Windows mode. Wider screens use the wider version of the same layout.
 These are native emulator captures, not physical-hardware photographs.
 
-CGAPAN after applying a requested step of 20: its horizontal alignment makes
-the saved step 24.
-
-![CGAPAN shared settings at 160×100 after Apply](panning/CGA-PAN.PNG)
+CGAPAN rounds a requested step of 20 to 24 to match its horizontal alignment.
 
 ![Shared settings with fixed CGA at 160×100](panning/CGA-SET.PNG)
 
 ![The same settings implementation on a fixed 320×200 display](panning/WIDE-SET.PNG)
+
+HPXY offers its supported Software/Hardware choices in that same window:
+
+![Shared HPXY settings after applying 200ms repeat](panning/HPXY-SET.PNG)
 
 Paintbrush in CGAPAN's larger desktop, from the preceding native qualification.
 The display driver and Paintbrush rendering bytes are unchanged in this update;

@@ -1,0 +1,18 @@
+{
+  "outcome": "PASS_NATIVE_SETUP",
+  "physical_hardware": false,
+  "checks": [
+    "native FRESH381/UPDATE93 closed preparation",
+    "normal FIXXT repair, CPSET APPLY, then guarded STARTXT on retained TSHELL/WHEEL/TGCLIP",
+    "exact installed current helpers; preserved HPXY/grabber/keyboard/sound/shell bytes",
+    "shared software/hardware settings/input and clean Windows-to-DOS return"
+  ],
+  "installed_receipt": {
+    "bytes": 1256,
+    "sha256": "d462661ef7a9aaba61dc71bd0b7e97a2d78c6131885ba8f2e58400aa3ee9e3ec"
+  },
+  "raw_result": {
+    "bytes": 657,
+    "sha256": "3cdca710acdf15417212f224a09d4323aef74de16e00f53a0f8261be49402a1b"
+  }
+}
