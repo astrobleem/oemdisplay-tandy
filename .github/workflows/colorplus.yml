@@ -106,7 +106,7 @@ jobs:
               (Path('sound-inputs')/name).write_bytes(data)
           PYCODE
           CORE_SHA=$(python3 -c "import json; print(json.load(open('tools/CURRENT/PRODUCTS.JSN'))['core_source_commit'])")
-          python3 -B tools/DOSINST/RCPUB.PY --out core --commit "$CORE_SHA"
+          python3 -B tools/UPAN/PUBLISH.PY --out core --commit "$CORE_SHA"
           python3 -B tools/CURRENT/CHECK.PY --core core --sound sound-inputs --report catalog-check.json
           python3 -B tools/CURRENT/BUNDLE.PY --core core --sound sound-inputs --commit "$SOURCE_SHA" --out current
       - name: Determine whether this catalog changes the ColorPlus packet
