@@ -1,6 +1,6 @@
 Current unified-panning packets use `tools/PAN/PUBLISH.PY` for accepted-byte
 packaging and the normal `tools/CURRENT` catalog checks. See
-[UPAN developer workflow](tools/UPAN/README.MD) and [user controls](docs/PANNING.MD).
+[PAN developer workflow](tools/PAN/README.MD) and [user controls](docs/PANNING.MD).
 The preceding RCPUB producer remains the immutable baseline for older acceptance.
 
 # Building and verifying Windows XT

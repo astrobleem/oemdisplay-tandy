@@ -1,0 +1,29 @@
+{
+  "adapter": "colorplus",
+  "driver": "CPPAN.DRV",
+  "bytes": 60816,
+  "sha256": "273a288fcd971d62688b29e7e349dbf6a40da4097395cd01e90e6b3bb24644ba",
+  "logical": [
+    640,
+    400
+  ],
+  "viewport": [
+    320,
+    200
+  ],
+  "pan_top": [
+    0,
+    200
+  ],
+  "shadow_bytes": 128000,
+  "video_page_bytes": 32768,
+  "new_shadow_bytes_vs_fixed": 96000,
+  "hardware_panning": false,
+  "staged_sha256": {
+    "TSOFT.ASM": "bbe03862bf51b9cd2774dbc919ba2796e187b1cd9e123e2370deb0fd2a38efbf",
+    "TCURSOR.ASM": "374f1fc2e72d3571a336a97e7df31c1e8886883c516e7643042a79235dedb915",
+    "SDIB88.ASM": "6045f09ab12037e17b065ac3e0daac9294be4463ccce19b52915697c641245ee",
+    "TSOFT.DEF": "b9e4223b8e354d6e98fcbcbc3d006ff385c1f71850f390bd244df85e4e2c2457"
+  },
+  "runtime": "NOT_TESTED"
+}

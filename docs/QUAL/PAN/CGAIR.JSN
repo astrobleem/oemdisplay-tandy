@@ -1,0 +1,8 @@
+{
+  "outcome": "PASS_NATIVE_INSTALLER_TRANSACTION",
+  "installed_receipt": {
+    "bytes": 1289,
+    "sha256": "b226888586115202ce9cea118940819c2cd4547156c32e7831fa481eaef0e4f6"
+  },
+  "installer_observation": "Exact installer bytes read from native mounted source or stopped fixture; all match qualified BIN"
+}

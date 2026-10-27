@@ -1,0 +1,73 @@
+{
+  "outcome": "DECLARED_NE_COSTS_AND_NATIVE_MEMORY",
+  "helpers_installed_disk_bytes": 130520,
+  "resident_architecture": "One selected owner and the2085byte sharedDLL; PAN dispatcher exits; other backends remain on disk",
+  "shadow_desktop_bytes": 128000,
+  "shadow_increase_over_prior_vertical": 64000,
+  "helper_ne_headers": {
+    "XTPAN.EXE": {
+      "before": {
+        "bytes": 27359,
+        "segment_minimum_bytes": 27728,
+        "heap": 1024,
+        "stack": 5120
+      },
+      "after": {
+        "bytes": 27407,
+        "segment_minimum_bytes": 27904,
+        "heap": 1024,
+        "stack": 5120
+      }
+    },
+    "XYCTL.EXE": {
+      "before": {
+        "bytes": 32934,
+        "segment_minimum_bytes": 31784,
+        "heap": 1024,
+        "stack": 8192
+      },
+      "after": {
+        "bytes": 33220,
+        "segment_minimum_bytes": 32072,
+        "heap": 1024,
+        "stack": 8192
+      }
+    },
+    "PANCFG.EXE": {
+      "before": {
+        "bytes": 11281,
+        "segment_minimum_bytes": 10382,
+        "heap": 1024,
+        "stack": 5120
+      },
+      "after": {
+        "bytes": 11985,
+        "segment_minimum_bytes": 11038,
+        "heap": 1024,
+        "stack": 5120
+      }
+    },
+    "PANKEY.DLL": {
+      "before": {
+        "bytes": 2085,
+        "segment_minimum_bytes": 1589,
+        "heap": 0,
+        "stack": 0
+      },
+      "after": {
+        "bytes": 2085,
+        "segment_minimum_bytes": 1589,
+        "heap": 0,
+        "stack": 0
+      }
+    }
+  },
+  "native_free_bytes": {
+    "pcjr": 170016,
+    "colorplus": 182528,
+    "hpxy_tshell_full": 77408,
+    "cga_pan": 303456
+  },
+  "pcjr_owner_observed_free_delta_bytes": 43712,
+  "scope": "Native free-memory samples include the observer and existing shell/helpers. Segment minimums are declared NE allocations, not measured per-process working sets."
+}

@@ -1,0 +1,20 @@
+{
+  "outcome": "PASS_NATIVE_CGA_FIXED_SINGLE_APP",
+  "physical_hardware": false,
+  "checks": [
+    "normal Setup selects CGA100 and one CGACTL; common compact settings fits 160x100, shows fixed capability and no fake step/engine control",
+    "queued arrows retain ordinary CGA five-pixel real-window movement; Home restores position",
+    "normal Windows shutdown and DOS return with CGACTL/shared DLL active"
+  ],
+  "installed_receipt": {
+    "bytes": 1777,
+    "sha256": "1be80df9e8e5079d624d0ec9b468a9ead5870f7813fba2e511213f55a27d2524"
+  },
+  "raw_result": {
+    "path": "docs/QUAL/PAN/CGA100RAW.JSN",
+    "identity": {
+      "bytes": 424,
+      "sha256": "af16f4648b5f74950dbad0bbba5730695f60df8093df7b9c05ee66313e0051d4"
+    }
+  }
+}

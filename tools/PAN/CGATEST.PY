@@ -9,6 +9,11 @@ try:
  s=ui.wait(lambda s:'width=160 height=100 ' in s and ui.window(s,'CGASlide'),420);owner=ui.window(s,'CGASlide');ui.save('BOOT',s)
  s=ui.send(r'RUN C:\WINDOWS\PAN.EXE /SETTINGS','SETTINGS');dlg=ui.window(s,'PanSetDlg');assert dlg and ui.window(s,'CGASlide')==owner
  r=ui.rect(s,dlg);assert r[2]-r[0]==152 and r[3]-r[1]<=96
+ assert 0<=r[0]<r[2]<=160 and 0<=r[1]<r[3]<=100,r
+ (ui.c/'CAPTURE.JSON').write_text(json.dumps(dict(id=1,label='GUIDE-SET')))
+ end=time.monotonic()+30
+ while not (ui.out/'GUIDE-SET.PNG').exists() and time.monotonic()<end:time.sleep(.25)
+ assert (ui.out/'GUIDE-SET.PNG').exists()
  assert ui.widget(s,dlg,227) and 'text=Windows' in s
  assert not re.search(r'parent='+str(dlg)+r' id=(210|225|226) ',s)
  s=ui.send(r'RUN C:\WINDOWS\PAN.EXE /SETTINGS','REOPEN');assert ui.window(s,'PanSetDlg')==dlg and ui.window(s,'CGASlide')==owner

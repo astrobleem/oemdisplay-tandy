@@ -1,0 +1,29 @@
+{
+  "adapter": "pcjr",
+  "driver": "JRPAN.DRV",
+  "bytes": 60528,
+  "sha256": "02dab8ed0f1350869cae5ee4ebde46d0b1fe95854660c2885045d73100e587cf",
+  "logical": [
+    640,
+    400
+  ],
+  "viewport": [
+    320,
+    200
+  ],
+  "pan_top": [
+    0,
+    200
+  ],
+  "shadow_bytes": 128000,
+  "video_page_bytes": 32768,
+  "new_shadow_bytes_vs_fixed": 96000,
+  "hardware_panning": false,
+  "staged_sha256": {
+    "TSOFT.ASM": "c63526d3fa394a5df48dedee76aad0d352532bf9db2cc6f488c0a96171d92dce",
+    "TCURSOR.ASM": "1dacd92998c77f5ebeac658a3e1a8b7d3971420ae2af58bf6f91b1f67c3d9698",
+    "SDIB88.ASM": "6045f09ab12037e17b065ac3e0daac9294be4463ccce19b52915697c641245ee",
+    "TSOFT.DEF": "b9e4223b8e354d6e98fcbcbc3d006ff385c1f71850f390bd244df85e4e2c2457"
+  },
+  "runtime": "NOT_TESTED"
+}

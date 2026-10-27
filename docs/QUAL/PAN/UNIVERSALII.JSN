@@ -1,0 +1,52 @@
+{
+  "installers": {
+    "PANSET.EXE": {
+      "bytes": 52064,
+      "sha256": "ab9c75b60161aca0be8af9dec07ac0c6a39a78ba6de808d82aef10c2464fcbfa"
+    }
+  },
+  "helpers": {
+    "XTPAN.EXE": {
+      "bytes": 27407,
+      "sha256": "bd33843a1fd456446b8935f69aa74605b82010e9c4345b4a186870b47c52213d"
+    },
+    "XYCTL.EXE": {
+      "bytes": 33220,
+      "sha256": "aa405b11e5b0f82cc4499bda54897b937ffee9305017788065c1bcb283097bbf"
+    },
+    "PANCTL.EXE": {
+      "bytes": 18591,
+      "sha256": "a13f1e676b8d71a20643a6b82646ba1f7066e726b88e1c2e482df2ba812f2015"
+    },
+    "CGACTL.EXE": {
+      "bytes": 25247,
+      "sha256": "fa1bc19c9f0301b4ea2f91116a0cfb1f3db0864d1f794edf5e7bdd70cfc5a2d0"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "PAN.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    }
+  },
+  "observations": {
+    "installer_observation": "Exact installer bytes read from native mounted source or stopped fixture; all match qualified BIN",
+    "log": {
+      "path": "docs/QUAL/PAN/UNIVERSAL.LOG",
+      "identity": {
+        "bytes": 2119,
+        "sha256": "e4a0b095be37d7822a7873064ad47237f6f863c90c3e6bf99aa8824577fcc8d0"
+      }
+    },
+    "upgraded_driver": {
+      "bytes": 60528,
+      "sha256": "02dab8ed0f1350869cae5ee4ebde46d0b1fe95854660c2885045d73100e587cf"
+    }
+  }
+}

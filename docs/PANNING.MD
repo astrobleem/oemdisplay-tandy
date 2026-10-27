@@ -6,8 +6,10 @@ You do not choose a helper program by name.
 
 For an existing supported display installation, download [PAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PAN.ZIP).
 Extract it and, outside Windows, run `SETUP C:\WINDOWS` from the extracted root.
-The normal adapter driver packets also include PAN, so a new driver installation
-needs no second package or helper copying. Start Windows normally afterward.
+The updated Windows XT, CGA, PCjr and ColorPlus driver packets also include
+PAN, so those driver installations need no second package or helper copying.
+For another existing supported display, use PAN.ZIP. Start Windows normally
+afterward.
 An explicit previous OFF choice stays OFF through reinstalling.
 
 Inside Windows, run `PAN /SETTINGS`, or press **Ctrl+Alt+S**. Reopening settings
@@ -26,7 +28,7 @@ commands after busy drawing completes; the input hook never draws.
 | PCjr or ColorPlus panning display | 640x400 desktop, 320x200 view | Software framebuffer viewport, both axes |
 | Tandy EX/HX extended display | 640x256 desktop, 320x200 view | Software or Hardware, chosen in settings |
 | CGA large-desktop 160x100 display | 320x200 desktop, 160x100 view | Software framebuffer viewport, both axes |
-| Supported fixed graphics or fixed text display | Existing fixed screen; optional window workspace | Moves windows, both axes |
+| Fixed 160/320/640x200 display, including fixed text, or fixed CGA160x100 | Existing fixed screen; optional window workspace | Moves windows, both axes |
 
 These are backends of PAN, not different panning applications. Hardware mode
 appears only where the installed driver supports it. A window workspace keeps
@@ -51,8 +53,9 @@ workspace. These retained display profiles are not separate panning programs.
 
 ## Native screens and test scope
 
-The shared dialog adapts to the physical view, including 160x100. The images
-below are captures of native emulator output, not mockups or physical-machine
+The shared dialog adapts to the physical view, including 160x100. PCjr and
+compact CGA images decode captured native video memory at the logical pixel
+resolution; other images are emulator captures. None are mockups or physical-machine
 photographs. [Native evidence](QUAL/PAN/README.MD) records the tested bytes,
 installation paths, memory and limitations.
 

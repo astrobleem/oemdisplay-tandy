@@ -1,3 +1,5 @@
+> For the current PCjr two-axis desktop and common Panning application, see [Panning](PANNING.MD). The fixed-driver proposal and tests below are retained as an earlier record.
+
 # IBM PCjr driver proposal (TNDYJR): first probe results
 
 Status: **TNDYJR.DRV builds through the pinned BUILD88 pipeline, passes its

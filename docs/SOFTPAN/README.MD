@@ -1,3 +1,5 @@
+> Earlier vertical-only driver evidence. The current two-axis desktop and common application are documented in [Panning](../PANNING.MD); these original test records remain unchanged.
+
 # PCjr and ColorPlus software panning candidates
 
 Public evidence copies omit host lease records, process identities and host

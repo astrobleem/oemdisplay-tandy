@@ -1,0 +1,22 @@
+{
+  "outcome": "PASS_NATIVE_HPXY_SINGLE_APP",
+  "physical_hardware": false,
+  "checks": [
+    "normal guarded launcher starts one XY owner alongside TSHELL and its input helper",
+    "native radio selection and queued software input honor 8x4 constraints; wide layout fits physical viewport",
+    "native hardware selection/readback and input work; repeat launch retains owner, mode and unapplied radio selection; Apply saves 200ms",
+    "Cancel discards 500ms and preserves applied 200ms; only supported software/hardware modes offered",
+    "Windows shuts down normally from hardware mode with TSHELL, shared hook, wheel and clipboard helpers active"
+  ],
+  "installed_receipt": {
+    "bytes": 1772,
+    "sha256": "212c13bf83a98e18abedeb42d61c8000b15803119598e66a2291aef719308062"
+  },
+  "raw_result": {
+    "path": "docs/QUAL/PAN/HPXYRAW.JSN",
+    "identity": {
+      "bytes": 668,
+      "sha256": "9336240691c2081511113488544c332418306ba22a5f3e77d3c50058ac388a8c"
+    }
+  }
+}

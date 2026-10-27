@@ -20,8 +20,8 @@ def native(b,win):
   last,pages=struct.unpack_from('<HH',b,2);require(pages*512-(512-last if last else 0)==len(b),'Appended DOS payload refused')
 def clean(row):
  q=json.loads(exact(row));require(q.get('lease_acquired') and q.get('lease_released'),'Emulator lease not completed')
- if 'children' in q:require(q.get('status')=='PASS' and not q.get('inventory_after') and all(x.get('stopped') for x in q['children']),'Owned emulator cleanup incomplete')
- else:require(q.get('owned_child_stopped') or q.get('owned_stopped'),'Owned emulator not stopped')
+ if 'children' in q:require(q.get('status')=='PASS' and bool(q['children']) and not q.get('inventory_after') and all(x.get('pid',0)>0 and x.get('stopped') for x in q['children']),'Owned emulator cleanup incomplete')
+ else:require((q.get('pid',0)>0 or q.get('owned_pid',0)>0) and (q.get('owned_child_stopped') or q.get('owned_stopped')),'Owned emulator not stopped')
  return q
 def qualification():
  try:q=json.loads((HERE/'ACCEPT.JSN').read_bytes())

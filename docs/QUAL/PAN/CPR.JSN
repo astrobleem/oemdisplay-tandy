@@ -1,0 +1,23 @@
+{
+  "outcome": "PASS_NATIVE_COLORPLUS_SINGLE_APP",
+  "physical_hardware": false,
+  "checks": [
+    "normal guarded launcher starts one XY owner from the normal CPWIN launcher",
+    "queued software input honor 8x4 constraints; wide layout fits physical viewport",
+    "software-only selection/readback and input work; repeat launch retains owner, mode and unapplied radio selection; Apply saves 200ms",
+    "Cancel discards 500ms and preserves applied 200ms; only software controls offered",
+    "Seven actual queued keyboard chords arrived during 64 native fullscreen fills and drained in order to viewport8,8 without hook rendering",
+    "Windows shuts down normally with the common queued-key hook and ColorPlus software owner"
+  ],
+  "installed_receipt": {
+    "bytes": 1901,
+    "sha256": "15e5718c4b0c6b4f32c5608f2fff820293a2270c3de9acfaa10683e77d2c22b7"
+  },
+  "raw_result": {
+    "path": "docs/QUAL/PAN/CPRAW.JSN",
+    "identity": {
+      "bytes": 747,
+      "sha256": "e96335a246db146945b213bcf8bdd6dc8c994710b9b56f09fd3e75a7d2c9e3fd"
+    }
+  }
+}

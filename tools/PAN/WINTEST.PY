@@ -4,9 +4,9 @@ import argparse,json,re,time
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'tools/UPAN'))
 from UICTRL import UI
-ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--out',type=Path,required=True);a=ap.parse_args();ui=UI(a.out);checks=[];result=dict(outcome='FAILED',physical_hardware=False)
+ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--gray-fix',action='store_true');ap.add_argument('--startup-seconds',type=int,default=420);a=ap.parse_args();assert 30<=a.startup_seconds<=900;ui=UI(a.out);checks=[];result=dict(outcome='FAILED',physical_hardware=False)
 try:
- s=ui.wait(lambda s:'width=320 height=200 ' in s,300);assert not ui.window(s,'XTPan');ui.save('BOOT',s)
+ s=ui.wait(lambda s:'width=320 height=200 ' in s,a.startup_seconds);assert not ui.window(s,'XTPan');ui.save('BOOT',s)
  checks.append('normal fixed-display launcher installs configuration/input helpers without forcing a workspace owner')
  s=ui.send(r'RUN C:\WINDOWS\PAN.EXE /SETTINGS','SETTINGS');owner=ui.window(s,'XTPan');dlg=ui.window(s,'PanSetDlg');assert owner and dlg
  assert 'Window workspace' in s and ui.widget(s,dlg,227)
@@ -27,6 +27,7 @@ try:
  s=ui.send(r'RUN C:\WINDOWS\PAN.EXE','ENABLE_EXISTING');assert ui.window(s,'XTPan')==owner
  ui.send('CLOSE '+str(dlg),'CANCEL')
  s=ui.send(r'RUN C:\WINDOWS\PAN.EXE OFF','OFF');s=ui.send('SNAP','OFF_SETTLED');assert not ui.window(s,'XTPan') and ui.rect(s,clock)==original
+ if a.gray_fix:assert r'\CGACTL.EXE' in s and r'\PAN.EXE' not in s,s[:500]
  s=ui.send(r'RUN C:\WINDOWS\PAN.EXE','ON');assert ui.window(s,'XTPan') and 'PROFILE Step=30 ' in s
  checks.append('enable persists fixed-workspace opt-in even when the owner already exists; OFF/ON restores state')
  ui.send('EXIT','EXIT');end=time.monotonic()+90

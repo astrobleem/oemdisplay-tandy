@@ -11,7 +11,7 @@ def check(sound,core):
  cga=importlib.machinery.SourceFileLoader('current_qualified_cga',str(P.ROOT/'tools/PAN/PUBLISH.PY')).load_module()
  cga.verify_alternatives(assets);checks.append('CGA exact qualified packet and preserved earlier runtime verified')
  checks.append('All4 live core identities pinned; supplied producer commit remains original')
- checks.append('All18 ancillary ZIPs match qualified inputs and deterministic build-input archive')
+ checks.append('All'+str(len(assets))+' ancillary ZIPs match qualified inputs and deterministic build-input archive')
  assert assets['BUILDIN.ZIP']==P.input_archive(config)
  inputs=P.zip_files(assets['BUILDIN.ZIP'])
  for n,pin in config['developer_inputs'].items():assert P.identity(inputs[n])==pin,n

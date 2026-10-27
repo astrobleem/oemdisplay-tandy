@@ -1,0 +1,17 @@
+{
+  "lock": "C:\\Users\\chad\\Documents\\Codex\\2026-10-06\\tandy-emulator.lock",
+  "children": [
+    {
+      "pid": 33600,
+      "bound_seconds": 900,
+      "stopped": true
+    }
+  ],
+  "status": "PASS",
+  "inventory_before": [],
+  "lease_acquired": true,
+  "rom_floppy_prompt_acknowledged": true,
+  "lease_released": true,
+  "inventory_after": [],
+  "seconds": 492.594
+}

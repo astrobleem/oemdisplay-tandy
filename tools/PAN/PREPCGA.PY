@@ -12,7 +12,7 @@ with PyFatFS(str(out/'DISK.IMG'),offset=offset) as f:
   f.writebytes(n,b)
  s=f.readbytes('WINDOWS/SYSTEM.INI').decode('latin1');s=re.sub(r'^display.drv=.*$', 'display.drv=CGA.DRV\r',s,flags=re.M|re.I);put('WINDOWS/SYSTEM.INI',s.encode('latin1'))
  s=f.readbytes('WINDOWS/WIN.INI').decode('latin1');s=re.sub(r'^load=.*$',lambda m:'load=C:\\UITEST.EXE\r',s,flags=re.M|re.I);s=re.sub(r'^run=.*$','run=\r',s,flags=re.M|re.I);s+='\r\n[CGAPan]\r\nEdgeOn=0\r\nFollowActive=0\r\n';put('WINDOWS/WIN.INI',s.encode('latin1'))
- put('UITEST.EXE',a.probe.read_bytes());put('UITASK.TXT',b'0 SNAP\r\n'+b' '*4088)
+ put('SPTEST.INI',b'[test]\r\nvseg=47104\r\n');put('UITEST.EXE',a.probe.read_bytes());put('UITASK.TXT',b'0 SNAP\r\n'+b' '*4088)
  f.makedirs('CGA',recreate=True)
  for q in (a.packet/'expanded/CGA').iterdir():put('CGA/'+q.name,q.read_bytes())
  put('SETUP.EXE',(a.packet/'expanded/SETUP.EXE').read_bytes())

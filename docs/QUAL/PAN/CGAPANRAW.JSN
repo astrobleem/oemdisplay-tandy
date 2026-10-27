@@ -1,0 +1,9 @@
+{
+  "outcome": "PASS_NATIVE_CGA_PAN_SINGLE_APP",
+  "physical_hardware": false,
+  "checks": [
+    "Normal SETUP installs one PAN startup owner and all helpers; shared152x96 settings fits160x100; repeated launch retains typed edits;20 rounds to24 and controls native viewport",
+    "Cancel preserves applied step; accepted driver reaches all logical edges without changing its bytes",
+    "Clean Windows shutdown with common input hook and normal DOS return"
+  ]
+}

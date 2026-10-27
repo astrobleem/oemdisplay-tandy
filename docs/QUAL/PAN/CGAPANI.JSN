@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "family": "cga_pan",
+  "observation": "Actual installed files read from stopped owned fixture",
+  "fixture": {
+    "bytes": 84341760,
+    "sha256": "d87f90fcf172294d643eb0c8cb7e9bb5b906d577365f5789c39949a0fb765211"
+  },
+  "helpers": {
+    "XTPAN.EXE": {
+      "bytes": 27407,
+      "sha256": "bd33843a1fd456446b8935f69aa74605b82010e9c4345b4a186870b47c52213d"
+    },
+    "XYCTL.EXE": {
+      "bytes": 33220,
+      "sha256": "aa405b11e5b0f82cc4499bda54897b937ffee9305017788065c1bcb283097bbf"
+    },
+    "PANCTL.EXE": {
+      "bytes": 18591,
+      "sha256": "a13f1e676b8d71a20643a6b82646ba1f7066e726b88e1c2e482df2ba812f2015"
+    },
+    "CGACTL.EXE": {
+      "bytes": 25247,
+      "sha256": "fa1bc19c9f0301b4ea2f91116a0cfb1f3db0864d1f794edf5e7bdd70cfc5a2d0"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "PAN.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+    },
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+    }
+  },
+  "destinations": {
+    "XTPAN.EXE": "WINDOWS/XTPAN.EXE",
+    "XYCTL.EXE": "WINDOWS/XYCTL.EXE",
+    "PANCTL.EXE": "WINDOWS/PANCTL.EXE",
+    "CGACTL.EXE": "WINDOWS/CGACTL.EXE",
+    "PANCFG.EXE": "WINDOWS/PANCFG.EXE",
+    "PAN.EXE": "WINDOWS/PAN.EXE",
+    "PANKEY.DLL": "WINDOWS/SYSTEM/PANKEY.DLL"
+  },
+  "win_ini": {
+    "bytes": 1453,
+    "sha256": "41780b74fc123bf3faa9e75ff929e7d7141529d0748d0cb74adc841e9aacbc61"
+  },
+  "system_ini": {
+    "bytes": 1037,
+    "sha256": "09cd210b8bc5b45a8768593c5be064ee731117462610936cf6b371ae491f8ccf"
+  }
+}

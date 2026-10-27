@@ -10,6 +10,7 @@ def module(baseline):
  s=s.replace("set(pin)-set(oldpin)!={'PANCFG.EXE','XTPAN.EXE'}", "set(pin)-set(oldpin)!={'PAN.EXE','XYCTL.EXE'}")
  s=s.replace("list(pin).index('PANCFG.EXE')", "list(pin).index('PAN.EXE')").replace("list(pin).index('XTPAN.EXE')", "list(pin).index('XYCTL.EXE')")
  s=s.replace("helper_by_mode={'100':'CGACTL.EXE','320':'CGACTL.EXE','640':'CGACTL.EXE','PAN':'PANCTL.EXE'}","helper_by_mode={'100':'PAN.EXE','320':'CGACTL.EXE','640':'CGACTL.EXE','PAN':'PAN.EXE'}")
+ s=s.replace("readme=(HERE/'README.TXT').read_bytes()", "readme=(repo/'tools/PAN/GUIDES/CGA.TXT').read_bytes()")
  m=types.ModuleType('pan_cga_recipe');m.__file__=str(path);exec(compile(s,str(path),'exec'),m.__dict__)
  m.ROOT_CGA_BASE=lambda repo:baseline
  original=m.CGASET.stage
