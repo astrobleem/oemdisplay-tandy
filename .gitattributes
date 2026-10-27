@@ -219,3 +219,9 @@ docs/QUAL/CGA/** -text
 
 # CGA recorded VRAM, image metadata and capture notes retain exact bytes.
 docs/CGA/** -text
+
+# Exact unified-panning source, receipts and consumer archives.
+tools/UPAN/** -text
+docs/QUAL/UPAN/** -text
+downloads/UNIPAN/** -text
+docs/panning/** -text
