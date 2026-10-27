@@ -1,0 +1,83 @@
+{
+  "status": "NATIVE_TESTS_PASS_INDEPENDENT_REVIEW_PENDING",
+  "physical_hardware": false,
+  "driver": {
+    "bytes": 62096,
+    "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c"
+  },
+  "archive": {
+    "bytes": 809353,
+    "sha256": "b323a9b10ed100c8f68568708272673a4781b96ae2554b1603ca05527cc2ed41"
+  },
+  "payload_changes": [
+    "SETUP.EXE",
+    "WINXT/FIXXT.EXE",
+    "WINXT/HPXY.DRV"
+  ],
+  "build": {
+    "bytes": 1008,
+    "sha256": "57937f59d3669609f891fd28bb0a49fd20bbe14451a8603a86c8066b4d310bcf"
+  },
+  "matrix": {
+    "bytes": 108776,
+    "sha256": "ff46cb811bd41c98319e455f82693ff97467277cb3092aed1762bb299900d216"
+  },
+  "native_preparation": {
+    "FRESH": {
+      "files": 387,
+      "result": {
+        "bytes": 69992,
+        "sha256": "377a77c7a7dc666ca4ee6685da19416414b7f1c57d17c8b4ba505bce9d7a59a3"
+      }
+    },
+    "UPDATE": {
+      "files": 99,
+      "result": {
+        "bytes": 21032,
+        "sha256": "c2f914cf021b240df53be1e1f84da442bc6ba6e3dde178d3e956a1aad71d4da8"
+      }
+    }
+  },
+  "windows": {
+    "full_finisher": {
+      "bytes": 2270,
+      "sha256": "0706e95adf4371f98b3a88fe3caf7999bdd60caf720ed16abfbe94979aabd7e4"
+    },
+    "ordinary_setup": {
+      "bytes": 5803,
+      "sha256": "2ba2dadea208a1a342d7cbb298ca16d1ca532461a2f980956ae98c810b5a92d9"
+    }
+  },
+  "host_tests": {
+    "frame_lifecycle_gate": 21,
+    "publication_gate": 3,
+    "preparation_boundaries": 7,
+    "display_checkpoint": 11,
+    "total": 42
+  },
+  "performance": {
+    "scope": "Emulated HX7.159092MHz; no physical hardware claim",
+    "repeated_import_percent": 12,
+    "repeated_export_percent_range": [
+      9,
+      11
+    ],
+    "startup_matched_pairs": 1,
+    "startup_baseline_seconds": 37.898,
+    "startup_candidate_seconds": 37.458,
+    "startup_gain_ms": 440
+  },
+  "costs": {
+    "driver_file_growth_bytes": 240,
+    "gross_NE_growth_bytes": 250,
+    "gross_NE_bytes": 127133,
+    "remaining_NE_budget_bytes": 398,
+    "observed_free_heap_reduction_bytes": 256
+  },
+  "remaining": [
+    "Independent exact-source final review: authorized reviewer start fails AbsolutePathBuf deserialized without a base path",
+    "Seal ACCEPT only after review, then qualify current producer/catalog integration",
+    "Separate publication approval"
+  ],
+  "accepted_downloads_changed": false
+}

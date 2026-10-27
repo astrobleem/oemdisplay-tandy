@@ -1,0 +1,16 @@
+{
+  "lock": "C:\\Users\\chad\\Documents\\Codex\\2026-10-06\\tandy-emulator.lock",
+  "children": [
+    {
+      "pid": 7864,
+      "bound_seconds": 500,
+      "stopped": true
+    }
+  ],
+  "status": "PASS",
+  "inventory_before": [],
+  "lease_acquired": true,
+  "lease_released": true,
+  "inventory_after": [],
+  "seconds": 173.782
+}

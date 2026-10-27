@@ -68,7 +68,7 @@ with PyFatFS(str(out/'DISK.IMG'),offset=8704,read_only=True) as fs:
   source=fs.readbytes('DIBTEST.BMP');saved=fs.readbytes('DIBOUT.BMP');assert bmp(source)==bmp(saved),'Paintbrush RGB round trip differs'
   (out/'DIBTEST.BMP').write_bytes(source);(out/'DIBOUT.BMP').write_bytes(saved);(out/'REPAIR.LOG').write_text(repair)
  assert fs.readbytes('WINXT/FIXXT.EXE')==(v.packet/'WINXT/FIXXT.EXE').read_bytes()
-r=dict(status='PASS_NATIVE_INSTALLED_HPXY_DIB',route=case,normal_dos_return=True,installed_driver=pin(driver),installed_helpers=observed,driver_not_injected=True,normal_packet_path=True,pan_controls_pass=True,repair_complete=application,paintbrush_rgb_equal=application,native_controls=control,physical_hardware=False)
+r=dict(status='PASS_NATIVE_INSTALLED_HPXY_DIB',route=case,normal_dos_return=True,installed_driver=pin(driver),installed_helpers=observed,driver_not_injected=True,normal_packet_path=True,pan_controls_pass=True,full_repair_invoked=application,repair_complete=True if application else None,paintbrush_tested=application,paintbrush_rgb_equal=True if application else None,native_controls=control,physical_hardware=False)
 if application:r.update(bitmap_width=bmp(saved)[0],bitmap_height=bmp(saved)[1],input_bitmap=pin(source),output_bitmap=pin(saved))
 if case in ('ordinary_setup','combined'):
  witness=json.loads((out/'SETUP-WITNESS.JSN').read_text())
@@ -77,7 +77,7 @@ if case in ('ordinary_setup','combined'):
  assert pin((out/'SETUP-PASS.LOG').read_bytes())==witness['setup_log']
  if case=='ordinary_setup':
   boot=json.loads((out/'ORDINARY-BOOT-INPUT.JSN').read_text());assert boot['full_repair_invoked'] is False and boot['only_host_changed_guest_file']=='AUTOEXEC.BAT'
-  assert 'FIXXT' not in boot['launcher'].upper() and 'STARTXT.BAT' in boot['launcher'].upper()
+  assert 'FIXXT' not in boot['launcher'].upper() and 'DISPWIN.BAT' in boot['launcher'].upper()
   assert boot['protected_windows_files']['WINDOWS/SYSTEM/HPXY.DRV']==pin(driver)
   assert boot['setup_checkpoint']==pin((out/'SETUP-WITNESS.JSN').read_bytes()) and boot['setup_lease']==pin((out/'SETUP-LEASE.JSON').read_bytes())
   prior=json.loads((out/'SETUP-LEASE.JSON').read_text());assert prior['status']=='PASS' and prior['lease_acquired'] is True and prior['lease_released'] is True and prior['inventory_after']==[] and prior['children'] and all(isinstance(c,dict) and type(c.get('pid')) is int and c['pid']>0 and c.get('stopped') is True for c in prior['children'])

@@ -35,18 +35,24 @@ def xy(s,x=None,y=None,mode=None):
  m=re.search(r'XYSTATE x=(\d+) y=(\d+) .*?mode=(\d+)',s)
  return bool(m) and all(want is None or int(got)==want for got,want in zip(m.groups(),(x,y,mode)))
 def main():
- ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--startup-seconds',type=int,default=300);ap.add_argument('--no-app',action='store_true');a=ap.parse_args();ui=UI(a.out);checks=[];result=dict(outcome='FAILED',physical_hardware=False)
+ ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--startup-seconds',type=int,default=300);ap.add_argument('--no-app',action='store_true');ap.add_argument('--pan-smoke',action='store_true');a=ap.parse_args();ui=UI(a.out);checks=[];result=dict(outcome='FAILED',physical_hardware=False)
  try:
   s=ui.wait(lambda s:ui.window(s,'XYOverviewControl') and xy(s),a.startup_seconds);ui.save('BOOT',s)
   checks.append('Normal guarded packet launcher starts installed PAN owner')
-  for mode,id,label in [(0,225,'SOFTWARE'),(1,226,'HARDWARE')]:
-   s=ui.send(r'RUN C:\WINDOWS\PAN.EXE /SETTINGS',label+'_SETTINGS');dlg=ui.window(s,'PanSetDlg');assert dlg
-   w=ui.widget(s,dlg,id);ui.send('KEY '+str(w)+' 32',label+'_SELECT_DOWN');s=ui.send('KEYUP '+str(w)+' 32',label+'_SELECT');assert 'CHECKED h='+str(w)+' value=1' in s
-   s=ui.send('CLICK '+str(ui.widget(s,dlg,1)),label+'_APPLY');assert xy(s,mode=mode)
-   ui.send('CLOSE '+str(dlg),label+'_CLOSE')
-   for scan,x,y,key in [(71,0,0,'HOME'),(77,8,0,'RIGHT'),(80,8,4,'DOWN')]:
-    s=ui.chord(scan,label+'_'+key);assert xy(s,x,y,mode)
-   checks.append('Installed '+label+' owner handles native Home/Right/Down with8x4 constraints')
+  if a.pan_smoke:
+   assert re.search(r'width=640 height=256',s)
+   for scan,x,y,label in [(71,0,0,'HOME'),(77,8,0,'RIGHT'),(80,8,4,'DOWN')]:
+    s=ui.chord(scan,'ORDINARY_'+label);assert xy(s,x,y)
+   checks.append('Ordinary driver route boots640x256 and native Home/Right/Down obey8x4 constraints')
+  else:
+   for mode,id,label in [(0,225,'SOFTWARE'),(1,226,'HARDWARE')]:
+    s=ui.send(r'RUN C:\WINDOWS\PAN.EXE /SETTINGS',label+'_SETTINGS');dlg=ui.window(s,'PanSetDlg');assert dlg
+    w=ui.widget(s,dlg,id);ui.send('KEY '+str(w)+' 32',label+'_SELECT_DOWN');s=ui.send('KEYUP '+str(w)+' 32',label+'_SELECT');assert 'CHECKED h='+str(w)+' value=1' in s
+    s=ui.send('CLICK '+str(ui.widget(s,dlg,1)),label+'_APPLY');assert xy(s,mode=mode)
+    ui.send('CLOSE '+str(dlg),label+'_CLOSE')
+    for scan,x,y,key in [(71,0,0,'HOME'),(77,8,0,'RIGHT'),(80,8,4,'DOWN')]:
+     s=ui.chord(scan,label+'_'+key);assert xy(s,x,y,mode)
+    checks.append('Installed '+label+' owner handles native Home/Right/Down with8x4 constraints')
   if not a.no_app:dib_application(ui);checks.append('Real Paintbrush import/save/pan/close completed; RGB readback remains separate')
   ui.send('EXIT','EXIT');end=time.monotonic()+120
   while time.monotonic()<end:
