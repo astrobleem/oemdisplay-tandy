@@ -1,0 +1,16 @@
+{
+  "outcome": "PASS_HOST_PUBLICATION_GUARDS",
+  "checks": [
+    "qualified inputs and all five closed member inventories accepted",
+    "pending acceptance refused",
+    "missing backend refused",
+    "unrelated passing result refused",
+    "missing adapter raster refused",
+    "unobserved installer declarations refused",
+    "internally matched empty installed inventory refused",
+    "wrong adapter driver observation refused",
+    "unclean emulator lease refused",
+    "empty owned-process list refused",
+    "changed pinned source/runtime input refused"
+  ]
+}

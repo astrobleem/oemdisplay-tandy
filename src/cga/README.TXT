@@ -14,7 +14,11 @@ the complete dialog-font registration. DOS 3.3+ is required.
 
 Exit Windows completely to DOS. Use your actual Windows directory:
 
-  SETUP C:\WINDOWS 100
+  SETUP C:\WINDOWS
+
+Choose from the menu, or select directly:
+
+  SETUP C:\WINDOWS 320C
 
 Choose 100 for 160x100 in 16 colors, 320 for 320x200 in four colors
 (black/bright cyan/magenta/white), 640 for 640x200 monochrome, or PAN for a
@@ -26,7 +30,14 @@ change to Windows and start:
   CD \WINDOWS
   WIN /R
 
-The four choices are separate display-driver geometries. To change mode,
+320 and 640 keep their existing text sizes and controls. Optional 320C and
+640C select the same resolution and colors with 3x5 UI text, 4x6 fixed/OEM
+text and six-row controls. Smaller text leaves more room; choose the size
+you prefer. The menu lists standard and compact choices side by side.
+Enter at the menu cancels without changing files. Existing 100/PAN choices
+are unchanged. Direct commands 320 and 640 retain their existing defaults.
+
+The six choices use separate display-driver profiles. To change mode,
 exit Windows and run SETUP again with the new choice. There is no live
 geometry switch. Do not run this IBM-CGA packet on a Tandy installation.
 
@@ -70,9 +81,9 @@ An INI larger than 18,000 bytes is refused before any files are copied.
 
 Component notices are in CGA\NOTICE.TXT and CGA\FONTLIC.TXT.
 
-320x200 uses original 4x6 System/Helv and fixed/OEM faces. 640x200 retains
+Standard 320x200 uses original 4x6 System/Helv and fixed/OEM faces. 640x200 retains
 its XTC System/fixed/OEM selection and adds the XT Pixels 8-row proportional
-Helv and existing 8x8 Courier dialog faces. Modes 100/320/640 start CGACTL automatically. At 320/640 it
+Helv and existing 8x8 Courier dialog faces. Modes 100/320/320C/640/640C start CGACTL automatically. At 320/640, including compact profiles, it
 makes disabled labels readable in the reduced palette, then exits. At 100 it
 runs the shared WDESK-based window-access client. Ctrl+Alt+arrows move the window workspace; Home recovers
 its origin and End exposes the active frame's bottom/right. It can expose a
@@ -98,3 +109,14 @@ screen edge. Apply saves them in WIN.INI under [CGAPan]; Cancel changes
 nothing. The step is a multiple of 8 across (down is five eighths of it).
 Native emulation results for PAN are in the development record; physical IBM
 CGA hardware is unqualified.
+
+OPTIONAL COMPACT PROFILES
+
+  SETUP C:\WINDOWS 320C    320x200 four colors, compact fonts and controls
+  SETUP C:\WINDOWS 640C    640x200 monochrome, compact fonts and controls
+
+Use SETUP C:\WINDOWS 320 or 640 to return to the corresponding standard UI.
+Exit Windows first, then start WIN /R after Setup reports success.
+These choices include the fonts; no manual INI editing is needed. The
+recognized current and earlier CGA packets can be upgraded through this
+SETUP; unchanged defaults and UNDO remain.

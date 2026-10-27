@@ -1,0 +1,49 @@
+{
+  "status": "PASS_NATIVE_COMPACT_WINDOWS",
+  "profile": "640C",
+  "width": 640,
+  "height": 200,
+  "bound_seconds": 400,
+  "physical_hardware": false,
+  "input": "Native keyboard plus documented private Win16 observer commands; no physical mouse qualification",
+  "machine": {
+    "cpu_family": "8088",
+    "cpu_speed": "4772728",
+    "machine": "ibmxt86",
+    "mem_size": "640",
+    "gfxcard": "cga"
+  },
+  "config": {
+    "bytes": 819,
+    "sha256": "4ad4382fe01ed7bd4a7f59818482753033b2ddc975b9f72936de5146264bf975"
+  },
+  "owned_pid": 22632,
+  "rom_f1": true,
+  "installed_receipt": {
+    "bytes": 4377,
+    "sha256": "630057f613d21e718f1fce090373a654a21d9f8d011c22750812f884ebaf140f"
+  },
+  "boot": "STATE seq=1 width=640 height=200 top=-2 free=292032 helper=0 active=4576 focus=0 load=C:\\UITEST.EXE CGACTL.EXE",
+  "notepad_edit": {
+    "handle": 6376,
+    "parent": 6292,
+    "id": 15,
+    "visible": 1,
+    "enabled": 1,
+    "rect": [
+      8,
+      16,
+      628,
+      193
+    ],
+    "cls": "Edit",
+    "text": "USER SELECTED COMPACT UI"
+  },
+  "dialog_text_height": 5,
+  "saved_file": "CMPNOTE2.TXT",
+  "saved_text": "COMPACT UI SAVED FROM NOTEPAD",
+  "pan_settings": "Opened installed public PAN /SETTINGS; screenshot and control tree retained",
+  "dos_return": "RETURNED\r\n",
+  "owned_stopped": true,
+  "seconds": 272.875
+}

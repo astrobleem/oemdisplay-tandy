@@ -1,0 +1,3 @@
+# Preserve the exact CRLF source bytes pinned by compact qualification.
+*.PY -text
+*.JSN -text

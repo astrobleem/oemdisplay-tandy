@@ -1,0 +1,13 @@
+{
+  "started": "2026-10-27T21:20:40.811445+00:00",
+  "emulator": "C:\\DOSBox-X\\dosbox-x.exe",
+  "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-7\\compact-build-02\\BUILD.CNF",
+  "emulator_sha256": "df62e4502eb25d8b7b9893ea8e479b05820baa11d4b54b02439c688ac1d834bd",
+  "timeout": 120,
+  "lease_acquired": true,
+  "inventory": "",
+  "pid": 26668,
+  "return": 0,
+  "owned_child_stopped": true,
+  "lease_released": true
+}

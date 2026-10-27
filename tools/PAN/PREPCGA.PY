@@ -3,7 +3,7 @@ from pathlib import Path
 import argparse,hashlib,json,re,shutil,struct,sys
 p=argparse.ArgumentParser()
 for n in ('image','config','packet','probe','out','deps'):p.add_argument('--'+n,type=Path,required=True)
-p.add_argument('--mode',choices=('100','PAN','320','640'),required=True);a=p.parse_args();out=a.out.resolve();out.mkdir(exist_ok=False);(out/'CROOT').mkdir();shutil.copyfile(a.image,out/'DISK.IMG')
+p.add_argument('--mode',choices=('100','PAN','320','320C','640','640C'),required=True);a=p.parse_args();out=a.out.resolve();out.mkdir(exist_ok=False);(out/'CROOT').mkdir();shutil.copyfile(a.image,out/'DISK.IMG')
 sys.path.insert(0,str(a.deps));from pyfatfs.PyFatFS import PyFatFS
 h=a.image.read_bytes()[:512];offset=next(struct.unpack_from('<I',h,454+i*16)[0]*512 for i in range(4) if h[450+i*16])
 with PyFatFS(str(out/'DISK.IMG'),offset=offset) as f:

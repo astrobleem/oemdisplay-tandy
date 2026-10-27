@@ -1,0 +1,26 @@
+{
+  "host": "PASS",
+  "native": "NOT_RUN",
+  "windows": "NOT_TESTED",
+  "tests": [
+    "current panning defaults and exact undo 100",
+    "current panning defaults and exact undo PAN",
+    "current panning defaults and exact undo 320",
+    "current panning defaults and exact undo 320C",
+    "current panning defaults and exact undo 640",
+    "current panning defaults and exact undo 640C",
+    "accepted legacy1 upgrade",
+    "accepted legacy1 undo",
+    "accepted legacy1 changed-refusal",
+    "accepted legacy2 upgrade",
+    "accepted legacy2 undo",
+    "accepted legacy2 changed-refusal",
+    "accepted legacy3 upgrade",
+    "accepted legacy3 undo",
+    "accepted legacy3 changed-refusal",
+    "accepted legacy4 upgrade",
+    "accepted legacy4 undo",
+    "accepted legacy4 changed-refusal"
+  ],
+  "prepared_payload_files": 32
+}

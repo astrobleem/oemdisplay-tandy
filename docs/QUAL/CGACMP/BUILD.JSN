@@ -1,0 +1,21 @@
+{
+  "build": "PASS",
+  "sources": {
+    "CGAPINS.H": "d50ab3e1358b3724ed9a2c5a8d8692cbbfe09d7d5f55630c1870a9608b951a4e",
+    "CRCFAST.H": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8",
+    "INICGA.C": "5fde5e1b419a3f8013efdb2753ff2167b502690d05fbcb5c76c2c75a2fe3b06b",
+    "SETUP.C": "e4f31c848db5eefec05144d5f089632e1244af7458d0fe39b3aee980caa4cbe8"
+  },
+  "binary": {
+    "bytes": 34337,
+    "sha256": "59441c52a6df1608c3fc414991bde8b6c6c4669ff785bbf0b4a3c6f54cbfb6ba",
+    "crc32": "6fd07cb6"
+  },
+  "data_budget": {
+    "data_and_stack_bytes": 61200,
+    "data_group_headroom_bytes": 4336
+  },
+  "runtime": "NOT_TESTED",
+  "source_commit": "a88f81e94bc6cd9cd957397733abebbea1549fe9",
+  "process": "PROCESS.JSON"
+}

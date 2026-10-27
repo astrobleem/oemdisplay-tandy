@@ -1,0 +1,245 @@
+{
+  "profile": "640C",
+  "width": 640,
+  "source": {
+    "bytes": 84341760,
+    "sha256": "37d831fe15f1df18313b496e5a168a5516d81f532eb492a2f9d2b46fb99bdf35"
+  },
+  "image_before": {
+    "bytes": 84341760,
+    "sha256": "df91f38628bdfab605fcd43d605d03d1dffdc60371adca08ec2de551cf85ba7a"
+  },
+  "installer": {
+    "bytes": 34337,
+    "sha256": "59441c52a6df1608c3fc414991bde8b6c6c4669ff785bbf0b4a3c6f54cbfb6ba"
+  },
+  "payload": {
+    "CG1COUR.FON": {
+      "bytes": 3536,
+      "sha256": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa",
+      "crc32": "85b96c8b",
+      "installed": "CG1COUR.FON",
+      "destination": "SYSTEM"
+    },
+    "CG1FIX.FON": {
+      "bytes": 3776,
+      "sha256": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52",
+      "crc32": "20dff0d7",
+      "installed": "CG1FIX.FON",
+      "destination": "SYSTEM"
+    },
+    "CG1HELV.FON": {
+      "bytes": 3536,
+      "sha256": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d",
+      "crc32": "556af1b9",
+      "installed": "CG1HELV.FON",
+      "destination": "SYSTEM"
+    },
+    "CG1OEM.FON": {
+      "bytes": 4080,
+      "sha256": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06",
+      "crc32": "060c76c1",
+      "installed": "CG1OEM.FON",
+      "destination": "SYSTEM"
+    },
+    "CG1SYS.FON": {
+      "bytes": 3536,
+      "sha256": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40",
+      "crc32": "b8133066",
+      "installed": "CG1SYS.FON",
+      "destination": "SYSTEM"
+    },
+    "CG2HELV.FON": {
+      "bytes": 3760,
+      "sha256": "d1f6878faaf8abd06f425d7672277d6eb6d1097f9994c738ba753655d125afc3",
+      "crc32": "f7ccaeab",
+      "installed": "CG2HELV.FON",
+      "destination": "SYSTEM"
+    },
+    "CG2SYS.FON": {
+      "bytes": 3760,
+      "sha256": "c0ac9e8753e6b13b5bf0faa5384c85daf94427d813485a47270a62333bbfd222",
+      "crc32": "e928d79e",
+      "installed": "CG2SYS.FON",
+      "destination": "SYSTEM"
+    },
+    "CG6HELV.FON": {
+      "bytes": 4256,
+      "sha256": "d3bccab5f5daea935ca568923d5274315301f93caffd50e2cdcdd4d59735842d",
+      "crc32": "456e2a18",
+      "installed": "CG6HELV.FON",
+      "destination": "SYSTEM"
+    },
+    "CGA100.DRV": {
+      "bytes": 58208,
+      "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3",
+      "crc32": "dd22f51b",
+      "installed": "CGA100.DRV",
+      "destination": "SYSTEM"
+    },
+    "CGA320.DRV": {
+      "bytes": 57728,
+      "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4",
+      "crc32": "7ca95cde",
+      "installed": "CGA320.DRV",
+      "destination": "SYSTEM"
+    },
+    "CGA32C.DRV": {
+      "bytes": 72368,
+      "sha256": "e4acacc170460f9e351cda46e4e4cc9af883c52d8ff1a9d091157beb86fc33e3",
+      "crc32": "656454d1",
+      "installed": "CGA32C.DRV",
+      "destination": "SYSTEM"
+    },
+    "CGA640.DRV": {
+      "bytes": 57312,
+      "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1",
+      "crc32": "02a304cf",
+      "installed": "CGA640.DRV",
+      "destination": "SYSTEM"
+    },
+    "CGA64C.DRV": {
+      "bytes": 71952,
+      "sha256": "0deee79c45e9d3cbece8cd350a4eec01fe9c0d67eae82a15b43e10da28f2b86c",
+      "crc32": "6972848b",
+      "installed": "CGA64C.DRV",
+      "destination": "SYSTEM"
+    },
+    "CGACTL.EXE": {
+      "bytes": 25247,
+      "sha256": "fa1bc19c9f0301b4ea2f91116a0cfb1f3db0864d1f794edf5e7bdd70cfc5a2d0",
+      "crc32": "910a1ba4",
+      "installed": "CGACTL.EXE",
+      "destination": "WINDOWS"
+    },
+    "CGAGRAB.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067",
+      "crc32": "3c3033a4",
+      "installed": "CGAGRAB.GR2",
+      "destination": "SYSTEM"
+    },
+    "CGAPAN.DRV": {
+      "bytes": 58928,
+      "sha256": "28eae7e0bd1ef57c00707f17a5272da259201fee026b6d75ce7f5cf735a563b5",
+      "crc32": "1c5afa88",
+      "installed": "CGAPAN.DRV",
+      "destination": "SYSTEM"
+    },
+    "FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "crc32": "df30a25d",
+      "installed": "",
+      "destination": ""
+    },
+    "LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80",
+      "crc32": "df30a25d",
+      "installed": "",
+      "destination": ""
+    },
+    "NOTICE.TXT": {
+      "bytes": 3025,
+      "sha256": "d0b64ce9ccad9692484ad81c951922f7d54461d6795a3cc4cd05fd70c127f7e9",
+      "crc32": "45a02834",
+      "installed": "",
+      "destination": ""
+    },
+    "OEMSETUP.INF": {
+      "bytes": 1535,
+      "sha256": "6d7e34414bc96d0e5a416a6414bc2a3da250119c535199a0f0a63c172e55f705",
+      "crc32": "3f4ca4e4",
+      "installed": "",
+      "destination": ""
+    },
+    "PAN.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2",
+      "crc32": "d1ce2cde",
+      "installed": "PAN.EXE",
+      "destination": "WINDOWS"
+    },
+    "PANCFG.EXE": {
+      "bytes": 11985,
+      "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2",
+      "crc32": "d1ce2cde",
+      "installed": "PANCFG.EXE",
+      "destination": "WINDOWS"
+    },
+    "PANCTL.EXE": {
+      "bytes": 18591,
+      "sha256": "a13f1e676b8d71a20643a6b82646ba1f7066e726b88e1c2e482df2ba812f2015",
+      "crc32": "419c14a9",
+      "installed": "PANCTL.EXE",
+      "destination": "WINDOWS"
+    },
+    "PANKEY.DLL": {
+      "bytes": 2085,
+      "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc",
+      "crc32": "15cdf34a",
+      "installed": "PANKEY.DLL",
+      "destination": "SYSTEM"
+    },
+    "T80COUR.FON": {
+      "bytes": 4224,
+      "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6",
+      "crc32": "eeb309ef",
+      "installed": "T80COUR.FON",
+      "destination": "SYSTEM"
+    },
+    "WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c",
+      "crc32": "86daba43",
+      "installed": "",
+      "destination": ""
+    },
+    "XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971",
+      "crc32": "a9e5a6fe",
+      "installed": "XTCFIX.FON",
+      "destination": "SYSTEM"
+    },
+    "XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055",
+      "crc32": "0824b6da",
+      "installed": "XTCOEM.FON",
+      "destination": "SYSTEM"
+    },
+    "XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326",
+      "crc32": "221afeae",
+      "installed": "XTCSYS.FON",
+      "destination": "SYSTEM"
+    },
+    "XTPAN.EXE": {
+      "bytes": 27407,
+      "sha256": "bd33843a1fd456446b8935f69aa74605b82010e9c4345b4a186870b47c52213d",
+      "crc32": "3b3ce77a",
+      "installed": "XTPAN.EXE",
+      "destination": "WINDOWS"
+    },
+    "XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef",
+      "crc32": "87f1a97b",
+      "installed": "",
+      "destination": ""
+    },
+    "XYCTL.EXE": {
+      "bytes": 33220,
+      "sha256": "aa405b11e5b0f82cc4499bda54897b937ffee9305017788065c1bcb283097bbf",
+      "crc32": "82a35b29",
+      "installed": "XYCTL.EXE",
+      "destination": "WINDOWS"
+    }
+  },
+  "native": "NOT_RUN",
+  "route": "Actual native menu SETUP completed in previous bounded run; focused normal cold boot, no repair or driver/font/INI edits",
+  "reused_image": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-7\\installed-compact-640C\\DISK.IMG"
+}

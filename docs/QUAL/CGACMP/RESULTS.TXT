@@ -1,0 +1,61 @@
+COMPACT CGA - REVIEWED AND INTEGRATED; PUBLICATION PENDING
+
+The DOS installer visibly offers 320C and 640C alongside the unchanged
+standard choices. It installs the real CGA100 3x5 UI, 4x6 fixed/OEM fonts
+and six-row OEM controls at the selected fixed resolution.
+
+Native checks passed:
+- C6 /G0 /AS build with 4,336 bytes of data/heap headroom (4,096 required).
+- Six modes, both compact menu choices, cancel without writes, actual prior
+  SETUP.EXE upgrade, and exact restoration of 119 Windows files by UNDO.
+- IBM XT/CGA guest: 8088 at 4.77 MHz, normal 640 KB, no XMS/EMS/UMB.
+- 320C native UNDO/reinstall recovery followed by WIN /R and application tests.
+- 640C completed its native install in the first bounded run; the later
+  focused cold boot used that same installation without repair.
+- Both profiles: all 26 installed payloads and boot font settings match;
+  Program Manager, Notepad Open/Save As with exact file readback, 5-pixel
+  dialog text, PAN settings, and normal Windows return to DOS passed.
+- Host transaction, four legacy inventories, resource/renderer preservation
+  and publication guard checks passed. All preceding helper/standard-driver/
+  font bytes and all four core release assets retain their original identity.
+
+Authentic raw framebuffer PNGs and live 16 KB CGA VRAM are retained. Full
+native images decode that VRAM; enlarged views use nearest-neighbor 4:3
+presentation. The emulator's raw-frame origin bug remains visible in the
+originals. CAPTURES.JSN records every overlap comparison, including the small
+focused-edit sample-timing difference. No captured UI pixels are corrected.
+
+The earlier 3,312-byte heap failure, two native time-bound failures, host
+preparation failures and blocked lease are retained. The heap fix reuses
+sequential scratch and preserves the 18,000-byte INI limit. The host observer
+repair changed no Windows files or installed payloads; see FAILED.
+
+No OS media, compiler or emulator is included. Physical hardware, real mouse
+input and ordinary Windows Setup selection for the new profiles remain
+unqualified. Native DOS SETUP is the complete supported installation route.
+
+Independent re-review of 902526c is clear; ACCEPT01.JSN retains that sealed
+checkpoint. Integration with current main preserves its newly published HPDIB
+core and selects only the compact CGA catalog row. A merged historical-source
+dispatch is independently reviewed at ee471245. REVIEW02.JSN retains that
+clear report and active ACCEPT.JSN seals its exact source/packet bindings.
+Publication approval and remote exact-head CI remain pending.
+
+Independent review of 6c8fe170 found that the gate trusted the machine
+declaration without parsing actual config fields. REVIEW01.JSN retains
+that finding. GATEFIX.JSN records the parser correction; HOST/GATE02.JSN
+passes 24 checks including 12 restamped actual-config refusals. Both
+recorded XT configurations still pass. No runtime/native evidence changed,
+and no emulator was started for this host-only correction. The separate compact-cga
+workflow now runs these regression checks. REVIEW.JSN records its clear re-review.
+
+REVIEW.JSN retains the clear independent re-review. The earlier finding and
+its implementation response remain verbatim historical checkpoints. Runtime
+and native evidence are unchanged. INTEG.JSN records the current-main merge,
+reproduced new core identities and passing tests before final review.
+REVIEW02.JSN now records the clear final integration review; all earlier
+review/acceptance checkpoints remain verbatim. Complete normal catalog checks
+passed after sealing: 9 checks, 18 ancillary assets, all 3 sound inputs verified
+against their exact pins, and the 4 current HPDIB core identities preserved.
+CATCHECK.JSN and CATALOG.JSN retain those results. HOST/GATE05.JSN records
+all 24 compact boundary checks passing with sealed acceptance.

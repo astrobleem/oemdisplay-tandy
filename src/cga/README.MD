@@ -286,3 +286,41 @@ hide/restore/carry, Paintbrush across the desktop, the 160x116 Control Panel
 Desktop dialog with every Tab stop brought into view, and 100/320/640 installs
 with their own helper. Not tested: real mouse input (the harness cannot inject
 it), physical hardware, less than 640 KB.
+
+## Optional compact UI at fixed 320 and 640 resolutions
+
+`SETUP C:\WINDOWS` now offers a visible mode/text-size menu. `320C` and
+`640C` are explicit optional profiles: CGA100's 3x5 UI, 4x6 fixed/OEM text
+and six-row controls on the existing higher-resolution renderer. Commands
+`320` and `640`, the 100/PAN profiles, palettes and helper behavior stay as
+before. Enter cancels the menu without writes. All mode changes occur in DOS.
+
+`CMPRSC.PY` copies the exact native CGA100 OEM bitmap and config/font resources
+into the corresponding accepted normal driver. It expands the NE resource
+table, rebases file offsets and verifies every file-backed segment including
+its relocation records remains byte-identical. The normal mode color table
+stays unchanged. This is a developer producer; consumers receive complete
+ordinary Win16 drivers and fonts. `CMPTEST.PY` checks real resource identities,
+renderer preservation and corruption refusals.
+
+The focused producer preserves the current accepted helper bytes and includes
+four existing sealed inventories for upgrade/undo. It does not require adopting
+a helper rebuild. The actual current downloads/PAN/CGA.ZIP helpers and
+public PAN entry are retained byte-for-byte. `docs/QUAL/CGACMP/BASE.*` freezes the original
+current packet; the older fixed packet remains under `docs/QUAL/CGAPAN/BASE.*`.
+Current published packets and acceptance records are unchanged until separate
+native qualification and publication approval.
+
+```text
+python src/cga/CMPTEST.PY --repo . --out NEW-COMPACT-RESOURCE-CHECK
+python src/cga/INSTALLT.PY --repo . --support . --out NEW-INSTALL-CHECK
+python src/cga/CMPINST.PY --repo . --out NEW-COMPACT-UPGRADE-CHECK
+python src/cga/CMPPACK.PY --repo . --source-commit FULL_COMMIT --out NEW-COMPACT-PREP
+```
+
+Use the existing `BUILDSET.PY` and `PACKCGA.PY finish` on that prepared output
+in a coordinated native slot, with the same C6 data-group headroom gate.
+`CMPINST.PY` uses actual accepted legacy payload identities to check upgrades,
+legacy UNDO and changed-file refusal through a host C89 executable. This is
+transaction evidence only. Native menu/command selection, switching, exact
+UNDO and installed-Windows font/control tests remain required before release.

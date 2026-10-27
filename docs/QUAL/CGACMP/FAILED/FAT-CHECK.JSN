@@ -1,0 +1,14 @@
+{
+  "installed-compact-320C": {
+    "fat_copies": 2,
+    "fat_bytes": 82432,
+    "identical": true,
+    "sha256": "88d459eba123ef19d813d6013475462c91f28125ebba75c7173b23fd0097577d"
+  },
+  "installed-compact-640C": {
+    "fat_copies": 2,
+    "fat_bytes": 82432,
+    "identical": true,
+    "sha256": "f2246acdb346aa33c206faadbc8137cb5dc4de532c3af8ce9405f0214bf404b4"
+  }
+}

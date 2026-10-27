@@ -1,0 +1,35 @@
+SETUP: CGA's changes to SYSTEM.INI and WIN.INI undone
+SETUP: display.drv=CGA320.DRV, selected system/fixed/OEM fonts, load= +CGACTL.EXE; [fonts] +2 lines
+SETUP: undo with SETUP UNDO C:\WINDOWS
+SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.
+Mode changes require exiting Windows and rerunning SETUP. Keep this packet for UNDO.
+SETUP: CGA's changes to SYSTEM.INI and WIN.INI undone
+SETUP: display.drv=CGA32C.DRV, selected system/fixed/OEM fonts, load= +CGACTL.EXE; [fonts] +2 lines; BorderWidth=1, GridGranularity=1
+SETUP: undo with SETUP UNDO C:\WINDOWS
+SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.
+Mode changes require exiting Windows and rerunning SETUP. Keep this packet for UNDO.
+SETUP: CGA's changes to SYSTEM.INI and WIN.INI undone
+SETUP: display.drv=CGA640.DRV, selected system/fixed/OEM fonts, load= +CGACTL.EXE; [fonts] +2 lines
+SETUP: undo with SETUP UNDO C:\WINDOWS
+SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.
+Mode changes require exiting Windows and rerunning SETUP. Keep this packet for UNDO.
+SETUP: CGA's changes to SYSTEM.INI and WIN.INI undone
+SETUP: display.drv=CGA64C.DRV, selected system/fixed/OEM fonts, load= +CGACTL.EXE; [fonts] +2 lines; BorderWidth=1, GridGranularity=1
+SETUP: undo with SETUP UNDO C:\WINDOWS
+SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.
+Mode changes require exiting Windows and rerunning SETUP. Keep this packet for UNDO.
+SETUP: CGA's changes to SYSTEM.INI and WIN.INI undone
+SETUP: display.drv=CGA100.DRV, selected system/fixed/OEM fonts, load= +PAN.EXE; [fonts] +2 lines; BorderWidth=1, GridGranularity=1
+SETUP: undo with SETUP UNDO C:\WINDOWS
+SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.
+Mode changes require exiting Windows and rerunning SETUP. Keep this packet for UNDO.
+SETUP: CGA's changes to SYSTEM.INI and WIN.INI undone
+SETUP: display.drv=CGAPAN.DRV, selected system/fixed/OEM fonts, load= +PAN.EXE; [fonts] +2 lines; BorderWidth=1, GridGranularity=1
+SETUP: undo with SETUP UNDO C:\WINDOWS
+SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.
+Mode changes require exiting Windows and rerunning SETUP. Keep this packet for UNDO.
+SETUP: CGA's changes to SYSTEM.INI and WIN.INI undone
+SETUP: display.drv=CGA320.DRV, selected system/fixed/OEM fonts, load= +CGACTL.EXE; [fonts] +2 lines
+SETUP: undo with SETUP UNDO C:\WINDOWS
+SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.
+Mode changes require exiting Windows and rerunning SETUP. Keep this packet for UNDO.

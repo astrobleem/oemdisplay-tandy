@@ -1,0 +1,43 @@
+Stack Allocation = 4096 bytes
+
+ Start  Stop   Length Name                   Class
+ 00000H 05829H 0582AH _TEXT                  CODE
+ 05830H 05831H 00002H EMULATOR_TEXT          CODE
+ 05832H 05832H 00000H C_ETEXT                ENDCODE
+ 05840H 05840H 00000H EMULATOR_DATA          FAR_DATA
+ 05840H 05881H 00042H NULL                   BEGDATA
+ 05882H 0831FH 02A9EH _DATA                  DATA
+ 08320H 08321H 00002H XIQC                   DATA
+ 08322H 0832FH 0000EH DBDATA                 DATA
+ 08330H 0833DH 0000EH CDATA                  DATA
+ 0833EH 0833EH 00000H XIFB                   DATA
+ 0833EH 0833EH 00000H XIF                    DATA
+ 0833EH 0833EH 00000H XIFE                   DATA
+ 0833EH 0833EH 00000H XIB                    DATA
+ 0833EH 0833EH 00000H XI                     DATA
+ 0833EH 0833EH 00000H XIE                    DATA
+ 0833EH 0833EH 00000H XPB                    DATA
+ 0833EH 0833FH 00002H XP                     DATA
+ 08340H 08340H 00000H XPE                    DATA
+ 08340H 08340H 00000H XCB                    DATA
+ 08340H 08340H 00000H XC                     DATA
+ 08340H 08340H 00000H XCE                    DATA
+ 08340H 08340H 00000H XCFB                   DATA
+ 08340H 08340H 00000H XCF                    DATA
+ 08340H 08340H 00000H XCFE                   DATA
+ 08340H 08340H 00000H CONST                  CONST
+ 08340H 08347H 00008H HDR                    MSG
+ 08348H 0841DH 000D6H MSG                    MSG
+ 0841EH 0841FH 00002H PAD                    MSG
+ 08420H 08420H 00001H EPAD                   MSG
+ 08422H 1354BH 0B12AH _BSS                   BSS
+ 1354CH 1354CH 00000H XOB                    BSS
+ 1354CH 1354CH 00000H XO                     BSS
+ 1354CH 1354CH 00000H XOE                    BSS
+ 13550H 1374FH 00200H c_common               BSS
+ 13750H 1474FH 01000H STACK                  STACK
+
+ Origin   Group
+ 0584:0   DGROUP
+
+Program entry point at 0000:303A
