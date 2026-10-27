@@ -26,9 +26,10 @@ payload, both Windows applications/save/normal-DOS-return, lease cleanup and
 independent source/packet review evidence. A catalog checksum or a successful
 host test cannot accept a new runtime. `ACCEPT01.JSN` in the qualification
 folder retains the acceptance sealed from the clear re-review of `902526c`.
-Integration with current main changes only its producer-history dispatch;
-active `ACCEPT.JSN` is pending final integration review of that source change.
-All 18 source identities and the unchanged native packet remain bound.
+The current-main historical-source dispatch is independently reviewed at
+`ee471245`; `REVIEW02.JSN` retains that exact report. Active `ACCEPT.JSN`
+seals the final integration, all 18 source identities and the unchanged native
+packet. The catalog selects only this new CGA alternative.
 
 ```text
 python tools/PAN/GATETEST.PY --out NEW-PRIOR-GATE.JSN
@@ -38,8 +39,9 @@ python tools/CGACMP/VERIFY.PY
 ```
 
 The candidate command checks completed native evidence and exact current
-source bindings. The normal verifier also requires sealed independent review;
-the local catalog remains refused until the final integration review is sealed.
+source bindings. The normal verifier additionally checks the sealed
+independent review;
+only that accepted record authorizes the local catalog alternative boundary.
 
 The gate parses the exact launch configuration rather than trusting its
 machine declaration. Its closed recorded fixture requires the 8088 at
@@ -55,3 +57,7 @@ updated local catalog entry, as prepared here. The new HPDIB core from main
 is reproduced exactly; each historical snapshot keeps its own closed names
 and original identities. See `docs/QUAL/CGACMP/INTEG.JSN`. Publication requires explicit approval,
 exact-source review and current CI. Physical hardware remains unqualified.
+
+Complete normal catalog checks, including all pinned sound inputs, are in
+`docs/QUAL/CGACMP/CATCHECK.JSN` and `CATALOG.JSN`. Local preparation does
+not authorize a push, merge or release upload.

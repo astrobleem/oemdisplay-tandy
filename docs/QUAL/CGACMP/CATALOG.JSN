@@ -1,0 +1,67 @@
+{
+  "status": "PASS_SEALED_REVIEW_AND_COMPLETE_CATALOG_CHECKS",
+  "reviewed_commit": "ee471245fd8b374552bf344490aac970611a2286",
+  "integrated_main": "f169a7798e23583dd4535e2e6d1debdbbbdbe95b",
+  "acceptance": "tools/CGACMP/ACCEPT.JSN",
+  "review": {
+    "path": "docs/QUAL/CGACMP/REVIEW02.JSN",
+    "identity": {
+      "bytes": 14678,
+      "sha256": "d18849849b4781f4df1cb786a8aa793dfe5b2ed51e26261d7add8385c61ff630"
+    }
+  },
+  "packet": {
+    "bytes": 297312,
+    "sha256": "84a1992803d1bd022318ddb001490b66494aba1e61ca09eef2fbc445fb469cc4"
+  },
+  "compact_guard_checks": 24,
+  "catalog_checks": 9,
+  "ancillary_assets": 18,
+  "sound_inputs": {
+    "TWXT2.ZIP": {
+      "identity": {
+        "bytes": 2420622,
+        "sha256": "fed4fdec0bb5652a6da4c987b6b8e7a4f860f92f4a8e34aad30ac26b49fb3486"
+      },
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/877c8f877af346b6076595bd2d4bde6b78dd60f2/artifacts/win30/TWXT2.ZIP"
+    },
+    "MML3AUTH.ZIP": {
+      "identity": {
+        "bytes": 3467832,
+        "sha256": "c0bf425a8b4fb8da4be238413fe4a4eca75e106ce1ff9535c351baefcca536b5"
+      },
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/1c1d06662128c6285ee3a9e0163b5b28a757f6d0/artifacts/win30/MML3AUTH.ZIP"
+    },
+    "PITEXPR.ZIP": {
+      "identity": {
+        "bytes": 3560729,
+        "sha256": "295c064bb140e20058469d8348b5e02443922d4a6e5d839eb62be76cae5e7be7"
+      },
+      "source": "https://raw.githubusercontent.com/astrobleem/oemsound-tandy/1c1d06662128c6285ee3a9e0163b5b28a757f6d0/artifacts/win30/PITEXPR.ZIP"
+    }
+  },
+  "core_source_commit": "eaafccb7f0e2229fae0028919b249ac968d1820d",
+  "preserved_core": {
+    "WINXT.ZIP": {
+      "bytes": 809353,
+      "sha256": "b323a9b10ed100c8f68568708272673a4781b96ae2554b1603ca05527cc2ed41"
+    },
+    "WINXTSRC.ZIP": {
+      "bytes": 100529,
+      "sha256": "9e32793d07820154d627cdcf147bbfc7086d5db7addf76f5c66d310ff9ff220a"
+    },
+    "WINXT.JSN": {
+      "bytes": 10127,
+      "sha256": "7fda63988169f557ebb64d8a0cccd329ebc575ae819988743a318bcc904874dc"
+    },
+    "WINXT.SHA": {
+      "bytes": 234,
+      "sha256": "ff8cb0336e733d5e2efc0bb40312e4d6fb1a1d71140b82845e5fcfd638bde6cf"
+    }
+  },
+  "catalog_delta": "local.CGA.ZIP only relative to integrated main",
+  "runtime_changed_since_review": false,
+  "remote_CI": "PENDING_AUTHORIZED_PUSH",
+  "publication": "PENDING_EXPLICIT_APPROVAL",
+  "emulator_started": false
+}

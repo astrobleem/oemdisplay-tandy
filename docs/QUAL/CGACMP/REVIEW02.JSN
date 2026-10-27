@@ -1,0 +1,331 @@
+{
+  "outcome": "NO_RESIDUAL_FINDINGS",
+  "reviewed_commit": "ee471245fd8b374552bf344490aac970611a2286",
+  "runtime_source": "a88f81e94bc6cd9cd957397733abebbea1549fe9",
+  "sources": {
+    "src/cga/SETUP.C": {
+      "bytes": 16794,
+      "sha256": "f503a11d8322d1a5f0d3564037b480e30b14a86ea760cef72cb3dc14d78a1779"
+    },
+    "src/cga/PACKCGA.PY": {
+      "bytes": 19710,
+      "sha256": "0c90fa180f752b961894b3210711e6ae8a0ede79aeedeb964c9bc443b7f6d745"
+    },
+    "src/cga/CGASET.PY": {
+      "bytes": 4829,
+      "sha256": "39b0d7944b113e80c8e8be3caa1cd78b6c34dfc7fcf191ed93340063109cf8ea"
+    },
+    "src/cga/CMPPACK.PY": {
+      "bytes": 2488,
+      "sha256": "740c01ead19f6156bb88aecc1e32694395ba7879d2ac77b0b7714265582ecb41"
+    },
+    "src/cga/CMPRSC.PY": {
+      "bytes": 5150,
+      "sha256": "74b84a531b5f57635ca251b4277e74999c5f0ef66276eb17f27bddf353654ec0"
+    },
+    "src/cga/CMPINST.PY": {
+      "bytes": 4170,
+      "sha256": "230db43bd1f97052f0493921953fb36303bc34dd304063bb4e569986c919ae01"
+    },
+    "src/cga/CMPTEST.PY": {
+      "bytes": 2270,
+      "sha256": "1fea3caee457765e6a47cffe6cf0bd438865ecbb9417cc44c0cdb62f1dee466b"
+    },
+    "src/cga/INSTALLT.PY": {
+      "bytes": 13976,
+      "sha256": "0bce0cbd081458f9229eca236ecccfb1518e2d19b1a78f276f89df4dfaf70e6e"
+    },
+    "src/cga/OEMSETUP.INF": {
+      "bytes": 1535,
+      "sha256": "6d7e34414bc96d0e5a416a6414bc2a3da250119c535199a0f0a63c172e55f705"
+    },
+    "tools/PAN/CGASTAGE.PY": {
+      "bytes": 2275,
+      "sha256": "92f0cb95f7d55ea71056afeef706965c36fd541852bbf20eabfe1591e8a1900e"
+    },
+    "tools/PAN/GUIDES/CGA.TXT": {
+      "bytes": 2732,
+      "sha256": "c91e12bed1c1a1b944c849f4708200a256c6e48916d557822e54842c8b5834cd"
+    },
+    "tools/PAN/PREPCGA.PY": {
+      "bytes": 2497,
+      "sha256": "8d9acffbfd6afe67cd869a046b03524c254cabce13dc763be4bc0cd4bdd5be07"
+    },
+    "tools/PAN/PUBLISH.PY": {
+      "bytes": 9262,
+      "sha256": "de81ee9ccf51751184744797f9515b3a3d857faf525ff6b5b7d53cbf9d9edc59"
+    },
+    "tools/PAN/COMPOSE.PY": {
+      "bytes": 3021,
+      "sha256": "038346212a18d02f532e1092d528cb010895af628159e5d30411a216c899df8a"
+    },
+    "tools/CGACMP/HISTORY.PY": {
+      "bytes": 1348,
+      "sha256": "dc8cb7335045024d8d58f08acf5fa89b4621eed136d887ad817463c27806b647"
+    },
+    "tools/CGACMP/VERIFY.PY": {
+      "bytes": 11810,
+      "sha256": "c0afba9a1a98cd18007fecf7b976260cf51d73481979270bdff37cc3610269a4"
+    },
+    "tools/CGACMP/TEST.PY": {
+      "bytes": 6797,
+      "sha256": "129817ac720c1d0ef58c78d5977472a3d41d6412bdb2f1b467814e4b8a6788e4"
+    },
+    "docs/QUAL/CGACMP/TESTSRC.ZIP": {
+      "bytes": 30461,
+      "sha256": "759f5736008ead2fa01a26b979bfc2cf7bc804dfa1473f2961712e4f880b2ed3"
+    }
+  },
+  "packet": {
+    "bytes": 297312,
+    "sha256": "84a1992803d1bd022318ddb001490b66494aba1e61ca09eef2fbc445fb469cc4"
+  },
+  "dispatcher_routes": {
+    ".github/workflows/current.yml": "hpdib",
+    "experiments/XYOVERVIEW/XYCTL.C": "hpdib",
+    "experiments/XYOVERVIEW/XYCTL.LNK": "hpdib",
+    "experiments/XYPAN/XYPATCH.PY": "hpdib",
+    "src/cga/BUILDCGA.PY": "hpdib",
+    "src/cga/BUILDPAN.PY": "hpdib",
+    "src/cga/BUILDPROB.PY": "hpdib",
+    "src/cga/BUILDSET.PY": "hpdib",
+    "src/cga/BUILDUI.PY": "hpdib",
+    "src/cga/CG6FONT.PY": "hpdib",
+    "src/cga/CGA100.PY": "hpdib",
+    "src/cga/CGA100D.ASM": "hpdib",
+    "src/cga/CGA100E.ASM": "hpdib",
+    "src/cga/CGACTL.C": "hpdib",
+    "src/cga/CGAFONT.PY": "hpdib",
+    "src/cga/CGAMET.C": "hpdib",
+    "src/cga/CGAMODEL.PY": "hpdib",
+    "src/cga/CGAPAN.PY": "hpdib",
+    "src/cga/CGASET.PY": "hpdib",
+    "src/cga/CGAUI.PY": "hpdib",
+    "src/cga/CGAVRAM.ASM": "hpdib",
+    "src/cga/INSTALLT.PY": "compact",
+    "src/cga/PACKCGA.PY": "compact",
+    "src/cga/PANCTL.C": "hpdib",
+    "src/cga/PANKEY.C": "hpdib",
+    "src/cga/PANKEY.DEF": "hpdib",
+    "src/cga/PANMET.C": "hpdib",
+    "src/cga/PANMODEL.PY": "hpdib",
+    "src/cga/PANVIEW.PY": "hpdib",
+    "src/cga/PANWATCH.C": "hpdib",
+    "src/cga/PKENTRY.ASM": "hpdib",
+    "src/cga/SETUP.C": "compact",
+    "src/cga/STAGECGA.PY": "hpdib",
+    "src/cga/TESTCGA.PY": "hpdib",
+    "src/cga/TESTKEY.PY": "hpdib",
+    "src/panui/CLTEST.PY": "hpdib",
+    "src/panui/HOSTUI.PY": "hpdib",
+    "src/panui/KEYTEST.PY": "hpdib",
+    "src/panui/PANCMD.H": "hpdib",
+    "src/panui/PANDLG.C": "hpdib",
+    "src/panui/PANDLG.H": "hpdib",
+    "src/panui/PANDLGC.C": "hpdib",
+    "src/panui/PANKCL.C": "hpdib",
+    "src/panui/PANKEY.C": "hpdib",
+    "src/panui/PANKEY.DEF": "hpdib",
+    "src/panui/PANKEY.H": "hpdib",
+    "src/panui/PANOWN.C": "hpdib",
+    "src/panui/PANOWN.H": "hpdib",
+    "src/panui/PANSET.C": "hpdib",
+    "src/panui/PANSET.H": "hpdib",
+    "src/panui/PANSTART.C": "hpdib",
+    "src/panui/PANSTART.H": "hpdib",
+    "src/panui/PANTGT.C": "hpdib",
+    "src/panui/PANTGT.H": "hpdib",
+    "src/panui/PKENTRY.ASM": "hpdib",
+    "src/panui/SETTEST.C": "hpdib",
+    "src/panui/STARTT.C": "hpdib",
+    "src/panui/TGTTEST.C": "hpdib",
+    "src/panui/VERIFY.PY": "hpdib",
+    "src/panui/XYAPPLY.C": "hpdib",
+    "src/panxy/BLDPROBE.PY": "hpdib",
+    "src/panxy/BUILD.PY": "hpdib",
+    "src/panxy/CHECK.PY": "hpdib",
+    "src/panxy/OBSERVER.C": "hpdib",
+    "src/panxy/PATCH.PY": "hpdib",
+    "src/panxy/PRESENT.ASM": "hpdib",
+    "src/panxy/PROBE.C": "hpdib",
+    "src/panxy/RUNCP.PY": "hpdib",
+    "src/panxy/RUNPROBE.PY": "hpdib",
+    "src/pcjr/JRPATCH.PY": "hpdib",
+    "src/pcp/PCPPATCH.PY": "hpdib",
+    "src/softpan/BUILDAPP.PY": "hpdib",
+    "src/softpan/BUILDSP.PY": "hpdib",
+    "src/softpan/MEMTEST.C": "hpdib",
+    "src/softpan/NATSET.PY": "hpdib",
+    "src/softpan/PACKCP.PY": "hpdib",
+    "src/softpan/PACKSP.PY": "hpdib",
+    "src/softpan/PANCFG.C": "hpdib",
+    "src/softpan/PANCFG.DEF": "hpdib",
+    "src/softpan/PANCFG.RSP": "hpdib",
+    "src/softpan/RAMTEST.PY": "hpdib",
+    "src/softpan/REPLAY86.PY": "hpdib",
+    "src/softpan/RUN86.PY": "hpdib",
+    "src/softpan/RUNTEST.PY": "hpdib",
+    "src/softpan/RUNUI86.PY": "hpdib",
+    "src/softpan/RUNUIJR.PY": "hpdib",
+    "src/softpan/SPCHK.PY": "hpdib",
+    "src/softpan/SPPATCH.PY": "hpdib",
+    "src/softpan/SPTEST.C": "hpdib",
+    "src/softpan/SPTEST.DEF": "hpdib",
+    "src/softpan/SPTEST.RSP": "hpdib",
+    "src/softpan/TESTUI.PY": "hpdib",
+    "src/softpan/UIFLOW.PY": "hpdib",
+    "src/softpan/UITEST.C": "hpdib",
+    "src/softpan/UITEST.DEF": "hpdib",
+    "src/softpan/UITEST.RSP": "hpdib",
+    "src/softpan/WINRUN.PY": "hpdib",
+    "src/xtpan/BUILDAPP.PY": "hpdib",
+    "src/xtpan/BUILDPAN.PY": "hpdib",
+    "src/xtpan/CURCHK.PY": "hpdib",
+    "src/xtpan/DEMO.PY": "hpdib",
+    "src/xtpan/EMULOCK.PY": "hpdib",
+    "src/xtpan/HOSTPAN.PY": "hpdib",
+    "src/xtpan/HOSTTEST.PY": "hpdib",
+    "src/xtpan/MSTEST.ASM": "hpdib",
+    "src/xtpan/PANCHK.PY": "hpdib",
+    "src/xtpan/PANPATCH.PY": "hpdib",
+    "src/xtpan/PANTEST.C": "hpdib",
+    "src/xtpan/PANTEST.DEF": "hpdib",
+    "src/xtpan/PANTEST.RSP": "hpdib",
+    "src/xtpan/PCP86.PY": "hpdib",
+    "src/xtpan/PCPMOUSE.PY": "hpdib",
+    "src/xtpan/PCPWIN.PY": "hpdib",
+    "src/xtpan/SHOTDEC.PY": "hpdib",
+    "src/xtpan/XPWIN.PY": "hpdib",
+    "src/xtpan/XTPAN.C": "hpdib",
+    "src/xtpan/XTPAN.DEF": "hpdib",
+    "src/xtpan/XTPAN.RSP": "hpdib",
+    "tools/BUILDDEPS/DEPS.PY": "hpdib",
+    "tools/CURRENT/BUNDLE.PY": "hpdib",
+    "tools/CURRENT/CHECK.PY": "hpdib",
+    "tools/PAN/BASE/PINS.JSN": "hpdib",
+    "tools/PAN/CGA.PY": "hpdib",
+    "tools/PAN/CGAPTEST.PY": "hpdib",
+    "tools/PAN/CGASTAGE.PY": "compact",
+    "tools/PAN/CGATEST.PY": "hpdib",
+    "tools/PAN/COMPOSE.PY": "compact",
+    "tools/PAN/CPTEST.PY": "hpdib",
+    "tools/PAN/EMU86.PY": "hpdib",
+    "tools/PAN/GATETEST.PY": "hpdib",
+    "tools/PAN/GUIDES/CGA.TXT": "compact",
+    "tools/PAN/GUIDES/CPPAN.TXT": "hpdib",
+    "tools/PAN/GUIDES/JRPAN.TXT": "hpdib",
+    "tools/PAN/GUIDES/PAN.TXT": "hpdib",
+    "tools/PAN/HISTORY.PY": "hpdib",
+    "tools/PAN/JRTEST.PY": "hpdib",
+    "tools/PAN/OBSERVE.PY": "hpdib",
+    "tools/PAN/PANSETUP.C": "hpdib",
+    "tools/PAN/PREP86.PY": "hpdib",
+    "tools/PAN/PREPARE.PY": "hpdib",
+    "tools/PAN/PREPCGA.PY": "compact",
+    "tools/PAN/PREPFULL.PY": "hpdib",
+    "tools/PAN/PUBLISH.PY": "compact",
+    "tools/PAN/README.MD": "hpdib",
+    "tools/PAN/SETTEST.PY": "hpdib",
+    "tools/PAN/SHOT.PY": "hpdib",
+    "tools/PAN/TESTINST.PY": "hpdib",
+    "tools/PAN/TESTSET.PY": "hpdib",
+    "tools/PAN/WINTEST.PY": "hpdib",
+    "tools/PAN/XYTEST.PY": "hpdib",
+    "tools/UPAN/BASE/CPSET.C": "hpdib",
+    "tools/UPAN/BUILD.PY": "hpdib",
+    "tools/UPAN/CGATEST.PY": "hpdib",
+    "tools/UPAN/CLIPTEST.PY": "hpdib",
+    "tools/UPAN/COMPOSE.PY": "hpdib",
+    "tools/UPAN/CPSET.C": "hpdib",
+    "tools/UPAN/CPTEST.PY": "hpdib",
+    "tools/UPAN/EMU86.PY": "hpdib",
+    "tools/UPAN/GATETEST.PY": "hpdib",
+    "tools/UPAN/GUIDES/CGA.TXT": "hpdib",
+    "tools/UPAN/GUIDES/CPPAN.TXT": "hpdib",
+    "tools/UPAN/GUIDES/JRPAN.TXT": "hpdib",
+    "tools/UPAN/GUIDES/WINXT.TXT": "hpdib",
+    "tools/UPAN/JRTEST.PY": "hpdib",
+    "tools/UPAN/NATIVE.PY": "hpdib",
+    "tools/UPAN/OBSERVE.PY": "hpdib",
+    "tools/UPAN/PANINT.H": "hpdib",
+    "tools/UPAN/PREP86.PY": "hpdib",
+    "tools/UPAN/PREPARE.PY": "hpdib",
+    "tools/UPAN/PREPFULL.PY": "hpdib",
+    "tools/UPAN/PUBLISH.PY": "hpdib",
+    "tools/UPAN/TESTINST.PY": "hpdib",
+    "tools/UPAN/UICTRL.PY": "hpdib",
+    "tools/UPAN/WINTEST.PY": "hpdib",
+    "tools/UPAN/XYTEST.PY": "hpdib",
+    "tools/XR1PACK/PUBLISH.PY": "hpdib"
+  },
+  "unchanged_relative_to_main": [
+    "tools/HPDIB/PUBLISH.PY",
+    "tools/HPDIB/ACCEPT.JSN",
+    "tools/HPDIB/BIN/HPXY.DRV",
+    "tools/HPDIB/BIN/FIXXT.EXE",
+    "tools/HPDIB/BIN/SETUP.EXE",
+    "tools/CURRENT/BUNDLE.PY",
+    "tools/CURRENT/CHECK.PY",
+    "tools/XR1PACK/PUBLISH.PY"
+  ],
+  "catalog_delta": "local.CGA.ZIP only; all other rows/core source/core identities identical",
+  "core": {
+    "WINXT.ZIP": {
+      "bytes": 809353,
+      "sha256": "b323a9b10ed100c8f68568708272673a4781b96ae2554b1603ca05527cc2ed41"
+    },
+    "WINXTSRC.ZIP": {
+      "bytes": 100529,
+      "sha256": "9e32793d07820154d627cdcf147bbfc7086d5db7addf76f5c66d310ff9ff220a"
+    },
+    "WINXT.JSN": {
+      "bytes": 10127,
+      "sha256": "7fda63988169f557ebb64d8a0cccd329ebc575ae819988743a318bcc904874dc"
+    },
+    "WINXT.SHA": {
+      "bytes": 234,
+      "sha256": "ff8cb0336e733d5e2efc0bb40312e4d6fb1a1d71140b82845e5fcfd638bde6cf"
+    }
+  },
+  "checks": {
+    "compact": {
+      "returncode": 0,
+      "output": "{\n  \"outcome\": \"PASS_HOST_COMPACT_PUBLICATION_GUARDS\",\n  \"checks\": [\n    \"All five preceding packets and their exact payload inventories preserved\",\n    \"Eight superseded sources recover only original exact accepted identities\",\n    \"Changed source outside closed historical snapshot refused\",\n    \"Missing compact native/review acceptance refused\",\n    \"Pending acceptance refused before packet assembly\",\n    \"Reviewed label cannot replace complete compact source bindings\",\n    \"Current alternative boundary rejects unqualified compact packet\",\n    \"Exact completed native candidate validates without accepting review/publication\",\n    \"Missing second native Windows profile refused\",\n    \"Other-resolution application receipt cannot substitute for320C\",\n    \"A larger-RAM native declaration cannot qualify normal640KB\",\n    \"Restamped actual configuration refused with unchanged declaration: 386 with1MB\",\n    \"Restamped actual configuration refused with unchanged declaration: largerRAM\",\n    \"Restamped actual configuration refused with unchanged declaration: otherCPU\",\n    \"Restamped actual configuration refused with unchanged declaration: otherclock\",\n    \"Restamped actual configuration refused with unchanged declaration: othermachine\",\n    \"Restamped actual configuration refused with unchanged declaration: othergraphics\",\n    \"Restamped actual configuration refused with unchanged declaration: dynarec\",\n    \"Restamped actual configuration refused with unchanged declaration: CPUmultiplier\",\n    \"Restamped actual configuration refused with unchanged declaration: memoryoverride\",\n    \"Restamped actual configuration refused with unchanged declaration: memoryboard\",\n    \"Restamped actual configuration refused with unchanged declaration: defaults\",\n    \"Restamped actual configuration refused with unchanged declaration: duplicateoption\",\n    \"A retained failed run cannot qualify a Windows profile\"\n  ],\n  \"native\": \"RECORDED_EVIDENCE_CHECKED\",\n  \"review\": \"NOT_PROVIDED_BY_THIS_TEST\"\n}\n"
+    },
+    "prior_pan": {
+      "returncode": 0,
+      "output": "qualified inputs and all five closed member inventories accepted\npending acceptance refused\nmissing backend refused\nunrelated passing result refused\nmissing adapter raster refused\nunobserved installer declarations refused\ninternally matched empty installed inventory refused\nwrong adapter driver observation refused\nunclean emulator lease refused\nempty owned-process list refused\nchanged pinned source/runtime input refused\n"
+    },
+    "hpdib_history": {
+      "returncode": 0,
+      "output": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.008s\n\nOK\n"
+    },
+    "hpdib_publication": {
+      "returncode": 0,
+      "output": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.003s\n\nOK\n"
+    }
+  },
+  "candidate": {
+    "outcome": "PASS_NATIVE_CANDIDATE_PENDING_REVIEW",
+    "packet": {
+      "bytes": 297312,
+      "sha256": "84a1992803d1bd022318ddb001490b66494aba1e61ca09eef2fbc445fb469cc4"
+    },
+    "native_profiles": [
+      "320C",
+      "640C"
+    ],
+    "publication": "REFUSED_UNTIL_INDEPENDENT_REVIEW",
+    "physical_hardware": false
+  },
+  "historical_products": "all five exact accepted packet identities; four stored PAN alternatives byte identical",
+  "catalog_alternative_gate_refusal": "Compact acceptance pending",
+  "emulator_started": false,
+  "publication_attempted": false,
+  "worktree_modified": false,
+  "remaining": [
+    "Seal exact-source independent review into compact acceptance",
+    "Final integration CI and publication authorization"
+  ],
+  "catalog_full_check": "Not rerun: standalone sound asset directory was not supplied. Direct actual alternative gate tested and refuses pending acceptance as intended."
+}

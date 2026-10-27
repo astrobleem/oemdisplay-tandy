@@ -1,4 +1,4 @@
-COMPACT CGA - INTEGRATED; FINAL SOURCE REVIEW PENDING
+COMPACT CGA - REVIEWED AND INTEGRATED; PUBLICATION PENDING
 
 The DOS installer visibly offers 320C and 640C alongside the unchanged
 standard choices. It installs the real CGA100 3x5 UI, 4x6 fixed/OEM fonts
@@ -37,8 +37,9 @@ unqualified. Native DOS SETUP is the complete supported installation route.
 Independent re-review of 902526c is clear; ACCEPT01.JSN retains that sealed
 checkpoint. Integration with current main preserves its newly published HPDIB
 core and selects only the compact CGA catalog row. A merged historical-source
-dispatch changes one reviewed source; final acceptance/catalog output now
-awaits exact integration review. No remote write has occurred.
+dispatch is independently reviewed at ee471245. REVIEW02.JSN retains that
+clear report and active ACCEPT.JSN seals its exact source/packet bindings.
+Publication approval and remote exact-head CI remain pending.
 
 Independent review of 6c8fe170 found that the gate trusted the machine
 declaration without parsing actual config fields. REVIEW01.JSN retains
@@ -51,4 +52,10 @@ workflow now runs these regression checks. REVIEW.JSN records its clear re-revie
 REVIEW.JSN retains the clear independent re-review. The earlier finding and
 its implementation response remain verbatim historical checkpoints. Runtime
 and native evidence are unchanged. INTEG.JSN records the current-main merge,
-reproduced new core identities, passing tests and pending final review.
+reproduced new core identities and passing tests before final review.
+REVIEW02.JSN now records the clear final integration review; all earlier
+review/acceptance checkpoints remain verbatim. Complete normal catalog checks
+passed after sealing: 9 checks, 18 ancillary assets, all 3 sound inputs verified
+against their exact pins, and the 4 current HPDIB core identities preserved.
+CATCHECK.JSN and CATALOG.JSN retain those results. HOST/GATE05.JSN records
+all 24 compact boundary checks passing with sealed acceptance.

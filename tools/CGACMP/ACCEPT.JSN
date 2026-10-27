@@ -1,5 +1,5 @@
 {
-  "status": "PENDING_INTEGRATION_REVIEW",
+  "status": "REVIEWED_NATIVE_COMPACT_CGA",
   "physical_hardware": false,
   "runtime_source": "a88f81e94bc6cd9cd957397733abebbea1549fe9",
   "packet": {
@@ -529,6 +529,10 @@
   },
   "review": {
     "path": "docs/QUAL/CGACMP/REVIEW02.JSN",
-    "identity": null
-  }
+    "identity": {
+      "bytes": 14678,
+      "sha256": "d18849849b4781f4df1cb786a8aa793dfe5b2ed51e26261d7add8385c61ff630"
+    }
+  },
+  "reviewed_commit": "ee471245fd8b374552bf344490aac970611a2286"
 }
