@@ -166,20 +166,51 @@ consumer installer/package qualification and physical EX/HX/CF testing remain
 open. No push, merge, publication or physical-media writes were performed.
 
 
-## DIB-only follow-on (host preparation)
+## DIB-only follow-on
 
-DIBBLD.PY applies DIB.PY after the normal HPXY overlay and does not apply the
-older solid-group predicate. It unrolls the fixed four-source-byte import and
-four-destination-byte export groups. Palette translation, every pixel operation,
-partial-byte routines, segment-crossing dispatch, stack frames, presentation,
-cursor and panning code remain unchanged. No data table or allocation is added.
-The original AH and temp_bit_count postconditions are explicitly retained.
+DIBBLD.PY applies DIB.PY after the normal HPXY overlay, without SOLID.PY.
+It unrolls the fixed four-source-byte import and four-destination-byte export
+groups. Palette translation and every pixel operation remain unchanged.
+Partial-byte handlers, segment-crossing dispatch, stack frames, presentation,
+cursor and panning code retain their original source. No table or allocation
+is added. The original AH and temp_bit_count postconditions are retained.
 
-DIBHOST.JSN records the source-stream proof: the repeated bodies are identical
-to the originals, and all text outside the two full-group routines is identical.
-This establishes source structure only; assembly and native results are pending.
-DIBSCN.C combines the prior scene with DIBTEST.C checks for palette permutations,
-widths1/7/8/9/15/16/17/37, a high-offset64KB crossing, RLE4, guard bytes and
-64-call GetDIBits/SetDIBits timing batches. It compiles with the same Open Watcom
-8086 Windows flags. DIBORCL.PY adds11 DIB-case and native-assertion requirements
-to the independent scene oracle.
+DIBHOST.JSN records the source-stream proof: repeated bodies are identical
+to the originals, and text outside the two full-group routines is identical.
+Native MASM 5.1 assembly passed, including 8086 branch/instruction audit.
+The emitted listing uses short JZ plus near JMP for the expanded outer loops.
+The driver is 62096 bytes; gross NE 127133 is 250 bytes above the release,
+leaving 398 bytes below the ceiling. Accepted runtime/package pins are unchanged.
+
+DIBSCN.C combines SCENE.C with DIBTEST.C. Both baseline and candidate passed
+all 11 native DIB cases: widths 1/7/8/9/15/16/17/37, palette permutations,
+a high-offset 64KB crossing, RLE4, guard bytes and an 80x32 timing image.
+DIBORCL.PY passed all 41 frames (1,312,000 packed visible bytes), 144 extra
+GDI pixel checks and cursor/pan recovery checks for both. Five canonical
+shadow snapshots are identical between drivers. Both returned normally to
+DOS; all owned emulators stopped, leases released, inventory empty, and FAT
+copies match after stop. Original images retain their recorded hashes.
+
+For 64 calls on the 80x32 image, SetDIBits fell 4120 to 3625ms (12.0%);
+GetDIBits fell 2471 to 2197ms (11.1%). All three five-fill batches matched:
+6481/6426/6426ms for dithered brush/early mixed/late mixed cases. Thus this
+sample avoids the earlier predicate candidate's checkerboard penalty.
+Warm free heap fell 145984 to 145728 bytes; largest block fell 145344 to 145088.
+
+The fresh matched Solitaire pair measured ready at 37.898s baseline
+and 37.458s DIB candidate (440ms, 1.16% reduction).
+Both start at GetTickCount 60033 and BIOS 1450 with 640x256x16 display and
+normal Solitaire window [0,0,640,224]. The full 81920-byte completed logical
+shadows are identical; the top 200 card rows remained stable for three guest
+seconds. LOGICAL.png captures retain the complete seven-column deal. The
+ready marker is an upper bound from visible-window/no-pending-invalidation,
+not the exact final drawing instruction. See DIBRES.JSN for exact receipts.
+
+This is one matched pair on emulated HX 7.159MHz, 640KB, Windows 3.0 real mode,
+XTIDE ramdisk timing. It does not establish a physical-machine result or a
+confidence interval. Separate reviewer signoff, broader application and
+consumer installer/package qualification remain open. The first baseline
+harness session disappeared before a guest result; its stale receipt is
+preserved under windows-baseline-interrupted and no timing was accepted.
+A subsequent empty inventory and successful guarded acquisition established
+that it no longer held the emulator or lease. No binaries were published.

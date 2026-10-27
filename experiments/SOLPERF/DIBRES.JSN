@@ -1,0 +1,3277 @@
+{
+  "status": "PASS_FOCUSED_DIB_VALIDATION",
+  "driver": {
+    "bytes": 62096,
+    "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c"
+  },
+  "build": {
+    "build": "PASS",
+    "runtime": "NOT_TESTED_BY_BUILD",
+    "candidate": "PRIVATE HPXY fixed-group DIB unroll",
+    "batching": false,
+    "synchronous_output": false,
+    "logical": [
+      640,
+      256,
+      16
+    ],
+    "viewport": [
+      320,
+      200,
+      16
+    ],
+    "shadow_bands": [
+      64000,
+      17920
+    ],
+    "stage_bytes": 2816,
+    "hardware_default": false,
+    "physical_tested": false,
+    "gross_NE_bytes": 127133,
+    "delta_from_R3_gross_bytes": 24178,
+    "ceiling_delta": 24576,
+    "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c",
+    "baseline_pipeline_report": "BASEPIPE.json describes transformations before the XY overlay; its mode and optimization descriptions are not final XY behavior",
+    "dib_overlay_sha256": "fd43363b728e7c133025225818a7de1b6d23fe4a04e9d2c68f2958e93fab56a1",
+    "source_base": "c40e380e13b6e7cc6201b1958c580fd287cf4374",
+    "presentation": "Unchanged released converter; no solid predicate",
+    "accepted_runtime_replaced": false
+  },
+  "trials": [
+    {
+      "name": "baseline",
+      "start_bios": 1450,
+      "start_ms": 60033,
+      "winexec_ms": 37788,
+      "ready_ms": 37898,
+      "bios_elapsed_ticks": 690,
+      "rect": [
+        0,
+        0,
+        640,
+        224
+      ],
+      "display": [
+        640,
+        256,
+        16
+      ],
+      "stable_card_region": true,
+      "owned_stopped": true,
+      "lease_released": true
+    },
+    {
+      "name": "candidate",
+      "start_bios": 1450,
+      "start_ms": 60033,
+      "winexec_ms": 37349,
+      "ready_ms": 37458,
+      "bios_elapsed_ticks": 682,
+      "rect": [
+        0,
+        0,
+        640,
+        224
+      ],
+      "display": [
+        640,
+        256,
+        16
+      ],
+      "stable_card_region": true,
+      "owned_stopped": true,
+      "lease_released": true
+    }
+  ],
+  "ready_reduction_ms": 440,
+  "ready_reduction_percent": 1.1610111351522507,
+  "whole_shadow_equal": true,
+  "whole_shadow_bytes": 81920,
+  "regressions": {
+    "baseline": {
+      "oracle": {
+        "status": "PASS",
+        "dib_cases": [
+          {
+            "w": 1,
+            "h": 3,
+            "pattern": 0,
+            "perm": 0,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 7,
+            "h": 3,
+            "pattern": 1,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 8,
+            "h": 3,
+            "pattern": 2,
+            "perm": 0,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 9,
+            "h": 3,
+            "pattern": 0,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 15,
+            "h": 3,
+            "pattern": 1,
+            "perm": 0,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 16,
+            "h": 3,
+            "pattern": 2,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 17,
+            "h": 3,
+            "pattern": 0,
+            "perm": 0,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 37,
+            "h": 3,
+            "pattern": 1,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 37,
+            "h": 11,
+            "pattern": 2,
+            "perm": 1,
+            "cross": 1,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 37,
+            "h": 11,
+            "pattern": 3,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 80,
+            "h": 32,
+            "pattern": 0,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          }
+        ],
+        "dib_benchmarks_ms": {
+          "SET": 4120,
+          "GET": 2471
+        },
+        "native_assertions_pass": true,
+        "extra_gdi_checks": [
+          {
+            "label": "palette_0",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "palette_1",
+            "expected": 1,
+            "actual": 1
+          },
+          {
+            "label": "palette_2",
+            "expected": 2,
+            "actual": 2
+          },
+          {
+            "label": "palette_3",
+            "expected": 3,
+            "actual": 3
+          },
+          {
+            "label": "palette_4",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "palette_5",
+            "expected": 5,
+            "actual": 5
+          },
+          {
+            "label": "palette_6",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "palette_7",
+            "expected": 7,
+            "actual": 7
+          },
+          {
+            "label": "palette_8",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "palette_9",
+            "expected": 9,
+            "actual": 9
+          },
+          {
+            "label": "palette_10",
+            "expected": 10,
+            "actual": 10
+          },
+          {
+            "label": "palette_11",
+            "expected": 11,
+            "actual": 11
+          },
+          {
+            "label": "palette_12",
+            "expected": 12,
+            "actual": 12
+          },
+          {
+            "label": "palette_13",
+            "expected": 13,
+            "actual": 13
+          },
+          {
+            "label": "palette_14",
+            "expected": 14,
+            "actual": 14
+          },
+          {
+            "label": "palette_15",
+            "expected": 15,
+            "actual": 15
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          }
+        ],
+        "extra_gdi_failures": [],
+        "oracle_correction": "Initial baseline oracle expected flat palette6/8 RGB brushes. Existing EGA brush dithering gives red/black at selected points; initial failed receipt preserved. Driver color realization unchanged.",
+        "frames": 41,
+        "compared_bytes": 1312000,
+        "visible_cursor_pixels_checked": 1472,
+        "frame_results": [
+          {
+            "frame": 0,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 1,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 2,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 3,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 4,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 5,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 6,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 7,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 8,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 9,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 10,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 11,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 12,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 13,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 14,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 15,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 16,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 17,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 18,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 19,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 20,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 21,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 22,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 23,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 24,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 25,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 26,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 27,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 28,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 29,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 30,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 31,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 32,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 33,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 40,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 41,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 42,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 43,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 100,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 101,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 102,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          }
+        ],
+        "gdi_checks": [
+          {
+            "label": "black",
+            "x": 20,
+            "y": 100,
+            "expected": 0,
+            "actual": 0,
+            "pass_": true
+          },
+          {
+            "label": "red",
+            "x": 100,
+            "y": 100,
+            "expected": 4,
+            "actual": 4,
+            "pass_": true
+          },
+          {
+            "label": "green",
+            "x": 500,
+            "y": 220,
+            "expected": 2,
+            "actual": 2,
+            "pass_": true
+          },
+          {
+            "label": "bright_blue_after_draw",
+            "x": 50,
+            "y": 70,
+            "expected": 9,
+            "actual": 9,
+            "pass_": true
+          }
+        ],
+        "moves": [
+          {
+            "id": 0,
+            "x": 24,
+            "y": 0,
+            "ms": 165,
+            "bytes": 2400,
+            "reason": 0,
+            "hw": 1,
+            "sw": 1
+          },
+          {
+            "id": 1,
+            "x": 0,
+            "y": 0,
+            "ms": 164,
+            "bytes": 2400,
+            "reason": 0,
+            "hw": 2,
+            "sw": 1
+          },
+          {
+            "id": 2,
+            "x": 0,
+            "y": 4,
+            "ms": 55,
+            "bytes": 640,
+            "reason": 0,
+            "hw": 3,
+            "sw": 1
+          },
+          {
+            "id": 3,
+            "x": 0,
+            "y": 0,
+            "ms": 55,
+            "bytes": 640,
+            "reason": 0,
+            "hw": 4,
+            "sw": 1
+          },
+          {
+            "id": 4,
+            "x": 16,
+            "y": 8,
+            "ms": 220,
+            "bytes": 2816,
+            "reason": 0,
+            "hw": 5,
+            "sw": 1
+          },
+          {
+            "id": 5,
+            "x": 16,
+            "y": 24,
+            "ms": 165,
+            "bytes": 2560,
+            "reason": 0,
+            "hw": 6,
+            "sw": 1
+          },
+          {
+            "id": 6,
+            "x": 304,
+            "y": 48,
+            "ms": 1208,
+            "bytes": 32000,
+            "reason": 1,
+            "hw": 6,
+            "sw": 2
+          },
+          {
+            "id": 7,
+            "x": 320,
+            "y": 56,
+            "ms": 220,
+            "bytes": 2816,
+            "reason": 0,
+            "hw": 7,
+            "sw": 2
+          },
+          {
+            "id": 8,
+            "x": 304,
+            "y": 48,
+            "ms": 220,
+            "bytes": 2816,
+            "reason": 0,
+            "hw": 8,
+            "sw": 2
+          },
+          {
+            "id": 9,
+            "x": 320,
+            "y": 56,
+            "ms": 165,
+            "bytes": 2816,
+            "reason": 0,
+            "hw": 9,
+            "sw": 2
+          },
+          {
+            "id": 10,
+            "x": 0,
+            "y": 0,
+            "ms": 1208,
+            "bytes": 32000,
+            "reason": 1,
+            "hw": 9,
+            "sw": 3
+          }
+        ],
+        "memory": [
+          {
+            "label": "ENTRY",
+            "free": 152352,
+            "largest": 145152
+          },
+          {
+            "label": "WARM",
+            "free": 145984,
+            "largest": 145344
+          },
+          {
+            "label": "AFTER_PANS",
+            "free": 145984,
+            "largest": 145344
+          },
+          {
+            "label": "CLOSED",
+            "free": 146144,
+            "largest": 145696
+          }
+        ],
+        "normal_dos_return": true,
+        "scope": "Actual Windows driver/cursor/GDI VRAM equivalence, not physical EX scanout"
+      },
+      "lease": {
+        "lock": "C:\\Users\\chad\\Documents\\Codex\\2026-10-06\\tandy-emulator.lock",
+        "children": [
+          {
+            "pid": 19328,
+            "bound_seconds": 300,
+            "stopped": true
+          }
+        ],
+        "status": "PASS",
+        "inventory_before": [],
+        "lease_acquired": true,
+        "lease_released": true,
+        "inventory_after": [],
+        "seconds": 149.406
+      },
+      "normal_dos_return": true,
+      "owned_stopped": true,
+      "fat_copies_equal_after_stop": true,
+      "fill_benchmarks_ms": {
+        "0": "6481",
+        "1": "6426",
+        "2": "6426"
+      }
+    },
+    "candidate": {
+      "oracle": {
+        "status": "PASS",
+        "dib_cases": [
+          {
+            "w": 1,
+            "h": 3,
+            "pattern": 0,
+            "perm": 0,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 7,
+            "h": 3,
+            "pattern": 1,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 8,
+            "h": 3,
+            "pattern": 2,
+            "perm": 0,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 9,
+            "h": 3,
+            "pattern": 0,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 15,
+            "h": 3,
+            "pattern": 1,
+            "perm": 0,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 16,
+            "h": 3,
+            "pattern": 2,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 17,
+            "h": 3,
+            "pattern": 0,
+            "perm": 0,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 37,
+            "h": 3,
+            "pattern": 1,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 37,
+            "h": 11,
+            "pattern": 2,
+            "perm": 1,
+            "cross": 1,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 37,
+            "h": 11,
+            "pattern": 3,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          },
+          {
+            "w": 80,
+            "h": 32,
+            "pattern": 0,
+            "perm": 1,
+            "cross": 0,
+            "setbad": 0,
+            "getbad": 0,
+            "guardbad": 0
+          }
+        ],
+        "dib_benchmarks_ms": {
+          "SET": 3625,
+          "GET": 2197
+        },
+        "native_assertions_pass": true,
+        "extra_gdi_checks": [
+          {
+            "label": "palette_0",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "palette_1",
+            "expected": 1,
+            "actual": 1
+          },
+          {
+            "label": "palette_2",
+            "expected": 2,
+            "actual": 2
+          },
+          {
+            "label": "palette_3",
+            "expected": 3,
+            "actual": 3
+          },
+          {
+            "label": "palette_4",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "palette_5",
+            "expected": 5,
+            "actual": 5
+          },
+          {
+            "label": "palette_6",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "palette_7",
+            "expected": 7,
+            "actual": 7
+          },
+          {
+            "label": "palette_8",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "palette_9",
+            "expected": 9,
+            "actual": 9
+          },
+          {
+            "label": "palette_10",
+            "expected": 10,
+            "actual": 10
+          },
+          {
+            "label": "palette_11",
+            "expected": 11,
+            "actual": 11
+          },
+          {
+            "label": "palette_12",
+            "expected": 12,
+            "actual": 12
+          },
+          {
+            "label": "palette_13",
+            "expected": 13,
+            "actual": 13
+          },
+          {
+            "label": "palette_14",
+            "expected": 14,
+            "actual": 14
+          },
+          {
+            "label": "palette_15",
+            "expected": 15,
+            "actual": 15
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "late_mixed",
+            "expected": 8,
+            "actual": 8
+          },
+          {
+            "label": "early_mixed",
+            "expected": 4,
+            "actual": 4
+          },
+          {
+            "label": "late_mixed",
+            "expected": 0,
+            "actual": 0
+          },
+          {
+            "label": "early_mixed",
+            "expected": 0,
+            "actual": 0
+          }
+        ],
+        "extra_gdi_failures": [],
+        "oracle_correction": "Initial baseline oracle expected flat palette6/8 RGB brushes. Existing EGA brush dithering gives red/black at selected points; initial failed receipt preserved. Driver color realization unchanged.",
+        "frames": 41,
+        "compared_bytes": 1312000,
+        "visible_cursor_pixels_checked": 1472,
+        "frame_results": [
+          {
+            "frame": 0,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 1,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 2,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 3,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 4,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 5,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 6,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 7,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 8,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 9,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 10,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 11,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 12,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 13,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 14,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 15,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 16,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 17,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 18,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 19,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 20,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 21,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 22,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 23,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 24,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 25,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 26,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 27,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 28,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 29,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 30,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 31,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 32,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 33,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 40,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 41,
+            "cursor": 1,
+            "cursor_pixels": 64,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 42,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 43,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 100,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 101,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          },
+          {
+            "frame": 102,
+            "cursor": 0,
+            "cursor_pixels": 0,
+            "result": "PASS",
+            "first_mismatches": []
+          }
+        ],
+        "gdi_checks": [
+          {
+            "label": "black",
+            "x": 20,
+            "y": 100,
+            "expected": 0,
+            "actual": 0,
+            "pass_": true
+          },
+          {
+            "label": "red",
+            "x": 100,
+            "y": 100,
+            "expected": 4,
+            "actual": 4,
+            "pass_": true
+          },
+          {
+            "label": "green",
+            "x": 500,
+            "y": 220,
+            "expected": 2,
+            "actual": 2,
+            "pass_": true
+          },
+          {
+            "label": "bright_blue_after_draw",
+            "x": 50,
+            "y": 70,
+            "expected": 9,
+            "actual": 9,
+            "pass_": true
+          }
+        ],
+        "moves": [
+          {
+            "id": 0,
+            "x": 24,
+            "y": 0,
+            "ms": 165,
+            "bytes": 2400,
+            "reason": 0,
+            "hw": 1,
+            "sw": 1
+          },
+          {
+            "id": 1,
+            "x": 0,
+            "y": 0,
+            "ms": 165,
+            "bytes": 2400,
+            "reason": 0,
+            "hw": 2,
+            "sw": 1
+          },
+          {
+            "id": 2,
+            "x": 0,
+            "y": 4,
+            "ms": 110,
+            "bytes": 640,
+            "reason": 0,
+            "hw": 3,
+            "sw": 1
+          },
+          {
+            "id": 3,
+            "x": 0,
+            "y": 0,
+            "ms": 110,
+            "bytes": 640,
+            "reason": 0,
+            "hw": 4,
+            "sw": 1
+          },
+          {
+            "id": 4,
+            "x": 16,
+            "y": 8,
+            "ms": 220,
+            "bytes": 2816,
+            "reason": 0,
+            "hw": 5,
+            "sw": 1
+          },
+          {
+            "id": 5,
+            "x": 16,
+            "y": 24,
+            "ms": 165,
+            "bytes": 2560,
+            "reason": 0,
+            "hw": 6,
+            "sw": 1
+          },
+          {
+            "id": 6,
+            "x": 304,
+            "y": 48,
+            "ms": 1209,
+            "bytes": 32000,
+            "reason": 1,
+            "hw": 6,
+            "sw": 2
+          },
+          {
+            "id": 7,
+            "x": 320,
+            "y": 56,
+            "ms": 220,
+            "bytes": 2816,
+            "reason": 0,
+            "hw": 7,
+            "sw": 2
+          },
+          {
+            "id": 8,
+            "x": 304,
+            "y": 48,
+            "ms": 164,
+            "bytes": 2816,
+            "reason": 0,
+            "hw": 8,
+            "sw": 2
+          },
+          {
+            "id": 9,
+            "x": 320,
+            "y": 56,
+            "ms": 164,
+            "bytes": 2816,
+            "reason": 0,
+            "hw": 9,
+            "sw": 2
+          },
+          {
+            "id": 10,
+            "x": 0,
+            "y": 0,
+            "ms": 1208,
+            "bytes": 32000,
+            "reason": 1,
+            "hw": 9,
+            "sw": 3
+          }
+        ],
+        "memory": [
+          {
+            "label": "ENTRY",
+            "free": 152096,
+            "largest": 145152
+          },
+          {
+            "label": "WARM",
+            "free": 145728,
+            "largest": 145088
+          },
+          {
+            "label": "AFTER_PANS",
+            "free": 145728,
+            "largest": 145088
+          },
+          {
+            "label": "CLOSED",
+            "free": 145888,
+            "largest": 145440
+          }
+        ],
+        "normal_dos_return": true,
+        "scope": "Actual Windows driver/cursor/GDI VRAM equivalence, not physical EX scanout"
+      },
+      "lease": {
+        "lock": "C:\\Users\\chad\\Documents\\Codex\\2026-10-06\\tandy-emulator.lock",
+        "children": [
+          {
+            "pid": 5372,
+            "bound_seconds": 300,
+            "stopped": true
+          }
+        ],
+        "status": "PASS",
+        "inventory_before": [],
+        "lease_acquired": true,
+        "lease_released": true,
+        "inventory_after": [],
+        "seconds": 148.625
+      },
+      "normal_dos_return": true,
+      "owned_stopped": true,
+      "fat_copies_equal_after_stop": true,
+      "fill_benchmarks_ms": {
+        "0": "6481",
+        "1": "6426",
+        "2": "6426"
+      }
+    }
+  },
+  "controls": {
+    "WINDOWS/WIN.INI": "6723e9efd00fea92c00a02d1b3d1f600ef90b90730affe09e48877f2b4c78f7c",
+    "WINDOWS/SYSTEM.INI": "2e741e95fb2198e3c56acd05f4714705738929d2fe985e7d0dc8991dd01aca63",
+    "WINDOWS/SOLPROF.EXE": "1352d273da5629ed7de8aa2f39baf6836fd817c24932ac4a0c2b54a9a4f2374f",
+    "WINDOWS/SOL.EXE": "b5b3d6feb0ef1de98cdc6744a794adffe24c6ead5063413609b629a964c2cd15",
+    "WINDOWS/SYSTEM/GDI.EXE": "48956cb3948f06209ac3b22293ceb49106bac9a39aa30d7fb2744ed0267672e2",
+    "WINDOWS/SYSTEM/USER.EXE": "609f8945fd73e084851f99b515c534eb68a1db8dc0c1b556d81c105dccef666c",
+    "WINDOWS/SYSTEM/KERNEL.EXE": "114675d9854bc96c50eaf2460ec048bad39438aaace42c3c41c6407c1ec4b7b3",
+    "WINDOWS/SYSTEM/HPXY.DRV": "c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9"
+  },
+  "source_images_unchanged": {
+    "C:\\Users\\chad\\Documents\\Codex\\2026-10-26\\task-6\\unified-full-06\\DISK.IMG": {
+      "bytes": 21411840,
+      "sha256": "c2dc067620db5365e35296f7e3ac3c3f6dd66ac37ab8f6ed05cc75db9730a1f3"
+    },
+    "C:\\Users\\chad\\Documents\\Codex\\2026-10-24\\task\\panui-xy-native-02\\DISK.IMG": {
+      "bytes": 21411840,
+      "sha256": "5a9c2696629446afcc5a8237d6d69bbd51528a68f72720f07eebee38655a5c52"
+    }
+  },
+  "evidence_root": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-3",
+  "probe_sources": {
+    "DIBTEST.C": {
+      "bytes": 4688,
+      "sha256": "a5bc279b63aec6fce905b6b7c229599dc277edd7f0e7bb93cfac675f910c4a4b"
+    },
+    "DIBSCN.C": {
+      "bytes": 12431,
+      "sha256": "bb06a8200958f0b085cd2cc1c2a0f1106df015dd1f345aa608ccc4b4ac1d67cc"
+    },
+    "MARK.C": {
+      "bytes": 2054,
+      "sha256": "023feda531c59993021e4bade9bcc5dc2799ad175bd9e84a217a8bd5e79165e3"
+    }
+  },
+  "interrupted_attempt": {
+    "path": "dib-validation/windows-baseline-interrupted",
+    "outcome": "Harness session disappeared before guest log or result; owned PID6568 subsequently absent, fresh guarded run acquired byte lock with empty inventory. No timing accepted."
+  },
+  "gaps": [
+    "Single matched startup pair; no statistical confidence interval",
+    "Ready marker is visible-window/no-pending-invalidation upper bound, with complete shadow and three-second top200 stability verification",
+    "Emulated HX 7.159MHz with XTIDE ramdisk timing; no physical machine or CF timing",
+    "Separate reviewer signoff and consumer installer/package qualification pending"
+  ],
+  "profiles": {
+    "baseline": {
+      "samples": 217,
+      "self_time_samples": {
+        "GDI.EXE": 62,
+        "KERNEL.EXE": 41,
+        "HPXY.DRV: DIB bitmap conversion": 36,
+        "UNKNOWN": 25,
+        "HPXY.DRV: presentation/conversion": 25,
+        "XT-IDE ROM (XUB signature)": 12,
+        "SOL.EXE": 6,
+        "HPXY.DRV: bitmap/raster/other text code": 5,
+        "USER.EXE": 3,
+        "HPXY.DRV: cursor": 1,
+        "HPXY.DRV: BitBlt wrapper": 1
+      },
+      "flush_owner_samples": {
+        "BitBlt wrapper": 19,
+        "presentation/conversion": 5,
+        "bitmap/raster/other text code": 1
+      },
+      "resolved_segments": {
+        "53248": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "4173": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "10239": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "11": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "7877": [
+          "HPXY.DRV",
+          1,
+          20062
+        ],
+        "30207": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "18619": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "16859": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "35253": [
+          "GDI.EXE",
+          30,
+          5606
+        ],
+        "7327": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "36343": [
+          "SOL.EXE",
+          5,
+          4753
+        ],
+        "36977": [
+          "SOL.EXE",
+          4,
+          6746
+        ]
+      },
+      "most_sampled": [
+        {
+          "module": "KERNEL.EXE",
+          "segment": 1,
+          "offset": "0x20b9",
+          "samples": 9
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x14ea",
+          "samples": 8
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x14f3",
+          "samples": 5
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 8,
+          "offset": "0x4d0",
+          "samples": 4
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x14f1",
+          "samples": 4
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 8,
+          "offset": "0xcc2",
+          "samples": 4
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x12db",
+          "samples": 3
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x12b1",
+          "samples": 3
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 8,
+          "offset": "0xcb8",
+          "samples": 3
+        },
+        {
+          "module": "KERNEL.EXE",
+          "segment": 1,
+          "offset": "0x1e70",
+          "samples": 2
+        },
+        {
+          "module": "UNKNOWN",
+          "segment": 0,
+          "offset": "0x106a",
+          "samples": 2
+        },
+        {
+          "module": "KERNEL.EXE",
+          "segment": 1,
+          "offset": "0x354c",
+          "samples": 2
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 1,
+          "offset": "0x266",
+          "samples": 2
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 1,
+          "offset": "0x20b",
+          "samples": 2
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 1,
+          "offset": "0x188",
+          "samples": 2
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 1,
+          "offset": "0x18d",
+          "samples": 2
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 8,
+          "offset": "0x492",
+          "samples": 2
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 8,
+          "offset": "0x4b1",
+          "samples": 2
+        },
+        {
+          "module": "UNKNOWN",
+          "segment": 0,
+          "offset": "0x122d",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x1db",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x14ed",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x1517",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x12b5",
+          "samples": 2
+        },
+        {
+          "module": "UNKNOWN",
+          "segment": 0,
+          "offset": "0x122f",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x150e",
+          "samples": 2
+        }
+      ],
+      "scope": "Random-interval stopped-PC sampling during native phase1/2. Counts estimate CPU self-time, not GDI call counts or separately measured disk latency; no claim of exact per-call cost."
+    },
+    "candidate": {
+      "samples": 215,
+      "self_time_samples": {
+        "GDI.EXE": 60,
+        "KERNEL.EXE": 47,
+        "HPXY.DRV: DIB bitmap conversion": 35,
+        "HPXY.DRV: presentation/conversion": 26,
+        "UNKNOWN": 16,
+        "XT-IDE ROM (XUB signature)": 15,
+        "HPXY.DRV: bitmap/raster/other text code": 8,
+        "SOL.EXE": 5,
+        "USER.EXE": 3
+      },
+      "flush_owner_samples": {
+        "BitBlt wrapper": 19,
+        "presentation/conversion": 7
+      },
+      "resolved_segments": {
+        "11": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "4173": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "53248": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "10239": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "36857": [
+          "KERNEL.EXE",
+          3,
+          4718
+        ],
+        "18635": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "7877": [
+          "HPXY.DRV",
+          1,
+          20062
+        ],
+        "30223": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "7327": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "35043": [
+          "GDI.EXE",
+          30,
+          5606
+        ],
+        "16875": [
+          "UNKNOWN",
+          0,
+          0
+        ],
+        "36551": [
+          "KERNEL.EXE",
+          3,
+          4718
+        ],
+        "34619": [
+          "SOL.EXE",
+          4,
+          6746
+        ]
+      },
+      "most_sampled": [
+        {
+          "module": "KERNEL.EXE",
+          "segment": 1,
+          "offset": "0x20b9",
+          "samples": 7
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x14f1",
+          "samples": 6
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x14ea",
+          "samples": 5
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x14ef",
+          "samples": 4
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x1507",
+          "samples": 4
+        },
+        {
+          "module": "KERNEL.EXE",
+          "segment": 1,
+          "offset": "0x354c",
+          "samples": 3
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x1517",
+          "samples": 3
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x12db",
+          "samples": 3
+        },
+        {
+          "module": "KERNEL.EXE",
+          "segment": 1,
+          "offset": "0x21df",
+          "samples": 2
+        },
+        {
+          "module": "KERNEL.EXE",
+          "segment": 1,
+          "offset": "0x20f6",
+          "samples": 2
+        },
+        {
+          "module": "KERNEL.EXE",
+          "segment": 1,
+          "offset": "0x3a4c",
+          "samples": 2
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 8,
+          "offset": "0xd65",
+          "samples": 2
+        },
+        {
+          "module": "KERNEL.EXE",
+          "segment": 1,
+          "offset": "0x6d36",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x1a2",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x150e",
+          "samples": 2
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 8,
+          "offset": "0x532",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x12a9",
+          "samples": 2
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 8,
+          "offset": "0xd56",
+          "samples": 2
+        },
+        {
+          "module": "UNKNOWN",
+          "segment": 0,
+          "offset": "0x1208",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x150f",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x150b",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x1511",
+          "samples": 2
+        },
+        {
+          "module": "HPXY.DRV",
+          "segment": 8,
+          "offset": "0xd33",
+          "samples": 2
+        },
+        {
+          "module": "GDI.EXE",
+          "segment": 30,
+          "offset": "0x12d1",
+          "samples": 2
+        },
+        {
+          "module": "SOL.EXE",
+          "segment": 4,
+          "offset": "0x1034",
+          "samples": 2
+        }
+      ],
+      "scope": "Random-interval stopped-PC sampling during native phase1/2. Counts estimate CPU self-time, not GDI call counts or separately measured disk latency; no claim of exact per-call cost."
+    }
+  }
+}
