@@ -24,7 +24,11 @@ static int cga_discard(void);
 #endif
 #include "INICGA.C"
 
-static unsigned char copybuf[1024],owned[CGA_MAX_COUNT];
+/* Payload CRC checks run outside the INI parser/transaction. Reuse its
+ * input scratch after parsing, leaving 1 KB more C6 small-model heap. */
+#define copybuf ((unsigned char *)inbuf)
+#define CGA_COPY_SIZE 1024
+static unsigned char owned[CGA_MAX_COUNT];
 static char payload[160],systemdir[160],srcpath[160],dstpath[160],tmppath[160];
 
 static int plain_dos(void)
@@ -45,7 +49,7 @@ static int matches(const char *path,const CGAFILE *pin)
 {
     FILE *f;unsigned n;U32 size=0,c=0xffffffffUL;int ok;
     f=fopen(path,"rb");if(!f)return 0;
-    while((n=(unsigned)fread(copybuf,1,sizeof(copybuf),f))!=0){
+    while((n=(unsigned)fread(copybuf,1,CGA_COPY_SIZE,f))!=0){
         size+=n;c=fast_crc(c,copybuf,n);
         if(size>pin->size)break;
     }
