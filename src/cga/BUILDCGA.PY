@@ -13,7 +13,7 @@ import json
 import shutil
 import sys
 from pathlib import Path
-from STAGECGA import MODES, read, write
+from STAGECGA import MODES, finish, read, write
 
 HERE = Path(__file__).resolve().parent
 
@@ -46,9 +46,11 @@ def main():
 
     def run(command,env,path,timeout=180):
         if 'patched' not in state:
+            applied = finish(args.mode,state['renderer'],state['resources'])
             if args.mode == '160x100x16':
-                patch = importlib.machinery.SourceFileLoader('cga100_build',str(HERE/'CGA100.PY')).load_module()
-                state['patched'] = patch.stage(state['renderer'],state['resources'])
+                state['patched'] = applied['CGA100']
+            elif applied:
+                state['patched'] = applied
             else:
                 state['patched'] = {'normal_mode':'upstream staged bytes unchanged'}
         # Reuse the watchdog/lease runner. Give each child fresh receipts.
