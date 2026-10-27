@@ -35,7 +35,14 @@ The retired softpan auto-publisher must remain disabled. Its source/payload
 and oracle verification continue in Actions, without moving the old tag.
 
 The current CGA choice is one expanded `CGA.ZIP` for fixed or panning 160x100x16 RGBI,
-320x200x4 and 640x200 monochrome. `tools/CGAPACK/VERIFY.PY` gates its exact
-native-qualified payload and independent review before catalog output.
-The earlier three drivers and CGACTL remain unchanged; CGAPAN is installed
-by the same native SETUP and expanded folder.
+320x200x4 and 640x200 monochrome. `tools/PAN/PUBLISH.PY` gates the current
+native-qualified payload, installed-byte evidence and independent review before
+catalog output. All four CGA display drivers retain their accepted bytes; shared
+PAN controls and automatic helper installation use the same native SETUP and
+expanded folder.
+
+The current catalog includes standalone PAN.ZIP for an existing supported display
+installation. PCjr and ColorPlus now expose a two-axis 640x400 software desktop
+through their 320x200 screen. The Windows XT, CGA, PCjr and ColorPlus packets
+bundle the same application. See [Panning](../../docs/PANNING.MD) and
+[native acceptance](../../docs/QUAL/PAN/README.MD) for capabilities and costs.

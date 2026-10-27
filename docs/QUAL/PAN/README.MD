@@ -52,5 +52,8 @@ are native emulator captures. Cropped FRAME API diagnostic captures are not used
 to establish dialog fit. Incorrect-segment CGAPAN BIN dumps are excluded; that
 run's independent API/installation/input/exit evidence remains valid.
 
-The producer refuses output until independent final review is complete. This
-follow-up remains local and unpublished pending separate publication approval.
+Independent final review and the accepted-byte publication gate passed. A clean
+tracked checkout reproduced all four core assets and all 24 catalog files exactly.
+PR #206 merged the implementation; all eleven post-merge workflows passed.
+The current release uses these qualified bytes. Documentation-only updates do
+not rebuild or replace their native evidence.

@@ -1,121 +1,65 @@
-# Shared Panning application settings
+# Shared PAN controls and settings
 
-The current public application is PAN. Its transient dispatcher detects the
-installed driver and starts one internal presentation owner. This directory
-provides the shared settings model, adaptive160x100/320x200 window, bounded
-queued-key input and owner routing. The owner keeps its own timer and rendering
-backend; the dialog adds no hook or extra process. Hardware/software means a
-choice of existing supported methods, never running both engines at once.
-See [the consumer guide](../../docs/PANNING.MD) and
-[the current producer](../../tools/PAN/README.MD).
+PAN is the public application. A transient dispatcher detects the installed
+driver and starts one internal owner. This directory supplies shared settings,
+an adaptive dialog for 160x100 and 320x200 views, bounded queued keys and owner
+routing. Only the selected owner and shared key DLL remain loaded; other
+presentation engines stay on disk. No rendering runs inside the input hook.
 
-## Files
+See [the consumer guide](../../docs/PANNING.MD),
+[current native acceptance](../../docs/QUAL/PAN/README.MD) and
+[current packet producer](../../tools/PAN/README.MD).
 
-- `PANSET.H/C` - pure C89 model: capabilities, defaults, validation,
-  WIN.INI load/save through an injected store, the Apply/Cancel/Home model,
-  and the command-line and singleton routing tables. No Windows calls.
-- `PANDLG.H/C` - the window, built in code from STATIC, BUTTON and EDIT
-  children (no resources, no Windows 3.1 controls, no CPL interface).
-  `PanDlgOpen(inst, host)` runs inside the owning helper only. A later
-  Control Panel wrapper must route like `PAN /SETTINGS` does: find the
-  owner window and post `PS_MSG_VERT` or `PS_MSG_XY` to it.
-- `HOSTUI.PY`, `SETTEST.C`, `XYAPPLY.C` - strict C89 tests, including the
-  actual XY Apply glue. `VERIFY.PY` binds native builds and saved UI evidence.
+## Common experience, adapter-specific presentation
 
-## Backends and settings
+| Installed display | Internal owner | Behavior |
+| --- | --- | --- |
+| PCjr/ColorPlus 640x400, Tandy HPXY 640x256 | XYCTL | Two-axis framebuffer viewport; software-only on PCjr/ColorPlus, software/hardware selection on HPXY |
+| CGA 320x200 desktop through 160x100 | PANCTL | Two-axis software viewport with aligned steps |
+| Fixed CGA 160x100 | CGACTL | Window workspace with five-pixel steps |
+| Supported fixed 160/320/640x200 | XTPAN | Two-axis window workspace |
+| Legacy vertical framebuffer | XTPAN | Retained vertical viewport and memory constraints |
 
-Settings are not merged by name.
+These executable names are internal compatibility details. Consumers run PAN
+and PAN /SETTINGS; native installers place the needed files automatically.
+Repeated launches route to the existing owner and retain its state and unfinished
+settings edits. PAN OFF removes the active owner and disables next-session pan
+startup; PAN enables it again. A required nonresident CGA color fix remains
+available when its window workspace is OFF.
 
-| Backend | Detected by | Settings shown |
-|---|---|---|
-| XTPAN (vertical software pan) | escape 0x5850 | Step (rows), Edge band width (rows), Dwell before pan (ms), Follow any newly activated window |
-| XYCTL (HPXY) | escape 0x5860, 640x256 / 320x200 geometry | Pan at screen edge, edge repeat 100/200/500 ms, Follow dialog boxes only, Software/Hardware |
+The PCjr/ColorPlus two-axis desktop uses two 64,000-byte bands, 128,000 bytes total,
+64,000 more than the preceding vertical-only profile. It retains the physical
+32KB page and guarded adapter launch. Hardware mode appears only when the
+installed display supports reading its actual hardware/software state.
 
-- XTPAN keeps its `[XTPan]` keys and defaults (Step 50, Dwell 400, Edge 3,
-  FollowActive 1). Only those four keys are ever written; never Enabled,
-  KeyMods, KeyDown/KeyUp/KeyTop, LogKeys or LogFile. No 8/4 alignment is
-  imposed on the vertical helper.
-- XYCTL persists to a new `[XYPan]` section: EdgeOn (0), RepeatMs (100),
-  FollowDialogs (0). Missing keys give today's behavior.
-- The Software/Hardware mode is session only: it is applied on Apply and
-  never saved, and XYCTL still starts and stops in software. Mode 2 (fault
-  injection) does not exist in the UI or validator. Hardware is offered only
-  when the DISPLAY stats export (ordinal 106) can read the real mode back,
-  and Apply reports what the driver says it is now running.
-- Home, Apply and Cancel: Apply validates, applies to the running helper,
-  reads back the result, then saves. Failing any earlier step saves nothing.
-  Cancel closes and changes neither the helper nor WIN.INI.
+## Shared implementation
 
-## Invoking
+- PANSET.H/C defines the C89 settings model, capabilities, validation,
+  persistence, Apply/Cancel/Home and singleton/command routing.
+- PANDLG.H/C creates the adaptive dialog with ordinary Windows 3.0 controls;
+  PANDLGC.C is a compatibility include of the same implementation.
+- PANOWN.C detects capabilities and selects the owner; PANSTART.C maintains
+  one public PAN startup token while preserving unrelated startup entries.
+- PANKEY.C and PANKCL.C provide bounded queued-key delivery, one wake-up and
+  timer recovery. The owner drains commands after busy drawing.
 
-- `PAN /SETTINGS` (or `/SETTINGS`): posts a registered message to the
-  running XTPAN, or to a running XYCTL if there is no XTPAN window. If XTPAN is stopped but enabled it is started with
-  `/SETTINGS`; if it is disabled PANCFG says so and starts nothing. It never
-  edits `load=` or `Enabled`. `PANCFG` alone still enables and `PANCFG OFF`
-  still removes autostart and stops the owner, with the same return codes
-  (new: 7 = disabled, nothing
-  started).
-- `XTPAN.EXE /SETTINGS` and `XYCTL.EXE /SETTINGS`: a second copy only asks
-  the first to open its window and exits. A second plain `XYCTL.EXE` now
-  activates the first instead of sending a mode escape (before this it
-  reset the running copy to software). XYCTL also has Options > Panning
-  settings.
-- Repeated invocation activates the one existing window; typed edits are kept.
+Persistence follows the selected backend's existing INI section. Apply validates,
+applies and reads back before saving; Cancel discards unapplied edits. Software
+and Hardware are alternative HPXY presentation modes, never simultaneous engines.
+The mode remains session-only. Dialog-only follow behavior and general
+follow-active behavior remain separate capabilities shown by the actual backend.
 
-## Host tests
+## Verification and packaging
 
-    python src/panui/HOSTUI.PY            (needs a host `cc`; add --crlf to also require CRLF)
-    python src/xtpan/HOSTPAN.PY           (unchanged checks)
-    python src/xtpan/HOSTTEST.PY
+HOSTUI.PY covers model, persistence, capability and actual Apply glue; KEYTEST.PY
+covers queue ordering, wake recovery and hook lifetime; CLTEST.PY checks DLL
+lookup, fallback and cleanup. Use the managed compiler route in AGENTS.md.
 
-HOSTUI covers defaults, validation, persistence and exact key sets, capability
-gating, Cancel/Apply/Home, mode read-back, the command-line and singleton
-tables, source-order checks that PANCFG SETTINGS and the XYCTL/XTPAN second
-launch route before touching `load=`, a driver escape or WIN.INI, the
-`sync_helper` transformation in `src/softpan/BUILDAPP.PY` against the current
-`XTPAN.C`, lint, and (when Open Watcom is installed) a 16-bit compile gate.
-
-## Native results
-
-The helpers were built with the established MSC6 and Open Watcom toolchains
-and exercised in Windows 3.0 real mode. Exact identities, source/build pins,
-raw snapshots, controls, memory readings, owned cleanup and DOS-return proof
-are in [NATIVE.JSN](../../docs/QUAL/PANUI/NATIVE.JSN). This is emulator evidence.
-
-| Fixture | Driver geometry | Result |
-|---|---|---|
-| DOSBox-X PCjr, 640 KB | 320x400 through 320x200 | UI, keyboard, enable/OFF, singleton, Apply/Cancel, persistence, Home, Calculator and exit passed |
-| 86Box IBM XT/Plantronics, 640 KB | 320x400 through 320x200 | UI, singleton, Apply/Cancel, persistence, OFF and exit passed |
-| 86Box Tandy 1000 HX/8088, 640 KB | 640x256 through 320x200 | XY controls, Apply/Cancel, driver mode readback, duplicate owner, Home, application focus, persistence and exit passed |
-
-Current builds: XTPAN 17,535 bytes; PANCFG 10,191 bytes; XYCTL 21,160 bytes.
-The softpan XTPAN uses the exact existing sync_helper transformation. HOSTUI
-passes 318 checks with real strict GCC through the managed host wrapper;
-`-x c` selects C for uppercase `.C` files and all warning flags are retained.
-
-PCjr and ColorPlus measured a 12,960-byte helper allocation. ColorPlus returned
-it exactly. In PCjr the measured Calculator session retained 704 bytes, and
-further helper open/remove cycles did not reduce the final free value.
-Tandy XY measured a 30,048-byte warm helper allocation; after Calculator and
-owner removal, free memory was 161,632 bytes and remained exactly that after
-reopen/removal. These are measured fixture observations, not a global
-zero-allocation or physical hardware qualification claim.
-
-The dialog follows the existing viewport after timer work without activating
-itself or replacing edits. Windows 3.0 Tab/Enter/Escape are handled explicitly.
-A disabled PANCFG notice is also positioned inside the physical viewport.
-
-## Current package integration
-
-Native-qualified helper/source pins have been refreshed. JRPAN and ColorPlus
-retain their driver, memory guards, ordinary Setup and support bytes. Current
-ZIP assembly is `tools/PANUI/PACKAGE.PY`; the main current-release curator
-checks these exact ZIPs and continues to use one expanded WINXT source folder.
-
-The expanded SETUP and C6 finisher catalogs bind the larger XYCTL. New main
-package output requires `docs/QUAL/PANUI/PACKAGE.JSN`, including exact packet,
-Setup and finisher identities and completed native preparation/startup proof.
-All remaining checks passed: fresh 370/370, update 83/83, C6 finisher and
-CPSET checks, automatic installed-owner startup through STARTXT, settings
-and normal DOS return. The owned VM stopped and the lease was released.
-No UI update is published or merged by this local qualification work.
+The current producer is tools/PAN/PUBLISH.PY. Its source/runtime pins, native
+builds, actual installed files, native installer transactions, raster checks and
+independent review are bound in tools/PAN/ACCEPT.JSN and docs/QUAL/PAN/FINAL.JSN.
+Six distinct application backend families passed native installation, settings,
+input and clean DOS exit. Each new PCjr/ColorPlus driver passed 704,000 native
+pixel comparisons with zero errors. These are emulator results, not physical
+hardware qualification. Older PANUI records retain their original historical
+scope; they are not the current driver or package identities.

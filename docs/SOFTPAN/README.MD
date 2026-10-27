@@ -1,4 +1,4 @@
-> Earlier vertical-only driver evidence. The current two-axis desktop and common application are documented in [Panning](../PANNING.MD); these original test records remain unchanged.
+> Historical vertical-only driver evidence. Use [PAN installation and controls](../PANNING.MD), [current native evidence](../QUAL/PAN/README.MD) and the [two-axis PCjr/ColorPlus install guide](RELEASE.MD) for the current release. These original test records remain unchanged.
 
 # PCjr and ColorPlus software panning candidates
 
