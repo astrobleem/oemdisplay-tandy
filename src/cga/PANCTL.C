@@ -101,11 +101,14 @@ static int Fit(int lo,int hi,int view,int cur)
 /* Bring a window or control into view; put the pointer inside if it is not. */
 static void Reveal(HWND w,int margin)
 {
- RECT r;POINT p;int dx,dy;
+ RECT r;POINT p;int dx,dy,x;
  if(!w || !IsWindow(w) || w==mainWindow || !IsWindowVisible(w) || IsIconic(w))return;
  GetWindowRect(w,&r);
  if(r.right<=r.left || r.bottom<=r.top)return;
- if(Pan(Fit(r.left-margin,r.right+margin,VIEW_W,left),Fit(r.top-margin,r.bottom+margin,VIEW_H,top),&dx,&dy))
+ x=Fit(r.left-margin,r.right+margin,VIEW_W,left);
+ /* A right-edge reveal rounds up; rounding down could clip seven pixels. */
+ if(x>left)x=(x+7)&~7;
+ if(Pan(x,Fit(r.top-margin,r.bottom+margin,VIEW_H,top),&dx,&dy))
   edgeArmed=0;
  GetCursorPos(&p);
  if(p.x<left || p.x>=left+VIEW_W || p.y<top || p.y>=top+VIEW_H){
@@ -128,7 +131,7 @@ static void Queue(int cmd)
  case CMD_HOME:x=0;y=0;break;
  case CMD_END:
   w=Active();if(!w)return;
-  GetWindowRect(w,&r);x=r.right-VIEW_W;y=r.bottom-VIEW_H;break;
+  GetWindowRect(w,&r);x=(r.right-VIEW_W+7)&~7;y=r.bottom-VIEW_H;break;
  case CMD_LEFT:x-=stepX;break;
  case CMD_RIGHT:x+=stepX;break;
  case CMD_UP:y-=stepY;break;
