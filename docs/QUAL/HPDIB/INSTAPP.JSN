@@ -1,0 +1,266 @@
+{
+  "status": "PASS_NATIVE_FULL_FINISHER_APPLICATION",
+  "physical_hardware": false,
+  "installed": {
+    "status": "PASS_NATIVE_INSTALLED_HPXY_DIB",
+    "route": "full_finisher",
+    "normal_dos_return": true,
+    "installed_driver": {
+      "bytes": 62096,
+      "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c"
+    },
+    "installed_helpers": {
+      "XTPAN.EXE": {
+        "bytes": 27407,
+        "sha256": "bd33843a1fd456446b8935f69aa74605b82010e9c4345b4a186870b47c52213d"
+      },
+      "XYCTL.EXE": {
+        "bytes": 33220,
+        "sha256": "aa405b11e5b0f82cc4499bda54897b937ffee9305017788065c1bcb283097bbf"
+      },
+      "PANCTL.EXE": {
+        "bytes": 18591,
+        "sha256": "a13f1e676b8d71a20643a6b82646ba1f7066e726b88e1c2e482df2ba812f2015"
+      },
+      "CGACTL.EXE": {
+        "bytes": 25247,
+        "sha256": "fa1bc19c9f0301b4ea2f91116a0cfb1f3db0864d1f794edf5e7bdd70cfc5a2d0"
+      },
+      "PANCFG.EXE": {
+        "bytes": 11985,
+        "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+      },
+      "PAN.EXE": {
+        "bytes": 11985,
+        "sha256": "680744c72f1404b5588122e224867c44b2d99e597bfce6a9afb109d9c82618b2"
+      },
+      "PANKEY.DLL": {
+        "bytes": 2085,
+        "sha256": "4d9c90f890a2906e34ba0d4977c87d3eb9af1323435a8db347552a5a917512cc"
+      }
+    },
+    "driver_not_injected": true,
+    "normal_packet_path": true,
+    "pan_controls_pass": true,
+    "repair_complete": true,
+    "paintbrush_rgb_equal": true,
+    "bitmap_width": 160,
+    "bitmap_height": 96,
+    "input_bitmap": {
+      "bytes": 7798,
+      "sha256": "9ab7bfcc0b5a0307ff9ffc5486a8f125cac8725610b98319fe66ef69792bf581"
+    },
+    "output_bitmap": {
+      "bytes": 7798,
+      "sha256": "0915356828fb6268c3df25891f4329f2070bed8e8463bdc5a18b4ccc48dfdde0"
+    },
+    "native_controls": {
+      "outcome": "PASS_NATIVE_HPXY_SINGLE_APP",
+      "physical_hardware": false,
+      "normal_dos_return": true,
+      "checks": [
+        "Normal guarded packet launcher starts installed PAN owner",
+        "Installed SOFTWARE owner handles native Home/Right/Down with8x4 constraints",
+        "Installed HARDWARE owner handles native Home/Right/Down with8x4 constraints",
+        "Real Paintbrush import/save/pan/close completed; RGB readback remains separate"
+      ]
+    },
+    "physical_hardware": false
+  },
+  "lease": {
+    "lock": "C:\\Users\\chad\\Documents\\Codex\\2026-10-06\\tandy-emulator.lock",
+    "children": [
+      {
+        "pid": 7380,
+        "bound_seconds": 1200,
+        "stopped": true
+      }
+    ],
+    "status": "PASS",
+    "inventory_before": [],
+    "lease_acquired": true,
+    "lease_released": true,
+    "inventory_after": [],
+    "seconds": 949.984
+  },
+  "archive": {
+    "bytes": 57791,
+    "sha256": "1cc46313dc7c5e2d51a772aa6da318c6de56d69c3858c47a6918d373dab2e6a9"
+  },
+  "members": {
+    "APP-CONTROL.JSN": {
+      "bytes": 344,
+      "sha256": "41f7b1716f2c3a43ad1bb74ffd31b2eaaed27d517ccd3a757f1315d840f0e387"
+    },
+    "BOOT.TXT": {
+      "bytes": 2239,
+      "sha256": "1ac36e7d1be55bd2747d0f469053b8d66e8e304d4680eb2eb1c8afa5a91f4469"
+    },
+    "DIBOUT.BMP": {
+      "bytes": 7798,
+      "sha256": "0915356828fb6268c3df25891f4329f2070bed8e8463bdc5a18b4ccc48dfdde0"
+    },
+    "DIBTEST.BMP": {
+      "bytes": 7798,
+      "sha256": "9ab7bfcc0b5a0307ff9ffc5486a8f125cac8725610b98319fe66ef69792bf581"
+    },
+    "DOS-CURRENT.TXT": {
+      "bytes": 2000,
+      "sha256": "99ca1e87eba788b46ebd29a761676b7b2c07ae2f2f237c2f682292532cb5d920"
+    },
+    "FINAL-DOS.TXT": {
+      "bytes": 2000,
+      "sha256": "cf8b3b88214217cf4adba7c9fc222d8340d2fb6295a371c3ee46cb1fdefad312"
+    },
+    "FINAL-LEASE.JSON": {
+      "bytes": 332,
+      "sha256": "e7111f9910fec4ec7128f4c32ea8ed99850f2331bc64dccd3e67b0326a2bac25"
+    },
+    "FINAL-RETURN.PNG": {
+      "bytes": 1096,
+      "sha256": "aca32e13534309499825504c75188e78a8ecf422b7da1ca95841c25a9e6384f8"
+    },
+    "FINAL-seq17.PNG": {
+      "bytes": 3893,
+      "sha256": "3eef103fbc154b5d0664314f26fae9e290aa1ab547e5f6450e8c145c825239a8"
+    },
+    "FINAL-seq20.PNG": {
+      "bytes": 3908,
+      "sha256": "2aa0c21c5c0b90364fe72a69d82e1043a719cd9f1e73fc3a45c67ee24ec7697f"
+    },
+    "FINAL-seq23.PNG": {
+      "bytes": 3830,
+      "sha256": "78fe0ec5fcd41f65abe09f99085287d3a13d73bc706aa475a71de7ad1ec28c9d"
+    },
+    "HARDWARE_APPLY.TXT": {
+      "bytes": 3934,
+      "sha256": "bbb404715ccc8df37dbd03b60f3fff05c6376ad3495af45f220cd72f654e039c"
+    },
+    "HARDWARE_CLOSE.TXT": {
+      "bytes": 2242,
+      "sha256": "eac63cdbf8acfa6eb74892f19ab644824513abd204de3e05750aefae2fb4c8ef"
+    },
+    "HARDWARE_DOWN.TXT": {
+      "bytes": 2242,
+      "sha256": "7ab0216c0fee5cb7d2d7da447a52e2f73701fead8a2eb7a7b5f750c31685e421"
+    },
+    "HARDWARE_HOME.TXT": {
+      "bytes": 2240,
+      "sha256": "ff91b7b7a872297f388b04ea4c8647baf7f66d6359a22e3b717dd6c6d7b8185a"
+    },
+    "HARDWARE_RIGHT.TXT": {
+      "bytes": 2241,
+      "sha256": "b44d7556553dffa8426bf95997f50cb93b5637cae3309daa0b380cefdc388ebd"
+    },
+    "HARDWARE_SELECT.TXT": {
+      "bytes": 3921,
+      "sha256": "5a03940feecb118e1eea365491be39b9d313c11518c5d99d8605cba7356811c3"
+    },
+    "HARDWARE_SELECT_DOWN.TXT": {
+      "bytes": 3921,
+      "sha256": "9166330b23e9b910d90a89142a80d6896be5b2654cfcf7ee341c8e87b1209547"
+    },
+    "HARDWARE_SETTINGS.TXT": {
+      "bytes": 3920,
+      "sha256": "e1c34e8590415910d9f71165e858bbcff523a3b6f1d45ddd4f9f6dbc162789e8"
+    },
+    "INSTALL-INPUT.JSN": {
+      "bytes": 9429,
+      "sha256": "5bb262b6a84296ed02289fcf743b88778a087c1af032f50e6336bf7a9faac10a"
+    },
+    "INSTALLED.JSN": {
+      "bytes": 2206,
+      "sha256": "d437b3fd95452f328542d0525ea70ec13166e8fdcaf89ae3c8261df86d419870"
+    },
+    "PBRUSH_CLOSE.TXT": {
+      "bytes": 2240,
+      "sha256": "d1db4201fd7366281b0a631e6c47cca2d33e503d4e8e4aeedf84853c65016c8b"
+    },
+    "PBRUSH_FILENAME.TXT": {
+      "bytes": 9605,
+      "sha256": "4be564bfe5ccc68e4de753a40c20fd65a947954b588bac706083561afa27e4aa"
+    },
+    "PBRUSH_OPEN.TXT": {
+      "bytes": 7104,
+      "sha256": "d707d04c464e2271a79124574ae326b96188b69342edb9186c0ed5ef4aa28d71"
+    },
+    "PBRUSH_PAN_DOWN.TXT": {
+      "bytes": 7109,
+      "sha256": "a9074caf74d10f46c0ba782a4b94b5741623d9e747a7e2784757c18415bef061"
+    },
+    "PBRUSH_PAN_HOME.TXT": {
+      "bytes": 7104,
+      "sha256": "50f2379f91ffa9bb190c7f2d93559b8eb2a57c06d08a968431fbc49d8eef8047"
+    },
+    "PBRUSH_PAN_RIGHT.TXT": {
+      "bytes": 7108,
+      "sha256": "c68cc873c736d89718fff5f9a045bd134659a6fb6ba1cbea9200de4ed7e018c6"
+    },
+    "PBRUSH_SAVE.TXT": {
+      "bytes": 7106,
+      "sha256": "e4ffdf40966035c365bf0e35d72e744af8e7d3c122184549a7a4f189f4abb09b"
+    },
+    "PBRUSH_SAVEAS.TXT": {
+      "bytes": 9603,
+      "sha256": "d5c1761269cc3f6704f6d01a6be7f1b9a7a6a08d47e1c8cc8dd93c6881fc6c83"
+    },
+    "PREPARE.JSN": {
+      "bytes": 14186,
+      "sha256": "1d74377eb2cffbbc006bc9a0bfca25f9012ecff477160f7bc8f2ea35f5640856"
+    },
+    "REPAIR.LOG": {
+      "bytes": 1328,
+      "sha256": "04700dc9cc31b1e8f414f7915ded9b57cd3bb69690f2e62a59d765181aaf8030"
+    },
+    "RESULT.JSN": {
+      "bytes": 450,
+      "sha256": "25018f08a067bd408666014dc9af1fab0c620178ab6b30aaaa8bc8ab9d82228e"
+    },
+    "RUNTIME.JSON": {
+      "bytes": 940,
+      "sha256": "f1d1720f3ccbbef7d8ff340d0784f23ce134fda6922280463840bbca10c4bf9d"
+    },
+    "SETUP-FAILED.LOG": {
+      "bytes": 1619,
+      "sha256": "fa6dbd5c1700c97c8e0125454d78fcaefea3404b0e1b052a8f68906ca356449f"
+    },
+    "SETUP-WITNESS.JSN": {
+      "bytes": 176,
+      "sha256": "bc800442ee9819d12fe013f923550f74f333e77d488cf7cb5e58a34a346dfb29"
+    },
+    "SOFTWARE_APPLY.TXT": {
+      "bytes": 3928,
+      "sha256": "3e8f6bf89d9fbb3ef267f7b3ab57e8539eed256a7d5bc66d7a2d14a6e22f7d95"
+    },
+    "SOFTWARE_CLOSE.TXT": {
+      "bytes": 2239,
+      "sha256": "cb0ac9dde27f37cb9d6ee70aab1a41aa256f937fe50a88f9660075fc9e228773"
+    },
+    "SOFTWARE_DOWN.TXT": {
+      "bytes": 2241,
+      "sha256": "aa2774c3c486aab5232c4f113c16dde50170b00308a3ebd689a45971687bceb1"
+    },
+    "SOFTWARE_HOME.TXT": {
+      "bytes": 2239,
+      "sha256": "9a9922e41a0790f8cf7380b74693b7e45ec27de7870aa429025c53fab41638a4"
+    },
+    "SOFTWARE_RIGHT.TXT": {
+      "bytes": 2240,
+      "sha256": "97084e190391ef410b261f2a1607d786b76f838468c1572058ec4053580cef87"
+    },
+    "SOFTWARE_SELECT.TXT": {
+      "bytes": 3915,
+      "sha256": "6cb89f41e3e8ca2e9f90cbe20c6713c9eaca2e1d4add41d465af7459cbfb1554"
+    },
+    "SOFTWARE_SELECT_DOWN.TXT": {
+      "bytes": 3915,
+      "sha256": "f984197038824a320eb20c05d35300de099bc21773d2be4961379f928c2264f9"
+    },
+    "SOFTWARE_SETTINGS.TXT": {
+      "bytes": 3915,
+      "sha256": "d5582ef4a56a288e03e0e783ec85a243df99be3e2cbb46a13de19545b40b83fd"
+    }
+  },
+  "ordinary_windows_setup": "NOT_QUALIFIED",
+  "independent_final_review": "PENDING"
+}

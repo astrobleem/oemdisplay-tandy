@@ -1,0 +1,33 @@
+{
+  "build": "PASS",
+  "runtime": "NOT_TESTED_BY_BUILD",
+  "candidate": "PRIVATE HPXY fixed-group DIB unroll",
+  "batching": false,
+  "synchronous_output": false,
+  "logical": [
+    640,
+    256,
+    16
+  ],
+  "viewport": [
+    320,
+    200,
+    16
+  ],
+  "shadow_bands": [
+    64000,
+    17920
+  ],
+  "stage_bytes": 2816,
+  "hardware_default": false,
+  "physical_tested": false,
+  "gross_NE_bytes": 127133,
+  "delta_from_R3_gross_bytes": 24178,
+  "ceiling_delta": 24576,
+  "sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c",
+  "baseline_pipeline_report": "BASEPIPE.json describes transformations before the XY overlay; its mode and optimization descriptions are not final XY behavior",
+  "dib_overlay_sha256": "fd43363b728e7c133025225818a7de1b6d23fe4a04e9d2c68f2958e93fab56a1",
+  "source_base": "cb923a717dc535960537d1a620b4814849a1c6eb",
+  "presentation": "Unchanged released converter; no solid predicate",
+  "accepted_runtime_replaced": false
+}

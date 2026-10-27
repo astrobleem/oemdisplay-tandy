@@ -1,0 +1,27 @@
+{
+  "status": "BUILT_NOT_RUN",
+  "target": "8086 Windows3 real mode",
+  "commands": [
+    [
+      "C:\\WATCOM\\BINNT\\WCC.EXE",
+      "-zW",
+      "-0",
+      "-ms",
+      "-od",
+      "-we",
+      "DIBREP.C"
+    ],
+    [
+      "C:\\WATCOM\\BINNT\\WLINK.EXE",
+      "@DIBREP.LNK"
+    ]
+  ],
+  "source": {
+    "bytes": 12704,
+    "sha256": "addca0c62e329a2a06dac8f4bb0dd89ec611ec224c1022433c02cf492277601e"
+  },
+  "binary": {
+    "bytes": 10920,
+    "sha256": "4dab7f192e0f502346ccea77881a69c028831adf8cd8c41c434de37062216ba2"
+  }
+}

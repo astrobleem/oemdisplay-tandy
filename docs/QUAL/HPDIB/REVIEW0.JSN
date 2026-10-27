@@ -1,0 +1,116 @@
+{
+  "reviewed_commit": "07a396b319308856d9511f9508aea1b0f17344e4",
+  "reviewed_base": "cb923a717dc535960537d1a620b4814849a1c6eb",
+  "status": "ONE_P2_FINDING_NO_ASSEMBLY_CORRECTNESS_DEFECT_FOUND",
+  "findings": [
+    {
+      "priority": "P2",
+      "file": "tools/HPDIB/CHECKREP.PY",
+      "line": 16,
+      "title": "Require raster coverage and successful native lifecycle before PASS",
+      "description": "The verifier inherits ORACLE.PY status but never requires41frames/exactframeIDs or normal_dos_return. ORACLE uses all over FRAME rows, so empty rows pass vacuously. With valid canonical shadows and synthetic complete61case/18batch logs, deleting every FRAME record and setting normal_dos_return=false still returns PASS frames0. This can qualify missing raster/lifecycle evidence.",
+      "repro": "review_checker.py; dib-review-missing-frames/VERIFIED.JSN",
+      "observed": {
+        "status": "PASS",
+        "frames": 0,
+        "normal_dos_return": false,
+        "dib_matrix_pass": true
+      },
+      "recommendation": "Require exact expected FRAME IDs/count, normal DOS return and successful owned-stop/lease lifecycle evidence; add negative tests for missing/duplicate frames and failed return."
+    }
+  ],
+  "positive_evidence": {
+    "preparation_tests": "7passed",
+    "native_rechecks": {
+      "baseline": {
+        "status": "PASS",
+        "frames": 41,
+        "compared_bytes": 1312000,
+        "dib_benchmarks_ms": {
+          "SET": 4120,
+          "GET": 2471
+        },
+        "native_assertions_pass": true,
+        "normal_dos_return": true,
+        "extra_gdi_failures": []
+      },
+      "candidate": {
+        "status": "PASS",
+        "frames": 41,
+        "compared_bytes": 1312000,
+        "dib_benchmarks_ms": {
+          "SET": 3625,
+          "GET": 2197
+        },
+        "native_assertions_pass": true,
+        "normal_dos_return": true,
+        "extra_gdi_failures": []
+      }
+    },
+    "canonical_shadows_equal": {
+      "S000.BIN": true,
+      "S001.BIN": true,
+      "S010.BIN": true,
+      "S011.BIN": true,
+      "S012.BIN": true
+    },
+    "source_proof": "Original bodies equal REPT bodies; all source outside full-group functions byte-equivalent after CRLF normalization. Import temp_bit_count=0 and exportAH=0 restored; no frame/linkage/partial/segment handler changes.",
+    "listing_proof": "MASM5.1 listings encode both outer loops as7403(shortJZ) plus E9nearJMP; no expanded8086Jcc hazard.",
+    "presentation_sha256": "43e7e2c9a9404396fccd72cb9d04b4074fa260425425d675cc301696ac3673c3",
+    "package_diff": [
+      {
+        "file": "SETUP.EXE",
+        "old_bytes": 85228,
+        "new_bytes": 85228
+      },
+      {
+        "file": "WINXT/FIXXT.EXE",
+        "old_bytes": 50928,
+        "new_bytes": 50928
+      },
+      {
+        "file": "WINXT/HPXY.DRV",
+        "old_bytes": 61856,
+        "new_bytes": 62096
+      }
+    ],
+    "candidate_sha256": "3642570a8103f8da7dc62c4c9dda7df16aa8844e17359fb5f0f0132b2d4d432c"
+  },
+  "performance_assessment": "Evidence supports4bpp conversion improvement on one64-call80x32batch:SET4120->3625ms(-12.0%),GET2471->2197ms(-11.1%). One matched Solitaire pair ready37898->37458ms(-440ms,1.16%), not repeated confidence. All3five-fillbrush batches equal; earlierSOLIDmixed-patternpenalty absent becausepresentationunchanged. GrossNE+250bytes; observedwarmheap-256bytes;398bytes belowceiling.",
+  "acceptance_limits": "Expanded61case/18batch probe compiled but not run at reviewedcommit. CurrentPAN-base rebuild, nativeFRESH/UPDATE/ordinarySetup/readback and installedPAN/app acceptance stillpending and explicitlygated inNEXT.MD. Do not equatepreparedpackage/hoststubpass withacceptedruntime. Publicproducer/catalogpinsunchanged.",
+  "source_pins": {
+    "src/hpxydib/DIB.PY": {
+      "bytes": 2609,
+      "sha256": "fd43363b728e7c133025225818a7de1b6d23fe4a04e9d2c68f2958e93fab56a1"
+    },
+    "tools/HPDIB/BUILD.PY": {
+      "bytes": 1467,
+      "sha256": "ace215ad562c6d1491ae52e79134af7013c2863c9b2f76286b1c23dac0ccee3e"
+    },
+    "tools/HPDIB/PREPARE.PY": {
+      "bytes": 4475,
+      "sha256": "d8f9e9d7ac02539175134acc65731c8361b9a38d83452d9b10b1475dcbc19e64"
+    },
+    "tools/HPDIB/PROBE.PY": {
+      "bytes": 2199,
+      "sha256": "a831fe62fd9b49e9f73fda2ddabd4718a2862420c75df42e5b6a1156254ec1d2"
+    },
+    "tools/HPDIB/CHECKREP.PY": {
+      "bytes": 2059,
+      "sha256": "0036073e28416eaa891226bfc01e9092de27286ac66e2c35e50c92978c96d778"
+    },
+    "experiments/SOLPERF/DIBTEST.C": {
+      "bytes": 4688,
+      "sha256": "a5bc279b63aec6fce905b6b7c229599dc277edd7f0e7bb93cfac675f910c4a4b"
+    },
+    "experiments/SOLPERF/DIBORCL.PY": {
+      "bytes": 4501,
+      "sha256": "ffac028eeae393420c915e8b1617af87fe68b90a03e7775bb5f0ffb6d65b86c2"
+    },
+    "experiments/SOLPERF/ORACLE.PY": {
+      "bytes": 4010,
+      "sha256": "b6e6aaa5b3988dcdb6961f2af856cec10d3259ad90cc4e866465452fc4cd1f68"
+    }
+  },
+  "emulator_use": "NONE; host-only replay and isolated copied/synthetic fixtures in task-2; task-3 worktree unchanged."
+}

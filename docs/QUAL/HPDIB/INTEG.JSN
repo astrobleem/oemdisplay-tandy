@@ -1,0 +1,120 @@
+{
+  "status": "LOCAL_INTEGRATION_CHECKS_PASS",
+  "native_acceptance": "tools/HPDIB/ACCEPT.JSN",
+  "review": "docs/QUAL/HPDIB/REVIEW1.JSN",
+  "reviewed_native_source_commit": "beb4a265065b53cde28b270564fa7e8ff58acff9",
+  "core_source_commit": "eaafccb7f0e2229fae0028919b249ac968d1820d",
+  "core": {
+    "WINXT.ZIP": {
+      "bytes": 809353,
+      "sha256": "b323a9b10ed100c8f68568708272673a4781b96ae2554b1603ca05527cc2ed41"
+    },
+    "WINXTSRC.ZIP": {
+      "bytes": 100529,
+      "sha256": "9e32793d07820154d627cdcf147bbfc7086d5db7addf76f5c66d310ff9ff220a"
+    },
+    "WINXT.JSN": {
+      "bytes": 10127,
+      "sha256": "7fda63988169f557ebb64d8a0cccd329ebc575ae819988743a318bcc904874dc"
+    },
+    "WINXT.SHA": {
+      "bytes": 234,
+      "sha256": "ff8cb0336e733d5e2efc0bb40312e4d6fb1a1d71140b82845e5fcfd638bde6cf"
+    }
+  },
+  "historical_pan_four_assets": "Exact original identities reproduced",
+  "historical_snapshot": {
+    "bytes": 16854,
+    "sha256": "ee4e192db3347c4e55aa056e30dc01ed5f847d11fb2972a09e4db13cd7e23e2c"
+  },
+  "host_tests": {
+    "native_qualification_gates": 42,
+    "historical_snapshot_boundaries": 5,
+    "legacy_preparation": 24,
+    "legacy_publisher": 11,
+    "dos_publisher": 16,
+    "legacy_hpxy_binding": 8,
+    "total_unit_tests": 106,
+    "crc_vectors": 17,
+    "crc_tested_bytes": 119609
+  },
+  "catalog_checks": 9,
+  "ancillary_assets": 18,
+  "catalog_delta": {
+    "status": "PASS",
+    "unchanged_ancillary_archives": [
+      "BUILDIN.ZIP",
+      "CGA.ZIP",
+      "COOKSET.ZIP",
+      "CPPAN.ZIP",
+      "JRPAN.ZIP",
+      "MINESET.ZIP",
+      "MML3AUTH.ZIP",
+      "PAN.ZIP",
+      "PC1.ZIP",
+      "PC1512.ZIP",
+      "PITDOS.ZIP",
+      "PITEXPR.ZIP",
+      "TEXT80.ZIP",
+      "TNDYV2.ZIP",
+      "TWXT2.ZIP",
+      "WINXT720.ZIP",
+      "YAMAHA.ZIP"
+    ],
+    "tandylab_changed_members": [
+      "TANDYLAB/DRIVERS/WINXT/FIXXT.EXE",
+      "TANDYLAB/DRIVERS/WINXT/HPXY.DRV",
+      "TANDYLAB/MANIFEST.SHA"
+    ]
+  },
+  "integration_sources": {
+    "tools/HPDIB/HISTORY.PY": {
+      "bytes": 1125,
+      "sha256": "832a275797dda39255bd7e6a30fa69efdf19679aaaa48e5de5011fb3e1f1bdd8"
+    },
+    "tools/HPDIB/TESTHIST.PY": {
+      "bytes": 1846,
+      "sha256": "b107b79cc403bda0fdf533c99faace283ac755fc675cc3c6b2a3d27b2a4d1fe9"
+    },
+    "tools/PAN/PUBLISH.PY": {
+      "bytes": 8758,
+      "sha256": "cc704e25ab93f4f6a056b7776d71f8fd780bbfc014532c5ce872f302a1d64941"
+    },
+    "tools/CURRENT/BUNDLE.PY": {
+      "bytes": 9492,
+      "sha256": "80aa11c230e2bbe6b81ac9ce1e78e616da60e717c71aff0ce44b5aeb1b48a142"
+    },
+    "tools/CURRENT/CHECK.PY": {
+      "bytes": 4947,
+      "sha256": "a7d2a307565ae9007f59c623e56f63677bf1f5b3508ec569994114e030e300f3"
+    },
+    "tools/CURRENT/PRODUCTS.JSN": {
+      "bytes": 6218,
+      "sha256": "5f04b535d4187845292d76ac0b5f68a6da298ad5f5621cf7a37dcd2fe6b3c4e8"
+    },
+    "tools/XR1PACK/PUBLISH.PY": {
+      "bytes": 20962,
+      "sha256": "7713f24936beacd4aa80baa92ba9bba4194018bec21bb70bd652515cdc9518b5"
+    },
+    ".github/workflows/current.yml": {
+      "bytes": 1955,
+      "sha256": "67d6ac6dbd8386e5d591b78c19a30a773dae439cfd9581e99707224f77561de1"
+    },
+    ".github/workflows/xr1pack.yml": {
+      "bytes": 2452,
+      "sha256": "6d1117a0fcf1843521ee450907d4e740ec3921c3897f4f4b342fa97fe6c42877"
+    },
+    ".github/workflows/pc1512.yml": {
+      "bytes": 7670,
+      "sha256": "e2f6603117088357c0ee7a39c818c43a9aabe9c690b3cfefece38e1388ee66ea"
+    },
+    ".github/workflows/colorplus.yml": {
+      "bytes": 9302,
+      "sha256": "5b525d138b3768fb75cc16c3e90948e11b367dcb1273cf773cec54eac8fa51fe"
+    }
+  },
+  "remote_ci_run": false,
+  "publication_performed": false,
+  "publication_approval_required": true,
+  "scope": "Host equivalents of affected verification jobs; no new emulator run or native runtime change. Final exact-head integration review/remote CI precede publication."
+}

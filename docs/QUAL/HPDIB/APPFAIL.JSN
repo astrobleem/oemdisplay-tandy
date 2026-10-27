@@ -1,0 +1,46 @@
+{
+  "status": "FAILED_BOUND_NOT_QUALIFIED",
+  "scope": "Full unchanged PAN settings suite plus Paintbrush; native actions reached app save/pan/close, but900s elapsed before confirmed DOS return",
+  "lease": {
+    "lock": "C:\\Users\\chad\\Documents\\Codex\\2026-10-06\\tandy-emulator.lock",
+    "children": [
+      {
+        "pid": 34244,
+        "bound_seconds": 900,
+        "stopped": true
+      }
+    ],
+    "status": "FAILED",
+    "inventory_before": [],
+    "lease_acquired": true,
+    "error": "TimeoutError('ColorPlus UI bound')",
+    "lease_released": true,
+    "inventory_after": [],
+    "seconds": 902.25
+  },
+  "controller": {
+    "outcome": "FAILED",
+    "physical_hardware": false,
+    "error": "TimeoutError('Windows did not return to DOS')",
+    "checks": [
+      "normal guarded launcher starts one XY owner alongside TSHELL and its input helper",
+      "native radio selection and queued software input honor 8x4 constraints; wide layout fits physical viewport",
+      "native hardware selection/readback and input work; repeat launch retains owner, mode and unapplied radio selection; Apply saves 200ms",
+      "Cancel discards 500ms and preserves applied 200ms; only supported software/hardware modes offered"
+    ]
+  },
+  "app_actions": {
+    "status": "UI_ACTIONS_COMPLETE_READBACK_PENDING",
+    "checks": [
+      "Real Paintbrush opens independent4bpp uniform/dense/checkerboard BMP",
+      "Native Save As exports image to a distinct BMP",
+      "Imported image remains open during native PAN right/down/home repaint"
+    ],
+    "application_window": 5716,
+    "save_as_command": 104
+  },
+  "observed_rgb_equal": true,
+  "normal_dos_return_confirmed": false,
+  "retained_private_path": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-3\\dib-installed-app",
+  "next": "Fresh combined ordinary Windows Setup/normal finisher with focused software/hardware PAN and same real Paintbrush RGB test"
+}

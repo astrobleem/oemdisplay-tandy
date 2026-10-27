@@ -1,0 +1,12 @@
+{
+  "status": "FAILED_NATIVE_SETUP_ATTEMPT",
+  "physical_hardware": false,
+  "witness": {
+    "status": "FAIL_NATIVE_SETUP",
+    "reason": "Setup returned status1; old installed driver retained; replacement fallback declined",
+    "pause_before_full_repair": false
+  },
+  "log": "\r\nC:\\DIBPKT\\WINXT>ECHO OFF\r\nRESERVE: 16K video overlap reserved. Start Windows with WIN /R.\r\nWindows Setup returned status 1.\r\nWindows Setup left HPXY selected, but its installed bytes need updating.\r\nThis also applies if you canceled Setup with HPXY already selected.\r\nReplace only SYSTEM\\HPXY.DRV from this source? [y/N] No replacement requested.\r\nINI WIN.INI [windows] load\r\nWIN.INI: TGCLIP startup installed; other commands preserved.\r\nTandy DOS/clipboard support installed.\r\n\r[                    ]   1% 2048/144520 bytes XTPAN.EXE   \r[#                   ]   7% 10240/144520 bytes XTPAN.EXE   \r[##                  ]  12% 18432/144520 bytes XTPAN.EXE   \r[###                 ]  17% 24576/144520 bytes XTPAN.EXE   \r[####                ]  23% 33551/144520 bytes XYCTL.EXE   \r[#####               ]  28% 41743/144520 bytes XYCTL.EXE   \r[######              ]  33% 47887/144520 bytes XYCTL.EXE   \r[#######             ]  38% 56079/144520 bytes XYCTL.EXE   \r[########            ]  43% 62675/144520 bytes PANCTL.EXE  \r[#########           ]  49% 70867/144520 bytes PANCTL.EXE  \r[##########          ]  54% 79059/144520 bytes PANCTL.EXE  \r[###########         ]  59% 85362/144520 bytes CGACTL.EXE  \r[############        ]  64% 93554/144520 bytes CGACTL.EXE  \r[##############      ]  70% 101746/144520 bytes CGACTL.EXE  \r[###############     ]  75% 108561/144520 bytes PANCFG.EXE  \r[################    ]  80% 116450/144520 bytes PANCFG.EXE  \r[#################   ]  86% 124642/144520 bytes PAN.EXE     INI WIN.INI [windows] load\r\nINI WIN.INI [UnifiedPan] Version\r\nPanning helpers ready; use PAN /SETTINGS in Windows.\r\n",
+  "reason": "Batched navigation did not establish driver selection; Escape returned Setup status1. Existing HPXY remained selected with old bytes; fallback replacement was declined. Full finisher/application acceptance is separate.",
+  "retry": "Separate guarded ordinary Windows Setup run with observed single-step navigation required"
+}

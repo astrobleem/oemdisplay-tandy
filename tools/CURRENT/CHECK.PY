@@ -8,9 +8,9 @@ def check(sound,core):
  config=P.spec();
  for n,pin in config['core_identities'].items():assert P.identity((core/n).read_bytes())==pin,n
  assets=P.ancillary(sound,(core/'WINXT.ZIP').read_bytes());checks=[];references=[]
- cga=importlib.machinery.SourceFileLoader('current_qualified_cga',str(P.ROOT/'tools/PAN/PUBLISH.PY')).load_module()
+ cga=importlib.machinery.SourceFileLoader('current_qualified_cga',str(P.ROOT/'tools/HPDIB/PUBLISH.PY')).load_module()
  cga.verify_alternatives(assets);checks.append('CGA exact qualified packet and preserved earlier runtime verified')
- checks.append('All4 live core identities pinned; supplied producer commit remains original')
+ checks.append('All4 qualified core identities pinned; supplied producer commit preserved')
  checks.append('All'+str(len(assets))+' ancillary ZIPs match qualified inputs and deterministic build-input archive')
  assert assets['BUILDIN.ZIP']==P.input_archive(config)
  inputs=P.zip_files(assets['BUILDIN.ZIP'])
@@ -54,7 +54,7 @@ def check(sound,core):
    if urls:references.append({'asset':name,'member':member,'release_references':urls})
  return {'checks':checks,'assets':{n:P.identity(b) for n,b in assets.items()},
          'packaged_release_references':references,
-         'main_native_gate':'Not exercised by this ancillary check; BUNDLE always calls the gated native producer before output.'}
+         'main_native_gate':'Replayed through main_product; BUNDLE additionally reproduces all four core artifacts through the gated producer.'}
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--sound',type=Path,required=True);p.add_argument('--core',type=Path,required=True);p.add_argument('--report',type=Path)
  a=p.parse_args();result=check(a.sound,a.core)

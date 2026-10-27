@@ -84,3 +84,12 @@ __pycache__/
 !/tools/DOSINST/BIN/HPXY.DRV
 !/docs/QUAL/HPXY/WINDOWS.ZIP
 !/docs/QUAL/HPXY/INSTALL.ZIP
+!/docs/QUAL/HPDIB/MATRIX.ZIP
+!/docs/QUAL/HPDIB/INSTAPP.ZIP
+!/docs/QUAL/HPDIB/DRVINST.ZIP
+!/docs/QUAL/HPDIB/ORDWIN.ZIP
+# Candidate-only runtime; publication remains blocked without HPDIB acceptance.
+!/tools/HPDIB/BIN/HPXY.DRV
+!/tools/HPDIB/BIN/FIXXT.EXE
+!/tools/HPDIB/BIN/SETUP.EXE
+!/tools/HPDIB/BASE/SRCPAN.ZIP
