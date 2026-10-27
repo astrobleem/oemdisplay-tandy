@@ -30,8 +30,13 @@ until the required evidence is complete; the new candidate is refused meanwhile.
 ```text
 python tools/PAN/GATETEST.PY --out NEW-PRIOR-GATE.JSN
 python tools/CGACMP/TEST.PY --out NEW-COMPACT-GATE
+python tools/CGACMP/VERIFY.PY --candidate docs/QUAL/CGACMP/CANDIDATE.JSN
 python tools/CGACMP/VERIFY.PY
 ```
+
+The candidate command checks completed native evidence and reports review
+pending. It cannot authorize the current catalog alternative boundary, which
+always requires the separate accepted review record.
 
 Do not replace `downloads/PAN/CGA.ZIP`: it remains the immutable preceding
 packet. A qualified compact alternative uses a separate tracked path and an

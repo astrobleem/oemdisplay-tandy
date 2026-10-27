@@ -30,11 +30,8 @@ def lease(q):
          all(c.get('pid',0)>0 and c.get('stopped') for c in q['children']),
          'Compact Windows owned-process cleanup incomplete')
 
-def verify(data=None):
- try:q=json.loads((HERE/'ACCEPT.JSN').read_bytes())
- except FileNotFoundError as e:raise ValueError('Compact acceptance pending: native evidence and independent review required') from e
- require(q.get('status')=='REVIEWED_NATIVE_COMPACT_CGA' and q.get('physical_hardware') is False,
-         'Compact acceptance pending')
+def validate_candidate(q,data=None):
+ require(q.get('physical_hardware') is False,'Physical hardware remains unqualified')
  require(re.fullmatch('[0-9a-f]{40}',q.get('runtime_source','')),'Full compact runtime source required')
  required_sources={'src/cga/SETUP.C','src/cga/PACKCGA.PY','src/cga/CGASET.PY',
   'src/cga/CMPPACK.PY','src/cga/CMPRSC.PY','src/cga/CMPINST.PY','src/cga/CMPTEST.PY',
@@ -77,7 +74,8 @@ def verify(data=None):
          dos.get('inventory_after')==[] and dos.get('owned_stopped') and dos.get('lease_released') and
          dos.get('menu_cancel')=='PASS' and dos.get('undo_exact_files',0)>100 and
          set(dos.get('selected_through_menu',[]))=={'320C','640C'} and
-         dos.get('switches')==['320','320C','640','640C','100','PAN','320'],'Compact native DOS matrix incomplete')
+         dos.get('switches')==['320','320C','640','640C','100','PAN','320'] and
+         dos.get('legacy_upgrade',{}).get('packet')==before['packet'],'Compact native DOS matrix/preceding installer upgrade incomplete')
  child(dos['compiler_process']);child(dos['installer_process'])
  for mode,name in [('320C','CGA32C.DRV'),('640C','CGA64C.DRV')]:
   require(dos['profiles'][mode]['driver']==identity(files['CGA/'+name]),'Native DOS installed compact driver differs')
@@ -99,14 +97,28 @@ def verify(data=None):
  for kind,row in q['host'].items():
   result=json.loads(exact(row));require(result.get('host')=='PASS','Compact host check failed: '+kind)
  require(set(q['host'])=={'install','legacy','resources'},'Compact host checks incomplete')
+ return raw
+
+def candidate(path):
+ q=json.loads(Path(path).read_bytes())
+ require(q.get('status')=='PENDING_INDEPENDENT_REVIEW','Expected an explicitly pending candidate')
+ raw=validate_candidate(q)
+ return dict(outcome='PASS_NATIVE_CANDIDATE_PENDING_REVIEW',packet=identity(raw),
+             native_profiles=['320C','640C'],publication='REFUSED_UNTIL_INDEPENDENT_REVIEW',physical_hardware=False)
+
+def verify(data=None):
+ try:q=json.loads((HERE/'ACCEPT.JSN').read_bytes())
+ except FileNotFoundError as e:raise ValueError('Compact acceptance pending: native evidence and independent review required') from e
+ require(q.get('status')=='REVIEWED_NATIVE_COMPACT_CGA','Compact acceptance pending')
+ raw=validate_candidate(q,data)
  review=json.loads(exact(q['review']))
  require(review.get('outcome')=='NO_RESIDUAL_FINDINGS' and review.get('runtime_source')==q['runtime_source'] and
          review.get('sources')==q['sources'] and review.get('packet')==q['packet']['identity'],
          'Independent compact source/packet review incomplete')
- return dict(packet=identity(raw),members=len(files),physical_hardware=False,
+ return dict(packet=identity(raw),members=len(q['members']),physical_hardware=False,
              native_profiles=['320C','640C'],review=review['outcome'])
 
 if __name__=='__main__':
- ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--packet',type=Path);a=ap.parse_args()
- try:print(json.dumps(verify(a.packet.read_bytes() if a.packet else None),indent=2))
+ ap=argparse.ArgumentParser(description=__doc__);group=ap.add_mutually_exclusive_group();group.add_argument('--packet',type=Path);group.add_argument('--candidate',type=Path);a=ap.parse_args()
+ try:print(json.dumps(candidate(a.candidate) if a.candidate else verify(a.packet.read_bytes() if a.packet else None),indent=2))
  except (ValueError,OSError,KeyError) as e:ap.exit(1,'Refused: '+str(e)+'\n')
