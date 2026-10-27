@@ -1,5 +1,5 @@
 {
-  "status": "PENDING_INDEPENDENT_FINAL_REVIEW",
+  "status": "REVIEWED_NATIVE_SINGLE_APP",
   "physical_hardware": false,
   "runtime_source": "5b3a79fded9e2b00b4e5f75d161e73f1eb685c04",
   "helpers": {
@@ -2179,8 +2179,8 @@
   "review": {
     "path": "docs/QUAL/PAN/REVIEW.JSN",
     "identity": {
-      "bytes": 95,
-      "sha256": "186c16c214952ba27d62fd2c983296adbc5e70d5aca2fd446e7959a4f3d4b688"
+      "bytes": 606,
+      "sha256": "aa6808d846bc18c6a4ee594f06f702241f2af3a6ffd0902ed340bb8b21778b8e"
     }
   }
 }
