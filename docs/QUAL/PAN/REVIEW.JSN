@@ -3,5 +3,6 @@
   "runtime_source": "5b3a79fded9e2b00b4e5f75d161e73f1eb685c04",
   "reviewed_candidate": "8e4aa7bcd77baed009bb48a747c663b995795e71",
   "reviewer": "/root/final_review",
-  "report": "No residual findings. Verified176 committed source pins, seven native families, three installer groups, both704000-pixel raster records, five composed packet inventories and preserved payloads. The435-member evidence archive passes its closed manifest. Independent VRAM decoding reproduces both guide screenshots exactly. No edits, emulator launches or publication performed."
+  "report": "No residual findings. Verified176 committed source pins, seven native families, three installer groups, both704000-pixel raster records, five composed packet inventories and preserved payloads. The435-member evidence archive passes its closed manifest. Independent VRAM decoding reproduces both guide screenshots exactly. No edits, emulator launches or publication performed.",
+  "cli_followup_review": "No substantive findings: main(argv=None) preserves parser/producer behavior and supports XR1 delegation. Source pins match, official gate passes, all five consumer downloads remain exact. Runtime unchanged."
 }

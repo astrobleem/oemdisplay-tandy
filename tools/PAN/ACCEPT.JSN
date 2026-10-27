@@ -1197,8 +1197,8 @@
       "sha256": "b7d3c766e7fdbe795c6fddea85f3939385504215e5002f71831c37f6b38ed712"
     },
     "tools/PAN/PUBLISH.PY": {
-      "bytes": 8605,
-      "sha256": "f6c2bf66d78934b6273915bee42ff7d5282c411444114d29bdefd1b6d7f96c73"
+      "bytes": 8639,
+      "sha256": "5a0f474a27d3c857a43ffc4adff1f22ba3648c572b725d353e1494d59c54a918"
     },
     "tools/PAN/README.MD": {
       "bytes": 1927,
@@ -2179,8 +2179,8 @@
   "review": {
     "path": "docs/QUAL/PAN/REVIEW.JSN",
     "identity": {
-      "bytes": 606,
-      "sha256": "aa6808d846bc18c6a4ee594f06f702241f2af3a6ffd0902ed340bb8b21778b8e"
+      "bytes": 842,
+      "sha256": "616dcbbfac06a97cdbff3e101662662998ad5e986b3ebb7e69c4b8c5e722035d"
     }
   }
 }

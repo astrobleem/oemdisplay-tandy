@@ -85,7 +85,9 @@ def build(out,commit,verify=False):
   require(not verify,'Missing verification output');out.mkdir(parents=True)
   for n,b in files.items():(out/n).write_bytes(b)
  return {n:identity(b) for n,b in files.items()}
-if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);g=p.add_mutually_exclusive_group(required=True);g.add_argument('--out',type=Path);g.add_argument('--verify',type=Path);p.add_argument('--commit',required=True);a=p.parse_args()
+def main(argv=None):
+ p=argparse.ArgumentParser(description=__doc__);g=p.add_mutually_exclusive_group(required=True);g.add_argument('--out',type=Path);g.add_argument('--verify',type=Path);p.add_argument('--commit',required=True);a=p.parse_args(argv)
  try:print(json.dumps(build(a.out or a.verify,a.commit,bool(a.verify)),indent=2))
  except (ValueError,OSError,KeyError) as e:p.exit(1,'Refused: '+str(e)+'\n')
+
+if __name__=='__main__':main()
