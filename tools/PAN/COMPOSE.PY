@@ -20,7 +20,7 @@ def base(n):
  b=(HERE/'BASE'/n).read_bytes()
  if identity(b)!=json.loads((HERE/'BASE/PINS.JSN').read_bytes())[n]:raise ValueError('Changed accepted preceding packet '+n)
  return members(b)
-def compose(h,drivers,native):
+def compose(h,drivers,native,cga_guide=None):
  result={};body=base('WINXT.ZIP');body['SETUP.EXE']=native['CORESET.EXE'];body['WINXT/FIXXT.EXE']=native['FIXXT.EXE'];body['README.TXT']=body['README.TXT'].replace(b'PANCFG',b'PAN')
  for n,b in h.items():body['WINXT/'+n]=b
  result['WINXT.ZIP']=archive(body)
@@ -38,7 +38,7 @@ def compose(h,drivers,native):
   result[kind+'.ZIP']=archive(body)
  body=base('CGA.ZIP');body['SETUP.EXE']=native['CGASET.EXE']
  for n,b in h.items():body['CGA/'+n]=b
- body['README.TXT']=(HERE/'GUIDES/CGA.TXT').read_bytes();result['CGA.ZIP']=archive(body)
+ body['README.TXT']=(HERE/'GUIDES/CGA.TXT').read_bytes() if cga_guide is None else cga_guide;result['CGA.ZIP']=archive(body)
  notices={}
  for kind in ('WINXT','JRPAN','CPPAN','CGA'):
   for name,b in base(kind+'.ZIP').items():

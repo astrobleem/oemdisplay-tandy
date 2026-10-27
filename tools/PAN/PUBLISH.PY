@@ -3,6 +3,7 @@ from pathlib import Path
 import argparse,importlib.machinery,json,re,struct
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
 C=importlib.machinery.SourceFileLoader('single_pan_recipes',str(HERE/'COMPOSE.PY')).load_module()
+H=importlib.machinery.SourceFileLoader('pre_compact_pan_sources',str(ROOT/'tools/CGACMP/HISTORY.PY')).load_module()
 ASSETS=('WINXT.ZIP','WINXTSRC.ZIP','WINXT.JSN','WINXT.SHA')
 REQUIRED={'pcjr','colorplus','hpxy','cga_pan','cga_fixed','fixed_workspace','native_setup'}
 EXPECTED={'pcjr':'PASS_NATIVE_PCJR_SINGLE_APP','colorplus':'PASS_NATIVE_COLORPLUS_SINGLE_APP','hpxy':'PASS_NATIVE_HPXY_SINGLE_APP','cga_pan':'PASS_NATIVE_CGA_PAN_SINGLE_APP','cga_fixed':'PASS_NATIVE_CGA_FIXED_SINGLE_APP','fixed_workspace':'PASS_NATIVE_FIXED_WORKSPACE_SINGLE_APP','native_setup':'PASS_NATIVE_SETUP_SINGLE_APP'}
@@ -27,7 +28,7 @@ def qualification():
  try:q=json.loads((HERE/'ACCEPT.JSN').read_bytes())
  except FileNotFoundError as e:raise ValueError('PAN acceptance pending') from e
  require(q.get('status')=='REVIEWED_NATIVE_SINGLE_APP' and q.get('physical_hardware') is False,'PAN acceptance pending')
- for n,pin in q['sources'].items():exact(dict(path=n,identity=pin))
+ for n,pin in q['sources'].items():H.previous_source(n,pin)
  h={n:exact(row) for n,row in q['helpers'].items()};require(set(h)==set(C.APP),'Common application inventory differs');require(h['PAN.EXE']==h['PANCFG.EXE'],'Public entry differs from reviewed dispatcher')
  d={n:exact(row) for n,row in q['drivers'].items()};require(set(d)=={'JRPAN.DRV','CPPAN.DRV'},'Software desktop driver inventory differs')
  installers={n:exact(row) for n,row in q['installers'].items()};require(set(installers)=={'CORESET.EXE','FIXXT.EXE','PANSET.EXE','CGASET.EXE'},'Native installer inventory differs')
@@ -61,7 +62,7 @@ def qualification():
  for n,row in q['screenshots'].items():exact(row)
  return q,h,d,installers
 def products():
- q,h,d,installers=qualification();packets=C.compose(h,d,installers)
+ q,h,d,installers=qualification();packets=C.compose(h,d,installers,cga_guide=H.previous_source('tools/PAN/GUIDES/CGA.TXT',q['sources']['tools/PAN/GUIDES/CGA.TXT']))
  require({n:identity(b) for n,b in packets.items()}==q['packets'],'Composed consumer identities differ')
  require({n:{p:identity(b) for p,b in C.members(data).items()} for n,data in packets.items()}==q['members'],'Consumer payload inventory differs')
  for name in ('WINXT.ZIP','CGA.ZIP','JRPAN.ZIP','CPPAN.ZIP'):
@@ -72,8 +73,11 @@ def verify_core(data):
  q,packets=products();require(data==packets['WINXT.ZIP'],'Different canonical PAN core');return C.members(data)
 def verify_alternatives(files):
  q,packets=products()
- for n in ('CGA.ZIP','CPPAN.ZIP','JRPAN.ZIP','PAN.ZIP'):require(files[n]==packets[n],'Different qualified PAN packet: '+n)
- return {n:identity(packets[n]) for n in ('CGA.ZIP','CPPAN.ZIP','JRPAN.ZIP','PAN.ZIP')}
+ for n in ('CPPAN.ZIP','JRPAN.ZIP','PAN.ZIP'):require(files[n]==packets[n],'Different qualified PAN packet: '+n)
+ if files['CGA.ZIP']!=packets['CGA.ZIP']:
+  compact=importlib.machinery.SourceFileLoader('qualified_compact_cga',str(ROOT/'tools/CGACMP/VERIFY.PY')).load_module()
+  compact.verify(files['CGA.ZIP'])
+ return {n:identity(files[n]) for n in ('CGA.ZIP','CPPAN.ZIP','JRPAN.ZIP','PAN.ZIP')}
 def text(s):return s.replace('\r\n','\n').replace('\n','\r\n').encode('ascii')
 def build(out,commit,verify=False):
  require(re.fullmatch('[0-9a-f]{40}',commit or ''),'Full source commit required')
