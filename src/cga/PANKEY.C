@@ -28,7 +28,7 @@ static FARPROC hookProc, nextHook;
 static HWND owner;
 static WORD wakeMessage;
 static BYTE ring[RING];
-static int head, tail, posted, live;
+static int head, tail, posted, live, depth;
 
 static int Command(WORD key)
 {
@@ -49,7 +49,8 @@ static int Command(WORD key)
  * released while the machine was busy still counts. */
 int FAR PASCAL PanKeyHook(int code, WORD key, DWORD bits)
 {
-    int cmd, next;
+    int cmd, next, result;
+    ++depth;
     if (code == HC_ACTION && live && owner && !(bits & 0x80000000L) &&
         (bits & 0x20000000L) && (GetKeyState(VK_CONTROL) & 0x8000)) {
         cmd = Command(key);
@@ -63,7 +64,9 @@ int FAR PASCAL PanKeyHook(int code, WORD key, DWORD bits)
                 posted = 1;
         }
     }
-    return (int)DefHookProc(code, key, bits, (FARPROC FAR *)&nextHook);
+    result = (int)DefHookProc(code, key, bits, (FARPROC FAR *)&nextHook);
+    --depth;
+    return result;
 }
 
 /* The next retained command, or 0. Emptying the ring lets the next key post
@@ -100,6 +103,11 @@ BOOL FAR PASCAL PanKeyRemove(void)
 {
     if (!live)
         return TRUE;
+    /* A downstream hook may close the owner reentrantly. Keep our code
+     * resident until the active callback has returned. */
+    owner = NULL;
+    if (depth)
+        return FALSE;
     live = 0;
     if (!UnhookWindowsHook(WH_KEYBOARD, hookProc)) {
         /* Keep the DLL resident, but never post to a destroyed owner. */
