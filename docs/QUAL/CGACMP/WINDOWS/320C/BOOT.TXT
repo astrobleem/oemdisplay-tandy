@@ -1,0 +1,59 @@
+STATE seq=1 width=320 height=200 top=-2 free=323680 helper=0 active=4576 focus=0 load=C:\UITEST.EXE CGACTL.EXE
+WIN h=4760 parent=4576 id=0 vis=1 enabled=1 rect=16,191,63,198 cls=#32772 text=
+WIN h=4576 parent=0 id=4114 vis=1 enabled=1 rect=29,179,49,191 cls=Progman text=Program Manager
+MENU depth=0 pos=0 id=-1 text=&File
+MENU depth=1 pos=0 id=101 text=&New...
+MENU depth=1 pos=1 id=102 text=&Open	Enter
+MENU depth=1 pos=2 id=103 text=&Move...
+MENU depth=1 pos=3 id=104 text=&Copy...
+MENU depth=1 pos=4 id=105 text=&Delete	Del
+MENU depth=1 pos=5 id=106 text=&Properties...
+MENU depth=1 pos=6 id=0 text=
+MENU depth=1 pos=7 id=107 text=&Run...
+MENU depth=1 pos=8 id=0 text=
+MENU depth=1 pos=9 id=108 text=E&xit Windows...
+MENU depth=0 pos=1 id=-1 text=&Options
+MENU depth=1 pos=0 id=201 text=&Auto Arrange
+MENU depth=1 pos=1 id=202 text=&Minimize on Use
+MENU depth=0 pos=2 id=-1 text=&Window
+MENU depth=1 pos=0 id=301 text=&Cascade	Shift+F5
+MENU depth=1 pos=1 id=302 text=&Tile	Shift+F4
+MENU depth=1 pos=2 id=303 text=&Arrange Icons
+MENU depth=1 pos=3 id=0 text=
+MENU depth=1 pos=4 id=304 text=&1 Accessories
+MENU depth=1 pos=5 id=305 text=&2 Games
+MENU depth=1 pos=6 id=306 text=&3 Main
+MENU depth=0 pos=3 id=-1 text=&Help
+MENU depth=1 pos=0 id=901 text=&Index
+MENU depth=1 pos=1 id=30 text=&Keyboard
+MENU depth=1 pos=2 id=31 text=&Basic Skills
+MENU depth=1 pos=3 id=32 text=&Commands
+MENU depth=1 pos=4 id=33 text=&Procedures
+MENU depth=1 pos=5 id=34 text=&Glossary
+MENU depth=1 pos=6 id=902 text=&Using Help
+MENU depth=1 pos=7 id=0 text=
+MENU depth=1 pos=8 id=903 text=&About Program Manager...
+WIN h=4644 parent=4576 id=1 vis=1 enabled=1 rect=29,179,349,365 cls=MDIClient text=
+WIN h=5140 parent=4644 id=306 vis=1 enabled=1 rect=29,179,353,320 cls=PMGroup text=Main
+WIN h=6180 parent=5140 id=0 vis=1 enabled=1 rect=45,200,81,207 cls=#32772 text=
+WIN h=6092 parent=5140 id=0 vis=1 enabled=1 rect=52,188,72,200 cls=PMItem text=File Manager
+WIN h=6024 parent=5140 id=0 vis=1 enabled=1 rect=118,200,157,207 cls=#32772 text=
+WIN h=5936 parent=5140 id=1 vis=1 enabled=1 rect=127,188,147,200 cls=PMItem text=Control Panel
+WIN h=5852 parent=5140 id=0 vis=1 enabled=1 rect=345,200,380,207 cls=#32772 text=
+WIN h=5764 parent=5140 id=2 vis=1 enabled=1 rect=352,188,372,200 cls=PMItem text=DOS Prompt
+WIN h=5696 parent=5140 id=0 vis=1 enabled=1 rect=193,200,232,207 cls=#32772 text=
+WIN h=5608 parent=5140 id=3 vis=1 enabled=1 rect=202,188,222,200 cls=PMItem text=Print Manager
+WIN h=5540 parent=5140 id=0 vis=1 enabled=1 rect=274,200,302,207 cls=#32772 text=
+WIN h=5452 parent=5140 id=4 vis=1 enabled=1 rect=277,188,297,200 cls=PMItem text=Clipboard
+WIN h=5384 parent=5140 id=0 vis=1 enabled=1 rect=42,256,84,263 cls=#32772 text=
+WIN h=5296 parent=5140 id=5 vis=1 enabled=1 rect=52,244,72,256 cls=PMItem text=Windows Setup
+WIN h=5072 parent=4644 id=0 vis=1 enabled=1 rect=134,356,154,363 cls=#32772 text=
+WIN h=4984 parent=4644 id=305 vis=1 enabled=1 rect=133,344,153,356 cls=PMGroup text=Games
+WIN h=4916 parent=4644 id=0 vis=1 enabled=1 rect=51,356,86,363 cls=#32772 text=
+WIN h=4828 parent=4644 id=304 vis=1 enabled=1 rect=58,344,78,356 cls=PMGroup text=Accessories
+WIN h=5228 parent=4644 id=0 vis=0 enabled=1 rect=29,179,30,180 cls=#32772 text=
+WIN h=4280 parent=0 id=0 vis=0 enabled=1 rect=0,0,0,0 cls=UIObserver text=UI observer
+WIN h=4028 parent=0 id=0 vis=0 enabled=1 rect=0,0,100,100 cls=#32768 text=
+WIN h=3960 parent=0 id=0 vis=0 enabled=0 rect=0,0,10,10 cls=#32771 text=
+PROFILE Step=50 Edge=3 Dwell=400 Follow=1 Enabled=1 EdgeOn=0 RepeatMs=100 FollowDialogs=0
+UI_COMPLETE

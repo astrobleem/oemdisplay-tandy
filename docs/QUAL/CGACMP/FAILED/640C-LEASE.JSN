@@ -1,0 +1,18 @@
+{
+  "lock": "C:\\Users\\chad\\Documents\\Codex\\2026-10-06\\tandy-emulator.lock",
+  "children": [
+    {
+      "pid": 14728,
+      "bound_seconds": 540,
+      "profile": "640C",
+      "stopped": true
+    }
+  ],
+  "status": "FAILED",
+  "inventory_before": [],
+  "lease_acquired": true,
+  "error": "AssertionError(\"AssertionError('Case deadline')\")",
+  "lease_released": true,
+  "inventory_after": [],
+  "seconds": 537.39
+}

@@ -1,0 +1,18 @@
+{
+  "lock": "C:\\Users\\chad\\Documents\\Codex\\2026-10-06\\tandy-emulator.lock",
+  "children": [
+    {
+      "pid": 10392,
+      "bound_seconds": 400,
+      "profile": "320C",
+      "stopped": true
+    }
+  ],
+  "status": "FAILED",
+  "inventory_before": [],
+  "lease_acquired": true,
+  "error": "AssertionError(\"TimeoutError('Native setup/Windows boot: A\u00bbFDD [A] C\u00bbHDD [C] F6ComDtct F8RomBoot                                         -=XTIDE Universal BIOS (XT)=- @ D000h                                           r625 (2023-02-19)                                                               Released under GNU GPL v2                                                                                                                                       Master at 300h: 86B_HD00                                                        Slave  at 300h: not found                                                       Booting C\u00bbC                                                                     Starting MS-DOS...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ')\")",
+  "lease_released": true,
+  "inventory_after": [],
+  "seconds": 281.797
+}

@@ -1,0 +1,167 @@
+{
+  "method": "Unchanged direct framebuffer PNG plus live 16KB CGA VRAM decoded to full native resolution. Framebuffer origin bug retained in raw images. Visible overlap compared pixel by pixel; every difference is recorded below.",
+  "frames": 14,
+  "pixels_compared": 2903040,
+  "mismatch_pixels": 12,
+  "frames_checked": {
+    "320C/BOOT": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "320C/DESKTOP": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "320C/NOTEPAD": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "320C/OPEN": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "320C/SAVE-AS": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "320C/SAVED": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "320C/PAN-SETTINGS": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "640C/BOOT": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "640C/DESKTOP": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "640C/NOTEPAD": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "640C/OPEN": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 12,
+      "difference_bbox": [
+        176,
+        80,
+        178,
+        86
+      ],
+      "note": "Small sample-timing difference confined to focused Edit control; likely caret. No pixels corrected."
+    },
+    "640C/SAVE-AS": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "640C/SAVED": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    },
+    "640C/PAN-SETTINGS": {
+      "raw_origin": [
+        8,
+        76
+      ],
+      "visible_native_rows": 162,
+      "compared_pixels": 207360,
+      "mismatches": 0,
+      "difference_bbox": null,
+      "note": "Exact visible overlap"
+    }
+  }
+}

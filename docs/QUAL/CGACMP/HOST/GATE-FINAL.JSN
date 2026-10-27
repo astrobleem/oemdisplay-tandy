@@ -1,0 +1,19 @@
+{
+  "outcome": "PASS_HOST_COMPACT_PUBLICATION_GUARDS",
+  "checks": [
+    "All five preceding packets and their exact payload inventories preserved",
+    "Eight superseded sources recover only original exact accepted identities",
+    "Changed source outside closed historical snapshot refused",
+    "Missing compact native/review acceptance refused",
+    "Pending acceptance refused before packet assembly",
+    "Reviewed label cannot replace complete compact source bindings",
+    "Current alternative boundary rejects unqualified compact packet",
+    "Exact completed native candidate validates without accepting review/publication",
+    "Missing second native Windows profile refused",
+    "Other-resolution application receipt cannot substitute for320C",
+    "A larger-RAM native declaration cannot qualify normal640KB",
+    "A retained failed run cannot qualify a Windows profile"
+  ],
+  "native": "RECORDED_EVIDENCE_CHECKED",
+  "review": "NOT_PROVIDED_BY_THIS_TEST"
+}

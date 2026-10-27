@@ -1,0 +1,38 @@
+{
+  "status": "PENDING_INDEPENDENT_REVIEW_AND_PUBLICATION_APPROVAL",
+  "product": "CGA.ZIP",
+  "current": {
+    "source": "downloads/PAN/CGA.ZIP",
+    "identity": {
+      "bytes": 460460,
+      "sha256": "1768cffab6a770ee01494fb493c9ffe4e3caf2a41a9617b2ccec7bc9909e37d2"
+    }
+  },
+  "proposed": {
+    "source": "downloads/COMPACT/CGA.ZIP",
+    "identity": {
+      "bytes": 297312,
+      "sha256": "84a1992803d1bd022318ddb001490b66494aba1e61ca09eef2fbc445fb469cc4"
+    }
+  },
+  "preserve_core": {
+    "WINXT.ZIP": {
+      "bytes": 809113,
+      "sha256": "f8eeb452a532695c7a8c7c5bfee334d089093d1f991e276cba3bc5136f0e9f17"
+    },
+    "WINXTSRC.ZIP": {
+      "bytes": 100529,
+      "sha256": "9e32793d07820154d627cdcf147bbfc7086d5db7addf76f5c66d310ff9ff220a"
+    },
+    "WINXT.JSN": {
+      "bytes": 10125,
+      "sha256": "4dde8e7d439d5fcf0c3bd751e421ea6020309ae6858c9ec51cbdfc44cd520891"
+    },
+    "WINXT.SHA": {
+      "bytes": 234,
+      "sha256": "9c9f41b6181cdf81b672a7bf15cf7f4f33664c318f23f34de54f86f74ab926e8"
+    }
+  },
+  "candidate": "docs/QUAL/CGACMP/CANDIDATE.JSN",
+  "gate": "tools/CGACMP/VERIFY.PY"
+}

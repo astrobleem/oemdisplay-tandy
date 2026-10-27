@@ -68,6 +68,12 @@ room. Standard choices keep larger UI text. Let your eyes decide: `320` and
 `640` retain their existing defaults, and dropping the `C` restores that
 resolution's standard fonts and controls. Both styles include their fonts.
 
+[![Standard and compact UI at 320x200 and 640x200](CGA/COMPACT.PNG)](CGA/COMPACT.PNG)
+
+*Actual Windows 3.0 emulation captures of both styles, displayed at 4:3 with
+nearest-neighbor pixels. The compact views use the real smaller fonts and
+OEM resources; only the presentation of the captures is enlarged.*
+
 ## 3. Install the selected driver
 
 For the fixed 160×100 desktop, type:

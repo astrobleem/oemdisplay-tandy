@@ -1,0 +1,14 @@
+{
+  "320C": {
+    "fat_copies": 2,
+    "identical": true,
+    "bytes": 82432,
+    "sha256": "83b7f9f80b072e495afe79663b0ba97d1299fc0f37240c81fddd1e9a45a4b48a"
+  },
+  "640C": {
+    "fat_copies": 2,
+    "identical": true,
+    "bytes": 82432,
+    "sha256": "1101ae3ad136912ba159ee6bfa21e61066b8fcdaeecda122c55ff74235584dbf"
+  }
+}

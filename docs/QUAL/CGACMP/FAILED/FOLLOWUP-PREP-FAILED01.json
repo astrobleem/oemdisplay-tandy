@@ -1,0 +1,7 @@
+{
+  "status": "FAILED_HOST_PREPARATION",
+  "owned_child_launched": false,
+  "lease_acquired": false,
+  "error": "UnicodeEncodeError while rewriting private emulator config: UTF-8 BOM read through default cp1252 codec",
+  "changed_scope": "Private320AUTOEXEC recovery script and interrupted-inventory receipt only; no driver/font/Windows INI edits"
+}

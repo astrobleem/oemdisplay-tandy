@@ -1,0 +1,7 @@
+{
+  "status": "FAILED_HOST_PREPARATION",
+  "owned_child_launched": false,
+  "lease_acquired": false,
+  "error": "PyFatFS truncation of existing multicluster observer files left retained FAT head pointing into freed tail; subsequent write raised FREE_CLUSTER",
+  "changed_scope": "Private640 UIState/UI task observer only; no driver/font/Windows INI edits"
+}

@@ -1,0 +1,9 @@
+Choose CGA resolution and text size:
+  1  160x100 16 colors - compact
+  2  PAN: 320x200 desktop through a 160x100 view
+  3  320x200 4 colors - standard controls, 4x6 text
+  4  320x200 4 colors - compact UI and controls (320C)
+  5  640x200 mono - standard controls, 8-row text
+  6  640x200 mono - compact UI and controls (640C)
+Compact: 3x5 UI, 4x6 fixed text, 6-row controls. Choose what suits you.
+Choice 1-6, or Enter to cancel: SETUP: cancelled; no files changed.

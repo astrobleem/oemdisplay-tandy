@@ -1,0 +1,26 @@
+{
+  "status": "FAILED",
+  "started": "2026-10-27T21:03:17.746263+00:00",
+  "bound_seconds": 300,
+  "source_commit": "d172daa72e08a39516936423e700defff3a50570",
+  "physical_hardware": "UNQUALIFIED",
+  "inventory_before": [],
+  "error": "CalledProcessError(1, ['C:\\\\Users\\\\chad\\\\Miniconda3\\\\python.exe', 'C:\\\\Users\\\\chad\\\\Documents\\\\Codex\\\\2026-10-27\\\\task-7\\\\integration\\\\src\\\\cga\\\\BUILDSET.PY', '--prepared', 'C:\\\\Users\\\\chad\\\\Documents\\\\Codex\\\\2026-10-27\\\\task-7\\\\compact-prepared-04', '--repo', 'C:\\\\Users\\\\chad\\\\Documents\\\\Codex\\\\2026-10-27\\\\task-7\\\\integration', '--toolchain', 'C:\\\\Users\\\\chad\\\\Documents\\\\Codex\\\\2026-10-25\\\\task-4\\\\cga-source-e30579b', '--dosbox', 'C:\\\\DOSBox-X\\\\dosbox-x.exe', '--lease', 'C:\\\\Users\\\\chad\\\\Documents\\\\Codex\\\\2026-10-06\\\\tandy-emulator.lock', '--out', 'C:\\\\Users\\\\chad\\\\Documents\\\\Codex\\\\2026-10-27\\\\task-7\\\\compact-build-01'])",
+  "seconds": 16.078,
+  "compiler_process": {
+    "started": "2026-10-27T21:03:22.978779+00:00",
+    "emulator": "C:\\DOSBox-X\\dosbox-x.exe",
+    "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-7\\compact-build-01\\BUILD.CNF",
+    "emulator_sha256": "df62e4502eb25d8b7b9893ea8e479b05820baa11d4b54b02439c688ac1d834bd",
+    "timeout": 120,
+    "lease_acquired": true,
+    "inventory": "",
+    "pid": 14512,
+    "return": 0,
+    "owned_child_stopped": true,
+    "lease_released": true
+  },
+  "inventory_after": [],
+  "owned_stopped": true,
+  "lease_released": true
+}

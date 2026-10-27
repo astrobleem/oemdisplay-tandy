@@ -1,0 +1,37 @@
+{
+  "status": "FAILED",
+  "profile": "640C",
+  "width": 640,
+  "height": 200,
+  "bound_seconds": 540,
+  "physical_hardware": false,
+  "input": "Native keyboard plus documented private Win16 observer commands; no physical mouse qualification",
+  "owned_pid": 14728,
+  "rom_f1": true,
+  "installed_receipt": {
+    "bytes": 4136,
+    "sha256": "67c24c0629664ac59b8c198e33f7eaaf57fa8221d3bf3a1393a6739a7e7a6cae"
+  },
+  "boot": "STATE seq=1 width=640 height=200 top=-2 free=292032 helper=0 active=4576 focus=0 load=C:\\UITEST.EXE CGACTL.EXE",
+  "notepad_edit": {
+    "handle": 6376,
+    "parent": 6292,
+    "id": 15,
+    "visible": 1,
+    "enabled": 1,
+    "rect": [
+      8,
+      16,
+      628,
+      193
+    ],
+    "cls": "Edit",
+    "text": "USER SELECTED COMPACT UI"
+  },
+  "dialog_text_height": 5,
+  "saved_text": "COMPACT UI SAVED FROM NOTEPAD",
+  "pan_settings": "Opened installed public PAN /SETTINGS; screenshot and control tree retained",
+  "error": "AssertionError('Case deadline')",
+  "owned_stopped": true,
+  "seconds": 537.36
+}

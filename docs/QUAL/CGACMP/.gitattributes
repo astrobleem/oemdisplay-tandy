@@ -1,0 +1,3 @@
+# Native observer snapshots and installed settings are verbatim evidence.
+WINDOWS/*/*.TXT binary
+WINDOWS/*/*.INI binary

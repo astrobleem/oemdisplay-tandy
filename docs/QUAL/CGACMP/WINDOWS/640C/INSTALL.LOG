@@ -1,0 +1,67 @@
+Choose CGA resolution and text size:
+  1  160x100 16 colors - compact
+  2  PAN: 320x200 desktop through a 160x100 view
+  3  320x200 4 colors - standard controls, 4x6 text
+  4  320x200 4 colors - compact UI and controls (320C)
+  5  640x200 mono - standard controls, 8-row text
+  6  640x200 mono - compact UI and controls (640C)
+Compact: 3x5 UI, 4x6 fixed text, 6-row controls. Choose what suits you.
+Choice 1-6, or Enter to cancel: SETUP: checking CG1COUR.FON
+SETUP: checking CG1FIX.FON
+SETUP: checking CG1HELV.FON
+SETUP: checking CG1OEM.FON
+SETUP: checking CG1SYS.FON
+SETUP: checking CG2HELV.FON
+SETUP: checking CG2SYS.FON
+SETUP: checking CG6HELV.FON
+SETUP: checking CGA100.DRV
+SETUP: checking CGA320.DRV
+SETUP: checking CGA32C.DRV
+SETUP: checking CGA640.DRV
+SETUP: checking CGA64C.DRV
+SETUP: checking CGACTL.EXE
+SETUP: checking CGAGRAB.GR2
+SETUP: checking CGAPAN.DRV
+SETUP: checking FONTLIC.TXT
+SETUP: checking LOGOLIC.TXT
+SETUP: checking NOTICE.TXT
+SETUP: checking OEMSETUP.INF
+SETUP: checking PAN.EXE
+SETUP: checking PANCFG.EXE
+SETUP: checking PANCTL.EXE
+SETUP: checking PANKEY.DLL
+SETUP: checking T80COUR.FON
+SETUP: checking WXTSPL01.RLE
+SETUP: checking XTCFIX.FON
+SETUP: checking XTCOEM.FON
+SETUP: checking XTCSYS.FON
+SETUP: checking XTPAN.EXE
+SETUP: checking XTSTATIC.LGO
+SETUP: checking XYCTL.EXE
+SETUP: installing CG1COUR.FON
+SETUP: installing CG1FIX.FON
+SETUP: installing CG1HELV.FON
+SETUP: installing CG1OEM.FON
+SETUP: installing CG1SYS.FON
+SETUP: installing CG2HELV.FON
+SETUP: installing CG2SYS.FON
+SETUP: installing CG6HELV.FON
+SETUP: installing CGA100.DRV
+SETUP: installing CGA320.DRV
+SETUP: installing CGA32C.DRV
+SETUP: installing CGA640.DRV
+SETUP: installing CGA64C.DRV
+SETUP: installing CGACTL.EXE
+SETUP: installing CGAGRAB.GR2
+SETUP: installing CGAPAN.DRV
+SETUP: installing PAN.EXE
+SETUP: installing PANCFG.EXE
+SETUP: installing PANCTL.EXE
+SETUP: installing PANKEY.DLL
+SETUP: installing T80COUR.FON
+SETUP: installing XTPAN.EXE
+SETUP: installing XYCTL.EXE
+SETUP: display.drv=CGA64C.DRV, selected system/fixed/OEM fonts, load= +CGACTL.EXE; [fonts] +2 lines; BorderWidth=1, GridGranularity=1
+SETUP: undo with SETUP UNDO C:\WINDOWS
+SETUP: selected CGA mode and fonts installed. Start Windows with WIN /R.
+Mode changes require exiting Windows and rerunning SETUP. Keep this packet for UNDO.

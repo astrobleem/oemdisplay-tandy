@@ -1,0 +1,14 @@
+{
+  "status": "FAILED",
+  "profile": "320C",
+  "width": 320,
+  "height": 200,
+  "bound_seconds": 400,
+  "physical_hardware": false,
+  "input": "Native keyboard plus documented private Win16 observer commands; no physical mouse qualification",
+  "owned_pid": 10392,
+  "rom_f1": true,
+  "error": "TimeoutError('Native setup/Windows boot: A\u00bbFDD [A] C\u00bbHDD [C] F6ComDtct F8RomBoot                                         -=XTIDE Universal BIOS (XT)=- @ D000h                                           r625 (2023-02-19)                                                               Released under GNU GPL v2                                                                                                                                       Master at 300h: 86B_HD00                                                        Slave  at 300h: not found                                                       Booting C\u00bbC                                                                     Starting MS-DOS...                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ')",
+  "owned_stopped": true,
+  "seconds": 281.766
+}

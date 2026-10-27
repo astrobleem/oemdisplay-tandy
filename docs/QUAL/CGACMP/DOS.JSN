@@ -1,0 +1,95 @@
+{
+  "status": "PASS_NATIVE_COMPACT_INSTALLER",
+  "started": "2026-10-27T21:20:35.663607+00:00",
+  "bound_seconds": 300,
+  "source_commit": "a88f81e94bc6cd9cd957397733abebbea1549fe9",
+  "physical_hardware": "UNQUALIFIED",
+  "inventory_before": [],
+  "compiler_process": {
+    "started": "2026-10-27T21:20:40.811445+00:00",
+    "emulator": "C:\\DOSBox-X\\dosbox-x.exe",
+    "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-7\\compact-build-02\\BUILD.CNF",
+    "emulator_sha256": "df62e4502eb25d8b7b9893ea8e479b05820baa11d4b54b02439c688ac1d834bd",
+    "timeout": 120,
+    "lease_acquired": true,
+    "inventory": "",
+    "pid": 26668,
+    "return": 0,
+    "owned_child_stopped": true,
+    "lease_released": true
+  },
+  "installer_process": {
+    "started": "2026-10-27T21:20:55.282474+00:00",
+    "emulator": "C:\\DOSBox-X\\dosbox-x.exe",
+    "config": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-7\\compact-native-dos-01\\RUN.CNF",
+    "emulator_sha256": "df62e4502eb25d8b7b9893ea8e479b05820baa11d4b54b02439c688ac1d834bd",
+    "timeout": 120,
+    "lease_acquired": true,
+    "inventory": "",
+    "pid": 33252,
+    "return": 0,
+    "owned_child_stopped": true,
+    "lease_released": true
+  },
+  "undo_exact_files": 119,
+  "legacy_upgrade": {
+    "packet": {
+      "bytes": 460460,
+      "sha256": "1768cffab6a770ee01494fb493c9ffe4e3caf2a41a9617b2ccec7bc9909e37d2"
+    },
+    "journal": {
+      "bytes": 520,
+      "sha256": "3bab647d15f498b9009982dad589267859d023b6cca6444843f7d75b2b677946"
+    },
+    "native": "Actual preceding SETUP.EXE installs 320, new SETUP upgrades to320C, exact final UNDO"
+  },
+  "profiles": {
+    "320C": {
+      "driver": {
+        "bytes": 72368,
+        "sha256": "e4acacc170460f9e351cda46e4e4cc9af883c52d8ff1a9d091157beb86fc33e3"
+      },
+      "system_ini": {
+        "bytes": 1062,
+        "sha256": "ac70389ff40b2a886f63d041275631badaae2de29f1cbb6c2806aad5ad800aea"
+      },
+      "win_ini": {
+        "bytes": 1366,
+        "sha256": "38c342bfe3f118f51ef01c0f7075b695ad0952a80e55e1b37e4ec57f34515165"
+      }
+    },
+    "640C": {
+      "driver": {
+        "bytes": 71952,
+        "sha256": "0deee79c45e9d3cbece8cd350a4eec01fe9c0d67eae82a15b43e10da28f2b86c"
+      },
+      "system_ini": {
+        "bytes": 1062,
+        "sha256": "e2ff19ef126cad72d45104f9323ad7283c36b5d78610ad9f4266da0565ffc248"
+      },
+      "win_ini": {
+        "bytes": 1366,
+        "sha256": "38c342bfe3f118f51ef01c0f7075b695ad0952a80e55e1b37e4ec57f34515165"
+      }
+    }
+  },
+  "selected_through_menu": [
+    "320C",
+    "640C"
+  ],
+  "switches": [
+    "320",
+    "320C",
+    "640",
+    "640C",
+    "100",
+    "PAN",
+    "320"
+  ],
+  "menu_cancel": "PASS",
+  "windows": "NOT_TESTED_NEW_INSTALLER",
+  "seconds": 32.953,
+  "inventory_after": [],
+  "owned_stopped": true,
+  "lease_released": true
+}
