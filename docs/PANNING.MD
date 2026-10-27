@@ -4,6 +4,12 @@ Panning is one application: **PAN**. It detects the installed display driver,
 starts one appropriate backend and uses the same settings and queued controls.
 You do not choose a helper program by name.
 
+The October 2026 milestone adds horizontal panning to PCjr and ColorPlus:
+both now provide a 640x400 desktop through their existing 320x200 screen.
+The same PAN application also controls the existing Tandy, CGA and supported
+fixed-display approaches. Presentation and available desktop size still follow
+the installed adapter; settings show its actual capabilities.
+
 For an existing supported display installation, download [PAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PAN.ZIP).
 Extract it and, outside Windows, run `SETUP C:\WINDOWS` from the extracted root.
 The updated Windows XT, CGA, PCjr and ColorPlus driver packets also include

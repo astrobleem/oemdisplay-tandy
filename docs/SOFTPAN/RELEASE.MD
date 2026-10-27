@@ -19,8 +19,11 @@ checks that reservation before Setup and every start. ColorPlus uses card RAM.
    640x400 software-panning entry. Complete changes and return to DOS.
 3. Start Windows with the matching command above. Run `PAN /SETTINGS` for controls.
 
-A 128,000-byte shadow retains the larger desktop. Existing installations of the
-previous vertical-only panning driver upgrade through the normal launcher.
+A 128,000-byte shadow retains the larger desktop: 64,000 bytes more than the
+previous vertical-only profile. Existing installations of that exact preceding
+panning driver upgrade through the normal launcher. Both adapters now use the
+same two-axis PAN controls, with no extra startup program to select or copy.
+[Current native acceptance and screenshots](../QUAL/PAN/README.MD).
 To choose fixed mode, exit Windows, repeat INSTALL and select 320x200 fixed.
 
 [Earlier vertical-driver test records](README.MD) describe the superseded driver;

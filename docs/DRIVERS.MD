@@ -78,8 +78,9 @@ if reservation fails. They use Windows in `C:\WINDOWS`; for another directory,
 pass its drive and path, such as `DISPLAY D: \WIN30` and `DISPWIN D: \WIN30`.
 
 Ctrl+Alt+arrows pan the 320x200 view over the 640x256 desktop;
-Ctrl+Alt+Home returns home. PAN or Ctrl+Alt+H switches software/hardware
-presentation. Exit Windows before changing display drivers through Setup.
+Ctrl+Alt+Home returns home. Use PAN /SETTINGS to choose Software or Hardware,
+or Ctrl+Alt+H to switch presentation. Exit Windows before changing display
+drivers through Setup.
 
 [Other hardware](PLATFORM.MD) uses its matching packet. [Native installation
 evidence](../tools/XROEM/NATIVE.JSN) records the alternate-folder Setup and launch test.

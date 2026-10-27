@@ -34,6 +34,23 @@ and the window workspace on fixed-resolution drivers.
 Other hardware profiles and apps are in [current downloads](docs/DOWNLOADS.MD).
 Each product has one current packet and a short install guide.
 
+## One panning application
+
+**[Download PAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PAN.ZIP)**
+for an existing supported display installation. The current Windows XT, CGA,
+PCjr and ColorPlus packets already include it.
+
+Run **PAN /SETTINGS** or press **Ctrl+Alt+S**. PAN detects the installed driver
+and starts its appropriate backend, with one settings dialog and the same queued
+keyboard controls. Tandy extended displays keep their software/hardware choice;
+fixed displays use the window workspace. There is no separate helper to choose
+or copy. [Installation, controls and supported displays](docs/PANNING.MD).
+
+PCjr and ColorPlus now pan **horizontally and vertically** across a 640x400
+desktop. Their larger software shadow uses 64 KB more memory than the previous
+vertical-only desktop; normal 640 KB remains sufficient for the tested sessions.
+[Native checks, screenshots and measured memory](docs/QUAL/PAN/README.MD).
+
 ## IBM CGA graphics
 
 **[Download CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP)**
@@ -43,16 +60,18 @@ files for an existing Windows 3.0 real-mode installation with normal 640 KB.
 [Installation and emulator qualification scope](docs/CGA.MD). Physical hardware
 and composite output remain unqualified.
 
-## PCjr and ColorPlus software panning
+## A larger desktop on PCjr and ColorPlus
 
 A **640x400 desktop through a 320x200, 16-color viewport** is available
-for these adapters. The kits include the helper and a fixed-mode switch-back.
+for these adapters. Both axes move, using the same PAN application as the other
+supported displays. The hardware packets also retain their fixed-mode choice.
 
 **[PCjr download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/JRPAN.ZIP)** | **[ColorPlus download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP)** |
-[Short install instructions](docs/SOFTPAN/RELEASE.MD) | [Windows emulator evidence](docs/SOFTPAN/README.MD)
+[Short install instructions](docs/SOFTPAN/RELEASE.MD) | [Current native evidence](docs/QUAL/PAN/README.MD)
 
-These use software copies and a 128,000-byte shadow desktop. The Windows
-runs cover DOSBox-X PCjr and 86Box XT/Plantronics, each with 640 KB RAM.
+These use software copies and a 128,000-byte shadow desktop, split into two
+64,000-byte bands. Native checks cover DOSBox-X PCjr and 86Box XT/Plantronics,
+each with 640 KB RAM. Physical hardware remains unqualified.
 
 ## More color, compact controls
 
