@@ -1,4 +1,4 @@
-Current unified-panning packets use `tools/PAN/PUBLISH.PY` for accepted-byte
+Current HPXY DIB and unified-panning packets use `tools/HPDIB/PUBLISH.PY` for accepted-byte
 packaging and the normal `tools/CURRENT` catalog checks. See
 [PAN developer workflow](tools/PAN/README.MD) and [user controls](docs/PANNING.MD).
 The preceding RCPUB producer remains the immutable baseline for older acceptance.
@@ -17,8 +17,8 @@ Host packaging uses Python and accepted, already qualified binaries. It does
 not launch an emulator or compile native source. Run from this checkout:
 
 ```text
-python -B tools/PAN/PUBLISH.PY --out NEW-CORE --commit CORE_SOURCE_SHA
-python -B tools/PAN/PUBLISH.PY --verify NEW-CORE --commit CORE_SOURCE_SHA
+python -B tools/HPDIB/PUBLISH.PY --out NEW-CORE --commit CORE_SOURCE_SHA
+python -B tools/HPDIB/PUBLISH.PY --verify NEW-CORE --commit CORE_SOURCE_SHA
 python -B tools/CURRENT/CHECK.PY --core NEW-CORE --sound SOUND-PACKETS --report catalog-check.json
 python -B tools/CURRENT/BUNDLE.PY --core NEW-CORE --sound SOUND-PACKETS --commit CATALOG_SOURCE_SHA --out NEW-CATALOG
 ```
@@ -44,6 +44,13 @@ Python helper functions retain historical publisher tests. The standalone
 second current consumer download.
 
 ## Host checks and CI
+
+The DIB producer checks both complete native raster matrices, FRESH/UPDATE
+preparation and both installed Windows routes before producing artifacts.
+`tools/HPDIB/TESTGATE.PY`, `TESTPUB.PY`, `TESTPREP.PY`, `TESTSET.PY` and
+`TESTHIST.PY` run in the package workflow. Ordinary Setup used its documented
+DISPLAY helper replacement; Setup itself is not claimed to have copied HPXY.
+
 
 Choose the checks matching your changes:
 
@@ -145,15 +152,18 @@ are in `SETNAT.JSN`. Earlier `docs/QUAL/DOSINST/EXPAND.JSN` and
 `tools/XROEM/NATIVE.JSN` receipts retain their original byte identities.
 Preserve guards and qualify changed bytes.
 
-The current HPXY runtime is `tools/DOSINST/BIN/HPXY.DRV`, bound to its
-source/build and focused Windows evidence in `tools/DOSINST/HPXY.JSN`.
+The current HPXY runtime is `tools/HPDIB/BIN/HPXY.DRV`, bound to the
+current-base rebuild in `docs/QUAL/HPDIB/BUILD2.JSN` and the independently
+reviewed native matrix/installation acceptance in `tools/HPDIB/ACCEPT.JSN`.
+The preceding `tools/DOSINST/BIN/HPXY.DRV` and `HPXY.JSN` retain their original
+identities and qualification.
 `docs/QUAL/HPXY/PACKAGE.JSN` qualifies the normal expanded package delta;
 older expanded/OEM/panning receipts retain their original byte identities.
 The normal producer overlays this qualified HPXY and regenerates native
 Setup's file/CRC pins. `FIXXT` also includes `HPXYID.H`, so both full setup
 and DISPLAY's optional same-filename refresh use the current driver bytes.
 The 127,531-byte HPXY project budget sums NE segment minimum allocations;
-its remaining 648 bytes are not free DOS conventional RAM. See the focused
+its remaining 398 bytes are not free DOS conventional RAM. See the focused
 integration report in `experiments/XYSTRIP/INTEGRATION.MD` for actual Windows
 heap measurements and the limits of emulator timing.
 

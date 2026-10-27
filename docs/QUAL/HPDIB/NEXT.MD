@@ -43,12 +43,14 @@ status and helper replacement are explicit in the final installed receipt.
 
 Independent review found no assembly defect and one real checker defect. The
 checker now requires all expected frames, matching native log, successful DOS
-return and process/lease cleanup; 21 gate tests pass. Final independent review
-of the corrected checker and new publication/application tools remains pending.
-The message requesting that review failed with an app routing error:
-AbsolutePathBuf deserialized without a base path.
+return and process/lease cleanup; 21 gate tests pass. Independent re-review at
+beb4a265 found no residual findings; REVIEW1.JSN is the exact report. ACCEPT.JSN
+binds that reviewed commit and all 21 source identities without changing any
+accepted prior native receipts.
 
-PUBLISH.PY remains blocked without ACCEPT.JSN. After native Setup and final
-review pass, seal the exact runtime/source/evidence records, qualify the current
-producer/catalog proposal and request separate publication approval. Existing
-accepted binaries, current producers and catalog remain unchanged.
+The current core producer and catalog now use the sealed HPDIB acceptance.
+Historical PAN source pins are preserved by a closed five-file source snapshot;
+its four original core assets reproduce unchanged. Local integration checks pass, including exact historical replay, all 106 unit
+tests, 17 CRC vectors, current catalog checks and unchanged unrelated archives.
+INTEG.JSN records that scope. Final exact-head integration review/remote CI and
+separate publication approval remain before any remote write.

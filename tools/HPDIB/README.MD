@@ -55,7 +55,10 @@ ORDWIN.JSN/ZIP contain that final route evidence. The earlier STARTXT refusal is
 retained; that full-desktop entry checks ownership beyond the driver-only route.
 CHECKSET/TESTSET distinguish this checkpoint from the final installed verdict.
 
-BIN contains only native-tested candidate runtime, for exact review and eventual
-acceptance sealing. Accepted prior binaries and current download producers are
-unchanged. PUBLISH still refuses output without final independent review and
-ACCEPT.JSN. No publication is authorized by these native records.
+BIN contains the independently reviewed and native-qualified runtime for the
+pending release. ACCEPT.JSN seals the exact review at beb4a265 and all source,
+packet, matrix and installation identities. Current entry points use this
+producer; it replays the preceding PAN producer and changes only three members.
+The historical source snapshot preserves its original source pins and four
+core artifact identities. TESTHIST exercises the closed snapshot boundary.
+Public downloads remain unchanged until separately approved publication.

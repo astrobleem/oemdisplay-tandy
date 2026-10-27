@@ -27,7 +27,8 @@ def qualification():
  try:q=json.loads((HERE/'ACCEPT.JSN').read_bytes())
  except FileNotFoundError as e:raise ValueError('PAN acceptance pending') from e
  require(q.get('status')=='REVIEWED_NATIVE_SINGLE_APP' and q.get('physical_hardware') is False,'PAN acceptance pending')
- for n,pin in q['sources'].items():exact(dict(path=n,identity=pin))
+ history=importlib.machinery.SourceFileLoader('preceding_pan_sources',str(ROOT/'tools/HPDIB/HISTORY.PY')).load_module()
+ for n,pin in q['sources'].items():history.previous_source(n,pin)
  h={n:exact(row) for n,row in q['helpers'].items()};require(set(h)==set(C.APP),'Common application inventory differs');require(h['PAN.EXE']==h['PANCFG.EXE'],'Public entry differs from reviewed dispatcher')
  d={n:exact(row) for n,row in q['drivers'].items()};require(set(d)=={'JRPAN.DRV','CPPAN.DRV'},'Software desktop driver inventory differs')
  installers={n:exact(row) for n,row in q['installers'].items()};require(set(installers)=={'CORESET.EXE','FIXXT.EXE','PANSET.EXE','CGASET.EXE'},'Native installer inventory differs')

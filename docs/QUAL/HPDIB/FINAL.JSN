@@ -75,7 +75,7 @@
     "observed_free_heap_reduction_bytes": 256
   },
   "remaining": [
-    "Qualify current producer/catalog integration",
+    "Final exact-head integration review and remote CI",
     "Separate publication approval"
   ],
   "accepted_downloads_changed": false,
@@ -86,5 +86,6 @@
       "sha256": "0d6a29b94b8f83f4508f732028385996a47256ec602d7625f5275de4281bed89"
     }
   },
-  "reviewed_source_commit": "beb4a265065b53cde28b270564fa7e8ff58acff9"
+  "reviewed_source_commit": "beb4a265065b53cde28b270564fa7e8ff58acff9",
+  "integration": "docs/QUAL/HPDIB/INTEG.JSN"
 }

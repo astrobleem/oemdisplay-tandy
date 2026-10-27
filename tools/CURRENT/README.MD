@@ -7,7 +7,7 @@ Raw SFX alternatives and older software milestones are not current choices.
 
 `BUNDLE.PY` assembles the exact native-qualified main packet and the current
 hardware/app ZIPs. TANDYLAB keeps every original application byte and replaces
-its optional incomplete toolkit with the same qualified expanded driver source. It calls the native producer, preserving its full-install
+its optional incomplete toolkit with the same qualified expanded driver source. It calls `tools/HPDIB/PUBLISH.PY`, preserving its reviewed native full-install
 qualification gate, and checks the alternate-folder ordinary OEM receipt.
 It does not run a compiler, installer or emulator or perform network writes.
 
