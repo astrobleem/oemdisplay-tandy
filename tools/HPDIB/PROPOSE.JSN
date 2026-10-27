@@ -1,8 +1,14 @@
 {
-  "status": "NATIVE_TESTED_REVIEW_PENDING",
+  "status": "REVIEWED_ACCEPTANCE_PROPOSAL",
   "physical_hardware": false,
-  "reviewed_source_commit": "b43b486742981dc821d7a021696c5cb5a0d8e0b8",
-  "review": null,
+  "reviewed_source_commit": "beb4a265065b53cde28b270564fa7e8ff58acff9",
+  "review": {
+    "path": "docs/QUAL/HPDIB/REVIEW1.JSN",
+    "identity": {
+      "bytes": 7405,
+      "sha256": "0d6a29b94b8f83f4508f732028385996a47256ec602d7625f5275de4281bed89"
+    }
+  },
   "sources": {
     "experiments/SOLPERF/DIBTEST.C": {
       "bytes": 4688,
@@ -884,8 +890,6 @@
     }
   },
   "integration_pending": [
-    "Independent exact-source review",
-    "Seal ACCEPT only after review",
     "Qualify current producer/catalog integration",
     "Separate publication approval"
   ]
