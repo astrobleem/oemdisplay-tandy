@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "status": "NATIVE_EMULATION_QUALIFIED_INDEPENDENTLY_REVIEWED",
+  "source_checkpoint": "6ba8a8551d56e5a15fccf3a9f3c893e7a148236c",
+  "runtime_source": "e2bf87b0214db50d9bc4e6b6fa1062bf837ec307",
+  "source_packet": {
+    "bytes": 139175,
+    "sha256": "97377649eff6520daed6d1f48b2539b6159a057f07e8a350487e191df471e86a"
+  },
+  "packet": {
+    "bytes": 139135,
+    "sha256": "57f2e9e10c1c2feb9d0fa545d040674f10caae7a6360a4e2e55dd9365e0217d7"
+  },
+  "path": "downloads/experimental/CGA/CGA.ZIP",
+  "modes": [
+    "160x100x16 RGBI",
+    "320x200x4 black/bright cyan/magenta/white",
+    "640x200x2 black/white"
+  ],
+  "layout": [
+    "SETUP.EXE",
+    "README.TXT",
+    "CGA/"
+  ],
+  "derivation": "Only README.TXT publication wording and CRLF normalized; all other 24 members byte-identical to the independently reviewed packet. Original packet remains in docs/QUAL/CGA/REVIEW.ZIP.",
+  "physical_hardware": "UNQUALIFIED",
+  "members": {
+    "CGA/CG1COUR.FON": {
+      "bytes": 3536,
+      "sha256": "dd934962d877c96bc493a053a3a7337584583f7f8da54ce718a4cb5bf5cfbbaa"
+    },
+    "CGA/CG1FIX.FON": {
+      "bytes": 3776,
+      "sha256": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52"
+    },
+    "CGA/CG1HELV.FON": {
+      "bytes": 3536,
+      "sha256": "80e221bd6626d5ec723ce7b723a33ea3a041f7dc8dd17e2498af5afe53917c9d"
+    },
+    "CGA/CG1OEM.FON": {
+      "bytes": 4080,
+      "sha256": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06"
+    },
+    "CGA/CG1SYS.FON": {
+      "bytes": 3536,
+      "sha256": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40"
+    },
+    "CGA/CG2HELV.FON": {
+      "bytes": 3760,
+      "sha256": "d1f6878faaf8abd06f425d7672277d6eb6d1097f9994c738ba753655d125afc3"
+    },
+    "CGA/CG2SYS.FON": {
+      "bytes": 3760,
+      "sha256": "c0ac9e8753e6b13b5bf0faa5384c85daf94427d813485a47270a62333bbfd222"
+    },
+    "CGA/CG6HELV.FON": {
+      "bytes": 4256,
+      "sha256": "d3bccab5f5daea935ca568923d5274315301f93caffd50e2cdcdd4d59735842d"
+    },
+    "CGA/CGA100.DRV": {
+      "bytes": 58208,
+      "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3"
+    },
+    "CGA/CGA320.DRV": {
+      "bytes": 57728,
+      "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4"
+    },
+    "CGA/CGA640.DRV": {
+      "bytes": 57312,
+      "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1"
+    },
+    "CGA/CGACTL.EXE": {
+      "bytes": 15855,
+      "sha256": "0f2a9a64db14111c4f21711bd3dbc110bf7339a0187a942c254aa35c05f5819d"
+    },
+    "CGA/CGAGRAB.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "CGA/FONTLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "CGA/LOGOLIC.TXT": {
+      "bytes": 1101,
+      "sha256": "b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80"
+    },
+    "CGA/NOTICE.TXT": {
+      "bytes": 3025,
+      "sha256": "d0b64ce9ccad9692484ad81c951922f7d54461d6795a3cc4cd05fd70c127f7e9"
+    },
+    "CGA/OEMSETUP.INF": {
+      "bytes": 1020,
+      "sha256": "96abec962aeaa7495e739a7e0749e8de7365645e03f0ad870752ee50c8ffa3e2"
+    },
+    "CGA/T80COUR.FON": {
+      "bytes": 4224,
+      "sha256": "fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6"
+    },
+    "CGA/WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    },
+    "CGA/XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "CGA/XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "CGA/XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "CGA/XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "README.TXT": {
+      "bytes": 4259,
+      "sha256": "734a9eddf4e7c8ee9d5b669c6be2d5095bf3723369c141693c937f41a21848a3"
+    },
+    "SETUP.EXE": {
+      "bytes": 31119,
+      "sha256": "1352512bd5440253bd871056b31ac1342192c1a30e41c9ad519d44d5e0482c00"
+    }
+  },
+  "evidence": {
+    "docs/QUAL/CGA/BUILDS.JSN": {
+      "bytes": 19007,
+      "sha256": "e9ce2a581bb6b3f6fd3756cd4965521b83c540b825bf7acc370d3b3923088971"
+    },
+    "docs/QUAL/CGA/FINAL.JSN": {
+      "bytes": 17960,
+      "sha256": "a536b34bd84a9af9629c81d44936f428a334626724c9bcefb39414256fc0c4d0"
+    },
+    "docs/QUAL/CGA/REVIEW.JSN": {
+      "bytes": 1792,
+      "sha256": "cf7867f7ba7409da94b0d440e8e080abd469780d310dcc6433d6a31a05d91442"
+    },
+    "docs/QUAL/CGA/REVIEW.ZIP": {
+      "bytes": 453222,
+      "sha256": "d8e68d9ba4de4c0e568c3b29e96addd0e648ce06d4f90f9d22b274ceff101db4"
+    }
+  }
+}

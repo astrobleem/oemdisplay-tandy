@@ -81,6 +81,9 @@ reviewed source checkpoint and exact member/evidence pins are in
 `tools/CGAPACK/ACCEPT.JSN`; verify them with
 `python -B tools/CGAPACK/VERIFY.PY`. Current catalog CI includes that gate.
 
+The PANKEY queue/lifetime API-stub check is `python -B src/cga/TESTKEY.PY --out NEW-KEY-HOST`.
+It uses the managed host compiler and makes no native Windows claim.
+
 CGA-specific integration uses `src/cga/INSTALLT.PY` for managed-host C89
 transaction checks and `PACKCGA.PY` for the expanded packet. Separate native
 `BUILDSET.PY` uses C6 and the existing leased child watchdog, preserving the

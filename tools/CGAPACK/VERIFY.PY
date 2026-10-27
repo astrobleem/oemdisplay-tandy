@@ -14,8 +14,7 @@ def members(b):
   names=z.namelist()
   if len(names)!=len(set(names)) or z.testzip():raise ValueError('Invalid CGA archive')
   return {n:z.read(n) for n in names}
-def verify(data=None):
- record=json.loads((HERE/'ACCEPT.JSN').read_bytes())
+def verify_previous(record,data=None):
  if record['status']!='NATIVE_EMULATION_QUALIFIED_INDEPENDENTLY_REVIEWED':raise ValueError('CGA acceptance missing')
  if data is None:data=(ROOT/record['path']).read_bytes()
  if identity(data)!=record['packet']:raise ValueError('CGA packet differs from accepted bytes')
@@ -44,5 +43,36 @@ def verify(data=None):
  expected=expected.replace('IBM CGA DISPLAY FOR WINDOWS 3.0 - DEVELOPMENT CANDIDATE','IBM CGA DISPLAY FOR WINDOWS 3.0').replace('Local development candidate, tested in Windows 3.0 real mode on IBM XT/CGA','Tested in Windows 3.0 real mode on IBM XT/CGA')
  if files['README.TXT']!=expected.replace('\n','\r\n').encode('ascii'):raise ValueError('Unexpected public README delta')
  return dict(packet=record['packet'],members=25,unchanged_native_and_support_members=24,independent_review=review['outcome'],physical_hardware=record['physical_hardware'])
+
+def verify(data=None):
+ record=json.loads((HERE/'ACCEPT.JSN').read_bytes())
+ if record.get('schema')==1:return verify_previous(record,data)
+ if record.get('schema')!=2 or record.get('status')!='NATIVE_EMULATION_QUALIFIED_REVIEWED':raise ValueError('CGA acceptance missing')
+ if data is None:data=(ROOT/record['path']).read_bytes()
+ if identity(data)!=record['packet']:raise ValueError('CGA packet differs from accepted bytes')
+ files=members(data)
+ if {n:identity(b) for n,b in files.items()}!=record['members']:raise ValueError('CGA member inventory changed')
+ if set(n.split('/')[0] for n in files)!={'SETUP.EXE','README.TXT','CGA'} or len(files)!=28:raise ValueError('CGA expanded layout changed')
+ if any(not re.fullmatch(r'CGA/[A-Z0-9]{1,8}\.[A-Z0-9]{1,3}',n) for n in files if n.startswith('CGA/')):raise ValueError('CGA DOS names invalid')
+ if any(n.upper().endswith(('.ZIP','.PY')) for n in files):raise ValueError('Consumer preparation dependency')
+ exe=files['SETUP.EXE']
+ if exe[:2]!=b'MZ' or len(exe)<64:raise ValueError('Native DOS SETUP missing')
+ last,pages=struct.unpack_from('<HH',exe,2)
+ if pages*512-(512-last if last else 0)!=len(exe):raise ValueError('SETUP appended archive refused')
+ for name,pin in record['evidence'].items():
+  if identity((ROOT/name).read_bytes())!=pin:raise ValueError('Changed CGAPAN evidence: '+name)
+ base=json.loads((ROOT/record['previous_acceptance']).read_bytes())
+ olddata=(ROOT/record['previous_packet']).read_bytes()
+ verify_previous(base,olddata)
+ old=members(olddata)
+ changed={'README.TXT','SETUP.EXE','CGA/OEMSETUP.INF'}
+ if set(files)-set(old)!={'CGA/CGAPAN.DRV','CGA/PANCTL.EXE','CGA/PANKEY.DLL'} or set(old)-set(files):raise ValueError('Unexpected CGAPAN inventory delta')
+ if any(files[n]!=b for n,b in old.items() if n not in changed):raise ValueError('Earlier CGA runtime/support changed')
+ final=json.loads((ROOT/'docs/QUAL/CGAPAN/FINAL.JSN').read_bytes())
+ if final['packet']!=record['packet'] or final['outcome']!='PASS':raise ValueError('Native final packet binding invalid')
+ if final['runtime_source']!=record['source_checkpoint']:raise ValueError('Native source binding invalid')
+ if final['review']['outcome']!='NO_RESIDUAL_FINDINGS':raise ValueError('Source review incomplete')
+ if set(final['checks'])!={'settings','busy_paint_exit'} or not all(v['outcome']=='PASS' for v in final['checks'].values()):raise ValueError('Native acceptance incomplete')
+ return dict(packet=record['packet'],members=28,preserved_previous_members=22,review=final['review']['outcome'],physical_hardware=record['physical_hardware'])
 
 if __name__=='__main__':print(json.dumps(verify(),indent=2))

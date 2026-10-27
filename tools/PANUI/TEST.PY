@@ -78,7 +78,18 @@ class Bindings(unittest.TestCase):
 
     def test_each_native_case_binds_packet_and_executables(self):
         entries = C.expanded_entries()
+        # Exercise the retained pre-HPXY/pre-grabber panning qualification,
+        # using its exact superseded members rather than today's core packet.
+        inherited = json.loads((ROOT / 'docs/QUAL/WDESK/PACKAGE.JSN').read_bytes())
+        entries = {n: entries[n] for n in inherited['files']}
+        with zipfile.ZipFile(Path(__file__).with_name('BASELINE.ZIP')) as z:
+            for name in z.namelist():
+                data = z.read(name)
+                self.assertEqual(P.identity(data), inherited['files'][name])
+                entries[name] = data
+        self.assertEqual({n: P.identity(b) for n, b in entries.items()}, inherited['files'])
         archive = C.pub.zip_bytes(entries)
+        self.assertEqual(P.identity(archive), inherited['archive'])
         baseline = json.loads((ROOT / 'docs/QUAL/DOSINST/EXPAND.JSN').read_bytes())
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

@@ -41,7 +41,9 @@ def main():
     # Small complete MZ/NE-shaped buffers are copy fixtures, not driver builds.
     drivers={v[1]:b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([i])*126
              for i,v in enumerate(P.MODES.values())}
-    files=P.payload(args.repo,args.support,drivers,out/'font-fixture',b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes(126))
+    files=P.payload(args.repo,args.support,drivers,out/'font-fixture',b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes(126),
+                    b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([7])*126,
+                    b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([8])*126)
     rec=P.emit(args.repo,out/'prepared',files,'0'*40,fixture=True)
     P.verify(out/'prepared')
     src=out/'host-src';shutil.copytree(out/'prepared/native-src',src);write(src/'HOSTTEST.H',SHIM)
@@ -74,16 +76,23 @@ def main():
 
     def passed(name):cases.append(name)
 
-    for mode,driver in (('100',b'CGA100.DRV'),('320',b'CGA320.DRV'),('640',b'CGA640.DRV')):
+    for mode,driver in (('100',b'CGA100.DRV'),('320',b'CGA320.DRV'),('640',b'CGA640.DRV'),('PAN',b'CGAPAN.DRV')):
         w,before=fixture(mode);run(w,mode)
         assert b'display.drv='+driver in (w/'SYSTEM.INI').read_bytes()
         assert b'286grabber=CGAGRAB.GR2' in (w/'SYSTEM.INI').read_bytes()
         ini=(w/'WIN.INI').read_bytes()
         assert b'load=CLOCK.EXE' in ini and b'Modern=MODERN.FON' in ini
-        if mode=='100':
+        # Exactly one viewport/placement helper is autoloaded, by mode.
+        assert (b'PANCTL.EXE' in ini)==(mode=='PAN') and (b'CGACTL.EXE' in ini)==(mode!='PAN')
+        # Startup helpers live in the Windows directory, never in SYSTEM.
+        helper='PANCTL.EXE' if mode=='PAN' else 'CGACTL.EXE'
+        assert (w/helper).is_file() and not (w/'SYSTEM'/helper).exists()
+        assert (w/'SYSTEM'/'PANKEY.DLL').is_file() and not (w/'PANKEY.DLL').exists()
+        if mode in ('100','PAN'):
+            # PAN keeps mode 100's compact fonts, border and settings.
             assert b'Helv 3x5 (CGA100)=CG1HELV.FON' in ini and b'BorderWidth=1' in ini
             assert b'fonts.fon=CG1SYS.FON' in (w/'SYSTEM.INI').read_bytes()
-            assert b'CGACTL.EXE' in ini
+            assert b'fixedfon.fon=CG1FIX.FON' in (w/'SYSTEM.INI').read_bytes()
         elif mode=='320':
             assert b'Helv 4x6 (CGA320)=CG2HELV.FON' in ini
             assert b'fonts.fon=CG2SYS.FON' in (w/'SYSTEM.INI').read_bytes()
@@ -98,6 +107,14 @@ def main():
     w,before=fixture('switch')
     for mode in ('100','320','640','100'):run(w,mode)
     run(w,'UNDO');assert snapshot(w)==before;passed('three modes/repeated switch/undo')
+    w,before=fixture('pan switch')
+    for mode,helper,other in (('PAN',b'PANCTL.EXE',b'CGACTL.EXE'),('100',b'CGACTL.EXE',b'PANCTL.EXE'),
+                              ('pan',b'PANCTL.EXE',b'CGACTL.EXE'),('640',b'CGACTL.EXE',b'PANCTL.EXE')):
+        run(w,mode)
+        ini=(w/'WIN.INI').read_bytes()
+        # The previous mode's recorded helper token is removed, never left behind.
+        assert helper in ini and other not in ini and b'load=CLOCK.EXE' in ini
+    run(w,'UNDO');assert snapshot(w)==before;passed('PAN switches to and from every mode, exact undo')
     w,before=fixture('identical');(w/'SYSTEM/XTCSYS.FON').write_bytes(files['XTCSYS.FON']);before=snapshot(w)
     run(w,'100');run(w,'UNDO');assert snapshot(w)==before;passed('identical preexisting font retained')
     w,before=fixture('collision');(w/'SYSTEM/CGA100.DRV').write_bytes(b'unrelated filename collision');before=snapshot(w)

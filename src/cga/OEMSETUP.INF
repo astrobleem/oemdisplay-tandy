@@ -7,6 +7,7 @@ Version="3.0"
 a = .,"CGA SOURCE CANDIDATE",OEMSETUP.INF
 [display]
 cga100 = a:CGA100.DRV,"IBM CGA 160x100 16 colors (experimental)","100,48,40",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
+cgapan = a:CGAPAN.DRV,"IBM CGA 160x100 view of 320x200 (experimental)","100,48,40",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
 cga320 = a:CGA320.DRV,"IBM CGA 320x200 4 colors (experimental)","200,96,48",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
 cga640 = a:CGA640.DRV,"IBM CGA 640x200 mono (experimental)","200,96,48",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
 [sysfonts]

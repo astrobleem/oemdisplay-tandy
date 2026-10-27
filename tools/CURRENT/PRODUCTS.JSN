@@ -90,8 +90,8 @@
     "CGA.ZIP": {
       "source": "downloads/experimental/CGA/CGA.ZIP",
       "identity": {
-        "bytes": 139135,
-        "sha256": "57f2e9e10c1c2feb9d0fa545d040674f10caae7a6360a4e2e55dd9365e0217d7"
+        "bytes": 178591,
+        "sha256": "0db0c85f349b3246cc8a262b22083297445353421b83a5f835d4ff995f2330a5"
       }
     }
   },

@@ -17,14 +17,16 @@ Exit Windows completely to DOS. Use your actual Windows directory:
   SETUP C:\WINDOWS 100
 
 Choose 100 for 160x100 in 16 colors, 320 for 320x200 in four colors
-(black/bright cyan/magenta/white), or 640 for 640x200 monochrome. Continue only
-after the setup success message. Then change to Windows and start:
+(black/bright cyan/magenta/white), 640 for 640x200 monochrome, or PAN for a
+320x200 desktop in 16 colors seen through a movable 160x100 window (same
+compact fonts as 100). Continue only after the setup success message. Then
+change to Windows and start:
 
   C:
   CD \WINDOWS
   WIN /R
 
-The three choices are separate display-driver geometries. To change mode,
+The four choices are separate display-driver geometries. To change mode,
 exit Windows and run SETUP again with the new choice. There is no live
 geometry switch. Do not run this IBM-CGA packet on a Tandy installation.
 
@@ -70,7 +72,7 @@ Component notices are in CGA\NOTICE.TXT and CGA\FONTLIC.TXT.
 
 320x200 uses original 4x6 System/Helv and fixed/OEM faces. 640x200 retains
 its XTC System/fixed/OEM selection and adds the XT Pixels 8-row proportional
-Helv and existing 8x8 Courier dialog faces. All modes start CGACTL automatically. At 320/640 it
+Helv and existing 8x8 Courier dialog faces. Modes 100/320/640 start CGACTL automatically. At 320/640 it
 makes disabled labels readable in the reduced palette, then exits. At 100 it
 runs the shared WDESK-based window-access client. Ctrl+Alt+arrows move the window workspace; Home recovers
 its origin and End exposes the active frame's bottom/right. It can expose a
@@ -79,3 +81,20 @@ Windows display geometry. Native integration, Home/recovery and ordinary DOS exi
 Use normal File Manager window/MDI maximize and File Open commands for its
 directory views on this short screen. The recorded DOS-command return test
 is a smoke check; it does not qualify every DOS program or PrintScreen.
+
+PAN starts PANCTL instead of CGACTL; the two never run together. Windows
+sees a 320x200 desktop and the screen shows a 160x100 part of it. Ctrl+Alt+
+arrows move the view, Ctrl+Alt+Home returns to the top left and
+Ctrl+Alt+End shows the bottom
+right of the active window. Moving the pointer to the edge of the view and
+holding it there scrolls the view; a new window or a control reached with Tab
+is brought into view. Drawing outside the view appears when it is scrolled in.
+Movement commands are kept while Windows is busy loading or drawing and are
+carried out in order afterwards (PANKEY.DLL, installed with PANCTL).
+
+Ctrl+Alt+S (or PANCTL /SETTINGS from Run) opens Panning settings, a window that fits the 160x100 view: step
+size, dwell before an edge scroll, follow the active window, and pan at the
+screen edge. Apply saves them in WIN.INI under [CGAPan]; Cancel changes
+nothing. The step is a multiple of 8 across (down is five eighths of it).
+Native emulation results for PAN are in the development record; physical IBM
+CGA hardware is unqualified.

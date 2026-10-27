@@ -45,3 +45,24 @@ are the original raw memory for each PNG; installer receipts preserve the
 recorded source. The final native/review records remain in
 [qualification](../QUAL/CGA/README.MD), and the earlier developer discussion
 is preserved in [the implementation record](../QUAL/CGA/IMPLEMENT.MD).
+
+## CGAPAN viewport and settings
+
+PANSET.PNG and PANAPPLY.PNG are complete, unretouched frames returned by
+the fixed 86Box headless capture API in busy-final2 (022.PNG and
+SETTINGS-APPLY.PNG). The first shows the settings window; the second shows
+Step 20 rounded to 24 after Apply. Follow and Edge were disabled before the
+run to isolate the queued-key test. The screen displays 160x100 logical
+pixels; each emulator frame retains its own scaling and border.
+PANPAL.PNG is a complete Paintbrush detail capture from that final run.
+PANPAINT.PNG reuses the settled pan-paint-4/003.PNG frame: its CGAPAN driver,
+fonts and all 18 non-owner installed files match the final packet exactly.
+That earlier run used the prior PANCTL owner; its install receipt and raw frame
+are retained. Paintbrush opened its stock PARTY.BMP in both runs.
+These are actual emulator frames, not composed UI or physical scanout.
+
+All runtime bytes in busy-final2 match the integrated CGA.ZIP. Exact
+identities, scope and raw captures are retained in ../QUAL/CGAPAN/FINAL.JSN
+and EVIDENCE.ZIP. Earlier settings/edge and paired-driver captures are
+retained there as supporting history, with their exact reuse scope. Pointer
+edge checks used guest Windows APIs; no physical mouse or hardware claim.

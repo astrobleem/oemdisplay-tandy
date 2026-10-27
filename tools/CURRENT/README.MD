@@ -34,7 +34,8 @@ only the anonymous public release list is consolidated.
 The retired softpan auto-publisher must remain disabled. Its source/payload
 and oracle verification continue in Actions, without moving the old tag.
 
-The current CGA choice is one expanded `CGA.ZIP` for 160x100x16 RGBI,
+The current CGA choice is one expanded `CGA.ZIP` for fixed or panning 160x100x16 RGBI,
 320x200x4 and 640x200 monochrome. `tools/CGAPACK/VERIFY.PY` gates its exact
 native-qualified payload and independent review before catalog output.
-Only the public root README differs from the preserved reviewed packet.
+The earlier three drivers and CGACTL remain unchanged; CGAPAN is installed
+by the same native SETUP and expanded folder.

@@ -11,6 +11,7 @@ import sys
 import unittest
 from pathlib import Path
 import CGAMODEL as M
+import PANMODEL as PM
 import CGAFONT as F
 import STAGECGA as S
 
@@ -18,6 +19,12 @@ HERE = Path(__file__).resolve().parent
 
 
 class Memory(unittest.TestCase):
+    def test_pan_dirty_flushes_and_pans_equal_full_repaint(self):
+        # Algorithm model of the staged CGAPAN converters; assembly is native.
+        stats = PM.check()
+        self.assertGreater(stats['draws'], 100)
+        self.assertGreater(stats['pans'], 50)
+
     def test_all_pair_colors_and_addresses(self):
         # Independent pair formula: DEh foreground is the RIGHT half.
         for left in range(16):
@@ -94,7 +101,7 @@ def font_checks(out):
         off=font_entry[3]
         raw=data[off:off+struct.unpack_from('<I',data,off+2)[0]]
         info=validator.validate_fnt(raw)
-        expected = (6,5,4,96,48) if name.startswith('CG2') else (5,5,3,48,40) if name in ('CG1SYS.FON','CG1HELV.FON') else (5,5,4,48,40) if name=='CG1COUR.FON' else (6,5,4,48,40)
+        expected = (6,5,4,48,40) if name.startswith('CG2') else (5,5,3,48,40) if name in ('CG1SYS.FON','CG1HELV.FON') else (5,5,4,48,40) if name=='CG1COUR.FON' else (6,5,4,48,40)
         assert (info['height'],info['ascent'],info['avg_width'],info['horiz_res'],info['vert_res'])==expected
         validator.validate_fon(data,{'module':module,'resources':[{'id':item['rid'],'font':info}]})
         assert not any(code in item['fallback_bytes'] for code in range(32,127))
@@ -113,8 +120,10 @@ def font_checks(out):
 
 def inventory_checks():
     inf=S.read(HERE/'OEMSETUP.INF')
-    choices=re.findall(r'^(cga\d+) = a:([^,]+),"([^"]+)","([^"]+)"',inf,re.M)
-    assert len(choices)==3
+    choices=re.findall(r'^(cga[0-9a-z]+) = a:([^,]+),"([^"]+)","([^"]+)"',inf,re.M)
+    assert len(choices)==4
+    # PAN keeps mode 100's compact fonts and dpi descriptor.
+    assert {v[0]:v[3] for v in choices}['cgapan']=='100,48,40'
     assert {v[1] for v in choices}=={v[1] for v in S.MODES.values()}
     assert all(len(v[2])<=47 for v in choices)
     assert choices[0][3]=='100,48,40'
@@ -153,6 +162,35 @@ def stage_checks(repo,out):
             fonts=S.read(directory/'resources/FONTS.ASM')
             assert 'AnsiVar \tdw\t5\t\t;lfheight\n\t\tdw\t3\t\t;lfwidth' in fonts
             assert 'AnsiFixed\tdw\t6' in fonts and 'OEMFixed\tdw\t6' in fonts
+        elif mode=='160x100x16pan':
+            cur=S.read(renderer/'EGA/TCURSOR.ASM')
+            assert 'SCREEN_WIDTH equ 320\nSCREEN_HEIGHT equ 200\nSCREEN_W_BYTES equ 40\n' in soft
+            assert 'VIEW_COLS equ 160' in soft and 'VIEW_ROWS equ 100' in soft and 'VIEW_BYTES equ 20' in soft
+            assert 'shadow_bits db 32000 dup' in soft
+            assert soft.count('BITMAP <0,320,200,40,4,1,0,8000')==1 and soft.count('BITMAP <1,320,200,40,4,1,0,8000')==1
+            assert '    dw 0300h,DT_RASDISPLAY,480,360,320,200,1,4\n' in soft
+            assert '[si+20]' not in soft and 'add si,60' not in soft
+            assert soft.count('mov byte ptr es:[di],0deh')==4
+            assert soft.count('call cga_vram_begin')==soft.count('call cga_vram_end')==4
+            assert cur.count('call cga_vram_begin')==cur.count('call cga_vram_end')==2
+            # Complete inventory of video-segment writers: four converters and
+            # the Enable fill in TSOFT, erase and draw in TCURSOR.
+            assert soft.lower().count('0b800h')==5 and cur.lower().count('0b800h')==2
+            assert 'mov cx,16000\n    cld\n    rep stosw\n' in soft and 'mov cx,8000                ; initialize' in soft
+            assert 'sub ax,pan_x' in cur and 'sub ax,pan_top' in cur and 'db 1088 dup' in cur
+            assert 'pan_escape proc far' in soft and 'ret 10' in soft and 'CGAPAN_ESC equ 05860h' in soft
+            assert 'cmp dx,pan_xr' in soft and 'cmp cx,pan_xb' in soft
+            # Only the four geometry files differ from the CGA100 stage.
+            plain=out/'160x100x16'
+            patched={'EGA/TSOFT.ASM','EGA/TCURSOR.ASM','EGA/TSOFT.DEF','SDIB88.ASM'}
+            for path in renderer.rglob('*'):
+                name=path.relative_to(renderer).as_posix()
+                if path.is_file() and name not in patched:
+                    assert path.read_bytes()==(plain/'renderer'/name).read_bytes(),name
+            for path in (directory/'resources').rglob('*'):
+                name=path.relative_to(directory/'resources').as_posix()
+                if path.is_file():
+                    assert path.read_bytes()==(plain/'resources'/name).read_bytes(),name
         else:
             # Independently invoke the baseline pipeline, proving that the
             # CGA names introduce no changes to the normal-mode source set.
