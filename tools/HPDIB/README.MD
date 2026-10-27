@@ -36,4 +36,9 @@ The first installed application session rendered and saved the test bitmap
 with equal RGB pixels, but timed out before confirmed DOS return. APPFAIL.JSN
 retains that failed outcome. RUNUI.PY, SETUPIO.PY and APPTEST.PY prepare a bounded
 follow-up through ordinary Windows Setup, the normal finisher and actual PAN
-controls/Paintbrush. Final installed acceptance and final review remain pending.
+controls/Paintbrush. The follow-up's normal finisher and installed application
+passed: exact driver/seven-helper readback, both PAN modes, equal saved RGB and
+normal DOS return with clean stop/release in 950 seconds. INSTAPP.JSN/ZIP retain
+that evidence. Its preceding ordinary Setup attempt returned status 1 and kept
+the old driver; SETUPFAIL.JSN preserves that separate failure. Ordinary Windows
+Setup acceptance and final independent review remain pending.

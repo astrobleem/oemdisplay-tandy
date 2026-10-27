@@ -1,6 +1,6 @@
 """Read back stopped native installation, real BMP round trip and clean lifecycle."""
 from pathlib import Path
-import sys,json,hashlib,struct,importlib.machinery,argparse
+import sys,json,hashlib,struct,importlib.machinery,argparse,re
 root=Path(__file__).resolve().parents[2]
 if not __debug__:raise RuntimeError('Native acceptance requires enabled assertions')
 ap=argparse.ArgumentParser(description=__doc__)
@@ -51,6 +51,10 @@ if not (lease.get('status')=='PASS' and lease.get('lease_acquired') is True and 
 assert json.loads((out/'RUNTIME.JSON').read_text())['mode']==3
 assert (out/'CROOT/RETURN1.TXT').read_text().strip()=='RETURNED'
 control=json.loads((out/'RESULT.JSN').read_text());assert control['outcome']=='PASS_NATIVE_HPXY_SINGLE_APP' and not control.get('error')
+for label,x,y in [('RIGHT',16,4),('DOWN',16,8),('HOME',0,0)]:
+ state=(out/('PBRUSH_PAN_'+label+'.TXT')).read_text()
+ assert re.search(r'^XYSTATE x=%d y=%d .*mode=1$'%(x,y),state,re.M),label
+ assert r'cls=pbParent text=Paintbrush - C:\DIBOUT.BMP' in state,label
 before=json.loads((out/'INSTALL-INPUT.JSN').read_text());assert before['driver_not_injected'] and before['previous_installed_driver_sha256']=='c86a243c9e724401de3fa40d2c304bb6e336c6f8ad5df241c2e4ff1911d297a9'
 base,_=P.products();observed={}
 with PyFatFS(str(out/'DISK.IMG'),offset=8704,read_only=True) as fs:
