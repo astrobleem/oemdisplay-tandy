@@ -1,0 +1,30 @@
+PLANTRONICS COLORPLUS - WINDOWS3.0 DISPLAY
+
+For a ColorPlus card with dedicated video RAM and installed Windows 3.0
+real mode in C:\WINDOWS. Fonts, grabber and artwork are included.
+1. Extract all files from CPPAN.ZIP into C:\CPPAN. Exit Windows to DOS.
+2. Run C:\CPPAN\INSTALL.
+3. In Windows Setup choose Display, Other, C:\CPPAN. Select
+   ColorPlus 320x200 fixed, or ColorPlus 320x400 software panning.
+4. Complete Setup and use C:\CPPAN\CPWIN for later Windows sessions.
+These normal entries install the matching configuration/input helpers.
+There is no manual helper-copy, INI-edit or first-enable step.
+
+The 320x400 driver starts its viewport owner automatically. Ctrl+Alt+Up/Down
+move the view; Home returns to the top; End reveals the active window.
+Alt+PgDn, Alt+PgUp and Alt+F9 remain available. Ctrl+Alt+S or
+PANCFG /SETTINGS in Windows File, Run opens the shared settings window.
+Apply saves supported step, edge, dwell and follow settings; Cancel discards
+unapplied edits. Reopening preserves the owner and unfinished edits.
+PANCFG OFF closes the owner and disables startup; PANCFG enables it again.
+Normal later launches preserve the user's OFF choice.
+
+The fixed 320x200 driver offers a window-moving workspace through
+PANCFG /SETTINGS. PANCFG enables its next-session startup. Arrows move
+windows; Home or PANCFG OFF brings them back. It retains the fixed driver
+and does not allocate a larger framebuffer. Choose framebuffer panning
+by returning to Windows Setup and selecting the 320x400 driver.
+
+Illustrated guide: docs/PANNING.MD in the source repository.
+Native real-mode emulation was tested; physical-card qualification is
+separate. Keep the complete packet for the normal launcher.

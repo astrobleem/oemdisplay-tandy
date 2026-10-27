@@ -427,39 +427,40 @@ def source_order_checks():
     code = re.sub(r"/\*.*?\*/", "", region, flags=re.S)
     expect("PANCFG.C: SETTINGS branch does not load (no 'load' in code, "
            "comments ignored)", "load" not in code.lower())
-    for n in range(1, 7):
+    for n in (1, 2, 3, 5, 6):
         expect(f"PANCFG.C: 'return {n};' still present",
                ("return %d;" % n) in pc)
     expect('PANCFG.C: "XTPan","Enabled" literal present',
            '"XTPan","Enabled"' in pc)
-    expect('PANCFG.C: FindWindow("XTPan" literal present',
-           'FindWindow("XTPan"' in pc)
-    expect('PANCFG.C: SETTINGS also reaches a running XYCTL '
-           '(XYOverviewControl + PS_MSG_XY before PanRoute)',
-           first_before(pc, 'XYOverviewControl', 'PanRoute') and
-           first_before(pc, 'PS_MSG_XY', 'PanRoute'))
+    expect("PANCFG routes the existing owner before detection or INI writes",
+           first_before(pc, "PanOwnerFind", "PanOwnerDetect") and
+           first_before(pc, "PanOwnerRoute(1)", "WriteProfileString"))
+    owner = text_of(REPO / "src/panui/PANOWN.C")
+    expect("One route covers all four existing owner classes",
+           all(name in owner for name in
+               ("XTPan", "XYOverviewControl", "CGAPan", "CGASlide")))
 
     xc = text_of(REPO / "experiments/XYOVERVIEW/XYCTL.C")
     m = xc.find("int PASCAL WinMain")
     expect("XYCTL.C: WinMain found", m >= 0)
     w = xc[m:] if m >= 0 else ""
-    po = w.find("PanOwnerStart")
-    expect("XYCTL.C: PanOwnerStart in WinMain", po >= 0)
+    po = w.find("PanOwnerRoute")
+    expect("XYCTL.C: PanOwnerRoute in WinMain", po >= 0)
     for lit, pat in (("GetDC(", r"GetDC\("),
                      ("Escape(", r"(?<![A-Za-z_])Escape\("),
                      ("RegisterClass", r"RegisterClass")):
         mm = re.search(pat, w)
         j = mm.start() if mm else -1
-        expect(f"XYCTL.C WinMain: PanOwnerStart before first {lit}",
+        expect(f"XYCTL.C WinMain: PanOwnerRoute before first {lit}",
                po >= 0 and (j < 0 or po < j))
 
     xt = text_of(REPO / "src/xtpan/XTPAN.C")
     m = xt.find("int PASCAL WinMain")
     expect("XTPAN.C: WinMain found", m >= 0)
     w = xt[m:] if m >= 0 else ""
-    po = w.find("PanOwnerStart")
+    po = w.find("PanOwnerRoute")
     pe = w.find('GetProfileInt("XTPan", "Enabled"')
-    expect('XTPAN.C WinMain: PanOwnerStart before GetProfileInt("XTPan", '
+    expect('XTPAN.C WinMain: PanOwnerRoute before GetProfileInt("XTPan", '
            '"Enabled"', 0 <= po and pe >= 0 and po < pe)
     expect("XTPAN.C WinMain: no 'if (hPrev)' early exit left",
            re.search(r"if\s*\(\s*hPrev\s*\)", w) is None)

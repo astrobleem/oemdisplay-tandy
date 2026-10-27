@@ -1,0 +1,49 @@
+WINDOWS XT - DOS INSTALLATION
+
+Original Tandy 1000 EX/HX, 640 KB, Windows 3.0 real mode.
+Extract this ZIP, keeping SETUP.EXE and the WINXT folder together.
+The files are ready to use. The ZIP is not needed after extraction.
+
+FULL DESKTOP (DOS 3.3+)
+Exit Windows and run:
+  SETUP UPDATE C:\WINDOWS
+For a new Windows installation, insert the first original Setup disk:
+  SETUP FRESH A:\
+Setup gathers the Windows disks automatically and installs the desktop.
+Use C:\STARTXT on every later launch.
+
+DRIVERS ONLY (DOS 3.20+; existing Windows)
+From the expanded WINXT folder, run DISPLAY from DOS. In Windows Setup
+choose Display, Other, enter that folder and select Tandy EX/HX HPXY.
+Complete Changes, giving the same folder when Setup requests its disk.
+If Setup keeps an older HPXY, DISPLAY offers to refresh it. Answer Y to
+install this packet's driver, or N to leave the installed driver unchanged.
+Start later sessions with DISPWIN from the expanded WINXT folder.
+See WINXT\DISPLAY.TXT for another Windows directory and viewport controls.
+
+PANNING SETTINGS
+Normal Setup and the guarded DISPLAY/DISPWIN entries install the matching
+owner, PANCFG and its input support automatically. No helper-copy or
+first-enable step is needed. Ctrl+Alt+S or PANCFG /SETTINGS in Windows
+File, Run opens one Panning settings window. Reopening preserves the
+running owner, selected mode and unfinished edits. Apply saves supported
+settings; Cancel discards edits since the last Apply.
+HPXY offers Software/Hardware selection and reports the effective mode.
+Its 320x200 viewport covers a 640x256 desktop; arrow steps remain 8x4.
+On supported fixed 320x200 or 640x200 displays, explicit Settings offers
+the existing window-moving workspace. It is a separate driver/profile
+choice, not an extra engine forced alongside HPXY. Home or PANCFG OFF
+brings its windows back. PANCFG enables startup; PANCFG OFF disables it.
+The same entry and compact settings also serve the matching CGA packet.
+Illustrated guide: docs/PANNING.MD in the source repository.
+
+DOS CLIPBOARD
+Full Setup installs TANDYGR.GR2 and starts TGCLIP with Windows. The guarded
+DISPLAY and DISPWIN entries keep this support when selecting a Tandy display;
+there is no separate TGSETUP step. Shift + PRINT in a DOS text program copies
+text. In a DOS graphics program it copies a bitmap for Paintbrush. BIOS palette
+changes are followed; direct OUT palette writes cannot be observed.
+
+Fonts, grabber and logos are included. Original Windows/DOS are required.
+Component notices and licences are in WINXT. SOUND source: WINXTSRC.ZIP
+beside the download at https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt

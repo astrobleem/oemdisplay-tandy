@@ -3,6 +3,9 @@
 #include <string.h>
 #include "PANDLG.H"
 #include "WDWIN.H"
+#include "PANKEY.H"
+#include "PANOWN.H"
+#include "PANTGT.H"
 #define ESC_XY 0x5860
 #define ESC_MODE 0x5861
 #define LEFT 101
@@ -48,7 +51,9 @@ static int dragging,dragAnchorX,dragAnchorY,previewLeft,previewTop,dragOriginX,d
 static int recoveryMoved,recoveryFailed;
 static unsigned recoveryVisited;
 static int driverWarning;
-static UINT openMsg;
+static UINT openMsg,keyWake;
+static int wantSettings;
+static void StartKeys(void);
 static PANHOST panHost;
 static int windowOnly;
 static char recoveryStatus[48]="Recovery is manual";
@@ -295,8 +300,9 @@ static void Cleanup(void) {
  Log("STOP_ORIGIN",left,top,live,0);
 }
 static int Stop(void) {
- if(closing)return 1;
- if(windowOnly && WDWinShutdown()<0)return 0;
+ if(!PanInputStop()){closing=1;return 0;}
+ if(closing)closing=0;
+ if(windowOnly && WDWinShutdown()<0){StartKeys();return 0;}
  CancelMapDrag();closing=1;PanDlgClose();edge=follow=0;ResetEdge();KillTimer(window,1);Cleanup();live=0;return 1;
 }
 static int Press(int key,int i) {
@@ -318,6 +324,7 @@ static void KeyAction(int i) {
 static int KeyMessage(int key,LPARAM flags) {
  int i;if(!(GetKeyState(VK_CONTROL)&0x8000) || !(GetKeyState(VK_MENU)&0x8000))return 0;
  for(i=0;i<10;i++)if(keys[i]==key){
+  if(PanInputActive())return 1;
   if(!(flags&0x40000000L) && !closing){
    latch[i]=1; /* A held key must not fire again if focus changes. */
    if(i==8)KeyAction(i);
@@ -325,21 +332,42 @@ static int KeyMessage(int key,LPARAM flags) {
   }return 1;
  }return 0;
 }
-static void Keyboard(void) {
- int k[10],chord,i,controlDown,altDown;
- /* Focused commands use queued messages so a short press survives paint.
-    The timer remains a best-effort background chord path, never both. */
- if(GetActiveWindow()==window)return;
- controlDown=(GetAsyncKeyState(VK_CONTROL)&0x8000)!=0;altDown=(GetAsyncKeyState(VK_MENU)&0x8000)!=0;chord=controlDown && altDown;
- for(i=0;i<10;i++)k[i]=Press(keys[i],i);
- if(!chord)return;
- if(k[8]){KeyAction(8);return;}
- if(k[9]){RecoverWindows();return;}
- if(k[4])XyHome(0);
- else if(k[0]||k[1]||k[2]||k[3])Pan(left+(k[1]-k[0])*8,top+(k[3]-k[2])*4);
- else if(k[5])Mode(!hardware);
- else if(k[6]){edge=!edge;edgePolled=0;ResetEdge();Log("EDGE",edge,500,0,0);InvalidateRect(window,0,FALSE);}
- else if(k[7] && !windowOnly){follow=!follow;ResetEdge();Log("FOLLOW",follow,0,0,0);InvalidateRect(window,0,FALSE);}
+static void Keyboard(void)
+{
+ int cmd,ex=0,ey=0;HWND active;RECT frame;PANTARGET target;
+ if(!PanInputActive() && GetActiveWindow()==window)return;
+ PanTargetInit(&target,left,top,logicalWidth-viewWidth,logicalHeight-viewHeight,
+               8,4,windowOnly?1:8,windowOnly?1:4);
+ while((cmd=PanInputNext())!=0){
+  if(cmd==PK_SETTINGS){wantSettings=1;continue;}
+  if(cmd>=PK_MODE){
+   if(target.moved){if(target.home && windowOnly)(void)WDWinHome();Pan(target.x,target.y);}
+   KeyAction(cmd==PK_MODE?5:cmd==PK_EDGE?6:cmd==PK_FOLLOW?7:cmd==PK_CLOSE?8:9);
+   PanTargetInit(&target,left,top,logicalWidth-viewWidth,logicalHeight-viewHeight,
+                 8,4,windowOnly?1:8,windowOnly?1:4);continue;
+  }
+  if(cmd==PK_END){
+   active=GetActiveWindow();if(!active || active==window)continue;
+   GetWindowRect(active,&frame);
+   ex=(windowOnly?left:0)+frame.right-viewWidth;
+   ey=(windowOnly?top:0)+frame.bottom-viewHeight;
+  }
+  (void)PanTargetCommand(&target,cmd,ex,ey);
+ }
+ if(target.moved){
+  if(target.home && windowOnly && WDWinHome()<0)return;
+  Pan(target.x,target.y);
+ }
+}
+static void StartKeys(void)
+{
+ static WORD extra[5]={'H','E','F','Q','R'};
+ PANBIND map[PK_BIND_MAX];int i,n=PanInputDefaults(map,PK_X|PK_Y);
+ for(i=0;i<5;i++){
+  map[n].key=extra[i];map[n].command=PK_MODE+i;map[n].mods=PK_CTRL|PK_ALT;
+  map[n++].flags=PK_ONCE;
+ }
+ (void)PanInputStart(window,keyWake,map,n);
 }
 static void Edge(void) {
  POINT p;int dx,dy,mx,my,px,py,ok,wasHardware;DWORD now,elapsed,wait;
@@ -440,12 +468,14 @@ static HMENU Menu(void) {
 }
 long FAR PASCAL __export Wnd(HWND w,UINT msg,WPARAM a,LPARAM b) {
  PAINTSTRUCT ps;HDC dc;char line[XY_PAINT_LINE_CAP];
- if(openMsg && msg==openMsg){OpenSettings();return 0;}
+ if(msg==keyWake)return 0;
+ if(openMsg && msg==openMsg){if(!closing)OpenSettings();return 0;}
  switch(msg){
  case WM_CREATE:
   homeButton=CreateWindow("BUTTON","Home",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,176,52,112,22,w,(HMENU)HOME,instanceHandle,0);
   recoverButton=CreateWindow("BUTTON","Recover windows",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,176,78,112,22,w,(HMENU)RECOVER,instanceHandle,0);
-  SetTimer(w,1,100,0);EnablePanControls(live);return 0;
+  if(!homeButton || !recoverButton || !SetTimer(w,1,100,0))return -1;
+  EnablePanControls(live);return 0;
  case WM_LBUTTONDOWN:Log("MAP_DOWN",(int)w,(int)(short)LOWORD(b),(int)(short)HIWORD(b),0);BeginMapDrag((int)(short)LOWORD(b),(int)(short)HIWORD(b));return 0;
  case WM_MOUSEMOVE:
   if(dragging && GetCapture()==w){Log("MAP_MOVE",(int)w,(int)(short)LOWORD(b),(int)(short)HIWORD(b),0);MapTarget((int)(short)LOWORD(b),(int)(short)HIWORD(b),&previewLeft,&previewTop);MapInvalidate();return 0;}
@@ -466,7 +496,7 @@ long FAR PASCAL __export Wnd(HWND w,UINT msg,WPARAM a,LPARAM b) {
  case WM_KEYDOWN:case WM_SYSKEYDOWN:
   if(a==VK_ESCAPE && dragging){CancelMapDrag();return 0;}
   if(KeyMessage(a,b))return 0;break;
- case WM_TIMER:if(!closing && live){int oldX,oldY;if(!timerSeen){timerSeen=1;Log("TIMER_START",left,top,edge,0);}oldX=left;oldY=top;if(!Query()){DriverLost("QUERY_ERROR");return 0;}if(windowOnly)(void)WDWinPan(left,top);if(dragging){if(GetCapture()!=w || oldX!=left || oldY!=top)CancelMapDrag();return 0;}Keyboard();if(Follow()){ResetEdge();PaintEdge();}else Edge();PanDlgTrack();}return 0;
+ case WM_TIMER:if(closing){if(Stop())DestroyWindow(w);return 0;}if(!closing && live){int oldX,oldY;if(!timerSeen){timerSeen=1;Log("TIMER_START",left,top,edge,0);}oldX=left;oldY=top;if(!Query()){DriverLost("QUERY_ERROR");return 0;}if(windowOnly)(void)WDWinPan(left,top);if(dragging){if(GetCapture()!=w || oldX!=left || oldY!=top)CancelMapDrag();return 0;}Keyboard();if(wantSettings){wantSettings=0;OpenSettings();}if(Follow()){ResetEdge();PaintEdge();}else Edge();PanDlgTrack();}return 0;
  case WM_COMMAND:
   if(a==RECOVER)Log("RECOVER_ENTRY",(int)w,(int)a,left,top);
   if(a!=QUIT && live && !Query()){DriverLost("COMMAND_QUERY");return 0;}
@@ -490,17 +520,18 @@ long FAR PASCAL __export Wnd(HWND w,UINT msg,WPARAM a,LPARAM b) {
   wsprintf(line,"Edge %d Follow %d",edge,follow);TextOut(dc,176,122,line,lstrlen(line));
   TextOut(dc,8,132,recoveryStatus,lstrlen(recoveryStatus));EndPaint(w,&ps);return 0;
  case WM_CLOSE:
-  if(!Stop()){MessageBox(w,"Windows could not finish recovering a window. Use Home before closing the workspace.","Window workspace",MB_OK|MB_ICONEXCLAMATION);return 0;}DestroyWindow(w);return 0;
+  if(!Stop()){if(!closing)MessageBox(w,"Windows could not finish recovering a window. Use Home before closing the workspace.","Window workspace",MB_OK|MB_ICONEXCLAMATION);return 0;}DestroyWindow(w);return 0;
  case WM_QUERYENDSESSION:return !windowOnly || WDWinPrepareShutdown()>=0;
  case WM_ENDSESSION:if(a)Stop();return 0;
  case WM_DESTROY:Stop();PostQuitMessage(0);return 0;
  }return DefWindowProc(w,msg,a,b);
 }
 int PASCAL WinMain(HINSTANCE instance,HINSTANCE previous,LPSTR command,int show) {
- WNDCLASS wc;FARPROC thunk;MSG msg;HINSTANCE driver;int value,settings;char arg[24];HWND owner;
+ WNDCLASS wc;FARPROC thunk;MSG msg;HINSTANCE driver;int value,settings,fixed;char arg[24];HWND owner;
  instanceHandle=instance;
  /* One owner: route a second launch to the first before any driver escape (an escape would reset its mode). */
- CopyArg(arg,command,sizeof(arg));settings=PanCmdParse(arg)==PS_CMD_SETTINGS;openMsg=RegisterWindowMessage(PS_MSG_XY);
+ CopyArg(arg,command,sizeof(arg));settings=PanCmdParse(arg)==PS_CMD_SETTINGS;openMsg=PanOwnerMessage(PN_XY);keyWake=RegisterWindowMessage(PK_WAKE);
+ if(PanOwnerRoute(settings))return 0;
  owner=FindWindow("XTPan",0);
  if(owner){if(settings)PostMessage(owner,RegisterWindowMessage(PS_MSG_VERT),0,0L);return 0;}
  switch(PanOwnerStart(previous!=0,settings)){
@@ -509,30 +540,31 @@ int PASCAL WinMain(HINSTANCE instance,HINSTANCE previous,LPSTR command,int show)
  }
  display=GetDC(0);if(!display)return 1;driver=GetModuleHandle("DISPLAY");statsProc=(STATS)GetProcAddress(driver,(LPSTR)106L);
  if(GetDeviceCaps(display,HORZRES)!=640 || GetDeviceCaps(display,VERTRES)!=256 || !Query()){
-  if(!settings || GetSystemMetrics(SM_CYSCREEN)!=200 ||
+  /* A stale startup token on another driver must not open a loader-time
+   * message box outside the actual viewport. PANCFG owns failure notices. */
+  if(!settings || PanOwnerDetect(&fixed)!=PN_VERT || !fixed || GetSystemMetrics(SM_CYSCREEN)!=200 ||
      (GetSystemMetrics(SM_CXSCREEN)!=320 && GetSystemMetrics(SM_CXSCREEN)!=640) ||
-     WDWinInit(2048,2048)!=WD_OK){
-   MessageBox(0,"Use the supported Tandy pan display, or open Settings on a fixed 320x200 or 640x200 display.","XY overview unavailable",MB_OK|MB_ICONEXCLAMATION);
-   ReleaseDC(0,display);return 1;
-  }
-  windowOnly=1;statsProc=0;live=1;WDWinExclude("Progman");WDWinExclude("TandyStart");Query();
+     WDWinInit(2048,2048)!=WD_OK){ReleaseDC(0,display);return 1;}
+  windowOnly=1;statsProc=0;live=1;WDWinExclude("Progman");WDWinExclude("TandyStart");WDWinExclude("PanSetDlg");WDWinExclude(XY_CLASS_NAME);Query();
  }
  value=0;if(!windowOnly)live=Escape(display,ESC_MODE,2,(LPSTR)&value,0)>0;
- if(!live){MessageBox(0,"The display driver does not provide the XY panning control escape. No pan controls were started.","XY overview unavailable",MB_OK|MB_ICONEXCLAMATION);ReleaseDC(0,display);return 1;}
+ if(!live){ReleaseDC(0,display);return 1;}
  if(!Query()){
-  Cleanup();MessageBox(0,"The display driver stopped reporting the supported XY panning geometry. No pan controls were started.","XY overview unavailable",MB_OK|MB_ICONEXCLAMATION);
+  Cleanup();
   live=0;ReleaseDC(0,display);return 1;
  }
  panHost.ops.query=XyQuery;panHost.ops.apply=XyApply;panHost.ops.home=XyHome;panHost.store.get=IniGet;panHost.store.put=IniPut;
- panHost.title="XY panning settings";panHost.backend=windowOnly?"Window workspace (24 windows)":"Tandy XY pan (HPXY)";
+ panHost.title="Panning settings";panHost.backend=windowOnly?"Window workspace (24 windows)":"Tandy XY pan (HPXY)";
  {PANCAPS pc;PANSET ps;
   /* Saved edge/repeat/dialog settings only; the mode always starts in software. */
   pc.backend=PS_BACK_XY;pc.caps=PanCapsFor(PS_BACK_XY,statsProc!=0);PanSetLoad(&pc,&ps,&panHost.store);
   edge=ps.edgeOn;edgeRepeat=ps.repeat;follow=windowOnly?0:ps.followDlg;}
  OpenLog(instance);Log("START",left,top,hardware,0);Log("EDGE_E1",500,edgeRepeat,100,0);
- memset(&wc,0,sizeof(wc));thunk=MakeProcInstance((FARPROC)Wnd,instance);wc.lpfnWndProc=(WNDPROC)thunk;wc.hInstance=instance;wc.hCursor=LoadCursor(0,IDC_ARROW);wc.hbrBackground=(HBRUSH)(COLOR_WINDOW+1);wc.lpszClassName=XY_CLASS_NAME;RegisterClass(&wc);
+ memset(&wc,0,sizeof(wc));thunk=MakeProcInstance((FARPROC)Wnd,instance);wc.lpfnWndProc=(WNDPROC)thunk;wc.hInstance=instance;wc.hCursor=LoadCursor(0,IDC_ARROW);wc.hbrBackground=(HBRUSH)(COLOR_WINDOW+1);wc.lpszClassName=XY_CLASS_NAME;
+ if(!thunk || !RegisterClass(&wc)){Cleanup();goto done;}
  window=CreateWindow(XY_CLASS_NAME,XY_WINDOW_TITLE,WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX,left+4,top+2,312,196,0,Menu(),instance,0);
  if(!window){Cleanup();goto done;}ShowWindow(window,show);UpdateWindow(window);
+ StartKeys();
  if(settings)PostMessage(window,openMsg,0,0L);
  while(GetMessage(&msg,0,0,0)){
   if(PanDlgMessage(&msg))continue;
@@ -551,5 +583,5 @@ int PASCAL WinMain(HINSTANCE instance,HINSTANCE previous,LPSTR command,int show)
   TranslateMessage(&msg);DispatchMessage(&msg);
  }
 done:
- if(logFile!=HFILE_ERROR)_lclose(logFile);FreeProcInstance(thunk);UnregisterClass(XY_CLASS_NAME,instance);ReleaseDC(0,display);return 0;
+ if(logFile!=HFILE_ERROR)_lclose(logFile);if(thunk)FreeProcInstance(thunk);UnregisterClass(XY_CLASS_NAME,instance);ReleaseDC(0,display);return 0;
 }

@@ -43,7 +43,9 @@ def main():
              for i,v in enumerate(P.MODES.values())}
     files=P.payload(args.repo,args.support,drivers,out/'font-fixture',b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes(126),
                     b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([7])*126,
-                    b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([8])*126)
+                    b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([8])*126,
+                    b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([9])*126,
+                    b'MZ'+bytes(58)+(64).to_bytes(4,'little')+b'NE'+bytes([10])*126)
     rec=P.emit(args.repo,out/'prepared',files,'0'*40,fixture=True)
     P.verify(out/'prepared')
     src=out/'host-src';shutil.copytree(out/'prepared/native-src',src);write(src/'HOSTTEST.H',SHIM)

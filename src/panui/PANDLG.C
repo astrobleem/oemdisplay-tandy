@@ -1,4 +1,4 @@
-/* PANDLG.C - the "Panning settings" window shared by XTPAN and XYCTL.
+/* PANDLG.C - one adaptive settings window for every panning owner.
  *
  * A passive popup built in code from STATIC, BUTTON and EDIT children: no
  * resource, no timer, no hook, no modal loop. Which rows exist depends only
@@ -11,8 +11,8 @@
 
 #define DLG_CLASS   "PanSetDlg"
 #define DLG_TITLE   "Panning settings"
-#define DLG_W       300
-#define DLG_MAXH    176
+#define DLG_W       (compact ? 152 : 300)
+#define DLG_MAXH    (compact ? 96 : 176)
 
 #define ID_BACKEND  200
 #define ID_VIEW     201
@@ -34,14 +34,14 @@
 /* Client layout in pixels: two text lines, one row per capability, then the
  * status line and the buttons at the bottom. The row pitch is 14 when there
  * is room and shrinks (down to 11) if additional rows must fit 176 px. */
-#define PAN_X       7
-#define PAN_W       280
-#define TXT_H       12
-#define STATUS_H    24      /* two lines for validation and driver messages */
-#define LAY_ROW     30      /* top of the first capability row */
-#define LAY_FOOT    44      /* client bottom to top of the status line */
-#define LAY_BTN     16      /* client bottom to top of the buttons */
-#define BTN_H       14
+#define PAN_X       (compact ? 4 : 7)
+#define PAN_W       (compact ? 142 : 280)
+#define TXT_H       (compact ? 7 : 12)
+#define STATUS_H    (compact ? 13 : 24)      /* two lines for validation and driver messages */
+#define LAY_ROW     (compact ? 9 : 30)      /* top of the first capability row */
+#define LAY_FOOT    (compact ? 27 : 44)      /* client bottom to top of the status line */
+#define LAY_BTN     (compact ? 12 : 16)      /* client bottom to top of the buttons */
+#define BTN_H       (compact ? 10 : 14)
 #define ROW_MAX     14
 #define ROW_MIN     11
 
@@ -55,6 +55,7 @@
 #define EM_LIMITTEXT (WM_USER + 21)
 #endif
 
+static int compact;
 static HWND hDlg;
 static const PANHOST *pHost;
 static PANMODEL model;
@@ -95,6 +96,8 @@ static int RowStep(int n)
 {
     int avail = ClientMax() - LAY_ROW - LAY_FOOT - 2;
     int step = ROW_MAX;
+    if (compact)
+        return 9;
     if (n > 0 && n * step > avail)
         step = avail / n;
     if (step < ROW_MIN)
@@ -127,7 +130,8 @@ static HWND MakeChild(HWND parent, const char *cls, const char *text,
 static void EditItem(HWND hwnd, int id, int y, int h)
 {
     HWND e = MakeChild(hwnd, "EDIT", "", WS_BORDER | ES_AUTOHSCROLL |
-                       WS_TABSTOP, 190, y, 44, h, id);
+                       WS_TABSTOP, compact ? 92 : 190, y, compact ? 30 : 44,
+                       compact ? h - 1 : h, id);
     SendMessage(e, EM_LIMITTEXT, 5, 0L);
 }
 
@@ -257,12 +261,13 @@ static void BuildControls(HWND hwnd)
     int y = LAY_ROW;
     const char *bk = pHost->backend ? pHost->backend : "";
 
-    MakeChild(hwnd, "STATIC", bk, SS_LEFT, PAN_X, 3, PAN_W, TXT_H, ID_BACKEND);
-    MakeChild(hwnd, "STATIC", "", SS_LEFT, PAN_X, 16, PAN_W, TXT_H, ID_VIEW);
+    if (!compact)
+        MakeChild(hwnd, "STATIC", bk, SS_LEFT, PAN_X, 3, PAN_W, TXT_H, ID_BACKEND);
+    MakeChild(hwnd, "STATIC", "", SS_LEFT, PAN_X, compact ? 1 : 16, PAN_W, TXT_H, ID_VIEW);
 
     if (caps & PS_CAP_STEP) {
-        MakeChild(hwnd, "STATIC", (caps & PS_CAP_DESK) ? "Step (pixels)" : "Step (rows)",
-                  SS_LEFT, PAN_X, y, 180,
+        MakeChild(hwnd, "STATIC", "Step (pixels)",
+                  SS_LEFT, PAN_X, y, compact ? 86 : 180,
                   step, 0);
         EditItem(hwnd, ID_STEP, y, step);
         y += step;
@@ -270,13 +275,13 @@ static void BuildControls(HWND hwnd)
     if (caps & PS_CAP_EDGE) {
         MakeChild(hwnd, "STATIC", (caps & PS_CAP_DESK) ?
                   "Edge band width (pixels)" : "Edge band width (rows)", SS_LEFT, PAN_X,
-                  y, 180, step, 0);
+                  y, compact ? 86 : 180, step, 0);
         EditItem(hwnd, ID_EDGE, y, step);
         y += step;
     }
     if (caps & PS_CAP_DWELL) {
         MakeChild(hwnd, "STATIC", "Dwell before pan (ms)", SS_LEFT, PAN_X,
-                  y, 180, step, 0);
+                  y, compact ? 86 : 180, step, 0);
         EditItem(hwnd, ID_DWELL, y, step);
         y += step;
     }
@@ -295,11 +300,11 @@ static void BuildControls(HWND hwnd)
     if (caps & PS_CAP_REPEAT) {
         /* one group: WS_GROUP and WS_TABSTOP on the first radio only */
         MakeChild(hwnd, "BUTTON", "Repeat 100 ms",
-                  BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP, PAN_X, y, 120,
+                  BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP, PAN_X, y, compact ? 62 : 120,
                   step, ID_REP100);
-        MakeChild(hwnd, "BUTTON", "200 ms", BS_AUTORADIOBUTTON, 130, y, 70,
+        MakeChild(hwnd, "BUTTON", "200 ms", BS_AUTORADIOBUTTON, compact ? 68 : 130, y, compact ? 36 : 70,
                   step, ID_REP200);
-        MakeChild(hwnd, "BUTTON", "500 ms", BS_AUTORADIOBUTTON, 204, y, 70,
+        MakeChild(hwnd, "BUTTON", "500 ms", BS_AUTORADIOBUTTON, compact ? 106 : 204, y, compact ? 36 : 70,
                   step, ID_REP500);
         y += step;
     }
@@ -312,15 +317,18 @@ static void BuildControls(HWND hwnd)
     if (caps & PS_CAP_MODE) {
         if (caps & PS_CAP_SOFT)
             MakeChild(hwnd, "BUTTON", "Software",
-                      BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP, PAN_X, y, 90,
+                      BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP, PAN_X, y, compact ? 44 : 90,
                       step, ID_SOFT);
         if (caps & PS_CAP_HARD)
-            MakeChild(hwnd, "BUTTON", "Hardware", BS_AUTORADIOBUTTON, 100, y, 90,
+            MakeChild(hwnd, "BUTTON", "Hardware", BS_AUTORADIOBUTTON, compact ? 50 : 100,
+                      y, compact ? 48 : 90,
                       step, ID_HARD);
         if (caps & PS_CAP_DESK)
             MakeChild(hwnd, "BUTTON", "Windows", BS_AUTORADIOBUTTON |
                       ((caps & PS_CAP_SOFT) ? 0L : WS_GROUP | WS_TABSTOP),
-                      (caps & (PS_CAP_SOFT | PS_CAP_HARD)) ? 194 : PAN_X, y, 86,
+                      (caps & (PS_CAP_SOFT | PS_CAP_HARD)) ?
+                      (compact ? 100 : 194) : PAN_X,
+                      y, compact ? 44 : 86,
                       step, ID_DESK);
         y += step;
     }
@@ -329,11 +337,11 @@ static void BuildControls(HWND hwnd)
               STATUS_H, ID_STATUS);
     if (caps & PS_CAP_HOME)
         MakeChild(hwnd, "BUTTON", "Home", BS_PUSHBUTTON | WS_TABSTOP, PAN_X,
-                  h - LAY_BTN, 60, BTN_H, ID_HOME);
-    MakeChild(hwnd, "BUTTON", "Apply", BS_DEFPUSHBUTTON | WS_TABSTOP, 160,
-              h - LAY_BTN, 60, BTN_H, IDOK);
-    MakeChild(hwnd, "BUTTON", "Cancel", BS_PUSHBUTTON | WS_TABSTOP, 226,
-              h - LAY_BTN, 60, BTN_H, IDCANCEL);
+                  h - LAY_BTN, compact ? 34 : 60, BTN_H, ID_HOME);
+    MakeChild(hwnd, "BUTTON", "Apply", BS_DEFPUSHBUTTON | WS_TABSTOP, compact ? 62 : 160,
+              h - LAY_BTN, compact ? 40 : 60, BTN_H, IDOK);
+    MakeChild(hwnd, "BUTTON", "Cancel", BS_PUSHBUTTON | WS_TABSTOP, compact ? 106 : 226,
+              h - LAY_BTN, compact ? 40 : 60, BTN_H, IDCANCEL);
 
     FillControls(hwnd);
     UpdateButtons(hwnd);
@@ -502,7 +510,10 @@ HWND PanDlgOpen(HINSTANCE inst, const PANHOST *host)
     hInst = inst;
     pHost = host;
     PanModelOpen(&model, &host->ops);
+    compact = model.caps.viewW < 300 || model.caps.viewH < 176;
     n = CountRows(model.caps.caps);
+    if (compact && (model.caps.viewW < 160 || model.caps.viewH < 100 || n > 5))
+        return NULL;
     step = RowStep(n);
     h = WinHeight(n, step);
     hDlg = CreateWindow((LPSTR)DLG_CLASS, (LPSTR)title,

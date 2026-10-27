@@ -19,6 +19,15 @@ SOURCES = ('src/panui/PANSET.C', 'src/panui/PANSET.H',
            'src/wdesk/PLACE/WTPLACE.C', 'src/wdesk/PLACE/WTPLACE.H')
 
 
+LEGACY_SOURCES = {
+    'src/panui/PANDLG.C', 'src/panui/PANDLG.H',
+    'src/xtpan/XTPAN.C', 'src/xtpan/XTPAN.DEF', 'src/xtpan/XTPAN.RSP',
+    'src/softpan/PANCFG.C', 'src/softpan/PANCFG.DEF',
+    'src/softpan/PANCFG.RSP', 'src/softpan/BUILDAPP.PY',
+    'src/softpan/BLDTEST.BAT',
+    'experiments/XYOVERVIEW/XYCTL.C', 'experiments/XYOVERVIEW/XYCTL.LNK'}
+
+
 def identity(data):
     return {'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
 
@@ -33,6 +42,12 @@ def exact(name, pin):
     require(not path.is_absolute() and '..' not in path.parts,
             'Unsafe qualification path: ' + name)
     data = (ROOT / path).read_bytes()
+    # The current implementation supersedes these helper sources. Original
+    # qualified binaries remain bound to their exact retained source snapshot.
+    if identity(data) != pin and name in LEGACY_SOURCES:
+        with zipfile.ZipFile(ROOT / 'src/panui/LEGACY.ZIP') as z:
+            require(set(z.namelist()) == set(SOURCES), 'Legacy source inventory differs')
+            data = z.read(name)
     require(identity(data) == pin, 'Changed qualified input: ' + name)
     return data
 

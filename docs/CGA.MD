@@ -69,16 +69,15 @@ to an edge scrolls after a short dwell. New windows and controls reached with
 Tab are brought into view. Commands sent while Windows is loading an app are
 retained in a bounded queue and applied afterward.
 
-**Ctrl+Alt+S** opens Panning settings; `PANCTL /SETTINGS` from Run also works.
+**Ctrl+Alt+S** opens Panning settings; `PANCFG /SETTINGS` from Run is the common entry.
+`PANCTL /SETTINGS` remains compatible.
 Change Step, Dwell, Follow active window or Pan at screen edge, then Apply.
 Apply saves in WIN.INI; Cancel discards un-applied edits. Step rounds to a
 multiple of 8 across: entering 20 gives 24. Home moves the view without
 changing the settings.
 
-![Panning settings on the actual 160x100 CGA viewport](CGA/PANSET.PNG)
-
-*Native IBM XT/CGA emulator screen capture; the complete settings window fits
-the 160x100 viewport. [Applied settings](CGA/PANAPPLY.PNG) and [capture details](CGA/CAPTURES.MD).*
+The compact dialog now shares its layout and input handling with the other
+panning helpers. See [current shared settings and controls](PANNING.MD).
 
 ![Paintbrush in the panning desktop](CGA/PANPAINT.PNG)
 
@@ -105,3 +104,7 @@ These modes were tested in IBM CGA emulation. Physical cards, clone CRTCs,
 composite, PCjr/Tandy and EGA/VGA remain separate targets.
 [Image sources and capture details](CGA/CAPTURES.MD) ·
 [Text instructions and recovery](../downloads/experimental/CGA/README.TXT).
+
+The compact settings use the same implementation as the other current panning
+helpers. `PANCFG /SETTINGS` is the common entry; see [Panning](PANNING.MD)
+for controls, supported approaches and current native screenshots.

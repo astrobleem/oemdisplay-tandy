@@ -1,0 +1,13 @@
+LIBRARY PANKEY
+DESCRIPTION 'CGAPAN retained viewport key commands'
+EXETYPE WINDOWS
+CODE PRELOAD FIXED
+DATA PRELOAD FIXED SINGLE
+HEAPSIZE 0
+EXPORTS
+ PanKeyInstall @1
+ PanKeyRemove @2
+ PanKeyNext @3
+ PanKeyHook @4
+ WEP @5 RESIDENTNAME
+ PanKeyInstallEx @6

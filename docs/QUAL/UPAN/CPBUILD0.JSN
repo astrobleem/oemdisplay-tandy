@@ -1,0 +1,36 @@
+[
+  {
+    "command": [
+      "C:\\WATCOM\\BINNT\\wcl.exe",
+      "-q",
+      "-bt=dos",
+      "-0",
+      "-ml",
+      "-s",
+      "-k8192",
+      "-fe=CPSET.EXE",
+      "CPSET.C"
+    ],
+    "status": 0,
+    "stdout": "",
+    "stderr": "",
+    "bytes": 36612,
+    "sha256": "e4fccba25d817f9a07a900a3cf443d9ea8a28cfb82cd39887293e8436589fa4d"
+  },
+  {
+    "command": [
+      "C:\\WATCOM\\BINNT\\wcl386.exe",
+      "-q",
+      "-bt=nt",
+      "-dHOST_TEST",
+      "-dHOST_WINDOWS",
+      "-fe=CPSETNT.EXE",
+      "CPSET.C"
+    ],
+    "status": 0,
+    "stdout": "",
+    "stderr": "",
+    "bytes": 50176,
+    "sha256": "059e7911278d0c806103dc0345bf26f790a5c0ce9cae45e4621f71fd083aa87a"
+  }
+]

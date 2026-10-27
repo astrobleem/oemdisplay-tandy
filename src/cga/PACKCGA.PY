@@ -31,9 +31,14 @@ ASSETS={
  'LOGOLIC.TXT':('LOGOLIC.TXT','b7b5b82f34c6a21e5f680e983af2dc628b9bd913363a7ffc6087cd1486201c80'),
 }
 T80_PINS={'T80COUR.FON':'fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6'}
-COPY=set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE','PANCTL.EXE','PANKEY.DLL'}
-HELPERS={'CGACTL.EXE','PANCTL.EXE'}
+COPY=set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE','PANCTL.EXE','PANKEY.DLL','PANCFG.EXE','XTPAN.EXE'}
+HELPERS={'CGACTL.EXE','PANCTL.EXE','PANCFG.EXE','XTPAN.EXE'}
 ALL_FILES=COPY|{'XTSTATIC.LGO','WXTSPL01.RLE','LOGOLIC.TXT','OEMSETUP.INF','FONTLIC.TXT','NOTICE.TXT'}
+
+
+def ROOT_CGA_BASE(repo):
+    with zipfile.ZipFile(repo/'tools/UPAN/BASE/CGA.ZIP') as z:
+        return {n[4:]:z.read(n) for n in z.namelist() if n.startswith('CGA/')}
 
 
 def identity(data):
@@ -65,7 +70,26 @@ def read_drivers(builds):
     return result
 
 
+def shared_build(folder,names):
+    record=json.loads((folder/'BUILD.JSN').read_bytes())
+    if record.get('status')!='BUILT_NOT_RUNTIME_QUALIFIED':raise ValueError('Missing unified native helper build')
+    files={}
+    for name in names:
+        data=(folder/name).read_bytes()
+        if {k:identity(data)[k] for k in ('bytes','sha256')}!=record['binaries'][name]:
+            raise ValueError('Changed unified helper: '+name)
+        files[name]=data
+    source_map={'CGACTL.C':HERE/'CGACTL.C','PANCTL.C':HERE/'PANCTL.C','PANCFG.C':HERE.parent/'softpan/PANCFG.C'}
+    source_map.update({p.name:p for p in (HERE.parent/'panui').iterdir() if p.suffix in ('.C','.H','.ASM','.DEF')})
+    for name,pin in record['sources'].items():
+        if name in source_map:
+            data=source_map[name].read_bytes()
+            if {k:identity(data)[k] for k in ('bytes','sha256')}!=pin:raise ValueError('Changed compiled helper source: '+name)
+    return files
+
+
 def read_helper(folder):
+    if (folder/'BUILD.JSN').exists():return shared_build(folder,('CGACTL.EXE',))['CGACTL.EXE']
     record=json.loads((folder/'HELPER.JSN').read_bytes())
     data=(folder/'CGACTL.EXE').read_bytes()
     if record.get('build')!='PASS' or record.get('kind')!='CGA_WINDOW_ACCESS_CANDIDATE':
@@ -84,7 +108,10 @@ def read_helper(folder):
 
 
 def read_owner(folder):
-    """The CGAPAN viewport owner: its own receipt, no shared placement source."""
+    """The CGAPAN viewport owner and its exact input module."""
+    if (folder/'BUILD.JSN').exists():
+        files=shared_build(folder,('PANCTL.EXE','PANKEY.DLL'))
+        return files['PANCTL.EXE'],files['PANKEY.DLL']
     record=json.loads((folder/'HELPER.JSN').read_bytes())
     data=(folder/'PANCTL.EXE').read_bytes()
     if record.get('build')!='PASS' or record.get('kind')!='CGA_PAN_OWNER_CANDIDATE':
@@ -108,11 +135,13 @@ def read_owner(folder):
     return data,key
 
 
-def payload(repo,support,drivers,fontout,helper,owner,key):
+def payload(repo,support,drivers,fontout,helper,owner,key,config,window):
     result=dict(drivers)
     result['CGACTL.EXE']=helper
     result['PANCTL.EXE']=owner
     result['PANKEY.DLL']=key
+    result['PANCFG.EXE']=config
+    result['XTPAN.EXE']=window
     CGAFONT.build(fontout)
     for name in CGAFONT.FACES:result[name]=(fontout/name).read_bytes()
     # Retain TEXT80 Courier exactly. CGA's proportional Helv preserves the
@@ -154,10 +183,33 @@ def emit(repo,out,files,source_commit,fixture=False):
                    destination='WINDOWS' if name in HELPERS else 'SYSTEM' if name in COPY else '')
          for name,data in sorted(files.items())}
     token=hashlib.sha256(json.dumps(pin,sort_keys=True).encode()).hexdigest()
-    header='#define CGA_PACKET_ID "'+token+'"\n#define CGA_COUNT '+str(len(pin))+'\nstatic CGAFILE cga_files[CGA_COUNT]={\n'
+    # Current and immediately preceding accepted packets share one checked
+    # upgrade/undo implementation, with each sealed inventory kept exact.
+    baseline=ROOT_CGA_BASE(repo)
+    oldpin={name:dict(identity(data),installed=name if name in COPY else '',
+                    destination='WINDOWS' if name in HELPERS else 'SYSTEM' if name in COPY else '')
+            for name,data in sorted(baseline.items())}
+    oldtoken=hashlib.sha256(json.dumps(oldpin,sort_keys=True).encode()).hexdigest()
+    header='#define CGA_MAX_COUNT '+str(max(len(pin),len(oldpin)))+'\n'
+    if not set(oldpin)<set(pin) or set(pin)-set(oldpin)!={'PANCFG.EXE','XTPAN.EXE'}:
+        raise ValueError('Review the prior-packet upgrade inventory')
+    header+='static CGAFILE cga_new_files[]={\n'
     for name,row in pin.items():
         header+=' {"%s","%s",%dUL,0x%sUL},\n'%(name,row['installed'],row['bytes'],row['crc32'])
-    header+='};\n'
+    header+='};\nstatic CGAFILE cga_old_files['+str(len(oldpin))+'];\n'
+    header+='static CGAFILE *cga_files=cga_new_files;\n'
+    header+='static unsigned cga_count='+str(len(pin))+';\nstatic int cga_legacy;\n'
+    header+='static const char *cga_packet_id="'+token+'";\n'
+    header+='#define CGA_COUNT cga_count\n#define CGA_PACKET_ID cga_packet_id\n'
+    header+='static void cga_select(int old){unsigned i,j=0;\nif(old){\n'
+    header+='for(i=0;i<'+str(len(pin))+';i++)if(i!='+str(list(pin).index('PANCFG.EXE'))+' && i!='+str(list(pin).index('XTPAN.EXE'))+')cga_old_files[j++]=cga_new_files[i];\n'
+    for i,(name,row) in enumerate(oldpin.items()):
+        if row['installed']!=pin[name]['installed']:raise ValueError('Prior destination changed')
+        if row['bytes']!=pin[name]['bytes'] or row['crc32']!=pin[name]['crc32']:
+            header+='cga_old_files[%d].size=%dUL;cga_old_files[%d].crc=0x%sUL;\n'%(i,row['bytes'],i,row['crc32'])
+    header+='}\ncga_legacy=old;cga_files=old?cga_old_files:cga_new_files;'
+    header+='cga_count=old?'+str(len(oldpin))+':'+str(len(pin))+';'
+    header+='cga_packet_id=old?"'+oldtoken+'":"'+token+'";}\n'
     sources=CGASET.stage(repo,out/'native-src',header)
     readme=(HERE/'README.TXT').read_bytes()
     (root/'README.TXT').write_bytes(readme)
@@ -225,6 +277,7 @@ def main():
     p.add_argument('--build-pan',type=Path,required=True)
     p.add_argument('--helper-build',type=Path,required=True)
     p.add_argument('--owner-build',type=Path,required=True)
+    p.add_argument('--config-build',type=Path,required=True)
     p.add_argument('--source-commit',required=True);p.add_argument('--out',type=Path,required=True)
     p=sub.add_parser('finish');p.add_argument('--prepared',type=Path,required=True);p.add_argument('--build',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
     args=ap.parse_args()
@@ -236,7 +289,7 @@ def main():
         fonts=args.out.parent/(args.out.name+'-fonts')
         if fonts.exists():raise ValueError('Fresh font output required: '+str(fonts))
         owner,key=read_owner(args.owner_build)
-        files=payload(args.repo,args.support,drivers,fonts,read_helper(args.helper_build),owner,key)
+        files=payload(args.repo,args.support,drivers,fonts,read_helper(args.helper_build),owner,key,shared_build(args.config_build,('PANCFG.EXE',))['PANCFG.EXE'],shared_build(args.config_build,('XTPAN.EXE',))['XTPAN.EXE'])
         emit(args.repo,args.out,files,args.source_commit)
         print('CGA expanded packet/source prepared; native helper build and Windows qualification remain queued')
     else:

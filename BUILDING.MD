@@ -1,3 +1,8 @@
+Current unified-panning packets use `tools/UPAN/PUBLISH.PY` for accepted-byte
+packaging and the normal `tools/CURRENT` catalog checks. See
+[UPAN developer workflow](tools/UPAN/README.MD) and [user controls](docs/PANNING.MD).
+The preceding RCPUB producer remains the immutable baseline for older acceptance.
+
 # Building and verifying Windows XT
 
 This is developer guidance. Consumers use [WINXT.ZIP and native DOS Setup](docs/DESKTOP.MD),
