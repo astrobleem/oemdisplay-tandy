@@ -28,7 +28,7 @@
 #define XY_LOG_LINE_CAP 112
 #define XY_PAINT_LINE_CAP 128
 #define XY_CLASS_NAME "XYOverviewControl"
-#define XY_WINDOW_TITLE "XY overview"
+#define XY_WINDOW_TITLE "Panning"
 #define MAP_LEFT 8
 #define MAP_TOP 58
 #define MAP_WIDTH 160
@@ -152,7 +152,7 @@ static int Query(void) {
  }
  in[0]=-1;in[1]=0;
  ok=Escape(display,ESC_XY,4,(LPSTR)in,(LPSTR)out)>0;
- if(!ok || out[0]<0 || out[0]>320 || (out[0]&7) || out[1]<0 || out[1]>56 || (out[1]&3) || out[2]!=320 || out[3]!=200 || out[4]!=640 || out[5]!=256)return 0;
+ if(!ok || out[0]<0 || out[0]>320 || (out[0]&7) || out[1]<0 || out[1]>out[5]-200 || (out[1]&3) || out[2]!=320 || out[3]!=200 || out[4]!=640 || (out[5]!=256 && out[5]!=400))return 0;
  if(left!=out[0] || top!=out[1]){ResetEdge();edgeDirty=1;}
  left=out[0];top=out[1];viewWidth=out[2];viewHeight=out[3];logicalWidth=out[4];logicalHeight=out[5];
  KeepControlVisible();
@@ -283,7 +283,7 @@ static int Pan(int x,int y) {
  if(edgePresent)edgeDirty=1;else{edgeDirty=0;InvalidateRect(window,0,FALSE);}return 1;
 }
 static void Mode(int value) {
- int ok;if(!live || windowOnly || (value!=0 && value!=1))return;ResetEdge();
+ int ok;if(!live || windowOnly || !statsProc || (value!=0 && value!=1))return;ResetEdge();
  ok=Escape(display,ESC_MODE,2,(LPSTR)&value,0)>0;
  if(!ok){Log("MODE",value,hardware,0,0);DriverLost("MODE_ESCAPE");return;}
  if(!Query()){Log("MODE",value,hardware,0,0);DriverLost("MODE_QUERY");return;}
@@ -408,7 +408,7 @@ static int Follow(void) {
  if(!active || active==window || !IsWindowVisible(active) || IsIconic(active))return 0;
  GetClassName(active,name,sizeof(name));
  if(lstrcmp(name,"#32770")!=0)return 0;
- GetWindowRect(active,&r);x=Fit(left,r.left,r.right,320,8,320);y=Fit(top,r.top,r.bottom,200,4,56);
+ GetWindowRect(active,&r);x=Fit(left,r.left,r.right,viewWidth,8,logicalWidth-viewWidth);y=Fit(top,r.top,r.bottom,viewHeight,4,logicalHeight-viewHeight);
  if(x!=left || y!=top){Log("DIALOG",r.left,r.top,r.right,r.bottom);Pan(x,y);}
  return 1; /* Active dialog following owns the viewport, even after it fits. */
 }
@@ -459,7 +459,7 @@ static HMENU Menu(void) {
  HMENU bar,p,m,e,w;bar=CreateMenu();p=CreatePopupMenu();m=CreatePopupMenu();e=CreatePopupMenu();w=CreatePopupMenu();
  AppendMenu(p,MF_STRING,LEFT,"&Left 8");AppendMenu(p,MF_STRING,RIGHT,"&Right 8");AppendMenu(p,MF_STRING,UP,"&Up 4");AppendMenu(p,MF_STRING,DOWN,"&Down 4");AppendMenu(p,MF_STRING,HOME,"&Home");AppendMenu(p,MF_STRING,QUIT,"E&xit");
  if(windowOnly)AppendMenu(m,MF_STRING|MF_CHECKED,SETTINGS,"Window workspace");
- else{AppendMenu(m,MF_STRING,SOFT,"&Software");AppendMenu(m,MF_STRING,HARD,"&Hardware");}
+ else{AppendMenu(m,MF_STRING,SOFT,"&Software");if(statsProc)AppendMenu(m,MF_STRING,HARD,"&Hardware");}
  AppendMenu(e,MF_STRING,EDGEON,"Edge &on");AppendMenu(e,MF_STRING,EDGEOFF,"Edge o&ff");
  if(!windowOnly){AppendMenu(e,MF_STRING,FOLLOWON,"Dialog follow on");AppendMenu(e,MF_STRING,FOLLOWOFF,"Dialog follow off");}
  AppendMenu(e,MF_STRING,SETTINGS,"Panning &settings...");AppendMenu(e,MF_STRING,REPEAT100,"Repeat &100ms");AppendMenu(e,MF_STRING,REPEAT200,"Repeat &200ms");AppendMenu(e,MF_STRING,REPEAT500,"Repeat &500ms");
@@ -539,7 +539,7 @@ int PASCAL WinMain(HINSTANCE instance,HINSTANCE previous,LPSTR command,int show)
  case PS_OWN_EXIT:owner=FindWindow(XY_CLASS_NAME,0);if(owner){if(IsIconic(owner))ShowWindow(owner,SW_RESTORE);BringWindowToTop(owner);}return 0;
  }
  display=GetDC(0);if(!display)return 1;driver=GetModuleHandle("DISPLAY");statsProc=(STATS)GetProcAddress(driver,(LPSTR)106L);
- if(GetDeviceCaps(display,HORZRES)!=640 || GetDeviceCaps(display,VERTRES)!=256 || !Query()){
+ if(GetDeviceCaps(display,HORZRES)!=640 || (GetDeviceCaps(display,VERTRES)!=256 && GetDeviceCaps(display,VERTRES)!=400) || !Query()){
   /* A stale startup token on another driver must not open a loader-time
    * message box outside the actual viewport. PANCFG owns failure notices. */
   if(!settings || PanOwnerDetect(&fixed)!=PN_VERT || !fixed || GetSystemMetrics(SM_CYSCREEN)!=200 ||
@@ -554,7 +554,7 @@ int PASCAL WinMain(HINSTANCE instance,HINSTANCE previous,LPSTR command,int show)
   live=0;ReleaseDC(0,display);return 1;
  }
  panHost.ops.query=XyQuery;panHost.ops.apply=XyApply;panHost.ops.home=XyHome;panHost.store.get=IniGet;panHost.store.put=IniPut;
- panHost.title="Panning settings";panHost.backend=windowOnly?"Window workspace (24 windows)":"Tandy XY pan (HPXY)";
+ panHost.title="Panning settings";panHost.backend=windowOnly?"Window workspace (24 windows)":"Framebuffer viewport";
  {PANCAPS pc;PANSET ps;
   /* Saved edge/repeat/dialog settings only; the mode always starts in software. */
   pc.backend=PS_BACK_XY;pc.caps=PanCapsFor(PS_BACK_XY,statsProc!=0);PanSetLoad(&pc,&ps,&panHost.store);

@@ -26,15 +26,15 @@ int PanOwnerDetect(int *fixed)
  HDC dc;int q=-1,in[2],out[6],w,h,colors,kind=PN_NONE;
  if(fixed)*fixed=0;dc=GetDC(0);if(!dc)return PN_NONE;
  w=GetDeviceCaps(dc,HORZRES);h=GetDeviceCaps(dc,VERTRES);colors=GetDeviceCaps(dc,NUMCOLORS);
- if(Escape(dc,0x5850,2,(LPSTR)&q,(LPSTR)out)>0 && w==320 &&
+ if(Escape(dc,0x5850,2,(LPSTR)&q,(LPSTR)out)>0 && (w==320 || w==640) &&
     out[0]>=0 && out[1]==200 && out[2]==400)kind=PN_VERT;
  else{
   in[0]=-1;in[1]=0;
   if(Escape(dc,0x5860,4,(LPSTR)in,(LPSTR)out)>0){
-   if(w==640 && h==256 && out[2]==320 && out[3]==200 && out[4]==640 && out[5]==256)kind=PN_XY;
+   if(w==640 && (h==256 || h==400) && out[2]==320 && out[3]==200 && out[4]==640 && out[5]==h)kind=PN_XY;
    else if(w==320 && h==200 && colors==16 && out[2]==160 && out[3]==100 && out[4]==320 && out[5]==200)kind=PN_CGA;
   }else if(w==160 && h==100 && colors==16)kind=PN_FIXED;
-  else if((w==320 || w==640) && h==200){kind=PN_VERT;if(fixed)*fixed=1;}
+  else if((w==160 || w==320 || w==640) && h==200){kind=PN_VERT;if(fixed)*fixed=1;}
  }
  ReleaseDC(0,dc);return kind;
 }

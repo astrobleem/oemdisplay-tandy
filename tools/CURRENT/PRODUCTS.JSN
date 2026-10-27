@@ -18,14 +18,14 @@
       }
     },
     "CPPAN.ZIP": {
-      "source": "downloads/UNIPAN/CPPAN.ZIP",
+      "source": "downloads/PAN/CPPAN.ZIP",
       "identity": {
         "bytes": 261492,
         "sha256": "e61e07157459ac6ead2488374a85995137e57f6e27c6fac72a003c5e87d48901"
       }
     },
     "JRPAN.ZIP": {
-      "source": "downloads/UNIPAN/JRPAN.ZIP",
+      "source": "downloads/PAN/JRPAN.ZIP",
       "identity": {
         "bytes": 259460,
         "sha256": "6ae2118ed70e3fd913cb4abb195f87fb1f7103a6bcb46818d5e046ca21d28095"
@@ -88,10 +88,17 @@
       }
     },
     "CGA.ZIP": {
-      "source": "downloads/UNIPAN/CGA.ZIP",
+      "source": "downloads/PAN/CGA.ZIP",
       "identity": {
         "bytes": 414463,
         "sha256": "f66bca3c0708923e2ecd9e56fddee5d092149831d68d535e866be212d30dafe9"
+      }
+    },
+    "PAN.ZIP": {
+      "source": "downloads/PAN/PAN.ZIP",
+      "identity": {
+        "bytes": 0,
+        "sha256": "PENDING_NATIVE_ACCEPTANCE"
       }
     }
   },
@@ -156,7 +163,7 @@
     },
     "CPPAN.ZIP": {
       "member": "INSTALL.TXT",
-      "source": "tools/UPAN/GUIDES/CPPAN.TXT"
+      "source": "tools/PAN/GUIDES/CPPAN.TXT"
     },
     "MINESET.ZIP": {
       "member": "INSTALL.TXT",

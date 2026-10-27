@@ -45,13 +45,13 @@ and composite output remain unqualified.
 
 ## PCjr and ColorPlus software panning
 
-A **320x400 desktop through a 320x200, 16-color viewport** is now available
+A **640x400 desktop through a 320x200, 16-color viewport** is available
 for these adapters. The kits include the helper and a fixed-mode switch-back.
 
 **[PCjr download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/JRPAN.ZIP)** | **[ColorPlus download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP)** |
 [Short install instructions](docs/SOFTPAN/RELEASE.MD) | [Windows emulator evidence](docs/SOFTPAN/README.MD)
 
-These use software copies and 32,000 additional shadow bytes. The Windows
+These use software copies and a 128,000-byte shadow desktop. The Windows
 runs cover DOSBox-X PCjr and 86Box XT/Plantronics, each with 640 KB RAM.
 
 ## More color, compact controls
@@ -82,8 +82,7 @@ The captures below retain their original, separately documented test scope.
 | --- | --- |
 | <img src="docs/pan/DEMO.GIF" alt="Emulator demonstration of vertical software panning" width="390"> | <img src="docs/pan/MINE/REVEAL.PNG" alt="Converted Minesweeper demonstration in the emulator's larger desktop" width="390"> |
 
-Use Ctrl+Alt+arrows to pan and Ctrl+Alt+Home to return home. XYCTL's menu or
-Ctrl+Alt+H switches between software and hardware presentation.
+Use Ctrl+Alt+arrows to pan and Ctrl+Alt+Home to return home. PAN /SETTINGS selects software or hardware presentation where the driver supports both.
 [Install Minesweeper](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/MINESET.ZIP) ·
 [Install guide](tools/CURRENT/GUIDES/MINESET.TXT) · [Capture notes](docs/pan/MINE/CAPTURE.MD).
 

@@ -13,7 +13,7 @@ with normal 640 KB. Other hardware uses its matching packet in
   with its guarded `DISPLAY` and `DISPWIN` entries. See [desktop setup](docs/DESKTOP.MD)
   and [driver setup](docs/DRIVERS.MD). Full preparation needs DOS 3.3+;
   the installed-Windows driver route supports DOS 3.20+.
-- **Current core producer:** `tools/DOSINST/RCPUB.PY`; the CLI in
+- **Current core producer:** `tools/PAN/PUBLISH.PY`; the CLI in
   `tools/XR1PACK/PUBLISH.PY` forwards to it. Current download curation is
   `tools/CURRENT/BUNDLE.PY`, checked by `tools/CURRENT/CHECK.PY` and pinned
   in `tools/CURRENT/PRODUCTS.JSN`.

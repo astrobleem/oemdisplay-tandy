@@ -1,0 +1,22 @@
+CGA DISPLAY + PANNING
+
+Use SETUP from DOS with your normal CGA display choice. The packet installs
+PAN automatically; no helper program selection or copying is required.
+The large-desktop 160x100 view pans over 320x200 in software. Fixed 160x100
+uses window movement. Ordinary 320x200 and 640x200 display paths retain their
+existing driver bytes and color fix; PAN /SETTINGS offers their optional
+window workspace. Use WIN /R after Setup as usual.
+
+In Windows run PAN /SETTINGS or press Ctrl+Alt+S. Ctrl+Alt+arrows pan;
+Ctrl+Alt+Home returns home and Ctrl+Alt+End finds the active window. Apply
+saves and Cancel discards edits. PAN OFF disables panning startup; PAN
+starts it again. Reopening settings keeps the existing owner and edits.
+
+The shared dialog fits 160x100. Settings show only the current display's
+supported method. Hardware panning is not advertised for CGA. Use the
+normal SETUP UNDO operation to restore the configuration recorded by this
+packet. Keep the whole expanded folder and its notices.
+
+Requires DOS, Windows 3.0 real mode and normal 640 KB. No Python, separate
+helper installation or Windows/DOS redistribution. Native emulator tests
+are not physical-machine qualification. Common guide: docs/PANNING.MD.

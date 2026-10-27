@@ -12,7 +12,7 @@
 #define DLG_CLASS   "PanSetDlg"
 #define DLG_TITLE   "Panning settings"
 #define DLG_W       (compact ? 152 : 300)
-#define DLG_MAXH    (compact ? 96 : 176)
+#define DLG_MAXH    (shortView ? 96 : 176)
 
 #define ID_BACKEND  200
 #define ID_VIEW     201
@@ -36,12 +36,12 @@
  * is room and shrinks (down to 11) if additional rows must fit 176 px. */
 #define PAN_X       (compact ? 4 : 7)
 #define PAN_W       (compact ? 142 : 280)
-#define TXT_H       (compact ? 7 : 12)
-#define STATUS_H    (compact ? 13 : 24)      /* two lines for validation and driver messages */
-#define LAY_ROW     (compact ? 9 : 30)      /* top of the first capability row */
-#define LAY_FOOT    (compact ? 27 : 44)      /* client bottom to top of the status line */
-#define LAY_BTN     (compact ? 12 : 16)      /* client bottom to top of the buttons */
-#define BTN_H       (compact ? 10 : 14)
+#define TXT_H       (shortView ? 7 : 12)
+#define STATUS_H    (shortView ? 13 : 24)      /* two lines for validation and driver messages */
+#define LAY_ROW     (shortView ? 9 : 30)      /* top of the first capability row */
+#define LAY_FOOT    (shortView ? 27 : 44)      /* client bottom to top of the status line */
+#define LAY_BTN     (shortView ? 12 : 16)      /* client bottom to top of the buttons */
+#define BTN_H       (shortView ? 10 : 14)
 #define ROW_MAX     14
 #define ROW_MIN     11
 
@@ -55,7 +55,7 @@
 #define EM_LIMITTEXT (WM_USER + 21)
 #endif
 
-static int compact;
+static int compact, shortView;
 static HWND hDlg;
 static const PANHOST *pHost;
 static PANMODEL model;
@@ -96,7 +96,7 @@ static int RowStep(int n)
 {
     int avail = ClientMax() - LAY_ROW - LAY_FOOT - 2;
     int step = ROW_MAX;
-    if (compact)
+    if (shortView)
         return 9;
     if (n > 0 && n * step > avail)
         step = avail / n;
@@ -131,7 +131,7 @@ static void EditItem(HWND hwnd, int id, int y, int h)
 {
     HWND e = MakeChild(hwnd, "EDIT", "", WS_BORDER | ES_AUTOHSCROLL |
                        WS_TABSTOP, compact ? 92 : 190, y, compact ? 30 : 44,
-                       compact ? h - 1 : h, id);
+                       shortView ? h - 1 : h, id);
     SendMessage(e, EM_LIMITTEXT, 5, 0L);
 }
 
@@ -158,7 +158,8 @@ static void SetViewLine(HWND hwnd)
 {
     const PANCAPS *c = &model.caps;
     char buf[48];
-    wsprintf(buf, "View %dx%d of %dx%d at %d,%d", c->viewW, c->viewH,
+    wsprintf(buf, compact && !shortView ? "%dx%d/%dx%d %d,%d" :
+             "View %dx%d of %dx%d at %d,%d", c->viewW, c->viewH,
              c->workW, c->workH, c->viewX, c->viewY);
     SetDlgItemText(hwnd, ID_VIEW, (LPSTR)buf);
     if (pHost && pHost->backend) {
@@ -261,9 +262,9 @@ static void BuildControls(HWND hwnd)
     int y = LAY_ROW;
     const char *bk = pHost->backend ? pHost->backend : "";
 
-    if (!compact)
+    if (!shortView)
         MakeChild(hwnd, "STATIC", bk, SS_LEFT, PAN_X, 3, PAN_W, TXT_H, ID_BACKEND);
-    MakeChild(hwnd, "STATIC", "", SS_LEFT, PAN_X, compact ? 1 : 16, PAN_W, TXT_H, ID_VIEW);
+    MakeChild(hwnd, "STATIC", "", SS_LEFT, PAN_X, shortView ? 1 : 16, PAN_W, TXT_H, ID_VIEW);
 
     if (caps & PS_CAP_STEP) {
         MakeChild(hwnd, "STATIC", "Step (pixels)",
@@ -274,13 +275,14 @@ static void BuildControls(HWND hwnd)
     }
     if (caps & PS_CAP_EDGE) {
         MakeChild(hwnd, "STATIC", (caps & PS_CAP_DESK) ?
-                  "Edge band width (pixels)" : "Edge band width (rows)", SS_LEFT, PAN_X,
+                  (compact ? "Edge (pixels)" : "Edge band width (pixels)") :
+                  "Edge band width (rows)", SS_LEFT, PAN_X,
                   y, compact ? 86 : 180, step, 0);
         EditItem(hwnd, ID_EDGE, y, step);
         y += step;
     }
     if (caps & PS_CAP_DWELL) {
-        MakeChild(hwnd, "STATIC", "Dwell before pan (ms)", SS_LEFT, PAN_X,
+        MakeChild(hwnd, "STATIC", (compact ? "Dwell (ms)" : "Dwell before pan (ms)"), SS_LEFT, PAN_X,
                   y, compact ? 86 : 180, step, 0);
         EditItem(hwnd, ID_DWELL, y, step);
         y += step;
@@ -328,7 +330,7 @@ static void BuildControls(HWND hwnd)
                       ((caps & PS_CAP_SOFT) ? 0L : WS_GROUP | WS_TABSTOP),
                       (caps & (PS_CAP_SOFT | PS_CAP_HARD)) ?
                       (compact ? 100 : 194) : PAN_X,
-                      y, compact ? 44 : 86,
+                      y, (caps & (PS_CAP_SOFT | PS_CAP_HARD)) ? (compact ? 44 : 86) : PAN_W,
                       step, ID_DESK);
         y += step;
     }
@@ -510,7 +512,8 @@ HWND PanDlgOpen(HINSTANCE inst, const PANHOST *host)
     hInst = inst;
     pHost = host;
     PanModelOpen(&model, &host->ops);
-    compact = model.caps.viewW < 300 || model.caps.viewH < 176;
+    shortView = model.caps.viewH < 176;
+    compact = model.caps.viewW < 300 || shortView;
     n = CountRows(model.caps.caps);
     if (compact && (model.caps.viewW < 160 || model.caps.viewH < 100 || n > 5))
         return NULL;

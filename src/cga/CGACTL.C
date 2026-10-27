@@ -103,7 +103,7 @@ static int CgaHome(void *ctx){(void)ctx;return WDWinHome()>=0;}
 static int NoStore(void *c,const char *s,const char *k,int v)
 {(void)c;(void)s;(void)k;(void)v;return 1;}
 static PANHOST host={{0,CgaQuery,CgaApply,CgaHome},{0,0,NoStore},
- "Panning settings","CGA window access (5 pixel steps)"};
+ "Panning settings","Window workspace (5 pixel steps)"};
 long FAR PASCAL CGA_ENTRY WndProc(HWND w,unsigned m,UINT wp,LONG lp)
 {
  int cmd;

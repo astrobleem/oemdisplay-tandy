@@ -1,7 +1,7 @@
 # Contributor build guidance
 
 Follow [AGENTS.md](AGENTS.md) and [BUILDING.MD](BUILDING.MD). Current core
-packaging is `tools/UPAN/PUBLISH.PY`; download curation is
+packaging is `tools/PAN/PUBLISH.PY`; download curation is
 `tools/CURRENT/BUNDLE.PY` with `PRODUCTS.JSN` and `CHECK.PY`. Current Actions
 verify/package accepted bytes and upload artifacts; they do not compile native
 DDK source or automatically publish new milestone releases.

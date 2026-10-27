@@ -1,4 +1,4 @@
-Current unified-panning packets use `tools/UPAN/PUBLISH.PY` for accepted-byte
+Current unified-panning packets use `tools/PAN/PUBLISH.PY` for accepted-byte
 packaging and the normal `tools/CURRENT` catalog checks. See
 [UPAN developer workflow](tools/UPAN/README.MD) and [user controls](docs/PANNING.MD).
 The preceding RCPUB producer remains the immutable baseline for older acceptance.
@@ -17,8 +17,8 @@ Host packaging uses Python and accepted, already qualified binaries. It does
 not launch an emulator or compile native source. Run from this checkout:
 
 ```text
-python -B tools/DOSINST/RCPUB.PY --out NEW-CORE --commit CORE_SOURCE_SHA
-python -B tools/DOSINST/RCPUB.PY --verify NEW-CORE --commit CORE_SOURCE_SHA
+python -B tools/PAN/PUBLISH.PY --out NEW-CORE --commit CORE_SOURCE_SHA
+python -B tools/PAN/PUBLISH.PY --verify NEW-CORE --commit CORE_SOURCE_SHA
 python -B tools/CURRENT/CHECK.PY --core NEW-CORE --sound SOUND-PACKETS --report catalog-check.json
 python -B tools/CURRENT/BUNDLE.PY --core NEW-CORE --sound SOUND-PACKETS --commit CATALOG_SOURCE_SHA --out NEW-CATALOG
 ```
