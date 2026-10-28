@@ -1,1 +1,165 @@
-PENDING
+{
+  "outcome": "NO_ACTIONABLE_FINDINGS",
+  "findings": [],
+  "reviewed_commit": "3bc8e80376f408ddf60da754bb05a03a2c00bede",
+  "reviewed_base": "8c01ca6dfba762580d52890d6ac8d10f7feae738",
+  "sources": {
+    "src/cga/FRESH.C": {
+      "bytes": 4781,
+      "sha256": "f91deff0c0a71c29015ef37079f093f1f22e5af675e59fa1b5a48046e07d2419"
+    },
+    "src/cga/FRESH.INF": {
+      "bytes": 449,
+      "sha256": "fd138332c20ce3e3973a841c2197949363fbdd91a2f7e78112a257c7b2adbf3c"
+    },
+    "src/cga/FRESH.TXT": {
+      "bytes": 4496,
+      "sha256": "b69cd7dc6b31d5264a5e016a111710f98cbf137f577a57f303228db15741dcf6"
+    },
+    "src/cga/FRESHLIC.TXT": {
+      "bytes": 483,
+      "sha256": "15797d42ff79c4cf0cd60e2796428ef74da0fa4daf6bb112ce4ec4db7056b457"
+    },
+    "src/cga/FRESHPK.PY": {
+      "bytes": 6848,
+      "sha256": "c65f5f78e6b89019236b77e58c5138b78a498c8db1cd729109e3bb174dabb666"
+    },
+    "src/cga/FRESHT.PY": {
+      "bytes": 3051,
+      "sha256": "dfef7b98b42eb878c314406b39f1eaa45e9ccebe4f50832d59b6ff2a16145b07"
+    },
+    "tools/CGAFRESH/VERIFY.PY": {
+      "bytes": 9607,
+      "sha256": "bbd268090b5069747f372c0daf431ff6864f6867a1a75870fc06bb9768b36925"
+    },
+    "tools/CGAFRESH/TESTGATE.PY": {
+      "bytes": 4545,
+      "sha256": "fa7f8033a758fd0e81a5dfd8f1de5f3509fd7a3005190dc420cbddb96c8e99d7"
+    },
+    "tools/CGAFRESH/README.MD": {
+      "bytes": 2240,
+      "sha256": "dd7efdd2744486fa11e40b533f58876d1f79d289ed63d1f3dbb52b817153f2fa"
+    },
+    "tools/CURRENT/BUNDLE.PY": {
+      "bytes": 10147,
+      "sha256": "95a0fd03692545e67ee9849222450562d6a639ad324491894c849039c8d3cbb5"
+    },
+    "tools/CURRENT/CHECK.PY": {
+      "bytes": 4826,
+      "sha256": "2d825bcc91ab6e96c0c5f26dd1b82debe821411f996959ff78dc84ccbae766cc"
+    },
+    "tools/CURRENT/PRODUCTS.JSN": {
+      "bytes": 6457,
+      "sha256": "c3d6934581fec1afd7c2b72c1d7172a3b679df2ff9f12c00b708eb0e029d091a"
+    },
+    "tools/DOSINST/CRCFAST.H": {
+      "bytes": 3941,
+      "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+    },
+    "tools/XR1PACK/OWATCOM.TXT": {
+      "bytes": 21128,
+      "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+    },
+    "docs/CGA.MD": {
+      "bytes": 11478,
+      "sha256": "b4001f9f3ecda688a55f3f4c936c6f83f6042ea8d7abbc56fb81e8b01ac264fb"
+    },
+    "docs/CGA-FRESH.MD": {
+      "bytes": 9680,
+      "sha256": "2d6d00c708ce29de7c2c9ddf25625def03b9ce023d79f89ab8a4c84dca4c0082"
+    },
+    "docs/CGA/INSTALL/CAPTURES.MD": {
+      "bytes": 3340,
+      "sha256": "ddb571b9949550ecafa750e750efe26302ed0cbd785a1572a4c9cc01838a679e"
+    }
+  },
+  "reviewer": "independent child agent fresh_review",
+  "scope": "Documentation-only Windows media / project driver folder / Windows destination clarification, historical screenshot scope, regenerated consumer/source archives and acceptance/catalog pins.",
+  "independent_checks": {
+    "all_17_acceptance_source_pins_match_reviewed_commit": true,
+    "candidate_gate": "PASS:31 checks",
+    "published_packet_comparison": "Only README.TXT/FRESH.TXT changed; 48 of 50 members unchanged.",
+    "native_runtime": "FRESH.EXE and all eleven FRESH640 files byte-identical to the published packet and prior native qualification.",
+    "published_source_comparison": "Only src/cga/FRESH.TXT changed; eight of nine members unchanged.",
+    "source_zip_rebuild": "Native FRESH.EXE and both revised ZIPs reproduced identically from the committed source archive.",
+    "path_wording": "Media argument, independently derived driver path, and Windows destination are distinct; the requested-disk-name table and cached-path warning match recorded actions and INPUTOK.LOG.",
+    "screenshot_scope": "Current textual extraction layout includes FRESH.EXE/FRESH640; historical directory/installer/launch captures are correctly scoped and not presented as current fresh path-entry proof.",
+    "external_summary": "FRESH-PATHS-VERIFIED.json examples, native log, member counts, launcher and archive pins checked independently.",
+    "release_note_draft": "Fresh-CGA section reviewed for the same path roles and unchanged native/hardware scope.",
+    "core_and_legacy": "Four Tandy core identities and producer commit, other original developer inputs, sound pins, collection and guide overlays unchanged.",
+    "production_gate": "Correctly refuses pending independent review acceptance.",
+    "crlf_preserved": true,
+    "worktree_clean": true,
+    "source_edits": false,
+    "emulator_started": false,
+    "published": false
+  },
+  "artifacts": {
+    "CGA.ZIP": {
+      "bytes": 368048,
+      "sha256": "6ff1c273de1d8ed85d11f85db71e39261daf8830f9fb29d1b4bebe7a1a305d6f"
+    },
+    "CGASRC.ZIP": {
+      "bytes": 306548,
+      "sha256": "0b4aa808c5afbf0a7936e5d3f5a336bfe85e3e995c530b9bab8e0b771828d62d"
+    },
+    "FRESH.EXE": {
+      "bytes": 23466,
+      "sha256": "1e6cd9130655fcfb96a55cbbb7e512bc23ab48f3a443cdb29038e09ee920947b"
+    }
+  },
+  "validation_records": {
+    "candidate/RESULT.JSN": {
+      "bytes": 1783,
+      "sha256": "8e40142680cfbf6b05d59c5586e23cc359d7766f7416b3b00abaeba7e2cc68ca"
+    },
+    "host/RESULT.JSN": {
+      "bytes": 874,
+      "sha256": "6a3f447bf9dcc07e8511bb25beccfc7ee96d19208b3a4aca6ceee7f65c917500"
+    },
+    "ARTIFACT-COMPARE.json": {
+      "bytes": 1223,
+      "sha256": "410ea944d290402ec30b63a21ab66c56f1d69ec7d2968b0a0476df095c4e3265"
+    }
+  },
+  "additional_reviewed_files": {
+    "RELEASE-NOTES-PATHS-DRAFT.md": {
+      "bytes": 13642,
+      "sha256": "7c12b1f809079d52b6a53906d45bfe8177d7ac4a4d041733a306c1ba653689c5"
+    },
+    "FRESH-PATHS-VERIFIED.json": {
+      "bytes": 1892,
+      "sha256": "745e2ceb13f55044b37ddef695915d6dab35d29fdf923bae7cd9622db256da31"
+    },
+    "fresh-native-02/INPUTOK.LOG": {
+      "bytes": 94,
+      "sha256": "3fb51d22a0b6c6e6f8091194af540bb408d77bb1edf04208004db98a7237d6cf"
+    },
+    "fresh-native-02/RESULT.json": {
+      "bytes": 2172,
+      "sha256": "1b19cad692ff7d8c6a42eac60438d8a5c03d97106a55cf75767b8a6de9f7dabc"
+    },
+    "fresh-native-02/SINGLE-OEM-CHOICE.PNG": {
+      "bytes": 3207,
+      "sha256": "ae230b30c9ea62c37c0ab9ae1b4e82154edffdc2e2396ad3422df89defa5f795"
+    },
+    "fresh-native-02/SELECTED.PNG": {
+      "bytes": 2619,
+      "sha256": "436292fd0151ea8e4fafaf7ff1999d1933d51556b87fa97e4485c81ec62a6e95"
+    },
+    "fresh-native-02/TARGET.PNG": {
+      "bytes": 5133,
+      "sha256": "766972736a00bf72c4201a8be17fd458a57c92f60040b8e09a5c61b34da1bcf7"
+    },
+    "display/docs/CGA/INSTALL/FILES.PNG": {
+      "bytes": 4228,
+      "sha256": "5c57b759e023f5a8b92025f46be412bddae76e7d4d120c19094625cc3dfd0686"
+    }
+  },
+  "limits": [
+    "No new emulator or physical-hardware execution performed; existing native qualification remains valid for unchanged runtime bytes.",
+    "The documented source-directory route was tested previously. Actual floppy swapping, other fresh profiles/media variants and physical hardware remain separate qualification.",
+    "The release-note draft is reviewed for this path correction; unrelated historical release claims were not re-audited. Apply the correction only after its production gate/catalog/CI checks and explicit publication approval.",
+    "The production gate and catalog should be run after installing this report and sealing acceptance metadata. No publication authorization is supplied by this review."
+  ]
+}
