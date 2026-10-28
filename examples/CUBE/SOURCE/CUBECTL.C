@@ -1,7 +1,7 @@
 /* Developer-only native UI/idle acceptance controller. Never installed. */
 #define WINVER 0x0300
 #include <windows.h>
-static int stage,ticks,errors,configSeen,shellSeen,pan,oldX,oldY,fieldLogged;static HWND cfg,bar;static DWORD since;static char ini[144];
+static int stage,ticks,errors,configSeen,shellSeen,pan,oldX,oldY,fieldLogged,ownerArmed,ownerLoss,ownerGained;static HWND cfg,bar;static DWORD since;static char ini[144];
 static void logtext(char *s){HFILE f=_lopen("C:\\CUBEUI.LOG",OF_WRITE);if(f==HFILE_ERROR)f=_lcreat("C:\\CUBEUI.LOG",0);if(f!=HFILE_ERROR){_llseek(f,0L,2);_lwrite(f,s,lstrlen(s));_lclose(f);}}
 static void next(int s,char *text){stage=s;since=GetTickCount();logtext(text);}
 static HWND dialog(int cube)
@@ -13,6 +13,11 @@ static void click(HWND w,int id){HWND c=GetDlgItem(w,id);SetActiveWindow(w);SetF
 LONG FAR PASCAL ControlProc(HWND w,UINT m,WPARAM wp,LPARAM lp)
 {
  HWND s;HDC dc;char b[80];int ok,in[2],answer[6];
+ if(ownerArmed&&(m==WM_SETFOCUS||m==WM_KILLFOCUS||m==WM_ACTIVATE||m==WM_ACTIVATEAPP)){
+  wsprintf(b,"UI OWNER EVENT message=%u state=%u\r\n",m,wp);logtext(b);
+  if(m==WM_SETFOCUS||(m==WM_ACTIVATE&&wp!=WA_INACTIVE))ownerGained=1;
+  if(ownerGained&&(m==WM_KILLFOCUS||(m==WM_ACTIVATE&&wp==WA_INACTIVE)||(m==WM_ACTIVATEAPP&&!wp)))ownerLoss++;
+ }
  if(m==WM_TIMER){
   ticks++;if(GetTickCount()-since>(stage==21?300000UL:60000UL)){logtext("UI FAIL timeout\r\n");KillTimer(w,1);return 0;}
   if(stage==0){WinExec("C:\\WINXT\\CUBE.EXE /C",SW_SHOWNORMAL);next(1,"UI settings launched\r\n");}
@@ -33,9 +38,11 @@ LONG FAR PASCAL ControlProc(HWND w,UINT m,WPARAM wp,LPARAM lp)
    logtext("UI PREVIEW RETURN PASS\r\n");click(cfg,104);next(16,"UI ownership preview requested\r\n");
   }else if(stage==16&&FindWindow("TandyCubeSaver",NULL)){
    SetWindowPos(w,NULL,8,8,100,28,SWP_NOACTIVATE);ShowWindow(w,SW_SHOWNOACTIVATE);
-   SetActiveWindow(w);next(17,"UI preview ownership transferred\r\n");
+   ownerLoss=ownerGained=0;ownerArmed=1;SetActiveWindow(w);next(17,"UI preview ownership transferred\r\n");
   }else if(stage==17&&!FindWindow("TandyCubeSaver",NULL)&&GetTickCount()-since>2000UL){
-   if(GetActiveWindow()!=w||GetFocus()!=w){logtext("UI FAIL preview stole focus\r\n");errors++;return 0;}
+   wsprintf(b,"UI OWNER losses=%d active=%u expected=%u focus=%u\r\n",ownerLoss,GetActiveWindow(),w,GetFocus());logtext(b);
+   ownerArmed=0;
+   if(!ownerGained||ownerLoss||GetActiveWindow()!=w||GetFocus()!=w){logtext("UI FAIL preview stole focus\r\n");errors++;return 0;}
    logtext("UI PREVIEW OWNER PASS\r\n");ShowWindow(w,SW_HIDE);
    PostMessage(cfg,WM_CLOSE,0,0L);next(5,"UI preview returned\r\n");
   }else if(stage==5&&!GetModuleHandle("CUBE")){
