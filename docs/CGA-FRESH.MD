@@ -19,11 +19,11 @@ unqualified. Publication requires approval.
 Video II and Yamaha/PC1 remain later adapter-specific work. No new fresh
 qualification is claimed for them. ROM-DOS and PicoMEM are outside this task.
 
-The current Tandy full-desktop route and the current CGA download remain
-unchanged. The integrated `CGA.ZIP` retains its 33 existing runtime
-and support members are retained byte-for-byte, including the DOS mode-selection
-installer, helpers and original OEM descriptor. The original README is retained
-as `CGAOLD.TXT`; the new root README leads with the fresh-install instructions.
+The Tandy core downloads and historical compact CGA input remain unchanged.
+The integrated normal `CGA.ZIP` gains FRESH while keeping its 33 existing
+runtime/support members byte-for-byte, including the existing installer,
+helpers and OEM descriptor. The original README remains as `CGAOLD.TXT`;
+the root README leads with fresh-install instructions.
 
 ## Consumer route
 
