@@ -5,6 +5,7 @@
     "intact review closure",
     "missing native scope despite ready label",
     "incomplete qualification",
+    "omitted source inventory",
     "runtime modification",
     "source modification",
     "receipt modification"

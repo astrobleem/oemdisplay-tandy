@@ -77,8 +77,8 @@
       "sha256": "f2498e22d659bc4447421fdfc536bf2198379560aeb2b5d54e013f65ad9592cb"
     },
     "examples/CUBE/SOURCE/PACK.PY": {
-      "bytes": 4690,
-      "sha256": "9c47afefa362ae1e52e893f5c833c02a00c16a584eace599ea94b5ae21b0f0d9"
+      "bytes": 4812,
+      "sha256": "8aaa68c120763f1302d825e14337177db5eb4a912fe70ea37e04ffd9b153a94c"
     },
     "examples/CUBE/SOURCE/RUNHOST.PY": {
       "bytes": 2112,
@@ -89,12 +89,12 @@
       "sha256": "a21340bf4829541e502abd0a244313192deb05b9ed63b673cb83c3bf982e2eef"
     },
     "examples/CUBE/SOURCE/TESTPACK.PY": {
-      "bytes": 2406,
-      "sha256": "ed76497e70c8bb27b3c334da1c7e9458dfaad2da2a251211335ad50dd96eca65"
+      "bytes": 2524,
+      "sha256": "927cd9e6ca0888a8cfb0e6f02e9f302886acac9b5dbaea0798f90bc93e05c4ee"
     },
     "examples/CUBE/SOURCE/VERIFY.PY": {
-      "bytes": 4660,
-      "sha256": "19245be843e4efe5bd90ce76f5343cb1e071e7d56c7193156b31a67f4b144bb9"
+      "bytes": 4960,
+      "sha256": "856a9d6a77310fa66ab2d6747487ec949e93c3316e5c8858a913623bd30a2cfc"
     },
     "examples/TSHELL/BUILD.BAT": {
       "bytes": 644,
@@ -671,8 +671,8 @@
       "sha256": "d81e3b60679f7e0199f4e403315862a101b042204d85f5049fce8ddd24be2c0a"
     },
     "EVIDENCE/REVIEW.JSN": {
-      "bytes": 2715,
-      "sha256": "5045ccae1e127d2b4ad04bce6ba0a58e52e673e6ceb9d18ccb229f2ee3e7614c"
+      "bytes": 2830,
+      "sha256": "073ad3fb17da96079f9d9793d5b268f7eed6163be6969982c618622a5caac733"
     },
     "EVIDENCE/BUILD/CBPROC.JSN": {
       "bytes": 460,
@@ -715,8 +715,8 @@
       "sha256": "5804f894a2d86156c0746d323c9477ecde533ece1a8032791a5e409c637ecb88"
     },
     "EVIDENCE/GATE/RESULT.JSN": {
-      "bytes": 313,
-      "sha256": "cfe0355ad16b4da602aee40644458b027b54fb932fa7a2c8beb13282fa4a2232"
+      "bytes": 346,
+      "sha256": "d1bf8fd1a1a0f6b19f87871950636fedf5741a856994e4c8573545fa56ebd91c"
     },
     "EVIDENCE/HARNESS/MATRIX.PY": {
       "bytes": 1612,
@@ -861,6 +861,10 @@
     "EVIDENCE/MONO01/UNKNOWN.LOG": {
       "bytes": 133,
       "sha256": "528729d76a7c484ec9472c590d1864c3e4696777d0c6eedb005adbe9d6750c59"
+    },
+    "EVIDENCE/SRCFAIL/RESULT.JSN": {
+      "bytes": 496,
+      "sha256": "748e6edb91727930542adb4a9ecfde1fc263306a18e41165303f26eb142e8a71"
     },
     "EVIDENCE/TANDY02/86box.cfg": {
       "bytes": 537,

@@ -31,14 +31,15 @@ def build(out,commit,review=False):
     source={'SOURCE/.gitattributes':b'* -text\r\n','BUILDSRC.TXT':(APP/'BUILDSRC.TXT').read_bytes()}
     # Closed first-party source closure. No DDK/SDK libraries or installed OS files.
     for folder in (HERE,ROOT/'examples/TSHELL'):
-        for path in folder.iterdir():
-            if path.is_file()and path.suffix.upper()in('.C','.H','.PY','.BAT','.DEF','.RSP'):
+        for path in folder.rglob('*'):
+            if path.is_file()and path.suffix.upper()in('.C','.H','.PY','.ASM','.BAT','.DEF','.RSP'):
                 source['SOURCE/'+path.relative_to(ROOT).as_posix()]=path.read_bytes()
     for relative in ('tools/SOUNDOWN/BUILDAPP.PY','tools/SOUNDOWN/RUNDOS.PY','tools/DOSINST/CRCFAST.H','examples/TSHELL/TESTS/CONFIG/TESTCFG.C'):
         source['SOURCE/'+relative]=(ROOT/relative).read_bytes()
-    for path in (ROOT/'examples/TSHELL/IDLE').rglob('*'):
-        if path.is_file()and path.suffix.upper()in('.C','.H','.PY','.ASM','.DEF','.RSP','.BAT'):
-            source['SOURCE/'+path.relative_to(ROOT).as_posix()]=path.read_bytes()
+    for n,p in acceptance['source'].items():
+        if pin(source['SOURCE/'+n])!=p:raise ValueError('Source archive closure differs: '+n)
+    for relative in ('examples/TSHELL/README.MD','examples/TSHELL/HISTORY.TXT','examples/TSHELL/DOS/README.TXT','examples/TSHELL/IDLE/README.MD'):
+        source['SOURCE/'+relative]=(ROOT/relative).read_bytes()
     for path in APP.glob('*.MD'):source[path.name]=path.read_bytes()
     source['README.TXT']=(APP/'README.TXT').read_bytes();source['ACCEPT.JSN']=(APP/'ACCEPT.JSN').read_bytes()
     for path in sorted((APP/'EVIDENCE').rglob('*')):

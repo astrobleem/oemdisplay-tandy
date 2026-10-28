@@ -11,9 +11,9 @@
     "examples/CUBE/SOURCE/BUILD.PY": "be7a3fee917f0f26f04f287d3f09498adc8e359efce7c67c79dfe66b97267dec",
     "examples/CUBE/SOURCE/BUILDIN.PY": "2947e9c8d5895249c7363d5aa2cac0591143a6ecb137b13d1c6896363b191e44",
     "examples/CUBE/SOURCE/BUILDSET.PY": "49f96c4ee020b1f9006e2e4af2f1ad78aa87a1db4b0b6c309febd41d8cda9872",
-    "examples/CUBE/SOURCE/PACK.PY": "9c47afefa362ae1e52e893f5c833c02a00c16a584eace599ea94b5ae21b0f0d9",
-    "examples/CUBE/SOURCE/VERIFY.PY": "19245be843e4efe5bd90ce76f5343cb1e071e7d56c7193156b31a67f4b144bb9",
-    "examples/CUBE/SOURCE/TESTPACK.PY": "ed76497e70c8bb27b3c334da1c7e9458dfaad2da2a251211335ad50dd96eca65",
+    "examples/CUBE/SOURCE/PACK.PY": "8aaa68c120763f1302d825e14337177db5eb4a912fe70ea37e04ffd9b153a94c",
+    "examples/CUBE/SOURCE/VERIFY.PY": "856a9d6a77310fa66ab2d6747487ec949e93c3316e5c8858a913623bd30a2cfc",
+    "examples/CUBE/SOURCE/TESTPACK.PY": "927cd9e6ca0888a8cfb0e6f02e9f302886acac9b5dbaea0798f90bc93e05c4ee",
     "examples/TSHELL/TSSAVER.C": "b50069564193ebf09e7b1c4201d36964c3c25b6bbb710b456d8bc31e5ebe628d",
     "examples/TSHELL/TSSAVCFG.C": "07b29247f4d2b1afacea7a05bda3176136f07fcd92f50adac76bd9fba5a1e020",
     "examples/TSHELL/TSHOLD.C": "f4f10b015e7ef13e3574ccd316263bea6dffb3a79e6dbd3dec5153cc7c1ada47",
@@ -28,7 +28,8 @@
     "Append-only shell configuration keys, compact selector, Cube module/window exclusions",
     "DOS exact-payload staging, paired originals, rollback/undo and unknown-file preservation",
     "Closed first-party source/runtime/evidence package and strict native gate",
-    "Changed source paths do not intersect HPDIB/PAN/UPAN/CGACMP accepted source inventories; core binaries unchanged"
+    "Changed source paths do not intersect HPDIB/PAN/UPAN/CGACMP accepted source inventories; core binaries unchanged",
+    "Source replay found omitted nested DOS sources; recursive closure and declared-inventory guards now checked"
   ],
   "pending": [
     "Nonzero-viewport native acceptance",

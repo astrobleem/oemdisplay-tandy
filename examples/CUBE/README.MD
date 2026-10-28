@@ -20,6 +20,7 @@ The current accepted shell/runtime packets are preserved separately.
 
 See [installation and controls](README.TXT) and [qualification](TESTS.MD).
 Source, build commands and developer-only native controllers are in SOURCE.
+The source ZIP layout and rebuild prerequisites are in [BUILDSRC.TXT](BUILDSRC.TXT).
 No Windows media, installed guest tree, licensed SDK/toolchain or emulator
 belongs in either runtime or source packet.
 

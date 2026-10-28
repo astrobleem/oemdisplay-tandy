@@ -8,6 +8,8 @@ def verify(review=False):
     if a['status']!='READY_FOR_PUBLICATION_APPROVAL'and not review:raise ValueError('Cube qualification/review is incomplete')
     for n,p in a['runtime'].items():
         if pin((APP/'BIN'/n).read_bytes())!=p:raise ValueError('Runtime differs: '+n)
+    expected={p.relative_to(ROOT).as_posix()for folder in (APP/'SOURCE',ROOT/'examples/TSHELL')for p in folder.rglob('*')if p.is_file()and p.suffix.upper()in('.C','.H','.PY','.ASM','.DEF','.RSP','.BAT')}
+    if set(a['source'])!=expected:raise ValueError('Source inventory is incomplete or stale')
     for n,p in a['source'].items():
         path=(ROOT/n).resolve()
         if not path.is_relative_to(ROOT)or pin(path.read_bytes())!=p:raise ValueError('Source differs: '+n)

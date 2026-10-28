@@ -31,6 +31,7 @@ if accept['status']=='READY_FOR_PUBLICATION_APPROVAL':
 rejects('missing native scope despite ready label',lambda:acceptance_change(lambda a:a.update(status='READY_FOR_PUBLICATION_APPROVAL',native={})),False)
 if accept['status']!='READY_FOR_PUBLICATION_APPROVAL':
     rejects('incomplete qualification',lambda:lambda:None,False)
+rejects('omitted source inventory',lambda:acceptance_change(lambda a:a['source'].pop(next(iter(a['source'])))),True)
 rejects('runtime modification',lambda:change(kit/'BIN/CUBE.EXE'),True)
 rejects('source modification',lambda:change(target/next(iter(accept['source']))),True)
 rejects('receipt modification',lambda:change(kit/next(iter(accept['receipts']))),True)
