@@ -370,6 +370,7 @@ static int startSaver(void)
 static void labels(void)
 {
  char b[40];
+ SetDlgItemText(config,ID_SAVE,"&Save");
  wsprintf(b,"Style: %s",(LPSTR)styles[selectedStyle]);SetDlgItemText(config,ID_STYLE,b);
  wsprintf(b,"Speed: %s",(LPSTR)speeds[selectedSpeed-1]);SetDlgItemText(config,ID_SPEED,b);
  wsprintf(b,"Cube: %s",(LPSTR)sizes[selectedSize-1]);SetDlgItemText(config,ID_SIZE,b);
@@ -491,7 +492,7 @@ int PASCAL WinMain(HINSTANCE inst,HINSTANCE prev,LPSTR cmd,int show)
  WNDCLASS wc;MSG msg;HDC dc;HFILE f;int n,i,key,value;char b[32];
  instance=inst;
  if(prev||FindWindow("TandyCubeSaver",NULL))return 8;
- GetWindowsDirectory(ini,sizeof(ini));if(lstrlen(ini)>128)return 1;lstrcat(ini,"\\CUBE.INI");readSettings();
+ n=GetWindowsDirectory(ini,sizeof(ini));if(n<1||n>128)return 1;lstrcat(ini,"\\CUBE.INI");readSettings();
  GetModuleFileName(inst,logpath,sizeof(logpath));n=lstrlen(logpath);
  for(i=n-1;i>=0&&logpath[i]!='\\'&&logpath[i]!=':';i--);logpath[i+1]=0;lstrcat(logpath,"CUBE.LOG");
  showConfig=!cmd[0];

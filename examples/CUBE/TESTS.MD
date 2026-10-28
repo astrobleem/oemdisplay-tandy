@@ -11,7 +11,7 @@ No accepted display, font, mouse, keyboard, sound or core packet was replaced.
 
 ## Completed before additional mode coverage
 
-The exact 15,615-byte Cube with SHA-256
+The last fully tested 15,615-byte Cube prototype with SHA-256
 `4c09c65813dec046961e7191ba8e3bd15bd9475718b08ae624038f62119cdd90`
 passed native rendering and input checks at **160x100x16 RGBI** on an emulated
 IBM XT 8088 at 4.77 MHz, 640 KB, DOS 6.22 and Windows 3.0 real mode.

@@ -20,7 +20,7 @@ def build(out,commit,review=False):
     acceptance=json.loads((APP/'ACCEPT.JSN').read_bytes())
     SourceFileLoader('cube_acceptance',str(HERE/'VERIFY.PY')).load_module().verify(review)
     if not review and acceptance.get('status')!='READY_FOR_PUBLICATION_APPROVAL':raise ValueError('Native qualification/review incomplete')
-    runtime={n:(APP/'BIN'/n).read_bytes()for n in ('CUBE.EXE','CUBESHL.EXE','CUBESET.EXE')}
+    runtime={n:(APP/'BIN'/n).read_bytes()for n in ('CUBE.EXE','CUBESHL.EXE','CUBESET.EXE','TSINPUT.DLL')}
     for n,data in runtime.items():
         if pin(data)!=acceptance['runtime'][n]:raise ValueError('Native runtime identity differs: '+n)
     runtime['README.TXT']=(APP/'README.TXT').read_bytes()
@@ -35,6 +35,9 @@ def build(out,commit,review=False):
                 source['SOURCE/'+path.relative_to(ROOT).as_posix()]=path.read_bytes()
     for relative in ('tools/SOUNDOWN/BUILDAPP.PY','tools/SOUNDOWN/RUNDOS.PY','tools/DOSINST/CRCFAST.H','examples/TSHELL/TESTS/CONFIG/TESTCFG.C'):
         source['SOURCE/'+relative]=(ROOT/relative).read_bytes()
+    for path in (ROOT/'examples/TSHELL/IDLE').rglob('*'):
+        if path.is_file()and path.suffix.upper()in('.C','.H','.PY','.ASM','.DEF','.RSP','.BAT'):
+            source['SOURCE/'+path.relative_to(ROOT).as_posix()]=path.read_bytes()
     for path in APP.glob('*.MD'):source[path.name]=path.read_bytes()
     source['README.TXT']=(APP/'README.TXT').read_bytes();source['ACCEPT.JSN']=(APP/'ACCEPT.JSN').read_bytes()
     for path in sorted((APP/'EVIDENCE').rglob('*')):

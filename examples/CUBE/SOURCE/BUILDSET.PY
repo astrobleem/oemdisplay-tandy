@@ -4,12 +4,12 @@ import argparse,hashlib,json,os,shutil,subprocess,zlib
 HERE=Path(__file__).resolve().parent
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    for n in ('watcom','cube','shell','old-shell','out'):p.add_argument('--'+n,type=Path,required=True)
+    for n in ('watcom','cube','shell','idle','old-shell','old-idle','out'):p.add_argument('--'+n,type=Path,required=True)
     a=p.parse_args();out=a.out.resolve();out.mkdir(parents=True,exist_ok=False)
     shutil.copyfile(HERE/'CUBESET.C',out/'CUBESET.C')
     crc=HERE.parents[2]/'tools/DOSINST/CRCFAST.H';shutil.copyfile(crc,out/'CRCFAST.H')
     lines=[];pins={}
-    for name,path in [('CUBE',a.cube),('SHELL',a.shell),('OLD',a.old_shell)]:
+    for name,path in [('CUBE',a.cube),('SHELL',a.shell),('IDLE',a.idle),('OLD',a.old_shell),('OLDIDLE',a.old_idle)]:
         data=path.read_bytes();pins[name]=dict(bytes=len(data),sha256=hashlib.sha256(data).hexdigest(),crc32=zlib.crc32(data))
         lines.extend([f'#define {name}_SIZE {len(data)}UL',f'#define {name}_CRC 0x{zlib.crc32(data):08x}UL'])
     (out/'CUBEPINS.H').write_bytes(('\r\n'.join(lines)+'\r\n').encode('ascii'))

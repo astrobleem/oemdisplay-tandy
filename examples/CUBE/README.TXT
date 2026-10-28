@@ -9,8 +9,10 @@ Expand this whole kit into a DOS folder. Run:
   CUBESET C:\WINDOWS
 Use the actual full Windows directory if different. Cube goes in C:\WINXT.
 The current Windows XT Tandy Start is recognized by exact file identity.
-Its replacement adds Cube to System > Screen saver. TSHCUBE.BAK preserves
-the old shell. Existing saver choice, idle delay and other settings remain.
+Its replacement adds Cube to System > Screen saver. The matching input DLL
+passes Cube wake gestures through the optional Hold shortcut. The originals
+are retained as TSHCUBE.BAK and TICUBE.BAK. Existing saver choice, idle delay
+and other settings remain.
 Select Cube and Apply to enable it. Options opens the Cube settings panel.
 The delay remains 10-3600 seconds; 300 means five minutes.
 
@@ -46,9 +48,10 @@ UNDO THE OPTIONAL SHELL UPDATE FROM DOS
 
 Choose another saver before undoing. Exit Windows, then run:
   CUBESET /UNDO C:\WINDOWS
-This restores the exact original Tandy Start from TSHCUBE.BAK. Cube and its
-settings remain for standalone use. Do not discard the backup if a copy or
-rename fails; /UNDO can recover when TSHELL.EXE is temporarily absent.
+This restores the exact original Tandy Start/input pair. Cube and settings
+remain for standalone use. Keep both backups if a copy or rename fails;
+/UNDO can recover a temporarily absent target. Unknown changed files are
+preserved. Resolve a reported pending transaction before starting Windows.
 
 This candidate supports the project dimensions through GDI, without raw
 framebuffer assumptions. TESTS.MD records the actual native mode coverage.

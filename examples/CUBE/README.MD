@@ -14,7 +14,7 @@ Input returns to the message loop between complete frames.
 The compact settings panel fits 160 by 100. A candidate Tandy Start adds Cube
 to its existing idle policy, preview, busy/ownership checks and shutdown.
 Its saver selector also has a compact layout for the 100-line display.
-The native DOS installer preserves the original shell, checks exact kit and
+The native DOS installer preserves the original shell/input pair, checks exact kit and
 baseline identities, supports undo, and retains existing configuration.
 The current accepted shell/runtime packets are preserved separately.
 
@@ -29,7 +29,8 @@ lease, external MSC6/DDK tools and DOSBox-X:
 ```text
 python SOURCE/BUILD.PY --toolchain EXTERNAL-INPUTS --dosbox DOSBOX-X --lease SHARED-LEASE --out FRESH-BUILD
 python ../TSHELL/BUILD.PY --toolchain EXTERNAL-INPUTS --dosbox DOSBOX-X --lease SHARED-LEASE --out FRESH-SHELL
-python SOURCE/BUILDSET.PY --watcom WATCOM --cube FRESH-BUILD/CUBE.EXE --shell FRESH-SHELL/TSHELL.EXE --old-shell ACCEPTED-TSHELL.EXE --out FRESH-INSTALLER
+python SOURCE/BUILDIN.PY --toolchain EXTERNAL-INPUTS --dosbox DOSBOX-X --lease SHARED-LEASE --out FRESH-INPUT
+python SOURCE/BUILDSET.PY --watcom WATCOM --cube FRESH-BUILD/CUBE.EXE --shell FRESH-SHELL/TSHELL.EXE --idle FRESH-INPUT/TSINPUT.DLL --old-shell ACCEPTED-TSHELL.EXE --old-idle ACCEPTED-TSINPUT.DLL --out FRESH-INSTALLER
 python SOURCE/RUNHOST.PY --out FRESH-HOST-CHECKS
 ```
 
