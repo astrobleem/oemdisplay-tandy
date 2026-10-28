@@ -90,8 +90,8 @@
     "CGA.ZIP": {
       "source": "downloads/FRESH/CGA.ZIP",
       "identity": {
-        "bytes": 367080,
-        "sha256": "06039bfced56f0affae86dfc782751a04a7fdaddf204d1057b65a4f0454527be"
+        "bytes": 368048,
+        "sha256": "6ff1c273de1d8ed85d11f85db71e39261daf8830f9fb29d1b4bebe7a1a305d6f"
       }
     },
     "PAN.ZIP": {
@@ -104,8 +104,8 @@
     "CGASRC.ZIP": {
       "source": "downloads/FRESH/CGASRC.ZIP",
       "identity": {
-        "bytes": 306064,
-        "sha256": "01875aec63bcddf838af07a8cd11d700f6c95fef97e8026298304744b0cb6b75"
+        "bytes": 306548,
+        "sha256": "0b4aa808c5afbf0a7936e5d3f5a336bfe85e3e995c530b9bab8e0b771828d62d"
       }
     }
   },

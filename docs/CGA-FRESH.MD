@@ -27,30 +27,51 @@ the root README leads with fresh-install instructions.
 
 ## Consumer route
 
-Extract the archive on the DOS computer with folders preserved. Read the
-included `FRESH.TXT`; then, at plain DOS 3.3 or later, run:
+Extract the archive on the DOS computer with folders preserved, for example
+into `C:\CGAKIT`. Keep the original Windows media separately in `C:\W30SRC`.
+Read the included `FRESH.TXT`; then, at plain DOS 3.3 or later, run:
 
 ```bat
 C:
 CD \CGAKIT
-FRESH A:\
+FRESH C:\W30SRC
 ```
 
-`A:\` is the first original English retail Windows 3.0 disk. A directory
-containing unchanged original Windows media also works: `FRESH C:\W30SRC`.
-`FRESH /CHECK C:\W30SRC` verifies without launching anything. No Python,
-modern-host conversion, manual INI changes or separate font gathering is
-required. The original operating system and the user's usual DOS ZIP and
-transfer tools remain prerequisites.
+`C:\W30SRC` is the **original Windows media directory**, containing Microsoft's
+unchanged `SETUP.EXE` and `SETUP.INF`. It is the argument to FRESH. The
+**display driver folder** is independently located beside `FRESH.EXE`; this
+example prints:
 
-The native launcher verifies the original Setup executable/metadata and all
-eleven fresh-kit files, prints the absolute OEM driver path, and launches
-original Microsoft Setup. At its hardware screen select **Display**, scroll
-down to **Other**, enter the printed `FRESH640` path, select **Windows XT IBM
-CGA 640x200 mono**, then accept the hardware list. Give the same path whenever
-Setup asks for this display disk; give the original OS media for Microsoft
-file requests. Choose an unused Windows directory and the appropriate
-keyboard/mouse. Start later sessions with `WIN /R`.
+```text
+Display driver path: C:\CGAKIT\FRESH640
+```
+
+Write down that complete path before starting original Setup. Choose a new
+**Windows destination**, normally `C:\WINDOWS`. At **System Information**,
+choose **Display**, scroll down to **Other**, enter **`C:\CGAKIT\FRESH640`**,
+select **Windows XT IBM CGA 640x200 mono**, then **No Changes** to accept the
+hardware list. Use the disk name to answer subsequent copy prompts:
+
+| Requested disk | Path for this example |
+| --- | --- |
+| Manufacturer's display-driver disk / **Windows XT CGA fresh Setup** | `C:\CGAKIT\FRESH640` |
+| **Microsoft Windows 3.0 Disk #1** or another original Windows disk | `C:\W30SRC` |
+
+Setup can prefill the previous disk's path. Replace it when the requested
+disk changes. Extracting the kit elsewhere changes the printed driver path;
+changing FRESH's media argument does not. For floppy media, insert the first
+original English retail Windows 3.0 disk and use `FRESH A:\` from the same
+kit directory. The driver path stays `C:\CGAKIT\FRESH640`; Microsoft disk
+requests use the requested original floppy in `A:\`.
+
+`FRESH /CHECK C:\W30SRC` verifies without launching anything. The native
+launcher verifies original Setup executable/metadata and all eleven fresh-kit
+files, then launches original Microsoft Setup. Choose the appropriate keyboard
+and mouse; start the installed Windows from its directory with `WIN /R`.
+No Python, modern-host conversion, manual INI changes or separate font
+gathering is required. The original operating system and the user's usual
+DOS ZIP and transfer tools remain prerequisites. [The consumer guide](CGA.MD)
+shows the current extraction layout and the complete procedure.
 
 The first increment deliberately offers one fresh display profile. Fresh
 160x100/PAN would also need placement/helper startup during Setup; the current
