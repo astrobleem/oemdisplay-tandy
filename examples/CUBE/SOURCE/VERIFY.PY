@@ -19,15 +19,23 @@ def verify(review=False):
         if not {'low','mono','tandy','virtual','ui','installer'}.issubset(roles):raise ValueError('Required native scope missing')
         for role,row in roles.items():
             if row['receipt']not in a['receipts']:raise ValueError('Native receipt is not pinned: '+role)
+            if row['prepare_receipt']not in a['receipts']:raise ValueError('Native fixture is not pinned: '+role)
+            prep=json.loads((APP/row['prepare_receipt']).read_bytes())
             r=json.loads((APP/row['receipt']).read_bytes())
+            if prep['payload']['CUBE.EXE']!=a['runtime']['CUBE.EXE']['sha256']:raise ValueError('Prepared Cube identity differs: '+role)
+            for target,payload in [('WINXT/CUBE.EXE','CUBE.EXE'),('WINDOWS/TSHELL.EXE','CUBESHL.EXE'),('WINDOWS/TSINPUT.DLL','TSINPUT.DLL')]:
+                if r['installed'][target]!=a['runtime'][payload]:raise ValueError('Installed identity differs: '+role+' '+target)
+            if role=='low'and 'START width=160 height=100 colors=16'not in r['native_log']:raise ValueError('Low-resolution scope missing')
+            if role=='mono'and 'colors=2'not in r['native_log']:raise ValueError('Monochrome scope missing')
+            if role=='virtual'and not re.search(r'VIEWPORT SET 160,28 \d+x\d+ logical=\d+x\d+',r['ui_log']):raise ValueError('Nonzero viewport scope missing')
             if r['status']!='PASS'or r.get('owned_stopped')is not True or r.get('lease_released')is not True or str(r.get('inventory_after'))!='0':raise ValueError('Native execution/cleanup missing: '+role)
             if row['cube_sha256']!=a['runtime']['CUBE.EXE']['sha256']:raise ValueError('Native Cube identity differs: '+role)
             if role=='ui':
-                if row['shell_sha256']!=a['runtime']['CUBESHL.EXE']['sha256']:raise ValueError('UI shell identity differs')
+                if prep['payload']['TSINPUT.DLL']!=a['runtime']['TSINPUT.DLL']['sha256']or row['shell_sha256']!=a['runtime']['CUBESHL.EXE']['sha256']:raise ValueError('UI shell identity differs')
                 for text in ('UI SAVE PASS','UI SHELL SAVE PASS','UI IDLE CUBE PASS','UI DONE PASS'):
                     if text not in r['ui_log']:raise ValueError('UI event absent: '+text)
             elif role=='installer':
-                if row['installer_sha256']!=a['runtime']['CUBESET.EXE']['sha256']or row.get('undo_reinstall')is not True:raise ValueError('Final installer acceptance missing')
+                if prep['payload']['CUBESET.EXE']!=a['runtime']['CUBESET.EXE']['sha256']or row['installer_sha256']!=a['runtime']['CUBESET.EXE']['sha256']or row.get('undo_reinstall')is not True or 'Original Tandy Start/input restored'not in r['undo_log']or 'Installed.'not in r['reinstall_log']:raise ValueError('Final installer acceptance missing')
             else:
                 log=r['native_log']
                 if 'QA DONE PASS'not in log or 'QA HELD PASS'not in log or len(re.findall(r'PIXEL source=16777215 target=16777215',log))!=6 or len(re.findall(r'QA step=\d+ frames=13 errors=0 leaks=0 capture=0 resources=0',log))!=6:raise ValueError('Native render/input/readback scope differs: '+role)

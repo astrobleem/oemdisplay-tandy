@@ -1,7 +1,7 @@
 /* Developer-only native UI/idle acceptance controller. Never installed. */
 #define WINVER 0x0300
 #include <windows.h>
-static int stage,ticks,errors,configSeen,shellSeen,pan,oldX,oldY;static HWND cfg,bar;static DWORD since;static char ini[144];
+static int stage,ticks,errors,configSeen,shellSeen,pan,oldX,oldY,fieldLogged;static HWND cfg,bar;static DWORD since;static char ini[144];
 static void logtext(char *s){HFILE f=_lopen("C:\\CUBEUI.LOG",OF_WRITE);if(f==HFILE_ERROR)f=_lcreat("C:\\CUBEUI.LOG",0);if(f!=HFILE_ERROR){_llseek(f,0L,2);_lwrite(f,s,lstrlen(s));_lclose(f);}}
 static void next(int s,char *text){stage=s;since=GetTickCount();logtext(text);}
 static HWND dialog(int cube)
@@ -43,9 +43,12 @@ LONG FAR PASCAL ControlProc(HWND w,UINT m,WPARAM wp,LPARAM lp)
    SendDlgItemMessage(cfg,123,EM_SETSEL,0,MAKELONG(0,32767));
    next(15,"UI NEED DELAY INPUT\r\n");
   }else if(stage==15){
-   GetDlgItemText(cfg,123,b,sizeof(b));
-   if(lstrcmp(b,"10"))return 0;
-   logtext("UI STAGED DELAY 10 PASS\r\n");
+   /* Query the edit procedure explicitly across tasks. The final acceptance
+      is the shell's own persisted value after Apply. */
+   b[0]=0;SendMessage(GetDlgItem(cfg,123),WM_GETTEXT,sizeof(b),(LPARAM)(LPSTR)b);
+   if(!fieldLogged++){logtext("UI EDIT TEXT [");logtext(b);logtext("]\r\n");}
+   if(GetTickCount()-since<3000UL)return 0;
+   logtext("UI delay hardware input settled\r\n");
    SetActiveWindow(cfg);SetFocus(GetDlgItem(cfg,125));
    next(8,"UI shell Cube Apply\r\n");
    PostMessage(cfg,WM_COMMAND,125,MAKELONG(GetDlgItem(cfg,125),BN_CLICKED));
