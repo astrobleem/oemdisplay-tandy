@@ -17,6 +17,7 @@ Choose your hardware or application. You supply DOS and Windows 3.0.
 | Olivetti PC1 / Yamaha B000h | [PC1.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PC1.ZIP) | [PC1](../experiments/YAMAHA/README.MD) |
 | Standalone Yamaha B800h | [YAMAHA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/YAMAHA.ZIP) | [Yamaha](../experiments/YAMAHA/README.MD) |
 | Text-mode Windows, starting with compact C25 | [TEXT80.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TEXT80.ZIP) | [Text mode](../downloads/experimental/TEXT80/README.MD) |
+| Rotating Cube screensaver, Windows 3.0 real mode | [CUBE.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CUBE.ZIP) | [Install and controls](CUBE.MD) |
 | Tandy Winamp and sound driver | [TWXT2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TWXT2.ZIP) | [Sound setup](https://github.com/astrobleem/oemsound-tandy/blob/main/experimental/WINAMP30/INSTALL.TXT) |
 | Tandy Beats Lab + Fiddle | [MML3AUTH.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/MML3AUTH.ZIP) | [Included INSTALL.TXT](https://github.com/astrobleem/oemsound-tandy/blob/main/docs/DOWNLOADS.MD) |
 | Tandy Beats Lab + instruments | [PITEXPR.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PITEXPR.ZIP) | [Included INSTALL.TXT](https://github.com/astrobleem/oemsound-tandy/blob/main/docs/DOWNLOADS.MD) |

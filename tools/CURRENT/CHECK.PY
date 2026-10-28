@@ -9,8 +9,25 @@ def check(sound,core):
  for n,pin in config['core_identities'].items():assert P.identity((core/n).read_bytes())==pin,n
  assets=P.ancillary(sound,(core/'WINXT.ZIP').read_bytes());checks=[];references=[]
  P.verify_alternatives(assets);checks.append('CGA exact qualified packet and preserved earlier runtime verified')
+ fresh=importlib.machinery.SourceFileLoader('catalog_fresh_snapshot_refusal',str(P.HERE/'FRESHVIEW.PY')).load_module()
+ with tempfile.TemporaryDirectory(prefix='fresh-catalog-refusal-') as tmp:
+  original=P.zip_files((P.HERE/'CGASNAP.ZIP').read_bytes());changed=dict(original)
+  changed['tools/CURRENT/BUNDLE.PY']+=b'changed'
+  (Path(tmp)/'CGASNAP.ZIP').write_bytes(P.archive(changed))
+  with mock.patch.object(fresh,'HERE',Path(tmp)):
+   try:fresh.verify(assets['CGA.ZIP'])
+   except ValueError:pass
+   else:raise AssertionError('Changed original fresh source accepted')
+ checks.append('Changed frozen catalog source refused; all original fresh CGA pins retained')
  checks.append('All4 qualified core identities pinned; supplied producer commit preserved')
- checks.append('All'+str(len(assets))+' ancillary ZIPs match qualified inputs and deterministic build-input archive')
+ checks.append('All'+str(len(assets))+' ancillary files match qualified inputs and deterministic build-input archive')
+ if 'CUBE.ZIP' in assets:
+  checks.append('Cube exact runtime/source/metadata and all10 frozen native roles verified; four core identities unchanged')
+  bad=dict(assets);bad['CUBE.ZIP']=P.archive({'README.TXT':b'incomplete'})
+  try:P.verify_cube(bad)
+  except ValueError:pass
+  else:raise AssertionError('Unbound Cube packet accepted')
+  checks.append('Modified Cube packet refused by its producer/artifact binding')
  assert assets['BUILDIN.ZIP']==P.input_archive(config)
  inputs=P.zip_files(assets['BUILDIN.ZIP'])
  for n,pin in config['developer_inputs'].items():assert P.identity(inputs[n])==pin,n
@@ -45,7 +62,7 @@ def check(sound,core):
   assert not any(chore in collection[n] for chore in [b'STAGE.PY',b'T88TOOLS.ZIP',b'CGASYS.FON EGAFIX.FON']),n
  checks.append('TANDYLAB app bytes unchanged; complete qualified movable OEM folder replaces Python toolkit')
  for name,data in assets.items():
-  if name=='BUILDIN.ZIP':continue
+  if name=='BUILDIN.ZIP' or name in config.get('metadata',{}):continue
   for member,body in P.zip_files(data).items():
    parts=member.upper().split('/')
    if not member.upper().endswith(('.TXT','.MD')) or any(x in parts for x in ['SRC','SOURCE','DEPS','EVIDENCE','TESTS','HISTORY']):continue

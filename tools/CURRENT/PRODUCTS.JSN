@@ -107,6 +107,20 @@
         "bytes": 306548,
         "sha256": "0b4aa808c5afbf0a7936e5d3f5a336bfe85e3e995c530b9bab8e0b771828d62d"
       }
+    },
+    "CUBE.ZIP": {
+      "source": "downloads/CUBE/CUBE.ZIP",
+      "identity": {
+        "bytes": 124715,
+        "sha256": "d04c606c0ceb6afc80ec09ce2d2011e00b3cf85bb788baf9b76a707e64289c9b"
+      }
+    },
+    "CUBESRC.ZIP": {
+      "source": "downloads/CUBE/CUBESRC.ZIP",
+      "identity": {
+        "bytes": 1647434,
+        "sha256": "fac555541ccebd0e9eeb027a6d962f30a9360ce6c84275084c40b42d407c75c7"
+      }
     }
   },
   "sound": {
@@ -153,7 +167,10 @@
     "WINXT.JSN",
     "WINXT.SHA",
     "CURRENT.JSN",
-    "CURRENT.SHA"
+    "CURRENT.SHA",
+    "CUBESRC.ZIP",
+    "CUBE.JSN",
+    "CUBE.SHA"
   ],
   "excluded_consumer_alternatives": [
     "WINXT.EXE",
@@ -207,5 +224,22 @@
       "bytes": 234,
       "sha256": "ff8cb0336e733d5e2efc0bb40312e4d6fb1a1d71140b82845e5fcfd638bde6cf"
     }
-  }
+  },
+  "metadata": {
+    "CUBE.JSN": {
+      "source": "downloads/CUBE/CUBE.JSN",
+      "identity": {
+        "bytes": 75617,
+        "sha256": "5cc12f02a1d0a2d5fc5370bc3e0ae23f02977eeb9b9a7bad6b04255a93f30678"
+      }
+    },
+    "CUBE.SHA": {
+      "source": "downloads/CUBE/CUBE.SHA",
+      "identity": {
+        "bytes": 231,
+        "sha256": "b7a5458b4e8b1ce327d1962fbd9a3dadcf6cc633d6f3e1db27a5c7e9a8a009fb"
+      }
+    }
+  },
+  "cube_source_commit": "797b33a390cd63d7afd0da991e70edd407cc3d89"
 }
