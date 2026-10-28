@@ -243,3 +243,9 @@ src/hpxydib/** -text whitespace=cr-at-eol
 tools/HPDIB/** -text whitespace=cr-at-eol
 
 docs/QUAL/HPDIB/** -text whitespace=cr-at-eol
+
+# Preserve the independently reviewed Cube distribution and guide bytes.
+downloads/CUBE/** -text
+docs/CUBE.MD -text
+tools/CURRENT/FRESHVIEW.PY -text
+tools/CURRENT/CGASNAP.ZIP -text

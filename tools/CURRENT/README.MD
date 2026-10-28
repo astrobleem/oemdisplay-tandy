@@ -49,3 +49,13 @@ installation. PCjr and ColorPlus now expose a two-axis 640x400 software desktop
 through their 320x200 screen. The Windows XT, CGA, PCjr and ColorPlus packets
 bundle the same application. See [Panning](../../docs/PANNING.MD) and
 [native acceptance](../../docs/QUAL/PAN/README.MD) for capabilities and costs.
+
+Cube is an optional native DOS app kit from frozen producer 797b33a. Its runtime
+and source ZIPs plus metadata retain their reviewed bytes. The catalog replays
+all ten native roles from its closed source packet, independently of later live
+shell source edits. CUBESRC.ZIP, CUBE.JSN and CUBE.SHA are developer assets;
+the four pinned core files and every earlier packet remain unchanged.
+
+The fresh CGA gate retains every original source/evidence pin. FRESHVIEW.PY
+replays it with the three exact catalog source files in CGASNAP.ZIP, taken
+from the accepted reviewed commit; no earlier acceptance record is relaxed.

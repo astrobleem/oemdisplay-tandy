@@ -21,7 +21,7 @@ def verify_alternatives(files):
  # gate verify its own compact base. Never substitute into the output mapping.
  native=importlib.machinery.SourceFileLoader('current_fresh_legacy_gate',str(ROOT/'tools/HPDIB/PUBLISH.PY')).load_module()
  base=exact(ROOT/'downloads/COMPACT/CGA.ZIP',{'bytes':297312,'sha256':'84a1992803d1bd022318ddb001490b66494aba1e61ca09eef2fbc445fb469cc4'})
- fresh=importlib.machinery.SourceFileLoader('current_fresh_cga_gate',str(ROOT/'tools/CGAFRESH/VERIFY.PY')).load_module()
+ fresh=importlib.machinery.SourceFileLoader('current_fresh_cga_gate',str(HERE/'FRESHVIEW.PY')).load_module()
  fresh.verify(files['CGA.ZIP'])
  qualified=dict(files);qualified['CGA.ZIP']=base
  native.verify_alternatives(qualified)
@@ -38,6 +38,29 @@ def zip_files(data):
   names=z.namelist()
   if len(names)!=len(set(names)) or z.testzip():raise ValueError('Duplicate or corrupt ZIP members')
   return {n:z.read(n) for n in names if not n.endswith('/')}
+
+def verify_cube(files):
+ """Replay the frozen Cube proof without coupling it to later shell edits."""
+ config=spec();meta=json.loads(files['CUBE.JSN']);runtime=zip_files(files['CUBE.ZIP']);source=zip_files(files['CUBESRC.ZIP'])
+ if meta['source_commit']!=config['cube_source_commit'] or meta['status']!='READY_FOR_PUBLICATION_APPROVAL':raise ValueError('Cube producer differs')
+ if meta['artifacts']!={n:identity(files[n]) for n in ('CUBE.ZIP','CUBESRC.ZIP')}:raise ValueError('Cube artifact binding differs')
+ if meta['runtime']!={n:identity(b) for n,b in runtime.items()}:raise ValueError('Cube runtime inventory differs')
+ manifest=json.loads(source.pop('SOURCE.JSN'))
+ if manifest!={n:v for n,v in meta.items() if n!='artifacts'} or set(source)!=set(manifest['source']):raise ValueError('Cube source inventory differs')
+ for n,b in source.items():
+  if identity(b)!=manifest['source'][n] or '\\' in n or ':' in n or Path(n).is_absolute() or '..' in Path(n).parts:raise ValueError('Cube source member differs: '+n)
+ expected=''.join(identity(files[n])['sha256']+'  '+n+'\n' for n in ('CUBE.JSN','CUBE.ZIP','CUBESRC.ZIP'))
+ if files['CUBE.SHA']!=text(expected):raise ValueError('Cube checksum list differs')
+ with tempfile.TemporaryDirectory(prefix='cube-catalog-proof-') as tmp:
+  root=Path(tmp)/'SOURCE';app=root/'examples/CUBE'
+  for n,b in source.items():
+   target=Path(tmp)/n if n.startswith('SOURCE/') else app/n if n=='ACCEPT.JSN' or n.startswith('EVIDENCE/') else None
+   if target is not None:target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(b)
+  (app/'BIN').mkdir()
+  for n in ('CUBE.EXE','CUBESHL.EXE','TSINPUT.DLL','CUBESET.EXE'):(app/'BIN'/n).write_bytes(runtime[n])
+  gate=importlib.machinery.SourceFileLoader('current_frozen_cube_gate',str(app/'SOURCE/VERIFY.PY')).load_module()
+  proof=gate.verify()
+ return {'source_commit':meta['source_commit'],'native_roles':proof['native_roles'],'runtime':proof['runtime']}
 def input_archive(config):
  files={n:exact(HERE/'INPUTS'/n,pin) for n,pin in config['developer_inputs'].items()}
  files['INPUTS.JSN']=text(json.dumps(config['developer_inputs'],indent=2)+'\n')
@@ -61,6 +84,10 @@ def ancillary(sound,main_zip):
   if not name.endswith('.ZIP'):raise ValueError('Consumer alternatives must be ZIPs: '+name)
   zip_files(data)
  if set(files)&set(config['excluded_consumer_alternatives']):raise ValueError('Obsolete raw installer alternative included')
+ for name,row in config.get('metadata',{}).items():
+  if name in files or name in config['core_assets'] or name not in config['developer_assets'] or not name.endswith(('.JSN','.SHA')):raise ValueError('Unexpected developer metadata: '+name)
+  files[name]=exact(ROOT/row['source'],row['identity'])
+ if 'CUBE.ZIP' in files:verify_cube(files)
  return files
 def collection(config,main_zip):
  original=zip_files(exact(ROOT/config['collection']['source'],config['collection']['identity']))
@@ -122,6 +149,7 @@ def build(output,sound,core_input,commit):
          'install_paths':{'full':'SETUP.EXE','drivers':'Windows Setup / Other / expanded WINXT folder'},
          'developer_assets':config['developer_assets'],
          'qualified_source_assets':config['local'],
+         'qualified_metadata_assets':config.get('metadata',{}),
          'documentation_overlays':config.get('documentation_overlays',{}),
          'assets':{n:identity(b) for n,b in sorted(files.items())}}
  files['CURRENT.JSN']=text(json.dumps(record,indent=2)+'\n')

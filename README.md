@@ -113,6 +113,10 @@ experiment. That comparison has its own [drawing test scope](docs/RRECT.MD).
 
 ## Games, savers and sound
 
+Add the optional **[rotating Cube screensaver](docs/CUBE.MD)** for Flat, Dither
+and Wire styles, compact settings and Tandy Start idle launch. Its native DOS
+installer supports standalone use and guarded undo; core packets stay unchanged.
+
 | [Maze preview](examples/MAZE/GAME/README.MD) | [Tandinator](examples/TANDINAT/README.MD) | [Tandy Winamp](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt) |
 | --- | --- | --- |
 | <img src="docs/PROMO/XTMAZE.PNG" alt="Windows XT Maze preview" width="260"> | <img src="examples/TANDINAT/SHOTS/320x200x16.PNG" alt="Tandinator character-guessing game" width="260"> | <img src="https://raw.githubusercontent.com/astrobleem/oemsound-tandy/824ae10e1d79d1bd2d09f4a37447f58dd9cc9476/docs/SHOTS/WAMPUI3.PNG" alt="Tandy Winamp companion with a scrolling playlist" width="260"> |
