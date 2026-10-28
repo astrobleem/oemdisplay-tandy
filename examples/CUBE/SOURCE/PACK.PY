@@ -49,10 +49,10 @@ def build(out,commit,review=False):
     record=dict(schema=1,source_commit=commit,status='REVIEW_CANDIDATE'if review else acceptance['status'],
                 qualification='See TESTS.MD and ACCEPT.JSN; not all adapters/modes or physical hardware qualified',
                 runtime={n:pin(b)for n,b in runtime.items()},source={n:pin(b)for n,b in source.items()})
-    source['SOURCE.JSN']=(json.dumps(record,indent=2)+'\r\n').encode('ascii')
+    source['SOURCE.JSN']=(json.dumps(record,indent=2,sort_keys=True)+'\r\n').encode('ascii')
     files={'CUBE.ZIP':archive(runtime),'CUBESRC.ZIP':archive(source)}
     record['artifacts']={n:pin(b)for n,b in files.items()}
-    files['CUBE.JSN']=(json.dumps(record,indent=2)+'\r\n').encode('ascii')
+    files['CUBE.JSN']=(json.dumps(record,indent=2,sort_keys=True)+'\r\n').encode('ascii')
     files['CUBE.SHA']=''.join(pin(b)['sha256']+'  '+n+'\r\n'for n,b in sorted(files.items())).encode('ascii')
     out.mkdir(parents=True,exist_ok=False)
     for n,b in files.items():(out/n).write_bytes(b)

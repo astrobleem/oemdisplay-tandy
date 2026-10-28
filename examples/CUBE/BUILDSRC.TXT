@@ -55,3 +55,10 @@ archive member set and every member hash/size, then all declared source bytes,
 a committed snapshot and the five
 extracted host compilation groups. The lifecycle group compiles actual
 production teardown code against API spies and a frozen pre-fix control.
+
+CROSS-PLATFORM PACKAGE REPRODUCTION
+
+The manifests use canonical JSON key order. TESTPACK.PY exercises the actual
+producer twice with normal and reversed filesystem enumeration and requires
+identical runtime/source ZIPs and both metadata files. This covers the ordering
+difference observed between the Windows and Linux source-packet builds.

@@ -1,7 +1,8 @@
 """Exercise review gating and exact-source/runtime/receipt tamper rejection. No emulator."""
 from pathlib import Path
 from importlib.machinery import SourceFileLoader
-import argparse,json,shutil,hashlib,zipfile
+import argparse,json,shutil,hashlib,zipfile,subprocess,contextlib,io
+from unittest import mock
 HERE=Path(__file__).resolve().parent;APP=HERE.parent;ROOT=HERE.parents[2]
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True);a=p.parse_args()
 out=a.out.resolve();out.mkdir(parents=True,exist_ok=False)
@@ -57,5 +58,26 @@ for label,files in [('modified outside-acceptance helper',dict(base,**{helper:b'
     try:src.inspect_archive(packed('bad'+str(len(checks))+'.zip',files))
     except ValueError:checks.append(label)
     else:raise AssertionError('Source replay accepted '+label)
+# Replay the actual producer against two filesystem enumeration orders. A
+# fresh committed closure keeps this integration check usable before commit.
+for n in ('README.TXT','BUILDSRC.TXT'):copy(APP/n,kit/n)
+for path in APP.glob('*.MD'):copy(path,kit/path.name)
+for n in ('examples/TSHELL/README.MD','examples/TSHELL/HISTORY.TXT','examples/TSHELL/DOS/README.TXT','examples/TSHELL/IDLE/README.MD'):copy(ROOT/n,target/n)
+(target/'.gitattributes').write_bytes(b'* -text\r\n')
+(target/'.gitignore').write_bytes(b'__pycache__/\r\n')
+for args in (['init','-q'],['add','.'],['-c','user.name=CubeGate','-c','user.email=cube-gate@example.invalid','commit','-qm','packet order regression']):
+    subprocess.run(['git','-C',str(target),*args],check=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+head=subprocess.check_output(['git','-C',str(target),'rev-parse','HEAD'],text=True).strip()
+pack=SourceFileLoader('cube_enumeration_producer',str(HERE/'PACK.PY')).load_module()
+pack.APP=kit;pack.ROOT=target;pack.HERE=kit/'SOURCE'
+original_tree=Path.rglob
+def reversed_tree(path,pattern):return iter(reversed(list(original_tree(path,pattern))))
+with contextlib.redirect_stdout(io.StringIO()):
+    pack.build(out/'normal-order',head,accept['status']!='READY_FOR_PUBLICATION_APPROVAL')
+    with mock.patch.object(Path,'rglob',reversed_tree):
+        pack.build(out/'reversed-order',head,accept['status']!='READY_FOR_PUBLICATION_APPROVAL')
+for name in ('CUBE.ZIP','CUBESRC.ZIP','CUBE.JSN','CUBE.SHA'):
+    assert(out/'normal-order'/name).read_bytes()==(out/'reversed-order'/name).read_bytes(),'Filesystem order changed '+name
+checks.append('actual full packet independent of filesystem enumeration order')
 record=dict(status='PASS',scope='Packet integrity/gating only; no native qualification',checks=checks)
 (out/'RESULT.JSN').write_text(json.dumps(record,indent=2)+'\n');print(json.dumps(record))
