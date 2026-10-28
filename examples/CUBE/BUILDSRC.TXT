@@ -47,3 +47,8 @@ runners with absolute fixture/tool paths; adapt them only to an owned private
 licensed test fixture. Ordinary native builds do not require those OS images.
 The source packet provides compile/test closure; release reassembly runs from
 the full repository with its pinned runtime, acceptance and evidence tree.
+
+Verify an assembled source archive and replay its actual host build with:
+  python examples/CUBE/SOURCE/TESTSRC.PY CUBESRC.ZIP --out NEW-REPLAY
+Run this command from a full checkout; it checks safe members, every declared
+source byte, a committed snapshot and the extracted host compilation closure.

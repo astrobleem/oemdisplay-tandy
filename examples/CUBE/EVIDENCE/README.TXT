@@ -3,9 +3,12 @@ LOCAL CUBE REVIEW EVIDENCE
 BUILD: native compile/link, ABI and exact source-copy audit receipts.
 HOST: C89 math/config/idle/Hold checks; not native qualification.
 ISA: direct-control-flow audit with explicit exclusions.
-GATE: incomplete qualification and modified runtime/source/receipt refusal.
+GATE: incomplete qualification, source inventory and tamper refusal.
+SRCFAIL: retained incomplete review-archive attempt.
+SRCREPLAY: corrected archive source identities and host replay PASS.
 UI03: final native settings/preview, ten-second idle and real keyboard wake PASS.
-LOW01/MONO01/TANDY02: final native render/input/readback and DOS recovery PASS.
+LOW01/MONO01/TANDY02/PAN01/CGAPAN01/T6404-01/CGA32001/T160-01:
+final native render/input/readback and DOS recovery PASS.
 MONO01 also checks unknown-shell refusal and standalone preservation.
 UI02: retained FAILED controller attempt; no acceptance claimed for it.
 HIST04: earlier 15,615-byte prototype; not final-binary qualification.

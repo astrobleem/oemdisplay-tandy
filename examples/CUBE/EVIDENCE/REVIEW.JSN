@@ -1,7 +1,7 @@
 {
   "type": "author_source_review",
   "independent": false,
-  "outcome": "NO_RESIDUAL_SOURCE_FINDINGS; QUALIFICATION_PENDING",
+  "outcome": "NO_RESIDUAL_SOURCE_FINDINGS",
   "reviewed_sources": {
     "examples/CUBE/SOURCE/CUBE.C": "dbaa4ba368425fd0cc211159dee6f03b8d38abc66fb8b59216f28f0347ea4733",
     "examples/CUBE/SOURCE/CUBECORE.C": "e73cc486cdf1bb33d26da5b8ec69a7b7c6062a981d96602751018f6505864986",
@@ -19,7 +19,8 @@
     "examples/TSHELL/TSHOLD.C": "f4f10b015e7ef13e3574ccd316263bea6dffb3a79e6dbd3dec5153cc7c1ada47",
     "examples/TSHELL/SCFGCORE.C": "7c82f01b1f809d35e7425c563afb0046fd0e4d138718988fa8c1f855b2b0302d",
     "examples/TSHELL/SCFGCORE.H": "d3eee52d1e1ab2c88777698cf8b421d764cd3fb0d71c2ea7f1db8ead1e597d65",
-    "examples/TSHELL/IDLE/TSINPUT.C": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c"
+    "examples/TSHELL/IDLE/TSINPUT.C": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c",
+    "examples/CUBE/SOURCE/TESTSRC.PY": "5ce22c342f5bfe5ebfe94f9bcf040e5bce1ff75f751e96c64131d469dd663167"
   },
   "checks": [
     "Fixed-point rotation period/bounds and palette/monochrome path",
@@ -32,8 +33,6 @@
     "Source replay found omitted nested DOS sources; recursive closure and declared-inventory guards now checked"
   ],
   "pending": [
-    "Nonzero-viewport native acceptance",
-    "Remaining representative mode captures",
     "Parent review and publication approval"
   ]
 }

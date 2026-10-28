@@ -27,6 +27,8 @@ jobs:
         run: python3 -B examples/CUBE/SOURCE/TESTPACK.PY --out "$RUNNER_TEMP/cube-gates"
       - name: Require exact native qualification and assemble packet
         run: python3 -B examples/CUBE/SOURCE/PACK.PY --commit "$SOURCE_SHA" --out "$RUNNER_TEMP/cube-packet"
+      - name: Replay the assembled source archive
+        run: python3 -B examples/CUBE/SOURCE/TESTSRC.PY "$RUNNER_TEMP/cube-packet/CUBESRC.ZIP" --out "$RUNNER_TEMP/cube-replay"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: cube-review-${{ env.SOURCE_SHA }}

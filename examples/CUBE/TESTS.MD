@@ -1,7 +1,7 @@
 # Cube qualification
 
-This local candidate still needs nonzero-viewport acceptance.
-Release packaging is blocked until those checks pass. No physical adapter,
+Eight representative native-emulator rendering fixtures passed.
+Qualification is limited to the table below. No physical adapter,
 composite output, Windows 3.1 or every-driver qualification is claimed.
 
 The exact CUBE.EXE is 15,647 bytes, SHA-256
@@ -13,11 +13,16 @@ No accepted display/font/mouse/keyboard/sound or core packet was replaced.
 ## Native rendering scope
 
 <!-- NATIVE TABLE -->
-| Case | Logical screen | Colors | Visible viewport | Driver | Result |
+| Fixture | Logical screen | Colors | Visible viewport | Driver | Result |
 | --- | --- | --- | --- | --- | --- |
-| low | 160x100 | 16 | 0,0 160x100 | CGA100.DRV | PASS |
-| mono | 640x200 | 2 | 0,0 640x200 | CGA640.DRV | PASS |
-| tandy | 320x200 | 16 | 0,0 320x200 | TR53216.DRV | PASS |
+| CGA low color | 160x100 | 16 | 0,0 160x100 | CGA100.DRV | PASS |
+| CGA monochrome | 640x200 | 2 | 0,0 640x200 | CGA640.DRV | PASS |
+| Tandy 16 color | 320x200 | 16 | 0,0 320x200 | TR53216.DRV | PASS |
+| Tandy extended | 640x256 | 16 | 160,28 320x200 | HPXY.DRV | PASS |
+| CGA large desktop | 320x200 | 16 | 160,28 160x100 | CGAPAN.DRV | PASS |
+| Tandy 4 color | 640x200 | 4 | 0,0 640x200 | TNDY6404.DRV | PASS |
+| CGA 4 color | 320x200 | 4 | 0,0 320x200 | CGA320.DRV | PASS |
+| Tandy low width | 160x200 | 16 | 0,0 160x200 | TNDY160.DRV | PASS |
 <!-- END NATIVE TABLE -->
 
 CGA runs use an emulated IBM XT 8088 at 4.77 MHz; Tandy runs use a Tandy
@@ -25,6 +30,10 @@ CGA runs use an emulated IBM XT 8088 at 4.77 MHz; Tandy runs use a Tandy
 The Tandy fixture uses the required RESERVE 32 guard. Selected fonts and
 driver sizes/hashes are retained in each PREPARE.json. These are emulator
 observations, not physical-adapter or composite-output qualification.
+
+The eight rows completed 624 QA frames and 48 matching white readbacks.
+Both panning rows used the nonzero viewport position (160,28); Cube logged
+the returned physical view and centered its drawing there.
 
 Every passing rendering row exercised Flat, Dither and Wire. Six cases each
 drew 13 complete frames: keyboard wake, held mouse button/release, movement,
@@ -99,3 +108,8 @@ receipts/config before launch. A stale-payload attempt stopped before
 acceptance. A later missing old Tandy clone stopped before launch; the
 completed fixture was copied into this task privately. Blank transitional
 captures were replaced with a developer QA frame hold and pixel readback.
+
+The corrected source ZIP was extracted and its complete declared source
+inventory and committed CRLF bytes checked before host replay. Earlier
+source replay found omitted nested DOS sources; the archive and inventory
+gates were corrected before final packaging.
