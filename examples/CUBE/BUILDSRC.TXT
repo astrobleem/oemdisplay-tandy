@@ -50,5 +50,8 @@ the full repository with its pinned runtime, acceptance and evidence tree.
 
 Verify an assembled source archive and replay its actual host build with:
   python examples/CUBE/SOURCE/TESTSRC.PY CUBESRC.ZIP --out NEW-REPLAY
-Run this command from a full checkout; it checks safe members, every declared
-source byte, a committed snapshot and the extracted host compilation closure.
+Run this command from a full checkout; it checks safe members, the exact full
+archive member set and every member hash/size, then all declared source bytes,
+a committed snapshot and the five
+extracted host compilation groups. The lifecycle group compiles actual
+production teardown code against API spies and a frozen pre-fix control.

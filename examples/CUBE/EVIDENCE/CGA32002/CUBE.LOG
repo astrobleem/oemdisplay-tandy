@@ -1,0 +1,45 @@
+START width=320 height=200 colors=4 view=0,0,320,200 canvas=96x95 scale=92x76 style=1 speed=2 size=2 free=305376
+FRAME n=1 phase=39 style=1 errors=0 draw_ms=1208
+FRAME n=2 phase=47 style=1 errors=0 draw_ms=769
+PIXEL source=16777215 target=16777215
+QA CAPTURE READY
+END reason=keyboard frames=13 errors=0 draw_ms=9776 max_ms=1208 elapsed=14171
+QA step=0 frames=13 errors=0 leaks=0 capture=0 resources=0
+START width=320 height=200 colors=4 view=0,0,320,200 canvas=96x95 scale=92x76 style=2 speed=2 size=2 free=303616
+FRAME n=1 phase=39 style=2 errors=0 draw_ms=878
+FRAME n=2 phase=47 style=2 errors=0 draw_ms=824
+PIXEL source=16777215 target=16777215
+QA CAPTURE READY
+QA HELD PASS
+END reason=mouse-button frames=13 errors=0 draw_ms=9501 max_ms=878 elapsed=14665
+QA step=1 frames=13 errors=0 leaks=0 capture=0 resources=0
+START width=320 height=200 colors=4 view=0,0,320,200 canvas=96x95 scale=92x76 style=3 speed=2 size=2 free=305248
+FRAME n=1 phase=39 style=3 errors=0 draw_ms=329
+FRAME n=2 phase=46 style=3 errors=0 draw_ms=330
+PIXEL source=16777215 target=16777215
+QA CAPTURE READY
+END reason=mouse-move frames=13 errors=0 draw_ms=4119 max_ms=384 elapsed=8184
+QA step=2 frames=13 errors=0 leaks=0 capture=0 resources=0
+START width=320 height=200 colors=4 view=0,0,320,200 canvas=96x95 scale=92x76 style=1 speed=2 size=2 free=305248
+FRAME n=1 phase=39 style=1 errors=0 draw_ms=823
+FRAME n=2 phase=47 style=1 errors=0 draw_ms=769
+PIXEL source=16777215 target=16777215
+QA CAPTURE READY
+END reason=deactivated frames=13 errors=0 draw_ms=9171 max_ms=823 elapsed=13237
+QA step=3 frames=13 errors=0 leaks=0 capture=0 resources=0
+START width=320 height=200 colors=4 view=0,0,320,200 canvas=96x95 scale=92x76 style=2 speed=2 size=2 free=303616
+FRAME n=1 phase=39 style=2 errors=0 draw_ms=879
+FRAME n=2 phase=47 style=2 errors=0 draw_ms=824
+PIXEL source=16777215 target=16777215
+QA CAPTURE READY
+END reason=close frames=13 errors=0 draw_ms=9502 max_ms=879 elapsed=13677
+QA step=4 frames=13 errors=0 leaks=0 capture=0 resources=0
+START width=320 height=200 colors=4 view=0,0,320,200 canvas=96x95 scale=92x76 style=3 speed=2 size=2 free=305248
+FRAME n=1 phase=39 style=3 errors=0 draw_ms=329
+FRAME n=2 phase=46 style=3 errors=0 draw_ms=330
+PIXEL source=16777215 target=16777215
+QA CAPTURE READY
+END reason=owner-lost frames=13 errors=0 draw_ms=4174 max_ms=384 elapsed=8074
+QA step=5 frames=13 errors=0 leaks=0 capture=0 resources=0
+QA DONE PASS
+QUIT clean qa=1

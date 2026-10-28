@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "last_owned_pid": 23504,
+  "owned_stopped": true,
+  "lease_available_independently": true,
+  "lease_released": true,
+  "inventory_after": 0,
+  "no_runner_queued": true,
+  "receipt": "native-t160-02/RESULT.json",
+  "receipt_sha256": "4388f0665bcd3c55d09429dc957ae2feda77d88e5ac8289fee39f4dbf294364f",
+  "verified_utc": "2026-10-28T10:57:40.431637+00:00"
+}

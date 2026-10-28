@@ -1,0 +1,49 @@
+{
+  "base": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-12\\native-tandy-02",
+  "environment": {
+    "display.drv": {
+      "name": "TNDY6404.DRV",
+      "bytes": 50832,
+      "sha256": "5ab225f6e93d53f39d092b8db81fd0129a0fe473cf30eef880ddaeaaa0a8d306"
+    },
+    "fonts.fon": {
+      "name": "XTCSYS.FON",
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "fixedfon.fon": {
+      "name": "XTCFIX.FON",
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "oemfonts.fon": {
+      "name": "XTCOEM.FON",
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "system_ini_sha256": "633e4ef4a86e2505578d0bf8ceae4eb0a0486b6c18c1f61742c22ffa71b666c3"
+  },
+  "private_image": true,
+  "reused": true,
+  "bytes": 84341760,
+  "scope": "tandy6404; kit, /Q, undo and reinstall",
+  "install_guards": false,
+  "negative_control": false,
+  "changes": [
+    "AUTOEXEC test entry",
+    "explicit known current TSHELL and TSINPUT baseline",
+    "kit files in CUBE folder",
+    "selected documented display fixture"
+  ],
+  "payload": {
+    "CUBE.EXE": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e",
+    "CUBECTL.EXE": "2cbc3bfa523143463e59b995d80a03cb1e5dfb7d0d554353a555629ae574fcff",
+    "CUBESHL.EXE": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48",
+    "TSINPUT.DLL": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878",
+    "CUBESET.EXE": "6dd36333aef1ffa91f4975eb8851dd0f7576f7b8c8ea37176d8901ffded5142d"
+  },
+  "originals": {
+    "TSHELL.EXE": "c1c0ae1f7b919f58ef4d7a34cec045f313206409a21955ffff09f63aced8e167",
+    "TSINPUT.DLL": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+  }
+}

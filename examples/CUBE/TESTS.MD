@@ -1,9 +1,3 @@
-<!-- CORRECTION PENDING -->
-Corrected-runtime requalification is in progress. The matrix below records
-the preceding runtime; ACCEPT.JSN selects completed corrected runs and blocks
-publication until its advertised roles are complete.
-<!-- END CORRECTION PENDING -->
-
 # Cube qualification
 
 Eight representative native-emulator rendering fixtures passed.
@@ -11,7 +5,7 @@ Qualification is limited to the table below. No physical adapter,
 composite output, Windows 3.1 or every-driver qualification is claimed.
 
 The exact CUBE.EXE is 15,647 bytes, SHA-256
-`1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d`.
+`9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e`.
 The paired shell is 74,131 bytes, input DLL 6,301 bytes and native DOS
 installer 16,306 bytes. ACCEPT.JSN pins all four, their source and evidence.
 No accepted display/font/mouse/keyboard/sound or core packet was replaced.
@@ -61,7 +55,9 @@ The shell saved Cube, enabled=1 and a ten-second idle delay. A real emulated
 keyboard F2 established a fresh idle baseline, Cube launched on idle, and a
 real Escape make/break gesture dismissed it. Installed file SHA-256 values
 and actual INI values were checked. Both compact panels, including all bottom
-buttons, fit in decoded 160x100 CGA video memory. See UI03 in EVIDENCE.
+buttons, fit in decoded 160x100 CGA video memory. See UI04 in EVIDENCE.
+Preview ownership transfer also left the other task active and focused
+without reactivation or focus repair by the controller.
 
 ## Installation and recovery
 
@@ -80,8 +76,8 @@ process was stopped. Private OS images/media, ROMs and native tools are excluded
 
 ## Performance and source checks
 
-CGA160x100 warm complete draws were about 0.77 seconds for filled styles and
-0.44 seconds for wireframe; CGA640 mono was about 0.66 and 0.28 seconds.
+CGA160x100 median second-frame draws were 0.77 seconds for
+filled styles and 0.41 for Wire; CGA640 mono was 0.66 and 0.33 seconds.
 These Windows tick observations include GDI and cooperative scheduling and
 are not calibrated physical-machine benchmarks. Small size or Wire reduces
 work. Every frame returns to the Windows message loop.
@@ -104,8 +100,9 @@ separate source packet. CUBECTL is developer-only and must not be installed
 or run in a Windows session containing user work. Autosaved 86Box configs
 normalize paths; where INPUT.CNF is present, it preserves exact launch bytes.
 
-UI01/UI02 controller attempts failed to verify the edited delay. UI03's
-explicit cross-task WM_GETTEXT read confirmed ten before Apply and passed
+Historical UI01/UI02 controller attempts failed to verify the edited delay.
+The preceding UI03's cross-task WM_GETTEXT read confirmed ten before Apply
+and passed
 persistence/idle/wake. The failed attempts are retained, not counted as
 acceptance. Historical prototype receipts are labeled separately. One FAT
 file-growth preparation incorrectly launched an incomplete fixture; its owned
@@ -115,7 +112,36 @@ acceptance. A later missing old Tandy clone stopped before launch; the
 completed fixture was copied into this task privately. Blank transitional
 captures were replaced with a developer QA frame hold and pixel readback.
 
-The corrected source ZIP was extracted and its complete declared source
-inventory and committed CRLF bytes checked before host replay. Earlier
-source replay found omitted nested DOS sources; the archive and inventory
-gates were corrected before final packaging.
+The final source ZIP is replayed after packaging: its complete member set,
+all member hashes/sizes, 163 declared source files, committed CRLF bytes and
+all five host groups are checked. Earlier source replay found omitted nested
+DOS sources; the closed inventory now includes them.
+
+## Independent review corrections
+
+Independent source review found preview teardown could reactivate its settings
+window after another task took ownership. Destruction no longer requests
+activation. The actual production stop/WM_DESTROY code is compiled with API
+spies: frozen pre-fix source fails with two activation requests; the corrected
+source passes five paths, including normal wake and preserving foreign capture.
+This is a deterministic source-policy regression, not native message-order
+reproduction. The earlier native settling control passed the old code and is
+explicitly retained as nondiscriminating. Corrected UI04 additionally records
+a native ownership-transfer smoke with zero activation/focus loss events.
+
+Independent packet review found source repinning could reuse stale native
+evidence, and source replay omitted hashes for helpers outside ACCEPT.source.
+The gates now bind every native source, recipe and runtime to build receipts,
+require all ten advertised roles, and check every source-archive member before
+extraction. Semantic source drift with only acceptance repinning, omitted roles,
+modified helpers, missing/extra members and runtime/receipt tampering are rejected.
+Independent re-review cleared both corrections; reports are in
+EVIDENCE/INDEPENDENT. The earlier 0346d47 package remains withheld history.
+
+Current native roles point only to UI04, LOW02, MONO02, TANDY03, PAN02,
+CGAPAN02, T6404-02, CGA32002 and T160-02. Other native folders are historical
+evidence for earlier runtime bytes; none qualifies the corrected binary.
+
+Forced installer copy/rename failure paths were source-reviewed but not
+native-fault-injected. Normal install, paired undo/reinstall and unknown-file
+refusal/standalone preservation are the observed installation scope.
