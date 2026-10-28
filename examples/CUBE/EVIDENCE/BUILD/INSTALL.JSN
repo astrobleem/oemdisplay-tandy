@@ -1,0 +1,44 @@
+{
+  "target": "DOS 3.3+, 8086/8088",
+  "flags": [
+    "-zq",
+    "-bt=dos",
+    "-0",
+    "-ms",
+    "-os",
+    "-k4096",
+    "-fe=CUBESET.EXE",
+    "CUBESET.C"
+  ],
+  "pins": {
+    "CUBE": {
+      "bytes": 15647,
+      "sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d",
+      "crc32": 1562845152
+    },
+    "SHELL": {
+      "bytes": 74131,
+      "sha256": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48",
+      "crc32": 2568458600
+    },
+    "IDLE": {
+      "bytes": 6301,
+      "sha256": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878",
+      "crc32": 3472839209
+    },
+    "OLD": {
+      "bytes": 71251,
+      "sha256": "c1c0ae1f7b919f58ef4d7a34cec045f313206409a21955ffff09f63aced8e167",
+      "crc32": 2285289003
+    },
+    "OLDIDLE": {
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80",
+      "crc32": 891649594
+    }
+  },
+  "runtime": {
+    "bytes": 16306,
+    "sha256": "fc0598cc196d2ec7b45a25afbcb9405d2a6d1986d50e397457737fc0010f7cd8"
+  }
+}

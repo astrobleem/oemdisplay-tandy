@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "scope": "Packet integrity/gating only; no native qualification",
+  "checks": [
+    "intact review closure",
+    "incomplete qualification",
+    "runtime modification",
+    "source modification",
+    "receipt modification"
+  ]
+}

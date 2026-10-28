@@ -1,0 +1,44 @@
+{
+  "file": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-12\\build-idle-01\\TSINPUT.DLL",
+  "bytes": 6301,
+  "sha256": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878",
+  "segments": [
+    {
+      "number": 1,
+      "bytes": 5308,
+      "minimum_allocation": 5309,
+      "flags": "0xd40"
+    },
+    {
+      "number": 2,
+      "bytes": 157,
+      "minimum_allocation": 530,
+      "flags": "0xc61"
+    }
+  ],
+  "resident_names": {
+    "TSINPUT": 0,
+    "WEP": 6
+  },
+  "exports": {
+    "TSINPUT": 0,
+    "WEP": 6,
+    "Windows 3.0 8086 global idle and Hold input hooks": 0,
+    "IDLEREMOVE": 2,
+    "IDLEREADY": 4,
+    "HOLDREMOVE": 8,
+    "HOLDKEYBOARD": 11,
+    "HOLDPOLICY": 9,
+    "IDLEGENERATION": 3,
+    "HOLDTAKE": 10,
+    "IDLEINSTALL": 1,
+    "IDLERECORD": 5,
+    "HOLDINSTALL": 7,
+    "HOLDRECORD": 12
+  },
+  "imports": [
+    "KERNEL",
+    "USER"
+  ],
+  "status": "PASS: fixed/preloaded code and single data, no heap, expected exports, only Win3 USER/KERNEL imports"
+}

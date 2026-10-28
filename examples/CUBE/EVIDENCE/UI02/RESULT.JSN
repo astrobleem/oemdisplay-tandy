@@ -1,0 +1,19 @@
+{
+  "status": "FAIL",
+  "actions": [
+    {
+      "hardware_input": "10 via headless keyboard control",
+      "purpose": "Edit the actual compact shell idle-delay field"
+    },
+    {
+      "capture": "DELAY-DIAG"
+    }
+  ],
+  "bound_seconds": 420,
+  "owned_pid": 23308,
+  "error": "RuntimeError('Native test failed')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-12\\run_cube.py\", line 95, in <module>\n    if 'FAIL' in log or 'FAIL' in ui or 'FAILED' in guest.get('CUBEDONE.TXT',''):raise RuntimeError('Native test failed')\nRuntimeError: Native test failed\n",
+  "owned_stopped": true,
+  "lease_released": true,
+  "inventory_after": "0"
+}

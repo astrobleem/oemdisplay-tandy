@@ -1,0 +1,69 @@
+{
+  "target": "Windows 3.0 real mode / 8086/8088",
+  "compiler": "/G0 /Gw /AS /W3 /Oat MSC6 LINK4",
+  "source": {
+    "CUBE.C": {
+      "bytes": 23493,
+      "sha256": "5423c264f8e00a9f0be78397d3586ac25bba653be81bc39946fde89f8f3fc036"
+    },
+    "CUBECORE.C": {
+      "bytes": 2130,
+      "sha256": "e73cc486cdf1bb33d26da5b8ec69a7b7c6062a981d96602751018f6505864986"
+    },
+    "CUBECORE.H": {
+      "bytes": 442,
+      "sha256": "b6e674eff8549e2ccc41a0380513301e8ce50037f32eb565182ad4ddcf6f173c"
+    },
+    "CUBE.DEF": {
+      "bytes": 243,
+      "sha256": "70f2f0ac4d1bec5560d1933242903fecc8ac437f99492cff2f431f30772129d2"
+    },
+    "CUBE.RSP": {
+      "bytes": 89,
+      "sha256": "f0892dad90dfdad2413c3f59f188b1514399a9c5b4fff86f72a7379c6f9a5649"
+    },
+    "BUILD.BAT": {
+      "bytes": 482,
+      "sha256": "7d0250f1729d6d92b632ce36e5210cca4f9bf5f47bc56c85c3c08799146392f7"
+    },
+    "CUBECTL.C": {
+      "bytes": 5040,
+      "sha256": "b93eb68c57d5b469c94a16a63ea4560913aa619a290cbb328fa61fdf21052ef9"
+    },
+    "CUBECTL.DEF": {
+      "bytes": 211,
+      "sha256": "56c17c13368eebab2efbe3e51bf689bd12af707da37980795ac60fbdd9ae2363"
+    },
+    "CUBECTL.RSP": {
+      "bytes": 88,
+      "sha256": "f0e34659dd64c420354d52705294ba2efd89e654894db2c3ad59eeebdb7fea57"
+    }
+  },
+  "toolchain": {
+    "BIN/CL.EXE": {
+      "bytes": 28858,
+      "sha256": "9f452b39def257b3e07a9f4e07857d6d8a6e36da869a30c6e20ac51ea98b9816"
+    },
+    "BIN/LINK4.EXE": {
+      "bytes": 107920,
+      "sha256": "a0ca9ccca97dc1b6f597cf9f6ff8a3f0807dddbd0b552635e0f77754fbdfab71"
+    },
+    "LIB/SLIBCEW.LIB": {
+      "bytes": 191169,
+      "sha256": "f081602b0010cb9bd1753772dcd34a65577a20b57e3f22daf4113cec4995af34"
+    },
+    "LIB/LIBW.LIB": {
+      "bytes": 104693,
+      "sha256": "614f34dacd850bf71a458a0d155723722ee6b122123c8aac319d5feaa96e7ce2"
+    },
+    "DDK/286/INC/WINDOWS.H": {
+      "bytes": 164373,
+      "sha256": "1a669a0384b5449f90a42eb0996c90a22d4e676ad76d8133a5d7253279181966"
+    }
+  },
+  "runtime": {
+    "bytes": 15615,
+    "sha256": "4c09c65813dec046961e7191ba8e3bd15bd9475718b08ae624038f62119cdd90"
+  },
+  "scope": "Compile/link only; native execution is separate"
+}

@@ -1,0 +1,772 @@
+{
+  "schema": 1,
+  "status": "QUALIFICATION_PENDING",
+  "runtime": {
+    "CUBE.EXE": {
+      "bytes": 15647,
+      "sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d"
+    },
+    "CUBESHL.EXE": {
+      "bytes": 74131,
+      "sha256": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48"
+    },
+    "TSINPUT.DLL": {
+      "bytes": 6301,
+      "sha256": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878"
+    },
+    "CUBESET.EXE": {
+      "bytes": 16306,
+      "sha256": "fc0598cc196d2ec7b45a25afbcb9405d2a6d1986d50e397457737fc0010f7cd8"
+    }
+  },
+  "source": {
+    "examples/CUBE/SOURCE/AUDIT.PY": {
+      "bytes": 2868,
+      "sha256": "7eca34fa6ba1102f4af48195ebb66b81130a9287182e3393d29fc5a8eb3719fa"
+    },
+    "examples/CUBE/SOURCE/BUILD.BAT": {
+      "bytes": 482,
+      "sha256": "7d0250f1729d6d92b632ce36e5210cca4f9bf5f47bc56c85c3c08799146392f7"
+    },
+    "examples/CUBE/SOURCE/BUILD.PY": {
+      "bytes": 3296,
+      "sha256": "be7a3fee917f0f26f04f287d3f09498adc8e359efce7c67c79dfe66b97267dec"
+    },
+    "examples/CUBE/SOURCE/BUILDIN.PY": {
+      "bytes": 2944,
+      "sha256": "2947e9c8d5895249c7363d5aa2cac0591143a6ecb137b13d1c6896363b191e44"
+    },
+    "examples/CUBE/SOURCE/BUILDSET.PY": {
+      "bytes": 1852,
+      "sha256": "49f96c4ee020b1f9006e2e4af2f1ad78aa87a1db4b0b6c309febd41d8cda9872"
+    },
+    "examples/CUBE/SOURCE/CUBE.C": {
+      "bytes": 24038,
+      "sha256": "dbaa4ba368425fd0cc211159dee6f03b8d38abc66fb8b59216f28f0347ea4733"
+    },
+    "examples/CUBE/SOURCE/CUBE.DEF": {
+      "bytes": 243,
+      "sha256": "70f2f0ac4d1bec5560d1933242903fecc8ac437f99492cff2f431f30772129d2"
+    },
+    "examples/CUBE/SOURCE/CUBE.RSP": {
+      "bytes": 89,
+      "sha256": "f0892dad90dfdad2413c3f59f188b1514399a9c5b4fff86f72a7379c6f9a5649"
+    },
+    "examples/CUBE/SOURCE/CUBECORE.C": {
+      "bytes": 2130,
+      "sha256": "e73cc486cdf1bb33d26da5b8ec69a7b7c6062a981d96602751018f6505864986"
+    },
+    "examples/CUBE/SOURCE/CUBECORE.H": {
+      "bytes": 442,
+      "sha256": "b6e674eff8549e2ccc41a0380513301e8ce50037f32eb565182ad4ddcf6f173c"
+    },
+    "examples/CUBE/SOURCE/CUBECTL.C": {
+      "bytes": 6349,
+      "sha256": "6c0a10151fe67bf622f210bc828577b103154ce50e1bb00f568fcef14e26b9bc"
+    },
+    "examples/CUBE/SOURCE/CUBECTL.DEF": {
+      "bytes": 211,
+      "sha256": "56c17c13368eebab2efbe3e51bf689bd12af707da37980795ac60fbdd9ae2363"
+    },
+    "examples/CUBE/SOURCE/CUBECTL.RSP": {
+      "bytes": 88,
+      "sha256": "f0e34659dd64c420354d52705294ba2efd89e654894db2c3ad59eeebdb7fea57"
+    },
+    "examples/CUBE/SOURCE/CUBESET.C": {
+      "bytes": 6881,
+      "sha256": "f2498e22d659bc4447421fdfc536bf2198379560aeb2b5d54e013f65ad9592cb"
+    },
+    "examples/CUBE/SOURCE/PACK.PY": {
+      "bytes": 4547,
+      "sha256": "70513b89a0dcb1c34fba8fa9c999151f0602fba067b536a97bd606c1f857e218"
+    },
+    "examples/CUBE/SOURCE/RUNHOST.PY": {
+      "bytes": 2112,
+      "sha256": "24d8890006451ea3c367d6b0538cc3e9d3f361288c45996ec9f1e35df21676de"
+    },
+    "examples/CUBE/SOURCE/TESTCORE.C": {
+      "bytes": 1914,
+      "sha256": "a21340bf4829541e502abd0a244313192deb05b9ed63b673cb83c3bf982e2eef"
+    },
+    "examples/CUBE/SOURCE/TESTPACK.PY": {
+      "bytes": 1946,
+      "sha256": "e67a9a82cb19fcccaf91466b7feccd1eefc3746e4ddc603369d4d00ef474ea7d"
+    },
+    "examples/CUBE/SOURCE/VERIFY.PY": {
+      "bytes": 4160,
+      "sha256": "c76002c3a631ae87003e0c2b9668293e6dd98913544e353ceda7b13c5a788592"
+    },
+    "examples/TSHELL/BUILD.BAT": {
+      "bytes": 644,
+      "sha256": "ae3f9345ca6d2ab7ce235d4bd2b668b4901409a7c4b9b31610853afb5779b9c9"
+    },
+    "examples/TSHELL/BUILD.PY": {
+      "bytes": 1054,
+      "sha256": "7540ce80c38521926d832b609e52859422b1f7372b7ee465fbdc65389a69aced"
+    },
+    "examples/TSHELL/DTCORE.C": {
+      "bytes": 5103,
+      "sha256": "e8ac15c5e1236549d079e75ce6cdb84b8c526b0fd6d1b11e9b1e4accf443cf72"
+    },
+    "examples/TSHELL/DTCORE.H": {
+      "bytes": 1088,
+      "sha256": "0368337ae099088c30edb5dd3245943fc2c38d0913df9c7c4a284bc68a7c71fe"
+    },
+    "examples/TSHELL/GRPREAD.C": {
+      "bytes": 7566,
+      "sha256": "c70727c378b2934f310cd916623cc22210ac639d2d13855ed2e7a5f66d7340c0"
+    },
+    "examples/TSHELL/GRPREAD.H": {
+      "bytes": 1470,
+      "sha256": "be510602fb11b7a7a9b69e7f77ec729b79df2252b992e12d4a80c378439a6f51"
+    },
+    "examples/TSHELL/PROGMENU.C": {
+      "bytes": 16242,
+      "sha256": "44291d08cd375034c8bf6192f39634be8d55f5048e06a8ffccea55332fc1d703"
+    },
+    "examples/TSHELL/PROGMENU.H": {
+      "bytes": 553,
+      "sha256": "3ecd00f88b29bd5d5a8cac9bca663b547aca8b2ab8c59158d67f9bced76c641a"
+    },
+    "examples/TSHELL/PSGOWN.H": {
+      "bytes": 2055,
+      "sha256": "7077bac94afb4ce6521b58e24125a82f6ea2281886146beec6355799d2ae9665"
+    },
+    "examples/TSHELL/RAWREAD.C": {
+      "bytes": 9338,
+      "sha256": "d3c045f00d7ea91dffb3fd9940faf27febcf68a643bfca401ba2b537255c1285"
+    },
+    "examples/TSHELL/RAWREAD.H": {
+      "bytes": 1275,
+      "sha256": "b4c6f9017c220de554db8ea34c86126328468750eb8d7dfb32795f0080b266eb"
+    },
+    "examples/TSHELL/SCFGCORE.C": {
+      "bytes": 6109,
+      "sha256": "7c82f01b1f809d35e7425c563afb0046fd0e4d138718988fa8c1f855b2b0302d"
+    },
+    "examples/TSHELL/SCFGCORE.H": {
+      "bytes": 1596,
+      "sha256": "d3eee52d1e1ab2c88777698cf8b421d764cd3fb0d71c2ea7f1db8ead1e597d65"
+    },
+    "examples/TSHELL/SVCORE.C": {
+      "bytes": 501,
+      "sha256": "f9231f8c25d3ecb182aa15db0cf24278602f5cadd72917b89e28e4035f03adb6"
+    },
+    "examples/TSHELL/SVCORE.H": {
+      "bytes": 378,
+      "sha256": "905eb75cd28b9541ae7e5ffdcbc02319ab692d0b4eb72bc0d4a01fed9a9654c3"
+    },
+    "examples/TSHELL/TNOTICE.C": {
+      "bytes": 5092,
+      "sha256": "be4a1217e92061a3cefc5c61522158eb4019202fc54ecca1e68f7275305aa043"
+    },
+    "examples/TSHELL/TNOTICE.H": {
+      "bytes": 322,
+      "sha256": "98058c37f3817877d3f7c79c6698ab138aa552fe854651dba5faee8ca41a5b41"
+    },
+    "examples/TSHELL/TSAUX.C": {
+      "bytes": 2128,
+      "sha256": "5adf8db7e0f7f055ac4e78b3cc5e567be06cfd9309ba8b7d876e19d4d18cccf9"
+    },
+    "examples/TSHELL/TSAUX.H": {
+      "bytes": 199,
+      "sha256": "4e172ce041df857579411c5b3fcb1606449c5d23434d62ec0c01e86aa94863f6"
+    },
+    "examples/TSHELL/TSBOOT.C": {
+      "bytes": 5838,
+      "sha256": "fcc2c0a3186ca44c5fc9ffa4cbda4ba1286e4f948d498d72d5c8f9cfb5df8eb7"
+    },
+    "examples/TSHELL/TSBOOT.H": {
+      "bytes": 336,
+      "sha256": "386a98475d3a5e90d7bcac3cb57b9c0e0ea145a874d7d4898fb64da932a1ec78"
+    },
+    "examples/TSHELL/TSCP.C": {
+      "bytes": 4042,
+      "sha256": "09350eee3c011f4d67284968cb4a75461b6693705f2e65378db3b3e00267458a"
+    },
+    "examples/TSHELL/TSCP.H": {
+      "bytes": 232,
+      "sha256": "db41733f59d588c345761f8890dd991de34d052c2928df2b374f1e6f4b7e7e98"
+    },
+    "examples/TSHELL/TSDATE.C": {
+      "bytes": 9528,
+      "sha256": "511566292c6ffd951a976e78fc1205d0bc62c126b8495e961b1262fb4b3fb6d6"
+    },
+    "examples/TSHELL/TSDATE.H": {
+      "bytes": 286,
+      "sha256": "75a2d14406a4f9640a8f55e4b011c7ab61691eb4809d1ef1abd337e8722bd0c8"
+    },
+    "examples/TSHELL/TSHELL.C": {
+      "bytes": 30129,
+      "sha256": "ca1af80d55b43491525f673b8a63e42b8884ad0df17a7ddd3fbb60992616a193"
+    },
+    "examples/TSHELL/TSHELL.DEF": {
+      "bytes": 330,
+      "sha256": "927f19ca0b992e4f8e92d6d38e584bc219e3450be678d74b22b1340dfb72021c"
+    },
+    "examples/TSHELL/TSHELL.RSP": {
+      "bytes": 282,
+      "sha256": "69df946e370a9ed8f0310f0749e31617c31dac59ace675e2196ebee22dc508df"
+    },
+    "examples/TSHELL/TSHOLD.C": {
+      "bytes": 6107,
+      "sha256": "f4f10b015e7ef13e3574ccd316263bea6dffb3a79e6dbd3dec5153cc7c1ada47"
+    },
+    "examples/TSHELL/TSHOLD.H": {
+      "bytes": 476,
+      "sha256": "101d433764c5311b681d5273985bf5da65b6c1d0f9e3642d4e72236455fec19e"
+    },
+    "examples/TSHELL/TSNAMES.C": {
+      "bytes": 4476,
+      "sha256": "157333cc99a6c389813509f821f45c520c52f1181c71bc59bdc59437ba8602d6"
+    },
+    "examples/TSHELL/TSNAMES.H": {
+      "bytes": 948,
+      "sha256": "15da96b33a89b425441bf10edf7e3590a43d44d3980bc6477bd4baba1d1b9734"
+    },
+    "examples/TSHELL/TSSAVCFG.C": {
+      "bytes": 18391,
+      "sha256": "07b29247f4d2b1afacea7a05bda3176136f07fcd92f50adac76bd9fba5a1e020"
+    },
+    "examples/TSHELL/TSSAVCFG.H": {
+      "bytes": 323,
+      "sha256": "e31c29e673b618d40027b340f6e6b3b03e9d6950e07a17422901e7948674114b"
+    },
+    "examples/TSHELL/TSSAVER.C": {
+      "bytes": 8484,
+      "sha256": "b50069564193ebf09e7b1c4201d36964c3c25b6bbb710b456d8bc31e5ebe628d"
+    },
+    "examples/TSHELL/TSSAVER.H": {
+      "bytes": 644,
+      "sha256": "c463b0205aa17ce699f90a5e187e83291afb5d2c08d44037ea2f783838eff36e"
+    },
+    "examples/TSHELL/TSSVOPT.C": {
+      "bytes": 4345,
+      "sha256": "3f329279b662379cccd5b2b6f765f99071eb98d5b04da3fb582c7f7ecb5359c2"
+    },
+    "examples/TSHELL/TSSVOPT.H": {
+      "bytes": 204,
+      "sha256": "2370ecab8f2540595c7dc0f9515468c8fae9965871f4b36f032183015a95c067"
+    },
+    "examples/TSHELL/VFAT.C": {
+      "bytes": 21181,
+      "sha256": "3dc3260515ce7334a7073895751500a6eea752c2edcba3c049955d7f79ec92ba"
+    },
+    "examples/TSHELL/VFAT.H": {
+      "bytes": 4420,
+      "sha256": "df6f5ed756e1d60472382574013b62d2435b1d94728cbd363ea6c6109778b25a"
+    },
+    "examples/TSHELL/DOS/BASESEL.C": {
+      "bytes": 18641,
+      "sha256": "509056b0597b4d42d8fee7b4afb3bdcd38a9a6cc9e2c0191819d95c8792b6fff"
+    },
+    "examples/TSHELL/DOS/BASESTRT.BAT": {
+      "bytes": 1735,
+      "sha256": "8c5be17bc58e7ab8dfcf57a9a24e08acdc3d0b05455815168bba8e84ba632262"
+    },
+    "examples/TSHELL/DOS/BUILD.BAT": {
+      "bytes": 268,
+      "sha256": "cae8ce4b9d3343bb0589756d80104d1e23e0c417488979bd22e11726713640a3"
+    },
+    "examples/TSHELL/DOS/RECOVER.BAT": {
+      "bytes": 576,
+      "sha256": "f54242f33f4f0a19483b7a6cb77b706149cd86238782f8e1318104da6316c2db"
+    },
+    "examples/TSHELL/DOS/SHELLSEL.C": {
+      "bytes": 22233,
+      "sha256": "831cd1c1964fc565e901287a89cbecd3ec57f389cc1476b2501354084496d195"
+    },
+    "examples/TSHELL/DOS/TESTNITE.PY": {
+      "bytes": 7561,
+      "sha256": "380881cdec86d72a8d674f827113e53e53fb6dc133c392d5cb05ed831d8b7cf7"
+    },
+    "examples/TSHELL/DOS/TESTSEL.PY": {
+      "bytes": 7403,
+      "sha256": "4b91afc5b69762b90089ef9c2fd602430289ad022966e2f64bc8a88f2ce0b7cd"
+    },
+    "examples/TSHELL/DOS/TSTART.BAT": {
+      "bytes": 2010,
+      "sha256": "1737e8adede392ea1925e781775a28bb82d774cfd21a66611bd2ded231ca847e"
+    },
+    "examples/TSHELL/EVIDENCE/AUDIT.PY": {
+      "bytes": 2936,
+      "sha256": "1c00e6cbb2331bc8b3823e319ba90a3aefea5d928cdb094da008d1c3d0fd1456"
+    },
+    "examples/TSHELL/EVIDENCE/CAPTURES/DECODE.PY": {
+      "bytes": 1614,
+      "sha256": "7e61157b3f7149967787d3a582624054de8f216e2a0f0595a91564daa13a2565"
+    },
+    "examples/TSHELL/EVIDENCE/KEYPROBE/BUILD.BAT": {
+      "bytes": 308,
+      "sha256": "f1094f94a199e3afd0170bb9f2af098dc71b83765469c0781ac2d2ea6edc9a0e"
+    },
+    "examples/TSHELL/EVIDENCE/KEYPROBE/BUILD.PY": {
+      "bytes": 2496,
+      "sha256": "f190f0d88cfdb3131c4c930a07f788a65e848af94a3234d845882a1c55a282c1"
+    },
+    "examples/TSHELL/EVIDENCE/KEYPROBE/TSHELL.C": {
+      "bytes": 19772,
+      "sha256": "0423c5cb41aab77f1a3d551dda06ebdc7c45657d31ddee2b6e8c7d656d88d2eb"
+    },
+    "examples/TSHELL/EVIDENCE/KEYPROBE/TSHELL.DEF": {
+      "bytes": 307,
+      "sha256": "9913797f5c089b20ac81229c63939f44551f061bfea30188fef6648e1dd6c7cf"
+    },
+    "examples/TSHELL/EVIDENCE/KEYPROBE/TSHELL.RSP": {
+      "bytes": 84,
+      "sha256": "756de9f2e3230305644885c65a63344b1c313c841e519622fc3309935bf71c8e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/CLOSEBAR/BUILD.BAT": {
+      "bytes": 308,
+      "sha256": "f1094f94a199e3afd0170bb9f2af098dc71b83765469c0781ac2d2ea6edc9a0e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/CLOSEBAR/BUILD.PY": {
+      "bytes": 2167,
+      "sha256": "1e0559dffc8890d73ca58610e4d58505a2abb94f50ce52fda58b143ee6d3a95a"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/CLOSEBAR/TSHELL.C": {
+      "bytes": 1227,
+      "sha256": "524bd7f54e4c418fcda145757dcb47398094cc9a1bfbb02e800723cba902a1ba"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/CLOSEBAR/TSHELL.DEF": {
+      "bytes": 128,
+      "sha256": "a9096ae30483690f7ce4754dd4724906715b3e6cf7c468ad92301deab1214bde"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/CLOSEBAR/TSHELL.RSP": {
+      "bytes": 84,
+      "sha256": "756de9f2e3230305644885c65a63344b1c313c841e519622fc3309935bf71c8e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/DIALOG/BUILD.BAT": {
+      "bytes": 308,
+      "sha256": "f1094f94a199e3afd0170bb9f2af098dc71b83765469c0781ac2d2ea6edc9a0e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/DIALOG/BUILD.PY": {
+      "bytes": 2496,
+      "sha256": "f190f0d88cfdb3131c4c930a07f788a65e848af94a3234d845882a1c55a282c1"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/DIALOG/TSHELL.C": {
+      "bytes": 9343,
+      "sha256": "6fab59de948c3df30d47ab4136a44dba2d65b53e49c4054a3d7dbd231d910204"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/DIALOG/TSHELL.DEF": {
+      "bytes": 248,
+      "sha256": "3f8a30face05a43393a8100f0231bb911a0db5cd4ba3495ff7988b90c6b86a5c"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/DIALOG/TSHELL.RSP": {
+      "bytes": 84,
+      "sha256": "756de9f2e3230305644885c65a63344b1c313c841e519622fc3309935bf71c8e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/MEMORY/BUILD.BAT": {
+      "bytes": 308,
+      "sha256": "f1094f94a199e3afd0170bb9f2af098dc71b83765469c0781ac2d2ea6edc9a0e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/MEMORY/BUILD.PY": {
+      "bytes": 2167,
+      "sha256": "1e0559dffc8890d73ca58610e4d58505a2abb94f50ce52fda58b143ee6d3a95a"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/MEMORY/TSHELL.C": {
+      "bytes": 836,
+      "sha256": "23a28e3a10a888ca5911898cbacea6f49654120da32ec2924599b71b494e7f14"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/MEMORY/TSHELL.DEF": {
+      "bytes": 128,
+      "sha256": "a9096ae30483690f7ce4754dd4724906715b3e6cf7c468ad92301deab1214bde"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/MEMORY/TSHELL.RSP": {
+      "bytes": 84,
+      "sha256": "756de9f2e3230305644885c65a63344b1c313c841e519622fc3309935bf71c8e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/MENU/BUILD.BAT": {
+      "bytes": 308,
+      "sha256": "f1094f94a199e3afd0170bb9f2af098dc71b83765469c0781ac2d2ea6edc9a0e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/MENU/BUILD.PY": {
+      "bytes": 2496,
+      "sha256": "f190f0d88cfdb3131c4c930a07f788a65e848af94a3234d845882a1c55a282c1"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/MENU/TSHELL.C": {
+      "bytes": 8537,
+      "sha256": "3c4452f68fb2724a8ead2375b3259151f3f652a504a0876c2574c225729c62c6"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/MENU/TSHELL.DEF": {
+      "bytes": 266,
+      "sha256": "ba16153ad9767854b9a01f76fc335bf35c04629cf46ea8b3c44dfa162dfa2b01"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/MENU/TSHELL.RSP": {
+      "bytes": 84,
+      "sha256": "756de9f2e3230305644885c65a63344b1c313c841e519622fc3309935bf71c8e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/PMRESTOR/BUILD.BAT": {
+      "bytes": 308,
+      "sha256": "f1094f94a199e3afd0170bb9f2af098dc71b83765469c0781ac2d2ea6edc9a0e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/PMRESTOR/BUILD.PY": {
+      "bytes": 2496,
+      "sha256": "f190f0d88cfdb3131c4c930a07f788a65e848af94a3234d845882a1c55a282c1"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/PMRESTOR/TSHELL.C": {
+      "bytes": 8421,
+      "sha256": "a27b049b777f37b1699085be2628e5f8a343881493e99e797bddc3e4504b4b2d"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/PMRESTOR/TSHELL.DEF": {
+      "bytes": 231,
+      "sha256": "2f4eaba1fbc006c5b12b3fb82858ce746628491d7a112397da4d17bea3adb81e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/PMRESTOR/TSHELL.RSP": {
+      "bytes": 84,
+      "sha256": "756de9f2e3230305644885c65a63344b1c313c841e519622fc3309935bf71c8e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/PROBE/BUILD.BAT": {
+      "bytes": 308,
+      "sha256": "f1094f94a199e3afd0170bb9f2af098dc71b83765469c0781ac2d2ea6edc9a0e"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/PROBE/BUILD.PY": {
+      "bytes": 2496,
+      "sha256": "f190f0d88cfdb3131c4c930a07f788a65e848af94a3234d845882a1c55a282c1"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/PROBE/TSHELL.C": {
+      "bytes": 9156,
+      "sha256": "035cd7d31c609ce156385674dbf7a1e627e2f16e76cab65d0cdc74db9a807822"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/PROBE/TSHELL.DEF": {
+      "bytes": 234,
+      "sha256": "b4fdf3b1fd6713a54955bd9666e2a814c166e8bb9b441d08c7c329b488d2ca59"
+    },
+    "examples/TSHELL/EVIDENCE/LEGACY09/PROBE/TSHELL.RSP": {
+      "bytes": 84,
+      "sha256": "756de9f2e3230305644885c65a63344b1c313c841e519622fc3309935bf71c8e"
+    },
+    "examples/TSHELL/EVIDENCE/MEMORY/BUILD.BAT": {
+      "bytes": 308,
+      "sha256": "f1094f94a199e3afd0170bb9f2af098dc71b83765469c0781ac2d2ea6edc9a0e"
+    },
+    "examples/TSHELL/EVIDENCE/MEMORY/BUILD.PY": {
+      "bytes": 2496,
+      "sha256": "f190f0d88cfdb3131c4c930a07f788a65e848af94a3234d845882a1c55a282c1"
+    },
+    "examples/TSHELL/EVIDENCE/MEMORY/TSHELL.C": {
+      "bytes": 1113,
+      "sha256": "97f29be9b038e829a76b71c6e167a397e2935b2761f83747a26eadbffdaa624d"
+    },
+    "examples/TSHELL/EVIDENCE/MEMORY/TSHELL.DEF": {
+      "bytes": 127,
+      "sha256": "5e650e74b401d140f1f7d260f6ab085f6f3680a58f3882dc7afef8b6a3deb2b0"
+    },
+    "examples/TSHELL/EVIDENCE/MEMORY/TSHELL.RSP": {
+      "bytes": 84,
+      "sha256": "756de9f2e3230305644885c65a63344b1c313c841e519622fc3309935bf71c8e"
+    },
+    "examples/TSHELL/EVIDENCE/RUNCHILD/BUILD.BAT": {
+      "bytes": 308,
+      "sha256": "f1094f94a199e3afd0170bb9f2af098dc71b83765469c0781ac2d2ea6edc9a0e"
+    },
+    "examples/TSHELL/EVIDENCE/RUNCHILD/BUILD.PY": {
+      "bytes": 2496,
+      "sha256": "f190f0d88cfdb3131c4c930a07f788a65e848af94a3234d845882a1c55a282c1"
+    },
+    "examples/TSHELL/EVIDENCE/RUNCHILD/TSHELL.C": {
+      "bytes": 306,
+      "sha256": "8bea5c6fd2aefb70884a519507b0bc69d102c7ac93070753ed7c03d513cf3c9f"
+    },
+    "examples/TSHELL/EVIDENCE/RUNCHILD/TSHELL.DEF": {
+      "bytes": 129,
+      "sha256": "dab22aacdc9ebcc627b99ba4db65e402b1be1b4150779743029ee65d5b3ee5b3"
+    },
+    "examples/TSHELL/EVIDENCE/RUNCHILD/TSHELL.RSP": {
+      "bytes": 84,
+      "sha256": "756de9f2e3230305644885c65a63344b1c313c841e519622fc3309935bf71c8e"
+    },
+    "examples/TSHELL/EVIDENCE/RUNPROBE/BUILD.BAT": {
+      "bytes": 308,
+      "sha256": "f1094f94a199e3afd0170bb9f2af098dc71b83765469c0781ac2d2ea6edc9a0e"
+    },
+    "examples/TSHELL/EVIDENCE/RUNPROBE/BUILD.PY": {
+      "bytes": 2496,
+      "sha256": "f190f0d88cfdb3131c4c930a07f788a65e848af94a3234d845882a1c55a282c1"
+    },
+    "examples/TSHELL/EVIDENCE/RUNPROBE/TSHELL.C": {
+      "bytes": 20845,
+      "sha256": "a97178e25bbe3048567622f339d08028241cfcc54b4bc0d3c719137feab0da2d"
+    },
+    "examples/TSHELL/EVIDENCE/RUNPROBE/TSHELL.DEF": {
+      "bytes": 293,
+      "sha256": "4393047da7613b1a8e4f91dab46218378d35f14410d1d8dd26737ef1cddb3a64"
+    },
+    "examples/TSHELL/EVIDENCE/RUNPROBE/TSHELL.RSP": {
+      "bytes": 84,
+      "sha256": "756de9f2e3230305644885c65a63344b1c313c841e519622fc3309935bf71c8e"
+    },
+    "examples/TSHELL/FRESH14/ASSEMBLE.PY": {
+      "bytes": 951,
+      "sha256": "06d09d3e751fad7a2b0d9be56abf49c049ae6b482eee908e1744b8c83e1bf9cc"
+    },
+    "examples/TSHELL/FRESH14/AUDITCHK.PY": {
+      "bytes": 2520,
+      "sha256": "b312c7757e51bf2322b61e330b0f000dc31a96818c416745333225af540e8ee2"
+    },
+    "examples/TSHELL/FRESH14/BUILDCHK.BAT": {
+      "bytes": 223,
+      "sha256": "c63f90a8818d30226f0e64ccd02dc4b09b5e9d3d922083c837565d32fa25b04a"
+    },
+    "examples/TSHELL/FRESH14/CHECKTST.PY": {
+      "bytes": 2021,
+      "sha256": "7e042990fead71f78d2e8d2b574967ea94bdfb744bc4d499364e5eaa664e1071"
+    },
+    "examples/TSHELL/FRESH14/TSCHECK.C": {
+      "bytes": 799,
+      "sha256": "21caed1a7e4bec26f82872091ee2e6fef75e01d813e771b714e3dc86587c1504"
+    },
+    "examples/TSHELL/FRESH14/TSSETUP.BAT": {
+      "bytes": 3828,
+      "sha256": "1f8d14d64c90f17c931548ab983237651ca2d003118b05f445317fb266a3753a"
+    },
+    "examples/TSHELL/FRESH14/TSTART.BAT": {
+      "bytes": 2185,
+      "sha256": "0c429b851b5e00b29143894cad6221d63e7c4cfd3782f43b1aefc731c6aa1cd2"
+    },
+    "examples/TSHELL/IDLE/BUILD.BAT": {
+      "bytes": 702,
+      "sha256": "feebbc6c1a69088ffe26d270dee9c01ed14f7dfeb39e55ac77640a355c90d348"
+    },
+    "examples/TSHELL/IDLE/BUILD.PY": {
+      "bytes": 2131,
+      "sha256": "bc68f1968c10db09ddfda631efa0dfce2257f0df4c6809963fe3c20cc72bb3f3"
+    },
+    "examples/TSHELL/IDLE/HOLDPROB.C": {
+      "bytes": 6539,
+      "sha256": "23f4ec8911f425c105b529e4d03b7b19d7769a902d5b47fae7dc195bab46c291"
+    },
+    "examples/TSHELL/IDLE/HOLDPROB.DEF": {
+      "bytes": 208,
+      "sha256": "41502759af534d7f24591ef42b77d3810266bba4011eb25b64493917fc700461"
+    },
+    "examples/TSHELL/IDLE/HOLDPROB.RSP": {
+      "bytes": 92,
+      "sha256": "e468ed0df829a7b54185714d9e4bc5d766fb1f93072cab75ed912e9b77257997"
+    },
+    "examples/TSHELL/IDLE/IDLEPROB.C": {
+      "bytes": 5066,
+      "sha256": "2181d321a38e483f36fd816717a54e06c20dbd5ff7f9af8fa01a19379597bbb8"
+    },
+    "examples/TSHELL/IDLE/IDLEPROB.DEF": {
+      "bytes": 199,
+      "sha256": "9bf963d87be7cab52fc75dfa17416165a9c842c7d91f795c4f2d33a74787adc3"
+    },
+    "examples/TSHELL/IDLE/IDLEPROB.RSP": {
+      "bytes": 92,
+      "sha256": "6cd229e3f3dad43b061e3e62fba3c1bee572c7c291e3e958a5c20a70cf14d8d7"
+    },
+    "examples/TSHELL/IDLE/LIBENTRY.ASM": {
+      "bytes": 982,
+      "sha256": "50ef9f7ef215970c30bf961919c635ea307e37b907d62066476dc32d1c10e1cd"
+    },
+    "examples/TSHELL/IDLE/TSINPUT.C": {
+      "bytes": 19582,
+      "sha256": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c"
+    },
+    "examples/TSHELL/IDLE/TSINPUT.DEF": {
+      "bytes": 373,
+      "sha256": "3afe75bb883b2246e88311330e3b56351e9167a497bdca85598404374c616818"
+    },
+    "examples/TSHELL/IDLE/TSINPUT.H": {
+      "bytes": 829,
+      "sha256": "e25e44a53eac398962eb3ccfbae6b045fbe8d87dc0dfd33d27b3acf402101d77"
+    },
+    "examples/TSHELL/IDLE/TSINPUT.RSP": {
+      "bytes": 82,
+      "sha256": "7dee60ba24cb3bd9c3912b113d89915cd64431bfb113621c30231b325b9c1df1"
+    },
+    "examples/TSHELL/IDLE/tests/HOLDTEST.C": {
+      "bytes": 16305,
+      "sha256": "b80113808a96990c0009df051ed3d20d29e129d1326ae6dd55439378827a7af7"
+    },
+    "examples/TSHELL/IDLE/tests/HOSTTEST.C": {
+      "bytes": 6907,
+      "sha256": "b174b9ddb9dd9fe0b68c48932f83003dedfecddc7aeb24621d8161ca63fbaae7"
+    },
+    "examples/TSHELL/IDLE/tests/VERIFY.PY": {
+      "bytes": 2033,
+      "sha256": "00d77651eea893fef2123d30724d48dc493c08a8ad7729fd11f80f870f6983c3"
+    },
+    "examples/TSHELL/IDLE/tests/WINSTUB.H": {
+      "bytes": 2292,
+      "sha256": "87725b378f1327c4bad7f817bc32db1cf18e350500bc67195a497a90586bad0f"
+    },
+    "examples/TSHELL/TESTS/BNDTEST.PY": {
+      "bytes": 634,
+      "sha256": "efda768c4175a75c44ea82cc4193501f439473f3917886b307dc8ecc96db20e9"
+    },
+    "examples/TSHELL/TESTS/BUNDLE.C": {
+      "bytes": 3327,
+      "sha256": "48bda3c6669121920b98ad98f98794692c5d35e2711f7b75a562d44a3e5c6b9e"
+    },
+    "examples/TSHELL/TESTS/GRPTEST.PY": {
+      "bytes": 8369,
+      "sha256": "4e4c3a82c4acf7ccf5c3b0592abea9dffcf89931ce5f9784f3674d552109e042"
+    },
+    "examples/TSHELL/TESTS/RUNHOST.PY": {
+      "bytes": 1353,
+      "sha256": "b7d50ab66ace869ad0c841df423f0ef088acb574c6df9dc4fa687d57377595a4"
+    },
+    "examples/TSHELL/TESTS/TESTBOOT.C": {
+      "bytes": 9393,
+      "sha256": "44cd901dacafbdcd93565f68be0617195a96a10191a18b8e372c4652b28c11e5"
+    },
+    "examples/TSHELL/TESTS/TESTSV.C": {
+      "bytes": 716,
+      "sha256": "630bdec2ae365a0ab33c5d59dd5b3bf39cc2dc08bc97937a73e2ca10a74a1eea"
+    },
+    "examples/TSHELL/TESTS/CONFIG/RUN.PY": {
+      "bytes": 677,
+      "sha256": "6735778a947e9820b0b2419524c7e26b4909dcb9e54013aaeb22d0ac9385e97e"
+    },
+    "examples/TSHELL/TESTS/CONFIG/TESTCFG.C": {
+      "bytes": 8057,
+      "sha256": "823e220d270698698d579daf75952f6e2123e1d7f8316bd7bbdab8bf6e66d8b8"
+    },
+    "examples/TSHELL/TESTS/CONTROL/CPREAD.PY": {
+      "bytes": 3555,
+      "sha256": "54a4f060cab87eda967c784913a0cfabafefb51d740dd3c6acd3bfab368080da"
+    },
+    "examples/TSHELL/TESTS/CONTROL/CPTEST.C": {
+      "bytes": 7046,
+      "sha256": "d2292cf2c028c043f40cc3d9aaa48eda5a17092b0b2e8d505c02bf660926c870"
+    },
+    "examples/TSHELL/TESTS/CONTROL/MNTEST.C": {
+      "bytes": 4789,
+      "sha256": "0e2d3bb39901c903ec18d5301140c173e5e0e6532dacde5757926a1327431d42"
+    },
+    "examples/TSHELL/TESTS/CONTROL/TESTCP.PY": {
+      "bytes": 544,
+      "sha256": "8278575464f4b00bf385fedf349058122a5763689b7706acfd883eab9afe7879"
+    },
+    "examples/TSHELL/TESTS/CONTROL/TESTMN.PY": {
+      "bytes": 1350,
+      "sha256": "77257b1b916181065238ecea96cfd7bc3756a0d4a9b6369f21671d339711b86d"
+    },
+    "examples/TSHELL/TESTS/CONTROL/WINDOWS.H": {
+      "bytes": 1501,
+      "sha256": "54e24f3ac7d9da5ec1efa9fadfa6a5480c8a94adf99d8b986bad46bbec23d7ab"
+    },
+    "examples/TSHELL/TESTS/DATE/DTTEST.C": {
+      "bytes": 8304,
+      "sha256": "46dc2a29b629955f6f0a7eac1d33d5a7f2be709992cb492a28c6db3b72591336"
+    },
+    "examples/TSHELL/TESTS/DATE/RUN.PY": {
+      "bytes": 930,
+      "sha256": "aa73b331fcbf66cc04be071e91e128139c08680ce67df1b234218ac9d3d7d7bf"
+    },
+    "examples/TSHELL/TESTS/HSTINC/PROGMENU.H": {
+      "bytes": 36,
+      "sha256": "e796bc917e20d51099edfd2e999efdbd808616256afedf2859df08a9e1f69baf"
+    },
+    "examples/TSHELL/TESTS/HSTINC/windows.h": {
+      "bytes": 1373,
+      "sha256": "6f7063ffb01307e8b155963c797fdeb4e7397fc4bda7882836c53269afc76a32"
+    }
+  },
+  "receipts": {
+    "EVIDENCE/README.TXT": {
+      "bytes": 1013,
+      "sha256": "4e8518cda1da760e91367bf962ee16b58d62cb52e83fdb3c614baa9a889f4027"
+    },
+    "EVIDENCE/BUILD/CBPROC.JSN": {
+      "bytes": 460,
+      "sha256": "5807f9319ac728fccf365c9161340ca8b68128d3d4eb7fa9e4d83279474c045e"
+    },
+    "EVIDENCE/BUILD/CUBE.JSN": {
+      "bytes": 2551,
+      "sha256": "47fb9ecf0731a17dffe6a1268b4bc3ffe90e57ba541b7ae865a178360a5f31ae"
+    },
+    "EVIDENCE/BUILD/INPROC.JSN": {
+      "bytes": 459,
+      "sha256": "8eac7912bd9fe7eaba51ebdb1327566513d2b0da87596fa845be4cc69b5612bc"
+    },
+    "EVIDENCE/BUILD/INPUT.JSN": {
+      "bytes": 1905,
+      "sha256": "16eb7092d7f7dbf12a2ab7e5fc777513ccef2de792061f8c7770591bcc9d643d"
+    },
+    "EVIDENCE/BUILD/INPUTNE.JSN": {
+      "bytes": 1047,
+      "sha256": "9a3ce65f0d1d7c0d438df13244ea94571f7973b666f957a0ed4420fbca91b32e"
+    },
+    "EVIDENCE/BUILD/INSTALL.JSN": {
+      "bytes": 1113,
+      "sha256": "ffee7c257d96589ba4a2aafaac3c945309fd14db25a548bd295d6d64a97dba51"
+    },
+    "EVIDENCE/BUILD/SHELL.JSN": {
+      "bytes": 8252,
+      "sha256": "3c766db65be5f90a06836497b35b922adab894a52474a642d1da1871802efd48"
+    },
+    "EVIDENCE/BUILD/SHPROC.JSN": {
+      "bytes": 460,
+      "sha256": "5804f894a2d86156c0746d323c9477ecde533ece1a8032791a5e409c637ecb88"
+    },
+    "EVIDENCE/GATE/RESULT.JSN": {
+      "bytes": 264,
+      "sha256": "644b9bddde2f93071e1a12f27e90e83a0a4c5496996b8b492e4f338f2527a5ef"
+    },
+    "EVIDENCE/HARNESS/NATIVE.PY": {
+      "bytes": 9139,
+      "sha256": "c60ffe6d5c48f6da5b0e2e2dfe1179b36a227db7f172029c609f2d9569023b8e"
+    },
+    "EVIDENCE/HARNESS/PREPARE.PY": {
+      "bytes": 7886,
+      "sha256": "75721f8a54830f7e27283c43cbdd5a9c03248c7a885238abeea5ee6b455f8d58"
+    },
+    "EVIDENCE/HIST04/BUILD.JSN": {
+      "bytes": 2241,
+      "sha256": "9d63f488ca03353640e1ea1538f59f59a36f257502470eda106699adcd5634d5"
+    },
+    "EVIDENCE/HIST04/PREPARE.JSN": {
+      "bytes": 658,
+      "sha256": "2940c5405a4bc2c5fb0bc567bb7602df827e8bffb6babb51b9a2d4a0e0b42cf3"
+    },
+    "EVIDENCE/HIST04/RESULT.JSN": {
+      "bytes": 3111,
+      "sha256": "108d8895d6329992a6ccc0a3f3a5ac7343a5e3e75b6f9e7278e3e12abea3e069"
+    },
+    "EVIDENCE/HOST/RESULT.JSN": {
+      "bytes": 2352,
+      "sha256": "4f511ece55001215d4fdf44790f88ccafeeadf43d3ac2c4be7afc609e9327f9c"
+    },
+    "EVIDENCE/ISA/AUDIT.JSN": {
+      "bytes": 723,
+      "sha256": "2e0537313dbfc9dec8dfdace10ed82dd5d8e9a81e493f8dc743e88b4fd1a8498"
+    },
+    "EVIDENCE/UI02/CUBEUI.LOG": {
+      "bytes": 253,
+      "sha256": "5f6077ef598c24bc41c895626005c19cbf4d199843ad67d6d3e80f08de46cbdd"
+    },
+    "EVIDENCE/UI02/PREPARE.JSN": {
+      "bytes": 1060,
+      "sha256": "e632ca1fa8d65aa5f9e9dcedef39222336fdd724171eb41d81c3e2ade979dc51"
+    },
+    "EVIDENCE/UI02/RESULT.JSN": {
+      "bytes": 727,
+      "sha256": "b857c58e339089e3b66c4c32f2e625220156e1b5950731266f379e93cdd92f3a"
+    },
+    "EVIDENCE/UI02/SET-VRAM.PNG": {
+      "bytes": 3146,
+      "sha256": "586abbb296045069dbd83b61ee50775a3a3c22a91b12dd7cfc8a16d1fdd20a35"
+    },
+    "EVIDENCE/UI02/SETTINGS.PNG": {
+      "bytes": 3092,
+      "sha256": "0d55440471e17f62fa341bfe995b870a9d29c5cfb71ae5fd3b8f3cb44c8a9fd5"
+    },
+    "EVIDENCE/UI02/SH-VRAM.PNG": {
+      "bytes": 3250,
+      "sha256": "637c152fc57cf6a29f8ea67e0954bbec9427fe45f99e1f7b7edf00faf3b0f530"
+    },
+    "EVIDENCE/UI02/SHELL.PNG": {
+      "bytes": 3268,
+      "sha256": "04c6dfa631f06306421966cf9a7681f32f2aa859a55a238295b002dacfa54a0c"
+    }
+  },
+  "native": {},
+  "limits": [
+    "Final rendering mode matrix and real idle launch still pending.",
+    "UI02 failed at controller edit readback; no UI acceptance claimed.",
+    "No physical hardware qualification; no publication authorized."
+  ]
+}

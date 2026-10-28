@@ -1,0 +1,25 @@
+{
+  "base": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-10\\fresh-native-02",
+  "private_image": true,
+  "reused": true,
+  "bytes": 84341760,
+  "scope": "cga100; UI and idle",
+  "install_guards": false,
+  "changes": [
+    "AUTOEXEC test entry",
+    "explicit known current TSHELL and TSINPUT baseline",
+    "kit files in CUBE folder",
+    "selected documented display fixture"
+  ],
+  "payload": {
+    "CUBE.EXE": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d",
+    "CUBECTL.EXE": "4d8020cc150de4f040aefc83238eec85a6107f4de1eea00b052afdf461672544",
+    "CUBESHL.EXE": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48",
+    "TSINPUT.DLL": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878",
+    "CUBESET.EXE": "fc0598cc196d2ec7b45a25afbcb9405d2a6d1986d50e397457737fc0010f7cd8"
+  },
+  "originals": {
+    "TSHELL.EXE": "c1c0ae1f7b919f58ef4d7a34cec045f313206409a21955ffff09f63aced8e167",
+    "TSINPUT.DLL": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+  }
+}

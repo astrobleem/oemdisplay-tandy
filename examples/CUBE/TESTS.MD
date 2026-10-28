@@ -1,74 +1,83 @@
 # Cube qualification
 
-This is a local candidate. Current coverage is deliberately narrower than
-the renderer's supported dimensions. No physical adapter, composite output,
-Windows 3.1 or every-driver qualification is claimed.
+This is a local candidate with qualification still pending. No physical
+adapter, composite output, Windows 3.1 or every-driver qualification is claimed.
+Publication is not authorized. ACCEPT.JSN intentionally blocks release packaging.
 
-The current Cube was compiled with MSC6/LINK4 using `/G0 /Gw /AS /W3 /Oat`.
-The candidate Tandy Start uses its existing `/G0 /Gw /AS /W3 /Od` build.
+The current 15,647-byte CUBE.EXE has SHA-256
+`1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d`.
+It was compiled with MSC6/LINK4, `/G0 /Gw /AS /W3 /Oat` and NE target 3.0.
+The candidate shell is 74,131 bytes; its paired TSINPUT.DLL is 6,301 bytes.
 The native DOS installer uses Open Watcom `-bt=dos -0 -ms -os`.
 No accepted display, font, mouse, keyboard, sound or core packet was replaced.
 
-## Completed before additional mode coverage
+## Current binary observations
 
-The last fully tested 15,615-byte Cube prototype with SHA-256
-`4c09c65813dec046961e7191ba8e3bd15bd9475718b08ae624038f62119cdd90`
-passed native rendering and input checks at **160x100x16 RGBI** on an emulated
-IBM XT 8088 at 4.77 MHz, 640 KB, DOS 6.22 and Windows 3.0 real mode.
-It used the project's accepted fixed CGA100 driver and matching compact fonts.
+Two native UI attempts used the exact current Cube, shell, DLL and installer
+on an IBM XT 8088 at 4.77 MHz, 640 KB, DOS 6.22, Windows 3.0 real mode,
+and the accepted CGA100 driver with compact fonts (160x100x16 RGBI).
+Both passed Cube settings persistence, preview launch, keyboard dismissal,
+and return to settings. Style=1, Speed=3 and Size=3 were saved.
 
-- Flat, ordered-dither and wireframe scenes were visually inspected from
-  actual headless scanout captures, held briefly by developer-only QA.
-- Six runs covered keyboard wake, held mouse button/release, movement,
-  activation loss, Close and stolen capture. Each drew 13 complete frames.
-- Each run read a white edge pixel back from both the memory bitmap and
-  the screen after the final copy. All six matched `16777215`.
-- The held-button check passed; no wake input reached the QA desktop.
-  Timer/capture/bitmap/DC/pen cleanup checks reported no retained resources.
-- Native DOS installation, shell backup, undo and reinstall completed and
-  returned to DOS. The original installer build in this run preceded only
-  the additional source-path length guard; the guarded build needs its
-  separate final native receipt.
-- The run's final receipt confirms its owned emulator stopped, the lease
-  was released and the process inventory was zero. It completed despite
-  a temporary disconnect of the execution environment.
+The first attempt saved the shell's Cube choice but left its delay at 300.
+The second typed into the actual delay field, then timed out in the test
+controller's cross-task edit readback, before Apply. These are failed tests;
+no final idle-launch acceptance is claimed. The controller is being corrected
+without changing the production Cube executable.
 
-The measured complete draw cost in this fixture was about 0.77-0.82 seconds
-for filled frames and 0.44-0.50 seconds for wireframe after startup. These
-are emulator observations using the Windows tick clock, including GDI and
-cooperative scheduling. They are not calibrated physical-machine timings.
-Small size and Wire are offered to reduce drawing work.
+Direct CGA video-memory captures confirm both compact settings panels,
+including their bottom buttons, fit inside 160x100. Every displayed cell
+was verified as character DEh; its background/foreground attributes give
+the left/right logical pixel. The decoder uses standard RGBI colors and
+nearest-neighbor enlargement. Original headless captures are retained;
+they have a vertical scanout offset that clips the lower image. Decoded
+captures are evidence of logical layout, not calibrated physical aspect ratio.
 
-An earlier 14,479-byte prototype passed the same six cases at CGA640 mono.
-That record is historical, not final-binary coverage for that mode.
+Each attempt's final receipt proves its owned emulator stopped, the byte
+lease was released and the emulator inventory was zero. No other run was stopped.
 
-Host checks pass the complete 512-phase geometry period, sine symmetry,
-face winding, lighting range and both normal and reduced-copy bounds. The
-existing shell transaction suite passes 163 checks, including Cube choice,
-custom path, disabling and write-failure rollback. These are C89 host
-checks through the managed GCC launcher, not native display qualification.
+## Host and build checks
 
-## Remaining qualification
+Host checks pass all 512 geometry phases, sine symmetry, face winding,
+lighting range, sizing bounds and the reduced copy rectangle. Shell
+transactions pass 163 checks, including Cube selection/path, disabling and
+write-failure rollback. Original idle checks pass, and Hold checks cover
+Cube's module/window wake exclusions. These are C89 host checks, not native
+display or input qualification.
 
-Native Cube settings save/preview, the compact shell selector and real idle
-launch remain pending. Final-binary monochrome, Tandy color and a larger
-virtual desktop/viewport also remain pending. The read-only XY viewport
-query is implemented but its new consumer use has not yet been accepted.
+The scoped 8088 audit traces the NE entry and three exported Cube callbacks
+through direct near control flow. It found no post-8088 suspects in 3,218
+instructions. Indirect continuations/tables and imported Windows code are
+excluded; this is not an exhaustive ISA or hardware proof.
 
-Developer-only CUBECTL performs UI/idle acceptance in an owned private
-Windows fixture. Its `/Q` route runs render/input QA and exits that private
-Windows session so DOS can exercise undo/reinstall. Do not distribute or
-install the controller as a consumer application.
+## Earlier prototype evidence
 
-## Retained failed attempts
+A 15,615-byte prototype (`4c09c65813dec046961e7191ba8e3bd15bd9475718b08ae624038f62119cdd90`)
+passed flat, dither and wireframe rendering at CGA160x100x16. Six runs each
+drew 13 frames, covering keyboard wake, held mouse button/release, movement,
+activation loss, Close and stolen capture. All six white source/screen
+pixel reads matched; no input leaks or timer/capture/bitmap/DC/pen remnants
+were reported. DOS install/undo/reinstall returned normally. That installer
+preceded the current paired shell/DLL transaction; this is historical evidence.
 
-The first reused-disk preparation failed while pyfatfs tried to grow a native
-DOS file entry. The wrapper incorrectly launched without a complete config;
-that owned process was stopped and its lease released. Preparation now
-replaces the entry before writing, and the runner requires a completed
-preparation receipt and config before launch. Subsequent fixtures use an
-explicit private image and the coordinated shared lease.
+The prototype's warm draw cost was about 0.77-0.82 seconds filled and
+0.44-0.50 seconds wireframe in that emulator. These Windows tick observations
+include GDI/cooperative scheduling and are not physical-machine benchmarks.
+An older 14,479-byte prototype passed the same six cases at CGA640 mono.
+Neither prototype establishes final-binary mode coverage.
 
-A stale build-path attempt was stopped before acceptance and is not counted
-as qualification. Transitional blank capture attempts were replaced by a
-developer-only frame hold and source/screen readback; no mockups are evidence.
+## Pending acceptance
+
+Final render/input QA at CGA low resolution, monochrome, Tandy color and
+larger virtual dimensions/nonzero viewport remains pending, along with
+real shell idle launch and paired installer undo/reinstall/unknown-file guards.
+CUBECTL is developer-only: its default route exercises UI/idle; /Q runs
+render/input QA and exits the private Windows fixture for DOS recovery tests.
+It must never be installed or run in a Windows session containing user work.
+
+Retained failed preparation attempts are not qualification: one FAT file-growth
+failure incorrectly launched an incomplete fixture; its owned process was
+stopped. Preparation now replaces entries and requires completed receipt/config
+before launch. A stale-payload attempt was stopped before acceptance. Blank
+transitional capture attempts were superseded by a QA frame hold and readback.
+Private OS images, ROMs, toolchains and emulator executables are excluded.

@@ -1,0 +1,58 @@
+{
+  "source_commit": "ee968d605099407e946443710e10cf0ce7107b16",
+  "source": {
+    "TSINPUT.C": {
+      "bytes": 19582,
+      "sha256": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c"
+    },
+    "TSINPUT.H": {
+      "bytes": 829,
+      "sha256": "e25e44a53eac398962eb3ccfbae6b045fbe8d87dc0dfd33d27b3acf402101d77"
+    },
+    "TSINPUT.DEF": {
+      "bytes": 373,
+      "sha256": "3afe75bb883b2246e88311330e3b56351e9167a497bdca85598404374c616818"
+    },
+    "TSINPUT.RSP": {
+      "bytes": 82,
+      "sha256": "7dee60ba24cb3bd9c3912b113d89915cd64431bfb113621c30231b325b9c1df1"
+    },
+    "LIBENTRY.ASM": {
+      "bytes": 982,
+      "sha256": "50ef9f7ef215970c30bf961919c635ea307e37b907d62066476dc32d1c10e1cd"
+    },
+    "IDLEPROB.C": {
+      "bytes": 5066,
+      "sha256": "2181d321a38e483f36fd816717a54e06c20dbd5ff7f9af8fa01a19379597bbb8"
+    },
+    "IDLEPROB.DEF": {
+      "bytes": 199,
+      "sha256": "9bf963d87be7cab52fc75dfa17416165a9c842c7d91f795c4f2d33a74787adc3"
+    },
+    "IDLEPROB.RSP": {
+      "bytes": 92,
+      "sha256": "6cd229e3f3dad43b061e3e62fba3c1bee572c7c291e3e958a5c20a70cf14d8d7"
+    },
+    "HOLDPROB.C": {
+      "bytes": 6539,
+      "sha256": "23f4ec8911f425c105b529e4d03b7b19d7769a902d5b47fae7dc195bab46c291"
+    },
+    "HOLDPROB.DEF": {
+      "bytes": 208,
+      "sha256": "41502759af534d7f24591ef42b77d3810266bba4011eb25b64493917fc700461"
+    },
+    "HOLDPROB.RSP": {
+      "bytes": 92,
+      "sha256": "e468ed0df829a7b54185714d9e4bc5d766fb1f93072cab75ed912e9b77257997"
+    },
+    "BUILD.BAT": {
+      "bytes": 702,
+      "sha256": "feebbc6c1a69088ffe26d270dee9c01ed14f7dfeb39e55ac77640a355c90d348"
+    }
+  },
+  "runtime": {
+    "bytes": 6301,
+    "sha256": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878"
+  },
+  "scope": "Compile/link and NE ABI contract; native behavior separate"
+}

@@ -1,0 +1,18 @@
+{
+  "base": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-10\\fresh-native-02",
+  "private_image": true,
+  "reused": true,
+  "bytes": 84341760,
+  "scope": "cga100; kit, /Q, undo and reinstall",
+  "changes": [
+    "AUTOEXEC test entry",
+    "explicit known current TSHELL and TSINPUT baseline",
+    "kit files in CUBE folder",
+    "selected documented display fixture"
+  ],
+  "kit": {
+    "cube": "4c09c65813dec046961e7191ba8e3bd15bd9475718b08ae624038f62119cdd90",
+    "shell": "fffd1c687c67f3cbd310b4a63b7791586b296d5f92e212b8b8c85e3704621f4d",
+    "installer": "5e46045d967070530b0113374da9e005b1ee54045e6d246f227eaba3bace2e12"
+  }
+}
