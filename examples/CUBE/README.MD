@@ -39,3 +39,14 @@ settings, preview, the shell selector and real idle launch. Its `/Q` route
 runs Cube's native render/input suite and then exits the private Windows
 fixture so DOS can test undo/reinstall. Never install that controller or run
 it in a Windows session with user work.
+
+The installer baseline inputs are the first-party `TSHELL.EXE` and `TSINPUT.DLL`
+from `distributions/WINXT` at commit
+`54ede71df5b569c70fb18a3825caf75f88d0406f`. Their exact sizes, SHA-256 and
+CRC-32 values are in `EVIDENCE/BUILD/INSTALL.JSN`. They are already public
+project files; consumers use the complete Cube kit. Licensed MSC6/DDK inputs
+remain external and are never included in either packet.
+
+CI runs the host math/policy and tamper checks and requires the strict native
+receipt gate before assembling review artifacts. It does not run Windows,
+replace a native receipt, or publish a release.

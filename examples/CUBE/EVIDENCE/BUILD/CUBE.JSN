@@ -1,5 +1,5 @@
 {
-  "source_commit": "962bed54fe2558ce606ba18ae1e12a7ba95c0697",
+  "source_commit": "0206f9e6850fc7d45cb14ec031beb48c55f2491b",
   "target": "Windows 3.0 real mode / 8086/8088",
   "compiler": "/G0 /Gw /AS /W3 /Oat MSC6 LINK4",
   "source": {
@@ -28,8 +28,8 @@
       "sha256": "7d0250f1729d6d92b632ce36e5210cca4f9bf5f47bc56c85c3c08799146392f7"
     },
     "CUBECTL.C": {
-      "bytes": 6060,
-      "sha256": "d27e160b68f33718f53c95a766e2f218faafa313c99f86eb8da43ed5811aedf0"
+      "bytes": 6349,
+      "sha256": "6c0a10151fe67bf622f210bc828577b103154ce50e1bb00f568fcef14e26b9bc"
     },
     "CUBECTL.DEF": {
       "bytes": 211,

@@ -1,4 +1,4 @@
-WINDOWS XT ROTATING CUBE - LOCAL REVIEW CANDIDATE
+WINDOWS XT ROTATING CUBE
 
 Windows 3.0 real mode, 8086/8088, normal 640 KB.
 Requires an installed working display driver and Windows. Not Windows 3.1.
@@ -54,7 +54,7 @@ remain for standalone use. Keep both backups if a copy or rename fails;
 preserved. Resolve a reported pending transaction before starting Windows.
 
 This candidate supports the project dimensions through GDI, without raw
-framebuffer assumptions. TESTS.MD records the actual native mode coverage.
+framebuffer assumptions. TESTS.TXT records the actual native mode coverage.
 It does not certify every adapter, physical hardware, composite output or
 all palette/driver combinations. No OS media, driver, compiler or emulator
-is included. Do not publish this local candidate without approval.
+is included.

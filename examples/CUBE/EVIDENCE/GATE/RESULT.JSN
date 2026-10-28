@@ -3,6 +3,7 @@
   "scope": "Packet integrity/gating only; no native qualification",
   "checks": [
     "intact review closure",
+    "missing native scope despite ready label",
     "incomplete qualification",
     "runtime modification",
     "source modification",

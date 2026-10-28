@@ -24,10 +24,11 @@ def build(out,commit,review=False):
     for n,data in runtime.items():
         if pin(data)!=acceptance['runtime'][n]:raise ValueError('Native runtime identity differs: '+n)
     runtime['README.TXT']=(APP/'README.TXT').read_bytes()
+    runtime['TESTS.TXT']=(APP/'TESTS.MD').read_bytes()
     for n in runtime:
         stem,dot,ext=n.partition('.')
         if len(stem)>8 or len(ext)>3:raise ValueError('Non-DOS runtime name')
-    source={}
+    source={'SOURCE/.gitattributes':b'* -text\r\n','BUILDSRC.TXT':(APP/'BUILDSRC.TXT').read_bytes()}
     # Closed first-party source closure. No DDK/SDK libraries or installed OS files.
     for folder in (HERE,ROOT/'examples/TSHELL'):
         for path in folder.iterdir():

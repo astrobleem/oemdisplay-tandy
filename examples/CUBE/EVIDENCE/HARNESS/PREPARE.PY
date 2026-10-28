@@ -1,7 +1,7 @@
 from pathlib import Path
 import sys,shutil,json,re,hashlib,subprocess,msvcrt
 ROOT=Path(__file__).resolve().parent
-BUILDS=dict(cube='build-cube-08',shell='build-shell-04',idle='build-idle-01',installer='build-set-05')
+BUILDS=dict(cube='build-cube-09',shell='build-shell-04',idle='build-idle-01',installer='build-set-05')
 PAYLOAD={
  'CUBE.EXE':ROOT/BUILDS['cube']/'CUBE.EXE',
  'CUBECTL.EXE':ROOT/BUILDS['cube']/'CUBECTL.EXE',
@@ -12,9 +12,10 @@ PAYLOAD={
 sys.path.insert(0,r'C:\Users\chad\Documents\Codex\2026-10-27\task-6\deps-local')
 from pyfatfs.PyFatFS import PyFatFS
 kind=sys.argv[1];out=ROOT/sys.argv[2];out.mkdir()
+(out/'PREPARE.PY').write_bytes(Path(__file__).read_bytes())
 ui='--ui' in sys.argv
 reuse=next((s.split('=',1)[1]for s in sys.argv if s.startswith('--image=')),None)
-base=Path(r'C:\Users\chad\Documents\Codex\2026-10-27\task-10\fresh-native-02') if kind.startswith('cga') or kind=='ega' else Path(r'C:\Users\chad\Documents\Codex\2026-10-27\task-11\native-fx-03')
+base=Path(r'C:\Users\chad\Documents\Codex\2026-10-27\task-10\fresh-native-02') if kind.startswith('cga') or kind=='ega' else ROOT/'native-tandy-02'
 lease=Path(r'C:\Users\chad\Documents\Codex\2026-10-06\tandy-emulator.lock')
 with lease.open('rb')as lock:
     lock.seek(0);msvcrt.locking(lock.fileno(),msvcrt.LK_NBLCK,1)
@@ -63,7 +64,7 @@ with lease.open('rb')as lock:
             if kind in ('tandy160','tandy3204','tandy6404','tandy6402','pan'):
                 for key,n in [('fonts.fon','XTCSYS.FON'),('fixedfon.fon','XTCFIX.FON'),('oemfonts.fon','XTCOEM.FON')]:
                     put('WINDOWS/SYSTEM/'+n,subprocess.check_output(['git','-C',str(ROOT/'display'),'show','HEAD:distributions/WINXT/'+n]));setting(key,n)
-            if ui:setting('shell','TSHELL.EXE')
+            setting('shell','TSHELL.EXE'if ui else'PROGMAN.EXE')
             put('WINDOWS/SYSTEM.INI',ini.replace('\n','\r\n').encode('ascii'))
             prefix=b'RESERVE 32\r\n' if not (kind.startswith('cga')or kind=='ega') else b''
             command=b'WIN /R C:\\CUBE\\CUBECTL.EXE' if ui else (b'WIN /R C:\\CUBE\\CUBECTL.EXE /P' if kind in ('pan','cgapan') else b'WIN /R C:\\CUBE\\CUBECTL.EXE /Q')
@@ -80,6 +81,7 @@ with lease.open('rb')as lock:
         config=(base/'86box.cfg').read_text();config=re.sub(r'(?m)^hdd_01_fn\s*=.*$',lambda m:'hdd_01_fn = '+image.as_posix(),config)
         if kind=='ega':config=config.replace('gfxcard = cga','gfxcard = ega')
         (out/'86box.cfg').write_text(config)
+        (out/'INPUT.CNF').write_bytes((out/'86box.cfg').read_bytes())
         (out/'PREPARE.json').write_text(json.dumps(dict(base=str(base),environment=environment,private_image=True,reused=bool(reuse),bytes=image.stat().st_size,scope=kind+('; UI and idle'if ui else '; kit, /Q, undo and reinstall'),install_guards='--install-guards'in sys.argv,changes=['AUTOEXEC test entry','explicit known current TSHELL and TSINPUT baseline','kit files in CUBE folder','selected documented display fixture'],payload={n:hashlib.sha256(p.read_bytes()).hexdigest()for n,p in PAYLOAD.items()},originals={n:hashlib.sha256(p.read_bytes()).hexdigest()for n,p in [('TSHELL.EXE',ROOT/'old-shell.exe'),('TSINPUT.DLL',ROOT/'display/examples/TSHELL/TSINPUT.DLL')]}),indent=2))
     finally:lock.seek(0);msvcrt.locking(lock.fileno(),msvcrt.LK_UNLCK,1)
 print(out)

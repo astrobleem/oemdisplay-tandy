@@ -23,7 +23,12 @@ def rejects(label,action,review):
 def change(path):
     original=path.read_bytes();path.write_bytes(original+b'changed')
     return lambda:path.write_bytes(original)
+def acceptance_change(change):
+    path=kit/'ACCEPT.JSN';original=path.read_bytes();a=json.loads(original);change(a);path.write_text(json.dumps(a));return lambda:path.write_bytes(original)
 v.verify(True);checks.append('intact review closure')
+if accept['status']=='READY_FOR_PUBLICATION_APPROVAL':
+    v.verify(False);checks.append('complete native gate')
+rejects('missing native scope despite ready label',lambda:acceptance_change(lambda a:a.update(status='READY_FOR_PUBLICATION_APPROVAL',native={})),False)
 if accept['status']!='READY_FOR_PUBLICATION_APPROVAL':
     rejects('incomplete qualification',lambda:lambda:None,False)
 rejects('runtime modification',lambda:change(kit/'BIN/CUBE.EXE'),True)

@@ -1,0 +1,48 @@
+{
+  "base": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-10\\fresh-native-02",
+  "environment": {
+    "display.drv": {
+      "name": "CGA100.DRV",
+      "bytes": 58208,
+      "sha256": "75d9e93c619ff4647bf6a06f6b94056fe6b3bcd6448c05ee332661373c1921e3"
+    },
+    "fonts.fon": {
+      "name": "CG1SYS.FON",
+      "bytes": 3536,
+      "sha256": "d18469da312eb99858843e73c939896d392824d83e9ee28efc4cd2e13529ee40"
+    },
+    "fixedfon.fon": {
+      "name": "CG1FIX.FON",
+      "bytes": 3776,
+      "sha256": "b64dcb5805764590006d20efb2e86ab36e0d4af7e7ca17ff4424d09b3fc54d52"
+    },
+    "oemfonts.fon": {
+      "name": "CG1OEM.FON",
+      "bytes": 4080,
+      "sha256": "be15090c5be5e6271ee6e245b2d45e27a606aa8294c710ef9837c749ce265f06"
+    },
+    "system_ini_sha256": "4531307eea320a69552af577934c863c77713201e1431b641ef6af47b3670527"
+  },
+  "private_image": true,
+  "reused": true,
+  "bytes": 84341760,
+  "scope": "cga100; kit, /Q, undo and reinstall",
+  "install_guards": false,
+  "changes": [
+    "AUTOEXEC test entry",
+    "explicit known current TSHELL and TSINPUT baseline",
+    "kit files in CUBE folder",
+    "selected documented display fixture"
+  ],
+  "payload": {
+    "CUBE.EXE": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d",
+    "CUBECTL.EXE": "38cd282879994383bcd47e0724feacaeff73f1f13282bfdf4b12d406e0306e0a",
+    "CUBESHL.EXE": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48",
+    "TSINPUT.DLL": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878",
+    "CUBESET.EXE": "fc0598cc196d2ec7b45a25afbcb9405d2a6d1986d50e397457737fc0010f7cd8"
+  },
+  "originals": {
+    "TSHELL.EXE": "c1c0ae1f7b919f58ef4d7a34cec045f313206409a21955ffff09f63aced8e167",
+    "TSINPUT.DLL": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+  }
+}

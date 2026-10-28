@@ -77,8 +77,8 @@
       "sha256": "f2498e22d659bc4447421fdfc536bf2198379560aeb2b5d54e013f65ad9592cb"
     },
     "examples/CUBE/SOURCE/PACK.PY": {
-      "bytes": 4547,
-      "sha256": "70513b89a0dcb1c34fba8fa9c999151f0602fba067b536a97bd606c1f857e218"
+      "bytes": 4690,
+      "sha256": "9c47afefa362ae1e52e893f5c833c02a00c16a584eace599ea94b5ae21b0f0d9"
     },
     "examples/CUBE/SOURCE/RUNHOST.PY": {
       "bytes": 2112,
@@ -89,12 +89,12 @@
       "sha256": "a21340bf4829541e502abd0a244313192deb05b9ed63b673cb83c3bf982e2eef"
     },
     "examples/CUBE/SOURCE/TESTPACK.PY": {
-      "bytes": 1946,
-      "sha256": "e67a9a82cb19fcccaf91466b7feccd1eefc3746e4ddc603369d4d00ef474ea7d"
+      "bytes": 2406,
+      "sha256": "ed76497e70c8bb27b3c334da1c7e9458dfaad2da2a251211335ad50dd96eca65"
     },
     "examples/CUBE/SOURCE/VERIFY.PY": {
-      "bytes": 4160,
-      "sha256": "c76002c3a631ae87003e0c2b9668293e6dd98913544e353ceda7b13c5a788592"
+      "bytes": 4660,
+      "sha256": "19245be843e4efe5bd90ce76f5343cb1e071e7d56c7193156b31a67f4b144bb9"
     },
     "examples/TSHELL/BUILD.BAT": {
       "bytes": 644,
@@ -667,16 +667,20 @@
   },
   "receipts": {
     "EVIDENCE/README.TXT": {
-      "bytes": 1013,
-      "sha256": "4e8518cda1da760e91367bf962ee16b58d62cb52e83fdb3c614baa9a889f4027"
+      "bytes": 1620,
+      "sha256": "d81e3b60679f7e0199f4e403315862a101b042204d85f5049fce8ddd24be2c0a"
+    },
+    "EVIDENCE/REVIEW.JSN": {
+      "bytes": 2715,
+      "sha256": "5045ccae1e127d2b4ad04bce6ba0a58e52e673e6ceb9d18ccb229f2ee3e7614c"
     },
     "EVIDENCE/BUILD/CBPROC.JSN": {
       "bytes": 460,
-      "sha256": "5807f9319ac728fccf365c9161340ca8b68128d3d4eb7fa9e4d83279474c045e"
+      "sha256": "34d57e917268261b4f01c4ed7e2684902e3d6fed77ee700cfcacfe686d12d8ed"
     },
     "EVIDENCE/BUILD/CUBE.JSN": {
       "bytes": 2551,
-      "sha256": "47fb9ecf0731a17dffe6a1268b4bc3ffe90e57ba541b7ae865a178360a5f31ae"
+      "sha256": "4b5225a1d373e7127eabc430bda7edb48616c0380724eac3de78bc0b4e683d46"
     },
     "EVIDENCE/BUILD/INPROC.JSN": {
       "bytes": 459,
@@ -690,9 +694,17 @@
       "bytes": 1047,
       "sha256": "9a3ce65f0d1d7c0d438df13244ea94571f7973b666f957a0ed4420fbca91b32e"
     },
+    "EVIDENCE/BUILD/INSSRC.JSN": {
+      "bytes": 469,
+      "sha256": "3d22c066837a40204c22f135ac5c14f23329b388f3de92a8a6e109976836e428"
+    },
     "EVIDENCE/BUILD/INSTALL.JSN": {
       "bytes": 1113,
       "sha256": "ffee7c257d96589ba4a2aafaac3c945309fd14db25a548bd295d6d64a97dba51"
+    },
+    "EVIDENCE/BUILD/PROBE.JSN": {
+      "bytes": 278,
+      "sha256": "4d1087092c0b0069832e20ae7915d8e12e99ca289b2fed68932c5c0098dc3df1"
     },
     "EVIDENCE/BUILD/SHELL.JSN": {
       "bytes": 8252,
@@ -703,16 +715,20 @@
       "sha256": "5804f894a2d86156c0746d323c9477ecde533ece1a8032791a5e409c637ecb88"
     },
     "EVIDENCE/GATE/RESULT.JSN": {
-      "bytes": 264,
-      "sha256": "644b9bddde2f93071e1a12f27e90e83a0a4c5496996b8b492e4f338f2527a5ef"
+      "bytes": 313,
+      "sha256": "cfe0355ad16b4da602aee40644458b027b54fb932fa7a2c8beb13282fa4a2232"
+    },
+    "EVIDENCE/HARNESS/MATRIX.PY": {
+      "bytes": 1612,
+      "sha256": "d05375f8bbbddd3352a9b086ede592dd3f609bab1864cb03a01aee38ab2a5388"
     },
     "EVIDENCE/HARNESS/NATIVE.PY": {
-      "bytes": 9139,
-      "sha256": "c60ffe6d5c48f6da5b0e2e2dfe1179b36a227db7f172029c609f2d9569023b8e"
+      "bytes": 9972,
+      "sha256": "7cb673325c7684836acd650752a297be1b75490cabdd3aa462a3284e52b26d32"
     },
     "EVIDENCE/HARNESS/PREPARE.PY": {
-      "bytes": 7886,
-      "sha256": "75721f8a54830f7e27283c43cbdd5a9c03248c7a885238abeea5ee6b455f8d58"
+      "bytes": 7987,
+      "sha256": "2feeb6ab20c81e09979bade09f3d3c4da8ec8ab07b3c99a94da5b23fdda60d52"
     },
     "EVIDENCE/HIST04/BUILD.JSN": {
       "bytes": 2241,
@@ -734,9 +750,177 @@
       "bytes": 723,
       "sha256": "2e0537313dbfc9dec8dfdace10ed82dd5d8e9a81e493f8dc743e88b4fd1a8498"
     },
+    "EVIDENCE/LOW01/86box.cfg": {
+      "bytes": 718,
+      "sha256": "38d1a61cb3414f626bafe096aa961e646366e8e2bd5a956eac26bf46f95a470f"
+    },
+    "EVIDENCE/LOW01/CUBE.LOG": {
+      "bytes": 2501,
+      "sha256": "a7d222859d3ee87c1c8c356b6768c57b73d83859a3e77bd4f7f8f5a5e654a521"
+    },
+    "EVIDENCE/LOW01/CUBEUI.LOG": {
+      "bytes": 73,
+      "sha256": "162339dc975a0ac763493a78d550ab034f957147a8eb19cc9c675de1ad942d25"
+    },
+    "EVIDENCE/LOW01/INSTALL.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/LOW01/PREPARE.json": {
+      "bytes": 1856,
+      "sha256": "43065f188c9565227106b2c2d02f213ff8c634598994e63bbb5d42f2b1eeb115"
+    },
+    "EVIDENCE/LOW01/REINST.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/LOW01/RESULT.json": {
+      "bytes": 4636,
+      "sha256": "5885ce762eafc65c009fb407b5a1fe46a8c7256a0751519dfab56790fd8b661d"
+    },
+    "EVIDENCE/LOW01/STYLE1-VRAM.PNG": {
+      "bytes": 1610,
+      "sha256": "6f6b770710c26794c72466df66849da1d89ba1d360b4b24131205fd679159315"
+    },
+    "EVIDENCE/LOW01/STYLE1.PNG": {
+      "bytes": 1471,
+      "sha256": "e7abf59229c7608be674769e0be0370ac2d9922934cbca8966aba2009c29e8c2"
+    },
+    "EVIDENCE/LOW01/STYLE2-VRAM.PNG": {
+      "bytes": 1822,
+      "sha256": "79189eec93b358edfa9852ba74f6c323ed6c1f24f5bc8cb7805a11db9fd4d1e0"
+    },
+    "EVIDENCE/LOW01/STYLE2.PNG": {
+      "bytes": 1662,
+      "sha256": "6ddac22ac293dd6f09ff86a5f2d988232a3df01683a6419ed691eddf8397716b"
+    },
+    "EVIDENCE/LOW01/STYLE3-VRAM.PNG": {
+      "bytes": 1695,
+      "sha256": "e48a348f593e2a174337284e08dd8439dce34a060b4cb1f13fad99c41276edda"
+    },
+    "EVIDENCE/LOW01/STYLE3.PNG": {
+      "bytes": 1627,
+      "sha256": "c4b51ec22fe16d38df52d819cf0d55e767ee032dcdd87c07a0d8e4ddb8e25fad"
+    },
+    "EVIDENCE/LOW01/UNDO.LOG": {
+      "bytes": 115,
+      "sha256": "76e0c26ce97afc848a3c54eb559bd44e2c22e6325501cd4eb36b5d1714b7a5a8"
+    },
+    "EVIDENCE/MONO01/86box.cfg": {
+      "bytes": 718,
+      "sha256": "38d1a61cb3414f626bafe096aa961e646366e8e2bd5a956eac26bf46f95a470f"
+    },
+    "EVIDENCE/MONO01/APPONLY.LOG": {
+      "bytes": 169,
+      "sha256": "f95b55cf71cd7134202d24348d2cba073fdecf5cb4f8bd93c5781e39ca4f5c1d"
+    },
+    "EVIDENCE/MONO01/CUBE.LOG": {
+      "bytes": 2507,
+      "sha256": "42aae8287e5875ec5396c4d99349365917616e172abb0e197ef6d084ec167327"
+    },
+    "EVIDENCE/MONO01/CUBEUI.LOG": {
+      "bytes": 73,
+      "sha256": "162339dc975a0ac763493a78d550ab034f957147a8eb19cc9c675de1ad942d25"
+    },
+    "EVIDENCE/MONO01/FATCHECK.JSN": {
+      "bytes": 277,
+      "sha256": "828d8135c6e1b92dcfde6198ab9582e818d7090ae04884188d243d0e6c30fa31"
+    },
+    "EVIDENCE/MONO01/INSTALL.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/MONO01/PREPARE.json": {
+      "bytes": 1855,
+      "sha256": "7178b9d2f6f444adb135e5952838e3e6e405b7192082f70892b67f7cf2aaf581"
+    },
+    "EVIDENCE/MONO01/REINST.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/MONO01/RESULT.json": {
+      "bytes": 5154,
+      "sha256": "b0f0a62d36614b9881b4ee01188c75ab8f85e1a4c88d879692532221c9ab7ebe"
+    },
+    "EVIDENCE/MONO01/STYLE1.PNG": {
+      "bytes": 1190,
+      "sha256": "ec63444b89829eb9ec226460e880c80d0217acb3e7d07293ef10a7ba4957a301"
+    },
+    "EVIDENCE/MONO01/STYLE2.PNG": {
+      "bytes": 1360,
+      "sha256": "dbc3d2a90ca0a82f17bff69ff70821cb9d58f067d4faeb26351a1dff8aafcc1d"
+    },
+    "EVIDENCE/MONO01/STYLE3.PNG": {
+      "bytes": 1408,
+      "sha256": "1e96174a5daab051166e828af8b4de5257200bae97816bed02770328a0506189"
+    },
+    "EVIDENCE/MONO01/UNDO.LOG": {
+      "bytes": 115,
+      "sha256": "76e0c26ce97afc848a3c54eb559bd44e2c22e6325501cd4eb36b5d1714b7a5a8"
+    },
+    "EVIDENCE/MONO01/UNKNOWN.LOG": {
+      "bytes": 133,
+      "sha256": "528729d76a7c484ec9472c590d1864c3e4696777d0c6eedb005adbe9d6750c59"
+    },
+    "EVIDENCE/TANDY02/86box.cfg": {
+      "bytes": 537,
+      "sha256": "3c147989c004b8ebf31e2281cfca99eafb9e7affe3db250720c84134f378f488"
+    },
+    "EVIDENCE/TANDY02/CUBE.LOG": {
+      "bytes": 2505,
+      "sha256": "eda4db3118b506b60087616343350ec5cdea037963b978bb5bab0765852d2c1b"
+    },
+    "EVIDENCE/TANDY02/CUBEUI.LOG": {
+      "bytes": 73,
+      "sha256": "162339dc975a0ac763493a78d550ab034f957147a8eb19cc9c675de1ad942d25"
+    },
+    "EVIDENCE/TANDY02/INPUT.CNF": {
+      "bytes": 602,
+      "sha256": "afb76ea411caf5cb5c976efd1db696bac7a413f110021c00c22bbfad77c7800d"
+    },
+    "EVIDENCE/TANDY02/INSTALL.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/TANDY02/NATIVE.PY": {
+      "bytes": 9972,
+      "sha256": "7cb673325c7684836acd650752a297be1b75490cabdd3aa462a3284e52b26d32"
+    },
+    "EVIDENCE/TANDY02/PREPARE.json": {
+      "bytes": 1854,
+      "sha256": "6851f510ca0be451d237336570f9bbc8c5fe2c2e969e843c8b6204256410fe1f"
+    },
+    "EVIDENCE/TANDY02/PREPARE.PY": {
+      "bytes": 8035,
+      "sha256": "041cfb9c7bedd3c5bba28e600ee5d7e06711c79152da64dd2dd21042632eb7be"
+    },
+    "EVIDENCE/TANDY02/REINST.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/TANDY02/RESULT.json": {
+      "bytes": 4816,
+      "sha256": "51cecc5c8760642f98bd23cab2639833e65a1f85b8e13066e302f0c04a214f77"
+    },
+    "EVIDENCE/TANDY02/STYLE1.PNG": {
+      "bytes": 1112,
+      "sha256": "3a531535a26536c6a3c4ecba67fe85c8bae8337b601380b9faec92c2219ba92a"
+    },
+    "EVIDENCE/TANDY02/STYLE2.PNG": {
+      "bytes": 1322,
+      "sha256": "98f339eac2d563c51333c21d68b5bc8664ade1b9aae48d762b9b2c2b525d96c3"
+    },
+    "EVIDENCE/TANDY02/STYLE3.PNG": {
+      "bytes": 1297,
+      "sha256": "0a90cfff6cbe6eb950786a3ac7e090dbe3471adbadf72b3c53423c969e2b82a2"
+    },
+    "EVIDENCE/TANDY02/UNDO.LOG": {
+      "bytes": 115,
+      "sha256": "76e0c26ce97afc848a3c54eb559bd44e2c22e6325501cd4eb36b5d1714b7a5a8"
+    },
     "EVIDENCE/UI02/CUBEUI.LOG": {
-      "bytes": 253,
-      "sha256": "5f6077ef598c24bc41c895626005c19cbf4d199843ad67d6d3e80f08de46cbdd"
+      "bytes": 241,
+      "sha256": "7bff44e438790efbd4eae6a8dc2436a2f2a5bb3ef77a8f88408af754a9dd91fe"
     },
     "EVIDENCE/UI02/PREPARE.JSN": {
       "bytes": 1060,
@@ -761,12 +945,90 @@
     "EVIDENCE/UI02/SHELL.PNG": {
       "bytes": 3268,
       "sha256": "04c6dfa631f06306421966cf9a7681f32f2aa859a55a238295b002dacfa54a0c"
+    },
+    "EVIDENCE/UI03/86box.cfg": {
+      "bytes": 718,
+      "sha256": "38d1a61cb3414f626bafe096aa961e646366e8e2bd5a956eac26bf46f95a470f"
+    },
+    "EVIDENCE/UI03/CUBEUI.LOG": {
+      "bytes": 389,
+      "sha256": "9e0f22b273f3eb027996cafc1f4bbbfeaa45e23492e2d5aa584f64dd8cb1d405"
+    },
+    "EVIDENCE/UI03/IDLE-VRAM.PNG": {
+      "bytes": 1802,
+      "sha256": "2d49a85b6638cae1dae06ceb8033707514ab67e4a39a6d9d690f5dda5666550d"
+    },
+    "EVIDENCE/UI03/IDLE.PNG": {
+      "bytes": 1499,
+      "sha256": "aa0c1b6d21a95a634ec59b9460919380dea77b075149d02e7ae5c9098cd4c750"
+    },
+    "EVIDENCE/UI03/INSTALL.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/UI03/PREPARE.json": {
+      "bytes": 1840,
+      "sha256": "0dfe10a8f7d5e6d7fb5c019bad60fc7da3bb6af1bd43ac05f25f8315bcc433b9"
+    },
+    "EVIDENCE/UI03/RESULT.json": {
+      "bytes": 2502,
+      "sha256": "d03ed5392bd5e82d9aa1fa3be3723774393eb6c416b79dd32a519bf37de012fd"
+    },
+    "EVIDENCE/UI03/SETTINGS-VRAM.PNG": {
+      "bytes": 3146,
+      "sha256": "586abbb296045069dbd83b61ee50775a3a3c22a91b12dd7cfc8a16d1fdd20a35"
+    },
+    "EVIDENCE/UI03/SETTINGS.PNG": {
+      "bytes": 3092,
+      "sha256": "0d55440471e17f62fa341bfe995b870a9d29c5cfb71ae5fd3b8f3cb44c8a9fd5"
+    },
+    "EVIDENCE/UI03/SHELL-VRAM.PNG": {
+      "bytes": 3250,
+      "sha256": "637c152fc57cf6a29f8ea67e0954bbec9427fe45f99e1f7b7edf00faf3b0f530"
+    },
+    "EVIDENCE/UI03/SHELL.PNG": {
+      "bytes": 824,
+      "sha256": "eccad29bf3e3c27e4f959dfdb498c46c0418a316dee1f6b9b8daad1d67d4ba04"
     }
   },
-  "native": {},
+  "native": {
+    "ui": {
+      "receipt": "EVIDENCE/UI03/RESULT.json",
+      "prepare_receipt": "EVIDENCE/UI03/PREPARE.json",
+      "cube_sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d",
+      "scope": "cga100; UI and idle",
+      "shell_sha256": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48"
+    },
+    "low": {
+      "receipt": "EVIDENCE/LOW01/RESULT.json",
+      "prepare_receipt": "EVIDENCE/LOW01/PREPARE.json",
+      "cube_sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d",
+      "scope": "cga100; kit, /Q, undo and reinstall"
+    },
+    "mono": {
+      "receipt": "EVIDENCE/MONO01/RESULT.json",
+      "prepare_receipt": "EVIDENCE/MONO01/PREPARE.json",
+      "cube_sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d",
+      "scope": "cga640; kit, /Q, undo and reinstall"
+    },
+    "tandy": {
+      "receipt": "EVIDENCE/TANDY02/RESULT.json",
+      "prepare_receipt": "EVIDENCE/TANDY02/PREPARE.json",
+      "cube_sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d",
+      "scope": "tandy; kit, /Q, undo and reinstall"
+    },
+    "installer": {
+      "receipt": "EVIDENCE/MONO01/RESULT.json",
+      "prepare_receipt": "EVIDENCE/MONO01/PREPARE.json",
+      "cube_sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d",
+      "scope": "cga640; kit, /Q, undo and reinstall",
+      "installer_sha256": "fc0598cc196d2ec7b45a25afbcb9405d2a6d1986d50e397457737fc0010f7cd8",
+      "undo_reinstall": true
+    }
+  },
   "limits": [
-    "Final rendering mode matrix and real idle launch still pending.",
-    "UI02 failed at controller edit readback; no UI acceptance claimed.",
-    "No physical hardware qualification; no publication authorized."
+    "No physical adapter/composite qualification.",
+    "Windows 3.1 and modes absent from TESTS.MD remain unqualified.",
+    "Publication requires separate user approval."
   ]
 }

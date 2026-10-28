@@ -1,5 +1,5 @@
 from pathlib import Path
-import sys,os,subprocess,socket,time,json,msvcrt,threading,base64,shutil,traceback,re,hashlib,configparser
+import sys,os,subprocess,socket,time,json,msvcrt,threading,base64,shutil,traceback,re,hashlib,configparser,struct
 from PIL import Image
 ROOT=Path(__file__).resolve().parent
 sys.path[:0]=[r'C:\Users\chad\Documents\Codex\2026-10-27\task-6',r'C:\Users\chad\Documents\Codex\2026-10-27\task-6\deps-local',r'E:\DOSMCP\mcp-server']
@@ -10,18 +10,19 @@ from owned_job import OwnedJob,stop_owned
 out=ROOT/sys.argv[1];bound=420;p=g=ctl=job=watch=None;held=False
 assert (out/'PREPARE.json').is_file() and (out/'86box.cfg').is_file(),'Completed private fixture preparation required'
 image=Path((out/'IMAGEREF.txt').read_text())if(out/'IMAGEREF.txt').exists()else out/'DISK.IMG'
-r=dict(status='FAIL',actions=[],bound_seconds=bound);lease=Path(r'C:\Users\chad\Documents\Codex\2026-10-06\tandy-emulator.lock').open('rb')
+harness=Path(__file__).read_bytes();(out/'NATIVE.PY').write_bytes(harness)
+r=dict(status='FAIL',actions=[],bound_seconds=bound,harness_sha256=hashlib.sha256(harness).hexdigest());lease=Path(r'C:\Users\chad\Documents\Codex\2026-10-06\tandy-emulator.lock').open('rb')
 def inventory():return subprocess.check_output(['powershell.exe','-NoProfile','-Command','@(Get-Process -Name dosbox*,86Box,TRACEIO,FIXBOX,pcem,tandybox -ErrorAction SilentlyContinue).Count'],text=True).strip()
 def read_guest():
     d={}
     with PyFatFS(str(image),offset=17408,read_only=True)as fs:
-        for name in ('WINXT/CUBE.LOG','INSTALL.LOG','CUBEDONE.TXT','UNDO.LOG','REINST.LOG','CUBEUI.LOG','WINDOWS/CUBE.INI','WINDOWS/TSHELL.INI'):
+        for name in ('WINXT/CUBE.LOG','INSTALL.LOG','CUBEDONE.TXT','UNDO.LOG','REINST.LOG','CUBEUI.LOG','WINDOWS/CUBE.INI','WINDOWS/TSHELL.INI','UNKNOWN.LOG','APPONLY.LOG'):
             if fs.exists(name):d[name]=fs.readbytes(name).decode('cp437',errors='replace')
     return d
 def capture(name):
     (out/(name+'.PNG')).write_bytes(base64.b64decode(ctl.capture_frame_png_b64()))
     prep=json.loads((out/'PREPARE.json').read_text())
-    if prep['scope'].startswith('cga100'):
+    if prep['scope'].split(';')[0]in('cga100','cgapan'):
         data=g.read_memory(0xb8000,16000)
         (out/(name+'.VRM')).write_bytes(data)
         chars=set(data[::2]);assert chars=={0xde},repr(chars)
@@ -32,6 +33,10 @@ def capture(name):
 
 def installed_pins():
     d={}
+    with image.open('rb')as disk:
+        disk.seek(17408);boot=disk.read(512);sector=struct.unpack_from('<H',boot,11)[0];reserved=struct.unpack_from('<H',boot,14)[0];count=boot[16];size=struct.unpack_from('<H',boot,22)[0]*sector
+        disk.seek(17408+reserved*sector);fats=[disk.read(size)for _ in range(count)];r['fat_copies_equal']=count>=2 and all(f==fats[0]for f in fats)
+        assert r['fat_copies_equal'],'FAT copies still differ at the quiescent acceptance endpoint'
     with PyFatFS(str(image),offset=17408,read_only=True)as fs:
         for n in ('WINXT/CUBE.EXE','WINDOWS/TSHELL.EXE','WINDOWS/TSINPUT.DLL','WINDOWS/TSHCUBE.BAK','WINDOWS/TICUBE.BAK','CUBE/AFTERSH.EXE'):
             if fs.exists(n):
@@ -66,7 +71,7 @@ try:
         if mode==3 and txt!=last:
             last=txt;serial+=1;(out/'SCREEN.txt').write_text('\n'.join(txt[i:i+80] for i in range(0,len(txt),80)),encoding='utf-8')
         guest=read_guest();log=guest.get('WINXT/CUBE.LOG','')
-        for name,text in guest.items():(out/Path(name).name).write_text(text)
+        for name,text in guest.items():(out/Path(name).name).write_bytes(text.encode('cp437'))
         styles=re.findall(r'START .*style=(\d)',log)
         current=log[log.rfind('START '):]if styles else ''
         if styles and styles[-1] not in captures and 'QA CAPTURE READY' in current and 'END reason=' not in current:
@@ -102,7 +107,7 @@ try:
             for path,payload in [('WINXT/CUBE.EXE','CUBE.EXE'),('WINDOWS/TSHELL.EXE','CUBESHL.EXE'),('WINDOWS/TSINPUT.DLL','TSINPUT.DLL')]:assert r['installed'][path]['sha256']==prep['payload'][payload],path
             for path,original in [('WINDOWS/TSHCUBE.BAK','TSHELL.EXE'),('WINDOWS/TICUBE.BAK','TSINPUT.DLL')]:assert r['installed'][path]['sha256']==prep['originals'][original],path
             if prep['install_guards']:assert r['installed']['CUBE/AFTERSH.EXE']['sha256']==hashlib.sha256(b'UNKNOWN\r\n').hexdigest()
-            r['status']='PASS';r['native_log']=log;r['ui_log']=ui;r['installer_log']=guest.get('INSTALL.LOG','');r['undo_log']=guest.get('UNDO.LOG','');r['reinstall_log']=guest.get('REINST.LOG','');break
+            r['status']='PASS';r['native_log']=log;r['ui_log']=ui;r['installer_log']=guest.get('INSTALL.LOG','');r['undo_log']=guest.get('UNDO.LOG','');r['reinstall_log']=guest.get('REINST.LOG','');r['unknown_guard_log']=guest.get('UNKNOWN.LOG','');r['standalone_guard_log']=guest.get('APPONLY.LOG','');break
         if shutil.disk_usage(out).free<512*1024**2:raise RuntimeError('Disk guard')
     else:raise TimeoutError('Native Cube bound expired')
 except BaseException as e:r['error']=repr(e);r['traceback']=traceback.format_exc()
@@ -116,3 +121,5 @@ finally:
     if held:lease.seek(0);msvcrt.locking(lease.fileno(),msvcrt.LK_UNLCK,1)
     lease.close();r['lease_released']=held;r['inventory_after']=inventory()
     (out/'RESULT.json').write_text(json.dumps(r,indent=2));print(json.dumps({k:v for k,v in r.items()if k not in ('native_log','installer_log')},indent=2),flush=True)
+
+raise SystemExit(0 if r['status']=='PASS'else 1)
