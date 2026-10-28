@@ -1,0 +1,188 @@
+{
+  "review_type": "Independent source review; reviewer did not implement the change",
+  "reviewed_commit": "0346d47af8025e9b854bfcf9af9e3061cb679e86",
+  "baseline_commit": "54ede71df5b569c70fb18a3825caf75f88d0406f",
+  "created_utc": "2026-10-28T08:49:39.439248+00:00",
+  "outcome": "One substantive actionable finding",
+  "findings": [
+    {
+      "id": "CUBE-SRC-1",
+      "priority": "P2",
+      "title": "Preserve the new active window when a settings preview loses ownership",
+      "file": "examples/CUBE/SOURCE/CUBE.C",
+      "line_start": 332,
+      "line_end": 332,
+      "scenario": "Launch CUBE /C, start Preview, then switch to another window/task or otherwise lose focus/capture while the preview is active.",
+      "defect": "WM_KILLFOCUS/WM_ACTIVATE/WM_ACTIVATEAPP and the ownership checks clear returnFocus before stop(). However, WM_DESTROY unconditionally calls ShowWindow(config, SW_SHOW) and SetActiveWindow(config) whenever showConfig is true. This activates the already-visible settings dialog independently of the guarded back value in stop().",
+      "consequence": "The preview dismissal takes active-window/input ownership back from the window the user or Windows just selected. It can interfere with task switching and with the focus/capture handoff that caused teardown.",
+      "recommendation": "Remove activation from the WM_DESTROY settings branch. The dialog is already visible; let stop() restore previousActive/previousFocus only when its pre-destroy back guard permits it. If visibility later becomes necessary, use a nonactivating show and retain the guarded restoration policy.",
+      "evidence": [
+        "CUBE.C:227 computes back=returnFocus && GetActiveWindow()==w; lines 235-238 restore focus only under back.",
+        "CUBE.C:318-324 clear returnFocus on focus/task activation loss; line 332 bypasses it.",
+        "The Windows 3.0 SDK documents SW_SHOW as activating, and SetActiveWindow as able to take active-window/input focus.",
+        "Native QA sets showConfig=0 at CUBE.C:510, so its existing deactivation case does not exercise this settings-preview branch."
+      ],
+      "references": [
+        {
+          "title": "Microsoft Windows 3.0 SDK Programmer's Reference, Volume 1 (SetActiveWindow and ShowWindow)",
+          "url": "https://www.pcjs.org/documents/books/mspl13/win/w3sdkr1/",
+          "sections": [
+            "SetActiveWindow",
+            "ShowWindow"
+          ]
+        }
+      ],
+      "confirmation": "Source control-flow and Windows 3.0 API-contract finding. No new native reproduction was performed."
+    }
+  ],
+  "reviewed_source_hashes": {
+    "examples/CUBE/SOURCE/CUBE.C": {
+      "bytes": 24038,
+      "sha256": "dbaa4ba368425fd0cc211159dee6f03b8d38abc66fb8b59216f28f0347ea4733"
+    },
+    "examples/CUBE/SOURCE/CUBECORE.C": {
+      "bytes": 2130,
+      "sha256": "e73cc486cdf1bb33d26da5b8ec69a7b7c6062a981d96602751018f6505864986"
+    },
+    "examples/CUBE/SOURCE/CUBECORE.H": {
+      "bytes": 442,
+      "sha256": "b6e674eff8549e2ccc41a0380513301e8ce50037f32eb565182ad4ddcf6f173c"
+    },
+    "examples/CUBE/SOURCE/CUBESET.C": {
+      "bytes": 6881,
+      "sha256": "f2498e22d659bc4447421fdfc536bf2198379560aeb2b5d54e013f65ad9592cb"
+    },
+    "examples/CUBE/SOURCE/CUBE.DEF": {
+      "bytes": 243,
+      "sha256": "70f2f0ac4d1bec5560d1933242903fecc8ac437f99492cff2f431f30772129d2"
+    },
+    "examples/CUBE/SOURCE/CUBE.RSP": {
+      "bytes": 89,
+      "sha256": "f0892dad90dfdad2413c3f59f188b1514399a9c5b4fff86f72a7379c6f9a5649"
+    },
+    "examples/CUBE/SOURCE/BUILD.BAT": {
+      "bytes": 482,
+      "sha256": "7d0250f1729d6d92b632ce36e5210cca4f9bf5f47bc56c85c3c08799146392f7"
+    },
+    "examples/CUBE/SOURCE/BUILD.PY": {
+      "bytes": 3296,
+      "sha256": "be7a3fee917f0f26f04f287d3f09498adc8e359efce7c67c79dfe66b97267dec"
+    },
+    "examples/CUBE/SOURCE/BUILDSET.PY": {
+      "bytes": 1852,
+      "sha256": "49f96c4ee020b1f9006e2e4af2f1ad78aa87a1db4b0b6c309febd41d8cda9872"
+    },
+    "examples/CUBE/SOURCE/BUILDIN.PY": {
+      "bytes": 2944,
+      "sha256": "2947e9c8d5895249c7363d5aa2cac0591143a6ecb137b13d1c6896363b191e44"
+    },
+    "examples/TSHELL/TSSAVCFG.C": {
+      "bytes": 18391,
+      "sha256": "07b29247f4d2b1afacea7a05bda3176136f07fcd92f50adac76bd9fba5a1e020"
+    },
+    "examples/TSHELL/SCFGCORE.C": {
+      "bytes": 6109,
+      "sha256": "7c82f01b1f809d35e7425c563afb0046fd0e4d138718988fa8c1f855b2b0302d"
+    },
+    "examples/TSHELL/SCFGCORE.H": {
+      "bytes": 1596,
+      "sha256": "d3eee52d1e1ab2c88777698cf8b421d764cd3fb0d71c2ea7f1db8ead1e597d65"
+    },
+    "examples/TSHELL/TSSAVER.C": {
+      "bytes": 8484,
+      "sha256": "b50069564193ebf09e7b1c4201d36964c3c25b6bbb710b456d8bc31e5ebe628d"
+    },
+    "examples/TSHELL/TSHOLD.C": {
+      "bytes": 6107,
+      "sha256": "f4f10b015e7ef13e3574ccd316263bea6dffb3a79e6dbd3dec5153cc7c1ada47"
+    },
+    "examples/TSHELL/IDLE/TSINPUT.C": {
+      "bytes": 19582,
+      "sha256": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c"
+    },
+    "examples/TSHELL/TSHELL.DEF": {
+      "bytes": 330,
+      "sha256": "927f19ca0b992e4f8e92d6d38e584bc219e3450be678d74b22b1340dfb72021c"
+    },
+    "tools/DOSINST/CRCFAST.H": {
+      "bytes": 3941,
+      "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+    }
+  },
+  "independent_checks": {
+    "committed_bytes": "All explicitly reviewed files match exact reviewed commit bytes",
+    "host_checks": [
+      {
+        "check": "core",
+        "result": "PASS 512 phases; winding, lighting, periodicity, low/high canvas bounds",
+        "sources": {
+          "examples/CUBE/SOURCE/TESTCORE.C": "a21340bf4829541e502abd0a244313192deb05b9ed63b673cb83c3bf982e2eef",
+          "examples/CUBE/SOURCE/CUBECORE.C": "e73cc486cdf1bb33d26da5b8ec69a7b7c6062a981d96602751018f6505864986"
+        }
+      },
+      {
+        "check": "config",
+        "result": "PASS 163 checks",
+        "sources": {
+          "examples/TSHELL/TESTS/CONFIG/TESTCFG.C": "823e220d270698698d579daf75952f6e2123e1d7f8316bd7bbdab8bf6e66d8b8",
+          "examples/TSHELL/SCFGCORE.C": "7c82f01b1f809d35e7425c563afb0046fd0e4d138718988fa8c1f855b2b0302d"
+        }
+      },
+      {
+        "check": "idle",
+        "result": "PASS: ownership, duplicate suppression, hook chaining, held input, modal/capture guards, poll gap, tick wrap, DOS suspension, midnight/backward clocks, remove failure, WEP (30 chained callbacks)",
+        "sources": {
+          "examples/TSHELL/IDLE/tests/HOSTTEST.C": "b174b9ddb9dd9fe0b68c48932f83003dedfecddc7aeb24621d8161ca63fbaae7",
+          "examples/TSHELL/IDLE/TSINPUT.C": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c",
+          "examples/TSHELL/IDLE/TSINPUT.H": "e25e44a53eac398962eb3ccfbae6b045fbe8d87dc0dfd33d27b3acf402101d77",
+          "examples/TSHELL/IDLE/tests/WINSTUB.H": "87725b378f1327c4bad7f817bc32db1cf18e350500bc67195a497a90586bad0f"
+        }
+      },
+      {
+        "check": "hold",
+        "result": "PASS: Hold ownership, chaining, NOREMOVE, make/repeat/break, modifiers, input cancellation, modal guards, tokens, expiry, deferred removal, reentry, partial failures, idle independence and WEP (246 callbacks, 19 post attempts)",
+        "sources": {
+          "examples/TSHELL/IDLE/tests/HOLDTEST.C": "b80113808a96990c0009df051ed3d20d29e129d1326ae6dd55439378827a7af7",
+          "examples/TSHELL/IDLE/TSINPUT.C": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c",
+          "examples/TSHELL/IDLE/TSINPUT.H": "e25e44a53eac398962eb3ccfbae6b045fbe8d87dc0dfd33d27b3acf402101d77",
+          "examples/TSHELL/IDLE/tests/WINSTUB.H": "87725b378f1327c4bad7f817bc32db1cf18e350500bc67195a497a90586bad0f"
+        }
+      }
+    ],
+    "source_binding": {
+      "status": "PASS",
+      "files": 60,
+      "scope": "Actual source and runtime hashes compared with the recorded build-source binding; this is not a new native build or an independent native acceptance run"
+    },
+    "runtime_hashes": {
+      "CUBE.EXE": {
+        "bytes": 15647,
+        "sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d"
+      },
+      "CUBESHL.EXE": {
+        "bytes": 74131,
+        "sha256": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48"
+      },
+      "TSINPUT.DLL": {
+        "bytes": 6301,
+        "sha256": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878"
+      },
+      "CUBESET.EXE": {
+        "bytes": 16306,
+        "sha256": "fc0598cc196d2ec7b45a25afbcb9405d2a6d1986d50e397457737fc0010f7cd8"
+      }
+    }
+  },
+  "other_review_results": [
+    "No additional actionable defects found in the scoped geometry, aspect/bounds handling, GDI cleanup, exported callback/build contracts, Cube setting write/readback rollback, changed shell selection/policy integration, Hold exclusions, or paired DOS install/restore logic.",
+    "Installer validation checks both originals/backups before restore mutations, retains originals across rename failures, and refuses unknown changed targets. This conclusion is source reasoning, not new filesystem fault injection."
+  ],
+  "limits": [
+    "No emulator was launched and no shared emulator lease was acquired; another task owned the coordinated slot.",
+    "No independent fresh MSC6/Open Watcom native build, exhaustive emitted-instruction audit, physical-hardware run, or scanout qualification.",
+    "Existing native receipts were read as recorded evidence only, not treated as independent author-review acceptance.",
+    "No GDI/allocation, INI write, disk-full, power-loss, or rename-failure fault injection was performed.",
+    "Review focused on the requested changed TSHELL paths and new Cube sources, not all unchanged legacy TSHELL code."
+  ],
+  "blockers": []
+}

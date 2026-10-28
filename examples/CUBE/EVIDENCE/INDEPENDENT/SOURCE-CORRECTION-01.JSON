@@ -1,0 +1,50 @@
+{
+  "review_type": "Independent source correction review; no source edits by reviewer",
+  "baseline_commit": "0346d47af8025e9b854bfcf9af9e3061cb679e86",
+  "reviewed_state": "Uncommitted correction; exact file hashes below define the reviewed state",
+  "created_utc": "2026-10-28T09:09:51.453046+00:00",
+  "outcome": "Production correction resolves CUBE-SRC-1; no residual production-source finding in the two-file diff",
+  "changed_file_hashes": {
+    "examples/CUBE/SOURCE/CUBE.C": {
+      "bytes": 24062,
+      "sha256": "8974196ce2f099ca9cae39bd043f9c90077562d13aa686e1d8afe9d2cb571a69"
+    },
+    "examples/CUBE/SOURCE/CUBECTL.C": {
+      "bytes": 6997,
+      "sha256": "11a9b7f90c9b1fc170a8d22881a42c3a936a4e3568fb64c6cdaedf8827bf5514"
+    }
+  },
+  "correction_assessment": [
+    "CUBE.C:332 no longer calls ShowWindow or SetActiveWindow during WM_DESTROY. It keeps the existing config dialog alive without an explicit activation on ownership loss.",
+    "stop() remains the explicit focus restorer, using the pre-destroy returnFocus/active-window guard and checking previousActive/previousFocus validity.",
+    "Standalone and shutdown destruction retain PostQuitMessage; developer QA still posts its completion event. Existing GDI/cursor/capture teardown is unchanged.",
+    "The two changed files preserve CRLF, Win3.0 API usage, C89 source conventions and exported callback names."
+  ],
+  "findings": [],
+  "regression_design": {
+    "useful_coverage": [
+      "The first settings preview now requires a live, visible config dialog to become active after an ordinary keyboard wake.",
+      "The second preview transfers ownership to a window in the independent controller task and checks active window plus focus after saver destruction and two seconds of settling."
+    ],
+    "validation_gap": {
+      "file": "examples/CUBE/SOURCE/CUBECTL.C",
+      "line_start": 36,
+      "line_end": 38,
+      "description": "SetActiveWindow(w) is immediately followed by SetFocus(w). Win3.0 SetFocus also activates its target. If pre-fix teardown steals activation synchronously during the first call, the second call may reclaim the controller before the later assertion. The current source alone does not establish that the regression fails against the frozen pre-fix executable.",
+      "classification": "Regression sensitivity/test gap, not an additional demonstrated production defect",
+      "recommendation": "Run the new controller against the frozen pre-fix CUBE.EXE as a negative control and require the ownership assertion to fail. If it passes, revise the observer/transfer sequence to detect unwanted owner activation or focus loss during the handoff and settling interval, then rerun both pre-fix and fixed executables.",
+      "reference": "https://www.pcjs.org/documents/books/mspl13/win/w3sdkr1/"
+    }
+  },
+  "validation_performed": [
+    "Inspected the exact two-file diff against frozen commit 0346d47af8025e9b854bfcf9af9e3061cb679e86.",
+    "Rechecked final destruction and normal-wake control flow using the preceding frozen-source review.",
+    "Computed exact changed-file SHA-256 values and checked CRLF preservation."
+  ],
+  "limits": [
+    "No native rebuild or emulator run has occurred for this correction; another task owns the coordinated emulator slot.",
+    "No runtime binary or previous native acceptance receipt is accepted as qualification of the changed production source.",
+    "Review covers only CUBE.C and CUBECTL.C correction hunks; acceptance-tool changes belong to the package reviewer."
+  ],
+  "blockers": []
+}

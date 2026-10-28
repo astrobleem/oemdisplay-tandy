@@ -329,8 +329,8 @@ LONG FAR PASCAL CubeProc(HWND w,UINT m,WPARAM wp,LPARAM lp)
   if(timerOn)KillTimer(w,1);KillTimer(w,2);timerOn=0;running=draining=0;
   if(GetCapture()==w)ReleaseCapture();restoreCursor();releaseDraw();saver=NULL;
   if(qaMode)PostMessage(qa,WM_USER+2,0,0L);
-  else if(showConfig&&!shutdown&&config){ShowWindow(config,SW_SHOW);SetActiveWindow(config);}
-  else PostQuitMessage(0);
+  /* The preview dialog stays visible. Only stop() restores focus on input wake. */
+  else if(!showConfig||shutdown||!config)PostQuitMessage(0);
   return 0;
  }
  return DefWindowProc(w,m,wp,lp);

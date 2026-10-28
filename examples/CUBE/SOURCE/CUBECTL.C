@@ -29,8 +29,15 @@ LONG FAR PASCAL ControlProc(HWND w,UINT m,WPARAM wp,LPARAM lp)
   }else if(stage==3&&GetTickCount()-since>2000UL){
    s=FindWindow("TandyCubeSaver",NULL);if(s){SendMessage(s,WM_KEYDOWN,VK_ESCAPE,0L);SendMessage(s,WM_KEYUP,VK_ESCAPE,0L);}next(4,"UI preview wake\r\n");
   }else if(stage==4&&!FindWindow("TandyCubeSaver",NULL)){
-   if(!IsWindow(cfg)){logtext("UI FAIL config missing\r\n");errors++;}
-   else PostMessage(cfg,WM_CLOSE,0,0L);next(5,"UI preview returned\r\n");
+   if(!IsWindow(cfg)||!IsWindowVisible(cfg)||GetActiveWindow()!=cfg){logtext("UI FAIL preview return focus\r\n");errors++;return 0;}
+   logtext("UI PREVIEW RETURN PASS\r\n");click(cfg,104);next(16,"UI ownership preview requested\r\n");
+  }else if(stage==16&&FindWindow("TandyCubeSaver",NULL)){
+   SetWindowPos(w,NULL,8,8,100,28,SWP_NOACTIVATE);ShowWindow(w,SW_SHOWNOACTIVATE);
+   SetActiveWindow(w);next(17,"UI preview ownership transferred\r\n");
+  }else if(stage==17&&!FindWindow("TandyCubeSaver",NULL)&&GetTickCount()-since>2000UL){
+   if(GetActiveWindow()!=w||GetFocus()!=w){logtext("UI FAIL preview stole focus\r\n");errors++;return 0;}
+   logtext("UI PREVIEW OWNER PASS\r\n");ShowWindow(w,SW_HIDE);
+   PostMessage(cfg,WM_CLOSE,0,0L);next(5,"UI preview returned\r\n");
   }else if(stage==5&&!GetModuleHandle("CUBE")){
    WinExec("C:\\WINDOWS\\TSHELL.EXE",SW_SHOWNORMAL);next(6,"UI shell launched\r\n");
   }else if(stage==6&&(bar=FindWindow("TandyStart",NULL))!=NULL){

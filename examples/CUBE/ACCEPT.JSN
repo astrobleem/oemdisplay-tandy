@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "status": "READY_FOR_PUBLICATION_APPROVAL",
+  "status": "INDEPENDENT_REVIEW_FINDINGS_PENDING",
   "runtime": {
     "CUBE.EXE": {
       "bytes": 15647,
