@@ -1,7 +1,7 @@
 {
-  "status": "NATIVE_COMPLETE_PENDING_REVIEW",
+  "status": "REVIEWED_FRESH_CGA_COMPLETE_INSTALL",
   "physical_hardware": false,
-  "reviewed_commit": "PENDING",
+  "reviewed_commit": "e77a726da8613fb5fd417afea64e04cf69473780",
   "sources": {
     "src/cga/FRESH.C": {
       "bytes": 4781,
@@ -71,8 +71,8 @@
   "review": {
     "path": "docs/QUAL/CGAFRESH/REVIEW-FINAL.JSN",
     "identity": {
-      "bytes": 0,
-      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      "bytes": 8701,
+      "sha256": "9e7c2167d16322489f9e89ae399d6f668aa55972a6b9779f5faceac98d0fff1f"
     }
   },
   "packet": {
