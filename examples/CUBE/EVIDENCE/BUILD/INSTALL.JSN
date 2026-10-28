@@ -13,8 +13,8 @@
   "pins": {
     "CUBE": {
       "bytes": 15647,
-      "sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d",
-      "crc32": 1562845152
+      "sha256": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e",
+      "crc32": 534621969
     },
     "SHELL": {
       "bytes": 74131,
@@ -39,6 +39,6 @@
   },
   "runtime": {
     "bytes": 16306,
-    "sha256": "fc0598cc196d2ec7b45a25afbcb9405d2a6d1986d50e397457737fc0010f7cd8"
+    "sha256": "6dd36333aef1ffa91f4975eb8851dd0f7576f7b8c8ea37176d8901ffded5142d"
   }
 }

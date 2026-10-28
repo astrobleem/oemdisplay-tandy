@@ -1,3 +1,9 @@
+<!-- CORRECTION PENDING -->
+Corrected-runtime requalification is in progress. The matrix below records
+the preceding runtime; ACCEPT.JSN selects completed corrected runs and blocks
+publication until its advertised roles are complete.
+<!-- END CORRECTION PENDING -->
+
 # Cube qualification
 
 Eight representative native-emulator rendering fixtures passed.

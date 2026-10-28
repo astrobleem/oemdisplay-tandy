@@ -1,0 +1,27 @@
+UI settings launched
+UI CONFIG VISIBLE
+UI SAVE PASS
+UI preview clicked
+UI preview visible
+UI preview wake
+UI PREVIEW RETURN PASS
+UI ownership preview requested
+UI OWNER EVENT message=28 state=1
+UI OWNER EVENT message=6 state=1
+UI OWNER EVENT message=7 state=5128
+UI preview ownership transferred
+UI OWNER losses=0 active=4484 expected=4484 focus=4484
+UI PREVIEW OWNER PASS
+UI preview returned
+UI shell launched
+UI shell settings requested
+UI SHELL CFG VISIBLE
+UI NEED DELAY INPUT
+UI EDIT TEXT [300]
+UI delay hardware input settled
+UI shell Cube Apply
+UI SHELL SAVE PASS
+UI NEED REAL INPUT
+UI IDLE CUBE PASS
+UI NEED REAL WAKE
+UI DONE PASS

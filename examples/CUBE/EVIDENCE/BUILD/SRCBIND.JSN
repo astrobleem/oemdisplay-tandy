@@ -3,8 +3,8 @@
   "scope": "Recorded first-party native build source/recipe bytes match current source and tested runtime; external SDK/toolchain hashes remain in individual build receipts",
   "sources": {
     "examples/CUBE/SOURCE/CUBE.C": {
-      "bytes": 24038,
-      "sha256": "dbaa4ba368425fd0cc211159dee6f03b8d38abc66fb8b59216f28f0347ea4733"
+      "bytes": 24062,
+      "sha256": "8974196ce2f099ca9cae39bd043f9c90077562d13aa686e1d8afe9d2cb571a69"
     },
     "examples/CUBE/SOURCE/CUBECORE.C": {
       "bytes": 2130,
@@ -27,8 +27,8 @@
       "sha256": "7d0250f1729d6d92b632ce36e5210cca4f9bf5f47bc56c85c3c08799146392f7"
     },
     "examples/CUBE/SOURCE/CUBECTL.C": {
-      "bytes": 6349,
-      "sha256": "6c0a10151fe67bf622f210bc828577b103154ce50e1bb00f568fcef14e26b9bc"
+      "bytes": 7570,
+      "sha256": "b882b984bcc46dd2c578fd1f5e10d6a708a37cbda8ccf88c7c379fe2a28aed9d"
     },
     "examples/CUBE/SOURCE/CUBECTL.DEF": {
       "bytes": 211,
@@ -246,7 +246,7 @@
   "runtime": {
     "CUBE.EXE": {
       "bytes": 15647,
-      "sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d"
+      "sha256": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e"
     },
     "CUBESHL.EXE": {
       "bytes": 74131,
@@ -258,7 +258,7 @@
     },
     "CUBESET.EXE": {
       "bytes": 16306,
-      "sha256": "fc0598cc196d2ec7b45a25afbcb9405d2a6d1986d50e397457737fc0010f7cd8"
+      "sha256": "6dd36333aef1ffa91f4975eb8851dd0f7576f7b8c8ea37176d8901ffded5142d"
     }
   }
 }

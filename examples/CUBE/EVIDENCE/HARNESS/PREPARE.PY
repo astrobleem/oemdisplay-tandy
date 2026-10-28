@@ -1,7 +1,7 @@
 from pathlib import Path
 import sys,shutil,json,re,hashlib,subprocess,msvcrt
 ROOT=Path(__file__).resolve().parent
-BUILDS=dict(cube='build-cube-09',shell='build-shell-04',idle='build-idle-01',installer='build-set-05')
+BUILDS=dict(cube='build-cube-11',shell='build-shell-04',idle='build-idle-01',installer='build-set-06')
 PAYLOAD={
  'CUBE.EXE':ROOT/BUILDS['cube']/'CUBE.EXE',
  'CUBECTL.EXE':ROOT/BUILDS['cube']/'CUBECTL.EXE',
@@ -9,6 +9,8 @@ PAYLOAD={
  'TSINPUT.DLL':ROOT/BUILDS['idle']/'TSINPUT.DLL',
  'CUBESET.EXE':ROOT/BUILDS['installer']/'CUBESET.EXE'
 }
+if '--pre-focus'in sys.argv:
+ PAYLOAD['CUBE.EXE']=ROOT/'build-cube-09/CUBE.EXE';PAYLOAD['CUBESET.EXE']=ROOT/'build-set-05/CUBESET.EXE'
 sys.path.insert(0,r'C:\Users\chad\Documents\Codex\2026-10-27\task-6\deps-local')
 from pyfatfs.PyFatFS import PyFatFS
 kind=sys.argv[1];out=ROOT/sys.argv[2];out.mkdir()
@@ -55,6 +57,10 @@ with lease.open('rb')as lock:
                 driver={'tandy160':'TNDY160.DRV','tandy3204':'TNDY3204.DRV','tandy6404':'TNDY6404.DRV','tandy6402':'TNDY6402.DRV'}[kind]
                 put('WINDOWS/SYSTEM/'+driver,subprocess.check_output(['git','-C',str(ROOT/'display'),'show','HEAD:src/tandysw/bin/'+driver]))
                 setting('display.drv',driver)
+            elif kind in ('tandy','tandy320'):
+                setting('display.drv','TR53216.DRV')
+                for key,n in [('fonts.fon','XTESYS.FON'),('fixedfon.fon','XTEFIX.FON'),('oemfonts.fon','XTEOEM.FON')]:
+                    put('WINDOWS/SYSTEM/'+n,subprocess.check_output(['git','-C',str(ROOT/'display'),'show','HEAD:distributions/WINXT/'+n]));setting(key,n)
             elif kind=='pan':
                 put('WINDOWS/SYSTEM/HPXY.DRV',subprocess.check_output(['git','-C',str(ROOT/'display'),'show','HEAD:tools/HPDIB/BIN/HPXY.DRV']))
                 setting('display.drv','HPXY.DRV')
@@ -82,6 +88,6 @@ with lease.open('rb')as lock:
         if kind=='ega':config=config.replace('gfxcard = cga','gfxcard = ega')
         (out/'86box.cfg').write_text(config)
         (out/'INPUT.CNF').write_bytes((out/'86box.cfg').read_bytes())
-        (out/'PREPARE.json').write_text(json.dumps(dict(base=str(base),environment=environment,private_image=True,reused=bool(reuse),bytes=image.stat().st_size,scope=kind+('; UI and idle'if ui else '; kit, /Q, undo and reinstall'),install_guards='--install-guards'in sys.argv,changes=['AUTOEXEC test entry','explicit known current TSHELL and TSINPUT baseline','kit files in CUBE folder','selected documented display fixture'],payload={n:hashlib.sha256(p.read_bytes()).hexdigest()for n,p in PAYLOAD.items()},originals={n:hashlib.sha256(p.read_bytes()).hexdigest()for n,p in [('TSHELL.EXE',ROOT/'old-shell.exe'),('TSINPUT.DLL',ROOT/'display/examples/TSHELL/TSINPUT.DLL')]}),indent=2))
+        (out/'PREPARE.json').write_text(json.dumps(dict(base=str(base),environment=environment,private_image=True,reused=bool(reuse),bytes=image.stat().st_size,scope=kind+('; UI and idle'if ui else '; kit, /Q, undo and reinstall'),install_guards='--install-guards'in sys.argv,negative_control='--pre-focus'in sys.argv,changes=['AUTOEXEC test entry','explicit known current TSHELL and TSINPUT baseline','kit files in CUBE folder','selected documented display fixture'],payload={n:hashlib.sha256(p.read_bytes()).hexdigest()for n,p in PAYLOAD.items()},originals={n:hashlib.sha256(p.read_bytes()).hexdigest()for n,p in [('TSHELL.EXE',ROOT/'old-shell.exe'),('TSINPUT.DLL',ROOT/'display/examples/TSHELL/TSINPUT.DLL')]}),indent=2))
     finally:lock.seek(0);msvcrt.locking(lock.fileno(),msvcrt.LK_UNLCK,1)
 print(out)

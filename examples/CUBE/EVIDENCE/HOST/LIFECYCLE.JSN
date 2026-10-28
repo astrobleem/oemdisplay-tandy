@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "scope": "Actual production stop and WM_DESTROY code under API stubs; not native message-order reproduction",
+  "before": {
+    "source_sha256": "dbaa4ba368425fd0cc211159dee6f03b8d38abc66fb8b59216f28f0347ea4733",
+    "returncode": 1,
+    "output": "FAIL ownership-loss activation requests=2 focus=0",
+    "stop_sha256": "4a80e94e93583b442d050850bf78d1e726a6dea48820d886589805cba8341338",
+    "destroy_sha256": "6543b6a3d33f4c1edf0ba9166d8918ac3e935042b4386b52735ba3aa1e2835f8"
+  },
+  "after": {
+    "source_sha256": "8974196ce2f099ca9cae39bd043f9c90077562d13aa686e1d8afe9d2cb571a69",
+    "returncode": 0,
+    "output": "PASS five production teardown paths; only ordinary input wake restores focus",
+    "stop_sha256": "4a80e94e93583b442d050850bf78d1e726a6dea48820d886589805cba8341338",
+    "destroy_sha256": "d94abd9e580948005baad63b766ede9e73732348683d356a1029ba8796cd7c1f"
+  }
+}

@@ -1,11 +1,11 @@
 {
-  "source_commit": "0206f9e6850fc7d45cb14ec031beb48c55f2491b",
+  "source_commit": "10721ce3daf31588a54de566f3c32b1b38a38424",
   "target": "Windows 3.0 real mode / 8086/8088",
   "compiler": "/G0 /Gw /AS /W3 /Oat MSC6 LINK4",
   "source": {
     "CUBE.C": {
-      "bytes": 24038,
-      "sha256": "dbaa4ba368425fd0cc211159dee6f03b8d38abc66fb8b59216f28f0347ea4733"
+      "bytes": 24062,
+      "sha256": "8974196ce2f099ca9cae39bd043f9c90077562d13aa686e1d8afe9d2cb571a69"
     },
     "CUBECORE.C": {
       "bytes": 2130,
@@ -28,8 +28,8 @@
       "sha256": "7d0250f1729d6d92b632ce36e5210cca4f9bf5f47bc56c85c3c08799146392f7"
     },
     "CUBECTL.C": {
-      "bytes": 6349,
-      "sha256": "6c0a10151fe67bf622f210bc828577b103154ce50e1bb00f568fcef14e26b9bc"
+      "bytes": 7570,
+      "sha256": "b882b984bcc46dd2c578fd1f5e10d6a708a37cbda8ccf88c7c379fe2a28aed9d"
     },
     "CUBECTL.DEF": {
       "bytes": 211,
@@ -64,7 +64,7 @@
   },
   "runtime": {
     "bytes": 15647,
-    "sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d"
+    "sha256": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e"
   },
   "builder": {
     "bytes": 3296,
