@@ -1,7 +1,7 @@
 # CGA installation screenshots
 
 These are genuine DOS screens from a private IBM XT/CGA emulator fixture.
-The supplied public `CGA.ZIP` and its installer were unmodified. They show
+The historical public `CGA.ZIP` and its installer were unmodified. They show
 the root package directory, a completed `SETUP C:\WINDOWS 100`, and the
 subsequent `WIN /R` launch. The latter was captured in a continuation boot
 of the same installation, with installed payloads and INIs unchanged.
@@ -23,6 +23,11 @@ stop at each stage and are not additional commands for users to enter.
 The success screen shows the final portion of the install log after earlier
 lines have scrolled out of the 25-row display.
 
+These captures show the existing-Windows route. They predate `FRESH.EXE`
+and the `FRESH640` folder, so the directory image is not a current extraction
+layout or evidence of fresh graphical Setup. See [the current guide](../../CGA.MD)
+for the fresh-install paths and [its native evidence](../../QUAL/CGAFRESH/README.MD).
+
 ## Exact version scope
 
 The capture used the preceding public package:
@@ -34,13 +39,13 @@ The capture used the preceding public package:
 - Selected display: `CGA100.DRV`; the screenshot records that selection and
   the successful install message.
 
-The current public package checked for this guide is 460,460 bytes, SHA-256
+A later package checked when this capture record was written was 460,460 bytes, SHA-256
 `1768cffab6a770ee01494fb493c9ffe4e3caf2a41a9617b2ccec7bc9909e37d2`.
 It adds the common `PAN` entry and updates helpers and the DOS installer.
 All four display-driver files remain byte-identical. The root layout, all four
 mode commands, final success message and `WIN /R` launch are unchanged.
 File sizes and helper-copy lines in the screenshots therefore differ from a
-new installation of that package. Current settings use `PAN /SETTINGS`.
+new installation of that package. Settings use `PAN /SETTINGS`.
 These captures do not establish a new native test of the updated installer
 or helper bytes.
 

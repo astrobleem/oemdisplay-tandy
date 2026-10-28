@@ -11,31 +11,52 @@ folders (for example PKUNZIP -D). Keep FRESH.EXE, FRESH.TXT, SETUP.EXE,
 CGA and FRESH640 together. No Python or modern computer conversion is needed.
 Use your usual DOS transfer/extraction tools; this is not a boot disk.
 
-Example extraction directory: C:\CGAKIT. Run from plain DOS:
+PATHS USED IN THIS EXAMPLE
+  C:\CGAKIT           Extracted CGA kit; contains FRESH.EXE.
+  C:\W30SRC           Original Windows media files; contains Microsoft's
+                      SETUP.EXE and SETUP.INF, not this kit's SETUP.EXE.
+  C:\CGAKIT\FRESH640  Display driver folder supplied by this kit.
+  C:\WINDOWS          New Windows destination, chosen inside Windows Setup.
+Substitute your actual drives/directories. Keep the kit and Windows media
+in separate directories. FRESH takes the Windows MEDIA path as its argument.
+It finds the display driver beside FRESH.EXE, independently of that argument.
+
+For unchanged original Windows media already collected in C:\W30SRC, run:
   C:
   CD \CGAKIT
-  FRESH A:\
-For original Windows media already collected in a directory:
   FRESH C:\W30SRC
-Optional read-only input verification:
+With this extraction directory, the launcher prints:
+  Display driver path: C:\CGAKIT\FRESH640
+Write down that complete path before pressing ENTER to start original Setup.
+Q then ENTER cancels. Optional read-only input verification:
   FRESH /CHECK C:\W30SRC
 
-FRESH verifies the original Setup executable/metadata and the bundled display
-files, prints the exact driver path and starts ORIGINAL Microsoft Setup.
-It does not modify your Windows media, select hardware automatically, copy
-the operating system for you, or install the Tandy desktop.
-Q then ENTER cancels before original Setup starts.
+If using original floppy disks instead, insert the first Windows Setup disk
+and run FRESH A:\ from C:\CGAKIT. The display driver path is still
+C:\CGAKIT\FRESH640. Insert the requested original disks for Microsoft files.
+
+FRESH verifies original Setup and the bundled display files, then starts
+ORIGINAL Microsoft Setup. It does not modify your Windows media, select
+hardware automatically, copy the operating system for you, or install the
+Tandy desktop.
 
 IN ORIGINAL SETUP
-1. Select a new Windows directory, normally C:\WINDOWS.
+1. Select a new Windows destination, normally C:\WINDOWS.
 2. At System Information, move to Display and press ENTER.
 3. Move DOWN to Other (the last choice), then press ENTER.
-4. Enter C:\CGAKIT\FRESH640 (use the exact path FRESH printed).
-5. Select Windows XT IBM CGA 640x200 mono, then accept the hardware list.
-6. Complete original Setup. Whenever it requests our display disk, give the
-   same FRESH640 path. Supply your original Windows disks for Microsoft files.
+4. At the manufacturer's driver-disk prompt, enter C:\CGAKIT\FRESH640.
+   If you extracted elsewhere, enter the exact display driver path printed
+   by FRESH instead. C:\W30SRC is the Windows media path, not the driver path.
+5. Select Windows XT IBM CGA 640x200 mono. Select No Changes to accept the
+   hardware list, then continue original Setup.
+6. For each later disk prompt, use the path for the disk it names:
+   - Windows XT CGA fresh Setup: C:\CGAKIT\FRESH640.
+   - Microsoft Windows 3.0 Disk #1 (or another Windows disk): C:\W30SRC.
+     With original floppies, insert the requested Windows disk and use A:\.
+   Setup may prefill the path from the previous disk request. Replace it
+   when it names the other disk; do not accept the old path automatically.
    Choose the keyboard and mouse appropriate to your own computer.
-7. Start Windows in real mode with WIN /R.
+7. Start the installed Windows from C:\WINDOWS with WIN /R.
 
 All required project display support is bundled. Do not gather stock CGA fonts
 or edit INIs. The fresh entry uses standard 640-mode controls and fonts, and
@@ -53,7 +74,8 @@ CGA640 selection. It does not uninstall Windows or remove the fresh driver.
 Keep the kit for later Windows Setup requests. Windows 3.1 and modified or
 different Setup versions are refused. Physical hardware is unqualified.
 FONTLIC.TXT, LOGOLIC.TXT and NOTICE.TXT retain the component terms.
-FRESHLIC.TXT covers the launcher source; OWATCOM.TXT carries its runtime notice.
+FRESHLIC.TXT covers the launcher source; OWATCOM.TXT carries its runtime
+notice.
 Source and developer build: src/cga/FRESH.C and FRESHPK.PY in the repository.
 The complete launcher rebuild inputs are also supplied as CGASRC.ZIP.
 No operating system, compiler, emulator or disk image is included.

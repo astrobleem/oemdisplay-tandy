@@ -9,44 +9,12 @@ included; Windows 3.1 is unsupported. Fresh Setup starts with the project's
 fixed 640x200 monochrome profile. The mode choices below remain available
 after Windows is installed.
 
-The examples use **`C:\WINDOWS`** for Windows and **`C:\CGAKIT`** for the extracted
-download. Substitute your actual drives and directories.
+The examples keep the extracted CGA kit, original Windows media and installed
+Windows in separate directories. Substitute your actual drives and directories.
 
-## Fresh Windows installation
+## Extract the package
 
-Extract this download on the DOS computer with folders preserved, as shown
-below. At plain DOS, insert your first original English retail Windows 3.0
-Setup disk and run:
-
-```bat
-C:
-CD \CGAKIT
-FRESH A:\
-```
-
-For unchanged original Windows media already collected in one directory, use
-`FRESH C:\W30SRC`. The native launcher prints the exact display-driver path.
-In original Windows Setup choose **Display**, scroll down to **Other**, enter
-that `FRESH640` path, and select **Windows XT IBM CGA 640x200 mono**. Accept the
-hardware list and complete Setup. Give the same path when it asks for our
-display disk; supply your original Windows disks for Microsoft file requests.
-Start the installed Windows with `WIN /R`.
-
-The driver, matching fonts and grabber are used during graphical Setup. No
-Python, modern-host conversion, manual INI edits or separate support gathering
-is needed. Fresh Setup currently offers this one fixed profile. To choose
-another resolution afterward, exit Windows and run the normal `SETUP C:\WINDOWS`
-menu below. The original existing-Windows instructions are also retained as
-`CGAOLD.TXT` in the archive.
-
-[Fresh Setup scope and native evidence](CGA-FRESH.MD) record the exact media,
-640 KB IBM XT/CGA fixture and physical-hardware limits. Other Setup versions
-are refused. Developer launcher rebuild inputs are in
-[CGASRC.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGASRC.ZIP).
-
-## 1. Exit Windows and extract the package
-
-If Windows is running, use Program Manager's **File → Exit Windows** and
+If Windows is running, use Program Manager's **File / Exit Windows** and
 confirm the exit. Run the following commands at the plain DOS prompt.
 
 Transfer `CGA.ZIP` to the DOS computer using your usual floppy, disk or network
@@ -59,28 +27,97 @@ MD \CGAKIT
 CD \CGAKIT
 PKUNZIP -D A:\CGA.ZIP
 DIR
+DIR FRESH640
 DIR CGA
 ```
 
-You should now have this layout:
+The current archive includes these files and folders:
 
 ```text
-C:\CGAKIT\SETUP.EXE
+C:\CGAKIT\FRESH.EXE
+C:\CGAKIT\FRESH.TXT
 C:\CGAKIT\README.TXT
-C:\CGAKIT\CGA\CGA100.DRV
-C:\CGAKIT\CGA\CGAPAN.DRV
-C:\CGAKIT\CGA\...the other supplied files...
+C:\CGAKIT\FRESH640\OEMSETUP.INF
+C:\CGAKIT\FRESH640\CGA640.DRV
+C:\CGAKIT\FRESH640\...the supplied fresh-Setup support files...
+C:\CGAKIT\SETUP.EXE
+C:\CGAKIT\CGAOLD.TXT
+C:\CGAKIT\CGA\...the supplied existing-Windows drivers and support files...
 ```
 
-Keep the complete `CGA` folder beside the package's root `SETUP.EXE`.
-You do not need Python, a modern-PC preparation step or separately collected
-fonts and support files.
+Keep both complete folders beside `FRESH.EXE` and the kit's `SETUP.EXE`.
+No Python, modern-PC preparation, manual INI edits or separate font/support
+gathering is needed. `README.TXT` and `FRESH.TXT` contain the same fresh-install
+instructions; `CGAOLD.TXT` retains the existing-Windows installer instructions.
 
-[![DOS directory listing showing SETUP.EXE, README.TXT and the CGA folder](CGA/INSTALL/FILES2X.PNG)](CGA/INSTALL/FILES.PNG)
+## Fresh Windows installation
 
-*The extracted package in `C:\CGAKIT`, captured from the DOS guest.*
+Use these paths for the example below:
 
-## 2. Choose a mode
+| Purpose | Example path | Contents or use |
+| --- | --- | --- |
+| Extracted CGA kit | `C:\CGAKIT` | This download, including `FRESH.EXE` |
+| Original Windows media | `C:\W30SRC` | Unchanged original Windows files, including Microsoft's `SETUP.EXE` and `SETUP.INF` |
+| Display driver folder | `C:\CGAKIT\FRESH640` | The bundled driver and its support files |
+| Windows destination | `C:\WINDOWS` | New installation directory chosen inside Microsoft Setup |
+
+With unchanged original English retail Windows 3.0 media already collected in
+`C:\W30SRC`, run:
+
+```bat
+C:
+CD \CGAKIT
+FRESH C:\W30SRC
+```
+
+**The argument `C:\W30SRC` tells FRESH where to read the Windows media.** The
+display driver folder comes from the location of `FRESH.EXE`. With the kit
+extracted in `C:\CGAKIT`, the launcher prints this exact line:
+
+```text
+Display driver path: C:\CGAKIT\FRESH640
+```
+
+Write down that complete path before pressing Enter to start original
+Microsoft Setup. If you extracted the kit elsewhere, use the complete path
+printed for your kit instead.
+
+1. Choose the new Windows destination, normally `C:\WINDOWS`.
+2. At **System Information**, choose **Display**, scroll down to **Other**
+   (the last choice), and press Enter.
+3. At the manufacturer's driver-disk prompt, enter **`C:\CGAKIT\FRESH640`**.
+4. Select **Windows XT IBM CGA 640x200 mono**, then **No Changes** to accept
+   the hardware list. Complete original Setup.
+5. Start the installed Windows from `C:\WINDOWS` with `WIN /R`.
+
+During copying, answer each disk request using the disk name:
+
+| Setup asks for | Enter this path in the example |
+| --- | --- |
+| Manufacturer's display-driver disk, or **Windows XT CGA fresh Setup** | `C:\CGAKIT\FRESH640` |
+| **Microsoft Windows 3.0 Disk #1**, or another original Windows disk | `C:\W30SRC` |
+
+**Setup may prefill the previous disk's path. Replace it when the requested
+disk changes.** For example, a request for **Windows XT CGA fresh Setup** may
+still show `C:\W30SRC`; replace it with `C:\CGAKIT\FRESH640`. A subsequent
+Microsoft Windows disk request may still show the driver path; replace it
+with `C:\W30SRC`.
+
+For original floppy media instead of a collected directory, insert the first
+Windows Setup disk and run `FRESH A:\` from `C:\CGAKIT`. The display driver
+path is still **`C:\CGAKIT\FRESH640`**. For Microsoft file requests, insert the
+requested original Windows disk and use `A:\`. You can verify inputs without
+starting Setup with `FRESH /CHECK C:\W30SRC` (or `FRESH /CHECK A:\`).
+
+The driver, matching fonts and grabber are used during graphical Setup.
+Fresh Setup currently offers one fixed 640x200 monochrome profile. To choose
+another mode afterward, exit Windows and follow the existing-Windows route
+below. [Fresh Setup scope and native evidence](CGA-FRESH.MD) record the tested
+media-directory route, 640 KB IBM XT/CGA fixture and physical-hardware limits.
+Other Setup versions are refused. Developer launcher rebuild inputs are in
+[CGASRC.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGASRC.ZIP).
+
+## Choose a mode in an existing Windows installation
 
 Run `SETUP C:\WINDOWS` to choose from a menu, or use one direct command
 from this table. Standard and compact text sizes are listed side by side.
@@ -107,7 +144,7 @@ resolution's standard fonts and controls. Both styles include their fonts.
 nearest-neighbor pixels. The compact views use the real smaller fonts and
 OEM resources; only the presentation of the captures is enlarged.*
 
-## 3. Install the selected driver
+## Install the selected driver
 
 For the fixed 160×100 desktop, type:
 
@@ -135,7 +172,7 @@ If it reports an error, stop and use the checks below before starting Windows.
 *Successful installation of mode `100`. Your chosen mode appears in the
 `display.drv` line.*
 
-## 4. Start Windows in real mode
+## Start Windows in real mode
 
 Change to the Windows drive and directory, then launch Windows:
 
@@ -160,7 +197,7 @@ these captures belong to the recording harness; you do not need to type them.*
 capture. This illustrates the installed display; capture provenance is in
 [CGA image sources](CGA/CAPTURES.MD).*
 
-## 5. Reach windows and controls
+## Reach windows and controls
 
 - In `PAN`, **Ctrl+Alt+arrows** moves the viewport over the larger desktop.
   **Ctrl+Alt+Home** returns to the top left; **Ctrl+Alt+End** shows the active
@@ -187,7 +224,7 @@ SETUP UNDO C:\WINDOWS
 
 Keep the package for mode changes and undo. `UNDO` preserves unrelated later
 INI edits. The separate `RESTORE` recovery command replaces whole saved INIs
-and loses later edits; use the included `README.TXT` for that recovery path.
+and loses later edits; use the included `CGAOLD.TXT` for that recovery path.
 
 ## If Setup stops
 
@@ -196,16 +233,21 @@ and loses later edits; use the included `README.TXT` for that recovery path.
 | `Exit Windows completely before running SETUP` | Exit Windows itself, including any Windows DOS session, then retry from plain DOS. |
 | `Existing Windows directory and SYSTEM folder required` | Use the directory containing your installed `WIN.COM` and `SYSTEM` folder. |
 | Missing or damaged packet file | Re-extract the complete ZIP with directories preserved; keep `CGA` beside root `SETUP.EXE`. |
-| Different, changed or incomplete installed files | Keep the recovery files and follow the package's `README.TXT`; do not delete the journals or overwrite individual drivers. |
+| Different, changed or incomplete installed files | Keep the recovery files and follow the package's `CGAOLD.TXT`; do not delete the journals or overwrite individual drivers. |
 
-The [current text instructions](../tools/PAN/GUIDES/CGA.TXT) match the package.
+The [fresh text instructions](../src/cga/FRESH.TXT) become the package's
+`README.TXT` and `FRESH.TXT`. The [existing-Windows text instructions](../tools/PAN/GUIDES/CGA.TXT)
+cover the separate `SETUP` route.
 Testing uses IBM XT/CGA emulation with normal 640 KB; physical cards, clone
 CRTCs and composite output remain unqualified. PCjr, Tandy and EGA/VGA are
 separate targets.
 
-The DOS screenshots use the preceding public package. The current download
-retains the same layout and success message and adds the optional compact choices; file sizes and
-helper-copy lines differ. The current settings entry is `PAN /SETTINGS`.
+The DOS installer and launch screenshots above show the historical
+existing-Windows route. They predate the fresh-install launcher and compact
+choices; file sizes and helper-copy lines differ. The old directory-listing
+capture is retained in the capture record, but does not show the current
+archive's added `FRESH.EXE` and `FRESH640` folder. Use the current extraction
+layout above. The current settings entry is `PAN /SETTINGS`.
 [Original captures and exact version scope](CGA/INSTALL/CAPTURES.MD).
 
 [Sixteen-color Paintbrush and capture details](CGA/CAPTURES.MD) ·

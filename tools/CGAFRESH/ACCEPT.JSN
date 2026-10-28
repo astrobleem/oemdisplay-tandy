@@ -1,7 +1,7 @@
 {
   "status": "REVIEWED_FRESH_CGA_COMPLETE_INSTALL",
   "physical_hardware": false,
-  "reviewed_commit": "e77a726da8613fb5fd417afea64e04cf69473780",
+  "reviewed_commit": "3bc8e80376f408ddf60da754bb05a03a2c00bede",
   "sources": {
     "src/cga/FRESH.C": {
       "bytes": 4781,
@@ -12,8 +12,8 @@
       "sha256": "fd138332c20ce3e3973a841c2197949363fbdd91a2f7e78112a257c7b2adbf3c"
     },
     "src/cga/FRESH.TXT": {
-      "bytes": 3125,
-      "sha256": "2306409264edd4c397220a92a580244cef87ff92b088dcf2010b98d32f69c56b"
+      "bytes": 4496,
+      "sha256": "b69cd7dc6b31d5264a5e016a111710f98cbf137f577a57f303228db15741dcf6"
     },
     "src/cga/FRESHLIC.TXT": {
       "bytes": 483,
@@ -49,7 +49,7 @@
     },
     "tools/CURRENT/PRODUCTS.JSN": {
       "bytes": 6457,
-      "sha256": "15026db9f04a7301887985705a5bdefbc285dfbdbfab65edfbcf545d9d0f14a1"
+      "sha256": "c3d6934581fec1afd7c2b72c1d7172a3b679df2ff9f12c00b708eb0e029d091a"
     },
     "tools/DOSINST/CRCFAST.H": {
       "bytes": 3941,
@@ -60,33 +60,37 @@
       "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
     },
     "docs/CGA.MD": {
-      "bytes": 9302,
-      "sha256": "95e05b938a7379a2fa11841bf1dda9e1014233b1417fdb85dfefcd109617561e"
+      "bytes": 11478,
+      "sha256": "b4001f9f3ecda688a55f3f4c936c6f83f6042ea8d7abbc56fb81e8b01ac264fb"
     },
     "docs/CGA-FRESH.MD": {
-      "bytes": 8618,
-      "sha256": "05ab22f47e0bd0b9e64df7ee898328352f620cfacd498b6bf4f78fd5eb0430b4"
+      "bytes": 9680,
+      "sha256": "2d6d00c708ce29de7c2c9ddf25625def03b9ce023d79f89ab8a4c84dca4c0082"
+    },
+    "docs/CGA/INSTALL/CAPTURES.MD": {
+      "bytes": 3340,
+      "sha256": "ddb571b9949550ecafa750e750efe26302ed0cbd785a1572a4c9cc01838a679e"
     }
   },
   "review": {
-    "path": "docs/QUAL/CGAFRESH/REVIEW-FINAL.JSN",
+    "path": "docs/QUAL/CGAFRESH/REVIEW-PATHS.JSN",
     "identity": {
-      "bytes": 8701,
-      "sha256": "9e7c2167d16322489f9e89ae399d6f668aa55972a6b9779f5faceac98d0fff1f"
+      "bytes": 7533,
+      "sha256": "8aeaff1d4227088d8a080fcf5a060e749e068d8c93ef9efb2d0eaffbad66f992"
     }
   },
   "packet": {
     "path": "downloads/FRESH/CGA.ZIP",
     "identity": {
-      "bytes": 367080,
-      "sha256": "06039bfced56f0affae86dfc782751a04a7fdaddf204d1057b65a4f0454527be"
+      "bytes": 368048,
+      "sha256": "6ff1c273de1d8ed85d11f85db71e39261daf8830f9fb29d1b4bebe7a1a305d6f"
     }
   },
   "source_packet": {
     "path": "downloads/FRESH/CGASRC.ZIP",
     "identity": {
-      "bytes": 306064,
-      "sha256": "01875aec63bcddf838af07a8cd11d700f6c95fef97e8026298304744b0cb6b75"
+      "bytes": 306548,
+      "sha256": "0b4aa808c5afbf0a7936e5d3f5a336bfe85e3e995c530b9bab8e0b771828d62d"
     }
   },
   "members": {
@@ -227,8 +231,8 @@
       "sha256": "1e6cd9130655fcfb96a55cbbb7e512bc23ab48f3a443cdb29038e09ee920947b"
     },
     "FRESH.TXT": {
-      "bytes": 3125,
-      "sha256": "2306409264edd4c397220a92a580244cef87ff92b088dcf2010b98d32f69c56b"
+      "bytes": 4496,
+      "sha256": "b69cd7dc6b31d5264a5e016a111710f98cbf137f577a57f303228db15741dcf6"
     },
     "FRESH640/CGA640.DRV": {
       "bytes": 57312,
@@ -283,8 +287,8 @@
       "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
     },
     "README.TXT": {
-      "bytes": 3125,
-      "sha256": "2306409264edd4c397220a92a580244cef87ff92b088dcf2010b98d32f69c56b"
+      "bytes": 4496,
+      "sha256": "b69cd7dc6b31d5264a5e016a111710f98cbf137f577a57f303228db15741dcf6"
     },
     "SETUP.EXE": {
       "bytes": 34337,
@@ -299,10 +303,10 @@
     }
   },
   "host": {
-    "path": "docs/QUAL/CGAFRESH/HOSTFULL.JSN",
+    "path": "docs/QUAL/CGAFRESH/HOSTPATH.JSN",
     "identity": {
       "bytes": 874,
-      "sha256": "f8966eaa4c21778bb9cde87bb7e49c6e96b52f48e8264d9737bb601987ff5108"
+      "sha256": "6a3f447bf9dcc07e8511bb25beccfc7ee96d19208b3a4aca6ceee7f65c917500"
     }
   },
   "native_entry": {
