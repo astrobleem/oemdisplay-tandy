@@ -39,7 +39,14 @@ LONG FAR PASCAL ControlProc(HWND w,UINT m,WPARAM wp,LPARAM lp)
    if(GetDlgItem(cfg,128))SendDlgItemMessage(cfg,128,CB_SETCURSEL,3,0L);else click(cfg,127);
    if(!shellSeen++){next(7,"UI SHELL CFG VISIBLE\r\n");return 0;}
    if(GetTickCount()-since<2000UL)return 0;
-   SetDlgItemText(cfg,123,"10");SetActiveWindow(cfg);SetFocus(GetDlgItem(cfg,125));
+   SetActiveWindow(cfg);SetFocus(GetDlgItem(cfg,123));
+   SendDlgItemMessage(cfg,123,EM_SETSEL,0,MAKELONG(0,32767));
+   next(15,"UI NEED DELAY INPUT\r\n");
+  }else if(stage==15){
+   GetDlgItemText(cfg,123,b,sizeof(b));
+   if(lstrcmp(b,"10"))return 0;
+   logtext("UI STAGED DELAY 10 PASS\r\n");
+   SetActiveWindow(cfg);SetFocus(GetDlgItem(cfg,125));
    next(8,"UI shell Cube Apply\r\n");
    PostMessage(cfg,WM_COMMAND,125,MAKELONG(GetDlgItem(cfg,125),BN_CLICKED));
   }else if(stage==8){
@@ -47,8 +54,8 @@ LONG FAR PASCAL ControlProc(HWND w,UINT m,WPARAM wp,LPARAM lp)
    s=GetActiveWindow();if(s&&s!=cfg&&s!=bar){PostMessage(s,WM_CLOSE,0,0L);return 0;}
    GetWindowsDirectory(ini,sizeof(ini));lstrcat(ini,"\\TSHELL.INI");
    GetPrivateProfileString("ScreenSaver","Choice","?",b,sizeof(b),ini);
-   if(lstrcmp(b,"Cube")||GetPrivateProfileInt("ScreenSaver","IdleSeconds",0,ini)!=10){logtext("UI FAIL shell save\r\n");errors++;}
-   else logtext("UI SHELL SAVE PASS\r\n");
+   if(lstrcmp(b,"Cube")||GetPrivateProfileInt("ScreenSaver","IdleSeconds",0,ini)!=10)return 0;
+   logtext("UI SHELL SAVE PASS\r\n");
    PostMessage(cfg,WM_CLOSE,0,0L);next(9,"UI NEED REAL INPUT\r\n");
   }else if(stage==9&&(s=FindWindow("TandyCubeSaver",NULL))!=NULL){
    next(10,"UI IDLE CUBE PASS\r\n");
