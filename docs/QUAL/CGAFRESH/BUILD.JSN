@@ -1,0 +1,53 @@
+{
+  "status": "BUILT_NOT_RUNTIME_TESTED",
+  "base": {
+    "bytes": 297312,
+    "sha256": "84a1992803d1bd022318ddb001490b66494aba1e61ca09eef2fbc445fb469cc4"
+  },
+  "sources": {
+    "FRESH.C": {
+      "bytes": 4781,
+      "sha256": "f91deff0c0a71c29015ef37079f093f1f22e5af675e59fa1b5a48046e07d2419"
+    },
+    "CRCFAST.H": {
+      "bytes": 3941,
+      "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+    },
+    "FRESHID.H": {
+      "bytes": 550,
+      "sha256": "35a01a5c2fe7d721e5c619314e8248005285a8f4b9183aa92d5b1b453925b31a"
+    }
+  },
+  "binary": {
+    "bytes": 23466,
+    "sha256": "1e6cd9130655fcfb96a55cbbb7e512bc23ab48f3a443cdb29038e09ee920947b"
+  },
+  "compiler": "Open Watcom native DOS, 8086 small model, 4096-byte stack",
+  "command": [
+    "C:\\WATCOM\\binnt\\wcl.exe",
+    "-zq",
+    "-bt=dos",
+    "-0",
+    "-ms",
+    "-os",
+    "-s",
+    "-k4096",
+    "-fm=FRESH.MAP",
+    "-fe=FRESH.EXE",
+    "FRESH.C"
+  ],
+  "toolchain": {
+    "binnt/wcl.exe": {
+      "bytes": 61952,
+      "sha256": "0697939fe0263f8b04dfbb0b98d98b10f3af936c2da9efd0b7a78ca38e2886e7"
+    },
+    "binnt/wcc.exe": {
+      "bytes": 34816,
+      "sha256": "d88049384eb428005c590af82e7cf63f48c14ed09af23f9572cf5dd579244d2d"
+    },
+    "binnt/wlink.exe": {
+      "bytes": 33792,
+      "sha256": "d58013821bfd77b6b68b56ab6582419a1a33ab7839709c5b973a992cd499b4e8"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "reviewed_commit": "c009241a69418c8aadfd39973a444eb6481acc66",
+  "reviewed_base": "407dfea6007b17bb5354c344a0e28ec4f82fd15d",
+  "reviewed_tree": "630f98093866b5f9afbff84badcc64b7197bcc56",
+  "reviewer": "independent child agent fresh_review",
+  "outcome": "NO_ACTIONABLE_FINDINGS_WITH_COVERAGE_LIMITS",
+  "findings": [],
+  "review_scope": [
+    "FRESH.C argument handling, bounded path construction, DOS/Windows guard, source/kit validation, read-only preflight and original Setup handoff",
+    "Dedicated FRESH.INF geometry/font/grabber/logo selection and matching accepted driver/support",
+    "FRESHPK closed input, source/binary receipts, archive layout, notices and original-CGA preservation",
+    "FRESHT refusal tests, standalone source archive rebuild and consumer instructions",
+    "Native qualification scope and evidence pin consistency"
+  ],
+  "independent_checks": {
+    "frozen_git_snapshot": true,
+    "native_cross_build": true,
+    "consumer_archive_reproduced_identically": true,
+    "source_archive_reproduced_identically": true,
+    "producer_refusal_and_source_rebuild_tests": true,
+    "all_16_native_evidence_pins_verified_against_commit": true,
+    "setup_options_capture_visually_inspected": true,
+    "all_25_changed_paths_additions": true,
+    "emulator_started": false,
+    "source_mutated": false,
+    "published": false
+  },
+  "reproduced": {
+    "FRESH.EXE": {
+      "bytes": 23466,
+      "sha256": "1e6cd9130655fcfb96a55cbbb7e512bc23ab48f3a443cdb29038e09ee920947b"
+    },
+    "CGAFRESH.ZIP": {
+      "bytes": 367060,
+      "sha256": "79b5e9891d7929099946c28b401f1602cf52edd04381eeac49a4d0c2b606ef99"
+    },
+    "CGAFSRC.ZIP": {
+      "bytes": 306029,
+      "sha256": "1a18af6d3de87d6b73d8369af1013bd061f059bfa290d607d1d91d028a465b11"
+    }
+  },
+  "host_result": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-10\\review-c009241a\\host\\RESULT.JSN",
+  "limitations": [
+    "Review used host-only cross-builds and retained native evidence; no new emulator or physical-hardware test performed.",
+    "c009241a qualifies only entry to the original graphical Setup options dialog. It does not yet qualify full installation or first ordinary Windows startup. Parent is completing that coverage separately.",
+    "Known English retail Setup identities and a merged original-media directory were tested. Four-floppy swapping and other retail media variants remain separate coverage.",
+    "Catalog integration is outside c009241a and needs exact final-head review before publication."
+  ],
+  "publication_readiness": "Not yet: combine completed installation/first-start evidence, reviewed catalog integration and explicit Chad approval. This review is clear for the c009241a code within its stated scope.",
+  "integration_advice": [
+    "A new catalog wrapper may verify the exact new CGA archive, full closed member inventory and new native completion/startup receipt before invoking the unchanged legacy alternatives verifier.",
+    "Pass a separate copied mapping with only CGA.ZIP replaced by the immutable compact base to the legacy verifier; do not alter the actual output mapping or let old compact qualification approve the new launcher.",
+    "Update both BUNDLE ancillary validation and CHECK direct verify_alternatives call to use the same wrapper.",
+    "Retain the four Tandy core pins, old producers/receipts and source/build-input access.",
+    "If promoted under CGA.ZIP, make the consumer extraction-name wording generic or update it from CGAFRESH.ZIP; that is a text-only packaging change but the final archive needs a new pin."
+  ]
+}

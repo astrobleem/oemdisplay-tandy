@@ -1,0 +1,10 @@
+{
+  "reused_image": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-10\\fresh-native-02\\DISK.IMG",
+  "image_sha256_before_resume": "5eaee53e0fb7076bc2dafbce9921d5f72e6c0285586789f7d321c41393b2b911",
+  "new_disk_image": false,
+  "scope": "Resume original graphical Setup shell, complete install, then normal WIN /R; no display/INI changes",
+  "changes": [
+    "AUTOEXEC only: WIN /R to resume existing original setup shell",
+    "FIRST.BAT only: ordinary WIN /R with DOS-return marker"
+  ]
+}

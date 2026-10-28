@@ -2,14 +2,47 @@
 
 **[Download CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP)**
 
-This installs the CGA display driver, matching fonts, grabber and helpers into
-an **existing Windows 3.0 installation**. You need **DOS 3.3 or later, 640 KB RAM,
+This supplies the CGA display driver, matching fonts, grabber and helpers for
+**fresh or existing Windows 3.0 installations**. You need **DOS 3.3 or later, 640 KB RAM,
 Windows 3.0 real mode, and IBM CGA with RGBI output**. Windows and DOS are not
-included; Windows 3.1 is unsupported. If Windows is not installed yet, install
-it from your own disks first and confirm that `WIN /R` starts.
+included; Windows 3.1 is unsupported. Fresh Setup starts with the project's
+fixed 640x200 monochrome profile. The mode choices below remain available
+after Windows is installed.
 
 The examples use **`C:\WINDOWS`** for Windows and **`C:\CGAKIT`** for the extracted
 download. Substitute your actual drives and directories.
+
+## Fresh Windows installation
+
+Extract this download on the DOS computer with folders preserved, as shown
+below. At plain DOS, insert your first original English retail Windows 3.0
+Setup disk and run:
+
+```bat
+C:
+CD \CGAKIT
+FRESH A:\
+```
+
+For unchanged original Windows media already collected in one directory, use
+`FRESH C:\W30SRC`. The native launcher prints the exact display-driver path.
+In original Windows Setup choose **Display**, scroll down to **Other**, enter
+that `FRESH640` path, and select **Windows XT IBM CGA 640x200 mono**. Accept the
+hardware list and complete Setup. Give the same path when it asks for our
+display disk; supply your original Windows disks for Microsoft file requests.
+Start the installed Windows with `WIN /R`.
+
+The driver, matching fonts and grabber are used during graphical Setup. No
+Python, modern-host conversion, manual INI edits or separate support gathering
+is needed. Fresh Setup currently offers this one fixed profile. To choose
+another resolution afterward, exit Windows and run the normal `SETUP C:\WINDOWS`
+menu below. The original existing-Windows instructions are also retained as
+`CGAOLD.TXT` in the archive.
+
+[Fresh Setup scope and native evidence](CGA-FRESH.MD) record the exact media,
+640 KB IBM XT/CGA fixture and physical-hardware limits. Other Setup versions
+are refused. Developer launcher rebuild inputs are in
+[CGASRC.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGASRC.ZIP).
 
 ## 1. Exit Windows and extract the package
 

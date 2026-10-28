@@ -1,0 +1,13 @@
+{
+  "original_media": {
+    "DISK01.IMG": "f6fdb21ed13aac598ddd35336662e59e61e5a4399fbef2e6c52576ecc305a08c",
+    "DISK02.IMG": "c0e925c30366429c06f3fe0f65bd4b665151f1ca5e83e4b069408b5d739cd427",
+    "DISK03.IMG": "4ec9a894fed22b71035370f6b4e66dddd20dd20104d48544663384dc47d3134e",
+    "DISK04.IMG": "83c6c33034b3511fa854c02d65ae87b98136dc5619501fe64d9346bc8b65dad3"
+  },
+  "windows_absent_at_start": true,
+  "fat_offset": 17408,
+  "disk_bytes": 84341760,
+  "source_disk_sha256": "8589674d6f2c85e4423cc11ce9d4d59d0af34c6505729311bbaa45d12eb4ad02",
+  "setup_inf_sha256": "4f4b65bdc0ce2d4a23859494f8936376296e857872a554b0037ceb068f2202f2"
+}

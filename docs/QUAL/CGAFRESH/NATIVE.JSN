@@ -1,0 +1,178 @@
+{
+  "status": "PASS_FRESH_ORIGINAL_MEDIA_GRAPHICAL_SETUP_ENTRY",
+  "scope": "Visible original Windows 3.0 graphical Setup using project CGA640; complete installation/normal startup not claimed",
+  "canonical_main": "2977d299120d1c628def4e22d2071f926c239dac",
+  "canonical_tree": "826ef77834dc574e18ff58e89d5d92fefce43acc",
+  "local_source_base_same_tree": "407dfea6007b17bb5354c344a0e28ec4f82fd15d",
+  "configuration": {
+    "machine": "IBM XT",
+    "cpu": "8088",
+    "cpu_hz": 4772728,
+    "ram_kb": 640,
+    "display": "IBM CGA RGBI",
+    "dos": "MS-DOS 6.22",
+    "bios_mode": 6
+  },
+  "windows_absent_at_start": true,
+  "post_install_driver_replacement": false,
+  "original_media": {
+    "DISK01.IMG": "f6fdb21ed13aac598ddd35336662e59e61e5a4399fbef2e6c52576ecc305a08c",
+    "DISK02.IMG": "c0e925c30366429c06f3fe0f65bd4b665151f1ca5e83e4b069408b5d739cd427",
+    "DISK03.IMG": "4ec9a894fed22b71035370f6b4e66dddd20dd20104d48544663384dc47d3134e",
+    "DISK04.IMG": "83c6c33034b3511fa854c02d65ae87b98136dc5619501fe64d9346bc8b65dad3"
+  },
+  "checks": {
+    "missing_original_media_exit_3": true,
+    "changed_kit_exit_4": true,
+    "read_only_check_pass": true,
+    "original_setup_launched": true,
+    "single_oem_choice": true,
+    "visible_original_graphical_setup": true,
+    "exact_final_runtime": true,
+    "accepted_installed_support": true,
+    "tandy_unchanged": true,
+    "standalone_source_zip_rebuild_identical": true,
+    "all_33_existing_cga_runtime_support_members_preserved": true,
+    "original_readme_retained_as_CGAOLD": true
+  },
+  "installed": {
+    "CGA640.DRV": {
+      "bytes": 57312,
+      "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1"
+    },
+    "XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "CGAGRAB.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    }
+  },
+  "launcher": "1e6cd9130655fcfb96a55cbbb7e512bc23ab48f3a443cdb29038e09ee920947b",
+  "generated_setup_boot": {
+    "shell": "setup.exe",
+    "display": "CGA640.DRV",
+    "system_font": "XTCSYS.FON",
+    "fixed_font": "XTCFIX.FON",
+    "oem_font": "XTCOEM.FON",
+    "grabber": "CGAGRAB.GR2"
+  },
+  "final_archives": {
+    "CGAFRESH.ZIP": {
+      "bytes": 367060,
+      "sha256": "79b5e9891d7929099946c28b401f1602cf52edd04381eeac49a4d0c2b606ef99"
+    },
+    "CGAFSRC.ZIP": {
+      "bytes": 306029,
+      "sha256": "1a18af6d3de87d6b73d8369af1013bd061f059bfa290d607d1d91d028a465b11"
+    }
+  },
+  "full_os_installation_tested": false,
+  "first_ordinary_windows_launch_tested": false,
+  "physical_hardware_tested": false,
+  "other_fresh_modes_tested": false,
+  "floppy_swaps_tested": false,
+  "test_source": "Unchanged four original floppy images merged into a private source directory; all Setup and decompression ran inside the 8088 emulator",
+  "owned_pid": 31688,
+  "owned_stopped": true,
+  "lease_released": true,
+  "byte_lock_available_after": true,
+  "inventory_after": 0,
+  "queued_runner": null,
+  "buddy_playback_performed": false,
+  "publication": false,
+  "limitations": [
+    "Exact candidate tested on original-media directory, not a complete four-floppy swapping sequence.",
+    "Scope stops at original graphical Setup options dialog; full installation and first normal startup remain separate gates.",
+    "Other fresh adapter profiles and physical hardware unqualified."
+  ],
+  "controller_notes": [
+    "First architecture run corrected an unsupported End-key selection using Down arrows; only correct CGA640 was started graphically.",
+    "Exact run text scratch encoding was normalized while the host controller waited; raw captures and retained per-screen text were preserved. No guest or runtime change."
+  ],
+  "evidence": {
+    "BADKIT.LOG": {
+      "bytes": 94,
+      "sha256": "df8c6dc935b318a00a2a64e39593e7cae5111758b8fda4d795df2c60c9450852"
+    },
+    "BADMEDIA.LOG": {
+      "bytes": 150,
+      "sha256": "9038a3e4f877df763ace6e89a40b21fe11fb78fbf18a1b60e16104178c719af2"
+    },
+    "BUILD.JSN": {
+      "bytes": 1436,
+      "sha256": "56b0ac2f3fc9a20c193411873734115fc53204d71a5d658a2393f1945746a8aa"
+    },
+    "CONTROL.PY": {
+      "bytes": 1535,
+      "sha256": "53aee0ce4c2d17a8f10d472a50c2bf3d105ecd9c42b228d786e7775d7c4f29c6"
+    },
+    "EXACTRUN.JSN": {
+      "bytes": 2172,
+      "sha256": "1b19cad692ff7d8c6a42eac60438d8a5c03d97106a55cf75767b8a6de9f7dabc"
+    },
+    "FIRST-RUN.JSN": {
+      "bytes": 2229,
+      "sha256": "6dd2dedefc407ef4fd88f28274c61dcb6d0f4e1024b4b05700676f2eb3477268"
+    },
+    "FIRST.JSN": {
+      "bytes": 1312,
+      "sha256": "3371f37d479f28fd68670cc55154f55516b7095f2de47dcf5e7e47a920c2590e"
+    },
+    "FIRST.PNG": {
+      "bytes": 5634,
+      "sha256": "4d200bea4c4e3f5320c2c398f299a578d8970862767116294f487f44634dd726"
+    },
+    "HOST.JSN": {
+      "bytes": 608,
+      "sha256": "ac05c78c3990c850dd1b8d3797519528527368e90caca3eb719c9d1b5968cf1e"
+    },
+    "INPUTOK.LOG": {
+      "bytes": 94,
+      "sha256": "3fb51d22a0b6c6e6f8091194af540bb408d77bb1edf04208004db98a7237d6cf"
+    },
+    "PREFLIGHT.JSN": {
+      "bytes": 1071,
+      "sha256": "373580f0a5c078495af8e02a7700a77d220ad1947df1d087daaa86705cc5a68f"
+    },
+    "PREPARE.JSN": {
+      "bytes": 650,
+      "sha256": "efcb5beeae66679d5afe577908111b7ec25558aaab72cac9b13571e185304558"
+    },
+    "PREPARE.PY": {
+      "bytes": 3906,
+      "sha256": "ae969e514b025f886a4e6d5b3dcac7a751050e9fd15a3de33e91a27096563cf1"
+    },
+    "RUNNER.PY": {
+      "bytes": 4525,
+      "sha256": "40b808666cd56b4a71ec1206899bc884fdd62e58c0c613aef8636a1c6c05f179"
+    },
+    "RUNTIME.JSN": {
+      "bytes": 741,
+      "sha256": "13f663f542335546cb436d01c42786c49a62f13cf18b761dc8745f9c92340f20"
+    },
+    "SETUP.PNG": {
+      "bytes": 5634,
+      "sha256": "4d200bea4c4e3f5320c2c398f299a578d8970862767116294f487f44634dd726"
+    }
+  },
+  "original_media_source_files_unchanged_after_setup": 282,
+  "stock_cga_driver_absent": true
+}

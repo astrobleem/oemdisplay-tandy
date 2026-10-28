@@ -1,0 +1,186 @@
+{
+  "outcome": "NO_ACTIONABLE_FINDINGS",
+  "findings": [],
+  "reviewed_commit": "e77a726da8613fb5fd417afea64e04cf69473780",
+  "reviewed_base": "c009241a69418c8aadfd39973a444eb6481acc66",
+  "reviewed_tree": "620f14d5274a282ec80892fe3aec421015860bd9",
+  "sources": {
+    "src/cga/FRESH.C": {
+      "bytes": 4781,
+      "sha256": "f91deff0c0a71c29015ef37079f093f1f22e5af675e59fa1b5a48046e07d2419"
+    },
+    "src/cga/FRESH.INF": {
+      "bytes": 449,
+      "sha256": "fd138332c20ce3e3973a841c2197949363fbdd91a2f7e78112a257c7b2adbf3c"
+    },
+    "src/cga/FRESH.TXT": {
+      "bytes": 3125,
+      "sha256": "2306409264edd4c397220a92a580244cef87ff92b088dcf2010b98d32f69c56b"
+    },
+    "src/cga/FRESHLIC.TXT": {
+      "bytes": 483,
+      "sha256": "15797d42ff79c4cf0cd60e2796428ef74da0fa4daf6bb112ce4ec4db7056b457"
+    },
+    "src/cga/FRESHPK.PY": {
+      "bytes": 6848,
+      "sha256": "c65f5f78e6b89019236b77e58c5138b78a498c8db1cd729109e3bb174dabb666"
+    },
+    "src/cga/FRESHT.PY": {
+      "bytes": 3051,
+      "sha256": "dfef7b98b42eb878c314406b39f1eaa45e9ccebe4f50832d59b6ff2a16145b07"
+    },
+    "tools/CGAFRESH/VERIFY.PY": {
+      "bytes": 9607,
+      "sha256": "bbd268090b5069747f372c0daf431ff6864f6867a1a75870fc06bb9768b36925"
+    },
+    "tools/CGAFRESH/TESTGATE.PY": {
+      "bytes": 4545,
+      "sha256": "fa7f8033a758fd0e81a5dfd8f1de5f3509fd7a3005190dc420cbddb96c8e99d7"
+    },
+    "tools/CGAFRESH/README.MD": {
+      "bytes": 2240,
+      "sha256": "dd7efdd2744486fa11e40b533f58876d1f79d289ed63d1f3dbb52b817153f2fa"
+    },
+    "tools/CURRENT/BUNDLE.PY": {
+      "bytes": 10147,
+      "sha256": "95a0fd03692545e67ee9849222450562d6a639ad324491894c849039c8d3cbb5"
+    },
+    "tools/CURRENT/CHECK.PY": {
+      "bytes": 4826,
+      "sha256": "2d825bcc91ab6e96c0c5f26dd1b82debe821411f996959ff78dc84ccbae766cc"
+    },
+    "tools/CURRENT/PRODUCTS.JSN": {
+      "bytes": 6457,
+      "sha256": "15026db9f04a7301887985705a5bdefbc285dfbdbfab65edfbcf545d9d0f14a1"
+    },
+    "tools/DOSINST/CRCFAST.H": {
+      "bytes": 3941,
+      "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+    },
+    "tools/XR1PACK/OWATCOM.TXT": {
+      "bytes": 21128,
+      "sha256": "7221bdce3cd8441bb3e3dbc713c8d0dfa7c4c59ec245be8a345a3ba6af2d8e9d"
+    },
+    "docs/CGA.MD": {
+      "bytes": 9302,
+      "sha256": "95e05b938a7379a2fa11841bf1dda9e1014233b1417fdb85dfefcd109617561e"
+    },
+    "docs/CGA-FRESH.MD": {
+      "bytes": 8618,
+      "sha256": "05ab22f47e0bd0b9e64df7ee898328352f620cfacd498b6bf4f78fd5eb0430b4"
+    }
+  },
+  "additional_reviewed_paths": {
+    "tools/HPDIB/PUBLISH.PY": {
+      "bytes": 8056,
+      "sha256": "0e164612d7ef00ceefb15e924967b374a0d5a5bc7c6a2a5d5b1c5a90839a0bd3"
+    },
+    "docs/QUAL/CGAFRESH/README.MD": {
+      "bytes": 3148,
+      "sha256": "9943d22f5c74c7d124281d1a08ff9e7791c03a5227f61ca378ccde93f5119c23"
+    },
+    "docs/QUAL/CGAFRESH/PREPFULL.PY": {
+      "bytes": 2090,
+      "sha256": "229139130dc0806f35614521772a4d3de59cc1f7b6fb601d6718d66a7411b777"
+    },
+    "docs/QUAL/CGAFRESH/RUNFULL.PY": {
+      "bytes": 4525,
+      "sha256": "d481246ffbf7e8ab3533d589075545d865f43bf961a796c8c927e0c6f946376b"
+    }
+  },
+  "reviewer": "independent child agent fresh_review",
+  "review_scope": [
+    "Native FRESH DOS launcher and closed single-choice OEM inventory from the earlier independently reviewed c009241a baseline",
+    "All changed production catalog/verification/test code, consumer instructions and acceptance source binding",
+    "Completed original-media Setup, separate ordinary Windows startup and DOS return evidence, including raw controller/preparation/config/markers",
+    "Preservation of the accepted CGA runtime/support and four Tandy core artifacts"
+  ],
+  "independent_validation": {
+    "pinned_source_map_exact": true,
+    "candidate_gate_and_semantic_refusals": "PASS, 31 checks at final source e77a726d",
+    "pending_production_verify": "Correctly refused pending independent review acceptance",
+    "report_binding_semantics": "Matching clear report fixture accepted; wrong outcome/findings/commit/sources refused; only review transport mocked",
+    "standalone_source_zip_rebuild": "Exact native launcher and both archives reproduced from the committed nine-member source ZIP",
+    "native_evidence": "All sealed completion proof pins verified by candidate gate; completed Setup, Program Manager and DOS-return screenshots independently inspected",
+    "read_only_image_audit": "All 282 original media files, all seven display support files, seven installed OS module hashes, Program Manager boot selection and both DOS return markers independently verified on the stopped image",
+    "unchanged_tandy_core": "All four core assets independently reproduced through unchanged HPDIB producer; exact catalog identities match",
+    "emulator_started": false,
+    "production_source_modified": false,
+    "private_image_modified": false,
+    "published": false
+  },
+  "archives": {
+    "CGA.ZIP": {
+      "bytes": 367080,
+      "sha256": "06039bfced56f0affae86dfc782751a04a7fdaddf204d1057b65a4f0454527be"
+    },
+    "CGASRC.ZIP": {
+      "bytes": 306064,
+      "sha256": "01875aec63bcddf838af07a8cd11d700f6c95fef97e8026298304744b0cb6b75"
+    }
+  },
+  "launcher": {
+    "bytes": 23466,
+    "sha256": "1e6cd9130655fcfb96a55cbbb7e512bc23ab48f3a443cdb29038e09ee920947b"
+  },
+  "validation_records": {
+    "candidate-e77/RESULT.JSN": {
+      "bytes": 1783,
+      "sha256": "86f08b4217dc3ea1ee22fca285cf30c9173d2f8308b52a6105672fe611108a98"
+    },
+    "host/RESULT.JSN": {
+      "bytes": 874,
+      "sha256": "f8966eaa4c21778bb9cde87bb7e49c6e96b52f48e8264d9737bb601987ff5108"
+    },
+    "CORE-CHECK.json": {
+      "bytes": 728,
+      "sha256": "71fe5239cf26cf699f0e3fe7c8a52fb70abb4e3534764c132a5d2f0be282f9fb"
+    },
+    "REVIEW-SEMANTICS.json": {
+      "bytes": 500,
+      "sha256": "623942c0f8852456f3e681f4b27ae0720d3199ec6828261e9eae668de19bd376"
+    },
+    "IMAGE-AUDIT.json": {
+      "bytes": 429,
+      "sha256": "76992e82ceac52dd21296519c419f90a21cc889c2112ccaa1d4ae7327dab4b13"
+    }
+  },
+  "acceptance_metadata_at_review": {
+    "status": "NATIVE_COMPLETE_PENDING_REVIEW",
+    "identity": {
+      "bytes": 11812,
+      "sha256": "f1669e99799cd1f14674c87b645b9a0c1d65681945b97ae7dcdcb858908aa7ca"
+    },
+    "review_record_not_yet_installed": true
+  },
+  "resolved_pre_review_findings": [
+    {
+      "issue": "Windows rooted evidence paths could escape ROOT",
+      "resolution": "Portable relative-path validation, strict resolved containment and linked-component refusal; original marker proof now refuses"
+    },
+    {
+      "issue": "Native entry launcher was not linked to accepted FRESH.EXE",
+      "resolution": "Native-entry launcher SHA now equals accepted binary SHA; semantic mutation refused"
+    },
+    {
+      "issue": "Source archive validation omitted CRC header/notice and extra members",
+      "resolution": "Exact nine-member source inventory required; wrong header and extra member refused"
+    },
+    {
+      "issue": "Old-base branch could bypass new current fresh gate",
+      "resolution": "Current catalog always calls fresh gate; only copied legacy-validation map receives compact base"
+    },
+    {
+      "issue": "Current-CGA-unchanged wording contradicted integration",
+      "resolution": "e77a726d corrects only that paragraph and its acceptance source pin"
+    }
+  ],
+  "limits": [
+    "Reviewer did not launch another emulator or physical hardware; native execution claims are based on the pinned evidence plus an independent read-only installed-image audit.",
+    "Qualification is IBM XT 8088 at 4.77 MHz, 640 KB, RGBI CGA, fixed 640x200 monochrome, DOS 6.22 and unchanged original Windows 3.0 media in a merged directory.",
+    "Full physical floppy swapping, other fresh profiles/media variants and physical hardware remain outside this qualification.",
+    "Full production gate/catalog checks must run after the real review report is installed and acceptance metadata is sealed. These have intentionally remained closed during review.",
+    "Publication still requires explicit Chad approval. No approval, upload, push, PR, tag or release change is granted by this report."
+  ],
+  "metadata_seal_policy": "This review binds the production source map and exact runtime/source/native inputs above. Adding this report and updating acceptance status/review pointer/commit without changing those source or artifact identities is a metadata seal; any source/archive/native-evidence change requires re-review."
+}

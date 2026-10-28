@@ -15,6 +15,17 @@ def exact(path,pin):
  if identity(data)!=pin:raise ValueError('Qualified input differs: '+str(path))
  return data
 def spec():return json.loads((HERE/'PRODUCTS.JSN').read_bytes())
+
+def verify_alternatives(files):
+ # Verify the new fresh packet separately, then let the unchanged historical
+ # gate verify its own compact base. Never substitute into the output mapping.
+ native=importlib.machinery.SourceFileLoader('current_fresh_legacy_gate',str(ROOT/'tools/HPDIB/PUBLISH.PY')).load_module()
+ base=exact(ROOT/'downloads/COMPACT/CGA.ZIP',{'bytes':297312,'sha256':'84a1992803d1bd022318ddb001490b66494aba1e61ca09eef2fbc445fb469cc4'})
+ fresh=importlib.machinery.SourceFileLoader('current_fresh_cga_gate',str(ROOT/'tools/CGAFRESH/VERIFY.PY')).load_module()
+ fresh.verify(files['CGA.ZIP'])
+ qualified=dict(files);qualified['CGA.ZIP']=base
+ native.verify_alternatives(qualified)
+ return {n:identity(files[n]) for n in ('CGA.ZIP','CPPAN.ZIP','JRPAN.ZIP','PAN.ZIP')}
 def archive(files):
  stream=io.BytesIO()
  with zipfile.ZipFile(stream,'w',zipfile.ZIP_STORED) as z:
@@ -43,8 +54,7 @@ def ancillary(sound,main_zip):
   if {n:b for n,b in updated.items() if n!=row['member']}!={n:b for n,b in original.items() if n!=row['member']}:raise ValueError('Documentation refresh changed runtime')
   files[name]=archive(updated)
  for name,row in config['sound'].items():files[name]=exact(sound/name,row['identity'])
- panning=importlib.machinery.SourceFileLoader('current_composed_colorplus',str(ROOT/'tools/HPDIB/PUBLISH.PY')).load_module()
- panning.verify_alternatives(files)
+ verify_alternatives(files)
  files['BUILDIN.ZIP']=input_archive(config)
  files['TANDYLAB.ZIP']=collection(config,main_zip)
  for name,data in files.items():

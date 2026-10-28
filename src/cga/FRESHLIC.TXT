@@ -1,0 +1,9 @@
+FRESH launcher source and producer
+
+Copyright 2026. Permission to use, modify and redistribute this source.
+
+This notice covers the project's fresh-Setup launcher and producer. It does
+not license Microsoft Windows, Microsoft-derived display components, fonts,
+startup artwork, the compiler or its runtime. Preserve the separate component
+notices supplied with the kit. FRESH.EXE links the unmodified Open Watcom DOS
+runtime; its existing notice is included in OWATCOM.TXT.

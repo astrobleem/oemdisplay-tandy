@@ -1,0 +1,26 @@
+{
+  "same_native_tested_runtime": true,
+  "checked": [
+    "FRESH.EXE",
+    "FRESH640/CGA640.DRV",
+    "FRESH640/CGAGRAB.GR2",
+    "FRESH640/FONTLIC.TXT",
+    "FRESH640/LOGOLIC.TXT",
+    "FRESH640/NOTICE.TXT",
+    "FRESH640/OEMSETUP.INF",
+    "FRESH640/WXTSPL01.RLE",
+    "FRESH640/XTCFIX.FON",
+    "FRESH640/XTCOEM.FON",
+    "FRESH640/XTCSYS.FON",
+    "FRESH640/XTSTATIC.LGO"
+  ],
+  "changes_since_native_staging": [
+    "Fresh instructions are root README.TXT and FRESH.TXT",
+    "Original README retained byte-for-byte as CGAOLD.TXT",
+    "Added FRESHLIC.TXT and OWATCOM.TXT"
+  ],
+  "consumer_packet": {
+    "bytes": 367060,
+    "sha256": "79b5e9891d7929099946c28b401f1602cf52edd04381eeac49a4d0c2b606ef99"
+  }
+}

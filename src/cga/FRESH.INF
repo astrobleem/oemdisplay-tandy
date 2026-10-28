@@ -1,0 +1,13 @@
+; Windows 3.0 fresh Setup: one fixed, helper-free 640x200 CGA display.
+[data]
+Version="3.0"
+[disks]
+a = .,"Windows XT CGA fresh Setup",OEMSETUP.INF
+[display]
+xtcga640 = a:CGA640.DRV,"Windows XT IBM CGA 640x200 mono","200,96,48",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
+[sysfonts]
+a:XTCSYS.FON,"XT CGA System","200,96,48"
+[fixedfonts]
+a:XTCFIX.FON,"XT CGA Fixed","200,96,48"
+[oemfonts]
+a:XTCOEM.FON,"XT CGA Terminal","200,96,48",1

@@ -8,8 +8,7 @@ def check(sound,core):
  config=P.spec();
  for n,pin in config['core_identities'].items():assert P.identity((core/n).read_bytes())==pin,n
  assets=P.ancillary(sound,(core/'WINXT.ZIP').read_bytes());checks=[];references=[]
- cga=importlib.machinery.SourceFileLoader('current_qualified_cga',str(P.ROOT/'tools/HPDIB/PUBLISH.PY')).load_module()
- cga.verify_alternatives(assets);checks.append('CGA exact qualified packet and preserved earlier runtime verified')
+ P.verify_alternatives(assets);checks.append('CGA exact qualified packet and preserved earlier runtime verified')
  checks.append('All4 qualified core identities pinned; supplied producer commit preserved')
  checks.append('All'+str(len(assets))+' ancillary ZIPs match qualified inputs and deterministic build-input archive')
  assert assets['BUILDIN.ZIP']==P.input_archive(config)

@@ -1,0 +1,77 @@
+{
+  "complete": true,
+  "scope": "Fresh original-media Windows 3.0 Setup; IBM XT 8088 4.77 MHz 640K CGA",
+  "actions": [
+    {
+      "contains": "Press ENTER to start original Setup",
+      "keys": "{ENTER}",
+      "capture": "NATIVE-LAUNCH",
+      "settle": 2
+    },
+    {
+      "contains": "Welcome to Setup",
+      "keys": "{ENTER}",
+      "capture": "WELCOME",
+      "settle": 2
+    },
+    {
+      "contains": "C:\\WINDOWS",
+      "keys": "{ENTER}",
+      "capture": "TARGET",
+      "settle": 3
+    },
+    {
+      "contains": "No Changes:",
+      "keys": "{UP}{UP}{UP}{UP}{UP}{UP}{ENTER}",
+      "capture": "SYSTEM",
+      "settle": 2
+    },
+    {
+      "contains": "Select a Display",
+      "keys": "{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{ENTER}",
+      "settle": 2
+    },
+    {
+      "contains": "manufacturer.",
+      "keys": "{HOME}{DEL}{DEL}{DEL}C:\\CGAPK\\FRESH640{ENTER}",
+      "settle": 3
+    },
+    {
+      "contains": "Windows XT IBM CGA 640x200 mono",
+      "keys": "{ENTER}",
+      "capture": "SINGLE-OEM-CHOICE",
+      "settle": 3
+    },
+    {
+      "contains": "Windows XT CGA fresh Setup",
+      "keys": "{HOME}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}C:\\CGAPK\\FRESH640{ENTER}",
+      "settle": 3
+    },
+    {
+      "contains": "No Changes:",
+      "keys": "{ENTER}",
+      "capture": "SELECTED",
+      "settle": 3
+    },
+    {
+      "contains": "Microsoft Windows 3.0 Disk #1",
+      "keys": "{HOME}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}C:\\W30SRC{ENTER}",
+      "settle": 3
+    },
+    {
+      "capture": "GUI-EXACT-CANDIDATE"
+    },
+    {
+      "capture": "GUI-CHECK-2"
+    },
+    {
+      "capture": "GUI-FINAL",
+      "finish": true
+    }
+  ],
+  "bound_seconds": 1200,
+  "owned_pid": 31688,
+  "owned_stopped": true,
+  "lease_released": true,
+  "inventory_after": "0"
+}
