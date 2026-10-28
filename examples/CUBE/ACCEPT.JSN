@@ -862,6 +862,74 @@
       "bytes": 115,
       "sha256": "76e0c26ce97afc848a3c54eb559bd44e2c22e6325501cd4eb36b5d1714b7a5a8"
     },
+    "EVIDENCE/CGAPAN02/86box.cfg": {
+      "bytes": 718,
+      "sha256": "38d1a61cb3414f626bafe096aa961e646366e8e2bd5a956eac26bf46f95a470f"
+    },
+    "EVIDENCE/CGAPAN02/CUBE.LOG": {
+      "bytes": 2519,
+      "sha256": "96dd0bc940957325148e9d10c04fd98b2119d24180008b27a79db7c0815b5274"
+    },
+    "EVIDENCE/CGAPAN02/CUBEUI.LOG": {
+      "bytes": 118,
+      "sha256": "47fb173bb92bf039528ad24e8682fbdca074ce2fb3f0876330f6a964186c9893"
+    },
+    "EVIDENCE/CGAPAN02/INPUT.CNF": {
+      "bytes": 753,
+      "sha256": "4e3630dc8792cc575b88ca31369ae7dc0a536c214065b1fbbd8e959e68388aa9"
+    },
+    "EVIDENCE/CGAPAN02/INSTALL.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/CGAPAN02/NATIVE.PY": {
+      "bytes": 9972,
+      "sha256": "7cb673325c7684836acd650752a297be1b75490cabdd3aa462a3284e52b26d32"
+    },
+    "EVIDENCE/CGAPAN02/PREPARE.json": {
+      "bytes": 1886,
+      "sha256": "a5e3c7dd38f7749f11d31984cc63854ddbe67e28aeb3beabcf0efe1a45d7bfec"
+    },
+    "EVIDENCE/CGAPAN02/PREPARE.PY": {
+      "bytes": 8544,
+      "sha256": "df55dc10711697fcc89d2d8d5cdbb7d13799ce1ec5f573726b1f10bfaf082243"
+    },
+    "EVIDENCE/CGAPAN02/REINST.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/CGAPAN02/RESULT.json": {
+      "bytes": 4878,
+      "sha256": "624b63f0ed0c6e36cfa19d3cc7f7211789cbe0f32897bf0c37fd4ec0e3ef3dc4"
+    },
+    "EVIDENCE/CGAPAN02/STYLE1-VRAM.PNG": {
+      "bytes": 1610,
+      "sha256": "6f6b770710c26794c72466df66849da1d89ba1d360b4b24131205fd679159315"
+    },
+    "EVIDENCE/CGAPAN02/STYLE1.PNG": {
+      "bytes": 1471,
+      "sha256": "e7abf59229c7608be674769e0be0370ac2d9922934cbca8966aba2009c29e8c2"
+    },
+    "EVIDENCE/CGAPAN02/STYLE2-VRAM.PNG": {
+      "bytes": 1822,
+      "sha256": "79189eec93b358edfa9852ba74f6c323ed6c1f24f5bc8cb7805a11db9fd4d1e0"
+    },
+    "EVIDENCE/CGAPAN02/STYLE2.PNG": {
+      "bytes": 1662,
+      "sha256": "6ddac22ac293dd6f09ff86a5f2d988232a3df01683a6419ed691eddf8397716b"
+    },
+    "EVIDENCE/CGAPAN02/STYLE3-VRAM.PNG": {
+      "bytes": 1695,
+      "sha256": "e48a348f593e2a174337284e08dd8439dce34a060b4cb1f13fad99c41276edda"
+    },
+    "EVIDENCE/CGAPAN02/STYLE3.PNG": {
+      "bytes": 1627,
+      "sha256": "c4b51ec22fe16d38df52d819cf0d55e767ee032dcdd87c07a0d8e4ddb8e25fad"
+    },
+    "EVIDENCE/CGAPAN02/UNDO.LOG": {
+      "bytes": 115,
+      "sha256": "76e0c26ce97afc848a3c54eb559bd44e2c22e6325501cd4eb36b5d1714b7a5a8"
+    },
     "EVIDENCE/GATE/RESULT.JSN": {
       "bytes": 342,
       "sha256": "545acec34a7aa42b8c34d7df1b0a69e7ee4d41d6e93c12ddcf607c1725e9ca20"
@@ -1250,6 +1318,62 @@
       "bytes": 115,
       "sha256": "76e0c26ce97afc848a3c54eb559bd44e2c22e6325501cd4eb36b5d1714b7a5a8"
     },
+    "EVIDENCE/PAN02/86box.cfg": {
+      "bytes": 567,
+      "sha256": "2a9b22c15e77f75636bd747d1630709ff0805d6f8a60538d74eba5f4e2966d95"
+    },
+    "EVIDENCE/PAN02/CUBE.LOG": {
+      "bytes": 2523,
+      "sha256": "5aade230102e3a023c5b42f9a0939be9c6d09b371b79823da5b11f85f8a4c2f1"
+    },
+    "EVIDENCE/PAN02/CUBEUI.LOG": {
+      "bytes": 118,
+      "sha256": "f57971e41a58af272e0dc843f08d9e2df7d48d1d84ae36bfda455ecd6a6773e6"
+    },
+    "EVIDENCE/PAN02/INPUT.CNF": {
+      "bytes": 602,
+      "sha256": "afb76ea411caf5cb5c976efd1db696bac7a413f110021c00c22bbfad77c7800d"
+    },
+    "EVIDENCE/PAN02/INSTALL.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/PAN02/NATIVE.PY": {
+      "bytes": 9972,
+      "sha256": "7cb673325c7684836acd650752a297be1b75490cabdd3aa462a3284e52b26d32"
+    },
+    "EVIDENCE/PAN02/PREPARE.json": {
+      "bytes": 1881,
+      "sha256": "591f69af2ba1fc5756c97c336be5ce435643eb8fd52188a5f383b9b9abe1567a"
+    },
+    "EVIDENCE/PAN02/PREPARE.PY": {
+      "bytes": 8544,
+      "sha256": "df55dc10711697fcc89d2d8d5cdbb7d13799ce1ec5f573726b1f10bfaf082243"
+    },
+    "EVIDENCE/PAN02/REINST.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/PAN02/RESULT.json": {
+      "bytes": 4882,
+      "sha256": "7aac1998a6ff2283082e5eba383366844bfa9d121525ae4bf4197554f97f6634"
+    },
+    "EVIDENCE/PAN02/STYLE1.PNG": {
+      "bytes": 1112,
+      "sha256": "3a531535a26536c6a3c4ecba67fe85c8bae8337b601380b9faec92c2219ba92a"
+    },
+    "EVIDENCE/PAN02/STYLE2.PNG": {
+      "bytes": 1322,
+      "sha256": "98f339eac2d563c51333c21d68b5bc8664ade1b9aae48d762b9b2c2b525d96c3"
+    },
+    "EVIDENCE/PAN02/STYLE3.PNG": {
+      "bytes": 1297,
+      "sha256": "0a90cfff6cbe6eb950786a3ac7e090dbe3471adbadf72b3c53423c969e2b82a2"
+    },
+    "EVIDENCE/PAN02/UNDO.LOG": {
+      "bytes": 115,
+      "sha256": "76e0c26ce97afc848a3c54eb559bd44e2c22e6325501cd4eb36b5d1714b7a5a8"
+    },
     "EVIDENCE/SRCFAIL/RESULT.JSN": {
       "bytes": 496,
       "sha256": "748e6edb91727930542adb4a9ecfde1fc263306a18e41165303f26eb142e8a71"
@@ -1426,6 +1550,62 @@
       "bytes": 115,
       "sha256": "76e0c26ce97afc848a3c54eb559bd44e2c22e6325501cd4eb36b5d1714b7a5a8"
     },
+    "EVIDENCE/TANDY03/86box.cfg": {
+      "bytes": 567,
+      "sha256": "2a9b22c15e77f75636bd747d1630709ff0805d6f8a60538d74eba5f4e2966d95"
+    },
+    "EVIDENCE/TANDY03/CUBE.LOG": {
+      "bytes": 2505,
+      "sha256": "4009685aa34beac358f7f7e15a3b3143c29aff64c9ee4571985d300e7d4c649a"
+    },
+    "EVIDENCE/TANDY03/CUBEUI.LOG": {
+      "bytes": 73,
+      "sha256": "162339dc975a0ac763493a78d550ab034f957147a8eb19cc9c675de1ad942d25"
+    },
+    "EVIDENCE/TANDY03/INPUT.CNF": {
+      "bytes": 602,
+      "sha256": "afb76ea411caf5cb5c976efd1db696bac7a413f110021c00c22bbfad77c7800d"
+    },
+    "EVIDENCE/TANDY03/INSTALL.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/TANDY03/NATIVE.PY": {
+      "bytes": 9972,
+      "sha256": "7cb673325c7684836acd650752a297be1b75490cabdd3aa462a3284e52b26d32"
+    },
+    "EVIDENCE/TANDY03/PREPARE.json": {
+      "bytes": 1886,
+      "sha256": "2f8eb4d0833f82517b828d70e808302282d15d500f9d686a5c11860faddfc0e1"
+    },
+    "EVIDENCE/TANDY03/PREPARE.PY": {
+      "bytes": 8544,
+      "sha256": "df55dc10711697fcc89d2d8d5cdbb7d13799ce1ec5f573726b1f10bfaf082243"
+    },
+    "EVIDENCE/TANDY03/REINST.LOG": {
+      "bytes": 297,
+      "sha256": "cbda0551fd6a4aef73005396f62e8850ef135ae7d33ce587a6dc44fd43545bb6"
+    },
+    "EVIDENCE/TANDY03/RESULT.json": {
+      "bytes": 4817,
+      "sha256": "dc4170e4256236b866700bb265a7e68da6522dff6910517b2d87d125e6a486c8"
+    },
+    "EVIDENCE/TANDY03/STYLE1.PNG": {
+      "bytes": 1112,
+      "sha256": "3a531535a26536c6a3c4ecba67fe85c8bae8337b601380b9faec92c2219ba92a"
+    },
+    "EVIDENCE/TANDY03/STYLE2.PNG": {
+      "bytes": 1322,
+      "sha256": "98f339eac2d563c51333c21d68b5bc8664ade1b9aae48d762b9b2c2b525d96c3"
+    },
+    "EVIDENCE/TANDY03/STYLE3.PNG": {
+      "bytes": 1297,
+      "sha256": "0a90cfff6cbe6eb950786a3ac7e090dbe3471adbadf72b3c53423c969e2b82a2"
+    },
+    "EVIDENCE/TANDY03/UNDO.LOG": {
+      "bytes": 115,
+      "sha256": "76e0c26ce97afc848a3c54eb559bd44e2c22e6325501cd4eb36b5d1714b7a5a8"
+    },
     "EVIDENCE/UI02/CUBEUI.LOG": {
       "bytes": 241,
       "sha256": "7bff44e438790efbd4eae6a8dc2436a2f2a5bb3ef77a8f88408af754a9dd91fe"
@@ -1574,6 +1754,24 @@
       "prepare_receipt": "EVIDENCE/MONO02/PREPARE.json",
       "cube_sha256": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e",
       "scope": "cga640; kit, /Q, undo and reinstall"
+    },
+    "tandy": {
+      "receipt": "EVIDENCE/TANDY03/RESULT.json",
+      "prepare_receipt": "EVIDENCE/TANDY03/PREPARE.json",
+      "cube_sha256": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e",
+      "scope": "tandy; kit, /Q, undo and reinstall"
+    },
+    "virtual": {
+      "receipt": "EVIDENCE/PAN02/RESULT.json",
+      "prepare_receipt": "EVIDENCE/PAN02/PREPARE.json",
+      "cube_sha256": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e",
+      "scope": "pan; kit, /Q, undo and reinstall"
+    },
+    "cgapan": {
+      "receipt": "EVIDENCE/CGAPAN02/RESULT.json",
+      "prepare_receipt": "EVIDENCE/CGAPAN02/PREPARE.json",
+      "cube_sha256": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e",
+      "scope": "cgapan; kit, /Q, undo and reinstall"
     },
     "installer": {
       "receipt": "EVIDENCE/MONO02/RESULT.json",
