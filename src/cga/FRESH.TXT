@@ -1,0 +1,58 @@
+CGA FRESH WINDOWS 3.0 SETUP - LOCAL CANDIDATE
+
+IBM XT/8088, 640 KB, IBM CGA RGBI, plain DOS 3.3 or later.
+Original English retail Windows 3.0 Setup media is required and not included.
+This first increment uses the project's fixed 640x200 monochrome driver and
+XT Pixels System/Fixed/OEM fonts during original graphical Windows Setup.
+Other fresh display modes are not qualified by this packet.
+
+Extract CGAFRESH.ZIP on the DOS computer with a DOS ZIP extractor that keeps
+folders (for example PKUNZIP -D). Keep FRESH.EXE, FRESH.TXT, SETUP.EXE,
+CGA and FRESH640 together. No Python or modern computer conversion is needed.
+Use your usual DOS transfer/extraction tools; this is not a boot disk.
+
+Example extraction directory: C:\CGAKIT. Run from plain DOS:
+  C:
+  CD \CGAKIT
+  FRESH A:\
+For original Windows media already collected in a directory:
+  FRESH C:\W30SRC
+Optional read-only input verification:
+  FRESH /CHECK C:\W30SRC
+
+FRESH verifies the original Setup executable/metadata and the bundled display
+files, prints the exact driver path and starts ORIGINAL Microsoft Setup.
+It does not modify your Windows media, select hardware automatically, copy
+the operating system for you, or install the Tandy desktop.
+Q then ENTER cancels before original Setup starts.
+
+IN ORIGINAL SETUP
+1. Select a new Windows directory, normally C:\WINDOWS.
+2. At System Information, move to Display and press ENTER.
+3. Move DOWN to Other (the last choice), then press ENTER.
+4. Enter C:\CGAKIT\FRESH640 (use the exact path FRESH printed).
+5. Select Windows XT IBM CGA 640x200 mono, then accept the hardware list.
+6. Complete original Setup. Whenever it requests our display disk, give the
+   same FRESH640 path. Supply your original Windows disks for Microsoft files.
+   Choose the keyboard and mouse appropriate to your own computer.
+7. Start Windows in real mode with WIN /R.
+
+All required project display support is bundled. Do not gather stock CGA fonts
+or edit INIs. The fresh entry uses standard 640-mode controls and fonts, and
+does not require a placement/panning helper during graphical Setup.
+
+AFTER WINDOWS IS INSTALLED
+Exit Windows and use the unchanged complete CGA packet's SETUP for any other
+mode, matching proportional dialog fonts and helper settings:
+  SETUP C:\WINDOWS
+or choose directly, for example SETUP C:\WINDOWS PAN or SETUP C:\WINDOWS 320C.
+See CGAOLD.TXT for this existing-Windows route and its UNDO behavior. UNDO
+restores that installer's starting configuration, which may be the fresh
+CGA640 selection. It does not uninstall Windows or remove the fresh driver.
+
+Keep the kit for later Windows Setup requests. Windows 3.1 and modified or
+different Setup versions are refused. Physical hardware is unqualified.
+FONTLIC.TXT, LOGOLIC.TXT and NOTICE.TXT retain the component terms.
+FRESHLIC.TXT covers the launcher source; OWATCOM.TXT carries its runtime notice.
+Source and developer build: src/cga/FRESH.C and FRESHPK.PY in the repository.
+No operating system, compiler, emulator or disk image is included.

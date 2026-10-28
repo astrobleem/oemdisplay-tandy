@@ -1,0 +1,87 @@
+{
+  "complete": true,
+  "scope": "Fresh original-media Windows 3.0 Setup; IBM XT 8088 4.77 MHz 640K CGA",
+  "actions": [
+    {
+      "contains": "Welcome to Setup",
+      "keys": "{ENTER}",
+      "capture": "WELCOME",
+      "settle": 2
+    },
+    {
+      "contains": "C:\\WINDOWS",
+      "keys": "{ENTER}",
+      "capture": "TARGET",
+      "settle": 3
+    },
+    {
+      "contains": "No Changes:",
+      "keys": "{UP}{UP}{UP}{UP}{UP}{UP}{ENTER}",
+      "capture": "SYSTEM",
+      "settle": 2
+    },
+    {
+      "contains": "Select a Display",
+      "keys": "{END}{ENTER}",
+      "capture": "DISPLAY",
+      "settle": 2
+    },
+    {
+      "contains": "No Changes:",
+      "keys": "{UP}{UP}{UP}{UP}{UP}{UP}{ENTER}",
+      "settle": 1
+    },
+    {
+      "contains": "Select a Display",
+      "keys": "{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}{DOWN}",
+      "settle": 2
+    },
+    {
+      "contains": "Other (Requires disk",
+      "keys": "{ENTER}",
+      "settle": 2
+    },
+    {
+      "contains": "manufacturer.",
+      "keys": "{HOME}{DEL}{DEL}{DEL}C:\\CGAPK\\CGA{ENTER}",
+      "settle": 3
+    },
+    {
+      "contains": "IBM CGA 640x200 mono",
+      "keys": "{DOWN}{DOWN}{DOWN}{ENTER}",
+      "capture": "OEM-CHOICES",
+      "settle": 3
+    },
+    {
+      "contains": "CGA SOURCE CANDIDATE",
+      "keys": "{HOME}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}C:\\CGAPK\\CGA{ENTER}",
+      "settle": 3
+    },
+    {
+      "contains": "Display:         IBM CGA 640x200",
+      "keys": "{ENTER}",
+      "capture": "SELECTED",
+      "settle": 3
+    },
+    {
+      "contains": "Microsoft Windows 3.0 Disk #1",
+      "keys": "{HOME}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}{DEL}C:\\W30SRC{ENTER}",
+      "settle": 5
+    },
+    {
+      "capture": "GRAPHICS-CHECK"
+    },
+    {
+      "capture": "GUI-SETUP"
+    },
+    {
+      "capture": "GUI-FINAL",
+      "finish": true
+    }
+  ],
+  "bound_seconds": 1200,
+  "owned_pid": 3328,
+  "owned_stopped": true,
+  "lease_released": true,
+  "inventory_after": "0"
+}

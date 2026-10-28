@@ -1,0 +1,11 @@
+{
+  "complete": false,
+  "scope": "Fresh original-media Windows 3.0 Setup; IBM XT 8088 4.77 MHz 640K CGA",
+  "actions": [],
+  "bound_seconds": 1200,
+  "error": "FileNotFoundError(2, 'The system cannot find the file specified', None, 2, None)",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-10\\run_fresh.py\", line 23, in <module>\n    p=subprocess.Popen([str(exe),'-P',str(out),'-R',r'E:\\x86box\\roms','-N'],cwd=out,env=env,stdout=host,stderr=subprocess.STDOUT,startupinfo=si,creationflags=subprocess.CREATE_NO_WINDOW);job.assign(p)\n  File \"C:\\Users\\chad\\Miniconda3\\lib\\subprocess.py\", line 971, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"C:\\Users\\chad\\Miniconda3\\lib\\subprocess.py\", line 1456, in _execute_child\n    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,\nFileNotFoundError: [WinError 2] The system cannot find the file specified\n",
+  "owned_stopped": true,
+  "lease_released": true,
+  "inventory_after": "0"
+}
