@@ -6,6 +6,7 @@
 #include "TSSAVER.H"
 #include "TSSAVCFG.H"
 #include "TSSVOPT.H"
+#include "PROGMENU.H"
 #define CFG_WIDTH 128
 #define CFG_HEIGHT 164
 #define CFG_MATRIX 120
@@ -16,18 +17,21 @@
 #define CFG_PREVIEW 124
 #define CFG_APPLY 125
 #define CFG_OPTIONS 126
+#define CFG_CUBE 127
+#define CFG_CHOICE 128
 #define CFG_STARTPREVIEW (WM_USER + 71)
 #define CFG_RELEASE_TIMER 4
 static HINSTANCE cfgInstance;
 static HWND cfgWindow;
 static int cfgBusy, cfgApplying, cfgLoaded, cfgClosing, cfgPreviewPending;
+static int cfgCompact;
 static int stagedSpeed, stagedStars, optionsDirty;
 static SCCONFIG loaded;
 static char iniPath[144];
 static char *keys[SC_KEYS] = { "Enabled", "IdleSeconds", "Choice", "Program", "MazeProgram",
-                             "StarProgram", "Speed", "Stars" };
+                             "StarProgram", "Speed", "Stars", "CubeProgram" };
 static char *section(int key)
-{ return key >= SC_SPEED ? "Starfield" : "ScreenSaver"; }
+{ return key == SC_SPEED || key == SC_STARS ? "Starfield" : "ScreenSaver"; }
 
 static int iniName(void)
 {
@@ -79,7 +83,7 @@ int SaverConfigProgram(HWND w, HINSTANCE instance,
 {
     const char *path;
     OFSTRUCT of;
-    if (choice != SC_MATRIX && choice != SC_MAZE && choice != SC_STARFIELD) {
+    if (choice != SC_MATRIX && choice != SC_MAZE && choice != SC_STARFIELD && choice != SC_CUBE) {
         TinyNotice(w, instance, "Saver", "Choose a saver."); return 0;
     }
     path = ScProgram(config, choice);
@@ -87,7 +91,7 @@ int SaverConfigProgram(HWND w, HINSTANCE instance,
         TinyNotice(w, instance, "Saver", "Bad app path.\nSee TSHELL.INI."); return 0;
     }
     if (OpenFile((LPSTR)path, &of, OF_EXIST) == HFILE_ERROR) {
-        TinyNotice(w, instance, "Saver", choice == SC_STARFIELD ?
+        TinyNotice(w, instance, "Saver", choice == SC_CUBE ? "Cube missing.\nRun CUBESET." : choice == SC_STARFIELD ?
                    "Starfield\nmissing. Check\nStarProgram." : choice == SC_MAZE ?
                    "Maze missing.\nNothing saved." : "Matrix missing.\nNothing saved.");
         return 0;
@@ -96,23 +100,37 @@ int SaverConfigProgram(HWND w, HINSTANCE instance,
 }
 static int selection(HWND w)
 {
+    int n;
+    if (cfgCompact) {
+        n = (int)SendDlgItemMessage(w, CFG_CHOICE, CB_GETCURSEL, 0, 0L);
+        return n == 0 ? SC_MATRIX : n == 1 ? SC_MAZE : n == 2 ? SC_STARFIELD :
+               n == 3 ? SC_CUBE : n == 4 ? SC_NONE : -1;
+    }
     if (IsDlgButtonChecked(w, CFG_MATRIX)) return SC_MATRIX;
     if (IsDlgButtonChecked(w, CFG_MAZE)) return SC_MAZE;
     if (IsDlgButtonChecked(w, CFG_STARFIELD)) return SC_STARFIELD;
     if (IsDlgButtonChecked(w, CFG_NONE)) return SC_NONE;
+    if (IsDlgButtonChecked(w, CFG_CUBE)) return SC_CUBE;
     return -1;
 }
 static void choose(HWND w, int id)
 {
+    if (cfgCompact) {
+        SendDlgItemMessage(w, CFG_CHOICE, CB_SETCURSEL, id == CFG_MATRIX ? 0 :
+            id == CFG_MAZE ? 1 : id == CFG_STARFIELD ? 2 : id == CFG_CUBE ? 3 : 4, 0L);
+        return;
+    }
     CheckDlgButton(w, CFG_MATRIX, id == CFG_MATRIX);
     CheckDlgButton(w, CFG_MAZE, id == CFG_MAZE);
     CheckDlgButton(w, CFG_STARFIELD, id == CFG_STARFIELD);
     CheckDlgButton(w, CFG_NONE, id == CFG_NONE);
+    CheckDlgButton(w, CFG_CUBE, id == CFG_CUBE);
 }
 static void updatePreview(HWND w)
 {
     EnableWindow(GetDlgItem(w, CFG_PREVIEW), cfgLoaded && selection(w) > SC_NONE);
-    EnableWindow(GetDlgItem(w, CFG_OPTIONS), cfgLoaded && selection(w) == SC_STARFIELD);
+    EnableWindow(GetDlgItem(w, CFG_OPTIONS), cfgLoaded &&
+        (selection(w) == SC_STARFIELD || selection(w) == SC_CUBE));
 }
 static int inputHeld(void)
 {
@@ -194,13 +212,29 @@ BOOL FAR PASCAL SaverCfgProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
         cfgWindow = w;
         GetWindowRect(w, &r); GetClientRect(w, &c);
         ww = CFG_WIDTH + r.right - r.left - c.right;
-        hh = CFG_HEIGHT + r.bottom - r.top - c.bottom;
+        hh = (cfgCompact ? 88 : CFG_HEIGHT) + r.bottom - r.top - c.bottom;
         if (ww > GetSystemMetrics(SM_CXSCREEN) || hh > GetSystemMetrics(SM_CYSCREEN)) {
             EndDialog(w, IDCANCEL); return TRUE;
         }
         SetWindowPos(w, NULL, (GetSystemMetrics(SM_CXSCREEN) - ww) / 2,
                      (GetSystemMetrics(SM_CYSCREEN) - hh) / 2, ww, hh, SWP_NOZORDER);
-        if (!makeControl(w, "BUTTON", "&Matrix", BS_RADIOBUTTON | WS_GROUP,
+        if (cfgCompact) {
+            if (!makeControl(w, "COMBOBOX", "", CBS_DROPDOWNLIST | WS_VSCROLL | WS_GROUP,
+                             6, 14, 116, 72, CFG_CHOICE) ||
+                !makeControl(w, "EDIT", "", WS_BORDER | ES_AUTOHSCROLL | WS_GROUP,
+                             38, 32, 84, 16, CFG_SECONDS) ||
+                !makeControl(w, "BUTTON", "&Options", BS_PUSHBUTTON, 6, 50, 54, 16, CFG_OPTIONS) ||
+                !makeControl(w, "BUTTON", "&Preview", BS_PUSHBUTTON, 68, 50, 54, 16, CFG_PREVIEW) ||
+                !makeControl(w, "BUTTON", "&Apply", BS_PUSHBUTTON, 6, 70, 54, 16, CFG_APPLY) ||
+                !makeControl(w, "BUTTON", "&Cancel", BS_DEFPUSHBUTTON, 68, 70, 54, 16, IDCANCEL)) {
+                EndDialog(w, IDCANCEL); return TRUE;
+            }
+            SendDlgItemMessage(w, CFG_CHOICE, CB_ADDSTRING, 0, (LPARAM)(LPSTR)"Matrix");
+            SendDlgItemMessage(w, CFG_CHOICE, CB_ADDSTRING, 0, (LPARAM)(LPSTR)"Maze");
+            SendDlgItemMessage(w, CFG_CHOICE, CB_ADDSTRING, 0, (LPARAM)(LPSTR)"Starfield");
+            SendDlgItemMessage(w, CFG_CHOICE, CB_ADDSTRING, 0, (LPARAM)(LPSTR)"Cube");
+            SendDlgItemMessage(w, CFG_CHOICE, CB_ADDSTRING, 0, (LPARAM)(LPSTR)"None");
+        } else if (!makeControl(w, "BUTTON", "&Matrix", BS_RADIOBUTTON | WS_GROUP,
                          6, 0, 116, 16, CFG_MATRIX) ||
             !makeControl(w, "BUTTON", "Ma&ze", BS_RADIOBUTTON,
                          6, 16, 116, 16, CFG_MAZE) ||
@@ -208,6 +242,8 @@ BOOL FAR PASCAL SaverCfgProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
                          6, 32, 116, 16, CFG_STARFIELD) ||
             !makeControl(w, "BUTTON", "&None", BS_RADIOBUTTON,
                          6, 48, 54, 16, CFG_NONE) ||
+            !makeControl(w, "BUTTON", "&Cube", BS_RADIOBUTTON,
+                         68, 48, 54, 16, CFG_CUBE) ||
             !makeControl(w, "EDIT", "", WS_BORDER | ES_AUTOHSCROLL | WS_GROUP,
                          6, 80, 116, 18, CFG_SECONDS) ||
             !makeControl(w, "BUTTON", "&Options...", BS_PUSHBUTTON,
@@ -228,7 +264,7 @@ BOOL FAR PASCAL SaverCfgProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
             choice = ScEnabled(&loaded) ? ScChoice(&loaded) : SC_NONE;
             if (choice >= SC_NONE) choose(w,
                 choice == SC_MATRIX ? CFG_MATRIX : choice == SC_MAZE ? CFG_MAZE :
-                choice == SC_STARFIELD ? CFG_STARFIELD : CFG_NONE);
+                choice == SC_STARFIELD ? CFG_STARFIELD : choice == SC_CUBE ? CFG_CUBE : CFG_NONE);
             stagedSpeed = ScSpeed(ScValue(&loaded, SC_SPEED));
             stagedStars = ScStars(ScValue(&loaded, SC_STARS));
             if (!stagedSpeed) stagedSpeed = 2;
@@ -241,11 +277,16 @@ BOOL FAR PASCAL SaverCfgProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
         dc = BeginPaint(w, &ps);
         oldfont = SelectObject(dc, GetStockObject(SYSTEM_FIXED_FONT));
         SetBkMode(dc, TRANSPARENT); SetTextColor(dc, GetSysColor(COLOR_WINDOWTEXT));
-        TextOut(dc, 6, 64, "10-3600 sec:", 12);
-        if (!TSSaverPrimary()) TextOut(dc, 62, 48, "Next run", 8);
+        if (cfgCompact) {
+            TextOut(dc, 6, 0, "Screen saver", 12);
+            TextOut(dc, 6, 34, "Sec:", 4);
+        } else {
+            TextOut(dc, 6, 64, "10-3600 sec:", 12);
+        }
         SelectObject(dc, oldfont); EndPaint(w, &ps); return TRUE;
     }
     if (m == WM_COMMAND) {
+        if (wp == CFG_CHOICE && HIWORD(lp) == CBN_SELCHANGE) { updatePreview(w); return TRUE; }
         if (wp == IDCANCEL) { cfgClosing = 1; EndDialog(w, IDCANCEL); return TRUE; }
         /* Win3 may send IDOK/zero LPARAM for Enter on the focused button. */
         if (wp == IDOK) {
@@ -255,7 +296,7 @@ BOOL FAR PASCAL SaverCfgProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
             else if (child == GetDlgItem(w, CFG_OPTIONS)) wp = CFG_OPTIONS;
             else return TRUE; /* Enter in the edit never writes or previews. */
         }
-        if (wp >= CFG_STARFIELD && wp <= CFG_NONE) {
+        if ((wp >= CFG_STARFIELD && wp <= CFG_NONE) || wp == CFG_CUBE) {
             if (HIWORD(lp) == BN_CLICKED && (HWND)LOWORD(lp) == GetDlgItem(w, wp)) {
                 choose(w, wp); updatePreview(w);
             }
@@ -269,6 +310,11 @@ BOOL FAR PASCAL SaverCfgProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
                 else if (wp == CFG_OPTIONS) {
                     if (cfgLoaded && selection(w) == SC_STARFIELD &&
                         SaverStarOptions(w, cfgInstance, &stagedSpeed, &stagedStars)) optionsDirty = 1;
+                    if (cfgLoaded && selection(w) == SC_CUBE &&
+                        SaverConfigProgram(w, cfgInstance, &loaded, SC_CUBE, command)) {
+                        command[lstrlen(command)-1] = 'C';
+                        PmLaunchShow(w, command, SW_SHOWNORMAL);
+                    }
                 }
                 else if (!cfgPreviewPending && cfgLoaded) {
                     cfgPreviewPending = 1; PostMessage(w, CFG_STARTPREVIEW, 0, 0L);
@@ -324,17 +370,18 @@ void TSSaverSettings(HWND owner, HINSTANCE instance)
     cfgBusy = 1; cfgApplying = cfgLoaded = cfgClosing = cfgPreviewPending = 0;
     optionsDirty = 0; stagedSpeed = 2; stagedStars = 32;
     cfgInstance = instance;
+    cfgCompact = GetSystemMetrics(SM_CYSCREEN) < 180;
     /* Also safe for callers that omit the customary outer shell hold. */
     TSSaverHold(1);
     memory = GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT, 64);
     if (memory) {
         p = (BYTE FAR *)GlobalLock(memory);
         if (p) {
-            style = WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_MODALFRAME;
+            style = cfgCompact ? WS_POPUP | WS_BORDER : WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_MODALFRAME;
             cfgWord(&p, LOWORD(style)); cfgWord(&p, HIWORD(style)); *p++ = 0;
             units = GetDialogBaseUnits(); cfgWord(&p, 0); cfgWord(&p, 0);
             cfgWord(&p, CFG_WIDTH * 4 / LOWORD(units));
-            cfgWord(&p, CFG_HEIGHT * 8 / HIWORD(units));
+            cfgWord(&p, (cfgCompact ? 88 : CFG_HEIGHT) * 8 / HIWORD(units));
             *p++ = 0; *p++ = 0;
             while (*title) *p++ = *title++;
             *p = 0; GlobalUnlock(memory);

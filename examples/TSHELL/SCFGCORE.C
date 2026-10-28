@@ -3,7 +3,7 @@
 #include "SCFGCORE.H"
 static const char *defaults[SC_KEYS] = {
     "0", "300", "Matrix", "C:\\TSTART\\MATRIX.EXE", "C:\\TSTART\\MAZE.EXE",
-    "C:\\TSTART\\STARFLD.EXE", "2", "32"
+    "C:\\TSTART\\STARFLD.EXE", "2", "32", "C:\\WINXT\\CUBE.EXE"
 };
 static int equalcase(const char *a, const char *b)
 {
@@ -54,6 +54,7 @@ int ScChoice(const SCCONFIG *c)
     if (equalcase(s, "Matrix")) return SC_MATRIX;
     if (equalcase(s, "Maze")) return SC_MAZE;
     if (equalcase(s, "Starfield")) return SC_STARFIELD;
+    if (equalcase(s, "Cube")) return SC_CUBE;
     return -1;
 }
 int ScSpeed(const char *s)
@@ -76,7 +77,7 @@ int ScAbsolute(const char *s)
     return s[n - 1] != '\\';
 }
 const char *ScProgram(const SCCONFIG *c, int choice)
-{ return ScValue(c, choice == SC_STARFIELD ? SC_STARPATH :
+{ return ScValue(c, choice == SC_CUBE ? SC_CUBEPATH : choice == SC_STARFIELD ? SC_STARPATH :
                  choice == SC_MAZE ? SC_MAZEPATH : SC_MATRIXPATH); }
 int ScCommand(const char *path, int speed, int stars, char *out, int capacity)
 {
@@ -112,7 +113,7 @@ int ScSaveOptions(SCIO *io, const SCCONFIG *before, const char *seconds,
     int i, last = -1, failed = 0, changed[SC_KEYS];
     if (!ScSeconds(seconds)) return SC_BADSECONDS;
     if (choice != SC_NONE && choice != SC_MATRIX && choice != SC_MAZE &&
-        choice != SC_STARFIELD) return SC_BADCHOICE;
+        choice != SC_STARFIELD && choice != SC_CUBE) return SC_BADCHOICE;
     if ((speed || stars) && (!speed || !stars || !ScSpeed(speed) || !ScStars(stars))) return SC_BADOPTIONS;
     if (ScRead(io, &actual) != SC_OK) return SC_READFAIL;
     if (!same(before, &actual)) return SC_CONFLICT;
@@ -123,7 +124,7 @@ int ScSaveOptions(SCIO *io, const SCCONFIG *before, const char *seconds,
     strcpy(want->value[SC_SECONDS], seconds);
     if (choice != SC_NONE) {
         want->present[SC_CHOICE] = 1;
-        strcpy(want->value[SC_CHOICE], choice == SC_STARFIELD ? "Starfield" :
+        strcpy(want->value[SC_CHOICE], choice == SC_CUBE ? "Cube" : choice == SC_STARFIELD ? "Starfield" :
                choice == SC_MAZE ? "Maze" : "Matrix");
     }
     if (speed) {

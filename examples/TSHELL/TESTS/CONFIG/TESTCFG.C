@@ -69,5 +69,19 @@ int main(void) {
  memset(path+3,'A',119);path[122]=0;CHECK(ScCommand(path,0,0,command,sizeof(command)));CHECK(strlen(command)==125);
  path[122]='A';path[123]=0;CHECK(!ScCommand(path,0,0,command,sizeof(command)));
  CHECK(!ScCommand("C:\\ST.EXE",0,32,command,sizeof(command)));CHECK(!ScCommand("C:\\ST.EXE",2,17,command,sizeof(command)));CHECK(!ScCommand("C:\\ST.EXE",2,32,command,10));
+ init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);
+ CHECK(!strcmp(ScProgram(&before,SC_CUBE),"C:\\WINXT\\CUBE.EXE"));
+ set(&t,SC_CUBEPATH,"D:\\SAVERS\\CUBE.EXE");set(&t,SC_CHOICE,"cUbE");
+ CHECK(ScRead(&io,&before)==SC_OK);CHECK(ScChoice(&before)==SC_CUBE);
+ CHECK(ScSave(&io,&before,"17",SC_CUBE,&after)==SC_OK);
+ CHECK(!strcmp(ScProgram(&after,SC_CUBE),"D:\\SAVERS\\CUBE.EXE"));
+ CHECK(ScCommand(ScProgram(&after,SC_CUBE),0,0,command,sizeof(command)));
+ CHECK(!strcmp(command,"D:\\SAVERS\\CUBE.EXE /S"));
+ before=after;CHECK(ScSave(&io,&before,"17",SC_NONE,&after)==SC_OK);
+ CHECK(ScChoice(&after)==SC_CUBE);
+ CHECK(!strcmp(ScProgram(&after,SC_CUBE),"D:\\SAVERS\\CUBE.EXE"));
+ for(i=1;i<=3;i++){init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failwrite=i;
+ CHECK(ScSave(&io,&before,"10",SC_CUBE,&after)==SC_WRITEFAIL);
+ CHECK(!t.c.present[SC_ENABLED]&&!t.c.present[SC_SECONDS]&&!t.c.present[SC_CHOICE]);}
  printf("PASS %d checks\n",checks);return 0;
 }
