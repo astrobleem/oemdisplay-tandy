@@ -93,3 +93,9 @@ __pycache__/
 !/tools/HPDIB/BIN/FIXXT.EXE
 !/tools/HPDIB/BIN/SETUP.EXE
 !/tools/HPDIB/BASE/SRCPAN.ZIP
+
+# First-party Cube review/runtime closure; release gate remains in ACCEPT.JSN.
+!/examples/CUBE/BIN/CUBE.EXE
+!/examples/CUBE/BIN/CUBESHL.EXE
+!/examples/CUBE/BIN/CUBESET.EXE
+!/examples/CUBE/EVIDENCE/**/*.LOG

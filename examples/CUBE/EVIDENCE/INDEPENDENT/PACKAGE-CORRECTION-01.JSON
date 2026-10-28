@@ -1,0 +1,114 @@
+{
+  "baseline_commit": "0346d47af8025e9b854bfcf9af9e3061cb679e86",
+  "mode": "Uncommitted correction re-review; no native run",
+  "changed_files": {
+    "VERIFY.PY": {
+      "bytes": 8166,
+      "sha256": "cae9a7a1913691cb933e6c68abf4706bbf23d00011cbb204aff2a0187cf1b776"
+    },
+    "TESTSRC.PY": {
+      "bytes": 3128,
+      "sha256": "a1a8c818f8758904488a7458f5acfd55a7b00f1900c2262ea8cc7bf3891ce27f"
+    },
+    "TESTPACK.PY": {
+      "bytes": 4366,
+      "sha256": "36c6372be6ba4f56a8e57f23c918ef82a73ea31fce971036dd9c1be9480351e5"
+    }
+  },
+  "checks": [
+    {
+      "name": "frozen compiled source/runtime/build bindings",
+      "result": "PASS"
+    },
+    {
+      "name": "saved semantic source-repin probe",
+      "result": "REJECTED",
+      "reason": "Stale build source: examples/CUBE/SOURCE/CUBE.C"
+    },
+    {
+      "name": "installer source repin without rebuilt installer",
+      "result": "REJECTED",
+      "reason": "Installer source binding differs"
+    },
+    {
+      "name": "required native guard drift",
+      "result": "REJECTED",
+      "reason": "Stale native build recipe: tools/SOUNDOWN/RUNDOS.PY"
+    },
+    {
+      "name": "required installer CRC header drift",
+      "result": "REJECTED",
+      "reason": "Installer source binding differs"
+    },
+    {
+      "name": "repinned stale build runtime",
+      "result": "REJECTED",
+      "reason": "Build/runtime identity differs: CUBE.EXE"
+    },
+    {
+      "name": "repinned omitted source-binding member",
+      "result": "REJECTED",
+      "reason": "Native source/runtime binding differs"
+    },
+    {
+      "name": "missing advertised role cgapan",
+      "result": "REJECTED",
+      "reason": "Required advertised native scope missing"
+    },
+    {
+      "name": "missing advertised role t6404",
+      "result": "REJECTED",
+      "reason": "Required advertised native scope missing"
+    },
+    {
+      "name": "missing advertised role cga320",
+      "result": "REJECTED",
+      "reason": "Required advertised native scope missing"
+    },
+    {
+      "name": "missing advertised role t160",
+      "result": "REJECTED",
+      "reason": "Required advertised native scope missing"
+    },
+    {
+      "name": "actual frozen source ZIP full manifest",
+      "result": "PASS",
+      "members": 334
+    },
+    {
+      "name": "saved tampered-helper ZIP",
+      "result": "REJECTED",
+      "reason": "Source archive member differs: SOURCE/tools/SOUNDOWN/RUNDOS.PY"
+    },
+    {
+      "name": "missing-helper",
+      "result": "REJECTED",
+      "reason": "Source archive member inventory differs"
+    },
+    {
+      "name": "extra-member",
+      "result": "REJECTED",
+      "reason": "Source archive member inventory differs"
+    }
+  ],
+  "testpack": {
+    "status": "PASS",
+    "scope": "Packet integrity/gating only; no native qualification",
+    "checks": [
+      "intact review closure",
+      "missing native scope despite ready label",
+      "incomplete qualification",
+      "omitted source inventory",
+      "runtime modification",
+      "source modification",
+      "source repinned without native rebuild",
+      "receipt modification",
+      "intact full source manifest",
+      "modified outside-acceptance helper",
+      "missing manifest member",
+      "extra archive member"
+    ]
+  },
+  "residual_findings": [],
+  "remaining_scope": "New runtime/receipt qualification and final exact-head/archive replay remain with parent; no emulator launch performed."
+}

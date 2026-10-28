@@ -32,10 +32,10 @@ static int knownAudio(void)
         FindWindow("TandyMiniMIDI", NULL) || FindWindow("TandyJoyMIDI", NULL);
 }
 static int saverRunning(void)
-{ return GetModuleHandle("MATRIX") || GetModuleHandle("MAZE") || GetModuleHandle("STARFLD"); }
+{ return GetModuleHandle("MATRIX") || GetModuleHandle("MAZE") || GetModuleHandle("STARFLD") || GetModuleHandle("CUBE"); }
 static int saverWindow(void)
 { return FindWindow("TandyMatrixSaver", NULL) || FindWindow("TandyMazeSaver", NULL) ||
-         FindWindow("TandyStarfieldSaver", NULL); }
+         FindWindow("TandyStarfieldSaver", NULL) || FindWindow("TandyCubeSaver", NULL); }
 static void closeSaver(void)
 {
     HWND w = FindWindow("TandyMatrixSaver", NULL);
@@ -43,6 +43,8 @@ static void closeSaver(void)
     w = FindWindow("TandyMazeSaver", NULL);
     if (w) PostMessage(w, WM_CLOSE, 0, 0L);
     w = FindWindow("TandyStarfieldSaver", NULL);
+    if (w) PostMessage(w, WM_CLOSE, 0, 0L);
+    w = FindWindow("TandyCubeSaver", NULL);
     if (w) PostMessage(w, WM_CLOSE, 0, 0L);
 }
 static void releaseHook(void)

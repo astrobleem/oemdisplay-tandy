@@ -1,0 +1,86 @@
+{
+  "review_type": "Independent supplemental receipt and exact-commit verification",
+  "reviewed_commit": "10721ce3daf31588a54de566f3c32b1b38a38424",
+  "created_utc": "2026-10-28T09:55:38.763907+00:00",
+  "outcome": "All previously reviewed file hashes match committed HEAD; corrected native ownership/UI smoke receipt is consistent with the reviewed build",
+  "findings": [],
+  "verified_committed_files": {
+    "examples/CUBE/SOURCE/CUBE.C": {
+      "bytes": 24062,
+      "sha256": "8974196ce2f099ca9cae39bd043f9c90077562d13aa686e1d8afe9d2cb571a69"
+    },
+    "examples/CUBE/SOURCE/CUBECTL.C": {
+      "bytes": 7570,
+      "sha256": "b882b984bcc46dd2c578fd1f5e10d6a708a37cbda8ccf88c7c379fe2a28aed9d"
+    },
+    "examples/CUBE/SOURCE/TESTLIFE.PY": {
+      "bytes": 6167,
+      "sha256": "92163f71780928d038be0f3f2dfcbff6df4889103cbb3eb8651ff044c4bd091d"
+    },
+    "examples/CUBE/SOURCE/RUNHOST.PY": {
+      "bytes": 2687,
+      "sha256": "8a744caeb82e590ce11a201dcebe3669169f67a9f38dccea71478d1f099a2238"
+    },
+    "examples/CUBE/EVIDENCE/INDEPENDENT/CUBE-BEFORE.C": {
+      "bytes": 24038,
+      "sha256": "dbaa4ba368425fd0cc211159dee6f03b8d38abc66fb8b59216f28f0347ea4733"
+    },
+    "examples/CUBE/EVIDENCE/INDEPENDENT/LIFECYCLE-CONTROL.JSN": {
+      "bytes": 923,
+      "sha256": "22959a69f2dfeaa57aaecbe72a0cc84e929b0bfcbd1447ee71a3213d85425b8e"
+    },
+    "examples/CUBE/EVIDENCE/INDEPENDENT/NATIVE-SMOKE-NONDISCRIMINATING.JSN": {
+      "bytes": 3129,
+      "sha256": "019b26f06e804bbd92d4d004dcd1486b6a21840e6874448771c1de99f6c8a196"
+    }
+  },
+  "build_receipt": {
+    "path": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-12\\build-cube-11\\BUILD.JSON",
+    "bytes": 2551,
+    "sha256": "b36e85f4393628cf8580bec7ce6e75d39e0a8dd2b392ccfea1cdbb49919b46dd",
+    "source_files_verified": 9,
+    "runtime": {
+      "bytes": 15647,
+      "sha256": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e"
+    }
+  },
+  "corrected_native_smoke": {
+    "receipt": {
+      "path": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-12\\native-ui100-04\\RESULT.json",
+      "bytes": 2971,
+      "sha256": "b2ae93b310d998f8a0fea7ed910898d92752c8220c4fe297a3f527abaa9b7260"
+    },
+    "preparation": {
+      "path": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-12\\native-ui100-04\\PREPARE.json",
+      "bytes": 1870,
+      "sha256": "b3e90176fd2ad7b146828eb41968fc526e91b09bb2f69ba7c2523ae6177683d8"
+    },
+    "controller_runtime": {
+      "bytes": 7743,
+      "sha256": "2cbc3bfa523143463e59b995d80a03cb1e5dfb7d0d554353a555629ae574fcff"
+    },
+    "status": "PASS",
+    "observed_in_receipt": [
+      "Normal settings-preview return passed",
+      "External controller ownership smoke passed with zero logged ownership losses and matching active/focus handles",
+      "Real emulated F2 established idle baseline; Cube idle launch and real Escape wake passed",
+      "FAT copies agreed"
+    ],
+    "recorded_cleanup": {
+      "owned_pid": 32468,
+      "owned_stopped": true,
+      "lease_released": true,
+      "inventory_after": 0
+    }
+  },
+  "evidence_distinction": [
+    "The corrected native-ui100-04 result is a native Windows 3.0 UI/idle/ownership smoke pass for CUBE.EXE SHA-256 9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e and the pinned revised controller.",
+    "The old native settling-only control passed with the old 1de2326a... executable. It remains explicitly nondiscriminating and does not reproduce the original policy issue.",
+    "The independently rerun TESTLIFE API-spy comparison is the deterministic source-policy regression: frozen stop/WM_DESTROY source fails with two activation requests; corrected source passes five paths. It does not model native message ordering."
+  ],
+  "limits": [
+    "This reviewer read and cross-checked receipts and hashes; no emulator or native build was launched.",
+    "This supplement does not expand the native smoke into complete adapter, physical hardware or failure-injection qualification."
+  ],
+  "blockers": []
+}

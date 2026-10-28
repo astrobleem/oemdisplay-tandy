@@ -1,0 +1,36 @@
+name: Cube saver review packet
+on:
+  pull_request:
+    paths:
+      - 'examples/CUBE/**'
+      - 'examples/TSHELL/**'
+      - '.github/workflows/cube.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cube:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - name: Confirm reviewed source commit
+        run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Geometry and shell idle/Hold regressions
+        run: python3 -B examples/CUBE/SOURCE/RUNHOST.PY --out "$RUNNER_TEMP/cube-host"
+      - name: Runtime, source and receipt integrity
+        run: python3 -B examples/CUBE/SOURCE/TESTPACK.PY --out "$RUNNER_TEMP/cube-gates"
+      - name: Require exact native qualification and assemble packet
+        run: python3 -B examples/CUBE/SOURCE/PACK.PY --commit "$SOURCE_SHA" --out "$RUNNER_TEMP/cube-packet"
+      - name: Replay the assembled source archive
+        run: python3 -B examples/CUBE/SOURCE/TESTSRC.PY "$RUNNER_TEMP/cube-packet/CUBESRC.ZIP" --out "$RUNNER_TEMP/cube-replay"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: cube-review-${{ env.SOURCE_SHA }}
+          path: ${{ runner.temp }}/cube-packet/*
+          if-no-files-found: error

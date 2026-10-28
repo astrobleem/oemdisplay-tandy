@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "scope": "Packet integrity/gating only; no native qualification",
+  "checks": [
+    "intact review closure",
+    "complete native gate",
+    "missing native scope despite ready label",
+    "omitted source inventory",
+    "runtime modification",
+    "source modification",
+    "source repinned without native rebuild",
+    "omitted advertised rendering role",
+    "receipt modification",
+    "intact full source manifest",
+    "modified outside-acceptance helper",
+    "missing manifest member",
+    "extra archive member"
+  ]
+}

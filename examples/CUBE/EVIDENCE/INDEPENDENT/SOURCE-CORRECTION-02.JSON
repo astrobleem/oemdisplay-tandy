@@ -1,0 +1,133 @@
+{
+  "review_type": "Independent final source-correction and regression verification",
+  "frozen_baseline_commit": "0346d47af8025e9b854bfcf9af9e3061cb679e86",
+  "repository_head_during_review": "10721ce3daf31588a54de566f3c32b1b38a38424",
+  "reviewed_state": "Production correction committed at repository HEAD; controller and host-test integration include uncommitted changes. Exact reviewed bytes are pinned below.",
+  "created_utc": "2026-10-28T09:46:01.303158+00:00",
+  "outcome": "CUBE-SRC-1 resolved; deterministic source-policy regression verified; no residual actionable source concern in the reviewed correction and regression changes",
+  "findings": [],
+  "reviewed_file_hashes": {
+    "examples/CUBE/SOURCE/CUBE.C": {
+      "bytes": 24062,
+      "sha256": "8974196ce2f099ca9cae39bd043f9c90077562d13aa686e1d8afe9d2cb571a69"
+    },
+    "examples/CUBE/SOURCE/CUBECTL.C": {
+      "bytes": 7570,
+      "sha256": "b882b984bcc46dd2c578fd1f5e10d6a708a37cbda8ccf88c7c379fe2a28aed9d"
+    },
+    "examples/CUBE/SOURCE/TESTLIFE.PY": {
+      "bytes": 6167,
+      "sha256": "92163f71780928d038be0f3f2dfcbff6df4889103cbb3eb8651ff044c4bd091d"
+    },
+    "examples/CUBE/SOURCE/RUNHOST.PY": {
+      "bytes": 2687,
+      "sha256": "8a744caeb82e590ce11a201dcebe3669169f67a9f38dccea71478d1f099a2238"
+    },
+    "examples/CUBE/EVIDENCE/INDEPENDENT/CUBE-BEFORE.C": {
+      "bytes": 24038,
+      "sha256": "dbaa4ba368425fd0cc211159dee6f03b8d38abc66fb8b59216f28f0347ea4733"
+    },
+    "examples/CUBE/EVIDENCE/INDEPENDENT/LIFECYCLE-CONTROL.JSN": {
+      "bytes": 923,
+      "sha256": "22959a69f2dfeaa57aaecbe72a0cc84e929b0bfcbd1447ee71a3213d85425b8e"
+    },
+    "examples/CUBE/EVIDENCE/INDEPENDENT/NATIVE-SMOKE-NONDISCRIMINATING.JSN": {
+      "bytes": 3129,
+      "sha256": "019b26f06e804bbd92d4d004dcd1486b6a21840e6874448771c1de99f6c8a196"
+    }
+  },
+  "verification": [
+    "TESTLIFE.PY extracts the actual stop() function and WM_DESTROY branch from each source rather than maintaining replacement implementations. Its only normalization is CRLF to LF for extraction/compilation.",
+    "The checked-in frozen control bytes exactly match CUBE.C from 0346d47af8025e9b854bfcf9af9e3061cb679e86.",
+    "Independent RUNHOST execution through the required managed GCC launcher passed all five groups: geometry, configuration, idle, Hold and lifecycle.",
+    "The frozen callback control fails with two activation requests during ownership-loss teardown. The corrected source passes ownership-loss/foreign-capture preservation, ordinary wake restoration, standalone quit, shutdown quit and QA completion.",
+    "Generated before/after stop() hashes are identical; the destruction branch differs. The comparison isolates the intended correction.",
+    "The revised CUBECTL observer logs gain/loss events, counts loss only after its first gain, arms before its single SetActiveWindow handoff, and disarms before hiding. It checks final active window and focus without a second activation/focus call.",
+    "The retained old native settling test is explicitly labeled NONDISCRIMINATING_CONTROL. It is not claimed to reproduce the focus symptom or distinguish the correction."
+  ],
+  "independent_host_result": {
+    "status": "PASS",
+    "scope": "Host C89 policy/math checks only; no native/hardware qualification",
+    "checks": [
+      {
+        "check": "core",
+        "result": "PASS 512 phases; winding, lighting, periodicity, low/high canvas bounds",
+        "sources": {
+          "examples/CUBE/SOURCE/TESTCORE.C": "a21340bf4829541e502abd0a244313192deb05b9ed63b673cb83c3bf982e2eef",
+          "examples/CUBE/SOURCE/CUBECORE.C": "e73cc486cdf1bb33d26da5b8ec69a7b7c6062a981d96602751018f6505864986"
+        }
+      },
+      {
+        "check": "config",
+        "result": "PASS 163 checks",
+        "sources": {
+          "examples/TSHELL/TESTS/CONFIG/TESTCFG.C": "823e220d270698698d579daf75952f6e2123e1d7f8316bd7bbdab8bf6e66d8b8",
+          "examples/TSHELL/SCFGCORE.C": "7c82f01b1f809d35e7425c563afb0046fd0e4d138718988fa8c1f855b2b0302d"
+        }
+      },
+      {
+        "check": "idle",
+        "result": "PASS: ownership, duplicate suppression, hook chaining, held input, modal/capture guards, poll gap, tick wrap, DOS suspension, midnight/backward clocks, remove failure, WEP (30 chained callbacks)",
+        "sources": {
+          "examples/TSHELL/IDLE/tests/HOSTTEST.C": "b174b9ddb9dd9fe0b68c48932f83003dedfecddc7aeb24621d8161ca63fbaae7",
+          "examples/TSHELL/IDLE/TSINPUT.C": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c",
+          "examples/TSHELL/IDLE/TSINPUT.H": "e25e44a53eac398962eb3ccfbae6b045fbe8d87dc0dfd33d27b3acf402101d77",
+          "examples/TSHELL/IDLE/tests/WINSTUB.H": "87725b378f1327c4bad7f817bc32db1cf18e350500bc67195a497a90586bad0f"
+        }
+      },
+      {
+        "check": "hold",
+        "result": "PASS: Hold ownership, chaining, NOREMOVE, make/repeat/break, modifiers, input cancellation, modal guards, tokens, expiry, deferred removal, reentry, partial failures, idle independence and WEP (246 callbacks, 19 post attempts)",
+        "sources": {
+          "examples/TSHELL/IDLE/tests/HOLDTEST.C": "b80113808a96990c0009df051ed3d20d29e129d1326ae6dd55439378827a7af7",
+          "examples/TSHELL/IDLE/TSINPUT.C": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c",
+          "examples/TSHELL/IDLE/TSINPUT.H": "e25e44a53eac398962eb3ccfbae6b045fbe8d87dc0dfd33d27b3acf402101d77",
+          "examples/TSHELL/IDLE/tests/WINSTUB.H": "87725b378f1327c4bad7f817bc32db1cf18e350500bc67195a497a90586bad0f"
+        }
+      },
+      {
+        "check": "lifecycle",
+        "result": "PASS frozen source fails activation-policy control; corrected production teardown passes five paths",
+        "sources": {
+          "examples/CUBE/SOURCE/CUBE.C": "8974196ce2f099ca9cae39bd043f9c90077562d13aa686e1d8afe9d2cb571a69"
+        },
+        "control_source_sha256": "dbaa4ba368425fd0cc211159dee6f03b8d38abc66fb8b59216f28f0347ea4733"
+      }
+    ]
+  },
+  "independent_lifecycle_result": {
+    "status": "PASS",
+    "scope": "Actual production stop and WM_DESTROY code under API stubs; not native message-order reproduction",
+    "before": {
+      "source_sha256": "dbaa4ba368425fd0cc211159dee6f03b8d38abc66fb8b59216f28f0347ea4733",
+      "returncode": 1,
+      "output": "FAIL ownership-loss activation requests=2 focus=0",
+      "stop_sha256": "4a80e94e93583b442d050850bf78d1e726a6dea48820d886589805cba8341338",
+      "destroy_sha256": "6543b6a3d33f4c1edf0ba9166d8918ac3e935042b4386b52735ba3aa1e2835f8"
+    },
+    "after": {
+      "source_sha256": "8974196ce2f099ca9cae39bd043f9c90077562d13aa686e1d8afe9d2cb571a69",
+      "returncode": 0,
+      "output": "PASS five production teardown paths; only ordinary input wake restores focus",
+      "stop_sha256": "4a80e94e93583b442d050850bf78d1e726a6dea48820d886589805cba8341338",
+      "destroy_sha256": "d94abd9e580948005baad63b766ede9e73732348683d356a1029ba8796cd7c1f"
+    }
+  },
+  "generated_harness_hashes": {
+    "correction-host-02/lifecycle/before/LIFE.C": {
+      "bytes": 4066,
+      "sha256": "ff4ccaf6e6c8eea06f26151396dc0db02feba77305b78a71745825561eb329e0"
+    },
+    "correction-host-02/lifecycle/after/LIFE.C": {
+      "bytes": 4090,
+      "sha256": "a4398404bd289da42999d6c48d5ec94b3fe6226b042c7f6784a55d1c5f24f986"
+    }
+  },
+  "limits": [
+    "The API-spy test establishes explicit activation-request policy and selected teardown state. It does not reproduce native Windows message ordering or model full GDI/cursor/window-manager semantics.",
+    "The controller handoff remains a native ownership smoke check; discrimination by the revised counter has not been independently established.",
+    "No emulator was launched by this reviewer and no new native build or runtime qualification is claimed by this report. The parent is coordinating the corrected native UI/mode batch.",
+    "This follow-up reviews the corrected CUBE teardown, CUBECTL smoke observer, TESTLIFE host regression and RUNHOST integration. Acceptance-tool/package updates are owned by the package reviewer."
+  ],
+  "blockers": []
+}

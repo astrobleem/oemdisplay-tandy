@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "scope": "Read-only installer build-copy/source identity audit",
+  "source": {
+    "bytes": 6881,
+    "sha256": "f2498e22d659bc4447421fdfc536bf2198379560aeb2b5d54e013f65ad9592cb"
+  },
+  "crc_header": {
+    "bytes": 3941,
+    "sha256": "dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8"
+  },
+  "runtime": {
+    "bytes": 16306,
+    "sha256": "6dd36333aef1ffa91f4975eb8851dd0f7576f7b8c8ea37176d8901ffded5142d"
+  }
+}

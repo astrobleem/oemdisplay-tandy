@@ -1,0 +1,27 @@
+{
+  "executable": {
+    "bytes": 15647,
+    "sha256": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d"
+  },
+  "target_version": "0x300",
+  "code_bytes": 12240,
+  "roots": [
+    10419,
+    4600,
+    6464,
+    7882
+  ],
+  "direct_instructions": 3218,
+  "post8088_suspects": [],
+  "indirect_branches": [
+    {
+      "offset": "0x293e",
+      "instruction": "jmp    *%bx"
+    },
+    {
+      "offset": "0x1518",
+      "instruction": "jmp    *%cs:0x151e(%bx)"
+    }
+  ],
+  "scope": "NE entry and three exported callbacks; direct near calls/branches only. Indirect CRT continuations, callback tables and imported Windows code excluded. Not exhaustive ISA or hardware qualification."
+}

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "scope": "Read-only closed CGA fixture after mono completion; Tandy runs use another image",
+  "fat_copies_equal": true,
+  "fat_count": 2,
+  "fat_bytes_each": 82432,
+  "sha256": "9aa27b0190ad3f1e2f1f9d6837f5ba4da89527b2ff231af31290ed1d079776e2"
+}

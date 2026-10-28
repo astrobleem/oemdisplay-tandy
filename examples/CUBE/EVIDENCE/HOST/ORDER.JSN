@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "scope": "Actual frozen producer and corrected producer on the same committed closure with reversed filesystem enumeration; no native runtime change",
+  "frozen_producer_commit": "37761b95399366dc5efca49c80e271d93643a063",
+  "frozen_producer_sha256": "8aaa68c120763f1302d825e14337177db5eb4a912fe70ea37e04ffd9b153a94c",
+  "corrected_producer_sha256": "3f09d5f573d798889bfcc1a8533aedb56797a0caf06f9e54b425b9f86c55698b",
+  "frozen_outputs_equal": {
+    "CUBE.ZIP": true,
+    "CUBESRC.ZIP": false,
+    "CUBE.JSN": false,
+    "CUBE.SHA": false
+  },
+  "corrected_outputs_equal": {
+    "CUBE.ZIP": true,
+    "CUBESRC.ZIP": true,
+    "CUBE.JSN": true,
+    "CUBE.SHA": true
+  },
+  "observed_cross_platform_difference": {
+    "source_members": 486,
+    "differences": [
+      {
+        "member": "SOURCE.JSN",
+        "semantic_json_equal": true,
+        "local_sha256": "ab8ce357ff4e67767581cb30407af81f22aa2c11fc857337aedc75dd2e6d1eca",
+        "ci_sha256": "ecde5ca33e9a962840fed9548cb8edf8182fe228bfa3be24949d832e9b5f46f5"
+      }
+    ],
+    "consumer_zip_identical": true
+  }
+}

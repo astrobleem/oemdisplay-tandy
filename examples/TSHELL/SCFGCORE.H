@@ -1,6 +1,6 @@
 #ifndef SCFGCORE_H
 #define SCFGCORE_H
-#define SC_KEYS 8
+#define SC_KEYS 9
 #define SC_VALUE 128
 #define SC_ENABLED 0
 #define SC_SECONDS 1
@@ -10,10 +10,12 @@
 #define SC_STARPATH 5
 #define SC_SPEED 6
 #define SC_STARS 7
+#define SC_CUBEPATH 8
 #define SC_NONE 0
 #define SC_MATRIX 1
 #define SC_MAZE 2
 #define SC_STARFIELD 3
+#define SC_CUBE 4
 #define SC_OK 0
 #define SC_READFAIL 1
 #define SC_BADSECONDS 2

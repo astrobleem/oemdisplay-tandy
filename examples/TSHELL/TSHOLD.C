@@ -90,7 +90,8 @@ static int canOpen(HWND owner)
     TSSaverShortcutBusy() || !IsWindowEnabled(owner) || GetCapture() ||
     GetSysModalWindow() || GetModuleHandle("TEXIT"))return 0;
  if(FindWindow("TandyMatrixSaver",NULL) || FindWindow("TandyMazeSaver",NULL) ||
-    FindWindow("TandyStarfieldSaver",NULL))return 0;
+    FindWindow("TandyStarfieldSaver",NULL) || FindWindow("TandyCubeSaver",NULL) ||
+    GetModuleHandle("CUBE"))return 0;
  active=GetActiveWindow();parent=active?GetWindow(active,GW_OWNER):NULL;
  if(parent && !IsWindowEnabled(parent))return 0;
  if(active && GetClassName(active,name,sizeof(name)) && !lstrcmp(name,"#32770"))return 0;

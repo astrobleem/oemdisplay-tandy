@@ -1,0 +1,5 @@
+Windows XT rotating cube installer (DOS 3.3+)
+Installed. Tandy Start: System > Screen saver > Cube > Apply.
+Options opens Cube settings. Existing choice/delay are preserved.
+Undo shell/input: CUBESET /UNDO plus this full Windows path.
+Cube preview: C:\WINXT\CUBE.EXE /S. Not a password lock.

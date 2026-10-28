@@ -1,0 +1,48 @@
+{
+  "base": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-11\\native-fx-09",
+  "environment": {
+    "display.drv": {
+      "name": "TR53216.DRV",
+      "bytes": 54896,
+      "sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61"
+    },
+    "fonts.fon": {
+      "name": "XTESYS.FON",
+      "bytes": 5680,
+      "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+    },
+    "fixedfon.fon": {
+      "name": "XTEFIX.FON",
+      "bytes": 4656,
+      "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+    },
+    "oemfonts.fon": {
+      "name": "XTEOEM.FON",
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "system_ini_sha256": "3fa05699b1ea802f6e0d3d789a85ce2dc2a9587bd3d44c5367a69fdc151f7cbe"
+  },
+  "private_image": true,
+  "reused": false,
+  "bytes": 84341760,
+  "scope": "tandy; kit, /Q, undo and reinstall",
+  "install_guards": false,
+  "changes": [
+    "AUTOEXEC test entry",
+    "explicit known current TSHELL and TSINPUT baseline",
+    "kit files in CUBE folder",
+    "selected documented display fixture"
+  ],
+  "payload": {
+    "CUBE.EXE": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d",
+    "CUBECTL.EXE": "38cd282879994383bcd47e0724feacaeff73f1f13282bfdf4b12d406e0306e0a",
+    "CUBESHL.EXE": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48",
+    "TSINPUT.DLL": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878",
+    "CUBESET.EXE": "fc0598cc196d2ec7b45a25afbcb9405d2a6d1986d50e397457737fc0010f7cd8"
+  },
+  "originals": {
+    "TSHELL.EXE": "c1c0ae1f7b919f58ef4d7a34cec045f313206409a21955ffff09f63aced8e167",
+    "TSINPUT.DLL": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+  }
+}

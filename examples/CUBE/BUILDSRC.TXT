@@ -1,0 +1,64 @@
+CUBE SOURCE ARCHIVE - DEVELOPER REBUILD
+
+The native consumer kit is CUBE.ZIP. It needs no Python or compiler.
+This source packet excludes OS media, installed Windows, ROMs, DDK/SDK,
+compiler libraries and emulator binaries.
+
+LAYOUT
+  SOURCE/examples/CUBE/SOURCE   Cube, native installer and guarded builders
+  SOURCE/examples/TSHELL       matching shell and input DLL source/tests
+  SOURCE/tools                 required first-party builder/CRC helpers
+  EVIDENCE                     native/build/host records and captures
+  ACCEPT.JSN                   exact tested identities and scope
+
+SOURCE is the root expected by the guarded builders. It is a source closure,
+not a complete checkout of the display repository. Start a local Git snapshot
+there before compiling, so the builders can verify committed input bytes:
+  cd SOURCE
+  git init
+  git add .
+  git -c user.name=Builder -c user.email=builder@example.invalid commit -m source
+
+From that directory run the commands in examples/CUBE/SOURCE, using explicit
+external inputs and fresh output directories:
+  python examples/CUBE/SOURCE/BUILD.PY --help
+  python examples/TSHELL/BUILD.PY --help
+  python examples/CUBE/SOURCE/BUILDIN.PY --help
+  python examples/CUBE/SOURCE/BUILDSET.PY --help
+  python examples/CUBE/SOURCE/RUNHOST.PY --help
+
+Native MSC6/LINK4 builds require a coordinated emulator slot, the existing
+shared byte lease and an external compiler/DDK view. Native DOS CUBESET is
+built by external Open Watcom. The builders retain source/input hashes.
+Windows host GCC uses the configured managed launcher; Linux host checks use
+GCC. No host result substitutes for native Windows acceptance.
+
+The installer baseline inputs are the original first-party TSHELL.EXE and
+TSINPUT.DLL from distributions/WINXT at display repository commit:
+  54ede71df5b569c70fb18a3825caf75f88d0406f
+Repository: https://github.com/astrobleem/oemdisplay-tandy
+Their exact sizes, SHA-256 and CRC-32 values are in EVIDENCE/BUILD/INSTALL.JSN.
+They are public project files, not OS/toolchain files. Supply them as the
+--old-shell and --old-idle inputs. The consumer never gathers these inputs.
+
+CUBECTL is a developer acceptance controller. Do not install it or run it in
+a Windows session containing user work. EVIDENCE/HARNESS retains lab-specific
+runners with absolute fixture/tool paths; adapt them only to an owned private
+licensed test fixture. Ordinary native builds do not require those OS images.
+The source packet provides compile/test closure; release reassembly runs from
+the full repository with its pinned runtime, acceptance and evidence tree.
+
+Verify an assembled source archive and replay its actual host build with:
+  python examples/CUBE/SOURCE/TESTSRC.PY CUBESRC.ZIP --out NEW-REPLAY
+Run this command from a full checkout; it checks safe members, the exact full
+archive member set and every member hash/size, then all declared source bytes,
+a committed snapshot and the five
+extracted host compilation groups. The lifecycle group compiles actual
+production teardown code against API spies and a frozen pre-fix control.
+
+CROSS-PLATFORM PACKAGE REPRODUCTION
+
+The manifests use canonical JSON key order. TESTPACK.PY exercises the actual
+producer twice with normal and reversed filesystem enumeration and requires
+identical runtime/source ZIPs and both metadata files. This covers the ordering
+difference observed between the Windows and Linux source-packet builds.

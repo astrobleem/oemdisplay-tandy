@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "actions": [],
+  "bound_seconds": 420,
+  "harness_sha256": "7cb673325c7684836acd650752a297be1b75490cabdd3aa462a3284e52b26d32",
+  "emulator": {
+    "bytes": 40974882,
+    "sha256": "17b8ba40caa595ded247799e8a501897bfe6913ce19249ea5fdb2cd1f9e8df36"
+  },
+  "config_sha256": "4e3630dc8792cc575b88ca31369ae7dc0a536c214065b1fbbd8e959e68388aa9",
+  "owned_pid": 27248,
+  "fat_copies_equal": true,
+  "installed": {
+    "WINXT/CUBE.EXE": {
+      "bytes": 15647,
+      "sha256": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e"
+    },
+    "WINDOWS/TSHELL.EXE": {
+      "bytes": 74131,
+      "sha256": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48"
+    },
+    "WINDOWS/TSINPUT.DLL": {
+      "bytes": 6301,
+      "sha256": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878"
+    },
+    "WINDOWS/TSHCUBE.BAK": {
+      "bytes": 71251,
+      "sha256": "c1c0ae1f7b919f58ef4d7a34cec045f313206409a21955ffff09f63aced8e167"
+    },
+    "WINDOWS/TICUBE.BAK": {
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+    }
+  },
+  "native_log": "START width=160 height=100 colors=16 view=0,0,160,100 canvas=69x70 scale=65x55 style=1 speed=2 size=2 free=333600\r\nFRAME n=1 phase=39 style=1 errors=0 draw_ms=1154\r\nFRAME n=2 phase=47 style=1 errors=0 draw_ms=769\r\nPIXEL source=16777215 target=16777215\r\nQA CAPTURE READY\r\nEND reason=keyboard frames=13 errors=0 draw_ms=9503 max_ms=1154 elapsed=13402\r\nQA step=0 frames=13 errors=0 leaks=0 capture=0 resources=0\r\nSTART width=160 height=100 colors=16 view=0,0,160,100 canvas=69x70 scale=65x55 style=2 speed=2 size=2 free=331840\r\nFRAME n=1 phase=39 style=2 errors=0 draw_ms=824\r\nFRAME n=2 phase=47 style=2 errors=0 draw_ms=769\r\nPIXEL source=16777215 target=16777215\r\nQA CAPTURE READY\r\nQA HELD PASS\r\nEND reason=mouse-button frames=13 errors=0 draw_ms=9172 max_ms=824 elapsed=13951\r\nQA step=1 frames=13 errors=0 leaks=0 capture=0 resources=0\r\nSTART width=160 height=100 colors=16 view=0,0,160,100 canvas=69x70 scale=65x55 style=3 speed=2 size=2 free=333472\r\nFRAME n=1 phase=39 style=3 errors=0 draw_ms=440\r\nFRAME n=2 phase=46 style=3 errors=0 draw_ms=439\r\nPIXEL source=16777215 target=16777215\r\nQA CAPTURE READY\r\nEND reason=mouse-move frames=13 errors=0 draw_ms=5437 max_ms=440 elapsed=8898\r\nQA step=2 frames=13 errors=0 leaks=0 capture=0 resources=0\r\nSTART width=160 height=100 colors=16 view=0,0,160,100 canvas=69x70 scale=65x55 style=1 speed=2 size=2 free=333472\r\nFRAME n=1 phase=39 style=1 errors=0 draw_ms=769\r\nFRAME n=2 phase=47 style=1 errors=0 draw_ms=768\r\nPIXEL source=16777215 target=16777215\r\nQA CAPTURE READY\r\nEND reason=deactivated frames=13 errors=0 draw_ms=9227 max_ms=824 elapsed=12633\r\nQA step=3 frames=13 errors=0 leaks=0 capture=0 resources=0\r\nSTART width=160 height=100 colors=16 view=0,0,160,100 canvas=69x70 scale=65x55 style=2 speed=2 size=2 free=331840\r\nFRAME n=1 phase=39 style=2 errors=0 draw_ms=824\r\nFRAME n=2 phase=47 style=2 errors=0 draw_ms=769\r\nPIXEL source=16777215 target=16777215\r\nQA CAPTURE READY\r\nEND reason=close frames=13 errors=0 draw_ms=9283 max_ms=824 elapsed=12907\r\nQA step=4 frames=13 errors=0 leaks=0 capture=0 resources=0\r\nSTART width=160 height=100 colors=16 view=0,0,160,100 canvas=69x70 scale=65x55 style=3 speed=2 size=2 free=333472\r\nFRAME n=1 phase=39 style=3 errors=0 draw_ms=384\r\nFRAME n=2 phase=46 style=3 errors=0 draw_ms=385\r\nPIXEL source=16777215 target=16777215\r\nQA CAPTURE READY\r\nEND reason=owner-lost frames=13 errors=0 draw_ms=5327 max_ms=440 elapsed=8733\r\nQA step=5 frames=13 errors=0 leaks=0 capture=0 resources=0\r\nQA DONE PASS\r\nQUIT clean qa=1\r\n",
+  "ui_log": "RENDER QA launched\r\nRENDER QA returned; exiting private Windows fixture\r\n",
+  "installer_log": "Windows XT rotating cube installer (DOS 3.3+)\r\nInstalled. Tandy Start: System > Screen saver > Cube > Apply.\r\nOptions opens Cube settings. Existing choice/delay are preserved.\r\nUndo shell/input: CUBESET /UNDO plus this full Windows path.\r\nCube preview: C:\\WINXT\\CUBE.EXE /S. Not a password lock.\r\n",
+  "undo_log": "Windows XT rotating cube installer (DOS 3.3+)\r\nOriginal Tandy Start/input restored. Cube files/settings retained.\r\n",
+  "reinstall_log": "Windows XT rotating cube installer (DOS 3.3+)\r\nInstalled. Tandy Start: System > Screen saver > Cube > Apply.\r\nOptions opens Cube settings. Existing choice/delay are preserved.\r\nUndo shell/input: CUBESET /UNDO plus this full Windows path.\r\nCube preview: C:\\WINXT\\CUBE.EXE /S. Not a password lock.\r\n",
+  "unknown_guard_log": "",
+  "standalone_guard_log": "",
+  "owned_stopped": true,
+  "lease_released": true,
+  "inventory_after": "0"
+}

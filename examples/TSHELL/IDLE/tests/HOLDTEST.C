@@ -241,6 +241,9 @@ int main(void)
     moduleName="TEXIT"; assert(step(VK_SCROLL,MAKE)==0); assert(step(VK_SCROLL,BREAK)==0);
     moduleName=""; windowClass="TandyStarfieldSaver";
     assert(step(VK_SCROLL,MAKE)==0); assert(step(VK_SCROLL,BREAK)==0); windowClass="";
+    moduleName="CUBE"; assert(step(VK_SCROLL,MAKE)==0); assert(step(VK_SCROLL,BREAK)==0);
+    moduleName=""; windowClass="TandyCubeSaver";
+    assert(step(VK_SCROLL,MAKE)==0); assert(step(VK_SCROLL,BREAK)==0); windowClass="";
     state[VK_LBUTTON]=0x8000; assert(step(VK_SCROLL,MAKE)==0);
     state[VK_LBUTTON]=0; assert(step(VK_SCROLL,BREAK)==0);
     assert(step(VK_SCROLL,MAKE)==1); active=(HWND)30; before=posts;

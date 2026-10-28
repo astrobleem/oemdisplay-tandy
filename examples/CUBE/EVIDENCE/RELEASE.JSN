@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "last_owned_pid": 22120,
+  "owned_stopped": true,
+  "lease_available_independently": true,
+  "lease_released": true,
+  "inventory_after": 0,
+  "no_runner_queued": true
+}

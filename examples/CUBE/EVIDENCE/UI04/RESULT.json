@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "actions": [
+    {
+      "hardware_input": "10 via headless keyboard control",
+      "purpose": "Edit the actual compact shell idle-delay field"
+    },
+    {
+      "hardware_input": "F2 make/break via headless keyboard control",
+      "purpose": "Release-aware global idle baseline"
+    },
+    {
+      "hardware_input": "Escape make/break via headless keyboard control",
+      "purpose": "Wake saver and reset the shell idle generation"
+    }
+  ],
+  "bound_seconds": 420,
+  "harness_sha256": "7cb673325c7684836acd650752a297be1b75490cabdd3aa462a3284e52b26d32",
+  "emulator": {
+    "bytes": 40974882,
+    "sha256": "17b8ba40caa595ded247799e8a501897bfe6913ce19249ea5fdb2cd1f9e8df36"
+  },
+  "config_sha256": "4e3630dc8792cc575b88ca31369ae7dc0a536c214065b1fbbd8e959e68388aa9",
+  "owned_pid": 32468,
+  "settings": {
+    "choice": "Cube",
+    "enabled": 1,
+    "idle_seconds": 10
+  },
+  "fat_copies_equal": true,
+  "installed": {
+    "WINXT/CUBE.EXE": {
+      "bytes": 15647,
+      "sha256": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e"
+    },
+    "WINDOWS/TSHELL.EXE": {
+      "bytes": 74131,
+      "sha256": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48"
+    },
+    "WINDOWS/TSINPUT.DLL": {
+      "bytes": 6301,
+      "sha256": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878"
+    },
+    "WINDOWS/TSHCUBE.BAK": {
+      "bytes": 71251,
+      "sha256": "c1c0ae1f7b919f58ef4d7a34cec045f313206409a21955ffff09f63aced8e167"
+    },
+    "WINDOWS/TICUBE.BAK": {
+      "bytes": 6281,
+      "sha256": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+    }
+  },
+  "native_log": "",
+  "ui_log": "UI settings launched\r\nUI CONFIG VISIBLE\r\nUI SAVE PASS\r\nUI preview clicked\r\nUI preview visible\r\nUI preview wake\r\nUI PREVIEW RETURN PASS\r\nUI ownership preview requested\r\nUI OWNER EVENT message=28 state=1\r\nUI OWNER EVENT message=6 state=1\r\nUI OWNER EVENT message=7 state=5128\r\nUI preview ownership transferred\r\nUI OWNER losses=0 active=4484 expected=4484 focus=4484\r\nUI PREVIEW OWNER PASS\r\nUI preview returned\r\nUI shell launched\r\nUI shell settings requested\r\nUI SHELL CFG VISIBLE\r\nUI NEED DELAY INPUT\r\nUI EDIT TEXT [300]\r\nUI delay hardware input settled\r\nUI shell Cube Apply\r\nUI SHELL SAVE PASS\r\nUI NEED REAL INPUT\r\nUI IDLE CUBE PASS\r\nUI NEED REAL WAKE\r\nUI DONE PASS\r\n",
+  "installer_log": "Windows XT rotating cube installer (DOS 3.3+)\r\nInstalled. Tandy Start: System > Screen saver > Cube > Apply.\r\nOptions opens Cube settings. Existing choice/delay are preserved.\r\nUndo shell/input: CUBESET /UNDO plus this full Windows path.\r\nCube preview: C:\\WINXT\\CUBE.EXE /S. Not a password lock.\r\n",
+  "undo_log": "",
+  "reinstall_log": "",
+  "unknown_guard_log": "",
+  "standalone_guard_log": "",
+  "owned_stopped": true,
+  "lease_released": true,
+  "inventory_after": "0"
+}

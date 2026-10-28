@@ -1,0 +1,11 @@
+{
+  "developer_only": true,
+  "binary": {
+    "bytes": 7743,
+    "sha256": "2cbc3bfa523143463e59b995d80a03cb1e5dfb7d0d554353a555629ae574fcff"
+  },
+  "source": {
+    "bytes": 7570,
+    "sha256": "b882b984bcc46dd2c578fd1f5e10d6a708a37cbda8ccf88c7c379fe2a28aed9d"
+  }
+}

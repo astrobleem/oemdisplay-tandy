@@ -1,0 +1,48 @@
+{
+  "base": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-10\\fresh-native-02",
+  "environment": {
+    "display.drv": {
+      "name": "CGA320.DRV",
+      "bytes": 57728,
+      "sha256": "484b96a52b173636113f17301a09467f54d6e2c827e2a33e525800b48ca77ef4"
+    },
+    "fonts.fon": {
+      "name": "XTCSYS.FON",
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "fixedfon.fon": {
+      "name": "XTCFIX.FON",
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "oemfonts.fon": {
+      "name": "XTCOEM.FON",
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "system_ini_sha256": "81a9c4f47a9ae813de6287b31ddec3526b8f39464e6ba06d7ccf7473ce2cf06e"
+  },
+  "private_image": true,
+  "reused": true,
+  "bytes": 84341760,
+  "scope": "cga320; kit, /Q, undo and reinstall",
+  "install_guards": false,
+  "changes": [
+    "AUTOEXEC test entry",
+    "explicit known current TSHELL and TSINPUT baseline",
+    "kit files in CUBE folder",
+    "selected documented display fixture"
+  ],
+  "payload": {
+    "CUBE.EXE": "1de2326af2b6bc7e353f5e72d5bf7e8cb4aeac0d4e8437fd0851f7b761dd754d",
+    "CUBECTL.EXE": "38cd282879994383bcd47e0724feacaeff73f1f13282bfdf4b12d406e0306e0a",
+    "CUBESHL.EXE": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48",
+    "TSINPUT.DLL": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878",
+    "CUBESET.EXE": "fc0598cc196d2ec7b45a25afbcb9405d2a6d1986d50e397457737fc0010f7cd8"
+  },
+  "originals": {
+    "TSHELL.EXE": "c1c0ae1f7b919f58ef4d7a34cec045f313206409a21955ffff09f63aced8e167",
+    "TSINPUT.DLL": "d14dde571906bdd27a95030f11647333016eb34864afd22c08c5d2cf80660a80"
+  }
+}

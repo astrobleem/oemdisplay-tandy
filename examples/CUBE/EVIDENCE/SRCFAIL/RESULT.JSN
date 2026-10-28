@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "scope": "Review packet02 complete source replay; runtime qualification unaffected",
+  "archive_sha256": "bd06b54d5111b47608319104e5efdf0dd0444f89da47b3e379b16b0cd1615aaa",
+  "error": "Nested examples/TSHELL/DOS/BASESEL.C was in source acceptance but absent from the source ZIP",
+  "host_checks": "PASS; complete source inventory failed afterward",
+  "correction": "Recursively include source roots and enforce source inventory and ZIP member identity before assembly"
+}

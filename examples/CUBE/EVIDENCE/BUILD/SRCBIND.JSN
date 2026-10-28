@@ -1,0 +1,264 @@
+{
+  "status": "PASS",
+  "scope": "Recorded first-party native build source/recipe bytes match current source and tested runtime; external SDK/toolchain hashes remain in individual build receipts",
+  "sources": {
+    "examples/CUBE/SOURCE/CUBE.C": {
+      "bytes": 24062,
+      "sha256": "8974196ce2f099ca9cae39bd043f9c90077562d13aa686e1d8afe9d2cb571a69"
+    },
+    "examples/CUBE/SOURCE/CUBECORE.C": {
+      "bytes": 2130,
+      "sha256": "e73cc486cdf1bb33d26da5b8ec69a7b7c6062a981d96602751018f6505864986"
+    },
+    "examples/CUBE/SOURCE/CUBECORE.H": {
+      "bytes": 442,
+      "sha256": "b6e674eff8549e2ccc41a0380513301e8ce50037f32eb565182ad4ddcf6f173c"
+    },
+    "examples/CUBE/SOURCE/CUBE.DEF": {
+      "bytes": 243,
+      "sha256": "70f2f0ac4d1bec5560d1933242903fecc8ac437f99492cff2f431f30772129d2"
+    },
+    "examples/CUBE/SOURCE/CUBE.RSP": {
+      "bytes": 89,
+      "sha256": "f0892dad90dfdad2413c3f59f188b1514399a9c5b4fff86f72a7379c6f9a5649"
+    },
+    "examples/CUBE/SOURCE/BUILD.BAT": {
+      "bytes": 482,
+      "sha256": "7d0250f1729d6d92b632ce36e5210cca4f9bf5f47bc56c85c3c08799146392f7"
+    },
+    "examples/CUBE/SOURCE/CUBECTL.C": {
+      "bytes": 7570,
+      "sha256": "b882b984bcc46dd2c578fd1f5e10d6a708a37cbda8ccf88c7c379fe2a28aed9d"
+    },
+    "examples/CUBE/SOURCE/CUBECTL.DEF": {
+      "bytes": 211,
+      "sha256": "56c17c13368eebab2efbe3e51bf689bd12af707da37980795ac60fbdd9ae2363"
+    },
+    "examples/CUBE/SOURCE/CUBECTL.RSP": {
+      "bytes": 88,
+      "sha256": "f0e34659dd64c420354d52705294ba2efd89e654894db2c3ad59eeebdb7fea57"
+    },
+    "examples/TSHELL/VFAT.C": {
+      "bytes": 21181,
+      "sha256": "3dc3260515ce7334a7073895751500a6eea752c2edcba3c049955d7f79ec92ba"
+    },
+    "examples/TSHELL/VFAT.H": {
+      "bytes": 4420,
+      "sha256": "df6f5ed756e1d60472382574013b62d2435b1d94728cbd363ea6c6109778b25a"
+    },
+    "examples/TSHELL/RAWREAD.C": {
+      "bytes": 9338,
+      "sha256": "d3c045f00d7ea91dffb3fd9940faf27febcf68a643bfca401ba2b537255c1285"
+    },
+    "examples/TSHELL/RAWREAD.H": {
+      "bytes": 1275,
+      "sha256": "b4c6f9017c220de554db8ea34c86126328468750eb8d7dfb32795f0080b266eb"
+    },
+    "examples/TSHELL/TSNAMES.C": {
+      "bytes": 4476,
+      "sha256": "157333cc99a6c389813509f821f45c520c52f1181c71bc59bdc59437ba8602d6"
+    },
+    "examples/TSHELL/TSNAMES.H": {
+      "bytes": 948,
+      "sha256": "15da96b33a89b425441bf10edf7e3590a43d44d3980bc6477bd4baba1d1b9734"
+    },
+    "examples/TSHELL/TSHELL.C": {
+      "bytes": 30129,
+      "sha256": "ca1af80d55b43491525f673b8a63e42b8884ad0df17a7ddd3fbb60992616a193"
+    },
+    "examples/TSHELL/TSCP.C": {
+      "bytes": 4042,
+      "sha256": "09350eee3c011f4d67284968cb4a75461b6693705f2e65378db3b3e00267458a"
+    },
+    "examples/TSHELL/TSCP.H": {
+      "bytes": 232,
+      "sha256": "db41733f59d588c345761f8890dd991de34d052c2928df2b374f1e6f4b7e7e98"
+    },
+    "examples/TSHELL/TSHOLD.C": {
+      "bytes": 6107,
+      "sha256": "f4f10b015e7ef13e3574ccd316263bea6dffb3a79e6dbd3dec5153cc7c1ada47"
+    },
+    "examples/TSHELL/TSHOLD.H": {
+      "bytes": 476,
+      "sha256": "101d433764c5311b681d5273985bf5da65b6c1d0f9e3642d4e72236455fec19e"
+    },
+    "examples/TSHELL/TSBOOT.C": {
+      "bytes": 5838,
+      "sha256": "fcc2c0a3186ca44c5fc9ffa4cbda4ba1286e4f948d498d72d5c8f9cfb5df8eb7"
+    },
+    "examples/TSHELL/TSBOOT.H": {
+      "bytes": 336,
+      "sha256": "386a98475d3a5e90d7bcac3cb57b9c0e0ea145a874d7d4898fb64da932a1ec78"
+    },
+    "examples/TSHELL/PSGOWN.H": {
+      "bytes": 2055,
+      "sha256": "7077bac94afb4ce6521b58e24125a82f6ea2281886146beec6355799d2ae9665"
+    },
+    "examples/TSHELL/TNOTICE.C": {
+      "bytes": 5092,
+      "sha256": "be4a1217e92061a3cefc5c61522158eb4019202fc54ecca1e68f7275305aa043"
+    },
+    "examples/TSHELL/TNOTICE.H": {
+      "bytes": 322,
+      "sha256": "98058c37f3817877d3f7c79c6698ab138aa552fe854651dba5faee8ca41a5b41"
+    },
+    "examples/TSHELL/PROGMENU.C": {
+      "bytes": 16242,
+      "sha256": "44291d08cd375034c8bf6192f39634be8d55f5048e06a8ffccea55332fc1d703"
+    },
+    "examples/TSHELL/PROGMENU.H": {
+      "bytes": 553,
+      "sha256": "3ecd00f88b29bd5d5a8cac9bca663b547aca8b2ab8c59158d67f9bced76c641a"
+    },
+    "examples/TSHELL/GRPREAD.C": {
+      "bytes": 7566,
+      "sha256": "c70727c378b2934f310cd916623cc22210ac639d2d13855ed2e7a5f66d7340c0"
+    },
+    "examples/TSHELL/GRPREAD.H": {
+      "bytes": 1470,
+      "sha256": "be510602fb11b7a7a9b69e7f77ec729b79df2252b992e12d4a80c378439a6f51"
+    },
+    "examples/TSHELL/TSAUX.C": {
+      "bytes": 2128,
+      "sha256": "5adf8db7e0f7f055ac4e78b3cc5e567be06cfd9309ba8b7d876e19d4d18cccf9"
+    },
+    "examples/TSHELL/TSAUX.H": {
+      "bytes": 199,
+      "sha256": "4e172ce041df857579411c5b3fcb1606449c5d23434d62ec0c01e86aa94863f6"
+    },
+    "examples/TSHELL/TSSAVER.C": {
+      "bytes": 8484,
+      "sha256": "b50069564193ebf09e7b1c4201d36964c3c25b6bbb710b456d8bc31e5ebe628d"
+    },
+    "examples/TSHELL/TSSAVER.H": {
+      "bytes": 644,
+      "sha256": "c463b0205aa17ce699f90a5e187e83291afb5d2c08d44037ea2f783838eff36e"
+    },
+    "examples/TSHELL/TSSAVCFG.C": {
+      "bytes": 18391,
+      "sha256": "07b29247f4d2b1afacea7a05bda3176136f07fcd92f50adac76bd9fba5a1e020"
+    },
+    "examples/TSHELL/TSSAVCFG.H": {
+      "bytes": 323,
+      "sha256": "e31c29e673b618d40027b340f6e6b3b03e9d6950e07a17422901e7948674114b"
+    },
+    "examples/TSHELL/TSSVOPT.C": {
+      "bytes": 4345,
+      "sha256": "3f329279b662379cccd5b2b6f765f99071eb98d5b04da3fb582c7f7ecb5359c2"
+    },
+    "examples/TSHELL/TSSVOPT.H": {
+      "bytes": 204,
+      "sha256": "2370ecab8f2540595c7dc0f9515468c8fae9965871f4b36f032183015a95c067"
+    },
+    "examples/TSHELL/SCFGCORE.C": {
+      "bytes": 6109,
+      "sha256": "7c82f01b1f809d35e7425c563afb0046fd0e4d138718988fa8c1f855b2b0302d"
+    },
+    "examples/TSHELL/SCFGCORE.H": {
+      "bytes": 1596,
+      "sha256": "d3eee52d1e1ab2c88777698cf8b421d764cd3fb0d71c2ea7f1db8ead1e597d65"
+    },
+    "examples/TSHELL/SVCORE.C": {
+      "bytes": 501,
+      "sha256": "f9231f8c25d3ecb182aa15db0cf24278602f5cadd72917b89e28e4035f03adb6"
+    },
+    "examples/TSHELL/SVCORE.H": {
+      "bytes": 378,
+      "sha256": "905eb75cd28b9541ae7e5ffdcbc02319ab692d0b4eb72bc0d4a01fed9a9654c3"
+    },
+    "examples/TSHELL/TSDATE.C": {
+      "bytes": 9528,
+      "sha256": "511566292c6ffd951a976e78fc1205d0bc62c126b8495e961b1262fb4b3fb6d6"
+    },
+    "examples/TSHELL/TSDATE.H": {
+      "bytes": 286,
+      "sha256": "75a2d14406a4f9640a8f55e4b011c7ab61691eb4809d1ef1abd337e8722bd0c8"
+    },
+    "examples/TSHELL/DTCORE.C": {
+      "bytes": 5103,
+      "sha256": "e8ac15c5e1236549d079e75ce6cdb84b8c526b0fd6d1b11e9b1e4accf443cf72"
+    },
+    "examples/TSHELL/DTCORE.H": {
+      "bytes": 1088,
+      "sha256": "0368337ae099088c30edb5dd3245943fc2c38d0913df9c7c4a284bc68a7c71fe"
+    },
+    "examples/TSHELL/TSHELL.DEF": {
+      "bytes": 330,
+      "sha256": "927f19ca0b992e4f8e92d6d38e584bc219e3450be678d74b22b1340dfb72021c"
+    },
+    "examples/TSHELL/TSHELL.RSP": {
+      "bytes": 282,
+      "sha256": "69df946e370a9ed8f0310f0749e31617c31dac59ace675e2196ebee22dc508df"
+    },
+    "examples/TSHELL/BUILD.BAT": {
+      "bytes": 644,
+      "sha256": "ae3f9345ca6d2ab7ce235d4bd2b668b4901409a7c4b9b31610853afb5779b9c9"
+    },
+    "examples/TSHELL/IDLE/TSINPUT.C": {
+      "bytes": 19582,
+      "sha256": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c"
+    },
+    "examples/TSHELL/IDLE/TSINPUT.H": {
+      "bytes": 829,
+      "sha256": "e25e44a53eac398962eb3ccfbae6b045fbe8d87dc0dfd33d27b3acf402101d77"
+    },
+    "examples/TSHELL/IDLE/TSINPUT.DEF": {
+      "bytes": 373,
+      "sha256": "3afe75bb883b2246e88311330e3b56351e9167a497bdca85598404374c616818"
+    },
+    "examples/TSHELL/IDLE/TSINPUT.RSP": {
+      "bytes": 82,
+      "sha256": "7dee60ba24cb3bd9c3912b113d89915cd64431bfb113621c30231b325b9c1df1"
+    },
+    "examples/TSHELL/IDLE/LIBENTRY.ASM": {
+      "bytes": 982,
+      "sha256": "50ef9f7ef215970c30bf961919c635ea307e37b907d62066476dc32d1c10e1cd"
+    },
+    "examples/TSHELL/IDLE/IDLEPROB.C": {
+      "bytes": 5066,
+      "sha256": "2181d321a38e483f36fd816717a54e06c20dbd5ff7f9af8fa01a19379597bbb8"
+    },
+    "examples/TSHELL/IDLE/IDLEPROB.DEF": {
+      "bytes": 199,
+      "sha256": "9bf963d87be7cab52fc75dfa17416165a9c842c7d91f795c4f2d33a74787adc3"
+    },
+    "examples/TSHELL/IDLE/IDLEPROB.RSP": {
+      "bytes": 92,
+      "sha256": "6cd229e3f3dad43b061e3e62fba3c1bee572c7c291e3e958a5c20a70cf14d8d7"
+    },
+    "examples/TSHELL/IDLE/HOLDPROB.C": {
+      "bytes": 6539,
+      "sha256": "23f4ec8911f425c105b529e4d03b7b19d7769a902d5b47fae7dc195bab46c291"
+    },
+    "examples/TSHELL/IDLE/HOLDPROB.DEF": {
+      "bytes": 208,
+      "sha256": "41502759af534d7f24591ef42b77d3810266bba4011eb25b64493917fc700461"
+    },
+    "examples/TSHELL/IDLE/HOLDPROB.RSP": {
+      "bytes": 92,
+      "sha256": "e468ed0df829a7b54185714d9e4bc5d766fb1f93072cab75ed912e9b77257997"
+    },
+    "examples/TSHELL/IDLE/BUILD.BAT": {
+      "bytes": 702,
+      "sha256": "feebbc6c1a69088ffe26d270dee9c01ed14f7dfeb39e55ac77640a355c90d348"
+    }
+  },
+  "runtime": {
+    "CUBE.EXE": {
+      "bytes": 15647,
+      "sha256": "9ce367edd179291f324b011f8175afa90d298d1c60a644ef53d63ae56b43aa0e"
+    },
+    "CUBESHL.EXE": {
+      "bytes": 74131,
+      "sha256": "1b1ae4384d42220d46a79aa0a2eba5436a6d93d4999abc4e6f758770969e2a48"
+    },
+    "TSINPUT.DLL": {
+      "bytes": 6301,
+      "sha256": "c28f0273b10d162c8308b2ee5f46f998234e00ca7dd755ce5bdce97bf8e9d878"
+    },
+    "CUBESET.EXE": {
+      "bytes": 16306,
+      "sha256": "6dd36333aef1ffa91f4975eb8851dd0f7576f7b8c8ea37176d8901ffded5142d"
+    }
+  }
+}
