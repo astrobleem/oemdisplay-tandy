@@ -30,3 +30,24 @@ are not inherited as fresh-install results. No publication is authorized.
 Both owned emulators stopped, the shared byte lease was released and checked
 available afterward, and emulator inventory ended at zero. No playback or
 runner is queued. Disk images, OS files, compiler and emulator are excluded.
+
+## Completed installation and first normal startup
+
+`FULL.JSN` separately binds the completed installation on the reused DOS 6.22
+image. The original Setup shell resumes normally with WIN /R; no display or
+INI change is made. Original Setup installs the remaining files and fonts,
+reports Windows 3.0 installed, and returns to DOS. A separate FIRST.BAT runs
+ordinary WIN /R, which reaches Program Manager. Normal Exit Windows returns
+to DOS and writes FIRSTRUN.TXT. All seven selected display-support files still
+match, shell is PROGMAN, and all 282 original-media source files are unchanged.
+
+![Setup reports Windows 3.0 installed](COMPLETE.PNG)
+
+![First ordinary Windows start](FIRSTWIN.PNG)
+
+The entry-only scope above remains the historical c009241a record. The new
+completion evidence is in FULLRUN.JSN, FULLPREP.JSN, COMPLETE.CNF and the
+sealed return markers. Optional printers, application scan and document
+viewing were skipped. Suggested DOS boot changes were saved as backups.
+Physical hardware, other fresh profiles and actual floppy swapping remain
+unqualified. No publication is authorized by these test receipts.

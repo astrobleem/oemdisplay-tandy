@@ -1,4 +1,4 @@
-CGA FRESH WINDOWS 3.0 SETUP - LOCAL CANDIDATE
+CGA FRESH WINDOWS 3.0 SETUP
 
 IBM XT/8088, 640 KB, IBM CGA RGBI, plain DOS 3.3 or later.
 Original English retail Windows 3.0 Setup media is required and not included.
@@ -6,7 +6,7 @@ This first increment uses the project's fixed 640x200 monochrome driver and
 XT Pixels System/Fixed/OEM fonts during original graphical Windows Setup.
 Other fresh display modes are not qualified by this packet.
 
-Extract CGAFRESH.ZIP on the DOS computer with a DOS ZIP extractor that keeps
+Extract this ZIP on the DOS computer with a DOS ZIP extractor that keeps
 folders (for example PKUNZIP -D). Keep FRESH.EXE, FRESH.TXT, SETUP.EXE,
 CGA and FRESH640 together. No Python or modern computer conversion is needed.
 Use your usual DOS transfer/extraction tools; this is not a boot disk.
@@ -55,4 +55,5 @@ different Setup versions are refused. Physical hardware is unqualified.
 FONTLIC.TXT, LOGOLIC.TXT and NOTICE.TXT retain the component terms.
 FRESHLIC.TXT covers the launcher source; OWATCOM.TXT carries its runtime notice.
 Source and developer build: src/cga/FRESH.C and FRESHPK.PY in the repository.
+The complete launcher rebuild inputs are also supplied as CGASRC.ZIP.
 No operating system, compiler, emulator or disk image is included.

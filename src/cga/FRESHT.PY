@@ -43,6 +43,8 @@ def main():
                     '--watcom',str(a.watcom.resolve()),'--out',str(out/'rebuild')],check=True)
     assert (out/'rebuild/FRESH.EXE').read_bytes()==(built/'FRESH.EXE').read_bytes()
     r['standalone_source_rebuild_identical']=True;r['launcher']=P.identity((built/'FRESH.EXE').read_bytes())
+    r['consumer_packet']=P.identity((packet/'CGAFRESH.ZIP').read_bytes())
+    r['source_packet']=P.identity((packet/'CGAFSRC.ZIP').read_bytes())
     r['emulator_started']=False;P.receipt(out/'RESULT.JSN',r);print(json.dumps(r,indent=2))
 
 if __name__=='__main__':main()

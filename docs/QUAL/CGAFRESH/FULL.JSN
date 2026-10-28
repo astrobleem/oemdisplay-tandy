@@ -1,0 +1,155 @@
+{
+  "status": "PASS_ORIGINAL_SETUP_COMPLETION_AND_FIRST_START",
+  "continued_from_entry": {
+    "bytes": 6705,
+    "sha256": "87db9b1ad95cb854aa8ef921266dee46aa6e33c9cbd2acae9016f978450e5ac7"
+  },
+  "scope": "Original media graphical Setup completed after resuming its existing shell on the same private image; return to DOS; a separate ordinary WIN /R start reaches Program Manager; normal Exit Windows returns to DOS.",
+  "complete_os_installation": true,
+  "first_ordinary_win_r_start": true,
+  "normal_dos_return": true,
+  "setup_returned_to_dos": true,
+  "original_media_unchanged": true,
+  "original_media_files_verified": 282,
+  "driver_replaced_after_setup": false,
+  "ini_patched_after_entry": false,
+  "installed": {
+    "CGA640.DRV": {
+      "bytes": 57312,
+      "sha256": "686654ddc6312f24c96e893850744beb8efd24e3db7c91eff13e1eae89d152a1"
+    },
+    "XTCSYS.FON": {
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "XTCFIX.FON": {
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "XTCOEM.FON": {
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    },
+    "CGAGRAB.GR2": {
+      "bytes": 2104,
+      "sha256": "1fc24254a1b76c2030a0ae60e25a17d6df4730c2a99d293ca22886059d8be067"
+    },
+    "XTSTATIC.LGO": {
+      "bytes": 361,
+      "sha256": "995d71e3626de64c8fe21bc1f037e0dece0853d4f0d09082bf607b2d237b37ef"
+    },
+    "WXTSPL01.RLE": {
+      "bytes": 4062,
+      "sha256": "eec3a413bb776bea8eccb19a379428d15f06cbdc0ac41b0871345ff9c24caf1c"
+    }
+  },
+  "boot_settings": {
+    "shell": "PROGMAN.EXE",
+    "display": "CGA640.DRV",
+    "system_font": "XTCSYS.FON",
+    "fixed_font": "XTCFIX.FON",
+    "oem_font": "XTCOEM.FON",
+    "grabber": "CGAGRAB.GR2"
+  },
+  "boot_setting_case": "DOS filenames normalized to uppercase",
+  "os_files": {
+    "WINDOWS/PROGMAN.EXE": {
+      "bytes": 55200,
+      "sha256": "7375eba584f248d57d604e5563885c4fa0f0cd148d5033b988942ad3ecd8ef15"
+    },
+    "WINDOWS/WINFILE.EXE": {
+      "bytes": 106288,
+      "sha256": "113c86204a3d7430fc3707ab0d27bc3391b9638e204d2edea2bc0f55f89ddb8c"
+    },
+    "WINDOWS/NOTEPAD.EXE": {
+      "bytes": 31936,
+      "sha256": "bace902375ec5bc88490724a13e49860f1bd938fca5ba97ef13115b1a0dd107e"
+    },
+    "WINDOWS/CONTROL.EXE": {
+      "bytes": 161488,
+      "sha256": "ba33951fcfe28c0bd73178027b4b2226ea054f121ed50c1a594bf569ff424ddd"
+    },
+    "WINDOWS/SYSTEM/KERNEL.EXE": {
+      "bytes": 68928,
+      "sha256": "114675d9854bc96c50eaf2460ec048bad39438aaace42c3c41c6407c1ec4b7b3"
+    },
+    "WINDOWS/SYSTEM/GDI.EXE": {
+      "bytes": 129691,
+      "sha256": "48956cb3948f06209ac3b22293ceb49106bac9a39aa30d7fb2744ed0267672e2"
+    },
+    "WINDOWS/SYSTEM/USER.EXE": {
+      "bytes": 231680,
+      "sha256": "609f8945fd73e084851f99b515c534eb68a1db8dc0c1b556d81c105dccef666c"
+    }
+  },
+  "source": "Four unchanged original 1.44 MB floppy contents in one media directory; original Setup copies/decompresses them on the 8088.",
+  "resume": {
+    "reused_image": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-10\\fresh-native-02\\DISK.IMG",
+    "image_sha256_before_resume": "5eaee53e0fb7076bc2dafbce9921d5f72e6c0285586789f7d321c41393b2b911",
+    "new_disk_image": false,
+    "scope": "Resume original graphical Setup shell, complete install, then normal WIN /R; no display/INI changes",
+    "changes": [
+      "AUTOEXEC only: WIN /R to resume existing original setup shell",
+      "FIRST.BAT only: ordinary WIN /R with DOS-return marker"
+    ]
+  },
+  "choices": [
+    "Skipped optional printer setup, app scan and document viewing",
+    "Gave original source directory C:\\W30SRC when prompted",
+    "Saved suggested boot-file changes as backups without applying them to harness startup files",
+    "Chose Return to DOS after Setup reports Windows 3.0 is now installed",
+    "Ran C:\\FIRST.BAT, which only runs ordinary WIN /R and writes a return marker",
+    "Used Program Manager File/Exit Windows and confirmed OK"
+  ],
+  "physical_hardware": false,
+  "other_fresh_profiles": false,
+  "floppy_swaps": false,
+  "owned_pid": 21092,
+  "owned_stopped": true,
+  "lease_released": true,
+  "inventory_after": 0,
+  "byte_lock_available_after": true,
+  "queued_runner": null,
+  "evidence": {
+    "COMPLETE.PNG": {
+      "bytes": 4723,
+      "sha256": "0afe1517c16fa3e92b19ff77a933710379ec35fc5bddc6808ef8b0a1ce3cb9ea"
+    },
+    "FIRSTWIN.PNG": {
+      "bytes": 3975,
+      "sha256": "aa9e24eb915a57ada27c48d53193cbfd6d9023674ed207ff79bff7d70c861f1e"
+    },
+    "DOSBACK.PNG": {
+      "bytes": 984,
+      "sha256": "c85729b2bc064a0c97e80006e422e40b5d1a1b6504ec0abedfc7d73a7abb2c86"
+    },
+    "FULLRUN.JSN": {
+      "bytes": 1867,
+      "sha256": "805743236cd38e83a44b7b60280af9dd4ed447f3a67524383c870d582fcb201e"
+    },
+    "FULLPREP.JSN": {
+      "bytes": 505,
+      "sha256": "1fc2e22dbcbbec6dd8da2807fa7c558092d2cb5793647190667764b370babf48"
+    },
+    "COMPLETE.CNF": {
+      "bytes": 717,
+      "sha256": "c27bbee689654d31d5f780d14248feb0a0cd8228d27b6775230fcb32d16d17d4"
+    },
+    "RUNFULL.PY": {
+      "bytes": 4525,
+      "sha256": "d481246ffbf7e8ab3533d589075545d865f43bf961a796c8c927e0c6f946376b"
+    },
+    "PREPFULL.PY": {
+      "bytes": 2090,
+      "sha256": "229139130dc0806f35614521772a4d3de59cc1f7b6fb601d6718d66a7411b777"
+    },
+    "SETUPRET.TXT": {
+      "bytes": 10,
+      "sha256": "29a7e48f881b212149a68b0ebbfa9560447e9626d9eb327a7903430182be1189"
+    },
+    "FIRSTRUN.TXT": {
+      "bytes": 10,
+      "sha256": "29a7e48f881b212149a68b0ebbfa9560447e9626d9eb327a7903430182be1189"
+    }
+  }
+}

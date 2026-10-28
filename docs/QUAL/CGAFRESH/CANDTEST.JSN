@@ -1,0 +1,42 @@
+{
+  "status": "PASS_FRESH_CANDIDATE_REFUSALS_PENDING_REVIEW",
+  "checks": [
+    "Unsafe evidence path refused: \\Users\\chad\\outside.txt",
+    "Unsafe evidence path refused: C:relative.txt",
+    "Unsafe evidence path refused: C:\\outside.txt",
+    "Unsafe evidence path refused: \\\\host\\share\\proof.txt",
+    "Unsafe evidence path refused: ../escape.txt",
+    "Unsafe evidence path refused: /outside.txt",
+    "Unsafe evidence path refused: a/../../outside.txt",
+    "Exact native fresh packet accepted",
+    "Changed packet refused",
+    "Changed packet refused",
+    "Changed source_packet refused",
+    "Changed native_entry refused",
+    "Changed native_completion refused",
+    "Changed build refused",
+    "Changed host refused",
+    "Changed config refused",
+    "Missing launcher source binding refused",
+    "Entry-only acceptance refused",
+    "Physical-hardware claim refused",
+    "First-start capture missing refused",
+    "Incomplete native complete_os_installation refused",
+    "Incomplete native first_ordinary_win_r_start refused",
+    "Incomplete native normal_dos_return refused",
+    "Incomplete native original_media_unchanged refused",
+    "Incomplete native driver_replaced_after_setup refused",
+    "Incomplete native owned_stopped refused",
+    "Incomplete native lease_released refused",
+    "Expanded native memory refused",
+    "Different native-tested launcher refused",
+    "Changed source inventory/header refused: tools/DOSINST/CRCFAST.H",
+    "Changed source inventory/header refused: EXTRA.TXT"
+  ],
+  "packet": {
+    "bytes": 367080,
+    "sha256": "06039bfced56f0affae86dfc782751a04a7fdaddf204d1057b65a4f0454527be"
+  },
+  "emulator_started": false,
+  "independent_review_required_for_catalog": true
+}

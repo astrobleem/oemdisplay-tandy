@@ -1,0 +1,7 @@
+{
+  "status": "FAILED_CONFIG_DECODER_BEFORE_FIX",
+  "error": "UnicodeDecodeError: ascii cannot decode byte 0xef at position 0",
+  "cause": "86Box serialized the fixture config with UTF-8 BOM; exact bytes were correct but decoder assumed ASCII.",
+  "fix": "Decode utf-8-sig; preserve exact hash and strict closed option validation.",
+  "native_test_changed": false
+}

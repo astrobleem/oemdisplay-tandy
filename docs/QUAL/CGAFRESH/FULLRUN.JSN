@@ -1,0 +1,93 @@
+{
+  "complete": true,
+  "scope": "Fresh original-media Windows 3.0 Setup; IBM XT 8088 4.77 MHz 640K CGA",
+  "actions": [
+    {
+      "capture": "RESUME-CHECK"
+    },
+    {
+      "keys": " {TAB} {TAB} {TAB}{ENTER}",
+      "capture": "OPTIONS-CONTINUE",
+      "settle": 4
+    },
+    {
+      "capture": "SETUP-NEXT"
+    },
+    {
+      "keys": "C:\\W30SRC{ENTER}",
+      "capture": "ORIGINAL-MEDIA-PATH",
+      "settle": 4
+    },
+    {
+      "capture": "COPY-PROGRESS"
+    },
+    {
+      "capture": "COPY-PROGRESS-2"
+    },
+    {
+      "capture": "COPY-PROGRESS-3"
+    },
+    {
+      "capture": "COPY-PROGRESS-4"
+    },
+    {
+      "capture": "SETUP-END-CHECK"
+    },
+    {
+      "capture": "SETUP-END-CHECK-2"
+    },
+    {
+      "keys": "{DOWN}{DOWN}{TAB}{ENTER}",
+      "capture": "BOOT-CONFIG-CHOICE",
+      "settle": 4
+    },
+    {
+      "capture": "FINISH-CHECK"
+    },
+    {
+      "keys": "{ENTER}",
+      "capture": "BOOT-BACKUPS",
+      "settle": 4
+    },
+    {
+      "capture": "FINISH-CHECK-2"
+    },
+    {
+      "keys": "{TAB}{ENTER}",
+      "capture": "SETUP-RETURN",
+      "settle": 5
+    },
+    {
+      "contains": "C:\\WINDOWS>",
+      "keys": "C:\\FIRST{ENTER}",
+      "capture": "FIRST-ORDINARY-LAUNCH",
+      "settle": 5
+    },
+    {
+      "capture": "FIRST-START-CHECK"
+    },
+    {
+      "keys": "{F10}{ENTER}x",
+      "capture": "NORMAL-EXIT-CHOICE",
+      "settle": 3
+    },
+    {
+      "capture": "NORMAL-EXIT-CHECK"
+    },
+    {
+      "keys": "{ENTER}",
+      "capture": "NORMAL-EXIT-CONFIRMED",
+      "settle": 5
+    },
+    {
+      "contains": "C:\\WINDOWS>",
+      "capture": "NORMAL-DOS-RETURN",
+      "finish": true
+    }
+  ],
+  "bound_seconds": 1800,
+  "owned_pid": 21092,
+  "owned_stopped": true,
+  "lease_released": true,
+  "inventory_after": "0"
+}

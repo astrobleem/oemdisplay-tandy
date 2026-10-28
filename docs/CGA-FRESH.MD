@@ -1,10 +1,10 @@
-# CGA during fresh Windows 3.0 Setup: local candidate
+# CGA during fresh Windows 3.0 Setup
 
-This additive candidate lets original Windows 3.0 Setup select the project's
+The integrated CGA packet lets original Windows 3.0 Setup select the project's
 fixed **CGA640** driver before its graphical phase starts. It bundles the
 matching XTC System/Fixed/OEM fonts, private CGA grabber and startup assets.
 It targets an IBM XT/8088 with RGBI CGA and 640 KB. Physical hardware remains
-unqualified. Publication and current-download selection require approval.
+unqualified. Publication requires approval.
 
 ## Adapter priorities
 
@@ -20,7 +20,7 @@ Video II and Yamaha/PC1 remain later adapter-specific work. No new fresh
 qualification is claimed for them. ROM-DOS and PicoMEM are outside this task.
 
 The current Tandy full-desktop route and the current CGA download remain
-unchanged. This is a separate `CGAFRESH.ZIP` candidate. Its 33 existing runtime
+unchanged. The integrated `CGA.ZIP` retains its 33 existing runtime
 and support members are retained byte-for-byte, including the DOS mode-selection
 installer, helpers and original OEM descriptor. The original README is retained
 as `CGAOLD.TXT`; the new root README leads with the fresh-install instructions.
@@ -89,6 +89,12 @@ Host checks reject changed base/build inputs and modern/protected executables,
 check all accepted members and DOS names, and rebuild the source ZIP identically.
 They do not establish native Setup behavior.
 
+The current catalog selects the integrated archive under its normal `CGA.ZIP`
+name and supplies the standalone source as `CGASRC.ZIP`. `tools/CGAFRESH` gates
+that selection on completed original-media installation, first normal startup,
+normal DOS return and independent final-source review. Historical compact/PAN
+validators and all four Tandy core identities retain their original contracts.
+
 ## Native evidence scope
 
 The first architecture test begins with no Windows directory on a private
@@ -110,11 +116,21 @@ installed display-support files match their accepted bytes. The final archive
 adds component notices and leads with fresh instructions after native staging; no
 executable, descriptor or display-support bytes changed.
 
-[The receipt and captures](QUAL/CGAFRESH/README.MD) pin both runs, the final
-candidate, host checks and standalone source rebuild. The scope ends at the
-graphical Setup options dialog: complete OS installation and first ordinary
-`WIN /R` startup are not claimed. The earlier missing-emulator-path launch
-failure is retained; it started no emulator. Both actual runs stopped only
+[The receipts and captures](QUAL/CGAFRESH/README.MD) retain those entry-only
+tests unchanged. `FULL.JSN` separately records completion on the same private
+DOS 6.22 image: its existing original Setup shell was resumed with `WIN /R`,
+the remaining original media files were installed, and Setup reported that
+Windows 3.0 was installed. Setup returned to DOS. A separate ordinary `WIN /R`
+launch reached Program Manager, then normal Exit Windows returned to DOS.
+The seven display-support files remain exact and the normal shell is PROGMAN;
+no driver replacement or INI patch was used. All 282 source-media files were
+checked unchanged. Optional printer setup, application scanning and document
+viewing were skipped; suggested boot-file changes were saved as backups.
+
+This covers the known original-media directory route on the 640 KB IBM XT/CGA
+fixture. A full floppy-swapping sequence, other fresh profiles and physical
+hardware remain separate coverage. The earlier missing-emulator-path launch
+failure is retained; it started no emulator. All actual runs stopped only
 their owned emulator, released the shared lease and ended with inventory zero.
 
 Every native run needs the shared nonblocking emulator lease, empty emulator

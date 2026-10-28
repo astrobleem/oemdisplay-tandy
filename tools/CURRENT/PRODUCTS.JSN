@@ -88,10 +88,10 @@
       }
     },
     "CGA.ZIP": {
-      "source": "downloads/COMPACT/CGA.ZIP",
+      "source": "downloads/FRESH/CGA.ZIP",
       "identity": {
-        "bytes": 297312,
-        "sha256": "84a1992803d1bd022318ddb001490b66494aba1e61ca09eef2fbc445fb469cc4"
+        "bytes": 367080,
+        "sha256": "06039bfced56f0affae86dfc782751a04a7fdaddf204d1057b65a4f0454527be"
       }
     },
     "PAN.ZIP": {
@@ -99,6 +99,13 @@
       "identity": {
         "bytes": 429623,
         "sha256": "e020e8c71d132bb89a65ff1dde096be25e437fc70a6d976cf004895b98ccfcd0"
+      }
+    },
+    "CGASRC.ZIP": {
+      "source": "downloads/FRESH/CGASRC.ZIP",
+      "identity": {
+        "bytes": 306064,
+        "sha256": "01875aec63bcddf838af07a8cd11d700f6c95fef97e8026298304744b0cb6b75"
       }
     }
   },
@@ -141,6 +148,7 @@
   },
   "developer_assets": [
     "WINXTSRC.ZIP",
+    "CGASRC.ZIP",
     "BUILDIN.ZIP",
     "WINXT.JSN",
     "WINXT.SHA",

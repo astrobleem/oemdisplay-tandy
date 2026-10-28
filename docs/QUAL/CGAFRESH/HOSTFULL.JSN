@@ -1,0 +1,28 @@
+{
+  "accepted_base_members_preserved": 33,
+  "original_readme_preserved_as": "CGAOLD.TXT",
+  "fresh_instructions_are_root_readme": true,
+  "closed_fresh_inventory": true,
+  "dos_83_names": true,
+  "PE_refused": true,
+  "NE_refused": true,
+  "LE_refused": true,
+  "LX_refused": true,
+  "oversized_launcher_refused": true,
+  "changed_base_refused": true,
+  "changed_launcher_refused": true,
+  "standalone_source_rebuild_identical": true,
+  "launcher": {
+    "bytes": 23466,
+    "sha256": "1e6cd9130655fcfb96a55cbbb7e512bc23ab48f3a443cdb29038e09ee920947b"
+  },
+  "consumer_packet": {
+    "bytes": 367080,
+    "sha256": "06039bfced56f0affae86dfc782751a04a7fdaddf204d1057b65a4f0454527be"
+  },
+  "source_packet": {
+    "bytes": 306064,
+    "sha256": "01875aec63bcddf838af07a8cd11d700f6c95fef97e8026298304744b0cb6b75"
+  },
+  "emulator_started": false
+}
