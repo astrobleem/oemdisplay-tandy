@@ -18,6 +18,10 @@ The native DOS installer preserves the original shell/input pair, checks exact k
 baseline identities, supports undo, and retains existing configuration.
 The current accepted shell/runtime packets are preserved separately.
 
+The working source includes an unqualified symmetry optimization; see
+[candidate changes, host evidence and pending native checks](OPTIMIZE.MD).
+The accepted runtime and its existing qualification remain pinned separately.
+
 See [installation and controls](README.TXT) and [qualification](TESTS.MD).
 Source, build commands and developer-only native controllers are in SOURCE.
 The source ZIP layout and rebuild prerequisites are in [BUILDSRC.TXT](BUILDSRC.TXT).
