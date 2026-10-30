@@ -25,6 +25,7 @@ static int benchmark, qaMode, qaStep, qaFrames, qaLeaks, qaDone, errors, frames;
 static int previewPending, shutdown, showConfig;
 static unsigned phase;
 static DWORD armedAt, lastInput, lastFrame, phaseTime, drawTotal, drawMax, start;
+static DWORD profMath,profClear,profDraw,profCopy;
 static POINT origin;
 static char logpath[144], ini[144], wakeReason[32];
 static CFRAME frame;
@@ -174,14 +175,16 @@ static int initDraw(HWND w)
 static int render(void)
 {
  POINT polygon[4];int n,j,x,y,mode=drawingStyle(),ok=1;
- HGDIOBJ oldpen,oldbrush;HDC dc;DWORD elapsed,sourcePixel,targetPixel,t=GetTickCount();char b[160];
+ HGDIOBJ oldpen,oldbrush;HDC dc;DWORD mark,next,elapsed,sourcePixel,targetPixel,t=GetTickCount();char b[160];
  if(!running||!ownsScreen())return 0;
  if(blankCursor)SetCursor(blankCursor);
  elapsed=t-lastFrame;lastFrame=t;if(elapsed>500UL)elapsed=500UL;
  phaseTime+=elapsed*(DWORD)speed;
  while(phaseTime>=125UL){phaseTime-=125UL;phase++;}
  CubeFrame(phase,cw/2,ch/2,scaleX,scaleY,&frame);
+ mark=GetTickCount();profMath+=mark-t;
  if(!PatBlt(canvas,0,0,cw,ch,BLACKNESS))ok=0;
+ next=GetTickCount();profClear+=next-mark;mark=next;
  oldpen=SelectObject(canvas,edge);oldbrush=SelectObject(canvas,GetStockObject(NULL_BRUSH));
  if(mode==3){
   for(n=0;n<12;n++){
@@ -196,6 +199,7 @@ static int render(void)
   if(!Polygon(canvas,polygon,4))ok=0;
  }
  SelectObject(canvas,oldbrush);SelectObject(canvas,oldpen);
+ next=GetTickCount();profDraw+=next-mark;mark=next;
  dc=GetDC(saver);
  if(dc){
   viewport(dc);x=viewX+(viewW-cw)/2;y=viewY+(viewH-ch)/2;
@@ -212,6 +216,7 @@ static int render(void)
   lastX=x;lastY=y;
   ReleaseDC(saver,dc);
  }else ok=0;
+ profCopy+=GetTickCount()-mark;
  if(!ok)errors++;
  elapsed=GetTickCount()-t;drawTotal+=elapsed;if(elapsed>drawMax)drawMax=elapsed;
  frames++;
@@ -231,6 +236,7 @@ static void stop(HWND w,char *reason)
  if(GetCapture()==w)ReleaseCapture();restoreCursor();
  wsprintf(b,"END reason=%s frames=%d errors=%d draw_ms=%lu max_ms=%lu elapsed=%lu\r\n",
   (LPSTR)reason,frames,errors,drawTotal,drawMax,GetTickCount()-start);logtext(b);
+ wsprintf(b,"PROFILE math=%lu clear=%lu draw=%lu copy=%lu\r\n",profMath,profClear,profDraw,profCopy);logtext(b);
  DestroyWindow(w);
  if(back&&IsWindow(previousActive)&&IsWindowVisible(previousActive)&&IsWindowEnabled(previousActive)){
   SetActiveWindow(previousActive);
@@ -348,7 +354,8 @@ static int startSaver(void)
  if(initialKeys[VK_LBUTTON])mouseHeld|=MK_LBUTTON;
  if(initialKeys[VK_RBUTTON])mouseHeld|=MK_RBUTTON;
  if(initialKeys[VK_MBUTTON])mouseHeld|=MK_MBUTTON;
- frames=errors=qaFrames=0;phase=31;phaseTime=drawTotal=drawMax=0;start=lastFrame=GetTickCount();
+ frames=errors=qaFrames=0;phase=31;phaseTime=drawTotal=drawMax=0;
+ profMath=profClear=profDraw=profCopy=0;start=lastFrame=GetTickCount();
  saver=CreateWindow("TandyCubeSaver","Rotating cube",WS_POPUP,0,0,screenW,screenH,NULL,NULL,instance,NULL);
  if(!saver)return 0;
  if(GetCapture()||GetSysModalWindow()||GetActiveWindow()!=previousActive){stop(saver,"startup-owner-changed");return 0;}
