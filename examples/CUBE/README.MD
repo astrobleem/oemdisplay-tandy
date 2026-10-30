@@ -55,3 +55,9 @@ remain external and are never included in either packet.
 CI runs the host math/policy and tamper checks and requires the strict native
 receipt gate before assembling review artifacts. It does not run Windows,
 replace a native receipt, or publish a release.
+
+## Drawing/copy experiment
+
+See [RENDER.MD](RENDER.MD) for the current unreleased drawing/copy candidate,
+controlled native Tandy comparisons and remaining qualification limits.
+The earlier geometry-only OPTIMIZE.MD record is historical.
