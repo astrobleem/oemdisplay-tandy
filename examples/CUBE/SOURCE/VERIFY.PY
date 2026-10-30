@@ -30,7 +30,7 @@ def verify(review=False):
     cube,shell,idle,install=(receipt(n)for n in ('CUBE','SHELL','INPUT','INSTALL'))
     for n,actual in [('CUBE.EXE',cube['runtime']),('CUBESHL.EXE',shell['runtime']['TSHELL.EXE']),('TSINPUT.DLL',idle['runtime']),('CUBESET.EXE',install['runtime'])]:
         if actual!=a['runtime'][n]:raise ValueError('Build/runtime identity differs: '+n)
-    required={'CUBE.C','CUBECORE.C','CUBECORE.H','CUBE.DEF','CUBE.RSP','BUILD.BAT','CUBECTL.C','CUBECTL.DEF','CUBECTL.RSP'}
+    required={'CUBE.C','CUBECORE.C','CUBECORE.H','CUBERECT.H','CUBE.DEF','CUBE.RSP','BUILD.BAT','CUBECTL.C','CUBECTL.DEF','CUBECTL.RSP'}
     if set(cube['source'])!=required:raise ValueError('Incomplete Cube build source inventory')
     for n,p in cube['source'].items():source('examples/CUBE/SOURCE/'+n,p)
     shellnames={}
