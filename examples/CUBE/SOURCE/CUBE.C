@@ -3,6 +3,7 @@
 #define WINVER 0x0300
 #include <windows.h>
 #include "CUBECORE.H"
+#include "CUBERECT.H"
 #define ID_STYLE 101
 #define ID_SPEED 102
 #define ID_SIZE 103
@@ -19,13 +20,13 @@ static HCURSOR blankCursor, previousCursor;
 static BYTE cursorAnd[128], cursorXor[128], initialKeys[256], downKeys[256];
 static int style, speed=2, cubeSize=2, selectedStyle, selectedSpeed, selectedSize;
 static int screenW, screenH, viewX, viewY, viewW, viewH, colors, cw, ch, scaleX, scaleY, timerOn;
-static int lastX, lastY;
+static int lastX, lastY, boundsReady;
+static CBOX lastBounds;
 static int running, draining, closing, returnFocus, hidden, mouseHeld, mouseGesture;
 static int benchmark, qaMode, qaStep, qaFrames, qaLeaks, qaDone, errors, frames;
 static int previewPending, shutdown, showConfig;
 static unsigned phase;
 static DWORD armedAt, lastInput, lastFrame, phaseTime, drawTotal, drawMax, start;
-static DWORD profMath,profClear,profDraw,profCopy;
 static POINT origin;
 static char logpath[144], ini[144], wakeReason[32];
 static CFRAME frame;
@@ -38,6 +39,11 @@ static void logtext(char *s)
  if(!benchmark&&!qaMode)return;
  f=_lopen(logpath,OF_WRITE);if(f==HFILE_ERROR)f=_lcreat(logpath,0);
  if(f!=HFILE_ERROR){_llseek(f,0L,2);_lwrite(f,s,lstrlen(s));_lclose(f);}
+}
+static void qaCaptureReady(void)
+{
+ char b[96];
+ wsprintf(b,"QA CAPTURE READY step=%d n=%d phase=%u\r\n",qaStep,qaFrames,phase);logtext(b);
 }
 static int valid(int v,int lo,int hi,int fallback)
 {return v>=lo&&v<=hi?v:fallback;}
@@ -134,7 +140,7 @@ static int initDraw(HWND w)
  };
  BYTE bits[16];HBITMAP pattern;HDC dc;int x,y,n,ax,ay,mode=drawingStyle();
  dc=GetDC(w);if(!dc)return 0;
- viewport(dc);lastX=lastY=-1;
+ viewport(dc);lastX=lastY=-1;boundsReady=0;
  cw=viewW-8;if(cw>224)cw=224;
  ch=viewH-8;if(ch>128)ch=128;
  if(cw<16||ch<16){ReleaseDC(w,dc);return 0;}
@@ -174,17 +180,20 @@ static int initDraw(HWND w)
 }
 static int render(void)
 {
- POINT polygon[4];int n,j,x,y,mode=drawingStyle(),ok=1;
- HGDIOBJ oldpen,oldbrush;HDC dc;DWORD mark,next,elapsed,sourcePixel,targetPixel,t=GetTickCount();char b[160];
+ POINT polygon[4];CBOX current,dirty;int n,j,x,y,mode=drawingStyle(),ok=1;
+ HGDIOBJ oldpen,oldbrush;HDC dc;DWORD elapsed,sourcePixel,targetPixel,t=GetTickCount();char b[160];
  if(!running||!ownsScreen())return 0;
  if(blankCursor)SetCursor(blankCursor);
  elapsed=t-lastFrame;lastFrame=t;if(elapsed>500UL)elapsed=500UL;
  phaseTime+=elapsed*(DWORD)speed;
  while(phaseTime>=125UL){phaseTime-=125UL;phase++;}
+ /* Deterministic developer QA phases make native comparisons reproducible. */
+ if(qaMode)phase=39U+(unsigned)frames*8U;
  CubeFrame(phase,cw/2,ch/2,scaleX,scaleY,&frame);
- mark=GetTickCount();profMath+=mark-t;
- if(!PatBlt(canvas,0,0,cw,ch,BLACKNESS))ok=0;
- next=GetTickCount();profClear+=next-mark;mark=next;
+ /* Erase and transfer the union so no old edge or fill can remain. */
+ CubeDirtyBounds(&frame,cw,ch,&lastBounds,boundsReady,&current,&dirty);
+ if(!PatBlt(canvas,dirty.left,dirty.top,dirty.right-dirty.left,
+   dirty.bottom-dirty.top,BLACKNESS))ok=0;
  oldpen=SelectObject(canvas,edge);oldbrush=SelectObject(canvas,GetStockObject(NULL_BRUSH));
  if(mode==3){
   for(n=0;n<12;n++){
@@ -199,13 +208,13 @@ static int render(void)
   if(!Polygon(canvas,polygon,4))ok=0;
  }
  SelectObject(canvas,oldbrush);SelectObject(canvas,oldpen);
- next=GetTickCount();profDraw+=next-mark;mark=next;
  dc=GetDC(saver);
  if(dc){
   viewport(dc);x=viewX+(viewW-cw)/2;y=viewY+(viewH-ch)/2;
   if(lastX>=0&&(lastX!=x||lastY!=y))
    if(!PatBlt(dc,lastX,lastY,cw,ch,BLACKNESS))ok=0;
-  if(!BitBlt(dc,x,y,cw,ch,canvas,0,0,SRCCOPY))ok=0;
+  if(!BitBlt(dc,x+dirty.left,y+dirty.top,dirty.right-dirty.left,
+   dirty.bottom-dirty.top,canvas,dirty.left,dirty.top,SRCCOPY))ok=0;
   if(qaMode&&frames==2){
    j=0;for(n=0;n<6;n++)if(frame.visible[n]){j=CubeFaces[n][0];break;}
    sourcePixel=GetPixel(canvas,frame.point[j].x,frame.point[j].y);
@@ -213,10 +222,9 @@ static int render(void)
    wsprintf(b,"PIXEL source=%lu target=%lu\r\n",sourcePixel,targetPixel);logtext(b);
    if(sourcePixel!=RGB(255,255,255)||targetPixel!=sourcePixel)ok=0;
   }
-  lastX=x;lastY=y;
+  lastX=x;lastY=y;lastBounds=current;boundsReady=1;
   ReleaseDC(saver,dc);
  }else ok=0;
- profCopy+=GetTickCount()-mark;
  if(!ok)errors++;
  elapsed=GetTickCount()-t;drawTotal+=elapsed;if(elapsed>drawMax)drawMax=elapsed;
  frames++;
@@ -236,7 +244,6 @@ static void stop(HWND w,char *reason)
  if(GetCapture()==w)ReleaseCapture();restoreCursor();
  wsprintf(b,"END reason=%s frames=%d errors=%d draw_ms=%lu max_ms=%lu elapsed=%lu\r\n",
   (LPSTR)reason,frames,errors,drawTotal,drawMax,GetTickCount()-start);logtext(b);
- wsprintf(b,"PROFILE math=%lu clear=%lu draw=%lu copy=%lu\r\n",profMath,profClear,profDraw,profCopy);logtext(b);
  DestroyWindow(w);
  if(back&&IsWindow(previousActive)&&IsWindowVisible(previousActive)&&IsWindowEnabled(previousActive)){
   SetActiveWindow(previousActive);
@@ -312,12 +319,12 @@ LONG FAR PASCAL CubeProc(HWND w,UINT m,WPARAM wp,LPARAM lp)
   if(!running)return 0;
   if(!ownsScreen()){returnFocus=0;stop(w,"owner-lost");return 0;}
   if(!render()){stop(w,"draw-failed");return 0;}
-  if(qaMode&&++qaFrames==2){
+  if(qaMode&&(++qaFrames==2||qaFrames==10)){
    /* A quiescent native frame lets a headless capture cross a scanout tick.
       The ordinary consumer renderer never enters this developer-only hold. */
    KillTimer(w,1);timerOn=0;
    if(!SetTimer(w,2,1500,NULL)){stop(w,"qa-hold-timer-failed");return 0;}
-   logtext("QA CAPTURE READY\r\n");
+   qaCaptureReady();
   }
   if(qaMode&&qaFrames==12)PostMessage(qa,WM_USER+1,0,0L);
   if(benchmark&&frames>=32)stop(w,"benchmark");return 0;
@@ -354,8 +361,7 @@ static int startSaver(void)
  if(initialKeys[VK_LBUTTON])mouseHeld|=MK_LBUTTON;
  if(initialKeys[VK_RBUTTON])mouseHeld|=MK_RBUTTON;
  if(initialKeys[VK_MBUTTON])mouseHeld|=MK_MBUTTON;
- frames=errors=qaFrames=0;phase=31;phaseTime=drawTotal=drawMax=0;
- profMath=profClear=profDraw=profCopy=0;start=lastFrame=GetTickCount();
+ frames=errors=qaFrames=0;phase=31;phaseTime=drawTotal=drawMax=0;start=lastFrame=GetTickCount();
  saver=CreateWindow("TandyCubeSaver","Rotating cube",WS_POPUP,0,0,screenW,screenH,NULL,NULL,instance,NULL);
  if(!saver)return 0;
  if(GetCapture()||GetSysModalWindow()||GetActiveWindow()!=previousActive){stop(saver,"startup-owner-changed");return 0;}
