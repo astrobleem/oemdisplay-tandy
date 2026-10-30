@@ -18,6 +18,10 @@ The native DOS installer preserves the original shell/input pair, checks exact k
 baseline identities, supports undo, and retains existing configuration.
 The current accepted shell/runtime packets are preserved separately.
 
+The working source includes an unqualified symmetry optimization; see
+[candidate changes, host evidence and pending native checks](OPTIMIZE.MD).
+The accepted runtime and its existing qualification remain pinned separately.
+
 See [installation and controls](README.TXT) and [qualification](TESTS.MD).
 Source, build commands and developer-only native controllers are in SOURCE.
 The source ZIP layout and rebuild prerequisites are in [BUILDSRC.TXT](BUILDSRC.TXT).
@@ -51,3 +55,12 @@ remain external and are never included in either packet.
 CI runs the host math/policy and tamper checks and requires the strict native
 receipt gate before assembling review artifacts. It does not run Windows,
 replace a native receipt, or publish a release.
+
+## Drawing/copy experiment
+
+See [RENDER.MD](RENDER.MD) for the current unreleased drawing/copy candidate,
+controlled native Tandy comparisons and remaining qualification limits.
+The earlier geometry-only OPTIMIZE.MD record is historical.
+The tested unreleased source now lives in
+[experiments/CUBEOPT](../../experiments/CUBEOPT/README.MD); this directory
+retains the complete accepted source/runtime/receipt closure.

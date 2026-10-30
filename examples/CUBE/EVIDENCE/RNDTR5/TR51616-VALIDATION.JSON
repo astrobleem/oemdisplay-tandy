@@ -1,0 +1,506 @@
+{
+  "driver": {
+    "repository": "astrobleem/oemdisplay-tandy",
+    "path": "distributions/WINXT/TR51616.DRV",
+    "git_blob_sha": "60f9c07f93be544c686d9eda661e73134de63e1e",
+    "display_url": "https://github.com/astrobleem/oemdisplay-tandy/blob/main/distributions/WINXT/TR51616.DRV",
+    "source": "GitHub default branch resolved by connector; immutable blob SHA retained",
+    "bytes": 54880,
+    "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d",
+    "matches_retained_repo": true
+  },
+  "comparison": {
+    "control": {
+      "process": {
+        "status": "PASS",
+        "variant": "render-control",
+        "bound_seconds": 420,
+        "inventory_before": "",
+        "mesen_before": "",
+        "parallel_authorization": "Chad explicitly authorized Mesen/BOR and independent x86 emulator work in parallel; x86 shared lease, private media/config and port checks retained. No Mesen control or BOR resources used.",
+        "emulator": {
+          "bytes": 40974882,
+          "sha256": "17b8ba40caa595ded247799e8a501897bfe6913ce19249ea5fdb2cd1f9e8df36"
+        },
+        "runtime": {
+          "bytes": 16191,
+          "sha256": "ce558e0fdcf73d8499f89aeea65c0a798414cc50506107dac0dbb2f7815bb6ee"
+        },
+        "owned_pid": 18552,
+        "captures": [
+          "STYLE1-STEP0-N10-P119",
+          "STYLE1-STEP0-N2-P55",
+          "STYLE1-STEP3-N10-P119",
+          "STYLE1-STEP3-N2-P55",
+          "STYLE2-STEP1-N10-P119",
+          "STYLE2-STEP1-N2-P55",
+          "STYLE2-STEP4-N10-P119",
+          "STYLE2-STEP4-N2-P55",
+          "STYLE3-STEP2-N10-P119",
+          "STYLE3-STEP2-N2-P55",
+          "STYLE3-STEP5-N10-P119",
+          "STYLE3-STEP5-N2-P55"
+        ],
+        "matching_readbacks": 6,
+        "seconds": 132.9,
+        "owned_stopped": true,
+        "guest_driver_after": {
+          "bytes": 54880,
+          "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d"
+        },
+        "lease_released": true,
+        "inventory_after": "",
+        "mesen_after": ""
+      },
+      "preparation": {
+        "seed": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-12\\native-tandy-02",
+        "private_image": true,
+        "profile": "tandytr5",
+        "environment": {
+          "display.drv": {
+            "name": "TR51616.DRV",
+            "bytes": 54880,
+            "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d"
+          },
+          "fonts.fon": {
+            "name": "XTCSYS.FON",
+            "bytes": 4592,
+            "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+          },
+          "fixedfon.fon": {
+            "name": "XTCFIX.FON",
+            "bytes": 4208,
+            "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+          },
+          "oemfonts.fon": {
+            "name": "XTCOEM.FON",
+            "bytes": 4560,
+            "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+          }
+        },
+        "cpu": "Tandy 1000 HX 8088 7159092 Hz; RESERVE 32",
+        "memory_kb": 640,
+        "config": {
+          "bytes": 609,
+          "sha256": "db82deeb8481a0cfe656141d0b6c077a61fc3b857a932e637f9b69bb453556aa"
+        },
+        "cube": {
+          "bytes": 16191,
+          "sha256": "ce558e0fdcf73d8499f89aeea65c0a798414cc50506107dac0dbb2f7815bb6ee"
+        },
+        "controller": {
+          "bytes": 7743,
+          "sha256": "2cbc3bfa523143463e59b995d80a03cb1e5dfb7d0d554353a555629ae574fcff"
+        },
+        "scope": "Fresh production cube /Q render/input suite; standalone runtime replacement only, no installer qualification",
+        "driver_identity": {
+          "repository": "astrobleem/oemdisplay-tandy",
+          "path": "distributions/WINXT/TR51616.DRV",
+          "git_blob_sha": "60f9c07f93be544c686d9eda661e73134de63e1e",
+          "display_url": "https://github.com/astrobleem/oemdisplay-tandy/blob/main/distributions/WINXT/TR51616.DRV",
+          "source": "GitHub default branch resolved by connector; immutable blob SHA retained",
+          "bytes": 54880,
+          "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d",
+          "matches_retained_repo": true
+        }
+      },
+      "cases": [
+        {
+          "style": 1,
+          "frames": 13,
+          "draw_ms": 6372
+        },
+        {
+          "style": 2,
+          "frames": 13,
+          "draw_ms": 6042
+        },
+        {
+          "style": 3,
+          "frames": 13,
+          "draw_ms": 2857
+        },
+        {
+          "style": 1,
+          "frames": 13,
+          "draw_ms": 5987
+        },
+        {
+          "style": 2,
+          "frames": 13,
+          "draw_ms": 5986
+        },
+        {
+          "style": 3,
+          "frames": 13,
+          "draw_ms": 2856
+        }
+      ],
+      "mean_ms": {
+        "1": 475.34615384615387,
+        "2": 462.61538461538464,
+        "3": 219.73076923076923
+      }
+    },
+    "selected": {
+      "process": {
+        "status": "PASS",
+        "variant": "render-mono",
+        "bound_seconds": 420,
+        "inventory_before": "",
+        "mesen_before": "",
+        "parallel_authorization": "Chad explicitly authorized Mesen/BOR and independent x86 emulator work in parallel; x86 shared lease, private media/config and port checks retained. No Mesen control or BOR resources used.",
+        "emulator": {
+          "bytes": 40974882,
+          "sha256": "17b8ba40caa595ded247799e8a501897bfe6913ce19249ea5fdb2cd1f9e8df36"
+        },
+        "runtime": {
+          "bytes": 16703,
+          "sha256": "b8d5fe0a6594800a9b51fa2a7fe7dc888f2e39dae64e81b03696beb83a6a50b6"
+        },
+        "owned_pid": 15332,
+        "captures": [
+          "STYLE1-STEP0-N10-P119",
+          "STYLE1-STEP0-N2-P55",
+          "STYLE1-STEP3-N10-P119",
+          "STYLE1-STEP3-N2-P55",
+          "STYLE2-STEP1-N10-P119",
+          "STYLE2-STEP1-N2-P55",
+          "STYLE2-STEP4-N10-P119",
+          "STYLE2-STEP4-N2-P55",
+          "STYLE3-STEP2-N10-P119",
+          "STYLE3-STEP2-N2-P55",
+          "STYLE3-STEP5-N10-P119",
+          "STYLE3-STEP5-N2-P55"
+        ],
+        "matching_readbacks": 6,
+        "seconds": 123.2,
+        "owned_stopped": true,
+        "guest_driver_after": {
+          "bytes": 54880,
+          "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d"
+        },
+        "fat_copies_equal": true,
+        "lease_released": true,
+        "inventory_after": "",
+        "mesen_after": ""
+      },
+      "preparation": {
+        "seed": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-12\\native-tandy-02",
+        "private_image": true,
+        "profile": "tandytr5",
+        "environment": {
+          "display.drv": {
+            "name": "TR51616.DRV",
+            "bytes": 54880,
+            "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d"
+          },
+          "fonts.fon": {
+            "name": "XTCSYS.FON",
+            "bytes": 4592,
+            "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+          },
+          "fixedfon.fon": {
+            "name": "XTCFIX.FON",
+            "bytes": 4208,
+            "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+          },
+          "oemfonts.fon": {
+            "name": "XTCOEM.FON",
+            "bytes": 4560,
+            "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+          }
+        },
+        "cpu": "Tandy 1000 HX 8088 7159092 Hz; RESERVE 32",
+        "memory_kb": 640,
+        "config": {
+          "bytes": 610,
+          "sha256": "e9a66891641a6aca12f36bfae40599efb8abca005ed4e0837a601086e03e173d"
+        },
+        "cube": {
+          "bytes": 16703,
+          "sha256": "b8d5fe0a6594800a9b51fa2a7fe7dc888f2e39dae64e81b03696beb83a6a50b6"
+        },
+        "controller": {
+          "bytes": 7743,
+          "sha256": "2cbc3bfa523143463e59b995d80a03cb1e5dfb7d0d554353a555629ae574fcff"
+        },
+        "scope": "Fresh production cube /Q render/input suite; standalone runtime replacement only, no installer qualification",
+        "driver_identity": {
+          "repository": "astrobleem/oemdisplay-tandy",
+          "path": "distributions/WINXT/TR51616.DRV",
+          "git_blob_sha": "60f9c07f93be544c686d9eda661e73134de63e1e",
+          "display_url": "https://github.com/astrobleem/oemdisplay-tandy/blob/main/distributions/WINXT/TR51616.DRV",
+          "source": "GitHub default branch resolved by connector; immutable blob SHA retained",
+          "bytes": 54880,
+          "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d",
+          "matches_retained_repo": true
+        }
+      },
+      "cases": [
+        {
+          "style": 1,
+          "frames": 13,
+          "draw_ms": 5715
+        },
+        {
+          "style": 2,
+          "frames": 13,
+          "draw_ms": 4338
+        },
+        {
+          "style": 3,
+          "frames": 13,
+          "draw_ms": 1866
+        },
+        {
+          "style": 1,
+          "frames": 13,
+          "draw_ms": 5383
+        },
+        {
+          "style": 2,
+          "frames": 13,
+          "draw_ms": 4283
+        },
+        {
+          "style": 3,
+          "frames": 13,
+          "draw_ms": 1976
+        }
+      ],
+      "mean_ms": {
+        "1": 426.84615384615387,
+        "2": 331.5769230769231,
+        "3": 147.76923076923077
+      }
+    }
+  },
+  "pixels": {
+    "STYLE1-STEP0-N10-P119.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1091,
+        "sha256": "4a3a235054390fa3bc091a39dbf73ce08135a6b774b04b2b9ef30f3d256b0040"
+      },
+      "selected": {
+        "bytes": 1091,
+        "sha256": "4a3a235054390fa3bc091a39dbf73ce08135a6b774b04b2b9ef30f3d256b0040"
+      }
+    },
+    "STYLE1-STEP0-N2-P55.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1101,
+        "sha256": "d891a76341198c109efcccf24d62bd63193fb8d4160f7a05ac4bdb0f6c8abc68"
+      },
+      "selected": {
+        "bytes": 1101,
+        "sha256": "d891a76341198c109efcccf24d62bd63193fb8d4160f7a05ac4bdb0f6c8abc68"
+      }
+    },
+    "STYLE1-STEP3-N10-P119.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1091,
+        "sha256": "4a3a235054390fa3bc091a39dbf73ce08135a6b774b04b2b9ef30f3d256b0040"
+      },
+      "selected": {
+        "bytes": 1091,
+        "sha256": "4a3a235054390fa3bc091a39dbf73ce08135a6b774b04b2b9ef30f3d256b0040"
+      }
+    },
+    "STYLE1-STEP3-N2-P55.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1101,
+        "sha256": "d891a76341198c109efcccf24d62bd63193fb8d4160f7a05ac4bdb0f6c8abc68"
+      },
+      "selected": {
+        "bytes": 1101,
+        "sha256": "d891a76341198c109efcccf24d62bd63193fb8d4160f7a05ac4bdb0f6c8abc68"
+      }
+    },
+    "STYLE2-STEP1-N10-P119.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1249,
+        "sha256": "784779adc248b210ff85223219807ba5500d6a2ab42a43bae9c02415afa27843"
+      },
+      "selected": {
+        "bytes": 1249,
+        "sha256": "784779adc248b210ff85223219807ba5500d6a2ab42a43bae9c02415afa27843"
+      }
+    },
+    "STYLE2-STEP1-N2-P55.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1210,
+        "sha256": "7391a1e45977505fcf9d6157d156886f04fb8c5f46ea8d71bfbd348ad7983669"
+      },
+      "selected": {
+        "bytes": 1210,
+        "sha256": "7391a1e45977505fcf9d6157d156886f04fb8c5f46ea8d71bfbd348ad7983669"
+      }
+    },
+    "STYLE2-STEP4-N10-P119.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1249,
+        "sha256": "784779adc248b210ff85223219807ba5500d6a2ab42a43bae9c02415afa27843"
+      },
+      "selected": {
+        "bytes": 1249,
+        "sha256": "784779adc248b210ff85223219807ba5500d6a2ab42a43bae9c02415afa27843"
+      }
+    },
+    "STYLE2-STEP4-N2-P55.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1210,
+        "sha256": "7391a1e45977505fcf9d6157d156886f04fb8c5f46ea8d71bfbd348ad7983669"
+      },
+      "selected": {
+        "bytes": 1210,
+        "sha256": "7391a1e45977505fcf9d6157d156886f04fb8c5f46ea8d71bfbd348ad7983669"
+      }
+    },
+    "STYLE3-STEP2-N10-P119.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1182,
+        "sha256": "88fa4731e6cfc449f05d32474d29e26e7c7a6e60c5c7669f9fdaece3ab1a1efb"
+      },
+      "selected": {
+        "bytes": 1182,
+        "sha256": "88fa4731e6cfc449f05d32474d29e26e7c7a6e60c5c7669f9fdaece3ab1a1efb"
+      }
+    },
+    "STYLE3-STEP2-N2-P55.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1178,
+        "sha256": "31abcfadacd5b0fd3ce81ec077674f01dbe2aa964456a08747965b4d1970dbb1"
+      },
+      "selected": {
+        "bytes": 1178,
+        "sha256": "31abcfadacd5b0fd3ce81ec077674f01dbe2aa964456a08747965b4d1970dbb1"
+      }
+    },
+    "STYLE3-STEP5-N10-P119.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1182,
+        "sha256": "88fa4731e6cfc449f05d32474d29e26e7c7a6e60c5c7669f9fdaece3ab1a1efb"
+      },
+      "selected": {
+        "bytes": 1182,
+        "sha256": "88fa4731e6cfc449f05d32474d29e26e7c7a6e60c5c7669f9fdaece3ab1a1efb"
+      }
+    },
+    "STYLE3-STEP5-N2-P55.PNG": {
+      "equal": true,
+      "control": {
+        "bytes": 1178,
+        "sha256": "31abcfadacd5b0fd3ce81ec077674f01dbe2aa964456a08747965b4d1970dbb1"
+      },
+      "selected": {
+        "bytes": 1178,
+        "sha256": "31abcfadacd5b0fd3ce81ec077674f01dbe2aa964456a08747965b4d1970dbb1"
+      }
+    }
+  },
+  "reduction_percent": {
+    "1": 10.20309086495671,
+    "2": 28.325573661456605,
+    "3": 32.7498687204621
+  },
+  "probe": {
+    "closed_verification": {
+      "status": "PASS",
+      "scope": "Independent closed-file verification of completed native probe; original failed harness receipt retained",
+      "reason": "Runner CRLF-sensitive regex counted zero valid records; parser repaired without rerunning or altering timing data",
+      "native_samples": 30,
+      "native_errors": 0,
+      "owned_stopped": true,
+      "lease_released": true,
+      "fat_copies_equal": true,
+      "driver": {
+        "bytes": 54880,
+        "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d"
+      },
+      "native_log_sha256": "d1fda4f2501b4b822e17bde0d730091f56fb6a18ffc4fa0ceb1279524a8843fe"
+    },
+    "original_result": {
+      "status": "FAIL",
+      "variant": "bltprof",
+      "bound_seconds": 420,
+      "inventory_before": "",
+      "mesen_before": "",
+      "parallel_authorization": "Chad explicitly authorized Mesen/BOR and independent x86 emulator work in parallel; x86 shared lease, private media/config and port checks retained. No Mesen control or BOR resources used.",
+      "emulator": {
+        "bytes": 40974882,
+        "sha256": "17b8ba40caa595ded247799e8a501897bfe6913ce19249ea5fdb2cd1f9e8df36"
+      },
+      "runtime": {
+        "bytes": 7679,
+        "sha256": "b435971e46697db4da2e59a2aee47e1282586f55db6d926155bbbf5f93afb16d"
+      },
+      "owned_pid": 15336,
+      "error": "AssertionError(0)",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\chad\\Documents\\Codex\\2026-10-29\\task-4\\run_bltprof.py\", line 125, in <module>\n    samples=re.findall(r'^SAMPLE .*errors=0$',log,re.M);assert len(samples)==30,len(samples)\nAssertionError: 0\n",
+      "owned_stopped": true,
+      "guest_driver_after": {
+        "bytes": 54880,
+        "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d"
+      },
+      "fat_copies_equal": true,
+      "lease_released": true,
+      "inventory_after": "",
+      "mesen_after": ""
+    },
+    "log": {
+      "bytes": 3006,
+      "sha256": "d1fda4f2501b4b822e17bde0d730091f56fb6a18ffc4fa0ceb1279524a8843fe"
+    },
+    "records": [
+      "READY display_module=7721 bitblt_cs=7809 bitblt_ip=1620",
+      "BITMAP mono=0 planes=4 bits=1 width_bytes=8",
+      "SAMPLE kind=memory mono=0 rect=0 sample=0 calls=128 x=0 y=0 w=49 h=95 ms=2856 errors=0",
+      "SAMPLE kind=display mono=0 rect=0 sample=0 calls=8 x=0 y=0 w=49 h=95 ms=933 errors=0",
+      "SAMPLE kind=display mono=0 rect=0 sample=1 calls=8 x=0 y=0 w=49 h=95 ms=934 errors=0",
+      "SAMPLE kind=memory mono=0 rect=0 sample=1 calls=128 x=0 y=0 w=49 h=95 ms=2856 errors=0",
+      "SAMPLE kind=memory mono=0 rect=0 sample=2 calls=128 x=0 y=0 w=49 h=95 ms=2856 errors=0",
+      "SAMPLE kind=display mono=0 rect=0 sample=2 calls=8 x=0 y=0 w=49 h=95 ms=934 errors=0",
+      "SAMPLE kind=memory mono=0 rect=1 sample=0 calls=128 x=4 y=5 w=41 h=85 ms=2581 errors=0",
+      "SAMPLE kind=display mono=0 rect=1 sample=0 calls=8 x=4 y=5 w=41 h=85 ms=769 errors=0",
+      "SAMPLE kind=display mono=0 rect=1 sample=1 calls=8 x=4 y=5 w=41 h=85 ms=769 errors=0",
+      "SAMPLE kind=memory mono=0 rect=1 sample=1 calls=128 x=4 y=5 w=41 h=85 ms=2527 errors=0",
+      "SAMPLE kind=memory mono=0 rect=1 sample=2 calls=128 x=4 y=5 w=41 h=85 ms=2526 errors=0",
+      "SAMPLE kind=display mono=0 rect=1 sample=2 calls=8 x=4 y=5 w=41 h=85 ms=769 errors=0",
+      "READBACK mono=0 source=16777215 target=16777215 display=16777215",
+      "BITMAP mono=1 planes=1 bits=1 width_bytes=8",
+      "SAMPLE kind=memory mono=1 rect=0 sample=0 calls=128 x=0 y=0 w=49 h=95 ms=2802 errors=0",
+      "SAMPLE kind=display mono=1 rect=0 sample=0 calls=8 x=0 y=0 w=49 h=95 ms=933 errors=0",
+      "SAMPLE kind=display mono=1 rect=0 sample=1 calls=8 x=0 y=0 w=49 h=95 ms=934 errors=0",
+      "SAMPLE kind=memory mono=1 rect=0 sample=1 calls=128 x=0 y=0 w=49 h=95 ms=2746 errors=0",
+      "SAMPLE kind=memory mono=1 rect=0 sample=2 calls=128 x=0 y=0 w=49 h=95 ms=2801 errors=0",
+      "SAMPLE kind=display mono=1 rect=0 sample=2 calls=8 x=0 y=0 w=49 h=95 ms=879 errors=0",
+      "SAMPLE kind=memory mono=1 rect=1 sample=0 calls=128 x=4 y=5 w=41 h=85 ms=2472 errors=0",
+      "SAMPLE kind=display mono=1 rect=1 sample=0 calls=8 x=4 y=5 w=41 h=85 ms=715 errors=0",
+      "SAMPLE kind=display mono=1 rect=1 sample=1 calls=8 x=4 y=5 w=41 h=85 ms=714 errors=0",
+      "SAMPLE kind=memory mono=1 rect=1 sample=1 calls=128 x=4 y=5 w=41 h=85 ms=2417 errors=0",
+      "SAMPLE kind=memory mono=1 rect=1 sample=2 calls=128 x=4 y=5 w=41 h=85 ms=2417 errors=0",
+      "SAMPLE kind=display mono=1 rect=1 sample=2 calls=8 x=4 y=5 w=41 h=85 ms=714 errors=0",
+      "READBACK mono=1 source=16777215 target=16777215 display=16777215",
+      "SAMPLE kind=display-identity-full mono=0 rect=0 sample=0 calls=8 x=0 y=0 w=49 h=95 ms=4394 errors=0",
+      "SAMPLE kind=display-identity-pixel mono=0 rect=1 sample=0 calls=8 x=24 y=24 w=1 h=1 ms=4230 errors=0",
+      "SAMPLE kind=display-identity-full mono=0 rect=0 sample=1 calls=8 x=0 y=0 w=49 h=95 ms=4394 errors=0",
+      "SAMPLE kind=display-identity-pixel mono=0 rect=1 sample=1 calls=8 x=24 y=24 w=1 h=1 ms=4229 errors=0",
+      "SAMPLE kind=display-identity-full mono=0 rect=0 sample=2 calls=8 x=0 y=0 w=49 h=95 ms=4394 errors=0",
+      "SAMPLE kind=display-identity-pixel mono=0 rect=1 sample=2 calls=8 x=24 y=24 w=1 h=1 ms=4229 errors=0",
+      "DONE errors=0",
+      "CLEAN stopped"
+    ]
+  }
+}
