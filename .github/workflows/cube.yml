@@ -4,11 +4,39 @@ on:
     paths:
       - 'examples/CUBE/**'
       - 'examples/TSHELL/**'
+      - 'experiments/CUBEOPT/**'
       - '.github/workflows/cube.yml'
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
+  candidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - name: Confirm candidate source commit
+        run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Isolated candidate geometry, bounds and lifecycle regressions
+        run: python3 -B experiments/CUBEOPT/SOURCE/RUNHOST.PY --out "$RUNNER_TEMP/cubeopt-host"
+      - name: Require exact candidate source and partial native evidence
+        run: python3 -B experiments/CUBEOPT/CHECK.PY --out "$RUNNER_TEMP/cubeopt-check"
+      - name: Reject drift and accidental release promotion
+        run: python3 -B experiments/CUBEOPT/TESTCHK.PY --out "$RUNNER_TEMP/cubeopt-tamper"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: cubeopt-validation-${{ env.SOURCE_SHA }}
+          path: |
+            ${{ runner.temp }}/cubeopt-host/*.log
+            ${{ runner.temp }}/cubeopt-host/RESULT.JSON
+            ${{ runner.temp }}/cubeopt-check/RESULT.JSN
+            ${{ runner.temp }}/cubeopt-tamper/RESULT.JSN
+          if-no-files-found: error
   cube:
     runs-on: ubuntu-24.04
     timeout-minutes: 5

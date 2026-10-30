@@ -38,7 +38,7 @@ Host/source checks: geometry equality remains exact for 136192 scale/phase plus 
 
 Build closure: CUBERECT.H is added to the native build input copy/pin list and strict native source inventory, and TESTRECT.C is part of RUNHOST.PY. Existing acceptance/runtime/package pins are not relaxed or repinned to these partial native tests. Release packaging is intentionally still gated until the remaining native qualification and exact receipt closure are completed.
 
-Selected code snapshot before these documentation notes: 1cb6f963fa6828a788397812854196e23c86fb46. Qualified selected runtime: b8d5fe0a6594800a9b51fa2a7fe7dc888f2e39dae64e81b03696beb83a6a50b6 (16703 bytes). Color/monochrome bitmap selection and bounding code are in examples/CUBE/SOURCE/CUBE.C and CUBERECT.H. The paired baseline/control and both candidate binaries/recipes remain in their native-* folders.
+Selected code snapshot before these documentation notes: 1cb6f963fa6828a788397812854196e23c86fb46. Qualified selected runtime: b8d5fe0a6594800a9b51fa2a7fe7dc888f2e39dae64e81b03696beb83a6a50b6 (16703 bytes). Color/monochrome bitmap selection and bounding code now live in experiments/CUBEOPT/SOURCE/CUBE.C and CUBERECT.H. The accepted examples/CUBE/SOURCE tree is restored byte-for-byte. The paired baseline/control and both candidate binaries/recipes remain in their native-* folders.
 
 BOR/Mesen: independent x86 work was explicitly authorized alongside Mesen. The x86 guard continues to require the shared byte lease, no other x86 emulator, unused control ports, private image/config, owned child job/watchdog and verified stop/release. Mesen inventory is observational and never blocks or controls that separate emulator family. No BOR/Mesen files, process, emulator state or ports were touched. These native experiments preceded publication authorization. Chad subsequently authorized publishing the tested source changes on a branch and opening a draft PR; approval and merge remain separately gated.
 
@@ -75,3 +75,9 @@ Probe completed30 error-free samples and native cleanup. Original host result FA
 All owned children stopped and leases released; matched driver bytes verified after runtime. BOR/Mesen untouched. Physical hardware, full-period raster equality, other sizes/modes and full release-package qualification remain outside scope.
 
 The machine-readable current-driver results, raw logs, exact driver/build identities and 12 paired captures are in EVIDENCE/RNDTR5. Source/runtime code is unchanged from the selected native-tested snapshot 2c50ab5d1759f84927640a3e06e755534e5f08d3. The following evidence additions change documentation only.
+
+## Accepted gate correction
+
+PR #215 initially replaced the accepted source tree with the unreleased candidate. The existing acceptance gate correctly rejected BUILD.PY against ACCEPT.JSN; the new builder copies CUBERECT.H, while the accepted native binary and original receipt predate that header. Updating that one source pin would not establish a new source/runtime binding.
+
+The candidate now lives in experiments/CUBEOPT/SOURCE. All ten native compiler inputs are byte-identical to the tested snapshot; only the host lifecycle report path was adjusted. CANDIDAT.JSN explicitly labels its separate source/evidence pins PARTIAL_NATIVE_NOT_RELEASE. Candidate host and integrity/tamper tests run in an additional CI job. The original examples/CUBE/SOURCE files, accepted binaries, ACCEPT.JSN, all original receipts and the existing release gate steps retain their accepted bytes. The original workflow still assembles and replays the accepted packet; its success does not qualify the candidate for release.

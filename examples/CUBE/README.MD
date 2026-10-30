@@ -61,3 +61,6 @@ replace a native receipt, or publish a release.
 See [RENDER.MD](RENDER.MD) for the current unreleased drawing/copy candidate,
 controlled native Tandy comparisons and remaining qualification limits.
 The earlier geometry-only OPTIMIZE.MD record is historical.
+The tested unreleased source now lives in
+[experiments/CUBEOPT](../../experiments/CUBEOPT/README.MD); this directory
+retains the complete accepted source/runtime/receipt closure.

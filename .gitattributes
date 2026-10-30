@@ -246,6 +246,7 @@ docs/QUAL/HPDIB/** -text whitespace=cr-at-eol
 
 # Preserve the independently reviewed Cube distribution and guide bytes.
 downloads/CUBE/** -text
+experiments/CUBEOPT/** -text whitespace=cr-at-eol
 docs/CUBE.MD -text
 tools/CURRENT/FRESHVIEW.PY -text
 tools/CURRENT/CGASNAP.ZIP -text

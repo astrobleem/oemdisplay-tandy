@@ -4,7 +4,7 @@ from importlib.machinery import SourceFileLoader
 import argparse, hashlib, importlib.util, json, shutil, struct, subprocess
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[2]
-FILES=('CUBE.C','CUBECORE.C','CUBECORE.H','CUBERECT.H','CUBE.DEF','CUBE.RSP','BUILD.BAT','CUBECTL.C','CUBECTL.DEF','CUBECTL.RSP')
+FILES=('CUBE.C','CUBECORE.C','CUBECORE.H','CUBE.DEF','CUBE.RSP','BUILD.BAT','CUBECTL.C','CUBECTL.DEF','CUBECTL.RSP')
 def pin(p):
     data=p.read_bytes()
     return dict(bytes=len(data),sha256=hashlib.sha256(data).hexdigest())
