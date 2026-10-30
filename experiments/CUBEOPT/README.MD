@@ -20,6 +20,8 @@ records separate candidate source/evidence pins and the explicit status
 matched TR51616/TR53216 render/input, cleanup and paired scanout receipts.
 `CHECK.PY` verifies that binding; `TESTCHK.PY` rejects changed or merely
 repinned source, altered receipts, missing evidence and a ready label.
+The check also compares every declared member with its committed Git blob,
+so an ignored local evidence file cannot produce a misleading local pass.
 
 From the repository root, use fresh output directories:
 

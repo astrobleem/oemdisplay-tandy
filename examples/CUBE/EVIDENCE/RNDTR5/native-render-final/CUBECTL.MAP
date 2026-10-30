@@ -1,0 +1,319 @@
+
+ CUBECTL
+
+ Start     Length     Name                   Class
+ 0001:0000 01264H     _TEXT                  CODE
+ 0002:0000 00010H     NULL                   BEGDATA
+ 0002:0010 00546H     _DATA                  DATA
+ 0002:0556 0000EH     CDATA                  DATA
+ 0002:0564 00000H     XIFB                   DATA
+ 0002:0564 00000H     XIF                    DATA
+ 0002:0564 00000H     XIFE                   DATA
+ 0002:0564 00000H     XIB                    DATA
+ 0002:0564 00000H     XI                     DATA
+ 0002:0564 00000H     XIE                    DATA
+ 0002:0564 00000H     XPB                    DATA
+ 0002:0564 00000H     XP                     DATA
+ 0002:0564 00000H     XPE                    DATA
+ 0002:0564 00000H     XCB                    DATA
+ 0002:0564 00000H     XC                     DATA
+ 0002:0564 00000H     XCE                    DATA
+ 0002:0564 00000H     XCFB                   DATA
+ 0002:0564 00000H     XCF                    DATA
+ 0002:0564 00000H     XCFE                   DATA
+ 0002:0564 0000CH     DBDATA                 DATA
+ 0002:0570 00002H     XIQC                   DATA
+ 0002:0572 00000H     CONST                  CONST
+ 0002:0572 00019H     HDR                    MSG
+ 0002:058B 000B1H     MSG                    MSG
+ 0002:063C 00002H     PAD                    MSG
+ 0002:063E 00001H     EPAD                   MSG
+ 0002:0640 000B0H     _BSS                   BSS
+ 0002:06F0 00000H     XOB                    BSS
+ 0002:06F0 00000H     XO                     BSS
+ 0002:06F0 00000H     XOE                    BSS
+
+ Origin   Group
+ 0002:0   DGROUP
+
+ Address   Export                  Alias
+
+ 0001:0162 ControlProc             ControlProc
+
+  Address         Publics by Name
+
+ 0001:0162       ControlProc
+ 0000:0000  Imp  CREATEWINDOW         (USER.41)
+ 0000:0000  Imp  DEFWINDOWPROC        (USER.107)
+ 0000:0000  Imp  DISPATCHMESSAGE      (USER.114)
+ 0000:0000  Imp  DOS3CALL             (KERNEL.102)
+ 0000:0000  Imp  ESCAPE               (GDI.38)
+ 0000:0000  Imp  EXITWINDOWS          (USER.7)
+ 0000:0000  Imp  FATALAPPEXIT         (KERNEL.137)
+ 0000:0000  Imp  FATALEXIT            (KERNEL.1)
+ 0000:0000  Imp  FINDWINDOW           (USER.50)
+ 0000:0000  Imp  GETACTIVEWINDOW      (USER.60)
+ 0000:0000  Imp  GETDC                (USER.66)
+ 0000:0000  Imp  GETDESKTOPWINDOW     (USER.286)
+ 0000:0000  Imp  GETDLGITEM           (USER.91)
+ 0000:0000  Imp  GETFOCUS             (USER.23)
+ 0000:0000  Imp  GETMESSAGE           (USER.108)
+ 0000:0000  Imp  GETMODULEHANDLE      (KERNEL.47)
+ 0000:0000  Imp  GETPRIVATEPROFILEINT (KERNEL.127)
+ 0000:0000  Imp  GETPRIVATEPROFILESTRING (KERNEL.128)
+ 0000:0000  Imp  GETTICKCOUNT         (USER.13)
+ 0000:0000  Imp  GETWINDOW            (USER.262)
+ 0000:0000  Imp  GETWINDOWSDIRECTORY  (KERNEL.134)
+ 0000:0000  Imp  GLOBALALLOC          (KERNEL.15)
+ 0000:0000  Imp  GLOBALFREE           (KERNEL.17)
+ 0000:0000  Imp  GLOBALREALLOC        (KERNEL.16)
+ 0000:0000  Imp  INITAPP              (USER.5)
+ 0000:0000  Imp  INITTASK             (KERNEL.91)
+ 0000:0000  Imp  ISWINDOW             (USER.47)
+ 0000:0000  Imp  ISWINDOWVISIBLE      (USER.49)
+ 0000:0000  Imp  KILLTIMER            (USER.12)
+ 0000:0000  Imp  LOCALALLOC           (KERNEL.5)
+ 0000:0000  Imp  LOCALFREE            (KERNEL.7)
+ 0000:0000  Imp  LOCALREALLOC         (KERNEL.6)
+ 0000:0000  Imp  LOCKSEGMENT          (KERNEL.23)
+ 0000:0000  Imp  LSTRCAT              (KERNEL.89)
+ 0000:0000  Imp  LSTRCMP              (USER.430)
+ 0000:0000  Imp  LSTRLEN              (KERNEL.90)
+ 0000:0000  Imp  OUTPUTDEBUGSTRING    (KERNEL.115)
+ 0000:0008  Abs  pAtomTable
+ 0000:0006  Abs  pLocalHeap
+ 0000:0000  Imp  POSTMESSAGE          (USER.110)
+ 0000:0000  Imp  POSTQUITMESSAGE      (USER.6)
+ 0000:000E  Abs  pStackBot
+ 0000:000C  Abs  pStackMin
+ 0000:000A  Abs  pStackTop
+ 0000:0000  Imp  REGISTERCLASS        (USER.57)
+ 0000:0000  Imp  RELEASEDC            (USER.68)
+ 0002:0004       rsrvptrs
+ 0000:0000  Imp  SENDDLGITEMMESSAGE   (USER.101)
+ 0000:0000  Imp  SENDMESSAGE          (USER.111)
+ 0000:0000  Imp  SETACTIVEWINDOW      (USER.59)
+ 0000:0000  Imp  SETFOCUS             (USER.22)
+ 0000:0000  Imp  SETTIMER             (USER.10)
+ 0000:0000  Imp  SETWINDOWPOS         (USER.232)
+ 0000:0000  Imp  SHOWWINDOW           (USER.42)
+ 0002:04F0       STKHQQ
+ 0000:0000  Imp  UNLOCKSEGMENT        (KERNEL.24)
+ 0000:0000  Imp  WAITEVENT            (KERNEL.30)
+ 0000:0000  Imp  WINEXEC              (KERNEL.166)
+ 0001:0ACA       WINMAIN
+ 0002:0640       _edata
+ 0000:0000  Abs  _end
+ 0002:0541       _environ
+ 0002:051A       _errno
+ 0001:0DA1       _exit
+ 0000:0000  Imp  _LCLOSE              (KERNEL.81)
+ 0000:0000  Imp  _LCREAT              (KERNEL.83)
+ 0000:0000  Imp  _LLSEEK              (KERNEL.84)
+ 0000:0000  Imp  _LOPEN               (KERNEL.85)
+ 0000:0000  Imp  _LWRITE              (KERNEL.86)
+ 0001:114C       _malloc
+ 0000:0000  Imp  _wsprintf            (USER.420)
+ 0002:04FC       __aaltstkovr
+ 0002:04FE       __acfinfo
+ 0000:9876  Abs  __acrtmsg
+ 0000:9876  Abs  __acrtused
+ 0000:9876  Abs  __acrtused2
+ 0000:D6D6  Abs  __aDBdoswp
+ 0002:0550       __adbgmsg
+ 0002:0568       __aDBrterr
+ 0001:0CA0       __aFchkstk
+ 0002:050C       __aintdiv
+ 0002:0554       __amblksiz
+ 0001:10AB       __amsg_exit
+ 0001:0C80       __aNchkstk
+ 0001:0C13       __astart
+ 0002:057A       __caption
+ 0001:0DB0       __cexit
+ 0002:0548       __child
+ 0001:0C80       __chkstk
+ 0001:0CD4       __cinit
+ 0001:10A6       __cintDIV
+ 0001:0E1A       __ctermsub
+ 0001:0DBA       __c_exit
+ 0002:0525       __doserrno
+ 0002:0522       __dosvermajor
+ 0002:0523       __dosverminor
+ 0001:0DA8       __exit
+ 0002:0510       __fac
+ 0001:11C4       __ffree
+ 0001:119A       __fmalloc
+ 0002:0558       __fpinit
+ 0000:9876  Abs  __fptaskdata
+ 0001:10C8       __fptrap
+ 0001:1224       __frealloc
+ 0002:054B       __intno
+ 0001:1120       __myalloc
+ 0002:0527       __nfile
+ 0001:118A       __nfree
+ 0001:1150       __nmalloc
+ 0001:10CE       __NMSG_TEXT
+ 0001:10F9       __NMSG_WRITE
+ 0001:11D4       __nrealloc
+ 0002:0525       __oserr
+ 0002:0529       __osfile
+ 0002:0522       __osmajor
+ 0002:0523       __osminor
+ 0002:0524       __osmode
+ 0002:0522       __osversion
+ 0002:054A       __ovlflag
+ 0002:054C       __ovlvec
+ 0002:0543       __pgmptr
+ 0002:0520       __psp
+ 0002:051E       __pspadr
+ 0001:0E8A       __setargv
+ 0001:1028       __setenvp
+ 0002:051C       __umaskval
+ 0001:0C11       __wflags
+ 0000:0000  Imp  __WINFLAGS           (KERNEL.178)
+ 0002:056A       ___aDBexit
+ 0002:0566       ___aDBswpchk
+ 0002:0564       ___aDBswpflg
+ 0002:053D       ___argc
+ 0002:053F       ___argv
+ 0002:0570       ___qczrinit
+
+  Address         Publics by Value
+
+ 0000:0000  Imp  LOCALREALLOC         (KERNEL.6)
+ 0000:0000  Imp  FATALEXIT            (KERNEL.1)
+ 0000:0000  Imp  GETPRIVATEPROFILEINT (KERNEL.127)
+ 0000:0000  Imp  WINEXEC              (KERNEL.166)
+ 0000:0000  Imp  _LCLOSE              (KERNEL.81)
+ 0000:0000  Imp  SETFOCUS             (USER.22)
+ 0000:0000  Imp  OUTPUTDEBUGSTRING    (KERNEL.115)
+ 0000:0000  Imp  GETMESSAGE           (USER.108)
+ 0000:0000  Imp  FATALAPPEXIT         (KERNEL.137)
+ 0000:0000  Imp  GETDESKTOPWINDOW     (USER.286)
+ 0000:0000  Imp  SHOWWINDOW           (USER.42)
+ 0000:0000  Imp  CREATEWINDOW         (USER.41)
+ 0000:0000  Imp  GETDLGITEM           (USER.91)
+ 0000:0000  Imp  _LOPEN               (KERNEL.85)
+ 0000:0000  Imp  _LWRITE              (KERNEL.86)
+ 0000:0000  Imp  GLOBALFREE           (KERNEL.17)
+ 0000:0000  Imp  ISWINDOW             (USER.47)
+ 0000:0000  Imp  DEFWINDOWPROC        (USER.107)
+ 0000:0000  Imp  _wsprintf            (USER.420)
+ 0000:0000  Imp  GETPRIVATEPROFILESTRING (KERNEL.128)
+ 0000:0000  Imp  RELEASEDC            (USER.68)
+ 0000:0000  Imp  GETMODULEHANDLE      (KERNEL.47)
+ 0000:0000  Imp  POSTQUITMESSAGE      (USER.6)
+ 0000:0000  Imp  __WINFLAGS           (KERNEL.178)
+ 0000:0000  Imp  EXITWINDOWS          (USER.7)
+ 0000:0000  Imp  GLOBALREALLOC        (KERNEL.16)
+ 0000:0000  Imp  ESCAPE               (GDI.38)
+ 0000:0000  Imp  _LCREAT              (KERNEL.83)
+ 0000:0000  Imp  UNLOCKSEGMENT        (KERNEL.24)
+ 0000:0000  Imp  SETACTIVEWINDOW      (USER.59)
+ 0000:0000  Imp  GLOBALALLOC          (KERNEL.15)
+ 0000:0000  Imp  GETDC                (USER.66)
+ 0000:0000  Imp  GETTICKCOUNT         (USER.13)
+ 0000:0000  Imp  LSTRLEN              (KERNEL.90)
+ 0000:0000  Imp  GETFOCUS             (USER.23)
+ 0000:0000  Imp  INITTASK             (KERNEL.91)
+ 0000:0000  Imp  POSTMESSAGE          (USER.110)
+ 0000:0000  Imp  _LLSEEK              (KERNEL.84)
+ 0000:0000  Imp  LSTRCAT              (KERNEL.89)
+ 0000:0000  Imp  DISPATCHMESSAGE      (USER.114)
+ 0000:0000  Imp  SETTIMER             (USER.10)
+ 0000:0000  Imp  LOCALFREE            (KERNEL.7)
+ 0000:0000  Imp  GETWINDOW            (USER.262)
+ 0000:0000  Imp  REGISTERCLASS        (USER.57)
+ 0000:0000  Imp  KILLTIMER            (USER.12)
+ 0000:0000  Imp  INITAPP              (USER.5)
+ 0000:0000  Imp  SETWINDOWPOS         (USER.232)
+ 0000:0000  Imp  SENDDLGITEMMESSAGE   (USER.101)
+ 0000:0000  Imp  ISWINDOWVISIBLE      (USER.49)
+ 0000:0000  Imp  WAITEVENT            (KERNEL.30)
+ 0000:0000  Imp  SENDMESSAGE          (USER.111)
+ 0000:0000  Imp  GETWINDOWSDIRECTORY  (KERNEL.134)
+ 0000:0000  Imp  FINDWINDOW           (USER.50)
+ 0000:0000  Imp  GETACTIVEWINDOW      (USER.60)
+ 0000:0000  Imp  LOCALALLOC           (KERNEL.5)
+ 0000:0000  Imp  DOS3CALL             (KERNEL.102)
+ 0000:0000  Imp  LOCKSEGMENT          (KERNEL.23)
+ 0000:0000  Imp  LSTRCMP              (USER.430)
+ 0000:0000  Abs  _end
+ 0000:0006  Abs  pLocalHeap
+ 0000:0008  Abs  pAtomTable
+ 0000:000A  Abs  pStackTop
+ 0000:000C  Abs  pStackMin
+ 0000:000E  Abs  pStackBot
+ 0000:9876  Abs  __acrtused
+ 0000:9876  Abs  __fptaskdata
+ 0000:9876  Abs  __acrtmsg
+ 0000:9876  Abs  __acrtused2
+ 0000:D6D6  Abs  __aDBdoswp
+ 0001:0162       ControlProc
+ 0001:0ACA       WINMAIN
+ 0001:0C11       __wflags
+ 0001:0C13       __astart
+ 0001:0C80       __aNchkstk
+ 0001:0C80       __chkstk
+ 0001:0CA0       __aFchkstk
+ 0001:0CD4       __cinit
+ 0001:0DA1       _exit
+ 0001:0DA8       __exit
+ 0001:0DB0       __cexit
+ 0001:0DBA       __c_exit
+ 0001:0E1A       __ctermsub
+ 0001:0E8A       __setargv
+ 0001:1028       __setenvp
+ 0001:10A6       __cintDIV
+ 0001:10AB       __amsg_exit
+ 0001:10C8       __fptrap
+ 0001:10CE       __NMSG_TEXT
+ 0001:10F9       __NMSG_WRITE
+ 0001:1120       __myalloc
+ 0001:114C       _malloc
+ 0001:1150       __nmalloc
+ 0001:118A       __nfree
+ 0001:119A       __fmalloc
+ 0001:11C4       __ffree
+ 0001:11D4       __nrealloc
+ 0001:1224       __frealloc
+ 0002:0004       rsrvptrs
+ 0002:04F0       STKHQQ
+ 0002:04FC       __aaltstkovr
+ 0002:04FE       __acfinfo
+ 0002:050C       __aintdiv
+ 0002:0510       __fac
+ 0002:051A       _errno
+ 0002:051C       __umaskval
+ 0002:051E       __pspadr
+ 0002:0520       __psp
+ 0002:0522       __osmajor
+ 0002:0522       __dosvermajor
+ 0002:0522       __osversion
+ 0002:0523       __osminor
+ 0002:0523       __dosverminor
+ 0002:0524       __osmode
+ 0002:0525       __oserr
+ 0002:0525       __doserrno
+ 0002:0527       __nfile
+ 0002:0529       __osfile
+ 0002:053D       ___argc
+ 0002:053F       ___argv
+ 0002:0541       _environ
+ 0002:0543       __pgmptr
+ 0002:0548       __child
+ 0002:054A       __ovlflag
+ 0002:054B       __intno
+ 0002:054C       __ovlvec
+ 0002:0550       __adbgmsg
+ 0002:0554       __amblksiz
+ 0002:0558       __fpinit
+ 0002:0564       ___aDBswpflg
+ 0002:0566       ___aDBswpchk
+ 0002:0568       __aDBrterr
+ 0002:056A       ___aDBexit
+ 0002:0570       ___qczrinit
+ 0002:057A       __caption
+ 0002:0640       _edata
+
+Program entry point at 0001:0C13

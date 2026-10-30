@@ -1,10 +1,26 @@
 """Bind partial native Cube evidence to isolated candidate source, never a release."""
 from pathlib import Path, PureWindowsPath
-import argparse, hashlib, json, re
+import argparse, hashlib, json, re, subprocess
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
 NATIVE={'CUBE.C','CUBECORE.C','CUBECORE.H','CUBERECT.H','CUBE.DEF','CUBE.RSP','BUILD.BAT','CUBECTL.C','CUBECTL.DEF','CUBECTL.RSP'}
 
 def pin(data):return dict(bytes=len(data),sha256=hashlib.sha256(data).hexdigest())
+def committed(root,candidate,commit):
+    head=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip()
+    if commit!='HEAD'and commit!=head:raise ValueError('Candidate must match the reviewed commit')
+    a=json.loads((candidate/'CANDIDAT.JSN').read_bytes());prefix=candidate.relative_to(root).as_posix()+'/'
+    paths=set(a['receipts'])|set(a['accepted_files'])|{prefix+'SOURCE/'+n for n in a['source']}
+    paths|={prefix+n for n in('CANDIDAT.JSN','CHECK.PY','TESTCHK.PY','README.MD','EVIDENCE/INDEPENDENT/CUBE-BEFORE.C')}
+    data=subprocess.check_output(['git','-C',str(root),'ls-tree','-r','-z',head,'--',*sorted(paths)])
+    blobs={}
+    for entry in data.split(b'\0'):
+        if entry:
+            info,name=entry.split(b'\t',1);mode,kind,sha=info.split();blobs[name.decode()]=sha.decode()
+    for name in paths:
+        raw=(root/name).read_bytes();sha=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+        if blobs.get(name)!=sha:raise ValueError('Candidate input/evidence is not committed exactly: '+name)
+    return dict(source_commit=head,committed_members=len(paths))
+
 def exact(base,name,want):
     path=Path(name)
     if path.is_absolute()or PureWindowsPath(name).drive or '\\'in name or '..'in path.parts:raise ValueError('Unsafe manifest path: '+name)
@@ -62,5 +78,5 @@ def verify(root=ROOT,candidate=HERE):
     return dict(status='PASS',qualification=a['status'],candidate_runtime=a['runtime'],source_count=len(a['source']),native_modes=modes,scope='Isolated source and partial native evidence integrity; accepted qualification remains separate')
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True);a=p.parse_args()
-    result=verify();a.out.mkdir(parents=True,exist_ok=False);(a.out/'RESULT.JSN').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True);p.add_argument('--commit',default='HEAD');a=p.parse_args()
+    result=verify();result.update(committed(ROOT,HERE,a.commit));a.out.mkdir(parents=True,exist_ok=False);(a.out/'RESULT.JSN').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
