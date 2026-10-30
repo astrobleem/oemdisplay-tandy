@@ -154,7 +154,9 @@ static int initDraw(HWND w)
  /* The projected x radius is <=0.472*sx and y <=0.578*sy.
     Copy only that small rectangle, not its unused sizing envelope. */
  cw=scaleX+4;ch=scaleY*6/5+4;
- canvas=CreateCompatibleDC(dc);bitmap=CreateCompatibleBitmap(dc,cw,ch);
+ canvas=CreateCompatibleDC(dc);
+ /* Wire and ordered dither use only black/white; keep flat shading in color. */
+ bitmap=mode==1?CreateCompatibleBitmap(dc,cw,ch):CreateBitmap(cw,ch,1,1,NULL);
  edge=CreatePen(PS_SOLID,1,RGB(255,255,255));
  for(n=0;n<17;n++){
   if(mode==2){
@@ -181,7 +183,7 @@ static int initDraw(HWND w)
 static int render(void)
 {
  POINT polygon[4];CBOX current,dirty;int n,j,x,y,mode=drawingStyle(),ok=1;
- HGDIOBJ oldpen,oldbrush;HDC dc;DWORD elapsed,sourcePixel,targetPixel,t=GetTickCount();char b[160];
+ HGDIOBJ oldpen,oldbrush;HDC dc;DWORD oldText=0,oldBk=0,elapsed,sourcePixel,targetPixel,t=GetTickCount();char b[160];
  if(!running||!ownsScreen())return 0;
  if(blankCursor)SetCursor(blankCursor);
  elapsed=t-lastFrame;lastFrame=t;if(elapsed>500UL)elapsed=500UL;
@@ -213,6 +215,10 @@ static int render(void)
   viewport(dc);x=viewX+(viewW-cw)/2;y=viewY+(viewH-ch)/2;
   if(lastX>=0&&(lastX!=x||lastY!=y))
    if(!PatBlt(dc,lastX,lastY,cw,ch,BLACKNESS))ok=0;
+  if(mode!=1){
+   oldText=SetTextColor(dc,RGB(0,0,0));oldBk=SetBkColor(dc,RGB(255,255,255));
+   if(oldText==0xffffffffUL||oldBk==0xffffffffUL)ok=0;
+  }
   if(!BitBlt(dc,x+dirty.left,y+dirty.top,dirty.right-dirty.left,
    dirty.bottom-dirty.top,canvas,dirty.left,dirty.top,SRCCOPY))ok=0;
   if(qaMode&&frames==2){
@@ -223,6 +229,7 @@ static int render(void)
    if(sourcePixel!=RGB(255,255,255)||targetPixel!=sourcePixel)ok=0;
   }
   lastX=x;lastY=y;lastBounds=current;boundsReady=1;
+  if(mode!=1){SetTextColor(dc,oldText);SetBkColor(dc,oldBk);}
   ReleaseDC(saver,dc);
  }else ok=0;
  if(!ok)errors++;

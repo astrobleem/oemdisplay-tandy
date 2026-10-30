@@ -10,7 +10,7 @@ if os.name=='nt':
     env['PATH']=r'C:\msys64\ucrt64\bin'+os.pathsep+env.get('PATH','')
 else:compiler=['gcc']
 checks=[]
-for label,include,files in [('core',HERE,[HERE/'TESTCORE.C',HERE/'CUBECORE.C']),('config',ROOT/'examples/TSHELL',[ROOT/'examples/TSHELL/TESTS/CONFIG/TESTCFG.C',ROOT/'examples/TSHELL/SCFGCORE.C']),('idle',ROOT/'examples/TSHELL/IDLE',[ROOT/'examples/TSHELL/IDLE/tests/HOSTTEST.C']),('hold',ROOT/'examples/TSHELL/IDLE',[ROOT/'examples/TSHELL/IDLE/tests/HOLDTEST.C'])]:
+for label,include,files in [('core',HERE,[HERE/'TESTCORE.C',HERE/'CUBECORE.C']),('rect',HERE,[HERE/'TESTRECT.C',HERE/'CUBECORE.C']),('config',ROOT/'examples/TSHELL',[ROOT/'examples/TSHELL/TESTS/CONFIG/TESTCFG.C',ROOT/'examples/TSHELL/SCFGCORE.C']),('idle',ROOT/'examples/TSHELL/IDLE',[ROOT/'examples/TSHELL/IDLE/tests/HOSTTEST.C']),('hold',ROOT/'examples/TSHELL/IDLE',[ROOT/'examples/TSHELL/IDLE/tests/HOLDTEST.C'])]:
     exe=out/(label+'.exe')
     flags=['-x','c','-std=c89','-pedantic','-Wall','-Wextra','-Werror']
     if label in ('idle','hold'):flags.append('-Wno-unused-parameter')
@@ -18,6 +18,7 @@ for label,include,files in [('core',HERE,[HERE/'TESTCORE.C',HERE/'CUBECORE.C']),
     r=subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT);(out/(label+'-build.log')).write_bytes(r.stdout);r.check_returncode()
     r=subprocess.run([str(exe)],env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT);(out/(label+'.log')).write_bytes(r.stdout);r.check_returncode()
     pins=list(files)
+    if label=='rect':pins.extend([HERE/'CUBERECT.H',HERE/'CUBECORE.H'])
     if label in ('idle','hold'):pins.extend([include/'TSINPUT.C',include/'TSINPUT.H',include/'tests/WINSTUB.H'])
     checks.append(dict(check=label,result=r.stdout.decode().strip(),sources={f.relative_to(ROOT).as_posix():hashlib.sha256(f.read_bytes()).hexdigest()for f in pins}))
 life=subprocess.run([sys.executable,str(HERE/'TESTLIFE.PY'),'--out',str(out/'lifecycle')],env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
