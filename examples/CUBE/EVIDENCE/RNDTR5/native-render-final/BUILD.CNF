@@ -1,0 +1,26 @@
+[sdl]
+fullscreen=false
+output=surface
+[dosbox]
+machine=tandy
+memsize=1
+[cpu]
+core=normal
+cputype=8086_prefetch
+cycles=fixed 200000
+fpu=false
+[dos]
+xms=false
+ems=false
+umb=false
+[mixer]
+nosound=true
+[midi]
+mididevice=none
+[autoexec]
+@echo off
+mount C "C:\Users\chad\Documents\Codex\2026-10-23\task-7\native\toolchain" -ro
+mount D "C:\Users\chad\Documents\Codex\2026-10-29\task-4\native-render-final"
+D:
+CALL BUILD.BAT
+exit

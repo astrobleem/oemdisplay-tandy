@@ -1,0 +1,22 @@
+CUBE.C
+CUBECORE.C
+
+Microsoft (R) Segmented-Executable Linker  Version 5.01.17
+Copyright (C) Microsoft Corp 1984-1988.  All rights reserved.
+
+Object Modules [.OBJ]: CUBE.OBJ CUBECORE.OBJ
+Run File [CUBE.EXE]: CUBE.EXE
+List File [D:CUBE.MAP]: CUBE.MAP
+Libraries [.LIB]: C:\LIB\SLIBCEW.LIB C:\LIB\LIBW.LIB
+Definitions File [NUL.DEF]: CUBE.DEF
+CUBECTL.C
+
+Microsoft (R) Segmented-Executable Linker  Version 5.01.17
+Copyright (C) Microsoft Corp 1984-1988.  All rights reserved.
+
+Object Modules [.OBJ]: CUBECTL.OBJ
+Run File [CUBECTL.EXE]: CUBECTL.EXE
+List File [D:CUBECTL.MAP]: CUBECTL.MAP
+Libraries [.LIB]: C:\LIB\SLIBCEW.LIB C:\LIB\LIBW.LIB
+Definitions File [NUL.DEF]: CUBECTL.DEF
+PASS
