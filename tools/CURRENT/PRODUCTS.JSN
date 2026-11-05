@@ -20,8 +20,8 @@
     "CPPAN.ZIP": {
       "source": "downloads/PAN/CPPAN.ZIP",
       "identity": {
-        "bytes": 354565,
-        "sha256": "bfc55baf6bf862c0775d2d6d2728705f7d9c53b85469c38e443ea688f8724a98"
+        "bytes": 363824,
+        "sha256": "955abb7a4f5f0c5f0a5912c428f5a5efb465ca61e2c9ae856abca0305692a741"
       }
     },
     "JRPAN.ZIP": {
@@ -48,8 +48,8 @@
     "YAMAHA.ZIP": {
       "source": "downloads/experimental/yamaha/YAMAHA.ZIP",
       "identity": {
-        "bytes": 83694,
-        "sha256": "cc750be92fad3e57ee87879d361c154881f56aa7bb10de6400f8e1e26339bb1c"
+        "bytes": 96670,
+        "sha256": "83552149e1d6330eb5e164b344f67698700cede69e945341dda61044c0ee22cf"
       }
     },
     "TEXT80.ZIP": {
@@ -188,7 +188,8 @@
     },
     "CPPAN.ZIP": {
       "member": "INSTALL.TXT",
-      "source": "tools/PAN/GUIDES/CPPAN.TXT"
+      "source": "tools/PAN/GUIDES/CPPAN.TXT",
+      "transform": "optimized-colorplus"
     },
     "MINESET.ZIP": {
       "member": "INSTALL.TXT",

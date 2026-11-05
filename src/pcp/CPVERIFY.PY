@@ -45,7 +45,7 @@ def package():
 def packet():
     p=package();return p.members(p.outputs()['CPPAN.ZIP'])
 
-def verify():
+def verify_historical():
     q=json.loads(QUAL.read_bytes())
     if q.get('schema')!=1 or q.get('complete') is not True or q.get('physical_hardware_qualified') is not False:
         raise ValueError('ColorPlus fixed-driver qualification is incomplete')
@@ -96,17 +96,18 @@ def verify():
     if identity(before['PCP3216.DRV'])!=runs['SHIPPED']['fixture']['driver'] or set(actual)!=set(before) or any(actual[n]!=identity(before[n]) for n in actual if n!='PCP3216.DRV'):raise ValueError('Fixed update changed current panning/installer/support inputs')
     if identity((ROOT/'downloads/experimental/CPPAN/CPPSET.EXE').read_bytes())!=old['outputs']['ColorPlus']['CPPSET.EXE']:raise ValueError('Original ColorPlus carrier evidence changed')
     if set(q['outputs'])!={'CPPAN.ZIP','INSTALL.TXT'} or any(identity((ROOT/'downloads/experimental/CPPAN'/n).read_bytes())!=pin for n,pin in q['outputs'].items()):raise ValueError('Current ColorPlus downloads differ from qualified ZIP composition')
-    catalog=json.loads((ROOT/'tools/CURRENT/PRODUCTS.JSN').read_bytes())['local']['CPPAN.ZIP']
-    if catalog!={'source':'downloads/experimental/CPPAN/CPPAN.ZIP','identity':q['outputs']['CPPAN.ZIP']}:
-        current_source=catalog['source']
-        current_producer='tools/PAN/PUBLISH.PY' if current_source=='downloads/PAN/CPPAN.ZIP' else 'tools/UPAN/PUBLISH.PY'
-        unified=importlib.machinery.SourceFileLoader('cpp_unified_catalog',str(ROOT/current_producer)).load_module()
-        accepted,products=unified.products()
-        data=products['CPPAN.ZIP']
-        if current_source not in ('downloads/UNIPAN/CPPAN.ZIP','downloads/PAN/CPPAN.ZIP') or catalog!={'source':current_source,'identity':identity(data)} or (ROOT/catalog['source']).read_bytes()!=data:
-            raise ValueError('Current ColorPlus catalog binding differs')
-        if identity(unified.C.members(data)['PCP3216.DRV'])!=q['driver']:
-            raise ValueError('Unified ColorPlus driver differs from native qualification')
+    if 'optimized' not in q:
+        catalog=json.loads((ROOT/'tools/CURRENT/PRODUCTS.JSN').read_bytes())['local']['CPPAN.ZIP']
+        if catalog!={'source':'downloads/experimental/CPPAN/CPPAN.ZIP','identity':q['outputs']['CPPAN.ZIP']}:
+            current_source=catalog['source']
+            current_producer='tools/PAN/PUBLISH.PY' if current_source=='downloads/PAN/CPPAN.ZIP' else 'tools/UPAN/PUBLISH.PY'
+            unified=importlib.machinery.SourceFileLoader('cpp_unified_catalog',str(ROOT/current_producer)).load_module()
+            accepted,products=unified.products()
+            data=products['CPPAN.ZIP']
+            if current_source not in ('downloads/UNIPAN/CPPAN.ZIP','downloads/PAN/CPPAN.ZIP') or catalog!={'source':current_source,'identity':identity(data)} or (ROOT/catalog['source']).read_bytes()!=data:
+                raise ValueError('Current ColorPlus catalog binding differs')
+            if identity(unified.C.members(data)['PCP3216.DRV'])!=q['driver']:
+                raise ValueError('Unified ColorPlus driver differs from native qualification')
     builds={}
     for label,n in [('BASELINE','BUILD-B.JSN'),('CANDIDATE','BUILD-C.JSN')]:
         b=json.loads((EVIDENCE/n).read_bytes());builds[label]=b;a=b['build88']
@@ -125,5 +126,24 @@ def verify():
     if full['candidate_ms']>full['baseline_ms']+55:raise ValueError('ColorPlus full-width scan regression exceeds one BIOS tick')
     return q,{'shipped':shipped,'candidate':candidate,'native_runs':runs}
 
+def verify():
+    q, result = verify_historical()
+    if 'optimized' not in q:
+        return q, result
+    current = importlib.machinery.SourceFileLoader('cpp_current_fixed', str(ROOT/'tools/CPPACK/CURRENT.PY')).load_module()
+    files, proof = current.qualified()
+    catalog = json.loads((ROOT/'tools/CURRENT/PRODUCTS.JSN').read_bytes())['local']['CPPAN.ZIP']
+    if catalog != {'source': 'downloads/PAN/CPPAN.ZIP', 'identity': identity(files['CPPAN.ZIP'])}:
+        raise ValueError('Optimized current ColorPlus catalog binding differs')
+    if (ROOT/catalog['source']).read_bytes() != files['CPPAN.ZIP']:
+        raise ValueError('Committed current ColorPlus packet differs')
+    normalized = dict(q)
+    normalized['driver'] = proof['driver']
+    normalized['runtime'] = {n: identity(b) for n, b in current.load('cpp_current_members', 'tools/CPPACK/PACKAGE.PY').members(files['CPPAN.ZIP']).items()}
+    normalized['outputs'] = {n: identity(b) for n, b in files.items()}
+    result['optimized'] = proof
+    return normalized, result
+
+
 if __name__=='__main__':
-    q,r=verify();print(json.dumps({'status':'PASS: host replay of qualified native ColorPlus runs','driver':q['driver'],'frames_per_comparison':len(r['candidate']['frames']),'physical_hardware_qualified':False},indent=2))
+    q,r=verify();print(json.dumps({'status':'PASS: historical proof and current native-qualified ColorPlus overlay','driver':q['driver'],'frames_per_comparison':len(r['candidate']['frames']),'physical_hardware_qualified':False},indent=2))

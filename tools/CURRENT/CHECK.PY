@@ -36,7 +36,12 @@ def check(sound,core):
   original=P.zip_files((P.ROOT/config['local'][n]['source']).read_bytes())
   refreshed=P.zip_files(assets[n]);assert set(original)==set(refreshed)
   assert {f:b for f,b in original.items() if f!=row['member']}=={f:b for f,b in refreshed.items() if f!=row['member']}
-  assert refreshed[row['member']]==(P.ROOT/row['source']).read_bytes()
+  expected=(P.ROOT/row['source']).read_bytes()
+  if row.get('transform') is not None:
+   assert n=='CPPAN.ZIP' and row['transform']=='optimized-colorplus'
+   current=importlib.machinery.SourceFileLoader('checked_colorplus_guide',str(P.ROOT/'tools/CPPACK/CURRENT.PY')).load_module()
+   expected=current.install_guide(expected)
+  assert refreshed[row['member']]==expected
  checks.append('All4 guide refreshes preserve every driver/app/helper/support byte')
  assert not set(assets)&set(config['excluded_consumer_alternatives'])
  checks.append('No promoted raw EXE or obsolete desktop wrapper in asset set')
