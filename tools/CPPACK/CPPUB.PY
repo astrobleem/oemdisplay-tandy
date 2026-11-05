@@ -1,4 +1,4 @@
-"""Publish only a qualified ColorPlus catalog update; preserve every other asset.
+"""Publish qualified ColorPlus/Yamaha driver updates; preserve every other asset.
 
 Default mode is read-only. Writes require --publish from the main-branch workflow
 at its exact checked commit. Uses existing BUNDLE/CHECK and gh authentication.
@@ -8,11 +8,12 @@ import argparse,hashlib,importlib.machinery,json,os,subprocess,urllib.request
 ROOT=Path(__file__).resolve().parents[2]
 P=importlib.machinery.SourceFileLoader('p15_catalog',str(ROOT/'tools/CURRENT/BUNDLE.PY')).load_module()
 V=importlib.machinery.SourceFileLoader('p15_release_proof',str(ROOT/'src/pcp/CPVERIFY.PY')).load_module()
-ORDER=('CPPAN.ZIP','CURRENT.SHA','CURRENT.JSN')
+PACKETS=('CPPAN.ZIP','YAMAHA.ZIP')
+ORDER=PACKETS+('CURRENT.SHA','CURRENT.JSN')
 CHANGED=set(ORDER)
 # This driver-only publisher preserves the current accepted collection.
-# Shared helper/core updates use aggregate current-release publication.
-PRESERVE_CURRENT={'TANDYLAB.ZIP':{'bytes':959948,'sha256':'8c6a7d016293658a84ba71c2ec633b8845bd4e81d09dadcad95436e76b5694cd'}}
+# Shared helper/core updates are outside this publisher's scope.
+PRESERVE_CURRENT={'TANDYLAB.ZIP':{'bytes':1098337,'sha256':'d50f4563d42b4219af093a0bb260fcf4d1cdbb495a69cf3cfa6ad0b31c67654e'}}
 REPOSITORY='astrobleem/oemdisplay-tandy'
 URL='https://github.com/'+REPOSITORY+'/releases/download/windows-xt/'
 
@@ -20,9 +21,74 @@ def download(url):
     request=urllib.request.Request(url,headers={'User-Agent':'qualified-colorplus-publisher','Cache-Control':'no-cache'})
     return urllib.request.urlopen(request,timeout=60).read()
 
+def packet_files(data):
+    files=P.zip_files(data)
+    if P.archive(files)!=data:raise ValueError('Noncanonical current driver packet')
+    return files
+
 def driver_only(previous,current):
-    return (set(previous)==set(current) and
-            all(previous[n]==current[n] for n in current if n!='PCP3216.DRV'))
+    # This is only a scope filter. check() binds INSTALL.TXT to its exact
+    # qualified derivation before any publication can proceed.
+    allowed={'PCP3216.DRV','INSTALL.TXT'}
+    return (allowed<=set(current) and set(previous)==set(current) and
+            all(previous[n]==current[n] for n in current if n not in allowed))
+
+def yamaha_driver_only(previous,current):
+    """Allow the B800 driver and its derived file records, never support edits."""
+    allowed={'YAM160.DRV','MANIFEST.JSN','SHA256.SUM'}
+    if (not allowed<=set(current) or set(previous)!=set(current) or
+        any(previous[n]!=current[n] for n in current if n not in allowed)):
+        return False
+    records=[]
+    for files in (previous,current):
+        record=json.loads(files['MANIFEST.JSN'])
+        pins={n:P.identity(b) for n,b in sorted(files.items()) if n not in {'MANIFEST.JSN','SHA256.SUM'}}
+        sums=P.text(''.join(P.identity(b)['sha256']+'  '+n+'\n' for n,b in sorted(files.items()) if n!='SHA256.SUM'))
+        if (not isinstance(record,dict) or record.get('profile')!='b800' or record.get('driver')!='YAM160.DRV' or
+            record.get('files')!=pins or files['SHA256.SUM']!=sums):
+            return False
+        records.append({n:v for n,v in record.items() if n!='files'})
+    return records[0]==records[1]
+
+def yamaha_verify(data):
+    gate=importlib.machinery.SourceFileLoader('fixed_yamaha_proof',str(ROOT/'tools/YAMPACK/PACK.PY')).load_module()
+    return gate.verify('b800',data)
+
+def optimized_guide(original):
+    gate=importlib.machinery.SourceFileLoader('fixed_colorplus_guide',str(ROOT/'tools/CPPACK/CURRENT.PY')).load_module()
+    return gate.install_guide(original)
+
+def preserves_packet(name,previous,current):
+    if name=='CPPAN.ZIP':return driver_only(previous,current)
+    if name=='YAMAHA.ZIP':return yamaha_driver_only(previous,current)
+    raise ValueError('Packet is outside fixed-driver scope: '+name)
+
+def scope(folder,release):
+    """Read-only workflow filter. Full qualification remains mandatory in check."""
+    rows={name:[row for row in release['assets'] if row['name']==name] for name in ORDER}
+    if any(len(r)>1 for r in rows.values()):raise ValueError('Duplicate current driver/catalog assets')
+    data={name:(folder/name).read_bytes() for name in PACKETS}
+    wanted={name:P.identity(body) for name,body in data.items()}
+    actual={name:({'bytes':r[0]['size'],'sha256':r[0]['digest'].removeprefix('sha256:')} if r else None) for name,r in rows.items()}
+    changed=any(actual[name]!=wanted[name] for name in PACKETS)
+    if not changed:
+        changed=any(not rows[name] for name in ('CURRENT.JSN','CURRENT.SHA'))
+        if not changed:
+            bodies={name:download(rows[name][0]['browser_download_url']) for name in ('CURRENT.JSN','CURRENT.SHA')}
+            if any(P.identity(body)!=actual[name] for name,body in bodies.items()):
+                raise ValueError('Current catalog download differs')
+            record=json.loads(bodies['CURRENT.JSN'])
+            sums={name:digest for digest,name in (line.split('  ',1) for line in bodies['CURRENT.SHA'].decode('ascii').splitlines())}
+            changed=(any(record['assets'].get(name)!=wanted[name] or sums.get(name)!=wanted[name]['sha256'] for name in PACKETS) or
+                     sums.get('CURRENT.JSN')!=P.identity(bodies['CURRENT.JSN'])['sha256'])
+    within=True
+    if changed:
+        for name in PACKETS:
+            if not rows[name]:continue
+            previous=download(rows[name][0]['browser_download_url'])
+            if P.identity(previous)!=actual[name]:raise ValueError('Current driver download differs: '+name)
+            within=preserves_packet(name,packet_files(previous),packet_files(data[name])) and within
+    return changed,within
 
 
 def prepare(folder,release):
@@ -57,28 +123,43 @@ def check(folder,release):
         raise ValueError('An unaffected release asset differs; refusing all writes')
     if any(expected[n]!=pin for n,pin in spec['core_identities'].items()):
         raise ValueError('Qualified core assets differ')
-    source=P.zip_files((ROOT/spec['local']['CPPAN.ZIP']['source']).read_bytes())
-    current=P.zip_files((folder/'CPPAN.ZIP').read_bytes())
+    if expected.get('PC1.ZIP')!=spec['local']['PC1.ZIP']['identity']:
+        raise ValueError('Qualified PC1 packet differs')
+    source=packet_files((ROOT/spec['local']['CPPAN.ZIP']['source']).read_bytes())
+    current=packet_files((folder/'CPPAN.ZIP').read_bytes())
     overlay=spec['documentation_overlays']['CPPAN.ZIP']
+    qualification,_=V.verify()
+    transform=overlay.get('transform')
+    if transform!=('optimized-colorplus' if qualification.get('optimized') else None):
+        raise ValueError('Unrecognized or unqualified ColorPlus guide transform')
+    guide=(ROOT/overlay['source']).read_bytes()
+    if qualification.get('optimized'):guide=optimized_guide(guide)
     if (set(current)!=set(source) or overlay['member']!='INSTALL.TXT' or
-        current['INSTALL.TXT']!=(ROOT/overlay['source']).read_bytes() or
         any(current[n]!=source[n] for n in current if n!='INSTALL.TXT')):
         raise ValueError('Current ColorPlus ZIP changed qualified runtime')
-    qualification,_=V.verify()
+    if current['INSTALL.TXT']!=guide:
+        raise ValueError('Current ColorPlus installation guide differs from qualified derivation')
     if P.identity(current['PCP3216.DRV'])!=qualification['driver']:
         raise ValueError('Public ColorPlus driver differs from native qualification')
+    yamaha=(folder/'YAMAHA.ZIP').read_bytes()
+    yamaha_source=spec['local']['YAMAHA.ZIP']
+    if (P.identity(yamaha)!=yamaha_source['identity'] or
+        yamaha!=(ROOT/yamaha_source['source']).read_bytes()):
+        raise ValueError('Current Yamaha ZIP differs from qualified source packet')
+    yamaha_verify(yamaha)
     # A concurrent panning/settings release shares this ZIP. Even though the
-    # archive itself is allowlisted for replacement, preserve every other
-    # live member. A missing archive can be repaired from the exact native
+    # archive itself is allowlisted for replacement, preserve support/runtime
+    # members besides the fixed driver and verified derived installation guide.
+    # A missing archive can be repaired from the exact native
     # qualified packet after an interrupted allowlisted upload.
-    live=[r for r in assets if r['name']=='CPPAN.ZIP']
-    if live:
-        data=download(live[0]['browser_download_url'])
-        if P.identity(data)!=actual['CPPAN.ZIP']:
-            raise ValueError('Anonymous current ColorPlus ZIP differs from release metadata')
-        previous=P.zip_files(data)
-        if not driver_only(previous,current):
-            raise ValueError('Fixed ColorPlus update would replace panning/installer/support members')
+    for name in PACKETS:
+        live=[r for r in assets if r['name']==name]
+        if live:
+            data=download(live[0]['browser_download_url'])
+            if P.identity(data)!=actual[name]:
+                raise ValueError('Anonymous current driver ZIP differs from release metadata: '+name)
+            if not preserves_packet(name,packet_files(data),packet_files((folder/name).read_bytes())):
+                raise ValueError('Fixed-driver update would replace panning/installer/support members: '+name)
     return expected,actual
 
 def require_live_main(head):
@@ -91,7 +172,7 @@ def readback(expected):
             raise ValueError('Anonymous publication readback differs: '+name)
     after=json.loads(download('https://api.github.com/repos/'+REPOSITORY+'/releases/tags/windows-xt'))
     final={r['name']:{'bytes':r['size'],'sha256':r['digest'].removeprefix('sha256:')} for r in after['assets']}
-    if final!=expected:raise ValueError('Published catalog asset identities differ')
+    if len(final)!=len(after['assets']) or final!=expected:raise ValueError('Published catalog asset identities differ')
 
 def main():
     a=argparse.ArgumentParser(description=__doc__)
@@ -123,6 +204,6 @@ def main():
         subprocess.run(['gh','release','upload','windows-xt',str(folder/name),
                         '--clobber','--repo',REPOSITORY],check=True,cwd=ROOT)
     readback(expected)
-    print('PASS: ColorPlus ZIP and catalog read back; all other current assets preserved')
+    print('PASS: ColorPlus/Yamaha ZIPs and catalog read back; all other current assets preserved')
 
 if __name__=='__main__':main()

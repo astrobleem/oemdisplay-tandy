@@ -24,6 +24,14 @@ def verify_alternatives(files):
  fresh=importlib.machinery.SourceFileLoader('current_fresh_cga_gate',str(HERE/'FRESHVIEW.PY')).load_module()
  fresh.verify(files['CGA.ZIP'])
  qualified=dict(files);qualified['CGA.ZIP']=base
+ # Replay the current fixed-driver proof before the historical PAN gate checks
+ # its own unchanged packet. The output mapping is never substituted.
+ q=json.loads((ROOT/'tools/CPPACK/QUALIFY.JSN').read_bytes())
+ if 'optimized' in q:
+  current=importlib.machinery.SourceFileLoader('current_fixed_colorplus',str(ROOT/'tools/CPPACK/CURRENT.PY')).load_module()
+  current.verify(files['CPPAN.ZIP'])
+  prior=importlib.machinery.SourceFileLoader('current_fixed_panning_base',str(ROOT/'tools/PAN/PUBLISH.PY')).load_module()
+  accepted,packets=prior.products();qualified['CPPAN.ZIP']=packets['CPPAN.ZIP']
  native.verify_alternatives(qualified)
  return {n:identity(files[n]) for n in ('CGA.ZIP','CPPAN.ZIP','JRPAN.ZIP','PAN.ZIP')}
 def archive(files):
@@ -71,6 +79,11 @@ def ancillary(sound,main_zip):
  for name,row in config.get('documentation_overlays',{}).items():
   original=zip_files(files[name]);updated=dict(original)
   guide=(ROOT/row['source']).read_bytes()
+  transform=row.get('transform')
+  if transform is not None:
+   if name!='CPPAN.ZIP' or transform!='optimized-colorplus':raise ValueError('Unknown guide transformation')
+   current=importlib.machinery.SourceFileLoader('current_colorplus_guide',str(ROOT/'tools/CPPACK/CURRENT.PY')).load_module()
+   guide=current.install_guide(guide)
   if row['member']!='INSTALL.TXT' or row['member'] not in original:raise ValueError('Unexpected documentation overlay')
   if b'\n' in guide.replace(b'\r\n',b''):raise ValueError('Guide must retain CRLF')
   updated[row['member']]=guide

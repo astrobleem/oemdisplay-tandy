@@ -249,3 +249,6 @@ downloads/CUBE/** -text
 docs/CUBE.MD -text
 tools/CURRENT/FRESHVIEW.PY -text
 tools/CURRENT/CGASNAP.ZIP -text
+experiments/DGSCOPY/** -text
+src/tandysw/BUILDCOPY.PY -text
+docs/pcp/OUTPUT/OPTIMIZED.ZIP -export-ignore

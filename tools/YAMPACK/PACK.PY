@@ -1,4 +1,4 @@
-"""Build support-complete Yamaha packets from unchanged accepted drivers."""
+"""Build Yamaha packets with historical validation and a qualified B800 overlay."""
 import argparse
 import hashlib
 import importlib.machinery
@@ -19,6 +19,7 @@ PROFILES = {
 SUPPORT = {'CGA.GR2', 'XTCSYS.FON', 'XTCFIX.FON', 'XTCOEM.FON', 'XTSTATIC.LGO', 'WXTSPL01.RLE'}
 LICENSES = {'FONTLIC.TXT', 'LOGOLIC.TXT'}
 STAMP = (1980, 1, 1, 0, 0, 0)
+B800_PAYLOAD = HERE / 'PAYLOAD/YAM160.DRV'
 
 def identity(data):
     return {'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
@@ -33,6 +34,27 @@ def exact(data, expected, name):
     if identity(data) != expected:
         raise ValueError('Accepted bytes differ: ' + name)
     return data
+
+def native_binding():
+    verifier = importlib.machinery.SourceFileLoader(
+        'yam_native_verify', str(ROOT / 'experiments/DGSCOPY/VERIFY.PY')).load_module()
+    return verifier.verify_profile('yamaha160-b800')
+
+def driver_pin(profile):
+    if profile == 'pc1':
+        return {'bytes': PROFILES[profile][5], 'sha256': PROFILES[profile][4]}
+    pin = native_binding()['driver']
+    if (set(pin) != {'bytes', 'sha256'} or type(pin['bytes']) is not int
+            or not 0 < pin['bytes'] <= 1048576 or not isinstance(pin['sha256'], str)
+            or len(pin['sha256']) != 64 or any(c not in '0123456789abcdef' for c in pin['sha256'])):
+        raise ValueError('Invalid qualified B800 driver identity')
+    return pin
+
+def qualified_b800():
+    pin = driver_pin('b800')
+    if B800_PAYLOAD.stat().st_size > 1048576:
+        raise ValueError('Qualified B800 overlay exceeds 1 MiB')
+    return exact(B800_PAYLOAD.read_bytes(), pin, 'qualified B800 overlay')
 
 def selector(profile):
     driver, label, *_ = PROFILES[profile]
@@ -76,10 +98,8 @@ def metadata(profile):
     return {'OEMSETUP.INF': selector(profile), 'README.TXT': (HERE / (profile.upper() + '.TXT')).read_bytes(),
             'NOTICE.TXT': (HERE / 'NOTICE.TXT').read_bytes()}
 
-def build(profile, output, accepted=None, grabber=None):
-    out = Path(output)
-    if out.exists():
-        raise ValueError('Output must be new')
+def historical_files(profile, accepted=None, grabber=None):
+    # Preserve candidate03 archive membership, historical driver and support checks.
     driver, label, filename, oldname, digest, size = PROFILES[profile]
     source = Path(accepted) if accepted else ROOT / 'downloads/experimental/yamaha-candidate03' / oldname
     if source.stat().st_size > 1048576:
@@ -97,13 +117,31 @@ def build(profile, output, accepted=None, grabber=None):
             data = (ROOT / 'distributions/WINXT' / name).read_bytes()
         files[name] = exact(data, pin, name)
     files.update(metadata(profile))
+    return files
+
+def packet_bytes(profile, files):
+    driver, label, *_ = PROFILES[profile]
+    files = dict(files)
     record = {'schema': 1, 'profile': profile, 'driver': driver, 'selector': label,
               'files': {n: identity(b) for n, b in sorted(files.items())},
               'external_support_inputs': [], 'native_test': 'not asserted by host packaging'}
     files['MANIFEST.JSN'] = dos(json.dumps(record, indent=2, sort_keys=True) + '\n')
     files['SHA256.SUM'] = checksum(files)
-    packed = archive(files)
+    return archive(files)
+
+def build(profile, output, accepted=None, grabber=None):
+    out = Path(output)
+    if out.exists():
+        raise ValueError('Output must be new')
+    driver, label, filename, *_ = PROFILES[profile]
+    files = historical_files(profile, accepted, grabber)
+    # The optimized input never substitutes for validation of the historical base.
+    if profile == 'b800':
+        files[driver] = qualified_b800()
+    packed = packet_bytes(profile, files)
     verify(profile, packed)
+    with zipfile.ZipFile(io.BytesIO(packed)) as z:
+        files = {name: z.read(name) for name in z.namelist()}
     out.mkdir(parents=True)
     for name, data in files.items():
         (out / name).write_bytes(data)
@@ -116,7 +154,7 @@ def verify(profile, data):
     files = read_archive(data, names)
     if data != archive(files):
         raise ValueError('Noncanonical packet metadata')
-    exact(files[driver], {'bytes': PROFILES[profile][5], 'sha256': PROFILES[profile][4]}, driver)
+    exact(files[driver], driver_pin(profile), driver)
     for name, pin in pins().items():
         exact(files[name], pin, name)
     for name, expected in metadata(profile).items():

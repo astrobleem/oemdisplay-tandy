@@ -1,4 +1,4 @@
-name: ColorPlus Output qualification
+name: ColorPlus and Yamaha Output qualification
 
 on:
   pull_request:
@@ -8,7 +8,10 @@ on:
       - 'src/tandysw/**'
       - 'tools/BUILDDEPS/LOCK.JSON'
       - 'tools/APPSET/**'
-      - 'tools/YAMPACK/SUPPORT.JSN'
+      - 'tools/YAMPACK/**'
+      - 'docs/yamaha/**'
+      - 'downloads/experimental/yamaha/**'
+      - 'experiments/DGSCOPY/**'
       - 'tools/XR1PACK/PREPARE.PY'
       - 'tools/XR1PACK/OWATCOM.TXT'
       - 'distributions/WINXT/**'
@@ -32,7 +35,10 @@ on:
       - 'src/tandysw/**'
       - 'tools/BUILDDEPS/LOCK.JSON'
       - 'tools/APPSET/**'
-      - 'tools/YAMPACK/SUPPORT.JSN'
+      - 'tools/YAMPACK/**'
+      - 'docs/yamaha/**'
+      - 'downloads/experimental/yamaha/**'
+      - 'experiments/DGSCOPY/**'
       - 'tools/XR1PACK/PREPARE.PY'
       - 'tools/XR1PACK/OWATCOM.TXT'
       - 'distributions/WINXT/**'
@@ -77,14 +83,28 @@ jobs:
           python3 -B tools/DRVSET/VERIFY.PY
           python3 -B tools/CPPACK/TESTSCP.PY
           python3 -B tools/CPPACK/TESTPUB.PY
+          python3 -B tools/CPPACK/TESTCUR.PY
           python3 -B tools/CPPACK/TESTPKG.PY
+          python3 -B experiments/DGSCOPY/TESTVFY.PY
+          python3 -B experiments/DGSCOPY/TEST.PY --out "$RUNNER_TEMP/copy-span"
+          python3 -B tools/YAMPACK/TEST.PY
+          python3 - <<'PYCODE'
+          import importlib.machinery,json
+          from pathlib import Path
+          spec=json.loads(Path('tools/CURRENT/PRODUCTS.JSN').read_bytes())
+          gate=importlib.machinery.SourceFileLoader('exact_yamaha','tools/YAMPACK/PACK.PY').load_module()
+          for profile,name in [('pc1','PC1.ZIP'),('b800','YAMAHA.ZIP')]:
+              row=spec['local'][name];data=Path(row['source']).read_bytes()
+              if gate.identity(data)!=row['identity']:raise ValueError('Catalog source identity differs: '+name)
+              gate.verify(profile,data)
+          PYCODE
 
   publication-check:
     needs: exact-source
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     outputs:
-      colorplus_changed: ${{ steps.scope.outputs.changed }}
+      drivers_changed: ${{ steps.scope.outputs.changed }}
       driver_only: ${{ steps.scope.outputs.driver_only }}
     env:
       SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -109,52 +129,23 @@ jobs:
           python3 -B tools/HPDIB/PUBLISH.PY --out core --commit "$CORE_SHA"
           python3 -B tools/CURRENT/CHECK.PY --core core --sound sound-inputs --report catalog-check.json
           python3 -B tools/CURRENT/BUNDLE.PY --core core --sound sound-inputs --commit "$SOURCE_SHA" --out current
-      - name: Determine whether this catalog changes the ColorPlus packet
+      - name: Determine whether this catalog changes either fixed-driver packet
         id: scope
         run: |
           python3 - <<'PYCODE'
-          import hashlib,importlib.machinery,json,os,urllib.request
+          import importlib.machinery,json,os
           from pathlib import Path
-          url='https://api.github.com/repos/astrobleem/oemdisplay-tandy/releases/tags/windows-xt'
-          request=urllib.request.Request(url,headers={'User-Agent':'colorplus-publication-scope','Cache-Control':'no-cache'})
-          release=json.loads(urllib.request.urlopen(request,timeout=60).read())
-          rows=[row for row in release['assets'] if row['name']=='CPPAN.ZIP']
-          if len(rows)>1:raise ValueError('Duplicate current ColorPlus assets')
-          live_packet=rows[0] if rows else None
-          data=Path('current/CPPAN.ZIP').read_bytes()
-          wanted={'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}
-          actual=({'bytes':rows[0]['size'],'sha256':rows[0]['digest'].removeprefix('sha256:')} if rows else None)
-          changed=actual!=wanted
-          if not changed:
-              catalogs={name:[row for row in release['assets'] if row['name']==name] for name in ['CURRENT.JSN','CURRENT.SHA']}
-              if any(len(rows)>1 for rows in catalogs.values()):raise ValueError('Duplicate current catalog assets')
-              changed=any(not rows for rows in catalogs.values())
-              if not changed:
-                  bodies={}
-                  for name,rows in catalogs.items():
-                      req=urllib.request.Request(rows[0]['browser_download_url'],headers={'User-Agent':'colorplus-publication-scope','Cache-Control':'no-cache'})
-                      bodies[name]=urllib.request.urlopen(req,timeout=60).read()
-                      if hashlib.sha256(bodies[name]).hexdigest()!=rows[0]['digest'].removeprefix('sha256:'):raise ValueError('Current catalog download differs')
-                  record=json.loads(bodies['CURRENT.JSN'])
-                  sums={name:digest for digest,name in (line.split('  ',1) for line in bodies['CURRENT.SHA'].decode('ascii').splitlines())}
-                  changed=(record['assets'].get('CPPAN.ZIP')!=wanted or
-                           sums.get('CPPAN.ZIP')!=wanted['sha256'] or
-                           sums.get('CURRENT.JSN')!=hashlib.sha256(bodies['CURRENT.JSN']).hexdigest())
-          driver_only=True
-          if changed and live_packet:
-              req=urllib.request.Request(live_packet['browser_download_url'],headers={'User-Agent':'colorplus-publication-scope','Cache-Control':'no-cache'})
-              previous=urllib.request.urlopen(req,timeout=60).read()
-              if {'bytes':len(previous),'sha256':hashlib.sha256(previous).hexdigest()}!=actual:raise ValueError('Current ColorPlus download differs')
-              publisher=importlib.machinery.SourceFileLoader('scope','tools/CPPACK/CPPUB.PY').load_module()
-              driver_only=publisher.driver_only(publisher.P.zip_files(previous),publisher.P.zip_files(data))
+          publisher=importlib.machinery.SourceFileLoader('scope','tools/CPPACK/CPPUB.PY').load_module()
+          release=json.loads(publisher.download('https://api.github.com/repos/'+publisher.REPOSITORY+'/releases/tags/windows-xt'))
+          changed,driver_only=publisher.scope(Path('current'),release)
           with open(os.environ['GITHUB_OUTPUT'],'a') as out:
               out.write('changed='+str(changed).lower()+'\n')
               out.write('driver_only='+str(driver_only).lower()+'\n')
-          print('ColorPlus packet changed:',changed)
-          print('Within fixed-driver-only publisher scope:',driver_only)
-          if not driver_only:print('Shared helper/support update: native package checks apply; aggregate current-release publication required')
+          print('Fixed-driver packets or catalog bindings changed:',changed)
+          print('Within ColorPlus/Yamaha fixed-driver-only publisher scope:',driver_only)
+          if not driver_only:raise ValueError('Shared helper/support changes are outside this publisher scope')
           PYCODE
-      - name: Check the exact ColorPlus candidate against current release without writes
+      - name: Check both exact driver candidates against current release without writes
         if: steps.scope.outputs.changed == 'true' && steps.scope.outputs.driver_only == 'true'
         run: |
           python3 -B tools/CPPACK/CPPUB.PY --folder current --commit "$SOURCE_SHA" --prepare
@@ -165,8 +156,8 @@ jobs:
           path: current/*
           if-no-files-found: error
 
-  publish-colorplus:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.publication-check.outputs.colorplus_changed == 'true' && needs.publication-check.outputs.driver_only == 'true'
+  publish-drivers:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.publication-check.outputs.drivers_changed == 'true' && needs.publication-check.outputs.driver_only == 'true'
     needs: publication-check
     runs-on: ubuntu-24.04
     timeout-minutes: 5
@@ -185,7 +176,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh run download "${{ github.run_id }}" --repo "${{ github.repository }}" --name "colorplus-current-${{ github.sha }}" --dir current
-      - name: Publish only the qualified ColorPlus ZIP and catalog records, then read back
+      - name: Publish only qualified ColorPlus/Yamaha ZIPs and catalog records, then read back
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 -B tools/CPPACK/CPPUB.PY --folder current --commit "${{ github.sha }}" --publish
