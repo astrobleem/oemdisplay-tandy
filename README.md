@@ -106,10 +106,36 @@ Use Ctrl+Alt+arrows to pan and Ctrl+Alt+Home to return home. PAN /SETTINGS selec
 [Install Minesweeper](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/MINESET.ZIP) ·
 [Install guide](tools/CURRENT/GUIDES/MINESET.TXT) · [Capture notes](docs/pan/MINE/CAPTURE.MD).
 
-<img src="docs/rrect/TIMELINE.PNG" alt="Matched emulator captures comparing the original and optimized Calculator repaint" width="640">
+## Calculator, faster again
 
-One Calculator repaint fell from **92.5 to 10.4 seconds** in a matched emulator
-experiment. That comparison has its own [drawing test scope](docs/RRECT.MD).
+**Under a second in both four-color modes.** The latest fixed-profile developer
+build cuts Calculator redraws by **up to 11.9×** in matched emulator tests.
+
+| Display mode | Before | Now | Speedup |
+| --- | ---: | ---: | ---: |
+| 640×200, four colors | 3.790 s | **0.604 s** | **6.27×** |
+| 320×200, four colors | 10.436 s | **0.934 s** | **11.17×** |
+| 320×200, sixteen colors | 26.858 s | **2.252 s** | **11.93×** |
+| 160×200, sixteen colors | 13.786 s | **1.483 s** | **9.30×** |
+| 640×200, monochrome | 1.593 s | **0.439 s** | **3.63×** |
+
+Less copying, same drawing: all 15 Calculator framebuffer comparisons matched
+their baseline exactly, alongside 200 text/GDI and polyline comparisons.
+
+These are medians of three full client repaints per build in Windows 3.0,
+DOSBox-X with a normal core, `8086_prefetch`, fixed 3000 cycles and 640 KB.
+Compare before/after within each mode; window sizes differ between modes.
+These are not physical-hardware timings. Existing low-resolution layout
+crowding/clipping is unchanged.
+
+[Source changes and validation](https://github.com/astrobleem/oemdisplay-tandy/pull/218)
+are in the developer build, **not yet in the downloadable driver packets**.
+
+<img src="docs/rrect/TIMELINE.PNG" alt="Earlier Calculator optimization: original matched emulator timeline, not the new measurements above" width="640">
+
+*The earlier 92.5 → 10.4 second experiment, shown above, has its own
+[drawing test scope](docs/RRECT.MD). Its timings are separate from the new
+five-mode comparison.*
 
 ## Games, savers and sound
 
