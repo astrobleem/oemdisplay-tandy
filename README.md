@@ -130,7 +130,10 @@ These are not physical-hardware timings. Existing low-resolution layout
 crowding/clipping is unchanged.
 
 [Source changes and validation](https://github.com/astrobleem/oemdisplay-tandy/pull/218)
-are in the developer build, **not yet in the downloadable driver packets**.
+are available through [`BUILDCALC.PY`](src/tandysw/BUILDCALC.PY),
+**not yet in the downloadable driver packets**. Use the same `--repo`, `--dosbox`,
+fresh `--out` and `--mode` arguments as BUILD88, with the tested stock UI.
+The historical BUILD88 entrypoint stays unchanged for other adapter builds.
 
 <img src="docs/rrect/TIMELINE.PNG" alt="Earlier Calculator optimization: original matched emulator timeline, not the new measurements above" width="640">
 
