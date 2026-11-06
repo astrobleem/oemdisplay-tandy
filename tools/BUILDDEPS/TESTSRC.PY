@@ -26,8 +26,7 @@ def main():
                          name in ("OUTPUTBOUNDS", "TEXTBOUNDS") else source)
         modules[name] = importlib.machinery.SourceFileLoader(
             "external_" + name, str(module_source / (name + suffix))).load_module()
-    # Exercise the real CLI staging gate without launching an emulator.
-    # XY overlays depend on the default row-only 320-pixel stage.
+    # Exercise the unchanged CLI and additive --fixed wrapper without a guest.
     class StageReady(Exception):
         pass
 
@@ -39,16 +38,29 @@ def main():
             "external_bounds_builder", str(source / "BUILD88.PY")).load_module()
     builder.bounded_run = stop_before_native
 
-    def cli_stage(out, mode, all_modes):
-        argv = ["BUILD88.PY", "--repo", str(repo), "--dosbox", "__not_run__",
-                "--out", str(out), "--mode", mode]
-        if all_modes:
-            argv.append("--all-mode-bounds")
+    wrapper = importlib.machinery.SourceFileLoader(
+        "external_bounds_wrapper", str(Path(__file__).resolve().parents[1] /
+                                       "HPDIB/BLDBNDS.PY")).load_module()
+    bounds_source = args.bounds_source or source
+
+    def cli_stage(out, mode, bounded):
+        argv = ["BLDBNDS.PY" if bounded else "BUILD88.PY", "--repo", str(repo),
+                "--dosbox", "__not_run__", "--out", str(out), "--mode", mode]
+        if bounded:
+            argv.append("--fixed")
+            fixed = wrapper.fixed_builder(source / "BUILD88.PY", bounds_source)
+            fixed.bounded_run = stop_before_native
         with patch.object(sys, "argv", argv):
             try:
-                builder.main()
+                if bounded:
+                    with patch.object(wrapper, "fixed_builder", return_value=fixed):
+                        wrapper.main()
+                else:
+                    builder.main()
             except StageReady:
-                return (out / "renderer/EGA/TSOFT.ASM").read_bytes()
+                return {(str(folder) + "/" + p.relative_to(out / folder).as_posix()): p.read_bytes()
+                        for folder in ("renderer", "resources")
+                        for p in (out / folder).rglob("*") if p.is_file()}
         raise AssertionError("CLI did not stop before native execution")
 
     baseline = json.loads((repo / "docs/TRIAL4/BUILDS.JSN").read_bytes())
@@ -130,9 +142,15 @@ def main():
             for name, content in before.items():
                 if name != "EGA/TSOFT.ASM":
                     assert (renderer / name).read_bytes() == content, name
-            assert cli_stage(Path(temp) / (mode + "-default"), mode, False) == (
-                text_final if mode == "640x200x4" else output), mode
-            assert cli_stage(Path(temp) / (mode + "-all-bounds"), mode, True) == text_final, mode
+            original_stage = cli_stage(Path(temp) / (mode + "-default"), mode, False)
+            fixed_stage = cli_stage(Path(temp) / (mode + "-fixed-bounds"), mode, True)
+            key = "renderer/EGA/TSOFT.ASM"
+            assert original_stage[key] == output, mode
+            assert fixed_stage[key] == text_final, mode
+            assert original_stage.keys() == fixed_stage.keys(), mode
+            for name, content in original_stage.items():
+                if name != key:
+                    assert fixed_stage[name] == content, (mode, name)
             results.append(mode)
     print(json.dumps({"status": "PASS", "modes": results,
                       "scope": "exact dependency/source pins and staged TR5 assembly; no native build or runtime claim"}, indent=2))

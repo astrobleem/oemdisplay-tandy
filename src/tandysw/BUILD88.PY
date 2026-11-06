@@ -23,8 +23,6 @@ def main():
     parser.add_argument("--dosbox", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--mode", default="320x200x16", choices=("320x200x16", "640x200x4", "160x200x16", "320x200x4", "640x200x2"))
-    parser.add_argument("--all-mode-bounds", action="store_true",
-                        help="Opt in synchronous Output/text columns for every fixed profile; omitted preserves XY overlay baselines")
     parser.add_argument("--ui-profile", default="stock", choices=("stock", "compact320", "compact160", "textgrid", "compact160narrow"),
                         help="Opt-in staged OEM resources; stock retains accepted resource pins")
     args = parser.parse_args()
@@ -61,15 +59,6 @@ def main():
     wide_loader = importlib.machinery.SourceFileLoader("widescan", str(HERE / "WIDESCAN.PY"))
     wide_module = wide_loader.load_module()
     wide_audit = wide_module.port(renderer, args.mode)
-    bounds_module = importlib.machinery.SourceFileLoader(
-        "outputbounds", str(HERE / "OUTPUTBOUNDS.PY")).load_module()
-    use_bounds = args.all_mode_bounds or args.mode == "640x200x4"
-    bounds_audit = (bounds_module.port(renderer, args.mode) if use_bounds
-                    else {"changed": False, "mode": args.mode})
-    text_module = importlib.machinery.SourceFileLoader(
-        "textbounds", str(HERE / "TEXTBOUNDS.PY")).load_module()
-    text_audit = (text_module.port(renderer, args.mode) if use_bounds
-                  else {"changed": False, "mode": args.mode})
     ui_audit = {"profile": "stock"}
     if args.ui_profile != "stock":
         ui_module = importlib.machinery.SourceFileLoader("compactui", str(HERE / "COMPACT.PY")).load_module()
@@ -133,8 +122,7 @@ def main():
               "instruction_audit": instruction_audit, "link_audit": link_audit,
               "rle_abi_audit": rle_abi_audit,
               "cursor_retention": keep_audit, "interrupt_safe_copies": rep_audit, "rep_prefix_audit": rep_instruction_audit,
-              "byte_columns": column_audit, "output_rows": out_audit, "wide_scanlines": wide_audit,
-              "output_bounds": bounds_audit, "text_bounds": text_audit}
+              "byte_columns": column_audit, "output_rows": out_audit, "wide_scanlines": wide_audit}
     (out / "RESULT.json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report, indent=2))
 
