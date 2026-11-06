@@ -27,9 +27,10 @@ It contains `SETUP.EXE`, `README.TXT` and an expanded `WINXT` folder.
 - **Drivers only:** point Windows Setup at the same expanded `WINXT` folder,
   without running the custom installer.
 
-Follow [installation](docs/DESKTOP.MD) for the normal Setup and launch entries.
-See [Panning settings](docs/PANNING.MD) for the available viewport approaches
-and the window workspace on fixed-resolution drivers.
+New installations default to **fixed 320x200, sixteen colors, without panning**.
+Updates preserve the installed display choice. HPXY panning remains optional.
+[Current release notes](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt) ·
+[Installation](docs/DESKTOP.MD) · [Panning settings](docs/PANNING.MD).
 
 Other hardware profiles and apps are in [current downloads](docs/DOWNLOADS.MD).
 Each product has one current packet and a short install guide.
@@ -46,18 +47,14 @@ keyboard controls. Tandy extended displays keep their software/hardware choice;
 fixed displays use the window workspace. There is no separate helper to choose
 or copy. [Installation, controls and supported displays](docs/PANNING.MD).
 
-PCjr and ColorPlus now pan **horizontally and vertically** across a 640x400
-desktop. Their larger software shadow uses 64 KB more memory than the previous
-vertical-only desktop; normal 640 KB remains sufficient for the tested sessions.
-[Native checks, screenshots and measured memory](docs/QUAL/PAN/README.MD).
-
 ## IBM CGA graphics
 
 **[Download CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP)**
 for fixed or panning 160x100 with 16 RGBI colors and compact fonts/controls, 320x200 four-color,
 or 640x200 monochrome. Standard and compact UI choices for 320 and 640
-are listed in the DOS installer menu. One native DOS installer includes the fonts and support
-files for an existing Windows 3.0 real-mode installation with normal 640 KB.
+are listed in the DOS installer menu; fonts and support files are included.
+For a new Windows installation, the kit's **FRESH** launcher uses your original
+Windows 3.0 media and the project's 640x200 monochrome driver during Setup.
 [Installation and emulator qualification scope](docs/CGA.MD). Physical hardware
 and composite output remain unqualified.
 
@@ -70,9 +67,13 @@ supported displays. The hardware packets also retain their fixed-mode choice.
 **[PCjr download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/JRPAN.ZIP)** | **[ColorPlus download](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CPPAN.ZIP)** |
 [Short install instructions](docs/SOFTPAN/RELEASE.MD) | [Current native evidence](docs/QUAL/PAN/README.MD)
 
-These use software copies and a 128,000-byte shadow desktop, split into two
-64,000-byte bands. Native checks cover DOSBox-X PCjr and 86Box XT/Plantronics,
-each with 640 KB RAM. Physical hardware remains unqualified.
+These use a 128,000-byte software shadow, 64 KB more than the earlier
+vertical-only desktop. Native checks cover DOSBox-X PCjr and 86Box
+XT/Plantronics with normal 640 KB. Physical hardware remains unqualified.
+
+The current **ColorPlus fixed driver and standalone Yamaha B800h driver** also
+include [new drawing optimizations](https://github.com/astrobleem/oemdisplay-tandy/pull/216).
+ColorPlus panning and the separate Olivetti PC1 driver are unchanged by that update.
 
 ## More color, compact controls
 
@@ -82,12 +83,13 @@ each with 640 KB RAM. Physical hardware remains unqualified.
 
 - Tandy Start: Programs, My Computer, Run/Browse and a clock.
 - Original XT Pixels bitmap fonts and compact controls.
+- [Copy DOS text and graphics into Windows](docs/GRABBER.MD) with Shift+Print.
 - Read existing long filenames on compatible DOS 6.22 FAT volumes.
 - A DOS display-mode menu with undo and interrupted-switch recovery.
 - Optional Hold-to-Start with the [compatible keyboard driver](src/tandyk3/README.md).
 
-The display shows a **640x256 logical desktop through a 320x200, sixteen-color view**.
-Keyboard panning brings off-screen windows and controls into reach.
+The optional **HPXY profile** shows a **640x256 desktop through a 320x200,
+sixteen-color view**. Keyboard panning brings off-screen windows into reach.
 [Display controls and installation](docs/DRIVERS.MD) ·
 [Original fonts](docs/FONTS/README.MD)
 
@@ -95,8 +97,7 @@ For a fixed-resolution desktop, choose the [fixed profiles](docs/FIXED.MD).
 
 ## More room to play
 
-The display packet includes panning and synchronous drawing.
-The captures below retain their original, separately documented test scope.
+These panning captures retain their original, separately documented test scope.
 
 | More room for windows | A board beyond the screen |
 | --- | --- |
@@ -139,17 +140,21 @@ five-mode comparison.*
 
 ## Games, savers and sound
 
-Add the optional **[rotating Cube screensaver](docs/CUBE.MD)** for Flat, Dither
-and Wire styles, compact settings and Tandy Start idle launch. Its native DOS
-installer supports standalone use and guarded undo; core packets stay unchanged.
+- **[Cube](docs/CUBE.MD):** optional download with Flat, Dither and Wire styles,
+  compact settings and Tandy Start idle launch. Its DOS installer also supports
+  standalone use and undo.
+- **[Starfield](experiments/VISPART2/README.MD) and
+  [Matrix](experiments/VISPART1/README.MD):** included in the desktop bundle,
+  alongside the older Maze saver.
+- **Ovals and the revised four-saver lineup** are still development work,
+  not part of the current downloads.
 
 | [Maze preview](examples/MAZE/GAME/README.MD) | [Tandinator](examples/TANDINAT/README.MD) | [Tandy Winamp](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt) |
 | --- | --- | --- |
 | <img src="docs/PROMO/XTMAZE.PNG" alt="Windows XT Maze preview" width="260"> | <img src="examples/TANDINAT/SHOTS/320x200x16.PNG" alt="Tandinator character-guessing game" width="260"> | <img src="https://raw.githubusercontent.com/astrobleem/oemsound-tandy/824ae10e1d79d1bd2d09f4a37447f58dd9cc9476/docs/SHOTS/WAMPUI3.PNG" alt="Tandy Winamp companion with a scrolling playlist" width="260"> |
 
-Try [Pinball](examples/PINBALL/README.MD), [Cookie Clicker](examples/COOKIE/README.MD),
-[Starfield](experiments/VISPART2/README.MD) and [Matrix](experiments/VISPART1/README.MD).
-The [desktop bundle](docs/DESKTOP.MD) includes Maze, Pinball, Starfield and Matrix.
+Try [Pinball](examples/PINBALL/README.MD) in the desktop bundle or add
+[Cookie Clicker](examples/COOKIE/README.MD).
 
 The separate [Tandy sound companion](https://github.com/astrobleem/oemsound-tandy)
 includes Winamp's playlist player, PSG music and Tandy Beats Lab/Fiddle tools.
