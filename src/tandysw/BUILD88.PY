@@ -59,6 +59,10 @@ def main():
     wide_loader = importlib.machinery.SourceFileLoader("widescan", str(HERE / "WIDESCAN.PY"))
     wide_module = wide_loader.load_module()
     wide_audit = wide_module.port(renderer, args.mode)
+    calc_module = importlib.machinery.SourceFileLoader("calcfast", str(HERE / "CALCFAST.PY")).load_module()
+    calc_module.port(renderer, args.mode, repo)
+    poly_module = importlib.machinery.SourceFileLoader("calcpoly", str(HERE / "CALCPOLY.PY")).load_module()
+    poly_module.port(renderer, args.mode, repo)
     ui_audit = {"profile": "stock"}
     if args.ui_profile != "stock":
         ui_module = importlib.machinery.SourceFileLoader("compactui", str(HERE / "COMPACT.PY")).load_module()
@@ -116,7 +120,7 @@ def main():
     binary = out / mode_module.PROFILES[args.mode]["driver"]
     subprocess.run([sys.executable, str(resources / "PACKRES.PY"), "attach", str(resource_file),
                     str(renderer / "EGA/TSOFT.DRV"), str(binary)], env=env, check=True)
-    report = {"build": "PASS", "runtime": "NOT_TESTED", "target": "8086/8088 real mode", "candidate": "Trial5 bounded multi-interval scanlines atop exact Trial4; " + args.mode,
+    report = {"build": "PASS", "runtime": "NOT_TESTED", "target": "8086/8088 real mode", "candidate": "Bounded Calculator output, text, and polyline copies; " + args.mode,
               "mode": mode_audit, "ui_profile": ui_audit, "resource_sha256": resource_sha, "driver_bytes": binary.stat().st_size,
               "driver_sha256": hashlib.sha256(binary.read_bytes()).hexdigest(), "port": audit, "dib": dib_audit,
               "instruction_audit": instruction_audit, "link_audit": link_audit,
