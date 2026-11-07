@@ -6,8 +6,8 @@ Choose your hardware or application. You supply DOS and Windows 3.0.
 | Product or hardware | Download | Install |
 | --- | --- | --- |
 | PAN for an existing supported display installation | [PAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PAN.ZIP) | [One panning application](PANNING.MD) |
-| Windows XT desktop or drivers only, original Tandy EX/HX | [WXT61107.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXT61107.ZIP) | [Full desktop](DESKTOP.MD) |
-| EX/HX drivers only, using the same expanded folder | [WXT61107.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXT61107.ZIP) | [Windows Setup](DRIVERS.MD) |
+| Windows XT desktop or drivers only, original Tandy EX/HX | [WXTF1107.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXTF1107.ZIP) | [Full desktop](DESKTOP.MD) |
+| EX/HX drivers only, using the same expanded folder | [WXTF1107.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXTF1107.ZIP) | [Windows Setup](DRIVERS.MD) |
 | Tandy EX/HX fixed-resolution profiles | [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT720.ZIP) | [Fixed profiles](FIXED.MD) |
 | Tandy SL/2 Video II; not EX/HX | [TNDYV2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TNDYV2.ZIP) | [Video II](tga2/INSTALL.TXT) |
 | IBM CGA RGBI: fixed/panning 160x100x16; standard/compact 320x200x4 and 640x200 mono | [CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP) | [CGA installation](CGA.MD) |
@@ -26,7 +26,7 @@ Choose your hardware or application. You supply DOS and Windows 3.0.
 | Cookie Clicker | [COOKSET.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/COOKSET.ZIP) | [Cookie](../tools/CURRENT/GUIDES/COOKSET.TXT) |
 | TANDYLAB application collection and optional complete driver folder | [TANDYLAB.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TANDYLAB.ZIP) | [TANDYLAB](../examples/TANDYLAB/README.MD) |
 
-Full installation and drivers only use the same WXT61107.ZIP. Other rows are
+Full installation and drivers only use the same WXTF1107.ZIP. Other rows are
 hardware or application choices, rather than a sequence of software versions.
 Developer source and build inputs are grouped separately in the release.
 
