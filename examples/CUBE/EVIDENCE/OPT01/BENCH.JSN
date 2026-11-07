@@ -1,0 +1,104 @@
+{
+  "scope": "Host-only geometry microbenchmark against immutable pre-optimization source.\nNo emulator, GDI, Windows frame-time or 8088 performance claim.\n",
+  "baseline_commit": "832daf29599c5a0a392a3f8135fa40206ae550af",
+  "baseline_sha256": "e73cc486cdf1bb33d26da5b8ec69a7b7c6062a981d96602751018f6505864986",
+  "candidate_sha256": "29af8cd42ce5b5641d24d4933e7d2d7a9452fdca856adaf7b9483dde58d8dc03",
+  "compiler": "gcc (Debian 14.2.0-19) 14.2.0",
+  "commands": [
+    [
+      "gcc",
+      "-x",
+      "c",
+      "-std=c89",
+      "-pedantic",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-I",
+      "/workspace/oemdisplay-tandy/examples/CUBE/SOURCE",
+      "-DCubeFrame=ReferenceFrame",
+      "-DCubeSin=ReferenceSin",
+      "-DCubeFaces=ReferenceFaces",
+      "-DCubeEdges=ReferenceEdges",
+      "-c",
+      "/tmp/cube-benchmark-final/BASE.C",
+      "-o",
+      "/tmp/cube-benchmark-final/BASE.O"
+    ],
+    [
+      "gcc",
+      "-x",
+      "c",
+      "-std=c89",
+      "-pedantic",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-I",
+      "/workspace/oemdisplay-tandy/examples/CUBE/SOURCE",
+      "-c",
+      "/workspace/oemdisplay-tandy/examples/CUBE/SOURCE/CUBECORE.C",
+      "-o",
+      "/tmp/cube-benchmark-final/OPT.O"
+    ],
+    [
+      "gcc",
+      "-x",
+      "c",
+      "-std=c89",
+      "-pedantic",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-I",
+      "/workspace/oemdisplay-tandy/examples/CUBE/SOURCE",
+      "-c",
+      "/tmp/cube-benchmark-final/BENCH.C",
+      "-o",
+      "/tmp/cube-benchmark-final/BENCH.O"
+    ],
+    [
+      "gcc",
+      "/tmp/cube-benchmark-final/BASE.O",
+      "/tmp/cube-benchmark-final/OPT.O",
+      "/tmp/cube-benchmark-final/BENCH.O",
+      "-o",
+      "/tmp/cube-benchmark-final/BENCH.EXE"
+    ],
+    [
+      "/tmp/cube-benchmark-final/BENCH.EXE"
+    ],
+    [
+      "gcc",
+      "--version"
+    ]
+  ],
+  "frames_per_sample": 2000000,
+  "cpu_seconds": {
+    "baseline": [
+      0.084354,
+      0.084119,
+      0.084154,
+      0.084049,
+      0.08425,
+      0.083943,
+      0.084204
+    ],
+    "symmetry": [
+      0.047927,
+      0.047787,
+      0.047709,
+      0.047757,
+      0.047618,
+      0.047518,
+      0.047712
+    ]
+  },
+  "median_cpu_seconds": {
+    "baseline": 0.084154,
+    "symmetry": 0.047712
+  }
+}

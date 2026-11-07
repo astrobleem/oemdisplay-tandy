@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "variant": "render-control",
+  "bound_seconds": 420,
+  "inventory_before": "",
+  "mesen_before": "",
+  "parallel_authorization": "Chad explicitly authorized Mesen/BOR and independent x86 emulator work in parallel; x86 shared lease, private media/config and port checks retained. No Mesen control or BOR resources used.",
+  "emulator": {
+    "bytes": 40974882,
+    "sha256": "17b8ba40caa595ded247799e8a501897bfe6913ce19249ea5fdb2cd1f9e8df36"
+  },
+  "runtime": {
+    "bytes": 16191,
+    "sha256": "ce558e0fdcf73d8499f89aeea65c0a798414cc50506107dac0dbb2f7815bb6ee"
+  },
+  "owned_pid": 8436,
+  "captures": [
+    "STYLE1-STEP0-N10-P119",
+    "STYLE1-STEP0-N2-P55",
+    "STYLE1-STEP3-N10-P119",
+    "STYLE1-STEP3-N2-P55",
+    "STYLE2-STEP1-N10-P119",
+    "STYLE2-STEP1-N2-P55",
+    "STYLE2-STEP4-N10-P119",
+    "STYLE2-STEP4-N2-P55",
+    "STYLE3-STEP2-N10-P119",
+    "STYLE3-STEP2-N2-P55",
+    "STYLE3-STEP5-N10-P119",
+    "STYLE3-STEP5-N2-P55"
+  ],
+  "matching_readbacks": 6,
+  "seconds": 162.3,
+  "owned_stopped": true,
+  "lease_released": true,
+  "inventory_after": "",
+  "mesen_after": ""
+}
