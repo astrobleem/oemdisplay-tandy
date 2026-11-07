@@ -50,6 +50,36 @@ static int pmstring(PmReadFn rd, void *ctx, const PmGroup *g, unsigned pos,
     return PM_STRING;
 }
 
+int PmReadTitle(PmReadFn rd, void *ctx, unsigned long length,
+                char *title, unsigned capacity)
+{
+    unsigned char head[34], b[PM_NAME_MAX + 1];
+    unsigned p, n, i, slots;
+    if (!capacity) return PM_STRING;
+    title[0] = 0;
+    if (length < 34UL || length > 65535UL) return PM_FORMAT;
+    if (!rd(ctx, 0UL, head, sizeof(head))) return PM_IO;
+    if (head[0] != 'P' || head[1] != 'M' ||
+        head[2] != 'C' || head[3] != 'C') return PM_FORMAT;
+    if ((unsigned long)pmword(head + 6) != length) return PM_VERSION;
+    slots = pmword(head + 32);
+    if (slots > PM_MAX_SLOTS) return PM_LIMIT;
+    p = pmword(head + 22);
+    if (p < 34U + 2U * slots || (unsigned long)p >= length) return PM_STRING;
+    n = (unsigned)(length - p);
+    if (n > sizeof(b)) n = sizeof(b);
+    if (!rd(ctx, (unsigned long)p, b, n)) return PM_IO;
+    for (i = 0; i < n && i + 1 < capacity && b[i]; ++i)
+        title[i] = (char)b[i];
+    title[i] = 0;
+    if (!i) return PM_STRING;
+    if (i == n || b[i]) {
+        if (n < sizeof(b) && i == n) return PM_STRING;
+        if (i >= 3) title[i-3] = title[i-2] = title[i-1] = '.';
+    }
+    return PM_OK;
+}
+
 int PmReadGroup(PmReadFn rd, void *ctx, unsigned long length, PmGroup *g)
 {
     unsigned char b[256], head[34], record[24], icon[12];

@@ -3,7 +3,7 @@
 #include "SCFGCORE.H"
 static const char *defaults[SC_KEYS] = {
     "0", "300", "Matrix", "C:\\TSTART\\MATRIX.EXE", "C:\\TSTART\\MAZE.EXE",
-    "C:\\TSTART\\STARFLD.EXE", "2", "32", "C:\\WINXT\\CUBE.EXE"
+    "C:\\TSTART\\STARFLD.EXE", "2", "32", "C:\\WINXT\\CUBE.EXE", "C:\\WINXT\\ORBITS.EXE"
 };
 static int equalcase(const char *a, const char *b)
 {
@@ -52,7 +52,8 @@ int ScChoice(const SCCONFIG *c)
 {
     const char *s = ScValue(c, SC_CHOICE);
     if (equalcase(s, "Matrix")) return SC_MATRIX;
-    if (equalcase(s, "Maze")) return SC_MAZE;
+    if (equalcase(s, "Maze")) return SC_MATRIX; /* Retired saver setting. */
+    if (equalcase(s, "Ovals")) return SC_OVALS;
     if (equalcase(s, "Starfield")) return SC_STARFIELD;
     if (equalcase(s, "Cube")) return SC_CUBE;
     return -1;
@@ -78,7 +79,7 @@ int ScAbsolute(const char *s)
 }
 const char *ScProgram(const SCCONFIG *c, int choice)
 { return ScValue(c, choice == SC_CUBE ? SC_CUBEPATH : choice == SC_STARFIELD ? SC_STARPATH :
-                 choice == SC_MAZE ? SC_MAZEPATH : SC_MATRIXPATH); }
+                 choice == SC_OVALS ? SC_OVALPATH : SC_MATRIXPATH); }
 int ScCommand(const char *path, int speed, int stars, char *out, int capacity)
 {
     char tail[16];
@@ -112,7 +113,7 @@ int ScSaveOptions(SCIO *io, const SCCONFIG *before, const char *seconds,
     SCCONFIG *want = after, actual;
     int i, last = -1, failed = 0, changed[SC_KEYS];
     if (!ScSeconds(seconds)) return SC_BADSECONDS;
-    if (choice != SC_NONE && choice != SC_MATRIX && choice != SC_MAZE &&
+    if (choice != SC_NONE && choice != SC_MATRIX && choice != SC_OVALS &&
         choice != SC_STARFIELD && choice != SC_CUBE) return SC_BADCHOICE;
     if ((speed || stars) && (!speed || !stars || !ScSpeed(speed) || !ScStars(stars))) return SC_BADOPTIONS;
     if (ScRead(io, &actual) != SC_OK) return SC_READFAIL;
@@ -125,7 +126,7 @@ int ScSaveOptions(SCIO *io, const SCCONFIG *before, const char *seconds,
     if (choice != SC_NONE) {
         want->present[SC_CHOICE] = 1;
         strcpy(want->value[SC_CHOICE], choice == SC_CUBE ? "Cube" : choice == SC_STARFIELD ? "Starfield" :
-               choice == SC_MAZE ? "Maze" : "Matrix");
+               choice == SC_OVALS ? "Ovals" : "Matrix");
     }
     if (speed) {
         want->present[SC_SPEED] = want->present[SC_STARS] = 1;

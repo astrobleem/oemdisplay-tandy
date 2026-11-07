@@ -234,8 +234,8 @@ int main(void)
     assert(step(VK_SCROLL,BREAK)==0);
     disabledOwner=(HWND)30; enabled=FALSE; assert(step(VK_SCROLL,MAKE)==0);
     enabled=TRUE; disabledOwner=NULL; assert(step(VK_SCROLL,BREAK)==0);
-    moduleName="MAZE"; assert(step(VK_SCROLL,MAKE)==0); assert(step(VK_SCROLL,BREAK)==0);
-    windowClass="TandyMaze"; token=tap(); assert(HoldTake(TARGET,token));
+    moduleName="ORBITS"; assert(step(VK_SCROLL,MAKE)==0); assert(step(VK_SCROLL,BREAK)==0);
+    windowClass="TandyOrbits"; token=tap(); assert(HoldTake(TARGET,token));
     moduleName=windowClass="";
     moduleName="MATRIX"; assert(step(VK_SCROLL,MAKE)==0); assert(step(VK_SCROLL,BREAK)==0);
     moduleName="TEXIT"; assert(step(VK_SCROLL,MAKE)==0); assert(step(VK_SCROLL,BREAK)==0);

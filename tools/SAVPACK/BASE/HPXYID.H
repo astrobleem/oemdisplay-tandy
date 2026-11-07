@@ -1,0 +1,3 @@
+#define HPXY_FILE "HPXY.DRV"
+#define HPXY_BYTES 62272UL
+#define HPXY_CRC 0x4eb1119eUL

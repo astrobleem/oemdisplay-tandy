@@ -55,6 +55,8 @@ BOOL PostMessage(HWND w,UINT m,WPARAM wp,LPARAM lp)
 {assert(w==2&&m==WM_COMMAND&&lp==0);lastcommand=wp;posts++;return postok;}
 void TinyNotice(HWND w,HINSTANCE h,char *title,char *text)
 {assert(w==1&&h==1&&!strcmp(title,"Settings"));assert(text[0]);notices++;active=1;}
+void FAR TSControlNotice(HWND w,HINSTANCE h,char *title,char *text)
+{TinyNotice(w,h,title,text);}
 static void reset(void)
 {present=0;created=enabled=exists=menuok=postok=captionok=1;winresult=33;pathlen=10;
  keymodule=keyexport=1;keyspeed=keyqueries=0;

@@ -252,3 +252,21 @@ tools/CURRENT/CGASNAP.ZIP -text
 experiments/DGSCOPY/** -text
 src/tandysw/BUILDCOPY.PY -text
 docs/pcp/OUTPUT/OPTIMIZED.ZIP -export-ignore
+
+# Four-saver integration keeps native source bytes unchanged on checkout.
+examples/OVALS/** -text
+libtandywin/** -text
+tools/FIXDFLT/** -text
+tools/SAVPACK/** -text
+
+# Scoped compatible fixed-driver source additions retain CRLF.
+src/tandysw/BUILDCALC.PY -text
+src/tandysw/TSTBLDCAL.PY -text
+src/tandysw/CALCLIVE.PY -text
+src/tandysw/TSTLIVE.PY -text
+src/tandysw/OUTPUTBOUNDS.PY -text
+src/tandysw/TEXTBOUNDS.PY -text
+src/tandysw/CALCFAST.PY -text
+
+# Include the qualified combined packet in source archives.
+tools/SAVPACK/BIN/*.ZIP -export-ignore

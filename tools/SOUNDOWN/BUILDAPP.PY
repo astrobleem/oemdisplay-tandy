@@ -35,7 +35,7 @@ def module_imports(exe):
     return names
 
 
-def build(here, name, sources, header):
+def build(here, name, sources, header, extra_inputs=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--dosbox', type=Path, required=True)
     p.add_argument('--toolchain', type=Path, required=True)
@@ -55,6 +55,11 @@ def build(here, name, sources, header):
         p.error('Existing shared emulator lease required')
     inputs = {n: here/n for n in sources}
     inputs['PSGOWN.H'] = header
+    if extra_inputs:
+        for label, path in extra_inputs.items():
+            if label in inputs or Path(label).name != label:
+                p.error('Duplicate or unsafe extra source: ' + label)
+            inputs[label] = Path(path)
     for label, path in inputs.items():
         if not path.is_file():
             p.error('Missing consumer source: ' + label)
@@ -118,7 +123,7 @@ exit
     if 'SOUND' in imports:
         raise RuntimeError('Early SOUND import: use dynamic installed-driver entry points')
     result = {'target': 'Windows 3.0 real mode; 8086; MSC6/LINK4',
-              'compiler_flags': '/G0 /Gw /AS /W3 /Od', 'imports': imports,
+              'compiler_flags': 'Mixed flags: see pinned BUILD.BAT', 'imports': imports,
               'source_pins': source_pins,
               'toolchain': {n: identity(tool/n) for n in TOOLS},
               'build_wrapper': identity(here/'BUILD.PY'),

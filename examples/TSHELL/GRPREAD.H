@@ -26,6 +26,9 @@ typedef struct {
 } PmGroup;
 
 /* ReadFn must return nonzero only after reading exactly n requested bytes. */
+/* Display-only bounded header peek. It does not authorize item activation. */
+int PmReadTitle(PmReadFn readfn, void *context, unsigned long length,
+                char *title, unsigned capacity);
 int PmReadGroup(PmReadFn readfn, void *context, unsigned long length,
                 PmGroup *group);
 /* Display names may be ellipsized; commands are NEVER silently truncated. */

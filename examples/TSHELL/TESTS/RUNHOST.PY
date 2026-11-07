@@ -22,5 +22,11 @@ with tempfile.TemporaryDirectory(prefix='tshell-tests-') as tmp:
   subprocess.run([str(exe)],check=True)
 subprocess.run([sys.executable,str(root/'IDLE/tests/VERIFY.PY'),str(root/'TSINPUT.DLL')],check=True)
 subprocess.run([sys.executable,str(root/'TESTS/CONTROL/TESTCP.PY')],check=True)
-subprocess.run([sys.executable,str(root/'TESTS/CONTROL/TESTMN.PY')],check=True)
-print('TSHELL 06 portable host and DLL contract checks PASS')
+# The custom cascade replaced the native popup. Exercise its production body,
+# navigation, keyboard/mouse transitions and parent-highlight contracts.
+with tempfile.TemporaryDirectory(prefix='tshell-menu-tests-') as tmp:
+ for name in ['MENUTEST','HOVTEST','NAVTEST','PARENT']:
+  subprocess.run([sys.executable,str(root/('TESTS/'+name+'.PY')),
+                  '--cc',shutil.which(cc),'--out',str(Path(tmp)/name)],check=True)
+subprocess.run([sys.executable,str(root/'TESTS/CONFIG/RUN.PY')],check=True)
+print('TSHELL four-saver portable host and DLL contract checks PASS')

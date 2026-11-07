@@ -1,7 +1,7 @@
 #ifndef WINDOWS_H
 #define WINDOWS_H
 #include <stddef.h>
-typedef unsigned UINT; typedef unsigned WPARAM; typedef long LPARAM; typedef unsigned long DWORD; typedef int HWND; typedef int HMODULE; typedef int HINSTANCE; typedef void *FARPROC; typedef struct {char szPathName[144];} OFSTRUCT;
+typedef unsigned UINT; typedef unsigned WPARAM; typedef long LPARAM; typedef unsigned long DWORD; typedef int HMENU; typedef int HWND; typedef int HMODULE; typedef int HINSTANCE; typedef void *FARPROC; typedef struct {char szPathName[144];} OFSTRUCT;
 #define FAR
 #define PASCAL
 typedef char *LPSTR;

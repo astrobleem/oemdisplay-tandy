@@ -13,7 +13,12 @@ with normal 640 KB. Other hardware uses its matching packet in
   with its guarded `DISPLAY` and `DISPWIN` entries. See [desktop setup](docs/DESKTOP.MD)
   and [driver setup](docs/DRIVERS.MD). Full preparation needs DOS 3.3+;
   the installed-Windows driver route supports DOS 3.20+.
-- **Current core producer:** `tools/HPDIB/PUBLISH.PY`; the CLI in
+- **Current combined packet:** `tools/SAVPACK/BIN/WINXT.ZIP`, published as
+  `WXT61107.ZIP`, includes five fixed modes and Cube/Starfield/Matrix/Ovals.
+  Check it with `tools/SAVPACK/TESTPKG.PY`; corresponding installer source is
+  `tools/SAVPACK/NATIVE`. The `savpack.yml` workflow verifies this packet.
+  Preserve historical catalog assets and pins as a separate immutable baseline.
+- **Historical core producer:** `tools/HPDIB/PUBLISH.PY`; the CLI in
   `tools/XR1PACK/PUBLISH.PY` forwards to it. Current download curation is
   `tools/CURRENT/BUNDLE.PY`, checked by `tools/CURRENT/CHECK.PY` and pinned
   in `tools/CURRENT/PRODUCTS.JSN`.

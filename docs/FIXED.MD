@@ -1,5 +1,14 @@
 # Tandy fixed-resolution display profiles
 
+The current [Windows XT pack](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXT61107.ZIP)
+includes all five optimized fixed modes. Use its [ordinary Windows Setup
+route](DRIVERS.MD) to select them. Fresh full installations default to 320x200
+with sixteen colors; updates preserve the installed display.
+
+## Historical 720 KB data disk
+
+The following disk and its original instructions remain available unchanged.
+
 **[Download WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT720.ZIP)**
 
 For Tandy 1000 EX/HX, 640 KB, DOS 3.3+ and an installed Windows 3.0 in real
