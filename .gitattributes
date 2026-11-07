@@ -270,3 +270,12 @@ src/tandysw/CALCFAST.PY -text
 
 # Include the qualified combined packet in source archives.
 tools/SAVPACK/BIN/*.ZIP -export-ignore
+
+# Font package source and exact consumer bytes survive checkout and export.
+tools/PROPFONT/** -text
+tools/FONTPACK/** -text
+tools/FONTPACK/BIN/*.ZIP -export-ignore
+.github/workflows/savpack.yml -text
+
+# Optional Helv reproduction reads the preserved CGA packet.
+downloads/FRESH/CGA.ZIP -export-ignore

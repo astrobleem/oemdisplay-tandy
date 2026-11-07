@@ -11,9 +11,32 @@ The ZIP root is `SETUP.EXE`, `README.TXT` and one `WINXT` folder of real files.
 No Python or individual font/grabber/logo gathering is part of installation.
 Installed DOS/Windows or original Windows OS media remain required.
 
+## Verify the current font-inclusive pack
+
+The current download is `WXTF1107.ZIP`. Its accepted archive is
+`tools/FONTPACK/BIN/WINXT.ZIP`; installer sources and the staging recipe are
+in `tools/FONTPACK`. The prior five-driver, four-saver archive below remains
+an immutable input, rather than being repinned for this update.
+
+```text
+python -B tools/XTFONTS/COMTEST.PY
+python -B tools/PROPFONT/TEST.PY
+python -B tools/FONTPACK/TESTSRC.PY
+python -B tools/FONTPACK/TESTPKG.PY
+python -B tools/FONTPACK/BUILD.PY --watcom C:\WATCOM --out FRESH-NATIVE-DIRECTORY
+```
+
+The native build runs on Windows with explicit Open Watcom. It verifies the
+unchanged CPSET identity and two independent FIXXT/SETUP builds. SETUP uses
+large model with read-only string literals in code segments (`-ml -zc`) so
+its extended file inventory fits the 64 KB data group. This is a compiler
+layout change; the target remains normal 640 KB without EMS/XMS or UMBs.
+The `savpack.yml` workflow verifies both archives, the font sources and their
+payload bindings; it does not compile DOS binaries or run Windows GUI tests.
+
 ## Verify the combined five-driver, four-saver pack
 
-The current dated download is `WXT61107.ZIP`. Its exact accepted archive is
+The preceding dated download is `WXT61107.ZIP`. Its exact accepted archive is
 `tools/SAVPACK/BIN/WINXT.ZIP`; native installer source is under
 `tools/SAVPACK/NATIVE`, with staging recipes in `tools/SAVPACK`.
 

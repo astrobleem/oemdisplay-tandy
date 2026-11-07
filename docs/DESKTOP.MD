@@ -1,13 +1,13 @@
 # Windows XT
 
-[Download the Windows XT pack](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXT61107.ZIP).
+[Download the Windows XT pack](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXTF1107.ZIP).
 The target is an original Tandy 1000 EX/HX with normal 640 KB and Windows 3.0
 real mode. Original Windows and DOS are required. Installation runs on the
 DOS computer itself; the full installer requires DOS 3.3 or later.
 
 ## 1. Extract the download
 
-Extract `WXT61107.ZIP` on the DOS computer. Keep `SETUP.EXE`, `README.TXT` and
+Extract `WXTF1107.ZIP` on the DOS computer. Keep `SETUP.EXE`, `README.TXT` and
 the expanded `WINXT` folder together. The folder contains the actual drivers,
 apps, fonts, grabber and logos; the ZIP is no longer needed.
 
@@ -27,6 +27,11 @@ SETUP UPDATE C:\WINDOWS
 ![SETUP UPDATE C:\WINDOWS typed at the DOS prompt in the extracted folder](SETUP/COMMAND.PNG)
 
 *Press Enter to install the full desktop and applications.*
+
+If you use the separate UISET compact-controls add-on, follow its restore
+step first: `UISET C:\WINDOWS OFF` for each enabled display mode before
+updating that driver. The full pack supplies the original controls, not the
+optional resource overlay.
 
 For a new Windows installation, insert the first original Setup disk and run:
 
@@ -65,6 +70,21 @@ entries are not deleted.
 
 See [Panning settings](PANNING.MD) for the available approaches, including the
 window workspace on fixed-resolution drivers and its Home recovery control.
+
+## Optional application fonts
+
+Setup copies the optional font folder to `C:\WINXT\FONTS` without registering
+fonts or altering your existing application-font choices. In Windows, open
+**Control Panel > Fonts > Add**, browse to that folder and select the Tandy
+fonts you want. Read its `README.TXT` before adding the compact Helv fonts:
+they share the Helv family and can change existing applications' font selection.
+
+The pack also includes the compatible narrow M/W System font for XTC displays.
+Updates recognize the selected original or earlier narrow XTCSYS by its
+complete contents. Unknown/custom font files or shadow files are refused
+rather than overwritten.
+Fresh fixed320 continues to use the unchanged XTE fonts.
+[Font details](FONTS/README.MD).
 
 ## Drivers only
 

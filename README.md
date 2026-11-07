@@ -19,7 +19,7 @@ Windows 3.0 desktop.
 
 For an **original Tandy 1000 EX/HX with normal 640 KB and Windows 3.0 real mode**:
 
-**[Download the Windows XT pack](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXT61107.ZIP).**
+**[Download the Windows XT pack](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXTF1107.ZIP).**
 It contains `SETUP.EXE`, `README.TXT` and an expanded `WINXT` folder.
 
 - **Full desktop:** run `SETUP UPDATE C:\WINDOWS` or `SETUP FRESH A:\` on DOS.
@@ -36,6 +36,21 @@ monochrome drivers, selected through Windows Setup. HPXY panning is unchanged.
 
 Other hardware profiles and apps are in [current downloads](docs/DOWNLOADS.MD).
 Each product has one current packet and a short install guide.
+
+## Narrow System font and optional application fonts
+
+The pack includes the narrower **M** and **W** System glyphs while keeping
+Windows 3.0's original dialog spacing. Updates replace recognized XTCSYS files
+when selected for HPXY or one of the four XTC fixed modes; fresh fixed
+320x200 sixteen-color installations keep their XTE fonts. Custom font choices
+and application font registrations are preserved.
+
+Six optional Tandy fonts provide **XT Tandy I**, **XT Tandy II** and
+**XT Tandy 2K** in 8-row and 12-row forms. Full Setup places them in
+`C:\WINXT\FONTS`; add the ones you want through **Control Panel > Fonts > Add**.
+Three compact Helv fonts are also included, but share the existing Helv family.
+Leave those unselected if you want to keep your present Helv installation.
+[Font details and installation](docs/FONTS/README.MD).
 
 ## One panning application
 
@@ -128,6 +143,8 @@ a normal core, `8086_prefetch`, fixed 3000 cycles and 640 KB. Compare within a
 mode, since window sizes differ. They are not physical-hardware timings or a
 new speedup over the previous fixed320 release. Existing low-resolution
 Calculator layout crowding/clipping is unchanged.
+These timings used the preceding System font; the font update is not a new
+performance result.
 
 All 235 Calculator, text/GDI and polyline framebuffer comparisons matched their
 corresponding baseline. Another 250 native bitmap/RLE cases matched video,
@@ -136,7 +153,8 @@ update, migration, repair and Computer completion checks. All four savers
 passed preview, keyboard wake and unload in all five modes; automatic idle
 re-arm was checked with Cube in each mode.
 The original Windows Setup wizard and physical hardware were not rerun for
-this update.
+that driver/saver update. The font update has its own
+[installation and native-test scope](docs/FONTS/README.MD#current-font-integration-checks).
 
 [Source changes](https://github.com/astrobleem/oemdisplay-tandy/pull/218) use
 [`BUILDCALC.PY`](src/tandysw/BUILDCALC.PY) with the same `--repo`, `--dosbox`,

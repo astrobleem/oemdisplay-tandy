@@ -1,4 +1,4 @@
-name: Verify combined Windows XT pack
+name: Verify Windows XT packs
 
 on:
   pull_request:
@@ -25,6 +25,12 @@ jobs:
         run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Verify accepted package and native inventory bindings
         run: python3 -B tools/SAVPACK/TESTPKG.PY
+      - name: Verify compatible System font and optional application fonts
+        run: |
+          python3 -B tools/XTFONTS/COMTEST.PY
+          python3 -B tools/PROPFONT/TEST.PY
+          python3 -B tools/FONTPACK/TESTSRC.PY
+          python3 -B tools/FONTPACK/TESTPKG.PY
       - name: Exercise shell and four-saver configuration
         run: python3 -B examples/TSHELL/TESTS/RUNHOST.PY
       - name: Exercise Ovals geometry and cleanup
@@ -42,5 +48,16 @@ jobs:
         with:
           name: combined-winxt-${{ env.SOURCE_SHA }}
           path: combined-pack/WXT61107.ZIP
+          if-no-files-found: error
+          retention-days: 30
+      - name: Stage current font-inclusive archive
+        run: |
+          mkdir font-pack
+          cp tools/FONTPACK/BIN/WINXT.ZIP font-pack/WXTF1107.ZIP
+          cmp tools/FONTPACK/BIN/WINXT.ZIP font-pack/WXTF1107.ZIP
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: font-winxt-${{ env.SOURCE_SHA }}
+          path: font-pack/WXTF1107.ZIP
           if-no-files-found: error
           retention-days: 30

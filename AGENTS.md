@@ -13,7 +13,12 @@ with normal 640 KB. Other hardware uses its matching packet in
   with its guarded `DISPLAY` and `DISPWIN` entries. See [desktop setup](docs/DESKTOP.MD)
   and [driver setup](docs/DRIVERS.MD). Full preparation needs DOS 3.3+;
   the installed-Windows driver route supports DOS 3.20+.
-- **Current combined packet:** `tools/SAVPACK/BIN/WINXT.ZIP`, published as
+- **Current font-inclusive packet:** `tools/FONTPACK/BIN/WINXT.ZIP`, published
+  as `WXTF1107.ZIP`, adds compatible narrow XTCSYS and optional application
+  fonts. Its sources and checks are in `tools/FONTPACK`. It preserves existing
+  font registrations; the optional Helv family is never registered silently.
+  The `savpack.yml` workflow checks this packet and its preserved baseline.
+- **Preserved combined packet:** `tools/SAVPACK/BIN/WINXT.ZIP`, published as
   `WXT61107.ZIP`, includes five fixed modes and Cube/Starfield/Matrix/Ovals.
   Check it with `tools/SAVPACK/TESTPKG.PY`; corresponding installer source is
   `tools/SAVPACK/NATIVE`. The `savpack.yml` workflow verifies this packet.

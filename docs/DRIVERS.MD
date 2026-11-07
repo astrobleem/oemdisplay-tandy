@@ -1,6 +1,6 @@
 # Windows XT: drivers through Windows Setup
 
-[Download the Windows XT pack](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXT61107.ZIP) and extract it. The same download
+[Download the Windows XT pack](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXTF1107.ZIP) and extract it. The same download
 offers the [full desktop installation](DESKTOP.MD) and a complete driver source
 in its expanded `WINXT` folder. Drivers only do not require the custom `SETUP.EXE`.
 
