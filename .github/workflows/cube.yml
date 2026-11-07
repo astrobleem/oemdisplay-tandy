@@ -14,6 +14,8 @@ jobs:
     timeout-minutes: 5
     env:
       SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      # Original standalone producer recorded in tools/CURRENT/PRODUCTS.JSN.
+      CUBE_SOURCE_SHA: 797b33a390cd63d7afd0da991e70edd407cc3d89
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -23,14 +25,28 @@ jobs:
         run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
       - name: Geometry and shell idle/Hold regressions
         run: python3 -B examples/CUBE/SOURCE/RUNHOST.PY --out "$RUNNER_TEMP/cube-host"
-      - name: Runtime, source and receipt integrity
-        run: python3 -B examples/CUBE/SOURCE/TESTPACK.PY --out "$RUNNER_TEMP/cube-gates"
-      - name: Require exact native qualification and assemble packet
-        run: python3 -B examples/CUBE/SOURCE/PACK.PY --commit "$SOURCE_SHA" --out "$RUNNER_TEMP/cube-packet"
-      - name: Replay the assembled source archive
-        run: python3 -B examples/CUBE/SOURCE/TESTSRC.PY "$RUNNER_TEMP/cube-packet/CUBESRC.ZIP" --out "$RUNNER_TEMP/cube-replay"
+      - name: Fetch exact preserved standalone Cube source
+        env:
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          historical="$RUNNER_TEMP/cube-source"
+          mkdir "$historical"
+          git -C "$historical" init -q
+          git -C "$historical" remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git -C "$historical" -c protocol.version=2 fetch --no-tags --depth=1 origin "$CUBE_SOURCE_SHA"
+          git -C "$historical" checkout --detach --force FETCH_HEAD
+          test "$(git -C "$historical" rev-parse HEAD)" = "$CUBE_SOURCE_SHA"
+          # Preserve the complete standalone source/runtime/evidence tree.
+          # Current shared shell changes are checked above and by savpack.yml.
+          test "$(git rev-parse HEAD:examples/CUBE)" = "$(git -C "$historical" rev-parse HEAD:examples/CUBE)"
+      - name: Preserved standalone runtime, source and receipt integrity
+        run: python3 -B "$RUNNER_TEMP/cube-source/examples/CUBE/SOURCE/TESTPACK.PY" --out "$RUNNER_TEMP/cube-gates"
+      - name: Require preserved native qualification and assemble historical packet
+        run: python3 -B "$RUNNER_TEMP/cube-source/examples/CUBE/SOURCE/PACK.PY" --commit "$CUBE_SOURCE_SHA" --out "$RUNNER_TEMP/cube-packet"
+      - name: Replay the preserved standalone source archive
+        run: python3 -B "$RUNNER_TEMP/cube-source/examples/CUBE/SOURCE/TESTSRC.PY" "$RUNNER_TEMP/cube-packet/CUBESRC.ZIP" --out "$RUNNER_TEMP/cube-replay"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: cube-review-${{ env.SOURCE_SHA }}
+          name: cube-standalone-${{ env.CUBE_SOURCE_SHA }}-checked-${{ env.SOURCE_SHA }}
           path: ${{ runner.temp }}/cube-packet/*
           if-no-files-found: error
