@@ -30,21 +30,21 @@ int main(void) {
  for(i=0;i<(int)(sizeof(bad)/sizeof(*bad));++i)CHECK(!ScSeconds(bad[i]));
  CHECK(ScAbsolute("C:\\CUSTOM\\MX.EXE"));CHECK(ScAbsolute("c:\\a.exe"));
  CHECK(!ScAbsolute("MATRIX.EXE"));CHECK(!ScAbsolute("C:MX.EXE"));CHECK(!ScAbsolute("C:\\My App.exe"));CHECK(!ScAbsolute("C:\\MX.EXE /S"));CHECK(!ScAbsolute("C:\\"));CHECK(!ScAbsolute("C:\\D:X"));
- init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);CHECK(!ScEnabled(&before));CHECK(ScChoice(&before)==SC_MATRIX);CHECK(!strcmp(ScValue(&before,SC_SECONDS),"300"));CHECK(!strcmp(ScProgram(&before,SC_MAZE),"C:\\TSTART\\MAZE.EXE"));
- set(&t,SC_ENABLED,"2");set(&t,SC_CHOICE,"mAzE");set(&t,SC_SECONDS,"17");set(&t,SC_MATRIXPATH,"C:\\CUSTOM\\MX.EXE");set(&t,SC_MAZEPATH,"C:\\CUSTOM\\MZ.EXE");
- CHECK(ScRead(&io,&before)==SC_OK);CHECK(ScEnabled(&before));CHECK(ScChoice(&before)==SC_MAZE);
- CHECK(ScSave(&io,&before,"17",SC_MATRIX,&after)==SC_OK);CHECK(t.writes==2);CHECK(!strcmp(ScProgram(&after,SC_MATRIX),"C:\\CUSTOM\\MX.EXE"));CHECK(!strcmp(ScProgram(&after,SC_MAZE),"C:\\CUSTOM\\MZ.EXE"));
+ init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);CHECK(!ScEnabled(&before));CHECK(ScChoice(&before)==SC_MATRIX);CHECK(!strcmp(ScValue(&before,SC_SECONDS),"300"));CHECK(!strcmp(ScProgram(&before,SC_OVALS),"C:\\WINXT\\ORBITS.EXE"));
+ set(&t,SC_ENABLED,"2");set(&t,SC_CHOICE,"oVaLs");set(&t,SC_SECONDS,"17");set(&t,SC_MATRIXPATH,"C:\\CUSTOM\\MX.EXE");set(&t,SC_OVALPATH,"C:\\CUSTOM\\OV.EXE");
+ CHECK(ScRead(&io,&before)==SC_OK);CHECK(ScEnabled(&before));CHECK(ScChoice(&before)==SC_OVALS);
+ CHECK(ScSave(&io,&before,"17",SC_MATRIX,&after)==SC_OK);CHECK(t.writes==2);CHECK(!strcmp(ScProgram(&after,SC_MATRIX),"C:\\CUSTOM\\MX.EXE"));CHECK(!strcmp(ScProgram(&after,SC_OVALS),"C:\\CUSTOM\\OV.EXE"));
  before=after;t.writes=0;CHECK(ScSave(&io,&before,"17",SC_NONE,&after)==SC_OK);CHECK(t.writes==1);CHECK(!ScEnabled(&after));CHECK(ScChoice(&after)==SC_MATRIX);CHECK(!strcmp(ScValue(&after,SC_SECONDS),"17"));
  before=after;t.writes=0;CHECK(ScSave(&io,&before,"17",SC_NONE,&after)==SC_OK);CHECK(t.writes==0);
- CHECK(ScSave(&io,&before,"9",SC_MAZE,&after)==SC_BADSECONDS);CHECK(!t.writes);CHECK(ScSave(&io,&before,"10",9,&after)==SC_BADCHOICE);CHECK(!t.writes);
- set(&t,SC_SECONDS,"18");CHECK(ScSave(&io,&before,"10",SC_MAZE,&after)==SC_CONFLICT);CHECK(!t.writes);
- for(i=1;i<=3;++i){init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failwrite=i;CHECK(ScSave(&io,&before,"10",SC_MAZE,&after)==SC_WRITEFAIL);CHECK(!t.c.present[0]&&!t.c.present[1]&&!t.c.present[2]);}
- init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failwrite=2;t.partial=1;CHECK(ScSave(&io,&before,"10",SC_MAZE,&after)==SC_WRITEFAIL);CHECK(!t.c.present[0]&&!t.c.present[1]&&!t.c.present[2]);
- init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failwrite=1;t.persistent=1;CHECK(ScSave(&io,&before,"10",SC_MAZE,&after)==SC_WRITEFAIL);CHECK(!t.c.present[0]);
- init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failwrite=2;t.persistent=1;CHECK(ScSave(&io,&before,"10",SC_MAZE,&after)==SC_UNCERTAIN);CHECK(t.c.present[0]);
- init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failread=t.reads+1;CHECK(ScSave(&io,&before,"10",SC_MAZE,&after)==SC_READFAIL);CHECK(!t.writes);
- init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failread=t.reads+SC_KEYS+1;CHECK(ScSave(&io,&before,"10",SC_MAZE,&after)==SC_UNCERTAIN);
- init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.mismatch=1;CHECK(ScSave(&io,&before,"10",SC_MAZE,&after)==SC_UNCERTAIN);
+ CHECK(ScSave(&io,&before,"9",SC_OVALS,&after)==SC_BADSECONDS);CHECK(!t.writes);CHECK(ScSave(&io,&before,"10",9,&after)==SC_BADCHOICE);CHECK(!t.writes);
+ set(&t,SC_SECONDS,"18");CHECK(ScSave(&io,&before,"10",SC_OVALS,&after)==SC_CONFLICT);CHECK(!t.writes);
+ for(i=1;i<=3;++i){init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failwrite=i;CHECK(ScSave(&io,&before,"10",SC_OVALS,&after)==SC_WRITEFAIL);CHECK(!t.c.present[0]&&!t.c.present[1]&&!t.c.present[2]);}
+ init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failwrite=2;t.partial=1;CHECK(ScSave(&io,&before,"10",SC_OVALS,&after)==SC_WRITEFAIL);CHECK(!t.c.present[0]&&!t.c.present[1]&&!t.c.present[2]);
+ init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failwrite=1;t.persistent=1;CHECK(ScSave(&io,&before,"10",SC_OVALS,&after)==SC_WRITEFAIL);CHECK(!t.c.present[0]);
+ init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failwrite=2;t.persistent=1;CHECK(ScSave(&io,&before,"10",SC_OVALS,&after)==SC_UNCERTAIN);CHECK(t.c.present[0]);
+ init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failread=t.reads+1;CHECK(ScSave(&io,&before,"10",SC_OVALS,&after)==SC_READFAIL);CHECK(!t.writes);
+ init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failread=t.reads+SC_KEYS+1;CHECK(ScSave(&io,&before,"10",SC_OVALS,&after)==SC_UNCERTAIN);
+ init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.mismatch=1;CHECK(ScSave(&io,&before,"10",SC_OVALS,&after)==SC_UNCERTAIN);
 
  CHECK(ScSpeed("1")==1);CHECK(ScSpeed("2")==2);CHECK(ScSpeed("3")==3);
  CHECK(!ScSpeed("0"));CHECK(!ScSpeed("4"));CHECK(!ScSpeed("02"));CHECK(!ScSpeed("2 "));
@@ -83,5 +83,10 @@ int main(void) {
  for(i=1;i<=3;i++){init(&t,&io);CHECK(ScRead(&io,&before)==SC_OK);t.failwrite=i;
  CHECK(ScSave(&io,&before,"10",SC_CUBE,&after)==SC_WRITEFAIL);
  CHECK(!t.c.present[SC_ENABLED]&&!t.c.present[SC_SECONDS]&&!t.c.present[SC_CHOICE]);}
+ init(&t,&io);set(&t,SC_CHOICE,"Maze");set(&t,SC_MAZEPATH,"D:\\KEEP\\MAZE.EXE");
+ CHECK(ScRead(&io,&before)==SC_OK);CHECK(ScChoice(&before)==SC_MATRIX);
+ CHECK(ScSave(&io,&before,"300",SC_OVALS,&after)==SC_OK);
+ CHECK(!strcmp(ScValue(&after,SC_MAZEPATH),"D:\\KEEP\\MAZE.EXE"));
+ CHECK(ScChoice(&after)==SC_OVALS);
  printf("PASS %d checks\n",checks);return 0;
 }

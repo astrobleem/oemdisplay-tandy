@@ -26,7 +26,7 @@ def main():
         raise ValueError('BUILDCALC: only stock UI is validated; nonstock profiles require qualification')
     sys.path.insert(0, str(HERE))
     builder = load('BUILD88')
-    fast, poly = load('CALCFAST'), load('CALCPOLY')
+    live = load('CALCLIVE')
     prepare, run = builder.baseline.prepare, builder.bounded_run
     state = {}
 
@@ -41,13 +41,12 @@ def main():
         if not state:
             raise RuntimeError('BUILDCALC: compilation before preparation')
         if 'patched' not in state:
-            # Each stage validates before writing. Restore the original staged
-            # wrapper if the second stage refuses, before any compiler runs.
+            # Preserve exact live bounds and validate the additive guard before
+            # any compiler runs; restore staged bytes if transformation fails.
             source = state['renderer'] / 'EGA/TSOFT.ASM'
             original = source.read_bytes()
             try:
-                fast.port(state['renderer'], args.mode, state['repo'])
-                poly.port(state['renderer'], args.mode, state['repo'])
+                live.port(state['renderer'], args.mode, state['repo'])
             except Exception:
                 source.write_bytes(original)
                 raise
@@ -60,7 +59,7 @@ def main():
         builder.main()
         if not state.get('patched'):
             raise RuntimeError('BUILDCALC: staged transformation did not run')
-        print('BUILDCALC: CALCFAST and CALCPOLY applied; BUILD88 audits completed; runtime not asserted')
+        print('BUILDCALC: live Output/text bounds plus unsupported Output copy guard applied; BUILD88 audits completed; runtime not asserted')
     finally:
         builder.baseline.prepare = prepare
         builder.bounded_run = run

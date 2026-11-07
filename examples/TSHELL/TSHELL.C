@@ -12,6 +12,8 @@
 #include "TSNAMES.H"
 #include "TSHOLD.H"
 #include "TSCP.H"
+#include "TSMENU.H"
+#include "LTWUI.H"
 #define START 1
 #define FIRSTAPP 20
 #define EXITWIN 40
@@ -26,6 +28,7 @@
 #define SETTINGSMENU 50
 #define STARTBOOT (WM_USER+3)
 #define OPENSYSTEM (WM_USER+4)
+#define OPENPROGRAMS (WM_USER+5)
 #define RUNEDIT 100
 #define RUNMAX 126
 #define BROWSE 101
@@ -36,16 +39,17 @@
 #define SHORTBOX 106
 #define NAMES_TIMER 19
 #define BROWSEHEIGHT 166
+#define BROWSEUP 107
 static char runStatus[17],chosen[144],browseOld[144],browseListed[144];
 static int browseDrive,browseFilter,browseBusy,browseValid;
-static int browseDrawDepth;
-static HWND browseDrawList;
+static LTWLISTPAINT browsePaint;
 static char FAR *browseDirs;
-static char *masks[]={"*.EXE","*.COM","*.BAT"};
+static char *masks[]={"*.EXE","*.COM","*.BAT","*.PIF"};
+#define BROWSE_FILTERS (sizeof(masks)/sizeof(masks[0]))
 static HINSTANCE instance;
 static HWND start;
 static int primaryShell, shellMode, width, barHeight=22, minute=-1;
-static int systemQueued;
+static int systemQueued,programsQueued;
 static char clockText[6]="--:--";
 static char *names[]={"&Program Mgr"};
 static char *files[]={"PROGMAN.EXE"};
@@ -70,7 +74,9 @@ static void clockread(HWND w) {
 static void launch(HWND w,int i) {
  UINT result;HWND manager;char message[80];
  if(i<0||i>=1)return;
- if(!paths[i][0])findapps();
+ /* Refresh when the user actually launches Program Manager, so a moved
+    executable is picked up without searching the disk on every Start open. */
+ findapps();
  if(!paths[i][0]){TinyNotice(w,instance,"Start","App not found.");return;}
  result=WinExec(paths[i],SW_SHOWNORMAL);
  if(result>=32&&i==0){manager=FindWindow("Progman",NULL);if(manager){ShowWindow(manager,SW_RESTORE);BringWindowToTop(manager);}}
@@ -111,26 +117,26 @@ static void settingspopup(HWND w) {
  if(!menu){TandyHoldMenuDone(1);TSSaverHold(0);return;}
  settingsitems(menu);GetWindowRect(w,&r);y=r.top-popupheight(w,menu);if(y<0)y=0;
  SetActiveWindow(w);SetFocus(w);
- TrackPopupMenu(menu,0,0,y,0,w,NULL);
+ TSMenuTrack(menu,0,y,w);
  DestroyMenu(menu);TandyHoldMenuDone(1);TSSaverHold(0);
 }
 static void popup(HWND w) {
- HMENU menu,system;RECT r;int y;
- TSSaverHold(1);BringWindowToTop(w);SetActiveWindow(w);SetFocus(w);findapps();menu=CreatePopupMenu();
+ HMENU menu,system,programs;RECT r;int y;
+ TSSaverHold(1);BringWindowToTop(w);SetActiveWindow(w);SetFocus(w);if(!paths[0][0])findapps();menu=CreatePopupMenu();
  if(!menu){TandyHoldMenuDone(1);TSSaverHold(0);return;}
  AppendMenu(menu,MF_STRING,MYCOMPUTER,"&My Computer");
- AppendMenu(menu,MF_STRING,PROGRAMS,"&Programs...");
+ programs=PmMenuCreate(instance);
+ if(programs && !AppendMenu(menu,MF_POPUP,(UINT)programs,"&Programs")){
+  DestroyMenu(programs);PmMenuDone();programs=NULL;
+ }
+ if(!programs)AppendMenu(menu,MF_STRING|MF_GRAYED,PROGRAMS,"&Programs");
  AppendMenu(menu,MF_STRING,RUNAPP,"&Run...");
- /* At 160 pixels USER overlaps a cascading child on its parent; a mouse
-    click can close both without choosing anything. Open this level as a
-    separate popup after the Start menu has finished tracking. */
- if(width<320)AppendMenu(menu,MF_STRING,SYSTEMMENU,"&System...");
- else {
+ /* The measured tracker permits every cascade to overlap its parents. */
+ {
   system=CreatePopupMenu();
   if(system){AppendMenu(system,MF_STRING,ABOUTSYS,"&About This Tandy");AppendMenu(system,MF_STRING,SAVERSETUP,"Screen &saver...");AppendMenu(menu,MF_POPUP,(UINT)system,"&System");}
  }
- if(width<320)AppendMenu(menu,MF_STRING,SETTINGSMENU,"S&ettings...");
- else {
+ {
   system=CreatePopupMenu();
   if(system){settingsitems(system);AppendMenu(menu,MF_POPUP,(UINT)system,"S&ettings");}
  }
@@ -139,7 +145,7 @@ static void popup(HWND w) {
  if(!shellMode)AppendMenu(menu,MF_STRING,CLOSEAPP,"&Close bar");
  AppendMenu(menu,MF_STRING,EXITWIN,"E&xit Windows...");
  GetWindowRect(w,&r);y=r.top-popupheight(w,menu);if(y<0)y=0;
- TrackPopupMenu(menu,TPM_LEFTBUTTON,0,y,0,w,NULL);DestroyMenu(menu);TandyHoldMenuDone(!systemQueued);TSSaverHold(0);
+ TSMenuTrack(menu,0,y,w);DestroyMenu(menu);PmMenuDone();TandyHoldMenuDone(!systemQueued&&!programsQueued);TSSaverHold(0);
 }
 static void systempopup(HWND w) {
  HMENU menu;RECT r;int y;
@@ -148,7 +154,7 @@ static void systempopup(HWND w) {
  AppendMenu(menu,MF_STRING,SAVERSETUP,"Screen &saver...");
  GetWindowRect(w,&r);y=r.top-popupheight(w,menu);if(y<0)y=0;
  SetActiveWindow(w);SetFocus(w);
- TrackPopupMenu(menu,0,0,y,0,w,NULL);
+ TSMenuTrack(menu,0,y,w);
  DestroyMenu(menu);TandyHoldMenuDone(1);TSSaverHold(0);
 }
 static void clockpopup(HWND w) {
@@ -159,7 +165,7 @@ static void clockpopup(HWND w) {
  GetWindowRect(w,&r);y=r.top-GetSystemMetrics(SM_CYMENU)-4;if(y<0)y=0;
  /* Windows 3.0 requires flags=0; right-button/alignment flags are 3.1. */
  x=width-160;if(x<0)x=0;
- TrackPopupMenu(menu,0,x,y,0,w,NULL);
+ TSMenuTrack(menu,x,y,w);
  DestroyMenu(menu);TSSaverHold(0);
 }
 static void word(BYTE FAR **p,unsigned v){*(*p)++=(BYTE)v;*(*p)++=(BYTE)(v>>8);}
@@ -209,19 +215,38 @@ static void sizeDialog(HWND w,int height) {
 /* Only synchronous list mutations are batched. Painting is restored before
    returning to Windows, including every error path and each async scan turn. */
 static void browsepaint(HWND w,int hold) {
- HWND list;
- if(hold){
-  if(!browseDrawDepth++){
-   browseDrawList=GetDlgItem(w,FILELIST);
-   if(browseDrawList)SendMessage(browseDrawList,WM_SETREDRAW,FALSE,0L);
-  }
- }else if(browseDrawDepth && !--browseDrawDepth){
-  list=browseDrawList;browseDrawList=NULL;
-  if(list && IsWindow(list) && GetDlgItem(w,FILELIST)==list){
-   SendMessage(list,WM_SETREDRAW,TRUE,0L);
-   InvalidateRect(list,NULL,TRUE);
-  }
+ if(hold)LtwListBegin(&browsePaint,GetDlgItem(w,FILELIST));
+ else LtwListEnd(&browsePaint,GetDlgItem(w,FILELIST));
+}
+static void browsetext(HWND w,int id,char *text) {
+ LtwSetText(GetDlgItem(w,id),text);
+}
+static void browsepath(HWND w,char *cwd) {
+ RECT r;char display[144];int n,limit;
+ GetClientRect(GetDlgItem(w,PATHBOX),&r);limit=(r.right-4)/8;
+ if(limit<4)limit=4;if(limit>143)limit=143;
+ n=lstrlen(cwd);
+ if(n>limit){lstrcpy(display,"...");lstrcat(display,cwd+n-limit+3);browsetext(w,PATHBOX,display);}
+ else browsetext(w,PATHBOX,cwd);
+}
+/* Reorder the authoritative aliases BEFORE snapshot/enrichment. Both lists
+   retain the same indices; no visible friendly name ever becomes a DOS path.
+   No parent is fabricated or removed, including USER's root-directory row. */
+static int browseparentfirst(HWND w) {
+ HWND list;int i,n,length;char row[5];
+ list=GetDlgItem(w,NATIVELIST);n=(int)SendMessage(list,LB_GETCOUNT,0,0L);
+ if(n<0)return 0;
+ for(i=0;i<n;i++){
+  length=(int)SendMessage(list,LB_GETTEXTLEN,i,0L);
+  if(length<0)return 0;
+  if(length!=4)continue;
+  if(SendMessage(list,LB_GETTEXT,i,(LPARAM)(LPSTR)row)==LB_ERR)return 0;
+  if(lstrcmp(row,"[..]"))continue;
+  if(!i)return 1;
+  if((int)SendMessage(list,LB_DELETESTRING,i,0L)<0)return 0;
+  return (int)SendMessage(list,LB_INSERTSTRING,0,(LPARAM)(LPSTR)row)==0;
  }
+ return 1;
 }
 static int browsealiases(HWND w) {
  char item[144];int i,n;HWND native,visible;
@@ -244,7 +269,7 @@ static void browseselect(HWND w) {
   if(SendDlgItemMessage(w,NATIVELIST,LB_GETTEXTLEN,i,0L)<sizeof(item))
    SendDlgItemMessage(w,NATIVELIST,LB_GETTEXT,i,(LPARAM)(LPSTR)item);
  }
- SetDlgItemText(w,SHORTBOX,item);
+ browsetext(w,SHORTBOX,item);
 }
 static void browseextent(HWND w) {
  char item[TSNAMES_TEXT];int i,n,width=0,extent;HDC dc;HFONT old;HWND list;
@@ -273,55 +298,55 @@ static void browsereadywork(HWND w,int failed) {
  }
  if(failed&&!browsealiases(w)){
   SendDlgItemMessage(w,FILELIST,LB_RESETCONTENT,0,0L);
-  SetDlgItemText(w,SHORTBOX,"");EnableWindow(GetDlgItem(w,FILTER),TRUE);
+  browsetext(w,SHORTBOX,"");EnableWindow(GetDlgItem(w,FILTER),TRUE);
   EnableWindow(GetDlgItem(w,IDOK),FALSE);
-  SetDlgItemText(w,PATHBOX,"Cannot list");return;
+  browsetext(w,PATHBOX,"Cannot list");return;
  }
  SendDlgItemMessage(w,FILELIST,LB_SETCURSEL,0,0L);
  EnableWindow(GetDlgItem(w,FILELIST),TRUE);
  EnableWindow(GetDlgItem(w,FILTER),TRUE);
  EnableWindow(GetDlgItem(w,IDOK),TRUE);
  SendMessage(w,DM_SETDEFID,IDOK,0L);
- browseValid=1;browseextent(w);browseselect(w);
+ browseValid=1;EnableWindow(GetDlgItem(w,BROWSEUP),lstrlen(browseListed)>3);
+ browseextent(w);browseselect(w);
 }
 static void browseready(HWND w,int failed) {
  browsepaint(w,1);browsereadywork(w,failed);browsepaint(w,0);
 }
 static int listfileswork(HWND w,char *where) {
- char pattern[144],cwd[144],display[15];int n,drive,result;
+ char pattern[144],cwd[144];int n,drive,result;
  if(browseBusy)return 0;
  /* Invalidate first: failed DlgDirList may already change native rows/CWD. */
  browseValid=0;browseListed[0]=0;
  EnableWindow(GetDlgItem(w,IDOK),FALSE);
- /* A disabled Open cannot consume Enter while Cancel is focused. */
- SendMessage(w,DM_SETDEFID,IDCANCEL,0L);
+ /* Open remains the default; browseBusy/browseValid guard activation. */
+ SendMessage(w,DM_SETDEFID,IDOK,0L);
+ EnableWindow(GetDlgItem(w,BROWSEUP),FALSE);
  SendDlgItemMessage(w,FILELIST,LB_RESETCONTENT,0,0L);
- SetDlgItemText(w,SHORTBOX,"");
+ browsetext(w,SHORTBOX,"");
  /* Snapshot the current drive even after an unexpected CWD/drive change.
     A later relative directory selection must not escape Cancel restoration. */
- if(!getcwd(cwd,sizeof(cwd))){SetDlgItemText(w,PATHBOX,"Cannot read");return 0;}
+ if(!getcwd(cwd,sizeof(cwd))){browsetext(w,PATHBOX,"Cannot read");return 0;}
  drive=cwd[0];if(drive>='a'&&drive<='z')drive-=32;drive-='A'-1;
- if(drive<1||drive>26||cwd[1]!=':'){SetDlgItemText(w,PATHBOX,"Cannot read");return 0;}
+ if(drive<1||drive>26||cwd[1]!=':'){browsetext(w,PATHBOX,"Cannot read");return 0;}
  if(!browseDirs[(drive-1)*144])lstrcpy(browseDirs+(drive-1)*144,cwd);
  /* Preserve every visited drive's DOS directory, including drive-relative paths. */
  if(where[0]&&where[1]==':'){
   drive=where[0];if(drive>='a'&&drive<='z')drive-=32;drive-='A'-1;
   if(drive<1||drive>26)return 0;
   if(!browseDirs[(drive-1)*144]){
-   if(!_getdcwd(drive,cwd,sizeof(cwd))){SetDlgItemText(w,PATHBOX,"Cannot read");return 0;}
+   if(!_getdcwd(drive,cwd,sizeof(cwd))){browsetext(w,PATHBOX,"Cannot read");return 0;}
    lstrcpy(browseDirs+(drive-1)*144,cwd);
   }
  }
  lstrcpy(pattern,where);n=lstrlen(pattern);
  if(n&&pattern[n-1]!='\\'&&pattern[n-1]!=':')lstrcat(pattern,"\\");
  lstrcat(pattern,masks[browseFilter]);
- if(!DlgDirList(w,pattern,NATIVELIST,0,DDL_DIRECTORY|DDL_DRIVES|DDL_READONLY|DDL_ARCHIVE)){SetDlgItemText(w,PATHBOX,"Cannot list");return 0;}
- if(!browsealiases(w)){SetDlgItemText(w,PATHBOX,"Cannot list");EnableWindow(GetDlgItem(w,IDOK),FALSE);return 0;}
- if(!getcwd(cwd,sizeof(cwd))){SetDlgItemText(w,PATHBOX,"Cannot read");return 0;}
+ if(!DlgDirList(w,pattern,NATIVELIST,0,DDL_DIRECTORY|DDL_DRIVES|DDL_READONLY|DDL_ARCHIVE)){browsetext(w,PATHBOX,"Cannot list");return 0;}
+ if(!browseparentfirst(w)||!browsealiases(w)){browsetext(w,PATHBOX,"Cannot list");EnableWindow(GetDlgItem(w,IDOK),FALSE);return 0;}
+ if(!getcwd(cwd,sizeof(cwd))){browsetext(w,PATHBOX,"Cannot read");return 0;}
  lstrcpy(browseListed,cwd);
- {
-  n=lstrlen(cwd);if(n>14){lstrcpy(display,"...");lstrcat(display,cwd+n-11);SetDlgItemText(w,PATHBOX,display);}else SetDlgItemText(w,PATHBOX,cwd);
- }
+ browsepath(w,cwd);
  /* Lists above the bounded enrichment budget remain ordinary usable DOS lists. */
  n=(int)SendDlgItemMessage(w,NATIVELIST,LB_GETCOUNT,0,0L);
  result=0;
@@ -331,7 +356,7 @@ static int listfileswork(HWND w,char *where) {
   SendDlgItemMessage(w,FILELIST,LB_SETCURSEL,0,0L);browseselect(w);browseextent(w);
   browseBusy=1;EnableWindow(GetDlgItem(w,FILELIST),FALSE);
   EnableWindow(GetDlgItem(w,FILTER),FALSE);EnableWindow(GetDlgItem(w,IDOK),FALSE);
-  SetFocus(GetDlgItem(w,IDCANCEL));
+  SetFocus(w);
   if(!SetTimer(w,NAMES_TIMER,55,NULL))browseready(w,1);
  }else browseready(w,result<0);
  return 1;
@@ -352,17 +377,17 @@ static void browsefinishwork(HWND w,int result) {
  if(n&&pattern[n-1]!='\\')lstrcat(pattern,"\\");
  lstrcat(pattern,masks[browseFilter]);
  if(!DlgDirList(w,pattern,NATIVELIST,0,DDL_DIRECTORY|DDL_DRIVES|DDL_READONLY|DDL_ARCHIVE) ||
-    !getcwd(cwd,sizeof(cwd))||lstrcmpi(cwd,browseListed)||!browsealiases(w)){
+    !getcwd(cwd,sizeof(cwd))||lstrcmpi(cwd,browseListed)||!browseparentfirst(w)||!browsealiases(w)){
   TSNamesEnd();browseBusy=0;browseListed[0]=0;
   SendDlgItemMessage(w,FILELIST,LB_RESETCONTENT,0,0L);
-  SetDlgItemText(w,SHORTBOX,"");SetDlgItemText(w,PATHBOX,"Cannot list");
+  browsetext(w,SHORTBOX,"");browsetext(w,PATHBOX,"Cannot list");
   EnableWindow(GetDlgItem(w,FILTER),TRUE);EnableWindow(GetDlgItem(w,IDOK),FALSE);return;
  }
  n=TSNamesCommit();
  if(n==-2){
   TSNamesEnd();browseBusy=0;browseListed[0]=0;
   SendDlgItemMessage(w,FILELIST,LB_RESETCONTENT,0,0L);
-  SetDlgItemText(w,SHORTBOX,"");SetDlgItemText(w,PATHBOX,"Cannot list");
+  browsetext(w,SHORTBOX,"");browsetext(w,PATHBOX,"Cannot list");
   EnableWindow(GetDlgItem(w,FILTER),TRUE);EnableWindow(GetDlgItem(w,IDOK),FALSE);return;
  }
  /* Changed enumeration leaves the freshly rebuilt aliases usable. */
@@ -372,23 +397,26 @@ static void browsefinish(HWND w,int result) {
  browsepaint(w,1);browsefinishwork(w,result);browsepaint(w,0);
 }
 BOOL FAR PASCAL BrowseProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
- HWND child;int i,n;char item[144],cwd[144];
- /* Win3 default Enter can report IDOK even when Cancel has focus. */
- if(m==WM_COMMAND&&wp==IDOK&&!lp&&GetFocus()==GetDlgItem(w,IDCANCEL))wp=IDCANCEL;
+ HWND child;RECT r,c;int i,n,clientWidth,ww,hh;char item[144],cwd[144];
+ /* USER may route Enter through the default ID even with Up focused. */
+ if(m==WM_COMMAND&&wp==IDOK&&!lp&&GetFocus()==GetDlgItem(w,BROWSEUP))wp=BROWSEUP;
  if(m==WM_INITDIALOG){
-  browseBusy=0;browseValid=0;browseListed[0]=0;TSNamesEnd();sizeDialog(w,BROWSEHEIGHT);
-  CreateWindow("STATIC","",WS_CHILD|WS_VISIBLE|WS_BORDER|SS_LEFT,6,4,116,16,w,(HMENU)PATHBOX,instance,NULL);
-  CreateWindow("COMBOBOX","",WS_CHILD|WS_VISIBLE|WS_TABSTOP|CBS_DROPDOWNLIST|WS_VSCROLL,6,23,116,64,w,(HMENU)FILTER,instance,NULL);
-  CreateWindow("LISTBOX","",WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_BORDER|WS_VSCROLL|WS_HSCROLL|LBS_NOTIFY,6,45,116,72,w,(HMENU)FILELIST,instance,NULL);
+  browseBusy=0;browseValid=0;browseListed[0]=0;TSNamesEnd();
+  clientWidth=GetSystemMetrics(SM_CXSCREEN)-32;if(clientWidth<128)clientWidth=128;if(clientWidth>288)clientWidth=288;
+  GetWindowRect(w,&r);GetClientRect(w,&c);ww=clientWidth+r.right-r.left-c.right;hh=BROWSEHEIGHT+r.bottom-r.top-c.bottom;
+  SetWindowPos(w,NULL,(GetSystemMetrics(SM_CXSCREEN)-ww)/2,(GetSystemMetrics(SM_CYSCREEN)-hh)/2,ww,hh,SWP_NOZORDER);
+  CreateWindow("BUTTON","^",WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_PUSHBUTTON,6,4,18,16,w,(HMENU)BROWSEUP,instance,NULL);
+  CreateWindow("STATIC","",WS_CHILD|WS_VISIBLE|WS_BORDER|SS_LEFT,28,4,clientWidth-34,16,w,(HMENU)PATHBOX,instance,NULL);
+  CreateWindow("COMBOBOX","",WS_CHILD|WS_VISIBLE|WS_TABSTOP|CBS_DROPDOWNLIST|WS_VSCROLL,6,23,clientWidth-60,64,w,(HMENU)FILTER,instance,NULL);
+  CreateWindow("LISTBOX","",WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_BORDER|WS_VSCROLL|WS_HSCROLL|LBS_NOTIFY,6,45,clientWidth-12,96,w,(HMENU)FILELIST,instance,NULL);
   CreateWindow("LISTBOX","",WS_CHILD,0,0,0,0,w,(HMENU)NATIVELIST,instance,NULL);
-  CreateWindow("STATIC","",WS_CHILD|WS_VISIBLE|WS_BORDER|SS_LEFT,6,122,116,16,w,(HMENU)SHORTBOX,instance,NULL);
-  CreateWindow("BUTTON","&Open",WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_DEFPUSHBUTTON,6,142,54,20,w,(HMENU)IDOK,instance,NULL);
-  CreateWindow("BUTTON","&Cancel",WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_PUSHBUTTON,68,142,54,20,w,(HMENU)IDCANCEL,instance,NULL);
-  for(i=0;i<7;i++){child=GetDlgItem(w,i==0?PATHBOX:i==1?FILTER:i==2?FILELIST:i==3?IDOK:i==4?IDCANCEL:i==5?NATIVELIST:SHORTBOX);if(!child){EndDialog(w,IDCANCEL);return TRUE;}SendMessage(child,WM_SETFONT,(WPARAM)GetStockObject(SYSTEM_FIXED_FONT),0L);}
-  for(i=0;i<3;i++)SendDlgItemMessage(w,FILTER,CB_ADDSTRING,0,(LPARAM)(LPSTR)masks[i]);
+  CreateWindow("STATIC","",WS_CHILD|WS_VISIBLE|WS_BORDER|SS_LEFT,6,146,clientWidth-12,16,w,(HMENU)SHORTBOX,instance,NULL);
+  CreateWindow("BUTTON","&Open",WS_CHILD|WS_VISIBLE|WS_TABSTOP|BS_DEFPUSHBUTTON,clientWidth-50,23,44,18,w,(HMENU)IDOK,instance,NULL);
+  for(i=0;i<7;i++){child=GetDlgItem(w,i==0?PATHBOX:i==1?FILTER:i==2?FILELIST:i==3?IDOK:i==4?BROWSEUP:i==5?NATIVELIST:SHORTBOX);if(!child){EndDialog(w,IDCANCEL);return TRUE;}SendMessage(child,WM_SETFONT,(WPARAM)GetStockObject(SYSTEM_FIXED_FONT),0L);}
+  for(i=0;i<BROWSE_FILTERS;i++)SendDlgItemMessage(w,FILTER,CB_ADDSTRING,0,(LPARAM)(LPSTR)masks[i]);
   SendDlgItemMessage(w,FILTER,CB_SETCURSEL,browseFilter,0L);
   if(!listfiles(w,"")){EndDialog(w,IDCANCEL);return TRUE;}
-  SetFocus(GetDlgItem(w,browseBusy?IDCANCEL:FILELIST));return FALSE;
+  if(browseBusy)SetFocus(w);else SetFocus(GetDlgItem(w,FILELIST));return FALSE;
  }
  if(m==WM_TIMER&&wp==NAMES_TIMER){
   if(browseBusy){n=TSNamesStep();if(n!=1){browsefinish(w,n);if(!browseBusy)SetFocus(GetDlgItem(w,FILELIST));}}
@@ -398,11 +426,19 @@ BOOL FAR PASCAL BrowseProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
   KillTimer(w,NAMES_TIMER);TSNamesEnd();browseBusy=0;EndDialog(w,IDCANCEL);return TRUE;
  }
  if(m==WM_DESTROY){KillTimer(w,NAMES_TIMER);TSNamesEnd();browseBusy=0;return TRUE;}
- if(m==WM_QUERYENDSESSION){if(browseBusy)browseready(w,1);return TRUE;}
+ /* Let DefDlgProc supply its normal affirmative shutdown result. */
+ if(m==WM_QUERYENDSESSION){if(browseBusy)browseready(w,1);return FALSE;}
  if(m==WM_ENDSESSION&&wp){KillTimer(w,NAMES_TIMER);TSNamesEnd();browseBusy=0;EndDialog(w,IDCANCEL);return TRUE;}
  if(m==WM_COMMAND&&browseBusy)return TRUE;
+ if(m==WM_COMMAND&&wp==BROWSEUP){
+  if(!browseValid)return TRUE;
+  if(!getcwd(cwd,sizeof(cwd))||lstrcmpi(cwd,browseListed)){listfiles(w,"");return TRUE;}
+  /* A root click is a no-op: never re-enumerate or redraw it. */
+  if(lstrlen(cwd)<=3)return TRUE;
+  listfiles(w,"..");if(!browseBusy)SetFocus(GetDlgItem(w,FILELIST));return TRUE;
+ }
  if(m==WM_COMMAND&&wp==FILELIST&&HIWORD(lp)==LBN_SELCHANGE){browseselect(w);return TRUE;}
- if(m==WM_COMMAND&&wp==FILTER&&HIWORD(lp)==CBN_SELCHANGE){browseFilter=(int)SendDlgItemMessage(w,FILTER,CB_GETCURSEL,0,0L);listfiles(w,"");return TRUE;}
+ if(m==WM_COMMAND&&wp==FILTER&&HIWORD(lp)==CBN_SELCHANGE){i=(int)SendDlgItemMessage(w,FILTER,CB_GETCURSEL,0,0L);if(i>=0&&i<BROWSE_FILTERS){browseFilter=i;listfiles(w,"");}return TRUE;}
  if(m==WM_COMMAND&&(wp==IDOK||(wp==FILELIST&&HIWORD(lp)==LBN_DBLCLK))){
   if(!browseValid)return TRUE;
   if(!getcwd(cwd,sizeof(cwd))||lstrcmpi(cwd,browseListed)){listfiles(w,"");return TRUE;}
@@ -429,6 +465,12 @@ static int browse(HWND w) {
  GlobalUnlock(h);GlobalFree(h);browseDirs=NULL;
  if(!restored)return -2;
  return result==IDOK;
+}
+static void computerbrowse(HWND w) {
+ int result;
+ result=browse(w);
+ if(result<0){TinyNotice(w,instance,"My Computer",result==-2?"Path restore\nfailed.":"Browse failed.");return;}
+ if(result)PmLaunch(w,chosen);
 }
 static void runstatus(HWND w,char *s) {
  RECT r;lstrcpy(runStatus,s);r.left=0;r.top=66;r.right=128;r.bottom=84;
@@ -485,6 +527,7 @@ static void runcommand(HWND w) {
 static void exitwindows(HWND w,int silent) {
  TSSaverHold(1);if(confirmexit(w))TandyExit(w,silent);TSSaverHold(0);
 }
+void FAR TSControlNotice(HWND owner,HINSTANCE inst,char *title,char *text){TinyNotice(owner,inst,title,text);}
 LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
  HDC dc;PAINTSTRUCT ps;RECT r;
  switch(m){
@@ -508,6 +551,9 @@ LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
    if(GetActiveWindow()==w){if(which==2)settingspopup(w);else systempopup(w);}
    else {TandyHoldMenuDone(1);}
    return 0;}
+ case OPENPROGRAMS:
+  programsQueued=0;TSSaverHold(1);if(GetActiveWindow()==w)PmPrograms(w,instance);TSSaverHold(0);TandyHoldMenuDone(1);return 0;
+ case WM_INITMENUPOPUP:PmMenuInit((HMENU)wp);return 0;
  case WM_LBUTTONDBLCLK:
   if((int)LOWORD(lp)>=width-45&&(int)LOWORD(lp)<width&&(int)HIWORD(lp)>=0&&(int)HIWORD(lp)<barHeight){TSSaverHold(1);TandyClock(w,instance);TSSaverHold(0);}
   return 0;
@@ -522,13 +568,17 @@ LONG FAR PASCAL WndProc(HWND w,UINT m,WPARAM wp,LPARAM lp) {
    return 0;
   }
   TandyHoldAction();
+  if(PmMenuCommand(wp)){TSSaverHold(1);PmMenuChoose(w,wp);TSSaverHold(0);return 0;}
   if(wp==CP_OPEN || (wp>=CP_FIRST && wp<CP_FIRST+CP_COUNT)){
    TSSaverHold(1);TSControlPanel(w,instance,wp==CP_OPEN?-1:wp-CP_FIRST);TSSaverHold(0);return 0;
   }
   if(wp>=FIRSTAPP&&wp<FIRSTAPP+1){launch(w,wp-FIRSTAPP);return 0;}
   if(wp==RUNAPP){TSSaverHold(1);runcommand(w);TSSaverHold(0);return 0;}
-  if(wp==PROGRAMS){TSSaverHold(1);PmPrograms(w,instance);TSSaverHold(0);return 0;}
-  if(wp==MYCOMPUTER){TSSaverHold(1);TandyFileManager(w,instance);TSSaverHold(0);return 0;}
+  if(wp==PROGRAMS){
+   if(!programsQueued){programsQueued=1;if(!PostMessage(w,OPENPROGRAMS,0,0L))programsQueued=0;}
+   return 0;
+  }
+  if(wp==MYCOMPUTER){TSSaverHold(1);computerbrowse(w);TSSaverHold(0);return 0;}
   if(wp==ADJUSTTIME){TSSaverHold(1);TandyDateTime(w,instance);TSSaverHold(0);return 0;}
   if(wp==ABOUTSYS){TSSaverHold(1);TandySystem(w,instance);TSSaverHold(0);return 0;}
   if(wp==SAVERSETUP){TSSaverHold(1);TSSaverSettings(w,instance);TSSaverHold(0);return 0;}

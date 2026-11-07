@@ -42,27 +42,24 @@ def lifecycle(wrapper):
                     for command, env, path, timeout in expected:
                         builder.bounded_run(command, env, path, timeout)
                 builder.main = main
-                def fast(*args):
-                    edits.append('fast')
-                    source.write_bytes(b'fast')
-                def poly(*args):
-                    edits.append('poly')
+                def live(*args):
+                    edits.append('live')
+                    source.write_bytes(b'partial')
                     if fail:
-                        raise ValueError('deliberate second-stage refusal')
-                    source.write_bytes(b'poly')
-                modules = {'BUILD88':builder, 'CALCFAST':SimpleNamespace(port=fast),
-                           'CALCPOLY':SimpleNamespace(port=poly)}
+                        raise ValueError('deliberate unified-stage refusal')
+                    source.write_bytes(b'live')
+                modules = {'BUILD88':builder, 'CALCLIVE':SimpleNamespace(port=live)}
                 wrapper.load = modules.__getitem__
                 sys.argv = ['BUILDCALC.PY']
                 try:
                     wrapper.main()
                 except ValueError as error:
-                    assert fail and str(error) == 'deliberate second-stage refusal'
+                    assert fail and str(error) == 'deliberate unified-stage refusal'
                 else:
                     assert not fail
-                assert edits == ['fast', 'poly']
+                assert edits == ['live']
                 assert calls == ([] if fail else expected)
-                assert source.read_bytes() == (b'original' if fail else b'poly')
+                assert source.read_bytes() == (b'original' if fail else b'live')
                 assert builder.baseline.prepare is prepare and builder.bounded_run is compiler
                 print('PASS lifecycle:', 'rollback before compiler' if fail else 'three compiler commands unchanged; apply once', '; hooks restored')
         sys.argv = ['BUILDCALC.PY', '--ui-profile', 'compact320']
@@ -78,16 +75,18 @@ def lifecycle(wrapper):
         wrapper.load, sys.argv = original_load, argv
 
 
-def run(repo, standalone):
-    tree = ast.parse(standalone.read_text())
-    body = []
-    for node in tree.body:
-        body.append(node)
-        if isinstance(node, ast.If) and ast.unparse(node.test) == 'not OUT.exists()':
-            break
-    else:
-        raise AssertionError('Standalone preparation boundary missing')
-    code = compile(ast.fix_missing_locations(ast.Module(body=body, type_ignores=[])), str(standalone), 'exec')
+def run(repo, standalone=None):
+    code = None
+    if standalone is not None:
+        tree = ast.parse(standalone.read_text())
+        body = []
+        for node in tree.body:
+            body.append(node)
+            if isinstance(node, ast.If) and ast.unparse(node.test) == 'not OUT.exists()':
+                break
+        else:
+            raise AssertionError('Standalone preparation boundary missing')
+        code = compile(ast.fix_missing_locations(ast.Module(body=body, type_ignores=[])), str(standalone), 'exec')
     wrapper = importlib.machinery.SourceFileLoader('tested_buildcalc', str(HERE / 'BUILDCALC.PY')).load_module()
     lifecycle(wrapper)
     load = wrapper.load
@@ -96,9 +95,13 @@ def run(repo, standalone):
         for mode in load('CALCFAST').MODES:
             with tempfile.TemporaryDirectory(prefix='buildcalc-') as temp:
                 expected, actual = Path(temp) / 'expected', Path(temp) / 'actual'
-                sys.argv = ['rebuild.py', '--repo', str(repo), '--source', str(HERE), '--out', str(expected),
-                            '--mode', mode, '--calculator-poly']
-                exec(code, {'__file__': str(standalone), '__name__': 'stage_only'})
+                if code is None:
+                    load('TSTLIVE').stage(repo, expected, mode, listings=True)
+                else:
+                    sys.argv = ['rebuild.py', '--repo', str(repo), '--source', str(HERE), '--out', str(expected),
+                                '--mode', mode]
+                    exec(code, {'__file__': str(standalone), '__name__': 'stage_only'})
+                load('CALCLIVE').port(expected / 'renderer', mode, repo)
                 state = {}
 
                 def stop(command, env, path, timeout=180):
@@ -128,7 +131,7 @@ def run(repo, standalone):
                 assert state['builder'].bounded_run is stop
                 assert state['builder'].baseline.prepare is state['prepare']
                 assert not (actual / 'RESULT.json').exists()
-                print('PASS', mode, 'BUILDCALC matches standalone sources/resources; hooks restored; no compiler/report')
+                print('PASS', mode, 'BUILDCALC matches independent sources/resources; hooks restored; no compiler/report')
     finally:
         wrapper.load = load
         sys.argv = argv
@@ -137,6 +140,6 @@ def run(repo, standalone):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--repo', type=Path, required=True)
-    parser.add_argument('--standalone', type=Path, required=True)
+    parser.add_argument('--standalone', type=Path, help='Optional legacy standalone staging script')
     args = parser.parse_args()
-    run(args.repo.resolve(), args.standalone.resolve())
+    run(args.repo.resolve(), args.standalone.resolve() if args.standalone else None)

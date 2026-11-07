@@ -1,6 +1,6 @@
 # Windows XT: drivers through Windows Setup
 
-[Download WINXT.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT.ZIP) and extract it. The same download
+[Download the Windows XT pack](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXT61107.ZIP) and extract it. The same download
 offers the [full desktop installation](DESKTOP.MD) and a complete driver source
 in its expanded `WINXT` folder. Drivers only do not require the custom `SETUP.EXE`.
 
@@ -39,13 +39,15 @@ disk, enter this same path again.*
 
 ## 4. Select the driver and finish
 
-Select **Tandy EX/HX HPXY 640x256 hardware pan** and press Enter. Back on the
-System Information screen, choose **Complete Changes** and press Enter.
+Select a fixed Tandy profile: **320x200 sixteen colors**, **640x200 four colors**,
+**320x200 four colors**, **160x200 sixteen colors** or **640x200 monochrome**.
+The optional **Tandy EX/HX HPXY 640x256 hardware pan** is also available.
+Press Enter, then choose **Complete Changes** on System Information.
 Keep your keyboard, mouse and DOS configuration choices unchanged.
 
 ![System Information showing the Tandy EX/HX HPXY display and Complete Changes selected](SETUP/SELECTED.PNG)
 
-*Check the Display line before accepting. Setup copies the included fonts,
+*The older screenshot illustrates HPXY. Check the Display line before accepting. Setup copies the included fonts,
 grabber and startup artwork along with the driver.*
 
 If HPXY was already selected, Windows Setup can retain its existing driver
@@ -77,7 +79,7 @@ installs it automatically.
 if reservation fails. They use Windows in `C:\WINDOWS`; for another directory,
 pass its drive and path, such as `DISPLAY D: \WIN30` and `DISPWIN D: \WIN30`.
 
-Ctrl+Alt+arrows pan the 320x200 view over the 640x256 desktop;
+With HPXY, Ctrl+Alt+arrows pan the 320x200 view over the 640x256 desktop;
 Ctrl+Alt+Home returns home. Use PAN /SETTINGS to choose Software or Hardware,
 or Ctrl+Alt+H to switch presentation. Exit Windows before changing display
 drivers through Setup.
@@ -86,4 +88,6 @@ drivers through Setup.
 evidence](../tools/XROEM/NATIVE.JSN) records the alternate-folder Setup and launch test.
 
 The included `WINXT\DISPLAY.TXT` has the same instructions without images.
+The five-driver update passed native installed-runtime tests; the original
+Windows Setup wizard was not rerun for this update.
 [Screenshot details](SETUP/CAPTURES.MD).

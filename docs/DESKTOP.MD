@@ -1,13 +1,13 @@
 # Windows XT
 
-[Download WINXT.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT.ZIP).
+[Download the Windows XT pack](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXT61107.ZIP).
 The target is an original Tandy 1000 EX/HX with normal 640 KB and Windows 3.0
 real mode. Original Windows and DOS are required. Installation runs on the
 DOS computer itself; the full installer requires DOS 3.3 or later.
 
 ## 1. Extract the download
 
-Extract `WINXT.ZIP` on the DOS computer. Keep `SETUP.EXE`, `README.TXT` and
+Extract `WXT61107.ZIP` on the DOS computer. Keep `SETUP.EXE`, `README.TXT` and
 the expanded `WINXT` folder together. The folder contains the actual drivers,
 apps, fonts, grabber and logos; the ZIP is no longer needed.
 
@@ -48,11 +48,20 @@ The installer installs Tandy Start and the apps, then starts Windows.
 *Windows is running. This view has been moved down to show Start; the viewport
 controls remain open above it. Use `C:\STARTXT` for every later session.*
 
-The display supplies a 640x256 desktop with a 320x200 hardware viewport.
-PAN starts automatically with viewport controls. Choose **Options / Panning
-settings** to change the available movement and follow options; Apply saves
-changes and Cancel leaves them unchanged. Ctrl+Alt+arrows move the view and
-Ctrl+Alt+Home returns home. Ctrl+Alt+Down brings the Start bar into view.
+New installations default to fixed 320x200 with sixteen colors, without panning.
+Updates preserve the installed display choice. The same folder offers four
+other optimized fixed profiles through Windows Setup: 640x200 four colors,
+320x200 four colors, 160x200 sixteen colors and 640x200 monochrome.
+
+HPXY remains optional. With HPXY, the display supplies a 640x256 desktop
+through a 320x200 view. PAN settings select the available movement and follow
+options. Ctrl+Alt+arrows move the view and Ctrl+Alt+Home returns home.
+The screenshot above illustrates that optional panning profile.
+
+Choose **System > Screen saver** for Cube, Starfield, Matrix or Ovals.
+The default idle delay is five minutes; updates preserve your existing settings.
+Maze is no longer a saver choice. Existing user-owned Maze files and menu
+entries are not deleted.
 
 See [Panning settings](PANNING.MD) for the available approaches, including the
 window workspace on fixed-resolution drivers and its Home recovery control.

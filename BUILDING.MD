@@ -1,4 +1,4 @@
-Current HPXY DIB and unified-panning packets use `tools/HPDIB/PUBLISH.PY` for accepted-byte
+The preserved HPXY DIB and unified-panning baseline uses `tools/HPDIB/PUBLISH.PY` for accepted-byte
 packaging and the normal `tools/CURRENT` catalog checks. See
 [PAN developer workflow](tools/PAN/README.MD) and [user controls](docs/PANNING.MD).
 The preceding RCPUB producer remains the immutable baseline for older acceptance.
@@ -11,7 +11,34 @@ The ZIP root is `SETUP.EXE`, `README.TXT` and one `WINXT` folder of real files.
 No Python or individual font/grabber/logo gathering is part of installation.
 Installed DOS/Windows or original Windows OS media remain required.
 
-## Reproduce the current release
+## Verify the combined five-driver, four-saver pack
+
+The current dated download is `WXT61107.ZIP`. Its exact accepted archive is
+`tools/SAVPACK/BIN/WINXT.ZIP`; native installer source is under
+`tools/SAVPACK/NATIVE`, with staging recipes in `tools/SAVPACK`.
+
+```text
+python -B tools/SAVPACK/TESTPKG.PY
+python -B tools/SAVPACK/BUILD.PY --watcom C:\WATCOM --out FRESH-NATIVE-DIRECTORY
+python -B examples/TSHELL/TESTS/RUNHOST.PY
+python -B src/tandysw/TSTLIVE.PY --repo EXTERNAL_VIEW
+python -B src/tandysw/TSTBLDCAL.PY --repo EXTERNAL_VIEW
+```
+
+The `savpack.yml` workflow checks the archive and its corresponding source.
+It does not compile DOS/Windows code or rerun native emulator tests.
+The native build command runs on Windows with an explicit Open Watcom path
+and a fresh output directory.
+`EXTERNAL_VIEW` is the explicit DDK/toolchain view described below, not a
+consumer input. `BUILDCALC.PY` builds the five optimized fixed modes while
+leaving historical `BUILD88.PY` unchanged. The quartet is Cube, Starfield,
+Matrix and Ovals; the default remains fixed320 and HPXY bytes are preserved.
+
+The earlier `WINXT.ZIP`, core records and catalog records remain available
+unchanged. The following historical producers reproduce those records, not
+the dated combined archive. No historical acceptance pin has been relaxed.
+
+## Reproduce the preserved core catalog
 
 Host packaging uses Python and accepted, already qualified binaries. It does
 not launch an emulator or compile native source. Run from this checkout:

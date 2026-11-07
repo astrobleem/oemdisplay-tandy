@@ -11,7 +11,7 @@
 #define CFG_HEIGHT 164
 #define CFG_MATRIX 120
 #define CFG_STARFIELD 119
-#define CFG_MAZE 121
+#define CFG_OVALS 121
 #define CFG_NONE 122
 #define CFG_SECONDS 123
 #define CFG_PREVIEW 124
@@ -29,7 +29,7 @@ static int stagedSpeed, stagedStars, optionsDirty;
 static SCCONFIG loaded;
 static char iniPath[144];
 static char *keys[SC_KEYS] = { "Enabled", "IdleSeconds", "Choice", "Program", "MazeProgram",
-                             "StarProgram", "Speed", "Stars", "CubeProgram" };
+                             "StarProgram", "Speed", "Stars", "CubeProgram", "OvalsProgram" };
 static char *section(int key)
 { return key == SC_SPEED || key == SC_STARS ? "Starfield" : "ScreenSaver"; }
 
@@ -83,7 +83,7 @@ int SaverConfigProgram(HWND w, HINSTANCE instance,
 {
     const char *path;
     OFSTRUCT of;
-    if (choice != SC_MATRIX && choice != SC_MAZE && choice != SC_STARFIELD && choice != SC_CUBE) {
+    if (choice != SC_MATRIX && choice != SC_OVALS && choice != SC_STARFIELD && choice != SC_CUBE) {
         TinyNotice(w, instance, "Saver", "Choose a saver."); return 0;
     }
     path = ScProgram(config, choice);
@@ -92,8 +92,8 @@ int SaverConfigProgram(HWND w, HINSTANCE instance,
     }
     if (OpenFile((LPSTR)path, &of, OF_EXIST) == HFILE_ERROR) {
         TinyNotice(w, instance, "Saver", choice == SC_CUBE ? "Cube missing.\nRun CUBESET." : choice == SC_STARFIELD ?
-                   "Starfield\nmissing. Check\nStarProgram." : choice == SC_MAZE ?
-                   "Maze missing.\nNothing saved." : "Matrix missing.\nNothing saved.");
+                   "Starfield\nmissing. Check\nStarProgram." : choice == SC_OVALS ?
+                   "Ovals missing.\nNothing saved." : "Matrix missing.\nNothing saved.");
         return 0;
     }
     return ScCommand(path, 0, 0, command, 128);
@@ -103,11 +103,11 @@ static int selection(HWND w)
     int n;
     if (cfgCompact) {
         n = (int)SendDlgItemMessage(w, CFG_CHOICE, CB_GETCURSEL, 0, 0L);
-        return n == 0 ? SC_MATRIX : n == 1 ? SC_MAZE : n == 2 ? SC_STARFIELD :
+        return n == 0 ? SC_MATRIX : n == 1 ? SC_OVALS : n == 2 ? SC_STARFIELD :
                n == 3 ? SC_CUBE : n == 4 ? SC_NONE : -1;
     }
     if (IsDlgButtonChecked(w, CFG_MATRIX)) return SC_MATRIX;
-    if (IsDlgButtonChecked(w, CFG_MAZE)) return SC_MAZE;
+    if (IsDlgButtonChecked(w, CFG_OVALS)) return SC_OVALS;
     if (IsDlgButtonChecked(w, CFG_STARFIELD)) return SC_STARFIELD;
     if (IsDlgButtonChecked(w, CFG_NONE)) return SC_NONE;
     if (IsDlgButtonChecked(w, CFG_CUBE)) return SC_CUBE;
@@ -117,11 +117,11 @@ static void choose(HWND w, int id)
 {
     if (cfgCompact) {
         SendDlgItemMessage(w, CFG_CHOICE, CB_SETCURSEL, id == CFG_MATRIX ? 0 :
-            id == CFG_MAZE ? 1 : id == CFG_STARFIELD ? 2 : id == CFG_CUBE ? 3 : 4, 0L);
+            id == CFG_OVALS ? 1 : id == CFG_STARFIELD ? 2 : id == CFG_CUBE ? 3 : 4, 0L);
         return;
     }
     CheckDlgButton(w, CFG_MATRIX, id == CFG_MATRIX);
-    CheckDlgButton(w, CFG_MAZE, id == CFG_MAZE);
+    CheckDlgButton(w, CFG_OVALS, id == CFG_OVALS);
     CheckDlgButton(w, CFG_STARFIELD, id == CFG_STARFIELD);
     CheckDlgButton(w, CFG_NONE, id == CFG_NONE);
     CheckDlgButton(w, CFG_CUBE, id == CFG_CUBE);
@@ -230,14 +230,14 @@ BOOL FAR PASCAL SaverCfgProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
                 EndDialog(w, IDCANCEL); return TRUE;
             }
             SendDlgItemMessage(w, CFG_CHOICE, CB_ADDSTRING, 0, (LPARAM)(LPSTR)"Matrix");
-            SendDlgItemMessage(w, CFG_CHOICE, CB_ADDSTRING, 0, (LPARAM)(LPSTR)"Maze");
+            SendDlgItemMessage(w, CFG_CHOICE, CB_ADDSTRING, 0, (LPARAM)(LPSTR)"Ovals");
             SendDlgItemMessage(w, CFG_CHOICE, CB_ADDSTRING, 0, (LPARAM)(LPSTR)"Starfield");
             SendDlgItemMessage(w, CFG_CHOICE, CB_ADDSTRING, 0, (LPARAM)(LPSTR)"Cube");
             SendDlgItemMessage(w, CFG_CHOICE, CB_ADDSTRING, 0, (LPARAM)(LPSTR)"None");
         } else if (!makeControl(w, "BUTTON", "&Matrix", BS_RADIOBUTTON | WS_GROUP,
                          6, 0, 116, 16, CFG_MATRIX) ||
-            !makeControl(w, "BUTTON", "Ma&ze", BS_RADIOBUTTON,
-                         6, 16, 116, 16, CFG_MAZE) ||
+            !makeControl(w, "BUTTON", "&Ovals", BS_RADIOBUTTON,
+                         6, 16, 116, 16, CFG_OVALS) ||
             !makeControl(w, "BUTTON", "&Starfield", BS_RADIOBUTTON,
                          6, 32, 116, 16, CFG_STARFIELD) ||
             !makeControl(w, "BUTTON", "&None", BS_RADIOBUTTON,
@@ -263,7 +263,7 @@ BOOL FAR PASCAL SaverCfgProc(HWND w, UINT m, WPARAM wp, LPARAM lp)
             SetDlgItemText(w, CFG_SECONDS, ScValue(&loaded, SC_SECONDS));
             choice = ScEnabled(&loaded) ? ScChoice(&loaded) : SC_NONE;
             if (choice >= SC_NONE) choose(w,
-                choice == SC_MATRIX ? CFG_MATRIX : choice == SC_MAZE ? CFG_MAZE :
+                choice == SC_MATRIX ? CFG_MATRIX : choice == SC_OVALS ? CFG_OVALS :
                 choice == SC_STARFIELD ? CFG_STARFIELD : choice == SC_CUBE ? CFG_CUBE : CFG_NONE);
             stagedSpeed = ScSpeed(ScValue(&loaded, SC_SPEED));
             stagedStars = ScStars(ScValue(&loaded, SC_STARS));

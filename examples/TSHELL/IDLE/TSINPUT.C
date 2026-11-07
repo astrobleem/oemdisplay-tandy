@@ -233,11 +233,11 @@ static BOOL holdContext(void)
         GetSysModalWindow() || GetCapture()) return FALSE;
     /* These are this suite's exact classes/modules, also checked by TSHELL.
        A loading saver has no capture/window yet: keep its wake key visible. */
-    if (FindWindow("TandyMatrixSaver", NULL) || FindWindow("TandyMazeSaver", NULL) ||
+    if (FindWindow("TandyMatrixSaver", NULL) || FindWindow("TandyOrbitsSaver", NULL) ||
         FindWindow("TandyStarfieldSaver", NULL) || FindWindow("TandyCubeSaver", NULL) ||
         GetModuleHandle("CUBE") || GetModuleHandle("TEXIT") ||
         GetModuleHandle("MATRIX") ||
-        (GetModuleHandle("MAZE") && !FindWindow("TandyMaze", NULL)) ||
+        (GetModuleHandle("ORBITS") && !FindWindow("TandyOrbits", NULL)) ||
         (GetModuleHandle("STARFLD") && !FindWindow("TandyStarfield", NULL))) return FALSE;
     active = GetActiveWindow();
     if (!active) return FALSE;

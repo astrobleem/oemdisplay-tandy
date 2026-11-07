@@ -1,0 +1,46 @@
+name: Verify combined Windows XT pack
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      ASAN_OPTIONS: detect_leaks=0
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          ref: ${{ env.SOURCE_SHA }}
+      - name: Verify exact source checkout
+        run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Verify accepted package and native inventory bindings
+        run: python3 -B tools/SAVPACK/TESTPKG.PY
+      - name: Exercise shell and four-saver configuration
+        run: python3 -B examples/TSHELL/TESTS/RUNHOST.PY
+      - name: Exercise Ovals geometry and cleanup
+        run: |
+          python3 -B examples/OVALS/TESTFX.PY --report "$RUNNER_TEMP/ovals-geometry.json"
+          python3 -B examples/OVALS/TESTDENS.PY --report "$RUNNER_TEMP/ovals-density.json"
+          python3 -B examples/OVALS/TESTFXRS.PY --report "$RUNNER_TEMP/ovals-resources.json"
+          python3 -B examples/OVALS/TESTFXCK.PY --report "$RUNNER_TEMP/ovals-checker.json"
+      - name: Stage exact consumer archive
+        run: |
+          mkdir combined-pack
+          cp tools/SAVPACK/BIN/WINXT.ZIP combined-pack/WXT61107.ZIP
+          cmp tools/SAVPACK/BIN/WINXT.ZIP combined-pack/WXT61107.ZIP
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: combined-winxt-${{ env.SOURCE_SHA }}
+          path: combined-pack/WXT61107.ZIP
+          if-no-files-found: error
+          retention-days: 30

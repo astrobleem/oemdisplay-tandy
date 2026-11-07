@@ -19,7 +19,7 @@ Windows 3.0 desktop.
 
 For an **original Tandy 1000 EX/HX with normal 640 KB and Windows 3.0 real mode**:
 
-**[Download WINXT.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT.ZIP).**
+**[Download the Windows XT pack](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXT61107.ZIP).**
 It contains `SETUP.EXE`, `README.TXT` and an expanded `WINXT` folder.
 
 - **Full desktop:** run `SETUP UPDATE C:\WINDOWS` or `SETUP FRESH A:\` on DOS.
@@ -28,7 +28,9 @@ It contains `SETUP.EXE`, `README.TXT` and an expanded `WINXT` folder.
   without running the custom installer.
 
 New installations default to **fixed 320x200, sixteen colors, without panning**.
-Updates preserve the installed display choice. HPXY panning remains optional.
+Updates preserve the installed display choice. The pack also includes optimized
+640x200 four-color, 320x200 four-color, 160x200 sixteen-color and 640x200
+monochrome drivers, selected through Windows Setup. HPXY panning is unchanged.
 [Current release notes](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt) ·
 [Installation](docs/DESKTOP.MD) · [Panning settings](docs/PANNING.MD).
 
@@ -107,50 +109,60 @@ Use Ctrl+Alt+arrows to pan and Ctrl+Alt+Home to return home. PAN /SETTINGS selec
 [Install Minesweeper](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/MINESET.ZIP) ·
 [Install guide](tools/CURRENT/GUIDES/MINESET.TXT) · [Capture notes](docs/pan/MINE/CAPTURE.MD).
 
-## Calculator, faster again
+## Optimized fixed displays
 
-**Under a second in both four-color modes.** The latest fixed-profile developer
-build cuts Calculator redraws by **up to 11.9×** in matched emulator tests.
+The pack includes all five fixed Tandy profiles. It retains the already-fast
+320x200 sixteen-color release driver and extends its compatible drawing
+optimizations to the other four modes.
 
-| Display mode | Before | Now | Speedup |
-| --- | ---: | ---: | ---: |
-| 640×200, four colors | 3.790 s | **0.604 s** | **6.27×** |
-| 320×200, four colors | 10.436 s | **0.934 s** | **11.17×** |
-| 320×200, sixteen colors | 26.858 s | **2.252 s** | **11.93×** |
-| 160×200, sixteen colors | 13.786 s | **1.483 s** | **9.30×** |
-| 640×200, monochrome | 1.593 s | **0.439 s** | **3.63×** |
+| Display mode | Calculator repaint |
+| --- | ---: |
+| 320x200, sixteen colors | 0.989 s |
+| 640x200, four colors | 0.494 s |
+| 320x200, four colors | 0.604 s |
+| 160x200, sixteen colors | 0.769 s |
+| 640x200, monochrome | 0.440 s |
 
-Less copying, same drawing: all 15 Calculator framebuffer comparisons matched
-their baseline exactly, alongside 200 text/GDI and polyline comparisons.
+These are medians of three full client repaints in Windows 3.0, DOSBox-X with
+a normal core, `8086_prefetch`, fixed 3000 cycles and 640 KB. Compare within a
+mode, since window sizes differ. They are not physical-hardware timings or a
+new speedup over the previous fixed320 release. Existing low-resolution
+Calculator layout crowding/clipping is unchanged.
 
-These are medians of three full client repaints per build in Windows 3.0,
-DOSBox-X with a normal core, `8086_prefetch`, fixed 3000 cycles and 640 KB.
-Compare before/after within each mode; window sizes differ between modes.
-These are not physical-hardware timings. Existing low-resolution layout
-crowding/clipping is unchanged.
+All 235 Calculator, text/GDI and polyline framebuffer comparisons matched their
+corresponding baseline. Another 250 native bitmap/RLE cases matched video,
+DDB readbacks and return values. The combined pack passed native preparation,
+update, migration, repair and Computer completion checks. All four savers
+passed preview, keyboard wake and unload in all five modes; automatic idle
+re-arm was checked with Cube in each mode.
+The original Windows Setup wizard and physical hardware were not rerun for
+this update.
 
-[Source changes and validation](https://github.com/astrobleem/oemdisplay-tandy/pull/218)
-are available through [`BUILDCALC.PY`](src/tandysw/BUILDCALC.PY),
-**not yet in the downloadable driver packets**. Use the same `--repo`, `--dosbox`,
+[Source changes](https://github.com/astrobleem/oemdisplay-tandy/pull/218) use
+[`BUILDCALC.PY`](src/tandysw/BUILDCALC.PY) with the same `--repo`, `--dosbox`,
 fresh `--out` and `--mode` arguments as BUILD88, with the tested stock UI.
 The historical BUILD88 entrypoint stays unchanged for other adapter builds.
 
 <img src="docs/rrect/TIMELINE.PNG" alt="Earlier Calculator optimization: original matched emulator timeline, not the new measurements above" width="640">
 
 *The earlier 92.5 → 10.4 second experiment, shown above, has its own
-[drawing test scope](docs/RRECT.MD). Its timings are separate from the new
-five-mode comparison.*
+[drawing test scope](docs/RRECT.MD). Its timings are separate from the
+five-mode measurements above.*
 
 ## Games, savers and sound
 
-- **[Cube](docs/CUBE.MD):** optional download with Flat, Dither and Wire styles,
-  compact settings and Tandy Start idle launch. Its DOS installer also supports
-  standalone use and undo.
-- **[Starfield](experiments/VISPART2/README.MD) and
-  [Matrix](experiments/VISPART1/README.MD):** included in the desktop bundle,
-  alongside the older Maze saver.
-- **Ovals and the revised four-saver lineup** are still development work,
-  not part of the current downloads.
+The pack includes **Cube, Starfield, Matrix and Ovals**. Choose one in
+**System > Screen saver**. New installations keep the five-minute idle delay;
+updates preserve existing settings.
+
+- **[Cube](docs/CUBE.MD):** Flat, Dither and Wire styles with compact settings.
+  Its separate DOS installer remains available for standalone use and undo.
+- **[Starfield](experiments/VISPART2/README.MD)** and
+  **[Matrix](experiments/VISPART1/README.MD)** retain their existing animations.
+- **[Ovals](examples/OVALS/ORBITS.C)** cycles through five animated scenes.
+
+Maze is a separate game/experiment, not a screen saver choice in this pack.
+Existing user-owned Maze files and menu entries are not deleted by an update.
 
 | [Maze preview](examples/MAZE/GAME/README.MD) | [Tandinator](examples/TANDINAT/README.MD) | [Tandy Winamp](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt) |
 | --- | --- | --- |
