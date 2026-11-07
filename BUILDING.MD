@@ -25,7 +25,8 @@ python -B src/tandysw/TSTLIVE.PY --repo EXTERNAL_VIEW
 python -B src/tandysw/TSTBLDCAL.PY --repo EXTERNAL_VIEW
 ```
 
-The `savpack.yml` workflow checks the archive and its corresponding source.
+The `savpack.yml` workflow checks the exact archive, its payload pins and
+shipped input-DLL contract, plus shell and Ovals host source checks.
 It does not compile DOS/Windows code or rerun native emulator tests.
 The native build command runs on Windows with an explicit Open Watcom path
 and a fresh output directory.

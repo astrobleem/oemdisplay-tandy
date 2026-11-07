@@ -1,6 +1,6 @@
 """Check the exact native-qualified combined package without OS media or emulation."""
 from pathlib import Path
-import argparse,hashlib,re,zipfile,zlib
+import argparse,hashlib,re,subprocess,sys,tempfile,zipfile,zlib
 HERE=Path(__file__).resolve().parent
 ACCEPTED='fa5b55806d35d0aca9cb6c3a67b608866a169843769d4e7b54628317214376aa'
 def check(archive,native=HERE/'NATIVE'):
@@ -27,6 +27,10 @@ def check(archive,native=HERE/'NATIVE'):
  oem=body['WINXT/OEMSETUP.INF']
  for n in ('TANDY88.DRV','TNDY6404.DRV','TNDY3204.DRV','TNDY160.DRV','TNDY6402.DRV'):assert n.encode() in oem
  assert b'/320' in body['README.TXT'] or b'MODEXT' in body['README.TXT']
+ # Check the newly shipped hook, preserving the older historical DLL fixture.
+ with tempfile.TemporaryDirectory(prefix='savpack-input-') as tmp:
+  dll=Path(tmp)/'TSINPUT.DLL';dll.write_bytes(body['WINXT/TSINPUT.DLL'])
+  subprocess.run([sys.executable,'-B',str(HERE.parents[1]/'examples/TSHELL/IDLE/tests/VERIFY.PY'),str(dll)],check=True)
  print('PASS:',len(body),'members; all native pins, exact archive, quartet, five modes, layout and idle seed')
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--archive',type=Path,default=HERE/'BIN/WINXT.ZIP');p.add_argument('--native',type=Path,default=HERE/'NATIVE');a=p.parse_args();check(a.archive,a.native)
