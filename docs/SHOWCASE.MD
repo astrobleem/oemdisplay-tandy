@@ -35,7 +35,7 @@ A converted Minesweeper demonstration shows one board extending below the 200-ro
 
 <img src="pan/MINE/REVEAL.PNG" alt="Revealed Minesweeper board in Windows 3.0 real mode on the emulated Tandy 1000 HX" width="640">
 
-*Cropped emulator capture · 86Box native headless · emulated Tandy 1000 HX, 8088 at 7.159090 MHz, 640 KB · Windows 3.0 real mode · 320×200×16 viewport over 640×256 logical space. The MNSN2 emulator run passed four snapshots with zero viewport/display mismatches. It used the then-private combined HPXY XR1 PR151 + E1 runtime. The linked component commit does not identify the complete capture build; current rc.8 has its own release pins and install qualification. No combined-runtime hardware qualification is claimed. [Capture/test provenance](pan/MINE/CAPTURE.MD) · [public PR151 component commit fc7b09b](https://github.com/astrobleem/oemdisplay-tandy/commit/fc7b09bdbe7e37dc9d562bdb746cf435b0628ba0).*
+*Cropped emulator capture · 86Box native headless · emulated Tandy 1000 HX, 8088 at 7.159090 MHz, 640 KB · Windows 3.0 real mode · 320×200×16 viewport over 640×256 logical space. The MNSN2 emulator run passed four snapshots with zero viewport/display mismatches. It used the then-private combined HPXY XR1 PR151 + E1 runtime. The linked component commit does not identify the complete capture build; the historical rc.8 package has its own release pins and installation records. No combined-runtime hardware qualification is claimed. [Capture/test provenance](pan/MINE/CAPTURE.MD) · [public PR151 component commit fc7b09b](https://github.com/astrobleem/oemdisplay-tandy/commit/fc7b09bdbe7e37dc9d562bdb746cf435b0628ba0).*
 
 <img src="pan/MINE/PAN16040.PNG" alt="Minesweeper viewport after a large jump to origin 160,40 in Windows 3.0 real mode" width="640">
 
@@ -43,23 +43,33 @@ A converted Minesweeper demonstration shows one board extending below the 200-ro
 
 ## Panning on real Tandy hardware
 
-Panning keeps a 320×200 display while bringing the rest of a larger Windows desktop into view. HPXY R1 has been tested and accepted on the owner's real Tandy 1000 EX: Windows 3.0 real mode, stock-CGA profile, 7.16 MHz 8088, 640 KB. The scoped run recorded 54 pans, including 53 hardware operations, no ERROR records, return to software presentation at (0,0), and Windows exit code 0. That acceptance applies to this HPXY R1 configuration; it does not qualify other machines, display profiles or Windows 3.1. The current [rc.8 installer](RELEASES/RC8.MD) includes the combined XR1 panning driver/helper and wheel system, with emulator fresh/update qualification. It makes no new hardware claim. RC6 remains unchanged and does not include panning.
+Panning keeps a 320×200 display while bringing the rest of a larger Windows desktop into view. HPXY R1 has been tested and accepted on the owner's real Tandy 1000 EX: Windows 3.0 real mode, stock-CGA profile, 7.16 MHz 8088, 640 KB. The scoped run recorded 54 pans, including 53 hardware operations, no ERROR records, return to software presentation at (0,0), and Windows exit code 0. That acceptance applies to this HPXY R1 configuration; it does not qualify other machines, display profiles or Windows 3.1. The historical [rc.8 installer](RELEASES/RC8.MD) combined the XR1 panning driver/helper and wheel system, with separate emulator installation records. It made no new hardware claim. For the current pack and its clean-install limitations, use the [desktop installation guide](DESKTOP.MD). RC6 remains unchanged and does not include panning.
 
 | HPAN R3 | HPXY R1 |
 | --- | --- |
 | <img src="../downloads/experimental/hpan-hpxy/HPAN-R3-86Box-FRAME314.png" alt="Original 86Box capture: emulated Tandy 1000 HX, Windows 3 real mode, 320×200×16 viewport over 640×200" width="360"> | <img src="../downloads/experimental/hpan-hpxy/HPXY-R1-86Box-FRAME514.png" alt="Original 86Box capture: emulated Tandy 1000 HX, Windows 3.0 real mode, 320×200×16 viewport over 640×256" width="360"> |
 | 86Box · Tandy 1000 HX · Windows 3 real mode · 320×200×16 display over 640×200 logical space. [Download HPAN R3 ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/7c119ac1ee5428fa1a3a3c37e49d340c0f363150/downloads/experimental/hpan-hpxy/HPAN-R3-PHYSICAL-ACCEPTANCE.zip). Its separate physical record is a short 0→104→0 run; it is not the accepted HPXY R1 hardware result. | 86Box · Tandy 1000 HX · Windows 3.0 real mode · 320×200×16 display over 640×256 logical space. [Download HPXY R1 ZIP](https://raw.githubusercontent.com/astrobleem/oemdisplay-tandy/7c119ac1ee5428fa1a3a3c37e49d340c0f363150/downloads/experimental/hpan-hpxy/HPXY-R1-EXPERIMENTAL.zip). The bundled frame is emulator evidence; the physical EX acceptance above is separate. |
 
-The ZIPs are repository downloads, not GitHub Release assets or installers. The [package guide, installation and rollback instructions](../downloads/experimental/hpan-hpxy/README.md) lists each binary hash and its original emulator evidence. The E1 + PR #151 combined runtime's qualification remains separate from this physical HPXY R1 acceptance. The current rc.8 package supplies the completed combined runtime; the older rc.7 component/overlay downloads remain unchanged.
+The ZIPs are repository downloads, not GitHub Release assets or installers. The [package guide, installation and rollback instructions](../downloads/experimental/hpan-hpxy/README.md) lists each binary hash and its original emulator evidence. The E1 + PR #151 combined runtime's qualification remains separate from this physical HPXY R1 acceptance. The historical rc.8 package supplied the completed combined runtime; the older rc.7 component/overlay downloads remain unchanged.
 
 
 ## Same Calculator, less waiting
+
+The current download repaints Calculator in about **one second** in the default
+320x200 sixteen-color mode. The [current emulator measurements](https://github.com/astrobleem/oemdisplay-tandy/pull/218)
+use DOSBox-X; they are not physical-hardware timings.
+
+The images and comparison below record an earlier 86Box optimization, not
+the current result. Measurements from these different emulator setups should
+not be combined into one speedup ratio.
+
+### Earlier Calculator comparison
 
 <img src="rrect/TIMELINE.PNG" alt="Actual 86Box comparison frames from unchanged and bounded-copy Calculator repaint runs" width="640">
 
 *86Box 6.0 · Tandy 1000 HX, 8088 at 7.16 MHz · Windows 3.0 real mode · TR5 320×200×16. This is a fixed-time screenshot sequence: the unchanged driver still lacks the Back key at 95 seconds; the candidate is complete at 14.7 seconds.*
 
-In a separate matched timing run, one Calculator repaint fell from **92.5 to 10.4 seconds**; all 13 compared frames were byte-identical. The bounded-copy change merged in [PR #151](https://github.com/astrobleem/oemdisplay-tandy/pull/151) at [commit fc7b09b](https://github.com/astrobleem/oemdisplay-tandy/commit/fc7b09bdbe7e37dc9d562bdb746cf435b0628ba0). It is emulator-only, tested only in 320×200×16, and is not in the RC6 download. The compact Start is already in RC6. The renderer optimization and panning now ship together in rc.8. Their combined runtime and E1 edge cadence remain physically untested. The rc.7 downloads retain their original component-only scope. See the [full test record](RRECT.MD) and [evidence commit](https://github.com/astrobleem/oemdisplay-tandy/commit/3ece9ee38ecce27c726aa9c73c815632b28589c9).
+In that earlier matched timing run, one Calculator repaint fell from **92.5 to 10.4 seconds**; all 13 compared frames were byte-identical. The bounded-copy change merged in [PR #151](https://github.com/astrobleem/oemdisplay-tandy/pull/151) at [commit fc7b09b](https://github.com/astrobleem/oemdisplay-tandy/commit/fc7b09bdbe7e37dc9d562bdb746cf435b0628ba0). It is emulator-only, tested only in 320×200×16, and is not in the RC6 download. The compact Start is already in RC6. The renderer optimization and panning later shipped together in rc.8. Their combined runtime and E1 edge cadence remain physically untested. The rc.7 downloads retain their original component-only scope. See the [full test record](RRECT.MD) and [evidence commit](https://github.com/astrobleem/oemdisplay-tandy/commit/3ece9ee38ecce27c726aa9c73c815632b28589c9).
 
 ## Readable text and compact controls
 
@@ -97,10 +107,16 @@ For PSG music, Fiddle/Beats authoring and PIT speaker tools, use the
 
 ## Screen savers
 
-| Starfield | Matrix |
+| Cube | Starfield |
 | --- | --- |
-| <img src="SHOTS/STARS10.PNG" alt="Saved native Starfield capture" width="390"> | <img src="SHOTS/MATRIX.PNG" alt="Saved native Matrix capture" width="390"> |
+| <img src="SHOTS/CURRENT/CUBE.PNG" alt="Current Cube screen saver in 320x200 sixteen-color mode" width="320"> | <img src="SHOTS/CURRENT/STARS.PNG" alt="Current Starfield screen saver in 320x200 mode" width="320"> |
 
-The [showcase record](PROMO/SHOWCASE.MD) describes these saved captures.
+| Matrix | Ovals |
+| --- | --- |
+| <img src="SHOTS/CURRENT/MATRIX.PNG" alt="Current Matrix screen saver with green character rain" width="320"> | <img src="SHOTS/CURRENT/OVALS.PNG" alt="Current Ovals screen saver with colorful intertwined ribbons" width="320"> |
+
+All four are included with the [Windows XT desktop](DESKTOP.MD). Choose one
+under **System > Screen saver**. These captures use the current download in
+320x200 sixteen-color mode.
 
 [Back to Windows XT](../README.md) · [Other machine packages and captures](PLATFORM.MD)

@@ -1,9 +1,8 @@
 # Windows XT user manual
 
-[Project and downloads](../README.md) · [Install](RELEASES/RC8.MD) ·
-[XR1 controls](RELEASES/RC8.MD#what-is-current) · [Tandy Start](#use-tandy-start) ·
-[Experimental drivers](#separate-experimental-drivers) ·
-[Repair](RELEASES/RC8.MD)
+[Project and downloads](../README.md) · [Install](DESKTOP.MD) ·
+[Panning controls](PANNING.MD) · [Tandy Start](#use-tandy-start) ·
+[Other drivers](#separate-experimental-drivers) · [Recovery](#recovery)
 
 Windows XT adds a compact Start-menu desktop, color graphics, original fonts,
 games and utilities to **Windows 3.0 real mode on a Tandy 1000 EX/HX with
@@ -17,11 +16,11 @@ complete desktop bundle. You supply DOS and Windows.
 
 ## Download and install
 
-[Download WINXT.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT.ZIP) and extract it. It contains
+[Download WXTF1107.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXTF1107.ZIP) and extract it. It contains
 `SETUP.EXE`, `README.TXT` and one expanded `WINXT` folder.
 
-- **Full desktop:** on DOS run `SETUP UPDATE C:\WINDOWS`, or `SETUP FRESH A:\`
-  for a new Windows installation. Follow [desktop setup](DESKTOP.MD), then use `C:\STARTXT`.
+- **Full desktop:** follow [desktop setup](DESKTOP.MD) to update existing
+  Windows or install from your original disks. Use `C:\STARTXT` afterward.
 - **Drivers only:** use [Windows Setup with the expanded WINXT folder](DRIVERS.MD).
   The same folder includes all fonts, grabber and logos; the custom installer is optional.
 
@@ -76,7 +75,6 @@ The standalone [TNDYK3 candidate guide](../src/tandyk3/README.md) retains its
 own guarded installer and rollback. Its separate K3TOOLS packet contains
 probes, rather than the driver. Raw hardware press/release observations do
 not qualify Windows key translation or physical Hold behavior.
-[Hold support and scope](../distributions/WINXT/HOLD14.TXT).
 
 [EXJOY](../examples/EXJOY/README.MD) is an optional raw joystick diagnostic
 with session-only calibration; physical input remains unverified. The public
@@ -87,10 +85,11 @@ Use the [desktop guide](DESKTOP.MD) for that combined wheel setup.
 
 ### Screen savers and sound
 
-**System → Screen saver** selects None, Matrix, Maze or Starfield. Delay is
-10–3600 seconds; Preview tries unsaved choices and Apply saves them. Starfield
-has speed and 16/32/64-star options; sixteen stars is the lightest setting.
-Maze can be very slow. These savers are visual effects, not password locks.
+**System → Screen saver** selects None, Cube, Starfield, Matrix or Ovals.
+Delay is 10–3600 seconds; Preview tries unsaved choices and Apply saves them.
+Use **Options** for Cube's style, speed and size, or Starfield's speed and
+16/32/64-star settings. Ovals cycles through five animated scenes.
+These savers are visual effects, not password locks.
 
 Tandy Start offers optional Tandy or XP-note startup and exit phrases. The
 chime apps use the PSG directly; the optional Computer preset does not enable
@@ -105,15 +104,15 @@ MIDI synthesizer.
 
 ## Games and utilities
 
-The desktop bundle includes Pinball, About, Matrix, Starfield and Maze.
-Other apps have their own packet and guide.
+The desktop bundle includes Pinball, About and the Cube, Starfield, Matrix
+and Ovals screen savers. Other apps have their own download and guide.
 
 | App | What to try |
 | --- | --- |
 | [Pinball](../examples/PINBALL/README.MD) | Space launches; Z/Left and / or Right control the flippers; P pauses. |
 | [Cookie Clicker](../examples/COOKIE/README.MD) | Click or press Space, buy upgrades, save and load. Fits 160×200. |
 | [Fly Swat](../examples/SWAT/README.MD) | Mouse-controlled fly hunting, pause/restart, windowed and fullscreen paths. |
-| [Maze game/saver](../examples/MAZE/GAME/README.MD) | Included in the desktop bundle. |
+| [Maze](../examples/MAZE/GAME/README.MD) | A separate first-person maze game. |
 | [Tandinator](../examples/TANDINAT/README.MD) | Character guessing; [0.3.8](../experiments/TANDI11/README.MD) is a separate experimental packet. |
 | [Green hill wallpaper](../examples/HILLS/README.TXT) | Native landscapes for the 160/320-pixel sixteen-color modes. |
 | [XTEyes](../examples/XTEYES/README.TXT) / [Slosh](../examples/SLOSH/README.MD) | Pointer-following eyes and a tiny moving water surface. |
@@ -192,7 +191,7 @@ qualification record for each profile's exact identity and test scope.
 ### IBM PCjr
 
 Use the current [JRPAN.ZIP and PCjr setup guide](SOFTPAN/RELEASE.MD).
-The packet offers fixed 320x200 and software-panning 320x400 profiles.
+The packet offers fixed 320x200 and software-panning 640x400 profiles.
 Its guard checks an already reserved 32 KB video page; it does not reserve it.
 Use JRSTART for every Windows launch.
 
@@ -200,7 +199,8 @@ Use JRSTART for every Windows launch.
 
 For EX/HX graphics panning, use the [Windows XT display](DRIVERS.MD).
 Ctrl+Alt+arrows move its 320x200 view over the 640x256 desktop;
-Ctrl+Alt+Home returns home. XYCTL selects software or hardware presentation.
+Ctrl+Alt+Home returns home. Run `PAN /SETTINGS` to choose software or hardware
+presentation. [Panning controls](PANNING.MD).
 
 TEXT80 PAN provides an 80x25 view over 80x50 logical rows. Its larger shadow
 uses more Windows memory. [Text panning controls and memory](TEXT80.MD#3-memory).
@@ -221,8 +221,9 @@ not qualify physical PC1 hardware.
 ## Recovery
 
 For drivers only, use [Windows Setup and DISPWIN](DRIVERS.MD).
-For the desktop bundle, use `C:\FIXXT` from plain DOS as described in
-[desktop setup](DESKTOP.MD). For TEXT80, run `T80OFF` from its extracted folder.
+For the desktop bundle, use `C:\FIXXT` from plain DOS to repair the current
+installation. [Repair instructions](DESKTOP.MD#repair-an-existing-installation).
+For TEXT80, run `T80OFF` from its extracted folder.
 PCjr and the other hardware drivers use the Setup/removal instructions in
 their own guides. Recovery depends on the installed product/profile.
 
