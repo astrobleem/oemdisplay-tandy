@@ -8,7 +8,7 @@ Choose your hardware or application. You supply DOS and Windows 3.0.
 | PAN for an existing supported display installation | [PAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PAN.ZIP) | [One panning application](PANNING.MD) |
 | Windows XT desktop or drivers only, original Tandy EX/HX | [WXTF1107.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXTF1107.ZIP) | [Full desktop](DESKTOP.MD) |
 | EX/HX drivers only, using the same expanded folder | [WXTF1107.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXTF1107.ZIP) | [Windows Setup](DRIVERS.MD) |
-| Tandy EX/HX fixed-resolution profiles | [WINXT720.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WINXT720.ZIP) | [Fixed profiles](FIXED.MD) |
+| Tandy EX/HX: all five optimized fixed-resolution profiles | [WXTF1107.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/WXTF1107.ZIP) | [Fixed profiles](FIXED.MD) |
 | Tandy SL/2 Video II; not EX/HX | [TNDYV2.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/TNDYV2.ZIP) | [Video II](tga2/INSTALL.TXT) |
 | IBM CGA RGBI: fixed/panning 160x100x16; standard/compact 320x200x4 and 640x200 mono | [CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP) | [CGA installation](CGA.MD) |
 | IBM PCjr display, including two-axis software desktop | [JRPAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/JRPAN.ZIP) | [PCjr and common PAN](PANNING.MD) |
@@ -29,6 +29,8 @@ Choose your hardware or application. You supply DOS and Windows 3.0.
 Full installation and drivers only use the same WXTF1107.ZIP. Other rows are
 hardware or application choices, rather than a sequence of software versions.
 Developer source and build inputs are grouped separately in the release.
+The older [720 KB fixed-profile disk](FIXED.MD#historical-720-kb-data-disk) is
+retained for historical use; it is not the current five-driver pack.
 
 Both sound-app kits include the same Tandy Beats Lab with five editable lanes,
 pattern Save/Load and original demos. Choose Fiddle or the Mini Piano/JoyMIDI/
