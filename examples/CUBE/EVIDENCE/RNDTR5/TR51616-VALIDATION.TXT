@@ -1,0 +1,23 @@
+Current TR5 160x200 cube validation, 2026-10-30
+
+Driver TR51616.DRV c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d (54880 bytes, Git blob 60f9c07f93be544c686d9eda661e73134de63e1e).
+
+This supersedes performance conclusions drawn from historical TNDY160.DRV. Historical records remain intact.
+
+Private 86Box Tandy 1000 HX, 8088 7159092 Hz, dynarec disabled, 640 KB, RESERVE 32, Windows 3.0 WIN /R, XTC fonts. Identical control/selected EXEs and 13 phases39..135 step8; 26 frames/style. QA holds excluded; QA pixel readbacks included.
+
+Flat control 475.35 -> selected 426.85 ms/frame (10.20% reduction)
+
+Dither control 462.62 -> selected 331.58 ms/frame (28.33% reduction)
+
+Wire control 219.73 -> selected 147.77 ms/frame (32.75% reduction)
+
+Both runs passed 78 frames, six source/screen readbacks and cleanup; all 12 paired full-screen captures are pixel-identical. No driver bytes changed.
+
+Separate BitBlt probe: color memory full/dirty medians 22.3125/19.7422 ms per call; color display full/dirty116.75/96.125. Mono memory21.8828/18.8828; mono display116.625/89.25. Full49x95, dirty41x85, 3 batches each (128 memory or8 display calls).
+
+Identity display full/1-pixel copies median549.25/528.625 ms/call are a documented full-resynchronization proxy. They do not represent ordinary cube bitmap-to-display calls. Memory/display differences include dispatch and conversion as well as flushing; internal flush-only cycles were not isolated. No driver change is proposed.
+
+Probe completed30 error-free samples and native cleanup. Original host result FAIL retained: CRLF regex counted0 samples. Corrected parser plus independent closed-log/driver/FAT verification passed without rerunning or replacing measurements.
+
+All owned children stopped and leases released; matched driver bytes verified after runtime. BOR/Mesen untouched. Physical hardware, full-period raster equality, other sizes/modes and full release-package qualification remain outside scope.
