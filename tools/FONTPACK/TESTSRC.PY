@@ -10,6 +10,23 @@ class FontRelease(unittest.TestCase):
   self.assertEqual(set(body)-set(old),{'WINXT/FONTS/'+n for n in (*M.FONTS,'README.TXT','LICENSE.TXT','FONTLIC.TXT')})
   for n in (*M.FONTS,'LICENSE.TXT','FONTLIC.TXT'):self.assertEqual(body['WINXT/FONTS/'+n],(M.ROOT/'tools/PROPFONT/BIN'/n).read_bytes())
   for n in ('XTCFIX.FON','XTCOEM.FON','XTESYS.FON','XTEFIX.FON','XTEOEM.FON'):self.assertEqual(body['WINXT/'+n],old['WINXT/'+n])
+ def test_system_driver_staging(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   out=Path(tmp)/'drivers';M.drivers(out)
+   with M.zipfile.ZipFile(HERE/'BIN/WINXT.ZIP') as z:
+    old={n[6:]:z.read(n) for n in z.namelist() if n.startswith('WINXT/')}
+   new={p.relative_to(out).as_posix():p.read_bytes() for p in out.rglob('*') if p.is_file()}
+   self.assertEqual(set(old)-set(new),{'SOUNDID.JSN'})
+   self.assertEqual(set(new)-set(old),{'SYSFONT.TXT'})
+   self.assertEqual(new['SYSFONT.TXT'],(M.ROOT/'tools/SYSFONT/README.TXT').read_bytes())
+   self.assertEqual({n for n in new.keys() & old.keys() if old[n]!=new[n]},{'XTCSYS.FON','XTESYS.FON'})
+   self.assertEqual(new['XTCSYS.FON'],(M.ROOT/'tools/SYSFONT/BIN/XTCSYS.FON').read_bytes())
+   self.assertEqual(new['XTESYS.FON'],(M.ROOT/'tools/SYSFONT/BIN/XTESYS.FON').read_bytes())
+   for name in ('XTTSYS.FON','XTCFIX.FON','XTCOEM.FON','XTEFIX.FON','XTEOEM.FON'):
+    self.assertEqual(new[name],old[name],'Fixed-cell fonts must retain their original bytes')
+   cga=Path(tmp)/'cga';M.drivers(cga,M.ROOT/'downloads/FRESH/CGA.ZIP')
+   for name in ('CG1SYS.FON','CG2SYS.FON','XTCSYS.FON'):
+    self.assertEqual((cga/name).read_bytes(),(M.ROOT/'tools/SYSFONT/BIN'/name).read_bytes())
  def test_native_inventories_and_idempotent_binding(self):
   with tempfile.TemporaryDirectory() as tmp:
    out=Path(tmp)/'stage';M.stage(out);native=out/'native';body=M.payload()

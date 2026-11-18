@@ -1,6 +1,7 @@
 """Build the font integration candidate without repinning historical SAVPACK."""
 from pathlib import Path
 import argparse,hashlib,re,shutil,zipfile,zlib
+import importlib.machinery as machinery
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
 BASE_SHA='fa5b55806d35d0aca9cb6c3a67b608866a169843769d4e7b54628317214376aa'
@@ -63,6 +64,28 @@ selected System/Fixed/Terminal font family; application fonts are optional.
 ''').replace('\n','\r\n').encode('ascii')
  return body
 
+
+def drivers(out,packet=None):
+ # The normal expanded OEM folder and its existing Setup descriptors.
+ # Only System resources change. No updater or install/version check is added.
+ require(not out.exists(),'Fresh output directory required')
+ with zipfile.ZipFile(packet or HERE/'BIN/WINXT.ZIP') as z:
+  descriptors=[n for n in z.namelist() if n.upper().endswith('OEMSETUP.INF') and 'FRESH640/' not in n.upper()]
+  require(len(descriptors)==1,'Choose a packet with one ordinary OEM driver folder')
+  prefix=descriptors[0][:-len('OEMSETUP.INF')]
+  body={n[len(prefix):]:z.read(n) for n in z.namelist() if n.startswith(prefix) and not n.endswith('/')}
+  body={n:b for n,b in body.items() if not (n.upper().endswith(('.JSN','.JSON','.SHA','.SUM')) or n.upper().startswith(('MANIFEST.','SHA256')))}
+ kit=machinery.SourceFileLoader('package_system_fonts',str(ROOT/'tools/SYSFONT/BUILD.PY')).load_module()
+ for name in ('CG1SYS.FON','CG2SYS.FON','XTCSYS.FON','XTESYS.FON'):
+  if name in body:body[name]=kit.improve(name,kit.source(name))
+ body['SYSFONT.TXT']=(ROOT/'tools/SYSFONT/README.TXT').read_bytes()
+ out.mkdir(parents=True)
+ for name,data in body.items():
+  member=Path(name)
+  require(not member.is_absolute() and not member.drive and '..' not in member.parts,'Unsafe OEM packet member')
+  p=out/member;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
+ print('Staged normal Windows Setup driver folder with revised System fonts:',out)
+
 def bind_headers(native,body):
  pins='static struct pin pins[]={\n'+'\n'.join(pinrow(n[6:].replace('/','\\'),b) for n,b in sorted(body.items()) if n.startswith('WINXT/'))+'\n};\n'
  write(native/'SETPINS.H',pins)
@@ -112,4 +135,4 @@ def pack(out):
     zi=zipfile.ZipInfo(p.relative_to(root).as_posix(),(1980,1,1,0,0,0));zi.create_system=0;zi.external_attr=32;z.writestr(zi,p.read_bytes())
  print(out/'WINXT.ZIP')
 if __name__=='__main__':
- a=argparse.ArgumentParser(description=__doc__);a.add_argument('phase',choices=('stage','bind','pack'));a.add_argument('--out',type=Path,required=True);v=a.parse_args();globals()[v.phase](v.out)
+ a=argparse.ArgumentParser(description=__doc__);a.add_argument('phase',choices=('stage','bind','pack','drivers'));a.add_argument('--out',type=Path,required=True);a.add_argument('--packet',type=Path,help='Existing hardware packet for the drivers phase');v=a.parse_args();drivers(v.out,v.packet) if v.phase=='drivers' else globals()[v.phase](v.out)

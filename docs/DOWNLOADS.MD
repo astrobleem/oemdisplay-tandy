@@ -3,6 +3,8 @@
 All current packets are in the [Windows XT release](https://github.com/astrobleem/oemdisplay-tandy/releases/tag/windows-xt).
 Choose your hardware or application. You supply DOS and Windows 3.0.
 
+For revised menu/title **System fonts**, use the eight [graphics driver packages](SYSFONT.MD) through ordinary Windows Setup. Full-install archives below remain available.
+
 | Product or hardware | Download | Install |
 | --- | --- | --- |
 | PAN for an existing supported display installation | [PAN.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/PAN.ZIP) | [One panning application](PANNING.MD) |
