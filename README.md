@@ -131,6 +131,8 @@ returns home and **Ctrl+Alt+End** brings the active window into view.
 
 The fonts needed by each display mode are installed automatically.
 
+[Graphics System-font driver packages](docs/SYSFONT.MD) improve menus and titles through ordinary Windows Setup, preserving existing widths and dialog metrics. These are separate from the optional application fonts below.
+
 For applications, the pack includes six optional **XT Tandy** fonts and three
 compact **Helv** fonts. Add the ones you want through **Control Panel > Fonts
 > Add**, from `C:\WINXT\FONTS` after full Setup or the extracted
