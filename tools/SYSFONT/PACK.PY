@@ -49,7 +49,7 @@ def gh(*args):return subprocess.check_output(['gh',*args],text=True)
 def download(url):
  req=urllib.request.Request(url,headers={'User-Agent':'Windows-XT-System-fonts','Cache-Control':'no-cache'})
  return urllib.request.urlopen(req,timeout=60).read()
-def main_head():return json.loads(download('https://api.github.com/repos/'+REPO+'/git/ref/heads/main'))['object']['sha']
+def main_head():return json.loads(gh('api','repos/'+REPO+'/git/ref/heads/main'))['object']['sha']
 def publish(folder,commit):
  head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
  if not (commit==head==os.environ.get('GITHUB_SHA') and os.environ.get('GITHUB_REPOSITORY')==REPO and os.environ.get('GITHUB_EVENT_NAME')=='push' and os.environ.get('GITHUB_REF')=='refs/heads/main'):
