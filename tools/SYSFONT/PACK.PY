@@ -13,7 +13,7 @@ PACKETS=(
  ('SFPCJR.ZIP','JRPAN','downloads/PAN/JRPAN.ZIP'),
  ('SFPCP.ZIP','CPPAN','downloads/PAN/CPPAN.ZIP'),
  ('SF1512.ZIP','PC1512','downloads/experimental/PC1512/PC1512.ZIP'),
- ('SFTGA2.ZIP','TNDYV2','downloads/experimental/TGA2/TNDYV2.ZIP'),
+ ('SFTGA2.ZIP','T2EXP','downloads/experimental/TGA2/TNDYV2.ZIP'),
  ('SFPC1.ZIP','PC1','downloads/experimental/yamaha/PC1.ZIP'),
  ('SFYAMA.ZIP','YAMAHA','downloads/experimental/yamaha/YAMAHA.ZIP'))
 REPO='astrobleem/oemdisplay-tandy'

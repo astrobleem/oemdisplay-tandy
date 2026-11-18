@@ -17,8 +17,10 @@ spacing remain intact. Existing low-resolution dialog clipping can remain.
 | Yamaha B800h | [SFYAMA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/SFYAMA.ZIP) |
 
 Use an existing Windows 3.0 installation. Exit Windows, extract the matching
-folder into a separate source directory (for example `C:\SFONTS`, preserving
-any installed `C:\WINXT` directory), run the hardware packet's normal memory
+folder to the location required by its existing launcher: Tandy under
+`C:\SFONTS\WINXT` (preserving any installed `C:\WINXT`), PCjr at `C:\JRPAN`,
+ColorPlus at `C:\CPPAN`, and Video II at `C:\T2EXP`. Other driver source folders
+can use their normal hardware-guide location. Run the packet's normal memory
 guard where required, then run
 Windows `SETUP` from DOS. Choose **Display → Other**, enter that extracted folder,
 select your existing matching hardware/profile and **Complete Changes**. Give

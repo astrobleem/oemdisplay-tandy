@@ -22,7 +22,10 @@ For Tandy EX/HX, extract under C:\SFONTS, then use the existing driver entry:
 DISPWIN performs the normal reservation and grabber/panning preparation.
 The legacy full-install STARTXT/FIXXT path manages its original font set;
 use DISPWIN for this driver-only font installation. Other hardware keeps
-its matching driver launcher/guard. Do not ignore a reservation failure.
+its matching driver launcher/guard. PCjr JRSTART expects C:\JRPAN;
+ColorPlus CPWIN expects C:\CPPAN; Video II T2WIN expects C:\T2EXP.
+Extract those folders to their expected locations before using the launcher.
+Do not ignore a reservation failure.
 The existing OEM descriptor selects its matching System resources.
 For generic CGA Setup, standard 320/640 select eight-row XTC; compact
 choices select five-row CG1. The included six-row CG2 is for the existing
