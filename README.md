@@ -129,6 +129,10 @@ returns home and **Ctrl+Alt+End** brings the active window into view.
 
 ## Optional fonts
 
+**[Open the XT Pixels font viewer and editor](https://astrobleem.github.io/mygithubpage/windows-xt/fonts/?v=5)** to select System faces and optional application fonts.
+
+The viewer currently retains the earlier System drawings. See the current System fonts in native before/after previews: [5 rows](docs/FONTS/SYSTEM/CG1.PNG), [6 rows](docs/FONTS/SYSTEM/CG2.PNG), [8 rows](docs/FONTS/SYSTEM/XTC.PNG), [12 rows](docs/FONTS/SYSTEM/XTE.PNG). Original is left; revised is right. Open an image at full size to inspect the pixels.
+
 The fonts needed by each display mode are installed automatically.
 
 [Graphics System-font driver packages](docs/SYSFONT.MD) improve menus and titles through ordinary Windows Setup, preserving existing widths and dialog metrics. These are separate from the optional application fonts below.
