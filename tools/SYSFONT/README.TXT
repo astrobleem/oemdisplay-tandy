@@ -15,7 +15,14 @@ Run the packet's normal pre-Windows video-memory guard when required.
 From your existing Windows directory, run Windows SETUP. Choose Display,
 Other, enter the staged folder, select the matching display and Complete
 Changes. Give the same folder again if Setup asks for its driver disk.
-Then cold-start with your hardware packet's normal Windows launcher.
+Keep the extracted source separate from an installed C:\WINXT directory.
+For Tandy EX/HX, extract under C:\SFONTS, then use the existing driver entry:
+  CD \SFONTS\WINXT
+  DISPWIN C: \WINDOWS
+DISPWIN performs the normal reservation and grabber/panning preparation.
+The legacy full-install STARTXT/FIXXT path manages its original font set;
+use DISPWIN for this driver-only font installation. Other hardware keeps
+its matching driver launcher/guard. Do not ignore a reservation failure.
 The existing OEM descriptor selects its matching System resources.
 For generic CGA Setup, standard 320/640 select eight-row XTC; compact
 choices select five-row CG1. The included six-row CG2 is for the existing

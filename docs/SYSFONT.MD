@@ -17,14 +17,20 @@ spacing remain intact. Existing low-resolution dialog clipping can remain.
 | Yamaha B800h | [SFYAMA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/SFYAMA.ZIP) |
 
 Use an existing Windows 3.0 installation. Exit Windows, extract the matching
-folder, run the hardware packet's normal memory guard where required, then run
+folder into a separate source directory (for example `C:\SFONTS`, preserving
+any installed `C:\WINXT` directory), run the hardware packet's normal memory
+guard where required, then run
 Windows `SETUP` from DOS. Choose **Display → Other**, enter that extracted folder,
 select your existing matching hardware/profile and **Complete Changes**. Give
 the same folder again for the driver disk; give original Windows media for OS
-disk requests. Cold-start with the packet's normal launcher/guard. See the
+disk requests. For Tandy EX/HX, start from the extracted driver folder with
+`CD \SFONTS\WINXT` then `DISPWIN C: \WINDOWS` (use your actual paths).
+This existing driver entry performs the required reservation and grabber/panning
+preparation. The legacy full-install `STARTXT`/`FIXXT` route manages its original
+font set, so use `DISPWIN` for this driver-only installation. Other hardware uses
+its matching driver launcher/guard; respect every reservation failure. See the
 included `SYSFONT.TXT` and existing hardware instructions. No Python or new
-installer is needed. Existing full-install archives remain available; use this
-driver route afterward to activate the revised System face.
+installer is needed. Existing full-install archives remain available.
 
 Tandy 320×200×16 uses twelve-row XTE; the other fixed Tandy modes and shared XTC
 paths use eight-row XTC. CGA100 uses five-row CG1. Generic CGA OEM Setup standard
