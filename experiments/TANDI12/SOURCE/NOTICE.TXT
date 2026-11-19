@@ -1,0 +1,22 @@
+TANDINATOR PROVENANCE / THIRD-PARTY NOTICE
+==========================================
+This kit contains project code, curated questions and two pixel-art sprite
+sheets supplied directly by the project owner for this TANDINATOR upgrade.
+Their immutable originals are SOURCE/art/CABINET.PNG and PARTS.PNG.
+SOURCE/art/MANIFEST.JSON records their SHA-256 hashes and exact crop slices.
+No generative redraw, smoothing or proprietary Akinator data was used.
+
+Asset authorship and any upstream license were not independently verified.
+No third-party watermark or license restriction is visible on the supplied
+sheets. This notice does not assign a new public license to the artwork.
+The project owner remains responsible for any public licensing decision.
+
+The kit contains no Microsoft Windows/compiler media, BIOS, display driver,
+font file, movie photograph or copied character portrait. Its font comes
+from the installed Windows environment at runtime.
+Character names and trademarks belong to their respective owners. No
+endorsement, affiliation or ownership of those fictional properties is
+implied. DATA/SOURCES.TXT documents curation and reference limitations.
+
+This kit was prepared privately. Any separately authorized experimental
+publication is a separate action; this package is not a hardware release.
