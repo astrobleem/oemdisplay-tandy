@@ -18,7 +18,7 @@ Exit Windows completely to DOS. Use your actual Windows directory:
 
 Choose from the menu, or select directly:
 
-  SETUP C:\WINDOWS 320C
+  SETUP C:\WINDOWS 320
 
 Choose 100 for 160x100 in 16 colors, 320 for 320x200 in four colors
 (black/bright cyan/magenta/white), 640 for 640x200 monochrome, or PAN for a
@@ -30,14 +30,12 @@ change to Windows and start:
   CD \WINDOWS
   WIN /R
 
-320 and 640 keep their existing text sizes and controls. Optional 320C and
-640C select the same resolution and colors with 3x5 UI text, 4x6 fixed/OEM
-text and six-row controls. Smaller text leaves more room; choose the size
-you prefer. The menu lists standard and compact choices side by side.
-Enter at the menu cancels without changing files. Existing 100/PAN choices
-are unchanged. Direct commands 320 and 640 retain their existing defaults.
+320 and 320C select exactly the same proportional 3x5 System font,
+4x6 Fixed/Terminal faces and six-row controls. The former large-control
+native profile is now explicit opt-in 320L. 640/640C are unchanged.
+Enter at the menu cancels without changes; 100/PAN are unchanged.
 
-The six choices use separate display-driver profiles. To change mode,
+The choices use separate display-driver profiles. To change mode,
 exit Windows and run SETUP again with the new choice. There is no live
 geometry switch. Do not run this IBM-CGA packet on a Tandy installation.
 
@@ -81,7 +79,7 @@ An INI larger than 18,000 bytes is refused before any files are copied.
 
 Component notices are in CGA\NOTICE.TXT and CGA\FONTLIC.TXT.
 
-Standard 320x200 uses original 4x6 System/Helv and fixed/OEM faces. 640x200 retains
+Legacy opt-in 320L uses original 4x6 System/Helv and fixed/OEM faces. 640x200 retains
 its XTC System/fixed/OEM selection and adds the XT Pixels 8-row proportional
 Helv and existing 8x8 Courier dialog faces. Modes 100/320/320C/640/640C start CGACTL automatically. At 320/640, including compact profiles, it
 makes disabled labels readable in the reduced palette, then exits. At 100 it
@@ -115,7 +113,7 @@ OPTIONAL COMPACT PROFILES
   SETUP C:\WINDOWS 320C    320x200 four colors, compact fonts and controls
   SETUP C:\WINDOWS 640C    640x200 monochrome, compact fonts and controls
 
-Use SETUP C:\WINDOWS 320 or 640 to return to the corresponding standard UI.
+Use SETUP C:\WINDOWS 320L for legacy large 320 controls; 640 remains standard.
 Exit Windows first, then start WIN /R after Setup reports success.
 These choices include the fonts; no manual INI editing is needed. The
 recognized current and earlier CGA packets can be upgraded through this

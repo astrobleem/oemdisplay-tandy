@@ -67,7 +67,7 @@ selected System/Fixed/Terminal font family; application fonts are optional.
 
 def drivers(out,packet=None):
  # The normal expanded OEM folder and its existing Setup descriptors.
- # Only System resources change. No updater or install/version check is added.
+ # Source CGA UI defaults and System resources only; no updater/version check.
  require(not out.exists(),'Fresh output directory required')
  with zipfile.ZipFile(packet or HERE/'BIN/WINXT.ZIP') as z:
   descriptors=[n for n in z.namelist() if n.upper().endswith('OEMSETUP.INF') and 'FRESH640/' not in n.upper()]
@@ -75,6 +75,9 @@ def drivers(out,packet=None):
   prefix=descriptors[0][:-len('OEMSETUP.INF')]
   body={n[len(prefix):]:z.read(n) for n in z.namelist() if n.startswith(prefix) and not n.endswith('/')}
   body={n:b for n,b in body.items() if not (n.upper().endswith(('.JSN','.JSON','.SHA','.SUM')) or n.upper().startswith(('MANIFEST.','SHA256')))}
+ # Keep the ordinary CGA 320/320C choice in sync with the native selector.
+ if 'CGA32C.DRV' in body and 'CGA100.DRV' in body:
+  body['OEMSETUP.INF']=(ROOT/'src/cga/OEMSETUP.INF').read_bytes()
  kit=machinery.SourceFileLoader('package_system_fonts',str(ROOT/'tools/SYSFONT/BUILD.PY')).load_module()
  for name in ('CG1SYS.FON','CG2SYS.FON','XTCSYS.FON','XTESYS.FON'):
   if name in body:body[name]=kit.improve(name,kit.source(name))

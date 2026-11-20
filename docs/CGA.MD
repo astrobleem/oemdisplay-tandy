@@ -1,5 +1,8 @@
 # Install the CGA driver for Windows 3.0
 
+> Feature-branch candidate: the 320 default below requires the rebuilt
+> installer/OEM descriptor. Published release archives are unchanged at this checkpoint.
+
 **[Download CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP)**
 
 This supplies the CGA display driver, matching fonts, grabber and helpers for
@@ -128,21 +131,24 @@ such as Paintbrush a larger desktop through a movable view.
 | --- | --- |
 | `SETUP C:\WINDOWS 100` | Fixed 160×100 desktop, 16 RGBI colors, compact fonts and controls |
 | `SETUP C:\WINDOWS PAN` | 320×200 desktop in 16 colors, seen through a movable 160×100 view |
-| `SETUP C:\WINDOWS 320` | Standard UI; fixed 320×200: black, bright cyan, magenta and white |
-| `SETUP C:\WINDOWS 320C` | Same four colors; compact UI and controls, 4×6 fixed text |
+| `SETUP C:\WINDOWS 320` | Default proportional compact UI; fixed 320×200: black, bright cyan, magenta and white |
+| `SETUP C:\WINDOWS 320C` | Alias of `320`: same proportional System, compact controls and 4×6 fixed text |
 | `SETUP C:\WINDOWS 640` | Standard UI; fixed 640×200: black and white |
 | `SETUP C:\WINDOWS 640C` | Same monochrome resolution; compact UI and controls, 4×6 fixed text |
 
-The compact choices use 3×5 UI text and six-row controls to leave more
-room. Standard choices keep larger UI text. Let your eyes decide: `320` and
-`640` retain their existing defaults, and dropping the `C` restores that
-resolution's standard fonts and controls. Both styles include their fonts.
+`320` and the legacy `320C` argument now select exactly the same compact
+CGA32C driver, proportional 3×5 System font and six-row controls. The
+4×6 Fixed and Terminal faces remain deliberately monospace. `320L` is an
+explicit opt-in for the former large-control native profile. OEM Setup
+also labels its old large entry as a legacy opt-in. The `640`/`640C` choices
+are unchanged at this checkpoint. All profiles remain fixed-resolution.
 
 [![Standard and compact UI at 320x200 and 640x200](CGA/COMPACT.PNG)](CGA/COMPACT.PNG)
 
-*Actual Windows 3.0 emulation captures of both styles, displayed at 4:3 with
+*Historical large-versus-compact Windows 3.0 captures, displayed at 4:3 with
 nearest-neighbor pixels. The compact views use the real smaller fonts and
-OEM resources; only the presentation of the captures is enlarged.*
+OEM resources; only the presentation of the captures is enlarged. The compact
+320 view is now the 320/320C default; the large native view is 320L.*
 
 ## Install the selected driver
 
@@ -214,7 +220,7 @@ show fallback boxes for extended characters.
 ## Change mode or undo
 
 Exit Windows, return to `C:\CGAKIT`, and rerun the chosen Setup command with
-`100`, `PAN`, `320`, `320C`, `640` or `640C`. To remove this packet's changes:
+`100`, `PAN`, `320`, `320C`, `320L`, `640` or `640C`. To remove this packet's changes:
 
 ```bat
 C:

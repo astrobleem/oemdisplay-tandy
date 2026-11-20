@@ -259,8 +259,8 @@ static const char *choose_mode(void)
     puts("Choose CGA resolution and text size:");
     puts("  1  160x100 16 colors - compact");
     puts("  2  PAN: 320x200 desktop through a 160x100 view");
-    puts("  3  320x200 4 colors - standard controls, 4x6 text");
-    puts("  4  320x200 4 colors - compact UI and controls (320C)");
+    puts("  3  320x200 4 colors - compact proportional UI (default)");
+    puts("  4  320x200 4 colors - legacy large controls (320L opt-in)");
     puts("  5  640x200 mono - standard controls, 8-row text");
     puts("  6  640x200 mono - compact UI and controls (640C)");
     puts("Compact: 3x5 UI, 4x6 fixed text, 6-row controls. Choose what suits you.");
@@ -270,7 +270,7 @@ static const char *choose_mode(void)
         if(input[1]!='\r' && input[1]!='\n' && input[1]!=0)continue;
         switch(input[0]){
         case '1':return "100";case '2':return "PAN";case '3':return "320";
-        case '4':return "320C";case '5':return "640";case '6':return "640C";
+        case '4':return "320L";case '5':return "640";case '6':return "640C";
         }
     }
 }
@@ -281,8 +281,8 @@ int main(int argc,char **argv)
     if(argc!=3 && argc!=2){
         puts("IBM CGA / Windows 3.0 real-mode display setup (existing Windows required).");
         puts("SETUP C:\\WINDOWS                  (choose from the mode/text-size menu)");
-        puts("SETUP C:\\WINDOWS 100|320|320C|640|640C|PAN  (select directly)");
-        puts("320/640 keep their standard UI; 320C/640C use the compact UI.");
+        puts("SETUP C:\\WINDOWS 100|320|320C|320L|640|640C|PAN  (select directly)");
+        puts("320 and 320C use the same compact UI. 320L opts into legacy large controls.");
         puts("PAN = 160x100 view of a 320x200 desktop (Ctrl+Alt+arrows, Home, End)");
         puts("SETUP UNDO C:\\WINDOWS         (undo this packet's changes)");
         puts("SETUP RESTORE C:\\WINDOWS      (saved INIs whole; loses later INI edits)");
@@ -321,13 +321,13 @@ int main(int argc,char **argv)
         puts("SETUP: CGA changes undone. Start Windows normally.");return 0;
     }
     pan=!stricmp(mode,"PAN");
-    compact32=!stricmp(mode,"320C");compact64=!stricmp(mode,"640C");
-    if(strcmp(mode,"100") && strcmp(mode,"320") && strcmp(mode,"640") && !pan && !compact32 && !compact64)
-        return fail("Choose 100, PAN, 320, 320C, 640 or 640C.");
+    compact32=!stricmp(mode,"320") || !stricmp(mode,"320C");compact64=!stricmp(mode,"640C");
+    if(strcmp(mode,"100") && strcmp(mode,"320") && strcmp(mode,"640") && stricmp(mode,"320L") && !pan && !compact32 && !compact64)
+        return fail("Choose 100, PAN, 320/320C, 320L, 640 or 640C.");
     if(readfile(in("SYSTEM.INI"))<0 || readfile(in("WIN.INI"))<0)
         return fail("Cannot read Windows INIs, or an INI exceeds 18000 bytes; nothing copied.");
     cga_small=!strcmp(mode,"100") || pan || compact32 || compact64;   /* Small and optional compact profiles share fonts/settings. */
-    cga_medium=!strcmp(mode,"320");
+    cga_medium=!stricmp(mode,"320L");
     if(!payload_location(argv[0]))return fail("Packet path too long.");
     if(exists(in("CGACOPY.NEW")))return fail("Incomplete copy record; no files changed. Keep it for diagnosis.");
     /* Upgrade an exact recognized prior packet through its normal undo path.
@@ -368,7 +368,7 @@ int main(int argc,char **argv)
     }
     args[0]="CGASET";args[1]="ON";args[2]=(char *)dir;
     args[3]=pan ? "CGAPAN.DRV" : compact32 ? "CGA32C.DRV" : compact64 ? "CGA64C.DRV" :
-            !strcmp(mode,"100") ? "CGA100.DRV" : !strcmp(mode,"320") ? "CGA320.DRV" : "CGA640.DRV";
+            !strcmp(mode,"100") ? "CGA100.DRV" : !stricmp(mode,"320L") ? "CGA320.DRV" : "CGA640.DRV";
     args[4]=pan ? "PANCTL.EXE" : "CGACTL.EXE";args[5]=cga_small ? "/C" : NULL;args[6]=NULL;
     rc=cga_ini_main(cga_small ? 6 : 5,args);
     if(rc){if(!ini_state())cleanup();return 1;}

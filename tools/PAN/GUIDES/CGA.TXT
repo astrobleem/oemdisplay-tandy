@@ -10,16 +10,16 @@ without changing files. You can also select directly:
 
   SETUP C:\WINDOWS 100     Fixed 160x100, 16 RGBI colors, compact UI
   SETUP C:\WINDOWS PAN     320x200 desktop in a movable 160x100 view
-  SETUP C:\WINDOWS 320     320x200 four colors, standard controls
-  SETUP C:\WINDOWS 320C    Same four colors, compact UI and controls
+  SETUP C:\WINDOWS 320     320x200 four colors, proportional compact default
+  SETUP C:\WINDOWS 320C    Alias of 320: same proportional compact UI
+  SETUP C:\WINDOWS 320L    Legacy large controls (explicit opt-in)
   SETUP C:\WINDOWS 640     640x200 mono, standard controls
   SETUP C:\WINDOWS 640C    Same monochrome resolution, compact UI
 
-320C and 640C use 3x5 UI text, 4x6 fixed/OEM text and six-row controls.
-Smaller text leaves more room; choose the size you prefer. Commands 320
-and 640 keep their existing fonts and controls. Use the same command
-without C to restore that resolution's standard UI. Fonts are included;
-no manual INI editing or separate helper copying is needed.
+320 and 320C select the same 3x5 proportional System, 4x6 fixed/OEM
+text and six-row controls. 320L explicitly opts into the former large
+native controls. 640 and 640C retain their standard/compact choices.
+Fonts are included; no manual INI editing or helper copying is needed.
 
 Wait for Setup's success message. Change to Windows and run WIN /R.
 Exit Windows before every mode change. Keep SETUP.EXE, README.TXT and the

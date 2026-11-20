@@ -8,10 +8,11 @@ a = .,"CGA SOURCE CANDIDATE",OEMSETUP.INF
 [display]
 cga100 = a:CGA100.DRV,"IBM CGA 160x100 16 colors (experimental)","100,48,40",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
 cgapan = a:CGAPAN.DRV,"IBM CGA 160x100 view of 320x200 (experimental)","100,48,40",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
-cga320 = a:CGA320.DRV,"IBM CGA 320x200 4 colors (experimental)","200,96,48",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
+cga320 = a:CGA32C.DRV,"IBM CGA 320x200 4 colors - proportional compact default","200,48,40",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
 cga640 = a:CGA640.DRV,"IBM CGA 640x200 mono (experimental)","200,96,48",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
-cga32c = a:CGA32C.DRV,"IBM CGA 320x200 4 colors - compact UI","200,48,40",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
+cga32c = a:CGA32C.DRV,"IBM CGA 320C - same proportional compact default","200,48,40",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
 cga64c = a:CGA64C.DRV,"IBM CGA 640x200 mono - compact UI","200,48,40",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
+cga320large = a:CGA320.DRV,"IBM CGA 320x200 - LARGE UI legacy opt-in","200,96,48",a:CGAGRAB.GR2,a:XTSTATIC.LGO,,,,a:WXTSPL01.RLE
 [sysfonts]
 a:CG1SYS.FON,"Compact 3x5 System","200,48,40"
 a:CG1SYS.FON,"CGA100 original proportional 3x5 System","100,48,40"
