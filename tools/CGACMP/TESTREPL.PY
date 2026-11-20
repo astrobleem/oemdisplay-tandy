@@ -21,11 +21,13 @@ class Replay(unittest.TestCase):
  def test_missing_immutable_object_fails_closed_without_fetch(self):
   with patch.object(R.subprocess,'check_output',side_effect=subprocess.CalledProcessError(128,['git'])):
    with self.assertRaisesRegex(ValueError,'fetch exact revision '+R.REVISION):R.original(R.GATE,self.pins[R.GATE])
- def test_fresh_guide_only_not_other_fresh_inputs(self):
+ def test_two_legacy_instruction_inputs_only(self):
   pins=json.loads((R.ROOT/'tools/CGAFRESH/ACCEPT.JSN').read_bytes())['sources']
-  self.assertEqual(R.identity(R.original(R.FRESH_GUIDE,pins[R.FRESH_GUIDE])),pins[R.FRESH_GUIDE])
-  with self.assertRaisesRegex(ValueError,'pin differs'):R.original(R.FRESH_GUIDE,dict(bytes=0,sha256='0'*64))
-  with self.assertRaisesRegex(ValueError,'outside immutable'):R.original('src/cga/FRESH.TXT',pins['src/cga/FRESH.TXT'])
+  self.assertEqual(R.FRESH_INPUTS,{'docs/CGA.MD','src/cga/FRESH.TXT'})
+  for name in R.FRESH_INPUTS:
+   self.assertEqual(R.identity(R.original(name,pins[name])),pins[name])
+   with self.assertRaisesRegex(ValueError,'pin differs'):R.original(name,dict(bytes=0,sha256='0'*64))
+  with self.assertRaisesRegex(ValueError,'outside immutable'):R.original('src/cga/FRESH.C',pins['src/cga/FRESH.C'])
  def test_preceding_pan_pin_still_required(self):
   pin=json.loads((R.ROOT/'tools/PAN/ACCEPT.JSN').read_bytes())['sources']['src/cga/CGASET.PY']
   self.assertEqual(R.identity(H.previous_source('src/cga/CGASET.PY',pin)),pin)
