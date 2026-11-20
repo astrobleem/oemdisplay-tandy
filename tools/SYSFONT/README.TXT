@@ -48,8 +48,8 @@ presenters recognize eight-row glyphs with eight-pixel advances and show
 one BIOS character per cell. Variable advances lose that text recognition
 and become block approximations. TEXT80 25/C25/PAN/VGA and TXT40 currently
 keep XTTSYS and their existing Fixed/Terminal fonts. Their System/UI is an
-open requirement, not completed or exempt. No exact same-mode pixel fallback
-is implemented here; their defaults remain unchanged.
+fixed-cell limitation accepted by Chad; redesign is out of scope. Their
+defaults remain unchanged.
 Existing 160-pixel dialogs can still clip. Fonts do not fix hardware flicker.
 Video II uses the revised XTC System face, but a matching SL/2 fixture is
 still required for candidate cold-start qualification. EX/HX emulation

@@ -2,8 +2,10 @@ CGA development packet - component notices
 
 The display renderer adapts the retained Microsoft Windows display-driver
 sources used by Windows XT. Existing Microsoft/DDK component notices remain
-in their source. CGAGRAB.GR2 is the byte-identical expanded CGA.GR2 already
-supplied by the current Windows XT driver packets, under a private filename.
+in their source. The stock CGA grabber is not distributed in new candidates. Ordinary
+Windows Setup obtains CGA.GR2 from the owner's original Windows Disk 3.
+The native selector copies that installed file to its private CGAGRAB name
+using the existing checked copy contract.
 Windows/DOS, compiler, DDK and emulator installations are not included.
 
 CG1SYS/FIX/OEM/HELV/COUR and CG2SYS/HELV are original CGA ASCII grid drawings using the

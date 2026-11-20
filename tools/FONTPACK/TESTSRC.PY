@@ -16,15 +16,20 @@ class FontRelease(unittest.TestCase):
    with M.zipfile.ZipFile(HERE/'BIN/WINXT.ZIP') as z:
     old={n[6:]:z.read(n) for n in z.namelist() if n.startswith('WINXT/')}
    new={p.relative_to(out).as_posix():p.read_bytes() for p in out.rglob('*') if p.is_file()}
-   self.assertEqual(set(old)-set(new),{'SOUNDID.JSN'})
-   self.assertEqual(set(new)-set(old),{'SYSFONT.TXT'})
+   self.assertEqual(set(old)-set(new),{'SOUNDID.JSN','CGA.GR2'})
+   self.assertEqual(set(new)-set(old),{'SYSFONT.TXT','OWNMEDIA.TXT','UI6SYS.FON','CG1SYS.FON','CG1FIX.FON','CG1OEM.FON'})
    self.assertEqual(new['SYSFONT.TXT'],(M.ROOT/'tools/SYSFONT/README.TXT').read_bytes())
-   self.assertEqual({n for n in new.keys() & old.keys() if old[n]!=new[n]},{'XTCSYS.FON','XTESYS.FON'})
+   self.assertEqual({n for n in new.keys() & old.keys() if old[n]!=new[n]},
+                    {'XTCSYS.FON','XTESYS.FON','OEMSETUP.INF','TANDY88.DRV','TNDY160.DRV','TNDY3204.DRV','TNDY6402.DRV','TNDY6404.DRV'})
+   self.assertEqual(new['HPXY.DRV'],old['HPXY.DRV'],'Existing launcher identity must remain exact')
+   self.assertEqual(new['FIXXT.EXE'],old['FIXXT.EXE'],'Do not invent another guest updater')
    self.assertEqual(new['XTCSYS.FON'],(M.ROOT/'tools/SYSFONT/BIN/XTCSYS.FON').read_bytes())
    self.assertEqual(new['XTESYS.FON'],(M.ROOT/'tools/SYSFONT/BIN/XTESYS.FON').read_bytes())
    for name in ('XTTSYS.FON','XTCFIX.FON','XTCOEM.FON','XTEFIX.FON','XTEOEM.FON'):
     self.assertEqual(new[name],old[name],'Fixed-cell fonts must retain their original bytes')
    cga=Path(tmp)/'cga';M.drivers(cga,M.ROOT/'downloads/FRESH/CGA.ZIP')
+   self.assertFalse((cga/'CGAGRAB.GR2').exists(),'Stock Microsoft file must come from owner media')
+   self.assertIn(b'3:CGA.GR2',(cga/'OEMSETUP.INF').read_bytes())
    for name in ('CG1SYS.FON','CG2SYS.FON','XTCSYS.FON'):
     self.assertEqual((cga/name).read_bytes(),(M.ROOT/'tools/SYSFONT/BIN'/name).read_bytes())
  def test_native_inventories_and_idempotent_binding(self):

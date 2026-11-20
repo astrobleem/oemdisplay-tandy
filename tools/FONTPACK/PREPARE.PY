@@ -78,12 +78,16 @@ def drivers(out,packet=None):
  # Keep the ordinary CGA 320/320C choice in sync with the native selector.
  if 'CGA32C.DRV' in body and 'CGA100.DRV' in body:
   body['OEMSETUP.INF']=(ROOT/'src/cga/OEMSETUP.INF').read_bytes()
+  body['NOTICE.TXT']=(ROOT/'src/cga/NOTICE.TXT').read_bytes()
+  body['OWATCOM.TXT']=(ROOT/'tools/XR1PACK/OWATCOM.TXT').read_bytes()
  kit=machinery.SourceFileLoader('package_system_fonts',str(ROOT/'tools/SYSFONT/BUILD.PY')).load_module()
  for name in ('CG1SYS.FON','CG2SYS.FON','XTCSYS.FON','XTESYS.FON'):
   if name in body:body[name]=kit.improve(name,kit.source(name))
  ui=machinery.SourceFileLoader('resolution_ui',str(ROOT/'tools/RESUI/GRAPHICS.PY')).load_module()
  body=ui.apply(body)
  body['SYSFONT.TXT']=(ROOT/'tools/SYSFONT/README.TXT').read_bytes()
+ media=machinery.SourceFileLoader('oem_own_media',str(ROOT/'tools/RESUI/OWNMEDIA.PY')).load_module()
+ body=media.strip(body)
  out.mkdir(parents=True)
  for name,data in body.items():
   member=Path(name)

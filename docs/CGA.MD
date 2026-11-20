@@ -5,7 +5,7 @@
 
 **[Download CGA.ZIP](https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/CGA.ZIP)**
 
-This supplies the CGA display driver, matching fonts, grabber and helpers for
+This supplies the CGA display driver, matching fonts and helpers for
 **fresh or existing Windows 3.0 installations**. You need **DOS 3.3 or later, 640 KB RAM,
 Windows 3.0 real mode, and IBM CGA with RGBI output**. Windows and DOS are not
 included; Windows 3.1 is unsupported. Fresh Setup starts with the project's
@@ -112,7 +112,8 @@ path is still **`C:\CGAKIT\FRESH640`**. For Microsoft file requests, insert the
 requested original Windows disk and use `A:\`. You can verify inputs without
 starting Setup with `FRESH /CHECK C:\W30SRC` (or `FRESH /CHECK A:\`).
 
-The driver, matching fonts and grabber are used during graphical Setup.
+The driver and matching fonts are used during graphical Setup. New candidates
+use stock CGA.GR2 from your own original Windows Disk 3, not a bundled copy.
 Fresh Setup currently offers one fixed 640x200 monochrome profile. To choose
 another mode afterward, exit Windows and follow the existing-Windows route
 below. [Fresh Setup scope and native evidence](CGA-FRESH.MD) record the tested

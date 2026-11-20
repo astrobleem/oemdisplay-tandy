@@ -50,11 +50,24 @@ def download(url):
  req=urllib.request.Request(url,headers={'User-Agent':'Windows-XT-System-fonts','Cache-Control':'no-cache'})
  return urllib.request.urlopen(req,timeout=60).read()
 def main_head():return json.loads(gh('api','repos/'+REPO+'/git/ref/heads/main'))['object']['sha']
+def ready(folder):
+ # Host-only release gate: the unchanged universal launcher rejects newly
+ # resource-derived JR/ColorPlus drivers. Do not publish eight assets merely
+ # because archive/font metadata passes; retain the guest binding unchanged.
+ for name,root,source in PACKETS:
+  if name not in ('SFPCJR.ZIP','SFPCP.ZIP'):continue
+  with zipfile.ZipFile(folder/name) as z:now={Path(n).name:z.read(n) for n in z.namelist()}
+  with zipfile.ZipFile(ROOT/source) as z:old={Path(n).name:z.read(n) for n in z.namelist()}
+  driver='JRPAN.DRV' if name=='SFPCJR.ZIP' else 'CPPAN.DRV'
+  if now.get('PANINST.EXE')==old.get('PANINST.EXE') and now[driver]!=old[driver]:
+   raise ValueError('Publication held: unchanged PANINST rejects revised '+driver+'; qualify its existing binding before replacing '+name)
+
 def publish(folder,commit):
  head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
  if not (commit==head==os.environ.get('GITHUB_SHA') and os.environ.get('GITHUB_REPOSITORY')==REPO and os.environ.get('GITHUB_EVENT_NAME')=='push' and os.environ.get('GITHUB_REF')=='refs/heads/main'):
   raise ValueError('Publication requires exact authorized main-push workflow')
  verify(folder)
+ ready(folder)
  before=json.loads(gh('api','repos/'+REPO+'/releases/tags/'+TAG))
  allowed={n for n,_,_ in PACKETS}
  preserved={x['name']:(x['id'],x['size'],x['updated_at']) for x in before['assets'] if x['name'] not in allowed}

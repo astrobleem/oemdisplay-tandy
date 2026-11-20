@@ -1,7 +1,8 @@
 """Stage the existing CGA installer candidate without generating audit manifests.
 
-The accepted input archive stays unchanged. This developer tree contains
-licensed/private support inputs and is NOT a redistributable archive.
+The accepted input archive stays unchanged. This stages project drivers,
+support and native compiler inputs, not a finished consumer archive. Stock
+Windows CGA.GR2 stays on the owner's original-media side of installation.
 """
 from pathlib import Path
 import sys,zipfile,subprocess,importlib.machinery as M
@@ -15,6 +16,7 @@ def stage(out):
   files={n[4:]:z.read(n) for n in z.namelist() if n.startswith('CGA/')}
  P=COMPOSER.module(dict(files))
  files['OEMSETUP.INF']=(ROOT/'src/cga/OEMSETUP.INF').read_bytes()
+ files['NOTICE.TXT']=(ROOT/'src/cga/NOTICE.TXT').read_bytes()
  for name in ['CG1SYS.FON','CG2SYS.FON','XTCSYS.FON']:
   files[name]=(ROOT/'tools/SYSFONT/BIN'/name).read_bytes()
  original=P.write

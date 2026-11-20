@@ -87,19 +87,11 @@ buttons and the small Save-style dialog fit in all tested routes. All
 completed clean DOS return. These are focused checks, not physical hardware
 or every application/font/legacy-install upgrade qualification.
 
-## Text cells remain an open requirement
+## Accepted unchanged text modes
 
-The TXT40/TEXT80 presenter converts a logical pixel shadow into character
-cells using ROM glyph matching and glyph hints (T40PRES). The cell is eight
-logical pixels wide; changing System advances alone can make GDI report
-proportional widths while the physical presenter loses/merges the glyphs.
-That would not meet the requirement. CGA has no writable character generator
-for arbitrary per-cell pixels. EGA/VGA font RAM could support an explicitly
-bounded glyph-cache renderer, but at the existing 8x8 cell geometry its finite glyph bank does not guarantee
-arbitrary exact pixel tiles across the whole screen. A different graphics
-mode is a different backend and cannot silently be called the same text mode.
-No universal exact same-mode pixel fallback has been implemented here. These
-profiles are neither completed nor exempt; their defaults remain unchanged.
+Chad accepted the fixed-cell limitation and removed text backend redesign
+from this assignment. TEXT80/TXT40 and their defaults remain untouched.
+All real graphics modes remain in scope. No SVGA/VESA work is included.
 
 ## Reproduce and continue
 
@@ -218,13 +210,106 @@ producer and full/fixed WINXT producers are not repackaged by this checkpoint.
 Video II still needs an actual matching SL/2 fixture. No physical adapter,
 scanout timing, snow/flicker or hardware readability qualification is claimed.
 
-A faithful universal proportional TEXT80/TXT40 backend is not supplied.
-CGA's ROM text glyphs cannot express arbitrary pixel tiles. Even writable
-EGA/VGA text fonts offer a finite simultaneous glyph bank and only two
-colors per character cell; arbitrary Windows pixels can exceed both limits.
-A cache would have to approximate, reject drawing after startup, or change
-modes. None is a transparent faithful same-mode fallback. Existing text
-mode defaults remain untouched, not completed or exempt. Next action is
-an explicit separate backend/design decision: a bounded writable-font trial
-with honest rendering limits, or an explicitly selected graphics backend;
-never silently promote a proportional flag on the current cell presenter.
+TEXT80/TXT40 stay unchanged by Chad's explicit acceptance. Their renderer
+redesign is no longer planned work. Fixed 160-pixel application-dialog
+clipping remains a separate graphics limitation, not a reason to shrink
+all text. Video II and physical hardware qualification remain separate.
+
+## Production package checkpoint
+
+The exact live WXTF1107.ZIP was downloaded read-only and equals the current
+FONTPACK/BIN/WINXT.ZIP byte for byte (1,201,728 bytes; root SETUP.EXE 95,716,
+FIXXT.EXE 53,814). Its actual graphics are fixed TANDY88/TNDY160/TNDY3204/
+TNDY6402/TNDY6404 plus HPXY. Its fixed-new-install, explicit HPXY and update
+preservation behavior already exists. No #217 generator was imported.
+
+The original CGA and full Tandy inputs contain a byte-identical original
+Windows CGA.GR2. New candidates exclude it. Ordinary OEM descriptors use
+original Windows Disk 3 via the standard `3:CGA.GR2` field. OWNMEDIA.PY also
+removes obsolete presence/copy lines from existing convenience scripts.
+Native CGA keeps its current checked copy/cleanup contract: it obtains the
+owner's installed SYSTEM\CGA.GR2 (or existing CGAGRAB alias) and creates its
+private alias locally. No new guest checksum or version machinery is added.
+The new compiler input headers serve the existing launchers; no standalone
+source, checksum, provenance or testing records are produced.
+
+Actual production-route evidence:
+
+- SFCGA: ordinary Windows Setup, Other, normal 320 entry selected CGA32C,
+  UI6 and existing 4x6 companions. Boot uses the owner's CGA.GR2. Cold start,
+  Paintbrush, Open buttons and clean DOS return passed; System i/W = 2/6.
+- SFTANDY: ordinary Setup selected fixed TANDY88, UI6 and 4x6 companions.
+  The unchanged DISPWIN executed reservation, grabber and PAN preparation,
+  started real-mode Windows, and returned to DOS. Important Open buttons fit.
+- The same SFTANDY source then selected explicit HPXY through ordinary Setup.
+  DISPWIN passed again. System i/W = 2/6; logical 640x256 / physical 320x200;
+  panning to (320,56) and restoration to (0,0) passed. HPXY driver identity
+  and the launcher/guard binaries remain unchanged.
+- Rebuilt native CGA normal 320 installed with no grabber in its source ZIP,
+  copied only the owner's known original, cold-started and returned to DOS.
+  Its existing UNDO restored original boot selections, removed its owned
+  grabber alias and preserved the original SYSTEM\CGA.GR2 byte for byte.
+- The rebuilt fresh launcher passed its real /CHECK against original media
+  and the new closed kit. Actual original fresh Setup recognized the OEM
+  choice and copied the exact revised CGA640, XTC fonts and owner's CGA.GR2.
+  Complete fresh Setup / first ordinary cold start is NOT yet accepted;
+  bounded automation stalled across alternating project/Microsoft disk paths.
+  These attempts are not passes or a diagnosed display-driver failure.
+
+Release URLs retain this prefix:
+https://github.com/astrobleem/oemdisplay-tandy/releases/download/windows-xt/
+
+| Asset names at that prefix | Current candidate status |
+| --- | --- |
+| SFCGA.ZIP | Independently ordinary-install/cold-start qualified in emulation |
+| SFTANDY.ZIP | Independently ordinary-install/guarded-start qualified for fixed 320 and explicit HPXY in emulation |
+| CGA.ZIP, CGASRC.ZIP | Project-only paired candidates built; native normal/restore and fresh input/OEM-copy checks pass; fresh completion still held |
+| WXTF1107.ZIP | Full desktop replacement blocked by existing compiled preparation/finisher bindings, not interchangeable with SFTANDY |
+| SFPCJR.ZIP, SFPCP.ZIP; JRPAN.ZIP, CPPAN.ZIP, PAN.ZIP | Existing universal panning updater binding blocks revised resource-derived drivers |
+| SF1512.ZIP; PC1512.ZIP | Matching driver base confirmed; metadata/shared-wide-UI checks only for new candidates; ordinary install not independently repeated |
+| SFTGA2.ZIP, SFPC1.ZIP, SFYAMA.ZIP; TNDYV2.ZIP, PC1.ZIP, YAMAHA.ZIP | OEM candidates machine-checked; independent adapter install/start not repeated; Video II still has no matching SL/2 fixture |
+| WINXT720.ZIP | Separate FAT12 data-image producer and installer; not rebuilt or qualified here |
+| TANDYLAB.ZIP | Curated optional display subtree depends on the full/core producer; app collection not rewritten here |
+| WINXT.ZIP, WINXTSRC.ZIP, WINXT.JSN, WINXT.SHA; WXT61107.ZIP | Preserved historical/core download identities, not a substitute for current WXTF1107 |
+
+PC1512's live/local ZIP drift is INSTALL.TXT only; the display binary agrees
+exactly. No unrelated app asset was modified, including MINESET/COOKSET.
+TEXT80/TXT40 and SVGA/VESA remain outside this work.
+
+The production blockers were observed, not inferred only from metadata:
+
+1. Overlaying graphics candidates into a private copy of the actual full
+   WXTF1107 packet makes ordinary SETUP UPDATE /PREP stop before changes:
+   first `Required regular file is missing: ...\CGA.GR2`. Supplying the
+   owner's original only inside that private fixture progresses to
+   `File larger than release pin: ...\OEMSETUP.INF`. Windows selections
+   remain untouched. Its finisher also still declares the former fixed
+   driver sizes and XTESYS/XTC profile font matrix; UI6/CG1 companions are
+   not wired into its full fresh/update ownership contract. Next work must
+   adapt the existing full producer's OS-input rule, payload bindings and
+   font selection, then qualify real UPDATE/FRESH and MODEXT transitions.
+   It must preserve guards and custom data, not introduce another updater.
+2. The unchanged PCjr PANINST executed with the candidate driver says
+   `STOP: Panning driver source damaged`. The source PANSETUP.C validates
+   its compiled current/old driver identities, and its launcher is shared
+   with ColorPlus and standalone PAN. The current contract cannot merely
+   be ignored or replaced by an unchecked copy. Existing transition/binding
+   handling needs a separate controlled update and qualification.
+3. The current catalog's closed CGAFRESH/core acceptance still describes
+   the former archives; no historical receipt or source pin was relaxed.
+
+SYSFONT/PACK.ready is a host-only fail-closed publication check for the
+observed unchanged panning-launcher mismatch. Automatic eight-asset upload
+now stops before any release mutation. It does not add guest validation.
+The earlier main-push workflow publishes all eight SF assets, so use only
+explicit independently qualified replacements until the blockers close.
+
+Final ZIP audits compared every entry with the owner's original Windows
+media: no exact original OS file remains. No OS disk, compiler/DDK, private
+guest tree, or unrequested JSN/JSON/SHA/SUM file is included. Original project
+and DDK-derived project components retain their existing component notices;
+this is not a claim that the project drivers contain no adapted DDK code.
+All final runtime/font/OEM/launcher bytes in the qualified SFCGA/SFTANDY ZIPs
+match the actually installed candidates; differences are instructional text.
+Normal 640 KB / 8086-prefetch emulator evidence is not physical hardware,
+scanout, flicker, bus timing or complete application qualification.

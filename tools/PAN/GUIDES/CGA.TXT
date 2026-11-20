@@ -51,3 +51,11 @@ Requires DOS 3.3+, Windows 3.0 real mode, IBM CGA RGBI and normal 640 KB.
 No Python, modern-host preparation or Windows/DOS redistribution is needed.
 Native emulator tests do not qualify physical cards, CRTCs or composite.
 Common panning guide: docs/PANNING.MD. Component notices remain in CGA/.
+
+ORIGINAL WINDOWS GRABBER
+The new candidate does not distribute Microsoft CGA.GR2. Ordinary Windows
+Setup gets it from your original Windows Disk 3. The native selector uses
+your installed SYSTEM\CGA.GR2 (or its existing CGAGRAB alias), under the
+existing checked copy contract. If missing, use original Windows Setup
+to install stock CGA first. Do not gather a different grabber or bypass
+a refusal. The original installed CGA.GR2 is preserved by SETUP UNDO.

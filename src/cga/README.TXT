@@ -118,3 +118,11 @@ Exit Windows first, then start WIN /R after Setup reports success.
 These choices include the fonts; no manual INI editing is needed. The
 recognized current and earlier CGA packets can be upgraded through this
 SETUP; unchanged defaults and UNDO remain.
+
+ORIGINAL WINDOWS GRABBER
+The new candidate does not distribute Microsoft CGA.GR2. Ordinary Windows
+Setup gets it from your original Windows Disk 3. The native selector uses
+your installed SYSTEM\CGA.GR2 (or its existing CGAGRAB alias), under the
+existing checked copy contract. If missing, use original Windows Setup
+to install stock CGA first. Do not gather a different grabber or bypass
+a refusal. The original installed CGA.GR2 is preserved by SETUP UNDO.

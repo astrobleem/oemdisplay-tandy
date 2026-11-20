@@ -58,12 +58,13 @@ IN ORIGINAL SETUP
    Choose the keyboard and mouse appropriate to your own computer.
 7. Start the installed Windows from C:\WINDOWS with WIN /R.
 
-All required project display support is bundled. Do not gather stock CGA fonts
-or edit INIs. The fresh entry uses standard 640-mode controls and fonts, and
+Project display support is bundled. Original CGA.GR2 comes from your own
+Windows Disk 3 through normal Setup; it is not in this ZIP. Do not gather stock CGA fonts
+or edit INIs. The fresh candidate uses proportional XTC and compact wide 640-mode controls, and
 does not require a placement/panning helper during graphical Setup.
 
 AFTER WINDOWS IS INSTALLED
-Exit Windows and use the unchanged complete CGA packet's SETUP for any other
+Exit Windows and use the complete CGA packet's SETUP for any other
 mode, matching proportional dialog fonts and helper settings:
   SETUP C:\WINDOWS
 or choose directly, for example SETUP C:\WINDOWS PAN or SETUP C:\WINDOWS 320C.
@@ -77,5 +78,6 @@ FONTLIC.TXT, LOGOLIC.TXT and NOTICE.TXT retain the component terms.
 FRESHLIC.TXT covers the launcher source; OWATCOM.TXT carries its runtime
 notice.
 Source and developer build: src/cga/FRESH.C and FRESHPK.PY in the repository.
-The complete launcher rebuild inputs are also supplied as CGASRC.ZIP.
+The launcher source, compiled input header and project display inputs are
+also supplied as CGASRC.ZIP. BUILD.BAT requires an external DOS C6 toolchain.
 No operating system, compiler, emulator or disk image is included.

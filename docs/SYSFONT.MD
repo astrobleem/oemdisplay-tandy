@@ -52,7 +52,8 @@ memory guards remain exact. HPXY retains its already compact accepted driver
 identity for its normal guarded launcher. The ordinary CGA 320 and 320C
 paths agree, while 320L explicitly retains the legacy large option.
 See [the current measured limits](../tools/RESUI/README.MD), including
-remaining 160-pixel application-dialog overflow and text-mode rendering gaps.
+remaining 160-pixel application-dialog overflow. TEXT80/TXT40 stay unchanged
+by Chad's explicit acceptance; their redesign is out of scope.
 
 Native emulator checks covered font widths/pixels, menus/dialogs, cold starts,
 ordinary Setup switching and shared panning paths. Video II's font selection and

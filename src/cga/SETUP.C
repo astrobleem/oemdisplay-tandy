@@ -62,6 +62,12 @@ static void paths(unsigned i)
 {
     char *dot;
     join(srcpath,payload,cga_files[i].name);
+    /* The stock grabber comes from the owner's Windows, never our ZIP.
+     * Preserve the existing exact-byte check and copy/cleanup contract. */
+    if(!strcmp(cga_files[i].name,"CGAGRAB.GR2")){
+        join(srcpath,systemdir,"CGA.GR2");
+        if(!exists(srcpath))join(srcpath,systemdir,"CGAGRAB.GR2");
+    }
     /* Startup executables live in Windows; support stays in SYSTEM. This
      * also keeps the existing INI journal's helper token a DOS basename. */
     join(dstpath,(!strcmp(cga_files[i].target,"CGACTL.EXE") ||

@@ -195,7 +195,9 @@ def emit(repo,out,files,source_commit,fixture=False,compact_only=False):
     root=out/'packet';folder=root/'CGA';folder.mkdir(parents=True)
     for name,data in sorted(files.items()):
         if not re.fullmatch(r'[A-Z0-9_]{1,8}\.[A-Z0-9]{1,3}',name):raise ValueError('Non-DOS payload name: '+name)
-        (folder/name).write_bytes(data)
+        # The existing native copy contract gathers the stock grabber from
+        # the owner's installed Windows. It is not a redistributed payload.
+        if name!="CGAGRAB.GR2":(folder/name).write_bytes(data)
     pin={name:dict(identity(data),installed=name if name in COPY else '',
                    destination='WINDOWS' if name in HELPERS else 'SYSTEM' if name in COPY else '')
          for name,data in sorted(files.items())}
@@ -258,12 +260,14 @@ def verify(out):
     root=out/'packet';files={p.name:p for p in (root/'CGA').iterdir() if p.is_file()}
     paths=list(root.rglob('*'))
     if any(p.is_symlink() for p in paths):raise ValueError('Linked packet content refused')
-    expected={'README.TXT'}|{'CGA/'+name for name in (COMPACT_FILES if rec.get('compact_only') else ALL_FILES)}
+    external_grabber='join(srcpath,systemdir,"CGA.GR2")' in (out/'native-src/SETUP.C').read_text()
+    omitted={'CGAGRAB.GR2'} if external_grabber else set()
+    expected={'README.TXT'}|{'CGA/'+name for name in ((COMPACT_FILES if rec.get('compact_only') else ALL_FILES)-omitted)}
     if {p.relative_to(root).as_posix() for p in paths if p.is_file()}!=expected:
         raise ValueError('Expanded packet inventory changed')
     if {p.relative_to(root).as_posix() for p in paths if p.is_dir()}!={'CGA'}:
         raise ValueError('Unexpected packet directory')
-    if set(files)!=set(rec['payload']):raise ValueError('Payload inventory changed')
+    if set(files)!=set(rec['payload'])-omitted:raise ValueError('Payload inventory changed')
     for name,path in files.items():
         if identity(path.read_bytes())!={k:rec['payload'][name][k] for k in ('bytes','sha256','crc32')}:
             raise ValueError('Payload changed: '+name)
