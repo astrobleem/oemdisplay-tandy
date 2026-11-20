@@ -1,4 +1,4 @@
-"""Build/publish only the eight graphics System-font OEM archives.
+"""Build the eight graphics System-font OEM archives; publish qualified ones.
 
 No native installer, checksums or inventory files are generated. Historical
 full-install packets and all other release assets remain unchanged.
@@ -18,6 +18,10 @@ PACKETS=(
  ('SFYAMA.ZIP','YAMAHA','downloads/experimental/yamaha/YAMAHA.ZIP'))
 REPO='astrobleem/oemdisplay-tandy'
 TAG='windows-xt'
+# These two exact rebuilds passed real-mode Setup and first Windows startup.
+# The panning archives still fail their native guard. The other candidates
+# have not independently passed installation and are not release replacements.
+QUALIFIED=('SFTANDY.ZIP','SFCGA.ZIP')
 
 def build(out):
  out.mkdir(parents=True,exist_ok=False)
@@ -50,31 +54,18 @@ def download(url):
  req=urllib.request.Request(url,headers={'User-Agent':'Windows-XT-System-fonts','Cache-Control':'no-cache'})
  return urllib.request.urlopen(req,timeout=60).read()
 def main_head():return json.loads(gh('api','repos/'+REPO+'/git/ref/heads/main'))['object']['sha']
-def ready(folder):
- # Host-only release gate: the unchanged universal launcher rejects newly
- # resource-derived JR/ColorPlus drivers. Do not publish eight assets merely
- # because archive/font metadata passes; retain the guest binding unchanged.
- for name,root,source in PACKETS:
-  if name not in ('SFPCJR.ZIP','SFPCP.ZIP'):continue
-  with zipfile.ZipFile(folder/name) as z:now={Path(n).name:z.read(n) for n in z.namelist()}
-  with zipfile.ZipFile(ROOT/source) as z:old={Path(n).name:z.read(n) for n in z.namelist()}
-  driver='JRPAN.DRV' if name=='SFPCJR.ZIP' else 'CPPAN.DRV'
-  if now.get('PANINST.EXE')==old.get('PANINST.EXE') and now[driver]!=old[driver]:
-   raise ValueError('Publication held: unchanged PANINST rejects revised '+driver+'; qualify its existing binding before replacing '+name)
-
 def publish(folder,commit):
  head=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
  if not (commit==head==os.environ.get('GITHUB_SHA') and os.environ.get('GITHUB_REPOSITORY')==REPO and os.environ.get('GITHUB_EVENT_NAME')=='push' and os.environ.get('GITHUB_REF')=='refs/heads/main'):
   raise ValueError('Publication requires exact authorized main-push workflow')
  verify(folder)
- ready(folder)
  before=json.loads(gh('api','repos/'+REPO+'/releases/tags/'+TAG))
- allowed={n for n,_,_ in PACKETS}
+ allowed=set(QUALIFIED)
  preserved={x['name']:(x['id'],x['size'],x['updated_at']) for x in before['assets'] if x['name'] not in allowed}
- for name,_,_ in PACKETS:
+ for name in QUALIFIED:
   if main_head()!=commit:raise ValueError('Main advanced; publication stopped')
   gh('release','upload',TAG,str(folder/name),'--clobber','--repo',REPO)
- for name,_,_ in PACKETS:
+ for name in QUALIFIED:
   url='https://github.com/'+REPO+'/releases/download/'+TAG+'/'+name
   for attempt in range(6):
    try:

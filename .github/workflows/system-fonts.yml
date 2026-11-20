@@ -46,7 +46,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh run download "${{ github.run_id }}" --repo "${{ github.repository }}" --name "graphics-system-fonts-${{ github.sha }}" --dir packages
-      - name: Publish only the eight System-font archives and verify public bytes
+      - name: Publish only the qualified CGA and Tandy System-font archives
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 -B tools/SYSFONT/PACK.PY --publish packages --commit "${{ github.sha }}"
