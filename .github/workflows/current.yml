@@ -22,6 +22,8 @@ jobs:
           ref: ${{ env.SOURCE_SHA }}
       - name: Verify exact source checkout
         run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Fetch immutable pre-UI proof sources
+        run: git -c protocol.version=2 fetch --no-tags --depth=1 origin cba234b88b0d120ca7b31bfefbc1b4de3f9fc822
       - name: Fetch immutable qualified sound inputs
         run: |
           python3 - <<'PY'

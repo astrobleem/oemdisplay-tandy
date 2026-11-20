@@ -31,6 +31,7 @@ jobs:
           git -c protocol.version=2 fetch --no-tags --depth=1 origin "$SOURCE_SHA"
           git checkout --detach --force FETCH_HEAD
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin cba234b88b0d120ca7b31bfefbc1b4de3f9fc822
 
       - name: Check preparation boundaries and closed release inventory
         env:

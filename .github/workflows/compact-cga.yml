@@ -22,8 +22,12 @@ jobs:
           ref: ${{ env.SOURCE_SHA }}
       - name: Verify exact source checkout
         run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - name: Fetch immutable pre-UI proof sources
+        run: git -c protocol.version=2 fetch --no-tags --depth=1 origin cba234b88b0d120ca7b31bfefbc1b4de3f9fc822
       - name: Check compact CGA native evidence and refusal boundaries
-        run: python3 -B tools/CGACMP/TEST.PY --out compact-gate
+        run: |
+          python3 -B tools/CGACMP/TESTREPL.PY
+          python3 -B tools/CGACMP/TEST.PY --out compact-gate
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: compact-cga-${{ env.SOURCE_SHA }}
