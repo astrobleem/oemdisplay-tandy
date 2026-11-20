@@ -1,0 +1,2 @@
+PASS exact reference equivalence: 136192 scale/phase + 65536 unsigned-phase cases
+PASS 512 phases; winding, lighting, periodicity, low/high canvas bounds

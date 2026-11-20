@@ -1,0 +1,42 @@
+{
+  "seed": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-12\\native-tandy-02",
+  "private_image": true,
+  "profile": "tandy320",
+  "environment": {
+    "display.drv": {
+      "name": "TR53216.DRV",
+      "bytes": 54896,
+      "sha256": "33f681b0238310ae2614b3c1b923d260c816261442b1fa5cd51867c25a6cef61"
+    },
+    "fonts.fon": {
+      "name": "XTESYS.FON",
+      "bytes": 5680,
+      "sha256": "50af47922fb4df487ecfbfb77a744dbdc315f521365b8fd089a71b6c5c6c6946"
+    },
+    "fixedfon.fon": {
+      "name": "XTEFIX.FON",
+      "bytes": 4656,
+      "sha256": "3c7ac7c82a987d75445f6e3c9e2a9afa650689a20cab573b8f661a37287b142c"
+    },
+    "oemfonts.fon": {
+      "name": "XTEOEM.FON",
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    }
+  },
+  "cpu": "Tandy 1000 HX 8088 7159092 Hz; RESERVE 32",
+  "memory_kb": 640,
+  "config": {
+    "bytes": 609,
+    "sha256": "52caeeaba3a42a26f52a3c62f8f217ab95f2b5f553eacedf8d22d9388bd666bf"
+  },
+  "cube": {
+    "bytes": 16703,
+    "sha256": "b8d5fe0a6594800a9b51fa2a7fe7dc888f2e39dae64e81b03696beb83a6a50b6"
+  },
+  "controller": {
+    "bytes": 7743,
+    "sha256": "2cbc3bfa523143463e59b995d80a03cb1e5dfb7d0d554353a555629ae574fcff"
+  },
+  "scope": "Fresh production cube /Q render/input suite; standalone runtime replacement only, no installer qualification"
+}

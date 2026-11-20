@@ -1,0 +1,37 @@
+READY display_module=7721 bitblt_cs=7809 bitblt_ip=1620
+BITMAP mono=0 planes=4 bits=1 width_bytes=8
+SAMPLE kind=memory mono=0 rect=0 sample=0 calls=128 x=0 y=0 w=49 h=95 ms=2856 errors=0
+SAMPLE kind=display mono=0 rect=0 sample=0 calls=8 x=0 y=0 w=49 h=95 ms=933 errors=0
+SAMPLE kind=display mono=0 rect=0 sample=1 calls=8 x=0 y=0 w=49 h=95 ms=934 errors=0
+SAMPLE kind=memory mono=0 rect=0 sample=1 calls=128 x=0 y=0 w=49 h=95 ms=2856 errors=0
+SAMPLE kind=memory mono=0 rect=0 sample=2 calls=128 x=0 y=0 w=49 h=95 ms=2856 errors=0
+SAMPLE kind=display mono=0 rect=0 sample=2 calls=8 x=0 y=0 w=49 h=95 ms=934 errors=0
+SAMPLE kind=memory mono=0 rect=1 sample=0 calls=128 x=4 y=5 w=41 h=85 ms=2581 errors=0
+SAMPLE kind=display mono=0 rect=1 sample=0 calls=8 x=4 y=5 w=41 h=85 ms=769 errors=0
+SAMPLE kind=display mono=0 rect=1 sample=1 calls=8 x=4 y=5 w=41 h=85 ms=769 errors=0
+SAMPLE kind=memory mono=0 rect=1 sample=1 calls=128 x=4 y=5 w=41 h=85 ms=2527 errors=0
+SAMPLE kind=memory mono=0 rect=1 sample=2 calls=128 x=4 y=5 w=41 h=85 ms=2526 errors=0
+SAMPLE kind=display mono=0 rect=1 sample=2 calls=8 x=4 y=5 w=41 h=85 ms=769 errors=0
+READBACK mono=0 source=16777215 target=16777215 display=16777215
+BITMAP mono=1 planes=1 bits=1 width_bytes=8
+SAMPLE kind=memory mono=1 rect=0 sample=0 calls=128 x=0 y=0 w=49 h=95 ms=2802 errors=0
+SAMPLE kind=display mono=1 rect=0 sample=0 calls=8 x=0 y=0 w=49 h=95 ms=933 errors=0
+SAMPLE kind=display mono=1 rect=0 sample=1 calls=8 x=0 y=0 w=49 h=95 ms=934 errors=0
+SAMPLE kind=memory mono=1 rect=0 sample=1 calls=128 x=0 y=0 w=49 h=95 ms=2746 errors=0
+SAMPLE kind=memory mono=1 rect=0 sample=2 calls=128 x=0 y=0 w=49 h=95 ms=2801 errors=0
+SAMPLE kind=display mono=1 rect=0 sample=2 calls=8 x=0 y=0 w=49 h=95 ms=879 errors=0
+SAMPLE kind=memory mono=1 rect=1 sample=0 calls=128 x=4 y=5 w=41 h=85 ms=2472 errors=0
+SAMPLE kind=display mono=1 rect=1 sample=0 calls=8 x=4 y=5 w=41 h=85 ms=715 errors=0
+SAMPLE kind=display mono=1 rect=1 sample=1 calls=8 x=4 y=5 w=41 h=85 ms=714 errors=0
+SAMPLE kind=memory mono=1 rect=1 sample=1 calls=128 x=4 y=5 w=41 h=85 ms=2417 errors=0
+SAMPLE kind=memory mono=1 rect=1 sample=2 calls=128 x=4 y=5 w=41 h=85 ms=2417 errors=0
+SAMPLE kind=display mono=1 rect=1 sample=2 calls=8 x=4 y=5 w=41 h=85 ms=714 errors=0
+READBACK mono=1 source=16777215 target=16777215 display=16777215
+SAMPLE kind=display-identity-full mono=0 rect=0 sample=0 calls=8 x=0 y=0 w=49 h=95 ms=4394 errors=0
+SAMPLE kind=display-identity-pixel mono=0 rect=1 sample=0 calls=8 x=24 y=24 w=1 h=1 ms=4230 errors=0
+SAMPLE kind=display-identity-full mono=0 rect=0 sample=1 calls=8 x=0 y=0 w=49 h=95 ms=4394 errors=0
+SAMPLE kind=display-identity-pixel mono=0 rect=1 sample=1 calls=8 x=24 y=24 w=1 h=1 ms=4229 errors=0
+SAMPLE kind=display-identity-full mono=0 rect=0 sample=2 calls=8 x=0 y=0 w=49 h=95 ms=4394 errors=0
+SAMPLE kind=display-identity-pixel mono=0 rect=1 sample=2 calls=8 x=24 y=24 w=1 h=1 ms=4229 errors=0
+DONE errors=0
+CLEAN stopped

@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "scope": "Independent closed-file verification of completed native probe; original failed harness receipt retained",
+  "reason": "Runner CRLF-sensitive regex counted zero valid records; parser repaired without rerunning or altering timing data",
+  "native_samples": 30,
+  "native_errors": 0,
+  "owned_stopped": true,
+  "lease_released": true,
+  "fat_copies_equal": true,
+  "driver": {
+    "bytes": 54880,
+    "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d"
+  },
+  "native_log_sha256": "d1fda4f2501b4b822e17bde0d730091f56fb6a18ffc4fa0ceb1279524a8843fe"
+}

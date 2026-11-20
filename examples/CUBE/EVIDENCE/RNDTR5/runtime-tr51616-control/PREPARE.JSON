@@ -1,0 +1,52 @@
+{
+  "seed": "C:\\Users\\chad\\Documents\\Codex\\2026-10-27\\task-12\\native-tandy-02",
+  "private_image": true,
+  "profile": "tandytr5",
+  "environment": {
+    "display.drv": {
+      "name": "TR51616.DRV",
+      "bytes": 54880,
+      "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d"
+    },
+    "fonts.fon": {
+      "name": "XTCSYS.FON",
+      "bytes": 4592,
+      "sha256": "c45b5d313109fe0b5fa6e665344accd5fa9de4a5ef35c0f416fe8ca1d83c1326"
+    },
+    "fixedfon.fon": {
+      "name": "XTCFIX.FON",
+      "bytes": 4208,
+      "sha256": "3c02c48996d3f8bc9d5a1825bfee966ca4da97ed3e8331472dc78cbe2a63a971"
+    },
+    "oemfonts.fon": {
+      "name": "XTCOEM.FON",
+      "bytes": 4560,
+      "sha256": "8fc600059c0246a1b43c1af47bef17a34df844b3ae21369ce53b9ecc8ccc3055"
+    }
+  },
+  "cpu": "Tandy 1000 HX 8088 7159092 Hz; RESERVE 32",
+  "memory_kb": 640,
+  "config": {
+    "bytes": 609,
+    "sha256": "db82deeb8481a0cfe656141d0b6c077a61fc3b857a932e637f9b69bb453556aa"
+  },
+  "cube": {
+    "bytes": 16191,
+    "sha256": "ce558e0fdcf73d8499f89aeea65c0a798414cc50506107dac0dbb2f7815bb6ee"
+  },
+  "controller": {
+    "bytes": 7743,
+    "sha256": "2cbc3bfa523143463e59b995d80a03cb1e5dfb7d0d554353a555629ae574fcff"
+  },
+  "scope": "Fresh production cube /Q render/input suite; standalone runtime replacement only, no installer qualification",
+  "driver_identity": {
+    "repository": "astrobleem/oemdisplay-tandy",
+    "path": "distributions/WINXT/TR51616.DRV",
+    "git_blob_sha": "60f9c07f93be544c686d9eda661e73134de63e1e",
+    "display_url": "https://github.com/astrobleem/oemdisplay-tandy/blob/main/distributions/WINXT/TR51616.DRV",
+    "source": "GitHub default branch resolved by connector; immutable blob SHA retained",
+    "bytes": 54880,
+    "sha256": "c03925071ea1dd5943654a7c180c9b7efc59340c4bee5ae086773d4228b9ce3d",
+    "matches_retained_repo": true
+  }
+}

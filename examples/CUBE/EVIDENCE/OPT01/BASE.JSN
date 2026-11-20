@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "scope": "Host C89 policy/math checks only; no native/hardware qualification",
+  "checks": [
+    {
+      "check": "core",
+      "result": "PASS 512 phases; winding, lighting, periodicity, low/high canvas bounds",
+      "sources": {
+        "examples/CUBE/SOURCE/TESTCORE.C": "a21340bf4829541e502abd0a244313192deb05b9ed63b673cb83c3bf982e2eef",
+        "examples/CUBE/SOURCE/CUBECORE.C": "e73cc486cdf1bb33d26da5b8ec69a7b7c6062a981d96602751018f6505864986"
+      }
+    },
+    {
+      "check": "config",
+      "result": "PASS 163 checks",
+      "sources": {
+        "examples/TSHELL/TESTS/CONFIG/TESTCFG.C": "823e220d270698698d579daf75952f6e2123e1d7f8316bd7bbdab8bf6e66d8b8",
+        "examples/TSHELL/SCFGCORE.C": "7c82f01b1f809d35e7425c563afb0046fd0e4d138718988fa8c1f855b2b0302d"
+      }
+    },
+    {
+      "check": "idle",
+      "result": "PASS: ownership, duplicate suppression, hook chaining, held input, modal/capture guards, poll gap, tick wrap, DOS suspension, midnight/backward clocks, remove failure, WEP (30 chained callbacks)",
+      "sources": {
+        "examples/TSHELL/IDLE/tests/HOSTTEST.C": "b174b9ddb9dd9fe0b68c48932f83003dedfecddc7aeb24621d8161ca63fbaae7",
+        "examples/TSHELL/IDLE/TSINPUT.C": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c",
+        "examples/TSHELL/IDLE/TSINPUT.H": "e25e44a53eac398962eb3ccfbae6b045fbe8d87dc0dfd33d27b3acf402101d77",
+        "examples/TSHELL/IDLE/tests/WINSTUB.H": "87725b378f1327c4bad7f817bc32db1cf18e350500bc67195a497a90586bad0f"
+      }
+    },
+    {
+      "check": "hold",
+      "result": "PASS: Hold ownership, chaining, NOREMOVE, make/repeat/break, modifiers, input cancellation, modal guards, tokens, expiry, deferred removal, reentry, partial failures, idle independence and WEP (246 callbacks, 19 post attempts)",
+      "sources": {
+        "examples/TSHELL/IDLE/tests/HOLDTEST.C": "b80113808a96990c0009df051ed3d20d29e129d1326ae6dd55439378827a7af7",
+        "examples/TSHELL/IDLE/TSINPUT.C": "0720b4b00ceb6675bc8b0c1ed511095c940fe9d156c5e632c23faafa611a892c",
+        "examples/TSHELL/IDLE/TSINPUT.H": "e25e44a53eac398962eb3ccfbae6b045fbe8d87dc0dfd33d27b3acf402101d77",
+        "examples/TSHELL/IDLE/tests/WINSTUB.H": "87725b378f1327c4bad7f817bc32db1cf18e350500bc67195a497a90586bad0f"
+      }
+    },
+    {
+      "check": "lifecycle",
+      "result": "PASS frozen source fails activation-policy control; corrected production teardown passes five paths",
+      "sources": {
+        "examples/CUBE/SOURCE/CUBE.C": "8974196ce2f099ca9cae39bd043f9c90077562d13aa686e1d8afe9d2cb571a69"
+      },
+      "control_source_sha256": "dbaa4ba368425fd0cc211159dee6f03b8d38abc66fb8b59216f28f0347ea4733"
+    }
+  ]
+}
