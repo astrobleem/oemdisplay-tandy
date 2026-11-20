@@ -33,7 +33,7 @@ ASSETS={
 }
 T80_PINS={'T80COUR.FON':'fe1d522d802dcd442d3904d35222fa864a3a52f214fe1f0f1fa60e120ece3ea6'}
 COMPACT_DRIVERS={'320C':'CGA32C.DRV','640C':'CGA64C.DRV'}
-COPY=set(COMPACT_DRIVERS.values())|set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE','PANCTL.EXE','PANKEY.DLL','PANCFG.EXE','XTPAN.EXE','PAN.EXE','XYCTL.EXE'}
+COPY=set(COMPACT_DRIVERS.values())|set(T80_PINS)|set(v[1] for v in MODES.values())|set(CGAFONT.FACES)|{'UI6SYS.FON','CG6HELV.FON','XTCSYS.FON','XTCFIX.FON','XTCOEM.FON','CGAGRAB.GR2','CGACTL.EXE','PANCTL.EXE','PANKEY.DLL','PANCFG.EXE','XTPAN.EXE','PAN.EXE','XYCTL.EXE'}
 HELPERS={'CGACTL.EXE','PANCTL.EXE','PANCFG.EXE','XTPAN.EXE','PAN.EXE','XYCTL.EXE'}
 ALL_FILES=COPY|{'XTSTATIC.LGO','WXTSPL01.RLE','LOGOLIC.TXT','OEMSETUP.INF','FONTLIC.TXT','NOTICE.TXT'}
 COMPACT_FILES=ALL_FILES
@@ -156,6 +156,8 @@ def payload(repo,support,drivers,fontout,helper,owner,key,config,window,fixture=
         result[name]=data
     CGAFONT.build(fontout)
     for name in CGAFONT.FACES:result[name]=(fontout/name).read_bytes()
+    ui6=importlib.machinery.SourceFileLoader('cga_ui6',str(repo/'tools/RESUI/UI6.PY')).load_module()
+    result['UI6SYS.FON']=ui6.build()
     # Retain TEXT80 Courier exactly. CGA's proportional Helv preserves the
     # same original 8-row ink with dialog-appropriate advances.
     t80=importlib.machinery.SourceFileLoader('cga_t80font',str(repo/'src/text80/T80FONT.PY')).load_module()
@@ -185,6 +187,9 @@ def emit(repo,out,files,source_commit,fixture=False,compact_only=False):
     """Shared serializer, also used on explicitly marked synthetic fixtures."""
     if out.exists():raise ValueError('Choose a fresh prepared directory')
     if not re.fullmatch('[0-9a-f]{40}',source_commit):raise ValueError('Use the full source commit')
+    if not fixture:
+        ui=importlib.machinery.SourceFileLoader('packet_viewport_ui',str(repo/'tools/RESUI/GRAPHICS.PY')).load_module()
+        files=ui.apply(files)
     if set(files)!=(COMPACT_FILES if compact_only else ALL_FILES):raise ValueError('Incomplete or unexpected CGA packet inventory')
     out.mkdir(parents=True)
     root=out/'packet';folder=root/'CGA';folder.mkdir(parents=True)

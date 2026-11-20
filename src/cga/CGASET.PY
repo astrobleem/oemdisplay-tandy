@@ -25,7 +25,7 @@ def ini_source(repo):
            'const char *sset[5], *fadd[2], *wset[2];')
     for old,new in (
         ('strcpy(sysset[1], "fonts.fon=XTTSYS.FON");',
-         'strcpy(sysset[1], cga_small ? "fonts.fon=CG1SYS.FON" : cga_medium ? "fonts.fon=CG2SYS.FON" : "fonts.fon=XTCSYS.FON");'),
+         'strcpy(sysset[1], cga_readable ? "fonts.fon=UI6SYS.FON" : cga_small ? "fonts.fon=CG1SYS.FON" : cga_medium ? "fonts.fon=CG2SYS.FON" : "fonts.fon=XTCSYS.FON");'),
         ('strcpy(sysset[2], "fixedfon.fon=XTCFIX.FON");',
          'strcpy(sysset[2], (cga_small || cga_medium) ? "fixedfon.fon=CG1FIX.FON" : "fixedfon.fon=XTCFIX.FON");'),
         ('strcpy(sysset[3], "oemfonts.fon=XTCOEM.FON");',

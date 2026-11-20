@@ -16,7 +16,7 @@ without changing files. You can also select directly:
   SETUP C:\WINDOWS 640     640x200 mono, standard controls
   SETUP C:\WINDOWS 640C    Same monochrome resolution, compact UI
 
-320 and 320C select the same 3x5 proportional System, 4x6 fixed/OEM
+320 and 320C select the same six-row UI6 proportional System, 4x6 fixed/OEM
 text and six-row controls. 320L explicitly opts into the former large
 native controls. 640 and 640C retain their standard/compact choices.
 Fonts are included; no manual INI editing or helper copying is needed.

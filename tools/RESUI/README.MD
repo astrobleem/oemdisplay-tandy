@@ -4,7 +4,8 @@ This feature branch starts the all-profile UI correction. It does not declare
 all graphics adapters, text presenters or released packages finished. PPCUI's
 separate PPC512 six-row tester and every accepted graphics module remain intact.
 
-The ordinary CGA `320` argument now selects **CGA32C.DRV + CG1SYS.FON**.
+The current CGA `320` argument selects **CGA32C.DRV + UI6SYS.FON**.
+The six-row follow-up below supersedes the first five-row visual baseline.
 `320C` remains an exact alias, including the interactive menu's ordinary
 320 choice. `320L` explicitly opts into the former large-control native
 profile. The ordinary OEM 320 entry and its 320C alias select the same compact
@@ -43,7 +44,7 @@ assuming that a 640-wide logical desktop gives a 640-wide visible screen.
 Fixed/Terminal/application faces deliberately requesting monospace are
 separate roles from the UI System face.
 
-## Findings and verified 320 slice
+## First checkpoint: five-row 320 slice (superseded visually)
 
 The graphics System faces already have genuinely different advances: CG1
 has `i=2/W=4`, CG2 `2/6`, corrected XTC `4/9`, XTE `4/14`. This does not make
@@ -112,11 +113,9 @@ contains existing licensed support inputs and is not a publication archive.
 CHECK.C/DEF provide the original Win16 geometry/Paintbrush probe. Screenshots
 are native logical Windows pixels; physical sampling/readability is untested.
 
-Next: carry viewport-based System/chrome choices through each graphics
-producer, preserve guards/palettes/timing and explicit fixed-font roles,
-verify representative low/wide/panning families, and check every package's
-selected System/font/OEM mapping. Legacy installed-package upgrade, full
-fresh-media production acceptance and non-CGA runtime coverage remain open.
+The follow-up below carries selection through all eight ordinary graphics OEM
+producers. Full fresh-media acceptance and legacy installed-package upgrades
+remain open; current released archives remain unchanged.
 
 Native settled Paintbrush comparison: [old 320](../../docs/RESUI/OLD320.PNG)
 and [new ordinary 320](../../docs/RESUI/NEW320.PNG).
@@ -131,3 +130,101 @@ announcing the fix as shipped, rebuild and qualify the bundled DOS launcher,
 CGA OEM folder and SFCGA OEM folder together. Their source defaults and
 instructions are now aligned. The other repository was only read, not edited;
 its 320C alias/320L explanation and release-facing wording remain follow-up.
+
+## Six-row caption and graphics-family follow-up
+
+Chad found the first five-row title hard to read. UI6.PY now builds a
+separate original six-row System face with one spacing column, wider m/w,
+and hand-tuned counters/stems. Neither released CG1/CG2 bytes nor PPCUI
+change. The native Paintbrush title exactly matches UI6's 82-pixel glyph
+sequence at (115,0): this verifies the caption uses the selected System
+strike, beyond merely measuring its proportional flag. Native screenshot
+pixels are binary black/white; the supplied crop had 13 grayscale levels
+in its title area. Resampling contributes distortion, but the crowded
+five-row design also needed work; integer enlargement does not repair it.
+The user's attachment is not included in this repository.
+
+| Current compact 320 measurement | Result |
+| --- | ---: |
+| System height / isolated i,W | 6 / 2,6 |
+| Dialog base units | 4x6 |
+| Caption / caption button | 8 / 8x6 |
+| Menu | 7 (one pixel above first checkpoint) |
+| Scrollbars / thumbs | 6 |
+| Paintbrush client height | 185 (first checkpoint 186) |
+| Paintbrush Open buttons | all fit, 12 high, right edge 283 |
+
+Both rebuilt native `320` and `320C` installations/cold starts completed;
+settled menu, Paintbrush and Open captures are byte-identical between them.
+Save-style dialog, actual Paintbrush Open, closure and DOS return passed.
+Ordinary Windows Setup Display > Other also committed CGA32C + UI6 and
+completed a cold-start check. These are source candidates,
+not an update to the released CGA download.
+
+[Previous native title at 4x](../../docs/RESUI/PREV4X.PNG),
+[current title at 4x](../../docs/RESUI/READ4X.PNG), and
+[current full native Paintbrush](../../docs/RESUI/READ320.PNG).
+Integer scaling uses nearest-neighbor; no generated artwork or user image.
+
+GRAPHICS.PY is shared by FONTPACK's eight ordinary graphics OEM stages and
+PACKCGA's existing native serializer. It selects by physical viewport:
+
+| Physical width | System | Chrome / companions |
+| --- | --- | --- |
+| 160 | existing CG1, five rows, i/W 2/4 | 8x6 caption buttons, 6x6 arrows/thumbs; existing 4x6 Fixed/Terminal |
+| 320 | new UI6, six rows, i/W 2/6 | same compact chrome; existing 4x6 Fixed/Terminal |
+| 640 | corrected XTC, eight rows, i/W 4/9 | existing HPXY 16x8 buttons, 12x8 arrows, 8/12 thumbs; original 8-pixel fixed faces |
+
+HPXY retains its accepted driver bytes and existing compact chrome because
+FIXXT DISPLAY validates that identity; its OEM System/companion selection
+changes. Explicit CGA320L and 640C choices are retained. CGA100 and its
+160x100-view pan keep their established compact path. The private PPCUI and
+nonblanking PPC512 variants are not inputs to this producer.
+
+The resource transplant checks all original file-backed segments and fixups,
+unbacked data contracts, target aspect/color configuration and palette.
+Only OEM bitmaps, UI geometry and default variable-face descriptors change.
+Fixed/Terminal **bytes and monospace behavior** remain exact, but low-viewport
+OEM selections now use the project's existing 4x6 companions. This matters:
+on fixed 160x200 the same small dialog shrank from 218 to 114 pixels wide;
+its overflow disappeared. Blindly preserving the old eight-pixel selection
+would preserve oversized controls despite a proportional System face.
+
+CHECKPKG.PY checks every one of the 21 staged OEM display entries for real
+variable System advances, complete System/Fixed/Terminal groups, exact fixed
+font bytes and resource-only driver reconstruction. All eight archive builds
+and exact rebuild verification passed. No standalone records are emitted.
+Use SYSFONT/PACK.PY --out NEW_PRIVATE_DIRECTORY, then CHECKPKG.PY DIRECTORY.
+BUILD320.PY produces the normal native candidate source/payload; compile it
+with the existing C6 workflow. Private support inputs are not distributable.
+
+Representative Windows 3.0 real-mode / 8086-prefetch runs used normal 640 KB,
+no EMS/XMS/UMB, and the existing lease/watchdog. In addition to both native
+320 aliases, wide CGA640 measured System 4/9, menu 9, caption 10, 16x8 caption
+buttons and 12x8 scrollbars; Paintbrush Open and DOS return passed.
+PCjr JRPAN measured a 640x400 desktop / 320x200 view, System 2/6, caption 8,
+menu 7 and six-pixel scrollbars. Its unchanged JRGUARD passed; panning to
+(320,200) and restoring to (0,0) succeeded. Fixed Tandy160's unchanged RESERVE
+reserved 16 KB and its compact System measured 2/4; Windows returned to DOS.
+
+There are real remaining limits. Fixed 160x200 Paintbrush Open still places
+buttons through x=173 on a 160-wide screen, even though the small dialog now
+fits. Do not call that profile a complete application-layout pass or shrink
+all text indiscriminately to hide it. Panning dialogs are measured against
+the logical desktop; their full bounds may require moving the viewport.
+The ordinary OEM consumer install paths outside CGA and full fresh-media/
+legacy-upgrade acceptance have not been rerun. The dedicated FRESH640 media
+producer and full/fixed WINXT producers are not repackaged by this checkpoint.
+Video II still needs an actual matching SL/2 fixture. No physical adapter,
+scanout timing, snow/flicker or hardware readability qualification is claimed.
+
+A faithful universal proportional TEXT80/TXT40 backend is not supplied.
+CGA's ROM text glyphs cannot express arbitrary pixel tiles. Even writable
+EGA/VGA text fonts offer a finite simultaneous glyph bank and only two
+colors per character cell; arbitrary Windows pixels can exceed both limits.
+A cache would have to approximate, reject drawing after startup, or change
+modes. None is a transparent faithful same-mode fallback. Existing text
+mode defaults remain untouched, not completed or exempt. Next action is
+an explicit separate backend/design decision: a bounded writable-font trial
+with honest rendering limits, or an explicitly selected graphics backend;
+never silently promote a proportional flag on the current cell presenter.

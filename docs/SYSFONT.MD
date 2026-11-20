@@ -3,7 +3,7 @@
 These drivers-only packages revise the Windows **System** face used by menus,
 titles and controls. Each font resource preserves its own advances, metadata
 and extended coverage; Fixed/Terminal faces are retained. The source CGA 320
-default now selects compact CG1 and its matching controls, so that selection
+default now selects separate six-row UI6 and compact controls, so that selection
 changes UI metrics compared with the former large profile. The approved nine-pixel M/W and I/J/C/E/S
 spacing remain intact. Existing low-resolution dialog clipping can remain.
 
@@ -40,15 +40,19 @@ its matching driver launcher/guard; respect every reservation failure. See the
 included `SYSFONT.TXT` and existing hardware instructions. No Python or new
 installer is needed. Existing full-install archives remain available.
 
-Tandy 320×200×16 uses twelve-row XTE; the other fixed Tandy modes and shared XTC
-paths use eight-row XTC. CGA100 uses five-row CG1. Source CGA OEM Setup's
-ordinary **320 and 320C** choices now both select **proportional five-row CG1
-and compact controls**, matching the native installer. Generic 640 and the
-explicit legacy large OEM entry retain XTC. The six-row CG2 face remains
-available to the native legacy 320L choice. No display-module bytes change.
-PCjr/ColorPlus retain their XTE choices; PC1512, Video II and Yamaha paths
-retain XTC selection at this checkpoint. Their resolution-aware controls
-remain part of the broader unfinished work.
+The released packages retain their original profile selections: XTE for
+Tandy 320x200x16 and PCjr/ColorPlus; XTC for the other broad graphics paths;
+CG1/CG2 for compact CGA. The feature-branch OEM producer now selects by
+physical viewport: CG1 at 160 pixels, separate hand-tuned six-row UI6 at
+320 pixels, and corrected XTC at 640 pixels. Low viewports select existing
+4x6 Fixed/Terminal companions so Windows 3.0 dialogs also scale appropriately;
+the font bytes and deliberate monospace behavior are preserved. Graphics
+OEM chrome changes while rendering segments, fixups, aspect, palettes and
+memory guards remain exact. HPXY retains its already compact accepted driver
+identity for its normal guarded launcher. The ordinary CGA 320 and 320C
+paths agree, while 320L explicitly retains the legacy large option.
+See [the current measured limits](../tools/RESUI/README.MD), including
+remaining 160-pixel application-dialog overflow and text-mode rendering gaps.
 
 Native emulator checks covered font widths/pixels, menus/dialogs, cold starts,
 ordinary Setup switching and shared panning paths. Video II's font selection and

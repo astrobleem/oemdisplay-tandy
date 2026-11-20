@@ -30,7 +30,14 @@ def resources(b):
    rows.append(dict(type=typ,id=ident,flags=flags,data=b[off<<shift:(off+size)<<shift]))
  return ne,shift,rows
 def compact(original,donor):
- ne,shift,rows=resources(original);_,_,small=resources(donor);wanted={}
+ out,record=transplant(original,resources(donor)[2])
+ record['donor']=pin(donor)
+ record['method']='Exact CGA100 compact OEM resource transplant; original segments/fixups preserved'
+ return out,record
+
+def transplant(original,small):
+ # Shared resource-only rebuilder; validates all original segments/fixups.
+ ne,shift,rows=resources(original);wanted={}
  if not all(any(r['type']==0xf006 and r['id']==i for r in small) for i in (0x8001,0x8003)):
   raise ValueError('Compact OEM config/font descriptors missing')
  for r in small:
@@ -82,4 +89,4 @@ def compact(original,donor):
  actual={(r['type'],r['id']):r['data'] for r in resources(out)[2]}
  for r in small:
   if r['type']==0x8002 or (r['type']==0xf006 and r['id'] in (0x8001,0x8003)):assert actual[r['type'],r['id']]==r['data']
- return bytes(out),dict(method='Exact CGA100 OEM bitmap/config/font-descriptor resource transplant; conventional resource table expanded and NE file offsets rebased; all10file-backed original segments including fixups remain byte-identical; unbacked data segment size/flags unchanged',header_growth=delta,segments=segments,changed=changed,additional_ids=[r['id'] for r in wanted.values()],input=pin(original),donor=pin(donor),output=pin(out))
+ return bytes(out),dict(method='OEM bitmap/config/font-descriptor transplant; conventional resource table expanded and NE offsets rebased; original segments/fixups and unbacked segment contracts preserved',header_growth=delta,segments=segments,changed=changed,additional_ids=[r['id'] for r in wanted.values()],input=pin(original),output=pin(out))

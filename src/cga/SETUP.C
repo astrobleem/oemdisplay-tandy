@@ -17,7 +17,7 @@ typedef char cga_u32_check[sizeof(U32)==4?1:-1];
 #include "CRCFAST.H"
 typedef struct {const char *name,*target;U32 size,crc;} CGAFILE;
 #include "CGAPINS.H"
-static int cga_small,cga_medium;
+static int cga_small,cga_medium,cga_readable;
 static int cga_discard(void);
 #ifdef HOST_TEST
 #include "HOSTTEST.H"
@@ -327,7 +327,7 @@ int main(int argc,char **argv)
     if(readfile(in("SYSTEM.INI"))<0 || readfile(in("WIN.INI"))<0)
         return fail("Cannot read Windows INIs, or an INI exceeds 18000 bytes; nothing copied.");
     cga_small=!strcmp(mode,"100") || pan || compact32 || compact64;   /* Small and optional compact profiles share fonts/settings. */
-    cga_medium=!stricmp(mode,"320L");
+    cga_medium=!stricmp(mode,"320L");cga_readable=compact32;
     if(!payload_location(argv[0]))return fail("Packet path too long.");
     if(exists(in("CGACOPY.NEW")))return fail("Incomplete copy record; no files changed. Keep it for diagnosis.");
     /* Upgrade an exact recognized prior packet through its normal undo path.

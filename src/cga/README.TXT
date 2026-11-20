@@ -30,7 +30,7 @@ change to Windows and start:
   CD \WINDOWS
   WIN /R
 
-320 and 320C select exactly the same proportional 3x5 System font,
+320 and 320C select exactly the same proportional six-row UI6 System font,
 4x6 Fixed/Terminal faces and six-row controls. The former large-control
 native profile is now explicit opt-in 320L. 640/640C are unchanged.
 Enter at the menu cancels without changes; 100/PAN are unchanged.

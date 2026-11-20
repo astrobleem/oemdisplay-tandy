@@ -28,7 +28,7 @@ ColorPlus CPWIN expects C:\CPPAN; Video II T2WIN expects C:\T2EXP.
 Extract those folders to their expected locations before using the launcher.
 Do not ignore a reservation failure.
 The source CGA descriptor now makes ordinary 320 and 320C select the same
-proportional five-row CG1 System and compact controls, matching the native
+proportional six-row UI6 System and compact controls, matching the native
 installer. Generic 640 and the explicit large OEM choice retain eight-row
 XTC; the native legacy 320L choice retains six-row CG2. Published CGA/SFCGA
 downloads still have their prior selection until rebuilt and released.
@@ -36,7 +36,13 @@ See tools/RESUI/README.MD for the measured feature-branch checkpoint.
 There is no added updater, version recognition, backup or rollback program.
 
 ASCII drawings are revised; extended coverage and fallbacks stay as before.
-Fixed/OEM fonts and TEXT80/TXT40 fixed-cell System fonts are unchanged.
+Fixed/OEM font bytes and TEXT80/TXT40 fonts are unchanged. Low-viewport
+graphics OEM choices select existing 4x6 Fixed/Terminal companions so
+Windows 3.0 dialog templates also scale; these remain deliberate monospace.
+The feature branch uses CG1 at 160 pixels, separate original UI6 at 320
+pixels and corrected XTC at 640 pixels, with viewport-appropriate OEM chrome.
+Only resources change: rendering, aspect, palette and memory guards stay
+exact. HPXY retains its accepted driver identity and existing compact chrome.
 Proportional UI rendering remains unsupported in TEXT80/TXT40. Their
 presenters recognize eight-row glyphs with eight-pixel advances and show
 one BIOS character per cell. Variable advances lose that text recognition

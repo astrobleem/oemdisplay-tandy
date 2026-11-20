@@ -148,7 +148,8 @@ are unchanged at this checkpoint. All profiles remain fixed-resolution.
 *Historical large-versus-compact Windows 3.0 captures, displayed at 4:3 with
 nearest-neighbor pixels. The compact views use the real smaller fonts and
 OEM resources; only the presentation of the captures is enlarged. The compact
-320 view is now the 320/320C default; the large native view is 320L.*
+320 control geometry is now the 320/320C default. The current feature
+branch improves its System glyphs to six rows; the large native view is 320L.*
 
 ## Install the selected driver
 

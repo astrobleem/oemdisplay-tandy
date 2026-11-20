@@ -81,6 +81,8 @@ def drivers(out,packet=None):
  kit=machinery.SourceFileLoader('package_system_fonts',str(ROOT/'tools/SYSFONT/BUILD.PY')).load_module()
  for name in ('CG1SYS.FON','CG2SYS.FON','XTCSYS.FON','XTESYS.FON'):
   if name in body:body[name]=kit.improve(name,kit.source(name))
+ ui=machinery.SourceFileLoader('resolution_ui',str(ROOT/'tools/RESUI/GRAPHICS.PY')).load_module()
+ body=ui.apply(body)
  body['SYSFONT.TXT']=(ROOT/'tools/SYSFONT/README.TXT').read_bytes()
  out.mkdir(parents=True)
  for name,data in body.items():
