@@ -16,7 +16,7 @@ def verify(data):
         p=Path(name)
         if p.is_absolute()or '..'in p.parts or ':'in name or '\\'in name:raise ValueError('Unsafe frozen fresh path')
         body=frozen[name]if name in NAMES else(ROOT/p).read_bytes()
-        if name=='docs/CGA.MD'and identity(body)!=want:
+        if name in ('docs/CGA.MD','src/cga/FRESH.TXT')and identity(body)!=want:
             replay=importlib.machinery.SourceFileLoader('fresh_original_cga_guide',str(ROOT/'tools/CGACMP/REPLAY.PY')).load_module()
             body=replay.original(name,want)
         if identity(body)!=want:raise ValueError('Changed original fresh proof: '+name)

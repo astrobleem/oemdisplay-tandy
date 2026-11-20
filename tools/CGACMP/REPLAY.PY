@@ -10,12 +10,12 @@ REVISION='cba234b88b0d120ca7b31bfefbc1b4de3f9fc822'
 INPUTS=frozenset(('src/cga/SETUP.C','src/cga/PACKCGA.PY','src/cga/CGASET.PY',
  'src/cga/CMPRSC.PY','src/cga/OEMSETUP.INF','tools/PAN/GUIDES/CGA.TXT'))
 GATE='tools/CGACMP/VERIFY.PY'
-FRESH_GUIDE='docs/CGA.MD'
+FRESH_INPUTS=frozenset(('docs/CGA.MD','src/cga/FRESH.TXT'))
 
 def identity(data):return dict(bytes=len(data),sha256=hashlib.sha256(data).hexdigest())
 
 def original(name,pin):
- if name not in INPUTS and name not in (GATE,FRESH_GUIDE):
+ if name not in INPUTS and name!=GATE and name not in FRESH_INPUTS:
   raise ValueError('Changed historical source outside immutable UI replay: '+name)
  try:
   data=subprocess.check_output(['git','show',REVISION+':'+name],cwd=ROOT,stderr=subprocess.PIPE)
