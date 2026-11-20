@@ -53,6 +53,8 @@ IN ORIGINAL SETUP
    - Windows XT CGA fresh Setup: C:\CGAKIT\FRESH640.
    - Microsoft Windows 3.0 Disk #1 (or another Windows disk): C:\W30SRC.
      With original floppies, insert the requested Windows disk and use A:\.
+   - If the disk name is blank and Copying shows CGA.GR2, give the original
+     Windows Disk 3 path (C:\W30SRC when using the combined media folder).
    Setup may prefill the path from the previous disk request. Replace it
    when it names the other disk; do not accept the old path automatically.
    Choose the keyboard and mouse appropriate to your own computer.
