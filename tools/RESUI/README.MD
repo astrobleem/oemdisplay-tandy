@@ -120,3 +120,14 @@ fresh-media production acceptance and non-CGA runtime coverage remain open.
 
 Native settled Paintbrush comparison: [old 320](../../docs/RESUI/OLD320.PNG)
 and [new ordinary 320](../../docs/RESUI/NEW320.PNG).
+
+## Release/front-door handoff
+
+The separate windows-3-cga README's Choose a display mode section directs
+users to plain 320 and lists 100/PAN/320/640. Its Download CGA.ZIP link points
+to oemdisplay-tandy's windows-xt release, whose archive is unchanged here.
+That existing download still selects the old large native 320 path. Before
+announcing the fix as shipped, rebuild and qualify the bundled DOS launcher,
+CGA OEM folder and SFCGA OEM folder together. Their source defaults and
+instructions are now aligned. The other repository was only read, not edited;
+its 320C alias/320L explanation and release-facing wording remain follow-up.

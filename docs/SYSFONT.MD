@@ -1,9 +1,15 @@
 # Graphics System fonts
 
 These drivers-only packages revise the Windows **System** face used by menus,
-titles and controls. They preserve all glyph advances, dialog metrics, extended
-characters and Fixed/Terminal fonts. The approved nine-pixel M/W and I/J/C/E/S
+titles and controls. Each font resource preserves its own advances, metadata
+and extended coverage; Fixed/Terminal faces are retained. The source CGA 320
+default now selects compact CG1 and its matching controls, so that selection
+changes UI metrics compared with the former large profile. The approved nine-pixel M/W and I/J/C/E/S
 spacing remain intact. Existing low-resolution dialog clipping can remain.
+
+> Feature-branch checkpoint: the download links below still serve the prior
+> release packages. The new 320 default requires rebuilt CGA/SFCGA packages;
+> see [the UI checkpoint](../tools/RESUI/README.MD).
 
 | Hardware | Driver source with revised System fonts |
 | --- | --- |
@@ -35,12 +41,14 @@ included `SYSFONT.TXT` and existing hardware instructions. No Python or new
 installer is needed. Existing full-install archives remain available.
 
 Tandy 320×200×16 uses twelve-row XTE; the other fixed Tandy modes and shared XTC
-paths use eight-row XTC. CGA100 uses five-row CG1. Generic CGA OEM Setup standard
-320/640 choices select **eight-row XTC**, and its compact choices select CG1.
-The included six-row CG2 resource serves the existing dedicated 320 profile;
-selecting generic 320 does not activate CG2. The existing descriptors and driver
-binaries retain their behavior. PCjr/ColorPlus use their existing XTE choices;
-PC1512, Video II and Yamaha paths retain XTC selection.
+paths use eight-row XTC. CGA100 uses five-row CG1. Source CGA OEM Setup's
+ordinary **320 and 320C** choices now both select **proportional five-row CG1
+and compact controls**, matching the native installer. Generic 640 and the
+explicit legacy large OEM entry retain XTC. The six-row CG2 face remains
+available to the native legacy 320L choice. No display-module bytes change.
+PCjr/ColorPlus retain their XTE choices; PC1512, Video II and Yamaha paths
+retain XTC selection at this checkpoint. Their resolution-aware controls
+remain part of the broader unfinished work.
 
 Native emulator checks covered font widths/pixels, menus/dialogs, cold starts,
 ordinary Setup switching and shared panning paths. Video II's font selection and
@@ -49,6 +57,8 @@ on a matching SL/2 fixture. PC1 checks establish logical Windows rendering, not
 physical scanout. Physical hardware remains untested, and fonts do not fix or
 diagnose PPC512 flicker. The separate PPCAB comparison is not included.
 
-TEXT80/TXT40 retain their eight-pixel fixed-cell fonts. Proportional glyphs are
-not supported by those presenters; these graphics packages do not change their
-ROM text faces. Optional application fonts remain a separate choice.
+TEXT80/TXT40 remain an open requirement. Their selected System face still
+has eight-pixel fixed advances, and the current cell presenters cannot render
+arbitrary proportional glyph pixels exactly. This checkpoint does not change
+their defaults, implement an exact pixel fallback, or mark them complete or
+exempt. Deliberate monospace application/Terminal faces are a separate role.
