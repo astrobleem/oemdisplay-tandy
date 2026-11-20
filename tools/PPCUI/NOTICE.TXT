@@ -1,0 +1,15 @@
+Optional PPC512 160x100 System UI tester
+
+Both display modules are the existing CGALIVE.DRV from the PPCAB kit at
+commit 1c2d56105c863d03a18f09de4083b63d9f2f8869, under separate filenames.
+They retain the project renderer's Microsoft/DDK component notices and
+licensing. No blanket MIT license applies to the adapted display renderer.
+The underlying source is src/cga and src/tandysw, with the nonblanking
+CGAVRAM helper in the published PPCAB kit. No driver code was changed.
+PPCSYS6.FON is original project art from tools/PPCUI/FONT.PY, using the
+existing project FNT/NE writer and original CGA ASCII drawings. FONTLIC.TXT
+covers these original fonts. Fixed/OEM fonts are unchanged. LOGOLIC.TXT
+covers the selected original project startup art.
+No stock Microsoft Windows/DOS executable, font or grabber is included.
+Windows Setup obtains CGA.GR2 from the user's licensed Windows media.
+No installer, update/version recognition or checksum program is supplied.
