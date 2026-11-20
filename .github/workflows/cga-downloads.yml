@@ -1,0 +1,43 @@
+name: Publish qualified CGA downloads
+on:
+  push:
+    branches: [main]
+    paths: ['downloads/RESUI/CGA.ZIP', 'downloads/RESUI/CGASRC.ZIP']
+permissions:
+  contents: read
+concurrency:
+  group: qualified-cga-downloads
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'astrobleem/oemdisplay-tandy'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - name: Verify and publish the two qualified CGA archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          for f in CGA.ZIP CGASRC.ZIP; do
+            unzip -tqq "downloads/RESUI/$f"
+          done
+          for f in CGA.ZIP CGASRC.ZIP; do
+            test "$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')" = "$GITHUB_SHA"
+            if gh release download windows-xt --repo "$GITHUB_REPOSITORY" --pattern "$f" --output "$RUNNER_TEMP/live-$f" && cmp -s "downloads/RESUI/$f" "$RUNNER_TEMP/live-$f"; then
+              continue
+            fi
+            gh release upload windows-xt --repo "$GITHUB_REPOSITORY" --clobber "downloads/RESUI/$f"
+          done
+          for f in CGA.ZIP CGASRC.ZIP; do
+            curl -fsSL --retry 5 --retry-all-errors --retry-delay 3 \
+              "https://github.com/$GITHUB_REPOSITORY/releases/download/windows-xt/$f" -o "$RUNNER_TEMP/check-$f"
+            cmp "downloads/RESUI/$f" "$RUNNER_TEMP/check-$f"
+          done
