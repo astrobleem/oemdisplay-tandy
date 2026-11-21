@@ -24,6 +24,6 @@ def stage(out):
   if path.suffix.upper() in ('.JSN','.JSON','.SHA','.SUM'):return
   original(path,text)
  P.write=no_records
- try:P.emit(ROOT,out,files,subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),compact_only=True)
+ try:P.emit(ROOT,out,files,subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),compact_only=True,tight640=True)
  finally:P.write=original
 if __name__=='__main__':stage(Path(sys.argv[1]).resolve())

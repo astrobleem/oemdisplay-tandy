@@ -14,7 +14,7 @@ CRC_SHA = 'dd29ef85d0e3f6935fd7eaa0e416f553f29283f96d597f5fec2698035efd5ed8'
 HERE = Path(__file__).resolve().parent
 
 
-def ini_source(repo):
+def ini_source(repo, *, tight640=False):
     raw=(repo/'src/text80/T80SET.C').read_bytes()
     if hashlib.sha256(raw).hexdigest()!=T80_SHA:
         raise ValueError('Unreviewed T80SET.C transaction input')
@@ -37,6 +37,11 @@ def ini_source(repo):
         ('"Helv 8x8 (TEXT80)=T80HELV.FON"','cga_small ? "Helv 3x5 (CGA100)=CG1HELV.FON" : cga_medium ? "Helv 4x6 (CGA320)=CG2HELV.FON" : "Helv proportional 8-row (CGA640)=CG6HELV.FON"'),
         ('"Courier 8x8 (TEXT80)=T80COUR.FON"','cga_small ? "Courier 4x5 (CGA100)=CG1COUR.FON" : cga_medium ? "Courier 4x6 (CGA320)=CG1FIX.FON" : "Courier 8x8 (CGA640)=T80COUR.FON"'),
     ): s=once(s,old,new)
+    if tight640:
+        # Only 640 falls through the small/readable/legacy-large font selection.
+        s=once(s,'        strcpy(sysset[2],',
+               '        if (!cga_small && !cga_medium && !cga_legacy) strcpy(sysset[1], CGA_TIGHT640);\n'
+               '        strcpy(sysset[2],')
     s=s.replace('SYSTEM.T80','SYSTEM.CG0').replace('WIN.T80','WIN.CG0')
     s=s.replace('.T8N','.CGN').replace('.T8O','.CGO')
     s=s.replace('T80SET','CGASET').replace('TEXT80','CGA').replace('BorderWidth=7','BorderWidth=1')
@@ -66,7 +71,7 @@ def stage(repo,out,header):
     if hashlib.sha256(crc.read_bytes()).hexdigest()!=CRC_SHA:
         raise ValueError('Unreviewed shared CRC header')
     out.mkdir(parents=True,exist_ok=False)
-    write(out/'INICGA.C',ini_source(repo))
+    write(out/'INICGA.C',ini_source(repo,tight640='#define CGA_TIGHT640 ' in header))
     (out/'SETUP.C').write_bytes((HERE/'SETUP.C').read_bytes())
     (out/'CRCFAST.H').write_bytes(crc.read_bytes())
     write(out/'CGAPINS.H',header)

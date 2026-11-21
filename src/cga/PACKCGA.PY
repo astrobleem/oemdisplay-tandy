@@ -183,14 +183,19 @@ def payload(repo,support,drivers,fontout,helper,owner,key,config,window,fixture=
     return result
 
 
-def emit(repo,out,files,source_commit,fixture=False,compact_only=False):
+def emit(repo,out,files,source_commit,fixture=False,compact_only=False,*,tight640=False):
     """Shared serializer, also used on explicitly marked synthetic fixtures."""
     if out.exists():raise ValueError('Choose a fresh prepared directory')
     if not re.fullmatch('[0-9a-f]{40}',source_commit):raise ValueError('Use the full source commit')
     if not fixture:
         ui=importlib.machinery.SourceFileLoader('packet_viewport_ui',str(repo/'tools/RESUI/GRAPHICS.PY')).load_module()
         files=ui.apply(files)
-    if set(files)!=(COMPACT_FILES if compact_only else ALL_FILES):raise ValueError('Incomplete or unexpected CGA packet inventory')
+    extra=set()
+    if tight640:
+        font=importlib.machinery.SourceFileLoader('cga_tight640',str(repo/'tools/RESUI/TIGHT640.PY')).load_module()
+        files[font.FONT]=font.build(files['XTCSYS.FON'])
+        extra.add(font.FONT)
+    if set(files)!=((COMPACT_FILES if compact_only else ALL_FILES)|extra):raise ValueError('Incomplete or unexpected CGA packet inventory')
     out.mkdir(parents=True)
     root=out/'packet';folder=root/'CGA';folder.mkdir(parents=True)
     for name,data in sorted(files.items()):
@@ -198,7 +203,7 @@ def emit(repo,out,files,source_commit,fixture=False,compact_only=False):
         # The existing native copy contract gathers the stock grabber from
         # the owner's installed Windows. It is not a redistributed payload.
         if name!="CGAGRAB.GR2":(folder/name).write_bytes(data)
-    pin={name:dict(identity(data),installed=name if name in COPY else '',
+    pin={name:dict(identity(data),installed=name if name in COPY or name in extra else '',
                    destination='WINDOWS' if name in HELPERS else 'SYSTEM' if name in COPY else '')
          for name,data in sorted(files.items())}
     token=hashlib.sha256(json.dumps(pin,sort_keys=True).encode()).hexdigest()
@@ -221,6 +226,7 @@ def emit(repo,out,files,source_commit,fixture=False,compact_only=False):
         if not set(oldpin)<set(pin):raise ValueError('Review prior compact upgrade inventory')
         olds.append((oldpin,hashlib.sha256(json.dumps(oldpin,sort_keys=True).encode()).hexdigest()))
     header='#define CGA_MAX_COUNT '+str(max([len(pin)]+[len(p) for p,t in olds]))+'\n'
+    if tight640:header+='#define CGA_TIGHT640 "fonts.fon='+font.FONT+'"\n'
     header+='#define CGA_VERSIONS '+str(1+len(olds))+'\n'
     header+='static CGAFILE cga_new_files[]={\n'
     for name,row in pin.items():
@@ -251,6 +257,7 @@ def emit(repo,out,files,source_commit,fixture=False,compact_only=False):
              helper_autoload_modes=['100','320','320C','640','640C','PAN'],
              helper_by_mode={'100':'CGACTL.EXE','320':'CGACTL.EXE','640':'CGACTL.EXE','320C':'CGACTL.EXE','640C':'CGACTL.EXE','PAN':'PANCTL.EXE'},
              helper_normal_modes='Set disabled text black, then exit; no resident placement owner')
+    if tight640:rec['tight640']=True
     write(out/'PREPARED.JSN',json.dumps(rec,indent=2)+'\n')
     return rec
 
@@ -262,7 +269,8 @@ def verify(out):
     if any(p.is_symlink() for p in paths):raise ValueError('Linked packet content refused')
     external_grabber='join(srcpath,systemdir,"CGA.GR2")' in (out/'native-src/SETUP.C').read_text()
     omitted={'CGAGRAB.GR2'} if external_grabber else set()
-    expected={'README.TXT'}|{'CGA/'+name for name in ((COMPACT_FILES if rec.get('compact_only') else ALL_FILES)-omitted)}
+    extra={'XTCLITE.FON'} if rec.get('tight640') else set()
+    expected={'README.TXT'}|{'CGA/'+name for name in (((COMPACT_FILES if rec.get('compact_only') else ALL_FILES)|extra)-omitted)}
     if {p.relative_to(root).as_posix() for p in paths if p.is_file()}!=expected:
         raise ValueError('Expanded packet inventory changed')
     if {p.relative_to(root).as_posix() for p in paths if p.is_dir()}!={'CGA'}:

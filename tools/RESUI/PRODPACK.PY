@@ -10,6 +10,7 @@ ROOT=Path(__file__).resolve().parents[2]
 F=M.SourceFileLoader('production_fresh',str(ROOT/'src/cga/FRESHPK.PY')).load_module()
 G=M.SourceFileLoader('production_ui',str(ROOT/'tools/RESUI/GRAPHICS.PY')).load_module()
 O=M.SourceFileLoader('production_media',str(ROOT/'tools/RESUI/OWNMEDIA.PY')).load_module()
+T=M.SourceFileLoader('production_tight640',str(ROOT/'tools/RESUI/TIGHT640.PY')).load_module()
 
 def stage(native,out):
  if out.exists():raise ValueError('Fresh candidate directory required')
@@ -17,6 +18,12 @@ def stage(native,out):
  fresh['NOTICE.TXT']=(ROOT/'src/cga/NOTICE.TXT').read_bytes()
  fresh['XTCSYS.FON']=(ROOT/'tools/SYSFONT/BIN/XTCSYS.FON').read_bytes()
  fresh=O.strip(G.apply(fresh))
+ # This OEM packet contains only CGA640, so no other display shares its
+ # group. The combined CGA packet retains XTCSYS for its old OEM choices.
+ original_font=b'a:XTCSYS.FON,'
+ if fresh['OEMSETUP.INF'].count(original_font)!=1:raise ValueError('Unexpected FRESH640 System font row')
+ fresh[T.FONT]=T.build(fresh.pop('XTCSYS.FON'))
+ fresh['OEMSETUP.INF']=fresh['OEMSETUP.INF'].replace(original_font,('a:'+T.FONT+',').encode('ascii'))
  out.mkdir(parents=True);shutil.copytree(native/'packet',out/'expanded')
  for n,b in fresh.items():F.save(out/'expanded/FRESH640'/n,b)
  previous=F.inputs;F.inputs=lambda repo:(original,fresh)
