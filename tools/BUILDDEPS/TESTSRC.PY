@@ -6,20 +6,63 @@ import importlib.machinery
 import json
 from pathlib import Path
 import tempfile
+import sys
+from unittest.mock import patch
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--view", type=Path, required=True)
+    parser.add_argument("--bounds-source", type=Path,
+                        help="Optional staged directory containing the two bounds modules")
     args = parser.parse_args()
     repo = args.view.resolve()
     source = repo / "src/tandysw"
     modules = {}
     for name in ("build", "PORT8086", "PORTDIB", "MODEPROF", "REPCOPY88",
-                 "BYTECOL", "CURKEEP", "OUTROWS", "WIDESCAN"):
+                 "BYTECOL", "CURKEEP", "OUTROWS", "WIDESCAN", "OUTPUTBOUNDS", "TEXTBOUNDS"):
         suffix = ".py" if name == "build" else ".PY"
+        module_source = (args.bounds_source if args.bounds_source is not None and
+                         name in ("OUTPUTBOUNDS", "TEXTBOUNDS") else source)
         modules[name] = importlib.machinery.SourceFileLoader(
-            "external_" + name, str(source / (name + suffix))).load_module()
+            "external_" + name, str(module_source / (name + suffix))).load_module()
+    # Exercise the unchanged CLI and additive --fixed wrapper without a guest.
+    class StageReady(Exception):
+        pass
+
+    def stop_before_native(*args, **kwargs):
+        raise StageReady()
+
+    with patch.dict(sys.modules, {"build": modules["build"]}):
+        builder = importlib.machinery.SourceFileLoader(
+            "external_bounds_builder", str(source / "BUILD88.PY")).load_module()
+    builder.bounded_run = stop_before_native
+
+    wrapper = importlib.machinery.SourceFileLoader(
+        "external_bounds_wrapper", str(Path(__file__).resolve().parents[1] /
+                                       "HPDIB/BLDBNDS.PY")).load_module()
+    bounds_source = args.bounds_source or source
+
+    def cli_stage(out, mode, bounded):
+        argv = ["BLDBNDS.PY" if bounded else "BUILD88.PY", "--repo", str(repo),
+                "--dosbox", "__not_run__", "--out", str(out), "--mode", mode]
+        if bounded:
+            argv.append("--fixed")
+            fixed = wrapper.fixed_builder(source / "BUILD88.PY", bounds_source)
+            fixed.bounded_run = stop_before_native
+        with patch.object(sys, "argv", argv):
+            try:
+                if bounded:
+                    with patch.object(wrapper, "fixed_builder", return_value=fixed):
+                        wrapper.main()
+                else:
+                    builder.main()
+            except StageReady:
+                return {(str(folder) + "/" + p.relative_to(out / folder).as_posix()): p.read_bytes()
+                        for folder in ("renderer", "resources")
+                        for p in (out / folder).rglob("*") if p.is_file()}
+        raise AssertionError("CLI did not stop before native execution")
+
     baseline = json.loads((repo / "docs/TRIAL4/BUILDS.JSN").read_bytes())
     wanted = json.loads((repo / "docs/TRIAL5/BUILDS.JSN").read_bytes())
     for name, digest in baseline["source_files"].items():
@@ -50,6 +93,64 @@ def main():
             output = (renderer / "EGA/TSOFT.ASM").read_bytes()
             assert hashlib.sha256(output).hexdigest() == wanted["profiles"][mode]["staged_source_sha256"], mode
             assert b"\n" not in output.replace(b"\r\n", b""), mode
+            bounds = modules["OUTPUTBOUNDS"]
+            changed = bounds.port(renderer, mode)
+            final = (renderer / "EGA/TSOFT.ASM").read_bytes()
+            assert changed["changed"], mode
+            assert final == bounds.transform(output, mode)
+            assert changed["added_data_bytes"] == 0
+            assert changed["extra_local_stack_bytes"] == 4
+            assert changed["extra_flush_save_bytes"] == 4
+            assert final.replace(bounds.NEW_GATE.encode("latin1"),
+                                 bounds.OLD_GATE.encode("latin1")) == output
+            for invalid in (b"", output + b"; changed\r\n", final):
+                try:
+                    bounds.transform(invalid, mode)
+                except ValueError:
+                    pass
+                else:
+                    raise AssertionError("Unknown or repeated Output stage accepted")
+            for other in bounds.EXPECTED:
+                if other != mode:
+                    try:
+                        bounds.transform(output, other)
+                    except ValueError:
+                        pass
+                    else:
+                        raise AssertionError("Wrong-profile Output stage accepted")
+            assert b"\n" not in final.replace(b"\r\n", b""), mode
+            text_bounds = modules["TEXTBOUNDS"]
+            checks = text_bounds.selftest(final, mode)
+            assert checks["exact_inverse"]
+            width = int(mode.split("x")[0])
+            assert checks["clip_intervals_checked"] == (width + 1) * (width + 2) // 2
+            text_changed = text_bounds.port(renderer, mode)
+            text_final = (renderer / "EGA/TSOFT.ASM").read_bytes()
+            assert text_changed["changed"], mode
+            assert text_final == text_bounds.transform(final, mode)
+            assert text_changed["added_data_bytes"] == 0
+            assert text_changed["extra_local_stack_bytes"] == 4
+            assert text_changed["extra_flush_save_bytes"] == 4
+            for other in text_bounds.EXPECTED:
+                if other != mode:
+                    try:
+                        text_bounds.transform(final, other)
+                    except ValueError:
+                        pass
+                    else:
+                        raise AssertionError("Wrong-profile text stage accepted")
+            for name, content in before.items():
+                if name != "EGA/TSOFT.ASM":
+                    assert (renderer / name).read_bytes() == content, name
+            original_stage = cli_stage(Path(temp) / (mode + "-default"), mode, False)
+            fixed_stage = cli_stage(Path(temp) / (mode + "-fixed-bounds"), mode, True)
+            key = "renderer/EGA/TSOFT.ASM"
+            assert original_stage[key] == output, mode
+            assert fixed_stage[key] == text_final, mode
+            assert original_stage.keys() == fixed_stage.keys(), mode
+            for name, content in original_stage.items():
+                if name != key:
+                    assert fixed_stage[name] == content, (mode, name)
             results.append(mode)
     print(json.dumps({"status": "PASS", "modes": results,
                       "scope": "exact dependency/source pins and staged TR5 assembly; no native build or runtime claim"}, indent=2))
